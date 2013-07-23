@@ -11,12 +11,12 @@
 
 #define TEST_BUG(__bug__)									\
 {															\
-	Scene* pScene = Scene::create();					\
-	Bug##__bug__##Layer* pLayer = new Bug##__bug__##Layer();	\
-	pLayer->init();                                         \
-	pScene->addChild(pLayer);                               \
-	Director::getInstance()->replaceScene(pScene);     \
-	pLayer->autorelease();                                  \
+	Scene* scene = Scene::create();					\
+	Bug##__bug__##Layer* layer = new Bug##__bug__##Layer();	\
+	layer->init();                                         \
+	scene->addChild(layer);                               \
+	Director::getInstance()->replaceScene(scene);     \
+	layer->autorelease();                                  \
 }
 
 enum
@@ -125,9 +125,9 @@ void BugsTestBaseLayer::onEnter()
 void BugsTestBaseLayer::backCallback(Object* pSender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
-    BugsTestScene* pScene = new BugsTestScene();
-    pScene->runThisTest();
-    pScene->autorelease();
+    BugsTestScene* scene = new BugsTestScene();
+    scene->runThisTest();
+    scene->autorelease();
 }
 
 ////////////////////////////////////////////////////////
@@ -137,9 +137,9 @@ void BugsTestBaseLayer::backCallback(Object* pSender)
 ////////////////////////////////////////////////////////
 void BugsTestScene::runThisTest()
 {
-    Layer* pLayer = new BugsTestMainLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new BugsTestMainLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

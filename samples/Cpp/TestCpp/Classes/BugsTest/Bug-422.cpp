@@ -52,9 +52,9 @@ void Bug422Layer::check(Node* t)
     CCARRAY_FOREACH(array, pChild)
     {
         CC_BREAK_IF(! pChild);
-        Node* pNode = static_cast<Node*>(pChild);
-        CCLog("%p, rc: %d", pNode, pNode->retainCount());
-        check(pNode);
+        Node* node = static_cast<Node*>(pChild);
+        CCLog("%p, rc: %d", node, node->retainCount());
+        check(node);
     }
 }
 

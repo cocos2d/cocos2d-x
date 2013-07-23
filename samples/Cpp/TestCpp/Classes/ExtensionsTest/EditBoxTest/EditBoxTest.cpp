@@ -87,9 +87,9 @@ EditBoxTest::~EditBoxTest()
 
 void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox)
@@ -127,10 +127,10 @@ void EditBoxTest::editBoxReturn(EditBox* editBox)
 
 void runEditBoxTest()
 {
-    Scene *pScene = Scene::create();
-    EditBoxTest *pLayer = new EditBoxTest();
-    pScene->addChild(pLayer);
+    Scene *scene = Scene::create();
+    EditBoxTest *layer = new EditBoxTest();
+    scene->addChild(layer);
     
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

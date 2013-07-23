@@ -126,9 +126,9 @@ void RotateWorldMainLayer::onEnter()
 
 void RotateWorldTestScene::runThisTest()
 {
-    Layer* pLayer = RotateWorldMainLayer::create();
+    Layer* layer = RotateWorldMainLayer::create();
 
-    addChild(pLayer);
+    addChild(layer);
     runAction( RotateBy::create(4, -360) );
 
     Director::getInstance()->replaceScene(this);

@@ -111,10 +111,10 @@ Layer* nextSpriteTestAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backSpriteTestAction()
@@ -124,18 +124,18 @@ Layer* backSpriteTestAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartSpriteTestAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 //------------------------------------------------------------------
@@ -3612,8 +3612,8 @@ std::string SpriteBatchBug1217::subtitle()
 
 void SpriteTestScene::runThisTest()
 {
-    Layer* pLayer = nextSpriteTestAction();
-    addChild(pLayer);
+    Layer* layer = nextSpriteTestAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

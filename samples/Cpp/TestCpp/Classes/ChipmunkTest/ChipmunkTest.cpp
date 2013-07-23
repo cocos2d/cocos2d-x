@@ -242,9 +242,9 @@ void ChipmunkTestLayer::didAccelerate(Acceleration* pAccelerationValue)
 
 void ChipmunkAccelTouchTestScene::runThisTest()
 {
-    Layer* pLayer = new ChipmunkTestLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new ChipmunkTestLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

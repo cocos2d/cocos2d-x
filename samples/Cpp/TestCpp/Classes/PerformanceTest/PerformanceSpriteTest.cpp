@@ -229,7 +229,7 @@ void SubTest::removeByTag(int tag)
 ////////////////////////////////////////////////////////
 void SpriteMenuLayer::showCurrentTest()
 {
-    SpriteMainScene* pScene = NULL;
+    SpriteMainScene* scene = NULL;
     SpriteMainScene* pPreScene = (SpriteMainScene*) getParent();
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
@@ -237,34 +237,34 @@ void SpriteMenuLayer::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        pScene = new SpritePerformTest1;
+        scene = new SpritePerformTest1;
         break;
     case 1:
-        pScene = new SpritePerformTest2;
+        scene = new SpritePerformTest2;
         break;
     case 2:
-        pScene = new SpritePerformTest3;
+        scene = new SpritePerformTest3;
         break;
     case 3:
-        pScene = new SpritePerformTest4;
+        scene = new SpritePerformTest4;
         break;
     case 4:
-        pScene = new SpritePerformTest5;
+        scene = new SpritePerformTest5;
         break;
     case 5:
-        pScene = new SpritePerformTest6;
+        scene = new SpritePerformTest6;
         break;
     case 6:
-        pScene = new SpritePerformTest7;
+        scene = new SpritePerformTest7;
         break;
     }
     s_nSpriteCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        pScene->initWithSubTest(nSubTest, nNodes);
-        Director::getInstance()->replaceScene(pScene);
-        pScene->release();
+        scene->initWithSubTest(nSubTest, nNodes);
+        Director::getInstance()->replaceScene(scene);
+        scene->release();
     }
 }
 
@@ -408,77 +408,77 @@ void SpriteMainScene::onDecrease(Object* pSender)
 // For test functions
 //
 ////////////////////////////////////////////////////////
-void performanceActions(Sprite* pSprite)
+void performanceActions(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    scene->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
-    pSprite->runAction(permanentScaleLoop);
+    scene->runAction(permanentScaleLoop);
 }
 
-void performanceActions20(Sprite* pSprite)
+void performanceActions20(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(Point( -1000, -1000));
+        scene->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    scene->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
-    pSprite->runAction(permanentScaleLoop);
+    scene->runAction(permanentScaleLoop);
 }
 
-void performanceRotationScale(Sprite* pSprite)
+void performanceRotationScale(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setRotation(CCRANDOM_0_1() * 360);
-    pSprite->setScale(CCRANDOM_0_1() * 2);
+    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    scene->setRotation(CCRANDOM_0_1() * 360);
+    scene->setScale(CCRANDOM_0_1() * 2);
 }
 
-void performancePosition(Sprite* pSprite)
+void performancePosition(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
-void performanceout20(Sprite* pSprite)
+void performanceout20(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(Point( -1000, -1000));
+        scene->setPosition(Point( -1000, -1000));
 }
 
-void performanceOut100(Sprite* pSprite)
+void performanceOut100(Sprite* scene)
 {
-    pSprite->setPosition(Point( -1000, -1000));
+    scene->setPosition(Point( -1000, -1000));
 }
 
-void performanceScale(Sprite* pSprite)
+void performanceScale(Sprite* scene)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setScale(CCRANDOM_0_1() * 100 / 50);
+    scene->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    scene->setScale(CCRANDOM_0_1() * 100 / 50);
 }
 
 ////////////////////////////////////////////////////////
@@ -609,8 +609,8 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 
 void runSpriteTest()
 {
-    SpriteMainScene* pScene = new SpritePerformTest1;
-    pScene->initWithSubTest(1, 50);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    SpriteMainScene* scene = new SpritePerformTest1;
+    scene->initWithSubTest(1, 50);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

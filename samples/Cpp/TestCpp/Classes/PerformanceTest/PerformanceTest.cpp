@@ -93,10 +93,10 @@ void PerformBasicLayer::onEnter()
 
 void PerformBasicLayer::toMainLayer(Object* pSender)
 {
-    PerformanceTestScene* pScene = new PerformanceTestScene();
-    pScene->runThisTest();
+    PerformanceTestScene* scene = new PerformanceTestScene();
+    scene->runThisTest();
 
-    pScene->release();
+    scene->release();
 }
 
 void PerformBasicLayer::restartCallback(Object* pSender)
@@ -129,9 +129,9 @@ void PerformBasicLayer::backCallback(Object* pSender)
 
 void PerformanceTestScene::runThisTest()
 {
-    Layer* pLayer = new PerformanceMainLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new PerformanceMainLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

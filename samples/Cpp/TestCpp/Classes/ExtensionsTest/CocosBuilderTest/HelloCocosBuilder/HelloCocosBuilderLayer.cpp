@@ -24,13 +24,13 @@ HelloCocosBuilderLayer::~HelloCocosBuilderLayer()
     CC_SAFE_RELEASE(mTestTitleLabelTTF);
 }
 
-void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pNodeName, NodeLoader * pNodeLoader) {
+void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * nodeName, NodeLoader * nodeLoader) {
     /* Create an autorelease NodeLoaderLibrary. */
     NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 
     ccNodeLoaderLibrary->registerNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
-    if(pNodeName != NULL && pNodeLoader != NULL) {
-        ccNodeLoaderLibrary->registerNodeLoader(pNodeName, pNodeLoader);
+    if(nodeName != NULL && nodeLoader != NULL) {
+        ccNodeLoaderLibrary->registerNodeLoader(nodeName, nodeLoader);
     }
 
     /* Create an autorelease CCBReader. */
@@ -61,7 +61,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pN
 }
 
 
-void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * pNode,  cocos2d::extension::NodeLoader * pNodeLoader) {
+void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * node,  cocos2d::extension::NodeLoader * nodeLoader) {
     RotateBy * ccRotateBy = RotateBy::create(20.0f, 360);
     RepeatForever * ccRepeatForever = RepeatForever::create(ccRotateBy);
     this->mBurstSprite->runAction(ccRepeatForever);

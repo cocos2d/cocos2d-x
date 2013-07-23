@@ -31,34 +31,34 @@ NodeChildrenMenuLayer::NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxC
 void NodeChildrenMenuLayer::showCurrentTest()
 {
     int nNodes = ((NodeChildrenMainScene*)getParent())->getQuantityOfNodes();
-    NodeChildrenMainScene* pScene = NULL;
+    NodeChildrenMainScene* scene = NULL;
 
     switch (_curCase)
     {
 //     case 0:
-//         pScene = new IterateSpriteSheetFastEnum();
+//         scene = new IterateSpriteSheetFastEnum();
 //         break;
     case 0:
-        pScene = new IterateSpriteSheetCArray();
+        scene = new IterateSpriteSheetCArray();
         break;
     case 1:
-        pScene = new AddSpriteSheet();
+        scene = new AddSpriteSheet();
         break;
     case 2:
-        pScene = new RemoveSpriteSheet();
+        scene = new RemoveSpriteSheet();
         break;
     case 3:
-        pScene = new ReorderSpriteSheet();
+        scene = new ReorderSpriteSheet();
         break;
     }
     s_nCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        pScene->initWithQuantityOfNodes(nNodes);
+        scene->initWithQuantityOfNodes(nNodes);
 
-        Director::getInstance()->replaceScene(pScene);
-        pScene->release();
+        Director::getInstance()->replaceScene(scene);
+        scene->release();
     }
 }
 
@@ -220,8 +220,8 @@ void IterateSpriteSheetFastEnum::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = static_cast<Sprite*>(pObject);
-        pSprite->setVisible(false);
+        Sprite* scene = static_cast<Sprite*>(pObject);
+        scene->setVisible(false);
     }
 
     CC_PROFILER_STOP_INSTANCE(this, this->profilerName());
@@ -257,8 +257,8 @@ void IterateSpriteSheetCArray::update(float dt)
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* pSprite = static_cast<Sprite*>(pObject);
-        pSprite->setVisible(false);
+        Sprite* scene = static_cast<Sprite*>(pObject);
+        scene->setVisible(false);
     }
 
     CC_PROFILER_STOP(this->profilerName());
@@ -354,8 +354,8 @@ void AddSpriteSheet::update(float dt)
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            Sprite* pSprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(pSprite);
+            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(scene);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
 
@@ -415,8 +415,8 @@ void RemoveSpriteSheet::update(float dt)
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            Sprite* pSprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(pSprite);
+            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(scene);
         }
 
         // add them with random Z (very important!)
@@ -471,8 +471,8 @@ void ReorderSpriteSheet::update(float dt)
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            Sprite* pSprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            sprites->addObject(pSprite);
+            Sprite* scene = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(scene);
         }
 
         // add them with random Z (very important!)
@@ -488,8 +488,8 @@ void ReorderSpriteSheet::update(float dt)
 
         for( int i=0;i <  totalToAdd;i++)
         {
-            Node* pNode = (Node*) (batchNode->getChildren()->objectAtIndex(i));
-            batchNode->reorderChild(pNode, CCRANDOM_MINUS1_1() * 50);
+            Node* node = (Node*) (batchNode->getChildren()->objectAtIndex(i));
+            batchNode->reorderChild(node, CCRANDOM_MINUS1_1() * 50);
         }
         
         batchNode->sortAllChildren();
@@ -520,9 +520,9 @@ const char*  ReorderSpriteSheet::profilerName()
 
 void runNodeChildrenTest()
 {
-    IterateSpriteSheet* pScene = new IterateSpriteSheetCArray();
-    pScene->initWithQuantityOfNodes(kNodesIncrease);
+    IterateSpriteSheet* scene = new IterateSpriteSheetCArray();
+    scene->initWithQuantityOfNodes(kNodesIncrease);
 
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

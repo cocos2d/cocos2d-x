@@ -193,9 +193,9 @@ void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2
 
 void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 // Menu Callbacks
@@ -232,10 +232,10 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
 
 void runWebSocketTest()
 {
-    Scene *pScene = Scene::create();
-    WebSocketTestLayer *pLayer = new WebSocketTestLayer();
-    pScene->addChild(pLayer);
+    Scene *scene = Scene::create();
+    WebSocketTestLayer *layer = new WebSocketTestLayer();
+    scene->addChild(layer);
     
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

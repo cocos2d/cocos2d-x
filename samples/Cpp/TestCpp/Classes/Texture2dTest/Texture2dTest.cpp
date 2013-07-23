@@ -69,14 +69,14 @@ static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFun
 static int sceneIdx=-1;
 Layer* createTextureTest(int index)
 {
-    Layer* pLayer = (createFunctions[index])();;
+    Layer* layer = (createFunctions[index])();;
 
-    if (pLayer)
+    if (layer)
     {
-        pLayer->autorelease();
+        layer->autorelease();
     }
 
-    return pLayer;
+    return layer;
 }
 
 Layer* nextTextureTest();
@@ -1793,8 +1793,8 @@ std::string TextureDrawInRect::subtitle()
 //------------------------------------------------------------------
 void TextureTestScene::runThisTest()
 {
-    Layer* pLayer = nextTextureTest();
-    addChild(pLayer);
+    Layer* layer = nextTextureTest();
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
 

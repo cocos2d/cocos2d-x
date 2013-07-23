@@ -8,10 +8,10 @@ enum
 
 void ClickAndMoveTestScene::runThisTest()
 {
-    Layer* pLayer = new MainLayer();
-    pLayer->autorelease();
+    Layer* layer = new MainLayer();
+    layer->autorelease();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
 

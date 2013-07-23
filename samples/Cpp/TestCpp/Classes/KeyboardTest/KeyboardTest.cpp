@@ -36,11 +36,11 @@ void KeyboardTest::keyReleased(int keyCode)
 
 void KeyboardTestScene::runThisTest()
 {
-    Layer* pLayer = new KeyboardTest();
-    addChild(pLayer);
+    Layer* layer = new KeyboardTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }
 
 #endif

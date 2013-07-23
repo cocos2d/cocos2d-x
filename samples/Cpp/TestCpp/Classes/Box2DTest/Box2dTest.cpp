@@ -248,9 +248,9 @@ void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration*
 
 void Box2DTestScene::runThisTest()
 {
-    Layer* pLayer = new Box2DTestLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new Box2DTestLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

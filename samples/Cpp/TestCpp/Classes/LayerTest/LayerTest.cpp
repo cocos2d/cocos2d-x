@@ -33,10 +33,10 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -46,18 +46,18 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 //------------------------------------------------------------------
@@ -716,9 +716,9 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
 void LayerIgnoreAnchorPointPos::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointPos::title()
@@ -764,9 +764,9 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
 void LayerIgnoreAnchorPointRot::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointRot::title()
@@ -815,9 +815,9 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
 void LayerIgnoreAnchorPointScale::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointScale::title()
@@ -833,8 +833,8 @@ std::string LayerIgnoreAnchorPointScale::subtitle()
 void LayerTestScene::runThisTest()
 {
     sceneIdx = -1;
-    Layer* pLayer = nextAction();
-    addChild(pLayer);
+    Layer* layer = nextAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

@@ -139,12 +139,12 @@ void TestController::menuCallback(Object * pSender)
     int idx = pMenuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = g_aTestNames[idx].callback();
+    TestScene* scene = g_aTestNames[idx].callback();
 
-    if (pScene)
+    if (scene)
     {
-        pScene->runThisTest();
-        pScene->release();
+        scene->runThisTest();
+        scene->release();
     }
 }
 
