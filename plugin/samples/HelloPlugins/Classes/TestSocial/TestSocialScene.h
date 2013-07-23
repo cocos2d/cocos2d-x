@@ -21,33 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __TEST_USER_SCENE_H__
-#define __TEST_USER_SCENE_H__
+#ifndef __TEST_SOCIAL_SCENE_H__
+#define __TEST_SOCIAL_SCENE_H__
 
 #include "cocos2d.h"
 
-class TestUser : public cocos2d::Layer
+class TestSocial : public cocos2d::Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
+    // there's no 'id' in cpp, so we recommand to return the exactly class pointer
     static cocos2d::Scene* scene();
     
     // a selector callback
     void menuBackCallback(Object* pSender);
-    void testLogin(Object* pSender);
-    void testLogout(Object* pSender);
-    
-    void caseChanged(Object* pSender);
+    void testSubmit(Object* pSender);
+    void testUnlock(Object* pSender);
+    void testLeaderboard(Object* pSender);
+    void testAchievement(Object* pSender);
 
     // implement the "static node()" method manually
-    CREATE_FUNC(TestUser);
+    CREATE_FUNC(TestSocial);
 
 private:
     cocos2d::MenuItemToggle* _caseItem;
-    int _selectedCase;
 };
 
-#endif // __TEST_USER_SCENE_H__
+#endif // __TEST_SOCIAL_SCENE_H__
