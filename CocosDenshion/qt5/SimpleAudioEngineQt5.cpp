@@ -26,12 +26,89 @@
  **/
 
 
-#include "platform/CCCommon.h"
 #include "SimpleAudioEngine.h"
 
-#include <QGuiApplication>
+#include "platform/CCCommon.h"
+#include "platform/CCFileUtils.h"
+
+#include <QMap>
+#include <QMediaPlayer>
+
+USING_NS_CC;
 
 namespace CocosDenshion {
+
+static QString
+fullPath(const char *filename)
+{
+    return QString::fromStdString(CCFileUtils::sharedFileUtils()->fullPathForFilename(filename));
+}
+
+class CocosQt5AudioBackend {
+    public:
+        static void cleanup();
+        static void gcEffects();
+
+        static QMediaPlayer *player() {
+            if (background_music == NULL) {
+                background_music = new QMediaPlayer;
+            }
+
+            return background_music;
+        }
+
+        static void setEffectsVolume(float volume)
+        {
+            effects_volume = volume;
+
+            foreach (QMediaPlayer *effect, effects.values()) {
+                effect->setVolume(volume * 100.0);
+            }
+        }
+
+        static QMap<int,QMediaPlayer*> effects;
+        static QMediaPlayer *background_music;
+        static int next_effect_id;
+        static float effects_volume;
+};
+
+QMap<int,QMediaPlayer*>
+CocosQt5AudioBackend::effects;
+
+QMediaPlayer *
+CocosQt5AudioBackend::background_music = NULL;
+
+int
+CocosQt5AudioBackend::next_effect_id = 0;
+
+float
+CocosQt5AudioBackend::effects_volume = 1.0;
+
+void
+CocosQt5AudioBackend::cleanup()
+{
+    foreach (QMediaPlayer *effect, effects.values()) {
+        delete effect;
+    }
+
+    if (background_music != NULL) {
+        delete background_music;
+        background_music = NULL;
+    }
+}
+
+void
+CocosQt5AudioBackend::gcEffects()
+{
+    foreach (int id, effects.keys()) {
+        QMediaPlayer *effect = effects[id];
+        if (effect->state() == QMediaPlayer::StoppedState) {
+            delete effect;
+            effects.remove(id);
+        }
+    }
+}
+
 
 /* Singleton object */
 static SimpleAudioEngine *
@@ -71,6 +148,8 @@ SimpleAudioEngine::SimpleAudioEngine()
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
+    // Free sound effects and stop background music
+    CocosQt5AudioBackend::cleanup();
 }
 
 /**
@@ -80,6 +159,7 @@ SimpleAudioEngine::~SimpleAudioEngine()
 void
 SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
+    QString filename = fullPath(pszFilePath);
 }
     
 /**
@@ -90,6 +170,13 @@ SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 void
 SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
+    QString filename = fullPath(pszFilePath);
+
+    CocosQt5AudioBackend::player()->setMedia(QUrl::fromLocalFile(filename));
+    if (bLoop) {
+        // TODO: Set QMediaPlayer to loop infinitely
+    }
+    CocosQt5AudioBackend::player()->play();
 }
 
 /**
@@ -99,6 +186,11 @@ SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 void
 SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 {
+    CocosQt5AudioBackend::player()->stop();
+
+    if (bReleaseData) {
+        CocosQt5AudioBackend::player()->setMedia(QMediaContent());
+    }
 }
 
 /**
@@ -107,6 +199,7 @@ SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
 void
 SimpleAudioEngine::pauseBackgroundMusic()
 {
+    CocosQt5AudioBackend::player()->pause();
 }
 
 /**
@@ -115,6 +208,7 @@ SimpleAudioEngine::pauseBackgroundMusic()
 void
 SimpleAudioEngine::resumeBackgroundMusic()
 {
+    CocosQt5AudioBackend::player()->play();
 }
 
 /**
@@ -123,12 +217,15 @@ SimpleAudioEngine::resumeBackgroundMusic()
 void
 SimpleAudioEngine::rewindBackgroundMusic()
 {
+    CocosQt5AudioBackend::player()->stop();
+    CocosQt5AudioBackend::player()->setPosition(0);
+    CocosQt5AudioBackend::player()->play();
 }
 
 bool
 SimpleAudioEngine::willPlayBackgroundMusic()
 {
-    return false;
+    return true;
 }
 
 /**
@@ -138,17 +235,16 @@ SimpleAudioEngine::willPlayBackgroundMusic()
 bool
 SimpleAudioEngine::isBackgroundMusicPlaying()
 {
-    return false;
+    return (CocosQt5AudioBackend::player()->state() == QMediaPlayer::PlayingState);
 }
 
-// properties
 /**
 @brief The volume of the background music max value is 1.0,the min value is 0.0
 */
 float
 SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return 1.0;
+    return (float)(CocosQt5AudioBackend::player()->volume()) / 100.;
 }
 
 /**
@@ -158,6 +254,7 @@ SimpleAudioEngine::getBackgroundMusicVolume()
 void
 SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
+    CocosQt5AudioBackend::player()->setVolume(100. * volume);
 }
 
 /**
@@ -166,7 +263,7 @@ SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 float
 SimpleAudioEngine::getEffectsVolume()
 {
-    return 1.0;
+    return CocosQt5AudioBackend::effects_volume;
 }
 
 /**
@@ -176,6 +273,7 @@ SimpleAudioEngine::getEffectsVolume()
 void
 SimpleAudioEngine::setEffectsVolume(float volume)
 {
+    CocosQt5AudioBackend::setEffectsVolume(volume);
 }
 
 // for sound effects
@@ -187,7 +285,21 @@ SimpleAudioEngine::setEffectsVolume(float volume)
 unsigned int
 SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
-    return 0;
+    CocosQt5AudioBackend::gcEffects();
+
+    QString filename = fullPath(pszFilePath);
+    int id = CocosQt5AudioBackend::next_effect_id++;
+
+    QMediaPlayer *effect = new QMediaPlayer;
+    effect->setMedia(QUrl::fromLocalFile(filename));
+    effect->setVolume(CocosQt5AudioBackend::effects_volume * 100.0);
+    if (bLoop) {
+        // TODO: Set QMediaPlayer to loop infinitely
+    }
+    effect->play();
+
+    CocosQt5AudioBackend::effects[id] = effect;
+    return id;
 }
 
 /**
@@ -197,6 +309,10 @@ SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 void
 SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 {
+    if (CocosQt5AudioBackend::effects.contains(nSoundId)) {
+        QMediaPlayer *effect = CocosQt5AudioBackend::effects[nSoundId];
+        effect->pause();
+    }
 }
 
 /**
@@ -206,6 +322,9 @@ SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 void
 SimpleAudioEngine::pauseAllEffects()
 {
+    foreach (QMediaPlayer *effect, CocosQt5AudioBackend::effects.values()) {
+        effect->pause();
+    }
 }
 
 /**
@@ -215,6 +334,10 @@ SimpleAudioEngine::pauseAllEffects()
 void
 SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 {
+    if (CocosQt5AudioBackend::effects.contains(nSoundId)) {
+        QMediaPlayer *effect = CocosQt5AudioBackend::effects[nSoundId];
+        effect->play();
+    }
 }
 
 /**
@@ -224,6 +347,11 @@ SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 void
 SimpleAudioEngine::resumeAllEffects()
 {
+    foreach (QMediaPlayer *effect, CocosQt5AudioBackend::effects.values()) {
+        if (effect->state() == QMediaPlayer::PausedState) {
+            effect->play();
+        }
+    }
 }
 
 /**
@@ -233,6 +361,11 @@ SimpleAudioEngine::resumeAllEffects()
 void
 SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 {
+    if (CocosQt5AudioBackend::effects.contains(nSoundId)) {
+        QMediaPlayer *effect = CocosQt5AudioBackend::effects[nSoundId];
+        CocosQt5AudioBackend::effects.remove(nSoundId);
+        delete effect;
+    }
 }
 
 /**
@@ -241,6 +374,10 @@ SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void
 SimpleAudioEngine::stopAllEffects()
 {
+    foreach (QMediaPlayer *effect, CocosQt5AudioBackend::effects.values()) {
+        delete effect;
+    }
+    CocosQt5AudioBackend::effects.clear();
 }
 
 /**
@@ -251,6 +388,7 @@ internal buffer in SimpleAudioEngine
 void
 SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
+    QString filename = fullPath(pszFilePath);
 }
 
 /**
@@ -260,6 +398,7 @@ SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 void
 SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
+    QString filename = fullPath(pszFilePath);
 }
 
 } /* end namespace CocosDenshion */
