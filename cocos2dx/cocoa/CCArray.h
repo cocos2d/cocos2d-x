@@ -66,7 +66,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
         if ((__array__) && (__array__)->data->num > 0)                                                           \
             for(Object** __arr__ = (__array__)->data->arr,                                                     \
                 **__end__ = (__array__)->data->arr + (__array__)->data->num-1; __arr__ <= __end__; __arr__++)    \
-                CCAssert(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
+                CCASSERT(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
     } while(false)
 #else
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)

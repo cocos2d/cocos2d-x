@@ -161,7 +161,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {        
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -184,11 +184,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
         strncpy(data.eventName,"return",64);
         event.data = (void*)&data;
-        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 	
 	if(editBox_ != nil)
@@ -238,7 +238,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
 }

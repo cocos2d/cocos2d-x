@@ -192,9 +192,9 @@ void NotificationCenter::postNotification(const char *name, Object *object)
         {
             if (0 != observer->getHandler())
             {
-                BasicScriptData data((void*)this,(void*)name);
+                BasicScriptData data(this, (void*)name);
                 ScriptEvent scriptEvent(kNotificationEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
             }
             else
             {

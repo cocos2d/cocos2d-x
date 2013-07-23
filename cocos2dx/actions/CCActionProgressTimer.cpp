@@ -63,7 +63,7 @@ ProgressTo* ProgressTo::clone() const
 
 ProgressTo* ProgressTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in ProgressTo");
+	CCASSERT(false, "reverse() not supported in ProgressTo");
 	return nullptr;
 }
 

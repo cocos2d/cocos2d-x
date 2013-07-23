@@ -49,33 +49,29 @@ typedef enum
 class ControlStepper : public Control
 {
 public:
+    static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
+
     ControlStepper();
     virtual ~ControlStepper();
 
     bool initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite);
-    static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
+
     virtual void setWraps(bool wraps);
     virtual void setMinimumValue(double minimumValue);
     virtual void setMaximumValue(double maximumValue);
     virtual void setValue(double value);
-    virtual double getValue();
+
+    virtual double getValue() const;
     virtual void setStepValue(double stepValue);
     virtual void setValueWithSendingEvent(double value, bool send);
-    virtual bool isContinuous();
+    virtual bool isContinuous() const;
+
+    // Overrides
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
     void update(float dt);
 
-    //events
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-
-protected:
-    // Weak links to children
-	CC_SYNTHESIZE_RETAIN(Sprite*, _minusSprite, MinusSprite)
-    CC_SYNTHESIZE_RETAIN(Sprite*, _plusSprite, PlusSprite)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _minusLabel, MinusLabel)
-    CC_SYNTHESIZE_RETAIN(LabelTTF*, _plusLabel, PlusLabel)
-    
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(Point location);
 
@@ -88,6 +84,7 @@ protected:
     /** Stop the autorepeat. */
     void stopAutorepeat();
 
+protected:
     /** The numeric value of the stepper. */
     double                  _value;
     /** The continuous vs. noncontinuous state of the stepper. */
@@ -105,6 +102,12 @@ protected:
     bool                    _touchInsideFlag;
     ControlStepperPart    _touchedPart;
     int                     _autorepeatCount;
+
+    // Weak links to children
+	CC_SYNTHESIZE_RETAIN(Sprite*, _minusSprite, MinusSprite)
+    CC_SYNTHESIZE_RETAIN(Sprite*, _plusSprite, PlusSprite)
+    CC_SYNTHESIZE_RETAIN(LabelTTF*, _minusLabel, MinusLabel)
+    CC_SYNTHESIZE_RETAIN(LabelTTF*, _plusLabel, PlusLabel)
 };
 
 // end of GUI group

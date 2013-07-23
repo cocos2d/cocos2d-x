@@ -44,7 +44,8 @@ NS_CC_BEGIN
 class LuaEngine : public ScriptEngineProtocol
 {
 public:
-    static LuaEngine* defaultEngine(void);    
+    static LuaEngine* getInstance(void);
+    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     virtual ~LuaEngine(void);
     
     virtual ccScriptType getScriptType() {
@@ -134,6 +135,7 @@ private:
     int handleKeypadEvent(void* data);
     int handleAccelerometerEvent(void* data);
     int handleCommonEvent(void* data);
+    int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
     void extendNode(lua_State* lua_S);

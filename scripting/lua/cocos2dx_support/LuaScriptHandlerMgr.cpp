@@ -73,7 +73,7 @@ void LuaCallFunc::execute()
     
     BasicScriptData data((void*)this,(void*)_target);
     ScriptEvent event(kCallFuncEvent,(void*)&data);
-    ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
 }
 
 LuaCallFunc* LuaCallFunc::clone() const
@@ -85,7 +85,7 @@ LuaCallFunc* LuaCallFunc::clone() const
     
     auto ret = new LuaCallFunc();
 
-    int newscriptHandler = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(handler);
+    int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
     
     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, newscriptHandler, ScriptHandlerMgr::kCallFuncHandler);
     
@@ -320,7 +320,7 @@ int tolua_Cocos2d_registerScriptTouchHandler00(lua_State* tolua_S)
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
         bool isMultiTouches = ((bool)  tolua_toboolean(tolua_S,3,false));
         int priority = ((int)  tolua_tonumber(tolua_S,4,0));
-        bool swallowsTouches = ((bool)  tolua_toboolean(tolua_S,5,false));
+        //the fifth arg(swallowsTouches) is not set in Layer,default true,
         ccTouchesMode touchesMode = kTouchesAllAtOnce;
         if (!isMultiTouches)
             touchesMode = kTouchesOneByOne;

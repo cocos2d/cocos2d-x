@@ -152,7 +152,7 @@ void ccGLBindTexture2D(GLuint textureId)
 void ccGLBindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    CCAssert(textureUnit < kMaxActiveTexture, "textureUnit is too big");
+    CCASSERT(textureUnit < kMaxActiveTexture, "textureUnit is too big");
     if (s_uCurrentBoundTexture[textureUnit] != textureId)
     {
         s_uCurrentBoundTexture[textureUnit] = textureId;

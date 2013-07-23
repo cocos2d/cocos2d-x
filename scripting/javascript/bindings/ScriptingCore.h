@@ -10,6 +10,7 @@
 #define __SCRIPTING_CORE_H__
 
 #include <assert.h>
+#include <memory>
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
@@ -86,16 +87,7 @@ public:
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
-    virtual int executeNodeEvent(Node* pNode, int nAction);
-    virtual int executeMenuItemEvent(MenuItem* pMenuItem);
-    virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL);
-    virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
-    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches);
-    virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
-    virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
-    virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
-    virtual int executeEvent(int nHandler, const char* pEventName, Object* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
+    virtual int sendEvent(ScriptEvent* message) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
 
@@ -204,6 +196,13 @@ public:
     
  private:
     void string_report(jsval val);
+    
+    int handleTouchesEvent(void* data);
+    int handleTouchEvent(void* data);
+    int handleNodeEvent(void* data);
+    int handleMenuClickedEvent(void* data);
+    int handleAccelerometerEvent(void* data);
+    int handleKeypadEvent(void* data);
 };
 
 // some utility functions

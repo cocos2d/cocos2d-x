@@ -238,17 +238,17 @@ void GridBase::afterDraw(cocos2d::Node *target)
 
 void GridBase::blit(void)
 {
-    CCAssert(0, "");
+    CCASSERT(0, "");
 }
 
 void GridBase::reuse(void)
 {
-    CCAssert(0, "");
+    CCASSERT(0, "");
 }
 
 void GridBase::calculateVertexPoints(void)
 {
-    CCAssert(0, "");
+    CCASSERT(0, "");
 }
 
 // implementation of Grid3D
@@ -426,7 +426,7 @@ void Grid3D::calculateVertexPoints(void)
 
 Vertex3F Grid3D::getVertex(const Point& pos) const
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
@@ -438,7 +438,7 @@ Vertex3F Grid3D::getVertex(const Point& pos) const
 
 Vertex3F Grid3D::getOriginalVertex(const Point& pos) const
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_originalVertices;
@@ -450,7 +450,7 @@ Vertex3F Grid3D::getOriginalVertex(const Point& pos) const
 
 void Grid3D::setVertex(const Point& pos, const Vertex3F& vertex)
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int index = (pos.x * (_gridSize.height + 1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
     vertArray[index] = vertex.x;
@@ -646,7 +646,7 @@ void TiledGrid3D::calculateVertexPoints(void)
 
 void TiledGrid3D::setTile(const Point& pos, const Quad3& coords)
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_vertices;
     memcpy(&vertArray[idx], &coords, sizeof(Quad3));
@@ -654,7 +654,7 @@ void TiledGrid3D::setTile(const Point& pos, const Quad3& coords)
 
 Quad3 TiledGrid3D::getOriginalTile(const Point& pos) const
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_originalVertices;
 
@@ -666,7 +666,7 @@ Quad3 TiledGrid3D::getOriginalTile(const Point& pos) const
 
 Quad3 TiledGrid3D::getTile(const Point& pos) const
 {
-    CCAssert( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
+    CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
     float *vertArray = (float*)_vertices;
 

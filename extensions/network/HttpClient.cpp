@@ -180,7 +180,7 @@ static void networkThread(void)
                 break;
             
             default:
-                CCAssert(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+                CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
                 
@@ -392,7 +392,7 @@ HttpClient* HttpClient::getInstance()
 
 void HttpClient::destroyInstance()
 {
-    CCAssert(s_pHttpClient, "");
+    CCASSERT(s_pHttpClient, "");
     Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
 }

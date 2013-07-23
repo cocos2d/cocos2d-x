@@ -84,7 +84,7 @@ Timer::Timer()
 {
 }
 
-Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector)
+Timer* Timer::create(Object *target, SEL_SCHEDULE selector)
 {
     Timer *pTimer = new Timer();
 
@@ -94,7 +94,7 @@ Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector)
     return pTimer;
 }
 
-Timer* Timer::createWithTarget(Object *target, SEL_SCHEDULE selector, float seconds)
+Timer* Timer::create(Object *target, SEL_SCHEDULE selector, float seconds)
 {
     Timer *pTimer = new Timer();
 
@@ -164,7 +164,7 @@ void Timer::update(float dt)
                 {
                     SchedulerScriptData data(_scriptHandler,_elapsed);
                     ScriptEvent event(kScheduleEvent,&data);
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                 }
                 _elapsed = 0;
             }
@@ -185,7 +185,7 @@ void Timer::update(float dt)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
-                        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
 
                     _elapsed = _elapsed - _delay;
@@ -206,7 +206,7 @@ void Timer::update(float dt)
                     {
                         SchedulerScriptData data(_scriptHandler,_elapsed);
                         ScriptEvent event(kScheduleEvent,&data);
-                        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
                     }
 
                     _elapsed = 0;
@@ -284,8 +284,8 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
 
 void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float interval, unsigned int repeat, float delay, bool paused)
 {
-    CCAssert(selector, "Argument selector must be non-NULL");
-    CCAssert(target, "Argument target must be non-NULL");
+    CCASSERT(selector, "Argument selector must be non-NULL");
+    CCASSERT(target, "Argument target must be non-NULL");
 
     tHashTimerEntry *element = NULL;
     HASH_FIND_INT(_hashForTimers, &target, element);
@@ -305,7 +305,7 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
     }
     else
     {
-        CCAssert(element->paused == paused, "");
+        CCASSERT(element->paused == paused, "");
     }
 
     if (element->timers == NULL)
@@ -342,8 +342,8 @@ void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Object *target)
         return;
     }
 
-    //CCAssert(target);
-    //CCAssert(selector);
+    //CCASSERT(target);
+    //CCASSERT(selector);
 
     tHashTimerEntry *element = NULL;
     HASH_FIND_INT(_hashForTimers, &target, element);
@@ -472,7 +472,7 @@ void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool pause
     if (pHashElement)
     {
 #if COCOS2D_DEBUG >= 1
-        CCAssert(pHashElement->entry->markedForDeletion,"");
+        CCASSERT(pHashElement->entry->markedForDeletion,"");
 #endif
         // TODO: check if priority has changed!
 
@@ -499,8 +499,8 @@ void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool pause
 
 bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Object *target)
 {
-    CCAssert(selector, "Argument selector must be non-NULL");
-    CCAssert(target, "Argument target must be non-NULL");
+    CCASSERT(selector, "Argument selector must be non-NULL");
+    CCASSERT(target, "Argument target must be non-NULL");
     
     tHashTimerEntry *element = NULL;
     HASH_FIND_INT(_hashForTimers, &target, element);
@@ -692,7 +692,7 @@ void Scheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 
 void Scheduler::resumeTarget(Object *target)
 {
-    CCAssert(target != NULL, "");
+    CCASSERT(target != NULL, "");
 
     // custom selectors
     tHashTimerEntry *element = NULL;
@@ -707,14 +707,14 @@ void Scheduler::resumeTarget(Object *target)
     HASH_FIND_INT(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
-        CCAssert(elementUpdate->entry != NULL, "");
+        CCASSERT(elementUpdate->entry != NULL, "");
         elementUpdate->entry->paused = false;
     }
 }
 
 void Scheduler::pauseTarget(Object *target)
 {
-    CCAssert(target != NULL, "");
+    CCASSERT(target != NULL, "");
 
     // custom selectors
     tHashTimerEntry *element = NULL;
@@ -729,14 +729,14 @@ void Scheduler::pauseTarget(Object *target)
     HASH_FIND_INT(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
-        CCAssert(elementUpdate->entry != NULL, "");
+        CCASSERT(elementUpdate->entry != NULL, "");
         elementUpdate->entry->paused = true;
     }
 }
 
 bool Scheduler::isTargetPaused(Object *target)
 {
-    CCAssert( target != NULL, "target must be non nil" );
+    CCASSERT( target != NULL, "target must be non nil" );
 
     // Custom selectors
     tHashTimerEntry *element = NULL;

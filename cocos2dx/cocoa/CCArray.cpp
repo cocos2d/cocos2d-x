@@ -221,7 +221,7 @@ unsigned int Array::indexOfObject(Object* object) const
 
 Object* Array::objectAtIndex(unsigned int index)
 {
-    CCAssert(index < data->num, "index out of range in objectAtIndex()");
+    CCASSERT(index < data->num, "index out of range in objectAtIndex()");
 
     return data->arr[index];
 }
@@ -285,7 +285,7 @@ void Array::insertObject(Object* object, unsigned int index)
 
 void Array::removeLastObject(bool bReleaseObj)
 {
-    CCAssert(data->num, "no objects added");
+    CCASSERT(data->num, "no objects added");
     ccArrayRemoveObjectAtIndex(data, data->num-1, bReleaseObj);
 }
 
