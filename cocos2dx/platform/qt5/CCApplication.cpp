@@ -149,10 +149,10 @@ CCApplication::getCurrentLanguage()
     QLocale locale;
 
     switch (locale.language()) {
-        case QLocale::Chinese:
-            return kLanguageChinese;
         case QLocale::English:
             return kLanguageEnglish;
+        case QLocale::Chinese:
+            return kLanguageChinese;
         case QLocale::French:
             return kLanguageFrench;
         case QLocale::Italian:
@@ -173,7 +173,6 @@ CCApplication::getCurrentLanguage()
             return kLanguagePortuguese;
         case QLocale::Arabic:
             return kLanguageArabic;
-        // XXX: Add missing
         default:
             break;
     }
