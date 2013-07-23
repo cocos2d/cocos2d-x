@@ -32,6 +32,7 @@
 #include "CCDirector.h"
 #include "platform/CCFileUtils.h"
 
+#include <QGuiApplication>
 #include <QLocale>
 #include <QObject>
 #include <QDir>
