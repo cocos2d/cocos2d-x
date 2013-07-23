@@ -125,16 +125,20 @@ public:
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
     /** return the TMXLayer for the specific layer */
-    TMXLayer* layerNamed(const char *layerName);
+    TMXLayer* getLayerNamed(const char *layerName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayerNamed(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
-    TMXObjectGroup* objectGroupNamed(const char *groupName);
+    TMXObjectGroup* getObjectGroupNamed(const char *groupName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroupNamed(groupName); };
 
     /** return the value for the specific property name */
-    String *propertyNamed(const char *propertyName);
+    String *getPropertyNamed(const char *propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getPropertyNamed(propertyName); };
 
     /** return properties dictionary for tile GID */
-    Dictionary* propertiesForGID(int GID);
+    Dictionary* getPropertiesForGID(int GID) const;
+    CC_DEPRECATED_ATTRIBUTE Dictionary* propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };
