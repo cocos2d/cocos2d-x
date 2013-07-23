@@ -43,6 +43,8 @@
 #include <QEvent>
 #include <QTouchEvent>
 
+#include <QInputMethod>
+
 NS_CC_BEGIN
 
 class Cocos2DQt5OpenGLIntegration : public QWindow {
@@ -178,7 +180,8 @@ CCEGLView::swapBuffers()
 void
 CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-    // XXX: Show/hide onscreen keyboard
+    QGuiApplication *app = static_cast<QGuiApplication*>(QGuiApplication::instance());
+    app->inputMethod()->setVisible(bOpen);
 }
 
 void
