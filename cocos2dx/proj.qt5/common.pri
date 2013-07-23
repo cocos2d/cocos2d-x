@@ -32,7 +32,11 @@ LINK_AGAINST_COCOS2DX = -L$${LIB_OUTPUT_DIR} -lcocos2d $${COCOS2DX_SYSTEM_LIBS}
 # CocosDenshion (audio library)
 QT += multimedia
 INCLUDEPATH += $${PWD}/../../CocosDenshion/include
-LINK_AGAINST_COCOSDENSHION = -L$${LIB_OUTPUT_DIR} -lcocosdenshion
+LINK_AGAINST_COCOSDENSHION = -lcocosdenshion
+
+# Extensions library
+INCLUDEPATH += $${PWD}/../../extensions
+LINK_AGAINST_COCOSEXTENSION = -lextension -lbox2d -lchipmunk -lcurl
 
 # Physics engines (pick one)
 DEFINES += CC_ENABLE_CHIPMUNK_INTEGRATION

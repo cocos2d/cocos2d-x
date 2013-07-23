@@ -15,4 +15,5 @@ SUBDIRS += extensions/proj.qt5/extensions.pro
 # Examples
 SUBDIRS += samples/Cpp/HelloCpp/proj.qt5/HelloCpp.pro
 SUBDIRS += samples/Cpp/SimpleGame/proj.qt5/SimpleGame.pro
+SUBDIRS += samples/Cpp/TestCpp/proj.qt5/TestCpp.pro
 
