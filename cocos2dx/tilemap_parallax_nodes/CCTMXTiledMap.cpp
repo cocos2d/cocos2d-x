@@ -58,7 +58,7 @@ TMXTiledMap* TMXTiledMap::createWithXML(const char* tmxString, const char* resou
 
 bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
 {
-    CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
+    CCASSERT(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
     
     setContentSize(Size::ZERO);
 
@@ -68,7 +68,7 @@ bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
     {
         return false;
     }
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -80,7 +80,7 @@ bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 
     TMXMapInfo *mapInfo = TMXMapInfo::formatWithXML(tmxString, resourcePath);
 
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -232,7 +232,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 // public
 TMXLayer * TMXTiledMap::layerNamed(const char *layerName)
 {
-    CCAssert(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
+    CCASSERT(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
     Object* pObj = NULL;
     CCARRAY_FOREACH(_children, pObj) 
     {
@@ -252,7 +252,7 @@ TMXLayer * TMXTiledMap::layerNamed(const char *layerName)
 
 TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
 {
-    CCAssert(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
+    CCASSERT(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
 
     std::string sGroupName = groupName;
     if (_objectGroups && _objectGroups->count()>0)

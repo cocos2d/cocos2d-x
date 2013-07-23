@@ -174,6 +174,12 @@ class EditBox
 {
 public:
     /**
+     * create a edit box with size.
+     * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
+     */
+    static EditBox* create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg = NULL, Scale9Sprite* pDisabled9SpriteBg = NULL);
+
+    /**
      * Constructor.
      */
     EditBox(void);
@@ -183,12 +189,6 @@ public:
      */
     virtual ~EditBox(void);
 
-    /**
-     * create a edit box with size.
-     * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
-     */
-    static EditBox* create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg = NULL, Scale9Sprite* pDisabled9SpriteBg = NULL);
-    
     /**
      * Init edit box with specified size. This method should be invoked right after constructor.
      * @param size The size of edit box.

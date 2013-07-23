@@ -95,7 +95,7 @@ public:
      */
     inline const char* getStrKey() const
     {
-        CCAssert(_strKey[0] != '\0', "Should not call this function for integer dictionary");
+        CCASSERT(_strKey[0] != '\0', "Should not call this function for integer dictionary");
         return _strKey;
     }
 
@@ -108,7 +108,7 @@ public:
      */
     inline intptr_t getIntKey() const
     {
-        CCAssert(_strKey[0] == '\0', "Should not call this function for string dictionary");
+        CCASSERT(_strKey[0] == '\0', "Should not call this function for string dictionary");
         return _intKey;
     }
     

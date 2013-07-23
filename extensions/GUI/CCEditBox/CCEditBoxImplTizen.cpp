@@ -253,15 +253,15 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     {       
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
         strncpy(data.eventName,"ended",64);
         event.data = (void*)&data;
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
         strncpy(data.eventName,"return",64);
         event.data = (void*)&data;
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
@@ -276,7 +276,7 @@ void EditBoxImplTizen::openKeyboard()
     {
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
     KeypadStyle keypadStyle = KEYPAD_STYLE_NORMAL;

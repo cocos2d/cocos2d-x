@@ -98,13 +98,13 @@ public:
     void alignItemsHorizontallyWithPadding(float padding);
 
     /** align items in rows of columns */
-    void alignItemsInColumns(unsigned int columns, ...);
-    void alignItemsInColumns(unsigned int columns, va_list args);
+    void alignItemsInColumns(int columns, ...);
+    void alignItemsInColumns(int columns, va_list args);
     void alignItemsInColumnsWithArray(Array* rows);
 
     /** align items in columns of rows */
-    void alignItemsInRows(unsigned int rows, ...);
-    void alignItemsInRows(unsigned int rows, va_list args);
+    void alignItemsInRows(int rows, ...);
+    void alignItemsInRows(int rows, va_list args);
     void alignItemsInRowsWithArray(Array* columns);
 
     /** set event handler priority. By default it is: kMenuTouchPriority */

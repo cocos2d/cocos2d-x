@@ -1498,7 +1498,7 @@ void TextureAsync::imageLoaded(Object* pObj)
     Texture2D* tex = static_cast<Texture2D*>(pObj);
     Director *director = Director::getInstance();
 
-    //CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+    //CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
 
     // IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 

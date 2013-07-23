@@ -325,11 +325,11 @@ CallFunc * CallFunc::create(const std::function<void()> &func)
     return NULL;
 }
 
-CallFunc * CallFunc::create(Object* pSelectorTarget, SEL_CallFunc selector) 
+CallFunc * CallFunc::create(Object* selectorTarget, SEL_CallFunc selector) 
 {
     CallFunc *pRet = new CallFunc();
 
-    if (pRet && pRet->initWithTarget(pSelectorTarget)) {
+    if (pRet && pRet->initWithTarget(selectorTarget)) {
         pRet->_callFunc = selector;
         pRet->autorelease();
         return pRet;
@@ -345,10 +345,10 @@ bool CallFunc::initWithFunction(const std::function<void()> &func)
     return true;
 }
 
-bool CallFunc::initWithTarget(Object* pSelectorTarget) {
-    if (pSelectorTarget) 
+bool CallFunc::initWithTarget(Object* selectorTarget) {
+    if (selectorTarget) 
     {
-        pSelectorTarget->retain();
+        selectorTarget->retain();
     }
 
     if (_selectorTarget) 
@@ -356,7 +356,7 @@ bool CallFunc::initWithTarget(Object* pSelectorTarget) {
         _selectorTarget->release();
     }
 
-    _selectorTarget = pSelectorTarget;
+    _selectorTarget = selectorTarget;
     return true;
 }
 
@@ -418,11 +418,11 @@ CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
 }
 
 // XXX deprecated
-CallFuncN * CallFuncN::create(Object* pSelectorTarget, SEL_CallFuncN selector)
+CallFuncN * CallFuncN::create(Object* selectorTarget, SEL_CallFuncN selector)
 {
     CallFuncN *pRet = new CallFuncN();
 
-    if (pRet && pRet->initWithTarget(pSelectorTarget, selector))
+    if (pRet && pRet->initWithTarget(selectorTarget, selector))
     {
         pRet->autorelease();
         return pRet;
@@ -447,9 +447,9 @@ bool CallFuncN::initWithFunction(const std::function<void (Node *)> &func)
     return true;
 }
 
-bool CallFuncN::initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector)
+bool CallFuncN::initWithTarget(Object* selectorTarget, SEL_CallFuncN selector)
 {
-    if (CallFunc::initWithTarget(pSelectorTarget)) {
+    if (CallFunc::initWithTarget(selectorTarget)) {
         _callFuncN = selector;
         return true;
     }
@@ -461,7 +461,14 @@ CallFuncN * CallFuncN::clone() const
 {
 	// no copy constructor
 	auto a = new CallFuncN();
-	a->initWithTarget(_selectorTarget, _callFuncN);
+
+    if( _selectorTarget) {
+        a->initWithTarget(_selectorTarget, _callFuncN);
+    }
+    else if( _function ){
+        a->initWithFunction(_functionN);
+    }
+
 	a->autorelease();
 	return a;
 }

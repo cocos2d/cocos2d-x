@@ -345,7 +345,7 @@ protected:
     CC_PROPERTY(ParticleBatchNode*, _batchNode, BatchNode);
 
     // index of system in batch node array
-    CC_SYNTHESIZE(unsigned int, _atlasIndex, AtlasIndex);
+    CC_SYNTHESIZE(int, _atlasIndex, AtlasIndex);
 
     //true if scaled or rotated
     bool _transformSystemDirty;
@@ -354,7 +354,6 @@ protected:
 
     /** Is the emitter active */
     bool _isActive;
-
     
     /** Quantity of particles that are being simulated at the moment */
     CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
