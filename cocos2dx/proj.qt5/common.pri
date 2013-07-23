@@ -17,6 +17,11 @@ CONFIG(debug, debug|release) {
 OBJECTS_DIR = obj/$${BUILD_TYPE}
 LIB_OUTPUT_DIR = $${PWD}/../../lib/$${OS_TYPE}/$${BUILD_TYPE}
 
+# Installation location of binaries
+LIB_INSTALL_DIR = /usr/lib
+BIN_INSTALL_DIR = /usr/bin
+DESKTOP_INSTALL_DIR = /usr/share/applications
+
 INCLUDEPATH += $${PWD}/..
 INCLUDEPATH += $${PWD}/../include
 INCLUDEPATH += $${PWD}/../platform

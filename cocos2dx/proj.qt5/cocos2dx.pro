@@ -157,3 +157,6 @@ INCLUDEPATH += ../../extensions/Components
 
 TARGET = $${LIB_OUTPUT_DIR}/cocos2d
 
+INSTALLS += target
+target.path = $${LIB_INSTALL_DIR}
+
