@@ -1867,7 +1867,7 @@ void PremultipliedAlphaTest::onEnter()
     BlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
     _emitter->setBlendFunc(tBlendFunc);
 
-    CCASSERT(_emitter->getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
+    CCASSERT(_emitter->isOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
 
     // Toggle next line to see old behavior
     //	this->emitter.opacityModifyRGB = NO;

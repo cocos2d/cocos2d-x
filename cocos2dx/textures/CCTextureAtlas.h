@@ -187,6 +187,24 @@ public:
 
     const char* description() const;
 
+    /** Gets the quantity of quads that are going to be drawn */
+    int getTotalQuads() const;
+    
+    /** Gets the quantity of quads that can be stored with the current texture atlas size */
+    int getCapacity() const;
+    
+    /** Gets the texture of the texture atlas */
+    Texture2D* getTexture() const;
+    
+    /** Sets the texture for the texture atlas */
+    void setTexture(Texture2D* texture);
+    
+    /** Gets the quads that are going to be rendered */
+    V3F_C4B_T2F_Quad* getQuads();
+    
+    /** Sets the quads that are going to be rendered */
+    void setQuads(V3F_C4B_T2F_Quad* quads);
+    
 private:
     void setupIndices();
     void mapBuffers();
@@ -203,16 +221,14 @@ protected:
 #endif
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-
-
     /** quantity of quads that are going to be drawn */
-    CC_PROPERTY_READONLY(int, _totalQuads, TotalQuads)
+    int _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */
-    CC_PROPERTY_READONLY(int, _capacity, Capacity)
+    int _capacity;
     /** Texture of the texture atlas */
-    CC_PROPERTY(Texture2D *, _texture, Texture)
+    Texture2D* _texture;
     /** Quads that are going to be rendered */
-    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
+    V3F_C4B_T2F_Quad* _quads;
 };
 
 // end of textures group

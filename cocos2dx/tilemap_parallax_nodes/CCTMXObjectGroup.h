@@ -44,12 +44,6 @@ NS_CC_BEGIN
 */
 class CC_DLL TMXObjectGroup : public Object
 {
-    /** offset position of child objects */
-    CC_SYNTHESIZE_PASS_BY_REF(Point, _positionOffset, PositionOffset);
-    /** list of properties stored in a dictionary */
-    CC_PROPERTY(Dictionary*, _properties, Properties);
-    /** array of the objects */
-    CC_PROPERTY(Array*, _objects, Objects);
 public:
     TMXObjectGroup();
     virtual ~TMXObjectGroup();
@@ -58,15 +52,52 @@ public:
     inline void setGroupName(const char *groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
-    String *propertyNamed(const char* propertyName);
+    String* getPropertyNamed(const char* propertyName) const;
+    
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char* propertyName) const { return getPropertyNamed(propertyName); };
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    Dictionary* objectNamed(const char *objectName);
-protected:    
+    Dictionary* getObjectNamed(const char *objectName) const;
+    
+    CC_DEPRECATED_ATTRIBUTE Dictionary* objectNamed(const char *objectName) const { return getObjectNamed(objectName); };
+    
+    /** Gets the offset position of child objects */
+    inline const Point& getPositionOffset() const { return _positionOffset; };
+    
+    /** Sets the offset position of child objects */
+    inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
+    
+    /** Gets the list of properties stored in a dictionary */
+    inline Dictionary* getProperties() const { return _properties; };
+    
+    /** Sets the list of properties */
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
+    
+    /** Gets the array of the objects */
+    inline Array* getObjects() const { return _objects; };
+    
+    /** Sets the array of the objects */
+    inline void setObjects(Array* objects) {
+        CC_SAFE_RETAIN(objects);
+        CC_SAFE_RELEASE(_objects);
+        _objects = objects;
+    };
+    
+protected:
     /** name of the group */
     std::string _groupName;
+    /** offset position of child objects */
+    Point _positionOffset;
+    /** list of properties stored in a dictionary */
+    Dictionary* _properties;
+    /** array of the objects */
+    Array* _objects;
 };
 
 // end of tilemap_parallax_nodes group

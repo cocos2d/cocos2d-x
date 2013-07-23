@@ -82,7 +82,7 @@ public:
     virtual void setPosition(const Point& position) override;
     virtual void draw() override;
     virtual void update(float delta) override;
-    virtual Texture2D* getTexture() override;
+    virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc& getBlendFunc() const override;
