@@ -71,9 +71,6 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setBlendFunc(const BlendFunc& blendFunc);
-    const BlendFunc& getBlendFunc() const;
-    
     void setQuadsToDraw(unsigned int quadsToDraw);
     unsigned int getQuadsToDraw() const;
 
@@ -87,6 +84,8 @@ public:
     virtual const Color3B& getColor(void) const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
+    virtual const BlendFunc& getBlendFunc() const override;
 
 private :
     void calculateMaxItems();

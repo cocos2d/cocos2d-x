@@ -67,19 +67,13 @@ public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity);
-    static SpriteBatchNode* createWithTexture(Texture2D* tex) {
-        return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
-    }
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = kDefaultSpriteBatchCapacity);
 
     /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, int capacity);
-    static SpriteBatchNode* create(const char* fileImage) {
-        return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
-    }
+    static SpriteBatchNode* create(const char* fileImage, int capacity = kDefaultSpriteBatchCapacity);
 
     SpriteBatchNode();
     virtual ~SpriteBatchNode();
@@ -174,7 +168,7 @@ protected:
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
 
-    // all descendants: children, gran children, etc...
+    // all descendants: children, grand children, etc...
     Array* _descendants;
 };
 
