@@ -366,6 +366,7 @@ public:
     /** does the alpha value modify color */
     inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
     inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
+    CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
     /** particles movement type: Free or Grouped
      @since v0.8
