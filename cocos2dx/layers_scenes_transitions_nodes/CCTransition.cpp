@@ -65,7 +65,7 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCAssert( scene != NULL, "Argument scene must be non-nil");
+    CCASSERT( scene != NULL, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
@@ -82,7 +82,7 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         }
         _outScene->retain();
 
-        CCAssert( _inScene != _outScene, "Incoming scene must be different from the outgoing scene" );
+        CCASSERT( _inScene != _outScene, "Incoming scene must be different from the outgoing scene" );
         
         sceneOrder();
 

@@ -1276,7 +1276,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2
     Touch *touch = (Touch *)pTouches->anyObject();
     Point location = touch->getLocationInView();
 
-    if (this->_arrowsShouldRetain->boundingBox().containsPoint(location))
+    if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
     {
         _drag = true;
         this->_arrowsBarShouldRetain->setVisible(true);

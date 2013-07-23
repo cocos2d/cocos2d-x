@@ -82,11 +82,11 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 {
     if (Control::init())
     {
-        CCAssert(node != NULL, "Label must not be nil.");
+        CCASSERT(node != NULL, "Label must not be nil.");
         LabelProtocol* label = dynamic_cast<LabelProtocol*>(node);
         RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(node);
-        CCAssert(backgroundSprite != NULL, "Background sprite must not be nil.");
-        CCAssert(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
+        CCASSERT(backgroundSprite != NULL, "Background sprite must not be nil.");
+        CCASSERT(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
         
         _parentInited = true;
 
@@ -320,7 +320,7 @@ void ControlButton::setTitleForState(String* title, ControlState state)
 }
 
 
-const Color3B ControlButton::getTitleColorForState(ControlState state)
+Color3B ControlButton::getTitleColorForState(ControlState state) const
 {
     Color3B returnColor = Color3B::WHITE;
     do 
@@ -568,7 +568,7 @@ void ControlButton::needsLayout()
     Size titleLabelSize;
     if (_titleLabel != NULL)
     {
-        titleLabelSize = _titleLabel->boundingBox().size;
+        titleLabelSize = _titleLabel->getBoundingBox().size;
     }
     
     // Adjust the background image if necessary
@@ -603,12 +603,12 @@ void ControlButton::needsLayout()
     Rect rectTitle;
     if (_titleLabel != NULL)
     {
-        rectTitle = _titleLabel->boundingBox();
+        rectTitle = _titleLabel->getBoundingBox();
     }
     Rect rectBackground;
     if (_backgroundSprite != NULL)
     {
-        rectBackground = _backgroundSprite->boundingBox();
+        rectBackground = _backgroundSprite->getBoundingBox();
     }
 
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);

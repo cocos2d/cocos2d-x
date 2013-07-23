@@ -55,49 +55,27 @@ To render the quads using an interleaved vertex array list, you should modify th
 */
 class CC_DLL TextureAtlas : public Object 
 {
-protected:
-    GLushort*           _indices;
-#if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint              _VAOname;
-#endif
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-
-
-    /** quantity of quads that are going to be drawn */
-    CC_PROPERTY_READONLY(unsigned int, _totalQuads, TotalQuads)
-    /** quantity of quads that can be stored with the current texture atlas size */
-    CC_PROPERTY_READONLY(unsigned int, _capacity, Capacity)
-    /** Texture of the texture atlas */
-    CC_PROPERTY(Texture2D *, _texture, Texture)
-    /** Quads that are going to be rendered */
-    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
-
 public:
+    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
+     * The TextureAtlas capacity can be increased in runtime.
+     */
+    static TextureAtlas* create(const char* file , int capacity);
+
+    /** creates a TextureAtlas with a previously initialized Texture2D object, and
+     * with an initial capacity for n Quads.
+     * The TextureAtlas capacity can be increased in runtime.
+     */
+    static TextureAtlas* createWithTexture(Texture2D *texture, int capacity);
 
     TextureAtlas();
     virtual ~TextureAtlas();
-
-    const char* description() const;
-
-    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
-    * The TextureAtlas capacity can be increased in runtime.
-    */
-    static TextureAtlas* create(const char* file , unsigned int capacity);
 
     /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
     * The TextureAtlas capacity can be increased in runtime.
     *
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
-    bool initWithFile(const char* file, unsigned int capacity);
-
-   /** creates a TextureAtlas with a previously initialized Texture2D object, and
-    * with an initial capacity for n Quads. 
-    * The TextureAtlas capacity can be increased in runtime.
-    */
-    static TextureAtlas* createWithTexture(Texture2D *texture, unsigned int capacity);
-
+    bool initWithFile(const char* file, int capacity);
 
     /** initializes a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for Quads. 
@@ -105,43 +83,43 @@ public:
     *
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
-    bool initWithTexture(Texture2D *texture, unsigned int capacity);
+    bool initWithTexture(Texture2D *texture, int capacity);
 
     /** updates a Quad (texture, vertex and color) at a certain index
     * index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void updateQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
+    void updateQuad(V3F_C4B_T2F_Quad* quad, int index);
 
     /** Inserts a Quad (texture, vertex and color) at a certain index
     index must be between 0 and the atlas capacity - 1
     @since v0.8
     */
-    void insertQuad(V3F_C4B_T2F_Quad* quad, unsigned int index);
+    void insertQuad(V3F_C4B_T2F_Quad* quad, int index);
 
     /** Inserts a c array of quads at a given index
      index must be between 0 and the atlas capacity - 1
      this method doesn't enlarge the array when amount + index > totalQuads
      @since v1.1
     */
-    void insertQuads(V3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount);
+    void insertQuads(V3F_C4B_T2F_Quad* quads, int index, int amount);
 
     /** Removes the quad that is located at a certain index and inserts it at a new index
     This operation is faster than removing and inserting in a quad in 2 different steps
     @since v0.7.2
     */
-    void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
+    void insertQuadFromIndex(int fromIndex, int newIndex);
 
     /** removes a quad at a given index number.
     The capacity remains the same, but the total number of quads to be drawn is reduced in 1
     @since v0.7.2
     */
-    void removeQuadAtIndex(unsigned int index);
+    void removeQuadAtIndex(int index);
 
     /** removes a amount of quads starting from index
         @since 1.1
      */
-    void removeQuadsAtIndex(unsigned int index, unsigned int amount);
+    void removeQuadsAtIndex(int index, int amount);
     /** removes all Quads.
     The TextureAtlas capacity remains untouched. No memory is freed.
     The total number of quads to be drawn will be 0
@@ -149,25 +127,24 @@ public:
     */
     void removeAllQuads();
 
-
     /** resize the capacity of the TextureAtlas.
     * The new capacity can be lower or higher than the current one
     * It returns YES if the resize was successful.
     * If it fails to resize the capacity it will return NO with a new capacity of 0.
     */
-    bool resizeCapacity(unsigned int n);
+    bool resizeCapacity(int capacity);
 
     /**
      Used internally by ParticleBatchNode
      don't use this unless you know what you're doing
      @since 1.1
     */
-    void increaseTotalQuadsWith(unsigned int amount);
+    void increaseTotalQuadsWith(int amount);
 
     /** Moves an amount of quads from oldIndex at newIndex
      @since v1.1
      */
-    void moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
+    void moveQuadsFromIndex(int oldIndex, int amount, int newIndex);
 
     /**
      Moves quads from index till totalQuads to the newIndex
@@ -175,26 +152,26 @@ public:
      This method doesn't enlarge the array if newIndex + quads to be moved > capacity
      @since 1.1
     */
-    void moveQuadsFromIndex(unsigned int index, unsigned int newIndex);
+    void moveQuadsFromIndex(int index, int newIndex);
 
     /**
      Ensures that after a realloc quads are still empty
      Used internally by ParticleBatchNode
      @since 1.1
     */
-    void fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount);
+    void fillWithEmptyQuadsFromIndex(int index, int amount);
 
     /** draws n quads
     * n can't be greater than the capacity of the Atlas
     */
-    void drawNumberOfQuads(unsigned int n);
+    void drawNumberOfQuads(int n);
 
     /** draws n quads from an index (offset).
     n + start can't be greater than the capacity of the atlas
 
     @since v1.0
     */
-    void drawNumberOfQuads(unsigned int n, unsigned int start);
+    void drawNumberOfQuads(int numberOfQuads, int start);
 
     /** draws all the Atlas's Quads
     */
@@ -208,6 +185,8 @@ public:
     /** specify if the array buffer of the VBO needs to be updated */
     inline void setDirty(bool bDirty) { _dirty = bDirty; }
 
+    const char* description() const;
+
 private:
     void setupIndices();
     void mapBuffers();
@@ -216,6 +195,24 @@ private:
 #else
     void setupVBO();
 #endif
+
+protected:
+    GLushort*           _indices;
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint              _VAOname;
+#endif
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices
+    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+
+
+    /** quantity of quads that are going to be drawn */
+    CC_PROPERTY_READONLY(int, _totalQuads, TotalQuads)
+    /** quantity of quads that can be stored with the current texture atlas size */
+    CC_PROPERTY_READONLY(int, _capacity, Capacity)
+    /** Texture of the texture atlas */
+    CC_PROPERTY(Texture2D *, _texture, Texture)
+    /** Quads that are going to be rendered */
+    CC_PROPERTY(V3F_C4B_T2F_Quad *, _quads, Quads)
 };
 
 // end of textures group

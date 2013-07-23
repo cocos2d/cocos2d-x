@@ -71,8 +71,8 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
 {
     if (Control::init())
     {
-        CCAssert(minusSprite,   "Minus sprite must be not nil");
-        CCAssert(plusSprite,    "Plus sprite must be not nil");
+        CCASSERT(minusSprite,   "Minus sprite must be not nil");
+        CCASSERT(plusSprite,    "Plus sprite must be not nil");
         
         setTouchEnabled(true);
 
@@ -108,7 +108,7 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
-        Rect maxRect = ControlUtils::RectUnion(_minusSprite->boundingBox(), _plusSprite->boundingBox());
+        Rect maxRect = ControlUtils::RectUnion(_minusSprite->getBoundingBox(), _plusSprite->getBoundingBox());
         this->setContentSize( Size(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
         return true;
     }
@@ -148,7 +148,7 @@ void ControlStepper::setMinimumValue(double minimumValue)
 {
     if (minimumValue >= _maximumValue)
     {
-        CCAssert(0, "Must be numerically less than maximumValue.");
+        CCASSERT(0, "Must be numerically less than maximumValue.");
     }
     
     _minimumValue   = minimumValue;
@@ -159,7 +159,7 @@ void ControlStepper::setMaximumValue(double maximumValue)
 {
     if (maximumValue <= _minimumValue)
     {
-        CCAssert(0, "Must be numerically greater than minimumValue.");
+        CCASSERT(0, "Must be numerically greater than minimumValue.");
     }
     
     _maximumValue   = maximumValue;
@@ -171,7 +171,7 @@ void ControlStepper::setValue(double value)
     this->setValueWithSendingEvent(value, true);
 }
 
-double ControlStepper::getValue()
+double ControlStepper::getValue() const
 {
     return _value;
 }
@@ -180,13 +180,13 @@ void ControlStepper::setStepValue(double stepValue)
 {
     if (stepValue <= 0)
     {
-        CCAssert(0,"Must be numerically greater than 0.");
+        CCASSERT(0,"Must be numerically greater than 0.");
     }
 
     _stepValue  = stepValue;
 }
 
-bool ControlStepper::isContinuous()
+bool ControlStepper::isContinuous() const
 {
     return _continuous;
 }

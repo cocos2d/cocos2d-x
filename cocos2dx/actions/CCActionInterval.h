@@ -76,7 +76,7 @@ public:
     //
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual ActionInterval* reverse() const override = 0;
 	virtual ActionInterval *clone() const override = 0;
 
@@ -110,7 +110,7 @@ public:
     //
     virtual Sequence* clone() const override;
 	virtual Sequence* reverse() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
 
@@ -154,7 +154,7 @@ public:
     //
     virtual Repeat* clone() const override;
 	virtual Repeat* reverse() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float dt) override;
     virtual bool isDone(void) const override;
@@ -206,7 +206,7 @@ public:
     //
     virtual RepeatForever* clone() const override;
 	virtual RepeatForever* reverse(void) const override;
-    virtual void startWithTarget(Node* pTarget) override;
+    virtual void startWithTarget(Node* target) override;
     virtual void step(float dt) override;
     virtual bool isDone(void) const override;
 
@@ -242,7 +242,7 @@ public:
     //
     virtual Spawn* clone() const override;
 	virtual Spawn* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
 
@@ -266,14 +266,14 @@ public:
     /** initializes the action */
     bool initWithDuration(float fDuration, float fDeltaAngle);
     
-    virtual bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
 
     //
     // Overrides
     //
     virtual RotateTo* clone() const override;
     virtual RotateTo* reverse() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
 protected:
@@ -305,7 +305,7 @@ public:
     //
     virtual RotateBy* clone() const override;
 	virtual RotateBy* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
 protected:
@@ -335,7 +335,7 @@ public:
     //
     virtual MoveBy* clone() const override;
 	virtual MoveBy* reverse(void) const  override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -362,7 +362,7 @@ public:
     // Overrides
     //
     virtual MoveTo* clone() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
 
 protected:
     Point _endPosition;
@@ -378,14 +378,14 @@ public:
     static SkewTo* create(float t, float sx, float sy);
 
     SkewTo();
-    virtual bool initWithDuration(float t, float sx, float sy);
+    bool initWithDuration(float t, float sx, float sy);
 
     //
     // Overrides
     //
     virtual SkewTo* clone() const override;
 	virtual SkewTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -408,12 +408,12 @@ public:
     /** creates the action */
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
-    virtual bool initWithDuration(float t, float sx, float sy);
+    bool initWithDuration(float t, float sx, float sy);
 
     //
     // Overrides
     //
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual SkewBy* clone() const  override;
 	virtual SkewBy* reverse(void) const override;
 };
@@ -424,24 +424,24 @@ class CC_DLL JumpBy : public ActionInterval
 {
 public:
     /** creates the action */
-    static JumpBy* create(float duration, const Point& position, float height, unsigned int jumps);
+    static JumpBy* create(float duration, const Point& position, float height, int jumps);
 
     /** initializes the action */
-    bool initWithDuration(float duration, const Point& position, float height, unsigned int jumps);
+    bool initWithDuration(float duration, const Point& position, float height, int jumps);
 
     //
     // Overrides
     //
     virtual JumpBy* clone() const override;
 	virtual JumpBy* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
     Point           _startPosition;
     Point           _delta;
     float           _height;
-    unsigned int    _jumps;
+    int             _jumps;
     Point           _previousPos;
 };
 
@@ -456,7 +456,7 @@ public:
     //
     // Override
     //
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual JumpTo* clone() const override;
 	virtual JumpTo* reverse(void) const override;
 };
@@ -488,7 +488,7 @@ public:
     //
     virtual BezierBy* clone() const override;
 	virtual BezierBy* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -510,9 +510,9 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(Node *pTarget);
-    virtual BezierTo* clone() const;
-	virtual BezierTo* reverse(void) const;
+    virtual void startWithTarget(Node *target) override;
+    virtual BezierTo* clone() const override;
+	virtual BezierTo* reverse(void) const override;
 
 protected:
     ccBezierConfig _toConfig;
@@ -541,7 +541,7 @@ public:
     //
     virtual ScaleTo* clone() const override;
 	virtual ScaleTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -569,7 +569,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual ScaleBy* clone() const override;
 	virtual ScaleBy* reverse(void) const override;
 };
@@ -580,10 +580,10 @@ class CC_DLL Blink : public ActionInterval
 {
 public:
     /** creates the action */
-    static Blink* create(float duration, unsigned int uBlinks);
+    static Blink* create(float duration, int blinks);
 
     /** initializes the action */
-    bool initWithDuration(float duration, unsigned int uBlinks);
+    bool initWithDuration(float duration, int blinks);
 
     //
     // Overrides
@@ -591,11 +591,11 @@ public:
     virtual Blink* clone() const override;
 	virtual Blink* reverse(void) const override;
     virtual void update(float time) override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
     
 protected:
-    unsigned int _times;
+    int _times;
     bool _originalState;
 };
 
@@ -650,7 +650,7 @@ public:
     //
     virtual FadeTo* clone() const override;
 	virtual FadeTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -676,7 +676,7 @@ public:
     //
     virtual TintTo* clone() const override;
 	virtual TintTo* reverse(void) const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -701,7 +701,7 @@ public:
     //
     virtual TintBy* clone() const override;
 	virtual TintBy* reverse() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
 
 protected:
@@ -754,7 +754,7 @@ public:
     //
 	virtual ReverseTime* reverse() const override;
     virtual ReverseTime* clone() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
 
@@ -776,23 +776,27 @@ public:
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(Animation *pAnimation);
 
+    /** sets the Animation object to be animated */
+    void setAnimation( Animation* animation );
+    /** returns the Animation object that is being animated */
+    Animation* getAnimation() { return _animation; }
+    const Animation* getAnimation() const { return _animation; }
+
     //
     // Overrides
     //
     virtual Animate* clone() const override;
     virtual Animate* reverse() const override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
 
-public:
-    CC_SYNTHESIZE_RETAIN(Animation*, _animation, Animation)
-
 protected:
     std::vector<float>* _splitTimes;
-    int                _nextFrame;
-    SpriteFrame*  _origFrame;
+    int             _nextFrame;
+    SpriteFrame*    _origFrame;
     unsigned int    _executedLoops;
+    Animation*      _animation;
 };
 
 /** Overrides the target of an action so that it always runs on the target
@@ -805,25 +809,29 @@ public:
     virtual ~TargetedAction();
 
     /** Create an action with the specified action and forced target */
-    static TargetedAction* create(Node* pTarget, FiniteTimeAction* pAction);
+    static TargetedAction* create(Node* target, FiniteTimeAction* pAction);
 
     /** Init an action with the specified action and forced target */
-    bool initWithTarget(Node* pTarget, FiniteTimeAction* pAction);
+    bool initWithTarget(Node* target, FiniteTimeAction* pAction);
+
+    /** Sets the target that the action will be forced to run with */
+    void setForcedTarget(Node* forcedTarget);
+    /** returns the target that the action is forced to run with */
+    Node* getForcedTarget() { return _forcedTarget; }
+    const Node* getForcedTarget() const { return _forcedTarget; }
 
     //
     // Overrides
     //
     virtual TargetedAction* clone() const override;
     virtual TargetedAction* reverse() const  override;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
 
-public:
-    /** This is the target that the action will be forced to run with */
-    CC_SYNTHESIZE_RETAIN(Node*, _forcedTarget, ForcedTarget);
 private:
     FiniteTimeAction* _action;
+    Node* _forcedTarget;
 };
 
 // end of actions group

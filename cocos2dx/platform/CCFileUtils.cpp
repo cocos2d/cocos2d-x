@@ -146,7 +146,7 @@ public:
             else if (SAX_DICT == preState)
             {
                 // add the dictionary into the pre dictionary
-                CCAssert(! _dictStack.empty(), "The state is wrong!");
+                CCASSERT(! _dictStack.empty(), "The state is wrong!");
                 Dictionary* pPreDict = _dictStack.top();
                 pPreDict->setObject(_curDict, _curKey.c_str());
             }
@@ -194,7 +194,7 @@ public:
             }
             else if (preState == SAX_ARRAY)
             {
-                CCAssert(! _arrayStack.empty(), "The state is wrong!");
+                CCASSERT(! _arrayStack.empty(), "The state is wrong!");
                 Array* pPreArray = _arrayStack.top();
                 pPreArray->addObject(_array);
             }
@@ -300,7 +300,7 @@ public:
             {
                 if (curState == SAX_DICT)
                 {
-                    CCAssert(!_curKey.empty(), "key not found : <integer/real>");
+                    CCASSERT(!_curKey.empty(), "key not found : <integer/real>");
                 }
                 
                 _curValue.append(pText->getCString());
@@ -501,7 +501,7 @@ void FileUtils::purgeCachedEntries()
 unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
-    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
+    CCASSERT(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
     *pSize = 0;
     do
     {
@@ -555,7 +555,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
         pBuffer = new unsigned char[FileInfo.uncompressed_size];
         int CC_UNUSED nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
-        CCAssert(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+        CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
         *pSize = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);
@@ -609,7 +609,7 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 
 std::string FileUtils::fullPathForFilename(const char* pszFileName)
 {
-    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
+    CCASSERT(pszFileName != NULL, "CCFileUtils: Invalid path");
     
     std::string strFileName = pszFileName;
     if (isAbsolutePath(pszFileName))
@@ -668,6 +668,7 @@ const char* FileUtils::fullPathFromRelativeFile(const char *pszFilename, const c
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
     bool bExistDefault = false;
+    _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
@@ -709,6 +710,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefaultRootPath = false;
     
+    _fullPathCache.clear();
     _searchPathArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
@@ -755,6 +757,7 @@ void FileUtils::addSearchPath(const char* path_)
 
 void FileUtils::setFilenameLookupDictionary(Dictionary* pFilenameLookupDict)
 {
+    _fullPathCache.clear();    
     CC_SAFE_RELEASE(_filenameLookupDict);
     _filenameLookupDict = pFilenameLookupDict;
     CC_SAFE_RETAIN(_filenameLookupDict);

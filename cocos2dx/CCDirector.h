@@ -103,7 +103,7 @@ public:
     static Director* getInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector(void);
+    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
 
     Director(void);
     virtual ~Director(void);

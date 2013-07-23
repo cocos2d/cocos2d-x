@@ -327,6 +327,7 @@ Developers:
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
+        Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -412,6 +413,7 @@ Developers:
         Linux OpenAL support.
         Added some guards to prevent Eclipse to compile twice the same class.
         Linux Eclipse projects updates
+        Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -443,6 +445,7 @@ Developers:
         Explicitly initialising CCAcceleration structure.
         Add support to save/retrieve CCData into/from CCUserDefault.
         Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -527,9 +530,13 @@ Developers:
         
     Sam Gross (colesbury)
         Ignoring formatting specifiers in JavaScript log messages.
+        Make bindings-generator supports to bind std::function argument.
         
     James Munro (jdmunro)
         Added JSB support for ccpDistanceSQ.
+        
+    Rafael (rafaelx)
+        A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
 
 Retired Core Developers:
     WenSheng Yang

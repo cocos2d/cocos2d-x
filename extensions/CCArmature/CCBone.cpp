@@ -128,7 +128,7 @@ bool Bone::init(const char *name)
 
 void Bone::setBoneData(BoneData *boneData)
 {
-    CCAssert(NULL != boneData, "_boneData must not be NULL");
+    CCASSERT(NULL != boneData, "_boneData must not be NULL");
 
     _boneData = boneData;
     _boneData->retain();
@@ -175,7 +175,7 @@ void Bone::update(float delta)
         _worldTransform.tx = _tweenData->x;
         _worldTransform.ty = _tweenData->y;
 
-        _worldTransform = AffineTransformConcat(nodeToParentTransform(), _worldTransform);
+        _worldTransform = AffineTransformConcat(getNodeToParentTransform(), _worldTransform);
 
         if(_parent)
         {
@@ -222,8 +222,8 @@ void Bone::updateColor()
 
 void Bone::addChildBone(Bone *child)
 {
-    CCAssert( NULL != child, "Argument must be non-nil");
-    CCAssert( NULL == child->_parent, "child already added. It can't be added again");
+    CCASSERT( NULL != child, "Argument must be non-nil");
+    CCASSERT( NULL == child->_parent, "child already added. It can't be added again");
 
     if(!_children)
     {

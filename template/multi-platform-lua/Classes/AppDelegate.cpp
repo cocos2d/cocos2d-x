@@ -35,7 +35,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // register lua engine
     LuaEngine* pEngine = LuaEngine::defaultEngine();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
     LuaStack *pStack = pEngine->getLuaStack();
     lua_State *tolua_s = pStack->getLuaState();

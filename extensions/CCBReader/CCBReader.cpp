@@ -155,7 +155,7 @@ CCBReader::~CCBReader() {
 
 void CCBReader::setCCBRootPath(const char* pCCBRootPath)
 {
-    CCAssert(pCCBRootPath != NULL, "");
+    CCASSERT(pCCBRootPath != NULL, "");
     mCCBRootPath = pCCBRootPath;
 }
 
@@ -835,7 +835,7 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
                 mLoadedSpriteSheets.insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->spriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
         value = spriteFrame;
     }

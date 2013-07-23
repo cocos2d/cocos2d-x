@@ -43,19 +43,7 @@ NS_CC_EXT_BEGIN
  */
 class PhysicsSprite : public Sprite
 {
-protected:
-    bool    _ignoreBodyRotation;
-
-
-    // chipmunk specific
-    cpBody  *_CPBody;
-
-    // box2d specific
-    b2Body  *_pB2Body;
-    float   _PTMRatio;
-
 public:
-    PhysicsSprite();
 
     static PhysicsSprite* create();
     /** Creates an sprite with a texture.
@@ -90,20 +78,13 @@ public:
      */
     static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
 
+    PhysicsSprite();
+
     virtual bool isDirty() const;
 
     /** Keep the sprite's rotation separate from the body. */
     bool isIgnoreBodyRotation() const;
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);
-
-    virtual const Point& getPosition() const;
-    virtual void getPosition(float* x, float* y) const;
-    virtual float getPositionX() const;
-    virtual float getPositionY() const;
-    virtual void setPosition(const Point &position);
-    virtual float getRotation() const;
-    virtual void setRotation(float fRotation);
-    virtual AffineTransform nodeToParentTransform();
 
     //
     // Chipmunk specific
@@ -122,8 +103,30 @@ public:
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
 
+    // overrides
+    virtual const Point& getPosition() const override;
+    virtual void getPosition(float* x, float* y) const override;
+    virtual float getPositionX() const override;
+    virtual float getPositionY() const override;
+    virtual void setPosition(const Point &position) override;
+    virtual float getRotation() const override;
+    virtual void setRotation(float fRotation) override;
+    virtual AffineTransform getNodeToParentTransform() const override;
+
 protected:
     const Point& getPosFromPhysics() const;
+
+protected:
+    bool    _ignoreBodyRotation;
+
+    // chipmunk specific
+    cpBody  *_CPBody;
+
+    // box2d specific
+    b2Body  *_pB2Body;
+    float   _PTMRatio;
+    
+
 };
 
 NS_CC_EXT_END

@@ -136,13 +136,13 @@ bool Armature::init(const char *name)
             _name = name;
 
             AnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "CCAnimationData not exist! ");
+            CCASSERT(animationData, "CCAnimationData not exist! ");
 
             _animation->setAnimationData(animationData);
 
 
             ArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCAssert(armatureData, "");
+            CCASSERT(armatureData, "");
 
             _armatureData = armatureData;
 
@@ -245,8 +245,8 @@ Bone *Armature::createBone(const char *boneName)
 
 void Armature::addBone(Bone *bone, const char *parentName)
 {
-    CCAssert( bone != NULL, "Argument must be non-nil");
-    CCAssert(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
+    CCASSERT( bone != NULL, "Argument must be non-nil");
+    CCASSERT(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
 
     if (NULL != parentName)
     {
@@ -280,7 +280,7 @@ void Armature::addBone(Bone *bone, const char *parentName)
 
 void Armature::removeBone(Bone *bone, bool recursion)
 {
-    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
 
     bone->setArmature(NULL);
     bone->removeFromParent(recursion);
@@ -302,7 +302,7 @@ Bone *Armature::getBone(const char *_name) const
 
 void Armature::changeBoneParent(Bone *bone, const char *parentName)
 {
-    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
+    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
 
     bone->getParentBone()->getChildren()->removeObject(bone);
     bone->setParentBone(NULL);
@@ -323,7 +323,7 @@ Dictionary *Armature::getBoneDic()
     return _boneDic;
 }
 
-AffineTransform Armature::nodeToParentTransform()
+AffineTransform Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -404,7 +404,7 @@ AffineTransform Armature::nodeToParentTransform()
 void Armature::updateOffsetPoint()
 {
     // Set contentsize and Calculate anchor point.
-    Rect rect = boundingBox();
+    Rect rect = getBoundingBox();
     setContentSize(rect.size);
     _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
     setAnchorPoint(Point(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
@@ -523,7 +523,7 @@ void Armature::visit()
     kmGLPopMatrix();
 }
 
-Rect Armature::boundingBox()
+Rect Armature::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
 

@@ -63,10 +63,10 @@ ActionTween *ActionTween::clone() const
 	return a;
 }
 
-void ActionTween::startWithTarget(Node *pTarget)
+void ActionTween::startWithTarget(Node *target)
 {
-    CCAssert(dynamic_cast<ActionTweenDelegate*>(pTarget), "target must implement ActionTweenDelegate");
-    ActionInterval::startWithTarget(pTarget);
+    CCASSERT(dynamic_cast<ActionTweenDelegate*>(target), "target must implement ActionTweenDelegate");
+    ActionInterval::startWithTarget(target);
     _delta = _to - _from;
 }
 

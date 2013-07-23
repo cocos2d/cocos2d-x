@@ -53,18 +53,6 @@ void AnimationCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
 }
 
-// XXX: deprecated
-AnimationCache* AnimationCache::sharedAnimationCache(void)
-{
-    return AnimationCache::getInstance();
-}
-
-// XXX: deprecated
-void AnimationCache::purgeSharedAnimationCache(void)
-{
-    return AnimationCache::destroyInstance();
-}
-
 bool AnimationCache::init()
 {
     _animations = new Dictionary();
@@ -127,7 +115,7 @@ void AnimationCache::parseVersion1(Dictionary* animations)
         CCARRAY_FOREACH(frameNames, pObj)
         {
             const char* frameName = static_cast<String*>(pObj)->getCString();
-            SpriteFrame* spriteFrame = frameCache->spriteFrameByName(frameName);
+            SpriteFrame* spriteFrame = frameCache->getSpriteFrameByName(frameName);
 
             if ( ! spriteFrame ) {
                 CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", pElement->getStrKey(), frameName);
@@ -185,7 +173,7 @@ void AnimationCache::parseVersion2(Dictionary* animations)
             Dictionary* entry = static_cast<Dictionary*>(pObj);
 
             const char* spriteFrameName = entry->valueForKey("spriteframe")->getCString();
-            SpriteFrame *spriteFrame = frameCache->spriteFrameByName(spriteFrameName);
+            SpriteFrame *spriteFrame = frameCache->getSpriteFrameByName(spriteFrameName);
 
             if( ! spriteFrame ) {
                 CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", name, spriteFrameName);
@@ -247,19 +235,19 @@ void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
             parseVersion2(animations);
             break;
         default:
-            CCAssert(false, "Invalid animation format");
+            CCASSERT(false, "Invalid animation format");
     }
 }
 
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void AnimationCache::addAnimationsWithFile(const char* plist)
 {
-    CCAssert( plist, "Invalid texture file name");
+    CCASSERT( plist, "Invalid texture file name");
 
     std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
     Dictionary* dict = Dictionary::createWithContentsOfFile(path.c_str());
 
-    CCAssert( dict, "CCAnimationCache: File could not be found");
+    CCASSERT( dict, "CCAnimationCache: File could not be found");
 
     addAnimationsWithDictionary(dict);
 }
