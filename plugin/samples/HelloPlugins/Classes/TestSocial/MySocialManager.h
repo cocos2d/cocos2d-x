@@ -21,33 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __TEST_USER_SCENE_H__
-#define __TEST_USER_SCENE_H__
+#ifndef __MY_SOCIAL_MANAGER_H__
+#define __MY_SOCIAL_MANAGER_H__
 
-#include "cocos2d.h"
+#include "ProtocolSocial.h"
 
-class TestUser : public cocos2d::Layer
+class MySocialManager : public cocos2d::plugin::SocialListener
 {
 public:
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();  
+    static MySocialManager* sharedManager();
+    static void purgeManager();
 
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* scene();
-    
-    // a selector callback
-    void menuBackCallback(Object* pSender);
-    void testLogin(Object* pSender);
-    void testLogout(Object* pSender);
-    
-    void caseChanged(Object* pSender);
+    typedef enum {
+        eNoneMode = 0,
+        eNd91,
+    } MySocialMode;
 
-    // implement the "static node()" method manually
-    CREATE_FUNC(TestUser);
+    void unloadPlugins();
+    void loadPlugins();
+
+    void submitScore(MySocialMode mode, const char* leaderboardID, long score);
+    void showLeaderboard(MySocialMode mode, const char* leaderboardID);
+    void unlockAchievement(MySocialMode mode, cocos2d::plugin::TAchievementInfo info);
+    void showAchievement(MySocialMode mode);
+
+    virtual void onSocialResult(cocos2d::plugin::SocialRetCode code, const char* msg);
 
 private:
-    cocos2d::MenuItemToggle* _caseItem;
-    int _selectedCase;
+    MySocialManager();
+    virtual ~MySocialManager();
+
+    static MySocialManager* s_pManager;
+
+    cocos2d::plugin::ProtocolSocial* _pNd91;
 };
 
-#endif // __TEST_USER_SCENE_H__
+#endif // __MY_SOCIAL_MANAGER_H__
