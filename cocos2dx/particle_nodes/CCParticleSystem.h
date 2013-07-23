@@ -353,7 +353,7 @@ public:
 
     //* initial angle of each particle
     inline float getEndSpinVar() const { return _endSpinVar; };
-    inline void setEndSpinVar(float endSpinVar) { _endSpinVar = endSpinVar };
+    inline void setEndSpinVar(float endSpinVar) { _endSpinVar = endSpinVar; };
 
     /** emission rate of the particles */
     inline float getEmissionRate() const { return _emissionRate; };
