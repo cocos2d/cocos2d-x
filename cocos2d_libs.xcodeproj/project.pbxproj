@@ -305,8 +305,6 @@
 		A03F26481780BAE8006731B9 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE71780BAE5006731B9 /* CCSAXParser.h */; };
 		A03F26491780BAE8006731B9 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1EE81780BAE5006731B9 /* CCThread.cpp */; };
 		A03F264A1780BAE8006731B9 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE91780BAE5006731B9 /* CCThread.h */; };
-		A03F26B91780BAE8006731B9 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1F5F1780BAE5006731B9 /* platform.cpp */; };
-		A03F26BA1780BAE8006731B9 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1F601780BAE5006731B9 /* platform.h */; };
 		A03F27DD1780BAE8006731B9 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F20D41780BAE5006731B9 /* libwebp.a */; };
 		A03F27DE1780BAE8006731B9 /* decode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F20D61780BAE5006731B9 /* decode.h */; };
 		A03F27DF1780BAE8006731B9 /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F20D71780BAE5006731B9 /* encode.h */; };
@@ -998,7 +996,6 @@
 		A07A4C701783777C0073F6A7 /* CCImageCommonWebp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1EE31780BAE5006731B9 /* CCImageCommonWebp.cpp */; };
 		A07A4C711783777C0073F6A7 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1EE61780BAE5006731B9 /* CCSAXParser.cpp */; };
 		A07A4C721783777C0073F6A7 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1EE81780BAE5006731B9 /* CCThread.cpp */; };
-		A07A4C7E1783777C0073F6A7 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F1F5F1780BAE5006731B9 /* platform.cpp */; };
 		A07A4C7F1783777C0073F6A7 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F24EA1780BAE8006731B9 /* CCScriptSupport.cpp */; };
 		A07A4C801783777C0073F6A7 /* CCGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F24ED1780BAE8006731B9 /* CCGLProgram.cpp */; };
 		A07A4C811783777C0073F6A7 /* ccGLStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F24EF1780BAE8006731B9 /* ccGLStateCache.cpp */; };
@@ -1141,7 +1138,6 @@
 		A07A4D0F1783777C0073F6A7 /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE51780BAE5006731B9 /* CCPlatformMacros.h */; };
 		A07A4D101783777C0073F6A7 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE71780BAE5006731B9 /* CCSAXParser.h */; };
 		A07A4D111783777C0073F6A7 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1EE91780BAE5006731B9 /* CCThread.h */; };
-		A07A4D1D1783777C0073F6A7 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1F601780BAE5006731B9 /* platform.h */; };
 		A07A4D211783777C0073F6A7 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F24EB1780BAE8006731B9 /* CCScriptSupport.h */; };
 		A07A4D221783777C0073F6A7 /* CCGLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F24EE1780BAE8006731B9 /* CCGLProgram.h */; };
 		A07A4D231783777C0073F6A7 /* ccGLStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F24F01780BAE8006731B9 /* ccGLStateCache.h */; };
@@ -2109,8 +2105,6 @@
 		A03F1EE71780BAE5006731B9 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		A03F1EE81780BAE5006731B9 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
 		A03F1EE91780BAE5006731B9 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
-		A03F1F5F1780BAE5006731B9 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
-		A03F1F601780BAE5006731B9 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		A03F20D41780BAE5006731B9 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebp.a; sourceTree = "<group>"; };
 		A03F20D61780BAE5006731B9 /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
 		A03F20D71780BAE5006731B9 /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
@@ -3551,8 +3545,6 @@
 				A03F1EE71780BAE5006731B9 /* CCSAXParser.h */,
 				A03F1EE81780BAE5006731B9 /* CCThread.cpp */,
 				A03F1EE91780BAE5006731B9 /* CCThread.h */,
-				A03F1F5F1780BAE5006731B9 /* platform.cpp */,
-				A03F1F601780BAE5006731B9 /* platform.h */,
 			);
 			path = platform;
 			sourceTree = "<group>";
@@ -5076,7 +5068,6 @@
 				A03F26461780BAE8006731B9 /* CCPlatformMacros.h in Headers */,
 				A03F26481780BAE8006731B9 /* CCSAXParser.h in Headers */,
 				A03F264A1780BAE8006731B9 /* CCThread.h in Headers */,
-				A03F26BA1780BAE8006731B9 /* platform.h in Headers */,
 				A03F27DE1780BAE8006731B9 /* decode.h in Headers */,
 				A03F27DF1780BAE8006731B9 /* encode.h in Headers */,
 				A03F27E01780BAE8006731B9 /* types.h in Headers */,
@@ -5641,7 +5632,6 @@
 				A07A4D0F1783777C0073F6A7 /* CCPlatformMacros.h in Headers */,
 				A07A4D101783777C0073F6A7 /* CCSAXParser.h in Headers */,
 				A07A4D111783777C0073F6A7 /* CCThread.h in Headers */,
-				A07A4D1D1783777C0073F6A7 /* platform.h in Headers */,
 				A07A4D211783777C0073F6A7 /* CCScriptSupport.h in Headers */,
 				A07A4D221783777C0073F6A7 /* CCGLProgram.h in Headers */,
 				A07A4D231783777C0073F6A7 /* ccGLStateCache.h in Headers */,
@@ -6431,7 +6421,6 @@
 				A03F26441780BAE8006731B9 /* CCImageCommonWebp.cpp in Sources */,
 				A03F26471780BAE8006731B9 /* CCSAXParser.cpp in Sources */,
 				A03F26491780BAE8006731B9 /* CCThread.cpp in Sources */,
-				A03F26B91780BAE8006731B9 /* platform.cpp in Sources */,
 				A03F2B041780BAE9006731B9 /* CCScriptSupport.cpp in Sources */,
 				A03F2B061780BAE9006731B9 /* CCGLProgram.cpp in Sources */,
 				A03F2B081780BAE9006731B9 /* ccGLStateCache.cpp in Sources */,
@@ -6868,7 +6857,6 @@
 				A07A4C701783777C0073F6A7 /* CCImageCommonWebp.cpp in Sources */,
 				A07A4C711783777C0073F6A7 /* CCSAXParser.cpp in Sources */,
 				A07A4C721783777C0073F6A7 /* CCThread.cpp in Sources */,
-				A07A4C7E1783777C0073F6A7 /* platform.cpp in Sources */,
 				A07A4C7F1783777C0073F6A7 /* CCScriptSupport.cpp in Sources */,
 				A07A4C801783777C0073F6A7 /* CCGLProgram.cpp in Sources */,
 				A07A4C811783777C0073F6A7 /* ccGLStateCache.cpp in Sources */,

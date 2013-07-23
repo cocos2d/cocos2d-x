@@ -102,7 +102,7 @@ bool TestAnalytics::init()
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     this->addChild(pMenu, 1);
 
     float yPos = 0;

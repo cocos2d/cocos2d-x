@@ -57,6 +57,8 @@
 		FAD55528177D2C2000968F54 /* BtnND91.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD55524177D2C2000968F54 /* BtnND91.png */; };
 		FAD55529177D2C2000968F54 /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = FAD55525177D2C2000968F54 /* twitter.jpeg */; };
 		FAD5552A177D2C2000968F54 /* weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = FAD55526177D2C2000968F54 /* weibo.png */; };
+		FADBF8A2179E559900F59B1D /* MySocialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADBF89E179E559900F59B1D /* MySocialManager.cpp */; };
+		FADBF8A3179E559900F59B1D /* TestSocialScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADBF8A0179E559900F59B1D /* TestSocialScene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +238,10 @@
 		FAD55524177D2C2000968F54 /* BtnND91.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BtnND91.png; sourceTree = "<group>"; };
 		FAD55525177D2C2000968F54 /* twitter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitter.jpeg; sourceTree = "<group>"; };
 		FAD55526177D2C2000968F54 /* weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weibo.png; sourceTree = "<group>"; };
+		FADBF89E179E559900F59B1D /* MySocialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MySocialManager.cpp; sourceTree = "<group>"; };
+		FADBF89F179E559900F59B1D /* MySocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySocialManager.h; sourceTree = "<group>"; };
+		FADBF8A0179E559900F59B1D /* TestSocialScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSocialScene.cpp; sourceTree = "<group>"; };
+		FADBF8A1179E559900F59B1D /* TestSocialScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSocialScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +295,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FADBF89D179E559900F59B1D /* TestSocial */,
 				FA3D264717867219009B234A /* TestIAPOnline */,
 				FAD5550E177D1EE900968F54 /* TestIAP */,
 				FAD55513177D1EE900968F54 /* TestUser */,
@@ -462,6 +469,18 @@
 			);
 			name = TestUser;
 			path = ../Classes/TestUser;
+			sourceTree = "<group>";
+		};
+		FADBF89D179E559900F59B1D /* TestSocial */ = {
+			isa = PBXGroup;
+			children = (
+				FADBF89E179E559900F59B1D /* MySocialManager.cpp */,
+				FADBF89F179E559900F59B1D /* MySocialManager.h */,
+				FADBF8A0179E559900F59B1D /* TestSocialScene.cpp */,
+				FADBF8A1179E559900F59B1D /* TestSocialScene.h */,
+			);
+			name = TestSocial;
+			path = ../Classes/TestSocial;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -662,6 +681,8 @@
 				FAD5551B177D1EE900968F54 /* TestUserScene.cpp in Sources */,
 				FA3D264D17867219009B234A /* MyIAPOLManager.cpp in Sources */,
 				FA3D264E17867219009B234A /* TestIAPOnlineScene.cpp in Sources */,
+				FADBF8A2179E559900F59B1D /* MySocialManager.cpp in Sources */,
+				FADBF8A3179E559900F59B1D /* TestSocialScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

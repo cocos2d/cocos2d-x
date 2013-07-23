@@ -68,15 +68,24 @@ public:
     */
     virtual void updateAtlasValues();
 
+    void setTextureAtlas(TextureAtlas* textureAtlas);
+    TextureAtlas* getTextureAtlas() const;
+    
+    void setQuadsToDraw(unsigned int quadsToDraw);
+    unsigned int getQuadsToDraw() const;
+
+    
     // Overrides
     virtual void draw() override;
-    virtual Texture2D* getTexture() override;
+    virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual const Color3B& getColor(void) const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
+    virtual const BlendFunc& getBlendFunc() const override;
 
 private :
     void calculateMaxItems();
@@ -96,18 +105,16 @@ protected:
     unsigned int    _itemWidth;
     //! height of each char
     unsigned int    _itemHeight;
-
+    
     Color3B    _colorUnmodified;
-
-    CC_PROPERTY(TextureAtlas*, _textureAtlas, TextureAtlas);
-
+    
+    TextureAtlas* _textureAtlas;
     // protocol variables
     bool _isOpacityModifyRGB;
-
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc);
+    BlendFunc _blendFunc;
 
     // quads to draw
-    CC_PROPERTY(unsigned int, _quadsToDraw, QuadsToDraw);
+    unsigned int _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
