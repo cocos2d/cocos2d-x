@@ -34,3 +34,9 @@ QT += multimedia
 INCLUDEPATH += $${PWD}/../../CocosDenshion/include
 LINK_AGAINST_COCOSDENSHION = -L$${LIB_OUTPUT_DIR} -lcocosdenshion
 
+# Physics engines (pick one)
+DEFINES += CC_ENABLE_CHIPMUNK_INTEGRATION
+#DEFINES += CC_ENABLE_BOX2D_INTEGRATION
+INCLUDEPATH += $${PWD}/../../external/chipmunk/include/chipmunk
+INCLUDEPATH += $${PWD}/../../external
+
