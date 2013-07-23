@@ -15,6 +15,7 @@ CONFIG(debug, debug|release) {
 }
 
 OBJECTS_DIR = obj/$${BUILD_TYPE}
+MOC_DIR = obj/$${BUILD_TYPE}
 LIB_OUTPUT_DIR = $${PWD}/../../lib/$${OS_TYPE}/$${BUILD_TYPE}
 
 # Installation location of binaries
@@ -31,6 +32,9 @@ INCLUDEPATH += $${PWD}/../kazmath/include
 COCOS2DX_SYSTEM_LIBS += -lz
 COCOS2DX_SYSTEM_LIBS += -ljpeg -ltiff -lpng
 COCOS2DX_SYSTEM_LIBS += -lfontconfig -lfreetype
+
+# Sensors module needed for CCAccelerometer
+QT += sensors
 
 LINK_AGAINST_COCOS2DX = -L$${LIB_OUTPUT_DIR} -lcocos2d $${COCOS2DX_SYSTEM_LIBS}
 

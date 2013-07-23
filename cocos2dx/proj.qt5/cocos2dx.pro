@@ -72,6 +72,7 @@ SOURCES += ../actions/CCAction.cpp \
 ../platform/qt5/CCDevice.cpp \
 ../platform/qt5/CCApplication.cpp \
 ../platform/qt5/CCAccelerometer.cpp \
+../platform/qt5/AccelerometerListener.cpp \
 ../platform/linux/CCImage.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
@@ -136,6 +137,9 @@ SOURCES += ../actions/CCAction.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
 ../cocos2d.cpp
+
+# Headers with QObject subclasses (will be processed by moc)
+HEADERS += ../platform/qt5/AccelerometerListener.h
 
 # WebP
 INCLUDEPATH += ../platform/third_party/marmalade/libwebp/webp

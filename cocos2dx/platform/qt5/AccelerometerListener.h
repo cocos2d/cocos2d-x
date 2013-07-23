@@ -25,37 +25,26 @@
  *
  **/
 
+#ifndef COCOS2DX_ACCELEROMETER_LISTENER_QT5_H
+#define COCOS2DX_ACCELEROMETER_LISTENER_QT5_H
 
-#ifndef CCACCELEROMETER_QT5_H
-#define CCACCELEROMETER_QT5_H
+#include "CCAccelerometer.h"
 
-#include "platform/CCCommon.h"
-#include "platform/CCAccelerometerDelegate.h"
+#include <QObject>
 
-class QAccelerometer;
-class AccelerometerListener;
+USING_NS_CC;
 
-NS_CC_BEGIN
+class AccelerometerListener : public QObject {
+    Q_OBJECT
 
-class CCAccelerometer {
     public:
-        CCAccelerometer();
-        ~CCAccelerometer();
+        AccelerometerListener(CCAccelerometer *accelerometer);
 
-        static CCAccelerometer *sharedAccelerometer();
-
-        void setDelegate(CCAccelerometerDelegate *pDelegate);
-        void setAccelerometerInterval(float interval);
-
-        /* Functions to be called from AccelerometerListener */
-        void readingChanged();
+    public slots:
+        void onReadingChanged();
 
     private:
-        QAccelerometer *m_accelerometer;
-        AccelerometerListener *m_listener;
-        CCAccelerometerDelegate *m_delegate;
+        CCAccelerometer *m_accelerometer;
 };
 
-NS_CC_END
-
-#endif /* CCACCELEROMETER_QT5_H */
+#endif /* COCOS2DX_ACCELEROMETER_LISTENER_QT5_H */
