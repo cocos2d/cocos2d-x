@@ -10,6 +10,7 @@ SUBDIRS += cocos2dx/proj.qt5/cocos2dx.pro
 
 # Cocos2D-X Additional Libraries
 SUBDIRS += CocosDenshion/proj.qt5/cocosdenshion.pro
+SUBDIRS += extensions/proj.qt5/extensions.pro
 
 # Examples
 SUBDIRS += samples/Cpp/HelloCpp/proj.qt5/HelloCpp.pro
