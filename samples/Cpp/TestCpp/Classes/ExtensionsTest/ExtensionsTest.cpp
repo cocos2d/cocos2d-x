@@ -21,6 +21,9 @@
 
 #include "Scale9SpriteTest/Scale9SpriteTest.h"
 
+#include "CocosGUITest/CocosGUIScene.h"
+#include "SceneEditorTest/SceneEditorTestScene.h"
+
 enum
 {
     LINE_SPACE = 40,
@@ -78,6 +81,12 @@ static struct {
                                              pScene->release();
                                         }
     },
+    { "CocosGUITest", [](Object *sender) { CocosGUITestScene *pScene = new CocosGUITestScene();
+        pScene->runThisTest();
+        pScene->release(); }
+    },
+    { "SceneEditorTest", [](Object *sender) { runSceneEditorTestLayer(); }
+    }
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);

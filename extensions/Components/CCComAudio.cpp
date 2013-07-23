@@ -30,6 +30,7 @@ NS_CC_EXT_BEGIN
 ComAudio::ComAudio(void)
 {
     _name = "Audio";
+    m_bLoop = false;
 }
 
 ComAudio::~ComAudio(void)
@@ -199,6 +200,26 @@ void ComAudio::preloadEffect(const char* pszFilePath)
 void ComAudio::unloadEffect(const char *pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->unloadEffect(pszFilePath);
+}
+
+void ComAudio::setFile(const char* pszFilePath)
+{
+	m_strFilePath.assign(pszFilePath);
+}
+
+void ComAudio::setIsLoop(bool bLoop)
+{
+	m_bLoop = bLoop;
+}
+
+const char* ComAudio::getFile()
+{
+	return m_strFilePath.c_str();
+}
+
+bool ComAudio::getIsLoop()
+{
+	return m_bLoop;
 }
 
 

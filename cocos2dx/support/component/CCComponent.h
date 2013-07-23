@@ -46,6 +46,7 @@ public:
     static Component* create(void);
     
     const char* getName() const;
+    void setName(const char *pName);
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;

@@ -51,5 +51,9 @@
 #include "Components/CCComAttribute.h"
 #include "Components/CCComAudio.h"
 #include "Components/CCComController.h"
+#include "Components/CCComRender.h"
+
+#include "CocostudioReader/CCJsonReader.h"
+#include "CocoGUILIB/System/CocosGUI.h"
 
 #endif /* __COCOS2D_EXT_H__ */

@@ -658,6 +658,10 @@ Size Scale9Sprite::getPreferredSize()
 
 void Scale9Sprite::setCapInsets(Rect capInsets)
 {
+    if (!_scale9Image)
+    {
+        return;
+    }
     Size contentSize = this->_contentSize;
     this->updateWithBatchNode(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
     this->setContentSize(contentSize);

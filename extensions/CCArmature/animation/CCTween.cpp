@@ -141,7 +141,7 @@ void Tween::play(MovementBoneData *_movementBoneData, int _durationTo, int _dura
             _rawDuration = _movementBoneData->duration - 1;
         }
 
-        _durationTween = _durationTween * _movementBoneData->scale;
+        this->_durationTween = _durationTween * _movementBoneData->scale;
 
         if (_loop && _movementBoneData->delay != 0)
         {

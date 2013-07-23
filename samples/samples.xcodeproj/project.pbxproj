@@ -262,6 +262,20 @@
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
+		3C6AEB27179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB20179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp */; };
+		3C6AEB28179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB20179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp */; };
+		3C6AEB29179E89FF00B4FC38 /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB22179E89FF00B4FC38 /* CocosGUIScene.cpp */; };
+		3C6AEB2A179E89FF00B4FC38 /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB22179E89FF00B4FC38 /* CocosGUIScene.cpp */; };
+		3C6AEB2B179E89FF00B4FC38 /* SceneEditorTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB25179E89FF00B4FC38 /* SceneEditorTestScene.cpp */; };
+		3C6AEB2C179E89FF00B4FC38 /* SceneEditorTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AEB25179E89FF00B4FC38 /* SceneEditorTestScene.cpp */; };
+		3C6AEB32179E8A8800B4FC38 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB2E179E8A8800B4FC38 /* cocosgui */; };
+		3C6AEB33179E8A8800B4FC38 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB2E179E8A8800B4FC38 /* cocosgui */; };
+		3C6AEB34179E8A8800B4FC38 /* fishes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB2F179E8A8800B4FC38 /* fishes */; };
+		3C6AEB35179E8A8800B4FC38 /* fishes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB2F179E8A8800B4FC38 /* fishes */; };
+		3C6AEB36179E8A8800B4FC38 /* FishJoy2.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB30179E8A8800B4FC38 /* FishJoy2.json */; };
+		3C6AEB37179E8A8800B4FC38 /* FishJoy2.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB30179E8A8800B4FC38 /* FishJoy2.json */; };
+		3C6AEB38179E8A8800B4FC38 /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB31179E8A8800B4FC38 /* ui */; };
+		3C6AEB39179E8A8800B4FC38 /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 3C6AEB31179E8A8800B4FC38 /* ui */; };
 		A01E166C1784BDA100B0CA4A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEA178254FF00987F6C /* .gitignore */; };
 		A01E166D1784BDA100B0CA4A /* app.config.txt in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEB178254FF00987F6C /* app.config.txt */; };
 		A01E166E1784BDA100B0CA4A /* app.icf in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEC178254FF00987F6C /* app.icf */; };
@@ -2369,6 +2383,16 @@
 		1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
 		1ACD13F2178E487D00682DBD /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C6AEB20179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIExamplesScene.cpp; sourceTree = "<group>"; };
+		3C6AEB21179E89FF00B4FC38 /* CocosGUIExamplesScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIExamplesScene.h; sourceTree = "<group>"; };
+		3C6AEB22179E89FF00B4FC38 /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
+		3C6AEB23179E89FF00B4FC38 /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
+		3C6AEB25179E89FF00B4FC38 /* SceneEditorTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTestScene.cpp; sourceTree = "<group>"; };
+		3C6AEB26179E89FF00B4FC38 /* SceneEditorTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTestScene.h; sourceTree = "<group>"; };
+		3C6AEB2E179E8A8800B4FC38 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosgui; sourceTree = "<group>"; };
+		3C6AEB2F179E8A8800B4FC38 /* fishes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fishes; sourceTree = "<group>"; };
+		3C6AEB30179E8A8800B4FC38 /* FishJoy2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FishJoy2.json; sourceTree = "<group>"; };
+		3C6AEB31179E8A8800B4FC38 /* ui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ui; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01E16A11784BF3000B0CA4A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A01E16A21784BF3000B0CA4A /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -3735,6 +3759,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3C6AEB1F179E89FF00B4FC38 /* CocosGUITest */ = {
+			isa = PBXGroup;
+			children = (
+				3C6AEB20179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp */,
+				3C6AEB21179E89FF00B4FC38 /* CocosGUIExamplesScene.h */,
+				3C6AEB22179E89FF00B4FC38 /* CocosGUIScene.cpp */,
+				3C6AEB23179E89FF00B4FC38 /* CocosGUIScene.h */,
+			);
+			path = CocosGUITest;
+			sourceTree = "<group>";
+		};
+		3C6AEB24179E89FF00B4FC38 /* SceneEditorTest */ = {
+			isa = PBXGroup;
+			children = (
+				3C6AEB25179E89FF00B4FC38 /* SceneEditorTestScene.cpp */,
+				3C6AEB26179E89FF00B4FC38 /* SceneEditorTestScene.h */,
+			);
+			path = SceneEditorTest;
+			sourceTree = "<group>";
+		};
 		A01E16A01784BF3000B0CA4A /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -4195,6 +4239,8 @@
 		A03599D517821D9B00987F6C /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				3C6AEB1F179E89FF00B4FC38 /* CocosGUITest */,
+				3C6AEB24179E89FF00B4FC38 /* SceneEditorTest */,
 				A03599D617821D9B00987F6C /* ArmatureTest */,
 				A03599D917821D9B00987F6C /* CocosBuilderTest */,
 				A0359A0017821D9B00987F6C /* ComponentsTest */,
@@ -4764,6 +4810,10 @@
 		A035A0201782270800987F6C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C6AEB2E179E8A8800B4FC38 /* cocosgui */,
+				3C6AEB2F179E8A8800B4FC38 /* fishes */,
+				3C6AEB30179E8A8800B4FC38 /* FishJoy2.json */,
+				3C6AEB31179E8A8800B4FC38 /* ui */,
 				A035A4FF1782275800987F6C /* animations */,
 				A035A5001782275800987F6C /* app.icf */,
 				A035A5011782275800987F6C /* armature */,
@@ -6146,6 +6196,10 @@
 				A07A525D1783A3D90073F6A7 /* InfoPlist.strings in Resources */,
 				A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */,
 				A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */,
+				3C6AEB32179E8A8800B4FC38 /* cocosgui in Resources */,
+				3C6AEB34179E8A8800B4FC38 /* fishes in Resources */,
+				3C6AEB36179E8A8800B4FC38 /* FishJoy2.json in Resources */,
+				3C6AEB38179E8A8800B4FC38 /* ui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6708,6 +6762,10 @@
 				A07A52491783A3A90073F6A7 /* Icon-144.png in Resources */,
 				A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */,
 				A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */,
+				3C6AEB33179E8A8800B4FC38 /* cocosgui in Resources */,
+				3C6AEB35179E8A8800B4FC38 /* fishes in Resources */,
+				3C6AEB37179E8A8800B4FC38 /* FishJoy2.json in Resources */,
+				3C6AEB39179E8A8800B4FC38 /* ui in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6886,6 +6944,9 @@
 				A07A52601783A3D90073F6A7 /* main.m in Sources */,
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
+				3C6AEB27179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp in Sources */,
+				3C6AEB29179E89FF00B4FC38 /* CocosGUIScene.cpp in Sources */,
+				3C6AEB2B179E89FF00B4FC38 /* SceneEditorTestScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7165,6 +7226,9 @@
 				A07A524C1783A3A90073F6A7 /* main.m in Sources */,
 				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
+				3C6AEB28179E89FF00B4FC38 /* CocosGUIExamplesScene.cpp in Sources */,
+				3C6AEB2A179E89FF00B4FC38 /* CocosGUIScene.cpp in Sources */,
+				3C6AEB2C179E89FF00B4FC38 /* SceneEditorTestScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
