@@ -34,6 +34,7 @@
 #include <string>
 
 class QGuiApplication;
+class Cocos2DQt5MainloopIntegration;
 
 NS_CC_BEGIN
 
@@ -83,6 +84,7 @@ class CCApplication : public CCApplicationProtocol {
         QGuiApplication *m_application;
         long m_animationInterval;
         std::string m_resourceRootPath;
+        Cocos2DQt5MainloopIntegration *m_mainloop;
 };
 
 NS_CC_END
