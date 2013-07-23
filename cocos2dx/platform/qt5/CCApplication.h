@@ -33,7 +33,7 @@
 #include "platform/CCApplicationProtocol.h"
 #include <string>
 
-#include <QGuiApplication>
+class QGuiApplication;
 
 NS_CC_BEGIN
 
