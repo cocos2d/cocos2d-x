@@ -72,7 +72,7 @@ MenuItem* MenuItem::create( const ccMenuCallback& callback)
 }
 
 // XXX deprecated
-bool MenuItem::initWithTarget(cocos2d::Object *target, SEL_MenuHandler selector )
+bool MenuItem::initWithTarget(Object *target, SEL_MenuHandler selector )
 {
 	_target = target;
 	CC_SAFE_RETAIN(_target);

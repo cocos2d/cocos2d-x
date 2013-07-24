@@ -619,7 +619,7 @@ void LabelBMFont::createFontChars()
         
         if (charSet->find(c) == charSet->end())
         {
-            CCLOGWARN("cocos2d::LabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+            CCLOGWARN("LabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
             continue;      
         }
 
@@ -632,7 +632,7 @@ void LabelBMFont::createFontChars()
         HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
         if (! element)
         {
-            CCLOGWARN("cocos2d::LabelBMFont: characer not found %d", c);
+            CCLOGWARN("LabelBMFont: characer not found %d", c);
             continue;
         }
 

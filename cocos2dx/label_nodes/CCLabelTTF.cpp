@@ -126,7 +126,7 @@ bool LabelTTF::initWithString(const char *label, const char *fontName, float fon
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
-                                const cocos2d::Size &dimensions, TextAlignment hAlignment,
+                                const Size &dimensions, TextAlignment hAlignment,
                                 VerticalTextAlignment vAlignment)
 {
     if (Sprite::init())
