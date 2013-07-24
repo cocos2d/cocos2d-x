@@ -5216,7 +5216,7 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
 #endif
         {
             self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
-			CC_SAFE_DELETE_ARRAY(floatArray);
+            CC_SAFE_DELETE_ARRAY(floatArray);
         }
     }
     return 1;
