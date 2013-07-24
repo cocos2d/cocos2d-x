@@ -907,6 +907,10 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 #define kCCFlipedAll                  kFlipedAll
 #define kCCFlippedMask                kFlippedMask
 
+
+/** use log() instead */
+CC_DEPRECATED_ATTRIBUTE void CC_DLL CCLog(const char * pszFormat, ...) CC_FORMAT_PRINTF(1, 2);
+
 // end of data_structures group
 /// @}
 
