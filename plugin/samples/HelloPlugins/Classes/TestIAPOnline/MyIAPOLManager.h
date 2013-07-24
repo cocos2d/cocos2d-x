@@ -27,10 +27,10 @@ THE SOFTWARE.
 #include "ProtocolIAP.h"
 #include "Configs.h"
 
-class MyIAPOnlineResult : public cocos2d::plugin::PayResultListener
+class MyIAPOnlineResult : public cc::plugin::PayResultListener
 {
 public:
-    virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info);
+    virtual void onPayResult(cc::plugin::PayResultCode ret, const char* msg, cc::plugin::TProductInfo info);
 };
 
 class MyIAPOLManager
@@ -50,7 +50,7 @@ public:
 
     void unloadPlugins();
     void loadPlugins();
-    void payByMode(cocos2d::plugin::TProductInfo info, MyPayMode mode);
+    void payByMode(cc::plugin::TProductInfo info, MyPayMode mode);
 
 private:
     MyIAPOLManager();
@@ -58,9 +58,9 @@ private:
 
     static MyIAPOLManager* s_pIAPOnline;
 
-    cocos2d::plugin::ProtocolIAP* s_pQH360;
-    cocos2d::plugin::ProtocolIAP* s_pNd91;
-    cocos2d::plugin::ProtocolIAP* s_pUC;
+    cc::plugin::ProtocolIAP* s_pQH360;
+    cc::plugin::ProtocolIAP* s_pNd91;
+    cc::plugin::ProtocolIAP* s_pUC;
     MyIAPOnlineResult* s_pRetListener;
 };
 

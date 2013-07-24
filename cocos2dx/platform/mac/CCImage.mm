@@ -217,8 +217,8 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
         return false;
     }
     
-	//if (cocos2d::Image::getIsScaleEnabled())
-	if( cocos2d::Director::getInstance()->getContentScaleFactor() > 1.0f )
+	//if (cc::Image::getIsScaleEnabled())
+	if( Director::getInstance()->getContentScaleFactor() > 1.0f )
 	{
 		POTWide = CGImageGetWidth(CGImage) * scaleX;
 		POTHigh = CGImageGetHeight(CGImage) * scaleY;
@@ -308,7 +308,7 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, cocos2d::Color3B* pStrokeColor)
+static bool _initWithString(const char * pText, Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, Color3B* pStrokeColor)
 {
     bool bRet = false;
 

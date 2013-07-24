@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 /*
  * use to calculate the matrix of node from parent node
@@ -56,6 +56,6 @@ public:
     static Point helpPoint2;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCTRANSFORMHELP_H__*/

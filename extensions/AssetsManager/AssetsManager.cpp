@@ -38,7 +38,6 @@
 
 #include "support/zip_support/unzip.h"
 
-using namespace cocos2d;
 using namespace std;
 
 NS_CC_EXT_BEGIN;

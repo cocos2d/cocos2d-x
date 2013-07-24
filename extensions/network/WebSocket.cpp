@@ -47,7 +47,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public cocos2d::Object
+class WsThreadHelper : public cc::Object
 {
 public:
     WsThreadHelper();

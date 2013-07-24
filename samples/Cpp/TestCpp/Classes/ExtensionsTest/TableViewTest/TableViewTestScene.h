@@ -6,21 +6,21 @@
 
 void runTableViewTest();
 
-class TableViewTestLayer : public cocos2d::Layer, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
+class TableViewTestLayer : public cc::Layer, public cc::extension::TableViewDataSource, public cc::extension::TableViewDelegate
 {
 public:
     virtual bool init();  
    
-	void toExtensionsMainLayer(cocos2d::Object *sender);
+	void toExtensionsMainLayer(cc::Object *sender);
 
     CREATE_FUNC(TableViewTestLayer);
     
-    virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) {};
-    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) {}
-    virtual void tableCellTouched(cocos2d::extension::TableView* table, cocos2d::extension::TableViewCell* cell);
-    virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, unsigned int idx);
-    virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, unsigned int idx);
-    virtual unsigned int numberOfCellsInTableView(cocos2d::extension::TableView *table);
+    virtual void scrollViewDidScroll(cc::extension::ScrollView* view) {};
+    virtual void scrollViewDidZoom(cc::extension::ScrollView* view) {}
+    virtual void tableCellTouched(cc::extension::TableView* table, cc::extension::TableViewCell* cell);
+    virtual cc::Size tableCellSizeForIndex(cc::extension::TableView *table, unsigned int idx);
+    virtual cc::extension::TableViewCell* tableCellAtIndex(cc::extension::TableView *table, unsigned int idx);
+    virtual unsigned int numberOfCellsInTableView(cc::extension::TableView *table);
 };
 
 #endif // __TABLEVIEWTESTSCENE_H__

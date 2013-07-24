@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../display/CCDecorativeDisplay.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Bone;
 
@@ -137,6 +137,6 @@ protected:
     Bone *_bone;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCDISPLAYMANAGER_H__*/

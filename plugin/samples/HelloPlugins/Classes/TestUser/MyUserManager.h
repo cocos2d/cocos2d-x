@@ -27,10 +27,10 @@ THE SOFTWARE.
 #include "ProtocolUser.h"
 #include "Configs.h"
 
-class MyUserActionResult : public cocos2d::plugin::UserActionListener
+class MyUserActionResult : public cc::plugin::UserActionListener
 {
 public:
-    virtual void onActionResult(cocos2d::plugin::ProtocolUser* pPlugin, cocos2d::plugin::UserActionResultCode code, const char* msg);
+    virtual void onActionResult(cc::plugin::ProtocolUser* pPlugin, cc::plugin::UserActionResultCode code, const char* msg);
 };
 
 class MyUserManager
@@ -59,9 +59,9 @@ private:
 
     static MyUserManager* s_pManager;
 
-    cocos2d::plugin::ProtocolUser* _qh360;
-    cocos2d::plugin::ProtocolUser* _nd91;
-    cocos2d::plugin::ProtocolUser* _uc;
+    cc::plugin::ProtocolUser* _qh360;
+    cc::plugin::ProtocolUser* _nd91;
+    cc::plugin::ProtocolUser* _uc;
     MyUserActionResult* _retListener;
 };
 

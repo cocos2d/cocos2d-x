@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Jul 22 11:51:18 2013.
+** Generated automatically by tolua++-1.0.92 on Wed Jul 24 14:54:39 2013.
 */
 
 /****************************************************************************
@@ -38,8 +38,8 @@ extern "C" {
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 using namespace CocosDenshion;
 
 
@@ -30083,7 +30083,7 @@ static int tolua_Cocos2d_CCAnimate_getAnimation00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getAnimation'", NULL);
 #endif
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  self->getAnimation();
+   cc::Animation* tolua_ret = (cc::Animation*)  self->getAnimation();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -30114,7 +30114,7 @@ static int tolua_Cocos2d_CCAnimate_setAnimation00(lua_State* tolua_S)
 #endif
  {
   Animate* self = (Animate*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::Animation* pAnimation = ((cocos2d::Animation*)  tolua_tousertype(tolua_S,2,0));
+  cc::Animation* pAnimation = ((cc::Animation*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnimation'", NULL);
 #endif
@@ -30146,7 +30146,7 @@ static int tolua_Cocos2d_CCAnimate_create00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* pAnimation = ((cocos2d::Animation*)  tolua_tousertype(tolua_S,2,0));
+  cc::Animation* pAnimation = ((cc::Animation*)  tolua_tousertype(tolua_S,2,0));
   {
    Animate* tolua_ret = (Animate*)  Animate::create(pAnimation);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -37463,7 +37463,7 @@ static int tolua_Cocos2d_CCAnimation_create00(lua_State* tolua_S)
   float delayPerUnit = ((float)  tolua_tonumber(tolua_S,3,0));
   unsigned int loops = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::create(arrayOfAnimationFrameNames,delayPerUnit,loops);
+   cc::Animation* tolua_ret = (cc::Animation*)  cc::Animation::create(arrayOfAnimationFrameNames,delayPerUnit,loops);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -37491,7 +37491,7 @@ static int tolua_Cocos2d_CCAnimation_create01(lua_State* tolua_S)
  else
  {
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::create();
+   cc::Animation* tolua_ret = (cc::Animation*)  cc::Animation::create();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -37522,7 +37522,7 @@ static int tolua_Cocos2d_CCAnimation_createWithSpriteFrames00(lua_State* tolua_S
   Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
   float delay = ((float)  tolua_tonumber(tolua_S,3,0));
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames,delay);
+   cc::Animation* tolua_ret = (cc::Animation*)  cc::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames,delay);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -37552,7 +37552,7 @@ static int tolua_Cocos2d_CCAnimation_createWithSpriteFrames01(lua_State* tolua_S
  {
   Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames);
+   cc::Animation* tolua_ret = (cc::Animation*)  cc::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -37579,7 +37579,7 @@ static int tolua_Cocos2d_CCAnimation_addSpriteFrame00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   SpriteFrame* pFrame = ((SpriteFrame*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addSpriteFrame'", NULL);
@@ -37612,7 +37612,7 @@ static int tolua_Cocos2d_CCAnimation_addSpriteFrameWithFileName00(lua_State* tol
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addSpriteFrameWithFileName'", NULL);
@@ -37646,7 +37646,7 @@ static int tolua_Cocos2d_CCAnimation_addSpriteFrameWithTexture00(lua_State* tolu
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   Texture2D* pobTexture = ((Texture2D*)  tolua_tousertype(tolua_S,2,0));
   const Rect* rect = ((const Rect*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
@@ -37679,7 +37679,7 @@ static int tolua_Cocos2d_CCAnimation_getTotalDelayUnits00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTotalDelayUnits'", NULL);
 #endif
@@ -37711,7 +37711,7 @@ static int tolua_Cocos2d_CCAnimation_getDelayPerUnit00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDelayPerUnit'", NULL);
 #endif
@@ -37744,7 +37744,7 @@ static int tolua_Cocos2d_CCAnimation_setDelayPerUnit00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   float fDelayPerUnits = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDelayPerUnit'", NULL);
@@ -37776,7 +37776,7 @@ static int tolua_Cocos2d_CCAnimation_getDuration00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDuration'", NULL);
 #endif
@@ -37808,12 +37808,12 @@ static int tolua_Cocos2d_CCAnimation_clone00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clone'", NULL);
 #endif
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  self->clone();
+   cc::Animation* tolua_ret = (cc::Animation*)  self->clone();
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");
@@ -37842,7 +37842,7 @@ static int tolua_Cocos2d_CCAnimation_getFrames00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrames'", NULL);
 #endif
@@ -37877,7 +37877,7 @@ static int tolua_Cocos2d_CCAnimation_setFrames00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   Array* pFrames = ((Array*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFrames'", NULL);
@@ -37909,7 +37909,7 @@ static int tolua_Cocos2d_CCAnimation_getRestoreOriginalFrame00(lua_State* tolua_
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRestoreOriginalFrame'", NULL);
 #endif
@@ -37942,7 +37942,7 @@ static int tolua_Cocos2d_CCAnimation_setRestoreOriginalFrame00(lua_State* tolua_
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   bool bRestoreFrame = ((bool)  tolua_toboolean(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRestoreOriginalFrame'", NULL);
@@ -37974,7 +37974,7 @@ static int tolua_Cocos2d_CCAnimation_getLoops00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLoops'", NULL);
 #endif
@@ -38007,7 +38007,7 @@ static int tolua_Cocos2d_CCAnimation_setLoops00(lua_State* tolua_S)
  else
 #endif
  {
-  cocos2d::Animation* self = (cocos2d::Animation*)  tolua_tousertype(tolua_S,1,0);
+  cc::Animation* self = (cc::Animation*)  tolua_tousertype(tolua_S,1,0);
   unsigned int uLoops = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLoops'", NULL);
@@ -38042,7 +38042,7 @@ static int tolua_Cocos2d_CCAnimationCache_addAnimation00(lua_State* tolua_S)
 #endif
  {
   AnimationCache* self = (AnimationCache*)  tolua_tousertype(tolua_S,1,0);
-  cocos2d::Animation* animation = ((cocos2d::Animation*)  tolua_tousertype(tolua_S,2,0));
+  cc::Animation* animation = ((cc::Animation*)  tolua_tousertype(tolua_S,2,0));
   const char* name = ((const char*)  tolua_tostring(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAnimation'", NULL);
@@ -38114,7 +38114,7 @@ static int tolua_Cocos2d_CCAnimationCache_animationByName00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'animationByName'", NULL);
 #endif
   {
-   cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  self->animationByName(name);
+   cc::Animation* tolua_ret = (cc::Animation*)  self->animationByName(name);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCAnimation");

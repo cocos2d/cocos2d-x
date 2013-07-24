@@ -1,7 +1,7 @@
 #include "CCNode+CCBRelativePositioning.h"
 #include "CCBReader.h"
 
-using namespace cocos2d;
+using namespace cc;
 
 NS_CC_EXT_BEGIN
 

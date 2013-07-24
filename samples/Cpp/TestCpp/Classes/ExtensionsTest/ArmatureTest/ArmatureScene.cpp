@@ -1,8 +1,8 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension::armature;
+using namespace cc;
+using namespace cc::extension::armature;
 
 Layer* NextTest();
 Layer* BackTest();

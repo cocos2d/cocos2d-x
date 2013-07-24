@@ -109,7 +109,7 @@ public:
     virtual ~Director(void);
     virtual bool init(void);
     virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::Director).name());
+		static const long id = cc::getHashCodeByString(typeid(cc::Director).name());
 		return id;
     }
 

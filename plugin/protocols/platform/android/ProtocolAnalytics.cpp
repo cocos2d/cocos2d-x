@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 static void callJavaFunctionWithName_string_map(ProtocolAnalytics* thiz, const char* funcName, const char* keyParam, LogEventParamMap* paramMap)
 {
@@ -141,4 +141,4 @@ void ProtocolAnalytics::logTimedEventEnd(const char* eventId)
 	callJavaFunctionWithName_string_map(this, "logTimedEventEnd", eventId, NULL);
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

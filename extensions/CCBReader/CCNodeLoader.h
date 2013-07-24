@@ -20,14 +20,14 @@ NS_CC_EXT_BEGIN
 #define PROPERTY_IGNOREANCHORPOINTFORPOSITION "ignoreAnchorPointForPosition"
 #define PROPERTY_VISIBLE "visible"
 
-#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) cocos2d::log("Unexpected property: '%s'!\n", PROPERTY); assert(false)
-#define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) cocos2d::log("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
+#define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) cc::log("Unexpected property: '%s'!\n", PROPERTY); assert(false)
+#define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) cc::log("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
-#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, cocos2d::extension::CCBReader * pCCBReader) { \
+#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cc::Node * pParent, cc::extension::CCBReader * pCCBReader) { \
     return T::create(); \
 }
 
-#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, cocos2d::extension::CCBReader * pCCBReader) = 0
+#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cc::Node * pParent, cc::extension::CCBReader * pCCBReader) = 0
 
 struct BlockData {
     SEL_MenuHandler mSELMenuHandler;

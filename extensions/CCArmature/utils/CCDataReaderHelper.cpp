@@ -126,7 +126,7 @@ static const char *VERTEX_POINT = "vertex";
 static const char *COLOR_INFO = "color";
 
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
@@ -1137,4 +1137,4 @@ void DataReaderHelper::decodeNode(BaseData *node, cs::CSJsonDictionary &json)
 
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

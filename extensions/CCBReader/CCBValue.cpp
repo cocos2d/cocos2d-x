@@ -1,7 +1,5 @@
 #include "CCBValue.h"
 
-using namespace cocos2d;
-
 NS_CC_EXT_BEGIN
 
 // Implementation of Color3BWapper

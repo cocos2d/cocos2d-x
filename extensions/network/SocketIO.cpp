@@ -59,10 +59,10 @@ public:
 
 	static SIOClientImpl* create(const std::string& host, int port);
 	
-	virtual void onOpen(cocos2d::extension::WebSocket* ws);
-    virtual void onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data);
-    virtual void onClose(cocos2d::extension::WebSocket* ws);
-    virtual void onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error);
+	virtual void onOpen(cc::extension::WebSocket* ws);
+    virtual void onMessage(cc::extension::WebSocket* ws, const cc::extension::WebSocket::Data& data);
+    virtual void onClose(cc::extension::WebSocket* ws);
+    virtual void onError(cc::extension::WebSocket* ws, const cc::extension::WebSocket::ErrorCode& error);
 
 	void connect();
 	void disconnect();
@@ -361,7 +361,7 @@ void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::strin
 
 }
 
-void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws) {
+void SIOClientImpl::onOpen(cc::extension::WebSocket* ws) {
 
 	_connected = true;
 
@@ -383,7 +383,7 @@ void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws) {
 
 }
 
-void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data) {
+void SIOClientImpl::onMessage(cc::extension::WebSocket* ws, const cc::extension::WebSocket::Data& data) {
 
 	log("SIOClientImpl::onMessage received: %s", data.bytes);
 
@@ -477,7 +477,7 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	return;
 }
 
-void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws) {
+void SIOClientImpl::onClose(cc::extension::WebSocket* ws) {
 
 	if(_clients->count() > 0) {
 
@@ -497,7 +497,7 @@ void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws) {
 
 }
 
-void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error) {
+void SIOClientImpl::onError(cc::extension::WebSocket* ws, const cc::extension::WebSocket::ErrorCode& error) {
 
 
 }

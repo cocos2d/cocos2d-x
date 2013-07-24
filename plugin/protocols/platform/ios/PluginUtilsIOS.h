@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <map>
 #include "PluginParam.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 typedef struct _PluginOCData
 {
@@ -90,6 +90,6 @@ private:
     static id callRetFunction(PluginProtocol* pPlugin, const char* funcName);
 };
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {
 
 #endif //__PLUGIN_UTILS_IOS_H__

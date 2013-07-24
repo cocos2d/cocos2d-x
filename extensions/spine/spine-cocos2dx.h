@@ -31,10 +31,10 @@
 #include <spine/CCSkeleton.h>
 #include <spine/CCSkeletonAnimation.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
-void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, cocos2d::V3F_C4B_T2F_Quad* quad, bool premultiplied = false);
+void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, cc::V3F_C4B_T2F_Quad* quad, bool premultiplied = false);
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_COCOS2DX_H_ */

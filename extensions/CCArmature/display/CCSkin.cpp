@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCSkin.h"
 #include "../utils/CCTransformHelp.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -137,4 +137,4 @@ void Skin::draw()
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

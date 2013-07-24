@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include <string>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 typedef std::map<std::string, std::string> TUserDeveloperInfo;
 
@@ -98,6 +98,6 @@ protected:
     UserActionListener* _listener;
 };
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {
 
 #endif /* __CCX_PROTOCOL_USER_H__ */

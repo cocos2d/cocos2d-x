@@ -30,7 +30,7 @@
 #include <spine/Slot.h>
 #include <spine/Skin.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct Skeleton Skeleton;
 struct Skeleton {
@@ -87,6 +87,6 @@ int Skeleton_setAttachment (Skeleton* self, const char* slotName, const char* at
 
 void Skeleton_update (Skeleton* self, float deltaTime);
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_SKELETON_H_*/

@@ -107,7 +107,7 @@ WebSocketTestLayer::~WebSocketTestLayer()
 }
 
 // Delegate methods
-void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
+void WebSocketTestLayer::onOpen(cc::extension::WebSocket* ws)
 {
     log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
@@ -124,7 +124,7 @@ void WebSocketTestLayer::onOpen(cocos2d::extension::WebSocket* ws)
     }
 }
 
-void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data)
+void WebSocketTestLayer::onMessage(cc::extension::WebSocket* ws, const cc::extension::WebSocket::Data& data)
 {
     if (!data.isBinary)
     {
@@ -161,7 +161,7 @@ void WebSocketTestLayer::onMessage(cocos2d::extension::WebSocket* ws, const coco
     }
 }
 
-void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
+void WebSocketTestLayer::onClose(cc::extension::WebSocket* ws)
 {
     log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
@@ -180,7 +180,7 @@ void WebSocketTestLayer::onClose(cocos2d::extension::WebSocket* ws)
     CC_SAFE_DELETE(ws);
 }
 
-void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
+void WebSocketTestLayer::onError(cc::extension::WebSocket* ws, const cc::extension::WebSocket::ErrorCode& error)
 {
     log("Error was fired, error code: %d", error);
     if (ws == _wsiError)
@@ -191,7 +191,7 @@ void WebSocketTestLayer::onError(cocos2d::extension::WebSocket* ws, const cocos2
     }
 }
 
-void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
+void WebSocketTestLayer::toExtensionsMainLayer(cc::Object *sender)
 {
     ExtensionsTestScene *scene = new ExtensionsTestScene();
     scene->runThisTest();
@@ -199,7 +199,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 }
 
 // Menu Callbacks
-void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
+void WebSocketTestLayer::onMenuSendTextClicked(cc::Object *sender)
 {
     if (_wsiSendText->getReadyState() == WebSocket::kStateOpen)
     {
@@ -214,7 +214,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
     }
 }
 
-void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
+void WebSocketTestLayer::onMenuSendBinaryClicked(cc::Object *sender)
 {
     if (_wsiSendBinary->getReadyState() == WebSocket::kStateOpen)
     {

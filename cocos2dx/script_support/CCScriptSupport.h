@@ -90,7 +90,7 @@ public:
     static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~SchedulerScriptHandlerEntry(void);
     
-    cocos2d::Timer* getTimer(void) {
+    cc::Timer* getTimer(void) {
         return _timer;
     }
     
@@ -116,7 +116,7 @@ private:
     }
     bool init(float fInterval, bool bPaused);
     
-    cocos2d::Timer*   _timer;
+    cc::Timer*   _timer;
     bool                _paused;
     bool                _markedForDeletion;
 };

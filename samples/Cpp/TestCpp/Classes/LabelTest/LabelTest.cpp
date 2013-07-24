@@ -1214,7 +1214,7 @@ std::string BitmapFontMultiLineAlignment::subtitle()
     return "";
 }
 
-void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
+void BitmapFontMultiLineAlignment::stringChanged(cc::Object *sender)
 {
     MenuItemFont *item = (MenuItemFont*)sender;
     item->setColor(Color3B::RED);
@@ -1240,7 +1240,7 @@ void BitmapFontMultiLineAlignment::stringChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
+void BitmapFontMultiLineAlignment::alignmentChanged(cc::Object *sender)
 {
     MenuItemFont *item = static_cast<MenuItemFont*>(sender);
     item->setColor(Color3B::RED);
@@ -1266,7 +1266,7 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesBegan(cc::Set *pTouches, cc::Event *pEvent)
 {
     Touch *touch = (Touch *)pTouches->anyObject();
     Point location = touch->getLocationInView();
@@ -1278,7 +1278,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesEnded(cc::Set *pTouches, cc::Event *pEvent)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1286,7 +1286,7 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesMoved(cc::Set *pTouches, cc::Event *pEvent)
 {
     if (! _drag)
     {

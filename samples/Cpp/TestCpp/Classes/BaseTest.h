@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 
-class BaseTest : public cocos2d::Layer
+class BaseTest : public cc::Layer
 {
 public:
     virtual void onEnter();

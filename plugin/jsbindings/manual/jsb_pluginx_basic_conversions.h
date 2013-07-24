@@ -13,7 +13,7 @@
 #define CCLOGINFO(...)      
 #endif
 
-using namespace cocos2d::plugin;
+using namespace cc::plugin;
 
 namespace pluginx {
 

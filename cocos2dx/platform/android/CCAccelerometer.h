@@ -25,11 +25,12 @@ THE SOFTWARE.
 #ifndef __PLATFORM_ANDROID_CCACCELEROMETER_H__
 #define __PLATFORM_ANDROID_CCACCELEROMETER_H__
 
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCCommon.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include <functional>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class Accelerometer
 {
@@ -46,6 +47,6 @@ private:
     Acceleration _accelerationValue;
 };
 
-}//namespace cocos2d
+NS_CC_END
 
 #endif

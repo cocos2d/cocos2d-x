@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include<math.h>
 
+NS_CC_BEGIN
 
 typedef struct
 {
@@ -172,7 +173,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -398,7 +399,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
     return bRet;
 }
 
-NS_CC_BEGIN
 
 Image::Image()
 : _width(0)

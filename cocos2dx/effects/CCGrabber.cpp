@@ -80,7 +80,7 @@ void Grabber::beforeRender(Texture2D *pTexture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void Grabber::afterRender(cocos2d::Texture2D *pTexture)
+void Grabber::afterRender(Texture2D *pTexture)
 {
     CC_UNUSED_PARAM(pTexture);
 

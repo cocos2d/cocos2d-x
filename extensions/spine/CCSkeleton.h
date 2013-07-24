@@ -29,12 +29,12 @@
 #include <spine/spine.h>
 #include "cocos2d.h"
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
+class CCSkeleton: public cc::NodeRGBA, public cc::BlendProtocol {
 public:
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
@@ -71,11 +71,11 @@ public:
     // Overrides
 	virtual void update (float deltaTime) override;
 	virtual void draw() override;
-	virtual cocos2d::Rect getBoundingBox() const override;
+	virtual cc::Rect getBoundingBox() const override;
 	virtual void setOpacityModifyRGB (bool value) override;
 	virtual bool isOpacityModifyRGB() const override;
-    virtual void setBlendFunc( const cocos2d::BlendFunc& func ) override;
-    virtual const cocos2d::BlendFunc& getBlendFunc() const override;
+    virtual void setBlendFunc( const cc::BlendFunc& func ) override;
+    virtual const cc::BlendFunc& getBlendFunc() const override;
 
     Skeleton* skeleton;
 	Bone* rootBone;
@@ -83,12 +83,12 @@ public:
 	bool debugSlots;
 	bool debugBones;
 	bool premultipliedAlpha;
-    cocos2d::BlendFunc blendFunc;
+    cc::BlendFunc blendFunc;
 
 protected:
 	CCSkeleton ();
 	void setSkeletonData (SkeletonData* skeletonData, bool ownsSkeletonData);
-	cocos2d::TextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
+	cc::TextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
 
 private:
 	bool ownsSkeletonData;
@@ -96,6 +96,6 @@ private:
 	void initialize ();
 };
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_CCSKELETON_H_ */

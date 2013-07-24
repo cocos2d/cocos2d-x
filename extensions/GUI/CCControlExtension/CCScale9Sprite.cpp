@@ -810,7 +810,7 @@ GLubyte Scale9Sprite::getOpacity() const
 	return _realOpacity;
 }
 
-void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
+void Scale9Sprite::updateDisplayedColor(const cc::Color3B &parentColor)
 {
     NodeRGBA::updateDisplayedColor(parentColor);
     Object* child;

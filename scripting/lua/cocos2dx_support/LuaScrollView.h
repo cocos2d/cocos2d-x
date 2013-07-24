@@ -10,7 +10,7 @@ extern "C" {
 #endif
 #include "GUI/CCScrollView/CCScrollView.h"
 
-class LuaScrollView:public cocos2d::extension::ScrollView,public cocos2d::extension::ScrollViewDelegate
+class LuaScrollView:public cc::extension::ScrollView,public cc::extension::ScrollViewDelegate
 {
 public:
     virtual ~LuaScrollView();

@@ -69,7 +69,7 @@ HttpClientTest::~HttpClientTest()
     HttpClient::getInstance()->destroyInstance();
 }
 
-void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)
+void HttpClientTest::onMenuGetTestClicked(cc::Object *sender)
 {    
     // test 1
     {
@@ -114,7 +114,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)
  
 }
 
-void HttpClientTest::onMenuPostTestClicked(cocos2d::Object *sender)
+void HttpClientTest::onMenuPostTestClicked(cc::Object *sender)
 {
     // test 1
     {
@@ -155,7 +155,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Object *sender)
     _labelStatusCode->setString("waiting...");
 }
 
-void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Object *sender)
+void HttpClientTest::onMenuPostBinaryTestClicked(cc::Object *sender)
 {
     HttpRequest* request = new HttpRequest();
     request->setUrl("http://httpbin.org/post");
@@ -281,7 +281,7 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     printf("\n");
 }
 
-void HttpClientTest::toExtensionsMainLayer(cocos2d::Object *sender)
+void HttpClientTest::toExtensionsMainLayer(cc::Object *sender)
 {
     ExtensionsTestScene *scene = new ExtensionsTestScene();
     scene->runThisTest();

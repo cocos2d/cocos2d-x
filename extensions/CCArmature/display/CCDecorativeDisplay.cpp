@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCDecorativeDisplay.h"
 #include "../utils/CCConstValue.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 DecorativeDisplay *DecorativeDisplay::create()
 {
@@ -70,4 +70,4 @@ void DecorativeDisplay::anchorPointChanged(float pointX, float pointY)
 {
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

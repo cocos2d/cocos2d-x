@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __CCX_PLUGIN_FACTORY_H__
 #define __CCX_PLUGIN_FACTORY_H__
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 class PluginProtocol;
 class PluginManager;
@@ -46,6 +46,6 @@ private:
     PluginProtocol* createPlugin(const char* name);
 };
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {
 
 #endif /* __CCX_PLUGIN_FACTORY_H__ */

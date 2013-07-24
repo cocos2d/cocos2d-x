@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #define MAX_LOG_LEN			256
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
-#define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
+#define JAVAVM    cc::PluginJniHelper::getJavaVM()
 
 jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* paramMap)
 {
@@ -51,10 +51,10 @@ jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* par
 
 void PluginUtils::initJavaPlugin(PluginProtocol* pPlugin, jobject jObj, const char* className)
 {
-	cocos2d::plugin::PluginJavaData* pUserData = new cocos2d::plugin::PluginJavaData();
+	cc::plugin::PluginJavaData* pUserData = new cc::plugin::PluginJavaData();
 	pUserData->jobj = PluginUtils::getEnv()->NewGlobalRef(jObj);
 	pUserData->jclassName = className;
-	cocos2d::plugin::PluginUtils::setPluginJavaData(pPlugin, pUserData);
+	cc::plugin::PluginUtils::setPluginJavaData(pPlugin, pUserData);
 }
 
 JNIEnv* PluginUtils::getEnv()
@@ -246,4 +246,4 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
 	return obj;
 }
 
-}}// namespace cocos2d { namespace plugin {
+}}// namespace cc { namespace plugin {

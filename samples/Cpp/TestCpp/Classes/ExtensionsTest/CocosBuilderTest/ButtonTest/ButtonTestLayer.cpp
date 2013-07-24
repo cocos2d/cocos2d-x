@@ -28,7 +28,7 @@ bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * p
     return false;
 }
 
-void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void ButtonTestLayer::onControlButtonClicked(cc::Object *pSender, cc::extension::ControlEvent pControlEvent) {
     switch(pControlEvent) {
         case ControlEventTouchDown:
             this->mControlEventLabel->setString("Touch Down.");

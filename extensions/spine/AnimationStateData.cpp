@@ -26,7 +26,7 @@
 #include <spine/AnimationStateData.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct _ToEntry _ToEntry;
 struct _ToEntry {
@@ -147,4 +147,4 @@ float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Anim
 	return 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

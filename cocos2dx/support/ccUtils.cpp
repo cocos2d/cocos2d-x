@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "ccUtils.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 unsigned long ccNextPOT(unsigned long x)
 {
@@ -36,4 +36,4 @@ unsigned long ccNextPOT(unsigned long x)
     return x + 1;
 }
 
-}
+NS_CC_END

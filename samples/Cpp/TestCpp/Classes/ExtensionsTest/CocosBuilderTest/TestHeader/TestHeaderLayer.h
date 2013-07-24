@@ -5,18 +5,18 @@
 #include "cocos-ext.h"
 
 class TestHeaderLayer
-    : public cocos2d::Layer
-    , public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::NodeLoaderListener
+    : public cc::Layer
+    , public cc::extension::CCBSelectorResolver
+, public cc::extension::NodeLoaderListener
 {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(TestHeaderLayer, create);
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);
+        virtual cc::SEL_MenuHandler onResolveCCBMenuItemSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual cc::extension::SEL_CCControlHandler onResolveCCBControlSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual void onNodeLoaded(cc::Node * node, cc::extension::NodeLoader * nodeLoader);
     
-        void onBackClicked(cocos2d::Object * pSender);
+        void onBackClicked(cc::Object * pSender);
 };
 
 #endif

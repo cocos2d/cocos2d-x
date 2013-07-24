@@ -259,7 +259,7 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
         int size = width * height * 4;
-        cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
+        cc::BitmapDC& bitmapDC = cc::sharedBitmapDC();
         bitmapDC._width = width;
         bitmapDC._height = height;
         bitmapDC._data = new unsigned char[size];

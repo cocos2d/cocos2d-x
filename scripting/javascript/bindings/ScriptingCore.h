@@ -20,7 +20,7 @@
 
 void js_log(const char *format, ...);
 
-using namespace cocos2d;
+using namespace cc;
 using namespace std;
 
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);

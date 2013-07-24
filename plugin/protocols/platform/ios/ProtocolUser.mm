@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "PluginUtilsIOS.h"
 #import "InterfaceUser.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 ProtocolUser::ProtocolUser()
 : _listener(NULL)
@@ -77,4 +77,4 @@ std::string ProtocolUser::getSessionID()
     return PluginUtilsIOS::callOCStringFunctionWithName(this, "getSessionID");
 }
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {

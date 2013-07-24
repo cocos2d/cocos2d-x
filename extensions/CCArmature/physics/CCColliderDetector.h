@@ -31,7 +31,7 @@ THE SOFTWARE.
 class b2Body;
 struct b2Filter;
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Bone;
 
@@ -100,6 +100,6 @@ private:
 
 };
 		
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCCOLLIDERDETECTOR_H__*/

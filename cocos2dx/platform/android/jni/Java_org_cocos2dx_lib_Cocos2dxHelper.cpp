@@ -15,7 +15,7 @@
 static EditTextCallback s_pfEditTextCallback = NULL;
 static void* s_ctx = NULL;
 
-using namespace cocos2d;
+USING_NS_CC;
 using namespace std;
 
 string g_apkPath;

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "PluginParam.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 PluginParam::PluginParam()
 {
@@ -67,4 +67,4 @@ PluginParam::PluginParam(StringMap strMapValue)
     _type = kParamTypeStringMap;
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

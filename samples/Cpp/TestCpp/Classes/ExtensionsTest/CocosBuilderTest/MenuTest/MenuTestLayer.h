@@ -5,9 +5,9 @@
 #include "cocos-ext.h"
 
 class MenuTestLayer
-    : public cocos2d::Layer
-    , public cocos2d::extension::CCBSelectorResolver
-    , public cocos2d::extension::CCBMemberVariableAssigner 
+    : public cc::Layer
+    , public cc::extension::CCBSelectorResolver
+    , public cc::extension::CCBMemberVariableAssigner 
 {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(MenuTestLayer, create);
@@ -15,16 +15,16 @@ class MenuTestLayer
         MenuTestLayer();
         virtual ~MenuTestLayer();
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
+        virtual cc::SEL_MenuHandler onResolveCCBMenuItemSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual cc::extension::SEL_CCControlHandler onResolveCCBControlSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual bool onAssignCCBMemberVariable(cc::Object * pTarget, const char * pMemberVariableName, cc::Node * node);
 
-        void onMenuItemAClicked(cocos2d::Object * pSender);
-        void onMenuItemBClicked(cocos2d::Object * pSender);
-        void onMenuItemCClicked(cocos2d::Object * pSender);
+        void onMenuItemAClicked(cc::Object * pSender);
+        void onMenuItemBClicked(cc::Object * pSender);
+        void onMenuItemCClicked(cc::Object * pSender);
 
     private:
-        cocos2d::LabelBMFont * mMenuItemStatusLabelBMFont;
+        cc::LabelBMFont * mMenuItemStatusLabelBMFont;
 };
 
 #endif

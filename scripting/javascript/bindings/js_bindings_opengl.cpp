@@ -3,7 +3,7 @@
 void GLNode::draw() {
   js_proxy_t* proxy = NULL;
   JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-  proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
+  proxy = js_get_or_create_proxy<cc::Node>(cx, this);
         
   //JSB_CCNode *proxy = objc_getAssociatedObject(self, &JSB_association_proxy_key);
   if( proxy ) {
@@ -33,7 +33,7 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
   if (argc == 0) {
     GLNode* cobj = new GLNode();
 #ifdef COCOS2D_JAVASCRIPT
-    cocos2d::Object *_ccobj = dynamic_cast<cocos2d::Object *>(cobj);
+    cc::Object *_ccobj = dynamic_cast<cc::Object *>(cobj);
     if (_ccobj) {
       _ccobj->autorelease();
     }
@@ -48,7 +48,7 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     // link the native object with the javascript object
     js_proxy_t *p = jsb_new_proxy(cobj, obj);
 #ifdef COCOS2D_JAVASCRIPT
-    JS_AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
+    JS_AddNamedObjectRoot(cx, &p->obj, "cc::GLNode");
 #endif
     return JS_TRUE;
   }

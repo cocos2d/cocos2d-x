@@ -4,8 +4,8 @@
 #include "GameOverScene.h"
 #include "EnemyController.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 SceneController::SceneController(void)
 : _fAddTargetTime(0.0f)

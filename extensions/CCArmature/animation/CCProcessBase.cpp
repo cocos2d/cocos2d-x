@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 ProcessBase::ProcessBase(void)
     : _animationScale(1)
@@ -142,4 +142,4 @@ int ProcessBase::getCurrentFrameIndex()
     return _curFrameIndex;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

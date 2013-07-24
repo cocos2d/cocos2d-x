@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include "PluginManager.h"
 #include "PluginFactory.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 static PluginManager* s_pPluginManager = NULL;
 
@@ -102,4 +102,4 @@ void PluginManager::unloadPlugin(const char* name)
     } while (false);
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

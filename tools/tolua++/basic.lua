@@ -292,8 +292,8 @@ extern "C" {
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 using namespace CocosDenshion;]])
 
       replace([[/* Exported function */
@@ -341,8 +341,8 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
 
     result = string.gsub(result, '([^\"]k)CC(%u%w*)', '%1%2')
 
-    replace("Animation*", "cocos2d::Animation*")
-    replace("Animation::create", "cocos2d::Animation::create")
+    replace("Animation*", "cc::Animation*")
+    replace("Animation::create", "cc::Animation::create")
 
     result = string.gsub(result, '(\"const )_(CC%u%w*)', '%1%2')
 

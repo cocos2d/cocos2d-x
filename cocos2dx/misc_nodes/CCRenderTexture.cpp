@@ -91,7 +91,7 @@ RenderTexture::~RenderTexture()
 #endif
 }
 
-void RenderTexture::listenToBackground(cocos2d::Object *obj)
+void RenderTexture::listenToBackground(Object *obj)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(_UITextureImage);
@@ -119,7 +119,7 @@ void RenderTexture::listenToBackground(cocos2d::Object *obj)
 #endif
 }
 
-void RenderTexture::listenToForeground(cocos2d::Object *obj)
+void RenderTexture::listenToForeground(Object *obj)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture

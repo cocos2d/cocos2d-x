@@ -27,7 +27,7 @@
 #include <ctype.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 AtlasPage* AtlasPage_create (const char* name) {
 	AtlasPage* self = NEW(AtlasPage);
@@ -336,4 +336,4 @@ AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name) {
 	return 0;
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <jni.h>
 #include <string>
 
-namespace cocos2d {
+namespace cc {
 
 typedef struct PluginJniMethodInfo_
 {

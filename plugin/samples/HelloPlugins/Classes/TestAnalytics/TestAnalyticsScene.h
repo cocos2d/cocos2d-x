@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ProtocolAnalytics.h"
 
-class TestAnalytics : public cocos2d::Layer
+class TestAnalytics : public cc::Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -35,7 +35,7 @@ public:
     virtual void onExit();
 
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-    static cocos2d::Scene* scene();
+    static cc::Scene* scene();
     
     // a selector callback
     void menuBackCallback(Object* pSender);
@@ -48,7 +48,7 @@ public:
     CREATE_FUNC(TestAnalytics);
 
 private:
-    cocos2d::plugin::ProtocolAnalytics* _pluginAnalytics;
+    cc::plugin::ProtocolAnalytics* _pluginAnalytics;
 };
 
 #endif // __TEST_ANALYTICS_SCENE_H__

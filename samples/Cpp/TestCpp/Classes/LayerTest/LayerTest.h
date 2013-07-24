@@ -102,7 +102,7 @@ public:
     virtual void ccTouchesMoved(Set * touches, Event *event);
     virtual std::string title();
     virtual std::string subtitle();
-    void toggleItem(cocos2d::Object *sender);
+    void toggleItem(cc::Object *sender);
 };
 
 class LayerGradientTest2 : public LayerTest

@@ -85,24 +85,24 @@ EditBoxTest::~EditBoxTest()
     
 }
 
-void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
+void EditBoxTest::toExtensionsMainLayer(cc::Object *sender)
 {
     ExtensionsTestScene *scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
 
-void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox)
+void EditBoxTest::editBoxEditingDidBegin(cc::extension::EditBox* editBox)
 {
     log("editBox %p DidBegin !", editBox);
 }
 
-void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox)
+void EditBoxTest::editBoxEditingDidEnd(cc::extension::EditBox* editBox)
 {
     log("editBox %p DidEnd !", editBox);
 }
 
-void EditBoxTest::editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text)
+void EditBoxTest::editBoxTextChanged(cc::extension::EditBox* editBox, const std::string& text)
 {
     log("editBox %p TextChanged, text: %s ", editBox, text.c_str());
 }

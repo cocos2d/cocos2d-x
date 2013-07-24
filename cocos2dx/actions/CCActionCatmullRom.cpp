@@ -37,7 +37,7 @@
 
 using namespace std;
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 /*
  *  Implementation of PointArray
@@ -136,7 +136,7 @@ Point PointArray::getControlPointAtIndex(unsigned int index)
     return *(_controlPoints->at(index));
 }
 
-void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, unsigned int index)
+void PointArray::replaceControlPoint(Point &controlPoint, unsigned int index)
 {
 
     Point *temp = _controlPoints->at(index);
@@ -220,7 +220,7 @@ Point ccCardinalSplineAt(Point &p0, Point &p1, Point &p2, Point &p3, float tensi
 /* Implementation of CardinalSplineTo
  */
 
-CardinalSplineTo* CardinalSplineTo::create(float duration, cocos2d::PointArray *points, float tension)
+CardinalSplineTo* CardinalSplineTo::create(float duration, PointArray *points, float tension)
 {
     CardinalSplineTo *ret = new CardinalSplineTo();
     if (ret)
@@ -238,7 +238,7 @@ CardinalSplineTo* CardinalSplineTo::create(float duration, cocos2d::PointArray *
     return ret;
 }
 
-bool CardinalSplineTo::initWithDuration(float duration, cocos2d::PointArray *points, float tension)
+bool CardinalSplineTo::initWithDuration(float duration, PointArray *points, float tension)
 {
     CCASSERT(points->count() > 0, "Invalid configuration. It must at least have one control point");
 
@@ -265,7 +265,7 @@ CardinalSplineTo::CardinalSplineTo()
 {
 }
 
-void CardinalSplineTo::startWithTarget(cocos2d::Node *target)
+void CardinalSplineTo::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
 	
@@ -328,7 +328,7 @@ void CardinalSplineTo::update(float time)
     this->updatePosition(newPos);
 }
 
-void CardinalSplineTo::updatePosition(cocos2d::Point &newPos)
+void CardinalSplineTo::updatePosition(Point &newPos)
 {
     _target->setPosition(newPos);
     _previousPosition = newPos;
@@ -344,7 +344,7 @@ CardinalSplineTo* CardinalSplineTo::reverse() const
 /* CardinalSplineBy
  */
 
-CardinalSplineBy* CardinalSplineBy::create(float duration, cocos2d::PointArray *points, float tension)
+CardinalSplineBy* CardinalSplineBy::create(float duration, PointArray *points, float tension)
 {
     CardinalSplineBy *ret = new CardinalSplineBy();
     if (ret)
@@ -366,7 +366,7 @@ CardinalSplineBy::CardinalSplineBy() : _startPosition(0,0)
 {
 }
 
-void CardinalSplineBy::updatePosition(cocos2d::Point &newPos)
+void CardinalSplineBy::updatePosition(Point &newPos)
 {
     Point p = newPos + _startPosition;
     _target->setPosition(p);
@@ -416,7 +416,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     return CardinalSplineBy::create(_duration, pReverse, _tension);
 }
 
-void CardinalSplineBy::startWithTarget(cocos2d::Node *target)
+void CardinalSplineBy::startWithTarget(Node *target)
 {    
     CardinalSplineTo::startWithTarget(target);
     _startPosition = target->getPosition();
@@ -434,7 +434,7 @@ CardinalSplineBy* CardinalSplineBy::clone() const
 /* CatmullRomTo
  */
 
-CatmullRomTo* CatmullRomTo::create(float dt, cocos2d::PointArray *points)
+CatmullRomTo* CatmullRomTo::create(float dt, PointArray *points)
 {
     CatmullRomTo *ret = new CatmullRomTo();
     if (ret)
@@ -452,7 +452,7 @@ CatmullRomTo* CatmullRomTo::create(float dt, cocos2d::PointArray *points)
     return ret;
 }
 
-bool CatmullRomTo::initWithDuration(float dt, cocos2d::PointArray *points)
+bool CatmullRomTo::initWithDuration(float dt, PointArray *points)
 {
     if (CardinalSplineTo::initWithDuration(dt, points, 0.5f))
     {
@@ -481,7 +481,7 @@ CatmullRomTo* CatmullRomTo::reverse() const
 /* CatmullRomBy
  */
 
-CatmullRomBy* CatmullRomBy::create(float dt, cocos2d::PointArray *points)
+CatmullRomBy* CatmullRomBy::create(float dt, PointArray *points)
 {
     CatmullRomBy *ret = new CatmullRomBy();
     if (ret)
@@ -499,7 +499,7 @@ CatmullRomBy* CatmullRomBy::create(float dt, cocos2d::PointArray *points)
     return ret;
 }
 
-bool CatmullRomBy::initWithDuration(float dt, cocos2d::PointArray *points)
+bool CatmullRomBy::initWithDuration(float dt, PointArray *points)
 {
     if (CardinalSplineTo::initWithDuration(dt, points, 0.5f))
     {
@@ -561,5 +561,5 @@ CatmullRomBy* CatmullRomBy::reverse() const
     return CatmullRomBy::create(_duration, pReverse);
 }
 
-NS_CC_END;
+NS_CC_END
 

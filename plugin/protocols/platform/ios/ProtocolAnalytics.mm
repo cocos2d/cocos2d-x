@@ -25,7 +25,7 @@
 #import  "InterfaceAnalytics.h"
 #include "PluginUtilsIOS.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 ProtocolAnalytics::ProtocolAnalytics()
 {
@@ -174,4 +174,4 @@ void ProtocolAnalytics::setCaptureUncaughtException(bool enabled)
     }
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

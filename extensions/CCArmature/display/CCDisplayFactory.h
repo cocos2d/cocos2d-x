@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Skin;
 class Bone;
@@ -60,6 +60,6 @@ public:
 };
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCDISPLAYFACTORY_H__*/

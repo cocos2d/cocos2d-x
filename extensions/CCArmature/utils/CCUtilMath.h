@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include <math.h>
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 #define CC_DOUBLE_PI (M_PI*2)
 
@@ -50,6 +50,6 @@ Point bezierTo(float t, Point &point1, Point &point2, Point &point3, Point &poin
 Point circleTo(float t, Point &center, float radius, float fromRadian, float radianDif);
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCUTILMATH_H__*/

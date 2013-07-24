@@ -27,7 +27,7 @@
 #include <string.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 Skeleton* Skeleton_create (SkeletonData* data) {
 	int i, ii;
@@ -199,4 +199,4 @@ void Skeleton_update (Skeleton* self, float deltaTime) {
 	self->time += deltaTime;
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

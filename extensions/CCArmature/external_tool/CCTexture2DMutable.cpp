@@ -11,7 +11,7 @@
 #include "CCTexture2DMutable.h"
 
 
-using namespace cocos2d;
+using namespace cc;
 
 #if CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA
 void* Texture2DMutable::getOriginalTexData() {
@@ -40,9 +40,9 @@ void* Texture2DMutable::keepData(void* data, unsigned int lenght)
 	return newData;
 }
 
-bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize)
+bool Texture2DMutable::initWithImageFile(const char *imageFile, cc::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cc::Size& contentSize)
 {
-    image_ = new cocos2d::Image();
+    image_ = new cc::Image();
     image_->initWithImageFile(imageFile);
     
     
@@ -51,13 +51,13 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture
 
 bool Texture2DMutable::initWithImageFile(const char *imageFile)
 {
-    image_ = new cocos2d::Image();
+    image_ = new cc::Image();
     image_->initWithImageFile(imageFile);
     
     bool                      hasAlpha = image_->hasAlpha();
     Size                    imageSize = Size((float)(image_->getWidth()), (float)(image_->getHeight()));
     size_t                    bpp = image_->getBitsPerComponent();
-    cocos2d::Texture2DPixelFormat pixelFormat;
+    cc::Texture2DPixelFormat pixelFormat;
     
     // compute pixel format
     if(hasAlpha)

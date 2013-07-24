@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define  LOGD(...) 
 #endif
 
-#define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
+#define JAVAVM    cc::PluginJniHelper::getJavaVM()
 
 using namespace std;
 
@@ -93,7 +93,7 @@ extern "C"
         return ret;
     }
 
-    static bool getStaticMethodInfo_(cocos2d::PluginJniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+    static bool getStaticMethodInfo_(cc::PluginJniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
     {
         jmethodID methodID = 0;
         JNIEnv *pEnv = 0;
@@ -128,7 +128,7 @@ extern "C"
         return bRet;
     }
 
-    static bool getMethodInfo_(cocos2d::PluginJniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+    static bool getMethodInfo_(cc::PluginJniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
     {
         jmethodID methodID = 0;
         JNIEnv *pEnv = 0;
@@ -187,7 +187,7 @@ extern "C"
     }
 }
 
-namespace cocos2d {
+namespace cc {
 
 JavaVM* PluginJniHelper::_psJavaVM = NULL;
 

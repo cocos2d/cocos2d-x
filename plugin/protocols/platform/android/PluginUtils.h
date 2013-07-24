@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "PluginParam.h"
 #include "PluginJniMacros.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 class PluginProtocol;
 class PluginUtils
@@ -162,6 +162,6 @@ public:
     static void outputLog(const char* logTag, const char* pFormat, ...);
 };
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {
 
 #endif //__PLUGIN_UTILS_H__

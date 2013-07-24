@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class QuestionContainerSprite : public cocos2d::Sprite 
+class QuestionContainerSprite : public cc::Sprite 
 {
 public:
     virtual bool init();

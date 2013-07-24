@@ -5,8 +5,8 @@
 #include "SceneController.h"
 #include "../ExtensionsTest.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 ComponentsTestLayer::~ComponentsTestLayer()
 {
@@ -62,7 +62,7 @@ bool ComponentsTestLayer::init()
 	return bRet;
 }
 
-cocos2d::Node* ComponentsTestLayer::createGameScene()
+cc::Node* ComponentsTestLayer::createGameScene()
 {
     Node *root = NULL;
     do 
@@ -76,7 +76,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
         
-        root = cocos2d::Node::create();
+        root = cc::Node::create();
         root->addChild(player, 1, 1);
         
 

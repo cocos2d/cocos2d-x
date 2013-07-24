@@ -99,7 +99,7 @@ public:
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual void addArmature(cocos2d::extension::armature::Armature *armature);
+	virtual void addArmature(cc::extension::armature::Armature *armature);
 	void update(float delta);
 
 	int armatureCount;
@@ -127,11 +127,11 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title();
-	void animationEvent(cocos2d::extension::armature::Armature *armature, cocos2d::extension::armature::MovementEventType movementType, const char *movementID);
+	void animationEvent(cc::extension::armature::Armature *armature, cc::extension::armature::MovementEventType movementType, const char *movementID);
 	void callback1();
 	void callback2();
 
-	cocos2d::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature;
 };
 
 class TestUseMutiplePicture : public ArmatureTestLayer
@@ -143,7 +143,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void registerWithTouchDispatcher();
 
 	int displayIndex;
-	cocos2d::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature;
 };
 
 class TestParticleDisplay : public ArmatureTestLayer
@@ -155,7 +155,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void registerWithTouchDispatcher();
 
 	int animationID;
-	cocos2d::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature;
 };
 
 class TestBox2DDetector : public ArmatureTestLayer, public sigslot::has_slots<>
@@ -166,10 +166,10 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onHit(cocos2d::extension::armature::Bone *bone, cocos2d::extension::armature::Bone *bone2);
+	void onHit(cc::extension::armature::Bone *bone, cc::extension::armature::Bone *bone2);
 
-	cocos2d::extension::armature::Armature *armature;
-	cocos2d::extension::armature::Armature *armature2;
+	cc::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature2;
 };
 
 class TestBoundingBox : public ArmatureTestLayer
@@ -179,7 +179,7 @@ public:
 	virtual std::string title();
 	virtual void draw();
 
-	cocos2d::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature;
 	Rect rect;
 };
 
@@ -198,7 +198,7 @@ public:
 	virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
 	virtual void registerWithTouchDispatcher();
 
-	cocos2d::extension::armature::Armature *armature;
+	cc::extension::armature::Armature *armature;
 	int weaponIndex;
 };
 #endif  // __HELLOWORLD_SCENE_H__

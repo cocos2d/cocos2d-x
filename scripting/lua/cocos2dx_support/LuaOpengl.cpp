@@ -16,8 +16,8 @@ extern "C" {
 #include "CCLuaEngine.h"
 #include "LuaScriptHandlerMgr.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 
     

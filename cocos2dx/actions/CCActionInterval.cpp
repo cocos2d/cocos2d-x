@@ -2037,7 +2037,7 @@ bool Animate::initWithAnimation(Animation *pAnimation)
     return false;
 }
 
-void Animate::setAnimation(cocos2d::Animation *animation)
+void Animate::setAnimation(Animation *animation)
 {
     if (_animation != animation)
     {

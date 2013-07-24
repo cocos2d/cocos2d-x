@@ -29,7 +29,7 @@
 #include <ctype.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 static const char* ep;
 
@@ -372,4 +372,4 @@ int Json_getInt (Json* value, const char* name, int defaultValue) {
 	return value ? (int)value->valuefloat : defaultValue;
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

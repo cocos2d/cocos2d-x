@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include <string>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 class PluginManager
 {
@@ -49,6 +49,6 @@ private:
     std::map<std::string, PluginProtocol*> _pluginsMap;
 };
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {
 
 #endif /* __CCX_PLUGINMANAGER_H__ */

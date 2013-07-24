@@ -109,7 +109,7 @@ namespace
 
     void myAccelerometerKeyHook( UINT message,WPARAM wParam,LPARAM lParam )
     {
-        cocos2d::Accelerometer    *pAccelerometer = cocos2d::Director::getInstance()->getAccelerometer();
+        cc::Accelerometer    *pAccelerometer = cc::Director::getInstance()->getAccelerometer();
         bool                        sendUpdate=false;
         switch( message )
         {

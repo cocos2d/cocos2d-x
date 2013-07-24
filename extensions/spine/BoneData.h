@@ -26,7 +26,7 @@
 #ifndef SPINE_BONEDATA_H_
 #define SPINE_BONEDATA_H_
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct BoneData BoneData;
 struct BoneData {
@@ -41,6 +41,6 @@ struct BoneData {
 BoneData* BoneData_create (const char* name, BoneData* parent);
 void BoneData_dispose (BoneData* self);
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_BONEDATA_H_ */

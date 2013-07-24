@@ -21,7 +21,7 @@ extern "C"
     static JNIEnv* getJNIEnv(void)
     {
         
-        JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+        JavaVM* jvm = cc::JniHelper::getJavaVM();
         if (NULL == jvm) {
             LOGD("Failed to get JNIEnv. JniHelper::getJavaVM() is NULL");
             return NULL;

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginParam.h"
 #include <vector>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 /**
 	The super class for all plugins.
@@ -79,6 +79,6 @@ private:
     std::string _pluginName;
 };
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {
 
 #endif /* __CCX_IPLUGIN_H__ */

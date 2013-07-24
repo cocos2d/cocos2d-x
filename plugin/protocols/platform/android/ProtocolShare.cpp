@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 extern "C" {
 	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_ShareWrapper_nativeOnShareResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
@@ -133,4 +133,4 @@ void ProtocolShare::onShareResult(ShareResultCode ret, const char* msg)
     PluginUtils::outputLog("ProtocolShare", "Share result is : %d(%s)", (int) ret, msg);
 }
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {

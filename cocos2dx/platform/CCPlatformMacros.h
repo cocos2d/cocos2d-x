@@ -100,9 +100,9 @@ It's new in cocos2d-x since v0.99.5
 
 // namespace cocos2d {}
 #ifdef __cplusplus
-    #define NS_CC_BEGIN                     namespace cocos2d {
+    #define NS_CC_BEGIN                     namespace cc {
     #define NS_CC_END                       }
-    #define USING_NS_CC                     using namespace cocos2d
+    #define USING_NS_CC                     using namespace cc
 #else
     #define NS_CC_BEGIN 
     #define NS_CC_END 
@@ -215,15 +215,15 @@ public: virtual void set##funName(varType var)   \
 #define CCLOGWARN(...)   do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::log(format, ##__VA_ARGS__)
+#define CCLOG(format, ...)      cc::log(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cc::log(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::log(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   cocos2d::log(format, ##__VA_ARGS__)
+#define CCLOG(format, ...)      cc::log(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cc::log(format, ##__VA_ARGS__)
+#define CCLOGINFO(format,...)   cc::log(format, ##__VA_ARGS__)
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
@@ -231,7 +231,7 @@ public: virtual void set##funName(varType var)   \
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
 #define LUALOG(...)
 #else
-#define LUALOG(format, ...)     cocos2d::log(format, ##__VA_ARGS__)
+#define LUALOG(format, ...)     cc::log(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \

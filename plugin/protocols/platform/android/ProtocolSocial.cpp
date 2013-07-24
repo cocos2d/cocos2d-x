@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 extern "C" {
     JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_SocialWrapper_nativeOnSocialResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
@@ -156,4 +156,4 @@ void ProtocolSocial::showAchievements()
     PluginUtils::callJavaFunctionWithName(this, "showAchievements");
 }
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {

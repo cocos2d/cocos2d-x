@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <stdio.h>
+#include <cstdio>
 #include <stdlib.h>
 #include "support/base64.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     
@@ -169,4 +169,4 @@ int base64Encode(const unsigned char *in, unsigned int inLength, char **out) {
     return outLength;
 }
     
-}//namespace   cocos2d 
+NS_CC_END

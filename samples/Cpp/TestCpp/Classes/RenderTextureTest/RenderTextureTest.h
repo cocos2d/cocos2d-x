@@ -61,17 +61,17 @@ public:
     void renderScreenShot();
 
 private:
-    cocos2d::SpriteBatchNode *mgr;;
+    cc::SpriteBatchNode *mgr;;
 
-    cocos2d::Sprite *sp1;
-    cocos2d::Sprite *sp2;
-    cocos2d::Sprite *sp3;
-    cocos2d::Sprite *sp4;
-    cocos2d::Sprite *sp5;
-    cocos2d::Sprite *sp6;
-    cocos2d::Sprite *sp7;
-    cocos2d::Sprite *sp8;
-    cocos2d::Sprite *sp9;
+    cc::Sprite *sp1;
+    cc::Sprite *sp2;
+    cc::Sprite *sp3;
+    cc::Sprite *sp4;
+    cc::Sprite *sp5;
+    cc::Sprite *sp6;
+    cc::Sprite *sp7;
+    cc::Sprite *sp8;
+    cc::Sprite *sp9;
 };
 
 class RenderTextureTestDepthStencil : public RenderTextureTest
@@ -85,8 +85,8 @@ public:
 class RenderTextureTargetNode : public RenderTextureTest
 {
 private:
-    cocos2d::Sprite *sprite1, *sprite2;
-    cocos2d::RenderTexture *renderTexture;
+    cc::Sprite *sprite1, *sprite2;
+    cc::RenderTexture *renderTexture;
 public:
     RenderTextureTargetNode();
     

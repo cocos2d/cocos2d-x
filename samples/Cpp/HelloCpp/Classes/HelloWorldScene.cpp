@@ -2,7 +2,6 @@
 #include "AppMacros.h"
 USING_NS_CC;
 
-
 Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object

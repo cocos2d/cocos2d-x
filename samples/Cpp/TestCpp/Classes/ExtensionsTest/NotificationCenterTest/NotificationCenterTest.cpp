@@ -134,7 +134,7 @@ NotificationCenterTest::NotificationCenterTest()
     NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", NULL);
 }
 
-void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
+void NotificationCenterTest::toExtensionsMainLayer(cc::Object* sender)
 {
     /* for testing removeAllObservers */
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
@@ -160,7 +160,7 @@ void NotificationCenterTest::connectToSwitch(Object *sender)
     pLight->setIsConnectToSwitch(bConnected);
 }
 
-void NotificationCenterTest::doNothing(cocos2d::Object *sender)
+void NotificationCenterTest::doNothing(cc::Object *sender)
 {
 
 }

@@ -128,9 +128,9 @@ void Control::sendActionsForControlEvents(ControlEvent controlEvents)
             //Call ScriptFunc
             if (kScriptTypeLua == _scriptType)
             {
-                cocos2d::BasicScriptData data(this,(void*)&controlEvents);
-                cocos2d::ScriptEvent event(cocos2d::kControlEvent,(void*)&data);
-                cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                cc::BasicScriptData data(this,(void*)&controlEvents);
+                cc::ScriptEvent event(cc::kControlEvent,(void*)&data);
+                cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
         }
     }

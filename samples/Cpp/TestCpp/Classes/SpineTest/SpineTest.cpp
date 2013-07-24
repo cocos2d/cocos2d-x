@@ -28,8 +28,8 @@
 #include <fstream>
 #include <string.h>
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 using namespace std;
 
 //------------------------------------------------------------------

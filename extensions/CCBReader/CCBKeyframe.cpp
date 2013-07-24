@@ -1,7 +1,5 @@
 #include "CCBKeyframe.h"
 
-using namespace cocos2d;
-
 NS_CC_EXT_BEGIN
 
 CCBKeyframe::CCBKeyframe()

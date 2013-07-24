@@ -30,7 +30,7 @@
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
-#define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
+#define getEditBoxImplMac() ((cc::extension::EditBoxImplMac*)editBox_)
 
 @implementation CCCustomNSTextField
 
@@ -141,18 +141,18 @@
 - (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
 {
     editState_ = YES;
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getEditBox());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -160,23 +160,23 @@
 - (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
 {
     editState_ = NO;
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getEditBox());
         pDelegate->editBoxReturn(getEditBoxImplMac()->getEditBox());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
         strncpy(data.eventName,"return",64);
         event.data = (void*)&data;
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -209,18 +209,18 @@
  */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplMac()->getEditBox(), getEditBoxImplMac()->getText());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 

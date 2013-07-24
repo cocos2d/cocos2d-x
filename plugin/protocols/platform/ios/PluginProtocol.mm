@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "PluginUtilsIOS.h"
 #include "PluginOCMacros.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 PluginProtocol::~PluginProtocol()
 {
@@ -193,4 +193,4 @@ float PluginProtocol::callFloatFuncWithParam(const char* funcName, std::vector<P
     CALL_OC_FUNC(float, 0.0f, Float)
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

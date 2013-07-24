@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 extern "C" {
 	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
@@ -112,4 +112,4 @@ std::string ProtocolUser::getSessionID()
     return PluginUtils::callJavaStringFuncWithName(this, "getSessionID");
 }
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {

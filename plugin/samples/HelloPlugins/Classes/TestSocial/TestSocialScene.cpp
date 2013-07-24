@@ -27,8 +27,8 @@ THE SOFTWARE.
 #include "MySocialManager.h"
 #include "HelloWorldScene.h"
 
-using namespace cocos2d;
-using namespace cocos2d::plugin;
+using namespace cc;
+using namespace cc::plugin;
 
 const std::string s_aTestCases[] = {
     "Nd91",

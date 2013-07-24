@@ -31,7 +31,7 @@
 
 //#pragma mark - Hash
 
-using namespace cocos2d;
+using namespace cc;
 
 typedef struct _hashJSObject
 {

@@ -326,7 +326,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
 
     virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		static const long id = cc::getHashCodeByString(typeid(cc::CallFunc).name());
 		return id;
     }
 

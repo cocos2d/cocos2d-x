@@ -5,7 +5,7 @@
 
 #include "SimpleAudioEngine.h"
 
-class HelloWorld : public cocos2d::LayerColor
+class HelloWorld : public cc::LayerColor
 {
 public:
 	HelloWorld();
@@ -16,27 +16,27 @@ public:
 	virtual bool init();  
 
 	// there's no 'id' in cpp, so we recommand to return the exactly class pointer
-	static cocos2d::Scene* scene();
+	static cc::Scene* scene();
 
 	// a selector callback
-	virtual void menuCloseCallback(cocos2d::Object* pSender);
+	virtual void menuCloseCallback(cc::Object* pSender);
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(HelloWorld);
 
-	void spriteMoveFinished(cocos2d::Node* sender);
+	void spriteMoveFinished(cc::Node* sender);
 
 	void gameLogic(float dt);
 
 	void updateGame(float dt);
 
 	void registerWithTouchDispatcher();
-	void ccTouchesEnded(cocos2d::Set* touches, cocos2d::Event* event);
+	void ccTouchesEnded(cc::Set* touches, cc::Event* event);
     
     
 protected:
-	cocos2d::Array *_targets;
-	cocos2d::Array *_projectiles;
+	cc::Array *_targets;
+	cc::Array *_projectiles;
 	int _projectilesDestroyed;
 
 	void addTarget();

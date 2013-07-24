@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "ProtocolSocial.h"
 
-class MySocialManager : public cocos2d::plugin::SocialListener
+class MySocialManager : public cc::plugin::SocialListener
 {
 public:
     static MySocialManager* sharedManager();
@@ -42,10 +42,10 @@ public:
 
     void submitScore(MySocialMode mode, const char* leaderboardID, long score);
     void showLeaderboard(MySocialMode mode, const char* leaderboardID);
-    void unlockAchievement(MySocialMode mode, cocos2d::plugin::TAchievementInfo info);
+    void unlockAchievement(MySocialMode mode, cc::plugin::TAchievementInfo info);
     void showAchievement(MySocialMode mode);
 
-    virtual void onSocialResult(cocos2d::plugin::SocialRetCode code, const char* msg);
+    virtual void onSocialResult(cc::plugin::SocialRetCode code, const char* msg);
 
 private:
     MySocialManager();
@@ -53,7 +53,7 @@ private:
 
     static MySocialManager* s_pManager;
 
-    cocos2d::plugin::ProtocolSocial* _pNd91;
+    cc::plugin::ProtocolSocial* _pNd91;
 };
 
 #endif // __MY_SOCIAL_MANAGER_H__

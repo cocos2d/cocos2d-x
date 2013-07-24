@@ -26,14 +26,14 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 
-class TestSocial : public cocos2d::Layer
+class TestSocial : public cc::Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-    static cocos2d::Scene* scene();
+    static cc::Scene* scene();
     
     // a selector callback
     void menuBackCallback(Object* pSender);
@@ -46,7 +46,7 @@ public:
     CREATE_FUNC(TestSocial);
 
 private:
-    cocos2d::MenuItemToggle* _caseItem;
+    cc::MenuItemToggle* _caseItem;
 };
 
 #endif // __TEST_SOCIAL_SCENE_H__

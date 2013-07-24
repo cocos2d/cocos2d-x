@@ -26,7 +26,7 @@
 #include <spine/BoneData.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 BoneData* BoneData_create (const char* name, BoneData* parent) {
 	BoneData* self = NEW(BoneData);
@@ -42,4 +42,4 @@ void BoneData_dispose (BoneData* self) {
 	FREE(self);
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

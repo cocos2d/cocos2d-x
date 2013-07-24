@@ -157,7 +157,7 @@ Set* ActionManager::pauseAllRunningActions()
     return idsWithActions;
 }
 
-void ActionManager::resumeTargets(cocos2d::Set *targetsToResume)
+void ActionManager::resumeTargets(Set *targetsToResume)
 {    
     SetIterator iter;
     for (iter = targetsToResume->begin(); iter != targetsToResume->end(); ++iter)

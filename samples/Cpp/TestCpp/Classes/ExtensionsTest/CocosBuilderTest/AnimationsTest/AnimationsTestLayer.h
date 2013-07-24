@@ -5,9 +5,9 @@
 #include "cocos-ext.h"
 
 class AnimationsTestLayer
-: public cocos2d::Layer
-, public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::CCBMemberVariableAssigner 
+: public cc::Layer
+, public cc::extension::CCBSelectorResolver
+, public cc::extension::CCBMemberVariableAssigner 
 {
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(AnimationsTestLayer, create);
@@ -15,19 +15,19 @@ public:
     AnimationsTestLayer();
     virtual ~AnimationsTestLayer();
     
-    virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName);
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
+    virtual cc::SEL_MenuHandler onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName);
+    virtual cc::extension::SEL_CCControlHandler onResolveCCBControlSelector(cc::Object * pTarget, const char * pSelectorName);
+    virtual bool onAssignCCBMemberVariable(cc::Object * pTarget, const char * pMemberVariableName, cc::Node * node);
     
-    void onControlButtonIdleClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-    void onControlButtonWaveClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-    void onControlButtonJumpClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-    void onControlButtonFunkyClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
+    void onControlButtonIdleClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+    void onControlButtonWaveClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+    void onControlButtonJumpClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+    void onControlButtonFunkyClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
     
-    void setAnimationManager(cocos2d::extension::CCBAnimationManager *pAnimationManager);
+    void setAnimationManager(cc::extension::CCBAnimationManager *pAnimationManager);
     
 private:
-    cocos2d::extension::CCBAnimationManager *mAnimationManager;
+    cc::extension::CCBAnimationManager *mAnimationManager;
 };
 
 #endif

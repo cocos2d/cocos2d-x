@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "PluginManager.h"
 #include "cocos2d.h"
 
-using namespace cocos2d::plugin;
-using namespace cocos2d;
+using namespace cc::plugin;
+using namespace cc;
 
 MySocialManager* MySocialManager::s_pManager = NULL;
 

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <emscripten/emscripten.h>
 #include <sstream>
 
-using namespace cocos2d;
+USING_NS_CC;
 using namespace std;
 
 #define MULTILINE(...) #__VA_ARGS__

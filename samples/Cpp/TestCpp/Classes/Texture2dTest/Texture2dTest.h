@@ -440,7 +440,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     
-    void transformSprite(cocos2d::Sprite *sprite);
+    void transformSprite(cc::Sprite *sprite);
 };
 
 // ETC1 texture format test

@@ -73,7 +73,7 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
+    cc::extension::ScrollView* cobj = (cc::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
@@ -196,7 +196,7 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
+    cc::extension::TableView* cobj = (cc::extension::TableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
@@ -269,12 +269,12 @@ public:
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            cocos2d::extension::TableViewCell* arg0;
+            cc::extension::TableViewCell* arg0;
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(ret);
                 proxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::extension::TableViewCell*)(proxy ? proxy->ptr : NULL);
+                arg0 = (cc::extension::TableViewCell*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, NULL, "Invalid Native Object");
             } while (0);
             return arg0;
@@ -379,7 +379,7 @@ static JSBool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
+    cc::extension::TableView* cobj = (cc::extension::TableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     if (argc == 1)
     {
@@ -417,9 +417,9 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
         pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
         
-        cocos2d::Size arg1;
+        cc::Size arg1;
         ok &= jsval_to_ccsize(cx, argv[1], &arg1);
-        cocos2d::extension::TableView* ret = NULL;
+        cc::extension::TableView* ret = NULL;
         ret = new TableView();
         ret->autorelease();
         
@@ -428,7 +428,7 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         jsval jsret;
         do {
             if (ret) {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::extension::TableView>(cx, ret);
+                js_proxy_t *proxy = js_get_or_create_proxy<cc::extension::TableView>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -441,12 +441,12 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         }
         else
         {
-            cocos2d::Node* arg2;
+            cc::Node* arg2;
             do {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
                 proxy = jsb_get_js_proxy(tmpObj);
-                arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
+                arg2 = (cc::Node*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg2, cx, JS_FALSE, "Invalid Native Object");
             } while (0);
             JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
@@ -551,7 +551,7 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
+    cc::extension::EditBox* cobj = (cc::extension::EditBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {

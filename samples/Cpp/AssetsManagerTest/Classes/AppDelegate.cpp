@@ -89,7 +89,7 @@ UpdateLayer::~UpdateLayer()
     CC_SAFE_DELETE(pAssetsManager);
 }
 
-void UpdateLayer::update(cocos2d::Object *pSender)
+void UpdateLayer::update(cc::Object *pSender)
 {
     pProgressLabel->setString("");
     
@@ -99,7 +99,7 @@ void UpdateLayer::update(cocos2d::Object *pSender)
     isUpdateItemClicked = true;
 }
 
-void UpdateLayer::reset(cocos2d::Object *pSender)
+void UpdateLayer::reset(cc::Object *pSender)
 {
     pProgressLabel->setString(" ");
     
@@ -121,7 +121,7 @@ void UpdateLayer::reset(cocos2d::Object *pSender)
     createDownloadedDir();
 }
 
-void UpdateLayer::enter(cocos2d::Object *pSender)
+void UpdateLayer::enter(cc::Object *pSender)
 {
     // Should set search resource path before running script if "update" is not clicked.
     // Because AssetsManager will set 

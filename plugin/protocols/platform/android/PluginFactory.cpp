@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "ProtocolUser.h"
 #include "ProtocolSocial.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 enum {
 	kPluginAds = 1,
@@ -153,4 +153,4 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 	return pRet;
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

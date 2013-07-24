@@ -25,10 +25,11 @@ THE SOFTWARE.
 #ifndef __CCACCELEROMETER_H__
 #define __CCACCELEROMETER_H__
 
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCAccelerometerDelegate.h"
 #include <functional>
 
-namespace   cocos2d {
+NS_CC_BEGIN
 
 class Accelerometer
 {
@@ -44,6 +45,6 @@ public:
     void setAccelerometerInterval(float interval) {CC_UNUSED_PARAM(interval);};
 };
 
-}
+NS_CC_END
 
 #endif /* __CCACCELEROMETER_H__ */

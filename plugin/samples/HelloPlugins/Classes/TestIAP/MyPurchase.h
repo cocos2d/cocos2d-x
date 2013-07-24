@@ -26,10 +26,10 @@ THE SOFTWARE.
 
 #include "ProtocolIAP.h"
 
-class MyPurchaseResult : public cocos2d::plugin::PayResultListener
+class MyPurchaseResult : public cc::plugin::PayResultListener
 {
 public:
-	virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info);
+	virtual void onPayResult(cc::plugin::PayResultCode ret, const char* msg, cc::plugin::TProductInfo info);
 };
 
 class MyPurchase
@@ -46,7 +46,7 @@ public:
 
 	void unloadIAPPlugin();
     void loadIAPPlugin();
-    void payByMode(cocos2d::plugin::TProductInfo info, MyPayMode mode);
+    void payByMode(cc::plugin::TProductInfo info, MyPayMode mode);
 
 private:
     MyPurchase();
@@ -54,8 +54,8 @@ private:
 
     static MyPurchase* s_pPurchase;
 
-    cocos2d::plugin::ProtocolIAP* s_pAlipay;
-    cocos2d::plugin::ProtocolIAP* s_pNd91;
+    cc::plugin::ProtocolIAP* s_pAlipay;
+    cc::plugin::ProtocolIAP* s_pNd91;
     MyPurchaseResult* s_pRetListener;
 };
 

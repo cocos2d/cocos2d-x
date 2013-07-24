@@ -264,7 +264,7 @@ Scheduler::~Scheduler(void)
 void Scheduler::removeHashElement(_hashSelectorEntry *element)
 {
 
-	cocos2d::Object *target = element->target;
+	Object *target = element->target;
 
     ccArrayFree(element->timers);
     HASH_DEL(_hashForTimers, element);

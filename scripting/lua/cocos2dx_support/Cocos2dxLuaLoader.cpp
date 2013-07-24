@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include <string>
 #include <algorithm>
 
-using namespace cocos2d;
+using namespace cc;
 
 extern "C"
 {
