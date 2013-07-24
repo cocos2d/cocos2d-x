@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 typedef std::map<std::string, std::string>   StringMap;
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 class PluginProtocol;
 class PluginParam
@@ -95,6 +95,6 @@ private:
 	StringMap _strMapValue;
 };
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {
 
 #endif /* __CCX_PLUGIN_PARAM_H__ */

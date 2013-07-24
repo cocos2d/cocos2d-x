@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "PluginUtils.h"
 #include "PluginJavaData.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 extern "C" {
 	JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_IAPWrapper_nativeOnPayResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
@@ -146,4 +146,4 @@ void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
     PluginUtils::outputLog("ProtocolIAP", "Pay result is : %d(%s)", (int) ret, msg);
 }
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {

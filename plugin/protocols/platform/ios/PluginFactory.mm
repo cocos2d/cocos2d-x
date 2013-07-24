@@ -34,7 +34,7 @@ THE SOFTWARE.
 #import "InterfaceIAP.h"
 #import "InterfaceShare.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 static PluginFactory* s_pFactory = NULL;
 
@@ -104,4 +104,4 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 	return pRet;
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

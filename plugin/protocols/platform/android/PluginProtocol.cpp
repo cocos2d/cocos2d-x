@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #define LOG_TAG     "PluginProtocol"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 PluginProtocol::~PluginProtocol()
 {
@@ -187,4 +187,4 @@ float PluginProtocol::callFloatFuncWithParam(const char* funcName, std::vector<P
     CALL_JAVA_FUNC(float, Float, 0.0f, "F")
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

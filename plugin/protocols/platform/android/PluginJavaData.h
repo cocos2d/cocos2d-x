@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <string>
 #include <jni.h>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 typedef struct _PluginJavaData_
 {
@@ -35,6 +35,6 @@ typedef struct _PluginJavaData_
 	std::string  jclassName;
 } PluginJavaData;
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {
 
 #endif // __PLUGIN_JAVA_DATA_H__

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include <string>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 typedef std::pair< std::string, std::string >   LogEventParamPair;
 typedef std::map< std::string, std::string >    LogEventParamMap;
@@ -91,7 +91,7 @@ public:
 	void setCaptureUncaughtException(bool enabled);
 };
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {
 
 
 #endif /* __CCX_PROTOCOL_ANALYTICS_H__ */

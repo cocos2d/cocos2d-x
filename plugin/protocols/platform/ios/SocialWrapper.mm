@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "PluginUtilsIOS.h"
 #include "ProtocolSocial.h"
 
-using namespace cocos2d::plugin;
+using namespace cc::plugin;
 
 @implementation SocialWrapper
 

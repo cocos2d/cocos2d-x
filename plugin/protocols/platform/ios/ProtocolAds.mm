@@ -26,7 +26,7 @@
 #include "PluginUtilsIOS.h"
 #import "InterfaceAds.h"
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 ProtocolAds::ProtocolAds()
 : _listener(NULL)
@@ -116,4 +116,4 @@ void ProtocolAds::onPlayerGetPoints(int points)
     }
 }
 
-}} //namespace cocos2d { namespace plugin {
+}} //namespace cc { namespace plugin {

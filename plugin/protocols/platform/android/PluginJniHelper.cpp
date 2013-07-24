@@ -187,7 +187,7 @@ extern "C"
     }
 }
 
-namespace cocos2d {
+namespace cc {
 
 JavaVM* PluginJniHelper::_psJavaVM = NULL;
 

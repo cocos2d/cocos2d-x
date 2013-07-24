@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <map>
 #include <string>
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 typedef std::map<std::string, std::string> TShareDeveloperInfo;
 typedef std::map<std::string, std::string> TShareInfo;
@@ -88,6 +88,6 @@ protected:
     ShareResultListener* _listener;
 };
 
-}} // namespace cocos2d { namespace plugin {
+}} // namespace cc { namespace plugin {
 
 #endif   /* ----- #ifndef __CCX_PROTOCOL_SHARE_H__ ----- */

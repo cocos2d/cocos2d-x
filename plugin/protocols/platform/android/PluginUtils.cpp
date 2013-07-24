@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #define MAX_LOG_LEN			256
 
-namespace cocos2d { namespace plugin {
+namespace cc { namespace plugin {
 
 #define JAVAVM    cc::PluginJniHelper::getJavaVM()
 
@@ -246,4 +246,4 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
 	return obj;
 }
 
-}}// namespace cocos2d { namespace plugin {
+}}// namespace cc { namespace plugin {
