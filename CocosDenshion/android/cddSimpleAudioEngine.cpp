@@ -31,7 +31,7 @@ namespace CocosDenshion {
 
     static SimpleAudioEngine *s_pEngine = 0;
 
-    SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
+    SimpleAudioEngine* SimpleAudioEngine::getInstance() {
         if (! s_pEngine) {
             // if (CocosDenshion::android::is_buggy_device()) {
                 // use the Java Audio implementation until compatibility is confirmed
@@ -64,13 +64,18 @@ namespace CocosDenshion {
     void SimpleAudioEngine::pauseBackgroundMusic() { }
     void SimpleAudioEngine::resumeBackgroundMusic() { }
     void SimpleAudioEngine::rewindBackgroundMusic() { }
-    bool SimpleAudioEngine::willPlayBackgroundMusic() { }
-    bool SimpleAudioEngine::isBackgroundMusicPlaying() { }
-    float SimpleAudioEngine::getBackgroundMusicVolume() { }
+    bool SimpleAudioEngine::willPlayBackgroundMusic() { return false; }
+    bool SimpleAudioEngine::isBackgroundMusicPlaying() { return false; }
+    float SimpleAudioEngine::getBackgroundMusicVolume() { return 0.0f; }
     void SimpleAudioEngine::setBackgroundMusicVolume(float volume) { }
-    float SimpleAudioEngine::getEffectsVolume() { }
+    float SimpleAudioEngine::getEffectsVolume() { return 0.0f; }
     void SimpleAudioEngine::setEffectsVolume(float volume) { }
-    unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop) { }
+    unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
+                                               bool bLoop,
+                                               float pitch,
+                                               float pan,
+                                               float gain) {
+        return 0; }
     void SimpleAudioEngine::pauseEffect(unsigned int nSoundId) { }
     void SimpleAudioEngine::pauseAllEffects() { }
     void SimpleAudioEngine::resumeEffect(unsigned int nSoundId) { }
