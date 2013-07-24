@@ -81,7 +81,7 @@ void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
 
 static NodeLoaderLibrary * sSharedNodeLoaderLibrary = NULL;
 
-NodeLoaderLibrary * NodeLoaderLibrary::sharedNodeLoaderLibrary() {
+NodeLoaderLibrary * NodeLoaderLibrary::getInstance() {
     if(sSharedNodeLoaderLibrary == NULL) {
         sSharedNodeLoaderLibrary = new NodeLoaderLibrary();
 
@@ -90,7 +90,7 @@ NodeLoaderLibrary * NodeLoaderLibrary::sharedNodeLoaderLibrary() {
     return sSharedNodeLoaderLibrary;
 }
 
-void NodeLoaderLibrary::purgeSharedNodeLoaderLibrary() {
+void NodeLoaderLibrary::destroyInstance() {
     CC_SAFE_DELETE(sSharedNodeLoaderLibrary);
 }
 
