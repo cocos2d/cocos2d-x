@@ -8,9 +8,10 @@ COCOS2DX_ROOT="$DIR"/../..
 build_android()
 {
     echo "Current dir: `pwd`"
-    cd $1/proj.android
+    pushd $1/proj.android
     ln -s $COCOS2DX_ROOT/android_build_objs obj
     ./build_native.sh
+    popd
 }
 
 if [ "$GEN_JSB"x = "YES"x ]; then
