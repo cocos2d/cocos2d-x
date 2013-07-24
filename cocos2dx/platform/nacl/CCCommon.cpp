@@ -72,12 +72,12 @@ void log(const char * pszFormat, ...)
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
-    CCLog("%s: %s", pszTitle, pszMsg);
+    log("%s: %s", pszTitle, pszMsg);
 }
 
 void LuaLog(const char * pszFormat)
 {
-    CCLog("%s", pszFormat);
+    log("%s", pszFormat);
 }
 
 NS_CC_END
