@@ -1,0 +1,604 @@
+/****************************************************************************
+ Copyright (c) 2013      Zynga Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#include "cocos2d.h"
+#include "CCStringTTF.h"
+#include "CCFont.h"
+#include "CCLabelTextFormatter.h"
+#include "CCFontAtlasCache.h"
+
+NS_CC_BEGIN
+
+StringTTF::StringTTF(FontAtlas *pAtlas, TextAlignment alignment):   _currentUTF8String(0),
+                                                                    _fontAtlas(pAtlas),
+                                                                    _alignment(alignment),
+                                                                    _lineBreakWithoutSpaces(false),
+                                                                    _advances(0)
+{
+}
+
+StringTTF* StringTTF::create(FontAtlas *pAtlas, TextAlignment alignment, int lineSize)
+{
+    StringTTF *ret = new StringTTF(pAtlas, alignment);
+    
+    if (!ret)
+        return 0;
+    
+    if( ret->init() )
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return 0;
+    }
+    
+    return ret;
+}
+
+StringTTF::~StringTTF()
+{
+    if (_currentUTF8String)
+    {
+        delete [] _currentUTF8String;
+        _currentUTF8String = 0;
+    }
+    
+    if (_advances)
+    {
+        delete [] _advances;
+        _advances = 0;
+    }
+    
+    if (_fontAtlas)
+    {
+        FontAtlasCache::releaseFontAtlas(_fontAtlas);
+    }
+}
+
+bool StringTTF::init()
+{
+    return true;
+}
+
+void StringTTF::setString(const char *stringToRender)
+{
+    setText(stringToRender, 0, kTextAlignmentCenter, false);
+}
+
+bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignment alignment, bool lineBreakWithoutSpaces)
+{
+    if (!_fontAtlas)
+        return false;
+    
+    _width                  = lineWidth;
+    _alignment              = alignment;
+    _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
+     
+    // release all the sprites
+    moveAllSpritesToCache();
+    
+    // store locally common line height
+    _commonLineHeight = _fontAtlas->getCommonLineHeight();
+    if (_commonLineHeight <= 0)
+        return false;
+    
+    int numLetter = 0;
+    unsigned short* utf16String = cc_utf8_to_utf16(stringToRender);
+    if(!utf16String)
+        return false;
+    
+    numLetter = cc_wcslen(utf16String);
+    SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), numLetter);
+    
+    // 
+    setCurrentString(utf16String);
+    
+    // align text
+    alignText();
+    
+    // done here
+    return true;
+}
+
+void StringTTF::setAlignment(TextAlignment alignment)
+{
+    // store the new alignment
+    if (alignment != _alignment)
+    {
+        // store
+        _alignment = alignment;
+    
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setWidth(float width)
+{
+    if (width != _width)
+    {
+        // store
+        _width = width;
+        
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setLineBreakWithoutSpace(bool breakWithoutSpace)
+{
+    if (breakWithoutSpace != _lineBreakWithoutSpaces)
+    {
+        // store
+        _lineBreakWithoutSpaces = breakWithoutSpace;
+        
+        // need to align text again
+        alignText();
+    }
+}
+
+void StringTTF::setScale(float scale)
+{
+    Node::setScale(scale);
+    alignText();
+}
+
+void StringTTF::setScaleX(float scaleX)
+{
+    Node::setScaleX(scaleX);
+    alignText();
+}
+
+void StringTTF::setScaleY(float scaleY)
+{
+    Node::setScaleY(scaleY);
+    alignText();
+}
+
+void StringTTF::alignText()
+{
+    hideAllLetters();
+    LabelTextFormatter::createStringSprites(this);
+    
+    if( LabelTextFormatter::multilineText(this) )
+    {
+        hideAllLetters();
+        LabelTextFormatter::createStringSprites(this);
+    }
+    
+    LabelTextFormatter::alignText(this);
+}
+
+void StringTTF::hideAllLetters()
+{
+    Object* Obj = NULL;
+    CCARRAY_FOREACH(&_spriteArray, Obj)
+    {
+        ((Sprite *)Obj)->setVisible(false);
+    }
+    
+    CCARRAY_FOREACH(&_spriteArrayCache, Obj)
+    {
+        ((Sprite *)Obj)->setVisible(false);
+    }
+}
+
+bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
+{
+    if (_advances)
+    {
+        delete [] _advances;
+        _advances = 0;
+    }
+    
+    // carloX
+    Font *theFont = 0;
+    theFont = _fontAtlas->getFont();
+    
+    if (!theFont)
+        return false;
+    
+    int letterCount = 0;
+    _advances = theFont->getAdvancesForTextUTF16(stringToRender, letterCount);
+    
+    if(!_advances)
+        return false;
+    else
+        return true;
+}
+
+bool StringTTF::setCurrentString(unsigned short *stringToSet)
+{
+    // set the new string
+    if (_currentUTF8String)
+    {
+        delete [] _currentUTF8String;
+        _currentUTF8String = 0;
+    }
+    
+    //
+    _currentUTF8String = stringToSet;
+    
+    // compute the advances
+    return computeAdvancesForString(stringToSet);
+}
+
+Sprite * StringTTF::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture)
+{
+    Rect uvRect;
+    uvRect.size.height = theDefinition.height;
+    uvRect.size.width  = theDefinition.width;
+    uvRect.origin.x    = theDefinition.U;
+    uvRect.origin.y    = theDefinition.V;
+    
+    SpriteFrame *pFrame = SpriteFrame::createWithTexture(theTexture, uvRect);
+    Sprite *tempSprite  = getSprite();
+    
+    if (!tempSprite)
+        return 0;
+    
+    tempSprite->initWithSpriteFrame(pFrame);
+    tempSprite->setAnchorPoint(Point(0.0, 1.0));
+    tempSprite->setBatchNode(this);
+    
+    return tempSprite;
+}
+
+Sprite * StringTTF::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, FontLetterDefinition &theDefinition, Texture2D *theTexture)
+{
+    if (!spriteToUpdate)
+    {
+        return 0;
+    }
+    else
+    {
+        Rect uvRect;
+        uvRect.size.height = theDefinition.height;
+        uvRect.size.width  = theDefinition.width;
+        uvRect.origin.x    = theDefinition.U;
+        uvRect.origin.y    = theDefinition.V;
+        
+        SpriteFrame *frame = SpriteFrame::createWithTexture(theTexture, uvRect);
+        if (frame)
+        {
+            spriteToUpdate->setTexture(theTexture);
+            spriteToUpdate->setDisplayFrame(frame);
+            spriteToUpdate->setAnchorPoint(Point(0.0, 1.0));
+            spriteToUpdate->setBatchNode(this);
+        }
+        
+        return spriteToUpdate;
+    }
+}
+
+Sprite * StringTTF::getSpriteForLetter(unsigned short int newLetter)
+{
+    if (!_fontAtlas)
+        return 0;
+    
+    FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+    Sprite *newSprite = createNewSpriteFromLetterDefinition(tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
+    this->addChild(newSprite);
+    return    newSprite;
+}
+
+Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter)
+{
+    if (!spriteToUpdate || !_fontAtlas)
+        return 0;
+    else
+    {
+        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+        Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
+        return    pNewSprite;
+    }
+}
+
+void StringTTF::moveAllSpritesToCache()
+{
+    Object* pObj = NULL;
+    CCARRAY_FOREACH(&_spriteArray, pObj)
+    {
+        ((Sprite *)pObj)->removeFromParent();
+        _spriteArrayCache.addObject(pObj);
+    }
+    
+    _spriteArray.removeAllObjects();
+}
+
+Sprite * StringTTF::getSprite()
+{
+    if (_spriteArrayCache.count())
+    {
+        Sprite *retSprite = (Sprite *) _spriteArrayCache.lastObject();
+        _spriteArrayCache.removeLastObject();
+        return retSprite;
+    }
+    else
+    {
+        Sprite *retSprite = new Sprite;
+        return retSprite;
+    }
+}
+
+///// PROTOCOL STUFF
+
+Sprite * StringTTF::getSpriteChild(int ID)
+{
+    Object* pObj = NULL;
+    CCARRAY_FOREACH(&_spriteArray, pObj)
+    {
+        Sprite *pSprite = (Sprite *)pObj;
+        if ( pSprite->getTag() == ID)
+        {
+            return pSprite;
+        }
+    }
+    return 0;
+}
+
+Array  * StringTTF::getChildrenLetters()
+{
+    return &_spriteArray;
+}
+
+Sprite * StringTTF::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
+{
+    // ret sprite 
+    Sprite *retSprite =  0;
+    
+    // look for already existing sprites
+    retSprite = getSpriteChild(spriteIndexHint);
+        
+    if (!retSprite)
+    {
+        retSprite = getSpriteForLetter(theChar);
+        if (!retSprite)
+            return 0;
+        
+        if (retSprite)
+            retSprite->setTag(spriteIndexHint);
+        
+        _spriteArray.addObject(retSprite);
+    }
+        
+    // the sprite is now visible
+    retSprite->setVisible(true);
+        
+    // set the right texture letter to the sprite
+    updateSpriteForLetter(retSprite, theChar);
+    
+    // we are done here
+    return retSprite;
+}
+
+float StringTTF::getLetterPosXLeft( Sprite* sp )
+{
+    float scaleX = _scaleX;
+    return sp->getPosition().x * scaleX - (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
+}
+
+float StringTTF::getLetterPosXRight( Sprite* sp )
+{
+    float scaleX = _scaleX;
+    return sp->getPosition().x * scaleX + (sp->getContentSize().width * scaleX * sp->getAnchorPoint().x);
+}
+
+int StringTTF::getCommonLineHeight()
+{
+    return _commonLineHeight * 0.8;
+}
+
+int StringTTF::getKerningForCharsPair(unsigned short first, unsigned short second)
+{
+    return 0;
+}
+
+int StringTTF::getXOffsetForChar(unsigned short c)
+{
+    return 0;
+}
+
+int StringTTF::getYOffsetForChar(unsigned short c)
+{
+    FontLetterDefinition tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
+    return (tempDefinition.offsetY);
+}
+
+
+int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
+{
+    if (_advances)
+    {
+        // not that advance contains the X offset already
+        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(c);
+        return (_advances[hintPositionInString].width - tempDefinition.offsetX);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+Rect StringTTF::getRectForChar(unsigned short c)
+{
+    Rect uvRect;
+    
+    uvRect.origin.x     = 0.0;
+    uvRect.origin.y     = 0.0;
+    uvRect.size.width   = 0.0;
+    uvRect.size.height  = 0.0;
+    
+    // Not needed for StringTTF
+    
+    /*
+    uvRect.size.height = tempDefinition.height;
+    uvRect.size.width  = tempDefinition.width;
+    uvRect.origin.x    = tempDefinition.U;
+    uvRect.origin.y    = tempDefinition.V;
+    */
+    
+    return uvRect;
+}
+
+// string related stuff
+int StringTTF::getStringNumLines()
+{
+    int quantityOfLines = 1;
+    
+    unsigned int stringLen = _currentUTF8String ? cc_wcslen(_currentUTF8String) : 0;
+    if (stringLen == 0)
+        return (-1);
+    
+    // count number of lines
+    for (unsigned int i = 0; i < stringLen - 1; ++i)
+    {
+        unsigned short c = _currentUTF8String[i];
+        if (c == '\n')
+        {
+            quantityOfLines++;
+        }
+    }
+    
+    return quantityOfLines;
+}
+
+int StringTTF::getStringLenght()
+{
+    return _currentUTF8String ? cc_wcslen(_currentUTF8String) : 0;
+}
+
+unsigned short StringTTF::getCharAtStringPosition(int position)
+{
+   return _currentUTF8String[position];
+}
+
+unsigned short * StringTTF::getUTF8String()
+{
+    return _currentUTF8String;
+}
+
+void StringTTF::assignNewUTF8String(unsigned short *newString)
+{
+    setCurrentString(newString);
+}
+
+TextAlignment StringTTF::getTextAlignment()
+{
+    return _alignment;
+}
+
+// label related stuff
+float StringTTF::getMaxLineWidth()
+{
+    return _width;
+}
+
+bool StringTTF::breakLineWithoutSpace()
+{
+    return _lineBreakWithoutSpaces;
+}
+
+Size StringTTF::getLabelContentSize()
+{
+    return getContentSize();
+}
+
+void StringTTF::setLabelContentSize(const Size &newSize)
+{
+    setContentSize(newSize);
+}
+
+
+// RGBA protocol
+
+
+bool StringTTF::isOpacityModifyRGB() const
+{
+    return false;
+}
+
+void StringTTF::setOpacityModifyRGB(bool isOpacityModifyRGB)
+{
+}
+
+unsigned char StringTTF::getOpacity() const
+{
+    return 0;
+}
+
+unsigned char StringTTF::getDisplayedOpacity() const
+{
+    return 0;
+}
+
+void StringTTF::setOpacity(GLubyte opacity)
+{
+}
+void StringTTF::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+}
+
+bool StringTTF::isCascadeOpacityEnabled() const
+{
+    return false;
+}
+
+void StringTTF::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+}
+
+const Color3B& StringTTF::getColor(void) const
+{
+    Color3B temp;
+    return temp;
+}
+
+const Color3B& StringTTF::getDisplayedColor() const
+{
+    Color3B temp;
+    return temp;
+}
+
+void StringTTF::setColor(const Color3B& color)
+{
+}
+
+void StringTTF::updateDisplayedColor(const Color3B& parentColor)
+{
+}
+
+bool StringTTF::isCascadeColorEnabled() const
+{
+    return false;
+}
+
+void StringTTF::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+}
+
+NS_CC_END

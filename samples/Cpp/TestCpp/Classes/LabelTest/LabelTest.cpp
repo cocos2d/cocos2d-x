@@ -69,6 +69,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignment),
     CL(LabelBMFontBounds),
     CL(TTFFontShadowAndStroke),
+    CL(NewLabelTTFTest),
+    CL(NewLabelBMFontTest),
+    CL(NewLabelFontDefTest),
 
     // should be moved to another test
     CL(Atlas1),
@@ -1581,7 +1584,6 @@ LabelBMFontBounds::LabelBMFontBounds()
     // LabelBMFont
     label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
-    
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
 }
@@ -1614,3 +1616,110 @@ void LabelBMFontBounds::draw()
     ccDrawPoly(vertices, 4, true);
 }
 
+LabelBMFontNewTest::LabelBMFontNewTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
+    addChild(layer, -10);
+    
+    // LabelBMFont
+    label1 = StringBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    
+    addChild(label1);
+    label1->setPosition(Point(s.width/2, s.height/2));
+}
+
+void LabelBMFontNewTest::draw()
+{
+}
+std::string LabelBMFontNewTest::title()
+{
+    return "New LabelBMFont";
+}
+
+std::string LabelBMFontNewTest::subtitle()
+{
+    return "Testing the new LabelBMFont";
+}
+
+///
+
+//
+/// NEW LABEL with TTF
+//
+NewLabelTTFTest::NewLabelTTFTest()
+{
+    Size size = Director::getInstance()->getWinSize();
+    label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point(0.5, 1.0));
+    label->retain();
+    addChild(label);
+}
+
+NewLabelTTFTest::~NewLabelTTFTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelTTFTest::title()
+{
+    return "Label() using TTF";
+}
+
+std::string NewLabelTTFTest::subtitle()
+{
+    return "Uses the new Label() with TTF";
+}
+
+//
+/// NEW LABEL with BMFont
+//
+NewLabelBMFontTest::NewLabelBMFontTest()
+{
+    Size size = Director::getInstance()->getWinSize();
+
+    label = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->retain();
+    addChild(label);
+}
+
+NewLabelBMFontTest::~NewLabelBMFontTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelBMFontTest::title()
+{
+    return "Label() using BMFont";
+}
+
+std::string NewLabelBMFontTest::subtitle()
+{
+    return "Uses the new Label() with BMFont";
+}
+
+//
+/// NEW LABEL with FontDefinition
+//
+NewLabelFontDefTest::NewLabelFontDefTest()
+: label(nullptr)
+{
+}
+
+NewLabelFontDefTest::~NewLabelFontDefTest()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelFontDefTest::title()
+{
+    return "NOT IMPLEMENTED YET";
+}
+
+std::string NewLabelFontDefTest::subtitle()
+{
+    return "NOT IMPLEMENTED YET";
+}
