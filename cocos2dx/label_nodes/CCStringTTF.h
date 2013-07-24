@@ -28,19 +28,21 @@
 #include "CCFontDefinition.h"
 #include "CCLabelTextFormatProtocol.h"
 #include "CCLabel.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-class StringTTF : public Label, public LabelTextFormatProtocol
+class CC_DLL StringTTF : public Label, public LabelTextFormatProtocol
 {
 public:
     
-    static StringTTF* create(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft, int lineSize = 0);
+    static StringTTF* create(FontAtlas *pAtlas, TextAlignment alignment = kTextAlignmentLeft, int lineSize = 0);
     
     // main interface
     bool setText(const char *stringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
     void setString(const char *stringToRender);
     const char* getString() const { return "not implemented"; }
+    
     virtual void setAlignment(TextAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -50,7 +52,6 @@ public:
     
     
     // RGBAProtocol
-    
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
     virtual unsigned char getOpacity() const;
@@ -100,7 +101,8 @@ public:
     
 private:
     
-     StringTTF(FontDefinitionTTF *pDefinition, TextAlignment alignment = kTextAlignmentLeft);
+     //
+     StringTTF(FontAtlas *pAtlas, TextAlignment alignment = kTextAlignmentLeft);
     ~StringTTF();
     
     bool init();
@@ -108,13 +110,13 @@ private:
     void alignText();
     void hideAllLetters();
     void moveAllSpritesToCache();
-    bool computeAdvancesForString(const char *stringToRender);
+    
     bool computeAdvancesForString(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     
     Sprite * getSprite();
-    Sprite * createNewSpriteFromLetterDefinition(LetterDefinition &theDefinition, Texture2D *theTexture);
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, LetterDefinition &theDefinition, Texture2D *theTexture);
+    Sprite * createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, FontLetterDefinition &theDefinition, Texture2D *theTexture);
     Sprite * getSpriteForLetter(unsigned short int newLetter);
     Sprite * updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter);
     
@@ -124,9 +126,9 @@ private:
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
     TextAlignment               _alignment;
-    FontDefinitionTTF  *        _fontDef;
     unsigned short int *        _currentUTF8String;
     Size               *        _advances;
+    FontAtlas          *        _fontAtlas;
     
 };
 

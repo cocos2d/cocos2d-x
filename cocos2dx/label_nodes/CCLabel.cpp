@@ -23,37 +23,42 @@
  ****************************************************************************/
 
 #include "CCLabel.h"
-#include "CCLabelBMFontNew.h"
+#include "CCStringBMFont.h"
 #include "CCStringTTF.h"
 #include "CCFontDefinition.h"
 #include "CCFontCache.h"
+#include "CCFontAtlasCache.h"
 
 NS_CC_BEGIN
 
 Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fontSize, GlyphCollection glyphs, int lineSize )
 {
-    FontDefinitionTTF *def = CCFontCache::getFontDefinition(tttFilePath, fontSize, glyphs);
-    
-    if(!def)
+    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(tttFilePath, fontSize, glyphs);
+    if (!tempAtlas)
         return 0;
+     
+    // create the actual label
+    StringTTF* templabel = StringTTF::create(tempAtlas, kTextAlignmentCenter, lineSize);
     
-    StringTTF* templabel = StringTTF::create(def, kTextAlignmentCenter, lineSize);
-    
-    if ( templabel )
+    if (templabel)
     {
         templabel->setText(label, lineSize, kTextAlignmentCenter, false);
         return templabel;
     }
     else
     {
-        CCFontCache::purgeUnusedFonts();
         return 0;
     }
 }
 
 Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize )
 {
-    return LabelBMFontNew::create(label, bmfontFilePath, lineSize);
+    
+    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
+    //if (!tempAtlas)
+    //    return 0;
+    
+    return StringBMFont::create(label, bmfontFilePath, lineSize);
 }
 
 Label::Label()

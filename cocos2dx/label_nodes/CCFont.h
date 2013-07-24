@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 class GlyphDef;
 
-class Font
+class CC_DLL Font : public Object
 {
 public:
     

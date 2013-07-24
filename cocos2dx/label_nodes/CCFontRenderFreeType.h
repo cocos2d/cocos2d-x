@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-class FontRenderFreeType : public FontRender
+class CC_DLL FontRenderFreeType : public FontRender
 {
 public:
     

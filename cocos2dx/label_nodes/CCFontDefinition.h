@@ -49,7 +49,7 @@ struct LetterDefinition
 
 /**
  */
-class FontDefinitionTTF : public Object
+class CC_DLL FontDefinitionTTF : public Object
 {
 public:
 
@@ -59,8 +59,6 @@ public:
     int         getNumTextures();
     Font *      getFont()                        { return _textImages->getFont(); }
     float       getCommonLineHeight()            { return _commonLineHeight;      }
-    
-    // carloX new
     FontAtlas * createFontAtlas();
     
 private:

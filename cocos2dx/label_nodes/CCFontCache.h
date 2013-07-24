@@ -33,15 +33,16 @@
 
 NS_CC_BEGIN
 
-class CCFontCache
+class CC_DLL CCFontCache
 {
     
 public:
     
     static FontDefinitionTTF * getFontDefinition(const char *fontFileName, int size, GlyphCollection glyphs);
-    static void purgeUnusedFonts();
-
+    static bool releaseFontDefinition(FontDefinitionTTF *def);
+    
 private:
+    
     static std::string generateFontName(const char *fontFileName, int size);
     static std::map<std::string, FontDefinitionTTF *> _fontsMap;
     static const char * getGlyphCollection(GlyphCollection glyphs);

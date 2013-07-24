@@ -65,7 +65,7 @@ TextPageDef::~TextPageDef()
     
     if (_pageTexture)
     {
-        delete _pageTexture;
+        _pageTexture->release();
     }
 }
 
@@ -76,7 +76,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     
     if (_pageTexture)
     {
-        delete _pageTexture;
+        _pageTexture->release();
         _pageTexture = 0;
     }
     
@@ -141,7 +141,7 @@ TextImage::~TextImage()
         delete _fontPages;
     
     if (_font)
-        delete _font;
+        _font->release();
     
     if (_fontRender)
         delete _fontRender;
@@ -324,7 +324,7 @@ bool TextImage::createFontRef(const char *fontName, int fontSize)
 {
     if (_font)
     {
-        delete _font;
+        _font->release();
         _font = 0;
     }
     
@@ -333,6 +333,8 @@ bool TextImage::createFontRef(const char *fontName, int fontSize)
     
     if (!_font)
         return false;
+    
+    _font->retain();
     
     if( !_font->createFontObject(fontName, fontSize))
         return false;

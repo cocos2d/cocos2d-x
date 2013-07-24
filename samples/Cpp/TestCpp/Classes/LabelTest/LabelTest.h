@@ -325,23 +325,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    LabelBMFontNew *label1;
-};
-
-class LabelDyamicTest : public AtlasDemo
-{
-public:
-    
-     LabelDyamicTest();
-    ~LabelDyamicTest();
-    
-    virtual std::string title();
-    virtual std::string subtitle();
-    
-private:
-    
-    StringTTF *label1;
-
+    StringBMFont *label1;
 };
 
 class NewLabelTTFTest : public AtlasDemo

@@ -26,26 +26,25 @@
 #include "CCStringTTF.h"
 #include "CCFont.h"
 #include "CCLabelTextFormatter.h"
+#include "CCFontAtlasCache.h"
 
 NS_CC_BEGIN
 
-StringTTF::StringTTF(FontDefinitionTTF *theDef, TextAlignment alignment) :   _currentUTF8String(0),
-                                                                             _fontDef(theDef),
-                                                                             _alignment(alignment),
-                                                                             _lineBreakWithoutSpaces(false),
-                                                                             _advances(0)
+StringTTF::StringTTF(FontAtlas *pAtlas, TextAlignment alignment):   _currentUTF8String(0),
+                                                                    _fontAtlas(pAtlas),
+                                                                    _alignment(alignment),
+                                                                    _lineBreakWithoutSpaces(false),
+                                                                    _advances(0)
 {
-    if (_fontDef)
-        _fontDef->retain();
 }
 
-StringTTF* StringTTF::create(FontDefinitionTTF *def, TextAlignment alignment, int lineSize )
+StringTTF* StringTTF::create(FontAtlas *pAtlas, TextAlignment alignment, int lineSize)
 {
-    StringTTF *ret = new StringTTF(def, alignment);
+    StringTTF *ret = new StringTTF(pAtlas, alignment);
     
     if (!ret)
         return 0;
-        
+    
     if( ret->init() )
     {
         ret->autorelease();
@@ -74,8 +73,10 @@ StringTTF::~StringTTF()
         _advances = 0;
     }
     
-    if (_fontDef)
-        _fontDef->release();
+    if (_fontAtlas)
+    {
+        FontAtlasCache::releaseFontAtlas(_fontAtlas);
+    }
 }
 
 bool StringTTF::init()
@@ -90,7 +91,7 @@ void StringTTF::setString(const char *stringToRender)
 
 bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignment alignment, bool lineBreakWithoutSpaces)
 {
-    if (!_fontDef)
+    if (!_fontAtlas)
         return false;
     
     _width                  = lineWidth;
@@ -101,24 +102,20 @@ bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignme
     moveAllSpritesToCache();
     
     // store locally common line height
-    _commonLineHeight = _fontDef->getCommonLineHeight();
+    _commonLineHeight = _fontAtlas->getCommonLineHeight();
     if (_commonLineHeight <= 0)
         return false;
     
-    Font *pFont = _fontDef->getFont();
-    
-    if (!pFont)
-        return false;
-
     int numLetter = 0;
-    unsigned short int *UTF8Text = pFont->getUTF16Text(stringToRender, numLetter);
-
-    // INIT THE BATCH NODE
-    // WARNING: currently only one font page is supported
-    SpriteBatchNode::initWithTexture(_fontDef->getTexture(0), numLetter);
+    unsigned short* utf16String = cc_utf8_to_utf16(stringToRender);
+    if(!utf16String)
+        return false;
+    
+    numLetter = cc_wcslen(utf16String);
+    SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), numLetter);
     
     // 
-    setCurrentString(UTF8Text);
+    setCurrentString(utf16String);
     
     // align text
     alignText();
@@ -210,28 +207,6 @@ void StringTTF::hideAllLetters()
     }
 }
 
-bool StringTTF::computeAdvancesForString(const char *stringToRender)
-{
-    if (_advances)
-    {
-        delete [] _advances;
-        _advances = 0;
-    }
-    
-    Font *theFont = _fontDef->getFont();
-    
-    if (!theFont)
-        return false;
-    
-    int letterCount = 0;
-    _advances = theFont->getAdvancesForText(stringToRender, letterCount);
-    
-    if(!_advances)
-        return false;
-    else
-        return true;
-}
-
 bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
 {
     if (_advances)
@@ -240,7 +215,9 @@ bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
         _advances = 0;
     }
     
-    Font *theFont = _fontDef->getFont();
+    // carloX
+    Font *theFont = 0;
+    theFont = _fontAtlas->getFont();
     
     if (!theFont)
         return false;
@@ -270,7 +247,7 @@ bool StringTTF::setCurrentString(unsigned short *stringToSet)
     return computeAdvancesForString(stringToSet);
 }
 
-Sprite * StringTTF::createNewSpriteFromLetterDefinition(LetterDefinition &theDefinition, Texture2D *theTexture)
+Sprite * StringTTF::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture)
 {
     Rect uvRect;
     uvRect.size.height = theDefinition.height;
@@ -279,7 +256,7 @@ Sprite * StringTTF::createNewSpriteFromLetterDefinition(LetterDefinition &theDef
     uvRect.origin.y    = theDefinition.V;
     
     SpriteFrame *pFrame = SpriteFrame::createWithTexture(theTexture, uvRect);
-    Sprite *tempSprite = getSprite();
+    Sprite *tempSprite  = getSprite();
     
     if (!tempSprite)
         return 0;
@@ -291,7 +268,7 @@ Sprite * StringTTF::createNewSpriteFromLetterDefinition(LetterDefinition &theDef
     return tempSprite;
 }
 
-Sprite * StringTTF::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, LetterDefinition &theDefinition, Texture2D *theTexture)
+Sprite * StringTTF::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, FontLetterDefinition &theDefinition, Texture2D *theTexture)
 {
     if (!spriteToUpdate)
     {
@@ -320,20 +297,23 @@ Sprite * StringTTF::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, Let
 
 Sprite * StringTTF::getSpriteForLetter(unsigned short int newLetter)
 {
-    LetterDefinition tempDefinition = _fontDef->getLetterDefinition(newLetter);
-    Sprite *newSprite = createNewSpriteFromLetterDefinition(tempDefinition, _fontDef->getTexture(tempDefinition.textureID) );
+    if (!_fontAtlas)
+        return 0;
+    
+    FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+    Sprite *newSprite = createNewSpriteFromLetterDefinition(tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
     this->addChild(newSprite);
     return    newSprite;
 }
 
 Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter)
 {
-    if (!spriteToUpdate)
+    if (!spriteToUpdate || !_fontAtlas)
         return 0;
     else
     {
-        LetterDefinition tempDefinition = _fontDef->getLetterDefinition(newLetter);
-        Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, tempDefinition, _fontDef->getTexture(tempDefinition.textureID) );
+        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+        Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
         return    pNewSprite;
     }
 }
@@ -391,25 +371,24 @@ Sprite * StringTTF::getSpriteForChar(unsigned short int theChar, int spriteIndex
     // ret sprite 
     Sprite *retSprite =  0;
     
-    // lool for already existing sprites
+    // look for already existing sprites
     retSprite = getSpriteChild(spriteIndexHint);
-    
+        
     if (!retSprite)
     {
-    
         retSprite = getSpriteForLetter(theChar);
         if (!retSprite)
             return 0;
-            
+        
         if (retSprite)
             retSprite->setTag(spriteIndexHint);
         
         _spriteArray.addObject(retSprite);
     }
-    
+        
     // the sprite is now visible
     retSprite->setVisible(true);
-    
+        
     // set the right texture letter to the sprite
     updateSpriteForLetter(retSprite, theChar);
     
@@ -446,17 +425,17 @@ int StringTTF::getXOffsetForChar(unsigned short c)
 
 int StringTTF::getYOffsetForChar(unsigned short c)
 {
-    
-    LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
+    FontLetterDefinition tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
     return (tempDefinition.offsetY);
 }
+
 
 int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
 {
     if (_advances)
     {
         // not that advance contains the X offset already
-        LetterDefinition tempDefinition   = _fontDef->getLetterDefinition(c);
+        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(c);
         return (_advances[hintPositionInString].width - tempDefinition.offsetX);
     }
     else

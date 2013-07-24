@@ -32,7 +32,7 @@
 
 NS_CC_BEGIN
 
-class FontFreeType : public Font
+class CC_DLL FontFreeType : public Font
 {
 public:
     

@@ -21,59 +21,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef _CCFontAtlas_h_
-#define _CCFontAtlas_h_
 
+#ifndef _CCFontAtlasFactory_h_
+#define _CCFontAtlasFactory_h_
 
-#include <map>
+#include "cocos2d.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-struct FontLetterDefinition
-{
-    unsigned short  letteCharUTF16;
-    float           U;
-    float           V;
-    float           width;
-    float           height;
-    float           offsetX;
-    float           offsetY;
-    int             textureID;
-    float           commonLineHeight;
-};
-
-class CC_DLL FontAtlas : public Object
+class CC_DLL FontAtlasFactory
 {
     
 public:
     
-    FontAtlas(Font *theFont);
-    virtual ~FontAtlas();
-    
-    void addLetterDefinition(FontLetterDefinition &letterDefinition);
-    FontLetterDefinition & getLetterDefinitionForChar(unsigned short  letteCharUTF16);
-    
-    void addTexture(Texture2D *pTexture, int slot);
-    Texture2D * getTexture(int slot);
-    float getCommonLineHeight();
-    void  setCommonLineHeight(float newHeight);
-    
-    unsigned short int * getUTF16Text(const char *pText, int &outNumLetters);
-    Font * getFont();
-    
+    static FontAtlas * createAtlasFromTTF(const char* tttFilePath, int fontSize, GlyphCollection glyphs);
+    static FontAtlas * createAtlasFromFNT(const char* tttFilePath);
     
 private:
     
-    void relaseTextures();
-    std::map<int, Texture2D *>                      _atlasTextures;
-    std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
-    float                                           _commonLineHeight;
-    Font *                                          _font;
+     static const char * getGlyphCollection(GlyphCollection glyphs);
 
 };
 
-
 NS_CC_END
 
-
-#endif /* defined(__cocos2d_libs__CCFontAtlas__) */
+#endif /* defined(_CCFontAtlasFactory_h_) */

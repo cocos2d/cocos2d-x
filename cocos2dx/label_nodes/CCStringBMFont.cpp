@@ -30,7 +30,7 @@ http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
 http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
-#include "CCLabelBMFontNew.h"
+#include "CCStringBMFont.h"
 #include "cocoa/CCString.h"
 #include "platform/platform.h"
 #include "cocoa/CCDictionary.h"
@@ -66,14 +66,14 @@ static unsigned short* copyUTF16StringNN(unsigned short* str)
 //
 
 //LabelBMFont - Purge Cache
-void LabelBMFontNew::purgeCachedData()
+void StringBMFont::purgeCachedData()
 {
     FNTConfigRemoveCache();
 }
 
-LabelBMFontNew * LabelBMFontNew::create()
+StringBMFont * StringBMFont::create()
 {
-    LabelBMFontNew * pRet = new LabelBMFontNew();
+    StringBMFont * pRet = new StringBMFont();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -83,25 +83,25 @@ LabelBMFontNew * LabelBMFontNew::create()
     return NULL;
 }
 
-LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
+StringBMFont * StringBMFont::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
 {
-    return LabelBMFontNew::create(str, fntFile, width, alignment, Point::ZERO);
+    return StringBMFont::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
-LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile, float width)
+StringBMFont * StringBMFont::create(const char *str, const char *fntFile, float width)
 {
-    return LabelBMFontNew::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
+    return StringBMFont::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
 }
 
-LabelBMFontNew * LabelBMFontNew::create(const char *str, const char *fntFile)
+StringBMFont * StringBMFont::create(const char *str, const char *fntFile)
 {
-    return LabelBMFontNew::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
+    return StringBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-LabelBMFontNew *LabelBMFontNew::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
+StringBMFont *StringBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
-    LabelBMFontNew *pRet = new LabelBMFontNew();
+    StringBMFont *pRet = new StringBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
     {
         pRet->autorelease();
@@ -111,15 +111,15 @@ LabelBMFontNew *LabelBMFontNew::create(const char *str, const char *fntFile, flo
     return NULL;
 }
 
-bool LabelBMFontNew::init()
+bool StringBMFont::init()
 {
     return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
 }
 
-bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
+bool StringBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCAssert(!_configuration, "re-init is no longer supported");
-    CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFontNew");
+    CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for StringBMFont");
     
     Texture2D *texture = NULL;
     
@@ -128,7 +128,7 @@ bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, 
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
         if (!newConf)
         {
-            CCLOG("cocos2d: WARNING. LabelBMFontNew: Impossible to create font. Please check file: '%s'", fntFile);
+            CCLOG("cocos2d: WARNING. StringBMFont: Impossible to create font. Please check file: '%s'", fntFile);
             release();
             return false;
         }
@@ -180,7 +180,7 @@ bool LabelBMFontNew::initWithString(const char *theString, const char *fntFile, 
     return false;
 }
 
-LabelBMFontNew::LabelBMFontNew()
+StringBMFont::StringBMFont()
 : _string(NULL)
 , _initialString(NULL)
 , _alignment(kTextAlignmentCenter)
@@ -200,7 +200,7 @@ LabelBMFontNew::LabelBMFontNew()
 
 }
 
-LabelBMFontNew::~LabelBMFontNew()
+StringBMFont::~StringBMFont()
 {
     CC_SAFE_RELEASE(_reusedChar);
     CC_SAFE_DELETE_ARRAY(_string);
@@ -208,8 +208,8 @@ LabelBMFontNew::~LabelBMFontNew()
     CC_SAFE_RELEASE(_configuration);
 }
 
-// LabelBMFontNew - Atlas generation
-int LabelBMFontNew::kerningAmountForFirst(unsigned short first, unsigned short second)
+// StringBMFont - Atlas generation
+int StringBMFont::kerningAmountForFirst(unsigned short first, unsigned short second)
 {
     int ret = 0;
     unsigned int key = (first<<16) | (second & 0xffff);
@@ -223,23 +223,23 @@ int LabelBMFontNew::kerningAmountForFirst(unsigned short first, unsigned short s
     return ret;
 }
 
-const char* LabelBMFontNew::getString(void) const
+const char* StringBMFont::getString(void) const
 {
     return _initialStringUTF8.c_str();
 }
 
-//LabelBMFontNew - RGBAProtocol protocol
-const Color3B& LabelBMFontNew::getColor() const
+//StringBMFont - RGBAProtocol protocol
+const Color3B& StringBMFont::getColor() const
 {
     return _realColor;
 }
 
-const Color3B& LabelBMFontNew::getDisplayedColor() const
+const Color3B& StringBMFont::getDisplayedColor() const
 {
     return _displayedColor;
 }
 
-void LabelBMFontNew::setColor(const Color3B& color)
+void StringBMFont::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
@@ -254,18 +254,18 @@ void LabelBMFontNew::setColor(const Color3B& color)
 	}
 }
 
-GLubyte LabelBMFontNew::getOpacity(void) const
+GLubyte StringBMFont::getOpacity(void) const
 {
     return _realOpacity;
 }
 
-GLubyte LabelBMFontNew::getDisplayedOpacity(void) const
+GLubyte StringBMFont::getDisplayedOpacity(void) const
 {
     return _displayedOpacity;
 }
 
 /** Override synthesized setOpacity to recurse items */
-void LabelBMFontNew::setOpacity(GLubyte opacity)
+void StringBMFont::setOpacity(GLubyte opacity)
 {
 	_displayedOpacity = _realOpacity = opacity;
     
@@ -280,7 +280,7 @@ void LabelBMFontNew::setOpacity(GLubyte opacity)
 	}
 }
 
-void LabelBMFontNew::setOpacityModifyRGB(bool var)
+void StringBMFont::setOpacityModifyRGB(bool var)
 {
     _isOpacityModifyRGB = var;
     if (_children && _children->count() != 0)
@@ -300,12 +300,12 @@ void LabelBMFontNew::setOpacityModifyRGB(bool var)
         }
     }
 }
-bool LabelBMFontNew::isOpacityModifyRGB() const
+bool StringBMFont::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
 
-void LabelBMFontNew::updateDisplayedOpacity(GLubyte parentOpacity)
+void StringBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
     
@@ -317,7 +317,7 @@ void LabelBMFontNew::updateDisplayedOpacity(GLubyte parentOpacity)
 	}
 }
 
-void LabelBMFontNew::updateDisplayedColor(const Color3B& parentColor)
+void StringBMFont::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
@@ -331,28 +331,28 @@ void LabelBMFontNew::updateDisplayedColor(const Color3B& parentColor)
 	}
 }
 
-bool LabelBMFontNew::isCascadeColorEnabled() const
+bool StringBMFont::isCascadeColorEnabled() const
 {
     return false;
 }
 
-void LabelBMFontNew::setCascadeColorEnabled(bool cascadeColorEnabled)
+void StringBMFont::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
     _cascadeColorEnabled = cascadeColorEnabled;
 }
 
-bool LabelBMFontNew::isCascadeOpacityEnabled() const
+bool StringBMFont::isCascadeOpacityEnabled() const
 {
     return false;
 }
 
-void LabelBMFontNew::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+void StringBMFont::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
-// LabelBMFontNew - AnchorPoint
-void LabelBMFontNew::setAnchorPoint(const Point& point)
+// StringBMFont - AnchorPoint
+void StringBMFont::setAnchorPoint(const Point& point)
 {
     if( ! point.equals(_anchorPoint))
     {
@@ -361,61 +361,61 @@ void LabelBMFontNew::setAnchorPoint(const Point& point)
     }
 }
 
-// LabelBMFontNew - Alignment
-void LabelBMFontNew::setAlignment(TextAlignment alignment)
+// StringBMFont - Alignment
+void StringBMFont::setAlignment(TextAlignment alignment)
 {
     this->_alignment = alignment;
     updateLabel();
 }
 
-void LabelBMFontNew::setWidth(float width)
+void StringBMFont::setWidth(float width)
 {
     this->_width = width;
     updateLabel();
 }
 
-void LabelBMFontNew::setLineBreakWithoutSpace( bool breakWithoutSpace )
+void StringBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 {
     _lineBreakWithoutSpaces = breakWithoutSpace;
     updateLabel();
 }
 
-void LabelBMFontNew::setScale(float scale)
+void StringBMFont::setScale(float scale)
 {
     SpriteBatchNode::setScale(scale);
     updateLabel();
 }
 
-void LabelBMFontNew::setScaleX(float scaleX)
+void StringBMFont::setScaleX(float scaleX)
 {
     SpriteBatchNode::setScaleX(scaleX);
     updateLabel();
 }
 
-void LabelBMFontNew::setScaleY(float scaleY)
+void StringBMFont::setScaleY(float scaleY)
 {
     SpriteBatchNode::setScaleY(scaleY);
     updateLabel();
 }
 
-float LabelBMFontNew::getLetterPosXLeft( Sprite* sp )
+float StringBMFont::getLetterPosXLeft( Sprite* sp )
 {
     return sp->getPosition().x * _scaleX - (sp->getContentSize().width * _scaleX * sp->getAnchorPoint().x);
 }
 
-float LabelBMFontNew::getLetterPosXRight( Sprite* sp )
+float StringBMFont::getLetterPosXRight( Sprite* sp )
 {
     return sp->getPosition().x * _scaleX + (sp->getContentSize().width * _scaleX * sp->getAnchorPoint().x);
 }
 
-// LabelBMFontNew - FntFile
-void LabelBMFontNew::setFntFile(const char* fntFile)
+// StringBMFont - FntFile
+void StringBMFont::setFntFile(const char* fntFile)
 {
     if (fntFile != NULL && strcmp(fntFile, _fntFile.c_str()) != 0 )
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 
-        CCAssert( newConf, "CCLabelBMFontNew: Impossible to create font. Please check file");
+        CCAssert( newConf, "CCStringBMFont: Impossible to create font. Please check file");
 
         _fntFile = fntFile;
 
@@ -428,15 +428,15 @@ void LabelBMFontNew::setFntFile(const char* fntFile)
     }
 }
 
-const char* LabelBMFontNew::getFntFile()
+const char* StringBMFont::getFntFile()
 {
     return _fntFile.c_str();
 }
 
 
-//LabelBMFontNew - Debug draw
+//StringBMFont - Debug draw
 #if CC_LabelBMFontNew_DEBUG_DRAW
-void LabelBMFontNew::draw()
+void StringBMFont::draw()
 {
     SpriteBatchNode::draw();
     const Size& s = this->getContentSize();
@@ -450,7 +450,7 @@ void LabelBMFontNew::draw()
 #endif // CC_LABELBMFONT_DEBUG_DRAW
 
 
-int  LabelBMFontNew::getCommonLineHeight()
+int  StringBMFont::getCommonLineHeight()
 {
     if (_configuration)
     {
@@ -462,12 +462,12 @@ int  LabelBMFontNew::getCommonLineHeight()
     }
 }
 
-int  LabelBMFontNew::getKerningForCharsPair(unsigned short first, unsigned short second)
+int  StringBMFont::getKerningForCharsPair(unsigned short first, unsigned short second)
 {
     return this->kerningAmountForFirst(first, second);
 }
 
-ccBMFontDef LabelBMFontNew::getFontDefForChar(unsigned short int theChar)
+ccBMFontDef StringBMFont::getFontDefForChar(unsigned short int theChar)
 {
     ccBMFontDef fontDef;
     tFontDefHashElement *element = NULL;
@@ -484,7 +484,7 @@ ccBMFontDef LabelBMFontNew::getFontDefForChar(unsigned short int theChar)
 }
 
 // return a sprite for rendering one letter
-Sprite * LabelBMFontNew::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
+Sprite * StringBMFont::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
 {
     Rect      rect;
     ccBMFontDef fontDef;
@@ -537,7 +537,7 @@ Sprite * LabelBMFontNew::getSpriteForChar(unsigned short int theChar, int sprite
     return pRetSprite;
 }
 
-int LabelBMFontNew::getStringNumLines()
+int StringBMFont::getStringNumLines()
 {
     int quantityOfLines = 1;
     
@@ -559,51 +559,51 @@ int LabelBMFontNew::getStringNumLines()
 }
 
 // need cross implementation
-int LabelBMFontNew::getStringLenght()
+int StringBMFont::getStringLenght()
 {
     return _string ? cc_wcslen(_string) : 0;
 }
 
-unsigned short LabelBMFontNew::getCharAtStringPosition(int position)
+unsigned short StringBMFont::getCharAtStringPosition(int position)
 {
     return _string[position];
 }
 
-int LabelBMFontNew::getXOffsetForChar(unsigned short c)
+int StringBMFont::getXOffsetForChar(unsigned short c)
 {
     ccBMFontDef fontDef = getFontDefForChar(c);
     return fontDef.xOffset;
 }
 
-int LabelBMFontNew::getYOffsetForChar(unsigned short c)
+int StringBMFont::getYOffsetForChar(unsigned short c)
 {
     ccBMFontDef fontDef = getFontDefForChar(c);
     return fontDef.yOffset;
 }
 
-Rect LabelBMFontNew::getRectForChar(unsigned short c)
+Rect StringBMFont::getRectForChar(unsigned short c)
 {
     ccBMFontDef fontDef = getFontDefForChar(c);
     return fontDef.rect;
 }
 
-int LabelBMFontNew::getAdvanceForChar(unsigned short c, int hintPositionInString)
+int StringBMFont::getAdvanceForChar(unsigned short c, int hintPositionInString)
 {
     ccBMFontDef fontDef = getFontDefForChar(c);
     return fontDef.xAdvance;
 }
 
-void  LabelBMFontNew::setLabelContentSize(const Size &newSize)
+void  StringBMFont::setLabelContentSize(const Size &newSize)
 {
     setContentSize(newSize);
 }
 
-void LabelBMFontNew::createStringSprites()
+void StringBMFont::createStringSprites()
 {
     LabelTextFormatter::createStringSprites(this);
 }
 
-void LabelBMFontNew::setString(const char *newString)
+void StringBMFont::setString(const char *newString)
 {
     // store initial string in char8 format
      _initialStringUTF8 = newString;
@@ -620,12 +620,12 @@ void LabelBMFontNew::setString(const char *newString)
     updateLabel();
 }
 
-void LabelBMFontNew::setCString(const char *label)
+void StringBMFont::setCString(const char *label)
 {
     setString(label);
 }
 
-void LabelBMFontNew::updateLabel()
+void StringBMFont::updateLabel()
 {
     if ( _initialString!=0 )
     {
@@ -644,7 +644,7 @@ void LabelBMFontNew::updateLabel()
     }
 }
 
-void LabelBMFontNew::updateLetterSprites()
+void StringBMFont::updateLetterSprites()
 {
     // hide all the letters
     hideStringSprites();
@@ -653,7 +653,7 @@ void LabelBMFontNew::updateLetterSprites()
     createStringSprites();
 }
 
-void LabelBMFontNew::hideStringSprites()
+void StringBMFont::hideStringSprites()
 {
     if (_children && _children->count() != 0)
     {
@@ -669,7 +669,7 @@ void LabelBMFontNew::hideStringSprites()
     }
 }
 
-void LabelBMFontNew::multilineText()
+void StringBMFont::multilineText()
 {
     if (_width > 0)
     {
@@ -681,7 +681,7 @@ void LabelBMFontNew::multilineText()
     }
 }
 
-void LabelBMFontNew::alignText()
+void StringBMFont::alignText()
 {
     if (_alignment != kTextAlignmentLeft)
     {
@@ -689,43 +689,43 @@ void LabelBMFontNew::alignText()
     }
 }
 
-unsigned short * LabelBMFontNew::getUTF8String()
+unsigned short * StringBMFont::getUTF8String()
 {
     return _string;
 }
 
-Sprite * LabelBMFontNew::getSpriteChild(int ID)
+Sprite * StringBMFont::getSpriteChild(int ID)
 {
     return (Sprite*)this->getChildByTag(ID);
 }
 
-float LabelBMFontNew::getMaxLineWidth()
+float StringBMFont::getMaxLineWidth()
 {
     return _width;
 }
 
-TextAlignment LabelBMFontNew::getTextAlignment()
+TextAlignment StringBMFont::getTextAlignment()
 {
     return _alignment;
 }
 
-Array*  LabelBMFontNew::getChildrenLetters()
+Array*  StringBMFont::getChildrenLetters()
 {
     return _children;
 }
 
-void LabelBMFontNew::assignNewUTF8String(unsigned short *newString)
+void StringBMFont::assignNewUTF8String(unsigned short *newString)
 {
     CC_SAFE_DELETE_ARRAY(_string);
     _string = newString;
 }
 
-Size LabelBMFontNew::getLabelContentSize()
+Size StringBMFont::getLabelContentSize()
 {
     return getContentSize();
 }
 
-bool LabelBMFontNew::breakLineWithoutSpace()
+bool StringBMFont::breakLineWithoutSpace()
 {
     return _lineBreakWithoutSpaces;
 }
