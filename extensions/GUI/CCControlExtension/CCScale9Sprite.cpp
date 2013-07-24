@@ -160,7 +160,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     // If there is no specified center region
     if ( _capInsetsInternal.equals(Rect::ZERO) )
     {
-        // CCLog("... cap insets not specified : using default cap insets ...");
+        // log("... cap insets not specified : using default cap insets ...");
         _capInsetsInternal = Rect(w/3, h/3, w/3, h/3);
     }
 
@@ -223,7 +223,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     Rect rightbottombounds = Rect(x, y, right_w, bottom_h);
 
     if (!rotated) {
-        // CCLog("!rotated");
+        // log("!rotated");
 
         AffineTransform t = AffineTransformMakeIdentity();
         t = AffineTransformTranslate(t, rect.origin.x, rect.origin.y);
@@ -286,7 +286,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         // set up transformation of coordinates
         // to handle the case where the sprite is stored rotated
         // in the spritesheet
-        // CCLog("rotated");
+        // log("rotated");
 
         AffineTransform t = AffineTransformMakeIdentity();
 
@@ -611,7 +611,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameNam
     }
     CC_SAFE_DELETE(pReturn);
 
-    CCLog("Could not allocate Scale9Sprite()");
+    log("Could not allocate Scale9Sprite()");
     return NULL;
     
 }

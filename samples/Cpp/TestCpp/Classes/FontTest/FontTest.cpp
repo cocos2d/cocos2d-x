@@ -166,8 +166,8 @@ void FontTest::restartCallback(Object* pSender)
 ///---------------------------------------
 void FontTestScene::runThisTest()
 {
-    Layer* pLayer = FontTest::create();
-    addChild(pLayer);
+    Layer* layer = FontTest::create();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

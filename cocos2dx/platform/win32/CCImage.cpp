@@ -383,7 +383,7 @@ bool Image::initWithString(
 
         if (! dc.setFont(pFontName, nSize))
         {
-            CCLog("Can't found font(%s), use system default", pFontName);
+            log("Can't found font(%s), use system default", pFontName);
         }
 
         // draw text

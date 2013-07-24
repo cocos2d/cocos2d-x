@@ -30,10 +30,10 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -43,18 +43,18 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 // BaseLayer
@@ -300,8 +300,8 @@ string DrawNodeTest::subtitle()
 
 void DrawPrimitivesTestScene::runThisTest()
 {
-    Layer* pLayer = nextAction();
-    addChild(pLayer);
+    Layer* layer = nextAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

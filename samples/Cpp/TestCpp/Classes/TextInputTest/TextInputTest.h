@@ -20,7 +20,7 @@ public:
     void backCallback(Object* pSender);
 
     std::string title();
-    void addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer);
+    void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
     
     virtual void onEnter();
 };
@@ -76,7 +76,7 @@ class TextFieldTTFActionTest : public KeyboardNotificationLayer, public TextFiel
     int                 _charLimit;       // the textfield max char limit
 
 public:
-    void callbackRemoveNodeWhenDidAction(Node * pNode);
+    void callbackRemoveNodeWhenDidAction(Node * node);
 
     // KeyboardNotificationLayer
     virtual std::string subtitle();

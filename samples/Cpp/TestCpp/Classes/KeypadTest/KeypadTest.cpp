@@ -34,9 +34,9 @@ void KeypadTest::keyMenuClicked()
 
 void KeypadTestScene::runThisTest()
 {
-    Layer* pLayer = new KeypadTest();
-    addChild(pLayer);
+    Layer* layer = new KeypadTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }

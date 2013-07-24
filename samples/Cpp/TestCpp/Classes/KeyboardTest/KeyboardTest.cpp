@@ -26,21 +26,21 @@ KeyboardTest::~KeyboardTest()
 
 void KeyboardTest::keyPressed(int keyCode)
 {
-    CCLog("Key with keycode %d pressed", keyCode);
+    log("Key with keycode %d pressed", keyCode);
 }
 
 void KeyboardTest::keyReleased(int keyCode)
 {
-    CCLog("Key with keycode %d released", keyCode);
+    log("Key with keycode %d released", keyCode);
 }
 
 void KeyboardTestScene::runThisTest()
 {
-    Layer* pLayer = new KeyboardTest();
-    addChild(pLayer);
+    Layer* layer = new KeyboardTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }
 
 #endif
