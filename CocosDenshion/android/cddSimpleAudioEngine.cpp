@@ -33,11 +33,12 @@ namespace CocosDenshion {
 
     SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
         if (! s_pEngine) {
-            if (CocosDenshion::android::is_buggy_device()) {
+            // if (CocosDenshion::android::is_buggy_device()) {
+                // use the Java Audio implementation until compatibility is confirmed
                 s_pEngine = new CocosDenshion::android::AndroidJavaEngine();
-            } else {
-                s_pEngine = new CocosDenshion::android::OpenSLEngine();
-            }
+            // } else {
+            //     s_pEngine = new CocosDenshion::android::OpenSLEngine();
+            // }
         }
     
         return s_pEngine;
