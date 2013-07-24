@@ -617,7 +617,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                     if(targetAsCCBSelectorResolver != NULL) {
-                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCallFuncSelector(target, selectorName.c_str    ());
+                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
                     }
                     if(selCallFunc == 0) {
                         CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
