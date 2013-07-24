@@ -21,59 +21,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef _CCFontAtlas_h_
-#define _CCFontAtlas_h_
 
+#ifndef _CCFontAtlasCache_h_
+#define _CCFontAtlasCache_h_
 
+#include <iostream>
 #include <map>
+
+#include "cocos2d.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-struct FontLetterDefinition
-{
-    unsigned short  letteCharUTF16;
-    float           U;
-    float           V;
-    float           width;
-    float           height;
-    float           offsetX;
-    float           offsetY;
-    int             textureID;
-    float           commonLineHeight;
-};
-
-class CC_DLL FontAtlas : public Object
+class CC_DLL FontAtlasCache
 {
     
 public:
     
-    FontAtlas(Font *theFont);
-    virtual ~FontAtlas();
-    
-    void addLetterDefinition(FontLetterDefinition &letterDefinition);
-    FontLetterDefinition & getLetterDefinitionForChar(unsigned short  letteCharUTF16);
-    
-    void addTexture(Texture2D *pTexture, int slot);
-    Texture2D * getTexture(int slot);
-    float getCommonLineHeight();
-    void  setCommonLineHeight(float newHeight);
-    
-    unsigned short int * getUTF16Text(const char *pText, int &outNumLetters);
-    Font * getFont();
-    
+    static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs);
+    static FontAtlas * getFontAtlasFNT(const char *fontFileName);
+    static bool releaseFontAtlas(FontAtlas *atlas);
     
 private:
     
-    void relaseTextures();
-    std::map<int, Texture2D *>                      _atlasTextures;
-    std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
-    float                                           _commonLineHeight;
-    Font *                                          _font;
-
+    static std::string generateFontName(const char *fontFileName, int size);
+    static std::map<std::string, FontAtlas *> _atlasMap;
 };
-
 
 NS_CC_END
 
-
-#endif /* defined(__cocos2d_libs__CCFontAtlas__) */
+#endif

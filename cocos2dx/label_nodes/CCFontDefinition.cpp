@@ -43,7 +43,6 @@ FontDefinitionTTF* FontDefinitionTTF::create(const char *fontName, int fontSize,
     
     if ( ret->initDefinition( fontName, fontSize, letters, textureSize ) )
     {
-        ret->autorelease();
         return ret;
     }
     else
@@ -196,7 +195,7 @@ int FontDefinitionTTF::getNumTextures()
 
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
-    FontAtlas *retAtlas = new FontAtlas();
+    FontAtlas *retAtlas = new FontAtlas(_textImages->getFont());
     
     if (!retAtlas)
         return 0;
@@ -207,9 +206,10 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         return 0;
     
     for (int c = 0; c<numTextures; ++c)
-    {
         retAtlas->addTexture(getTexture(c), c);
-    }
+    
+    // set the common line height
+    retAtlas->setCommonLineHeight(getCommonLineHeight());
     
     // add all the letter definitions
     std::map<unsigned short, LetterDefinition>::iterator ITER;

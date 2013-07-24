@@ -45,12 +45,12 @@ Use any of these editors to generate BMFonts:
 
 NS_CC_BEGIN
 
-class CC_DLL LabelBMFontNew: public Label, public LabelTextFormatProtocol
+class CC_DLL StringBMFont: public Label, public LabelTextFormatProtocol
 {
 public:
-    LabelBMFontNew();
+    StringBMFont();
 
-    virtual ~LabelBMFontNew();
+    virtual ~StringBMFont();
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.
     @since v0.99.3
@@ -58,17 +58,17 @@ public:
     static void purgeCachedData();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFontNew * create(const char *str, const char *fntFile, float width, TextAlignment alignment, Point imageOffset);
+    static StringBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment, Point imageOffset);
     
-	static LabelBMFontNew * create(const char *str, const char *fntFile, float width, TextAlignment alignment);
+	static StringBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment);
 
-	static LabelBMFontNew * create(const char *str, const char *fntFile, float width);
+	static StringBMFont * create(const char *str, const char *fntFile, float width);
 
-	static LabelBMFontNew * create(const char *str, const char *fntFile);
+	static StringBMFont * create(const char *str, const char *fntFile);
 
     /** Creates an label.
      */
-    static LabelBMFontNew * create();
+    static StringBMFont * create();
 
     bool init();
     /** init a bitmap font atlas with an initial string and the FNT file */
@@ -106,7 +106,7 @@ public:
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     
-    // LabelBMFontNew protocol stuff
+    // StringBMFont protocol stuff
     virtual Sprite *          getSpriteChild(int ID);
     virtual Array  *          getChildrenLetters();
     virtual Sprite *          getSpriteForChar(unsigned short int theChar, int spriteIndexHint);

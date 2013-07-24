@@ -31,7 +31,7 @@ NS_CC_BEGIN
 class Font;
 class TextPageDef;
 
-class FontRender
+class CC_DLL FontRender
 {
     
 public:

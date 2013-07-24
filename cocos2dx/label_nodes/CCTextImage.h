@@ -36,7 +36,7 @@ NS_CC_BEGIN
  *
  */
 
-class GlyphDef
+class CC_DLL GlyphDef
 {
 public:
     
@@ -66,7 +66,7 @@ private:
  * conllects all the GlyphDef for a text line plus line size and line position in text image space
  *
  */
-class TextLineDef
+class CC_DLL TextLineDef
 {
 public:
     
@@ -96,7 +96,7 @@ private:
  * collects all the TextLineDef for one page, the witdh and height of the page and the  graphics (texture) for the page
  *
  */
-class TextPageDef
+class CC_DLL TextPageDef
 {
 public:
     
@@ -131,7 +131,7 @@ private:
  *
  *  A TextImage is composed by one or more text pages. This calss collects all of those pages
  */
-class TextFontPagesDef
+class CC_DLL TextFontPagesDef
 {
 public:
     
@@ -151,7 +151,7 @@ private:
 /** @brief TextImage 
  *
  */
-class TextImage
+class CC_DLL TextImage
 {
 public:
     

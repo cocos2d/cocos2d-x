@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-class LabelTextFormatter
+class CC_DLL LabelTextFormatter
 {
 public:
     
