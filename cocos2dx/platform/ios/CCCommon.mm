@@ -31,6 +31,19 @@
 
 NS_CC_BEGIN
 
+// XXX deprecated
+void CCLog(const char * pszFormat, ...)
+{
+    printf("Cocos2d: ");
+    char szBuf[kMaxLogLen+1] = {0};
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_end(ap);
+    printf("%s", szBuf);
+    printf("\n");
+}
+
 void log(const char * pszFormat, ...)
 {
     printf("Cocos2d: ");
