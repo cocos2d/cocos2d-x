@@ -36,7 +36,7 @@ public:
 class MyUserManager
 {
 public:
-	static MyUserManager* sharedManager();
+	static MyUserManager* getInstance();
     static void purgeManager();
 
     typedef enum {
