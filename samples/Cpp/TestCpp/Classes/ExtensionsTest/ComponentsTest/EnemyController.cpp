@@ -35,17 +35,18 @@ void EnemyController::onEnter()
 	
 
 	// Determine speed of the target
-	int minDuration = (int)2.0;
-	int maxDuration = (int)4.0;
+	int minDuration = 2;
+	int maxDuration = 4;
 	int rangeDuration = maxDuration - minDuration;
 	// srand( TimGetTicks() );
 	int actualDuration = ( rand() % rangeDuration ) + minDuration;
 
 	// Create the actions
-	FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
+	FiniteTimeAction* actionMove = MoveTo::create( actualDuration,
                                             Point(0 - getOwner()->getContentSize().width/2, actualY) );
-	FiniteTimeAction* actionMoveDone = CallFuncN::create(getOwner()->getParent()->getComponent("SceneController"),
-                                            callfuncN_selector(SceneController::spriteMoveFinished));
+	FiniteTimeAction* actionMoveDone = CallFuncN::create(
+                                         CC_CALLBACK_1(SceneController::spriteMoveFinished, static_cast<SceneController*>( getOwner()->getParent()->getComponent("SceneController") )));
+
 	_owner->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
 }
 
