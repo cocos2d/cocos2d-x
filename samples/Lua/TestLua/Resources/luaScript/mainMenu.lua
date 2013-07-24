@@ -58,7 +58,7 @@ local _allTests = {
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
-    { isSupported = false,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
+    { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
