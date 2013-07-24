@@ -259,7 +259,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                     if (!cocos2d::JniHelper::getStaticMethodInfo(ccxhelperInit,
                                                                  "org/cocos2dx/lib/Cocos2dxHelper",
                                                                  "init",
-                                                                 "(Landroid/content/Context;)V")) {
+                                                                 "(Landroid/app/Activity;)V")) {
                         LOGI("cocos2d::JniHelper::getStaticMethodInfo(ccxhelperInit) FAILED");
                     }
                     ccxhelperInit.env->CallStaticVoidMethod(ccxhelperInit.classID,

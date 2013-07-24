@@ -29,7 +29,9 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -56,29 +58,51 @@ public class Cocos2dxHelper {
 	private static Context sContext = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 
+    /**
+     * Optional meta-that can be in the manifest for this component, specifying
+     * the name of the native shared library to load.  If not specified,
+     * "main" is used.
+     */
+    private static final String META_DATA_LIB_NAME = "android.app.lib_name";
+    private static final String DEFAULT_LIB_NAME = "main";
+
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public static void init(final Context pContext) {
-		final ApplicationInfo applicationInfo = pContext.getApplicationInfo();
+	public static void init(final Activity activity) {
+		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
 		
-		Cocos2dxHelper.sContext = pContext;
+		Cocos2dxHelper.sContext = activity;
 
-        System.loadLibrary("game");
+        try {
+        // Get the lib_name from AndroidManifest.xml metadata
+            ActivityInfo ai =
+                activity.getPackageManager().getActivityInfo(activity.getIntent().getComponent(), PackageManager.GET_META_DATA);
+            if (null != ai.metaData) {
+                String lib_name = ai.metaData.getString(META_DATA_LIB_NAME);
+                if (null != lib_name) {
+                    System.loadLibrary(lib_name);
+                } else {
+                    System.loadLibrary(DEFAULT_LIB_NAME);
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException("Error getting activity info", e);
+        }
 
 		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
-		Cocos2dxHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
+		Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
 		//Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
-		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(pContext);
-		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(pContext);
-		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(pContext);
-		Cocos2dxHelper.sAssetManager = pContext.getAssets();
+		Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
+		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
+		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
+		Cocos2dxHelper.sAssetManager = activity.getAssets();
 
 		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
-		Cocos2dxBitmap.setContext(pContext);
-        Cocos2dxETCLoader.setContext(pContext);
+        Cocos2dxBitmap.setContext(activity);
+        Cocos2dxETCLoader.setContext(activity);
 	}
 
 	// ===========================================================
