@@ -7,6 +7,7 @@ COCOS2DX_ROOT="$DIR"/../..
 
 build_android()
 {
+    echo "Current dir: `pwd`"
     cd proj.android
     ln -s $COCOS2DX_ROOT/android_build_objs obj
     ./build_native.sh
@@ -39,7 +40,8 @@ if [ "$GEN_JSB"x = "YES"x ]; then
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 
-    # Generate jsbinding glue codes 
+    # Generate jsbinding glue codes
+    echo "Generating jsbindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
@@ -49,6 +51,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     mkdir android_build_objs
 
     # Build samples
+    echo "Building samples ..."
     cd $COCOS2DX_ROOT/samples/Cpp
     build_android HelloCpp
     build_android TestCpp
@@ -66,6 +69,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     build_android TestLua
 
     # Build template
+    echo "Building template ..."
     cd $COCOS2DX_ROOT/template
     build_android multi-platform-cpp
     build_android multi-platform-js
