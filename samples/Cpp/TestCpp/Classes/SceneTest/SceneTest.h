@@ -31,6 +31,8 @@ public:
     void onGoBack(Object* sender);
     void onReplaceScene(Object* sender);
     void onReplaceSceneTran(Object* sender);
+    void onPopSceneBack(Object* pSender);
+    void onPopSceneBackTran(Object* pSender);
 
     //CREATE_NODE(SceneTestLayer2);
 } ;

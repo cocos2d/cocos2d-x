@@ -105,9 +105,11 @@ SceneTestLayer2::SceneTestLayer2()
 
     MenuItemFont* item1 = MenuItemFont::create( "replaceScene", CC_CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
     MenuItemFont* item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
-    MenuItemFont* item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
+    MenuItemFont* item3 = MenuItemFont::create( "popSceneBack", CC_CALLBACK_1(SceneTestLayer2::onPopSceneBack, this));
+    MenuItemFont* item4 = MenuItemFont::create( "popSceneBack w/transition", CC_CALLBACK_1(SceneTestLayer2::onPopSceneBackTran, this));
+    MenuItemFont* item5 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
     
-    Menu* menu = Menu::create( item1, item2, item3, NULL );
+    Menu* menu = Menu::create( item1, item2, item3, item4, item5, NULL );
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -152,6 +154,17 @@ void SceneTestLayer2::onReplaceSceneTran(Object* sender)
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
     scene->release();
+}
+
+void SceneTestLayer2::onPopSceneBack(Object* pSender)
+{
+    Director::getInstance()->popSceneBack();
+}
+
+void SceneTestLayer2::onPopSceneBackTran(Object* pSender)
+{
+    Scene* scene = Director::getInstance()->popSceneBack();
+    Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
 }
 
 //------------------------------------------------------------------
