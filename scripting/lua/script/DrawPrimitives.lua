@@ -1,11 +1,11 @@
-dp_initialized = false
-dp_shader      = nil
-dp_colorLocation = -1
-dp_color = { 1.0, 1.0, 1.0, 1.0 }
-dp_pointSizeLocation = -1
-dp_pointSize = 1.0
+local dp_initialized = false
+local dp_shader      = nil
+local dp_colorLocation = -1
+local dp_color = { 1.0, 1.0, 1.0, 1.0 }
+local dp_pointSizeLocation = -1
+local dp_pointSize = 1.0
 
-kShader_Position_uColor = "ShaderPosition_uColor"
+local kShader_Position_uColor = "ShaderPosition_uColor"
 
 local targetPlatform = CCApplication:getInstance():getTargetPlatform()
 
@@ -65,10 +65,12 @@ function ccDrawPoint(point)
     if not lazy_init() then
         return
     end
-    local VertexBuffer = { }
+
+    local vertexBuffer = { }
+
     local function initBuffer()
-        VertexBuffer.buffer_id = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+        vertexBuffer.buffer_id = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
         local vertices = { point.x,point.y}
         gl.bufferData(gl.ARRAY_BUFFER,2,vertices,gl.STATIC_DRAW)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
@@ -80,7 +82,7 @@ function ccDrawPoint(point)
 
     dp_shader:setUniformLocationWith1f(dp_pointSizeLocation, dp_pointSize)
 
-    gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+    gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
     gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
     gl.drawArrays(gl.POINTS,0,1)
     gl.bindBuffer(gl.ARRAY_BUFFER,0)
@@ -91,16 +93,16 @@ function ccDrawPoints(points,numOfPoint)
         return
     end
 
-    local VertexBuffer = {}
+    local vertexBuffer = {}
     local i = 1
+
     local function initBuffer()
-        VertexBuffer.buffer_id = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, VertexBuffer.buffer_id)
+        vertexBuffer.buffer_id = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.buffer_id)
         local vertices = {}
         for i = 1, numOfPoint do
             vertices[2 * i - 1] = points[i].x
             vertices[2 * i]     = points[i].y
-
         end
         gl.bufferData(gl.ARRAY_BUFFER, numOfPoint * 2, vertices, gl.STATIC_DRAW)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
@@ -112,7 +114,7 @@ function ccDrawPoints(points,numOfPoint)
 
     dp_shader:setUniformLocationWith1f(dp_pointSizeLocation, dp_pointSize)
 
-    gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+    gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
     gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
     gl.drawArrays(gl.POINTS,0,numOfPoint)
     gl.bindBuffer(gl.ARRAY_BUFFER,0)
@@ -123,10 +125,11 @@ function ccDrawLine(origin,destination)
         return
     end
 
-    local VertexBuffer = {}
+    local vertexBuffer = {}
+
     local function initBuffer()
-        VertexBuffer.buffer_id = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, VertexBuffer.buffer_id)
+        vertexBuffer.buffer_id = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.buffer_id)
         local vertices = { origin.x, origin.y, destination.x, destination.y}
         gl.bufferData(gl.ARRAY_BUFFER,4,vertices,gl.STATIC_DRAW)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
@@ -136,7 +139,7 @@ function ccDrawLine(origin,destination)
 
     setDrawProperty()
 
-    gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+    gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
     gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
     gl.drawArrays(gl.LINES ,0,2)
     gl.bindBuffer(gl.ARRAY_BUFFER,0)
@@ -147,25 +150,26 @@ function ccDrawPoly(points,numOfPoints,closePolygon)
         return
     end
 
-    local VertexBuffer = {}
+    local vertexBuffer = {}
     local i = 1
+
     local function initBuffer()
-        VertexBuffer.buffer_id = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, VertexBuffer.buffer_id)
+        vertexBuffer.buffer_id = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.buffer_id)
         local vertices = {}
         for i = 1, numOfPoints do
             vertices[2 * i - 1] = points[i].x
             vertices[2 * i]     = points[i].y
-
         end
         gl.bufferData(gl.ARRAY_BUFFER, numOfPoints * 2, vertices, gl.STATIC_DRAW)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
     end
+
     initBuffer()
 
     setDrawProperty()
 
-    gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+    gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
     gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
     if closePolygon then
         gl.drawArrays(gl.LINE_LOOP , 0, numOfPoints)
@@ -180,11 +184,12 @@ function ccDrawSolidPoly(points,numOfPoints,color)
         return
     end
 
-    local VertexBuffer = {}
+    local vertexBuffer = {}
     local i = 1
+
     local function initBuffer()
-        VertexBuffer.buffer_id = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, VertexBuffer.buffer_id)
+        vertexBuffer.buffer_id = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.buffer_id)
         local vertices = {}
         for i = 1, numOfPoints do
             vertices[2 * i - 1] = points[i].x
@@ -202,7 +207,7 @@ function ccDrawSolidPoly(points,numOfPoints,color)
     dp_shader:setUniformsForBuiltins()    
     dp_shader:setUniformLocationWith4fv(dp_colorLocation, color, 1)
 
-    gl.bindBuffer(gl.ARRAY_BUFFER,VertexBuffer.buffer_id)
+    gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
     gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
     gl.drawArrays(gl.TRIANGLE_FAN , 0, numOfPoints)
     gl.bindBuffer(gl.ARRAY_BUFFER,0)
@@ -231,6 +236,7 @@ function ccDrawCircleScale( center, radius, angle, segments,drawLineToCenter,sca
     end
 
     local vertexBuffer = { }
+
     local function initBuffer()
         local coef = 2.0 * math.pi / segments
         local i = 1
@@ -271,6 +277,7 @@ function ccDrawSolidCircle(center, radius, angle, segments,scaleX,scaleY)
     end
 
     local vertexBuffer = { }
+
     local function initBuffer()
         local coef = 2.0 * math.pi / segments
         local i = 1
@@ -305,17 +312,20 @@ function ccDrawQuadBezier(origin, control, destination, segments)
     if not lazy_init() then
         return
     end
+
     local vertexBuffer = { }
+
     local function initBuffer()
         local vertices = { } 
         local i = 1
         local t = 0.0
+
         for i = 1, segments do
             vertices[2 * i - 1] = math.pow(1 - t,2) * origin.x + 2.0 * (1 - t) * t * control.x + t * t * destination.x
             vertices[2 * i]     = math.pow(1 - t,2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y
             t = t + 1.0 / segments
         end
-
+        
         vertices[2 * (segments + 1) - 1] = destination.x
         vertices[2 * (segments + 1)]     = destination.y
 
@@ -324,6 +334,7 @@ function ccDrawQuadBezier(origin, control, destination, segments)
         gl.bufferData(gl.ARRAY_BUFFER, (segments + 1) * 2, vertices, gl.STATIC_DRAW)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
     end
+
     initBuffer()
 
     setDrawProperty()
@@ -340,10 +351,12 @@ function ccDrawCubicBezier(origin, control1, control2, destination, segments)
     end
 
     local vertexBuffer = { }
+
     local function initBuffer()
         local vertices = { } 
         local t = 0
         local i = 1
+
         for i = 1, segments do
             vertices[2 * i - 1] = math.pow(1 - t,3) * origin.x + 3.0 * math.pow(1 - t, 2) * t * control1.x + 3.0 * (1 - t) * t * t * control2.x + t * t * t * destination.x
             vertices[2 * i]     = math.pow(1 - t,3) * origin.y + 3.0 * math.pow(1 - t, 2) * t * control1.y + 3.0 * (1 - t) * t * t * control2.y + t * t * t * destination.y

@@ -1,34 +1,34 @@
 require "DrawPrimitives"
 
-local function DrawPrimitivesMainLayer()
+local function drawPrimitivesMainLayer()
     local kItemTagBasic = 1000
     local testCount = 1
     local maxCases = testCount
     local curCase  = 0
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     local curLayer = nil
 
-    local  function OrderCallbackMenu()
+    local  function orderCallbackMenu()
         local function backCallback()
             curCase = curCase - 1
             if curCase < 0 then
                 curCase = curCase + maxCases
             end
-            ShowCurrentTest()
+            showCurrentTest()
         end
     
         local function restartCallback()
-            ShowCurrentTest()
+            showCurrentTest()
         end
     
         local function nextCallback()
             curCase = curCase + 1
             curCase = curCase % maxCases
-            ShowCurrentTest()
+            showCurrentTest()
         end
 
         local ordercallbackmenu = CCMenu:create()
-        local size = CCDirector:sharedDirector():getWinSize()
+        local size = CCDirector:getInstance():getWinSize()
         local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
         item1:registerScriptTapHandler(backCallback)
         ordercallbackmenu:addChild(item1,kItemTagBasic)
@@ -155,27 +155,27 @@ local function DrawPrimitivesMainLayer()
         end
     end
 
-    function ShowCurrentTest()    
+    function showCurrentTest()    
         local curScene = CCScene:create()
         if nil ~= curScene then
             curLayer = createLayerByCurCase(curCase)
             if nil ~= curLayer then
                 curScene:addChild(curLayer)
-                curLayer:addChild(OrderCallbackMenu(),15)
+                curLayer:addChild(orderCallbackMenu(),15)
                 curScene:addChild(CreateBackMenuItem())
-                CCDirector:sharedDirector():replaceScene(curScene)
+                CCDirector:getInstance():replaceScene(curScene)
             end            
         end 
     end
 
     curLayer = createLayerByCurCase(curCase)
-    curLayer:addChild(OrderCallbackMenu(),15)
+    curLayer:addChild(orderCallbackMenu(),15)
     return curLayer
 end
 
 function DrawPrimitivesTest()
     local scene = CCScene:create()
-    scene:addChild(DrawPrimitivesMainLayer())
+    scene:addChild(drawPrimitivesMainLayer())
     scene:addChild(CreateBackMenuItem())
     return scene
 end
