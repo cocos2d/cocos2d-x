@@ -473,5 +473,116 @@ CallFuncN * CallFuncN::clone() const
 	return a;
 }
 
+//
+// CallFuncND
+//
+
+CallFuncND * CallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    CallFuncND* pRet = new CallFuncND();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _data = d;
+        _callFuncND = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+void CallFuncND::execute()
+{
+    if (_callFuncND)
+    {
+        (_selectorTarget->*_callFuncND)(_target, _data);
+    }
+}
+
+CallFuncND * CallFuncND::clone() const
+{
+	// no copy constructor
+	auto a = new CallFuncND();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncND, _data);
+    }
+    
+	a->autorelease();
+	return a;
+}
+
+//
+// CallFuncO
+//
+CallFuncO::CallFuncO() :
+_object(NULL)
+{
+}
+
+CallFuncO::~CallFuncO()
+{
+    CC_SAFE_RELEASE(_object);
+}
+
+void CallFuncO::execute()
+{
+    if (_callFuncO) {
+        (_selectorTarget->*_callFuncO)(_object);
+    }
+}
+
+CallFuncO * CallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    CallFuncO *pRet = new CallFuncO();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _object = object;
+        CC_SAFE_RETAIN(_object);
+        
+        _callFuncO = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+CallFuncO * CallFuncO::clone() const
+{
+	// no copy constructor
+	auto a = new CallFuncO();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncO, _object);
+    }
+    
+	a->autorelease();
+	return a;
+}
 
 NS_CC_END
