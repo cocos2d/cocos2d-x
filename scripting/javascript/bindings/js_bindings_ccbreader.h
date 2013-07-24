@@ -13,9 +13,9 @@
 #include "cocos2d_specifics.hpp"
 
 
-class CCBScriptCallbackProxy:  public cocos2d::Layer
-, public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::CCBMemberVariableAssigner {
+class CCBScriptCallbackProxy:  public cc::Layer
+, public cc::extension::CCBSelectorResolver
+, public cc::extension::CCBMemberVariableAssigner {
     
     std::string callBackProp;
     jsval owner;
@@ -27,26 +27,26 @@ public:
     virtual ~CCBScriptCallbackProxy() {}
 
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBScriptCallbackProxy, create);
-    virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget,
+    virtual cc::SEL_MenuHandler onResolveCCBMenuItemSelector(cc::Object * pTarget,
                                                                     const char * pSelectorName);
 
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget,
+    virtual cc::extension::SEL_CCControlHandler onResolveCCBControlSelector(cc::Object * pTarget,
                                                                                    const char * pSelectorName);
-    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName,
-                                           cocos2d::Node * pNode);
-    virtual void onNodeLoaded(cocos2d::Node * pNode,
-                              cocos2d::extension::NodeLoader * pNodeLoader);
+    virtual bool onAssignCCBMemberVariable(cc::Object * pTarget, const char * pMemberVariableName,
+                                           cc::Node * pNode);
+    virtual void onNodeLoaded(cc::Node * pNode,
+                              cc::extension::NodeLoader * pNodeLoader);
         
     virtual CCBSelectorResolver * createNew();
     void menuItemCallback(Object *pSender);
-    void controlCallback(Object *pSender, cocos2d::extension::ControlEvent event);
+    void controlCallback(Object *pSender, cc::extension::ControlEvent event);
     void setCallbackProperty(const char *prop);
     void setJSOwner(jsval ownr);
     jsval getJSOwner();
 };
 
 
-class JSLayerLoader : public cocos2d::extension::LayerLoader {
+class JSLayerLoader : public cc::extension::LayerLoader {
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(JSLayerLoader, loader);
     

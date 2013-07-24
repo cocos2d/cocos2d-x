@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <jni.h>
 
-using namespace cocos2d;
+USING_NS_CC;
 
 extern "C" {
     void setKeyboardStateJNI(int bOpen) {

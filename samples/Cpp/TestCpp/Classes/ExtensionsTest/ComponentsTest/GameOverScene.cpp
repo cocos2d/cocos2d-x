@@ -27,7 +27,7 @@
 #include "ComponentsTestScene.h"
 #include "../ExtensionsTest.h"
 
-using namespace cocos2d;
+using namespace cc;
 
 bool GameOverScene::init()
 {

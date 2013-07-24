@@ -1,7 +1,7 @@
 #include "EnemyController.h"
 #include "SceneController.h"
 
-using namespace cocos2d;
+using namespace cc;
 
 EnemyController::EnemyController(void)
 {
@@ -75,7 +75,7 @@ EnemyController* EnemyController::create(void)
 void EnemyController::die()
 {
     Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
+    cc::Array *_targets = ((SceneController*)com)->getTargets();
     _targets->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
     ((SceneController*)com)->increaseKillCount();

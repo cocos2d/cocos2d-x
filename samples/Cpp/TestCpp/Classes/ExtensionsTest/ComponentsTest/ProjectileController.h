@@ -5,7 +5,7 @@
 #include "cocos-ext.h"
 
 
-class ProjectileController : public cocos2d::extension::ComController
+class ProjectileController : public cc::extension::ComController
 {
 protected:
     ProjectileController(void);

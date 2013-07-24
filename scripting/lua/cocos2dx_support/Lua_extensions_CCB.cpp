@@ -13,8 +13,8 @@ extern "C" {
 #include "cocos-ext.h"
 #include "CCBProxy.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 #ifdef __cplusplus
 static int tolua_collect_CCBAnimationManager (lua_State* tolua_S)

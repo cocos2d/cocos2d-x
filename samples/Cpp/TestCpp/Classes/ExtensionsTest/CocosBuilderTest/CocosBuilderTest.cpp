@@ -36,7 +36,7 @@ void CocosBuilderTestScene::runThisTest() {
     ccNodeLoaderLibrary->registerNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
 
     /* Create an autorelease CCBReader. */
-    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    cc::extension::CCBReader * ccbReader = new cc::extension::CCBReader(ccNodeLoaderLibrary);
     
     /* Read a ccbi file. */
     Node * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);

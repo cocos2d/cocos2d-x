@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "HelloWorldScene.h"
 
 USING_NS_CC;
-using namespace cocos2d::plugin;
+using namespace cc::plugin;
 
 const std::string s_aTestCases[] = {
 	"Admob",
@@ -238,7 +238,7 @@ void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
 	log("OnAdsResult, code : %d, msg : %s", code, msg);
 }
 
-void MyAdsListener::onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points)
+void MyAdsListener::onPlayerGetPoints(cc::plugin::ProtocolAds* pAdsPlugin, int points)
 {
 	log("Player get points : %d", points);
 

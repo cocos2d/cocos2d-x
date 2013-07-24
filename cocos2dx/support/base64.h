@@ -25,11 +25,13 @@ THE SOFTWARE.
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
+#include "platform/CCPlatformMacros.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif    
     
-namespace cocos2d {
+NS_CC_BEGIN
 
 /** @file
  base64 helper functions
@@ -55,7 +57,7 @@ int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char *
  */
 int base64Encode(const unsigned char *in, unsigned int inLength, char **out);
 
-}//namespace   cocos2d 
+NS_CC_END
 
 #ifdef __cplusplus
 }

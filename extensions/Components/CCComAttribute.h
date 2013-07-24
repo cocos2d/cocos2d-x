@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class ComAttribute : public cocos2d::Component
+class ComAttribute : public cc::Component
 {
 protected:
     ComAttribute(void);

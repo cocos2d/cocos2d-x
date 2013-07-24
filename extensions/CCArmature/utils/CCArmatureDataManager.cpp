@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "../physics/CCPhysicsWorld.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 static ArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
@@ -197,4 +197,4 @@ void ArmatureDataManager::removeAll()
     DataReaderHelper::clear();
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

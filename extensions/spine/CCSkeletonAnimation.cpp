@@ -32,7 +32,7 @@ using std::min;
 using std::max;
 using std::vector;
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 CCSkeletonAnimation* CCSkeletonAnimation::createWithData (SkeletonData* skeletonData) {
 	CCSkeletonAnimation* node = new CCSkeletonAnimation(skeletonData);
@@ -139,4 +139,4 @@ void CCSkeletonAnimation::clearAnimation (int stateIndex) {
 	AnimationState_clearAnimation(states[stateIndex]);
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

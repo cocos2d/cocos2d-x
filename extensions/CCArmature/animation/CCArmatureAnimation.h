@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../external_tool/sigslot.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 
 enum MovementEventType
@@ -160,6 +160,6 @@ public:
     sigslot::signal2<Bone *, const char *> FrameEventSignal;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCANIMATION_H__*/

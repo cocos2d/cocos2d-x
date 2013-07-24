@@ -42,7 +42,7 @@ class b2Fixture;
 class b2Contact;
 class b2World;
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class ContactListener;
 class GLESDebugDraw;
@@ -75,6 +75,6 @@ public:
     sigslot::signal2<Bone *, Bone *> BoneColliderSignal;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif/*__CCPHYSICSWORLD_H__*/

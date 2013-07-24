@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "../utils/CCArmatureDefine.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class ShaderNode : public Node
 {
@@ -52,6 +52,6 @@ private:
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCSHADERNODE_H__*/

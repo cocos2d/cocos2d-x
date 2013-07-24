@@ -6,7 +6,7 @@
 
 void runComponentsTestLayerTest();
 
-class ComponentsTestLayer : public cocos2d::LayerColor
+class ComponentsTestLayer : public cc::LayerColor
 {
 public:
 	ComponentsTestLayer();
@@ -17,13 +17,13 @@ public:
 	virtual bool init();
     
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-	static cocos2d::Scene* scene();
+	static cc::Scene* scene();
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(ComponentsTestLayer);
 
     // init scene
-    cocos2d::Node* createGameScene();
+    cc::Node* createGameScene();
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

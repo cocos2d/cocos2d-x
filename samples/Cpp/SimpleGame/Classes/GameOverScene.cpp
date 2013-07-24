@@ -26,7 +26,7 @@
 #include "GameOverScene.h"
 #include "HelloWorldScene.h"
 
-using namespace cocos2d;
+using namespace cc;
 
 bool GameOverScene::init()
 {

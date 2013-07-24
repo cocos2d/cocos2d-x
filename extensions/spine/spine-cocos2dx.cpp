@@ -28,7 +28,7 @@
 
 USING_NS_CC;
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
 	Texture2D* texture = TextureCache::getInstance()->addImage(path);
@@ -106,4 +106,4 @@ void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, V3F_C4B_T2
 	quad->br.texCoords.v = self->uvs[VERTEX_Y4];
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

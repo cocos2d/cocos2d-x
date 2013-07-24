@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "utils/CCTransformHelp.h"
 #include "display/CCDisplayManager.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 Bone *Bone::create()
 {
@@ -342,4 +342,4 @@ void Bone::changeDisplayByIndex(int _index, bool _force)
     _displayManager->changeDisplayByIndex(_index, _force);
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

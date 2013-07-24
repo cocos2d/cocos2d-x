@@ -16,7 +16,7 @@
 
 The reason to implement with private inheritance is to hide some interface details of Director.
 */
-class  AppDelegate : private cocos2d::Application
+class  AppDelegate : private cc::Application
 {
 public:
     AppDelegate();

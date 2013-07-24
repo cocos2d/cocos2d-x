@@ -331,13 +331,13 @@ Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename)
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(cc::Array *array, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForDict(cc::Dictionary *dict, tinyxml2::XMLDocument *pDoc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath)
+bool FileUtils::writeToFile(cc::Dictionary *dict, const std::string &fullPath)
 {
     //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
@@ -381,7 +381,7 @@ bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPa
 /*
  * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForObject(cocos2d::Object *object, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForObject(cc::Object *object, tinyxml2::XMLDocument *pDoc)
 {
     // object is String
     if (String *str = dynamic_cast<String *>(object))
@@ -407,7 +407,7 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::Object *object, t
 /*
  * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(cc::Dictionary *dict, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
@@ -430,7 +430,7 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::Dictionary *dict, t
 /*
  * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(cc::Array *array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
@@ -450,7 +450,7 @@ NS_CC_BEGIN
 
 /* The subclass FileUtilsIOS and FileUtilsMac should override these two method. */
 Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
-bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return NULL;}
+bool FileUtils::writeToFile(cc::Dictionary *dict, const std::string &fullPath) {return NULL;}
 Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {return NULL;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */

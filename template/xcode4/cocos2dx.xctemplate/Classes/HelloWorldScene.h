@@ -3,14 +3,14 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Layer
+class HelloWorld : public cc::Layer
 {
 public:
     // Method 'init' in cocos2d-x returns bool, instead of 'id' in cocos2d-iphone (an object pointer)
     virtual bool init();
 
     // there's no 'id' in cpp, so we recommend to return the class instance pointer
-    static cocos2d::Scene* scene();
+    static cc::Scene* scene();
     
     // a selector callback
     void menuCloseCallback(Object* pSender);

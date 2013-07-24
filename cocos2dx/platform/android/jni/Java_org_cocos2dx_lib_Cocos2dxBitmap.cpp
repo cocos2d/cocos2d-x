@@ -7,7 +7,7 @@
 #include "support/CCNotificationCenter.h"
 #include <jni.h>
 
-using namespace cocos2d;
+USING_NS_CC;
 
 
 int getFontSizeAccordingHeightJni(int height) {

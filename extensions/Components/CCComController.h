@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class ComController : public cocos2d::Component, public InputDelegate
+class ComController : public cc::Component, public InputDelegate
 {
 protected:
     ComController(void);

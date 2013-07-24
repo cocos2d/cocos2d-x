@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "PluginManager.h"
 #include "HelloWorldScene.h"
 
-using namespace cocos2d;
-using namespace cocos2d::plugin;
+using namespace cc;
+using namespace cc::plugin;
 
 // The app key of flurry
 #define FLURRY_KEY_IOS          "KMGG7CD9WPK2TW4X9VR8"

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
 {
@@ -312,4 +312,4 @@ void ArmatureAnimation::updateFrameData(float currentPercent)
 }
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

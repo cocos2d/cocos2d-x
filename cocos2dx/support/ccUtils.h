@@ -28,7 +28,9 @@ THE SOFTWARE.
 Misc free functions
 */
 
-namespace cocos2d {
+#include "platform/CCPlatformMacros.h"
+
+NS_CC_BEGIN
 /*
 ccNextPOT function is licensed under the same license that is used in Texture2D.m.
 */
@@ -45,6 +47,6 @@ Examples:
 
 unsigned long ccNextPOT( unsigned long value );
 
-}
+NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__

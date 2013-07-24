@@ -1095,7 +1095,7 @@ class TestNode2 : public Node
 {
 public:
 	~TestNode2() {
-		cocos2d::log("Delete TestNode (should not crash)");
+		cc::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
 	}
 

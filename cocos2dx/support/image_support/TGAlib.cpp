@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "TGAlib.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
@@ -326,4 +326,5 @@ void tgaDestroy(tImageTGA *psInfo) {
         free(psInfo);
     }
 }
-}//namespace   cocos2d 
+
+NS_CC_END

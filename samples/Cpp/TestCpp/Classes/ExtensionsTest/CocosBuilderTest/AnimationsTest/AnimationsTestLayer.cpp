@@ -32,7 +32,7 @@ bool AnimationsTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char
     return false;
 }
 
-void AnimationsTestLayer::setAnimationManager(cocos2d::extension::CCBAnimationManager *pAnimationManager)
+void AnimationsTestLayer::setAnimationManager(cc::extension::CCBAnimationManager *pAnimationManager)
 {
     CC_SAFE_RELEASE_NULL(mAnimationManager);
     mAnimationManager = pAnimationManager;

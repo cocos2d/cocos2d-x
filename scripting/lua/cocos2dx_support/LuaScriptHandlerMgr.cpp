@@ -18,8 +18,8 @@ extern "C" {
 #include "LuaOpengl.h"
 #include "LuaScrollView.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 NS_CC_BEGIN
 
@@ -85,7 +85,7 @@ LuaCallFunc* LuaCallFunc::clone() const
     
     auto ret = new LuaCallFunc();
 
-    int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+    int newscriptHandler = cc::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
     
     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, newscriptHandler, ScriptHandlerMgr::kCallFuncHandler);
     

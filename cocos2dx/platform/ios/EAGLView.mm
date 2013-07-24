@@ -73,6 +73,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCEGLView.h"
 //CLASS IMPLEMENTATIONS:
 
+USING_NS_CC;
+
 #define IOS_MAX_TOUCHES_COUNT     10
 
 static CCEAGLView *view = 0;
@@ -260,14 +262,14 @@ static CCEAGLView *view = 0;
     // Issue #914 #924
 //     Director *director = [Director sharedDirector];
 //     [director reshapeProjection:size_];
-    cocos2d::Size size;
+    cc::Size size;
     size.width = size_.width;
     size.height = size_.height;
-    //cocos2d::Director::getInstance()->reshapeProjection(size);
+    //Director::getInstance()->reshapeProjection(size);
 
     // Avoid flicker. Issue #350
     //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-    cocos2d::Director::getInstance()->drawScene();
+    Director::getInstance()->drawScene();
 }
 
 - (void) swapBuffers
@@ -410,7 +412,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, ids, xs, ys);
+    EGLView::getInstance()->handleTouchesBegin(i, ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -430,7 +432,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, ids, xs, ys);
+    EGLView::getInstance()->handleTouchesMove(i, ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -451,7 +453,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, ids, xs, ys);
+    EGLView::getInstance()->handleTouchesEnd(i, ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -472,7 +474,7 @@ static CCEAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, ids, xs, ys);
+    EGLView::getInstance()->handleTouchesCancel(i, ids, xs, ys);
 }
 
 #pragma mark -
@@ -519,7 +521,7 @@ static CCEAGLView *view = 0;
         markedText_ = nil;
     }
     const char * pszText = [text cStringUsingEncoding:NSUTF8StringEncoding];
-    cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
 }
 
 - (void)deleteBackward
@@ -528,7 +530,7 @@ static CCEAGLView *view = 0;
         [markedText_ release];
         markedText_ = nil;
     }
-    cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+    IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
 #pragma mark -
@@ -627,7 +629,7 @@ static CCEAGLView *view = 0;
         return;
     }
     const char * pszText = [markedText_ cStringUsingEncoding:NSUTF8StringEncoding];
-    cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
+    IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
     [markedText_ release];
     markedText_ = nil;
 }
@@ -797,8 +799,8 @@ static CCEAGLView *view = 0;
             break;
     }
     
-    float scaleX = cocos2d::EGLView::getInstance()->getScaleX();
-	float scaleY = cocos2d::EGLView::getInstance()->getScaleY();
+    float scaleX = EGLView::getInstance()->getScaleX();
+	float scaleY = EGLView::getInstance()->getScaleY();
     
     
     if (self.contentScaleFactor == 2.0f)
@@ -809,7 +811,7 @@ static CCEAGLView *view = 0;
         end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
     }
     
-    float offestY = cocos2d::EGLView::getInstance()->getViewPortRect().origin.y;
+    float offestY = EGLView::getInstance()->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
@@ -823,18 +825,18 @@ static CCEAGLView *view = 0;
     end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
 
     
-    cocos2d::IMEKeyboardNotificationInfo notiInfo;
-    notiInfo.begin = cocos2d::Rect(begin.origin.x,
+    IMEKeyboardNotificationInfo notiInfo;
+    notiInfo.begin = cc::Rect(begin.origin.x,
                                      begin.origin.y,
                                      begin.size.width,
                                      begin.size.height);
-    notiInfo.end = cocos2d::Rect(end.origin.x,
+    notiInfo.end = cc::Rect(end.origin.x,
                                    end.origin.y,
                                    end.size.width,
                                    end.size.height);
     notiInfo.duration = (float)aniDuration;
     
-    cocos2d::IMEDispatcher* dispatcher = cocos2d::IMEDispatcher::sharedDispatcher();
+    IMEDispatcher* dispatcher = IMEDispatcher::sharedDispatcher();
     if (UIKeyboardWillShowNotification == type) 
     {
         self.keyboardShowNotification = notif; // implicit copy
@@ -868,11 +870,11 @@ static CCEAGLView *view = 0;
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::EGLView::getInstance()->getScaleY());
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, EGLView::getInstance()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 
-	dis *= cocos2d::EGLView::getInstance()->getScaleY();
+	dis *= EGLView::getInstance()->getScaleY();
     
     if (self.contentScaleFactor == 2.0f)
     {

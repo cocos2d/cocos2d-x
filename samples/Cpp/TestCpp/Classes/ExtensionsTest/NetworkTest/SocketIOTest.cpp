@@ -123,7 +123,7 @@ void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
 }
 
-void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
+void SocketIOTestLayer::toExtensionsMainLayer(cc::Object *sender)
 {
 	ExtensionsTestScene *scene = new ExtensionsTestScene();
     scene->runThisTest();
@@ -134,7 +134,7 @@ void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuSIOClientClicked(cc::Object *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
 	_sioClient = SocketIO::connect(*this, "ws://channon.us:3000");
@@ -147,7 +147,7 @@ void SocketIOTestLayer::onMenuSIOClientClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuSIOEndpointClicked(cc::Object *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
 	_sioEndpoint = SocketIO::connect(*this, "ws://channon.us:3000/testpoint");
@@ -160,7 +160,7 @@ void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestMessageClicked(cc::Object *sender)
 {
 	//check that the socket is != NULL before sending or emitting events
 	//the client should be NULL either before initialization and connection or after disconnect
@@ -168,14 +168,14 @@ void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestMessageEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestMessageEndpointClicked(cc::Object *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->send("Hello Socket.IO!");
 
 }
 
-void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEventClicked(cc::Object *sender)
 {
 	//check that the socket is != NULL before sending or emitting events
 	//the client should be NULL either before initialization and connection or after disconnect
@@ -183,21 +183,21 @@ void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Object *sender)
 
 }
 
-void SocketIOTestLayer::onMenuTestEventEndpointClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEventEndpointClicked(cc::Object *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
 }
 
-void SocketIOTestLayer::onMenuTestClientDisconnectClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestClientDisconnectClicked(cc::Object *sender)
 {
 
 	if(_sioClient != NULL) _sioClient->disconnect();
 
 }
 
-void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Object *sender)
+void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cc::Object *sender)
 {
 
 	if(_sioEndpoint != NULL) _sioEndpoint->disconnect();
@@ -206,7 +206,7 @@ void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Object *sen
 
 // Delegate methods
 
-void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
+void SocketIOTestLayer::onConnect(cc::extension::SIOClient* client)
 {
 	log("SocketIOTestLayer::onConnect called");
 
@@ -216,7 +216,7 @@ void SocketIOTestLayer::onConnect(cocos2d::extension::SIOClient* client)
 
 }
 
-void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const std::string& data)
+void SocketIOTestLayer::onMessage(cc::extension::SIOClient* client, const std::string& data)
 {
 	log("SocketIOTestLayer::onMessage received: %s", data.c_str());
 	
@@ -226,7 +226,7 @@ void SocketIOTestLayer::onMessage(cocos2d::extension::SIOClient* client, const s
 
 }
 
-void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
+void SocketIOTestLayer::onClose(cc::extension::SIOClient* client)
 {
 	log("SocketIOTestLayer::onClose called");
 
@@ -246,7 +246,7 @@ void SocketIOTestLayer::onClose(cocos2d::extension::SIOClient* client)
 	
 }
 
-void SocketIOTestLayer::onError(cocos2d::extension::SIOClient* client, const std::string& data)
+void SocketIOTestLayer::onError(cc::extension::SIOClient* client, const std::string& data)
 {
 	log("SocketIOTestLayer::onError received: %s", data.c_str());
 

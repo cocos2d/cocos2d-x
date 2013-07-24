@@ -242,7 +242,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
 		JSObject *obj = JS_NewObject(cx, js_cocos2dx_websocket_class, js_cocos2dx_websocket_prototype, NULL);
 		
         
-		cocos2d::extension::WebSocket* cobj = new cocos2d::extension::WebSocket();
+		cc::extension::WebSocket* cobj = new cc::extension::WebSocket();
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         

@@ -13,37 +13,37 @@
 #include "network/SocketIO.h"
 
 class SocketIOTestLayer
-	: public cocos2d::Layer
-	, public cocos2d::extension::SocketIO::SIODelegate
+	: public cc::Layer
+	, public cc::extension::SocketIO::SIODelegate
 {
 public:
 	SocketIOTestLayer(void);
 	virtual ~SocketIOTestLayer(void);
 
-	virtual void onConnect(cocos2d::extension::SIOClient* client);
-    virtual void onMessage(cocos2d::extension::SIOClient* client, const std::string& data);
-    virtual void onClose(cocos2d::extension::SIOClient* client);
-    virtual void onError(cocos2d::extension::SIOClient* client, const std::string& data);
+	virtual void onConnect(cc::extension::SIOClient* client);
+    virtual void onMessage(cc::extension::SIOClient* client, const std::string& data);
+    virtual void onClose(cc::extension::SIOClient* client);
+    virtual void onError(cc::extension::SIOClient* client, const std::string& data);
 
-	void toExtensionsMainLayer(cocos2d::Object *sender);
+	void toExtensionsMainLayer(cc::Object *sender);
 	
-	void onMenuSIOClientClicked(cocos2d::Object *sender);
-	void onMenuTestMessageClicked(cocos2d::Object *sender);
-	void onMenuTestEventClicked(cocos2d::Object *sender);
-	void onMenuTestClientDisconnectClicked(cocos2d::Object *sender);
+	void onMenuSIOClientClicked(cc::Object *sender);
+	void onMenuTestMessageClicked(cc::Object *sender);
+	void onMenuTestEventClicked(cc::Object *sender);
+	void onMenuTestClientDisconnectClicked(cc::Object *sender);
 
-	void onMenuSIOEndpointClicked(cocos2d::Object *sender);
-	void onMenuTestMessageEndpointClicked(cocos2d::Object *sender);
-	void onMenuTestEventEndpointClicked(cocos2d::Object *sender);
-	void onMenuTestEndpointDisconnectClicked(cocos2d::Object *sender);
+	void onMenuSIOEndpointClicked(cc::Object *sender);
+	void onMenuTestMessageEndpointClicked(cc::Object *sender);
+	void onMenuTestEventEndpointClicked(cc::Object *sender);
+	void onMenuTestEndpointDisconnectClicked(cc::Object *sender);
 
 
-	void testevent(cocos2d::extension::SIOClient *client, const std::string& data);
-	void echotest(cocos2d::extension::SIOClient *client, const std::string& data);
+	void testevent(cc::extension::SIOClient *client, const std::string& data);
+	void echotest(cc::extension::SIOClient *client, const std::string& data);
 
-	cocos2d::extension::SIOClient *_sioClient, *_sioEndpoint;
+	cc::extension::SIOClient *_sioClient, *_sioEndpoint;
 
-	cocos2d::LabelTTF *_sioClientStatus;
+	cc::LabelTTF *_sioClientStatus;
 };
 
 void runSocketIOTest();

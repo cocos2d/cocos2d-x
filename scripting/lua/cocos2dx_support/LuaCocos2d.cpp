@@ -38,7 +38,7 @@ extern "C" {
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
 
-using namespace cocos2d;
+using namespace cc;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;
 

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCDatas.h"
 #include "CCArmature/utils/CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 
 	BaseData::BaseData()
@@ -410,4 +410,4 @@ ContourData *TextureData::getContourData(int index)
 }
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

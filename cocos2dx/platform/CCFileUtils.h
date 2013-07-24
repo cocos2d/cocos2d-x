@@ -52,7 +52,7 @@ public:
      *  @return The unique ID for this class.
      */
     virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::FileUtils).name());
+		static const long id = cc::getHashCodeByString(typeid(cc::FileUtils).name());
 		return id;
     }
     

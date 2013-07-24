@@ -284,4 +284,6 @@ CC_DLL const char* cocos2dVersion();
 
 NS_CC_END
 
+namespace cocos2d = cc;
+
 #endif // __COCOS2D_H__

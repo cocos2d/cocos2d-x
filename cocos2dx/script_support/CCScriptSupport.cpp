@@ -27,7 +27,7 @@
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
-    cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine();
+    cc::ScriptEngineProtocol* pEngine = cc::ScriptEngineManager::getInstance()->getScriptEngine();
     if (pEngine && pEngine->handleAssert(msg))
     {
         return true;

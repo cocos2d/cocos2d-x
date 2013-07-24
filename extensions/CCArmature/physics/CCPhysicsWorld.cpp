@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "Box2D/Box2D.h"
 #include "../external_tool/GLES-Render.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 
 class Contact
@@ -162,4 +162,4 @@ void PhysicsWorld::drawDebug()
     _noGravityWorld->DrawDebugData();
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

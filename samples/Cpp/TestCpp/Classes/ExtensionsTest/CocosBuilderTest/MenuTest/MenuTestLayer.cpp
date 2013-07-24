@@ -30,14 +30,14 @@ bool MenuTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMe
     return false;
 }
 
-void MenuTestLayer::onMenuItemAClicked(cocos2d::Object *pSender) {
+void MenuTestLayer::onMenuItemAClicked(cc::Object *pSender) {
     this->mMenuItemStatusLabelBMFont->setString("Menu Item A clicked.");
 }
 
-void MenuTestLayer::onMenuItemBClicked(cocos2d::Object *pSender) {
+void MenuTestLayer::onMenuItemBClicked(cc::Object *pSender) {
     this->mMenuItemStatusLabelBMFont->setString("Menu Item B clicked.");
 }
 
-void MenuTestLayer::onMenuItemCClicked(cocos2d::Object *pSender) {
+void MenuTestLayer::onMenuItemCClicked(cc::Object *pSender) {
     this->mMenuItemStatusLabelBMFont->setString("Menu Item C clicked.");
 }

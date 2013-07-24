@@ -22,6 +22,7 @@
 #define _ZLIBIOAPI64_H
 
 #include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
 
 #if (!defined(_WIN32)) && (!defined(WIN32))
 
@@ -46,7 +47,7 @@
 #include <stdlib.h>
 #include "zlib.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 #ifndef OF
 #define OF _Z_OF
@@ -196,6 +197,6 @@ void    fill_zlib_filefunc64_32_def_from_filefunc32(zlib_filefunc64_32_def* p_fi
 #define ZTELL64(filefunc,filestream)            (call_ztell64((&(filefunc)),(filestream)))
 #define ZSEEK64(filefunc,filestream,pos,mode)   (call_zseek64((&(filefunc)),(filestream),(pos),(mode)))
 
-} // end of namespace cocos2d
+NS_CC_END
 
 #endif

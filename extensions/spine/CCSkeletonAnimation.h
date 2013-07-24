@@ -30,7 +30,7 @@
 #include <spine/CCSkeleton.h>
 #include "cocos2d.h"
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 /**
 Draws an animated skeleton, providing a simple API for applying one or more animations and queuing animations to be played later.
@@ -68,6 +68,6 @@ private:
 	void initialize ();
 };
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_CCSKELETONANIMATION_H_ */

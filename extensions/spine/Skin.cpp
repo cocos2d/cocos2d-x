@@ -26,7 +26,7 @@
 #include <spine/Skin.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct _Entry _Entry;
 struct _Entry {
@@ -115,4 +115,4 @@ void Skin_attachAll (const Skin* self, Skeleton* skeleton, const Skin* oldSkin) 
 	}
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

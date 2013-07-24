@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "../utils/CCTweenFunction.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 Tween *Tween::create(Bone *bone)
 {
@@ -435,4 +435,4 @@ float Tween::updateFrameData(float currentPrecent, bool activeFrame)
     return currentPrecent;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

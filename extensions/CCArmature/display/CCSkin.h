@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCBone.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Skin : public Sprite
 {
@@ -48,6 +48,6 @@ protected:
     AffineTransform _skinTransform;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCSKIN_H__*/

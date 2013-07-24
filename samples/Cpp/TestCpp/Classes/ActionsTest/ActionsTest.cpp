@@ -1702,7 +1702,7 @@ void Issue1305::onEnter()
 
 void Issue1305::log(Node* pSender)
 {
-    cocos2d::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    cc::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
 
 void Issue1305::onExit()

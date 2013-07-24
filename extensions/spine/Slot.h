@@ -30,7 +30,7 @@
 #include <spine/Attachment.h>
 #include <spine/SlotData.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 struct Skeleton;
 
@@ -53,6 +53,6 @@ float Slot_getAttachmentTime (const Slot* self);
 
 void Slot_setToSetupPose (Slot* self);
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_SLOT_H_ */

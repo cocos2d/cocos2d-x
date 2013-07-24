@@ -30,7 +30,7 @@
 
 USING_NS_CC;
 
-class ControlSceneManager : public cocos2d::Object
+class ControlSceneManager : public cc::Object
 {
 public:
     ControlSceneManager();
@@ -39,13 +39,13 @@ public:
     static ControlSceneManager * sharedControlSceneManager();
 
     /** Returns the next control scene. */
-    cocos2d::Scene *nextControlScene();
+    cc::Scene *nextControlScene();
 
     /** Returns the previous control scene. */
-    cocos2d::Scene *previousControlScene();
+    cc::Scene *previousControlScene();
 
     /** Returns the current control scene. */
-    cocos2d::Scene *currentControlScene();
+    cc::Scene *currentControlScene();
 
     /** Control scene id. */
     CC_SYNTHESIZE(int, _currentControlSceneId, CurrentControlSceneId)

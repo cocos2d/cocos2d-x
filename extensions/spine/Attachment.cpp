@@ -27,7 +27,7 @@
 #include <spine/extension.h>
 #include <spine/Slot.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct _AttachmentVtable {
 	void (*dispose) (Attachment* self);
@@ -53,4 +53,4 @@ void Attachment_dispose (Attachment* self) {
 	FREE(self);
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

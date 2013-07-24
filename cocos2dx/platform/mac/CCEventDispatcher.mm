@@ -34,6 +34,8 @@
 #include "CCDirector.h"
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
+USING_NS_CC;
+
 //NS_CC_BEGIN;
 static CCEventDispatcher *sharedDispatcher = nil;
 
@@ -505,7 +507,7 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, true);
+		Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, true);
 
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyDown ) {
@@ -521,7 +523,7 @@ static int		eventQueueCount;
 {
 	if( dispatchEvents_ ) {
 		tListEntry *entry, *tmp;
-		cocos2d::Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, false);
+		Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.keyCode, false);
 
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
 			if ( entry->flags & kImplementsKeyUp ) {

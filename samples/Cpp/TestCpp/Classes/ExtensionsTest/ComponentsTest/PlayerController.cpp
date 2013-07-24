@@ -3,8 +3,8 @@
 #include "SceneController.h"
 #include "ProjectileController.h"
 
-using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cc;
+using namespace cc::extension;
 
 PlayerController::PlayerController(void)
 {

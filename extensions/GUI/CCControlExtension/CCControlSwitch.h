@@ -30,10 +30,6 @@
 
 #include "CCControl.h"
 
-
-namespace cocos2d { class Sprite; }
-namespace cocos2d { class LabelTTF; }
-
 NS_CC_EXT_BEGIN
 
 class ControlSwitchSprite;

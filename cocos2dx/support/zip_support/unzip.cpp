@@ -86,7 +86,7 @@
 #   include <errno.h>
 #endif
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 #ifndef local
 #  define local static
@@ -2158,4 +2158,4 @@ int ZEXPORT unzSetOffset (unzFile file, uLong pos)
     return unzSetOffset64(file,pos);
 }
 
-} // end of namespace cocos2d
+NS_CC_END

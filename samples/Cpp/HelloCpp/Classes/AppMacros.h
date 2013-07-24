@@ -32,25 +32,25 @@
 
 typedef struct tagResource
 {
-    cocos2d::Size size;
+    cc::Size size;
     char directory[100];
 }Resource;
 
-static Resource smallResource  =  { cocos2d::Size(480, 320),   "iphone" };
-static Resource mediumResource =  { cocos2d::Size(1024, 768),  "ipad"   };
-static Resource largeResource  =  { cocos2d::Size(2048, 1536), "ipadhd" };
+static Resource smallResource  =  { cc::Size(480, 320),   "iphone" };
+static Resource mediumResource =  { cc::Size(1024, 768),  "ipad"   };
+static Resource largeResource  =  { cc::Size(2048, 1536), "ipadhd" };
 
 #if (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_480X320)
-static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
+static cc::Size designResolutionSize = cc::Size(480, 320);
 #elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_1024X768)
-static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 768);
+static cc::Size designResolutionSize = cc::Size(1024, 768);
 #elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_2048X1536)
-static cocos2d::Size designResolutionSize = cocos2d::Size(2048, 1536);
+static cc::Size designResolutionSize = cc::Size(2048, 1536);
 #else
 #error unknown target design resolution!
 #endif
 
 // The font size 24 is designed for small resolution, so we should change it to fit for current design resolution
-#define TITLE_FONT_SIZE  (cocos2d::EGLView::getInstance()->getDesignResolutionSize().width / smallResource.size.width * 24)
+#define TITLE_FONT_SIZE  (cc::EGLView::getInstance()->getDesignResolutionSize().width / smallResource.size.width * 24)
 
 #endif /* __APPMACROS_H__ */

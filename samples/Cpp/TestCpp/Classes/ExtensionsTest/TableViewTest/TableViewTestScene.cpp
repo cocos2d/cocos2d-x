@@ -48,7 +48,7 @@ bool TableViewTestLayer::init()
     return true;
 }
 
-void TableViewTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
+void TableViewTestLayer::toExtensionsMainLayer(cc::Object *sender)
 {
 	ExtensionsTestScene *scene = new ExtensionsTestScene();
 	scene->runThisTest();

@@ -28,6 +28,8 @@
 #import "CCEventDispatcher.h"
 #include "CCAutoreleasePool.h"
 
+USING_NS_CC;
+
 static id s_sharedDirectorCaller;
 
 @interface NSObject(CADisplayLink)
@@ -79,8 +81,8 @@ static id s_sharedDirectorCaller;
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	cocos2d::Director::getInstance()->drawScene();
-	cocos2d::PoolManager::sharedPoolManager()->pop();
+	Director::getInstance()->drawScene();
+	PoolManager::sharedPoolManager()->pop();
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
@@ -101,7 +103,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     //    CVReturn result = [(DirectorCaller*)displayLinkContext getFrameForTime:outputTime];
     //    return result;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	cocos2d::Director::getInstance()->mainLoop();
+	Director::getInstance()->mainLoop();
 	[pool release];
     
 	return kCVReturnSuccess;
@@ -119,7 +121,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[openGLView lockOpenGLContext];
     
 	// run the main cocos2d loop
-	cocos2d::Director::getInstance()->mainLoop();
+	Director::getInstance()->mainLoop();
     
 	// flush buffer (this line is very important!)
 	[[openGLView openGLContext] flushBuffer];
@@ -207,7 +209,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 -(void) doCaller: (id) sender
 {
-	cocos2d::Director::getInstance()->mainLoop();
+	Director::getInstance()->mainLoop();
 }
 
 @end

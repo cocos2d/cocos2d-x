@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-class ScrollViewTestLayer : public cocos2d::Layer {
+class ScrollViewTestLayer : public cc::Layer {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(ScrollViewTestLayer, create);
 };

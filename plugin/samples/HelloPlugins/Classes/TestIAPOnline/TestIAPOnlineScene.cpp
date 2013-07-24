@@ -27,8 +27,8 @@ THE SOFTWARE.
 #include "MyIAPOLManager.h"
 #include "HelloWorldScene.h"
 
-using namespace cocos2d;
-using namespace cocos2d::plugin;
+using namespace cc;
+using namespace cc::plugin;
 
 enum {
 	TAG_PAY_BY_QH360 = 100,

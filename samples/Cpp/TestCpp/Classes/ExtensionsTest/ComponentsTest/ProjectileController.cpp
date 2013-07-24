@@ -2,7 +2,7 @@
 #include "SceneController.h"
 #include "EnemyController.h"
 
-using namespace cocos2d;
+using namespace cc;
 
 ProjectileController::ProjectileController(void)
 {
@@ -36,7 +36,7 @@ void ProjectileController::onExit()
 void ProjectileController::update(float delta)
 {
     Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
+    cc::Array *_targets = ((SceneController*)com)->getTargets();
     
     Sprite *projectile = dynamic_cast<Sprite*>(_owner);
     Rect projectileRect = Rect(
@@ -133,7 +133,7 @@ void ProjectileController::move(float flocationX, float flocationY)
 void ProjectileController::die()
 {
     Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_projectiles = ((SceneController*)com)->getProjectiles();
+    cc::Array *_projectiles = ((SceneController*)com)->getProjectiles();
     _projectiles->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
 }

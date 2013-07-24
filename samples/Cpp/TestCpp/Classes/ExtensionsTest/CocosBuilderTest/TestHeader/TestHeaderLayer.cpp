@@ -14,11 +14,11 @@ SEL_CCControlHandler TestHeaderLayer::onResolveCCBControlSelector(Object * pTarg
     return NULL;
 }
 
-void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader)
+void TestHeaderLayer::onNodeLoaded(cc::Node * node, cc::extension::NodeLoader * nodeLoader)
 {
     CCLOG("TestHeaderLayer::onNodeLoaded");
 }
 
-void TestHeaderLayer::onBackClicked(cocos2d::Object *pSender) {
+void TestHeaderLayer::onBackClicked(cc::Object *pSender) {
     Director::getInstance()->popScene();
 }

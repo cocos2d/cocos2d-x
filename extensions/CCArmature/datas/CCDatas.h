@@ -55,7 +55,7 @@ public: \
 	return NULL;\
 }
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 /**
 * the base node include a lot of attribute.
@@ -454,6 +454,6 @@ public:
 };
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCARMATURE_DATAS_H__*/

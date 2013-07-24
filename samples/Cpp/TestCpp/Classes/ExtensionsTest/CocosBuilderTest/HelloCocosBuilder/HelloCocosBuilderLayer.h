@@ -15,10 +15,10 @@
  * http://www.cocoabuilder.com/archive/xcode/265549-crash-in-virtual-method-call.html
  */
 class HelloCocosBuilderLayer
-: public cocos2d::Layer
-, public cocos2d::extension::CCBSelectorResolver
-, public cocos2d::extension::CCBMemberVariableAssigner
-, public cocos2d::extension::NodeLoaderListener
+: public cc::Layer
+, public cc::extension::CCBSelectorResolver
+, public cc::extension::CCBMemberVariableAssigner
+, public cc::extension::NodeLoaderListener
 {
     public:
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(HelloCocosBuilderLayer, create);
@@ -26,25 +26,25 @@ class HelloCocosBuilderLayer
         HelloCocosBuilderLayer();
         virtual ~HelloCocosBuilderLayer();
 
-        void openTest(const char * pCCBFileName, const char * nodeName = NULL, cocos2d::extension::NodeLoader * nodeLoader = NULL);
+        void openTest(const char * pCCBFileName, const char * nodeName = NULL, cc::extension::NodeLoader * nodeLoader = NULL);
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
-        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue);
-        virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);
+        virtual cc::SEL_MenuHandler onResolveCCBMenuItemSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual cc::extension::SEL_CCControlHandler onResolveCCBControlSelector(cc::Object * pTarget, const char * pSelectorName);
+        virtual bool onAssignCCBMemberVariable(cc::Object * pTarget, const char * pMemberVariableName, cc::Node * node);
+        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, cc::extension::CCBValue* pCCBValue);
+        virtual void onNodeLoaded(cc::Node * node, cc::extension::NodeLoader * nodeLoader);
 
-        void onMenuTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onSpriteTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onButtonTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onAnimationsTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onParticleSystemTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onScrollViewTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
-        void onTimelineCallbackSoundClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
+        void onMenuTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onSpriteTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onButtonTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onAnimationsTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onParticleSystemTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onScrollViewTestClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
+        void onTimelineCallbackSoundClicked(cc::Object * pSender, cc::extension::ControlEvent pControlEvent);
 
     private:
-        cocos2d::Sprite * mBurstSprite;
-        cocos2d::LabelTTF * mTestTitleLabelTTF;
+        cc::Sprite * mBurstSprite;
+        cc::LabelTTF * mTestTitleLabelTTF;
     
         int mCustomPropertyInt;
         float mCustomPropertyFloat;

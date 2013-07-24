@@ -133,12 +133,12 @@ string RenderTextureSave::subtitle()
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
 
-void RenderTextureSave::clearImage(cocos2d::Object *pSender)
+void RenderTextureSave::clearImage(cc::Object *pSender)
 {
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Object *pSender)
+void RenderTextureSave::saveImage(cc::Object *pSender)
 {
     static int counter = 0;
 
@@ -361,7 +361,7 @@ string RenderTextureZbuffer::subtitle()
     return "Touch screen. It should be green";
 }
 
-void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event *event)
+void RenderTextureZbuffer::ccTouchesBegan(cc::Set *touches, cc::Event *event)
 {
 
     for (auto &item: *touches)

@@ -10,10 +10,10 @@ public:
     CurlTest();
     ~CurlTest();
 
-    virtual void ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
+    virtual void ccTouchesEnded(cc::Set *pTouches, cc::Event *pEvent);
 
 private:
-    cocos2d::LabelTTF*         _label;
+    cc::LabelTTF*         _label;
 };
 
 class CurlTestScene : public TestScene

@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "display/CCDecorativeDisplay.h"
 #include "display/CCDisplayManager.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Armature;
 
@@ -177,6 +177,6 @@ protected:
     AffineTransform _worldTransform;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCBONE_H__*/

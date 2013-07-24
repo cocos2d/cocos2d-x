@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCTweenFunction.h"
 #include "CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 float TweenFunction::tweenTo(float from, float change, float time, float duration, TweenType tweenType)
 {
@@ -411,4 +411,4 @@ float TweenFunction::bounceEaseInOut(float t, float b, float c, float d)
 }
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

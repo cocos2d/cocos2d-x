@@ -28,7 +28,7 @@
 
 #include <spine/BoneData.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 typedef struct {
 	const char* const name;
@@ -43,6 +43,6 @@ void SlotData_dispose (SlotData* self);
 /* @param attachmentName May be 0 for no setup pose attachment. */
 void SlotData_setAttachmentName (SlotData* self, const char* attachmentName);
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {
 
 #endif /* SPINE_SLOTDATA_H_ */

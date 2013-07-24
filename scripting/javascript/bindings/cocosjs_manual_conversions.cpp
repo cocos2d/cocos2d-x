@@ -6,7 +6,7 @@
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
-using namespace cocos2d;
+using namespace cc;
 
 JSBool jsval_to_CCPoint( JSContext *cx, jsval vp, Point *ret )
 {

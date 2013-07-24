@@ -30,48 +30,49 @@ THE SOFTWARE.
 #define  LOG_TAG    "CCAccelerometer_android"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-namespace cocos2d
+NS_CC_BEGIN
+
+Accelerometer::Accelerometer() : _function(nullptr)
 {
-    Accelerometer::Accelerometer() : _function(nullptr)
-    {
+}
+
+Accelerometer::~Accelerometer() 
+{
+
+}
+
+void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
+{
+    _function = function;
+
+    if (_function)
+    {        
+        enableAccelerometerJNI();
     }
-
-    Accelerometer::~Accelerometer() 
+    else
     {
-
+        disableAccelerometerJNI();
     }
+}
 
-    void Accelerometer::setDelegate(std::function<void(Acceleration*)> function) 
+void Accelerometer::setAccelerometerInterval(float interval) 
+{
+    setAccelerometerIntervalJNI(interval);
+}
+
+
+void Accelerometer::update(float x, float y, float z, long sensorTimeStamp) 
+{
+    if (_function)
     {
-        _function = function;
+        _accelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+        _accelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+        _accelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+        _accelerationValue.timestamp = (double)sensorTimeStamp;
 
-        if (_function)
-        {        
-            enableAccelerometerJNI();
-        }
-        else
-        {
-            disableAccelerometerJNI();
-        }
-    }
+        _function(&_accelerationValue);
+    }    
+}
 
-    void Accelerometer::setAccelerometerInterval(float interval) 
-    {
-        setAccelerometerIntervalJNI(interval);
-    }
-
-
-    void Accelerometer::update(float x, float y, float z, long sensorTimeStamp) 
-    {
-        if (_function)
-        {
-            _accelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-            _accelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-            _accelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-            _accelerationValue.timestamp = (double)sensorTimeStamp;
-
-            _function(&_accelerationValue);
-        }    
-    }
-} // end of namespace cococs2d
+NS_CC_END
 

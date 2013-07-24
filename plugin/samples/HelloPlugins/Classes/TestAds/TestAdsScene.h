@@ -27,21 +27,21 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ProtocolAds.h"
 
-class MyAdsListener : public cocos2d::plugin::AdsListener
+class MyAdsListener : public cc::plugin::AdsListener
 {
 public:
-	virtual void onAdsResult(cocos2d::plugin::AdsResultCode code, const char* msg);
-	virtual void onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points);
+	virtual void onAdsResult(cc::plugin::AdsResultCode code, const char* msg);
+	virtual void onPlayerGetPoints(cc::plugin::ProtocolAds* pAdsPlugin, int points);
 };
 
-class TestAds : public cocos2d::Layer
+class TestAds : public cc::Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* scene();
+    static cc::Scene* scene();
     
     // a selector callback
     void menuBackCallback(Object* pSender);
@@ -57,16 +57,16 @@ public:
     CREATE_FUNC(TestAds);
 
 private:
-    cocos2d::plugin::ProtocolAds* _admob;
+    cc::plugin::ProtocolAds* _admob;
     MyAdsListener* _listener;
 
-    cocos2d::MenuItemToggle* _caseItem;
-    cocos2d::MenuItemToggle* _typeItem;
-    cocos2d::MenuItemToggle* _posItem;
+    cc::MenuItemToggle* _caseItem;
+    cc::MenuItemToggle* _typeItem;
+    cc::MenuItemToggle* _posItem;
 
-    cocos2d::plugin::ProtocolAds* _ads;
-    cocos2d::plugin::ProtocolAds::AdsPos _pos;
-    cocos2d::plugin::ProtocolAds::AdsType _type;
+    cc::plugin::ProtocolAds* _ads;
+    cc::plugin::ProtocolAds::AdsPos _pos;
+    cc::plugin::ProtocolAds::AdsType _type;
 };
 
 #endif // __TEST_ADS_SCENE_H__

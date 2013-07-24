@@ -157,7 +157,7 @@ private:
         void* obj;
     } Message;
     
-    class Helper : public cocos2d::Object
+    class Helper : public cc::Object
     {
     public:
         Helper();

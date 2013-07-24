@@ -539,7 +539,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
     log("NO CRASHES");
 }
 
-void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
+void BugsTest::issue1410v2MenuCallback(cc::Object *pSender)
 {
     Menu *menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
     menu->setTouchEnabled(true);
@@ -548,7 +548,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
 
-void BugsTest::backMenuCallback(cocos2d::Object *pSender)
+void BugsTest::backMenuCallback(cc::Object *pSender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCTweenFunction.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class Bone;
 class ArmatureAnimation;
@@ -137,6 +137,6 @@ protected:
     ArmatureAnimation *_animation;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCTWEEN_H__*/

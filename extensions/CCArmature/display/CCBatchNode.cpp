@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCArmature.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 BatchNode *BatchNode::create()
 {
@@ -116,4 +116,4 @@ void BatchNode::draw()
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

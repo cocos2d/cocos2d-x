@@ -27,7 +27,7 @@
 #include <math.h>
 #include <spine/extension.h>
 
-namespace cocos2d { namespace extension {
+namespace cc { namespace extension {
 
 static int yDown;
 
@@ -96,4 +96,4 @@ void Bone_updateWorldTransform (Bone* self, int flipX, int flipY) {
 	}
 }
 
-}} // namespace cocos2d { namespace extension {
+}} // namespace cc { namespace extension {

@@ -12,22 +12,22 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-class EditBoxTest : public cocos2d::Layer, public cocos2d::extension::EditBoxDelegate
+class EditBoxTest : public cc::Layer, public cc::extension::EditBoxDelegate
 {
 public:
     EditBoxTest();
     virtual ~EditBoxTest();
-    void toExtensionsMainLayer(cocos2d::Object *sender);
+    void toExtensionsMainLayer(cc::Object *sender);
     
-    virtual void editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox);
-    virtual void editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox);
-    virtual void editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text);
-    virtual void editBoxReturn(cocos2d::extension::EditBox* editBox);
+    virtual void editBoxEditingDidBegin(cc::extension::EditBox* editBox);
+    virtual void editBoxEditingDidEnd(cc::extension::EditBox* editBox);
+    virtual void editBoxTextChanged(cc::extension::EditBox* editBox, const std::string& text);
+    virtual void editBoxReturn(cc::extension::EditBox* editBox);
 private:
-    cocos2d::LabelTTF* _TTFShowEditReturn;
-    cocos2d::extension::EditBox* _editName;
-    cocos2d::extension::EditBox* _editPassword;
-    cocos2d::extension::EditBox* _editEmail;
+    cc::LabelTTF* _TTFShowEditReturn;
+    cc::extension::EditBox* _editName;
+    cc::extension::EditBox* _editPassword;
+    cc::extension::EditBox* _editEmail;
 };
 
 void runEditBoxTest();

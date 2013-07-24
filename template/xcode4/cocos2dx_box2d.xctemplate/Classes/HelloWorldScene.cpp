@@ -8,7 +8,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
-using namespace cocos2d;
+using namespace cc;
 using namespace CocosDenshion;
 
 #define PTM_RATIO 32

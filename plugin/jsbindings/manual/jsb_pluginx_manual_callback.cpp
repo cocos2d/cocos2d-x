@@ -7,10 +7,10 @@ using namespace pluginx;
 
 static JSContext* s_cx = NULL;
 
-class Pluginx_PurchaseResult : public cocos2d::plugin::PayResultListener
+class Pluginx_PurchaseResult : public cc::plugin::PayResultListener
 {
 public:
-    virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info)
+    virtual void onPayResult(cc::plugin::PayResultCode ret, const char* msg, cc::plugin::TProductInfo info)
     {
         char goodInfo[1024] = { 0 };
         sprintf(goodInfo, "商品名称:%s\n商品价格:%s\n商品描述:%s",
@@ -60,7 +60,7 @@ JSBool js_pluginx_ProtocolIAP_setResultListener(JSContext *cx, uint32_t argc, js
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-    cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
+    cc::plugin::ProtocolIAP* cobj = (cc::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
     JSBool ok = JS_TRUE;
 
     if (argc == 1) {
@@ -78,7 +78,7 @@ JSBool js_pluginx_ProtocolIAP_setResultListener(JSContext *cx, uint32_t argc, js
     return JS_FALSE;
 }
 
-class Pluginx_AdsListener : public cocos2d::plugin::AdsListener
+class Pluginx_AdsListener : public cc::plugin::AdsListener
 {
 public:
 
@@ -156,7 +156,7 @@ JSBool js_pluginx_ProtocolAds_setAdsListener(JSContext *cx, uint32_t argc, jsval
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-    cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
+    cc::plugin::ProtocolAds* cobj = (cc::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         // save the delegate
@@ -173,10 +173,10 @@ JSBool js_pluginx_ProtocolAds_setAdsListener(JSContext *cx, uint32_t argc, jsval
     return JS_FALSE;
 }
 
-class Pluginx_ShareResult : public cocos2d::plugin::ShareResultListener
+class Pluginx_ShareResult : public cc::plugin::ShareResultListener
 {
 public:
-    virtual void onShareResult(cocos2d::plugin::ShareResultCode ret, const char* msg)
+    virtual void onShareResult(cc::plugin::ShareResultCode ret, const char* msg)
     {
         JSContext* cx = s_cx;
 
@@ -218,7 +218,7 @@ JSBool js_pluginx_ProtocolShare_setResultListener(JSContext *cx, uint32_t argc, 
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
     js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
-    cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
+    cc::plugin::ProtocolShare* cobj = (cc::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
     JSBool ok = JS_TRUE;
 
     if (argc == 1) {

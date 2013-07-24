@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "../utils/CCArmatureDefine.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 class BatchNode : public Node
 {
@@ -45,6 +45,6 @@ protected:
     TextureAtlas *_atlas;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
 
 #endif /*__CCBATCHNODE_H__*/

@@ -23,9 +23,9 @@ typedef std::pair<EventType, EventHandler> PairEventHandler;
 typedef std::vector<PairEventHandler> VecEventHandlers;
 typedef std::map<void*,VecEventHandlers> MapObjectHandlers;
 typedef std::vector<ScheduleHandlerDelegate*> VecShedule;
-typedef std::map<cocos2d::Node*,VecShedule> MapNodeSchedules;
+typedef std::map<cc::Node*,VecShedule> MapNodeSchedules;
 
-class ScheduleHandlerDelegate:public cocos2d::Object
+class ScheduleHandlerDelegate:public cc::Object
 {
 public:
     ScheduleHandlerDelegate():_isUpdateSchedule(false)
@@ -45,7 +45,7 @@ private:
     bool _isUpdateSchedule;
 };
 
-class LuaCallFunc:public cocos2d::CallFuncN
+class LuaCallFunc:public cc::CallFuncN
 {
 public:
     LuaCallFunc()

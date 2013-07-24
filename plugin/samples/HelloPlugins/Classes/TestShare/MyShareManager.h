@@ -26,10 +26,10 @@ THE SOFTWARE.
 
 #include "ProtocolShare.h"
 
-class MyShareResult : public cocos2d::plugin::ShareResultListener
+class MyShareResult : public cc::plugin::ShareResultListener
 {
 public:
-	virtual void onShareResult(cocos2d::plugin::ShareResultCode ret, const char* msg);
+	virtual void onShareResult(cc::plugin::ShareResultCode ret, const char* msg);
 };
 
 class MyShareManager
@@ -46,7 +46,7 @@ public:
 
 	void unloadSharePlugin();
     void loadSharePlugin();
-    void shareByMode(cocos2d::plugin::TShareInfo info, MyShareMode mode);
+    void shareByMode(cc::plugin::TShareInfo info, MyShareMode mode);
 
 private:
     MyShareManager();
@@ -54,8 +54,8 @@ private:
 
     static MyShareManager* s_pManager;
 
-    cocos2d::plugin::ProtocolShare* s_pTwitter;
-    cocos2d::plugin::ProtocolShare* s_pWeibo;
+    cc::plugin::ProtocolShare* s_pTwitter;
+    cc::plugin::ProtocolShare* s_pWeibo;
     MyShareResult* s_pRetListener;
 };
 

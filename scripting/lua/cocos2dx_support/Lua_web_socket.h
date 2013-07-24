@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #include "network/WebSocket.h"
-class LuaWebSocket: public cocos2d::extension::WebSocket,public cocos2d::extension::WebSocket::Delegate
+class LuaWebSocket: public cc::extension::WebSocket,public cc::extension::WebSocket::Delegate
 {
 public:
     virtual ~LuaWebSocket();

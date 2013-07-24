@@ -283,7 +283,7 @@ void EditBoxImplAndroid::openKeyboard()
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
-        ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        ScriptEvent event(cc::kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 	

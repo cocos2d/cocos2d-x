@@ -24,7 +24,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 USING_NS_CC;
 
@@ -251,4 +251,4 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {

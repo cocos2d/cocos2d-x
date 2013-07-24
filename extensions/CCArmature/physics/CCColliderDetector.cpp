@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "../CCBone.h"
 #include "Box2D/Box2D.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+namespace cc { namespace extension { namespace armature {
 
 ColliderDetector *ColliderDetector::create()
 {
@@ -203,4 +203,4 @@ void ColliderDetector::updateTransform(AffineTransform &t)
 
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+}}} // namespace cc { namespace extension { namespace armature {
