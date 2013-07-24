@@ -5207,17 +5207,17 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
         int location = ((int)  tolua_tonumber(tolua_S,2,0));
         unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
         float* floatArray = new float[numberOfArrays * 4];
-        for (int i = 1; i <= numberOfArrays * 4; i++)
+        for (int i = 1; i <= numberOfArrays * 4; ++i)
         {
             floatArray[i - 1] = (float)tolua_tofieldnumber(tolua_S, 3, i, 0);
         }
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
 #endif
-        {
-            self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
-            CC_SAFE_DELETE_ARRAY(floatArray);
-        }
+		
+		self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
+		CC_SAFE_DELETE_ARRAY(floatArray);
+		
     }
     return 1;
 #ifndef TOLUA_RELEASE
