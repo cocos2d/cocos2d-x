@@ -450,3 +450,10 @@ local function sharedEngine()
     return SimpleAudioEngine:getInstance()
 end
 rawset(SimpleAudioEngine,"sharedEngine",sharedEngine)
+
+local function sendBinaryMsg(self,table,size)
+    deprecatedTip("sendBinaryMsg","sendBinaryStringMsg")
+    local strMsg = string.char(unpack(table))
+    return self:sendBinaryStringMsg(strMsg)
+end
+rawset(WebSocket,"sendBinaryMsg",sendBinaryMsg)

@@ -51,7 +51,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.push_back("cocosbuilderRes");
+	searchPaths.insert(searchPaths.begin(), "cocosbuilderRes");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

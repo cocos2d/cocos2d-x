@@ -337,41 +337,33 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: sendBinaryMsg of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendBinaryMsg00
-static int tolua_Cocos2d_WebSocket_sendBinaryMsg00(lua_State* tolua_S)
+/* method: sendBinaryStringMsg of class WebSocket */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendBinaryStringMsg00
+static int tolua_Cocos2d_WebSocket_sendBinaryStringMsg00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !tolua_istable(tolua_S, 2, 0, &tolua_err)             ||
-        !tolua_isnumber(tolua_S,3, 0,&tolua_err)             ||
-        !tolua_isnoobj(tolua_S, 4,&tolua_err)
+        !tolua_isstring(tolua_S,2,0,&tolua_err)               ||
+        !tolua_isnoobj(tolua_S, 3,&tolua_err)
         )
         goto tolua_lerror;
     else
 #endif
     {
         LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        int   nLength      = lua_tonumber(tolua_S, 3);
-        
-        if (NULL != self && nLength > 0) {
-            unsigned char* binaryArray = new unsigned char[nLength];
-            if (NULL == binaryArray) {
-                return 0;
-            }
-            for (int i = 0; i < nLength; i++) {
-                binaryArray[i] = (unsigned char)tolua_tofieldnumber(tolua_S, 2, i+1, 0);
-            }
-            self->send(binaryArray, nLength);
-            delete [] binaryArray;
+        size_t size = 0;
+        const char* data = (const char*) lua_tolstring(tolua_S, 2, &size);
+        if (NULL != self && NULL != data && size > 0) 
+        {
+            self->send((const unsigned char*)data, size);
         }
     }
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'sendBinaryMsg'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'sendBinaryStringMsg'.",&tolua_err);
     return 0;
 #endif
 }
@@ -403,7 +395,7 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
         tolua_function(tolua_S, "getReadyState", tolua_Cocos2d_WebSocket_getReadyState00);
         tolua_function(tolua_S, "sendTextMsg", tolua_Cocos2d_WebSocket_sendTextMsg00);
         tolua_function(tolua_S, "close", tolua_Cocos2d_WebSocket_close00);
-        tolua_function(tolua_S, "sendBinaryMsg", tolua_Cocos2d_WebSocket_sendBinaryMsg00);
+	    tolua_function(tolua_S, "sendBinaryStringMsg", tolua_Cocos2d_WebSocket_sendBinaryStringMsg00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
 	return 1;
