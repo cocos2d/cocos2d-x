@@ -341,6 +341,94 @@ protected:
     std::function<void(Node*)> _functionN;
 };
 
+/**
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
+ * ND means: Node and Data. Data is void *, so it could be anything.
+ */
+class CC_DLL CC_DEPRECATED_ATTRIBUTE CallFuncND : public CallFuncN
+{
+public:
+    /** creates the action with the callback and the data to pass as an argument */
+    static CallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+    virtual long getClassTypeInfo() {
+        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		return id;
+    }
+    
+    /** initializes the action with the callback and the data to pass as an argument */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+    //
+    // Overrides
+    //
+	virtual CallFuncND* clone() const override;
+    virtual void execute() override;
+    
+protected:
+    SEL_CallFuncND _callFuncND;
+    void* _data;
+};
+
+
+/**
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with an object as the first argument.
+ O means Object.
+ @since v0.99.5
+ */
+
+class CC_DLL CC_DEPRECATED_ATTRIBUTE CallFuncO : public CallFunc, public TypeInfo
+{
+public:
+    /** creates the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    static CallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+    CallFuncO();
+    virtual ~CallFuncO();
+    
+    /** initializes the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+    virtual long getClassTypeInfo() {
+	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		return id;
+    }
+    
+    //
+    // Overrides
+    //
+	virtual CallFuncO* clone() const override;
+    virtual void execute() override;
+    
+    inline Object* getObject()
+    {
+        return _object;
+    }
+    
+    inline void setObject(Object* obj)
+    {
+        if (obj != _object)
+        {
+            CC_SAFE_RELEASE(_object);
+            _object = obj;
+            CC_SAFE_RETAIN(_object);
+        }
+    }
+    
+protected:
+    /** object to be passed as argument */
+    Object* _object;
+    SEL_CallFuncO _callFuncO;
+};
+
 // end of actions group
 /// @}
 
