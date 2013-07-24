@@ -81,7 +81,7 @@ int TextureAtlas::getCapacity() const
     return _capacity;
 }
 
-Texture2D* TextureAtlas::getTexture()
+Texture2D* TextureAtlas::getTexture() const
 {
     return _texture;
 }
@@ -100,22 +100,22 @@ V3F_C4B_T2F_Quad* TextureAtlas::getQuads()
     return _quads;
 }
 
-void TextureAtlas::setQuads(V3F_C4B_T2F_Quad *var)
+void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 {
-    _quads = var;
+    _quads = quads;
 }
 
 // TextureAtlas - alloc & init
 
 TextureAtlas * TextureAtlas::create(const char* file, int capacity)
 {
-    TextureAtlas * pTextureAtlas = new TextureAtlas();
-    if(pTextureAtlas && pTextureAtlas->initWithFile(file, capacity))
+    TextureAtlas * textureAtlas = new TextureAtlas();
+    if(textureAtlas && textureAtlas->initWithFile(file, capacity))
     {
-        pTextureAtlas->autorelease();
-        return pTextureAtlas;
+        textureAtlas->autorelease();
+        return textureAtlas;
     }
-    CC_SAFE_DELETE(pTextureAtlas);
+    CC_SAFE_DELETE(textureAtlas);
     return NULL;
 }
 

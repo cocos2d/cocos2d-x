@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "misc_nodes/CCRenderTexture.h"
 #include "CCDirector.h"
-#include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -139,68 +138,6 @@ void RenderTexture::listenToForeground(cocos2d::Object *obj)
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 #endif
-}
-
-Sprite * RenderTexture::getSprite()
-{
-    return _sprite;
-}
-
-void RenderTexture::setSprite(Sprite* var)
-{
-    CC_SAFE_RELEASE(_sprite);
-    _sprite = var;
-    CC_SAFE_RETAIN(_sprite);
-}
-
-unsigned int RenderTexture::getClearFlags() const
-{
-    return _clearFlags;
-}
-
-void RenderTexture::setClearFlags(unsigned int uClearFlags)
-{
-    _clearFlags = uClearFlags;
-}
-
-const Color4F& RenderTexture::getClearColor() const
-{
-    return _clearColor;
-}
-
-void RenderTexture::setClearColor(const Color4F &clearColor)
-{
-    _clearColor = clearColor;
-}
-
-float RenderTexture::getClearDepth() const
-{
-    return _clearDepth;
-}
-
-void RenderTexture::setClearDepth(float fClearDepth)
-{
-    _clearDepth = fClearDepth;
-}
-
-int RenderTexture::getClearStencil() const
-{
-    return _clearStencil;
-}
-
-void RenderTexture::setClearStencil(float fClearStencil)
-{
-    _clearStencil = fClearStencil;
-}
-
-bool RenderTexture::isAutoDraw() const
-{
-    return _autoDraw;
-}
-
-void RenderTexture::setAutoDraw(bool bAutoDraw)
-{
-    _autoDraw = bAutoDraw;
 }
 
 RenderTexture * RenderTexture::create(int w, int h, Texture2DPixelFormat eFormat)

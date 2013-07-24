@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCConfiguration.h"
-#include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
 #include "support/ccUtils.h"
@@ -112,7 +111,6 @@ GLuint Texture2D::getName() const
 
 Size Texture2D::getContentSize() const
 {
-
     Size ret;
     ret.width = _contentSize.width / CC_CONTENT_SCALE_FACTOR();
     ret.height = _contentSize.height / CC_CONTENT_SCALE_FACTOR();
@@ -125,7 +123,7 @@ const Size& Texture2D::getContentSizeInPixels()
     return _contentSize;
 }
 
-GLfloat Texture2D::getMaxS()
+GLfloat Texture2D::getMaxS() const
 {
     return _maxS;
 }
@@ -135,7 +133,7 @@ void Texture2D::setMaxS(GLfloat maxS)
     _maxS = maxS;
 }
 
-GLfloat Texture2D::getMaxT()
+GLfloat Texture2D::getMaxT() const
 {
     return _maxT;
 }
@@ -145,7 +143,7 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getShaderProgram(void)
+GLProgram* Texture2D::getShaderProgram() const
 {
     return _shaderProgram;
 }
