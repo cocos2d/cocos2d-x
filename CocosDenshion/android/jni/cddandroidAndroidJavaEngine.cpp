@@ -178,7 +178,8 @@ namespace CocosDenshion {
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
 
-        unsigned int AndroidJavaEngine::playEffect(const char* pszFilePath, bool bLoop) {
+        unsigned int AndroidJavaEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                                   float pitch, float pan, float gain) {
             cocos2d::JniMethodInfo methodInfo;
             int ret = 0;
             std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
