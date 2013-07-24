@@ -178,9 +178,9 @@ static cocos_dimensions engine_init_display(struct engine* engine) {
  * Just the current frame in the display.
  */
 static void engine_draw_frame(struct engine* engine) {
-    LOGI("engine_draw_frame(...)");
+    LOG_RENDER_DEBUG("engine_draw_frame(...)");
     pthread_t thisthread = pthread_self();
-    LOGI("pthread_self() = %X", thisthread);
+    LOG_RENDER_DEBUG("pthread_self() = %X", thisthread);
 
     if (engine->display == NULL) {
         // No display.
