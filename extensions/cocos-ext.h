@@ -3,6 +3,8 @@
 
 #include "ExtensionMacros.h"
 
+#include "AssetsManager/AssetsManager.h"
+
 #include "CCBReader/CCBFileLoader.h"
 #include "CCBReader/CCBMemberVariableAssigner.h"
 #include "CCBReader/CCBReader.h"
@@ -39,6 +41,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
+#include "network/SocketIO.h"
 
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
@@ -51,5 +54,7 @@
 #include "Components/CCComAttribute.h"
 #include "Components/CCComAudio.h"
 #include "Components/CCComController.h"
+
+#include "CCDeprecated-ext.h"
 
 #endif /* __COCOS2D_EXT_H__ */
