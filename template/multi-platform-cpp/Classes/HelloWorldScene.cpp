@@ -46,7 +46,7 @@ bool HelloWorld::init()
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pCloseItem, NULL);
-    pMenu->setPosition(PointZero);
+    pMenu->setPosition(Point::ZERO);
     this->addChild(pMenu, 1);
 
     /////////////////////////////
