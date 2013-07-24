@@ -14,7 +14,7 @@ SEL_CCControlHandler TestHeaderLayer::onResolveCCBControlSelector(Object * pTarg
     return NULL;
 }
 
-void TestHeaderLayer::onNodeLoaded(cocos2d::Node * pNode, cocos2d::extension::NodeLoader * pNodeLoader)
+void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader)
 {
     CCLOG("TestHeaderLayer::onNodeLoaded");
 }

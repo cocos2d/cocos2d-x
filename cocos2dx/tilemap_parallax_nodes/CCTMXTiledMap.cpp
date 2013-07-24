@@ -206,7 +206,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 }
 
 // public
-TMXLayer * TMXTiledMap::getLayerNamed(const char *layerName) const
+TMXLayer * TMXTiledMap::getLayer(const char *layerName) const
 {
     CCASSERT(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
     Object* pObj = NULL;
@@ -226,7 +226,7 @@ TMXLayer * TMXTiledMap::getLayerNamed(const char *layerName) const
     return NULL;
 }
 
-TMXObjectGroup * TMXTiledMap::getObjectGroupNamed(const char *groupName) const
+TMXObjectGroup * TMXTiledMap::getObjectGroup(const char *groupName) const
 {
     CCASSERT(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
 
@@ -249,7 +249,7 @@ TMXObjectGroup * TMXTiledMap::getObjectGroupNamed(const char *groupName) const
     return NULL;
 }
 
-String* TMXTiledMap::getPropertyNamed(const char *propertyName) const
+String* TMXTiledMap::getProperty(const char *propertyName) const
 {
     return static_cast<String*>(_properties->objectForKey(propertyName));
 }

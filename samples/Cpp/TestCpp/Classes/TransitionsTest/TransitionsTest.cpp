@@ -267,9 +267,9 @@ TransitionScene* createTransition(int nIndex, float t, Scene* s)
 
 void TransitionsTestScene::runThisTest()
 {
-    Layer * pLayer = new TestLayer1();
-    addChild(pLayer);
-    pLayer->release();
+    Layer * layer = new TestLayer1();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }
@@ -297,9 +297,9 @@ TestLayer1::TestLayer1(void)
     addChild( label);
 
     // menu
-    MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
+    MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
+    MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
+    MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
 
     Menu *menu = Menu::create(item1, item2, item3, NULL);
 
@@ -322,15 +322,15 @@ void TestLayer1::restartCallback(Object* pSender)
 {
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }    
 }
 
@@ -341,15 +341,15 @@ void TestLayer1::nextCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -362,15 +362,15 @@ void TestLayer1::backCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer2();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer2();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -382,25 +382,25 @@ void TestLayer1::step(float dt)
 void TestLayer1::onEnter()
 {
     Layer::onEnter();
-    CCLog("Scene 1 onEnter");
+    log("Scene 1 onEnter");
 }
 
 void TestLayer1::onEnterTransitionDidFinish()
 {
     Layer::onEnterTransitionDidFinish();
-    CCLog("Scene 1: onEnterTransitionDidFinish");
+    log("Scene 1: onEnterTransitionDidFinish");
 }
 
 void TestLayer1::onExitTransitionDidStart()
 {
     Layer::onExitTransitionDidStart();
-    CCLog("Scene 1: onExitTransitionDidStart");
+    log("Scene 1: onExitTransitionDidStart");
 }
 
 void TestLayer1::onExit()
 {
     Layer::onExit();
-    CCLog("Scene 1 onExit");
+    log("Scene 1 onExit");
 }
 
 TestLayer2::TestLayer2()
@@ -426,9 +426,9 @@ TestLayer2::TestLayer2()
     addChild( label);
 
     // menu
-    MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
+    MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
+    MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
+    MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
 
     Menu *menu = Menu::create(item1, item2, item3, NULL);
 
@@ -451,15 +451,15 @@ void TestLayer2::restartCallback(Object* pSender)
 {
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -470,15 +470,15 @@ void TestLayer2::nextCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -491,15 +491,15 @@ void TestLayer2::backCallback(Object* pSender)
 
     Scene* s = new TransitionsTestScene();
 
-    Layer* pLayer = new TestLayer1();
-    s->addChild(pLayer);
+    Layer* layer = new TestLayer1();
+    s->addChild(layer);
 
-    Scene* pScene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
-    pLayer->release();
-    if (pScene)
+    layer->release();
+    if (scene)
     {
-        Director::getInstance()->replaceScene(pScene);
+        Director::getInstance()->replaceScene(scene);
     }
 }
 
@@ -511,23 +511,23 @@ void TestLayer2::step(float dt)
 void TestLayer2::onEnter()
 {
     Layer::onEnter();
-    CCLog("Scene 2 onEnter");
+    log("Scene 2 onEnter");
 }
 
 void TestLayer2::onEnterTransitionDidFinish()
 {
     Layer::onEnterTransitionDidFinish();
-    CCLog("Scene 2: onEnterTransitionDidFinish");
+    log("Scene 2: onEnterTransitionDidFinish");
 }
 
 void TestLayer2::onExitTransitionDidStart()
 {
     Layer::onExitTransitionDidStart();
-    CCLog("Scene 2: onExitTransitionDidStart");
+    log("Scene 2: onExitTransitionDidStart");
 }
 
 void TestLayer2::onExit()
 {
     Layer::onExit();
-    CCLog("Scene 2 onExit");
+    log("Scene 2 onExit");
 }

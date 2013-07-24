@@ -215,8 +215,8 @@ void MyUserActionResult::onActionResult(ProtocolUser* pPlugin, UserActionResultC
 
     // get session ID
     std::string sessionID = pPlugin->getSessionID();
-    CCLog("User Session ID of plugin %s is : %s", pPlugin->getPluginName(), sessionID.c_str());
+    log("User Session ID of plugin %s is : %s", pPlugin->getPluginName(), sessionID.c_str());
 
     std::string strStatus = pPlugin->isLogined() ? "online" : "offline";
-    CCLog("User status of plugin %s is : %s", pPlugin->getPluginName(), strStatus.c_str());
+    log("User status of plugin %s is : %s", pPlugin->getPluginName(), strStatus.c_str());
 }

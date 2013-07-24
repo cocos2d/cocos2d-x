@@ -92,7 +92,7 @@ class CC_DLL Sequence : public ActionInterval
 {
 public:
     /** helper constructor to create an array of sequenceable actions */
-    static Sequence* create(FiniteTimeAction *pAction1, ...);
+    static Sequence* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
     /** helper constructor to create an array of sequenceable actions given an array */
     static Sequence* create(Array *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
@@ -221,7 +221,7 @@ class CC_DLL Spawn : public ActionInterval
 {
 public:
     /** helper constructor to create an array of spawned actions */
-    static Spawn* create(FiniteTimeAction *pAction1, ...);
+    static Spawn* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** helper constructor to create an array of spawned actions */
     static Spawn* createWithVariableList(FiniteTimeAction *pAction1, va_list args);

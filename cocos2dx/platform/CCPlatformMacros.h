@@ -205,7 +205,7 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)            if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    CCLog("%s : %s",__FUNCTION__, String::createWithFormat(s, ##__VA_ARGS__)->getCString())
+    log("%s : %s",__FUNCTION__, String::createWithFormat(s, ##__VA_ARGS__)->getCString())
 
 // cocos2d debug
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
@@ -215,15 +215,15 @@ public: virtual void set##funName(varType var)   \
 #define CCLOGWARN(...)   do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::log(format, ##__VA_ARGS__)
 #define CCLOGINFO(format,...)   do {} while (0)
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(format, ...)      cocos2d::CCLog(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::CCLog(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   cocos2d::CCLog(format, ##__VA_ARGS__)
+#define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
+#define CCLOGERROR(format,...)  cocos2d::log(format, ##__VA_ARGS__)
+#define CCLOGINFO(format,...)   cocos2d::log(format, ##__VA_ARGS__)
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
@@ -231,7 +231,7 @@ public: virtual void set##funName(varType var)   \
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
 #define LUALOG(...)
 #else
-#define LUALOG(format, ...)     cocos2d::CCLog(format, ##__VA_ARGS__)
+#define LUALOG(format, ...)     cocos2d::log(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
@@ -283,6 +283,19 @@ private: \
 #define CC_UNUSED __attribute__ ((unused))
 #else
 #define CC_UNUSED
+#endif
+
+//
+// CC_REQUIRES_NULL_TERMINATION
+//
+#if !defined(CC_REQUIRES_NULL_TERMINATION)
+    #if defined(__APPLE_CC__) && (__APPLE_CC__ >= 5549)
+        #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))
+    #elif defined(__GNUC__)
+        #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel))
+    #else
+        #define CC_REQUIRES_NULL_TERMINATION
+    #endif
 #endif
 
 #endif // __CC_PLATFORM_MACROS_H__

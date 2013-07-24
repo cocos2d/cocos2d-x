@@ -60,7 +60,7 @@ public:
     static Menu* create();
 
     /** creates a Menu with MenuItem objects */
-    static Menu* create(MenuItem* item, ...);
+    static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** creates a Menu with a Array of MenuItem objects */
     static Menu* createWithArray(Array* pArrayOfItems);
@@ -98,12 +98,12 @@ public:
     void alignItemsHorizontallyWithPadding(float padding);
 
     /** align items in rows of columns */
-    void alignItemsInColumns(int columns, ...);
+    void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
     void alignItemsInColumnsWithArray(Array* rows);
 
     /** align items in columns of rows */
-    void alignItemsInRows(int rows, ...);
+    void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
     void alignItemsInRowsWithArray(Array* columns);
 
