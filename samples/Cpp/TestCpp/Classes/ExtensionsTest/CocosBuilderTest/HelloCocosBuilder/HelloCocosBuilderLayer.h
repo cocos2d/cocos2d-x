@@ -26,13 +26,13 @@ class HelloCocosBuilderLayer
         HelloCocosBuilderLayer();
         virtual ~HelloCocosBuilderLayer();
 
-        void openTest(const char * pCCBFileName, const char * pNodeName = NULL, cocos2d::extension::NodeLoader * pNodeLoader = NULL);
+        void openTest(const char * pCCBFileName, const char * nodeName = NULL, cocos2d::extension::NodeLoader * nodeLoader = NULL);
 
         virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * pNode);
+        virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
         virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue);
-        virtual void onNodeLoaded(cocos2d::Node * pNode, cocos2d::extension::NodeLoader * pNodeLoader);
+        virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);
 
         void onMenuTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
         void onSpriteTestClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);

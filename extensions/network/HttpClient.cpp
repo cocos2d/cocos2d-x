@@ -477,7 +477,7 @@ void HttpClient::send(HttpRequest* request)
 // Poll and notify main thread if responses exists in queue
 void HttpClient::dispatchResponseCallbacks(float delta)
 {
-    // CCLog("CCHttpClient::dispatchResponseCallbacks is running");
+    // log("CCHttpClient::dispatchResponseCallbacks is running");
     
     HttpResponse* response = NULL;
     
