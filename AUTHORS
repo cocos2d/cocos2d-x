@@ -552,6 +552,9 @@ Retired Core Developers:
         
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        
+    bmanGH
+        Use gl caching functions in TexturePVR::createGLTexture()
 
 
 Cocos2d-x can not grow so fast without the active community.
