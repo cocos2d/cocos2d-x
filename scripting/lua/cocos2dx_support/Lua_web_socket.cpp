@@ -395,7 +395,7 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
         tolua_function(tolua_S, "getReadyState", tolua_Cocos2d_WebSocket_getReadyState00);
         tolua_function(tolua_S, "sendTextMsg", tolua_Cocos2d_WebSocket_sendTextMsg00);
         tolua_function(tolua_S, "close", tolua_Cocos2d_WebSocket_close00);
-	    tolua_function(tolua_S, "sendBinaryStringMsg", tolua_Cocos2d_WebSocket_sendBinaryStringMsg00);
+        tolua_function(tolua_S, "sendBinaryStringMsg", tolua_Cocos2d_WebSocket_sendBinaryStringMsg00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
 	return 1;
