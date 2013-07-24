@@ -48,7 +48,7 @@ MyPurchase::~MyPurchase()
 	}
 }
 
-MyPurchase* MyPurchase::sharedPurchase()
+MyPurchase* MyPurchase::getInstance()
 {
 	if (s_pPurchase == NULL) {
 		s_pPurchase = new MyPurchase();

@@ -49,7 +49,7 @@ MyIAPOLManager::~MyIAPOLManager()
     }
 }
 
-MyIAPOLManager* MyIAPOLManager::sharedManager()
+MyIAPOLManager* MyIAPOLManager::getInstance()
 {
     if (s_pIAPOnline == NULL) {
         s_pIAPOnline = new MyIAPOLManager();
