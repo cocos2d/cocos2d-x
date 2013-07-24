@@ -5214,10 +5214,10 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
 #endif
-		
-		self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
-		CC_SAFE_DELETE_ARRAY(floatArray);
-		
+
+        self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
+        CC_SAFE_DELETE_ARRAY(floatArray);
+
     }
     return 1;
 #ifndef TOLUA_RELEASE
