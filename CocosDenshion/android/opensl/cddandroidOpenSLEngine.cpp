@@ -17,7 +17,11 @@ namespace CocosDenshion {
         void OpenSLEngine::setBackgroundMusicVolume(float volume) { }
         float OpenSLEngine::getEffectsVolume() { }
         void OpenSLEngine::setEffectsVolume(float volume) { }
-        unsigned int OpenSLEngine::playEffect(const char* pszFilePath, bool bLoop) { }
+        unsigned int OpenSLEngine::playEffect(const char* pszFilePath,
+                                              bool bLoop,
+                                              float pitch, float pan,
+                                              float gain) {
+        }
         void OpenSLEngine::pauseEffect(unsigned int nSoundId) { }
         void OpenSLEngine::pauseAllEffects() { }
         void OpenSLEngine::resumeEffect(unsigned int nSoundId) { }
