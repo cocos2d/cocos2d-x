@@ -555,6 +555,9 @@ Retired Core Developers:
         
     bmanGH
         Use gl caching functions in TexturePVR::createGLTexture()
+        
+    metadao
+        make create_project.py more pythonic and fix some typoes
 
 
 Cocos2d-x can not grow so fast without the active community.
