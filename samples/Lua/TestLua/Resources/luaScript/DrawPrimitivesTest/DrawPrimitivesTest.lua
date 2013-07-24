@@ -1,139 +1,182 @@
+require "DrawPrimitives"
 
-local SceneIdx  = -1
-local MAX_LAYER = 2
+local function DrawPrimitivesMainLayer()
+    local kItemTagBasic = 1000
+    local testCount = 1
+    local maxCases = testCount
+    local curCase  = 0
+    local size = CCDirector:sharedDirector():getWinSize()
+    local curLayer = nil
 
-local background = nil
-
-local labelAtlas = nil
-local baseLayer_entry = nil
-
-local s = CCDirector:sharedDirector():getWinSize()
-
-local function getBaseLayer()
-	local layer = CCLayer:create()
-
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
-	local item4 = CCMenuItemToggle:create(CCMenuItemFont:create("Free Movement"))
-	item4:addSubItem(CCMenuItemFont:create("Relative Movement"))
-	item4:addSubItem(CCMenuItemFont:create("Grouped Movement"))
-	item1:registerScriptTapHandler(backCallback)
-	item2:registerScriptTapHandler(restartCallback)
-	item3:registerScriptTapHandler(nextCallback)
-
-    labelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
-    layer:addChild(labelAtlas, 100)
-    labelAtlas:setPosition(ccp(s.width - 66, 50))
-
-	layer:setTouchEnabled(false)
-
-    Helper.initWithLayer(layer)
-
-	return layer
-end
-
-local function drawPrimitivesTest()
-    local layer = getBaseLayer()
+    local  function OrderCallbackMenu()
+        local function backCallback()
+            curCase = curCase - 1
+            if curCase < 0 then
+                curCase = curCase + maxCases
+            end
+            ShowCurrentTest()
+        end
     
-    ccDrawLine( ccp(0, s.height),  ccp(s.width, 0) );
-	glLineWidth( 5.0);
-	ccDrawColor4B(255,0,0,255);
-    ccDrawLine(ccp(0, 0), ccp(s.width, s.height) );
+        local function restartCallback()
+            ShowCurrentTest()
+        end
     
---  ccPointSize(64);
---  ccDrawColor4B(0,0,255,128);
---  ccDrawPoint( VisibleRect::center() );
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // draw 4 small points
---  CCPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
---  ccPointSize(4);
---  ccDrawColor4B(0,255,255,255);
---  ccDrawPoints( points, 4);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // draw a green circle with 10 segments
---  glLineWidth(16);
---  ccDrawColor4B(0, 255, 0, 255);
---  ccDrawCircle( VisibleRect::center(), 100, 0, 10, false);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // draw a green circle with 50 segments with line to center
---  glLineWidth(2);
---  ccDrawColor4B(0, 255, 255, 255);
---  ccDrawCircle( VisibleRect::center(), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // open yellow poly
---  ccDrawColor4B(255, 255, 0, 255);
---  glLineWidth(10);
---  CCPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
---  ccDrawPoly( vertices, 5, false);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // filled poly
---  glLineWidth(1);
---  CCPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
---  ccDrawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
---
---
---  // closed purble poly
---  ccDrawColor4B(255, 0, 255, 255);
---  glLineWidth(2);
---  CCPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
---  ccDrawPoly( vertices2, 3, true);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // draw quad bezier path
---  ccDrawQuadBezier(VisibleRect::leftTop(), VisibleRect::center(), VisibleRect::rightTop(), 50);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  // draw cubic bezier path
---  ccDrawCubicBezier(VisibleRect::center(), ccp(VisibleRect::center().x+30,VisibleRect::center().y+50), ccp(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
---
---  CHECK_GL_ERROR_DEBUG();
---
---  //draw a solid polygon
---  CCPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
---  ccDrawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
---
---  // restore original values
---  glLineWidth(1);
---  ccDrawColor4B(255,255,255,255);
---  ccPointSize(1);
---
---  CHECK_GL_ERROR_DEBUG();
-    return layer
-end
+        local function nextCallback()
+            curCase = curCase + 1
+            curCase = curCase % maxCases
+            ShowCurrentTest()
+        end
 
----------------------------------
---  DrawPrimitives Test
----------------------------------
-function CreateDrawPrimitivesTestLayer()
-	if SceneIdx == 0 then return drawPrimitivesTest()
-	end
+        local ordercallbackmenu = CCMenu:create()
+        local size = CCDirector:sharedDirector():getWinSize()
+        local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+        item1:registerScriptTapHandler(backCallback)
+        ordercallbackmenu:addChild(item1,kItemTagBasic)
+        local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+        item2:registerScriptTapHandler(restartCallback)
+        ordercallbackmenu:addChild(item2,kItemTagBasic)
+        local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+        ordercallbackmenu:addChild(item3,kItemTagBasic) 
+        item3:registerScriptTapHandler(nextCallback)
+                
+        item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+        item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        
+        ordercallbackmenu:setPosition(ccp(0, 0))
+
+        return ordercallbackmenu
+    end
+
+    local function GetTitle()
+        if 0 == curCase then
+            return "Draw primitives"
+        elseif 1 == curCase then
+            return "Test DrawNode"
+        end
+    end
+    
+    local function GetSubTitle()
+        if 0 == curCase then
+            return "Drawing Primitives by call gl funtions"
+        elseif 1 == curCase then
+            return "Testing DrawNode - batched draws. Concave polygons are BROKEN"
+        end
+    end
+
+    local function InitTitle(layer)
+        --Title
+        local lableTitle = CCLabelTTF:create(GetTitle(), "Arial", 40)
+        layer:addChild(lableTitle, 15)
+        lableTitle:setPosition(CCPoint(size.width / 2, size.height - 32))
+        lableTitle:setColor(Color3B(255, 255, 40))
+        --SubTitle
+        local subLabelTitle = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        layer:addChild(subLabelTitle, 15)
+        subLabelTitle:setPosition(CCPoint(size.width / 2, size.height - 80)) 
+    end
+
+    local function createDrawPrimitivesEffect()
+        local layer = CCLayer:create()
+
+        InitTitle(layer)
+
+        local glNode  = gl.glNodeCreate()
+        glNode:setContentSize(CCSize(size.width, size.height))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+
+        local function primitivesDraw()
+            ccDrawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
+
+            gl.lineWidth( 5.0 )
+            ccDrawColor4B(255,0,0,255)
+            ccDrawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
+
+            ccPointSize(64)
+            ccDrawColor4B(0, 0, 255, 128)
+            ccDrawPoint(VisibleRect:center())
+
+            local points = {CCPoint(60,60), CCPoint(70,70), CCPoint(60,70), CCPoint(70,60) }
+            ccPointSize(4)
+            ccDrawColor4B(0,255,255,255)
+            ccDrawPoints(points,4)
+
+            gl.lineWidth(16)
+            ccDrawColor4B(0, 255, 0, 255)
+            ccDrawCircle( VisibleRect:center(), 100, 0, 10, false)
+
+            gl.lineWidth(2)
+            ccDrawColor4B(0, 255, 255, 255)
+            ccDrawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
+            
+            gl.lineWidth(2)
+            ccDrawColor4B(255, 0, 255, 255)
+            ccDrawSolidCircle( VisibleRect:center() + CCPoint(140,0), 40, math.rad(90), 50, 1.0, 1.0)
+
+
+            ccDrawColor4B(255, 255, 0, 255)
+            gl.lineWidth(10)
+            local yellowPoints = { CCPoint(0,0), CCPoint(50,50), CCPoint(100,50), CCPoint(100,100), CCPoint(50,100)}
+            ccDrawPoly( yellowPoints, 5, false)
+
+            gl.lineWidth(1)
+            local filledVertices = { CCPoint(0,120), CCPoint(50,120), CCPoint(50,170), CCPoint(25,200), CCPoint(0,170) }
+            local colorFilled = { 0.5, 0.5, 1, 1 } 
+            ccDrawSolidPoly(filledVertices, 5, colorFilled)
+
+            ccDrawColor4B(255, 0, 255, 255)
+            gl.lineWidth(2)
+            local closePoints= { CCPoint(30,130), CCPoint(30,230), CCPoint(50,200) }
+            ccDrawPoly( closePoints, 3, true)
+
+            ccDrawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
+
+            ccDrawCubicBezier(VisibleRect:center(), CCPoint(VisibleRect:center().x + 30, VisibleRect:center().y + 50), CCPoint(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
+
+            local solidvertices = {CCPoint(60,160), CCPoint(70,190), CCPoint(100,190), CCPoint(90,160)}
+            local colorsolid= { 1, 1, 0, 1 }
+            ccDrawSolidPoly( solidvertices, 4, colorsolid )
+
+            gl.lineWidth(1)
+            ccDrawColor4B(255,255,255,255)
+            ccPointSize(1)
+        end
+
+        glNode:registerScriptDrawHandler(primitivesDraw)
+        layer:addChild(glNode,-10)
+        glNode:setPosition( size.width / 2, size.height / 2)
+
+        return layer
+    end
+
+    local function createLayerByCurCase(curCase)
+        if 0 == curCase then
+            return createDrawPrimitivesEffect()
+        end
+    end
+
+    function ShowCurrentTest()    
+        local curScene = CCScene:create()
+        if nil ~= curScene then
+            curLayer = createLayerByCurCase(curCase)
+            if nil ~= curLayer then
+                curScene:addChild(curLayer)
+                curLayer:addChild(OrderCallbackMenu(),15)
+                curScene:addChild(CreateBackMenuItem())
+                CCDirector:sharedDirector():replaceScene(curScene)
+            end            
+        end 
+    end
+
+    curLayer = createLayerByCurCase(curCase)
+    curLayer:addChild(OrderCallbackMenu(),15)
+    return curLayer
 end
 
 function DrawPrimitivesTest()
-	cclog("DrawPrimitivesTest")
-	local scene = CCScene:create()
-
-    Helper.createFunctionTable = {
-        drawPrimitivesTest
-    }
-
-	scene:addChild(drawPrimitivesTest())
-	scene:addChild(CreateBackMenuItem())
-
-	return scene
+    local scene = CCScene:create()
+    scene:addChild(DrawPrimitivesMainLayer())
+    scene:addChild(CreateBackMenuItem())
+    return scene
 end
-
 
