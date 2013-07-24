@@ -40,7 +40,7 @@ extern bool CC_DLL cc_assert_script_compatible(const char *msg);
 #define CCASSERT(cond, msg) do {                              \
       if (!(cond)) {                                          \
         if (!cc_assert_script_compatible(msg) && strlen(msg)) \
-          cocos2d::CCLog("Assert failed: %s", msg);           \
+          cocos2d::log("Assert failed: %s", msg);             \
         CC_ASSERT(cond);                                      \
       } \
     } while (0)
@@ -238,7 +238,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     do { \
         GLenum __error = glGetError(); \
         if(__error) { \
-            CCLog("OpenGL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
+            cocos2d::log("OpenGL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
         } \
     } while (false)
 #endif

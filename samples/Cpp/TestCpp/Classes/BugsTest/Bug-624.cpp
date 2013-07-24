@@ -39,7 +39,7 @@ void Bug624Layer::switchLayer(float dt)
 
 void Bug624Layer::didAccelerate(Acceleration* acceleration)
 {    
-    CCLog("Layer1 accel");
+    log("Layer1 accel");
 }
 
 ////////////////////////////////////////////////////////
@@ -76,5 +76,5 @@ void Bug624Layer2::switchLayer(float dt)
 
 void Bug624Layer2::didAccelerate(Acceleration* acceleration)
 {    
-    CCLog("Layer2 accel");
+    log("Layer2 accel");
 }

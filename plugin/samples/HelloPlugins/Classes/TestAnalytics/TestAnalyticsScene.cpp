@@ -153,7 +153,7 @@ void TestAnalytics::eventMenuCallback(Object* pSender)
     case TAG_LOG_ONLINE_CONFIG:
         {
             PluginParam param("abc");
-            CCLog("Online config = %s", _pluginAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL).c_str());
+            log("Online config = %s", _pluginAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL).c_str());
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
@@ -259,7 +259,7 @@ void TestAnalytics::loadPlugins()
     _pluginAnalytics->setSessionContinueMillis(10000);
     
     const char* sdkVer = _pluginAnalytics->getSDKVersion().c_str();
-    CCLog("SDK version : %s", sdkVer);
+    log("SDK version : %s", sdkVer);
     
     _pluginAnalytics->callFuncWithParam("updateOnlineConfig", NULL);
     

@@ -30,10 +30,10 @@ Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backAction()
@@ -43,18 +43,18 @@ Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartAction()
 {
-    Layer* pLayer = createLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -135,13 +135,13 @@ void SpriteProgressToRadial::onEnter()
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
 
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathSister1));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType( kProgressTimerTypeRadial );
     addChild(left);
     left->setPosition(Point(100, s.height/2));
     left->runAction( RepeatForever::create(to1));
     
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathBlock));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathBlock));
     right->setType(kProgressTimerTypeRadial);
     // Makes the ridial CCW
     right->setReverseProgress(true);
@@ -170,7 +170,7 @@ void SpriteProgressToHorizontal::onEnter()
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
     
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathSister1));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the left since the midpoint is 0 for the x
     left->setMidpoint(Point(0,0));
@@ -180,7 +180,7 @@ void SpriteProgressToHorizontal::onEnter()
     left->setPosition(Point(100, s.height/2));
     left->runAction( RepeatForever::create(to1));
     
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the left since the midpoint is 1 for the x
     right->setMidpoint(Point(1, 0));
@@ -210,7 +210,7 @@ void SpriteProgressToVertical::onEnter()
     ProgressTo *to1 = ProgressTo::create(2, 100);
     ProgressTo *to2 = ProgressTo::create(2, 100);
     
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathSister1));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(kProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -221,7 +221,7 @@ void SpriteProgressToVertical::onEnter()
     left->setPosition(Point(100, s.height/2));
     left->runAction( RepeatForever::create(to1));
     
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(Point(0, 1));
@@ -253,7 +253,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
     /**
    *  Our image on the left should be a radial progress indicator, clockwise
    */
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathBlock));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathBlock));
     left->setType(kProgressTimerTypeRadial);
     addChild(left);
     left->setMidpoint(Point(0.25f, 0.75f));
@@ -263,7 +263,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
     /**
    *  Our image on the left should be a radial progress indicator, counter clockwise
    */
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathBlock));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathBlock));
     right->setType(kProgressTimerTypeRadial);
     right->setMidpoint(Point(0.75f, 0.25f));
 
@@ -294,7 +294,7 @@ void SpriteProgressBarVarious::onEnter()
 
     ProgressTo *to = ProgressTo::create(2, 100);
 
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathSister1));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(kProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -305,7 +305,7 @@ void SpriteProgressBarVarious::onEnter()
     left->setPosition(Point(100, s.height/2));
     left->runAction(RepeatForever::create(to->clone()));
 
-    ProgressTimer *middle = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *middle = ProgressTimer::create(Sprite::create(s_pathSister2));
     middle->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     middle->setMidpoint(Point(0.5f, 0.5f));
@@ -315,7 +315,7 @@ void SpriteProgressBarVarious::onEnter()
     middle->setPosition(Point(s.width/2, s.height/2));
     middle->runAction(RepeatForever::create(to->clone()));
 
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(Point(0.5f, 0.5f));
@@ -351,7 +351,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 								   FadeTo::create(1.0f, 255),
 								   NULL);
 
-    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pPathSister1));
+    ProgressTimer *left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(kProgressTimerTypeBar);
 
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
@@ -365,7 +365,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 
     left->addChild(LabelTTF::create("Tint", "Marker Felt", 20.0f));
 
-    ProgressTimer *middle = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *middle = ProgressTimer::create(Sprite::create(s_pathSister2));
     middle->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     middle->setMidpoint(Point(0.5f, 0.5f));
@@ -378,7 +378,7 @@ void SpriteProgressBarTintAndFade::onEnter()
 
     middle->addChild(LabelTTF::create("Fade", "Marker Felt", 20.0f));
 
-    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pPathSister2));
+    ProgressTimer *right = ProgressTimer::create(Sprite::create(s_pathSister2));
     right->setType(kProgressTimerTypeBar);
     //    Setup for a bar starting from the bottom since the midpoint is 0 for the y
     right->setMidpoint(Point(0.5f, 0.5f));

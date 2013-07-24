@@ -396,7 +396,7 @@ bool CCBReader::readHeader()
     /* Read version. */
     int version = this->readInt(false);
     if(version != kCCBVersion) {
-        CCLog("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, kCCBVersion);
+        log("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, kCCBVersion);
         return false;
     }
 
@@ -563,7 +563,7 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
      
     if (! ccNodeLoader)
     {
-        CCLog("no corresponding node loader for %s", className.c_str());
+        log("no corresponding node loader for %s", className.c_str());
         return NULL;
     }
 

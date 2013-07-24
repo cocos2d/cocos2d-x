@@ -381,7 +381,7 @@ public:
     /** creates a menu item from a Array with a callable object */
     static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, Array* menuItems);
     /** creates a menu item from a list of items with a callable object */
-    static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...);
+    static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
     /** creates a menu item with no target/selector and no items */
     static MenuItemToggle* create();
     /** creates a menu item with a item */
@@ -389,7 +389,7 @@ public:
     /** creates a menu item from a Array with a target selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
     /** creates a menu item from a list of items with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
 
     MenuItemToggle()
     : _selectedIndex(0)

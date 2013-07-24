@@ -303,10 +303,10 @@ Layer* nextEffectAdvanceAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backEffectAdvanceAction()
@@ -316,18 +316,18 @@ Layer* backEffectAdvanceAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartEffectAdvanceAction()
 {
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -396,8 +396,8 @@ void EffectAdvanceTextLayer::backCallback(Object* pSender)
 
 void EffectAdvanceScene::runThisTest()
 {
-    Layer* pLayer = nextEffectAdvanceAction();
+    Layer* layer = nextEffectAdvanceAction();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

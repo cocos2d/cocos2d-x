@@ -32,14 +32,14 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    Director *director = Director::getInstance();
+    director->setOpenGLView(EGLView::getInstance());
 
     // turn on display FPS
-    //pDirector->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
 
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     scene->addChild(updateLayer);
     updateLayer->release();
     
-    pDirector->runWithScene(scene);
+    director->runWithScene(scene);
     
     return true;
 }
