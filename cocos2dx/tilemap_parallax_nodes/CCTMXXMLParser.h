@@ -151,35 +151,19 @@ This information is obtained from the TMX file.
 class CC_DLL TMXMapInfo : public Object, public SAXDelegator
 {    
 public:    
-    /// map orientation
-    CC_SYNTHESIZE(int,    _orientation, Orientation);
-    /// map width & height
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapSize, MapSize);
-    /// tiles width & height
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _tileSize, TileSize);
-    /// Layers
-    CC_PROPERTY(Array*, _layers, Layers);
-    /// tilesets
-    CC_PROPERTY(Array*, _tilesets, Tilesets);
-    /// ObjectGroups
-    CC_PROPERTY(Array*, _objectGroups, ObjectGroups);
-    /// parent element
-    CC_SYNTHESIZE(int, _parentElement, ParentElement);
-    /// parent GID
-    CC_SYNTHESIZE(unsigned int, _parentGID, ParentGID);
-    /// layer attribs
-    CC_SYNTHESIZE(int, _layerAttribs, LayerAttribs);
-    /// is storing characters?
-    CC_SYNTHESIZE(bool, _storingCharacters, StoringCharacters);
-    /// properties
-    CC_PROPERTY(Dictionary*, _properties, Properties);
-public:    
+    /** creates a TMX Format with a tmx file */
+    static TMXMapInfo * create(const char *tmxFile);
+    /** creates a TMX Format with an XML string and a TMX resource path */
+    static TMXMapInfo * createWithXML(const char* tmxString, const char* resourcePath);
+    
+    /** creates a TMX Format with a tmx file */
+    CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
+    /** creates a TMX Format with an XML string and a TMX resource path */
+    CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
+    
     TMXMapInfo();
     virtual ~TMXMapInfo();
-    /** creates a TMX Format with a tmx file */
-    static TMXMapInfo * formatWithTMXFile(const char *tmxFile);
-    /** creates a TMX Format with an XML string and a TMX resource path */
-    static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath);
+    
     /** initializes a TMX format with a  tmx file */
     bool initWithTMXFile(const char *tmxFile);
     /** initializes a TMX format with an XML string and a TMX resource path */
@@ -189,9 +173,74 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const char *xmlString);
 
-    Dictionary* getTileProperties();
-    void setTileProperties(Dictionary* tileProperties);
+    Dictionary* getTileProperties() { return _tileProperties; };
+    void setTileProperties(Dictionary* tileProperties) {
+        CC_SAFE_RETAIN(tileProperties);
+        CC_SAFE_RELEASE(_tileProperties);
+        _tileProperties = tileProperties;
+    };
 
+    /// map orientation
+    inline int getOrientation() const { return _orientation; };
+    inline void setOrientation(int orientation) { _orientation = orientation; };
+
+    /// map width & height
+    inline const Size& getMapSize() const { return _mapSize; };
+    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+
+    /// tiles width & height
+    inline const Size& getTileSize() const { return _tileSize; };
+    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+    
+    /// Layers
+    inline Array* getLayers() const { return _layers; };
+    inline void setLayers(Array* layers) {
+        CC_SAFE_RETAIN(layers);
+        CC_SAFE_RELEASE(_layers);
+        _layers = layers;
+    };
+
+    /// tilesets
+    inline Array* getTilesets() const { return _tilesets; };
+    inline void setTilesets(Array* tilesets) {
+        CC_SAFE_RETAIN(tilesets);
+        CC_SAFE_RELEASE(_tilesets);
+        _tilesets = tilesets;
+    };
+
+    /// ObjectGroups
+    inline Array* getObjectGroups() const { return _objectGroups; };
+    inline void setObjectGroups(Array* groups) {
+        CC_SAFE_RETAIN(groups);
+        CC_SAFE_RELEASE(_objectGroups);
+        _objectGroups = groups;
+    };
+
+    /// parent element
+    inline int getParentElement() const { return _parentElement; };
+    inline void setParentElement(int element) { _parentElement = element; };
+
+    /// parent GID
+    inline unsigned int getParentGID() const { return _parentGID; };
+    inline void setParentGID(unsigned int gid) { _parentGID = gid; };
+
+    /// layer attribs
+    inline int getLayerAttribs() const { return _layerAttribs; };
+    inline void setLayerAttribs(int layerAttribs) { _layerAttribs = layerAttribs; };
+
+    /// is storing characters?
+    inline bool isStoringCharacters() const { return _storingCharacters; };
+    CC_DEPRECATED_ATTRIBUTE inline bool getStoringCharacters() const { return isStoringCharacters(); };
+    inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
+
+    /// properties
+    inline Dictionary* getProperties() const { return _properties; };
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
+    
     // implement pure virtual methods of SAXDelegator
     void startElement(void *ctx, const char *name, const char **atts);
     void endElement(void *ctx, const char *name);
@@ -204,6 +253,30 @@ public:
 private:
     void internalInit(const char* tmxFileName, const char* resourcePath);
 protected:
+
+    /// map orientation
+    int    _orientation;
+    /// map width & height
+    Size _mapSize;
+    /// tiles width & height
+    Size _tileSize;
+    /// Layers
+    Array* _layers;
+    /// tilesets
+    Array* _tilesets;
+    /// ObjectGroups
+    Array* _objectGroups;
+    /// parent element
+    int _parentElement;
+    /// parent GID
+    unsigned int _parentGID;
+    /// layer attribs
+    int _layerAttribs;
+    /// is storing characters?
+    bool _storingCharacters;
+    /// properties
+    Dictionary* _properties;
+    
     //! tmx filename
     std::string _TMXFileName;
     // tmx resource path

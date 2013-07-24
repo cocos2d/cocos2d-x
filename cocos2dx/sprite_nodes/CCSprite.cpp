@@ -1119,7 +1119,7 @@ void Sprite::setTexture(Texture2D *texture)
     }
 }
 
-Texture2D* Sprite::getTexture(void)
+Texture2D* Sprite::getTexture(void) const
 {
     return _texture;
 }
