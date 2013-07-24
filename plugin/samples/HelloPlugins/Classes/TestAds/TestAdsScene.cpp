@@ -103,7 +103,7 @@ bool TestAds::init()
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
 
 	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));

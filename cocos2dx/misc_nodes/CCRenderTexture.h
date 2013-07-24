@@ -127,27 +127,37 @@ public:
     void listenToForeground(Object *obj);
     
     /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
-    unsigned int getClearFlags() const;
-    void setClearFlags(unsigned int uClearFlags);
+    inline unsigned int getClearFlags() const { return _clearFlags; };
+    inline void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; };
     
     /** Clear color value. Valid only when "autoDraw" is true. */
-    const Color4F& getClearColor() const;
-    void setClearColor(const Color4F &clearColor);
+    inline const Color4F& getClearColor() const { return _clearColor; };
+    inline void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; };
     
     /** Value for clearDepth. Valid only when autoDraw is true. */
-    float getClearDepth() const;
-    void setClearDepth(float fClearDepth);
+    inline float getClearDepth() const { return _clearDepth; };
+    inline void setClearDepth(float clearDepth) { _clearDepth = clearDepth; };
     
     /** Value for clear Stencil. Valid only when autoDraw is true */
-    int getClearStencil() const;
-    void setClearStencil(float fClearStencil);
+    inline int getClearStencil() const { return _clearStencil; };
+    inline void setClearStencil(float clearStencil) { _clearStencil = clearStencil; };
     
     /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
      Will be enabled in the future.
      */
-    bool isAutoDraw() const;
-    void setAutoDraw(bool bAutoDraw);
+    inline bool isAutoDraw() const { return _autoDraw; };
+    inline void setAutoDraw(bool isAutoDraw) { _autoDraw = isAutoDraw; };
 
+    /** Gets the Sprite being used. */
+    inline Sprite* getSprite() const { return _sprite; };
+    
+    /** Sets the Sprite being used. */
+    inline void setSprite(Sprite* sprite) {
+        CC_SAFE_RETAIN(sprite);
+        CC_SAFE_RELEASE(_sprite);
+        _sprite = sprite;
+    };
+    
     // Overrides
     virtual void visit() override;
     virtual void draw() override;
@@ -176,7 +186,7 @@ protected:
      The blending function can be changed in runtime by calling:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
-    CC_PROPERTY(Sprite*, _sprite, Sprite)
+    Sprite* _sprite;
 };
 
 // end of textures group

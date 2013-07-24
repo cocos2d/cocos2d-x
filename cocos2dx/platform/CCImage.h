@@ -48,7 +48,7 @@ public:
     friend class TextureCache;
     
     Image();
-    ~Image();
+    virtual ~Image();
 
     typedef enum
     {
@@ -145,25 +145,25 @@ public:
     #endif
     
 
-    unsigned char *   getData()               { return _data; }
-    int               getDataLen()            { return _width * _height; }
-
-
-    bool hasAlpha()                     { return _hasAlpha;   }
-    bool isPremultipliedAlpha()         { return _preMulti;   }
-
-
     /**
-    @brief    Save Image data to the specified file, with specified format.
-    @param    pszFilePath        the file's absolute path, including file suffix.
-    @param    bIsToRGB        whether the image is saved as RGB format.
-    */
+     @brief    Save Image data to the specified file, with specified format.
+     @param    pszFilePath        the file's absolute path, including file suffix.
+     @param    bIsToRGB        whether the image is saved as RGB format.
+     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
+    
+    // Getters
+    inline unsigned char *   getData()               { return _data; }
+    inline int               getDataLen()            { return _width * _height; }
 
-    CC_SYNTHESIZE_READONLY(unsigned short,   _width,       Width);
-    CC_SYNTHESIZE_READONLY(unsigned short,   _height,      Height);
-    CC_SYNTHESIZE_READONLY(int,     _bitsPerComponent,   BitsPerComponent);
+    inline bool hasAlpha()                     { return _hasAlpha;   }
+    inline bool isPremultipliedAlpha()         { return _preMulti;   }
 
+    inline unsigned short getWidth() { return _width; };
+    inline unsigned short getHeight() { return _height; };
+    inline int getBitsPerComponent() { return _bitsPerComponent; };
+    //
+    
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
@@ -173,6 +173,10 @@ protected:
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);
 
+    unsigned short   _width;
+    unsigned short   _height;
+    int     _bitsPerComponent;
+    
     unsigned char *_data;
     bool _hasAlpha;
     bool _preMulti;
