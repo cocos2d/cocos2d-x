@@ -295,7 +295,7 @@ static CCEAGLView *view;
 
 	// is this necessary?
     // re-configure glView
-	//cocos2d::Director *director = cocos2d::Director::getInstance();
+	//cc::Director *director = cc::Director::getInstance();
 	//director->setOpenGLView(openGLview); //[self setView:openGLview];
 
     //[openGLview release]; // Retain -1
@@ -313,7 +313,7 @@ static CCEAGLView *view;
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = eventDelegate_;																\
 	[obj performSelector:__selector__														\
-			onThread:[(cocos2d::Director*)[Director sharedDirector] runningThread]			\
+			onThread:[(cc::Director*)[Director sharedDirector] runningThread]			\
 		  withObject:__event__																\
 	   waitUntilDone:NO];
 #endif

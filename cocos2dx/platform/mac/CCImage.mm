@@ -217,7 +217,7 @@ static bool _initWithImage(CGImageRef CGImage, tImageInfo *pImageinfo, double sc
         return false;
     }
     
-	//if (cocos2d::Image::getIsScaleEnabled())
+	//if (cc::Image::getIsScaleEnabled())
 	if( Director::getInstance()->getContentScaleFactor() > 1.0f )
 	{
 		POTWide = CGImageGetWidth(CGImage) * scaleX;

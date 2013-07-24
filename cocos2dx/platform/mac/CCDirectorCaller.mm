@@ -164,7 +164,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     
     /*
      // CVDisplayLink
-     //cocos2d::Director::getInstance()->gettimeofday();
+     //cc::Director::getInstance()->gettimeofday();
      
      // Create a display link capable of being used with all active displays
      CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
