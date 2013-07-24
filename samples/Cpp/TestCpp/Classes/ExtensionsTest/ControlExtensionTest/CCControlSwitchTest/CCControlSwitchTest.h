@@ -1,5 +1,5 @@
 /*
- * CCControlSwitchTest.h
+ * ControlSwitchTest.h
  *
  * Copyright (c) 2012 Yannick Loriot
  * http://yannickloriot.com
@@ -26,14 +26,14 @@
 
 #include "../CCControlScene.h"
 
-class CCControlSwitchTest : public CCControlScene
+class ControlSwitchTest : public ControlScene
 {
 public:
-    virtual ~CCControlSwitchTest();
+    virtual ~ControlSwitchTest();
     bool init();
     /** Callback for the change value. */
-    void valueChanged(CCObject* sender, CCControlEvent controlEvent);
-    CCLabelTTF *m_pDisplayValueLabel;
-    CONTROL_SCENE_CREATE_FUNC(CCControlSwitchTest)
+    void valueChanged(Object* sender, ControlEvent controlEvent);
+    LabelTTF *_displayValueLabel;
+    CONTROL_SCENE_CREATE_FUNC(ControlSwitchTest)
 };
 

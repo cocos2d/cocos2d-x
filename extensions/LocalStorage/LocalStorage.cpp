@@ -29,7 +29,7 @@
 
 #include "cocos2d.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,9 +42,6 @@ static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
 
-
-static void localStorageLazyInit();
-static void localStorageCreateTable();
 
 static void localStorageCreateTable()
 {

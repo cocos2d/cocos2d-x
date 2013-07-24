@@ -101,7 +101,13 @@
       <UniqueIdentifier>{c45b97e8-fa1f-4e58-8ec5-d46371c2dd26}</UniqueIdentifier>
     </Filter>
     <Filter Include="support\component">
-      <UniqueIdentifier>{485f1c18-d463-48d0-bcaa-a10e32aa3332}</UniqueIdentifier>
+      <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="textures\etc">
+      <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="keyboard_dispatcher">
+      <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +144,7 @@
     <ClCompile Include="..\cocoa\CCString.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocoa\CCZone.cpp">
+    <ClCompile Include="..\cocoa\CCData.cpp">
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\effects\CCGrabber.cpp">
@@ -246,9 +252,6 @@
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\platform.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -289,9 +292,6 @@
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\CCNotificationCenter.cpp">
-      <Filter>support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\support\CCPointExtension.cpp">
       <Filter>support</Filter>
     </ClCompile>
     <ClCompile Include="..\support\CCProfiling.cpp">
@@ -474,6 +474,13 @@
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
+    <ClCompile Include="..\textures\etc\etc1.cpp">
+      <Filter>textures\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
+      <Filter>keyboard_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ccTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -512,7 +519,7 @@
     <ClInclude Include="..\cocoa\CCString.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocoa\CCZone.h">
+    <ClInclude Include="..\cocoa\CCData.h">
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\effects\CCGrabber.h">
@@ -662,9 +669,6 @@
     <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\platform.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\win32\CCAccelerometer.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
@@ -705,9 +709,6 @@
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\CCNotificationCenter.h">
-      <Filter>support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\support\CCPointExtension.h">
       <Filter>support</Filter>
     </ClInclude>
     <ClInclude Include="..\support\CCProfiling.h">
@@ -946,11 +947,20 @@
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\ccFPSImages.h" />
+    <ClInclude Include="..\support\component\CCComponentContainer.h">
+      <Filter>support\component</Filter>
+    </ClInclude>
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
     </ClInclude>
-    <ClInclude Include="..\support\component\CCComponentContainer.h">
-      <Filter>support\component</Filter>
+    <ClInclude Include="..\textures\etc\etc1.h">
+      <Filter>textures\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
+      <Filter>keyboard_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CCDeprecated.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

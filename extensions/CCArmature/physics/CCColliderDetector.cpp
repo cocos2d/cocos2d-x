@@ -27,11 +27,11 @@ THE SOFTWARE.
 #include "../CCBone.h"
 #include "Box2D/Box2D.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-CCColliderDetector *CCColliderDetector::create()
+ColliderDetector *ColliderDetector::create()
 {
-    CCColliderDetector *pColliderDetector = new CCColliderDetector();
+    ColliderDetector *pColliderDetector = new ColliderDetector();
     if (pColliderDetector && pColliderDetector->init())
     {
         pColliderDetector->autorelease();
@@ -41,9 +41,9 @@ CCColliderDetector *CCColliderDetector::create()
     return NULL;
 }
 
-CCColliderDetector *CCColliderDetector::create(CCBone *bone)
+ColliderDetector *ColliderDetector::create(Bone *bone)
 {
-    CCColliderDetector *pColliderDetector = new CCColliderDetector();
+    ColliderDetector *pColliderDetector = new ColliderDetector();
     if (pColliderDetector && pColliderDetector->init(bone))
     {
         pColliderDetector->autorelease();
@@ -53,37 +53,37 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
     return NULL;
 }
 
-CCColliderDetector::CCColliderDetector()
-    : m_pColliderBodyList(NULL)
+ColliderDetector::ColliderDetector()
+    : _colliderBodyList(NULL)
 {
 }
 
-CCColliderDetector::~CCColliderDetector()
+ColliderDetector::~ColliderDetector()
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    Object *object = NULL;
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
 
         b2Body *body = colliderBody->getB2Body();
-        CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
+        PhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
     }
 
 
-    m_pColliderBodyList->removeAllObjects();
-    CC_SAFE_DELETE(m_pColliderBodyList);
+    _colliderBodyList->removeAllObjects();
+    CC_SAFE_DELETE(_colliderBodyList);
 }
 
-bool CCColliderDetector::init()
+bool ColliderDetector::init()
 {
-    m_pColliderBodyList = CCArray::create();
-    CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
-    m_pColliderBodyList->retain();
+    _colliderBodyList = Array::create();
+    CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
+    _colliderBodyList->retain();
 
     return true;
 }
 
-bool CCColliderDetector::init(CCBone *bone)
+bool ColliderDetector::init(Bone *bone)
 {
     init();
     setBone(bone);
@@ -91,17 +91,17 @@ bool CCColliderDetector::init(CCBone *bone)
     return true;
 }
 
-void CCColliderDetector::addContourData(CCContourData *contourData)
+void ColliderDetector::addContourData(ContourData *contourData)
 {
-    const CCArray *array = &contourData->vertexList;
-    CCObject *object = NULL;
+    const Array *array = &contourData->vertexList;
+    Object *object = NULL;
 
     b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
 
     int i = 0;
     CCARRAY_FOREACH(array, object)
     {
-        CCContourVertex2 *v = (CCContourVertex2 *)object;
+        ContourVertex2F *v = static_cast<ContourVertex2F *>(object);
         b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
         i++;
     }
@@ -119,80 +119,80 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position = b2Vec2(0.0f, 0.0f);
-    bodyDef.userData = m_pBone;
+    bodyDef.userData = _bone;
 
-    b2Body *body = CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->CreateBody(&bodyDef);
+    b2Body *body = PhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixtureDef);
 
     ColliderBody *colliderBody = new ColliderBody(body, contourData);
-    m_pColliderBodyList->addObject(colliderBody);
+    _colliderBodyList->addObject(colliderBody);
     colliderBody->release();
 }
 
-void CCColliderDetector::addContourDataList(CCArray *contourDataList)
+void ColliderDetector::addContourDataList(Array *contourDataList)
 {
-    CCObject *object = NULL;
+    Object *object = NULL;
     CCARRAY_FOREACH(contourDataList, object)
     {
-        addContourData((CCContourData *)object);
+        addContourData(static_cast<ContourData *>(object));
     }
 }
 
-void CCColliderDetector::removeContourData(CCContourData *_contourData)
+void ColliderDetector::removeContourData(ContourData *_contourData)
 {
-    m_pColliderBodyList->removeObject(_contourData);
+    _colliderBodyList->removeObject(_contourData);
 }
 
-void CCColliderDetector::removeAll()
+void ColliderDetector::removeAll()
 {
-    m_pColliderBodyList->removeAllObjects();
+    _colliderBodyList->removeAllObjects();
 }
 
-void CCColliderDetector::setColliderFilter(b2Filter &filter)
+void ColliderDetector::setColliderFilter(b2Filter &filter)
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    Object *object = NULL;
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
         colliderBody->getB2Body()->GetFixtureList()->SetFilterData(filter);
     }
 }
 
-void CCColliderDetector::setActive(bool active)
+void ColliderDetector::setActive(bool active)
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    Object *object = NULL;
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
         colliderBody->getB2Body()->SetActive(active);
     }
 }
 
-CCPoint helpPoint;
+Point helpPoint;
 
-void CCColliderDetector::updateTransform(CCAffineTransform &t)
+void ColliderDetector::updateTransform(AffineTransform &t)
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    Object *object = NULL;
+    CCARRAY_FOREACH(_colliderBodyList, object)
     {
-        ColliderBody *colliderBody = (ColliderBody *)object;
+        ColliderBody *colliderBody = static_cast<ColliderBody *>(object);
 
-        CCContourData *contourData = colliderBody->getContourData();
+        ContourData *contourData = colliderBody->getContourData();
         b2Body *body = colliderBody->getB2Body();
 
         b2PolygonShape *shape = (b2PolygonShape *)body->GetFixtureList()->GetShape();
 
         //! update every vertex
-        const CCArray *array = &contourData->vertexList;
-        CCObject *object = NULL;
+        const Array *array = &contourData->vertexList;
+        Object *object = NULL;
         int i = 0;
         CCARRAY_FOREACH(array, object)
         {
-            CCContourVertex2 *cv = (CCContourVertex2 *)object;
+            ContourVertex2F *cv = static_cast<ContourVertex2F *>(object);
             b2Vec2 &bv = shape->m_vertices[i];
 
             helpPoint.setPoint(cv->x, cv->y);
-            helpPoint = CCPointApplyAffineTransform(helpPoint, t);
+            helpPoint = PointApplyAffineTransform(helpPoint, t);
 
             bv.Set(helpPoint.x / PT_RATIO, helpPoint.y / PT_RATIO);
 
@@ -203,4 +203,4 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
 
 
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

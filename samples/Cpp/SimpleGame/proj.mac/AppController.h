@@ -30,11 +30,11 @@
 @interface AppController : NSObject <NSApplicationDelegate>
 	{
 		NSWindow *window;
-		EAGLView *glView;
+		CCEAGLView *glView;
 	}
 
 	@property (nonatomic, assign) IBOutlet NSWindow* window;
-	@property (nonatomic, assign) IBOutlet EAGLView* glView;
+	@property (nonatomic, assign) IBOutlet CCEAGLView* glView;
 
 	-(IBAction) toggleFullScreen:(id)sender;
 	-(IBAction) exitFullScreen:(id)sender;

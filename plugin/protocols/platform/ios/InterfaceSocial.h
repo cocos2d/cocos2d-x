@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2012+2013 cocos2d+x.org
+Copyright (c) 2013 cocos2d+x.org
 
 http://www.cocos2d+x.org
 
@@ -25,7 +25,10 @@ THE SOFTWARE.
 @protocol InterfaceSocial <NSObject>
 
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
-- (void) share: (NSMutableDictionary*) shareInfo;
+- (void) submitScore: (NSString*) leaderboardID withScore: (long) score;
+- (void) showLeaderboard: (NSString*) leaderboardID;
+- (void) unlockAchievement: (NSMutableDictionary*) achInfo;
+- (void) showAchievements;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
 - (NSString*) getPluginVersion;

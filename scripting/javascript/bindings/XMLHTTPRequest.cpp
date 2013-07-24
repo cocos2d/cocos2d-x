@@ -167,7 +167,7 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
  *  @param sender   Object which initialized callback
  *  @param respone  Response object
  */
-void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response) {
+void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response) {
 
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
@@ -245,7 +245,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
 void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     
     cc_request->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
-    cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
+    cocos2d::extension::HttpClient::getInstance()->send(cc_request);
     cc_request->release();
 
 }
@@ -260,7 +260,7 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(NULL), isNetwork(t
     request_header.clear();
     withCredentialsValue = true;
     cx = ScriptingCore::getInstance()->getGlobalContext();
-    cc_request = new cocos2d::extension::CCHttpRequest();
+    cc_request = new cocos2d::extension::HttpRequest();
 }
 
 /**
@@ -601,10 +601,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         }
 
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpPost);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpPost);
         }
         else {
-            cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpGet);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpGet);
         }
         
         cc_request->setUrl(url.c_str());

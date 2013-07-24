@@ -31,12 +31,7 @@ namespace JS {}
 namespace mozilla {}
 
 /* The private JS engine namespace. */
-namespace js {
-
-/* The private namespace is a superset of the public/shared namespaces. */
-using namespace JS;
-
-}  /* namespace js */
+namespace js {}
 
 /*
  * Pattern used to overwrite freed memory. If you are accessing an object with
@@ -562,6 +557,13 @@ struct ScopedDeletePtrTraits : public ScopedFreePtrTraits<T>
     static void release(T *ptr) { js_delete(ptr); }
 };
 SCOPED_TEMPLATE(ScopedJSDeletePtr, ScopedDeletePtrTraits)
+
+template <typename T>
+struct ScopedReleasePtrTraits : public ScopedFreePtrTraits<T>
+{
+    static void release(T *ptr) { if (ptr) ptr->release(); }
+};
+SCOPED_TEMPLATE(ScopedReleasePtr, ScopedReleasePtrTraits)
 
 } /* namespace js */
 

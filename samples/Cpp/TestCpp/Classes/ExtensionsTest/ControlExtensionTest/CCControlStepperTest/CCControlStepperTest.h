@@ -28,20 +28,20 @@
 
 #include "../CCControlScene.h"
 
-class CCControlStepperTest : public CCControlScene
+class ControlStepperTest : public ControlScene
 {
 public:
-    CCControlStepperTest();
-    virtual ~CCControlStepperTest();
+    ControlStepperTest();
+    virtual ~ControlStepperTest();
     bool init();
     /** Creates and returns a new ControlStepper. */
-    CCControlStepper* makeControlStepper();
+    ControlStepper* makeControlStepper();
 
     /** Callback for the change value. */
-    void valueChanged(CCObject *sender, CCControlEvent controlEvent);
+    void valueChanged(Object *sender, ControlEvent controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pDisplayValueLabel, DisplayValueLabel)
-    CONTROL_SCENE_CREATE_FUNC(CCControlStepperTest)
+    CC_SYNTHESIZE_RETAIN(LabelTTF*, _displayValueLabel, DisplayValueLabel)
+    CONTROL_SCENE_CREATE_FUNC(ControlStepperTest)
 };
 
 #endif /* __CCCONTROLSTEPPERTEST_H__ */

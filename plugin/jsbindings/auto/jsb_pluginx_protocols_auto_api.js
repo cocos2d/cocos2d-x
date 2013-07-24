@@ -16,13 +16,13 @@ getPluginName : function () {},
 
 /**
  * @method getPluginVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getPluginVersion : function () {},
 
 /**
  * @method getSDKVersion
- * @return A value converted from C/C++ "const char*"
+ * @return A value converted from C/C++ "std::string"
  */
 getSDKVersion : function () {},
 
@@ -167,10 +167,16 @@ showAds : function () {},
 hideAds : function () {},
 
 /**
- * @method configDeveloperInfo
- * @param {TAdsDeveloperInfo}
+ * @method queryPoints
  */
-configDeveloperInfo : function () {},
+queryPoints : function () {},
+
+/**
+ * @method onAdsResult
+ * @param {cocos2d::plugin::AdsResultCode}
+ * @param {const char*}
+ */
+onAdsResult : function () {},
 
 /**
  * @method spendPoints
@@ -179,11 +185,10 @@ configDeveloperInfo : function () {},
 spendPoints : function () {},
 
 /**
- * @method onAdsResult
- * @param {cocos2d::plugin::AdsResultCode}
- * @param {const char*}
+ * @method configDeveloperInfo
+ * @param {TAdsDeveloperInfo}
  */
-onAdsResult : function () {},
+configDeveloperInfo : function () {},
 
 /**
  * @method onPlayerGetPoints
@@ -194,9 +199,9 @@ onPlayerGetPoints : function () {},
 };
 
 /**
- * @class ProtocolSocial
+ * @class ProtocolShare
  */
-plugin.ProtocolSocial = {
+plugin.ProtocolShare = {
 
 /**
  * @method onShareResult
@@ -213,7 +218,7 @@ share : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TSocialDeveloperInfo}
+ * @param {TShareDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 

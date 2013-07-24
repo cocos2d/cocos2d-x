@@ -17,16 +17,16 @@ typedef enum {
 class CCSprite : public CCNodeRGBA
 {
 	void setDirty(bool bDirty);
-	bool isDirty(void);
+	bool isDirty(void) const;
 
-	ccV3F_C4B_T2F_Quad getQuad(void);
+	V3F_C4B_T2F_Quad getQuad(void);
 
 	CCRect getTextureRect(void);
 	//bool isUsesBatchNode(void);
 	bool isTextureRectRotated(void);
 
 	void setAtlasIndex(unsigned int uAtlasIndex);
-	unsigned int getAtlasIndex(void);
+	unsigned int getAtlasIndex(void) const;
 	//void setUsesSpriteBatchNode(bool bUsesSpriteBatchNode);
 	void setTextureAtlas(CCTextureAtlas *pobTextureAtlas);
 	CCTextureAtlas* getTextureAtlas(void);
@@ -34,16 +34,16 @@ class CCSprite : public CCNodeRGBA
 	//CCSpriteBatchNode* getSpriteBatchNode(void);
 	//void setHonorParentTransform(ccHonorParentTransform eHonorParentTransform);
 	//ccHonorParentTransform getHonorParentTransform(void);
-	void setBlendFunc(ccBlendFunc blendFunc);
-	ccBlendFunc getBlendFunc(void);
+	void setBlendFunc(const BlendFunc &blendFunc);
+	const BlendFunc& getBlendFunc(void);
 
-	CCPoint getOffsetPosition(void);
+	const CCPoint& getOffsetPosition(void) const;
 
 	void ignoreAnchorPointForPosition(bool newValue);
 	void setFlipX(bool bFlipX);
 	void setFlipY(bool bFlipY);
-	bool isFlipX(void);
-	bool isFlipY(void);
+	bool isFlipX(void) const;
+	bool isFlipY(void) const;
 
 	void removeChild(CCNode* pChild, bool bCleanUp);
 	void removeAllChildrenWithCleanup(bool bCleanup);
@@ -64,12 +64,11 @@ class CCSprite : public CCNodeRGBA
 	void setVisible(bool bVisible);
 
 	void setOpacity(GLubyte opacity);
-	GLubyte getOpacity(void);
 
-	void setColor(ccColor3B color3);
-	ccColor3B getColor(void);
+	void setColor(Color3B color3);
+	Color3B getColor(void);
 	void setOpacityModifyRGB(bool bValue);
-	bool isOpacityModifyRGB(void);
+	bool isOpacityModifyRGB(void) const;
 
 	void setTexture(CCTexture2D *texture);
 	CCTexture2D* getTexture(void);
@@ -81,7 +80,7 @@ class CCSprite : public CCNodeRGBA
 	void setVertexRect(CCRect rect);
 	//void useBatchNode(CCSpriteBatchNode *batchNode);
 	void setDisplayFrame(CCSpriteFrame *pNewFrame);
-	bool isFrameDisplayed(CCSpriteFrame *pFrame);
+	bool isFrameDisplayed(CCSpriteFrame *pFrame) const;
 	CCSpriteFrame* displayFrame(void);
 	void setBatchNode(CCSpriteBatchNode* pBatchNode);
 	CCSpriteBatchNode* getBatchNode();

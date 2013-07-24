@@ -9,11 +9,11 @@ public:
     virtual void runThisTest();
 };
 
-class MainLayer : public CCLayer
+class MainLayer : public Layer
 {
 public:
     MainLayer();
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
 };
 
 #endif

@@ -3,17 +3,18 @@
 
 #include "cocos2d.h"
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
-class RenderTextureTest : public CCLayer
+class RenderTextureTest : public BaseTest
 {
 public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void backCallback(Object* pSender);
 };
 
 class RenderTextureSave : public RenderTextureTest
@@ -23,13 +24,13 @@ public:
     ~RenderTextureSave();
     virtual std::string title();
     virtual std::string subtitle();
-    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-    void clearImage(CCObject *pSender);
-    void saveImage(CCObject *pSender);
+    virtual void ccTouchesMoved(Set* touches, Event* event);
+    void clearImage(Object *pSender);
+    void saveImage(Object *pSender);
 
 private:
-    CCRenderTexture *m_pTarget;
-    CCSprite *m_pBrush;
+    RenderTexture *_target;
+    Sprite *_brush;
 };
 
 class RenderTextureIssue937 : public RenderTextureTest
@@ -51,26 +52,26 @@ class RenderTextureZbuffer : public RenderTextureTest
 public:
     RenderTextureZbuffer();
 
-    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesMoved(Set* touches, Event* event);
+    virtual void ccTouchesBegan(Set* touches, Event* event);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
     virtual std::string title();
     virtual std::string subtitle();
 
     void renderScreenShot();
 
 private:
-    cocos2d::CCSpriteBatchNode *mgr;;
+    cocos2d::SpriteBatchNode *mgr;;
 
-    cocos2d::CCSprite *sp1;
-    cocos2d::CCSprite *sp2;
-    cocos2d::CCSprite *sp3;
-    cocos2d::CCSprite *sp4;
-    cocos2d::CCSprite *sp5;
-    cocos2d::CCSprite *sp6;
-    cocos2d::CCSprite *sp7;
-    cocos2d::CCSprite *sp8;
-    cocos2d::CCSprite *sp9;
+    cocos2d::Sprite *sp1;
+    cocos2d::Sprite *sp2;
+    cocos2d::Sprite *sp3;
+    cocos2d::Sprite *sp4;
+    cocos2d::Sprite *sp5;
+    cocos2d::Sprite *sp6;
+    cocos2d::Sprite *sp7;
+    cocos2d::Sprite *sp8;
+    cocos2d::Sprite *sp9;
 };
 
 class RenderTextureTestDepthStencil : public RenderTextureTest
@@ -84,8 +85,8 @@ public:
 class RenderTextureTargetNode : public RenderTextureTest
 {
 private:
-    cocos2d::CCSprite *sprite1, *sprite2;
-    cocos2d::CCRenderTexture *renderTexture;
+    cocos2d::Sprite *sprite1, *sprite2;
+    cocos2d::RenderTexture *renderTexture;
 public:
     RenderTextureTargetNode();
     
@@ -93,33 +94,33 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     
-    void touched(CCObject* sender);
+    void touched(Object* sender);
 };
 
 class SpriteRenderTextureBug : public RenderTextureTest
 {
 public:
     
-class SimpleSprite : public CCSprite
+class SimpleSprite : public Sprite
 {
     public:
         SimpleSprite();
         virtual void draw();
         
-        static SimpleSprite* create(const char* filename, const CCRect &rect);
+        static SimpleSprite* create(const char* filename, const Rect &rect);
         
     public:
-        CCRenderTexture *rt;
+        RenderTexture *rt;
 };
         
 public:
     SpriteRenderTextureBug();
     
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesEnded(Set* touches, Event* event);
     virtual std::string title();
     virtual std::string subtitle();
     
-    SimpleSprite* addNewSpriteWithCoords(const CCPoint& p);
+    SimpleSprite* addNewSpriteWithCoords(const Point& p);
 };
 
 #endif

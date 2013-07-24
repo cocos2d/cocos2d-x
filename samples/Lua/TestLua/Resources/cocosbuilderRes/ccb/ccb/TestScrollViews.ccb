@@ -383,6 +383,8 @@
 		<string>TestScrollViewsLayer</string>
 		<key>displayName</key>
 		<string>TestScrollViews</string>
+		<key>jsController</key>
+		<string>TestScrollViewsLayer</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
@@ -454,6 +456,8 @@
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

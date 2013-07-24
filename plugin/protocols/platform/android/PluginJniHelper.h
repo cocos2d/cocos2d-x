@@ -47,7 +47,7 @@ public:
     static std::string jstring2string(jstring str);
 
 private:
-    static JavaVM *m_psJavaVM;
+    static JavaVM *_psJavaVM;
 };
 }
 

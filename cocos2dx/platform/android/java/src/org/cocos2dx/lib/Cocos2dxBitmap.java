@@ -96,7 +96,7 @@ public class Cocos2dxBitmap {
 		//
 		createTextBitmapShadowStroke( pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
 									  pAlignment, pWidth, pHeight,							// alignment and size
-									  false, 0.0f, 0.0f, 0.0f,								// no shadow
+									  false, 0.0f, 0.0f, 0.0f, 0.0f,           				// no shadow
 									  false, 1.0f, 1.0f, 1.0f, 1.0f);						// no stroke
 									 
 	}
@@ -104,7 +104,7 @@ public class Cocos2dxBitmap {
 	public static void createTextBitmapShadowStroke(String pString,  final String pFontName, final int pFontSize,
 													final float fontTintR, final float fontTintG, final float fontTintB,
 													final int pAlignment, final int pWidth, final int pHeight, final boolean shadow,
-													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
+													final float shadowDX, final float shadowDY, final float shadowBlur, final float shadowOpacity, final boolean stroke,
 													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
 
 		
@@ -128,7 +128,7 @@ public class Cocos2dxBitmap {
 		
 		if ( shadow ) {
 
-			int shadowColor = 0xff7d7d7d;
+			int shadowColor = ((int)(255 * shadowOpacity) & 0xff) << 24;
 			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 	
 			bitmapPaddingX = Math.abs(shadowDX);
@@ -390,7 +390,7 @@ public class Cocos2dxBitmap {
 				}
 
 				/* Remove spaces at the beginning of a new line. */
-				while (pString.charAt(i) == ' ') {
+				while (i < charLength && pString.charAt(i) == ' ') {
 					++i;
 				}
 

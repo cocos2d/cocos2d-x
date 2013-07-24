@@ -37,9 +37,12 @@ JS_FRIEND_API(size_t) MemoryReportingSundriesThreshold();
 namespace JS {
 
 // Data for tracking memory usage of things hanging off objects.
-struct ObjectsExtraSizes {
+struct ObjectsExtraSizes
+{
     size_t slots;
-    size_t elements;
+    size_t elementsNonAsmJS;
+    size_t elementsAsmJSHeap;
+    size_t elementsAsmJSNonHeap;
     size_t argumentsData;
     size_t regExpStatics;
     size_t propertyIteratorData;
@@ -51,7 +54,9 @@ struct ObjectsExtraSizes {
 
     void add(ObjectsExtraSizes &sizes) {
         this->slots                += sizes.slots;
-        this->elements             += sizes.elements;
+        this->elementsNonAsmJS     += sizes.elementsNonAsmJS;
+        this->elementsAsmJSHeap    += sizes.elementsAsmJSHeap;
+        this->elementsAsmJSNonHeap += sizes.elementsAsmJSNonHeap;
         this->argumentsData        += sizes.argumentsData;
         this->regExpStatics        += sizes.regExpStatics;
         this->propertyIteratorData += sizes.propertyIteratorData;
@@ -66,12 +71,10 @@ struct TypeInferenceSizes
     size_t typeScripts;
     size_t typeResults;
     size_t analysisPool;
-    size_t typePool;
     size_t pendingArrays;
     size_t allocationSiteTables;
     size_t arrayTypeTables;
     size_t objectTypeTables;
-    size_t typeObjects;
 
     TypeInferenceSizes() { memset(this, 0, sizeof(TypeInferenceSizes)); }
 
@@ -79,31 +82,37 @@ struct TypeInferenceSizes
         this->typeScripts          += sizes.typeScripts;
         this->typeResults          += sizes.typeResults;
         this->analysisPool         += sizes.analysisPool;
-        this->typePool             += sizes.typePool;
         this->pendingArrays        += sizes.pendingArrays;
         this->allocationSiteTables += sizes.allocationSiteTables;
         this->arrayTypeTables      += sizes.arrayTypeTables;
         this->objectTypeTables     += sizes.objectTypeTables;
-        this->typeObjects          += sizes.typeObjects;
     }
+};
+
+// Data for tracking JIT-code memory usage.
+struct CodeSizes
+{
+    size_t jaeger;
+    size_t ion;
+    size_t asmJS;
+    size_t baseline;
+    size_t regexp;
+    size_t other;
+    size_t unused;
+
+    CodeSizes() { memset(this, 0, sizeof(CodeSizes)); }
 };
 
 // Holds data about a huge string (one which uses more HugeStringInfo::MinSize
 // bytes of memory), so we can report it individually.
 struct HugeStringInfo
 {
-    HugeStringInfo()
-      : length(0)
-      , size(0)
-    {
-        memset(&buffer, 0, sizeof(buffer));
-    }
+    HugeStringInfo() : length(0), size(0) { memset(&buffer, 0, sizeof(buffer)); }
 
     // A string needs to take up this many bytes of storage before we consider
     // it to be "huge".
-    static size_t MinSize()
-    {
-      return js::MemoryReportingSundriesThreshold();
+    static size_t MinSize() {
+        return js::MemoryReportingSundriesThreshold();
     }
 
     // A string's size in memory is not necessarily equal to twice its length
@@ -127,92 +136,149 @@ struct RuntimeSizes
     size_t contexts;
     size_t dtoa;
     size_t temporary;
-    size_t jaegerCode;
-    size_t ionCode;
-    size_t regexpCode;
-    size_t unusedCode;
     size_t regexpData;
     size_t stack;
     size_t gcMarker;
     size_t mathCache;
-    size_t scriptFilenames;
     size_t scriptData;
     size_t scriptSources;
+
+    CodeSizes code;
+};
+
+struct ZoneStats
+{
+    ZoneStats()
+      : extra1(0),
+        gcHeapArenaAdmin(0),
+        gcHeapUnusedGcThings(0),
+        gcHeapStringsNormal(0),
+        gcHeapStringsShort(0),
+        gcHeapTypeObjects(0),
+        gcHeapIonCodes(0),
+        stringCharsNonHuge(0),
+        typeObjects(0),
+        typePool(0),
+        hugeStrings()
+    {}
+
+    ZoneStats(const ZoneStats &other)
+      : extra1(other.extra1),
+        gcHeapArenaAdmin(other.gcHeapArenaAdmin),
+        gcHeapUnusedGcThings(other.gcHeapUnusedGcThings),
+        gcHeapStringsNormal(other.gcHeapStringsNormal),
+        gcHeapStringsShort(other.gcHeapStringsShort),
+        gcHeapTypeObjects(other.gcHeapTypeObjects),
+        gcHeapIonCodes(other.gcHeapIonCodes),
+        stringCharsNonHuge(other.stringCharsNonHuge),
+        typeObjects(other.typeObjects),
+        typePool(other.typePool),
+        hugeStrings()
+    {
+        hugeStrings.append(other.hugeStrings);
+    }
+
+    // Add other's numbers to this object's numbers.
+    void add(ZoneStats &other) {
+        #define ADD(x)  this->x += other.x
+
+        ADD(gcHeapArenaAdmin);
+        ADD(gcHeapUnusedGcThings);
+
+        ADD(gcHeapStringsNormal);
+        ADD(gcHeapStringsShort);
+        ADD(gcHeapTypeObjects);
+        ADD(gcHeapIonCodes);
+
+        ADD(stringCharsNonHuge);
+        ADD(typeObjects);
+        ADD(typePool);
+
+        #undef ADD
+
+        hugeStrings.append(other.hugeStrings);
+    }
+
+    // This field can be used by embedders.
+    void   *extra1;
+
+    size_t gcHeapArenaAdmin;
+    size_t gcHeapUnusedGcThings;
+
+    size_t gcHeapStringsNormal;
+    size_t gcHeapStringsShort;
+
+    size_t gcHeapTypeObjects;
+    size_t gcHeapIonCodes;
+
+    size_t stringCharsNonHuge;
+    size_t typeObjects;
+    size_t typePool;
+
+    js::Vector<HugeStringInfo, 0, js::SystemAllocPolicy> hugeStrings;
+
+    // The size of all the live things in the GC heap that don't belong to any
+    // compartment.
+    size_t GCHeapThingsSize();
 };
 
 struct CompartmentStats
 {
     CompartmentStats()
-      : extra1(0)
-      , extra2(0)
-      , gcHeapArenaAdmin(0)
-      , gcHeapUnusedGcThings(0)
-      , gcHeapObjectsOrdinary(0)
-      , gcHeapObjectsFunction(0)
-      , gcHeapObjectsDenseArray(0)
-      , gcHeapObjectsSlowArray(0)
-      , gcHeapObjectsCrossCompartmentWrapper(0)
-      , gcHeapStringsNormal(0)
-      , gcHeapStringsShort(0)
-      , gcHeapShapesTreeGlobalParented(0)
-      , gcHeapShapesTreeNonGlobalParented(0)
-      , gcHeapShapesDict(0)
-      , gcHeapShapesBase(0)
-      , gcHeapScripts(0)
-      , gcHeapTypeObjects(0)
-      , gcHeapIonCodes(0)
-      , objectsExtra()
-      , stringCharsNonHuge(0)
-      , shapesExtraTreeTables(0)
-      , shapesExtraDictTables(0)
-      , shapesExtraTreeShapeKids(0)
-      , shapesCompartmentTables(0)
-      , scriptData(0)
-      , jaegerData(0)
-      , ionData(0)
-      , compartmentObject(0)
-      , crossCompartmentWrappersTable(0)
-      , regexpCompartment(0)
-      , debuggeesSet(0)
-      , typeInference()
-      , hugeStrings()
+      : extra1(0),
+        extra2(0),
+        gcHeapObjectsOrdinary(0),
+        gcHeapObjectsFunction(0),
+        gcHeapObjectsDenseArray(0),
+        gcHeapObjectsSlowArray(0),
+        gcHeapObjectsCrossCompartmentWrapper(0),
+        gcHeapShapesTreeGlobalParented(0),
+        gcHeapShapesTreeNonGlobalParented(0),
+        gcHeapShapesDict(0),
+        gcHeapShapesBase(0),
+        gcHeapScripts(0),
+        objectsExtra(),
+        shapesExtraTreeTables(0),
+        shapesExtraDictTables(0),
+        shapesExtraTreeShapeKids(0),
+        shapesCompartmentTables(0),
+        scriptData(0),
+        jaegerData(0),
+        ionData(0),
+        compartmentObject(0),
+        crossCompartmentWrappersTable(0),
+        regexpCompartment(0),
+        debuggeesSet(0),
+        typeInference()
     {}
 
     CompartmentStats(const CompartmentStats &other)
-      : extra1(other.extra1)
-      , extra2(other.extra2)
-      , gcHeapArenaAdmin(other.gcHeapArenaAdmin)
-      , gcHeapUnusedGcThings(other.gcHeapUnusedGcThings)
-      , gcHeapObjectsOrdinary(other.gcHeapObjectsOrdinary)
-      , gcHeapObjectsFunction(other.gcHeapObjectsFunction)
-      , gcHeapObjectsDenseArray(other.gcHeapObjectsDenseArray)
-      , gcHeapObjectsSlowArray(other.gcHeapObjectsSlowArray)
-      , gcHeapObjectsCrossCompartmentWrapper(other.gcHeapObjectsCrossCompartmentWrapper)
-      , gcHeapStringsNormal(other.gcHeapStringsNormal)
-      , gcHeapStringsShort(other.gcHeapStringsShort)
-      , gcHeapShapesTreeGlobalParented(other.gcHeapShapesTreeGlobalParented)
-      , gcHeapShapesTreeNonGlobalParented(other.gcHeapShapesTreeNonGlobalParented)
-      , gcHeapShapesDict(other.gcHeapShapesDict)
-      , gcHeapShapesBase(other.gcHeapShapesBase)
-      , gcHeapScripts(other.gcHeapScripts)
-      , gcHeapTypeObjects(other.gcHeapTypeObjects)
-      , gcHeapIonCodes(other.gcHeapIonCodes)
-      , objectsExtra(other.objectsExtra)
-      , stringCharsNonHuge(other.stringCharsNonHuge)
-      , shapesExtraTreeTables(other.shapesExtraTreeTables)
-      , shapesExtraDictTables(other.shapesExtraDictTables)
-      , shapesExtraTreeShapeKids(other.shapesExtraTreeShapeKids)
-      , shapesCompartmentTables(other.shapesCompartmentTables)
-      , scriptData(other.scriptData)
-      , jaegerData(other.jaegerData)
-      , ionData(other.ionData)
-      , compartmentObject(other.compartmentObject)
-      , crossCompartmentWrappersTable(other.crossCompartmentWrappersTable)
-      , regexpCompartment(other.regexpCompartment)
-      , debuggeesSet(other.debuggeesSet)
-      , typeInference(other.typeInference)
+      : extra1(other.extra1),
+        extra2(other.extra2),
+        gcHeapObjectsOrdinary(other.gcHeapObjectsOrdinary),
+        gcHeapObjectsFunction(other.gcHeapObjectsFunction),
+        gcHeapObjectsDenseArray(other.gcHeapObjectsDenseArray),
+        gcHeapObjectsSlowArray(other.gcHeapObjectsSlowArray),
+        gcHeapObjectsCrossCompartmentWrapper(other.gcHeapObjectsCrossCompartmentWrapper),
+        gcHeapShapesTreeGlobalParented(other.gcHeapShapesTreeGlobalParented),
+        gcHeapShapesTreeNonGlobalParented(other.gcHeapShapesTreeNonGlobalParented),
+        gcHeapShapesDict(other.gcHeapShapesDict),
+        gcHeapShapesBase(other.gcHeapShapesBase),
+        gcHeapScripts(other.gcHeapScripts),
+        objectsExtra(other.objectsExtra),
+        shapesExtraTreeTables(other.shapesExtraTreeTables),
+        shapesExtraDictTables(other.shapesExtraDictTables),
+        shapesExtraTreeShapeKids(other.shapesExtraTreeShapeKids),
+        shapesCompartmentTables(other.shapesCompartmentTables),
+        scriptData(other.scriptData),
+        jaegerData(other.jaegerData),
+        ionData(other.ionData),
+        compartmentObject(other.compartmentObject),
+        crossCompartmentWrappersTable(other.crossCompartmentWrappersTable),
+        regexpCompartment(other.regexpCompartment),
+        debuggeesSet(other.debuggeesSet),
+        typeInference(other.typeInference)
     {
-      hugeStrings.append(other.hugeStrings);
     }
 
     // These fields can be used by embedders.
@@ -221,26 +287,18 @@ struct CompartmentStats
 
     // If you add a new number, remember to update the constructors, add(), and
     // maybe gcHeapThingsSize()!
-    size_t gcHeapArenaAdmin;
-    size_t gcHeapUnusedGcThings;
-
     size_t gcHeapObjectsOrdinary;
     size_t gcHeapObjectsFunction;
     size_t gcHeapObjectsDenseArray;
     size_t gcHeapObjectsSlowArray;
     size_t gcHeapObjectsCrossCompartmentWrapper;
-    size_t gcHeapStringsNormal;
-    size_t gcHeapStringsShort;
     size_t gcHeapShapesTreeGlobalParented;
     size_t gcHeapShapesTreeNonGlobalParented;
     size_t gcHeapShapesDict;
     size_t gcHeapShapesBase;
     size_t gcHeapScripts;
-    size_t gcHeapTypeObjects;
-    size_t gcHeapIonCodes;
     ObjectsExtraSizes objectsExtra;
 
-    size_t stringCharsNonHuge;
     size_t shapesExtraTreeTables;
     size_t shapesExtraDictTables;
     size_t shapesExtraTreeShapeKids;
@@ -254,33 +312,23 @@ struct CompartmentStats
     size_t debuggeesSet;
 
     TypeInferenceSizes typeInference;
-    js::Vector<HugeStringInfo, 0, js::SystemAllocPolicy> hugeStrings;
 
     // Add cStats's numbers to this object's numbers.
-    void add(CompartmentStats &cStats)
-    {
+    void add(CompartmentStats &cStats) {
         #define ADD(x)  this->x += cStats.x
-
-        ADD(gcHeapArenaAdmin);
-        ADD(gcHeapUnusedGcThings);
 
         ADD(gcHeapObjectsOrdinary);
         ADD(gcHeapObjectsFunction);
         ADD(gcHeapObjectsDenseArray);
         ADD(gcHeapObjectsSlowArray);
         ADD(gcHeapObjectsCrossCompartmentWrapper);
-        ADD(gcHeapStringsNormal);
-        ADD(gcHeapStringsShort);
         ADD(gcHeapShapesTreeGlobalParented);
         ADD(gcHeapShapesTreeNonGlobalParented);
         ADD(gcHeapShapesDict);
         ADD(gcHeapShapesBase);
         ADD(gcHeapScripts);
-        ADD(gcHeapTypeObjects);
-        ADD(gcHeapIonCodes);
         objectsExtra.add(cStats.objectsExtra);
 
-        ADD(stringCharsNonHuge);
         ADD(shapesExtraTreeTables);
         ADD(shapesExtraDictTables);
         ADD(shapesExtraTreeShapeKids);
@@ -296,28 +344,29 @@ struct CompartmentStats
         #undef ADD
 
         typeInference.add(cStats.typeInference);
-        hugeStrings.append(cStats.hugeStrings);
     }
 
     // The size of all the live things in the GC heap.
-    size_t gcHeapThingsSize();
+    size_t GCHeapThingsSize();
 };
 
 struct RuntimeStats
 {
     RuntimeStats(JSMallocSizeOfFun mallocSizeOf)
-      : runtime()
-      , gcHeapChunkTotal(0)
-      , gcHeapDecommittedArenas(0)
-      , gcHeapUnusedChunks(0)
-      , gcHeapUnusedArenas(0)
-      , gcHeapUnusedGcThings(0)
-      , gcHeapChunkAdmin(0)
-      , gcHeapGcThings(0)
-      , totals()
-      , compartmentStatsVector()
-      , currCompartmentStats(NULL)
-      , mallocSizeOf_(mallocSizeOf)
+      : runtime(),
+        gcHeapChunkTotal(0),
+        gcHeapDecommittedArenas(0),
+        gcHeapUnusedChunks(0),
+        gcHeapUnusedArenas(0),
+        gcHeapUnusedGcThings(0),
+        gcHeapChunkAdmin(0),
+        gcHeapGcThings(0),
+        cTotals(),
+        zTotals(),
+        compartmentStatsVector(),
+        zoneStatsVector(),
+        currZoneStats(NULL),
+        mallocSizeOf_(mallocSizeOf)
     {}
 
     RuntimeSizes runtime;
@@ -352,21 +401,23 @@ struct RuntimeStats
     size_t gcHeapGcThings;
 
     // The sum of all compartment's measurements.
-    CompartmentStats totals;
- 
+    CompartmentStats cTotals;
+    ZoneStats zTotals;
+
     js::Vector<CompartmentStats, 0, js::SystemAllocPolicy> compartmentStatsVector;
-    CompartmentStats *currCompartmentStats;
+    js::Vector<ZoneStats, 0, js::SystemAllocPolicy> zoneStatsVector;
+
+    ZoneStats *currZoneStats;
 
     JSMallocSizeOfFun mallocSizeOf_;
 
     virtual void initExtraCompartmentStats(JSCompartment *c, CompartmentStats *cstats) = 0;
+    virtual void initExtraZoneStats(JS::Zone *zone, ZoneStats *zstats) = 0;
 };
-
-#ifdef JS_THREADSAFE
 
 class ObjectPrivateVisitor
 {
-public:
+  public:
     // Within CollectRuntimeStats, this method is called for each JS object
     // that has an nsISupports pointer.
     virtual size_t sizeOfIncludingThis(nsISupports *aSupports) = 0;
@@ -387,13 +438,14 @@ CollectRuntimeStats(JSRuntime *rt, RuntimeStats *rtStats, ObjectPrivateVisitor *
 extern JS_PUBLIC_API(int64_t)
 GetExplicitNonHeapForRuntime(JSRuntime *rt, JSMallocSizeOfFun mallocSizeOf);
 
-#endif // JS_THREADSAFE
+extern JS_PUBLIC_API(size_t)
+SystemCompartmentCount(JSRuntime *rt);
 
 extern JS_PUBLIC_API(size_t)
-SystemCompartmentCount(const JSRuntime *rt);
+UserCompartmentCount(JSRuntime *rt);
 
 extern JS_PUBLIC_API(size_t)
-UserCompartmentCount(const JSRuntime *rt);
+PeakSizeOfTemporary(const JSRuntime *rt);
 
 } // namespace JS
 

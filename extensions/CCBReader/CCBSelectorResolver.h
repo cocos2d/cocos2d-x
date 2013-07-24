@@ -23,9 +23,9 @@ NS_CC_EXT_BEGIN
 class CCBSelectorResolver {
     public:
         virtual ~CCBSelectorResolver() {};
-    virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char* pSelectorName) = 0;
-    virtual SEL_CallFuncN onResolveCCBCCCallFuncSelector(CCObject * pTarget, const char* pSelectorName) { return NULL; };
-    virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char* pSelectorName) = 0;
+    virtual SEL_MenuHandler onResolveCCBMenuItemSelector(Object * pTarget, const char* pSelectorName) = 0;
+    virtual SEL_CallFuncN onResolveCCBCallFuncSelector(Object * pTarget, const char* pSelectorName) { return NULL; };
+    virtual SEL_CCControlHandler onResolveCCBControlSelector(Object * pTarget, const char* pSelectorName) = 0;
 };
 
 

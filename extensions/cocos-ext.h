@@ -29,7 +29,6 @@
 #include "CCBReader/CCBSequence.h"
 #include "CCBReader/CCBSequenceProperty.h"
 #include "CCBReader/CCBValue.h"
-#include "CCBReader/CCData.h"
 #include "CCBReader/CCNode+CCBRelativePositioning.h"
 
 #include "GUI/CCControlExtension/CCControlExtensions.h"

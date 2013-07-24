@@ -38,7 +38,7 @@ extern std::string getFileDirectoryJNI();
 extern void enableAccelerometerJNI();
 extern void disableAccelerometerJNI();
 extern void setAccelerometerIntervalJNI(float interval);
-// functions for CCUserDefault
+// functions for UserDefault
 extern bool getBoolForKeyJNI(const char* pKey, bool defaultValue);
 extern int getIntegerForKeyJNI(const char* pKey, int defaultValue);
 extern float getFloatForKeyJNI(const char* pKey, float defaultValue);

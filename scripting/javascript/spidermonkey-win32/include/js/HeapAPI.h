@@ -56,7 +56,7 @@ static const uint32_t GRAY = 1;
 } /* namespace js */
 
 namespace JS {
-typedef JSCompartment Zone;
+struct Zone;
 } /* namespace JS */
 
 namespace JS {
@@ -110,28 +110,16 @@ GetGCThingArena(void *thing)
 }
 
 } /* namespace gc */
+
 } /* namespace js */
 
 namespace JS {
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetGCThingCompartment(void *thing)
-{
-    JS_ASSERT(thing);
-    return js::gc::GetGCThingArena(thing)->zone;
-}
 
 static JS_ALWAYS_INLINE Zone *
 GetGCThingZone(void *thing)
 {
     JS_ASSERT(thing);
     return js::gc::GetGCThingArena(thing)->zone;
-}
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetObjectCompartment(JSObject *obj)
-{
-    return GetGCThingCompartment(obj);
 }
 
 static JS_ALWAYS_INLINE Zone *

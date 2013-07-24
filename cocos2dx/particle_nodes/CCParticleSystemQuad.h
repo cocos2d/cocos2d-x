@@ -31,14 +31,14 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCSpriteFrame;
+class SpriteFrame;
 
 /**
  * @addtogroup particle_nodes
  * @{
  */
 
-/** @brief CCParticleSystemQuad is a subclass of CCParticleSystem
+/** @brief ParticleSystemQuad is a subclass of ParticleSystem
 
 It includes all the features of ParticleSystem.
 
@@ -50,58 +50,52 @@ Special features and Limitations:
 - It supports batched rendering since 1.1
 @since v0.8
 */
-class CC_DLL CCParticleSystemQuad : public CCParticleSystem
+class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
-protected:
-    ccV3F_C4B_T2F_Quad    *m_pQuads;        // quads to be rendered
-    GLushort            *m_pIndices;    // indices
-
-#if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint                m_uVAOname;
-#endif
-
-    GLuint                m_pBuffersVBO[2]; //0: vertex  1: indices
-
 public:
-    CCParticleSystemQuad();
-    virtual ~CCParticleSystemQuad();
 
-    /** creates an initializes a CCParticleSystemQuad from a plist file.
-    This plist files can be created manually or with Particle Designer:  
-    */
-    static CCParticleSystemQuad * create(const char *plistFile);
+    /** creates a Particle Emitter */
+    static ParticleSystemQuad * create();
+    /** creates a Particle Emitter with a number of particles */
+    static ParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    /** creates an initializes a ParticleSystemQuad from a plist file.
+     This plist files can be created manually or with Particle Designer:
+     */
+    static ParticleSystemQuad * create(const char *plistFile);
+
+    ParticleSystemQuad();
+    virtual ~ParticleSystemQuad();
 
     /** initializes the indices for the vertices*/
     void initIndices();
 
     /** initializes the texture with a rectangle measured Points */
-    void initTexCoordsWithRect(const CCRect& rect);
+    void initTexCoordsWithRect(const Rect& rect);
 
-    /** Sets a new CCSpriteFrame as particle.
+    /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTexture:withRect instead.
     @since v0.99.4
     */
-    void setDisplayFrame(CCSpriteFrame *spriteFrame);
+    void setDisplayFrame(SpriteFrame *spriteFrame);
 
     /** Sets a new texture with a rect. The rect is in Points.
     @since v0.99.4
     */
-    void setTextureWithRect(CCTexture2D *texture, const CCRect& rect);
-    // super methods
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void setTexture(CCTexture2D* texture);
-    virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
-    virtual void postStep();
-    virtual void draw();
-    virtual void setBatchNode(CCParticleBatchNode* batchNode);
-    virtual void setTotalParticles(unsigned int tp);
-    
+    void setTextureWithRect(Texture2D *texture, const Rect& rect);
+
     /** listen the event that coming to foreground on Android
      */
-    void listenBackToForeground(CCObject *obj);
+    void listenBackToForeground(Object *obj);
 
-    static CCParticleSystemQuad * create();
-    static CCParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    // Overrides
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
+    virtual void setTexture(Texture2D* texture) override;
+    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
+    virtual void postStep() override;
+    virtual void draw() override;
+    virtual void setBatchNode(ParticleBatchNode* batchNode) override;
+    virtual void setTotalParticles(unsigned int tp) override;
+
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
@@ -109,6 +103,16 @@ private:
     void setupVBO();
 #endif
     bool allocMemory();
+    
+protected:
+    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
+    GLushort            *_indices;    // indices
+    
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint                _VAOname;
+#endif
+    
+    GLuint                _buffersVBO[2]; //0: vertex  1: indices
 };
 
 // end of particle_nodes group

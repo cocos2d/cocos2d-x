@@ -25,46 +25,41 @@
 #include "CCTextureETC.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCFileUtils.h"
+#include "CCConfiguration.h"
+#include "etc/etc1.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #endif
 
-
 NS_CC_BEGIN
 
-CCTextureETC::CCTextureETC()
+TextureETC::TextureETC()
 : _name(0)
 , _width(0)
 , _height(0)
 {}
 
-CCTextureETC::~CCTextureETC()
+TextureETC::~TextureETC()
 {
 }
 
-bool CCTextureETC::initWithFile(const char *file)
+bool TextureETC::initWithFile(const char *file)
 {
-    // Only Android supports ETC file format
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    bool ret = loadTexture(CCFileUtils::sharedFileUtils()->fullPathForFilename(file).c_str());
-    return ret;
-#else
-    return false;
-#endif
+    return loadTexture(FileUtils::getInstance()->fullPathForFilename(file).c_str());
 }
 
-unsigned int CCTextureETC::getName() const
+unsigned int TextureETC::getName() const
 {
     return _name;
 }
 
-unsigned int CCTextureETC::getWidth() const
+unsigned int TextureETC::getWidth() const
 {
     return _width;
 }
 
-unsigned int CCTextureETC::getHeight() const
+unsigned int TextureETC::getHeight() const
 {
     return _height;
 }
@@ -92,56 +87,89 @@ extern "C"
 }
 #endif
 
-bool CCTextureETC::loadTexture(const char* file)
+bool TextureETC::loadTexture(const char* file)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxETCLoader", "loadTexture", "(Ljava/lang/String;)Z"))
+    unsigned long etcFileSize = 0;
+    etc1_byte* etcFileData = NULL;
+    etcFileData = FileUtils::getInstance()->getFileData(file, "rb", &etcFileSize);
+    
+    if(0 == etcFileSize)
     {
-        jstring stringArg1 = t.env->NewStringUTF(file);
-        jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg1);
-        
-        t.env->DeleteLocalRef(stringArg1);
-        t.env->DeleteLocalRef(t.classID);
-        
-        if (ret)
-        {
-            _width = sWidth;
-            _height = sHeight;
-            
-            
-            glGenTextures(1, &_name);
-            glBindTexture(GL_TEXTURE_2D, _name);
-            
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            
-            glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, _width, _height, 0, sLength, sData);
-            
-            glBindTexture(GL_TEXTURE_2D, 0);
-            
-            delete [] sData;
-            sData = NULL;
-            
-            GLenum err = glGetError();
-            if (err != GL_NO_ERROR)
-            {
-                LOGD("width %d, height %d, lenght %d", _width, _height, sLength);
-                LOGD("cocos2d: TextureETC: Error uploading compressed texture %s glError: 0x%04X", file, err);
-                return false;
-            }
-            
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
-#else
-    return false;
+    
+    if(!etc1_pkm_is_valid(etcFileData))
+    {
+        delete[] etcFileData;
+        etcFileData = NULL;
+        return  false;
+    }
+    
+    _width = etc1_pkm_get_width(etcFileData);
+    _height = etc1_pkm_get_height(etcFileData);
+    
+    if( 0 == _width || 0 == _height )
+    {
+        delete[] etcFileData;
+        etcFileData = NULL;
+        return false;
+    }
+    
+    if(Configuration::getInstance()->supportsETC())
+    {
+        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
+#ifdef GL_ETC1_RGB8_OES
+        glGenTextures(1, &_name);
+        glBindTexture(GL_TEXTURE_2D, _name);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, _width, _height, 0, etcFileSize - ETC_PKM_HEADER_SIZE,
+                               etcFileData + ETC_PKM_HEADER_SIZE);
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
+        delete[] etcFileData;
+        etcFileData = NULL;
+        return true;
 #endif
+    }
+    else
+    {
+         //if it is not gles or device do not support ETC, decode texture by software
+        int bytePerPixel = 3;
+        GLenum fallBackType = GL_UNSIGNED_BYTE;
+        
+        /*bool fallBackUseShort = false;
+        if(fallBackUseShort)
+        {
+            bytePerPixel = 2;
+            fallBackType = GL_UNSIGNED_SHORT_5_6_5;
+        }
+        */
+        unsigned int stride = _width * bytePerPixel;
+        
+        std::vector<unsigned char> decodeImageData(stride * _height);
+        
+        etc1_decode_image(etcFileData + ETC_PKM_HEADER_SIZE, &decodeImageData[0], _width, _height, bytePerPixel, stride);
+        
+        //set decoded data to gl
+        glGenTextures(1, &_name);
+        glBindTexture(GL_TEXTURE_2D, _name);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _width, _height, 0, GL_RGB, fallBackType, &decodeImageData[0]);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        delete[] etcFileData;
+        etcFileData = NULL;
+        return true;
+    }
+    return false;
 }
 
 NS_CC_END

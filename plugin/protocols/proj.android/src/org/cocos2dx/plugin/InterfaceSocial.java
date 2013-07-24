@@ -26,11 +26,14 @@ package org.cocos2dx.plugin;
 import java.util.Hashtable;
 
 public interface InterfaceSocial {
-	public final int PluginType = 4;
+    public final int PluginType = 6;
 
-	public void configDeveloperInfo(Hashtable<String, String> cpInfo);
-	public void share(Hashtable<String, String> cpInfo);
-	public void setDebugMode(boolean debug);
-	public String getSDKVersion();
-	public String getPluginVersion();
+    public void configDeveloperInfo(Hashtable<String, String> cpInfo);
+    public void submitScore(String leaderboardID, long score);
+    public void showLeaderboard(String leaderboardID);
+    public void unlockAchievement(Hashtable<String, String> achInfo);
+    public void showAchievements();
+    public void setDebugMode(boolean debug);
+    public String getSDKVersion();
+    public String getPluginVersion();
 }

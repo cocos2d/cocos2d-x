@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class GameOverLayer : public cocos2d::CCLayerColor
+class GameOverLayer : public cocos2d::LayerColor
 {
 public:
     GameOverLayer():_label(NULL) {};
@@ -13,10 +13,10 @@ public:
 
     void gameOverDone();
 
-    CC_SYNTHESIZE_READONLY(cocos2d::CCLabelTTF*, _label, Label);
+    CC_SYNTHESIZE_READONLY(cocos2d::LabelTTF*, _label, Label);
 };
 
-class GameOverScene : public cocos2d::CCScene
+class GameOverScene : public cocos2d::Scene
 {
 public:
     GameOverScene():_layer(NULL) {};

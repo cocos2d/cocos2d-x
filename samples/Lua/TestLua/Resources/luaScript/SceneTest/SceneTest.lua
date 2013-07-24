@@ -139,13 +139,13 @@ end
 --------------------------------------------------------------------
 
 SceneTestLayer3 = function()
-    local ret = CCLayerColor:create(ccc4(0,0,255,255))
+    local ret = CCLayerColor:create(Color4B(0,0,255,255))
     local s = CCDirector:sharedDirector():getWinSize()
 
     local function item0Clicked(tag, pSender)
         local newScene = CCScene:create()
         newScene:addChild(SceneTestLayer3())
-        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, newScene, ccc3(0,255,255)))
+        CCDirector:sharedDirector():pushScene(CCTransitionFade:create(0.5, newScene, Color3B(0,255,255)))
     end
 
     local function item1Clicked(tag, pSender)

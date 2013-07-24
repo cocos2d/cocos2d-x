@@ -31,69 +31,69 @@ namespace cs {
     
     CSJsonDictionary::CSJsonDictionary()
     {
-        m_cValue.clear();
+        _value.clear();
     }
     
     
     CSJsonDictionary::~CSJsonDictionary()
     {
-        m_cValue.clear();
+        _value.clear();
     }
     
     
     void CSJsonDictionary::initWithDescription(const char *pszDescription)
     {
         CSJson::Reader cReader;
-        m_cValue.clear();
+        _value.clear();
         if (pszDescription && *pszDescription)
         {
             std::string strValue = pszDescription;
-            cReader.parse(strValue, m_cValue, false);
+            cReader.parse(strValue, _value, false);
         }
     }
     
     
     void CSJsonDictionary::initWithValue(CSJson::Value& value)
     {
-        m_cValue = value;
+        _value = value;
     }
     
     
     void CSJsonDictionary::insertItem(const char *pszKey, int nValue)
     {
-        m_cValue[pszKey] = nValue;
+        _value[pszKey] = nValue;
     }
     
     
     void CSJsonDictionary::insertItem(const char *pszKey, double fValue)
     {
-        m_cValue[pszKey] = fValue;
+        _value[pszKey] = fValue;
     }
     
     
     void CSJsonDictionary::insertItem(const char *pszKey, const char * pszValue)
     {
-        m_cValue[pszKey] = pszValue;
+        _value[pszKey] = pszValue;
     }
     
     void CSJsonDictionary::insertItem(const char *pszKey, bool bValue)
     {
-        m_cValue[pszKey] = bValue;
+        _value[pszKey] = bValue;
     }
     
     void CSJsonDictionary::insertItem(const char *pszKey, CSJsonDictionary * subDictionary)
     {
         if (subDictionary)
-            m_cValue[pszKey] = subDictionary->m_cValue;
+            _value[pszKey] = subDictionary->_value;
     }
     
     
     bool CSJsonDictionary::deleteItem(const char *pszKey)
     {
-        if(!m_cValue.isMember(pszKey))
+        if(!_value.isMember(pszKey))
             return false;
         
-        m_cValue.removeMember(pszKey);
+        _value.removeMember(pszKey);
         
         return true;
     }
@@ -101,65 +101,65 @@ namespace cs {
     
     void CSJsonDictionary::cleanUp()
     {
-        m_cValue.clear();
+        _value.clear();
     }
     
     
     bool CSJsonDictionary::isKeyValidate(const char *pszKey)
     {
-        return m_cValue.isMember(pszKey);
+        return _value.isMember(pszKey);
     }
     
     
     int CSJsonDictionary::getItemIntValue(const char *pszKey, int nDefaultValue)
     {
-        if (!isKeyValidate(pszKey, m_cValue) || !m_cValue[pszKey].isNumeric())
+        if (!isKeyValidate(pszKey, _value) || !_value[pszKey].isNumeric())
             return nDefaultValue;
         
-        return m_cValue[pszKey].asInt();
+        return _value[pszKey].asInt();
     }
     
     
     double CSJsonDictionary::getItemFloatValue(const char *pszKey, double fDefaultValue)
     {
-        if (!isKeyValidate(pszKey, m_cValue) || !m_cValue[pszKey].isNumeric())
+        if (!isKeyValidate(pszKey, _value) || !_value[pszKey].isNumeric())
             return fDefaultValue;
         
-        return m_cValue[pszKey].asDouble();
+        return _value[pszKey].asDouble();
     }
     
     
     const char * CSJsonDictionary::getItemStringValue(const char *pszKey)
     {
-        if (!isKeyValidate(pszKey, m_cValue) || !m_cValue[pszKey].isString())
+        if (!isKeyValidate(pszKey, _value) || !_value[pszKey].isString())
             return NULL;
         
-        return m_cValue[pszKey].asCString();
+        return _value[pszKey].asCString();
     }
     
     bool CSJsonDictionary::getItemBoolvalue(const char *pszKey, bool bDefaultValue)
     {
-        if (!isKeyValidate(pszKey, m_cValue) || !m_cValue[pszKey].isBool())
+        if (!isKeyValidate(pszKey, _value) || !_value[pszKey].isBool())
             return bDefaultValue;
         
-        return m_cValue[pszKey].asBool();
+        return _value[pszKey].asBool();
     }
     
     
     CSJsonDictionary * CSJsonDictionary::getSubDictionary(const char *pszKey)
     {
         CSJsonDictionary * pNewDictionary;
-        if (!isKeyValidate(pszKey, m_cValue) || (!m_cValue[pszKey].isArray() &&
-                                                 !m_cValue[pszKey].isObject() &&
-                                                 !m_cValue[pszKey].isConvertibleTo(CSJson::arrayValue) &&
-                                                 !m_cValue[pszKey].isConvertibleTo(CSJson::objectValue)))
+        if (!isKeyValidate(pszKey, _value) || (!_value[pszKey].isArray() &&
+                                                 !_value[pszKey].isObject() &&
+                                                 !_value[pszKey].isConvertibleTo(CSJson::arrayValue) &&
+                                                 !_value[pszKey].isConvertibleTo(CSJson::objectValue)))
         {
             pNewDictionary = NULL;
         }
         else
         {
             pNewDictionary = new CSJsonDictionary();
-            pNewDictionary->initWithValue(m_cValue[pszKey]);
+            pNewDictionary->initWithValue(_value[pszKey]);
         }
         return pNewDictionary;
     }
@@ -167,7 +167,7 @@ namespace cs {
     
     std::string CSJsonDictionary::getDescription()
     {
-        std::string strReturn = m_cValue.toStyledString();
+        std::string strReturn = _value.toStyledString();
         return strReturn;
     }
     
@@ -175,16 +175,16 @@ namespace cs {
     bool CSJsonDictionary::insertItemToArray(const char *pszArrayKey, int nValue)
     {
         CSJson::Value array;
-        if(m_cValue.isMember(pszArrayKey))
+        if(_value.isMember(pszArrayKey))
         {
-            if (!m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
+            if (!_value[pszArrayKey].isArray() && !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
                 return false;
             
-            array = m_cValue[pszArrayKey];
+            array = _value[pszArrayKey];
         }
         
         array.append(nValue);
-        m_cValue[pszArrayKey] = array;
+        _value[pszArrayKey] = array;
         
         return true;
     }
@@ -193,16 +193,16 @@ namespace cs {
     bool CSJsonDictionary::insertItemToArray(const char *pszArrayKey, double fValue)
     {
         CSJson::Value array;
-        if(m_cValue.isMember(pszArrayKey))
+        if(_value.isMember(pszArrayKey))
         {
-            if (!m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
+            if (!_value[pszArrayKey].isArray() && !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
                 return false;
             
-            array = m_cValue[pszArrayKey];
+            array = _value[pszArrayKey];
         }
         
         array.append(fValue);
-        m_cValue[pszArrayKey] = array;
+        _value[pszArrayKey] = array;
         
         return true;
     }
@@ -211,16 +211,16 @@ namespace cs {
     bool CSJsonDictionary::insertItemToArray(const char *pszArrayKey, const char * pszValue)
     {
         CSJson::Value array;
-        if(m_cValue.isMember(pszArrayKey))
+        if(_value.isMember(pszArrayKey))
         {
-            if (!m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
+            if (!_value[pszArrayKey].isArray() && !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
                 return false;
             
-            array = m_cValue[pszArrayKey];
+            array = _value[pszArrayKey];
         }
         
         array.append(pszValue);
-        m_cValue[pszArrayKey] = array;
+        _value[pszArrayKey] = array;
         
         return true;
     }
@@ -229,16 +229,16 @@ namespace cs {
     bool CSJsonDictionary::insertItemToArray(const char *pszArrayKey, CSJsonDictionary * subDictionary)
     {
         CSJson::Value array;
-        if(m_cValue.isMember(pszArrayKey))
+        if(_value.isMember(pszArrayKey))
         {
-            if (!m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
+            if (!_value[pszArrayKey].isArray() && !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
                 return false;
             
-            array = m_cValue[pszArrayKey];
+            array = _value[pszArrayKey];
         }
         
-        array.append(subDictionary->m_cValue);
-        m_cValue[pszArrayKey] = array;
+        array.append(subDictionary->_value);
+        _value[pszArrayKey] = array;
         
         return true;
     }
@@ -246,39 +246,39 @@ namespace cs {
     
     int CSJsonDictionary::getItemCount()
     {
-        return m_cValue.size();
+        return _value.size();
     }
     
     
     DicItemType CSJsonDictionary::getItemType(int nIndex)
     {
-        return (DicItemType)m_cValue[nIndex].type();
+        return (DicItemType)_value[nIndex].type();
     }
     
     
     DicItemType CSJsonDictionary::getItemType(const char *pszKey)
     {
-        return (DicItemType)m_cValue[pszKey].type();
+        return (DicItemType)_value[pszKey].type();
     }
     
     std::vector<std::string> CSJsonDictionary::getAllMemberNames()
     {
-        return m_cValue.getMemberNames();
+        return _value.getMemberNames();
     }
     
     
     int CSJsonDictionary::getArrayItemCount(const char *pszArrayKey)
     {
         int nRet = 0;
-        if (!isKeyValidate(pszArrayKey, m_cValue) ||
-            (!m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isObject() &&
-             !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue) && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::objectValue)))
+        if (!isKeyValidate(pszArrayKey, _value) ||
+            (!_value[pszArrayKey].isArray() && !_value[pszArrayKey].isObject() &&
+             !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue) && !_value[pszArrayKey].isConvertibleTo(CSJson::objectValue)))
         {
             nRet = 0;
         }
         else
         {
-            CSJson::Value arrayValue = m_cValue[pszArrayKey];
+            CSJson::Value arrayValue = _value[pszArrayKey];
             nRet = arrayValue.size();
         }
         
@@ -365,11 +365,11 @@ namespace cs {
     
     inline CSJson::Value * CSJsonDictionary::validateArrayItem(const char *pszArrayKey, int nIndex)
     {
-        if (!isKeyValidate(pszArrayKey, m_cValue) && !m_cValue[pszArrayKey].isArray() && !m_cValue[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
+        if (!isKeyValidate(pszArrayKey, _value) && !_value[pszArrayKey].isArray() && !_value[pszArrayKey].isConvertibleTo(CSJson::arrayValue))
             return NULL;
-        if (!m_cValue[pszArrayKey].isValidIndex(nIndex))
+        if (!_value[pszArrayKey].isValidIndex(nIndex))
             return NULL;
         
-        return &m_cValue[pszArrayKey];
+        return &_value[pszArrayKey];
     }
 }

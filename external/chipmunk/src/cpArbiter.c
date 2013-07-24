@@ -48,7 +48,10 @@ unthreadHelper(cpArbiter *arb, cpBody *body)
 	
 	if(prev){
 		cpArbiterThreadForBody(prev, body)->next = next;
-	} else {
+	} else if(body->arbiterList == arb) {
+		// IFF prev is NULL and body->arbiterList == arb, is arb at the head of the list.
+		// This function may be called for an arbiter that was never in a list.
+		// In that case, we need to protect it from wiping out the body->arbiterList pointer.
 		body->arbiterList = next;
 	}
 	
@@ -107,8 +110,7 @@ cpArbiterGetContactPointSet(const cpArbiter *arb)
 	cpContactPointSet set;
 	set.count = cpArbiterGetCount(arb);
 	
-	int i;
-	for(i=0; i<set.count; i++){
+	for(int i=0; i<set.count; i++){
 		set.points[i].point = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
 		set.points[i].normal = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(n);
 		set.points[i].dist = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
@@ -117,6 +119,18 @@ cpArbiterGetContactPointSet(const cpArbiter *arb)
 	return set;
 }
 
+void
+cpArbiterSetContactPointSet(cpArbiter *arb, cpContactPointSet *set)
+{
+	int count = set->count;
+	cpAssertHard(count == arb->numContacts, "The number of contact points cannot be changed.");
+	
+	for(int i=0; i<count; i++){
+		arb->contacts[i].p = set->points[i].point;
+		arb->contacts[i].n = set->points[i].normal;
+		arb->contacts[i].dist = set->points[i].dist;
+	}
+}
 
 cpVect
 cpArbiterTotalImpulse(const cpArbiter *arb)
@@ -164,29 +178,24 @@ cpArbiterTotalKE(const cpArbiter *arb)
 	return sum;
 }
 
-//cpFloat
-//cpContactsEstimateCrushingImpulse(cpContact *contacts, int numContacts)
-//{
-//	cpFloat fsum = 0.0f;
-//	cpVect vsum = cpvzero;
-//	
-//	for(int i=0; i<numContacts; i++){
-//		cpContact *con = &contacts[i];
-//		cpVect j = cpvrotate(con->n, cpv(con->jnAcc, con->jtAcc));
-//		
-//		fsum += cpvlength(j);
-//		vsum = cpvadd(vsum, j);
-//	}
-//	
-//	cpFloat vmag = cpvlength(vsum);
-//	return (1.0f - vmag/fsum);
-//}
-
 void
 cpArbiterIgnore(cpArbiter *arb)
 {
 	arb->state = cpArbiterStateIgnore;
 }
+
+cpVect
+cpArbiterGetSurfaceVelocity(cpArbiter *arb)
+{
+	return cpvmult(arb->surface_vr, arb->swappedColl ? -1.0f : 1.0);
+}
+
+void
+cpArbiterSetSurfaceVelocity(cpArbiter *arb, cpVect vr)
+{
+	arb->surface_vr = cpvmult(vr, arb->swappedColl ? -1.0f : 1.0);
+}
+
 
 cpArbiter*
 cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
@@ -220,21 +229,18 @@ cpArbiterInit(cpArbiter *arb, cpShape *a, cpShape *b)
 void
 cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisionHandler *handler, cpShape *a, cpShape *b)
 {
-	// Arbiters without contact data may exist if a collision function rejected the collision.
-	if(arb->contacts){
-		// Iterate over the possible pairs to look for hash value matches.
-		for(int i=0; i<arb->numContacts; i++){
-			cpContact *old = &arb->contacts[i];
+	// Iterate over the possible pairs to look for hash value matches.
+	for(int i=0; i<numContacts; i++){
+		cpContact *con = &contacts[i];
+		
+		for(int j=0; j<arb->numContacts; j++){
+			cpContact *old = &arb->contacts[j];
 			
-			for(int j=0; j<numContacts; j++){
-				cpContact *new_contact = &contacts[j];
-				
-				// This could trigger false positives, but is fairly unlikely nor serious if it does.
-				if(new_contact->hash == old->hash){
-					// Copy the persistant contact information.
-					new_contact->jnAcc = old->jnAcc;
-					new_contact->jtAcc = old->jtAcc;
-				}
+			// This could trigger false positives, but is fairly unlikely nor serious if it does.
+			if(con->hash == old->hash){
+				// Copy the persistant contact information.
+				con->jnAcc = old->jnAcc;
+				con->jtAcc = old->jtAcc;
 			}
 		}
 	}
@@ -247,7 +253,12 @@ cpArbiterUpdate(cpArbiter *arb, cpContact *contacts, int numContacts, cpCollisio
 	
 	arb->e = a->e * b->e;
 	arb->u = a->u * b->u;
-	arb->surface_vr = cpvsub(a->surface_v, b->surface_v);
+	
+	// Currently all contacts will have the same normal.
+	// This may change in the future.
+	cpVect n = (numContacts ? contacts[0].n : cpvzero);
+	cpVect surface_vr = cpvsub(a->surface_v, b->surface_v);
+	arb->surface_vr = cpvsub(surface_vr, cpvmult(n, cpvdot(surface_vr, n)));
 	
 	// For collisions between two similar primitive types, the order could have been swapped.
 	arb->a = a; arb->body_a = a->body;
@@ -317,11 +328,11 @@ cpArbiterApplyImpulse(cpArbiter *arb)
 		
 		cpVect vb1 = cpvadd(a->v_bias, cpvmult(cpvperp(r1), a->w_bias));
 		cpVect vb2 = cpvadd(b->v_bias, cpvmult(cpvperp(r2), b->w_bias));
-		cpVect vr = relative_velocity(a, b, r1, r2);
+		cpVect vr = cpvadd(relative_velocity(a, b, r1, r2), surface_vr);
 		
 		cpFloat vbn = cpvdot(cpvsub(vb2, vb1), n);
 		cpFloat vrn = cpvdot(vr, n);
-		cpFloat vrt = cpvdot(cpvadd(vr, surface_vr), cpvperp(n));
+		cpFloat vrt = cpvdot(vr, cpvperp(n));
 		
 		cpFloat jbn = (con->bias - vbn)*nMass;
 		cpFloat jbnOld = con->jBias;

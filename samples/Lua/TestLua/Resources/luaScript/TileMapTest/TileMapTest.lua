@@ -101,7 +101,7 @@ local function TileMapEditTest()
         -- over all your tiles in every frame. It's very expensive
         --    for(int x=0 x < tilemap.tgaInfo:width x++)
         --        for(int y=0 y < tilemap.tgaInfo:height y++)
-        --            ccColor3B c =[tilemap tileAt:local Make(x,y))
+        --            Color3B c =[tilemap tileAt:local Make(x,y))
         --            if( c.r != 0 )
         --                --------cclog("%d,%d = %d", x,y,c.r)
         --            end
@@ -152,7 +152,7 @@ local function TMXOrthoTest()
     --
     -- it should not flicker. No artifacts should appear
     --
-    --local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    --local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     --addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
@@ -377,9 +377,12 @@ local function TMXReadWriteTest()
     local  fadein = CCFadeIn:create(2)
     local  scaleback = CCScaleTo:create(1, 1)
 
-    local function removeSprite(tag, sender)
+    local function removeSprite(sender)
         --------cclog("removing tile: %x", sender)
-        local node = tolua.cast(sender, "CCNode");
+        local node = tolua.cast(sender, "CCNode")
+        if nil == node then
+            print("Errro node is nil")
+        end
         local p = node:getParent()
 
         if p ~= nil then
@@ -388,8 +391,7 @@ local function TMXReadWriteTest()
         ----------cclog("atlas quantity: %d", p:textureAtlas():totalQuads())
     end
 
-
-    local  finish = CCCallFuncN:create(removeSprite)
+    local finish = CCCallFunc:create(removeSprite)
     local arr = CCArray:create()
     arr:addObject(move)
     arr:addObject(rotate)
@@ -399,9 +401,9 @@ local function TMXReadWriteTest()
     arr:addObject(scaleback)
     arr:addObject(finish)
     local  seq0 = CCSequence:create(arr)
-    local  seq1 = tolua.cast(seq0:copy():autorelease(), "CCAction")
-    local  seq2 = tolua.cast(seq0:copy():autorelease(), "CCAction")
-    local  seq3 = tolua.cast(seq0:copy():autorelease(), "CCAction")
+    local  seq1 = tolua.cast(seq0:clone(), "CCAction")
+    local  seq2 = tolua.cast(seq0:clone(), "CCAction")
+    local  seq3 = tolua.cast(seq0:clone(), "CCAction")
 
     tile0:runAction(seq0)
     tile1:runAction(seq1)
@@ -496,7 +498,7 @@ end
 --------------------------------------------------------------------
 local function TMXHexTest()
     local ret = createTileDemoLayer("TMX Hex tes")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/hexa-test.tmx")
@@ -514,7 +516,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest()
     local ret = createTileDemoLayer("TMX Isometric test 0")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local  map = CCTMXTiledMap:create("TileMaps/iso-test.tmx")
@@ -534,7 +536,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest1()
     local ret = createTileDemoLayer("TMX Isometric test + anchorPoint")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test1.tmx")
@@ -554,7 +556,7 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest2()
     local ret = createTileDemoLayer("TMX Isometric test 2")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test2.tmx")
@@ -577,7 +579,7 @@ end
 --------------------------------------------------------------------
 local function TMXUncompressedTest()
     local ret = createTileDemoLayer("TMX Uncompressed test")
-    local  color = CCLayerColor:create( ccc4(64,64,64,255) )
+    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
     ret:addChild(color, -1)
 
     local map = CCTMXTiledMap:create("TileMaps/iso-test2-uncompressed.tmx")
@@ -1197,7 +1199,7 @@ local function TMXOrthoFromXMLTest()
     local file = resources.."/orthogonal-test1.tmx"
 
     local  str = CCString:createWithContentsOfFile(CCFileUtils:sharedFileUtils():fullPathForFilename(file)):getCString()
-    --    CCAssert(str != NULL, "Unable to open file")
+    --    CCASSERT(str != NULL, "Unable to open file")
     if (str == nil) then
         cclog("Unable to open file")
     end

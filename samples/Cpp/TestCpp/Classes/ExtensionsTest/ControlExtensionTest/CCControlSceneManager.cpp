@@ -1,5 +1,5 @@
 /*
- * CCControlSceneManager.m
+ * ControlSceneManager.m
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -36,15 +36,15 @@ USING_NS_CC;
 
 enum
 {
-    kCCControlSliderTest = 0,
-    kCCControlColourPickerTest,
-    kCCControlSwitchTest,
-    kCCControlButtonTest_HelloVariableSize,
-    kCCControlButtonTest_Event,
-    kCCControlButtonTest_Styling,
-    kCCControlPotentiometerTest,
-    kCCControlStepperTest,
-    kCCControlTestMax
+    kControlSliderTest = 0,
+    kControlColourPickerTest,
+    kControlSwitchTest,
+    kControlButtonTest_HelloVariableSize,
+    kControlButtonTest_Event,
+    kControlButtonTest_Styling,
+    kControlPotentiometerTest,
+    kControlStepperTest,
+    kControlTestMax
 };
 
 static const char* s_testArray[] = {
@@ -58,58 +58,58 @@ static const char* s_testArray[] = {
     "CCControlStepperTest"
 };
 
-static CCControlSceneManager *sharedInstance = NULL;
+static ControlSceneManager *sharedInstance = NULL;
 
 
-CCControlSceneManager::CCControlSceneManager()
+ControlSceneManager::ControlSceneManager()
 {
-    m_nCurrentControlSceneId = kCCControlSliderTest;
+    _currentControlSceneId = kControlSliderTest;
 }
 
-CCControlSceneManager::~CCControlSceneManager()
+ControlSceneManager::~ControlSceneManager()
 {
     CC_SAFE_RELEASE(sharedInstance);
 }
 
-CCControlSceneManager * CCControlSceneManager::sharedControlSceneManager()
+ControlSceneManager * ControlSceneManager::sharedControlSceneManager()
 {
     if (sharedInstance == NULL)
     {
-        sharedInstance = new CCControlSceneManager();
+        sharedInstance = new ControlSceneManager();
     }
     return sharedInstance;
 }
 
-CCScene *CCControlSceneManager::nextControlScene()
+Scene *ControlSceneManager::nextControlScene()
 {
-    m_nCurrentControlSceneId = (m_nCurrentControlSceneId + 1) % kCCControlTestMax;
+    _currentControlSceneId = (_currentControlSceneId + 1) % kControlTestMax;
 
     return currentControlScene();
 }
 
-CCScene *CCControlSceneManager::previousControlScene()
+Scene *ControlSceneManager::previousControlScene()
 {
-    m_nCurrentControlSceneId = m_nCurrentControlSceneId - 1;
-    if (m_nCurrentControlSceneId < 0)
+    _currentControlSceneId = _currentControlSceneId - 1;
+    if (_currentControlSceneId < 0)
     {
-        m_nCurrentControlSceneId = kCCControlTestMax - 1;
+        _currentControlSceneId = kControlTestMax - 1;
     }
 
     return currentControlScene();
 }
 
-CCScene *CCControlSceneManager::currentControlScene()
+Scene *ControlSceneManager::currentControlScene()
 {
-    switch (m_nCurrentControlSceneId)
+    switch (_currentControlSceneId)
     {
-    case kCCControlSliderTest: return CCControlSliderTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlColourPickerTest:return CCControlColourPickerTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlSwitchTest:return CCControlSwitchTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlButtonTest_HelloVariableSize:return CCControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlButtonTest_Event:return CCControlButtonTest_Event::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlButtonTest_Styling:return CCControlButtonTest_Styling::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlPotentiometerTest:return CCControlPotentiometerTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
-    case kCCControlStepperTest:return CCControlStepperTest::sceneWithTitle(s_testArray[m_nCurrentControlSceneId]);
+    case kControlSliderTest: return ControlSliderTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlColourPickerTest:return ControlColourPickerTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlSwitchTest:return ControlSwitchTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlButtonTest_HelloVariableSize:return ControlButtonTest_HelloVariableSize::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlButtonTest_Event:return ControlButtonTest_Event::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlButtonTest_Styling:return ControlButtonTest_Styling::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlPotentiometerTest:return ControlPotentiometerTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
+    case kControlStepperTest:return ControlStepperTest::sceneWithTitle(s_testArray[_currentControlSceneId]);
     }
     return NULL;
 }

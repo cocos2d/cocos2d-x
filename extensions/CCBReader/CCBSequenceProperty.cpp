@@ -14,7 +14,7 @@ CCBSequenceProperty::CCBSequenceProperty()
 
 bool CCBSequenceProperty::init()
 {
-    mKeyframes = new CCArray();
+    mKeyframes = new Array();
     
     return true;
 }
@@ -44,7 +44,7 @@ void CCBSequenceProperty::setType(int nType)
     mType = nType;
 }
 
-CCArray* CCBSequenceProperty::getKeyframes()
+Array* CCBSequenceProperty::getKeyframes()
 {
     return mKeyframes;
 }

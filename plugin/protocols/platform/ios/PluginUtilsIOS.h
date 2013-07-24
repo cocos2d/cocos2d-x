@@ -80,8 +80,8 @@ public:
     /**
      @brief method return string value
      */
-    static const char* callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
-    static const char* callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
+    static std::string callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param);
+    static std::string callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
 
     static void outputLog(const char* pFormat, ...);
 

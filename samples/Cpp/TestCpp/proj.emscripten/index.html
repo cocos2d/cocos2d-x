@@ -37,12 +37,20 @@
     <script type='text/javascript'>
       // connect to canvas
       var Module = {
+        debug: true,
+        consoleLogging: true,
         preRun: [],
         postRun: [],
         print: (function() {
           var element = document.getElementById('output');
           element.value = ''; // clear browser cache
           return function(text) {
+            if(!Module.debug) return;
+            if(Module.consoleLogging)
+            {
+                console.log(text);
+                return;
+            }
             text = Array.prototype.slice.call(arguments).join(' ');
             // These replacements are necessary if you render to raw HTML
             //text = text.replace(/&/g, "&amp;");
@@ -54,6 +62,12 @@
           };
         })(),
         printErr: function(text) {
+          if(!Module.debug) return;
+          if(Module.consoleLogging)
+          {
+              console.log(text);
+              return;
+          }
           text = Array.prototype.slice.call(arguments).join(' ');
           if (0) { // XXX disabled for safety typeof dump == 'function') {
             dump(text + '\n'); // fast, straight to the real console

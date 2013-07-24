@@ -38,7 +38,7 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsMac : public CCFileUtils
+class CC_DLL FileUtilsMac : public FileUtils
 {
 public:
     /* override funtions */
@@ -47,10 +47,10 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath);
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
     
-    virtual CCDictionary* createCCDictionaryWithContentsOfFile(const std::string& filename);
-    virtual bool writeToFile(CCDictionary *dict, const std::string& fullPath);
+    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename);
+    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath);
     
-    virtual CCArray* createCCArrayWithContentsOfFile(const std::string& filename);
+    virtual Array* createArrayWithContentsOfFile(const std::string& filename);
 
 };
 

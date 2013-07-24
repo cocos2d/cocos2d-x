@@ -25,11 +25,12 @@
 #include "jspubtd.h"
 #include "jsutil.h"
 
-#include "gc/Root.h"
 #include "js/Anchor.h"
+#include "js/CallArgs.h"
 #include "js/CharacterEncoding.h"
 #include "js/HashTable.h"
 #include "js/PropertyKey.h"
+#include "js/RootingAPI.h"
 #include "js/Utility.h"
 #include "js/Value.h"
 #include "js/Vector.h"
@@ -129,7 +130,6 @@ class JS_PUBLIC_API(AutoGCRooter) {
         STRINGVECTOR =-17, /* js::AutoStringVector */
         SCRIPTVECTOR =-18, /* js::AutoScriptVector */
         PROPDESC =    -19, /* js::PropDesc::AutoRooter */
-        SHAPERANGE =  -20, /* js::Shape::Range::AutoRooter */
         STACKSHAPE =  -21, /* js::StackShape::AutoRooter */
         STACKBASESHAPE=-22,/* js::StackBaseShape::AutoRooter */
         GETTERSETTER =-24, /* js::AutoRooterGetterSetter */
@@ -142,7 +142,8 @@ class JS_PUBLIC_API(AutoGCRooter) {
         WRAPPER =     -31, /* js::AutoWrapperRooter */
         OBJOBJHASHMAP=-32, /* js::AutoObjectObjectHashMap */
         OBJU32HASHMAP=-33, /* js::AutoObjectUnsigned32HashMap */
-        OBJHASHSET =  -34  /* js::AutoObjectHashSet */
+        OBJHASHSET =  -34, /* js::AutoObjectHashSet */
+        JSONPARSER =  -35  /* js::JSONParser */
     };
 
   private:
@@ -666,125 +667,6 @@ class AutoScriptVector : public AutoVectorRooter<JSScript *>
     MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
 };
 
-class CallReceiver
-{
-  protected:
-#ifdef DEBUG
-    mutable bool usedRval_;
-    void setUsedRval() const { usedRval_ = true; }
-    void clearUsedRval() const { usedRval_ = false; }
-#else
-    void setUsedRval() const {}
-    void clearUsedRval() const {}
-#endif
-    Value *argv_;
-  public:
-    friend CallReceiver CallReceiverFromVp(Value *);
-    friend CallReceiver CallReceiverFromArgv(Value *);
-    Value *base() const { return argv_ - 2; }
-    JSObject &callee() const { JS_ASSERT(!usedRval_); return argv_[-2].toObject(); }
-
-    JS::HandleValue calleev() const {
-        JS_ASSERT(!usedRval_);
-        return JS::HandleValue::fromMarkedLocation(&argv_[-2]);
-    }
-
-    JS::HandleValue thisv() const {
-        return JS::HandleValue::fromMarkedLocation(&argv_[-1]);
-    }
-
-    JS::MutableHandleValue mutableThisv() const {
-        return JS::MutableHandleValue::fromMarkedLocation(&argv_[-1]);
-    }
-
-    JS::MutableHandleValue rval() const {
-        setUsedRval();
-        return JS::MutableHandleValue::fromMarkedLocation(&argv_[-2]);
-    }
-
-    Value *spAfterCall() const {
-        setUsedRval();
-        return argv_ - 1;
-    }
-
-    void setCallee(Value aCalleev) const {
-        clearUsedRval();
-        argv_[-2] = aCalleev;
-    }
-
-    void setThis(Value aThisv) const {
-        argv_[-1] = aThisv;
-    }
-};
-
-JS_ALWAYS_INLINE CallReceiver
-CallReceiverFromArgv(Value *argv)
-{
-    CallReceiver receiver;
-    receiver.clearUsedRval();
-    receiver.argv_ = argv;
-    return receiver;
-}
-
-JS_ALWAYS_INLINE CallReceiver
-CallReceiverFromVp(Value *vp)
-{
-    return CallReceiverFromArgv(vp + 2);
-}
-
-/*****************************************************************************/
-
-class CallArgs : public CallReceiver
-{
-  protected:
-    unsigned argc_;
-  public:
-    friend CallArgs CallArgsFromVp(unsigned, Value *);
-    friend CallArgs CallArgsFromArgv(unsigned, Value *);
-    friend CallArgs CallArgsFromSp(unsigned, Value *);
-    Value &operator[](unsigned i) const { JS_ASSERT(i < argc_); return argv_[i]; }
-    MutableHandleValue handleAt(unsigned i)
-    {
-        JS_ASSERT(i < argc_);
-        return MutableHandleValue::fromMarkedLocation(&argv_[i]);
-    }
-    HandleValue handleAt(unsigned i) const
-    {
-        JS_ASSERT(i < argc_);
-        return HandleValue::fromMarkedLocation(&argv_[i]);
-    }
-    Value get(unsigned i) const
-    {
-        return i < length() ? argv_[i] : UndefinedValue();
-    }
-    Value *array() const { return argv_; }
-    unsigned length() const { return argc_; }
-    Value *end() const { return argv_ + argc_; }
-    bool hasDefined(unsigned i) const { return i < argc_ && !argv_[i].isUndefined(); }
-};
-
-JS_ALWAYS_INLINE CallArgs
-CallArgsFromArgv(unsigned argc, Value *argv)
-{
-    CallArgs args;
-    args.clearUsedRval();
-    args.argv_ = argv;
-    args.argc_ = argc;
-    return args;
-}
-
-JS_ALWAYS_INLINE CallArgs
-CallArgsFromVp(unsigned argc, Value *vp)
-{
-    return CallArgsFromArgv(argc, vp + 2);
-}
-
-JS_ALWAYS_INLINE CallArgs
-CallArgsFromSp(unsigned argc, Value *sp)
-{
-    return CallArgsFromArgv(argc, sp - argc);
-}
-
 /* Returns true if |v| is considered an acceptable this-value. */
 typedef bool (*IsAcceptableThis)(const Value &v);
 
@@ -1067,11 +949,8 @@ typedef JSBool
 /*
  * Function type for trace operation of the class called to enumerate all
  * traceable things reachable from obj's private data structure. For each such
- * thing, a trace implementation must call
- *
- *    JS_CallTracer(trc, thing, kind);
- *
- * or one of its convenience macros as described in jsapi.h.
+ * thing, a trace implementation must call one of the |JS_Call<Type>Tracer|
+ * variants on the thing.
  *
  * JSTraceOp implementation can assume that no other threads mutates object
  * state. It must not change state of the object or corresponding native
@@ -1085,23 +964,14 @@ typedef void
 (* JSTraceOp)(JSTracer *trc, JSRawObject obj);
 
 /*
- * DEBUG only callback that JSTraceOp implementation can provide to return
- * a string describing the reference traced with JS_CallTracer.
+ * Callback that JSTraceOp implementation can provide to return a string
+ * describing the reference traced with JS_CallTracer.
  */
 typedef void
 (* JSTraceNamePrinter)(JSTracer *trc, char *buf, size_t bufsize);
 
 typedef JSRawObject
 (* JSWeakmapKeyDelegateOp)(JSRawObject obj);
-
-/*
- * Typedef for native functions called by the JS VM.
- *
- * See jsapi.h, the JS_CALLEE, JS_THIS, etc. macros.
- */
-
-typedef JSBool
-(* JSNative)(JSContext *cx, unsigned argc, jsval *vp);
 
 /* Callbacks and their arguments. */
 
@@ -1690,7 +1560,6 @@ namespace JS {
 JS_ALWAYS_INLINE bool
 ToNumber(JSContext *cx, const Value &v, double *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot root(cx, &v);
@@ -1779,9 +1648,8 @@ ToUint64Slow(JSContext *cx, const JS::Value &v, uint64_t *out);
 namespace JS {
 
 JS_ALWAYS_INLINE bool
-ToUint16(JSContext *cx, const js::Value &v, uint16_t *out)
+ToUint16(JSContext *cx, const JS::Value &v, uint16_t *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot skip(cx, &v);
@@ -1796,9 +1664,8 @@ ToUint16(JSContext *cx, const js::Value &v, uint16_t *out)
 }
 
 JS_ALWAYS_INLINE bool
-ToInt32(JSContext *cx, const js::Value &v, int32_t *out)
+ToInt32(JSContext *cx, const JS::Value &v, int32_t *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot root(cx, &v);
@@ -1813,9 +1680,8 @@ ToInt32(JSContext *cx, const js::Value &v, int32_t *out)
 }
 
 JS_ALWAYS_INLINE bool
-ToUint32(JSContext *cx, const js::Value &v, uint32_t *out)
+ToUint32(JSContext *cx, const JS::Value &v, uint32_t *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot root(cx, &v);
@@ -1830,9 +1696,8 @@ ToUint32(JSContext *cx, const js::Value &v, uint32_t *out)
 }
 
 JS_ALWAYS_INLINE bool
-ToInt64(JSContext *cx, const js::Value &v, int64_t *out)
+ToInt64(JSContext *cx, const JS::Value &v, int64_t *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot skip(cx, &v);
@@ -1848,9 +1713,8 @@ ToInt64(JSContext *cx, const js::Value &v, int64_t *out)
 }
 
 JS_ALWAYS_INLINE bool
-ToUint64(JSContext *cx, const js::Value &v, uint64_t *out)
+ToUint64(JSContext *cx, const JS::Value &v, uint64_t *out)
 {
-    AssertCanGC();
     AssertArgumentsAreSane(cx, v);
     {
         js::SkipRoot skip(cx, &v);
@@ -1979,7 +1843,7 @@ template <> struct RootMethods<jsid>
 {
     static jsid initial() { return JSID_VOID; }
     static ThingRootKind kind() { return THING_ROOT_ID; }
-    static bool poisoned(jsid id) { return IsPoisonedId(id); }
+    static bool poisoned(jsid id) { return JS::IsPoisonedId(id); }
 };
 
 } /* namespace js */
@@ -2099,10 +1963,8 @@ JS_StringToVersion(const char *string);
                                                    script once only; enables
                                                    compile-time scope chain
                                                    resolution of consts. */
-#define JSOPTION_ATLINE         JS_BIT(5)       /* //@line number ["filename"]
-                                                   option supported for the
-                                                   XUL preprocessor and kindred
-                                                   beasts. */
+
+/* JS_BIT(5) is currently unused. */
 
 /* JS_BIT(6) is currently unused. */
 
@@ -2147,8 +2009,9 @@ JS_StringToVersion(const char *string);
                                                    "use strict" annotations. */
 
 #define JSOPTION_ION            JS_BIT(20)      /* IonMonkey */
+#define JSOPTION_ASMJS          JS_BIT(21)      /* optimizingasm.js compiler */
 
-#define JSOPTION_MASK           JS_BITMASK(21)
+#define JSOPTION_MASK           JS_BITMASK(22)
 
 extern JS_PUBLIC_API(uint32_t)
 JS_GetOptions(JSContext *cx);
@@ -2247,7 +2110,6 @@ class JS_PUBLIC_API(JSAutoCompartment)
   public:
     JSAutoCompartment(JSContext *cx, JSRawObject target);
     JSAutoCompartment(JSContext *cx, JSScript *target);
-    JSAutoCompartment(JSContext *cx, JSString *target);
     ~JSAutoCompartment();
 };
 
@@ -2353,6 +2215,15 @@ JS_GetGlobalForCompartmentOrNull(JSContext *cx, JSCompartment *c);
 extern JS_PUBLIC_API(JSObject *)
 JS_GetGlobalForScopeChain(JSContext *cx);
 
+/*
+ * This method returns the global corresponding to the most recent scripted
+ * frame, which may not match the cx's current compartment. This is extremely
+ * dangerous, because it can bypass compartment security invariants in subtle
+ * ways. To use it safely, the caller must perform a subsequent security
+ * check. There is currently only one consumer of this function in Gecko, and
+ * it should probably stay that way. If you'd like to use it, please consult
+ * the XPConnect module owner first.
+ */
 extern JS_PUBLIC_API(JSObject *)
 JS_GetScriptedGlobal(JSContext *cx);
 
@@ -2408,65 +2279,6 @@ typedef JSBool
  */
 extern JS_PUBLIC_API(void)
 JS_EnumerateDiagnosticMemoryRegions(JSEnumerateDiagnosticMemoryCallback callback);
-
-/*
- * Macros to hide interpreter stack layout details from a JSFastNative using
- * its jsval *vp parameter. The stack layout underlying invocation can't change
- * without breaking source and binary compatibility (argv[-2] is well-known to
- * be the callee jsval, and argv[-1] is as well known to be |this|).
- *
- * Note well: However, argv[-1] may be JSVAL_NULL where with slow natives it
- * is the global object, so embeddings implementing fast natives *must* call
- * JS_THIS or JS_THIS_OBJECT and test for failure indicated by a null return,
- * which should propagate as a false return from native functions and hooks.
- *
- * To reduce boilerplace checks, JS_InstanceOf and JS_GetInstancePrivate now
- * handle a null obj parameter by returning false (throwing a TypeError if
- * given non-null argv), so most native functions that type-check their |this|
- * parameter need not add null checking.
- *
- * NB: there is an anti-dependency between JS_CALLEE and JS_SET_RVAL: native
- * methods that may inspect their callee must defer setting their return value
- * until after any such possible inspection. Otherwise the return value will be
- * inspected instead of the callee function object.
- *
- * WARNING: These are not (yet) mandatory macros, but new code outside of the
- * engine should use them. In the Mozilla 2.0 milestone their definitions may
- * change incompatibly.
- *
- * N.B. constructors must not use JS_THIS, as no 'this' object has been created.
- */
-
-#define JS_CALLEE(cx,vp)        ((vp)[0])
-#define JS_THIS(cx,vp)          JS_ComputeThis(cx, vp)
-#define JS_THIS_OBJECT(cx,vp)   (JSVAL_TO_OBJECT(JS_THIS(cx,vp)))
-#define JS_ARGV(cx,vp)          ((vp) + 2)
-#define JS_RVAL(cx,vp)          (*(vp))
-#define JS_SET_RVAL(cx,vp,v)    (*(vp) = (v))
-
-extern JS_PUBLIC_API(jsval)
-JS_ComputeThis(JSContext *cx, jsval *vp);
-
-#undef JS_THIS
-static JS_ALWAYS_INLINE jsval
-JS_THIS(JSContext *cx, jsval *vp)
-{
-    return JSVAL_IS_PRIMITIVE(vp[1]) ? JS_ComputeThis(cx, vp) : vp[1];
-}
-
-/*
- * |this| is passed to functions in ES5 without change.  Functions themselves
- * do any post-processing they desire to box |this|, compute the global object,
- * &c.  Use this macro to retrieve a function's unboxed |this| value.
- *
- * This macro must not be used in conjunction with JS_THIS or JS_THIS_OBJECT,
- * or vice versa.  Either use the provided this value with this macro, or
- * compute the boxed this value using those.
- *
- * N.B. constructors must not use JS_THIS_VALUE, as no 'this' object has been
- * created.
- */
-#define JS_THIS_VALUE(cx,vp)    ((vp)[1])
 
 extern JS_PUBLIC_API(void *)
 JS_malloc(JSContext *cx, size_t nbytes);
@@ -2596,12 +2408,6 @@ js_RemoveRoot(JSRuntime *rt, void *rp);
 extern JS_NEVER_INLINE JS_PUBLIC_API(void)
 JS_AnchorPtr(void *p);
 
-extern JS_PUBLIC_API(JSBool)
-JS_LockGCThingRT(JSRuntime *rt, void *gcthing);
-
-extern JS_PUBLIC_API(JSBool)
-JS_UnlockGCThingRT(JSRuntime *rt, void *gcthing);
-
 /*
  * Register externally maintained GC roots.
  *
@@ -2663,26 +2469,22 @@ JSVAL_TRACE_KIND(jsval v)
 typedef void
 (* JSTraceCallback)(JSTracer *trc, void **thingp, JSGCTraceKind kind);
 
+enum WeakMapTraceKind {
+    DoNotTraceWeakMaps = 0,
+    TraceWeakMapValues = 1
+};
+
 struct JSTracer {
     JSRuntime           *runtime;
     JSTraceCallback     callback;
     JSTraceNamePrinter  debugPrinter;
     const void          *debugPrintArg;
     size_t              debugPrintIndex;
-    JSBool              eagerlyTraceWeakMaps;
+    WeakMapTraceKind    eagerlyTraceWeakMaps;
 #ifdef JS_GC_ZEAL
     void                *realLocation;
 #endif
 };
-
-/*
- * The method to call on each reference to a traceable thing stored in a
- * particular JSObject or other runtime structure. With DEBUG defined the
- * caller before calling JS_CallTracer must initialize JSTracer fields
- * describing the reference using the macros below.
- */
-extern JS_PUBLIC_API(void)
-JS_CallTracer(JSTracer *trc, void *thing, JSGCTraceKind kind);
 
 /*
  * Set debugging information about a reference to a traceable thing to prepare
@@ -2748,48 +2550,23 @@ JS_CallTracer(JSTracer *trc, void *thing, JSGCTraceKind kind);
 # define JS_SET_TRACING_NAME(trc, name)                                       \
     JS_SET_TRACING_DETAILS(trc, NULL, name, (size_t)-1)
 
-/*
- * Convenience macro to invoke JS_CallTracer using C string as the name for
- * the reference to a traceable thing.
- */
-# define JS_CALL_TRACER(trc, thing, kind, name)                               \
-    JS_BEGIN_MACRO                                                            \
-        JS_SET_TRACING_NAME(trc, name);                                       \
-        JS_CallTracer((trc), (thing), (kind));                                \
-    JS_END_MACRO
+extern JS_PUBLIC_API(void)
+JS_CallValueTracer(JSTracer *trc, JS::Value value, const char *name);
 
-/*
- * Convenience macros to invoke JS_CallTracer when jsval represents a
- * reference to a traceable thing.
- */
-#define JS_CALL_VALUE_TRACER(trc, val, name)                                  \
-    JS_BEGIN_MACRO                                                            \
-        if (JSVAL_IS_TRACEABLE(val)) {                                        \
-            JS_CALL_TRACER((trc), JSVAL_TO_GCTHING(val),                      \
-                           JSVAL_TRACE_KIND(val), name);                      \
-        }                                                                     \
-    JS_END_MACRO
+extern JS_PUBLIC_API(void)
+JS_CallIdTracer(JSTracer *trc, jsid id, const char *name);
 
-#define JS_CALL_OBJECT_TRACER(trc, object, name)                              \
-    JS_BEGIN_MACRO                                                            \
-        JSObject *obj_ = (object);                                            \
-        JS_ASSERT(obj_);                                                      \
-        JS_CALL_TRACER((trc), obj_, JSTRACE_OBJECT, name);                    \
-    JS_END_MACRO
+extern JS_PUBLIC_API(void)
+JS_CallObjectTracer(JSTracer *trc, JSObject *obj, const char *name);
 
-#define JS_CALL_STRING_TRACER(trc, string, name)                              \
-    JS_BEGIN_MACRO                                                            \
-        JSString *str_ = (string);                                            \
-        JS_ASSERT(str_);                                                      \
-        JS_CALL_TRACER((trc), str_, JSTRACE_STRING, name);                    \
-    JS_END_MACRO
+extern JS_PUBLIC_API(void)
+JS_CallStringTracer(JSTracer *trc, JSString *str, const char *name);
 
-#define JS_CALL_SCRIPT_TRACER(trc, script, name)                              \
-    JS_BEGIN_MACRO                                                            \
-        JSScript *script_ = (script);                                         \
-        JS_ASSERT(script_);                                                   \
-        JS_CALL_TRACER((trc), script_, JSTRACE_SCRIPT, name);                 \
-    JS_END_MACRO
+extern JS_PUBLIC_API(void)
+JS_CallScriptTracer(JSTracer *trc, JSScript *script, const char *name);
+
+extern JS_PUBLIC_API(void)
+JS_CallGenericTracer(JSTracer *trc, void *gcthing, const char *name);
 
 /*
  * API for JSTraceCallback implementations.
@@ -2851,8 +2628,24 @@ JS_SetFinalizeCallback(JSRuntime *rt, JSFinalizeCallback cb);
 extern JS_PUBLIC_API(JSBool)
 JS_IsGCMarkingTracer(JSTracer *trc);
 
+/*
+ * JS_IsAboutToBeFinalized checks if the given object is going to be finalized
+ * at the end of the current GC. When called outside of the context of a GC,
+ * this function will return false. Typically this function is used on weak
+ * references, where the reference should be nulled out or destroyed if the
+ * given object is about to be finalized.
+ *
+ * The argument to JS_IsAboutToBeFinalized is an in-out param: when the
+ * function returns false, the object being referenced is still alive, but the
+ * garbage collector might have moved it. In this case, the reference passed
+ * to JS_IsAboutToBeFinalized will be updated to the object's new location.
+ * Callers of this method are responsible for updating any state that is
+ * dependent on the object's address. For example, if the object's address is
+ * used as a key in a hashtable, then the object must be removed and
+ * re-inserted with the correct hash.
+ */
 extern JS_PUBLIC_API(JSBool)
-JS_IsAboutToBeFinalized(void *thing);
+JS_IsAboutToBeFinalized(JSObject **obj);
 
 typedef enum JSGCParamKey {
     /* Maximum nominal heap before last ditch GC. */
@@ -2920,9 +2713,6 @@ typedef enum JSGCParamKey {
 
     /* Lower limit after which we limit the heap growth. */
     JSGC_ALLOCATION_THRESHOLD = 20,
-
-    /* Enable the generational GC. */
-    JSGC_ENABLE_GENERATIONAL = 21
 } JSGCParamKey;
 
 typedef enum JSGCMode {
@@ -3052,6 +2842,8 @@ struct JSClass {
 /* Reserved for embeddings. */
 #define JSCLASS_USERBIT2                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+6))
 #define JSCLASS_USERBIT3                (1<<(JSCLASS_HIGH_FLAGS_SHIFT+7))
+
+#define JSCLASS_BACKGROUND_FINALIZE     (1<<(JSCLASS_HIGH_FLAGS_SHIFT+8))
 
 /*
  * Bits 26 through 31 are reserved for the CACHED_PROTO_KEY mechanism, see
@@ -3327,8 +3119,28 @@ JS_GetConstructor(JSContext *cx, JSObject *proto);
 extern JS_PUBLIC_API(JSBool)
 JS_GetObjectId(JSContext *cx, JSRawObject obj, jsid *idp);
 
+namespace JS {
+
+enum {
+    FreshZone,
+    SystemZone,
+    SpecificZones
+};
+
+typedef uintptr_t ZoneSpecifier;
+
+inline ZoneSpecifier
+SameZoneAs(JSObject *obj)
+{
+    JS_ASSERT(uintptr_t(obj) > SpecificZones);
+    return ZoneSpecifier(obj);
+}
+
+} /* namespace JS */
+
 extern JS_PUBLIC_API(JSObject *)
-JS_NewGlobalObject(JSContext *cx, JSClass *clasp, JSPrincipals *principals);
+JS_NewGlobalObject(JSContext *cx, JSClass *clasp, JSPrincipals *principals,
+                   JS::ZoneSpecifier zoneSpec = JS::FreshZone);
 
 extern JS_PUBLIC_API(JSObject *)
 JS_NewObject(JSContext *cx, JSClass *clasp, JSObject *proto, JSObject *parent);
@@ -4444,6 +4256,12 @@ JS_PUBLIC_API(char *)
 JS_EncodeString(JSContext *cx, JSRawString str);
 
 /*
+ * Same behavior as JS_EncodeString(), but encode into UTF-8 string
+ */
+JS_PUBLIC_API(char *)
+JS_EncodeStringToUTF8(JSContext *cx, JSRawString str);
+
+/*
  * Get number of bytes in the string encoding (without accounting for a
  * terminating zero bytes. The function returns (size_t) -1 if the string
  * can not be encoded into bytes and reports an error using cx accordingly.
@@ -4489,10 +4307,17 @@ class JSAutoByteString
         mBytes = bytes;
     }
 
-    char *encode(JSContext *cx, JSString *str) {
+    char *encodeLatin1(JSContext *cx, JSString *str) {
         JS_ASSERT(!mBytes);
         JS_ASSERT(cx);
         mBytes = JS_EncodeString(cx, str);
+        return mBytes;
+    }
+
+    char *encodeUtf8(JSContext *cx, JSString *str) {
+        JS_ASSERT(!mBytes);
+        JS_ASSERT(cx);
+        mBytes = JS_EncodeStringToUTF8(cx, str);
         return mBytes;
     }
 
@@ -4507,6 +4332,12 @@ class JSAutoByteString
 
     bool operator!() const {
         return !mBytes;
+    }
+
+    size_t length() const {
+        if (!mBytes)
+            return 0;
+        return strlen(mBytes);
     }
 
   private:
@@ -4693,7 +4524,7 @@ JS_ResetDefaultLocale(JSRuntime *rt);
 struct JSLocaleCallbacks {
     JSLocaleToUpperCase     localeToUpperCase;
     JSLocaleToLowerCase     localeToLowerCase;
-    JSLocaleCompare         localeCompare;
+    JSLocaleCompare         localeCompare; // not used #if ENABLE_INTL_API
     JSLocaleToUnicode       localeToUnicode;
     JSErrorCallback         localeGetErrorMessage;
 };
@@ -5103,5 +4934,91 @@ JS_DecodeScript(JSContext *cx, const void *data, uint32_t length,
 extern JS_PUBLIC_API(JSObject *)
 JS_DecodeInterpretedFunction(JSContext *cx, const void *data, uint32_t length,
                              JSPrincipals *principals, JSPrincipals *originPrincipals);
+
+namespace JS {
+
+extern JS_PUBLIC_DATA(const HandleId) JSID_VOIDHANDLE;
+extern JS_PUBLIC_DATA(const HandleId) JSID_EMPTYHANDLE;
+
+};
+
+namespace js {
+
+/*
+ * Import some JS:: names into the js namespace so we can make unqualified
+ * references to them.
+ */
+
+using JS::Value;
+using JS::IsPoisonedValue;
+using JS::NullValue;
+using JS::UndefinedValue;
+using JS::Int32Value;
+using JS::DoubleValue;
+using JS::StringValue;
+using JS::BooleanValue;
+using JS::ObjectValue;
+using JS::MagicValue;
+using JS::NumberValue;
+using JS::ObjectOrNullValue;
+using JS::PrivateValue;
+using JS::PrivateUint32Value;
+
+using JS::IsPoisonedPtr;
+using JS::IsPoisonedId;
+
+using JS::StableCharPtr;
+using JS::TwoByteChars;
+using JS::Latin1CharsZ;
+
+using JS::AutoIdVector;
+using JS::AutoValueVector;
+using JS::AutoScriptVector;
+using JS::AutoIdArray;
+
+using JS::AutoGCRooter;
+using JS::AutoValueRooter;
+using JS::AutoObjectRooter;
+using JS::AutoArrayRooter;
+using JS::AutoVectorRooter;
+using JS::AutoHashMapRooter;
+using JS::AutoHashSetRooter;
+
+using JS::CallArgs;
+using JS::IsAcceptableThis;
+using JS::NativeImpl;
+using JS::CallReceiver;
+using JS::CompileOptions;
+using JS::CallNonGenericMethod;
+
+using JS::Rooted;
+using JS::RootedObject;
+using JS::RootedModule;
+using JS::RootedFunction;
+using JS::RootedScript;
+using JS::RootedString;
+using JS::RootedId;
+using JS::RootedValue;
+
+using JS::Handle;
+using JS::HandleObject;
+using JS::HandleModule;
+using JS::HandleFunction;
+using JS::HandleScript;
+using JS::HandleString;
+using JS::HandleId;
+using JS::HandleValue;
+
+using JS::MutableHandle;
+using JS::MutableHandleObject;
+using JS::MutableHandleFunction;
+using JS::MutableHandleScript;
+using JS::MutableHandleString;
+using JS::MutableHandleId;
+using JS::MutableHandleValue;
+
+using JS::Zone;
+
+}  /* namespace js */
 
 #endif /* jsapi_h___ */

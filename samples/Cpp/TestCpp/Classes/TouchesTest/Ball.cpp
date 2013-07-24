@@ -15,7 +15,7 @@ float Ball::radius()
     return getTexture()->getContentSize().width / 2;
 }
 
-Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
+Ball* Ball::ballWithTexture(Texture2D* aTexture)
 {
     Ball* pBall = new Ball();
     pBall->initWithTexture(aTexture);
@@ -26,23 +26,23 @@ Ball* Ball::ballWithTexture(CCTexture2D* aTexture)
 
 void Ball::move(float delta)
 {
-    this->setPosition( ccpAdd(getPosition(), ccpMult(m_velocity, delta)) );
+    this->setPosition(getPosition() + _velocity * delta);
     
     if (getPosition().x > VisibleRect::right().x - radius()) 
     {
-        setPosition( ccp( VisibleRect::right().x - radius(), getPosition().y) );
-        m_velocity.x *= -1;
+        setPosition( Point( VisibleRect::right().x - radius(), getPosition().y) );
+        _velocity.x *= -1;
     } 
     else if (getPosition().x < VisibleRect::left().x + radius()) 
     {
-        setPosition( ccp(VisibleRect::left().x + radius(), getPosition().y) );
-        m_velocity.x *= -1;
+        setPosition( Point(VisibleRect::left().x + radius(), getPosition().y) );
+        _velocity.x *= -1;
     }
 }
 
 void Ball::collideWithPaddle(Paddle* paddle)
 {
-    CCRect paddleRect = paddle->rect();
+    Rect paddleRect = paddle->getRect();
     paddleRect.origin.x += paddle->getPosition().x;
     paddleRect.origin.y += paddle->getPosition().y;
     
@@ -60,25 +60,25 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (getPosition().y > midY && getPosition().y <= highY + radius()) 
         {
-            setPosition( ccp(getPosition().x, highY + radius()) );
+            setPosition( Point(getPosition().x, highY + radius()) );
             hit = true;
             angleOffset = (float)M_PI / 2;
         }
         else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
         {
-            setPosition( ccp(getPosition().x, lowY - radius()) );
+            setPosition( Point(getPosition().x, lowY - radius()) );
             hit = true;
             angleOffset = -(float)M_PI / 2;
         }
         
         if (hit) 
         {
-            float hitAngle = ccpToAngle(ccpSub(paddle->getPosition(), getPosition())) + angleOffset;
+            float hitAngle = (paddle->getPosition() - getPosition()).getAngle() + angleOffset;
             
-            float scalarVelocity = ccpLength(m_velocity) * 1.05f;
-            float velocityAngle = -ccpToAngle(m_velocity) + 0.5f * hitAngle;
+            float scalarVelocity = _velocity.getLength() * 1.05f;
+            float velocityAngle = -_velocity.getAngle() + 0.5f * hitAngle;
             
-            m_velocity = ccpMult(ccpForAngle(velocityAngle), scalarVelocity);
+            _velocity = Point::forAngle(velocityAngle) * scalarVelocity;
         }
     }    
 } 

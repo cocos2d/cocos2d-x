@@ -12,36 +12,6 @@
 
 	<key>Definitions</key>
 	<dict>
-		<key>libs/javascript/spidermonkey-ios/include/ds/BitArray.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>ds</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/ds/BitArray.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/javascript/spidermonkey-ios/include/gc/Root.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>javascript</string>
-				<string>spidermonkey-ios</string>
-				<string>include</string>
-				<string>gc</string>
-			</array>
-			<key>Path</key>
-			<string>libs/javascript/spidermonkey-ios/include/gc/Root.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/javascript/spidermonkey-ios/include/js/Anchor.h</key>
 		<dict>
 			<key>Group</key>
@@ -54,6 +24,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/js/Anchor.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/js/CallArgs.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/js/CallArgs.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -174,6 +159,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/javascript/spidermonkey-ios/include/js/RequiredDefines.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/javascript/spidermonkey-ios/include/js/RootingAPI.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>javascript</string>
+				<string>spidermonkey-ios</string>
+				<string>include</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/javascript/spidermonkey-ios/include/js/RootingAPI.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1023,9 +1023,8 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
-		<string>libs/javascript/spidermonkey-ios/include/ds/BitArray.h</string>
-		<string>libs/javascript/spidermonkey-ios/include/gc/Root.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/Anchor.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/js/CallArgs.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/CharacterEncoding.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/GCAPI.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/HashTable.h</string>
@@ -1034,6 +1033,7 @@
 		<string>libs/javascript/spidermonkey-ios/include/js/MemoryMetrics.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/PropertyKey.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/RequiredDefines.h</string>
+		<string>libs/javascript/spidermonkey-ios/include/js/RootingAPI.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/TemplateLib.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/Utility.h</string>
 		<string>libs/javascript/spidermonkey-ios/include/js/Value.h</string>

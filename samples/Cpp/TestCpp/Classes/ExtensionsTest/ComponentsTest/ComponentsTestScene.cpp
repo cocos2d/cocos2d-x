@@ -16,13 +16,13 @@ ComponentsTestLayer::ComponentsTestLayer()
 {
 }
 
-CCScene* ComponentsTestLayer::scene()
+Scene* ComponentsTestLayer::scene()
 {
-	CCScene * scene = NULL;
+	Scene * scene = NULL;
 	do 
 	{
 		// 'scene' is an autorelease object
-		scene = CCScene::create();
+		scene = Scene::create();
 		CC_BREAK_IF(! scene);
 
 		// 'layer' is an autorelease object
@@ -43,17 +43,17 @@ bool ComponentsTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(255,255,255,255) ) );
+        CC_BREAK_IF(! LayerColor::initWithColor( Color4B(255,255,255,255) ) );
         
-        CCNode *root = createGameScene();
+        Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
 
-        root->getChildByTag(1)->addComponent(CCComAudio::create());
+        root->getChildByTag(1)->addComponent(ComAudio::create());
         root->getChildByTag(1)->addComponent(PlayerController::create());  
         
-        root->addComponent(CCComAudio::create());
-        root->addComponent(CCComAttribute::create());
+        root->addComponent(ComAudio::create());
+        root->addComponent(ComAttribute::create());
         root->addComponent(SceneController::create());
 
 		bRet = true;
@@ -62,29 +62,34 @@ bool ComponentsTestLayer::init()
 	return bRet;
 }
 
-cocos2d::CCNode* ComponentsTestLayer::createGameScene()
+cocos2d::Node* ComponentsTestLayer::createGameScene()
 {
-    CCNode *root = NULL;
+    Node *root = NULL;
     do 
 	{
-        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-        CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Point origin = Director::getInstance()->getVisibleOrigin();
 
        
-        CCSprite *player = CCSprite::create("components/Player.png", CCRectMake(0, 0, 27, 40) );
+        Sprite *player = Sprite::create("components/Player.png", Rect(0, 0, 27, 40) );
         
-        player->setPosition( ccp(origin.x + player->getContentSize().width/2,
+        player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
         
-        root = cocos2d::CCNode::create();
+        root = cocos2d::Node::create();
         root->addChild(player, 1, 1);
         
 
-        CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(ComponentsTestLayer::toExtensionsMainLayer));
-        itemBack->setColor(ccc3(0, 0, 0));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        CCMenu *menuBack = CCMenu::create(itemBack, NULL);
-        menuBack->setPosition(CCPointZero);
+        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
+        	ExtensionsTestScene *scene = new ExtensionsTestScene();
+            scene->runThisTest();
+            scene->release();
+        });
+        
+        itemBack->setColor(Color3B(0, 0, 0));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        Menu *menuBack = Menu::create(itemBack, NULL);
+        menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
     }while (0);
@@ -92,16 +97,8 @@ cocos2d::CCNode* ComponentsTestLayer::createGameScene()
     return root;
 }
 
-void ComponentsTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
-{
-	ExtensionsTestScene *pScene = new ExtensionsTestScene();
-	pScene->runThisTest();
-	pScene->release();
-}
-
-
 void runComponentsTestLayerTest()
 {
-    CCScene *pScene = ComponentsTestLayer::scene();
-    CCDirector::sharedDirector()->replaceScene(pScene);
+    Scene *scene = ComponentsTestLayer::scene();
+    Director::getInstance()->replaceScene(scene);
 }

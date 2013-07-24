@@ -263,9 +263,9 @@ bool PluginUtilsIOS::callOCBoolFunctionWithName(PluginProtocol* pPlugin, const c
     return ret;
 }
 
-const char* PluginUtilsIOS::callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
+std::string PluginUtilsIOS::callOCStringFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
-    const char* ret = "";
+    std::string ret = "";
     NSString* pRet = (NSString*)callRetFunctionWithParam(pPlugin, funcName, param);
     if (nil != pRet) {
         ret = [pRet UTF8String];
@@ -274,9 +274,9 @@ const char* PluginUtilsIOS::callOCStringFunctionWithName_oneParam(PluginProtocol
     return ret;
 }
     
-const char* PluginUtilsIOS::callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
+std::string PluginUtilsIOS::callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
 {
-    const char* ret = "";
+    std::string ret = "";
     NSString* pRet = (NSString*)callRetFunction(pPlugin, funcName);
     if (nil != pRet) {
         ret = [pRet UTF8String];

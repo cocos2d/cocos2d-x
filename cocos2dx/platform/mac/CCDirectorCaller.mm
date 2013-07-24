@@ -59,7 +59,7 @@ static id s_sharedDirectorCaller;
 -(void) dealloc
 {
     s_sharedDirectorCaller = nil;
-    CCLOG("cocos2d: deallocing CCDirectorCaller %p", self);
+    CCLOG("cocos2d: deallocing DirectorCaller %p", self);
 	if (displayLink) {
 		CVDisplayLinkRelease(displayLink);
 	}
@@ -79,8 +79,8 @@ static id s_sharedDirectorCaller;
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	cocos2d::CCDirector::sharedDirector()->drawScene();
-	cocos2d::CCPoolManager::sharedPoolManager()->pop();
+	cocos2d::Director::getInstance()->drawScene();
+	cocos2d::PoolManager::sharedPoolManager()->pop();
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
@@ -98,10 +98,10 @@ static id s_sharedDirectorCaller;
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    //    CVReturn result = [(CCDirectorCaller*)displayLinkContext getFrameForTime:outputTime];
+    //    CVReturn result = [(DirectorCaller*)displayLinkContext getFrameForTime:outputTime];
     //    return result;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	cocos2d::CCDirector::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
 	[pool release];
     
 	return kCVReturnSuccess;
@@ -115,11 +115,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
 	// get the opengl view
-	EAGLView *openGLView = [EAGLView sharedEGLView];
+	CCEAGLView *openGLView = [CCEAGLView sharedEGLView];
 	[openGLView lockOpenGLContext];
     
 	// run the main cocos2d loop
-	cocos2d::CCDirector::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
     
 	// flush buffer (this line is very important!)
 	[[openGLView openGLContext] flushBuffer];
@@ -134,7 +134,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 -(void) startMainLoop
 {
-    // CCDirector::setAnimationInterval() is called, we should invalide it first
+    // Director::setAnimationInterval() is called, we should invalide it first
     //        [displayLink invalidate];
     //        displayLink = nil;
     //
@@ -162,7 +162,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     
     /*
      // CVDisplayLink
-     //cocos2d::CCDirector::sharedDirector()->gettimeofday();
+     //cocos2d::Director::getInstance()->gettimeofday();
      
      // Create a display link capable of being used with all active displays
      CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
@@ -171,7 +171,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
      CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
      
      // Set the display link for the current renderer
-     EAGLView *openGLView_ = (EAGLView*)[EAGLView sharedEGLView];
+     CCEAGLView *openGLView_ = (CCEAGLView*)[CCEAGLView sharedEGLView];
      CGLContextObj cglContext = (CGLContextObj)[[openGLView_ openGLContext] CGLContextObj];
      CGLPixelFormatObj cglPixelFormat = (CGLPixelFormatObj)[[openGLView_ pixelFormat] CGLPixelFormatObj];
      CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
@@ -207,7 +207,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 -(void) doCaller: (id) sender
 {
-	cocos2d::CCDirector::sharedDirector()->mainLoop();
+	cocos2d::Director::getInstance()->mainLoop();
 }
 
 @end

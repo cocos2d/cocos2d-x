@@ -30,12 +30,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCComponent : public CCObject
+class CC_DLL Component : public Object
 {
 protected:
-    CCComponent(void);
+    Component(void);
 public:
-    virtual ~CCComponent(void);
+    virtual ~Component(void);
     virtual bool init();
     virtual void onEnter();
     virtual void onExit();
@@ -43,17 +43,17 @@ public:
     virtual void serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
-    static CCComponent* create(void);
+    static Component* create(void);
     
     const char* getName() const;
     
-    void setOwner(CCNode *pOwner);
-    CCNode* getOwner() const;
+    void setOwner(Node *pOwner);
+    Node* getOwner() const;
     
 protected:
-    CCNode *m_pOwner;
-    std::string m_strName;
-    bool m_bEnabled;
+    Node *_owner;
+    std::string _name;
+    bool _enabled;
 };
 
 NS_CC_END

@@ -87,27 +87,27 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/Box2D/Box2D.h</name>
+			<name>src/Box2D.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Box2D.h</locationURI>
 		</link>
 		<link>
-			<name>src/Box2D/Collision</name>
+			<name>src/Collision</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Collision</locationURI>
 		</link>
 		<link>
-			<name>src/Box2D/Common</name>
+			<name>src/Common</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Common</locationURI>
 		</link>
 		<link>
-			<name>src/Box2D/Dynamics</name>
+			<name>src/Dynamics</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Dynamics</locationURI>
 		</link>
 		<link>
-			<name>src/Box2D/Rope</name>
+			<name>src/Rope</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Rope</locationURI>
 		</link>

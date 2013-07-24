@@ -5,7 +5,7 @@
 #include "cocos-ext.h"
 
 
-class SceneController : public cocos2d::extension::CCComController
+class SceneController : public cocos2d::extension::ComController
 {
 protected:
     SceneController(void);
@@ -20,9 +20,9 @@ public:
    static SceneController* create(void);
    
 public:
-   cocos2d::CCArray* getTargets() {return _targets;};
-   cocos2d::CCArray* getProjectiles() {return _projectiles;};
-   void spriteMoveFinished(cocos2d::CCNode* sender);
+   cocos2d::Array* getTargets() {return _targets;};
+   cocos2d::Array* getProjectiles() {return _projectiles;};
+   void spriteMoveFinished(cocos2d::Node* sender);
    void increaseKillCount();
    
    void addTarget();
@@ -31,8 +31,8 @@ public:
    
    
 protected:
-    cocos2d::CCArray *_targets;
-	cocos2d::CCArray *_projectiles;
+    cocos2d::Array *_targets;
+	cocos2d::Array *_projectiles;
 };
 
 

@@ -119,7 +119,9 @@
                         android:layout_weight="1"
                         android:hint="@string/nd3_account_login_hint_account"
                         android:singleLine="true" 
-                        android:inputType="textEmailAddress">
+                        android:nextFocusDown="@+id/nd3_account_login_password"
+                        android:inputType="textEmailAddress"
+                        android:imeOptions="actionNext">
                     </AutoCompleteTextView>
 
                     <ImageView
@@ -164,7 +166,8 @@
                         android:layout_weight="1"
                         android:hint="@string/nd3_account_login_hint_password"
                         android:inputType="textPassword"
-                        android:singleLine="true" >
+                        android:singleLine="true" 
+                        android:imeOptions="actionDone">
                     </EditText>
                 </LinearLayout>
             </LinearLayout>

@@ -122,7 +122,16 @@ if [ -f $BUILD_NATIVE_SCRIPT ]; then
     #invoke ndk build for plugin project
     ./build_native.sh
     LIB_FILE="$(getLibraryFileName)"
-    cp -rf "${ANDROID_PROJ_DIR}/obj/local/armeabi/${LIB_FILE}" "${TARGET_DIR}/android"
+    for File in ${ANDROID_PROJ_DIR}/obj/local/*
+    do
+        if [ -d $File ]; then
+            if [ -f "${File}"/${LIB_FILE} ]; then
+                ABI_NAME=`basename "${File}"`
+                mkdir -p "${TARGET_DIR}/android/lib/${ABI_NAME}"
+                cp -rf "${File}/${LIB_FILE}" "${TARGET_DIR}/android/lib/${ABI_NAME}"
+            fi
+        fi
+    done
 
     #generate mk file for prebuild
     ${PLUGIN_ROOT}/tools/toolsForPublish/genPrebuildMK.sh ${ANDROID_PROJ_DIR}/jni/Android.mk ${TARGET_DIR}/android/Android.mk

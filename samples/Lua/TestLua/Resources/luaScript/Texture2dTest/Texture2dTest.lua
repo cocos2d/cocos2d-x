@@ -8,7 +8,7 @@ local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
     Helper.titleLabel:setTag(kTagLabel)
     CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
-    local col = CCLayerColor:create(ccc4(128,128,128,255))
+    local col = CCLayerColor:create(Color4B(128,128,128,255))
     ret:addChild(col, -10)
     CCTextureCache:sharedTextureCache():dumpCachedTextureInfo()
     return ret
@@ -115,8 +115,7 @@ local function TextureMipMap()
     local  scale1 = CCEaseOut:create(CCScaleBy:create(4, 0.01), 3)
     local  sc_back = scale1:reverse()
 
-    local  scale2 = tolua.cast(scale1:copy(), "CCEaseOut")
-    scale2:autorelease()
+    local  scale2 = tolua.cast(scale1:clone(), "CCEaseOut")
     local  sc_back2 = scale2:reverse()
 
     local arr = CCArray:create()
@@ -167,8 +166,7 @@ local function TexturePVRMipMap()
         local  scale1 = CCEaseOut:create(CCScaleBy:create(4, 0.01), 3)
         local  sc_back = scale1:reverse()
 
-        local  scale2 = tolua.cast(scale1:copy(), "CCEaseOut")
-        scale2:autorelease()
+        local  scale2 = tolua.cast(scale1:clone(), "CCEaseOut")
         local  sc_back2 = scale2:reverse()
 
         local arr = CCArray:create()
@@ -216,8 +214,7 @@ local function TexturePVRMipMap2()
     local  scale1 = CCEaseOut:create(CCScaleBy:create(4, 0.01), 3)
     local  sc_back = scale1:reverse()
 
-    local  scale2 = tolua.cast(scale1:copy(), "CCEaseOut")
-    scale2:autorelease()
+    local  scale2 = tolua.cast(scale1:clone(), "CCEaseOut")
     local  sc_back2 = scale2:reverse()
     local arr = CCArray:create()
     arr:addObject(scale1)
@@ -850,8 +847,7 @@ local function TextureAlias()
     arr:addObject(sc)
     arr:addObject(sc_back)
     local  scaleforever = CCRepeatForever:create(CCSequence:create(arr))
-    local  scaleToo = tolua.cast(scaleforever:copy(), "CCRepeatForever")
-    scaleToo:autorelease()
+    local  scaleToo = tolua.cast(scaleforever:clone(), "CCRepeatForever")
 
     sprite2:runAction(scaleforever)
     sprite:runAction(scaleToo)
@@ -876,11 +872,11 @@ local function TexturePixelFormat()
     -- 4- 16-bit RGB565
 
     local label = tolua.cast(ret:getChildByTag(kTagLabel), "CCLabelTTF")
-    label:setColor(ccc3(16,16,255))
+    label:setColor(Color3B(16,16,255))
 
     local s = CCDirector:sharedDirector():getWinSize()
 
-    local background = CCLayerColor:create(ccc4(128,128,128,255), s.width, s.height)
+    local background = CCLayerColor:create(Color4B(128,128,128,255), s.width, s.height)
     ret:addChild(background, -1)
 
     -- RGBA 8888 image (32-bit)
@@ -945,14 +941,10 @@ local function TexturePixelFormat()
     arr:addObject(fadein)
     local  seq = CCSequence:create(arr)
     local  seq_4ever = CCRepeatForever:create(seq)
-    local  seq_4ever2 = tolua.cast(seq_4ever:copy(), "CCRepeatForever")
-    seq_4ever2:autorelease()
-    local  seq_4ever3 = tolua.cast(seq_4ever:copy(), "CCRepeatForever")
-    seq_4ever3:autorelease()
-    local  seq_4ever4 = tolua.cast(seq_4ever:copy(), "CCRepeatForever")
-    seq_4ever4:autorelease()
-    local  seq_4ever5 = tolua.cast(seq_4ever:copy(), "CCRepeatForever")
-    seq_4ever5:autorelease()
+    local  seq_4ever2 = tolua.cast(seq_4ever:clone(), "CCRepeatForever")
+    local  seq_4ever3 = tolua.cast(seq_4ever:clone(), "CCRepeatForever")
+    local  seq_4ever4 = tolua.cast(seq_4ever:clone(), "CCRepeatForever")
+    local  seq_4ever5 = tolua.cast(seq_4ever:clone(), "CCRepeatForever")
 
     sprite1:runAction(seq_4ever)
     sprite2:runAction(seq_4ever2)
@@ -981,7 +973,7 @@ local function TextureBlend()
         local cloud = CCSprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 100+i)
         cloud:setPosition(ccp(50+25*i, 80))
-        local blendFunc1 =  ccBlendFunc()
+        local blendFunc1 =  BlendFunc()
         blendFunc1.src = GL_ONE
         blendFunc1.dst = GL_ONE_MINUS_SRC_ALPHA
         cloud:setBlendFunc(blendFunc1)
@@ -991,7 +983,7 @@ local function TextureBlend()
         cloud = CCSprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(ccp(50+25*i, 160))
-        local blendFunc2 =  ccBlendFunc()
+        local blendFunc2 =  BlendFunc()
         blendFunc2.src = GL_ONE_MINUS_DST_COLOR
         blendFunc2.dst = GL_ZERO
         cloud:setBlendFunc(blendFunc2)
@@ -1001,7 +993,7 @@ local function TextureBlend()
         cloud = CCSprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(ccp(50+25*i, 320-80))
-        local blendFunc3 =  ccBlendFunc()
+        local blendFunc3 =  BlendFunc()
         blendFunc3.src = GL_SRC_ALPHA
         blendFunc3.dst = GL_ONE
         cloud:setBlendFunc(blendFunc3)  -- additive blending
@@ -1038,7 +1030,7 @@ local function TextureAsync()
         local  tex = tolua.cast(pObj, "CCTexture2D")
         local director = CCDirector:sharedDirector()
 
-        --CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
+        --CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
 
         -- IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
@@ -1264,7 +1256,7 @@ end
 -- TextureDrawAtPoint
 local function TextureDrawAtPoint()
     local m_pTex1 = nil
-    local m_pTex2 = nil
+    local m_pTex2F = nil
     local ret = createTestLayer("CCTexture2D: drawAtPoint",
                                 "draws 2 textures using drawAtPoint")
 
@@ -1274,18 +1266,18 @@ local function TextureDrawAtPoint()
         local s = CCDirector:sharedDirector():getWinSize()
 
         m_pTex1:drawAtPoint(ccp(s.width/2-50, s.height/2 - 50))
-        m_pTex2:drawAtPoint(ccp(s.width/2+50, s.height/2 - 50))
+        m_pTex2F:drawAtPoint(ccp(s.width/2+50, s.height/2 - 50))
     end
 
     m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
-    m_pTex2 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
+    m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
-    m_pTex2:retain()
+    m_pTex2F:retain()
     local function onNodeEvent(event)
         if event == "exit" then
             m_pTex1:release()
-            m_pTex2:release()
+            m_pTex2F:release()
         end
     end
 
@@ -1308,18 +1300,18 @@ local function TextureDrawInRect()
         local rect2 = CCRectMake( s.width/2 + 80, s.height/2, m_pTex1:getContentSize().width * 2, m_pTex1:getContentSize().height * 0.5 )
 
         m_pTex1:drawInRect(rect1)
-        m_pTex2:drawInRect(rect2)
+        m_pTex2F:drawInRect(rect2)
     end
 
     local m_pTex1 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister1.png")
-    local m_pTex2 = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
+    local m_pTex2F = CCTextureCache:sharedTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
-    m_pTex2:retain()
+    m_pTex2F:retain()
     local function onNodeEvent(event)
         if event == "exit" then
             m_pTex1:release()
-            m_pTex2:release()
+            m_pTex2F:release()
         end
     end
 
@@ -1441,7 +1433,7 @@ local function TexturePVRv3Premult()
 
     local size = CCDirector:sharedDirector():getWinSize()
 
-    local background = CCLayerColor:create(ccc4(128,128,128,255), size.width, size.height)
+    local background = CCLayerColor:create(Color4B(128,128,128,255), size.width, size.height)
     ret:addChild(background, -1)
 
 

@@ -1,5 +1,5 @@
 /*
- * CCControlColourPickerTest.h
+ * ControlColourPickerTest.h
  *
  * Copyright (c) 2012 Yannick Loriot
  *
@@ -28,17 +28,17 @@
 
 USING_NS_CC_EXT;
 
-class CCControlColourPickerTest : public CCControlScene
+class ControlColourPickerTest : public ControlScene
 {
 public:
-    CCControlColourPickerTest();
-    virtual ~CCControlColourPickerTest();
+    ControlColourPickerTest();
+    virtual ~ControlColourPickerTest();
     bool init();
     /** Callback for the change value. */
-    void colourValueChanged(CCObject *sender, CCControlEvent controlEvent);
+    void colourValueChanged(Object *sender, ControlEvent controlEvent);
 
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pColorLabel, ColorLabel)
+    CC_SYNTHESIZE_RETAIN(LabelTTF*, _colorLabel, ColorLabel)
 
-    CONTROL_SCENE_CREATE_FUNC(CCControlColourPickerTest)
+    CONTROL_SCENE_CREATE_FUNC(ControlColourPickerTest)
 };
 

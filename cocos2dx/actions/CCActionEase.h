@@ -30,8 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCObject;
-class CCZone;
+class Object;
 
 /**
  * @addtogroup actions
@@ -42,207 +41,199 @@ class CCZone;
  @brief Base class for Easing actions
  @ingroup Actions
  */
-class CC_DLL CCActionEase : public CCActionInterval
+class CC_DLL ActionEase : public ActionInterval
 {
 public:
-    virtual ~CCActionEase(void);
+    virtual ~ActionEase(void);
 
     /** initializes the action */
-    bool initWithAction(CCActionInterval *pAction);
+    bool initWithAction(ActionInterval *pAction);
 
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual void startWithTarget(CCNode *pTarget);
-    virtual void stop(void);
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCActionInterval* getInnerAction();
+    virtual ActionInterval* getInnerAction();
 
-public:
-
-    /** creates the action */
-    static CCActionEase* create(CCActionInterval *pAction);
+    //
+    // Overrides
+    //
+	virtual ActionEase* clone() const override = 0;
+    virtual ActionEase* reverse() const override = 0;
+    virtual void startWithTarget(Node *target) override;
+    virtual void stop(void) override;
+    virtual void update(float time) override;
 
 protected:
     /** The inner action */
-    CCActionInterval *m_pInner;
+    ActionInterval *_inner;
 };
 
 /** 
  @brief Base class for Easing actions with rate parameters
  @ingroup Actions
  */
-class CC_DLL CCEaseRateAction : public CCActionEase
+class CC_DLL EaseRateAction : public ActionEase
 {
 public:
-    virtual ~CCEaseRateAction(void);
-
-    /** set rate value for the actions */
-    inline void setRate(float rate) { m_fRate = rate; }
-    /** get rate value for the actions */
-    inline float getRate(void) { return m_fRate; }
+    virtual ~EaseRateAction(void);
 
     /** Initializes the action with the inner action and the rate parameter */
-    bool initWithAction(CCActionInterval *pAction, float fRate);
+    bool initWithAction(ActionInterval *pAction, float fRate);
 
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse(void);
+    /** set rate value for the actions */
+    inline void setRate(float rate) { _rate = rate; }
+    /** get rate value for the actions */
+    inline float getRate(void) const { return _rate; }
 
-public:
-
-    /** Creates the action with the inner action and the rate parameter */
-    static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
+    //
+    // Overrides
+    //
+	virtual EaseRateAction* clone() const override = 0;
+    virtual EaseRateAction* reverse() const override = 0;
 
 protected:
-    float m_fRate;
+    float _rate;
 };
 
 /** 
- @brief CCEaseIn action with a rate
+ @brief EaseIn action with a rate
  @ingroup Actions
  */
-class CC_DLL CCEaseIn : public CCEaseRateAction
+class CC_DLL EaseIn : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-public:
-
     /** Creates the action with the inner action and the rate parameter */
-    static CCEaseIn* create(CCActionInterval* pAction, float fRate);
+    static EaseIn* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseIn* clone() const override;
+	virtual EaseIn* reverse() const override;
 };
 
 /** 
- @brief CCEaseOut action with a rate
+ @brief EaseOut action with a rate
  @ingroup Actions
  */
-class CC_DLL CCEaseOut : public CCEaseRateAction
+class CC_DLL EaseOut : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse();
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** Creates the action with the inner action and the rate parameter */
-    static CCEaseOut* create(CCActionInterval* pAction, float fRate);
+    static EaseOut* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseOut* clone() const  override;
+	virtual EaseOut* reverse() const  override;
 };
 
 /** 
- @brief CCEaseInOut action with a rate
+ @brief EaseInOut action with a rate
  @ingroup Actions
  */
-class CC_DLL CCEaseInOut : public CCEaseRateAction
+class CC_DLL EaseInOut : public EaseRateAction
 {
 public:
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse(void);
-
-public:
-
     /** Creates the action with the inner action and the rate parameter */
-    static CCEaseInOut* create(CCActionInterval* pAction, float fRate);
+    static EaseInOut* create(ActionInterval* pAction, float fRate);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseInOut* clone() const  override;
+	virtual EaseInOut* reverse() const  override;
 };
 
 /** 
- @brief CCEase Exponential In
+ @brief Ease Exponential In
  @ingroup Actions
  */
-class CC_DLL CCEaseExponentialIn : public CCActionEase
+class CC_DLL EaseExponentialIn : public ActionEase
 {
-public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
 public:
     /** creates the action */
-    static CCEaseExponentialIn* create(CCActionInterval* pAction);
+    static EaseExponentialIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
  @brief Ease Exponential Out
  @ingroup Actions
  */
-class CC_DLL CCEaseExponentialOut : public CCActionEase
+class CC_DLL EaseExponentialOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
     /** creates the action */
-    static CCEaseExponentialOut* create(CCActionInterval* pAction);
+    static EaseExponentialOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
  @brief Ease Exponential InOut
  @ingroup Actions
  */
-class CC_DLL CCEaseExponentialInOut : public CCActionEase
+class CC_DLL EaseExponentialInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
-
-public:
-
     /** creates the action */
-    static CCEaseExponentialInOut* create(CCActionInterval* pAction);
+    static EaseExponentialInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseExponentialInOut* clone() const override;
+	virtual EaseExponentialInOut* reverse() const override;
 };
 
 /** 
  @brief Ease Sine In
  @ingroup Actions
  */
-class CC_DLL CCEaseSineIn : public CCActionEase
+class CC_DLL EaseSineIn : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
     /** creates the action */
-    static CCEaseSineIn* create(CCActionInterval* pAction);
+    static EaseSineIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
  @brief Ease Sine Out
  @ingroup Actions
  */
-class CC_DLL CCEaseSineOut : public CCActionEase
+class CC_DLL EaseSineOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** creates the action */
-    static CCEaseSineOut* create(CCActionInterval* pAction);
+    static EaseSineOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
  @brief Ease Sine InOut
  @ingroup Actions
  */
-class CC_DLL CCEaseSineInOut : public CCActionEase
+class CC_DLL EaseSineInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
-
-public:
-
     /** creates the action */
-    static CCEaseSineInOut* create(CCActionInterval* pAction);
+    static EaseSineInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseSineInOut* clone() const override;
+	virtual EaseSineInOut* reverse() const override;
 };
 
 /** 
@@ -250,27 +241,25 @@ public:
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseElastic : public CCActionEase
+class CC_DLL EaseElastic : public ActionEase
 {
 public:
-    /** get period of the wave in radians. default is 0.3 */
-    inline float getPeriod(void) { return m_fPeriod; }
-    /** set period of the wave in radians. */
-    inline void setPeriod(float fPeriod) { m_fPeriod = fPeriod; }
-
     /** Initializes the action with the inner action and the period in radians (default is 0.3) */
-    bool initWithAction(CCActionInterval *pAction, float fPeriod = 0.3f);
+    bool initWithAction(ActionInterval *pAction, float fPeriod = 0.3f);
 
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
+    /** get period of the wave in radians. default is 0.3 */
+    inline float getPeriod(void) const { return _period; }
+    /** set period of the wave in radians. */
+    inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
-public:
+    //
+    // Overrides
+    //
+	virtual EaseElastic* clone() const override = 0;
+	virtual EaseElastic* reverse() const override = 0;
 
-    /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElastic* create(CCActionInterval *pAction, float fPeriod);
-    static CCEaseElastic* create(CCActionInterval *pAction);
 protected:
-    float m_fPeriod;
+    float _period;
 };
 
 /** 
@@ -279,18 +268,17 @@ protected:
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseElasticIn : public CCEaseElastic
+class CC_DLL EaseElasticIn : public EaseElastic
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticIn* create(CCActionInterval *pAction, float fPeriod);
-    static CCEaseElasticIn* create(CCActionInterval *pAction);
+    static EaseElasticIn* create(ActionInterval *pAction, float fPeriod);
+    static EaseElasticIn* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticIn* clone() const override;
+	virtual EaseElastic* reverse() const override;
 };
 
 /** 
@@ -299,18 +287,17 @@ public:
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseElasticOut : public CCEaseElastic
+class CC_DLL EaseElasticOut : public EaseElastic
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticOut* create(CCActionInterval *pAction, float fPeriod);
-    static CCEaseElasticOut* create(CCActionInterval *pAction);
+    static EaseElasticOut* create(ActionInterval *pAction, float fPeriod);
+    static EaseElasticOut* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticOut* clone() const override;
+	virtual EaseElastic* reverse() const override;
 };
 
 /** 
@@ -319,55 +306,50 @@ public:
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseElasticInOut : public CCEaseElastic
+class CC_DLL EaseElasticInOut : public EaseElastic
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** Creates the action with the inner action and the period in radians (default is 0.3) */
-    static CCEaseElasticInOut* create(CCActionInterval *pAction, float fPeriod);
-    static CCEaseElasticInOut* create(CCActionInterval *pAction);
+    static EaseElasticInOut* create(ActionInterval *pAction, float fPeriod);
+    static EaseElasticInOut* create(ActionInterval *pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseElasticInOut* clone() const override;
+	virtual EaseElasticInOut* reverse() const override;
 };
 
 /** 
- @brief CCEaseBounce abstract class.
+ @brief EaseBounce abstract class.
  @since v0.8.2
  @ingroup Actions
 */
-class CC_DLL CCEaseBounce : public CCActionEase
+class CC_DLL EaseBounce : public ActionEase
 {
 public:
     float bounceTime(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
 
-public:
-
-    /** creates the action */
-    static CCEaseBounce* create(CCActionInterval* pAction);
+    // Overrides
+	virtual EaseBounce* clone() const override = 0;
+	virtual EaseBounce* reverse() const override = 0;
 };
 
 /** 
- @brief CCEaseBounceIn action.
+ @brief EaseBounceIn action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
 */
-class CC_DLL CCEaseBounceIn : public CCEaseBounce
+class CC_DLL EaseBounceIn : public EaseBounce
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** creates the action */
-    static CCEaseBounceIn* create(CCActionInterval* pAction);
+    static EaseBounceIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceIn* clone() const override;
+	virtual EaseBounce* reverse() const override;
 };
 
 /** 
@@ -376,93 +358,88 @@ public:
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseBounceOut : public CCEaseBounce
+class CC_DLL EaseBounceOut : public EaseBounce
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** creates the action */
-    static CCEaseBounceOut* create(CCActionInterval* pAction);
+    static EaseBounceOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceOut* clone() const override;
+	virtual EaseBounce* reverse() const override;
 };
 
 /** 
- @brief CCEaseBounceInOut action.
+ @brief EaseBounceInOut action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseBounceInOut : public CCEaseBounce
+class CC_DLL EaseBounceInOut : public EaseBounce
 {
 public:
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
-
-public:
-
     /** creates the action */
-    static CCEaseBounceInOut* create(CCActionInterval* pAction);
+    static EaseBounceInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBounceInOut* clone() const override;
+	virtual EaseBounceInOut* reverse() const override;
 };
 
 /** 
- @brief CCEaseBackIn action.
+ @brief EaseBackIn action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseBackIn : public CCActionEase
+class CC_DLL EaseBackIn : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** creates the action */
-    static CCEaseBackIn* create(CCActionInterval* pAction);
+    static EaseBackIn* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackIn* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
- @brief CCEaseBackOut action.
+ @brief EaseBackOut action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseBackOut : public CCActionEase
+class CC_DLL EaseBackOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCActionInterval* reverse(void);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-
-public:
-
     /** creates the action */
-    static CCEaseBackOut* create(CCActionInterval* pAction);
+    static EaseBackOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackOut* clone() const override;
+	virtual ActionEase* reverse() const override;
 };
 
 /** 
- @brief CCEaseBackInOut action.
+ @brief EaseBackInOut action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  @ingroup Actions
  */
-class CC_DLL CCEaseBackInOut : public CCActionEase
+class CC_DLL EaseBackInOut : public ActionEase
 {
 public:
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual CCActionInterval* reverse();
-
-public:
-
     /** creates the action */
-    static CCEaseBackInOut* create(CCActionInterval* pAction);
+    static EaseBackInOut* create(ActionInterval* pAction);
+
+    // Overrides
+    virtual void update(float time) override;
+	virtual EaseBackInOut* clone() const override;
+	virtual EaseBackInOut* reverse() const override;
 };
 
 // end of actions group

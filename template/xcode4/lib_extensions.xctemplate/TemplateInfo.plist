@@ -278,30 +278,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/extensions/CCBReader/CCData.cpp</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>CCBReader</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/CCBReader/CCData.cpp</string>
-		</dict>
-		<key>libs/extensions/CCBReader/CCData.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>extensions</string>
-				<string>CCBReader</string>
-			</array>
-			<key>Path</key>
-			<string>libs/extensions/CCBReader/CCData.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/extensions/CCBReader/CCLabelBMFontLoader.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -1527,6 +1503,52 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/extensions/proj.ios/extensions-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.ios</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.ios/extensions-Prefix.pch</string>
+		</dict>
+		<key>libs/extensions/proj.ios/extensions.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.ios</string>
+				<string>extensions.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.ios/extensions.xcodeproj/project.pbxproj</string>
+		</dict>
+		<key>libs/extensions/proj.mac/extensions-Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.mac</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.mac/extensions-Prefix.pch</string>
+		</dict>
+		<key>libs/extensions/proj.mac/extensions.xcodeproj/project.pbxproj</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>extensions</string>
+				<string>proj.mac</string>
+				<string>extensions.xcodeproj</string>
+			</array>
+			<key>Path</key>
+			<string>libs/extensions/proj.mac/extensions.xcodeproj/project.pbxproj</string>
+		</dict>
 		<key>libs/extensions/spine/Animation.cpp</key>
 		<dict>
 			<key>Group</key>
@@ -2069,8 +2091,6 @@
 		<string>libs/extensions/CCBReader/CCControlButtonLoader.h</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCControlLoader.h</string>
-		<string>libs/extensions/CCBReader/CCData.cpp</string>
-		<string>libs/extensions/CCBReader/CCData.h</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.cpp</string>
 		<string>libs/extensions/CCBReader/CCLabelBMFontLoader.h</string>
 		<string>libs/extensions/CCBReader/CCLabelTTFLoader.cpp</string>
@@ -2169,6 +2189,10 @@
 		<string>libs/extensions/physics_nodes/CCPhysicsDebugNode.h</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.cpp</string>
 		<string>libs/extensions/physics_nodes/CCPhysicsSprite.h</string>
+		<string>libs/extensions/proj.ios/extensions-Prefix.pch</string>
+		<string>libs/extensions/proj.ios/extensions.xcodeproj/project.pbxproj</string>
+		<string>libs/extensions/proj.mac/extensions-Prefix.pch</string>
+		<string>libs/extensions/proj.mac/extensions.xcodeproj/project.pbxproj</string>
 		<string>libs/extensions/spine/Animation.cpp</string>
 		<string>libs/extensions/spine/Animation.h</string>
 		<string>libs/extensions/spine/AnimationState.cpp</string>

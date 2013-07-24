@@ -20,8 +20,8 @@ if [ -z "${NDK_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${CLANG_ROOT+aaa}" ]; then
-# ... if CLANG_ROOT is not set, use "$HOME/bin/clang+llvm-3.1"
-    CLANG_ROOT="$HOME/bin/clang+llvm-3.1"
+# ... if CLANG_ROOT is not set, use "$HOME/bin/clang+llvm-3.3"
+    CLANG_ROOT="$HOME/bin/clang+llvm-3.3"
 fi
 
 if [ -z "${PYTHON_BIN+aaa}" ]; then

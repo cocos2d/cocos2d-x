@@ -3,7 +3,7 @@
 void GLNode::draw() {
   js_proxy_t* proxy = NULL;
   JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-  proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, this);
+  proxy = js_get_or_create_proxy<cocos2d::Node>(cx, this);
         
   //JSB_CCNode *proxy = objc_getAssociatedObject(self, &JSB_association_proxy_key);
   if( proxy ) {
@@ -33,7 +33,7 @@ JSBool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
   if (argc == 0) {
     GLNode* cobj = new GLNode();
 #ifdef COCOS2D_JAVASCRIPT
-    cocos2d::CCObject *_ccobj = dynamic_cast<cocos2d::CCObject *>(cobj);
+    cocos2d::Object *_ccobj = dynamic_cast<cocos2d::Object *>(cobj);
     if (_ccobj) {
       _ccobj->autorelease();
     }
@@ -86,7 +86,7 @@ JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
   return JS_TRUE;
 }
 
-extern JSObject* jsb_CCNode_prototype;
+extern JSObject* jsb_Node_prototype;
 
 void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
   js_cocos2dx_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -117,7 +117,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
   
   js_cocos2dx_GLNode_prototype = JS_InitClass(
 					      cx, global,
-					      jsb_CCNode_prototype,
+					      jsb_Node_prototype,
 					      js_cocos2dx_GLNode_class,
 					      js_cocos2dx_GLNode_constructor, 0, // constructor
 					      properties,
@@ -138,7 +138,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
     p->type = typeId;
     p->jsclass = js_cocos2dx_GLNode_class;
     p->proto = js_cocos2dx_GLNode_prototype;
-    p->parentProto = jsb_CCNode_prototype;
+    p->parentProto = jsb_Node_prototype;
     HASH_ADD_INT(_js_global_type_ht, type, p);
   }
 }

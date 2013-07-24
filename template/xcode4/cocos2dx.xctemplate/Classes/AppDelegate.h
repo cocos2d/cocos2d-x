@@ -14,16 +14,16 @@
 /**
 @brief    The cocos2d Application.
 
-The reason to implement with private inheritance is to hide some interface details of CCDirector.
+The reason to implement with private inheritance is to hide some interface details of Director.
 */
-class  AppDelegate : private cocos2d::CCApplication
+class  AppDelegate : private cocos2d::Application
 {
 public:
     AppDelegate();
     virtual ~AppDelegate();
 
     /**
-    @brief    Implement CCDirector and CCScene init code here.
+    @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */

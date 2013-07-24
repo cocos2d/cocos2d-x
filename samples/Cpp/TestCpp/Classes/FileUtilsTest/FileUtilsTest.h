@@ -2,6 +2,8 @@
 #define __FILEUTILSTEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
+
 USING_NS_CC;
 using namespace std;
 
@@ -11,15 +13,15 @@ public:
     virtual void runThisTest();
 };
 
-class FileUtilsDemo : public CCLayer
+class FileUtilsDemo : public BaseTest
 {
 public:
     virtual void onEnter();
     virtual string title();
     virtual string subtitle();
-    void backCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void restartCallback(CCObject* pSender);
+    void backCallback(Object* pSender);
+    void nextCallback(Object* pSender);
+    void restartCallback(Object* pSender);
 };
 
 class TestResolutionDirectories : public FileUtilsDemo
@@ -30,8 +32,8 @@ public:
     virtual string title();
     virtual string subtitle();
 private:
-    vector<string> m_defaultSearchPathArray;
-    vector<string> m_defaultResolutionsOrderArray;
+    vector<string> _defaultSearchPathArray;
+    vector<string> _defaultResolutionsOrderArray;
 };
 
 class TestSearchPath : public FileUtilsDemo
@@ -42,8 +44,8 @@ public:
     virtual string title();
     virtual string subtitle();
 private:
-    vector<string> m_defaultSearchPathArray;
-    vector<string> m_defaultResolutionsOrderArray;
+    vector<string> _defaultSearchPathArray;
+    vector<string> _defaultResolutionsOrderArray;
 };
 
 class TestFilenameLookup : public FileUtilsDemo

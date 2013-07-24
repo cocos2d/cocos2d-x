@@ -226,11 +226,14 @@
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\ComponentsTest">
-      <UniqueIdentifier>{90142ee3-1b3c-4bc6-a353-986231a58a17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\ArmatureTest">
-      <UniqueIdentifier>{710d484c-0bf8-4024-a1e7-43258671b4cd}</UniqueIdentifier>
+      <UniqueIdentifier>{f0a099b9-0cf3-4217-a311-8d2f84e503c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ComponentsTest">
+      <UniqueIdentifier>{285cdfb8-5749-4969-ae31-99ec25f15e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\Scale9SpriteTest">
+      <UniqueIdentifier>{3d73aa04-d66e-43d3-921f-b867a753c113}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -519,6 +522,12 @@
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BaseTest.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClCompile>
@@ -537,8 +546,11 @@
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
-      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1007,6 +1019,12 @@
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\BaseTest.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
+      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.h">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClInclude>
@@ -1025,8 +1043,11 @@
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\ComponentsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
-      <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
+    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
+      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

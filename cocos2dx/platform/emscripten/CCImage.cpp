@@ -57,7 +57,7 @@ public:
     BitmapDC()
     {
 		iInterval = szFont_kenning;
-		m_pData = NULL;
+		_data = NULL;
 		reset();
     }
     
@@ -130,7 +130,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(TTF_Font *face, CCImage::ETextAlign eAlignMask, char cText,
+	int computeLineStart(TTF_Font *face, Image::ETextAlign eAlignMask, char cText,
                          int iLineIndex) {
         return 0;
         /*
@@ -141,11 +141,11 @@ public:
 			return -1;
 		}
         
-		if (eAlignMask == CCImage::kAlignCenter) {
+		if (eAlignMask == Image::kAlignCenter) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
 			- RSHIFT6(face->glyph->metrics.horiBearingX );
             
-		} else if (eAlignMask == CCImage::kAlignRight) {
+		} else if (eAlignMask == Image::kAlignRight) {
 			iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
 			- RSHIFT6(face->glyph->metrics.horiBearingX );
 		} else {
@@ -156,18 +156,18 @@ public:
         */
 	}
 		
-	int computeLineStartY( TTF_Font *face, CCImage::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( TTF_Font *face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
         return 0;
         /*
 		int iRet;
-		if (eAlignMask == CCImage::kAlignCenter || eAlignMask == CCImage::kAlignLeft ||
-			eAlignMask == CCImage::kAlignRight ) {
+		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft ||
+			eAlignMask == Image::kAlignRight ) {
 			//vertical center
 			iRet = (borderHeight - txtHeight)/2 + RSHIFT6(face->size->metrics.ascender);
 
-		} else if (eAlignMask == CCImage::kAlignBottomRight || 
-				   eAlignMask == CCImage::kAlignBottom || 
-				   eAlignMask == CCImage::kAlignBottomLeft ) {
+		} else if (eAlignMask == Image::kAlignBottomRight || 
+				   eAlignMask == Image::kAlignBottom || 
+				   eAlignMask == Image::kAlignBottomLeft ) {
 			//vertical bottom
 			iRet = borderHeight - txtHeight + RSHIFT6(face->size->metrics.ascender);
 		} else {
@@ -178,13 +178,11 @@ public:
         */
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
 		const char* pText = text;
-        // No need to release m_pData here as it is destroyed by CCImage.
+        int pxSize = (int)fontSize;
 
-		int iCurXCursor;
-
-        TTF_Font *face = TTF_OpenFont(pFontName, fontSize);
+        TTF_Font *face = TTF_OpenFont(pFontName, pxSize);
         if(!face)
         {
             return false;
@@ -195,42 +193,61 @@ public:
         //compute the final line width
         iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
 
-        iMaxLineHeight = (int)fontSize;
+        iMaxLineHeight = pxSize;
         iMaxLineHeight *= vLines.size();
 
         //compute the final line height
         iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
 
         uint bitmapSize = iMaxLineWidth * iMaxLineHeight * 4;
+        _data = new unsigned char[bitmapSize];
+        memset(_data, 0, bitmapSize);
 
-        m_pData = new unsigned char[bitmapSize];
-        memset(m_pData, 0, bitmapSize);
+        if(!strlen(text))
+        {
+            return true;
+        }
 
         // XXX: Can this be optimized by inserting newlines into the string and
         // making a single TTF_RenderText_Solid call? Could conceivably just
         // pass back SDL's buffer then, though would need additional logic to
         // call SDL_FreeSurface appropriately.
+
+        // FIXME: handle alignment, etc.
         for (size_t l = 0; l < vLines.size(); l++) {
             pText = vLines[l].sLineStr.c_str();
-            //initialize the origin cursor
-            iCurXCursor = computeLineStart(face, eAlignMask, *pText, l);
+            if(!strlen(pText))
+            {
+                continue;
+            }
 
             SDL_Color color = { 0xff, 0xff, 0xff, 0xff };
             SDL_Surface *tSurf = TTF_RenderText_Solid(face, pText, color);
+            if(!tSurf)
+            {
+                TTF_CloseFont(face);
+                return false;
+            }
+
             SDL_LockSurface(tSurf);
             SDL_UnlockSurface(tSurf);
 
             // We treat pixels as 32-bit words, since both source and target
             // are rendered as such.
-            int *pixels = (int*) tSurf->pixels;
-            int *out = (int*)m_pData;
+            int *pixels = (int*)tSurf->pixels;
+            int *out = (int*)_data;
 
-            for(int i = 0; i < tSurf->h; ++i)
+            // (i, j) should be treated as (x, y) coordinates in the source
+            // bitmap. This loop maps those locations to the target bitmap.
+            // Need to ensure that those values do not exceed the allocated
+            // memory.
+            int minWidth = MIN(tSurf->w, iMaxLineWidth);
+            for(int i = 0; i < tSurf->h && (i + l * pxSize) < iMaxLineHeight; ++i)
             {
-                for(int j = 0; j < tSurf->w; ++j)
+                for(int j = 0; j < minWidth; ++j)
                 {
-                    int targetOffset = (l * iMaxLineHeight + i) * iMaxLineWidth + j;
                     int sourceOffset = i * tSurf->w + j;
+                    int targetOffset = (l * pxSize + i) * iMaxLineWidth + j;
 
                     // HTML5 canvas is non-pre-alpha-multiplied, so alpha-multiply here.
                     unsigned char *p = (unsigned char*) &pixels[sourceOffset];
@@ -249,7 +266,7 @@ public:
     }
 
 public:
-	unsigned char *m_pData;
+	unsigned char *_data;
 	int libError;
 	vector<TextLine> vLines;
 	int iInterval;
@@ -263,7 +280,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-bool CCImage::initWithString(
+bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,
@@ -283,15 +300,15 @@ bool CCImage::initWithString(
 
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         
-        // assign the dc.m_pData to m_pData in order to save time
-        m_pData = dc.m_pData;
-        CC_BREAK_IF(! m_pData);
+        // assign the dc._data to _data in order to save time
+        _data = dc._data;
+        CC_BREAK_IF(! _data);
         
-        m_nWidth = (short)dc.iMaxLineWidth;
-        m_nHeight = (short)dc.iMaxLineHeight;
-        m_bHasAlpha = true;
-        m_bPreMulti = true;
-        m_nBitsPerComponent = 8;
+        _width = (short)dc.iMaxLineWidth;
+        _height = (short)dc.iMaxLineHeight;
+        _hasAlpha = true;
+        _preMulti = true;
+        _bitsPerComponent = 8;
         
         bRet = true;
         

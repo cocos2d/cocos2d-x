@@ -16,16 +16,16 @@
 /**
 @brief    The cocos2d Application.
 
-The reason to implement with private inheritance is to hide some interface details of CCDirector.
+The reason to implement with private inheritance is to hide some interface details of Director.
 */
-class  AppDelegate : private cocos2d::CCApplication
+class  AppDelegate : private cocos2d::Application
 {
 public:
     AppDelegate();
     virtual ~AppDelegate();
 
     /**
-    @brief    Implement CCDirector and CCScene init code here.
+    @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
@@ -44,16 +44,16 @@ public:
     virtual void applicationWillEnterForeground();
 };
 
-class UpdateLayer : public cocos2d::CCLayer, public cocos2d::extension::AssetsManagerDelegateProtocol
+class UpdateLayer : public cocos2d::Layer, public cocos2d::extension::AssetsManagerDelegateProtocol
 {
 public:
     UpdateLayer();
     ~UpdateLayer();
     virtual bool init();
     
-    void enter(cocos2d::CCObject *pSender);
-    void reset(cocos2d::CCObject *pSender);
-    void update(cocos2d::CCObject *pSender);
+    void enter(cocos2d::Object *pSender);
+    void reset(cocos2d::Object *pSender);
+    void update(cocos2d::Object *pSender);
 
     virtual void onError(cocos2d::extension::AssetsManager::ErrorCode errorCode);
     virtual void onProgress(int percent);
@@ -63,10 +63,10 @@ private:
     cocos2d::extension::AssetsManager* getAssetsManager();
     void createDownloadedDir();
     
-    cocos2d::CCMenuItemFont *pItemEnter;
-    cocos2d::CCMenuItemFont *pItemReset;
-    cocos2d::CCMenuItemFont *pItemUpdate;
-    cocos2d::CCLabelTTF *pProgressLabel;
+    cocos2d::MenuItemFont *pItemEnter;
+    cocos2d::MenuItemFont *pItemReset;
+    cocos2d::MenuItemFont *pItemUpdate;
+    cocos2d::LabelTTF *pProgressLabel;
     std::string pathToSave;
     bool isUpdateItemClicked;
 };

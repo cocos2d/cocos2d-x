@@ -7,21 +7,21 @@ NS_CC_EXT_BEGIN
 #define PROPERTY_SELECTED "selected"
 #define PROPERTY_CCCONTROL "ccControl"
 
-void CCControlLoader::onHandlePropTypeCheck(CCNode * pNode, CCNode * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+void ControlLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_ENABLED) == 0) {
-        ((CCControl *)pNode)->setEnabled(pCheck);
+        ((Control *)pNode)->setEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_SELECTED) == 0) {
-        ((CCControl *)pNode)->setSelected(pCheck);
+        ((Control *)pNode)->setSelected(pCheck);
     } else {
-        CCNodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
+        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
     }
 }
 
-void CCControlLoader::onHandlePropTypeBlockCCControl(CCNode * pNode, CCNode * pParent, const char * pPropertyName, BlockCCControlData * pBlockCCControlData, CCBReader * pCCBReader) {
+void ControlLoader::onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char * pPropertyName, BlockControlData * pBlockControlData, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_CCCONTROL) == 0) {
-        ((CCControl *)pNode)->addTargetWithActionForControlEvents(pBlockCCControlData->mTarget, pBlockCCControlData->mSELCCControlHandler, pBlockCCControlData->mControlEvents);
+        ((Control *)pNode)->addTargetWithActionForControlEvents(pBlockControlData->mTarget, pBlockControlData->mSELControlHandler, pBlockControlData->mControlEvents);
     } else {
-        CCNodeLoader::onHandlePropTypeBlockCCControl(pNode, pParent, pPropertyName, pBlockCCControlData, pCCBReader);
+        NodeLoader::onHandlePropTypeBlockControl(pNode, pParent, pPropertyName, pBlockControlData, pCCBReader);
     }
 }
 

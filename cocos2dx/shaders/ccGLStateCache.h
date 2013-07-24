@@ -37,17 +37,17 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCGLProgram;
+class GLProgram;
 
 /** vertex attrib flags */
 enum {
-    kCCVertexAttribFlag_None        = 0,
+    kVertexAttribFlag_None        = 0,
 
-    kCCVertexAttribFlag_Position    = 1 << 0,
-    kCCVertexAttribFlag_Color       = 1 << 1,
-    kCCVertexAttribFlag_TexCoords   = 1 << 2,
+    kVertexAttribFlag_Position    = 1 << 0,
+    kVertexAttribFlag_Color       = 1 << 1,
+    kVertexAttribFlag_TexCoords   = 1 << 2,
 
-    kCCVertexAttribFlag_PosColorTex = ( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color | kCCVertexAttribFlag_TexCoords ),
+    kVertexAttribFlag_PosColorTex = ( kVertexAttribFlag_Position | kVertexAttribFlag_Color | kVertexAttribFlag_TexCoords ),
 };
 
 /** GL server side states */
@@ -105,9 +105,9 @@ void CC_DLL ccSetProjectionMatrixDirty(void);
 /** Will enable the vertex attribs that are passed as flags.
  Possible flags:
 
-    * kCCVertexAttribFlag_Position
-    * kCCVertexAttribFlag_Color
-    * kCCVertexAttribFlag_TexCoords
+    * kVertexAttribFlag_Position
+    * kVertexAttribFlag_Color
+    * kVertexAttribFlag_TexCoords
 
  These flags can be ORed. The flags that are not present, will be disabled.
 

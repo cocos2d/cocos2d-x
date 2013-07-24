@@ -6,16 +6,16 @@
 
 NS_CC_BEGIN
 
-class CCRect;
+class Rect;
 
-class CC_DLL CCApplication : public CCApplicationProtocol
+class CC_DLL Application : public ApplicationProtocol
 {
 public:
-    CCApplication();
-    virtual ~CCApplication();
+    Application();
+    virtual ~Application();
 
     /**
-    @brief    Callback by CCDirector to limit FPS.
+    @brief    Callback by Director to limit FPS.
     @interval       The time, expressed in seconds, between current frame and next. 
     */
     void setAnimationInterval(double interval);
@@ -29,7 +29,10 @@ public:
     @brief    Get current application instance.
     @return Current application instance pointer.
     */
-    static CCApplication* sharedApplication();
+    static Application* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
 
     /**
     @brief Get current language config
@@ -43,7 +46,7 @@ public:
     virtual TargetPlatform getTargetPlatform();
 
 protected:
-    static CCApplication * sm_pSharedApplication;
+    static Application * sm_pSharedApplication;
 };
 
 NS_CC_END

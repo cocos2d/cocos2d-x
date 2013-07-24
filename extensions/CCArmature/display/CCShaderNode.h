@@ -27,31 +27,31 @@ THE SOFTWARE.
 
 #include "../utils/CCArmatureDefine.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-class CCShaderNode : public CCNode
+class ShaderNode : public Node
 {
 public:
-    CCShaderNode();
+    ShaderNode();
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
 
     virtual void update(float dt);
-    virtual void setPosition(const CCPoint &newPosition);
-    virtual void translateFormOtherNode(CCAffineTransform &transform);
+    virtual void setPosition(const Point &newPosition);
+    virtual void translateFormOtherNode(AffineTransform &transform);
     virtual void draw();
 
-    static CCShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
+    static ShaderNode *shaderNodeWithVertex(const char *vert, const char *frag);
 
 private:
 
-    ccVertex2F m_center;
-    ccVertex2F m_resolution;
-    float      m_time;
-    GLuint     m_uniformCenter, m_uniformResolution, m_uniformTime;
+    Vertex2F _center;
+    Vertex2F _resolution;
+    float      _time;
+    GLuint     _uniformCenter, _uniformResolution, _uniformTime;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCSHADERNODE_H__*/

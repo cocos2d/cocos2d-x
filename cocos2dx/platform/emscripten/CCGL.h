@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-//declare here while define in CCEGLView.cpp
+//declare here while define in EGLView.cpp
 extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArrays;
 extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArray;
 extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArrays;

@@ -1,0 +1,19 @@
+################################################################################
+# Do not include this file in your project: see cocos2dx.pri.
+################################################################################
+
+linux {
+    # We will compile box2d on demand using Makefile.
+    build_box2d.name = Build box2d static library
+    build_box2d.input = $$PWD/Makefile
+    build_box2d.output = $$CC_LIBRARY_DIR/libbox2d.a
+    build_box2d.target = $$CC_LIBRARY_DIR/libbox2d.a
+    build_box2d.CONFIG = no_link target_predeps
+    build_box2d.commands = cd $$PWD && make $$CC_MAKE_FLAGS
+
+    QMAKE_EXTRA_COMPILERS += build_box2d
+    QMAKE_EXTRA_TARGETS += build_box2d
+
+    PRE_TARGETDEPS += $$CC_LIBRARY_DIR/libbox2d.a
+    LIBS += -Wl,-Bstatic -lbox2d -Wl,-Bdynamic
+}

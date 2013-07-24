@@ -40,18 +40,18 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCString : public CCObject
+class CC_DLL String : public Object, public Clonable
 {
 public:
-    CCString();
-    CCString(const char* str);
-    CCString(const std::string& str);
-    CCString(const CCString& str);
+    String();
+    String(const char* str);
+    String(const std::string& str);
+    String(const String& str);
 
-    virtual ~CCString();
+    virtual ~String();
     
     /* override assignment operator */
-    CCString& operator= (const CCString& other);
+    String& operator= (const String& other);
 
     /** init a string with format, it's similar with the c function 'sprintf' */ 
     bool initWithFormat(const char* format, ...) CC_FORMAT_PRINTF(2, 3);
@@ -80,55 +80,64 @@ public:
     /** compare to a c string */
     int compare(const char *) const;
 
+    /** append additional characters at the end of its current value */
+    void append(const std::string& str);
+
+    /** append(w/ format) additional characters at the end of its current value */
+    void appendWithFormat(const char* format, ...);
+
+    /** split a string */
+    Array* componentsSeparatedByString(const char *delimiter);
+    
     /* override functions */
-    virtual CCObject* copyWithZone(CCZone* pZone);
-    virtual bool isEqual(const CCObject* pObject);
+    virtual bool isEqual(const Object* pObject);
 
     /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* create(const std::string& str);
+    static String* create(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
-     *  if you want to change it, you should modify the kMaxStringLen macro in CCString.cpp file.
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  if you want to change it, you should modify the kMaxStringLen macro in String.cpp file.
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */ 
-    static CCString* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
+    static String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
     /** create a string with binary data 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* createWithData(const unsigned char* pData, unsigned long nLen);
+    static String* createWithData(const unsigned char* pData, unsigned long nLen);
 
     /** create a string with a file, 
-     *  @return A CCString pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static CCString* createWithContentsOfFile(const char* pszFileName);
+    static String* createWithContentsOfFile(const char* pszFileName);
 
-    virtual void acceptVisitor(CCDataVisitor &visitor);
-
+    virtual void acceptVisitor(DataVisitor &visitor);
+    virtual String* clone() const;
+    
 private:
 
     /** only for internal use */
     bool initWithFormatAndValist(const char* format, va_list ap);
 
 public:
-    std::string m_sString;
+    std::string _string;
 };
 
-struct CCStringCompare : public std::binary_function<CCString *, CCString *, bool> {
+struct StringCompare : public std::binary_function<String *, String *, bool> {
     public:
-        bool operator() (CCString * a, CCString * b) const {
+        bool operator() (String * a, String * b) const {
             return strcmp(a->getCString(), b->getCString()) < 0;
         }
 };
 
-#define CCStringMake(str) CCString::create(str)
-#define ccs               CCStringMake
+#define StringMake(str) String::create(str)
+#define ccs               StringMake
 
 // end of data_structure group
 /// @}

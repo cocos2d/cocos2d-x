@@ -5,7 +5,7 @@ local kTagSprite = 1
 local function initWithLayer()
     local sprite = CCSprite:create(s_pPathGrossini)
 
-    local bgLayer = CCLayerColor:create(ccc4(255,255,0,255))
+    local bgLayer = CCLayerColor:create(Color4B(255,255,0,255))
     layer:addChild(bgLayer, -1)
 
     layer:addChild(sprite, 0, kTagSprite)

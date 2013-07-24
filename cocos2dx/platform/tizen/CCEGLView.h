@@ -32,13 +32,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCEGLView
-    : public CCEGLViewProtocol
+class CC_DLL EGLView
+    : public EGLViewProtocol
     , public Tizen::Base::Runtime::ITimerEventListener
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    EGLView();
+    virtual ~EGLView();
 
     bool    isOpenGLReady();
     Tizen::Base::Runtime::Timer*    getTimer();
@@ -53,8 +53,10 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView* sharedOpenGLView();
+    static EGLView* getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
     // Tizen timer callback
     virtual void OnTimerExpired(Tizen::Base::Runtime::Timer& timer);
 

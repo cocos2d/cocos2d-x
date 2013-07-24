@@ -5,7 +5,7 @@
 #include "../testBasic.h"
 #include <string>
 
-class TextureAtlasEncryptionDemo : public CCLayer
+class TextureAtlasEncryptionDemo : public Layer
 {
 public:
     virtual std::string title();
@@ -13,7 +13,7 @@ public:
     virtual void onEnter();
 
 protected:
-    std::string    m_strTitle;
+    std::string    _title;
 };
 
 class TextureAtlasEncryptionTestScene : public TestScene

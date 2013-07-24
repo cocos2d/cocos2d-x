@@ -2,14 +2,14 @@
 
 CurrentLanguageTest::CurrentLanguageTest()
 {
-    CCLabelTTF* label = CCLabelTTF::create("Current language Test", "Arial", 28);
+    LabelTTF* label = LabelTTF::create("Current language Test", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
-    CCLabelTTF *labelLanguage = CCLabelTTF::create("", "Arial", 20);
+    LabelTTF *labelLanguage = LabelTTF::create("", "Arial", 20);
     labelLanguage->setPosition(VisibleRect::center());
 
-    ccLanguageType currentLanguageType = CCApplication::sharedApplication()->getCurrentLanguage();
+    ccLanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
     switch (currentLanguageType)
     {
     case kLanguageEnglish:
@@ -48,6 +48,12 @@ CurrentLanguageTest::CurrentLanguageTest()
     case kLanguageArabic:
         labelLanguage->setString("current language is Arabic");
         break;
+    case kLanguageNorwegian:
+        labelLanguage->setString("current language is Norwegian");
+        break;
+    case kLanguagePolish:
+        labelLanguage->setString("current language is Polish");
+        break;
     }
 
     addChild(labelLanguage);
@@ -55,9 +61,9 @@ CurrentLanguageTest::CurrentLanguageTest()
 
 void CurrentLanguageTestScene::runThisTest()
 {
-    CCLayer* pLayer = new CurrentLanguageTest();
-    addChild(pLayer);
+    Layer* layer = new CurrentLanguageTest();
+    addChild(layer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
-    pLayer->release();
+    Director::getInstance()->replaceScene(this);
+    layer->release();
 }

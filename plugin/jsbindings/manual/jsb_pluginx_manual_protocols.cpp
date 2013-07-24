@@ -224,9 +224,9 @@ JSBool js_pluginx_PluginProtocol_callStringFuncWithParam(JSContext *cx, uint32_t
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
         js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
         cocos2d::plugin::PluginProtocol* cobj = (cocos2d::plugin::PluginProtocol *)(proxy ? proxy->ptr : NULL);
-        const char* ret = cobj->callStringFuncWithParam(strName.c_str(), params);
+        std::string ret = cobj->callStringFuncWithParam(strName.c_str(), params);
 		jsval jsret;
-		jsret = c_string_to_jsval(cx, ret);
+		jsret = std_string_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}

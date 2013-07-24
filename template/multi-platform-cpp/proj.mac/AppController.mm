@@ -52,8 +52,8 @@
         NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
 		
 		// allocate our GL view
-		// (isn't there already a shared EAGLView?)
-		glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
+		// (isn't there already a shared CCEAGLView?)
+		glView = [[CCEAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
 
 		// set window parameters
 		[window becomeFirstResponder];
@@ -62,7 +62,7 @@
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
 
-		cocos2d::CCApplication::sharedApplication()->run();
+		cocos2d::Application::getInstance()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
@@ -72,7 +72,7 @@
 
 	-(void) dealloc
 	{
-		cocos2d::CCDirector::sharedDirector()->end();
+		cocos2d::Director::getInstance()->end();
 		[super dealloc];
 	}
 
@@ -81,13 +81,13 @@
 
 	-(IBAction) toggleFullScreen:(id)sender
 	{
-		EAGLView* pView = [EAGLView sharedEGLView];
+		CCEAGLView* pView = [CCEAGLView sharedEGLView];
 		[pView setFullScreen:!pView.isFullScreen];
 	}
 
 	-(IBAction) exitFullScreen:(id)sender
 	{
-		[[EAGLView sharedEGLView] setFullScreen:NO];
+		[[CCEAGLView sharedEGLView] setFullScreen:NO];
 	}
 
 @end

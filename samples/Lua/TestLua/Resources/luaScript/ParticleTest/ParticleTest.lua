@@ -94,7 +94,7 @@ local function baseLayer_onEnterOrExit(tag)
 end
 
 local function getBaseLayer()
-	local layer = CCLayerColor:create(ccc4(127,127,127,255))
+	local layer = CCLayerColor:create(Color4B(127,127,127,255))
 
     emitter = nil
 
@@ -223,7 +223,7 @@ local function ParticleReorder()
 	ParticleReorder_layer = getBaseLayer()
 
 	ParticleReorder_Order = 0
-    ParticleReorder_layer:setColor(ccc3(0, 0, 0))
+    ParticleReorder_layer:setColor(Color3B(0, 0, 0))
     ParticleReorder_layer:removeChild(background, true)
     background = nil
 
@@ -241,13 +241,13 @@ local function ParticleReorder()
 		end
 
         local emitter1 = CCParticleSystemQuad:create("Particles/SmallSun.plist")
-        emitter1:setStartColor(ccc4f(1,0,0,1))
+        emitter1:setStartColor(Color4F(1,0,0,1))
         emitter1:setBlendAdditive(false)
         local emitter2 = CCParticleSystemQuad:create("Particles/SmallSun.plist")
-        emitter2:setStartColor(ccc4f(0,1,0,1))
+        emitter2:setStartColor(Color4F(0,1,0,1))
         emitter2:setBlendAdditive(false)
         local emitter3 = CCParticleSystemQuad:create("Particles/SmallSun.plist")
-        emitter3:setStartColor(ccc4f(0,0,1,1))
+        emitter3:setStartColor(Color4F(0,0,1,1))
         emitter3:setBlendAdditive(false)
 
 		local neg = nil
@@ -313,7 +313,7 @@ end
 local function ParticleBatchHybrid()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -341,16 +341,16 @@ end
 local function ParticleBatchMultipleEmitters()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
     local emitter1 = CCParticleSystemQuad:create("Particles/LavaFlow.plist")
-    emitter1:setStartColor(ccc4f(1,0,0,1))
+    emitter1:setStartColor(Color4F(1,0,0,1))
     local emitter2 = CCParticleSystemQuad:create("Particles/LavaFlow.plist")
-    emitter2:setStartColor(ccc4f(0,1,0,1))
+    emitter2:setStartColor(Color4F(0,1,0,1))
     local emitter3 = CCParticleSystemQuad:create("Particles/LavaFlow.plist")
-    emitter3:setStartColor(ccc4f(0,0,1,1))
+    emitter3:setStartColor(Color4F(0,0,1,1))
 
     emitter1:setPosition(ccp(s.width / 1.25, s.height / 1.25))
     emitter2:setPosition(ccp(s.width / 2, s.height / 2))
@@ -647,10 +647,10 @@ local function DemoBigFlower()
     emitter:setEndSpinVar(0)
 
     -- color of particles
-    emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(80.0)
@@ -720,10 +720,10 @@ local function DemoRotFlower()
     emitter:setEndSpinVar(2000)
 
     -- color of particles
-	emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+	emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(30.0)
@@ -789,10 +789,10 @@ local function DemoModernArt()
     emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
 
     -- color of particles
-	emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+	emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(1.0)
@@ -880,7 +880,7 @@ end
 local function DemoParticleFromFile(name)
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -902,7 +902,7 @@ end
 local function RadiusMode1()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -947,10 +947,10 @@ local function RadiusMode1()
     emitter:setEndSpinVar(0)
 
     -- color of particles
-    emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(32)
@@ -973,7 +973,7 @@ end
 local function RadiusMode2()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1017,10 +1017,10 @@ local function RadiusMode2()
     emitter:setEndSpinVar(0)
 
     -- color of particles
-    emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(32)
@@ -1043,7 +1043,7 @@ end
 local function Issue704()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1088,10 +1088,10 @@ local function Issue704()
     emitter:setEndSpinVar(0)
 
     -- color of particles
-    emitter:setStartColor(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setStartColorVar(ccc4f(0.5, 0.5, 0.5, 1.0))
-    emitter:setEndColor(ccc4f(0.1, 0.1, 0.1, 0.2))
-    emitter:setEndColorVar(ccc4f(0.1, 0.1, 0.1, 0.2))
+    emitter:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setStartColorVar(Color4F(0.5, 0.5, 0.5, 1.0))
+    emitter:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    emitter:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
 
     -- size, in pixels
     emitter:setStartSize(16)
@@ -1138,7 +1138,7 @@ end
 local function Issue870()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1162,7 +1162,7 @@ end
 local function MultipleParticleSystems()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1188,7 +1188,7 @@ end
 local function MultipleParticleSystemsBatched()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1250,7 +1250,7 @@ end
 local function AddAndDeleteParticleSystems()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 
@@ -1308,7 +1308,7 @@ end
 local function ReorderParticleSystems()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background ,true)
     background = nil
 
@@ -1357,7 +1357,7 @@ local function ReorderParticleSystems()
         particleSystem:setEndSpinVar(0)
 
         -- color of particles
-		local startColor = ccColor4F:new()
+		local startColor = Color4F:new()
 		startColor.r = 0
 		startColor.g = 0
 		startColor.b = 0
@@ -1368,11 +1368,11 @@ local function ReorderParticleSystems()
 		end
 
         particleSystem:setStartColor(startColor)
-        particleSystem:setStartColorVar(ccc4f(0, 0, 0, 0))
+        particleSystem:setStartColorVar(Color4F(0, 0, 0, 0))
 
 		local endColor = startColor
         particleSystem:setEndColor(endColor)
-        particleSystem:setEndColorVar(ccc4f(0, 0, 0, 0))
+        particleSystem:setEndColorVar(Color4F(0, 0, 0, 0))
 
         -- size, in pixels
         particleSystem:setStartSize(32)
@@ -1405,23 +1405,23 @@ end
 local function PremultipliedAlphaTest()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 255))
+	layer:setColor(Color3B(0, 0, 255))
     layer:removeChild(background, true)
     background = nil
 
     emitter = CCParticleSystemQuad:create("Particles/BoilingFoam.plist")
 
-    local tBlendFunc = ccBlendFunc:new()
+    local tBlendFunc = BlendFunc:new()
 	tBlendFunc.src = 1 --GL_ONE
 	tBlendFunc.dst = 0x0303 --GL_ONE_MINUS_SRC_ALPHA
     emitter:setBlendFunc(tBlendFunc)
 
     --assert(emitter:getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless")
 
-    emitter:setStartColor(ccc4f(1, 1, 1, 1))
-    emitter:setEndColor(ccc4f(1, 1, 1, 0))
-    emitter:setStartColorVar(ccc4f(0, 0, 0, 0))
-    emitter:setEndColorVar(ccc4f(0, 0, 0, 0))
+    emitter:setStartColor(Color4F(1, 1, 1, 1))
+    emitter:setEndColor(Color4F(1, 1, 1, 0))
+    emitter:setStartColorVar(Color4F(0, 0, 0, 0))
+    emitter:setEndColorVar(Color4F(0, 0, 0, 0))
 
     layer:addChild(emitter, 10)
 
@@ -1436,7 +1436,7 @@ end
 local function PremultipliedAlphaTest2()
 	local layer = getBaseLayer()
 
-	layer:setColor(ccc3(0, 0, 0))
+	layer:setColor(Color3B(0, 0, 0))
     layer:removeChild(background, true)
     background = nil
 

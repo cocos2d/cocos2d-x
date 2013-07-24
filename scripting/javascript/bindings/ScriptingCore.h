@@ -10,6 +10,7 @@
 #define __SCRIPTING_CORE_H__
 
 #include <assert.h>
+#include <memory>
 #include "cocos2d.h"
 #include "js_bindings_config.h"
 #include "js_bindings_core.h"
@@ -27,13 +28,13 @@ typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 
-class SimpleRunLoop : public CCObject
+class SimpleRunLoop : public Object
 {
 public:
 	void update(float d);
 };
 
-class ScriptingCore : public CCScriptEngineProtocol
+class ScriptingCore : public ScriptEngineProtocol
 {
 	JSRuntime *rt_;
 	JSContext *cx_;
@@ -56,10 +57,10 @@ public:
     virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
 
     /**
-     @brief Remove CCObject from lua state
+     @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByCCObject(CCObject* pObj);
+    virtual void removeScriptObjectByObject(Object* pObj);
 
     /**
      @brief Execute script code contained in the given string.
@@ -86,20 +87,11 @@ public:
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
-    virtual int executeNodeEvent(CCNode* pNode, int nAction);
-    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
+    virtual int sendEvent(ScriptEvent* message) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
 
-    bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
+    bool executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
@@ -149,11 +141,11 @@ public:
 
 
     int executeCustomTouchEvent(int eventType,
-                                CCTouch *pTouch, JSObject *obj, jsval &retval);
+                                Touch *pTouch, JSObject *obj, jsval &retval);
     int executeCustomTouchEvent(int eventType,
-                                CCTouch *pTouch, JSObject *obj);
+                                Touch *pTouch, JSObject *obj);
     int executeCustomTouchesEvent(int eventType,
-                                  CCSet *pTouches, JSObject *obj);
+                                  Set *pTouches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */
@@ -204,6 +196,13 @@ public:
     
  private:
     void string_report(jsval val);
+    
+    int handleTouchesEvent(void* data);
+    int handleTouchEvent(void* data);
+    int handleNodeEvent(void* data);
+    int handleMenuClickedEvent(void* data);
+    int handleAccelerometerEvent(void* data);
+    int handleKeypadEvent(void* data);
 };
 
 // some utility functions
@@ -213,37 +212,37 @@ JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
 JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
 JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_ccpoint(JSContext *cx, jsval v, CCPoint* ret);
-JSBool jsval_to_ccrect(JSContext *cx, jsval v, CCRect* ret);
-JSBool jsval_to_ccsize(JSContext *cx, jsval v, CCSize* ret);
-JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, ccColor4B* ret);
-JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, ccColor4F* ret);
-JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, ccColor3B* ret);
-JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, CCPoint **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, CCArray** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, CCDictionary** ret);
-JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, CCAcceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, CCArray** ret);
-JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, CCAffineTransform* ret);
-JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out );
+JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret);
+JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret);
+JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret);
+JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret);
+JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret);
+JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret);
+JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints);
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret);
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret);
+JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret);
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** ret);
+JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret);
+JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition* ret );
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, string& v);
+jsval std_string_to_jsval(JSContext* cx, const string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
-jsval ccpoint_to_jsval(JSContext* cx, CCPoint& v);
-jsval ccrect_to_jsval(JSContext* cx, CCRect& v);
-jsval ccsize_to_jsval(JSContext* cx, CCSize& v);
-jsval cccolor4b_to_jsval(JSContext* cx, ccColor4B& v);
-jsval cccolor4f_to_jsval(JSContext* cx, ccColor4F& v);
-jsval cccolor3b_to_jsval(JSContext* cx, const ccColor3B& v);
-jsval ccdictionary_to_jsval(JSContext* cx, CCDictionary *dict);
-jsval ccarray_to_jsval(JSContext* cx, CCArray *arr);
-jsval ccacceleration_to_jsval(JSContext* cx, CCAcceleration& v);
-jsval ccaffinetransform_to_jsval(JSContext* cx, CCAffineTransform& t);
-
+jsval ccpoint_to_jsval(JSContext* cx, const Point& v);
+jsval ccrect_to_jsval(JSContext* cx, const Rect& v);
+jsval ccsize_to_jsval(JSContext* cx, const Size& v);
+jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v);
+jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v);
+jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v);
+jsval ccdictionary_to_jsval(JSContext* cx, Dictionary *dict);
+jsval ccarray_to_jsval(JSContext* cx, Array *arr);
+jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v);
+jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t);
+jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t);
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 JSBool jsStartDebugger(JSContext* cx, unsigned argc, jsval* vp);
@@ -308,6 +307,34 @@ private:
 	/* Copy and assignment are not supported. */
     JSStringWrapper(const JSStringWrapper &another);
     JSStringWrapper &operator=(const JSStringWrapper &another);
+};
+
+// wraps a function and "this" object
+class JSFunctionWrapper
+{
+    JSContext *_cx;
+    JSObject *_jsthis;
+    jsval _fval;
+public:
+    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+    : _cx(cx)
+    , _jsthis(jsthis)
+    , _fval(fval)
+    {
+        JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+        JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    }
+    ~JSFunctionWrapper() {
+        JS_RemoveValueRoot(this->_cx, &this->_fval);
+        JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+    }
+    JSBool invoke(unsigned int argc, jsval *argv, jsval &rval) {
+        return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+    }
+private:
+    /* Copy and assignment are not supported. */
+    JSFunctionWrapper(const JSFunctionWrapper &another);
+    JSFunctionWrapper &operator=(const JSFunctionWrapper &another);
 };
 
 JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);

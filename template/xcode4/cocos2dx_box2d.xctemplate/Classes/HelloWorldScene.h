@@ -12,36 +12,36 @@
 #include "cocos2d.h"
 #include "Box2D.h"
 
-class PhysicsSprite : public cocos2d::CCSprite
+class PhysicsSprite : public cocos2d::Sprite
 {
 public:
     PhysicsSprite();
     void setPhysicsBody(b2Body * body);
     virtual bool isDirty(void);
-    virtual cocos2d::CCAffineTransform nodeToParentTransform(void);
+    virtual cocos2d::AffineTransform nodeToParentTransform(void);
 private:
-    b2Body* m_pBody;    // strong ref
+    b2Body* _body;    // strong ref
 };
 
-class HelloWorld : public cocos2d::CCLayer {
+class HelloWorld : public cocos2d::Layer {
 public:
     ~HelloWorld();
     HelloWorld();
     
     // returns a Scene that contains the HelloWorld as the only child
-    static cocos2d::CCScene* scene();
+    static cocos2d::Scene* scene();
     
     void initPhysics();
     // adds a new sprite at a given coordinate
-    void addNewSpriteAtPosition(cocos2d::CCPoint p);
+    void addNewSpriteAtPosition(cocos2d::Point p);
 
     virtual void draw();
-    virtual void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+    virtual void ccTouchesEnded(cocos2d::Set* touches, cocos2d::Event* event);
     void update(float dt);
     
 private:
     b2World* world;
-    cocos2d::CCTexture2D* m_pSpriteTexture; // weak ref
+    cocos2d::Texture2D* _spriteTexture; // weak ref
 };
 
 #endif // __HELLO_WORLD_H__

@@ -19,42 +19,42 @@
 
 NS_CC_EXT_BEGIN
 
-CCNodeLoaderLibrary::CCNodeLoaderLibrary() {
+NodeLoaderLibrary::NodeLoaderLibrary() {
 
 }
 
-CCNodeLoaderLibrary::~CCNodeLoaderLibrary() {
+NodeLoaderLibrary::~NodeLoaderLibrary() {
     this->purge(true);
 }
 
-void CCNodeLoaderLibrary::registerDefaultCCNodeLoaders() {
-    this->registerCCNodeLoader("CCNode", CCNodeLoader::loader());
-    this->registerCCNodeLoader("CCLayer", CCLayerLoader::loader());
-    this->registerCCNodeLoader("CCLayerColor", CCLayerColorLoader::loader());
-    this->registerCCNodeLoader("CCLayerGradient", CCLayerGradientLoader::loader());
-    this->registerCCNodeLoader("CCSprite", CCSpriteLoader::loader());
-    this->registerCCNodeLoader("CCLabelBMFont", CCLabelBMFontLoader::loader());
-    this->registerCCNodeLoader("CCLabelTTF", CCLabelTTFLoader::loader());
-    this->registerCCNodeLoader("CCScale9Sprite", CCScale9SpriteLoader::loader());
-    this->registerCCNodeLoader("CCScrollView", CCScrollViewLoader::loader());
-    this->registerCCNodeLoader("CCBFile", CCBFileLoader::loader());
-    this->registerCCNodeLoader("CCMenu", CCMenuLoader::loader());
-    this->registerCCNodeLoader("CCMenuItemImage", CCMenuItemImageLoader::loader());
-    this->registerCCNodeLoader("CCControlButton", CCControlButtonLoader::loader());
-    this->registerCCNodeLoader("CCParticleSystemQuad", CCParticleSystemQuadLoader::loader());
+void NodeLoaderLibrary::registerDefaultNodeLoaders() {
+    this->registerNodeLoader("CCNode", NodeLoader::loader());
+    this->registerNodeLoader("CCLayer", LayerLoader::loader());
+    this->registerNodeLoader("CCLayerColor", LayerColorLoader::loader());
+    this->registerNodeLoader("CCLayerGradient", LayerGradientLoader::loader());
+    this->registerNodeLoader("CCSprite", SpriteLoader::loader());
+    this->registerNodeLoader("CCLabelBMFont", LabelBMFontLoader::loader());
+    this->registerNodeLoader("CCLabelTTF", LabelTTFLoader::loader());
+    this->registerNodeLoader("CCScale9Sprite", Scale9SpriteLoader::loader());
+    this->registerNodeLoader("CCScrollView", ScrollViewLoader::loader());
+    this->registerNodeLoader("CCBFile", CCBFileLoader::loader());
+    this->registerNodeLoader("CCMenu", MenuLoader::loader());
+    this->registerNodeLoader("CCMenuItemImage", MenuItemImageLoader::loader());
+    this->registerNodeLoader("CCControlButton", ControlButtonLoader::loader());
+    this->registerNodeLoader("CCParticleSystemQuad", ParticleSystemQuadLoader::loader());
 }
 
-void CCNodeLoaderLibrary::registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader) {
-    pCCNodeLoader->retain();
-    this->mCCNodeLoaders.insert(CCNodeLoaderMapEntry(pClassName, pCCNodeLoader));
+void NodeLoaderLibrary::registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) {
+    pNodeLoader->retain();
+    this->mNodeLoaders.insert(NodeLoaderMapEntry(pClassName, pNodeLoader));
 }
 
-void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
-    CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
-    if (ccNodeLoadersIterator != this->mCCNodeLoaders.end())
+void NodeLoaderLibrary::unregisterNodeLoader(const char * pClassName) {
+    NodeLoaderMap::iterator ccNodeLoadersIterator = this->mNodeLoaders.find(pClassName);
+    if (ccNodeLoadersIterator != this->mNodeLoaders.end())
     {
         ccNodeLoadersIterator->second->release();
-        mCCNodeLoaders.erase(ccNodeLoadersIterator);
+        mNodeLoaders.erase(ccNodeLoadersIterator);
     }
     else
     {
@@ -62,42 +62,42 @@ void CCNodeLoaderLibrary::unregisterCCNodeLoader(const char * pClassName) {
     }
 }
 
-CCNodeLoader * CCNodeLoaderLibrary::getCCNodeLoader(const char* pClassName) {
-    CCNodeLoaderMap::iterator ccNodeLoadersIterator = this->mCCNodeLoaders.find(pClassName);
-    assert(ccNodeLoadersIterator != this->mCCNodeLoaders.end());
+NodeLoader * NodeLoaderLibrary::getNodeLoader(const char* pClassName) {
+    NodeLoaderMap::iterator ccNodeLoadersIterator = this->mNodeLoaders.find(pClassName);
+    assert(ccNodeLoadersIterator != this->mNodeLoaders.end());
     return ccNodeLoadersIterator->second;
 }
 
-void CCNodeLoaderLibrary::purge(bool pReleaseCCNodeLoaders) {
-    if(pReleaseCCNodeLoaders) {
-        for(CCNodeLoaderMap::iterator it = this->mCCNodeLoaders.begin(); it != this->mCCNodeLoaders.end(); it++) {
+void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
+    if(pReleaseNodeLoaders) {
+        for(NodeLoaderMap::iterator it = this->mNodeLoaders.begin(); it != this->mNodeLoaders.end(); it++) {
             it->second->release();
         }
     }
-    this->mCCNodeLoaders.clear();
+    this->mNodeLoaders.clear();
 }
 
 
 
-static CCNodeLoaderLibrary * sSharedCCNodeLoaderLibrary = NULL;
+static NodeLoaderLibrary * sSharedNodeLoaderLibrary = NULL;
 
-CCNodeLoaderLibrary * CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary() {
-    if(sSharedCCNodeLoaderLibrary == NULL) {
-        sSharedCCNodeLoaderLibrary = new CCNodeLoaderLibrary();
+NodeLoaderLibrary * NodeLoaderLibrary::sharedNodeLoaderLibrary() {
+    if(sSharedNodeLoaderLibrary == NULL) {
+        sSharedNodeLoaderLibrary = new NodeLoaderLibrary();
 
-        sSharedCCNodeLoaderLibrary->registerDefaultCCNodeLoaders();
+        sSharedNodeLoaderLibrary->registerDefaultNodeLoaders();
     }
-    return sSharedCCNodeLoaderLibrary;
+    return sSharedNodeLoaderLibrary;
 }
 
-void CCNodeLoaderLibrary::purgeSharedCCNodeLoaderLibrary() {
-    CC_SAFE_DELETE(sSharedCCNodeLoaderLibrary);
+void NodeLoaderLibrary::purgeSharedNodeLoaderLibrary() {
+    CC_SAFE_DELETE(sSharedNodeLoaderLibrary);
 }
 
-CCNodeLoaderLibrary * CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary() {
-    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::library();
+NodeLoaderLibrary * NodeLoaderLibrary::newDefaultNodeLoaderLibrary() {
+    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::library();
     
-    ccNodeLoaderLibrary->registerDefaultCCNodeLoaders();
+    ccNodeLoaderLibrary->registerDefaultNodeLoaders();
 
     return ccNodeLoaderLibrary;
 }

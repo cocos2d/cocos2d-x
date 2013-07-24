@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2012+2013 cocos2d+x.org
+Copyright (c) 2013 cocos2d+x.org
 
 http://www.cocos2d+x.org
 
@@ -25,17 +25,18 @@ THE SOFTWARE.
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    kShareSuccess = 0,
-    kShareFail,
-    kShareCancel,
-    kShareTimeOut,
-} ShareResult;
+    kSubmitScoreSuccess = 1,
+    kSubmitScoreFailed,
+
+    kUnlockAchiSuccess,
+    kUnlockAchiFailed,
+} SocialResult;
 
 @interface SocialWrapper : NSObject
 {
     
 }
 
-+ (void) onShareResult:(id) obj withRet:(ShareResult) ret withMsg:(NSString*) msg;
++ (void) onSocialResult:(id) obj withRet:(SocialResult) ret withMsg:(NSString*) msg;
 
 @end

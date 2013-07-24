@@ -24,11 +24,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    EGLView* eglView = EGLView::getInstance();
     eglView->setViewName("WatermelonWithMe");
     eglView->setFrameSize(800, 450);
 
-    int ret = CCApplication::sharedApplication()->run();
+    int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();

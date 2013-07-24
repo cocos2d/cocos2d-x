@@ -9,12 +9,12 @@
 
 bool Bug899Layer::init()
 {
-//    CCDirector::sharedDirector()->enableRetinaDisplay(true);
+//    Director::getInstance()->enableRetinaDisplay(true);
     if (BugsTestBaseLayer::init())
     {
-        CCSprite *bg = CCSprite::create("Images/bugs/RetinaDisplay.jpg");
+        Sprite *bg = Sprite::create("Images/bugs/RetinaDisplay.jpg");
         addChild(bg, 0);
-        bg->setAnchorPoint(CCPointZero);
+        bg->setAnchorPoint(Point::ZERO);
 
         return true;
     }

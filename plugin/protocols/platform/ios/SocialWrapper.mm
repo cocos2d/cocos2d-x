@@ -30,16 +30,20 @@ using namespace cocos2d::plugin;
 
 @implementation SocialWrapper
 
-+ (void) onShareResult:(id) obj withRet:(ShareResult) ret withMsg:(NSString*) msg
++ (void) onSocialResult:(id) obj withRet:(SocialResult) ret withMsg:(NSString*) msg
 {
     PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
     ProtocolSocial* pSocial = dynamic_cast<ProtocolSocial*>(pPlugin);
     if (pSocial) {
-        const char* chMsg = [msg UTF8String];
-        ShareResultCode cRet = (ShareResultCode) ret;
-        pSocial->onShareResult(cRet, chMsg);
+        SocialListener* pListener = pSocial->getListener();
+        if (NULL != pListener)
+        {
+            const char* chMsg = [msg UTF8String];
+            SocialRetCode cRet = (SocialRetCode) ret;
+            pListener->onSocialResult(cRet, chMsg);
+        }
     } else {
-        PluginUtilsIOS::outputLog("Can't find the C++ object of the social plugin");
+        PluginUtilsIOS::outputLog("Can't find the C++ object of the Social plugin");
     }
 }
 

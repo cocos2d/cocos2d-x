@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "Box2D/Box2D.h"
 #include "../external_tool/GLES-Render.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
 
 class Contact
@@ -75,53 +75,53 @@ public:
 
 
 
-CCPhysicsWorld *CCPhysicsWorld::s_PhysicsWorld = NULL;
+PhysicsWorld *PhysicsWorld::s_PhysicsWorld = NULL;
 
 
-CCPhysicsWorld *CCPhysicsWorld::sharedPhysicsWorld()
+PhysicsWorld *PhysicsWorld::sharedPhysicsWorld()
 {
     if (s_PhysicsWorld == NULL)
     {
-        s_PhysicsWorld = new CCPhysicsWorld();
+        s_PhysicsWorld = new PhysicsWorld();
         s_PhysicsWorld->initNoGravityWorld();
     }
 
     return s_PhysicsWorld;
 }
 
-void CCPhysicsWorld::purgePhysicsWorld()
+void PhysicsWorld::purgePhysicsWorld()
 {
     delete s_PhysicsWorld;
     s_PhysicsWorld = NULL;
 }
 
-CCPhysicsWorld::CCPhysicsWorld()
-    : m_pNoGravityWorld(NULL)
-    , m_pDebugDraw(NULL)
+PhysicsWorld::PhysicsWorld()
+    : _noGravityWorld(NULL)
+    , _debugDraw(NULL)
 {
 }
 
-CCPhysicsWorld::~CCPhysicsWorld()
+PhysicsWorld::~PhysicsWorld()
 {
-    CC_SAFE_DELETE(m_pDebugDraw);
-    CC_SAFE_DELETE(m_pNoGravityWorld);
-    CC_SAFE_DELETE(m_pContactListener);
+    CC_SAFE_DELETE(_debugDraw);
+    CC_SAFE_DELETE(_noGravityWorld);
+    CC_SAFE_DELETE(_contactListener);
 }
 
-void CCPhysicsWorld::initNoGravityWorld()
+void PhysicsWorld::initNoGravityWorld()
 {
     b2Vec2 noGravity(0, 0);
 
-    m_pNoGravityWorld = new b2World(noGravity);
-    m_pNoGravityWorld->SetAllowSleeping(true);
+    _noGravityWorld = new b2World(noGravity);
+    _noGravityWorld->SetAllowSleeping(true);
 
-    m_pContactListener = new ContactListener();
-    m_pNoGravityWorld->SetContactListener(m_pContactListener);
+    _contactListener = new ContactListener();
+    _noGravityWorld->SetContactListener(_contactListener);
 
 
 #if ENABLE_PHYSICS_DEBUG
-    m_pDebugDraw = new GLESDebugDraw( PT_RATIO );
-    m_pNoGravityWorld->SetDebugDraw(m_pDebugDraw);
+    _debugDraw = new GLESDebugDraw( PT_RATIO );
+    _noGravityWorld->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
@@ -129,37 +129,37 @@ void CCPhysicsWorld::initNoGravityWorld()
     //        flags += b2Draw::e_aabbBit;
     //        flags += b2Draw::e_pairBit;
     //        flags += b2Draw::e_centerOfMassBit;
-    m_pDebugDraw->SetFlags(flags);
+    _debugDraw->SetFlags(flags);
 #endif
 }
 
-b2World *CCPhysicsWorld::getNoGravityWorld()
+b2World *PhysicsWorld::getNoGravityWorld()
 {
-    return m_pNoGravityWorld;
+    return _noGravityWorld;
 }
 
-void CCPhysicsWorld::update(float dt)
+void PhysicsWorld::update(float dt)
 {
-    m_pNoGravityWorld->Step(dt, 0, 0);
+    _noGravityWorld->Step(dt, 0, 0);
 
-    for (std::list<Contact>::iterator it = m_pContactListener->contact_list.begin(); it != m_pContactListener->contact_list.end(); ++it)
+    for (std::list<Contact>::iterator it = _contactListener->contact_list.begin(); it != _contactListener->contact_list.end(); ++it)
     {
         Contact &contact = *it;
 
         b2Body *b2a = contact.fixtureA->GetBody();
         b2Body *b2b = contact.fixtureB->GetBody();
 
-        CCBone *ba = (CCBone *)b2a->GetUserData();
-        CCBone *bb = (CCBone *)b2b->GetUserData();
+        Bone *ba = (Bone *)b2a->GetUserData();
+        Bone *bb = (Bone *)b2b->GetUserData();
 
         BoneColliderSignal.emit(ba, bb);
     }
 
 }
 
-void CCPhysicsWorld::drawDebug()
+void PhysicsWorld::drawDebug()
 {
-    m_pNoGravityWorld->DrawDebugData();
+    _noGravityWorld->DrawDebugData();
 }
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {

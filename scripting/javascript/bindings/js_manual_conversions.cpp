@@ -12,19 +12,19 @@
 JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 {
 #ifdef __LP64__
+
+    // begin
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
+	JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), cx, JS_FALSE, "Invalid Typed Array length");
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "jsb: Not a TypedArray object");
-
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), "jsb: Invalid Typed Array lenght");
-	
-	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
-	uint64 ret =  arg_array[0];
+	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+	uint64_t ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
-	
+
 #else
 	assert( sizeof(int)==4);
 	int32_t ret;
@@ -52,19 +52,18 @@ JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 #ifdef __LP64__
 	// compatibility check
 	assert( sizeof(long)==8);
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
+	JSString *jsstr = JS_ValueToString(cx, vp);
+	JSB_PRECONDITION2(jsstr, cx, JS_FALSE, "Error converting value to string");
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "jsb: Not a TypedArray object");
+	char *str = JS_EncodeString(cx, jsstr);
+	JSB_PRECONDITION2(str, cx, JS_FALSE, "Error encoding string");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), "jsb: Invalid Typed Array lenght");
-	
-	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
-	long ret =  arg_array[0];
-	ret = ret << 32;
-	ret |= arg_array[1];
-	
+	char *endptr;
+	long ret = strtol(str, &endptr, 10);
+
+	*r = ret;
+	return JS_TRUE;
+
 #else
 	// compatibility check
 	assert( sizeof(int)==4);
@@ -97,11 +96,11 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 {
 #ifdef __LP64__
 	uint64_t number = (uint64_t)opaque;
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
-	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
+	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray);
 	buffer[0] = number >> 32;
 	buffer[1] = number & 0xffffffff;
-	return OBJECT_TO_JSVAL(typedArray);		
+	return OBJECT_TO_JSVAL(typedArray);
 #else
 	assert(sizeof(int)==4);
 	int32_t number = (int32_t) opaque;
@@ -116,7 +115,7 @@ jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *
 	jsobj = jsb_get_jsobject_for_proxy(handle);
 	if( !jsobj ) {
 		jsobj = JS_NewObject(cx, klass, object, NULL);
-		CCAssert(jsobj, "Invalid object");
+		CCASSERT(jsobj, "Invalid object");
 		jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
 		jsb_set_jsobject_for_proxy(jsobj, handle);
 	}
@@ -198,14 +197,14 @@ jsval uint_to_jsval( JSContext *cx, unsigned int number )
 jsval long_to_jsval( JSContext *cx, long number )
 {
 #ifdef __LP64__
-	NSCAssert( sizeof(long)==8, @"Error!");
-    
+	assert( sizeof(long)==8);
+
 	char chr[128];
 	snprintf(chr, sizeof(chr)-1, "%ld", number);
 	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
 	return STRING_TO_JSVAL(ret_obj);
 #else
-	CCAssert( sizeof(int)==4, "Error!");
+	CCASSERT( sizeof(int)==4, "Error!");
 	return INT_TO_JSVAL(number);
 #endif
 }
@@ -219,7 +218,7 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 	return STRING_TO_JSVAL(ret_obj);
     
 #else
-	CCAssert( sizeof(long long)==8, "Error!");
+	CCASSERT( sizeof(long long)==8, "Error!");
 	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
 	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray, cx);
 	buffer[0] = number >> 32;
@@ -238,8 +237,8 @@ JSBool jsval_to_charptr( JSContext *cx, jsval vp, const char **ret )
 
     JSStringWrapper strWrapper(jsstr);
     
-    // XXX: It is converted to CCString and then back to char* to autorelease the created object.
-    CCString *tmp = CCString::create(strWrapper.get());
+    // XXX: It is converted to String and then back to char* to autorelease the created object.
+    String *tmp = String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, JS_FALSE, "Error creating string from UTF8");
 

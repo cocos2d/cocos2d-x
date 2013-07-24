@@ -1,5 +1,5 @@
 /*
- * CCControlButtonTest.h
+ * ControlButtonTest.h
  *
  * Copyright (c) 2011 Yannick Loriot
  *
@@ -30,42 +30,42 @@
 
 USING_NS_CC_EXT;
 
-class CCControlButtonTest_HelloVariableSize : public CCControlScene
+class ControlButtonTest_HelloVariableSize : public ControlScene
 {
 public:
     bool init();
     /** Creates and return a button with a default background and title color. */
-    CCControlButton *standardButtonWithTitle(const char * title);
+    ControlButton *standardButtonWithTitle(const char * title);
 
-    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_HelloVariableSize)
+    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_HelloVariableSize)
 };
 
-class CCControlButtonTest_Event : public CCControlScene
+class ControlButtonTest_Event : public ControlScene
 {
 public:
-    CCControlButtonTest_Event();
-    ~CCControlButtonTest_Event();
+    ControlButtonTest_Event();
+    ~ControlButtonTest_Event();
     bool init();
-    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchDragInsideAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchDragOutsideAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchDragEnterAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchDragExitAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchUpInsideAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchUpOutsideAction(CCObject *sender, CCControlEvent controlEvent);
-    void touchCancelAction(CCObject *sender, CCControlEvent controlEvent);
+    void touchDownAction(Object *sender, ControlEvent controlEvent);
+    void touchDragInsideAction(Object *sender, ControlEvent controlEvent);
+    void touchDragOutsideAction(Object *sender, ControlEvent controlEvent);
+    void touchDragEnterAction(Object *sender, ControlEvent controlEvent);
+    void touchDragExitAction(Object *sender, ControlEvent controlEvent);
+    void touchUpInsideAction(Object *sender, ControlEvent controlEvent);
+    void touchUpOutsideAction(Object *sender, ControlEvent controlEvent);
+    void touchCancelAction(Object *sender, ControlEvent controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Event)
+    CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayValueLabel, DisplayValueLabel)
+    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Event)
 };
 
 
-class CCControlButtonTest_Styling : public CCControlScene
+class ControlButtonTest_Styling : public ControlScene
 {
 public:
     bool init();
-    CCControlButton *standardButtonWithTitle(const char *title);
-    CONTROL_SCENE_CREATE_FUNC(CCControlButtonTest_Styling)
+    ControlButton *standardButtonWithTitle(const char *title);
+    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Styling)
 };
 
 

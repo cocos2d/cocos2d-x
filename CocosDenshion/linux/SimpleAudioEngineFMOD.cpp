@@ -1,3 +1,5 @@
+#ifndef OPENAL
+
 #include "SimpleAudioEngine.h"
 #include "FmodAudioPlayer.h"
 #include "cocos2d.h"
@@ -14,7 +16,7 @@ SimpleAudioEngine::SimpleAudioEngine() {
 SimpleAudioEngine::~SimpleAudioEngine() {
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine() {
+SimpleAudioEngine* SimpleAudioEngine::getInstance() {
 	static SimpleAudioEngine s_SharedEngine;
 	return &s_SharedEngine;
 }
@@ -30,7 +32,7 @@ void SimpleAudioEngine::end() {
 void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath,
 		bool bLoop) {
 	// Changing file path to full path
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 	oAudioPlayer->playBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
@@ -60,7 +62,7 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying() {
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
 	// Changing file path to full path
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 	return oAudioPlayer->preloadBackgroundMusic(fullPath.c_str());
 }
 
@@ -68,11 +70,11 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
-		bool bLoop) {
-	// Changing file path to full path
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
-	return oAudioPlayer->playEffect(fullPath.c_str(), bLoop);
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                           float pitch, float pan, float gain) {
+    // Changing file path to full path
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
+    return oAudioPlayer->playEffect(fullPath.c_str(), bLoop, pitch, pan, gain);
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
@@ -81,13 +83,13 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath) {
 	// Changing file path to full path
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 	return oAudioPlayer->preloadEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
 	// Changing file path to full path
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
 	return oAudioPlayer->unloadEffect(fullPath.c_str());
 }
 
@@ -135,3 +137,5 @@ void SimpleAudioEngine::setEffectsVolume(float volume) {
 
 
 } // end of namespace CocosDenshion
+
+#endif

@@ -6,9 +6,9 @@
 
 NS_CC_EXT_BEGIN
 
-extern CCPoint getAbsolutePosition(const CCPoint &pt, int nType, const CCSize &containerSize, const char *pPropName);
+extern Point getAbsolutePosition(const Point &pt, int nType, const Size &containerSize, const char *pPropName);
 
-extern void setRelativeScale(CCNode *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName);
+extern void setRelativeScale(Node *pNode, float fScaleX, float fScaleY, int nType, const char* pPropName);
 
 NS_CC_EXT_END
 

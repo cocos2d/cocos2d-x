@@ -89,12 +89,12 @@
 		<link>
 			<name>src/Classes</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/HelloLua/Classes</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1360216703005</id>
+			<id>1373009863403</id>
 			<name></name>
 			<type>26</type>
 			<matcher>

@@ -7,12 +7,12 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBSequenceProperty : public CCObject
+class CCBSequenceProperty : public Object
 {
 private:
     std::string mName;
     int mType;
-    CCArray *mKeyframes;
+    Array *mKeyframes;
     
 public:
     CCBSequenceProperty();
@@ -26,7 +26,7 @@ public:
     int getType();
     void setType(int nType);
     
-    CCArray* getKeyframes();
+    Array* getKeyframes();
 };
 
 NS_CC_EXT_END

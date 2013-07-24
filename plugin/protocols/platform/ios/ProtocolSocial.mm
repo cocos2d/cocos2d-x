@@ -28,7 +28,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 ProtocolSocial::ProtocolSocial()
-: m_pListener(NULL)
+: _listener(NULL)
 {
 }
 
@@ -56,16 +56,40 @@ void ProtocolSocial::configDeveloperInfo(TSocialDeveloperInfo devInfo)
         }
     }
 }
-
-void ProtocolSocial::share(TShareInfo info)
+    
+void ProtocolSocial::submitScore(const char* leadboardID, long score)
 {
-    if (info.empty())
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceSocial)]) {
+        NSObject<InterfaceSocial>* curObj = ocObj;
+        
+        NSString* pID = [NSString stringWithUTF8String:leadboardID];
+        [curObj submitScore:pID withScore:score];
+    }
+}
+
+void ProtocolSocial::showLeaderboard(const char* leaderboardID)
+{
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    assert(pData != NULL);
+    
+    id ocObj = pData->obj;
+    if ([ocObj conformsToProtocol:@protocol(InterfaceSocial)]) {
+        NSObject<InterfaceSocial>* curObj = ocObj;
+        
+        NSString* pID = [NSString stringWithUTF8String:leaderboardID];
+        [curObj showLeaderboard:pID];
+    }
+}
+
+void ProtocolSocial::unlockAchievement(TAchievementInfo achInfo)
+{
+    if (achInfo.empty())
     {
-        if (NULL != m_pListener)
-        {
-            onShareResult(kShareFail, "Share info error");
-        }
-        PluginUtilsIOS::outputLog("The Share info of %s is empty!", this->getPluginName());
+        PluginUtilsIOS::outputLog("ProtocolSocial", "The achievement info is empty!");
         return;
     }
     else
@@ -76,28 +100,16 @@ void ProtocolSocial::share(TShareInfo info)
         id ocObj = pData->obj;
         if ([ocObj conformsToProtocol:@protocol(InterfaceSocial)]) {
             NSObject<InterfaceSocial>* curObj = ocObj;
-            NSMutableDictionary* pDict = PluginUtilsIOS::createDictFromMap(&info);
-            [curObj share:pDict];
+            
+            NSMutableDictionary* pDict = PluginUtilsIOS::createDictFromMap(&achInfo);
+            [curObj unlockAchievement:pDict];
         }
     }
 }
 
-void ProtocolSocial::setResultListener(ShareResultListener* pListener)
+void ProtocolSocial::showAchievements()
 {
-	m_pListener = pListener;
-}
-
-void ProtocolSocial::onShareResult(ShareResultCode ret, const char* msg)
-{
-    if (m_pListener)
-    {
-    	m_pListener->onShareResult(ret, msg);
-    }
-    else
-    {
-        PluginUtilsIOS::outputLog("Share result listener of %s is null!", this->getPluginName());
-    }
-    PluginUtilsIOS::outputLog("Share result of %s is : %d(%s)", this->getPluginName(), (int) ret, msg);
+    PluginUtilsIOS::callOCFunctionWithName(this, "showAchievements");
 }
 
 }} // namespace cocos2d { namespace plugin {

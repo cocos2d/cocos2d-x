@@ -43,8 +43,8 @@ static AppDelegate s_sharedApplication;
 			defer:YES];
 		
 		// allocate our GL view
-		// (isn't there already a shared EAGLView?)
-		glView = [[EAGLView alloc] initWithFrame:rect];
+		// (isn't there already a shared CCEAGLView?)
+		glView = [[CCEAGLView alloc] initWithFrame:rect];
 
 		// set window parameters
 		[window becomeFirstResponder];
@@ -55,7 +55,7 @@ static AppDelegate s_sharedApplication;
         
         [glView setFrameZoomFactor:0.4];
 
-		cocos2d::CCApplication::sharedApplication()->run();
+		cocos2d::Application::getInstance()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
@@ -65,7 +65,7 @@ static AppDelegate s_sharedApplication;
 
 	-(void) dealloc
 	{
-		cocos2d::CCDirector::sharedDirector()->end();
+		cocos2d::Director::getInstance()->end();
 		[super dealloc];
 	}
 
@@ -74,13 +74,13 @@ static AppDelegate s_sharedApplication;
 
 	-(IBAction) toggleFullScreen:(id)sender
 	{
-		EAGLView* pView = [EAGLView sharedEGLView];
+		CCEAGLView* pView = [CCEAGLView sharedEGLView];
 		[pView setFullScreen:!pView.isFullScreen];
 	}
 
 	-(IBAction) exitFullScreen:(id)sender
 	{
-		[[EAGLView sharedEGLView] setFullScreen:NO];
+		[[CCEAGLView sharedEGLView] setFullScreen:NO];
 	}
 
 @end

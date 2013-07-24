@@ -7,10 +7,10 @@
 
 UserDefaultTest::UserDefaultTest()
 {
-    CCSize s = CCDirector::sharedDirector()->getWinSize();
-    CCLabelTTF* label = CCLabelTTF::create("CCUserDefault test see log", "Arial", 28);
+    Size s = Director::getInstance()->getWinSize();
+    LabelTTF* label = LabelTTF::create("CCUserDefault test see log", "Arial", 28);
     addChild(label, 0);
-    label->setPosition( ccp(s.width/2, s.height-50) );
+    label->setPosition( Point(s.width/2, s.height-50) );
 
     doTest();
 }
@@ -21,27 +21,27 @@ void UserDefaultTest::doTest()
 
     // set default value
 
-    CCUserDefault::sharedUserDefault()->setStringForKey("string", "value1");
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("integer", 10);
-    CCUserDefault::sharedUserDefault()->setFloatForKey("float", 2.3f);
-    CCUserDefault::sharedUserDefault()->setDoubleForKey("double", 2.4);
-    CCUserDefault::sharedUserDefault()->setBoolForKey("bool", true);
+    UserDefault::getInstance()->setStringForKey("string", "value1");
+    UserDefault::getInstance()->setIntegerForKey("integer", 10);
+    UserDefault::getInstance()->setFloatForKey("float", 2.3f);
+    UserDefault::getInstance()->setDoubleForKey("double", 2.4);
+    UserDefault::getInstance()->setBoolForKey("bool", true);
 
     // print value
 
-    string ret = CCUserDefault::sharedUserDefault()->getStringForKey("string");
+    string ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
-    double d = CCUserDefault::sharedUserDefault()->getDoubleForKey("double");
+    double d = UserDefault::getInstance()->getDoubleForKey("double");
     CCLOG("double is %f", d);
 
-    int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integer");
+    int i = UserDefault::getInstance()->getIntegerForKey("integer");
     CCLOG("integer is %d", i);
 
-    float f = CCUserDefault::sharedUserDefault()->getFloatForKey("float");
+    float f = UserDefault::getInstance()->getFloatForKey("float");
     CCLOG("float is %f", f);
 
-    bool b = CCUserDefault::sharedUserDefault()->getBoolForKey("bool");
+    bool b = UserDefault::getInstance()->getBoolForKey("bool");
     if (b)
     {
         CCLOG("bool is true");
@@ -51,35 +51,35 @@ void UserDefaultTest::doTest()
         CCLOG("bool is false");
     }
     
-    //CCUserDefault::sharedUserDefault()->flush();
+    //CCUserDefault::getInstance()->flush();
 
     CCLOG("********************** after change value ***********************");
 
     // change the value
 
-    CCUserDefault::sharedUserDefault()->setStringForKey("string", "value2");
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("integer", 11);
-    CCUserDefault::sharedUserDefault()->setFloatForKey("float", 2.5f);
-    CCUserDefault::sharedUserDefault()->setDoubleForKey("double", 2.6);
-    CCUserDefault::sharedUserDefault()->setBoolForKey("bool", false);
+    UserDefault::getInstance()->setStringForKey("string", "value2");
+    UserDefault::getInstance()->setIntegerForKey("integer", 11);
+    UserDefault::getInstance()->setFloatForKey("float", 2.5f);
+    UserDefault::getInstance()->setDoubleForKey("double", 2.6);
+    UserDefault::getInstance()->setBoolForKey("bool", false);
 
-    CCUserDefault::sharedUserDefault()->flush();
+    UserDefault::getInstance()->flush();
 
     // print value
 
-    ret = CCUserDefault::sharedUserDefault()->getStringForKey("string");
+    ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
-    d = CCUserDefault::sharedUserDefault()->getDoubleForKey("double");
+    d = UserDefault::getInstance()->getDoubleForKey("double");
     CCLOG("double is %f", d);
 
-    i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integer");
+    i = UserDefault::getInstance()->getIntegerForKey("integer");
     CCLOG("integer is %d", i);
 
-    f = CCUserDefault::sharedUserDefault()->getFloatForKey("float");
+    f = UserDefault::getInstance()->getFloatForKey("float");
     CCLOG("float is %f", f);
 
-    b = CCUserDefault::sharedUserDefault()->getBoolForKey("bool");
+    b = UserDefault::getInstance()->getBoolForKey("bool");
     if (b)
     {
         CCLOG("bool is true");
@@ -97,9 +97,9 @@ UserDefaultTest::~UserDefaultTest()
 
 void UserDefaultTestScene::runThisTest()
 {
-    CCLayer* pLayer = new UserDefaultTest();
-    addChild(pLayer);
+    Layer* layer = new UserDefaultTest();
+    addChild(layer);
 
-    CCDirector::sharedDirector()->replaceScene(this);
-    pLayer->release();
+    Director::getInstance()->replaceScene(this);
+    layer->release();
 }

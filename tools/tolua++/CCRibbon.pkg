@@ -7,14 +7,14 @@ class CCRibbon: public CCNode
     void  setTextureLength(float val);
     float getTextureLength();
 
-    void setBlendFunc(ccBlendFunc val);
-    ccBlendFunc getBlendFunc();
+    void setBlendFunc(BlendFunc val);
+    BlendFunc getBlendFunc();
 
-    void setColor(ccColor4B val);
-    ccColor4B getColor();
+    void setColor(Color4B val);
+    Color4B getColor();
 
     void addPointAt(CCPoint location, float width);
     float sideOfLine(CCPoint p, CCPoint l1, CCPoint l2);
 
-    static CCRibbon * create(float w, const char *path, float length, ccColor4B color, float fade);
+    static CCRibbon * create(float w, const char *path, float length, Color4B color, float fade);
 };

@@ -38,88 +38,87 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCTextureAtlas;
+class TextureAtlas;
 
-/** @brief CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and CCTextureProtocol protocol
+/** @brief AtlasNode is a subclass of Node that implements the RGBAProtocol and TextureProtocol protocol
 
 It knows how to render a TextureAtlas object.
-If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a subclass of CCAtlasNode)
+If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)
 
-All features from CCNode are valid, plus the following features:
+All features from Node are valid, plus the following features:
 - opacity and RGB colors
 */
-class CC_DLL CCAtlasNode : public CCNodeRGBA, public CCTextureProtocol
-{
-protected:
-
-    //! chars per row
-    unsigned int m_uItemsPerRow;
-    //! chars per column
-    unsigned int m_uItemsPerColumn;
-
-    //! width of each char
-    unsigned int    m_uItemWidth;
-    //! height of each char
-    unsigned int    m_uItemHeight;
-
-    ccColor3B    m_tColorUnmodified;
-
-    CC_PROPERTY(CCTextureAtlas*, m_pTextureAtlas, TextureAtlas);
-
-    // protocol variables
-    bool m_bIsOpacityModifyRGB;
-    
-    CC_PROPERTY(ccBlendFunc, m_tBlendFunc, BlendFunc);
-
-    // quads to draw
-    CC_PROPERTY(unsigned int, m_uQuadsToDraw, QuadsToDraw);
-    // color uniform
-    GLint    m_nUniformColor;
-    // This varible is only used for CCLabelAtlas FPS display. So plz don't modify its value.
-    bool m_bIgnoreContentScaleFactor;
-    
+class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
+{    
 public:
-    CCAtlasNode();
-    virtual ~CCAtlasNode();
+	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
+                              unsigned int itemsToRender);
+    AtlasNode();
+    virtual ~AtlasNode();
 
-	/** creates a CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static CCAtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight, 
-		unsigned int itemsToRender);
-
-    /** initializes an CCAtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
     bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
 
-    /** initializes an CCAtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(CCTexture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    bool initWithTexture(Texture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
     
     /** updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses
     */
     virtual void updateAtlasValues();
 
-    virtual void draw(void);
-
-    // CC Texture protocol
-
-    /** returns the used texture*/
-    virtual CCTexture2D* getTexture(void);
-
-    /** sets a new texture. it will be retained*/
-    virtual void setTexture(CCTexture2D *texture);
+    void setTextureAtlas(TextureAtlas* textureAtlas);
+    TextureAtlas* getTextureAtlas() const;
     
-    virtual bool isOpacityModifyRGB();
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual const ccColor3B& getColor(void);
-    virtual void setColor(const ccColor3B& color);
-    virtual void setOpacity(GLubyte opacity);
+    void setQuadsToDraw(unsigned int quadsToDraw);
+    unsigned int getQuadsToDraw() const;
+
+    
+    // Overrides
+    virtual void draw() override;
+    virtual Texture2D* getTexture() const override;
+    virtual void setTexture(Texture2D *texture) override;
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
+    virtual const Color3B& getColor(void) const override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
+    virtual const BlendFunc& getBlendFunc() const override;
 
 private :
     void calculateMaxItems();
     void updateBlendFunc();
     void updateOpacityModifyRGB();
     
-    friend class CCDirector;
+    friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
+
+protected:
+    //! chars per row
+    unsigned int _itemsPerRow;
+    //! chars per column
+    unsigned int _itemsPerColumn;
+
+    //! width of each char
+    unsigned int    _itemWidth;
+    //! height of each char
+    unsigned int    _itemHeight;
+    
+    Color3B    _colorUnmodified;
+    
+    TextureAtlas* _textureAtlas;
+    // protocol variables
+    bool _isOpacityModifyRGB;
+    BlendFunc _blendFunc;
+
+    // quads to draw
+    unsigned int _quadsToDraw;
+    // color uniform
+    GLint    _uniformColor;
+    // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
+    bool _ignoreContentScaleFactor;
 };
 
 // end of base_node group

@@ -4,11 +4,11 @@ using namespace cocos2d;
 
 NS_CC_EXT_BEGIN
 
-// Implementation of ccColor3BWapper
+// Implementation of Color3BWapper
 
-ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
+Color3BWapper* Color3BWapper::create(const Color3B& color)
 {
-    ccColor3BWapper *ret = new ccColor3BWapper();
+    Color3BWapper *ret = new Color3BWapper();
     if (ret)
     {
         ret->color.r = color.r;
@@ -21,7 +21,7 @@ ccColor3BWapper* ccColor3BWapper::create(const ccColor3B& color)
     return ret;
 }
 
-const ccColor3B& ccColor3BWapper::getColor() const
+const Color3B& Color3BWapper::getColor() const
 {
     return color;
 }
@@ -85,7 +85,7 @@ CCBValue* CCBValue::create(const char *pStringValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->m_strValue = pStringValue;
+        ret->_value = pStringValue;
         ret->mType = kStringValue;
         ret->autorelease();
     }
@@ -94,12 +94,12 @@ CCBValue* CCBValue::create(const char *pStringValue)
 }
 
 
-CCBValue* CCBValue::create(CCArray *pArrValue)
+CCBValue* CCBValue::create(Array *pArrValue)
 {
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->m_arrValue = pArrValue;
+        ret->_arrValue = pArrValue;
         ret->mType = kArrayValue;
         ret->autorelease();
     }
@@ -136,10 +136,10 @@ unsigned char CCBValue::getByteValue()
     return (unsigned char)(mValue.nValue);
 }
 
-CCArray* CCBValue::getArrayValue() {
+Array* CCBValue::getArrayValue() {
     assert(mType == kArrayValue);
     
-    return m_arrValue;
+    return _arrValue;
 }
 
 
@@ -147,7 +147,7 @@ const char* CCBValue::getStringValue()
 {
     assert(mType == kStringValue);
     
-    return m_strValue.c_str();
+    return _value.c_str();
 }
 
 int CCBValue::getType()

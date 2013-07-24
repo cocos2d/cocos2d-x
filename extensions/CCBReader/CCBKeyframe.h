@@ -6,10 +6,10 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBKeyframe : public CCObject
+class CCBKeyframe : public Object
 {
 private:
-    CCObject *mValue;
+    Object *mValue;
     float mTime;
     int mEasingType;
     float mEasingOpt;
@@ -18,8 +18,8 @@ public:
     CCBKeyframe();
     ~CCBKeyframe();
     
-    CCObject* getValue();
-    void setValue(CCObject *pValue); // retain
+    Object* getValue();
+    void setValue(Object *pValue); // retain
     
     float getTime();
     void setTime(float fTime);

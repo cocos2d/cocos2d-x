@@ -609,17 +609,23 @@ JSObject* JSB_cpPivotJoint_object = NULL;
 // Constructor
 JSBool JSB_cpPivotJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSB_PRECONDITION2(argc==3, cx, JS_FALSE, "Invalid number of arguments");
+	JSB_PRECONDITION2(argc==4 || argc==3, cx, JS_FALSE, "Invalid number of arguments");
 	JSObject *jsobj = JS_NewObject(cx, JSB_cpPivotJoint_class, JSB_cpPivotJoint_object, NULL);
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	cpBody* arg0; cpBody* arg1; cpVect arg2; 
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; void *ret_val;
 
 	ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg0, NULL );
 	ok &= jsval_to_c_class( cx, *argvp++, (void**)&arg1, NULL );
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg2 );
-	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-	void* 	ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2  );
+	if(argc == 4) {
+		ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg3 );
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		ret_val = cpPivotJointNew2((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2, (cpVect)arg3  );
+	} else {
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2);
+	}
 
 	jsb_set_jsobject_for_proxy(jsobj, ret_val);
 	jsb_set_c_proxy_for_jsobject(jsobj, ret_val, JSB_C_FLAG_CALL_FREE);
@@ -627,7 +633,6 @@ JSBool JSB_cpPivotJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
 	return JS_TRUE;
 }
-
 // Destructor
 void JSB_cpPivotJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 {
@@ -2807,7 +2812,7 @@ JSBool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpSpace* arg0 = (cpSpace*) proxy->handle;
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	cpVect arg1; uint32_t arg2; cpGroup arg3; 
+	cpVect arg1; uint32_t arg2; cpGroup arg3;
 
 	ok &= jsval_to_cpVect( cx, *argvp++, (cpVect*) &arg1 );
 	ok &= jsval_to_uint32( cx, *argvp++, &arg2 );
@@ -2817,12 +2822,14 @@ JSBool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
 
-	jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpShape_object, JSB_cpShape_class, "cpShape" );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-    
+	if(ret_val) {
+		jsval ret_jsval = c_class_to_jsval( cx, ret_val, JSB_cpShape_object, JSB_cpShape_class, "cpShape" );
+		JS_SET_RVAL(cx, vp, ret_jsval);
+	} else {
+		JS_SET_RVAL(cx, vp, JSVAL_NULL);
+	}
 	return JS_TRUE;
 }
-
 // Arguments: cpShape*
 // Ret value: void
 JSBool JSB_cpSpace_reindexShape(JSContext *cx, uint32_t argc, jsval *vp) {

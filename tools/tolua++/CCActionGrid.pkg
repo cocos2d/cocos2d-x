@@ -4,8 +4,6 @@ class CCGridAction : public CCActionInterval
 	CCActionInterval* reverse(void);
 
     CCGridBase* getGrid(void);
-
-    static CCGridAction* create(float duration, CCSize gridSize);
 };
 
 class CCAccelDeccelAmplitude : public CCActionInterval
@@ -21,19 +19,17 @@ class CCAccelDeccelAmplitude : public CCActionInterval
 class CCGrid3DAction : public CCGridAction
 {
     virtual CCGridBase* getGrid(void);
-    ccVertex3F vertex(const CCPoint& pos);
-    ccVertex3F originalVertex(const CCPoint& pos);
-    void setVertex(const CCPoint& pos, const ccVertex3F& vertex);
-
-    //static CCGrid3DAction* create(float duration, CCSize gridSize);
+    void setVertex(const CCPoint& pos, const Vertex3F& vertex);
+    Vertex3F getVertex(const CCPoint& position);
+    Vertex3F getOriginalVertex(const CCPoint& position);
 };
 
 class CCTiledGrid3DAction : public CCGridAction
 {
-    ccQuad3 tile(CCPoint pos);
-    ccQuad3 originalTile(CCPoint pos);
-    void setTile(CCPoint pos, ccQuad3 coords);
+    void setTile(CCPoint pos, Quad3 coords);
     CCGridBase* getGrid(void);
+    Quad3 getTile(const CCPoint& position);
+    Quad3 getOriginalTile(const CCPoint& position);
 
     //static CCTiledGrid3DAction* create(float duration, const CCSize& gridSize);
 };

@@ -30,20 +30,29 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCNotificationCenter : public CCObject
+class ScriptHandlerMgr;
+class CC_DLL NotificationCenter : public Object
 {
+    friend class ScriptHandlerMgr;
 public:
-    /** CCNotificationCenter constructor */
-    CCNotificationCenter();
+    /** NotificationCenter constructor */
+    NotificationCenter();
 
-    /** CCNotificationCenter destructor */
-    ~CCNotificationCenter();
+    /** NotificationCenter destructor */
+    ~NotificationCenter();
     
-    /** Gets the single instance of CCNotificationCenter. */
-    static CCNotificationCenter *sharedNotificationCenter(void);
+    /** Gets the single instance of NotificationCenter. */
+    static NotificationCenter *getInstance();
 
-    /** Destroys the single instance of CCNotificationCenter. */
-    static void purgeNotificationCenter(void);
+    /** Destroys the single instance of NotificationCenter. */
+    static void destroyInstance();
+
+    /** @deprecated use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static NotificationCenter *sharedNotificationCenter(void);
+
+    /** @deprecated use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
+
 
     /** @brief Adds an observer for the specified target.
      *  @param target The target which wants to observe notification events.
@@ -51,31 +60,31 @@ public:
      *  @param name The name of this notification.
      *  @param obj The extra parameter which will be passed to the callback function.
      */
-    void addObserver(CCObject *target, 
+    void addObserver(Object *target, 
                      SEL_CallFuncO selector,
                      const char *name,
-                     CCObject *obj);
+                     Object *obj);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
-    void removeObserver(CCObject *target,const char *name);
+    void removeObserver(Object *target,const char *name);
     
     /** @brief Removes all notifications registered by this target
      *  @param target The target of this notification.
      *  @returns the number of observers removed
      */
-    int removeAllObservers(CCObject *target);
+    int removeAllObservers(Object *target);
 
     /** @brief Registers one hander for script binding.
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(CCObject *target,int handler,const char* name);
+    void registerScriptObserver(Object *target,int handler,const char* name);
 
     /** Unregisters script observer */
-    void unregisterScriptObserver(CCObject *target,const char* name);
+    void unregisterScriptObserver(Object *target,const char* name);
     
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
@@ -86,13 +95,13 @@ public:
      *  @param name The name of this notification.
      *  @param object The extra parameter.
      */
-    void postNotification(const char *name, CCObject *object);
+    void postNotification(const char *name, Object *object);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
      *  @return The script handle.
      */
-    inline int getScriptHandler() { return m_scriptHandler; };
+    inline int getScriptHandler() const { return _scriptHandler; };
     
     /** @brief Gets observer script handler.
      *  @param name The name of this notification.
@@ -103,39 +112,48 @@ private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(CCObject *target,const char *name);
+    bool observerExisted(Object *target,const char *name);
     
     // variables
     //
-    CCArray *m_observers;
-    int     m_scriptHandler;
+    Array *_observers;
+    int     _scriptHandler;
 };
 
-class CC_DLL CCNotificationObserver : public CCObject
+class CC_DLL NotificationObserver : public Object
 {
 public:
-    /** @brief CCNotificationObserver constructor
+    /** @brief NotificationObserver constructor
      *  @param target The target which wants to observer notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
      *  @param obj The extra parameter which will be passed to the callback function.
      */
-    CCNotificationObserver(CCObject *target, 
+    NotificationObserver(Object *target, 
                            SEL_CallFuncO selector,
                            const char *name,
-                           CCObject *obj);
+                           Object *obj);
 
-    /** CCNotificationObserver destructor function */
-    ~CCNotificationObserver();      
+    /** NotificationObserver destructor function */
+    ~NotificationObserver();      
     
     /** Invokes the callback function of this observer */
-    void performSelector(CCObject *obj);
+    void performSelector(Object *obj);
+    
+    // Getters / Setters
+    Object* getTarget() const;
+    SEL_CallFuncO getSelector() const;
+    const char* getName() const;
+    Object* getObject() const;
+    int getHandler() const;
+    void setHandler(int handler);
+
 private:
-    CC_PROPERTY_READONLY(CCObject *, m_target, Target);
-    CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
-    CC_PROPERTY_READONLY(char *, m_name, Name);
-    CC_PROPERTY_READONLY(CCObject *, m_object, Object);
-    CC_PROPERTY(int, m_nHandler,Handler);
+    Object* _target;
+    SEL_CallFuncO _selector;
+    std::string _name;
+    Object* _object;
+    int _handler;
 };
 
 NS_CC_END

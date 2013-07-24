@@ -8,8 +8,8 @@ class Bug1159Layer : public BugsTestBaseLayer
 public:
     virtual bool init();
     virtual void onExit();
-    static CCScene* scene();
-    void callBack(CCObject* pSender);
+    static Scene* scene();
+    void callBack(Object* pSender);
 
     CREATE_FUNC(Bug1159Layer);
 };

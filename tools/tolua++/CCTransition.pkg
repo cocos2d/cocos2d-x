@@ -107,7 +107,7 @@ class CCTransitionZoomFlipAngular : public CCScene
 
 class CCTransitionFade : public CCScene
 {
-    static CCTransitionFade* create(float duration,CCScene* scene, ccColor3B color = ccBLACK);
+    static CCTransitionFade* create(float duration,CCScene* scene, Color3B color = ccBLACK);
 };
 
 class CCTransitionCrossFade : public CCScene

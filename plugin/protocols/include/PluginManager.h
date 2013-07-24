@@ -46,7 +46,7 @@ public:
 
 private:
     PluginManager(void);
-    std::map<std::string, PluginProtocol*> m_pluginsMap;
+    std::map<std::string, PluginProtocol*> _pluginsMap;
 };
 
 }} //namespace cocos2d { namespace plugin {

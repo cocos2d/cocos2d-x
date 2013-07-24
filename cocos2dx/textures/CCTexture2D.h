@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CCImage;
+class Image;
 
 /**
  * @addtogroup textures
@@ -45,48 +45,38 @@ class CCImage;
 
 //CONSTANTS:
 
-/** @typedef CCTexture2DPixelFormat
+/** @typedef Texture2DPixelFormat
 Possible texture pixel formats
 */
 typedef enum {
 
     //! 32-bit texture: RGBA8888
-    kCCTexture2DPixelFormat_RGBA8888,
+    kTexture2DPixelFormat_RGBA8888,
     //! 24-bit texture: RGBA888
-    kCCTexture2DPixelFormat_RGB888,
+    kTexture2DPixelFormat_RGB888,
     //! 16-bit texture without Alpha channel
-    kCCTexture2DPixelFormat_RGB565,
+    kTexture2DPixelFormat_RGB565,
     //! 8-bit textures used as masks
-    kCCTexture2DPixelFormat_A8,
+    kTexture2DPixelFormat_A8,
     //! 8-bit intensity texture
-    kCCTexture2DPixelFormat_I8,
+    kTexture2DPixelFormat_I8,
     //! 16-bit textures used as masks
-    kCCTexture2DPixelFormat_AI88,
+    kTexture2DPixelFormat_AI88,
     //! 16-bit textures: RGBA4444
-    kCCTexture2DPixelFormat_RGBA4444,
+    kTexture2DPixelFormat_RGBA4444,
     //! 16-bit textures: RGB5A1
-    kCCTexture2DPixelFormat_RGB5A1,    
+    kTexture2DPixelFormat_RGB5A1,    
     //! 4-bit PVRTC-compressed texture: PVRTC4
-    kCCTexture2DPixelFormat_PVRTC4,
+    kTexture2DPixelFormat_PVRTC4,
     //! 2-bit PVRTC-compressed texture: PVRTC2
-    kCCTexture2DPixelFormat_PVRTC2,
+    kTexture2DPixelFormat_PVRTC2,
 
 
     //! Default texture format: RGBA8888
-    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
+    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888
+} Texture2DPixelFormat;
 
-    // backward compatibility stuff
-    kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-    kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
-    kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-    kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-    kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-    kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-    kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
-
-} CCTexture2DPixelFormat;
-
-class CCGLProgram;
+class GLProgram;
 
 /**
 Extension to set the Min / Mag filter
@@ -100,53 +90,87 @@ typedef struct _ccTexParams {
 
 //CLASS INTERFACES:
 
-/** @brief CCTexture2D class.
+/** @brief Texture2D class.
 * This class allows to easily create OpenGL 2D textures from images, text or raw data.
-* The created CCTexture2D object will always have power-of-two dimensions. 
-* Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
+* The created Texture2D object will always have power-of-two dimensions. 
+* Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
-class CC_DLL CCTexture2D : public CCObject
+class CC_DLL Texture2D : public Object
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCTexture2D();
-    virtual ~CCTexture2D();
+    /** sets the default pixel format for UIImagescontains alpha channel.
+     If the UIImage contains alpha channel, then the options are:
+     - generate 32-bit textures: kTexture2DPixelFormat_RGBA8888 (default one)
+     - generate 24-bit textures: kTexture2DPixelFormat_RGB888
+     - generate 16-bit textures: kTexture2DPixelFormat_RGBA4444
+     - generate 16-bit textures: kTexture2DPixelFormat_RGB5A1
+     - generate 16-bit textures: kTexture2DPixelFormat_RGB565
+     - generate 8-bit textures: kTexture2DPixelFormat_A8 (only use it if you use just 1 color)
 
-    const char* description(void);
+     How does it work ?
+     - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
+     - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
+
+     This parameter is not valid for PVR / PVR.CCZ images.
+
+     @since v0.8
+     */
+    static void setDefaultAlphaPixelFormat(Texture2DPixelFormat format);
+
+    /** returns the alpha pixel format
+     @since v0.8
+     */
+    static Texture2DPixelFormat getDefaultAlphaPixelFormat();
+    CC_DEPRECATED_ATTRIBUTE static Texture2DPixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
+
+    /** treats (or not) PVR files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+
+     By default it is disabled.
+
+     @since v0.99.5
+     */
+    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
+public:
+    Texture2D();
+    virtual ~Texture2D();
+
+    const char* description(void) const;
 
     /** These functions are needed to create mutable textures */
     void releaseData(void *data);
     void* keepData(void *data, unsigned int length);
 
     /** Initializes with a texture2d with data */
-    bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
+    bool initWithData(const void* data, Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
 
     /**
-    Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
+    Drawing extensions to make it easy to draw basic quads using a Texture2D object.
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
     */
     /** draws a texture at a given point */
-    void drawAtPoint(const CCPoint& point);
+    void drawAtPoint(const Point& point);
     /** draws a texture inside a rect */
-    void drawInRect(const CCRect& rect);
+    void drawInRect(const Rect& rect);
 
     /**
-    Extensions to make it easy to create a CCTexture2D object from an image file.
+    Extensions to make it easy to create a Texture2D object from an image file.
     Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
     */
     /** Initializes a texture from a UIImage object */
 
-    bool initWithImage(CCImage * uiImage);
+    bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
-    /** Initializes a texture from a string with font name and font size */
-    bool initWithString(const char *text, const char *fontName, float fontSize);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextAlignment hAlignment = kTextAlignmentCenter, VerticalTextAlignment vAlignment = kVerticalTextAlignmentTop);
     /** Initializes a texture from a string using a text definition*/
-    bool initWithString(const char *text, ccFontDefinition *textDefinition);
+    bool initWithString(const char *text, const FontDefinition& textDefinition);
     
     /** Initializes a texture from a PVR file */
     bool initWithPVRFile(const char* file);
@@ -161,7 +185,7 @@ public:
 
     @since v0.8
     */
-    void setTexParameters(ccTexParams* texParams);
+    void setTexParameters(const ccTexParams& texParams);
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
@@ -193,87 +217,89 @@ public:
     /** returns the pixel format.
      @since v2.0
      */
-    const char* stringForFormat();
+    const char* getStringForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
-    unsigned int bitsPerPixelForFormat();  
+    unsigned int getBitsPerPixelForFormat() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
-
-    /** sets the default pixel format for UIImagescontains alpha channel.
-    If the UIImage contains alpha channel, then the options are:
-    - generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
-    - generate 24-bit textures: kCCTexture2DPixelFormat_RGB888
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
-    - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
-    - generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
-
-    How does it work ?
-    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-    - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
-
-    This parameter is not valid for PVR / PVR.CCZ images.
-
-    @since v0.8
-    */
-    static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-
-    /** returns the alpha pixel format
-    @since v0.8
-    */
-    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
-
-    /** treats (or not) PVR files as if they have alpha premultiplied.
-     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
-     possible load them as if they have (or not) the alpha channel premultiplied.
-     
-     By default it is disabled.
-     
-     @since v0.99.5
-     */
-    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    unsigned int getBitsPerPixelForFormat(Texture2DPixelFormat format) const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** content size */
-    const CCSize& getContentSizeInPixels();
+    const Size& getContentSizeInPixels();
+
+    bool hasPremultipliedAlpha() const;
+    bool hasMipmaps() const;
+
+    /** Gets the pixel format of the texture */
+    Texture2DPixelFormat getPixelFormat() const;
     
-    bool hasPremultipliedAlpha();
-    bool hasMipmaps();
+    /** Gets the width of the texture in pixels */
+    unsigned int getPixelsWide() const;
+    
+    /** Gets the height of the texture in pixels */
+    unsigned int getPixelsHigh() const;
+    
+    /** Gets the texture name */
+    GLuint getName() const;
+    
+    /** Gets max S */
+    GLfloat getMaxS() const;
+    /** Sets max S */
+    void setMaxS(GLfloat maxS);
+    
+    /** Gets max T */
+    GLfloat getMaxT() const;
+    /** Sets max T */
+    void setMaxT(GLfloat maxT);
+    
+    Size getContentSize() const;
+    
+    void setShaderProgram(GLProgram* program);
+    GLProgram* getShaderProgram() const;
+    
 private:
-    bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+    bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
-    bool m_bPVRHaveAlphaPremultiplied;
+    bool _PVRHaveAlphaPremultiplied;
 
+protected:
     /** pixel format of the texture */
-    CC_PROPERTY_READONLY(CCTexture2DPixelFormat, m_ePixelFormat, PixelFormat)
+    Texture2DPixelFormat _pixelFormat;
+
     /** width in pixels */
-    CC_PROPERTY_READONLY(unsigned int, m_uPixelsWide, PixelsWide)
+    unsigned int _pixelsWide;
+
     /** height in pixels */
-    CC_PROPERTY_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh)
+    unsigned int _pixelsHigh;
 
     /** texture name */
-    CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+    GLuint _name;
 
     /** texture max S */
-    CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
+    GLfloat _maxS;
+    
     /** texture max T */
-    CC_PROPERTY(GLfloat, m_fMaxT, MaxT)
+    GLfloat _maxT;
+
     /** content size */
-    CC_PROPERTY_READONLY(CCSize, m_tContentSize, ContentSize)
+    Size _contentSize;
 
     /** whether or not the texture has their Alpha premultiplied */
-    bool m_bHasPremultipliedAlpha;
+    bool _hasPremultipliedAlpha;
 
-    bool m_bHasMipmaps;
+    bool _hasMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
-    CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+    GLProgram* _shaderProgram;
 };
 
 // end of textures group

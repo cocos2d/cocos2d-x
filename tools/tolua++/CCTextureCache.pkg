@@ -13,7 +13,8 @@ class CCTextureCache : public CCObject
     void removeTextureForKey(const char *textureKeyName);
     void dumpCachedTextureInfo();
 
-    static CCTextureCache * sharedTextureCache();
     static void reloadAllTextures();
-    static void purgeSharedTextureCache();
+
+    static CCTextureCache * getInstance();
+    static void destroyInstance();
 };

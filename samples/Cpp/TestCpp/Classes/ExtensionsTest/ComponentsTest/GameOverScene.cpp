@@ -31,7 +31,7 @@ using namespace cocos2d;
 
 bool GameOverScene::init()
 {
-	if( CCScene::init() )
+	if( Scene::init() )
 	{
 		this->_layer = GameOverLayer::create();
 		this->_layer->retain();
@@ -57,27 +57,31 @@ GameOverScene::~GameOverScene()
 
 bool GameOverLayer::init()
 {
-	if ( CCLayerColor::initWithColor( ccc4(255,255,255,255) ) )
+	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
 	{
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		this->_label = CCLabelTTF::create("","Artial", 32);
+		Size winSize = Director::getInstance()->getWinSize();
+		this->_label = LabelTTF::create("","Artial", 32);
 		_label->retain();
-		_label->setColor( ccc3(0, 0, 0) );
-		_label->setPosition( ccp(winSize.width/2, winSize.height/2) );
+		_label->setColor( Color3B(0, 0, 0) );
+		_label->setPosition( Point(winSize.width/2, winSize.height/2) );
 		this->addChild(_label);
 		
-		this->runAction( CCSequence::create(
-                                CCDelayTime::create(3),
-                                CCCallFunc::create(this, 
-                                callfunc_selector(GameOverLayer::gameOverDone)),
+		this->runAction( Sequence::create(
+                                DelayTime::create(3),
+                                CallFunc::create(CC_CALLBACK_0(GameOverLayer::gameOverDone, this)),
                                 NULL));
 		
         
-        CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(ComponentsTestLayer::toExtensionsMainLayer));
-        itemBack->setColor(ccc3(0, 0, 0));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        CCMenu *menuBack = CCMenu::create(itemBack, NULL);
-        menuBack->setPosition(CCPointZero);
+        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
+            ExtensionsTestScene *scene = new ExtensionsTestScene();
+            scene->runThisTest();
+            scene->release();
+        });
+        
+        itemBack->setColor(Color3B(0, 0, 0));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        Menu *menuBack = Menu::create(itemBack, NULL);
+        menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
 		return true;
@@ -90,7 +94,7 @@ bool GameOverLayer::init()
 
 void GameOverLayer::gameOverDone()
 {
-	CCDirector::sharedDirector()->replaceScene( ComponentsTestLayer::scene() );
+	Director::getInstance()->replaceScene( ComponentsTestLayer::scene() );
 }
 
 GameOverLayer::~GameOverLayer()

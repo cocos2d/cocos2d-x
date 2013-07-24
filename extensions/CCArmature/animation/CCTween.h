@@ -29,61 +29,61 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCTweenFunction.h"
 
-NS_CC_EXT_BEGIN
+namespace cocos2d { namespace extension { namespace armature {
 
-class CCBone;
-class CCArmatureAnimation;
+class Bone;
+class ArmatureAnimation;
 
-class  CCTween : public CCProcessBase
+class  Tween : public ProcessBase
 {
 public:
     /**
-     * Create with a CCBone
-     * @param bone the CCBone CCTween will bind to
+     * Create with a Bone
+     * @param bone the Bone Tween will bind to
      */
-    static CCTween *create(CCBone *bone);
+    static Tween *create(Bone *bone);
 public:
-    CCTween(void);
-    virtual ~CCTween(void);
+    Tween(void);
+    virtual ~Tween(void);
 
     /**
-     * Init with a CCBone
-     * @param bone the CCBone CCTween will bind to
+     * Init with a Bone
+     * @param bone the Bone Tween will bind to
      */
-    virtual bool init(CCBone *bone);
+    virtual bool init(Bone *bone);
 
     /**
      * Start the Process
      *
-     * @param  movementBoneData  the CCMovementBoneData include all frame datas
+     * @param  movementBoneData  the MovementBoneData include all frame datas
      * @param  durationTo the frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      * @param  durationTween  the frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     *         -1 : use the value from MovementData get from flash design panel
      *
      * @param  loop   whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
      * @param  tweenEasing    tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
      *
      */
-    virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
-	inline void setAnimation(CCArmatureAnimation *animation) { m_pAnimation = animation; }
-	inline CCArmatureAnimation *getAnimation() const { return m_pAnimation; }
+	inline void setAnimation(ArmatureAnimation *animation) { _animation = animation; }
+	inline ArmatureAnimation *getAnimation() const { return _animation; }
 protected:
 
     /**
@@ -99,44 +99,44 @@ protected:
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
      */
-    virtual void setBetween(CCFrameData *from, CCFrameData *to);
+    virtual void setBetween(FrameData *from, FrameData *to);
 
     /**
-     * According to the percent to calculate current CCFrameData with tween effect
+     * According to the percent to calculate current FrameData with tween effect
      */
-    virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
+    virtual FrameData *tweenNodeTo(float percent, FrameData *node = NULL);
 
     /**
      * Update display index and process the key frame event when arrived a key frame
      */
-    virtual void arriveKeyFrame(CCFrameData *keyFrameData);
+    virtual void arriveKeyFrame(FrameData *keyFrameData);
 protected:
-    //! A weak reference to the current CCMovementBoneData. The data is in the data pool
-    CC_SYNTHESIZE(CCMovementBoneData *, m_pMovementBoneData, MovementBoneData)
+    //! A weak reference to the current MovementBoneData. The data is in the data pool
+    CC_SYNTHESIZE(MovementBoneData *, _movementBoneData, MovementBoneData)
 
-    CCFrameData *m_pTweenData;		//! The computational tween frame data, //! A weak reference to the CCBone's tweenData
-    CCFrameData *m_pFrom;				//! From frame data, used for calculate between value
-    CCFrameData *m_pTo;				//! To frame data, used for calculate between value
-    CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
+    FrameData *_tweenData;		//! The computational tween frame data, //! A weak reference to the Bone's tweenData
+    FrameData *_from;				//! From frame data, used for calculate between value
+    FrameData *_to;				//! To frame data, used for calculate between value
+    FrameData *_between;			//! Between frame data, used for calculate current FrameData(_node) value
 
-    CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
+    FrameData *_currentKeyFrame;	//! A weak reference to the current FrameData. The data is in the data pool
 
-    CCBone *m_pBone;					//! A weak reference to the CCBone
+    Bone *_bone;					//! A weak reference to the Bone
 
-    CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
+    TweenType _frameTweenEasing;	//! Dedermine which tween effect current frame use
 
-    bool m_bIsTweenKeyFrame;
+    bool _isTweenKeyFrame;
 
     int betweenDuration;			//! Current key frame will last betweenDuration frames
-    int m_iTotalDuration;
+    int _totalDuration;
 
 
-    int m_iFromIndex;				//! The current frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
-    int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
+    int _fromIndex;				//! The current frame index in FrameList of MovementBoneData, it's different from _frameIndex
+    int _toIndex;					//! The next frame index in FrameList of MovementBoneData, it's different from _frameIndex
 
-    CCArmatureAnimation *m_pAnimation;
+    ArmatureAnimation *_animation;
 };
 
-NS_CC_EXT_END
+}}} // namespace cocos2d { namespace extension { namespace armature {
 
 #endif /*__CCTWEEN_H__*/

@@ -31,6 +31,7 @@
 
 NS_CC_BEGIN
 
+// XXX deprecated
 void CCLog(const char * pszFormat, ...)
 {
     printf("Cocos2d: ");
@@ -43,8 +44,20 @@ void CCLog(const char * pszFormat, ...)
     printf("\n");
 }
 
-// ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void log(const char * pszFormat, ...)
+{
+    printf("Cocos2d: ");
+    char szBuf[kMaxLogLen+1] = {0};
+    va_list ap;
+    va_start(ap, pszFormat);
+    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_end(ap);
+    printf("%s", szBuf);
+    printf("\n");
+}
+
+// ios no MessageBox, use log instead
+void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
     NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
@@ -57,7 +70,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
     [messageBox show];
 }
 
-void CCLuaLog(const char * pszFormat)
+void LuaLog(const char * pszFormat)
 {
     puts(pszFormat);
 }

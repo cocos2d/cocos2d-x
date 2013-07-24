@@ -37,16 +37,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.954744053" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1620989551" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.1121644479" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.1525878615" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -60,16 +61,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1531770269" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.1446204747" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.1626885407" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1947498091" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.697502414" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1826952880" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
@@ -87,7 +89,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
@@ -170,15 +171,16 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1432872181" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1658108227" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.1465323333" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -192,15 +194,16 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1479035749" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.2077117046" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1031698537" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.191330176" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1375796638" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">
@@ -218,7 +221,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/libwebp.a"/>
@@ -302,16 +304,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.500904227" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.342084758" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.1479362521" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.1396416546" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.386716465" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.320530417" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -325,16 +328,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1461044764" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.742815361" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.1135702714" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1509540325" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1931033313" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1972290949" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
@@ -352,7 +356,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>
@@ -435,16 +438,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.120885829" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1763578720" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.other.pic.240673876" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.1435671044" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.854667177" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1189084590" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -458,16 +462,17 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/kazmath/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libfreetype2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libpng"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libxml2"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libjpeg"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libtiff/include"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libwebp"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1821931544" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<option id="gnu.c.compiler.option.warnings.allwarn.320491147" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.pic.349169503" name="Position Independent Code (-fPIC)" superClass="gnu.c.compiler.option.misc.pic" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.misc.other.1812062349" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -Wno-deprecated-declarations" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.630327615" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.490273333" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release">
@@ -485,7 +490,6 @@
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libfreetype.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libcurl.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libtiff.a"/>
-									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libxml2.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libpng.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libjpeg.a"/>
 									<listOptionValue builtIn="false" value="../../../cocos2dx/platform/third_party/linux/libraries/lib64/libwebp.a"/>
@@ -537,39 +541,62 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="libcocos2d.cdt.managedbuild.target.gnu.exe.634598992" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
+		</configuration>
+		<configuration configurationName="Debug64">
+			<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
+		</configuration>
+		<configuration configurationName="Release64">
+			<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/libcocos2d"/>
+		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710;cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1024625311;cdt.managedbuild.tool.gnu.cpp.compiler.input.1920645677">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671;cdt.managedbuild.tool.gnu.c.compiler.input.191330176">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1742516529;cdt.managedbuild.tool.gnu.cpp.compiler.input.1036435822">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.755655996;cdt.managedbuild.config.gnu.exe.release.1270689208.755655996.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.1189084590;cdt.managedbuild.tool.gnu.c.compiler.input.630327615">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180;cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1527575500;cdt.managedbuild.tool.gnu.cpp.compiler.input.386716465">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.518312421;cdt.managedbuild.tool.gnu.c.compiler.input.1602098267">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180;cdt.managedbuild.config.gnu.exe.debug.502995704.1339240180.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.320530417;cdt.managedbuild.tool.gnu.c.compiler.input.1931033313">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.755655996;cdt.managedbuild.config.gnu.exe.release.1270689208.755655996.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.409581596;cdt.managedbuild.tool.gnu.cpp.compiler.input.854667177">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.870071077;cdt.managedbuild.tool.gnu.c.compiler.input.132105612">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.452615323;cdt.managedbuild.tool.gnu.c.compiler.input.697502414">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704;cdt.managedbuild.config.gnu.exe.debug.502995704.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2063289710;cdt.managedbuild.tool.gnu.cpp.compiler.input.966305124">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1336291657;cdt.managedbuild.tool.gnu.cpp.compiler.input.1506297979">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208.232480047;cdt.managedbuild.config.gnu.exe.release.1270689208.232480047.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1742516529;cdt.managedbuild.tool.gnu.cpp.compiler.input.1036435822">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526;cdt.managedbuild.config.gnu.exe.debug.502995704.1534655526.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.870071077;cdt.managedbuild.tool.gnu.c.compiler.input.132105612">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1270689208;cdt.managedbuild.config.gnu.exe.release.1270689208.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.984270671;cdt.managedbuild.tool.gnu.c.compiler.input.191330176">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-		<buildTargets/>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

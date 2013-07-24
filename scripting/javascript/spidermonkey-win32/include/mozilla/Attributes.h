@@ -319,6 +319,64 @@
 #  define MOZ_WARN_UNUSED_RESULT
 #endif
 
+/*
+ * The following macros are attributes that support the static analysis plugin
+ * included with Mozilla, and will be implemented (when such support is enabled)
+ * as C++11 attributes. Since such attributes are legal pretty much everywhere
+ * and have subtly different semantics depending on their placement, the
+ * following is a guide on where to place the attributes.
+ *
+ * Attributes that apply to a struct or class precede the name of the class:
+ * (Note that this is different from the placement of MOZ_FINAL for classes!)
+ *
+ *   class MOZ_CLASS_ATTRIBUTE SomeClass {};
+ *
+ * Attributes that apply to functions follow the parentheses and const
+ * qualifiers but precede MOZ_FINAL, MOZ_OVERRIDE and the function body:
+ *
+ *   void DeclaredFunction() MOZ_FUNCTION_ATTRIBUTE;
+ *   void SomeFunction() MOZ_FUNCTION_ATTRIBUTE {}
+ *   void PureFunction() const MOZ_FUNCTION_ATTRIBUTE = 0;
+ *   void OverriddenFunction() MOZ_FUNCTION_ATTIRBUTE MOZ_OVERRIDE;
+ *
+ * Attributes that apply to variables or parameters follow the variable's name:
+ *
+ *   int variable MOZ_VARIABLE_ATTRIBUTE;
+ *
+ * Attributes that apply to types follow the type name:
+ *
+ *   typedef int MOZ_TYPE_ATTRIBUTE MagicInt;
+ *   int MOZ_TYPE_ATTRIBUTE someVariable;
+ *   int * MOZ_TYPE_ATTRIBUTE magicPtrInt;
+ *   int MOZ_TYPE_ATTRIBUTE * ptrToMagicInt;
+ *
+ * Attributes that apply to statements precede the statement:
+ *
+ *   MOZ_IF_ATTRIBUTE if (x == 0)
+ *   MOZ_DO_ATTRIBUTE do { } while(0);
+ *
+ * Attributes that apply to labels precede the label:
+ *
+ *   MOZ_LABEL_ATTRIBUTE target:
+ *     goto target;
+ *   MOZ_CASE_ATTRIBUTE case 5:
+ *   MOZ_DEFAULT_ATTRIBUTE default:
+ *
+ * The static analyses that are performed by the plugin are as follows:
+ *
+ * MOZ_MUST_OVERRIDE: Applies to all C++ member functions. All immediate
+ *   subclasses must provide an exact override of this method; if a subclass
+ *   does not override this method, the compiler will emit an error. This
+ *   attribute is not limited to virtual methods, so if it is applied to a
+ *   nonvirtual method and the subclass does not provide an equivalent
+ *   definition, the compiler will emit an error.
+ */
+#ifdef MOZ_CLANG_PLUGIN
+# define MOZ_MUST_OVERRIDE __attribute__((annotate("moz_must_override")))
+#else
+# define MOZ_MUST_OVERRIDE /* nothing */
+#endif /* MOZ_CLANG_PLUGIN */
+
 #endif /* __cplusplus */
 
 #endif  /* mozilla_Attributes_h_ */

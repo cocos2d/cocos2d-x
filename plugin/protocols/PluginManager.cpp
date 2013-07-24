@@ -34,15 +34,15 @@ PluginManager::PluginManager(void)
 
 PluginManager::~PluginManager()
 {
-	std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.begin();
-    for (;it != m_pluginsMap.end();++it)
+	std::map<std::string, PluginProtocol*>::iterator it = _pluginsMap.begin();
+    for (;it != _pluginsMap.end();++it)
     {
         if (it->second != NULL) {
             delete it->second;
             it->second = NULL;
         }
     }
-    m_pluginsMap.clear();
+    _pluginsMap.clear();
 }
 
 PluginManager* PluginManager::getInstance()
@@ -70,8 +70,8 @@ PluginProtocol* PluginManager::loadPlugin(const char* name)
     PluginProtocol* pRet = NULL;
     do {
         if (name == NULL || strlen(name) == 0) break;
-        std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.find(name);
-        if (it != m_pluginsMap.end())
+        std::map<std::string, PluginProtocol*>::iterator it = _pluginsMap.find(name);
+        if (it != _pluginsMap.end())
         {
             if (it->second == NULL) {
                 it->second = PluginFactory::getInstance()->createPlugin(name);
@@ -80,7 +80,7 @@ PluginProtocol* PluginManager::loadPlugin(const char* name)
         } else
         {
         	pRet = PluginFactory::getInstance()->createPlugin(name);
-        	m_pluginsMap[name] = pRet;
+        	_pluginsMap[name] = pRet;
         }
     } while (false);
 
@@ -91,8 +91,8 @@ void PluginManager::unloadPlugin(const char* name)
 {
     do {
         if (name == NULL || strlen(name) == 0) break;
-        std::map<std::string, PluginProtocol*>::iterator it = m_pluginsMap.find(name);
-		if (it != m_pluginsMap.end())
+        std::map<std::string, PluginProtocol*>::iterator it = _pluginsMap.find(name);
+		if (it != _pluginsMap.end())
         {
             if (it->second != NULL) {
                 delete it->second;
