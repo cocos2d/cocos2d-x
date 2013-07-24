@@ -56,7 +56,7 @@ void log(const char * pszFormat, ...)
     printf("\n");
 }
 
-// ios no MessageBox, use CCLog instead
+// ios no MessageBox, use log instead
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;

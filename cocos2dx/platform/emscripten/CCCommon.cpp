@@ -56,7 +56,7 @@ void log(const char * pszFormat, ...)
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
 //    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
-	CCLog(pszMsg);
+	log(pszMsg);
 }
 
 void LuaLog(const char * pszFormat)
