@@ -50,9 +50,6 @@
                local buf = "Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0."
                local nLength = string.len(buf)
                t = {string.byte(buf,1,-1)}
-               --[[print(t)
-               print(table.getn(t))
-               print(string.char(unpack(t)))]]--
                wsSendBinary:sendBinaryMsg(t,table.getn(t))
             else
                 local warningStr = "send binary websocket instance wasn't ready..."
