@@ -31,7 +31,7 @@
 NS_CC_EXT_BEGIN
 
 CC_DEPRECATED_ATTRIBUTE typedef TableView CCTableView;
-
+CC_DEPRECATED_ATTRIBUTE typedef TableViewCell CCTableViewCell;
 CC_DEPRECATED_ATTRIBUTE typedef TableViewDelegate CCTableViewDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef TableViewDataSource CCTableViewDataSource;
 CC_DEPRECATED_ATTRIBUTE typedef TableView CCTableView;
@@ -42,28 +42,7 @@ CC_DEPRECATED_ATTRIBUTE typedef SortableObject CCSortableObject;
 CC_DEPRECATED_ATTRIBUTE typedef ArrayForObjectSorting CCArrayForObjectSorting;
 CC_DEPRECATED_ATTRIBUTE typedef TableViewCell CCTableViewCell;
 CC_DEPRECATED_ATTRIBUTE typedef EditBox CCEditBox;
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImpl CCEditBoxImpl;
 CC_DEPRECATED_ATTRIBUTE typedef EditBoxDelegate CCEditBoxDelegate;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImplWin CCEditBoxImplWin;
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImplTizen CCEditBoxImplTizen;
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImplMac CCEditBoxImplMac;
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImplIOS CCEditBoxImplIOS;
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-CC_DEPRECATED_ATTRIBUTE typedef EditBoxImplAndroid CCEditBoxImplAndroid;
-#endif
 
 CC_DEPRECATED_ATTRIBUTE typedef Color3bObject CCColor3bObject;
 CC_DEPRECATED_ATTRIBUTE typedef ControlUtils CCControlUtils;
@@ -80,6 +59,8 @@ CC_DEPRECATED_ATTRIBUTE typedef ControlButton CCControlButton;
 CC_DEPRECATED_ATTRIBUTE typedef ControlSlider CCControlSlider;
 CC_DEPRECATED_ATTRIBUTE typedef Control CCControl;
 CC_DEPRECATED_ATTRIBUTE typedef ControlLoader CCControlLoader;
+CC_DEPRECATED_ATTRIBUTE typedef ControlColourPicker CCControlColourPicker;
+
 CC_DEPRECATED_ATTRIBUTE typedef LabelBMFontLoader CCLabelBMFontLoader;
 CC_DEPRECATED_ATTRIBUTE typedef ScrollViewLoader CCScrollViewLoader;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteLoader CCSpriteLoader;
@@ -111,60 +92,10 @@ CC_DEPRECATED_ATTRIBUTE typedef ComAttribute CCComAttribute;
 CC_DEPRECATED_ATTRIBUTE typedef InputDelegate CCInputDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef ComAudio CCComAudio;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX) && (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-CC_DEPRECATED_ATTRIBUTE typedef WsMessage CCWsMessage;
-CC_DEPRECATED_ATTRIBUTE typedef WsThreadHelper CCWsThreadHelper;
-CC_DEPRECATED_ATTRIBUTE typedef WebSocketCallbackWrapper CCWebSocketCallbackWrapper;
-#endif
-
 CC_DEPRECATED_ATTRIBUTE typedef HttpClient CCHttpClient;
 CC_DEPRECATED_ATTRIBUTE typedef HttpResponse CCHttpResponse;
 CC_DEPRECATED_ATTRIBUTE typedef HttpRequest CCHttpRequest;
 CC_DEPRECATED_ATTRIBUTE typedef Skin CCSkin;
-
-namespace armature {
-
-CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
-CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef SpriteDisplayData CCSpriteDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureDisplayData CCArmatureDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef ParticleDisplayData CCParticleDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef ShaderDisplayData CCShaderDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef BoneData CCBoneData;
-CC_DEPRECATED_ATTRIBUTE typedef FrameData CCFrameData;
-CC_DEPRECATED_ATTRIBUTE typedef MovementBoneData CCMovementBoneData;
-CC_DEPRECATED_ATTRIBUTE typedef MovementData CCMovementData;
-CC_DEPRECATED_ATTRIBUTE typedef AnimationData CCAnimationData;
-CC_DEPRECATED_ATTRIBUTE typedef ContourData CCContourData;
-CC_DEPRECATED_ATTRIBUTE typedef TextureData CCTextureData;
-CC_DEPRECATED_ATTRIBUTE typedef ShaderNode CCShaderNode;
-CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayFactory CCDisplayFactory;
-CC_DEPRECATED_ATTRIBUTE typedef BatchNode CCBatchNode;
-CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayManager CCDisplayManager;
-CC_DEPRECATED_ATTRIBUTE typedef ColliderBody CCColliderBody;
-CC_DEPRECATED_ATTRIBUTE typedef ColliderDetector CCColliderDetector;
-CC_DEPRECATED_ATTRIBUTE typedef GLESDebugDraw CCGLESDebugDraw;
-CC_DEPRECATED_ATTRIBUTE typedef PhysicsWorld CCPhysicsWorld;
-CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
-CC_DEPRECATED_ATTRIBUTE typedef TweenFunction CCTweenFunction;
-CC_DEPRECATED_ATTRIBUTE typedef TransformHelp CCTransformHelp;
-CC_DEPRECATED_ATTRIBUTE typedef DataReaderHelper CCDataReaderHelper;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureData CCArmatureData;
-CC_DEPRECATED_ATTRIBUTE typedef Bone CCBone;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
-CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
-
-} // namespace armature {
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-CC_DEPRECATED_ATTRIBUTE typedef CWin32InputBox CCCWin32InputBox;
-#endif
 
 CC_DEPRECATED_ATTRIBUTE typedef AtlasFormat CCAtlasFormat;
 CC_DEPRECATED_ATTRIBUTE typedef AtlasFilter CCAtlasFilter;
