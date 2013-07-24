@@ -23,7 +23,7 @@ int check_for_error( Point p1, Point p2, Point p3, Point p4, float s, float t )
     // Since float has rounding errors, only check if diff is < 0.05
     if( (fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( fabs(hitPoint1.y - hitPoint2.y) > 0.1f) )
     {
-        CCLog("ERROR: (%f,%f) != (%f,%f)", hitPoint1.x, hitPoint1.y, hitPoint2.x, hitPoint2.y);
+        log("ERROR: (%f,%f) != (%f,%f)", hitPoint1.x, hitPoint1.y, hitPoint2.x, hitPoint2.y);
         return 1;
     }
 
@@ -46,7 +46,7 @@ bool Bug1174Layer::init()
         //
         // Test 1.
         //
-        CCLog("Test1 - Start");
+        log("Test1 - Start");
         for( int i=0; i < 10000; i++)
         {
             // A | b
@@ -84,12 +84,12 @@ bool Bug1174Layer::init()
                     ok++;
             }
         }
-        CCLog("Test1 - End. OK=%i, Err=%i", ok, err);
+        log("Test1 - End. OK=%i, Err=%i", ok, err);
 
         //
         // Test 2.
         //
-        CCLog("Test2 - Start");
+        log("Test2 - Start");
         
         p1 = Point(220,480);
         p2 = Point(304,325);
@@ -100,13 +100,13 @@ bool Bug1174Layer::init()
         if( Point::isLineIntersect(p1, p2, p3, p4, &s, &t) )
             check_for_error(p1, p2, p3, p4, s,t );
 
-        CCLog("Test2 - End");
+        log("Test2 - End");
 
         
         //
         // Test 3
         //
-        CCLog("Test3 - Start");
+        log("Test3 - Start");
         
         ok=0;
         err=0;
@@ -153,7 +153,7 @@ bool Bug1174Layer::init()
             }
         }
         
-        CCLog("Test3 - End. OK=%i, err=%i", ok, err);
+        log("Test3 - End. OK=%i, err=%i", ok, err);
         return true;
     }
 

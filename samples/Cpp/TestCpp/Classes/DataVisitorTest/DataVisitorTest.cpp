@@ -55,10 +55,10 @@ void PrettyPrinterDemo::onEnter()
     PrettyPrinter vistor;
     
     // print dictionary
-    Dictionary* pDict = Dictionary::createWithContentsOfFile("animations/animations.plist");
-    pDict->acceptVisitor(vistor);
-    CCLog("%s", vistor.getResult().c_str());
-    CCLog("-------------------------------");
+    Dictionary* dict = Dictionary::createWithContentsOfFile("animations/animations.plist");
+    dict->acceptVisitor(vistor);
+    log("%s", vistor.getResult().c_str());
+    log("-------------------------------");
     
     Set myset;
     for (int i = 0; i < 30; ++i) {
@@ -66,14 +66,14 @@ void PrettyPrinterDemo::onEnter()
     }
     vistor.clear();
     myset.acceptVisitor(vistor);
-    CCLog("%s", vistor.getResult().c_str());
-    CCLog("-------------------------------");
+    log("%s", vistor.getResult().c_str());
+    log("-------------------------------");
     
     vistor.clear();
     addSprite();
-    pDict = TextureCache::getInstance()->snapshotTextures();
-    pDict->acceptVisitor(vistor);
-    CCLog("%s", vistor.getResult().c_str());
+    dict = TextureCache::getInstance()->snapshotTextures();
+    dict->acceptVisitor(vistor);
+    log("%s", vistor.getResult().c_str());
 }
 
 void DataVisitorTestScene::runThisTest()

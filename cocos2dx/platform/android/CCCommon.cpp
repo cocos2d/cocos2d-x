@@ -32,7 +32,20 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
+// XXX deprecated
 void CCLog(const char * pszFormat, ...)
+{
+    char buf[MAX_LEN];
+
+    va_list args;
+    va_start(args, pszFormat);        
+    vsnprintf(buf, MAX_LEN, pszFormat, args);
+    va_end(args);
+
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+}
+
+void log(const char * pszFormat, ...)
 {
     char buf[MAX_LEN];
 

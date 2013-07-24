@@ -306,7 +306,7 @@ bool Image::_initWithJpgData(void * data, int nSize)
 			/* If we get here, the JPEG code has signaled an error.
 			 * We need to clean up the JPEG object, close the input file, and return.
 			 */
-			CCLog("%d", bRet);
+			log("%d", bRet);
 			jpeg_destroy_decompress(&cinfo);
 			break;
 		}
