@@ -31,13 +31,13 @@
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
-#define getEditBoxImplIOS() ((cocos2d::extension::EditBoxImplIOS*)editBox_)
+#define getEditBoxImplIOS() ((cc::extension::EditBoxImplIOS*)editBox_)
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CCCustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::getInstance()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * cc::EGLView::getInstance()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -150,18 +150,18 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     return YES;
 }
@@ -172,23 +172,23 @@ static const int CC_EDIT_BOX_PADDING = 5;
     editState_ = NO;
     getEditBoxImplIOS()->setText(getEditBoxImplIOS()->getText());
     
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getEditBox());
         pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,64*sizeof(char));
         strncpy(data.eventName,"return",64);
         event.data = (void*)&data;
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 	
 	if(editBox_ != nil)
@@ -227,18 +227,18 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (void) textChanged
 {
     // NSLog(@"text is %@", self.textField.text);
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cc::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
     }
     
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cc::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        cc::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        cc::ScriptEvent event(cc::kCommonEvent,(void*)&data);
+        cc::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
 }
