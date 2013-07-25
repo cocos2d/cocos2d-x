@@ -637,7 +637,7 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
         case WS_MSG_TO_UITHREAD_ERROR:
             {
                 // FIXME: The exact error needs to be checked.
-                WebSocket::ErrorCode err = kErrorConnectionFailure;
+                WebSocket::ErrorCode err = ERROR_CONNECTION_FAILURE;
                 _delegate->onError(this, err);
             }
             break;

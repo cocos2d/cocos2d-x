@@ -65,9 +65,13 @@ public:
      */
     enum ErrorCode
     {
-        kErrorTimeout = 0,
-        kErrorConnectionFailure,
-        kErrorUnknown
+        ERROR_TIME_OUT,
+        ERROR_CONNECTION_FAILURE,
+        ERROR_UNKNOWN,
+        
+        kErrorTimeout = ERROR_TIME_OUT,
+        kErrorConnectionFailure = ERROR_CONNECTION_FAILURE,
+        kErrorUnknown = ERROR_UNKNOWN,
     };
 
     /**
