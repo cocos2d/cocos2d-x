@@ -52,14 +52,14 @@ enum {
     kParticleStartRadiusEqualToEndRadius = -1
 };
 
-//* @enum
-enum {
-    /** Gravity mode (A mode) */
-    kParticleModeGravity,
-
-    /** Radius mode (B mode) */
-    kParticleModeRadius,    
-};
+////* @enum
+//enum {
+//    /** Gravity mode (A mode) */
+//    kParticleModeGravity,
+//
+//    /** Radius mode (B mode) */
+//    kParticleModeRadius,    
+//};
 
 
 /** @typedef tPositionType
@@ -166,6 +166,12 @@ emitter.startSpin = 0;
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
+    enum 
+    {
+        MODE_GRAVITY,
+        MODE_RADIUS,
+    };
+    
     /** creates an initializes a ParticleSystem from a plist file.
     This plist files can be created manually or with Particle Designer:
     http://particledesigner.71squared.com/
