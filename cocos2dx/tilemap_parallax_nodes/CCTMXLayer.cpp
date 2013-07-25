@@ -186,7 +186,7 @@ void TMXLayer::setupTiles()
 }
 
 // TMXLayer - Properties
-String* TMXLayer::getPropertyNamed(const char *propertyName) const
+String* TMXLayer::getProperty(const char *propertyName) const
 {
     return static_cast<String*>(_properties->objectForKey(propertyName));
 }
@@ -195,14 +195,14 @@ void TMXLayer::parseInternalProperties()
 {
     // if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-    String *vertexz = getPropertyNamed("cc_vertexz");
+    String *vertexz = getProperty("cc_vertexz");
     if (vertexz) 
     {
         // If "automatic" is on, then parse the "cc_alpha_func" too
         if (vertexz->_string == "automatic")
         {
             _useAutomaticVertexZ = true;
-            String *alphaFuncVal = getPropertyNamed("cc_alpha_func");
+            String *alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = 0.0f;
             if (alphaFuncVal != NULL)
             {

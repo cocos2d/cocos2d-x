@@ -47,7 +47,7 @@ TMXObjectGroup::~TMXObjectGroup()
     CC_SAFE_RELEASE(_properties);
 }
 
-Dictionary* TMXObjectGroup::getObjectNamed(const char *objectName) const
+Dictionary* TMXObjectGroup::getObject(const char *objectName) const
 {
     if (_objects && _objects->count() > 0)
     {
@@ -66,7 +66,7 @@ Dictionary* TMXObjectGroup::getObjectNamed(const char *objectName) const
     return NULL;    
 }
 
-String* TMXObjectGroup::getPropertyNamed(const char* propertyName) const
+String* TMXObjectGroup::getProperty(const char* propertyName) const
 {
     return static_cast<String*>(_properties->objectForKey(propertyName));
 }
