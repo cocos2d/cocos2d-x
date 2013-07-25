@@ -301,6 +301,8 @@ namespace sigslot {
 	class _connection_base0
 	{
 	public:
+		virtual ~_connection_base0() { }
+		
 		virtual has_slots<mt_policy>* getdest() const = 0;
 		virtual void emit() = 0;
 		virtual _connection_base0* clone() = 0;
@@ -386,6 +388,8 @@ namespace sigslot {
 	class _connection_base7
 	{
 	public:
+		virtual ~_connection_base7() { }
+		
 		virtual has_slots<mt_policy>* getdest() const = 0;
 		virtual void emit(arg1_type, arg2_type, arg3_type, arg4_type, arg5_type,
                           arg6_type, arg7_type) = 0;
@@ -400,6 +404,8 @@ namespace sigslot {
 	class _connection_base8
 	{
 	public:
+		virutal ~_connection_base8() { }
+		
 		virtual has_slots<mt_policy>* getdest() const = 0;
 		virtual void emit(arg1_type, arg2_type, arg3_type, arg4_type, arg5_type,
                           arg6_type, arg7_type, arg8_type) = 0;
@@ -413,6 +419,8 @@ namespace sigslot {
 	class _signal_base : public mt_policy
 	{
 	public:
+		virtual ~_signal_base() { }
+		
 		virtual void slot_disconnect(has_slots<mt_policy>* pslot) = 0;
 		virtual void slot_duplicate(const has_slots<mt_policy>* poldslot, has_slots<mt_policy>* pnewslot) = 0;
 	};
