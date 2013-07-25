@@ -104,7 +104,10 @@ public:
     /* creates a new Image from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
+    
     Image* newImage(bool flipImage = true);
+    
+    CC_DEPRECATED_ATTRIBUTE Image* newCCImage(bool flipImage = true) { return newImage(flipImage); };
 
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.

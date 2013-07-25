@@ -28,8 +28,8 @@ class HelloCocosBuilderLayer
 
         void openTest(const char * pCCBFileName, const char * nodeName = NULL, cocos2d::extension::NodeLoader * nodeLoader = NULL);
 
-        virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+        virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+        virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
         virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, cocos2d::extension::CCBValue* pCCBValue);
         virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);

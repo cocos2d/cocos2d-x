@@ -622,6 +622,9 @@ CC_DEPRECATED_ATTRIBUTE typedef FlipX CCFlipX;
 CC_DEPRECATED_ATTRIBUTE typedef FlipY CCFlipY;
 CC_DEPRECATED_ATTRIBUTE typedef Place CCPlace;
 CC_DEPRECATED_ATTRIBUTE typedef CallFunc CCCallFunc;
+CC_DEPRECATED_ATTRIBUTE typedef CallFuncN CCCallFuncN;
+CC_DEPRECATED_ATTRIBUTE typedef __CCCallFuncND CCCallFuncND;
+CC_DEPRECATED_ATTRIBUTE typedef __CCCallFuncO CCCallFuncO;
 CC_DEPRECATED_ATTRIBUTE typedef GridAction CCGridAction;
 CC_DEPRECATED_ATTRIBUTE typedef Grid3DAction CCGrid3DAction;
 CC_DEPRECATED_ATTRIBUTE typedef TiledGrid3DAction CCTiledGrid3DAction;
@@ -760,6 +763,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Timer CCTimer;
 CC_DEPRECATED_ATTRIBUTE typedef Scheduler CCScheduler;
 CC_DEPRECATED_ATTRIBUTE typedef EGLView CCEGLView;
 
+CC_DEPRECATED_ATTRIBUTE typedef Component CCComponent;
 CC_DEPRECATED_ATTRIBUTE typedef AffineTransform CCAffineTransform;
 CC_DEPRECATED_ATTRIBUTE typedef Point CCPoint;
 CC_DEPRECATED_ATTRIBUTE typedef Size CCSize;

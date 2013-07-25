@@ -86,6 +86,8 @@
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
 		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
+		1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
+		1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
 		1A6FB50617854BC200CDF010 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196951785201F00D62A44 /* tolua_event.c */; };
 		1A6FB50717854BC200CDF010 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196971785201F00D62A44 /* tolua_is.c */; };
 		1A6FB50817854BC200CDF010 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
@@ -1924,6 +1926,7 @@
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDeprecated-ext.h"; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
@@ -4105,6 +4108,7 @@
 				A03F2FD9178145F2006731B9 /* AssetsManager */,
 				A03F2FDC178145F2006731B9 /* CCArmature */,
 				A03F3027178145F2006731B9 /* CCBReader */,
+				1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */,
 				A03F305A178145F3006731B9 /* cocos-ext.h */,
 				A03F305B178145F3006731B9 /* Components */,
 				A03F3064178145F3006731B9 /* ExtensionMacros.h */,
@@ -5429,6 +5433,7 @@
 				A03F31E0178145F3006731B9 /* spine-cocos2dx.h in Headers */,
 				A03F31E1178145F3006731B9 /* spine.h in Headers */,
 				1AE019861790023400D574A8 /* SocketIO.h in Headers */,
+				1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5854,6 +5859,7 @@
 				A07A4EF71783867C0073F6A7 /* spine-cocos2dx.h in Headers */,
 				A07A4EF81783867C0073F6A7 /* spine.h in Headers */,
 				1AE019871790023400D574A8 /* SocketIO.h in Headers */,
+				1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

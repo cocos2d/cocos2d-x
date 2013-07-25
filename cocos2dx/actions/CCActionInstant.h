@@ -341,6 +341,87 @@ protected:
     std::function<void(Node*)> _functionN;
 };
 
+/**
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
+ * ND means: Node and Data. Data is void *, so it could be anything.
+ */
+
+class CC_DLL  __CCCallFuncND : public CallFunc
+{
+public:
+    /** creates the action with the callback and the data to pass as an argument */
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+    virtual long getClassTypeInfo() {
+        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		return id;
+    }
+    
+protected:
+    /** initializes the action with the callback and the data to pass as an argument */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+public:
+    //
+    // Overrides
+    //
+	virtual __CCCallFuncND* clone() const override;
+    virtual void execute() override;
+    
+protected:
+    SEL_CallFuncND _callFuncND;
+    void* _data;
+};
+
+
+/**
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with an object as the first argument.
+ O means Object.
+ @since v0.99.5
+ */
+
+class CC_DLL __CCCallFuncO : public CallFunc, public TypeInfo
+{
+public:
+    /** creates the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+    __CCCallFuncO();
+    virtual ~__CCCallFuncO();
+    
+    virtual long getClassTypeInfo() {
+	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+		return id;
+    }
+    
+protected:
+    /** initializes the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+public:
+    //
+    // Overrides
+    //
+	virtual __CCCallFuncO* clone() const override;
+    virtual void execute() override;
+    
+    Object* getObject() const;
+    void setObject(Object* obj);
+    
+protected:
+    /** object to be passed as argument */
+    Object* _object;
+    SEL_CallFuncO _callFuncO;
+};
+
 // end of actions group
 /// @}
 
