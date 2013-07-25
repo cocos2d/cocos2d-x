@@ -12,29 +12,39 @@ typedef std::map<std::string, NodeLoader *> NodeLoaderMap;
 typedef std::pair<std::string, NodeLoader *> NodeLoaderMapEntry;
 
 class NodeLoaderLibrary : public Object {
-    private:
-        NodeLoaderMap mNodeLoaders;
+private:
+    NodeLoaderMap mNodeLoaders;
 
-    public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
+public:
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
 
-        NodeLoaderLibrary();
-        virtual ~NodeLoaderLibrary();
+    NodeLoaderLibrary();
+    virtual ~NodeLoaderLibrary();
 
-        void registerDefaultNodeLoaders();
-        void registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader);
-        //void registerNodeLoader(String * pClassName, NodeLoader * pNodeLoader);
-        void unregisterNodeLoader(const char * pClassName);
-        //void unregisterNodeLoader(String * pClassName);
-        NodeLoader * getNodeLoader(const char * pClassName);
-        //CCNodeLoader * getNodeLoader(String * pClassName);
-        void purge(bool pDelete);
+    void registerDefaultNodeLoaders();
+    void registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader);
+    //void registerNodeLoader(String * pClassName, NodeLoader * pNodeLoader);
+    void unregisterNodeLoader(const char * pClassName);
+    //void unregisterNodeLoader(String * pClassName);
+    NodeLoader * getNodeLoader(const char * pClassName);
+    //CCNodeLoader * getNodeLoader(String * pClassName);
+    void purge(bool pDelete);
 
-    public:
-        static NodeLoaderLibrary * sharedNodeLoaderLibrary();
-        static void purgeSharedNodeLoaderLibrary();
+    CC_DEPRECATED_ATTRIBUTE void registerDefaultCCNodeLoaders() { registerDefaultNodeLoaders(); }
+    CC_DEPRECATED_ATTRIBUTE void registerCCNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) { registerNodeLoader(pClassName, pNodeLoader); };
+    CC_DEPRECATED_ATTRIBUTE void unregisterCCNodeLoader(const char * pClassName) { unregisterNodeLoader(pClassName); };
+    CC_DEPRECATED_ATTRIBUTE NodeLoader * getCCNodeLoader(const char * pClassName) { return getNodeLoader(pClassName); };
+    
+public:
+    static NodeLoaderLibrary * getInstance();
+    static void destroyInstance();
 
-        static NodeLoaderLibrary * newDefaultNodeLoaderLibrary();
+    static NodeLoaderLibrary * newDefaultNodeLoaderLibrary();
+
+    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * sharedNodeLoaderLibrary() { return NodeLoaderLibrary::getInstance(); };
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedNodeLoaderLibrary() { NodeLoaderLibrary::destroyInstance(); };
+        
+    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * newDefaultCCNodeLoaderLibrary() { return NodeLoaderLibrary::newDefaultNodeLoaderLibrary(); };
 };
 
 NS_CC_EXT_END
