@@ -917,14 +917,14 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesOneByOne;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesAllAtOnce;
 CC_DEPRECATED_ATTRIBUTE typedef enum Layer::TouchesMode ccTouchesMode;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatPNG;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatJPEG;
+CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatPNG;
+CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatJPEG;
 CC_DEPRECATED_ATTRIBUTE typedef enum Image::Format tImageFormat;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationLeftOver;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationRightOver;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationUpOver;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationDownOver;
+CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationLeftOver;
+CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationRightOver;
+CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationUpOver;
+CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationDownOver;
 CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;

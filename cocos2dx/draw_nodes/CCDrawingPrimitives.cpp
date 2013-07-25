@@ -52,12 +52,12 @@ NS_CC_BEGIN
     #define M_PI       3.14159265358979323846
 #endif
 
-static bool s_bInitialized = false;
-static GLProgram* s_pShader = NULL;
-static int s_nColorLocation = -1;
-static Color4F s_tColor(1.0f,1.0f,1.0f,1.0f);
-static int s_nPointSizeLocation = -1;
-static GLfloat s_fPointSize = 1.0f;
+static bool s_initialized = false;
+static GLProgram* s_shader = NULL;
+static int s_colorLocation = -1;
+static Color4F s_color(1.0f,1.0f,1.0f,1.0f);
+static int s_pointSizeLocation = -1;
+static GLfloat s_pointSize = 1.0f;
 
 #ifdef EMSCRIPTEN
 static GLuint s_bufferObject = 0;
@@ -88,20 +88,20 @@ static void setGLBufferData(void *buf, GLuint bufSize)
 
 static void lazy_init( void )
 {
-    if( ! s_bInitialized ) {
+    if( ! s_initialized ) {
 
         //
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
-        s_pShader = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-        s_pShader->retain();
+        s_shader = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+        s_shader->retain();
         
-        s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");
+        s_colorLocation = glGetUniformLocation( s_shader->getProgram(), "u_color");
     CHECK_GL_ERROR_DEBUG();
-        s_nPointSizeLocation = glGetUniformLocation( s_pShader->getProgram(), "u_pointSize");
+        s_pointSizeLocation = glGetUniformLocation( s_shader->getProgram(), "u_pointSize");
     CHECK_GL_ERROR_DEBUG();
 
-        s_bInitialized = true;
+        s_initialized = true;
     }
 }
 
@@ -113,8 +113,8 @@ void DrawPrimitives::init()
 
 void DrawPrimitives::free()
 {
-	CC_SAFE_RELEASE_NULL(s_pShader);
-	s_bInitialized = false;
+	CC_SAFE_RELEASE_NULL(s_shader);
+	s_initialized = false;
 }
 
 void DrawPrimitives::drawPoint( const Point& point )
@@ -126,11 +126,11 @@ void DrawPrimitives::drawPoint( const Point& point )
     p.y = point.y;
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
 
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
+    s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
 
 #ifdef EMSCRIPTEN
     setGLBufferData(&p, 8);
@@ -149,10 +149,10 @@ void DrawPrimitives::drawPoints( const Point *points, unsigned int numberOfPoint
     lazy_init();
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
+    s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     Vertex2F* newPoints = new Vertex2F[numberOfPoints];
@@ -201,9 +201,9 @@ void DrawPrimitives::drawLine( const Point& origin, const Point& destination )
         Vertex2F(destination.x, destination.y)
     };
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 #ifdef EMSCRIPTEN
@@ -241,9 +241,9 @@ void DrawPrimitives::drawPoly( const Point *poli, unsigned int numberOfPoints, b
 {
     lazy_init();
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -293,9 +293,9 @@ void DrawPrimitives::drawSolidPoly( const Point *poli, unsigned int numberOfPoin
 {
     lazy_init();
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -358,9 +358,9 @@ void DrawPrimitives::drawCircle( const Point& center, float radius, float angle,
     vertices[(segments+1)*2] = center.x;
     vertices[(segments+1)*2+1] = center.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -403,9 +403,9 @@ void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float a
     vertices[(segments+1)*2] = center.x;
     vertices[(segments+1)*2+1] = center.y;
     
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
     
@@ -444,9 +444,9 @@ void DrawPrimitives::drawQuadBezier(const Point& origin, const Point& control, c
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -501,9 +501,9 @@ void DrawPrimitives::drawCardinalSpline( PointArray *config, float tension,  uns
         vertices[i].y = newPos.y;
     }
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*)&s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -535,9 +535,9 @@ void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1,
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
     ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -553,28 +553,28 @@ void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1,
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
+void DrawPrimitives::setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
-    s_tColor.r = r;
-    s_tColor.g = g;
-    s_tColor.b = b;
-    s_tColor.a = a;
+    s_color.r = r;
+    s_color.g = g;
+    s_color.b = b;
+    s_color.a = a;
 }
 
 void DrawPrimitives::setPointSize( GLfloat pointSize )
 {
-    s_fPointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
+    s_pointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
 
     //TODO :glPointSize( pointSize );
 
 }
 
-void DrawPrimitives::drawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+void DrawPrimitives::setDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
-    s_tColor.r = r/255.0f;
-    s_tColor.g = g/255.0f;
-    s_tColor.b = b/255.0f;
-    s_tColor.a = a/255.0f;
+    s_color.r = r/255.0f;
+    s_color.g = g/255.0f;
+    s_color.b = b/255.0f;
+    s_color.a = a/255.0f;
 }
 
 NS_CC_END

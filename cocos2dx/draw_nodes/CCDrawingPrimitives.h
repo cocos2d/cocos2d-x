@@ -147,12 +147,12 @@ public:
     /** set the drawing color with 4 unsigned bytes
      @since v2.0
      */
-    static void drawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+    static void setDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
     /** set the drawing color with 4 floats
      @since v2.0
      */
-    static void drawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
+    static void setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
     /** set the point size in points. Default 1.
      @since v2.0

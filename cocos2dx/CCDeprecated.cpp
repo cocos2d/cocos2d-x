@@ -145,13 +145,13 @@ const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
 const int kCCTouchesOneByOne = Layer::TOUCHES_ONE_BY_ONE;
 const int kCCTouchesAllAtOnce = Layer::TOUCHES_ALL_AT_ONCE;
 
-const int kCCImageFormatPNG = Image::FORMAT_PNG;
-const int kCCImageFormatJPEG = Image::FORMAT_JPG;
+const Image::Format kCCImageFormatPNG = Image::Format::PNG;
+const Image::Format kCCImageFormatJPEG = Image::Format::JPG;
 
-const int kCCTransitionOrientationLeftOver = TransitionScene::ORIENTATION_LEFT_OVER;
-const int kCCTransitionOrientationRightOver = TransitionScene::ORIENTATION_RIGHT_OVER;
-const int kCCTransitionOrientationUpOver = TransitionScene::ORIENTATION_UP_OVER;
-const int kCCTransitionOrientationDownOver = TransitionScene::ORIENTATION_DOWN_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationLeftOver = TransitionScene::Orientation::LEFT_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationRightOver = TransitionScene::Orientation::RIGHT_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationUpOver = TransitionScene::Orientation::UP_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationDownOver = TransitionScene::Orientation::DOWN_OVER;
 
 const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
@@ -243,12 +243,12 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
 
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
-    DrawPrimitives::drawColor4B(r, g, b, a);
+    DrawPrimitives::setDrawColor4B(r, g, b, a);
 }
 
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
-    DrawPrimitives::drawColor4F(r, g, b, a);
+    DrawPrimitives::setDrawColor4F(r, g, b, a);
 }
 
 void ccPointSize( GLfloat pointSize )

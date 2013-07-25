@@ -627,7 +627,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForClippingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
 
-        ccDrawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
+        DrawPrimitives::drawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
         
         kmGLPushMatrix();
         this->transform();
@@ -637,7 +637,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForDrawingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
         
-        ccDrawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
+        DrawPrimitives::drawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
         
         kmGLPushMatrix();
         this->transform();
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(Point::ZERO, Point(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Point::ZERO, Point(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);

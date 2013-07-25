@@ -281,7 +281,7 @@ my_error_exit (j_common_ptr cinfo)
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool Image::_initWithJpgData(void * data, int nSize)
+bool Image::initWithJpgData(void * data, int nSize)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -378,7 +378,7 @@ bool Image::_initWithJpgData(void * data, int nSize)
     return bRet;
 }
 
-bool Image::_initWithPngData(void * pData, int nDatalen)
+bool Image::initWithPngData(void * pData, int nDatalen)
 {
 // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -611,7 +611,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool Image::_initWithTiffData(void* pData, int nDataLen)
+bool Image::initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
@@ -743,7 +743,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     return bRet;
 }
 
-bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
     bool bRet = false;
     do 
@@ -883,7 +883,7 @@ bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
     } while (0);
     return bRet;
 }
-bool Image::_saveImageToJPG(const char * pszFilePath)
+bool Image::saveImageToJPG(const char * pszFilePath)
 {
     bool bRet = false;
     do 

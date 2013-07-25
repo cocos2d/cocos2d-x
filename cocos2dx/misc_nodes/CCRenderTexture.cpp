@@ -544,38 +544,38 @@ void RenderTexture::draw()
 
 bool RenderTexture::saveToFile(const char *szFilePath)
 {
-    bool bRet = false;
+    bool ret = false;
 
-    Image *pImage = newImage(true);
-    if (pImage)
+    Image *image = newImage(true);
+    if (image)
     {
-        bRet = pImage->saveToFile(szFilePath, Image::FORMAT_JPG);
+        ret = image->saveToFile(szFilePath);
     }
 
-    CC_SAFE_DELETE(pImage);
-    return bRet;
+    CC_SAFE_DELETE(image);
+    return ret;
 }
 bool RenderTexture::saveToFile(const char *fileName, Image::Format format)
 {
     bool bRet = false;
-    CCASSERT(format == Image::FORMAT_JPG || format == Image::FORMAT_PNG,
+    CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
 
-    Image *pImage = newImage(true);
-    if (pImage)
+    Image *image = newImage(true);
+    if (image)
     {
         std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
         
-        bRet = pImage->saveToFile(fullpath.c_str(), true);
+        bRet = image->saveToFile(fullpath.c_str(), true);
     }
 
-    CC_SAFE_DELETE(pImage);
+    CC_SAFE_DELETE(image);
 
     return bRet;
 }
 
 /* get buffer as Image */
-Image* RenderTexture::newImage(bool flipImage)
+Image* RenderTexture::newImage(bool fliimage)
 {
     CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
@@ -594,7 +594,7 @@ Image* RenderTexture::newImage(bool flipImage)
 
     GLubyte *pBuffer = NULL;
     GLubyte *pTempData = NULL;
-    Image *pImage = new Image();
+    Image *image = new Image();
 
     do
     {
@@ -612,7 +612,7 @@ Image* RenderTexture::newImage(bool flipImage)
         glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
         this->end();
 
-        if ( flipImage ) // -- flip is only required when saving image to file
+        if ( fliimage ) // -- flip is only required when saving image to file
         {
             // to get the actual texture data
             // #640 the image read from rendertexture is dirty
@@ -623,11 +623,11 @@ Image* RenderTexture::newImage(bool flipImage)
                        nSavedBufferWidth * 4);
             }
 
-            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::FORMAT_RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::Format::RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         else
         {
-            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::FORMAT_RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::Format::RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         
     } while (0);
@@ -635,7 +635,7 @@ Image* RenderTexture::newImage(bool flipImage)
     CC_SAFE_DELETE_ARRAY(pBuffer);
     CC_SAFE_DELETE_ARRAY(pTempData);
 
-    return pImage;
+    return image;
 }
 
 NS_CC_END

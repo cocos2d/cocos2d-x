@@ -19,13 +19,13 @@ public:
 
     virtual void draw()
     {
-        ccDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
+        DrawPrimitives::setDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);
-        ccDrawLine( Point(0, _touchPoint.y), Point(getContentSize().width, _touchPoint.y) );
-        ccDrawLine( Point(_touchPoint.x, 0), Point(_touchPoint.x, getContentSize().height) );
+        DrawPrimitives::drawLine( Point(0, _touchPoint.y), Point(getContentSize().width, _touchPoint.y) );
+        DrawPrimitives::drawLine( Point(_touchPoint.x, 0), Point(_touchPoint.x, getContentSize().height) );
         glLineWidth(1);
-        ccPointSize(30);
-        ccDrawPoint(_touchPoint);
+        DrawPrimitives::setPointSize(30);
+        DrawPrimitives::drawPoint(_touchPoint);
     }
 
     void setTouchPos(const Point& pt)

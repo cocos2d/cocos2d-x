@@ -50,14 +50,21 @@ public:
     Image();
     virtual ~Image();
 
-    enum Format
+    /** Supported formats for Image */
+    enum class Format
     {
-        FORMAT_JPG,
-        FORMAT_PNG,
-        FORMAT_TIFF,
-        FORMAT_WEBP,
-        FORMAT_RAW_DATA,
-        FORMAT_UNKOWN
+        //! JPEG
+        JPG,
+        //! PNG
+        PNG,
+        //! TIFF
+        TIFF,
+        //! WebP
+        WEBP,
+        //! Raw Data
+        RAW_DATA,
+        //! Unknown format
+        UNKOWN
     };
 
     typedef enum
@@ -79,7 +86,7 @@ public:
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, Format imageType = FORMAT_PNG);
+    bool initWithImageFile(const char * strPath, Format imageType = Format::PNG);
 
     /**
     @brief  Load image from stream buffer.
@@ -92,7 +99,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           Format eFmt = FORMAT_UNKOWN,
+                           Format eFmt = Format::UNKOWN,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -165,13 +172,13 @@ public:
     //
     
 protected:
-    bool _initWithJpgData(void *pData, int nDatalen);
-    bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void *pData, int nDataLen);
-    bool _initWithWebpData(void *pData, int nDataLen);
+    bool initWithJpgData(void *pData, int nDatalen);
+    bool initWithPngData(void *pData, int nDatalen);
+    bool initWithTiffData(void *pData, int nDataLen);
+    bool initWithWebpData(void *pData, int nDataLen);
 
-    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool _saveImageToJPG(const char *pszFilePath);
+    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveImageToJPG(const char *pszFilePath);
 
     unsigned short   _width;
     unsigned short   _height;
@@ -194,7 +201,7 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = FORMAT_PNG);
+    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = Format::PNG);
 };
 
 // end of platform group

@@ -581,8 +581,8 @@ void TestBoundingBox::draw()
 
 	rect = RectApplyAffineTransform(armature->getBoundingBox(), armature->getNodeToParentTransform());
 	
-	ccDrawColor4B(100, 100, 100, 255);
-	ccDrawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
+	DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
+	DrawPrimitives::drawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
 }
 
 

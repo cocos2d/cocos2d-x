@@ -10,6 +10,8 @@ enum {
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(TexturePVRv3Premult),
+
     CL(TextureMemoryAlloc),
     CL(TextureAlias),
     CL(TexturePVRMipMap),
