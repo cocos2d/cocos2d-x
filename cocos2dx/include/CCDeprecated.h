@@ -390,26 +390,26 @@ CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, fl
 }
 
 
-CC_DEPRECATED_ATTRIBUTE const Point CCPointZero = Point::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Point CCPointZero;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
-CC_DEPRECATED_ATTRIBUTE const Size CCSizeZero = Size::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Size CCSizeZero;
 
 /* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */
-CC_DEPRECATED_ATTRIBUTE const Rect CCRectZero = Rect::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Rect CCRectZero;
 
 
-CC_DEPRECATED_ATTRIBUTE const Color3B ccWHITE = Color3B::WHITE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccYELLOW = Color3B::YELLOW;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccGREEN = Color3B::GREEN;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccBLUE = Color3B::BLUE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccRED = Color3B::RED;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccMAGENTA = Color3B::MAGENTA;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccBLACK = Color3B::BLACK;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccORANGE = Color3B::ORANGE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccGRAY = Color3B::GRAY;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccWHITE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccYELLOW;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGREEN;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLUE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccRED;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccMAGENTA;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLACK;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccORANGE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGRAY;
 
-CC_DEPRECATED_ATTRIBUTE const BlendFunc kBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kBlendFuncDisable;
 
 CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(GLubyte r, GLubyte g, GLubyte b)
 {
@@ -795,68 +795,67 @@ CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
-#define kCCVertexAttrib_Position     kVertexAttrib_Position
-#define kCCVertexAttrib_Color        kVertexAttrib_Color
-#define kCCVertexAttrib_TexCoords    kVertexAttrib_TexCoords
-#define kCCVertexAttrib_MAX          kVertexAttrib_MAX
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Position;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Color;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_TexCoords;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_MAX;
 
-#define kCCUniformPMatrix    kUniformPMatrix
-#define kCCUniformMVMatrix   kUniformMVMatrix
-#define kCCUniformMVPMatrix  kUniformMVPMatrix
-#define kCCUniformTime       kUniformTime
-#define kCCUniformSinTime    kUniformSinTime
-#define kCCUniformCosTime    kUniformCosTime
-#define kCCUniformRandom01   kUniformRandom01
-#define kCCUniformSampler    kUniformSampler
-#define kCCUniform_MAX       kUniform_MAX
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformPMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVPMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSinTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformCosTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformRandom01;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSampler;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniform_MAX;
 
-
-#define kCCShader_PositionTextureColor              kShader_PositionTextureColor
-#define kCCShader_PositionTextureColorAlphaTest     kShader_PositionTextureColorAlphaTest
-#define kCCShader_PositionColor                     kShader_PositionColor
-#define kCCShader_PositionTexture                   kShader_PositionTexture
-#define kCCShader_PositionTexture_uColor            kShader_PositionTexture_uColor
-#define kCCShader_PositionTextureA8Color            kShader_PositionTextureA8Color
-#define kCCShader_Position_uColor                   kShader_Position_uColor
-#define kCCShader_PositionLengthTexureColor         kShader_PositionLengthTexureColor
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColorAlphaTest;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTexture;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTexture_uColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureA8Color;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_Position_uColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionLengthTexureColor;
 
 // uniform names
-#define kCCUniformPMatrix_s				kUniformPMatrix_s
-#define kCCUniformMVMatrix_s			kUniformMVMatrix_s
-#define kCCUniformMVPMatrix_s			kUniformMVPMatrix_s
-#define kCCUniformTime_s				kUniformTime_s
-#define kCCUniformSinTime_s				kUniformSinTime_s
-#define kCCUniformCosTime_s				kUniformCosTime_s
-#define kCCUniformRandom01_s			kUniformRandom01_s
-#define kCCUniformSampler_s				kUniformSampler_s
-#define kCCUniformAlphaTestValue		kUniformAlphaTestValue
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformPMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformMVMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformMVPMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformSinTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformCosTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformRandom01_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformSampler_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformAlphaTestValue;
 
 // Attribute names
-#define    kCCAttributeNameColor           kAttributeNameColor
-#define    kCCAttributeNamePosition        kAttributeNamePosition
-#define    kCCAttributeNameTexCoord        kAttributeNameTexCoord
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameColor;
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNamePosition;
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = VERTEX_ATTRIB_FLAT_NONE;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = VERTEX_ATTRIB_FLAG_POSITION;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = VERTEX_ATTRIB_FLAG_COLOR;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = VERTEX_ATTRIB_FLAG_TEX_COORDS;
-CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_None;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Position;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Color;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_TexCoords;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_PosColorTex;
 
-#define kCCProgressTimerTypeRadial ProgressTimer::RADIAL
-#define kCCProgressTimerTypeBar    ProgressTimer::BAR
+CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeRadial;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeBar;
 CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection2D = Director::PROJECTION_2D;
-CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection3D = Director::PROJECTION_3D; 
-CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionCustom = Director::PROJECTION_CUSTOM;
-CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionDefault = Director::PROJECTION_DEFAULT;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection2D;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection3D; 
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionCustom;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionDefault;
 CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
-CC_DEPRECATED_ATTRIBUTE const int ConfigurationError = Configuration::ERROR;
-CC_DEPRECATED_ATTRIBUTE const int ConfigurationString = Configuration::STRING;
-CC_DEPRECATED_ATTRIBUTE const int ConfigurationInt = Configuration::INT;
-CC_DEPRECATED_ATTRIBUTE const int ConfigurationDouble = Configuration::DOUBLE;
-CC_DEPRECATED_ATTRIBUTE const int ConfigurationBoolean = Configuration::BOOLEAN;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationError;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationString;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationInt;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationDouble;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationBoolean;
 CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 
 #define kCCVerticalTextAlignmentTop     kVerticalTextAlignmentTop
@@ -882,16 +881,16 @@ CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
-CC_DEPRECATED_ATTRIBUTE const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
-CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
-CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDurationInfinity;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartSizeEqualToEndSize;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartRadiusEqualToEndRadius;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
-CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeGravity;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeRadius;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeFree =  ParticleSystem::FREE;
-CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeRelative =  ParticleSystem::RELATIVE;
-CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeGrouped =  ParticleSystem::GROUPED;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeFree;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeRelative;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeGrouped;
 CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
 #define kCCBlendFuncDisable   kBlendFuncDisable
