@@ -36,7 +36,7 @@ public:
 class MyIAPOLManager
 {
 public:
-    static MyIAPOLManager* sharedManager();
+    static MyIAPOLManager* getInstance();
     static void purge();
 
     typedef enum {
