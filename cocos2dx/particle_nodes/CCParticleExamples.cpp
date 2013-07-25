@@ -91,7 +91,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         this->_emitterMode = MODE_GRAVITY;
@@ -124,7 +124,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 54.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per frame
         _emissionRate = _totalParticles/_life;
@@ -196,7 +196,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration= kParticleDurationInfinity;
+        _duration= DURATION_INFINITY;
 
         // Gravity Mode
         this->_emitterMode = MODE_GRAVITY;
@@ -248,7 +248,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 8.0f;
         _startSizeVar = 2.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         Texture2D* pTexture = getDefaultTexture();
         if (pTexture != NULL)
@@ -300,7 +300,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         this->setBlendAdditive(true);
 
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -333,7 +333,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 30.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per seconds
         _emissionRate = _totalParticles/_life;
@@ -404,7 +404,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -440,7 +440,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 37.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = _totalParticles/_life;
@@ -513,7 +513,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -549,7 +549,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 30.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = _totalParticles/_life;
@@ -621,7 +621,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -657,7 +657,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 60.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = _totalParticles/_life;
@@ -730,7 +730,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -766,7 +766,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 20.0f;
         _startSizeVar = 0.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = _totalParticles/_life;
@@ -874,7 +874,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 15.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = _totalParticles/_duration;
@@ -947,7 +947,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // Emitter mode: Gravity Mode
         setEmitterMode(MODE_GRAVITY);
@@ -979,7 +979,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 60.0f;
         _startSizeVar = 10.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per frame
         _emissionRate = _totalParticles/_life;
@@ -1052,7 +1052,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         // set gravity mode.
         setEmitterMode(MODE_GRAVITY);
@@ -1088,7 +1088,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 10.0f;
         _startSizeVar = 5.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = 10;
@@ -1160,7 +1160,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
         // duration
-        _duration = kParticleDurationInfinity;
+        _duration = DURATION_INFINITY;
 
         setEmitterMode(MODE_GRAVITY);
 
@@ -1196,7 +1196,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         _startSize = 4.0f;
         _startSizeVar = 2.0f;
-        _endSize = kParticleStartSizeEqualToEndSize;
+        _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         // emits per second
         _emissionRate = 20;

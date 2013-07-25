@@ -40,45 +40,6 @@ NS_CC_BEGIN
 
 class ParticleBatchNode;
 
-//* @enum
-enum {
-    /** The Particle emitter lives forever */
-    kParticleDurationInfinity = -1,
-
-    /** The starting size of the particle is equal to the ending size */
-    kParticleStartSizeEqualToEndSize = -1,
-
-    /** The starting radius of the particle is equal to the ending radius */
-    kParticleStartRadiusEqualToEndRadius = -1
-};
-
-////* @enum
-//enum {
-//    /** Gravity mode (A mode) */
-//    kParticleModeGravity,
-//
-//    /** Radius mode (B mode) */
-//    kParticleModeRadius,    
-//};
-
-
-/** @typedef tPositionType
-possible types of particle positions
-*/
-typedef enum {
-    /** Living particles are attached to the world and are unaffected by emitter repositioning. */
-    kPositionTypeFree,
-
-    /** Living particles are attached to the world but will follow the emitter repositioning.
-    Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
-    */
-    kPositionTypeRelative,
-
-    /** Living particles are attached to the emitter and are translated along with it. */
-    kPositionTypeGrouped,
-}tPositionType;
-
-
 /**
 Structure that contains the values of each particle
 */
@@ -170,6 +131,35 @@ public:
     {
         MODE_GRAVITY,
         MODE_RADIUS,
+    };
+    
+    /** @typedef PositionType
+     possible types of particle positions
+     */
+    enum PositionType
+    {
+        /** Living particles are attached to the world and are unaffected by emitter repositioning. */
+        FREE,
+        
+        /** Living particles are attached to the world but will follow the emitter repositioning.
+         Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
+         */
+        RELATIVE,
+        
+        /** Living particles are attached to the emitter and are translated along with it. */
+        GROUPED,
+    };
+    
+    //* @enum
+    enum {
+        /** The Particle emitter lives forever */
+        DURATION_INFINITY = -1,
+        
+        /** The starting size of the particle is equal to the ending size */
+        START_SIZE_EQUAL_TO_END_SIZE = -1,
+        
+        /** The starting radius of the particle is equal to the ending radius */
+        START_RADIUS_EQUAL_TO_END_RADIUS = -1,
     };
     
     /** creates an initializes a ParticleSystem from a plist file.
@@ -377,8 +367,8 @@ public:
     /** particles movement type: Free or Grouped
      @since v0.8
      */
-    inline tPositionType getPositionType() const { return _positionType; };
-    inline void setPositionType(tPositionType type) { _positionType = type; };
+    inline PositionType getPositionType() const { return _positionType; };
+    inline void setPositionType(PositionType type) { _positionType = type; };
     
     // Overrides
     virtual void update(float dt) override;
@@ -537,7 +527,7 @@ protected:
     /** particles movement type: Free or Grouped
      @since v0.8
      */
-    tPositionType _positionType;
+    PositionType _positionType;
 };
 
 // end of particle_nodes group

@@ -873,16 +873,17 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
-#define kCCParticleDurationInfinity   kParticleDurationInfinity
-#define kCCParticleStartSizeEqualToEndSize   kParticleStartSizeEqualToEndSize
-#define kCCParticleStartRadiusEqualToEndRadius   kParticleStartRadiusEqualToEndRadius
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
 CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
 
-#define kCCPositionTypeFree         kPositionTypeFree
-#define kCCPositionTypeRelative     kPositionTypeRelative
-#define kCCPositionTypeGrouped      kPositionTypeGrouped
+CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeFree =  ParticleSystem::FREE;
+CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeRelative =  ParticleSystem::RELATIVE;
+CC_DEPRECATED_ATTRIBUTE const int kCCPositionTypeGrouped =  ParticleSystem::GROUPED;
+CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
 #define kCCBlendFuncDisable   kBlendFuncDisable
 
