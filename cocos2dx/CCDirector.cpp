@@ -146,7 +146,7 @@ bool Director::init(void)
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, kPrioritySystem, false);
+    _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
     // touchDispatcher
     _touchDispatcher = new TouchDispatcher();
     _touchDispatcher->init();

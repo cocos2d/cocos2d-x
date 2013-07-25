@@ -912,8 +912,8 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationUpOver;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationDownOver;
 CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
 
-#define kCCPrioritySystem           kPrioritySystem
-#define kCCPriorityNonSystemMin     kPriorityNonSystemMin
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
 
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
