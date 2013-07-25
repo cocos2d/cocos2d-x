@@ -45,7 +45,7 @@ const Color3B ccBLACK = Color3B::BLACK;
 const Color3B ccORANGE = Color3B::ORANGE;
 const Color3B ccGRAY = Color3B::GRAY;
 
-const BlendFunc kBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+const BlendFunc kCCBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
 
 const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
 const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
@@ -137,5 +137,9 @@ const int kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PIXEL_FORMAT_RGB5A1;
 const int kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PIXEL_FORMAT_PRVTC4;
 const int kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PIXEL_FORMAT_PRVTC2;
 const int kCCTexture2DPixelFormat_Default = Texture2D::PIXEL_FORMAT_DEFAULT;
+
+const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
+const int kCCMenuStateWaiting = Menu::STATE_WAITING;
+const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
 
 NS_CC_END
