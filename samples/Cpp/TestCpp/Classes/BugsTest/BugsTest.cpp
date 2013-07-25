@@ -70,16 +70,16 @@ void BugsTestMainLayer::onEnter()
     setTouchEnabled(true);
 }
 
-void BugsTestMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void BugsTestMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*) pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
 
     _beginPos = touch->getLocation();    
 }
 
-void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void BugsTestMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*) pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
@@ -122,7 +122,7 @@ void BugsTestBaseLayer::onEnter()
     addChild(menu);
 }
 
-void BugsTestBaseLayer::backCallback(Object* pSender)
+void BugsTestBaseLayer::backCallback(Object* sender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
     BugsTestScene* scene = new BugsTestScene();

@@ -69,50 +69,50 @@ void MutiTouchTestLayer::registerWithTouchDispatcher(void)
     Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
-void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event  *event)
 {
 
     for ( auto &item: *touches )
     {
-        Touch* pTouch = (Touch*)item;
-        TouchPoint* pTouchPoint = TouchPoint::touchPointWithParent(this);
-        Point location = pTouch->getLocation();
+        Touch* touch = static_cast<Touch*>(item);
+        TouchPoint* touchPoint = TouchPoint::touchPointWithParent(this);
+        Point location = touch->getLocation();
 
-        pTouchPoint->setTouchPos(location);
-        pTouchPoint->setTouchColor(s_TouchColors[pTouch->getID()]);
+        touchPoint->setTouchPos(location);
+        touchPoint->setTouchColor(s_TouchColors[touch->getID()]);
 
-        addChild(pTouchPoint);
-        s_dic.setObject(pTouchPoint, pTouch->getID());
+        addChild(touchPoint);
+        s_dic.setObject(touchPoint, touch->getID());
     }
     
 
 }
 
-void MutiTouchTestLayer::ccTouchesMoved(Set *touches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesMoved(Set *touches, Event  *event)
 {
     for( auto &item: *touches)
     {
-        Touch* pTouch = (Touch*)item;
-        TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
-        Point location = pTouch->getLocation();
+        Touch* touch = static_cast<Touch*>(item);
+        TouchPoint* pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
+        Point location = touch->getLocation();
         pTP->setTouchPos(location);
     }
 }
 
-void MutiTouchTestLayer::ccTouchesEnded(Set *touches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesEnded(Set *touches, Event  *event)
 {
     for ( auto &item: *touches )
     {
-        Touch* pTouch = (Touch*)item;
-        TouchPoint* pTP = (TouchPoint*)s_dic.objectForKey(pTouch->getID());
+        Touch* touch = static_cast<Touch*>(item);
+        TouchPoint* pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
         removeChild(pTP, true);
-        s_dic.removeObjectForKey(pTouch->getID());
+        s_dic.removeObjectForKey(touch->getID());
     }
 }
 
-void MutiTouchTestLayer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
+void MutiTouchTestLayer::ccTouchesCancelled(Set  *touches, Event  *event)
 {
-    ccTouchesEnded(pTouches, pEvent);
+    ccTouchesEnded(touches, event);
 }
 
 void MutiTouchTestScene::runThisTest()

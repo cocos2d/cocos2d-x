@@ -55,7 +55,7 @@ void RenderTextureTest::onEnter()
     BaseTest::onEnter();
 }
 
-void RenderTextureTest::restartCallback(Object* pSender)
+void RenderTextureTest::restartCallback(Object* sender)
 {
     Scene* s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
@@ -64,7 +64,7 @@ void RenderTextureTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void RenderTextureTest::nextCallback(Object* pSender)
+void RenderTextureTest::nextCallback(Object* sender)
 {
     Scene* s = new RenderTextureScene();
     s->addChild( nextTestCase() );
@@ -72,7 +72,7 @@ void RenderTextureTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void RenderTextureTest::backCallback(Object* pSender)
+void RenderTextureTest::backCallback(Object* sender)
 {
     Scene* s = new RenderTextureScene();
     s->addChild( backTestCase() );

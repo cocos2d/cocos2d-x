@@ -110,7 +110,7 @@ void ArmatureTestScene::runThisTest()
 
 	Director::getInstance()->replaceScene(this);
 }
-void ArmatureTestScene::MainMenuCallback(Object* pSender)
+void ArmatureTestScene::MainMenuCallback(Object* sender)
 {
 	removeAllChildren();
 	ArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();
@@ -170,21 +170,21 @@ std::string ArmatureTestLayer::subtitle()
 	return "";
 }
 
-void ArmatureTestLayer::restartCallback(Object* pSender)
+void ArmatureTestLayer::restartCallback(Object* sender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( RestartTest() );
 	Director::getInstance()->replaceScene(s);
 	s->release();
 }
-void ArmatureTestLayer::nextCallback(Object* pSender)
+void ArmatureTestLayer::nextCallback(Object* sender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( NextTest() );
 	Director::getInstance()->replaceScene(s);
 	s->release();
 }
-void ArmatureTestLayer::backCallback(Object* pSender)
+void ArmatureTestLayer::backCallback(Object* sender)
 {
 	Scene* s = new ArmatureTestScene();
 	s->addChild( BackTest() );
@@ -450,7 +450,7 @@ std::string TestParticleDisplay::subtitle()
 {
 	return "Touch to change animation";
 }
-bool TestParticleDisplay::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool TestParticleDisplay::ccTouchBegan(Touch  *touch, Event  *event)
 {
 	++animationID;
 	animationID = animationID % armature->getAnimation()->getMovementCount();
@@ -496,7 +496,7 @@ std::string TestUseMutiplePicture::subtitle()
 {
 	return "weapon and armature are in different picture";
 }
-bool TestUseMutiplePicture::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool TestUseMutiplePicture::ccTouchBegan(Touch  *touch, Event  *event)
 {
 	++displayIndex;
 	displayIndex = (displayIndex) % 6;
@@ -631,7 +631,7 @@ std::string TestArmatureNesting::title()
 {
 	return "Test Armature Nesting";
 }
-bool TestArmatureNesting::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool TestArmatureNesting::ccTouchBegan(Touch  *touch, Event  *event)
 {
 	++weaponIndex;
 	weaponIndex = weaponIndex % 4;

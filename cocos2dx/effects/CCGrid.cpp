@@ -76,7 +76,7 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     bool bRet = true;
 
@@ -84,7 +84,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFli
     _reuseGrid = 0;
     _gridSize = gridSize;
 
-    _texture = pTexture;
+    _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = bFlipped;
 
@@ -127,20 +127,20 @@ bool GridBase::initWithSize(const Size& gridSize)
         return false;
     }
 
-    Texture2D *pTexture = new Texture2D();
-    pTexture->initWithData(data, format, POTWide, POTHigh, s);
+    Texture2D *texture = new Texture2D();
+    texture->initWithData(data, format, POTWide, POTHigh, s);
 
     free(data);
 
-    if (! pTexture)
+    if (! texture)
     {
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
 
-    initWithSize(gridSize, pTexture, false);
+    initWithSize(gridSize, texture, false);
 
-    pTexture->release();
+    texture->release();
 
     return true;
 }
@@ -253,13 +253,13 @@ void GridBase::calculateVertexPoints(void)
 
 // implementation of Grid3D
 
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     Grid3D *pRet= new Grid3D();
 
     if (pRet)
     {
-        if (pRet->initWithSize(gridSize, pTexture, bFlipped))
+        if (pRet->initWithSize(gridSize, texture, bFlipped))
         {
             pRet->autorelease();
         }
@@ -486,13 +486,13 @@ TiledGrid3D::~TiledGrid3D(void)
     CC_SAFE_FREE(_indices);
 }
 
-TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     TiledGrid3D *pRet= new TiledGrid3D();
 
     if (pRet)
     {
-        if (pRet->initWithSize(gridSize, pTexture, bFlipped))
+        if (pRet->initWithSize(gridSize, texture, bFlipped))
         {
             pRet->autorelease();
         }

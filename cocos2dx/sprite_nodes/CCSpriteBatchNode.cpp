@@ -110,8 +110,8 @@ bool SpriteBatchNode::init()
 */
 bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
-    Texture2D *pTexture2D = TextureCache::getInstance()->addImage(fileImage);
-    return initWithTexture(pTexture2D, capacity);
+    Texture2D *texture2D = TextureCache::getInstance()->addImage(fileImage);
+    return initWithTexture(texture2D, capacity);
 }
 
 SpriteBatchNode::SpriteBatchNode()
@@ -494,13 +494,13 @@ unsigned int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *pSprite)
     }
 }
 
-unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
+unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
-    Array *pBrothers = pobSprite->getParent()->getChildren();
-    unsigned int uChildIndex = pBrothers->indexOfObject(pobSprite);
+    Array *pBrothers = sprite->getParent()->getChildren();
+    unsigned int uChildIndex = pBrothers->indexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
-    bool bIgnoreParent = (SpriteBatchNode*)(pobSprite->getParent()) == this;
+    bool bIgnoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
     Sprite *pPrevious = NULL;
     if (uChildIndex > 0 &&
         uChildIndex < UINT_MAX)
@@ -524,7 +524,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
     // first child of an Sprite ?
     if (uChildIndex == 0)
     {
-        Sprite *p = (Sprite*)(pobSprite->getParent());
+        Sprite *p = (Sprite*)(sprite->getParent());
 
         // less than parent and brothers
         if (nZ < 0)
@@ -545,7 +545,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
         }
 
         // else (previous < 0 and sprite >= 0 )
-        Sprite *p = (Sprite*)(pobSprite->getParent());
+        Sprite *p = (Sprite*)(sprite->getParent());
         return p->getAtlasIndex() + 1;
     }
 
@@ -625,15 +625,15 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 }
 
-void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
+void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
 {
     // remove from TextureAtlas
-    _textureAtlas->removeQuadAtIndex(pobSprite->getAtlasIndex());
+    _textureAtlas->removeQuadAtIndex(sprite->getAtlasIndex());
 
     // Cleanup sprite. It might be reused (issue #569)
-    pobSprite->setBatchNode(NULL);
+    sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->indexOfObject(pobSprite);
+    unsigned int uIndex = _descendants->indexOfObject(sprite);
     if (uIndex != UINT_MAX)
     {
         _descendants->removeObjectAtIndex(uIndex);
@@ -649,7 +649,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
     }
 
     // remove children recursively
-    Array *pChildren = pobSprite->getChildren();
+    Array *pChildren = sprite->getChildren();
     if (pChildren && pChildren->count() > 0)
     {
         Object* pObject = NULL;

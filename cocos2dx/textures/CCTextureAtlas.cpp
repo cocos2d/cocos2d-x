@@ -121,13 +121,13 @@ TextureAtlas * TextureAtlas::create(const char* file, int capacity)
 
 TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, int capacity)
 {
-    TextureAtlas * pTextureAtlas = new TextureAtlas();
-    if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
+    TextureAtlas * textureAtlas = new TextureAtlas();
+    if (textureAtlas && textureAtlas->initWithTexture(texture, capacity))
     {
-        pTextureAtlas->autorelease();
-        return pTextureAtlas;
+        textureAtlas->autorelease();
+        return textureAtlas;
     }
-    CC_SAFE_DELETE(pTextureAtlas);
+    CC_SAFE_DELETE(textureAtlas);
     return NULL;
 }
 

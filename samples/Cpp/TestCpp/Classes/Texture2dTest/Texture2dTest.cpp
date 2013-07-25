@@ -130,7 +130,7 @@ TextureDemo::~TextureDemo()
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
 
-void TextureDemo::restartCallback(Object* pSender)
+void TextureDemo::restartCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(restartTextureTest());
@@ -138,7 +138,7 @@ void TextureDemo::restartCallback(Object* pSender)
     s->autorelease();
 }
 
-void TextureDemo::nextCallback(Object* pSender)
+void TextureDemo::nextCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(nextTextureTest());
@@ -146,7 +146,7 @@ void TextureDemo::nextCallback(Object* pSender)
     s->autorelease();
 }
 
-void TextureDemo::backCallback(Object* pSender)
+void TextureDemo::backCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(backTextureTest());

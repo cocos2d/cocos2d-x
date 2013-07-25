@@ -16,9 +16,9 @@ public:
     virtual std::string title();
     virtual void onEnter();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 class Parallax1 : public ParallaxDemo
@@ -43,7 +43,7 @@ protected:
 public:
     Parallax2();
     
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
 
     virtual std::string title();
 };

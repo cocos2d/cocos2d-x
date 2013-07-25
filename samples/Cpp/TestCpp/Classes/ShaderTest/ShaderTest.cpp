@@ -62,7 +62,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 }
 
-void ShaderTestDemo::backCallback(Object* pSender)
+void ShaderTestDemo::backCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild( backAction() );
@@ -70,7 +70,7 @@ void ShaderTestDemo::backCallback(Object* pSender)
     s->release();
 }
 
-void ShaderTestDemo::nextCallback(Object* pSender)
+void ShaderTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
@@ -88,7 +88,7 @@ std::string ShaderTestDemo::subtitle()
     return "";
 }
 
-void ShaderTestDemo::restartCallback(Object* pSender)
+void ShaderTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild(restartAction()); 

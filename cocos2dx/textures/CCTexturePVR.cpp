@@ -667,21 +667,21 @@ bool TexturePVR::initWithContentsOfFile(const char* path)
 
 TexturePVR * TexturePVR::create(const char* path)
 {
-    TexturePVR * pTexture = new TexturePVR();
-    if (pTexture)
+    TexturePVR * texture = new TexturePVR();
+    if (texture)
     {
-        if (pTexture->initWithContentsOfFile(path))
+        if (texture->initWithContentsOfFile(path))
         {
-            pTexture->autorelease();
+            texture->autorelease();
         }
         else
         {
-            delete pTexture;
-            pTexture = NULL;
+            delete texture;
+            texture = NULL;
         }
     }
 
-    return pTexture;
+    return texture;
 }
 
 NS_CC_END

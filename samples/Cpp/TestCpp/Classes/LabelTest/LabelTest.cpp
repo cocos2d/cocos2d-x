@@ -132,7 +132,7 @@ void AtlasDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemo::restartCallback(Object* pSender)
+void AtlasDemo::restartCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild(restartAtlasAction()); 
@@ -141,7 +141,7 @@ void AtlasDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void AtlasDemo::nextCallback(Object* pSender)
+void AtlasDemo::nextCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild( nextAtlasAction() );
@@ -149,7 +149,7 @@ void AtlasDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void AtlasDemo::backCallback(Object* pSender)
+void AtlasDemo::backCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild( backAtlasAction() );
@@ -986,37 +986,37 @@ void  LabelTTFTest::updateAlignment()
     this->addChild(_plabel);
 }
 
-void LabelTTFTest::setAlignmentLeft(Object* pSender)
+void LabelTTFTest::setAlignmentLeft(Object* sender)
 {
     _horizAlign = Label::HAlignment::LEFT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentCenter(Object* pSender)
+void LabelTTFTest::setAlignmentCenter(Object* sender)
 {
     _horizAlign = Label::HAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentRight(Object* pSender)
+void LabelTTFTest::setAlignmentRight(Object* sender)
 {
     _horizAlign = Label::HAlignment::RIGHT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentTop(Object* pSender)
+void LabelTTFTest::setAlignmentTop(Object* sender)
 {
     _vertAlign = Label::VAlignment::TOP;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentMiddle(Object* pSender)
+void LabelTTFTest::setAlignmentMiddle(Object* sender)
 {
     _vertAlign = Label::VAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentBottom(Object* pSender)
+void LabelTTFTest::setAlignmentBottom(Object* sender)
 {
     _vertAlign = Label::VAlignment::BOTTOM;
     this->updateAlignment();
@@ -1266,9 +1266,9 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
-    Touch *touch = (Touch *)pTouches->anyObject();
+    Touch *touch = (Touch *)touches->anyObject();
     Point location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
@@ -1278,7 +1278,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1286,14 +1286,14 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
     if (! _drag)
     {
         return;
     }
 
-    Touch *touch = (Touch *)pTouches->anyObject();
+    Touch *touch = (Touch *)touches->anyObject();
     Point location = touch->getLocationInView();
 
     Size winSize = Director::getInstance()->getWinSize();

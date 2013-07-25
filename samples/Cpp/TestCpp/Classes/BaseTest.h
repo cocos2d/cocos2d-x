@@ -20,9 +20,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-	virtual void restartCallback(Object* pSender);
-	virtual void nextCallback(Object* pSender);
-	virtual void backCallback(Object* pSender);
+	virtual void restartCallback(Object* sender);
+	virtual void nextCallback(Object* sender);
+	virtual void backCallback(Object* sender);
 };
 
 

@@ -1114,19 +1114,19 @@ std::string ParticleDemo::subtitle()
     return "No titile";
 }
 
-void ParticleDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    ccTouchesEnded(pTouches, pEvent);
+    ccTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    return ccTouchesEnded(pTouches, pEvent);
+    return ccTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     
     Point location = touch->getLocation();
 
@@ -1153,7 +1153,7 @@ void ParticleDemo::update(float dt)
     }
 }
 
-void ParticleDemo::toggleCallback(Object* pSender)
+void ParticleDemo::toggleCallback(Object* sender)
 {
     if (_emitter != NULL)
     {
@@ -1166,7 +1166,7 @@ void ParticleDemo::toggleCallback(Object* pSender)
     }
 }
 
-void ParticleDemo::restartCallback(Object* pSender)
+void ParticleDemo::restartCallback(Object* sender)
 {
     if (_emitter != NULL)
     {
@@ -1174,7 +1174,7 @@ void ParticleDemo::restartCallback(Object* pSender)
     }
 }
 
-void ParticleDemo::nextCallback(Object* pSender)
+void ParticleDemo::nextCallback(Object* sender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( nextParticleAction() );
@@ -1182,7 +1182,7 @@ void ParticleDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ParticleDemo::backCallback(Object* pSender)
+void ParticleDemo::backCallback(Object* sender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( backParticleAction() );
