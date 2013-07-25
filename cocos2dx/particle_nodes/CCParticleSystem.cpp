@@ -112,7 +112,7 @@ ParticleSystem::ParticleSystem()
 , _texture(NULL)
 , _opacityModifyRGB(false)
 , _isBlendAdditive(false)
-, _positionType(kPositionTypeFree)
+, _positionType(PositionType::FREE)
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(MODE_GRAVITY)
 {
@@ -419,7 +419,7 @@ bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
     _blendFunc.dst = CC_BLEND_DST;
 
     // default movement type;
-    _positionType = kPositionTypeFree;
+    _positionType = PositionType::FREE;
 
     // by default be in mode A:
     _emitterMode = MODE_GRAVITY;
@@ -502,7 +502,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
     particle->size = startS;
 
-    if( _endSize == kParticleStartSizeEqualToEndSize )
+    if (_endSize == START_SIZE_EQUAL_TO_END_SIZE)
     {
         particle->deltaSize = 0;
     }
@@ -520,11 +520,11 @@ void ParticleSystem::initParticle(tParticle* particle)
     particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
     // position
-    if( _positionType == kPositionTypeFree )
+    if (_positionType == PositionType::FREE)
     {
         particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
-    else if ( _positionType == kPositionTypeRelative )
+    else if (_positionType == PositionType::RELATIVE)
     {
         particle->startPos = _position;
     }
@@ -562,7 +562,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
         particle->modeB.radius = startRadius;
 
-        if(modeB.endRadius == kParticleStartRadiusEqualToEndRadius)
+        if (modeB.endRadius == START_RADIUS_EQUAL_TO_END_RADIUS)
         {
             particle->modeB.deltaRadius = 0;
         }
@@ -628,11 +628,11 @@ void ParticleSystem::update(float dt)
     _particleIdx = 0;
 
     Point currentPosition = Point::ZERO;
-    if (_positionType == kPositionTypeFree)
+    if (_positionType == PositionType::FREE)
     {
         currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
-    else if (_positionType == kPositionTypeRelative)
+    else if (_positionType == PositionType::RELATIVE)
     {
         currentPosition = _position;
     }
@@ -706,7 +706,7 @@ void ParticleSystem::update(float dt)
 
                 Point    newPos;
 
-                if (_positionType == kPositionTypeFree || _positionType == kPositionTypeRelative) 
+                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
                 {
                     Point diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;
