@@ -1,13 +1,9 @@
-
+--tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")
 end
-local function addHandleOfControlEvent(self,func,controlEvent)
-    deprecatedTip("addHandleOfControlEvent","registerControlEventHandler")
-    self:registerControlEventHandler(func,controlEvent)
-end
-rawset(CCControl,"addHandleOfControlEvent",addHandleOfControlEvent)
 
+--functions of _G will be deprecated begin
 local function ccpLineIntersect(a,b,c,d,s,t)
     deprecatedTip("ccpLineIntersect","CCPoint:isLineIntersect")
     return CCPoint:isLineIntersect(a,b,c,d,s,t)
@@ -93,7 +89,6 @@ local function ccpRPerp(pt)
 end
 rawset(_G,"ccpRPerp",ccpRPerp)
 
---no test
 local function ccpProject(pt1,pt2)
     deprecatedTip("ccpProject","CCPoint:project")
     return pt1:project(pt2)
@@ -215,238 +210,579 @@ local function ccpIntersectPoint(pt1,pt2,pt3,pt4)
 end
 rawset(_G,"ccpIntersectPoint",ccpIntersectPoint)
 
+local function ccc3(r,g,b)
+    deprecatedTip("ccc3(r,g,b)","ccColor3B(r,g,b)")
+    return ccColor3B(r,g,b)
+end
+rawset(_G,"ccc3",ccc3)
 
-local function sharedOpenGLView()
+local function ccc4(r,g,b,a)
+    deprecatedTip("ccc4(r,g,b,a)","Color4B(r,g,b,a)")
+    return Color4B(r,g,b,a)
+end
+rawset(_G,"ccc4",ccc4)
+
+local function ccc4FFromccc3B(color3B)
+    deprecatedTip("ccc4FFromccc3B(color3B)","Color4F(color3B.r / 255.0,color3B.g / 255.0,color3B.b / 255.0,1.0)")
+    return Color4F(color3B.r/255.0, color3B.g/255.0, color3B.b/255.0, 1.0)
+end
+rawset(_G,"ccc4FFromccc3B",ccc4FFromccc3B)
+
+local function ccc4f(r,g,b,a)
+    deprecatedTip("ccc4f(r,g,b,a)","Color4F(r,g,b,a)")
+    return Color4F(r,g,b,a)
+end
+rawset(_G,"ccc4f",ccc4f)
+
+local function ccc4FFromccc4B(color4B)
+    deprecatedTip("ccc4FFromccc4B(color4B)","Color4F(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)")
+    return Color4F(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)   
+end
+rawset(_G,"ccc4FFromccc4B",ccc4FFromccc4B)
+
+local function ccc4FEqual(a,b)
+    deprecatedTip("ccc4FEqual(a,b)","a:equals(b)")
+    return a:equals(b)
+end
+rawset(_G,"ccc4FEqual",ccc4FEqual)
+
+local function vertex2(x,y)
+    deprecatedTip("vertex2(x,y)","Vertex2F(x,y)")
+    return Vertex2F(x,y)
+end
+rawset(_G,"vertex2",vertex2)
+
+local function vertex3(x,y,z)
+    deprecatedTip("vertex3(x,y,z)","Vertex3F(x,y,z)")
+    return Vertex3F(x,y,z)
+end
+rawset(_G,"vertex3",vertex3)
+
+local function tex2(u,v)
+    deprecatedTip("tex2(u,v)","Tex2F(u,v)")
+    return Tex2F(u,v)
+end
+rawset(_G,"tex2",tex2) 
+
+local function ccc4BFromccc4F(color4F)
+    deprecatedTip("ccc4BFromccc4F(color4F)","Color4B(color4F.r * 255.0, color4F.g * 255.0, color4F.b * 255.0, color4B.a * 255.0)")
+    return Color4B(color4F.r * 255.0, color4F.g * 255.0, color4F.b * 255.0, color4B.a * 255.0) 
+end
+rawset(_G,"ccc4BFromccc4F",ccc4BFromccc4F)
+
+local function ccColor3BDeprecated()
+    deprecatedTip("ccColor3B","Color3B")
+    return Color3B
+end
+_G["ccColor3B"] = ccColor3BDeprecated()
+
+local function ccColor4BDeprecated()
+    deprecatedTip("ccColor4B","Color4B")
+    return Color4B
+end
+_G["ccColor4B"] = ccColor4BDeprecated()
+
+local function ccColor4FDeprecated()
+    deprecatedTip("ccColor4F","Color4F")
+    return Color4F
+end
+_G["ccColor4F"] = ccColor4FDeprecated()
+
+local function ccVertex2FDeprecated()
+    deprecatedTip("ccVertex2F","Vertex2F")
+    return Vertex2F
+end
+_G["ccVertex2F"] = ccVertex2FDeprecated()
+
+local function ccVertex3FDeprecated()
+    deprecatedTip("ccVertex3F","Vertex3F")
+    return Vertex3F
+end
+_G["ccVertex3F"] = ccVertex3FDeprecated()
+
+local function ccTex2FDeprecated()
+    deprecatedTip("ccTex2F","Tex2F")
+    return Tex2F
+end
+_G["ccTex2F"] = ccTex2FDeprecated()
+
+local function ccPointSpriteDeprecated()
+    deprecatedTip("ccPointSprite","PointSprite")
+    return PointSprite
+end
+_G["ccPointSprite"] = ccPointSpriteDeprecated()
+
+local function ccQuad2Deprecated()
+    deprecatedTip("ccQuad2","Quad2")
+    return Quad2
+end
+_G["ccQuad2"] = ccQuad2Deprecated()
+
+local function ccQuad3Deprecated()
+    deprecatedTip("ccQuad3","Quad3")
+    return Quad3
+end
+_G["ccQuad3"] = ccQuad3Deprecated()
+
+local function ccV2FC4BT2FDeprecated()
+    deprecatedTip("ccV2F_C4B_T2F","V2F_C4B_T2F")
+    return V2F_C4B_T2F
+end
+_G["ccV2F_C4B_T2F"] = ccV2FC4BT2FDeprecated()
+
+
+local function ccV2FC4FT2FDeprecated()
+    deprecatedTip("ccV2F_C4F_T2F","V2F_C4F_T2F")
+    return V2F_C4F_T2F
+end
+_G["ccV2F_C4F_T2F"] = ccV2FC4FT2FDeprecated()
+
+local function ccV3FC4BT2FDeprecated()
+    deprecatedTip("ccV3F_C4B_T2F","V3F_C4B_T2F")
+    return V3F_C4B_T2F
+end
+_G["ccV3F_C4B_T2F"] = ccV3FC4BT2FDeprecated()
+
+local function ccV2FC4BT2FQuadDeprecated()
+    deprecatedTip("ccV2F_C4B_T2F_Quad","V2F_C4B_T2F_Quad")
+    return V2F_C4B_T2F_Quad
+end
+_G["ccV2F_C4B_T2F_Quad"] = ccV2FC4BT2FQuadDeprecated()
+
+local function ccV3FC4BT2FQuadDeprecated()
+    deprecatedTip("ccV3F_C4B_T2F_Quad","V3F_C4B_T2F_Quad")
+    return V3F_C4B_T2F_Quad
+end
+_G["ccV3F_C4B_T2F_Quad"] = ccV3FC4BT2FQuadDeprecated()
+
+local function ccV2FC4FT2FQuadDeprecated()
+    deprecatedTip("ccV2F_C4F_T2F_Quad","V2F_C4F_T2F_Quad")
+    return V2F_C4F_T2F_Quad
+end
+_G["ccV2F_C4F_T2F_Quad"] = ccV2FC4FT2FQuadDeprecated()
+
+local function ccBlendFuncDeprecated()
+    deprecatedTip("ccBlendFunc","BlendFunc")
+    return BlendFunc
+end
+_G["ccBlendFunc"] = ccBlendFuncDeprecated()
+
+local function ccT2FQuadDeprecated()
+    deprecatedTip("ccT2F_Quad","T2F_Quad")
+    return T2F_Quad
+end
+_G["ccT2F_Quad"] = ccT2FQuadDeprecated()
+
+local function ccAnimationFrameDataDeprecated()
+    deprecatedTip("ccAnimationFrameData","AnimationFrameData")
+    return AnimationFrameData
+end
+_G["ccAnimationFrameData"] = ccAnimationFrameDataDeprecated()
+
+local function CCCallFuncNDeprecated( )
+    deprecatedTip("CCCallFuncN","CCCallFunc")
+    return CCCallFunc
+end
+_G["CCCallFuncN"] = CCCallFuncNDeprecated()
+
+--functions of _G will be deprecated end
+local color = ccColor4B()
+local r = color.r
+
+--functions of CCControl will be deprecated end
+local CCControlDeprecated = { }
+function CCControlDeprecated.addHandleOfControlEvent(self,func,controlEvent)
+    deprecatedTip("addHandleOfControlEvent","registerControlEventHandler")
+    print("come in addHandleOfControlEvent")
+    self:registerControlEventHandler(func,controlEvent)
+end
+rawset(CCControl,"addHandleOfControlEvent",CCControlDeprecated.addHandleOfControlEvent)
+--functions of CCControl will be deprecated end
+
+
+--functions of CCEGLView will be deprecated end
+local CCEGLViewDeprecated = { }
+function CCEGLViewDeprecated.sharedOpenGLView()
     deprecatedTip("CCEGLView:sharedOpenGLView","CCEGLView:getInstance")
     return CCEGLView:getInstance()
 end
-rawset(CCEGLView,"sharedOpenGLView",sharedOpenGLView)
+rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
+--functions of CCFileUtils will be deprecated end
 
-local function sharedFileUtils()
+
+--functions of CCFileUtils will be deprecated end
+local CCFileUtilsDeprecated = { }
+function CCFileUtilsDeprecated.sharedFileUtils()
     deprecatedTip("CCFileUtils:sharedFileUtils","CCFileUtils:getInstance")
     return CCFileUtils:getInstance()
 end
-rawset(CCFileUtils,"sharedFileUtils",sharedFileUtils)
+rawset(CCFileUtils,"sharedFileUtils",CCFileUtilsDeprecated.sharedFileUtils)
 
-local function purgeFileUtils()
+function CCFileUtilsDeprecated.purgeFileUtils()
     deprecatedTip("CCFileUtils:purgeFileUtils","CCFileUtils:destroyInstance")
     return CCFileUtils:destroyInstance()
 end
-rawset(CCFileUtils,"purgeFileUtils",purgeFileUtils)
+rawset(CCFileUtils,"purgeFileUtils",CCFileUtilsDeprecated.purgeFileUtils)
+--functions of CCFileUtils will be deprecated end
 
-local function sharedApplication()
+
+--functions of CCApplication will be deprecated end
+local CCApplicationDeprecated = { }
+function CCApplicationDeprecated.sharedApplication()
     deprecatedTip("CCApplication:sharedApplication","CCApplication:getInstance")
     return CCApplication:getInstance()
 end
-rawset(CCApplication,"sharedApplication",sharedApplication)
+rawset(CCApplication,"sharedApplication",CCApplicationDeprecated.sharedApplication)
+--functions of CCApplication will be deprecated end
 
-local function sharedDirector()
+
+--functions of CCDirector will be deprecated end
+local CCDirectorDeprecated = { }
+function CCDirectorDeprecated.sharedDirector()
     deprecatedTip("CCDirector:sharedDirector","CCDirector:getInstance")
     return CCDirector:getInstance()
 end
-rawset(CCDirector,"sharedDirector",sharedDirector)
+rawset(CCDirector,"sharedDirector",CCDirectorDeprecated.sharedDirector)
+--functions of CCDirector will be deprecated end
 
-local function sharedUserDefault()
+
+--functions of CCUserDefault will be deprecated end
+local CCUserDefaultDeprecated = { }
+function CCUserDefaultDeprecated.sharedUserDefault()
     deprecatedTip("CCUserDefault:sharedUserDefault","CCUserDefault:getInstance")
     return CCUserDefault:getInstance()
 end
-rawset(CCUserDefault,"sharedUserDefault",sharedUserDefault)
+rawset(CCUserDefault,"sharedUserDefault",CCUserDefaultDeprecated.sharedUserDefault)
 
-local function purgeSharedUserDefault()
+function CCUserDefaultDeprecated.purgeSharedUserDefault()
     deprecatedTip("CCUserDefault:purgeSharedUserDefault","CCUserDefault:destroyInstance")
     return CCUserDefault:destroyInstance()
 end
-rawset(CCUserDefault,"purgeSharedUserDefault",purgeSharedUserDefault)
+rawset(CCUserDefault,"purgeSharedUserDefault",CCUserDefaultDeprecated.purgeSharedUserDefault)
+--functions of CCUserDefault will be deprecated end
 
 
-local function sharedNotificationCenter()
+--functions of CCNotificationCenter will be deprecated end
+local CCNotificationCenterDeprecated = { }
+function CCNotificationCenterDeprecated.sharedNotificationCenter()
     deprecatedTip("CCNotificationCenter:sharedNotificationCenter","CCNotificationCenter:getInstance")
     return CCNotificationCenter:getInstance()
 end
-rawset(CCNotificationCenter,"sharedNotificationCenter",sharedNotificationCenter)
+rawset(CCNotificationCenter,"sharedNotificationCenter",CCNotificationCenterDeprecated.sharedNotificationCenter)
 
-local function purgeNotificationCenter()
+function CCNotificationCenterDeprecated.purgeNotificationCenter()
     deprecatedTip("CCNotificationCenter:purgeNotificationCenter","CCNotificationCenter:destroyInstance")
     return CCNotificationCenter:destroyInstance()
 end
-rawset(CCNotificationCenter,"purgeNotificationCenter",purgeNotificationCenter)
+rawset(CCNotificationCenter,"purgeNotificationCenter",CCNotificationCenterDeprecated.purgeNotificationCenter)
+--functions of CCNotificationCenter will be deprecated end
 
-local function sharedTextureCache()
+
+--functions of CCTextureCache will be deprecated begin
+local CCTextureCacheDeprecated = { }
+function CCTextureCacheDeprecated.sharedTextureCache()
     deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")
     return CCTextureCache:getInstance()
 end
-rawset(CCTextureCache,"sharedTextureCache",sharedTextureCache)
+rawset(CCTextureCache,"sharedTextureCache",CCTextureCacheDeprecated.sharedTextureCache)
 
-local function purgeSharedTextureCache()
+function CCTextureCacheDeprecated.purgeSharedTextureCache()
     deprecatedTip("CCTextureCache:purgeSharedTextureCache","CCTextureCache:destroyInstance")
     return CCTextureCache:destroyInstance()
 end
-rawset(CCTextureCache,"purgeSharedTextureCache",purgeSharedTextureCache)
+rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
+--functions of CCTextureCache will be deprecated end
 
-local function sharedSpriteFrameCache()
-    deprecatedTip("CCSpriteFrameCache:sharedSpriteFrameCache","CCSpriteFrameCache:getInstance")
-    return CCSpriteFrameCache:getInstance()
-end
-rawset(CCSpriteFrameCache,"sharedSpriteFrameCache",sharedSpriteFrameCache)
 
-local function purgeSharedSpriteFrameCache()
-    deprecatedTip("CCSpriteFrameCache:purgeSharedSpriteFrameCache","CCSpriteFrameCache:destroyInstance")
-    return CCSpriteFrameCache:destroyInstance()
-end
-rawset(CCSpriteFrameCache,"purgeSharedSpriteFrameCache",purgeSharedSpriteFrameCache)
-
-local function vertex(self,pt)
+--functions of CCGrid3DAction will be deprecated begin
+local CCGrid3DActionDeprecated = { }
+function CCGrid3DActionDeprecated.vertex(self,pt)
     deprecatedTip("vertex","CCGrid3DAction:getVertex")
     return self:getVertex(pt)
 end
-rawset(CCGrid3DAction,"vertex",vertex)
+rawset(CCGrid3DAction,"vertex",CCGrid3DActionDeprecated.vertex)
 
-local function originalVertex(self,pt)
+function CCGrid3DActionDeprecated.originalVertex(self,pt)
     deprecatedTip("originalVertex","CCGrid3DAction:getOriginalVertex")
     return self:getOriginalVertex(pt)
 end
-rawset(CCGrid3DAction,"originalVertex",originalVertex)
+rawset(CCGrid3DAction,"originalVertex",CCGrid3DActionDeprecated.originalVertex)
+--functions of CCGrid3DAction will be deprecated end
 
-local function tile(self,pt)
+
+--functions of CCTiledGrid3DAction will be deprecated begin
+local CCTiledGrid3DActionDeprecated = { }
+function CCTiledGrid3DActionDeprecated.tile(self,pt)
     deprecatedTip("tile","CCTiledGrid3DAction:getTile")
     return self:getTile(pt)
 end
-rawset(CCTiledGrid3DAction,"tile",tile)
+rawset(CCTiledGrid3DAction,"tile",CCTiledGrid3DActionDeprecated.tile)
 
-local function originalTile(self,pt)
+function CCTiledGrid3DActionDeprecated.originalTile(self,pt)
     deprecatedTip("originalTile","CCTiledGrid3DAction:getOriginalTile")
     return self:getOriginalTile(pt)
 end
-rawset(CCTiledGrid3DAction,"originalTile",originalTile)
+rawset(CCTiledGrid3DAction,"originalTile",CCTiledGrid3DActionDeprecated.originalTile)
+--functions of CCTiledGrid3DAction will be deprecated end
 
-local function sharedAnimationCache()
+
+--functions of CCAnimationCache will be deprecated begin
+local CCAnimationCacheDeprecated = { }
+function CCAnimationCacheDeprecated.sharedAnimationCache()
     deprecatedTip("CCAnimationCache:sharedAnimationCache","CCAnimationCache:getInstance")
     return CCAnimationCache:getInstance()
 end
-rawset(CCAnimationCache,"sharedAnimationCache",sharedAnimationCache)
+rawset(CCAnimationCache,"sharedAnimationCache",CCAnimationCacheDeprecated.sharedAnimationCache)
 
-local function purgeSharedAnimationCache()
+function CCAnimationCacheDeprecated.purgeSharedAnimationCache()
     deprecatedTip("CCAnimationCache:purgeSharedAnimationCache","CCAnimationCache:destroyInstance")
     return CCAnimationCache:destroyInstance()
 end
-rawset(CCAnimationCache,"purgeSharedAnimationCache",purgeSharedAnimationCache)
+rawset(CCAnimationCache,"purgeSharedAnimationCache",CCAnimationCacheDeprecated.purgeSharedAnimationCache)
+--functions of CCAnimationCache will be deprecated end
 
-local function boundingBox(self)
+
+--functions of CCNode will be deprecated begin
+local CCNodeDeprecated = { }
+function CCNodeDeprecated.boundingBox(self)
     deprecatedTip("CCNode:boundingBox","CCNode:getBoundingBox")
     return self:getBoundingBox()
 end
-rawset(CCNode,"boundingBox",boundingBox)
+rawset(CCNode,"boundingBox",CCNodeDeprecated.boundingBox)
 
-local function numberOfRunningActions(self)
+function CCNodeDeprecated.numberOfRunningActions(self)
     deprecatedTip("CCNode:numberOfRunningActions","CCNode:getNumberOfRunningActions")
     return self:getNumberOfRunningActions()
 end
-rawset(CCNode,"numberOfRunningActions",numberOfRunningActions)
+rawset(CCNode,"numberOfRunningActions",CCNodeDeprecated.numberOfRunningActions)
+--functions of CCNode will be deprecated end
 
-local function stringForFormat(self)
+
+--functions of CCTexture2D will be deprecated begin
+local CCTexture2DDeprecated = { }
+function CCTexture2DDeprecated.stringForFormat(self)
     deprecatedTip("Texture2D:stringForFormat","Texture2D:getStringForFormat")
     return self:getStringForFormat()
 end
-rawset(CCTexture2D,"stringForFormat",stringForFormat)
+rawset(CCTexture2D,"stringForFormat",CCTexture2DDeprecated.stringForFormat)
 
-local function bitsPerPixelForFormat(self)
+function CCTexture2DDeprecated.bitsPerPixelForFormat(self)
     deprecatedTip("Texture2D:bitsPerPixelForFormat","Texture2D:getBitsPerPixelForFormat")
     return self:getBitsPerPixelForFormat()
 end
-rawset(CCTexture2D,"bitsPerPixelForFormat",bitsPerPixelForFormat)
+rawset(CCTexture2D,"bitsPerPixelForFormat",CCTexture2DDeprecated.bitsPerPixelForFormat)
 
-local function bitsPerPixelForFormat(self,pixelFormat)
+function CCTexture2DDeprecated.bitsPerPixelForFormat(self,pixelFormat)
     deprecatedTip("Texture2D:bitsPerPixelForFormat","Texture2D:getBitsPerPixelForFormat")
     return self:getBitsPerPixelForFormat(pixelFormat)
 end
-rawset(CCTexture2D,"bitsPerPixelForFormat",bitsPerPixelForFormat)
+rawset(CCTexture2D,"bitsPerPixelForFormat",CCTexture2DDeprecated.bitsPerPixelForFormat)
 
-local function defaultAlphaPixelFormat(self)
+function CCTexture2DDeprecated.defaultAlphaPixelFormat(self)
     deprecatedTip("Texture2D:defaultAlphaPixelFormat","Texture2D:getDefaultAlphaPixelFormat")
     return self:getDefaultAlphaPixelFormat()
 end
-rawset(CCTexture2D,"defaultAlphaPixelFormat",defaultAlphaPixelFormat)
+rawset(CCTexture2D,"defaultAlphaPixelFormat",CCTexture2DDeprecated.defaultAlphaPixelFormat)
+--functions of CCTexture2D will be deprecated end
 
-local function spriteFrameByName(self,szName)
+
+--functions of CCSpriteFrameCache will be deprecated begin
+local CCSpriteFrameCacheDeprecated = { }
+function CCSpriteFrameCacheDeprecated.spriteFrameByName(self,szName)
     deprecatedTip("CCSpriteFrameCache:spriteFrameByName","CCSpriteFrameCache:getSpriteFrameByName")
     return self:getSpriteFrameByName(szName)
 end
-rawset(CCSpriteFrameCache,"spriteFrameByName",spriteFrameByName)
+rawset(CCSpriteFrameCache,"spriteFrameByName",CCSpriteFrameCacheDeprecated.spriteFrameByName)
 
-local function timerWithScriptHandler(handler,seconds)
+function CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache()
+    deprecatedTip("CCSpriteFrameCache:sharedSpriteFrameCache","CCSpriteFrameCache:getInstance")
+    return CCSpriteFrameCache:getInstance()
+end
+rawset(CCSpriteFrameCache,"sharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache)
+
+function CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache()
+    deprecatedTip("CCSpriteFrameCache:purgeSharedSpriteFrameCache","CCSpriteFrameCache:destroyInstance")
+    return CCSpriteFrameCache:destroyInstance()
+end
+rawset(CCSpriteFrameCache,"purgeSharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache)
+--functions of CCSpriteFrameCache will be deprecated end
+
+
+--functions of CCTimer will be deprecated begin
+local CCTimerDeprecated = { }
+function CCTimerDeprecated.timerWithScriptHandler(handler,seconds)
     deprecatedTip("CCTimer:timerWithScriptHandler","CCTimer:createWithScriptHandler")
     return CCTimer:createWithScriptHandler(handler,seconds)
 end
-rawset(CCTimer,"timerWithScriptHandler",timerWithScriptHandler)
+rawset(CCTimer,"timerWithScriptHandler",CCTimerDeprecated.timerWithScriptHandler)
 
-local function numberOfRunningActionsInTarget(self,target)
+function CCTimerDeprecated.numberOfRunningActionsInTarget(self,target)
     deprecatedTip("CCActionManager:numberOfRunningActionsInTarget","CCActionManager:getNumberOfRunningActionsInTarget")
     return self:getNumberOfRunningActionsInTarget(target)
 end
-rawset(CCTimer,"numberOfRunningActionsInTarget",numberOfRunningActionsInTarget)
+rawset(CCTimer,"numberOfRunningActionsInTarget",CCTimerDeprecated.numberOfRunningActionsInTarget)
+--functions of CCTimer will be deprecated end
 
-local function fontSize()
+
+--functions of CCMenuItemFont will be deprecated begin
+local CCMenuItemFontDeprecated = { }
+function CCMenuItemFontDeprecated.fontSize()
     deprecatedTip("CCMenuItemFont:fontSize","CCMenuItemFont:getFontSize")
     return CCMenuItemFont:getFontSize()
 end
-rawset(CCMenuItemFont,"fontSize",fontSize)
+rawset(CCMenuItemFont,"fontSize",CCMenuItemFontDeprecated.fontSize)
 
-local function fontName()
+function CCMenuItemFontDeprecated.fontName()
     deprecatedTip("CCMenuItemFont:fontName","CCMenuItemFont:getFontName")
     return CCMenuItemFont:getFontName()
 end
-rawset(CCMenuItemFont,"fontName",fontName)
+rawset(CCMenuItemFont,"fontName",CCMenuItemFontDeprecated.fontName)
 
-local function fontSizeObj(self)
+function CCMenuItemFontDeprecated.fontSizeObj(self)
     deprecatedTip("CCMenuItemFont:fontSizeObj","CCMenuItemFont:getFontSizeObj")
     return self:getFontSizeObj()
 end
-rawset(CCMenuItemFont,"fontSizeObj",fontSizeObj)
+rawset(CCMenuItemFont,"fontSizeObj",CCMenuItemFontDeprecated.fontSizeObj)
 
-local function fontNameObj(self)
+function CCMenuItemFontDeprecated.fontNameObj(self)
     deprecatedTip("CCMenuItemFont:fontNameObj","CCMenuItemFont:getFontNameObj")
     return self:getFontNameObj()
 end
-rawset(CCMenuItemFont,"fontNameObj",fontNameObj)
+rawset(CCMenuItemFont,"fontNameObj",CCMenuItemFontDeprecated.fontNameObj)
+--functions of CCMenuItemFont will be deprecated end
 
-local function selectedItem(self)
+
+--functions of CCMenuItemToggle will be deprecated begin
+local CCMenuItemToggleDeprecated = { }
+function CCMenuItemToggleDeprecated.selectedItem(self)
     deprecatedTip("CCMenuItemToggle:selectedItem","CCMenuItemToggle:getSelectedItem")
     return self:getSelectedItem()
 end
-rawset(CCMenuItemToggle,"selectedItem",selectedItem)
+rawset(CCMenuItemToggle,"selectedItem",CCMenuItemToggleDeprecated.selectedItem)
+--functions of CCMenuItemToggle will be deprecated end
 
-local function tileAt(self,pos)
+
+--functions of CCTileMapAtlas will be deprecated begin
+local CCTileMapAtlasDeprecated = { }
+function CCTileMapAtlasDeprecated.tileAt(self,pos)
     deprecatedTip("CCTileMapAtlas:tileAt","CCTileMapAtlas:getTileAt")
     return self:getTileAt(pos)
 end
-rawset(CCTileMapAtlas,"tileAt",tileAt)
+rawset(CCTileMapAtlas,"tileAt",CCTileMapAtlasDeprecated.tileAt)
+--functions of CCTileMapAtlas will be deprecated end
 
-local function tileAt(self,tileCoordinate)
+
+--functions of CCTMXLayer will be deprecated begin
+local CCTMXLayerDeprecated = { }
+function CCTMXLayerDeprecated.tileAt(self,tileCoordinate)
     deprecatedTip("CCTMXLayer:tileAt","CCTMXLayer:getTileAt")
     return self:getTileAt(tileCoordinate)
 end
-rawset(CCTMXLayer,"tileAt",tileAt)
+rawset(CCTMXLayer,"tileAt",CCTMXLayerDeprecated.tileAt)
 
-local function tileGIDAt(self,tileCoordinate)
+function CCTMXLayerDeprecated.tileGIDAt(self,tileCoordinate)
     deprecatedTip("CCTMXLayer:tileGIDAt","CCTMXLayer:getTileGIDAt")
     return self:getTileGIDAt(tileCoordinate)
 end
-rawset(CCTMXLayer,"tileGIDAt",tileGIDAt)
+rawset(CCTMXLayer,"tileGIDAt",CCTMXLayerDeprecated.tileGIDAt)
 
-local function positionAt(self,tileCoordinate)
+function CCTMXLayerDeprecated.positionAt(self,tileCoordinate)
     deprecatedTip("CCTMXLayer:positionAt","CCTMXLayer:getPositionAt")
     return self:getPositionAt(tileCoordinate)
 end
-rawset(CCTMXLayer,"positionAt",positionAt)
+rawset(CCTMXLayer,"positionAt",CCTMXLayerDeprecated.positionAt)
 
-local function propertyNamed(self,propertyName)
-    deprecatedTip("CCTMXLayer:propertyNamed","CCTMXLayer:getPropertyNamed")
-    return self:getPropertyNamed(propertyName)
+function CCTMXLayerDeprecated.propertyNamed(self,propertyName)
+    deprecatedTip("CCTMXLayer:propertyNamed","CCTMXLayer:getProperty")
+    return self:getProperty(propertyName)
 end
-rawset(CCTMXLayer,"propertyNamed",propertyNamed)
+rawset(CCTMXLayer,"propertyNamed",CCTMXLayerDeprecated.propertyNamed)
+--functions of CCTMXLayer will be deprecated end
 
-local function sharedEngine()
+
+--functions of SimpleAudioEngine will be deprecated begin
+local SimpleAudioEngineDeprecated = { }
+function SimpleAudioEngineDeprecated.sharedEngine()
     deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
     return SimpleAudioEngine:getInstance()
 end
-rawset(SimpleAudioEngine,"sharedEngine",sharedEngine)
+rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine)
+--functions of SimpleAudioEngine will be deprecated end
+
+
+--functions of WebSocket will be deprecated begin
+local WebSocketDeprecated = { }
+function WebSocketDeprecated.sendBinaryMsg(self,table,size)
+    deprecatedTip("sendBinaryMsg","sendBinaryStringMsg")
+    local strMsg = string.char(unpack(table))
+    return self:sendBinaryStringMsg(strMsg)
+end
+rawset(WebSocket,"sendBinaryMsg",WebSocketDeprecated.sendBinaryMsg)
+--functions of WebSocket will be deprecated end
+
+
+--functions of CCTMXTiledMap will be deprecated begin
+local CCTMXTiledMapDeprecated = { }
+function CCTMXTiledMapDeprecated.layerNamed(self,layerName)
+    deprecatedTip("CCTMXTiledMap:layerNamed","CCTMXTiledMap:getLayer")
+    return self:getLayer(layerName)
+end
+rawset(CCTMXTiledMap,"layerNamed", CCTMXTiledMapDeprecated.layerNamed)
+
+function CCTMXTiledMapDeprecated.propertyNamed(self,propertyName)
+    deprecatedTip("CCTMXTiledMap:propertyNamed","CCTMXTiledMap:getProperty")
+    return self:getProperty(propertyName)
+end
+rawset(CCTMXTiledMap,"propertyNamed", CCTMXTiledMapDeprecated.propertyNamed )
+
+function CCTMXTiledMapDeprecated.propertiesForGID(self,GID)
+    deprecatedTip("CCTMXTiledMap:propertiesForGID","CCTMXTiledMap:getPropertiesForGID")
+    return self:getPropertiesForGID(GID)
+end
+rawset(CCTMXTiledMap,"propertiesForGID", CCTMXTiledMapDeprecated.propertiesForGID)
+
+function CCTMXTiledMapDeprecated.objectGroupNamed(self,groupName)
+    deprecatedTip("CCTMXTiledMap:objectGroupNamed","CCTMXTiledMap:getObjectGroup")
+    return self:getObjectGroup(groupName)
+end
+rawset(CCTMXTiledMap,"objectGroupNamed", CCTMXTiledMapDeprecated.objectGroupNamed)
+--functions of CCTMXTiledMap will be deprecated end
+
+
+--functions of CCTMXMapInfo will be deprecated begin
+local CCTMXMapInfoDeprecated = { }
+function CCTMXMapInfoDeprecated.getStoringCharacters(self)
+    deprecatedTip("CCTMXMapInfo:getStoringCharacters","CCTMXMapInfo:isStoringCharacters")
+    return self:isStoringCharacters()
+end
+rawset(CCTMXMapInfo,"getStoringCharacters", CCTMXMapInfoDeprecated.getStoringCharacters)
+
+function CCTMXMapInfoDeprecated.formatWithTMXFile(infoTable,tmxFile)
+    deprecatedTip("CCTMXMapInfo:formatWithTMXFile","CCTMXMapInfo:create")
+    return CCTMXMapInfo:create(tmxFile)
+end
+rawset(CCTMXMapInfo,"formatWithTMXFile", CCTMXMapInfoDeprecated.formatWithTMXFile)
+
+function CCTMXMapInfoDeprecated.formatWithXML(infoTable,tmxString,resourcePath)
+    deprecatedTip("CCTMXMapInfo:formatWithXML","TMXMapInfo:createWithXML")
+    return CCTMXMapInfo:createWithXML(tmxString,resourcePath)
+end
+rawset(CCTMXMapInfo,"formatWithXML", CCTMXMapInfoDeprecated.formatWithXML)
+--functions of CCTMXMapInfo will be deprecated end
+
+
+--functions of CCTMXObject will be deprecated begin
+local CCTMXObjectGroupDeprecated = { }
+function CCTMXObjectGroupDeprecated.propertyNamed(self,propertyName)
+    deprecatedTip("CCTMXObjectGroup:propertyNamed","CCTMXObjectGroup:getProperty")
+    return self:getProperty(propertyName)
+end
+rawset(CCTMXObjectGroup,"propertyNamed", CCTMXObjectGroupDeprecated.propertyNamed)
+
+function CCTMXObjectGroupDeprecated.objectNamed(self, objectName)
+    deprecatedTip("CCTMXObjectGroup:objectNamed","CCTMXObjectGroup:getObjectNamed")
+    return self:getObjectNamed(objectName)
+end
+rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
+--functions of CCTMXObject will be deprecated end
+
