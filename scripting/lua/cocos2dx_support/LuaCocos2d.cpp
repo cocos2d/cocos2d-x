@@ -26372,7 +26372,7 @@ static int tolua_Cocos2d_CCTransitionFlipX_create00(lua_State* tolua_S)
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationRightOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_RIGHT_OVER));
   {
    TransitionFlipX* tolua_ret = (TransitionFlipX*)  TransitionFlipX::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -26408,7 +26408,7 @@ static int tolua_Cocos2d_CCTransitionFlipY_create00(lua_State* tolua_S)
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationUpOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_UP_OVER));
   {
    TransitionFlipY* tolua_ret = (TransitionFlipY*)  TransitionFlipY::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -26444,7 +26444,7 @@ static int tolua_Cocos2d_CCTransitionFlipAngular_create00(lua_State* tolua_S)
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationRightOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_RIGHT_OVER));
   {
    TransitionFlipAngular* tolua_ret = (TransitionFlipAngular*)  TransitionFlipAngular::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -26480,7 +26480,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipX_create00(lua_State* tolua_S)
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationRightOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_RIGHT_OVER));
   {
    TransitionZoomFlipX* tolua_ret = (TransitionZoomFlipX*)  TransitionZoomFlipX::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -26516,7 +26516,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipY_create00(lua_State* tolua_S)
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationUpOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_UP_OVER));
   {
    TransitionZoomFlipY* tolua_ret = (TransitionZoomFlipY*)  TransitionZoomFlipY::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -26552,7 +26552,7 @@ static int tolua_Cocos2d_CCTransitionZoomFlipAngular_create00(lua_State* tolua_S
  {
   float t = ((float)  tolua_tonumber(tolua_S,2,0));
   Scene* s = ((Scene*)  tolua_tousertype(tolua_S,3,0));
-  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,kTransitionOrientationRightOver));
+  tOrientation o = ((tOrientation) (int)  tolua_tonumber(tolua_S,4,TransitionScene::ORIENTATION_RIGHT_OVER));
   {
    TransitionZoomFlipAngular* tolua_ret = (TransitionZoomFlipAngular*)  TransitionZoomFlipAngular::create(t,s,o);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -65071,10 +65071,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"CCScene");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCScene_create00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCTransitionOrientationLeftOver",kTransitionOrientationLeftOver);
-  tolua_constant(tolua_S,"kCCTransitionOrientationRightOver",kTransitionOrientationRightOver);
-  tolua_constant(tolua_S,"kCCTransitionOrientationUpOver",kTransitionOrientationUpOver);
-  tolua_constant(tolua_S,"kCCTransitionOrientationDownOver",kTransitionOrientationDownOver);
+  tolua_constant(tolua_S,"kCCTransitionOrientationLeftOver",TransitionScene::ORIENTATION_LEFT_OVER);
+  tolua_constant(tolua_S,"kCCTransitionOrientationRightOver",TransitionScene::ORIENTATION_RIGHT_OVER);
+  tolua_constant(tolua_S,"kCCTransitionOrientationUpOver",TransitionScene::ORIENTATION_UP_OVER);
+  tolua_constant(tolua_S,"kCCTransitionOrientationDownOver",TransitionScene::ORIENTATION_DOWN_OVER);
   tolua_cclass(tolua_S,"CCTransitionScene","CCTransitionScene","CCScene",NULL);
   tolua_beginmodule(tolua_S,"CCTransitionScene");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCTransitionScene_create00);

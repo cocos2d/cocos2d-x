@@ -906,10 +906,11 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatPNG;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatJPEG;
 CC_DEPRECATED_ATTRIBUTE typedef enum Image::Format tImageFormat;
 
-#define kCCTransitionOrientationLeftOver    kTransitionOrientationLeftOver
-#define kCCTransitionOrientationRightOver   kTransitionOrientationRightOver
-#define kCCTransitionOrientationUpOver      kTransitionOrientationUpOver
-#define kCCTransitionOrientationDownOver    kTransitionOrientationDownOver
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationLeftOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationRightOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationUpOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationDownOver;
+CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
 
 #define kCCPrioritySystem           kPrioritySystem
 #define kCCPriorityNonSystemMin     kPriorityNonSystemMin

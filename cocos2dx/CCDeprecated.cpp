@@ -148,4 +148,9 @@ const int kCCTouchesAllAtOnce = Layer::TOUCHES_ALL_AT_ONCE;
 const int kCCImageFormatPNG = Image::FORMAT_PNG;
 const int kCCImageFormatJPEG = Image::FORMAT_JPG;
 
+const int kCCTransitionOrientationLeftOver = TransitionScene::ORIENTATION_LEFT_OVER;
+const int kCCTransitionOrientationRightOver = TransitionScene::ORIENTATION_RIGHT_OVER;
+const int kCCTransitionOrientationUpOver = TransitionScene::ORIENTATION_UP_OVER;
+const int kCCTransitionOrientationDownOver = TransitionScene::ORIENTATION_DOWN_OVER;
+
 NS_CC_END
