@@ -404,7 +404,7 @@ namespace sigslot {
 	class _connection_base8
 	{
 	public:
-		virutal ~_connection_base8() { }
+		virtual ~_connection_base8() { }
 		
 		virtual has_slots<mt_policy>* getdest() const = 0;
 		virtual void emit(arg1_type, arg2_type, arg3_type, arg4_type, arg5_type,
