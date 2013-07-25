@@ -476,10 +476,13 @@ CallFuncN * CallFuncN::clone() const
 //
 // CallFuncND
 //
-
-CallFuncND * CallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+CCCallFuncND * CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
 {
-    CallFuncND* pRet = new CallFuncND();
+    CCCallFuncND* pRet = new CCCallFuncND();
     
     if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
         pRet->autorelease();
@@ -490,7 +493,7 @@ CallFuncND * CallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector,
     return NULL;
 }
 
-bool CallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+bool CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
 {
     if (CallFunc::initWithTarget(selectorTarget))
     {
@@ -502,7 +505,7 @@ bool CallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector,
     return false;
 }
 
-void CallFuncND::execute()
+void CCCallFuncND::execute()
 {
     if (_callFuncND)
     {
@@ -510,10 +513,10 @@ void CallFuncND::execute()
     }
 }
 
-CallFuncND * CallFuncND::clone() const
+CCCallFuncND * CCCallFuncND::clone() const
 {
 	// no copy constructor
-	auto a = new CallFuncND();
+	auto a = new CCCallFuncND();
     
     if( _selectorTarget)
     {
@@ -527,26 +530,26 @@ CallFuncND * CallFuncND::clone() const
 //
 // CallFuncO
 //
-CallFuncO::CallFuncO() :
+CCCallFuncO::CCCallFuncO() :
 _object(NULL)
 {
 }
 
-CallFuncO::~CallFuncO()
+CCCallFuncO::~CCCallFuncO()
 {
     CC_SAFE_RELEASE(_object);
 }
 
-void CallFuncO::execute()
+void CCCallFuncO::execute()
 {
     if (_callFuncO) {
         (_selectorTarget->*_callFuncO)(_object);
     }
 }
 
-CallFuncO * CallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+CCCallFuncO * CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
 {
-    CallFuncO *pRet = new CallFuncO();
+    CCCallFuncO *pRet = new CCCallFuncO();
     
     if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
         pRet->autorelease();
@@ -557,7 +560,7 @@ CallFuncO * CallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Ob
     return NULL;
 }
 
-bool CallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+bool CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
 {
     if (CallFunc::initWithTarget(selectorTarget))
     {
@@ -571,10 +574,10 @@ bool CallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, O
     return false;
 }
 
-CallFuncO * CallFuncO::clone() const
+CCCallFuncO * CCCallFuncO::clone() const
 {
 	// no copy constructor
-	auto a = new CallFuncO();
+	auto a = new CCCallFuncO();
     
     if( _selectorTarget)
     {
@@ -584,5 +587,24 @@ CallFuncO * CallFuncO::clone() const
 	a->autorelease();
 	return a;
 }
+
+Object* CCCallFuncO::getObject() const
+{
+    return _object;
+}
+    
+void CCCallFuncO::setObject(Object* obj)
+{
+    if (obj != _object)
+    {
+        CC_SAFE_RELEASE(_object);
+        _object = obj;
+        CC_SAFE_RETAIN(_object);
+    }
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#pragma warning (pop)
+#endif
 
 NS_CC_END
