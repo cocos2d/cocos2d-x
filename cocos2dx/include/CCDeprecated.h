@@ -940,6 +940,27 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
 /** use log() instead */
 CC_DEPRECATED_ATTRIBUTE void CC_DLL CCLog(const char * pszFormat, ...) CC_FORMAT_PRINTF(1, 2);
 
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawInit();
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawFree();
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawPoint( const Point& point );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawPoints( const Point *points, unsigned int numberOfPoints );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawLine( const Point& origin, const Point& destination );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawRect( Point origin, Point destination );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawSolidRect( Point origin, Point destination, Color4F color );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments);
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
+CC_DEPRECATED_ATTRIBUTE void CC_DLL ccPointSize( GLfloat pointSize );
+
 // end of data_structures group
 /// @}
 
