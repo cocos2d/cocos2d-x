@@ -414,6 +414,8 @@ Developers:
         Added some guards to prevent Eclipse to compile twice the same class.
         Linux Eclipse projects updates
         Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
+        Creation of CCDeprecated-ext.h
+        Use of a single emscripten HTML template file.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.

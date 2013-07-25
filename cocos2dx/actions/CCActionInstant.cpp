@@ -29,6 +29,13 @@
 #include "sprite_nodes/CCSprite.h"
 #include "script_support/CCScriptSupport.h"
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 NS_CC_BEGIN
 //
 // InstantAction
@@ -473,5 +480,137 @@ CallFuncN * CallFuncN::clone() const
 	return a;
 }
 
+//
+// CallFuncND
+//
+
+__CCCallFuncND * __CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    __CCCallFuncND* pRet = new __CCCallFuncND();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool __CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _data = d;
+        _callFuncND = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+void __CCCallFuncND::execute()
+{
+    if (_callFuncND)
+    {
+        (_selectorTarget->*_callFuncND)(_target, _data);
+    }
+}
+
+__CCCallFuncND * __CCCallFuncND::clone() const
+{
+	// no copy constructor
+	auto a = new __CCCallFuncND();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncND, _data);
+    }
+    
+	a->autorelease();
+	return a;
+}
+
+//
+// CallFuncO
+//
+__CCCallFuncO::__CCCallFuncO() :
+_object(NULL)
+{
+}
+
+__CCCallFuncO::~__CCCallFuncO()
+{
+    CC_SAFE_RELEASE(_object);
+}
+
+void __CCCallFuncO::execute()
+{
+    if (_callFuncO) {
+        (_selectorTarget->*_callFuncO)(_object);
+    }
+}
+
+__CCCallFuncO * __CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    __CCCallFuncO *pRet = new __CCCallFuncO();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool __CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _object = object;
+        CC_SAFE_RETAIN(_object);
+        
+        _callFuncO = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+__CCCallFuncO * __CCCallFuncO::clone() const
+{
+	// no copy constructor
+	auto a = new __CCCallFuncO();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncO, _object);
+    }
+    
+	a->autorelease();
+	return a;
+}
+
+Object* __CCCallFuncO::getObject() const
+{
+    return _object;
+}
+    
+void __CCCallFuncO::setObject(Object* obj)
+{
+    if (obj != _object)
+    {
+        CC_SAFE_RELEASE(_object);
+        _object = obj;
+        CC_SAFE_RETAIN(_object);
+    }
+}
 
 NS_CC_END
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif

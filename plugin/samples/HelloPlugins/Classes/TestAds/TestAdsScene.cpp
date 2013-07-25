@@ -89,8 +89,8 @@ bool TestAds::init()
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    Point posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
-    Point posBR = ccp(origin.x + visibleSize.width, origin.y);
+    Point posMid = Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    Point posBR = Point(origin.x + visibleSize.width, origin.y);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -99,7 +99,7 @@ bool TestAds::init()
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestAds::menuBackCallback, this));
     Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(ccpAdd(posBR, ccp(- backSize.width / 2, backSize.height / 2)));
+    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
@@ -107,15 +107,15 @@ bool TestAds::init()
 
 	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));
-	pItemShow->setAnchorPoint(ccp(0.5f, 0));
+	pItemShow->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
-	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -120)));
+	pItemShow->setPosition(posMid + Point(-100, -120));
 
 	LabelTTF* label2 = LabelTTF::create("HideAds", "Arial", 24);
 	MenuItemLabel* pItemHide = MenuItemLabel::create(label2, CC_CALLBACK_1(TestAds::testHide, this));
-	pItemHide->setAnchorPoint(ccp(0.5f, 0));
+	pItemHide->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
-	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -120)));
+	pItemHide->setPosition(posMid + Point(100, -120));
 
 	// create optional menu
 	// cases item
@@ -127,7 +127,7 @@ bool TestAds::init()
 	{
 		_caseItem->getSubItems()->addObject( MenuItemFont::create( s_aTestCases[i].c_str() ) );
 	}
-	_caseItem->setPosition(ccpAdd(posMid, ccp(-200, 120)));
+	_caseItem->setPosition(posMid + Point(-200, 120));
 	pMenu->addChild(_caseItem);
 
 	// type item
@@ -139,7 +139,7 @@ bool TestAds::init()
 	{
 		_typeItem->getSubItems()->addObject( MenuItemFont::create( s_aTestTypes[i].c_str() ) );
 	}
-	_typeItem->setPosition(ccpAdd(posMid, ccp(0, 120)));
+	_typeItem->setPosition(posMid + Point(0, 120));
 	pMenu->addChild(_typeItem);
 
 	// poses item
@@ -151,7 +151,7 @@ bool TestAds::init()
 	{
 		_posItem->getSubItems()->addObject( MenuItemFont::create( s_aTestPoses[i].c_str() ) );
 	}
-	_posItem->setPosition(ccpAdd(posMid, ccp(200, 120)));
+	_posItem->setPosition(posMid + Point(200, 120));
 	pMenu->addChild(_posItem);
 
 	// init options

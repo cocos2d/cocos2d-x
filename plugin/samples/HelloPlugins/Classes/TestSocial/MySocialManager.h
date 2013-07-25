@@ -29,7 +29,7 @@ THE SOFTWARE.
 class MySocialManager : public cocos2d::plugin::SocialListener
 {
 public:
-    static MySocialManager* sharedManager();
+    static MySocialManager* getInstance();
     static void purgeManager();
 
     typedef enum {
