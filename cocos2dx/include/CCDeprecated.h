@@ -471,9 +471,20 @@ CC_DEPRECATED_ATTRIBUTE static inline Tex2F tex2(const float u, const float v)
     return t;
 }
 
-#define CCAffineTransformMake AffineTransformMake
-#define CCPointApplyAffineTransform PointApplyAffineTransform
-#define CCSizeApplyAffineTransform SizeApplyAffineTransform
+CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty)
+{
+    return AffineTransformMake(a, b, c, d, tx, ty);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Point CCPointApplyAffineTransform(const Point& point, const AffineTransform& t)
+{
+    return PointApplyAffineTransform(point, t);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Size CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t)
+{
+    return SizeApplyAffineTransform(size, t);
+}
 
 CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformMakeIdentity()
 {
