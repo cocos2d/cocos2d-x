@@ -550,16 +550,16 @@ bool RenderTexture::saveToFile(const char *szFilePath)
     Image *pImage = newImage(true);
     if (pImage)
     {
-        bRet = pImage->saveToFile(szFilePath, kImageFormatJPEG);
+        bRet = pImage->saveToFile(szFilePath, Image::FORMAT_JPG);
     }
 
     CC_SAFE_DELETE(pImage);
     return bRet;
 }
-bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
+bool RenderTexture::saveToFile(const char *fileName, Image::Format format)
 {
     bool bRet = false;
-    CCASSERT(format == kImageFormatJPEG || format == kImageFormatPNG,
+    CCASSERT(format == Image::FORMAT_JPG || format == Image::FORMAT_PNG,
              "the image can only be saved as JPG or PNG format");
 
     Image *pImage = newImage(true);
