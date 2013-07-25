@@ -27,7 +27,7 @@
 
 CCBReader* CCBProxy::createCCBReader()
 {
-    NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
+    NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     
     ccNodeLoaderLibrary->registerNodeLoader("", CCBLayerLoader::loader());
     

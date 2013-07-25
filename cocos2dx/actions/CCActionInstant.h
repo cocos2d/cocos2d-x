@@ -347,24 +347,26 @@ protected:
  * ND means: Node and Data. Data is void *, so it could be anything.
  */
 
-class CC_DLL CC_DEPRECATED_ATTRIBUTE CCCallFuncND : public CallFunc
+class CC_DLL  __CCCallFuncND : public CallFunc
 {
 public:
     /** creates the action with the callback and the data to pass as an argument */
-    static CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
     
     virtual long getClassTypeInfo() {
         static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
 		return id;
     }
     
+protected:
     /** initializes the action with the callback and the data to pass as an argument */
     bool initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d);
     
+public:
     //
     // Overrides
     //
-	virtual CCCallFuncND* clone() const override;
+	virtual __CCCallFuncND* clone() const override;
     virtual void execute() override;
     
 protected:
@@ -380,33 +382,35 @@ protected:
  @since v0.99.5
  */
 
-class CC_DLL CC_DEPRECATED_ATTRIBUTE CCCallFuncO : public CallFunc, public TypeInfo
+class CC_DLL __CCCallFuncO : public CallFunc, public TypeInfo
 {
 public:
     /** creates the action with the callback
      
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
-    static CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
     
-    CCCallFuncO();
-    virtual ~CCCallFuncO();
-    
-    /** initializes the action with the callback
-     
-     typedef void (Object::*SEL_CallFuncO)(Object*);
-     */
-    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    __CCCallFuncO();
+    virtual ~__CCCallFuncO();
     
     virtual long getClassTypeInfo() {
 	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
 		return id;
     }
     
+protected:
+    /** initializes the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+public:
     //
     // Overrides
     //
-	virtual CCCallFuncO* clone() const override;
+	virtual __CCCallFuncO* clone() const override;
     virtual void execute() override;
     
     Object* getObject() const;
