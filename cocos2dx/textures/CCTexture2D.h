@@ -168,7 +168,7 @@ public:
     bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextAlignment hAlignment = kTextAlignmentCenter, VerticalTextAlignment vAlignment = kVerticalTextAlignmentTop);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), Label::TextAlignment hAlignment = Label::TEXT_ALIGNMENT_CENTER, Label::VerticalTextAlignment vAlignment = Label::VERTICAL_TEXT_ALIGNMENT_TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     

@@ -304,23 +304,27 @@ struct BlendFunc
     const static BlendFunc BLEND_FUNC_DISABLE;
 };
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-//! Vertical text alignment type
-typedef enum
+class Label
 {
-    kVerticalTextAlignmentTop,
-    kVerticalTextAlignmentCenter,
-    kVerticalTextAlignmentBottom,
-} VerticalTextAlignment;
-
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-//! Horizontal text alignment type
-typedef enum
-{
-    kTextAlignmentLeft,
-    kTextAlignmentCenter,
-    kTextAlignmentRight,
-} TextAlignment;
+public:
+    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+    //! Vertical text alignment type
+    enum VerticalTextAlignment
+    {
+        VERTICAL_TEXT_ALIGNMENT_TOP,
+        VERTICAL_TEXT_ALIGNMENT_CENTER,
+        VERTICAL_TEXT_ALIGNMENT_BOTTOM,
+    };
+    
+    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+    //! Horizontal text alignment type
+    enum TextAlignment
+    {
+        TEXT_ALIGNMENT_LEFT,
+        TEXT_ALIGNMENT_CENTER,
+        TEXT_ALIGNMENT_RIGHT,
+    };
+};
 
 // types for animation in particle systems
 
@@ -344,8 +348,6 @@ struct AnimationFrameData
     float delay;
     Size size; 
 };
-
-
 
 /**
  types used for defining fonts properties (i.e. font name, size, stroke or shadow)
@@ -398,8 +400,8 @@ struct FontDefinition
 public:
     
     FontDefinition():_fontSize(0),
-    _alignment(kTextAlignmentCenter),
-    _vertAlignment(kVerticalTextAlignmentTop),
+    _alignment(Label::TEXT_ALIGNMENT_CENTER),
+    _vertAlignment(Label::VERTICAL_TEXT_ALIGNMENT_TOP),
     _fontFillColor(Color3B::WHITE)
     { _dimensions = Size(0,0); }
     
@@ -408,9 +410,9 @@ public:
     // font size
     int                   _fontSize;
     // horizontal alignment
-    TextAlignment         _alignment;
+    Label::Label::Label::TextAlignment         _alignment;
     // vertical alignment
-    VerticalTextAlignment _vertAlignment;
+    Label::Label::Label::VerticalTextAlignment _vertAlignment;
     // renering box
     Size                  _dimensions;
     // font color

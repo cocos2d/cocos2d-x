@@ -789,8 +789,8 @@ CC_DEPRECATED_ATTRIBUTE typedef FontShadow ccFontShadow;
 CC_DEPRECATED_ATTRIBUTE typedef FontStroke ccFontStroke;
 CC_DEPRECATED_ATTRIBUTE typedef FontDefinition ccFontDefinition;
 
-CC_DEPRECATED_ATTRIBUTE typedef VerticalTextAlignment CCVerticalTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef TextAlignment CCTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef Label::VerticalTextAlignment CCVerticalTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef Label::TextAlignment CCTextAlignment;
 CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
@@ -858,14 +858,13 @@ CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationDouble;
 CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationBoolean;
 CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 
-#define kCCVerticalTextAlignmentTop     kVerticalTextAlignmentTop
-#define kCCVerticalTextAlignmentCenter  kVerticalTextAlignmentCenter
-#define kCCVerticalTextAlignmentBottom  kVerticalTextAlignmentBottom
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentTop;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentBottom;
 
-#define kCCTextAlignmentLeft        kTextAlignmentLeft
-#define kCCTextAlignmentCenter      kTextAlignmentCenter
-#define kCCTextAlignmentRight       kTextAlignmentRight
-
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentLeft;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentRight;
 
 #define kCCTexture2DPixelFormat_RGBA8888    kTexture2DPixelFormat_RGBA8888
 #define kCCTexture2DPixelFormat_RGB888      kTexture2DPixelFormat_RGB888
@@ -877,7 +876,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 #define kCCTexture2DPixelFormat_RGB5A1      kTexture2DPixelFormat_RGB5A1
 #define kCCTexture2DPixelFormat_PVRTC4      kTexture2DPixelFormat_PVRTC4
 #define kCCTexture2DPixelFormat_PVRTC2      kTexture2DPixelFormat_PVRTC2
-#define kCCTexture2DPixelFormat_Default       kTexture2DPixelFormat_Default
+#define kCCTexture2DPixelFormat_Default     kTexture2DPixelFormat_Default
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 

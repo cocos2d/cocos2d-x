@@ -112,7 +112,7 @@ ParticleSystem::ParticleSystem()
 , _texture(NULL)
 , _opacityModifyRGB(false)
 , _isBlendAdditive(false)
-, _positionType(PositionType::FREE)
+, _positionType(POSITION_TYPE_FREE)
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(MODE_GRAVITY)
 {
@@ -419,7 +419,7 @@ bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
     _blendFunc.dst = CC_BLEND_DST;
 
     // default movement type;
-    _positionType = PositionType::FREE;
+    _positionType = POSITION_TYPE_FREE;
 
     // by default be in mode A:
     _emitterMode = MODE_GRAVITY;
@@ -520,11 +520,11 @@ void ParticleSystem::initParticle(tParticle* particle)
     particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
     // position
-    if (_positionType == PositionType::FREE)
+    if (_positionType == POSITION_TYPE_FREE)
     {
         particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
-    else if (_positionType == PositionType::RELATIVE)
+    else if (_positionType == POSITION_TYPE_RELATIVE)
     {
         particle->startPos = _position;
     }
@@ -628,11 +628,11 @@ void ParticleSystem::update(float dt)
     _particleIdx = 0;
 
     Point currentPosition = Point::ZERO;
-    if (_positionType == PositionType::FREE)
+    if (_positionType == POSITION_TYPE_FREE)
     {
         currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
-    else if (_positionType == PositionType::RELATIVE)
+    else if (_positionType == POSITION_TYPE_RELATIVE)
     {
         currentPosition = _position;
     }
@@ -706,7 +706,7 @@ void ParticleSystem::update(float dt)
 
                 Point    newPos;
 
-                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
+                if (_positionType == POSITION_TYPE_FREE || _positionType == POSITION_TYPE_RELATIVE)
                 {
                     Point diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;

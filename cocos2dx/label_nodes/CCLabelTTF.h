@@ -48,9 +48,9 @@ NS_CC_BEGIN
  * Custom ttf file can be put in assets/ or external storage that the Application can access.
  * @code
  * LabelTTF *label1 = LabelTTF::create("alignment left", "A Damn Mess", fontSize, blockSize, 
- *                                          kTextAlignmentLeft, kVerticalTextAlignmentCenter);
+ *                                          Label::TEXT_ALIGNMENT_LEFT, Label::VERTICAL_TEXT_ALIGNMENT_CENTER);
  * LabelTTF *label2 = LabelTTF::create("alignment right", "/mnt/sdcard/Scissor Cuts.ttf", fontSize, blockSize,
- *                                          kTextAlignmentLeft, kVerticalTextAlignmentCenter);
+ *                                          Label::TEXT_ALIGNMENT_LEFT, Label::VERTICAL_TEXT_ALIGNMENT_CENTER);
  * @endcode
  *
  */
@@ -70,14 +70,14 @@ public:
      @since v2.0.1
      */
     static LabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const Size& dimensions, TextAlignment hAlignment);
+                               const Size& dimensions, Label::TextAlignment hAlignment);
   
     /** creates a Label from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
     static LabelTTF * create(const char *string, const char *fontName, float fontSize,
-                               const Size& dimensions, TextAlignment hAlignment, 
-                               VerticalTextAlignment vAlignment);
+                               const Size& dimensions, Label::TextAlignment hAlignment, 
+                               Label::VerticalTextAlignment vAlignment);
     
     
     /** Create a lable with string and a font definition*/
@@ -88,12 +88,12 @@ public:
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize,
-                        const Size& dimensions, TextAlignment hAlignment);
+                        const Size& dimensions, Label::TextAlignment hAlignment);
 
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const char *string, const char *fontName, float fontSize,
-                        const Size& dimensions, TextAlignment hAlignment, 
-                        VerticalTextAlignment vAlignment);
+                        const Size& dimensions, Label::TextAlignment hAlignment, 
+                        Label::VerticalTextAlignment vAlignment);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithStringAndTextDefinition(const char *string, FontDefinition &textDefinition);
@@ -136,11 +136,11 @@ public:
     virtual void setString(const char *label);
     virtual const char* getString(void) const;
     
-    TextAlignment getHorizontalAlignment() const;
-    void setHorizontalAlignment(TextAlignment alignment);
+    Label::TextAlignment getHorizontalAlignment() const;
+    void setHorizontalAlignment(Label::TextAlignment alignment);
     
-    VerticalTextAlignment getVerticalAlignment() const;
-    void setVerticalAlignment(VerticalTextAlignment verticalAlignment);
+    Label::VerticalTextAlignment getVerticalAlignment() const;
+    void setVerticalAlignment(Label::VerticalTextAlignment verticalAlignment);
     
     const Size& getDimensions() const;
     void setDimensions(const Size &dim);
@@ -162,9 +162,9 @@ protected:
     /** Dimensions of the label in Points */
     Size _dimensions;
     /** The alignment of the label */
-    TextAlignment         _alignment;
+    Label::TextAlignment         _alignment;
     /** The vertical alignment of the label */
-    VerticalTextAlignment _vAlignment;
+    Label::VerticalTextAlignment _vAlignment;
     /** Font name used in the label */
     std::string * _fontName;
     /** Font size of the label */
