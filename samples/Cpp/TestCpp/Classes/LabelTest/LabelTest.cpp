@@ -523,8 +523,8 @@ Atlas4::Atlas4()
 void Atlas4::draw()
 {
     Size s = Director::getInstance()->getWinSize();
-    ccDrawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
-    ccDrawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
+    DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
+    DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
 }
 
 void Atlas4::step(float dt)
@@ -1611,6 +1611,6 @@ void LabelBMFontBounds::draw()
         Point(labelSize.width + origin.width, labelSize.height + origin.height),
         Point(origin.width, labelSize.height + origin.height)
     };
-    ccDrawPoly(vertices, 4, true);
+    DrawPrimitives::drawPoly(vertices, 4, true);
 }
 

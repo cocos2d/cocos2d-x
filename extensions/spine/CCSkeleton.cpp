@@ -161,7 +161,7 @@ void CCSkeleton::draw () {
 
 	if (debugSlots) {
 		// Slots.
-		ccDrawColor4B(0, 0, 255, 255);
+		DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
 		glLineWidth(1);
 		Point points[4];
 		V3F_C4B_T2F_Quad quad;
@@ -174,26 +174,26 @@ void CCSkeleton::draw () {
 			points[1] = Point(quad.br.vertices.x, quad.br.vertices.y);
 			points[2] = Point(quad.tr.vertices.x, quad.tr.vertices.y);
 			points[3] = Point(quad.tl.vertices.x, quad.tl.vertices.y);
-			ccDrawPoly(points, 4, true);
+			DrawPrimitives::drawPoly(points, 4, true);
 		}
 	}
 	if (debugBones) {
 		// Bone lengths.
 		glLineWidth(2);
-		ccDrawColor4B(255, 0, 0, 255);
+		DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
 		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
 			Bone *bone = skeleton->bones[i];
 			float x = bone->data->length * bone->m00 + bone->worldX;
 			float y = bone->data->length * bone->m10 + bone->worldY;
-			ccDrawLine(Point(bone->worldX, bone->worldY), Point(x, y));
+			DrawPrimitives::drawLine(Point(bone->worldX, bone->worldY), Point(x, y));
 		}
 		// Bone origins.
-		ccPointSize(4);
-		ccDrawColor4B(0, 0, 255, 255); // Root bone is blue.
+		DrawPrimitives::setPointSize(4);
+		DrawPrimitives::setDrawColor4B(0, 0, 255, 255); // Root bone is blue.
 		for (int i = 0, n = skeleton->boneCount; i < n; i++) {
 			Bone *bone = skeleton->bones[i];
-			ccDrawPoint(Point(bone->worldX, bone->worldY));
-			if (i == 0) ccDrawColor4B(0, 255, 0, 255);
+			DrawPrimitives::drawPoint(Point(bone->worldX, bone->worldY));
+			if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
 		}
 	}
 }

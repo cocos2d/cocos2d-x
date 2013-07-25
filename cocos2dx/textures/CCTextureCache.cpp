@@ -208,7 +208,7 @@ void TextureCache::loadImage()
 
         // compute image type
         Image::Format imageType = computeImageFormatType(pAsyncStruct->filename);
-        if (imageType == Image::FORMAT_UNKOWN)
+        if (imageType == Image::Format::UNKOWN)
         {
             CCLOG("unsupported format %s",filename);
             delete pAsyncStruct;
@@ -248,23 +248,23 @@ void TextureCache::loadImage()
 
 Image::Format TextureCache::computeImageFormatType(string& filename)
 {
-    Image::Format ret = Image::FORMAT_UNKOWN;
+    Image::Format ret = Image::Format::UNKOWN;
 
     if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
     {
-        ret = Image::FORMAT_JPG;
+        ret = Image::Format::JPG;
     }
     else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
     {
-        ret = Image::FORMAT_PNG;
+        ret = Image::Format::PNG;
     }
     else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
     {
-        ret = Image::FORMAT_TIFF;
+        ret = Image::Format::TIFF;
     }
     else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
     {
-        ret = Image::FORMAT_WEBP;
+        ret = Image::Format::WEBP;
     }
    
     return ret;
@@ -365,22 +365,22 @@ Texture2D * TextureCache::addImage(const char * path)
             }
             else
             {
-                Image::Format eImageFormat = Image::FORMAT_UNKOWN;
+                Image::Format eImageFormat = Image::Format::UNKOWN;
                 if (std::string::npos != lowerCase.find(".png"))
                 {
-                    eImageFormat = Image::FORMAT_PNG;
+                    eImageFormat = Image::Format::PNG;
                 }
                 else if (std::string::npos != lowerCase.find(".jpg") || std::string::npos != lowerCase.find(".jpeg"))
                 {
-                    eImageFormat = Image::FORMAT_JPG;
+                    eImageFormat = Image::Format::JPG;
                 }
                 else if (std::string::npos != lowerCase.find(".tif") || std::string::npos != lowerCase.find(".tiff"))
                 {
-                    eImageFormat = Image::FORMAT_TIFF;
+                    eImageFormat = Image::Format::TIFF;
                 }
                 else if (std::string::npos != lowerCase.find(".webp"))
                 {
-                    eImageFormat = Image::FORMAT_WEBP;
+                    eImageFormat = Image::Format::WEBP;
                 }
                 
                 pImage = new Image();
@@ -433,7 +433,7 @@ Texture2D * TextureCache::addPVRImage(const char* path)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str(), Image::FORMAT_RAW_DATA);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str(), Image::Format::RAW_DATA);
 #endif
         _textures->setObject(texture, key.c_str());
         texture->autorelease();
@@ -643,7 +643,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _textureData(NULL)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
-, _fmtImage(Image::FORMAT_PNG)
+, _fmtImage(Image::Format::PNG)
 , _text("")
 , _uiImage(NULL)
 {

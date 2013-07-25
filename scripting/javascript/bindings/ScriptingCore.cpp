@@ -1817,9 +1817,9 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     
     ok &= JS_DefineProperty(cx, tmp, "fontSize", int32_to_jsval(cx, t._fontSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, (int32_t)t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, (int32_t)t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     ok &= JS_DefineProperty(cx, tmp, "fontFillColor", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     

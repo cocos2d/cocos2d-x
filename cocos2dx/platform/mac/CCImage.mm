@@ -797,13 +797,13 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == FORMAT_RAW_DATA)
+        if (eFmt == Format::RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == Image::FORMAT_WEBP)
+        else if (eFmt == Image::Format::WEBP)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
         }
         else
         {
@@ -813,7 +813,7 @@ bool Image::initWithImageData(void * pData,
                 _height = (short)info.height;
                 _width = (short)info.width;
                 _bitsPerComponent = info.bitsPerComponent;
-                if (eFmt == FORMAT_JPG)
+                if (eFmt == Format::JPG)
                 {
                     _hasAlpha = true;
                     _preMulti = false;

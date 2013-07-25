@@ -659,10 +659,10 @@ void TMXOrthoObjectsTest::draw()
         
         glLineWidth(3);
         
-        ccDrawLine( Point((float)x, (float)y), Point((float)(x+width), (float)y) );
-        ccDrawLine( Point((float)(x+width), (float)y), Point((float)(x+width), (float)(y+height)) );
-        ccDrawLine( Point((float)(x+width), (float)(y+height)), Point((float)x, (float)(y+height)) );
-        ccDrawLine( Point((float)x, (float)(y+height)), Point((float)x, (float)y) );
+        DrawPrimitives::drawLine( Point((float)x, (float)y), Point((float)(x+width), (float)y) );
+        DrawPrimitives::drawLine( Point((float)(x+width), (float)y), Point((float)(x+width), (float)(y+height)) );
+        DrawPrimitives::drawLine( Point((float)(x+width), (float)(y+height)), Point((float)x, (float)(y+height)) );
+        DrawPrimitives::drawLine( Point((float)x, (float)(y+height)), Point((float)x, (float)y) );
         
         glLineWidth(1);
     }
@@ -736,10 +736,10 @@ void TMXIsoObjectsTest::draw()
         
         glLineWidth(3);
         
-        ccDrawLine( Point(x,y), Point(x+width,y) );
-        ccDrawLine( Point(x+width,y), Point(x+width,y+height) );
-        ccDrawLine( Point(x+width,y+height), Point(x,y+height) );
-        ccDrawLine( Point(x,y+height), Point(x,y) );
+        DrawPrimitives::drawLine( Point(x,y), Point(x+width,y) );
+        DrawPrimitives::drawLine( Point(x+width,y), Point(x+width,y+height) );
+        DrawPrimitives::drawLine( Point(x+width,y+height), Point(x,y+height) );
+        DrawPrimitives::drawLine( Point(x,y+height), Point(x,y) );
         
         glLineWidth(1);
     }
@@ -1540,10 +1540,10 @@ void TMXGIDObjectsTest::draw()
 
         glLineWidth(3);
 
-        ccDrawLine(Point(x, y), Point(x + width, y));
-        ccDrawLine(Point(x + width, y), Point(x + width, y + height));
-        ccDrawLine(Point(x + width,y + height), Point(x,y + height));
-        ccDrawLine(Point(x,y + height), Point(x,y));
+        DrawPrimitives::drawLine(Point(x, y), Point(x + width, y));
+        DrawPrimitives::drawLine(Point(x + width, y), Point(x + width, y + height));
+        DrawPrimitives::drawLine(Point(x + width,y + height), Point(x,y + height));
+        DrawPrimitives::drawLine(Point(x,y + height), Point(x,y));
 
         glLineWidth(1);
     }
