@@ -151,7 +151,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     kmGLPushMatrix();
     kmGLLoadIdentity();
     
-    ccDrawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
     
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
