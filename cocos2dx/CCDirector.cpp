@@ -210,22 +210,22 @@ void Director::setDefaultValues(void)
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if( strcmp(projection, "3d") == 0 )
-		_projection = PROJECTION_3D;
+		_projection = Projection::_3D;
 	else if (strcmp(projection, "2d") == 0)
-		_projection = PROJECTION_2D;
+		_projection = Projection::_2D;
 	else if (strcmp(projection, "custom") == 0)
-		_projection = PROJECTION_CUSTOM;
+		_projection = Projection::CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB5A1);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
@@ -385,16 +385,15 @@ void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     _nextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void Director::setProjection(Projection kProjection)
+void Director::setProjection(Projection projection)
 {
     Size size = _winSizeInPoints;
 
     setViewport();
 
-    switch (kProjection)
+    switch (projection)
     {
-    case PROJECTION_2D:
-        {
+        case Projection::_2D:
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
@@ -402,10 +401,9 @@ void Director::setProjection(Projection kProjection)
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
-        }
-        break;
+            break;
 
-    case PROJECTION_3D:
+        case Projection::_3D:
         {
             float zeye = this->getZEye();
 
@@ -428,22 +426,20 @@ void Director::setProjection(Projection kProjection)
             kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
+            break;
         }
-        break;
             
-    case PROJECTION_CUSTOM:
-        if (_projectionDelegate)
-        {
-            _projectionDelegate->updateProjection();
-        }
-        break;
+        case Projection::CUSTOM:
+            if (_projectionDelegate)
+                _projectionDelegate->updateProjection();
+            break;
             
-    default:
-        CCLOG("cocos2d: Director: unrecognized projection");
-        break;
+        default:
+            CCLOG("cocos2d: Director: unrecognized projection");
+            break;
     }
 
-    _projection = kProjection;
+    _projection = projection;
     ccSetProjectionMatrixDirty();
 }
 
@@ -865,7 +861,7 @@ void Director::createStatsLabel()
     }
 
     Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);

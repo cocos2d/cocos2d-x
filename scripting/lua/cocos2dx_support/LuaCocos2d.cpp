@@ -39897,7 +39897,7 @@ static int tolua_Cocos2d_CCLabelBMFont_setAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelBMFont* self = (LabelBMFont*)  tolua_tousertype(tolua_S,1,0);
-  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::HAlignment alignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAlignment'", NULL);
 #endif
@@ -40387,7 +40387,7 @@ static int tolua_Cocos2d_CCLabelBMFont_create00(lua_State* tolua_S)
   const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,kLabelAutomaticWidth));
-  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,5,Label::TEXT_ALIGNMENT_LEFT));
+  Label::HAlignment alignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,5,Label::HAlignment::LEFT));
   {
    LabelBMFont* tolua_ret = (LabelBMFont*)  LabelBMFont::create(str,fntFile,width,alignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -40424,7 +40424,7 @@ static int tolua_Cocos2d_CCLabelBMFont_create01(lua_State* tolua_S)
   const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,0));
-  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
+  Label::HAlignment alignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,5,0));
   Point imageOffset = *((Point*)  tolua_tousertype(tolua_S,6,0));
   {
    LabelBMFont* tolua_ret = (LabelBMFont*)  LabelBMFont::create(str,fntFile,width,alignment,imageOffset);
@@ -40670,7 +40670,7 @@ static int tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHorizontalAlignment'", NULL);
 #endif
   {
-   Label::TextAlignment tolua_ret = (Label::TextAlignment)  self->getHorizontalAlignment();
+   Label::HAlignment tolua_ret = (Label::HAlignment)  self->getHorizontalAlignment();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -40699,7 +40699,7 @@ static int tolua_Cocos2d_CCLabelTTF_setHorizontalAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelTTF* self = (LabelTTF*)  tolua_tousertype(tolua_S,1,0);
-  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::HAlignment alignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHorizontalAlignment'", NULL);
 #endif
@@ -40735,7 +40735,7 @@ static int tolua_Cocos2d_CCLabelTTF_getVerticalAlignment00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getVerticalAlignment'", NULL);
 #endif
   {
-   Label::VerticalTextAlignment tolua_ret = (Label::VerticalTextAlignment)  self->getVerticalAlignment();
+   Label::VAlignment tolua_ret = (Label::VAlignment)  self->getVerticalAlignment();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -40764,7 +40764,7 @@ static int tolua_Cocos2d_CCLabelTTF_setVerticalAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelTTF* self = (LabelTTF*)  tolua_tousertype(tolua_S,1,0);
-  Label::VerticalTextAlignment verticalAlignment = ((Label::VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::VAlignment verticalAlignment = ((Label::VAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVerticalAlignment'", NULL);
 #endif
@@ -41010,8 +41010,8 @@ static int tolua_Cocos2d_CCLabelTTF_create00(lua_State* tolua_S)
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   const Size* dimensions = ((const Size*)  tolua_tousertype(tolua_S,5,0));
-  Label::TextAlignment hAlignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
-  Label::VerticalTextAlignment vAlignment = ((Label::VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,7,0));
+  Label::HAlignment hAlignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,6,0));
+  Label::VAlignment vAlignment = ((Label::VAlignment) (int)  tolua_tonumber(tolua_S,7,0));
   {
    LabelTTF* tolua_ret = (LabelTTF*)  LabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment,vAlignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -41049,7 +41049,7 @@ static int tolua_Cocos2d_CCLabelTTF_create01(lua_State* tolua_S)
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   const Size* dimensions = ((const Size*)  tolua_tousertype(tolua_S,5,0));
-  Label::TextAlignment hAlignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
+  Label::HAlignment hAlignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,6,0));
   {
    LabelTTF* tolua_ret = (LabelTTF*)  LabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -49947,7 +49947,7 @@ static int tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder00(lua_State* to
  {
   const char* placeholder = ((const char*)  tolua_tostring(tolua_S,2,0));
   Size dimensions = *((Size*)  tolua_tousertype(tolua_S,3,0));
-  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,4,0));
+  Label::HAlignment alignment = ((Label::HAlignment) (int)  tolua_tonumber(tolua_S,4,0));
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,5,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,6,0));
   {
@@ -64013,12 +64013,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"src",tolua_get_BlendFunc_unsigned_src,tolua_set_BlendFunc_unsigned_src);
    tolua_variable(tolua_S,"dst",tolua_get_BlendFunc_unsigned_dst,tolua_set_BlendFunc_unsigned_dst);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentTop",Label::VERTICAL_TEXT_ALIGNMENT_TOP);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentCenter",Label::VERTICAL_TEXT_ALIGNMENT_CENTER);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentBottom",Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM);
-  tolua_constant(tolua_S,"kCCTextAlignmentLeft",Label::TEXT_ALIGNMENT_LEFT);
-  tolua_constant(tolua_S,"kCCTextAlignmentCenter",Label::TEXT_ALIGNMENT_CENTER);
-  tolua_constant(tolua_S,"kCCTextAlignmentRight",Label::TEXT_ALIGNMENT_RIGHT);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentTop",Label::VAlignment::TOP);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentCenter",Label::VAlignment::CENTER);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentBottom",Label::VAlignment::BOTTOM);
+  tolua_constant(tolua_S,"kCCTextAlignmentLeft",Label::HAlignment::LEFT);
+  tolua_constant(tolua_S,"kCCTextAlignmentCenter",Label::HAlignment::CENTER);
+  tolua_constant(tolua_S,"kCCTextAlignmentRight",Label::HAlignment::RIGHT);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"T2F_Quad","T2F_Quad","",tolua_collect_T2F_Quad);
   #else
@@ -64337,10 +64337,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isDispatchEvents",tolua_Cocos2d_CCTouchDispatcher_isDispatchEvents00);
    tolua_function(tolua_S,"setDispatchEvents",tolua_Cocos2d_CCTouchDispatcher_setDispatchEvents00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCDirectorProjection2D",Director::PROJECTION_2D);
-  tolua_constant(tolua_S,"kCCDirectorProjection3D",Director::PROJECTION_3D);
-    tolua_constant(tolua_S,"kCCDirectorProjectionCustom",Director::PROJECTION_CUSTOM);
-    tolua_constant(tolua_S,"kCCDirectorProjectionDefault",Director::PROJECTION_DEFAULT);
+  tolua_constant(tolua_S,"kCCDirectorProjection2D",Director::Projection::_2D);
+  tolua_constant(tolua_S,"kCCDirectorProjection3D",Director::Projection::_3D);
+    tolua_constant(tolua_S,"kCCDirectorProjectionCustom",Director::Projection::_CUSTOM);
+    tolua_constant(tolua_S,"kCCDirectorProjectionDefault",Director::Projection::_DEFAULT);
   tolua_cclass(tolua_S,"CCDirector","CCDirector","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCDirector");
    tolua_function(tolua_S,"getRunningScene",tolua_Cocos2d_CCDirector_getRunningScene00);
@@ -64866,24 +64866,24 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_RENDERBUFFER_BINDING",GL_RENDERBUFFER_BINDING);
   tolua_constant(tolua_S,"GL_MAX_RENDERBUFFER_SIZE",GL_MAX_RENDERBUFFER_SIZE);
   tolua_constant(tolua_S,"GL_INVALID_FRAMEBUFFER_OPERATION",GL_INVALID_FRAMEBUFFER_OPERATION);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA8888",Texture2D::PIXEL_FORMAT_RGBA8888);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB888",Texture2D::PIXEL_FORMAT_RGB888);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB565",Texture2D::PIXEL_FORMAT_RGB565);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_A8",Texture2D::PIXEL_FORMAT_A8);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_I8",Texture2D::PIXEL_FORMAT_I8);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_AI88",Texture2D::PIXEL_FORMAT_AI88);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA4444",Texture2D::PIXEL_FORMAT_RGBA4444);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB5A1",Texture2D::PIXEL_FORMAT_RGB5A1);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",Texture2D::PIXEL_FORMAT_PRVTC4);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",Texture2D::PIXEL_FORMAT_PRVTC2);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",Texture2D::PIXEL_FORMAT_DEFAULT);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGBA8888",Texture2D::PIXEL_FORMAT_RGBA8888);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB888",Texture2D::PIXEL_FORMAT_RGB888);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB565",Texture2D::PIXEL_FORMAT_RGB565);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_A8",Texture2D::PIXEL_FORMAT_A8);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGBA4444",Texture2D::PIXEL_FORMAT_RGBA4444);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB5A1",Texture2D::PIXEL_FORMAT_RGB5A1);
-  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_DEFAULT",Texture2D::PIXEL_FORMAT_DEFAULT);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA8888",Texture2D::PixelFormat::RGBA8888);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB888",Texture2D::PixelFormat::RGB888);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB565",Texture2D::PixelFormat::RGB565);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_A8",Texture2D::PixelFormat::A8);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_I8",Texture2D::PixelFormat::I8);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_AI88",Texture2D::PixelFormat::AI88);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA4444",Texture2D::PixelFormat::RGBA4444);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB5A1",Texture2D::PixelFormat::RGB5A1);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",Texture2D::PixelFormat::PRVTC4);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",Texture2D::PixelFormat::PRVTC2);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",Texture2D::PixelFormat::DEFAULT);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::RGBA8888",Texture2D::PixelFormat::RGBA8888);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::RGB888",Texture2D::PixelFormat::RGB888);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::RGB565",Texture2D::PixelFormat::RGB565);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::A8",Texture2D::PixelFormat::A8);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::RGBA4444",Texture2D::PixelFormat::RGBA4444);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::RGB5A1",Texture2D::PixelFormat::RGB5A1);
+  tolua_constant(tolua_S,"Texture2D::PixelFormat::DEFAULT",Texture2D::PixelFormat::DEFAULT);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",tolua_collect_ccTexParams);
   #else

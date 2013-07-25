@@ -875,12 +875,12 @@ void SpriteZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
     
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void SpriteZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     SpriteTestDemo::onExit();
 }
 
@@ -960,12 +960,12 @@ void SpriteBatchNodeZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
 
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void SpriteBatchNodeZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     SpriteTestDemo::onExit();
 }
 

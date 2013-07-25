@@ -815,8 +815,7 @@ void ParticleSystem::updateBlendFunc()
             }
             else
             {
-                _blendFunc.src = GL_SRC_ALPHA;
-                _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+                _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
             }
         }
     }
@@ -832,21 +831,14 @@ void ParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE;
+        _blendFunc = BlendFunc::ADDITIVE;
     }
     else
     {
         if( _texture && ! _texture->hasPremultipliedAlpha() )
-        {
-            _blendFunc.src = GL_SRC_ALPHA;
-            _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        } 
+            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         else 
-        {
-            _blendFunc.src = CC_BLEND_SRC;
-            _blendFunc.dst = CC_BLEND_DST;
-        }
+            _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     }
 }
 

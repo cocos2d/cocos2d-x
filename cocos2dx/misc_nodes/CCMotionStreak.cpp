@@ -49,9 +49,8 @@ MotionStreak::MotionStreak()
 , _vertices(NULL)
 , _colorPointer(NULL)
 , _texCoords(NULL)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
-    _blendFunc.src = GL_SRC_ALPHA;
-    _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 }
 
 MotionStreak::~MotionStreak()
@@ -123,8 +122,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
     // Set blend mode
-    _blendFunc.src = GL_SRC_ALPHA;
-    _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader program
     setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));

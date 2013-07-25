@@ -98,7 +98,7 @@ RenderTextureSave::RenderTextureSave()
     Size s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA8888);
+    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Point(s.width / 2, s.height / 2));
 
@@ -243,7 +243,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     
     
     /* A2 & B2 setup */
-    RenderTexture *rend = RenderTexture::create(32, 64, Texture2D::PIXEL_FORMAT_RGBA8888);
+    RenderTexture *rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
     if (NULL == rend)
     {
@@ -441,7 +441,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     Sprite *sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    RenderTexture *rend = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA4444, GL_DEPTH24_STENCIL8);
+    RenderTexture *rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -505,7 +505,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     Size s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA4444);
+    RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -591,7 +591,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     {
 		Size s = Director::getInstance()->getWinSize();
         rt = new RenderTexture();
-        rt->initWithWidthAndHeight(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA8888);
+        rt->initWithWidthAndHeight(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
 	}
 	rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	rt->end();

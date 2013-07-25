@@ -804,8 +804,8 @@ CC_DEPRECATED_ATTRIBUTE typedef FontShadow ccFontShadow;
 CC_DEPRECATED_ATTRIBUTE typedef FontStroke ccFontStroke;
 CC_DEPRECATED_ATTRIBUTE typedef FontDefinition ccFontDefinition;
 
-CC_DEPRECATED_ATTRIBUTE typedef Label::VerticalTextAlignment CCVerticalTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef Label::TextAlignment CCTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef Label::VAlignment CCVerticalTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef Label::HAlignment CCTextAlignment;
 CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
@@ -860,10 +860,10 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeRadial;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeBar;
 CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection2D;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection3D; 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionCustom;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionDefault;
+CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection2D;
+CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection3D; 
+CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionCustom;
+CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionDefault;
 CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
 CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationError;
@@ -873,25 +873,25 @@ CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationDouble;
 CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationBoolean;
 CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentTop;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentCenter;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentBottom;
+CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentTop;
+CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentBottom;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentLeft;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentCenter;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentRight;
+CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentLeft;
+CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentRight;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA8888;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB888;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB565;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_A8;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_I8;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_AI88;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA4444;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB5A1;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC4;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC2;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_Default;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2;
+CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default;
 CC_DEPRECATED_ATTRIBUTE typedef enum Texture2D::PixelFormat CCTexture2DPixelFormat;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth

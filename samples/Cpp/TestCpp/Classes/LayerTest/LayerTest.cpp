@@ -858,10 +858,7 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
     layer3->setEndOpacity(255);
-    BlendFunc blend;
-    blend.src = GL_SRC_ALPHA;
-    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
-    layer3->setBlendFunc(blend);
+    layer3->setBlendFunc( BlendFunc::ALPHA_NON_PREMULTIPLIED );
     addChild(layer3);
 }
 

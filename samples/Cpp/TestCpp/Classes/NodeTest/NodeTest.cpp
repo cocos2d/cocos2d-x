@@ -512,12 +512,12 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -584,12 +584,12 @@ void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -797,8 +797,7 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.png");
-        BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-        background->setBlendFunc(blendFunc);
+        background->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
@@ -823,7 +822,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.jpg");
-        background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
+        background->setBlendFunc(BlendFunc::DISABLE);
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
