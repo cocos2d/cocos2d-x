@@ -143,9 +143,10 @@ $(TARGET).data: $(CORE_MAKEFILE_LIST) $(patsubst %,$(RESOURCE_PATH)/%,$(RESOURCE
 	cp -av $(RESOURCE_PATH)/* $(shell dirname $@)
 	rm -rf $(RESTMP)
 
-$(BIN_DIR)/index.html: index.html $(CORE_MAKEFILE_LIST)
+$(BIN_DIR)/$(HTMLTPL_FILE): $(HTMLTPL_DIR)/$(HTMLTPL_FILE) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	cp index.html $(@D)
+	@cp -Rf $(HTMLTPL_DIR)/* $(BIN_DIR)
+	@sed -i -e "s/JS_APPLICATION/$(EXECUTABLE)/g" $(BIN_DIR)/$(HTMLTPL_FILE)
 
 ####### Compile
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
