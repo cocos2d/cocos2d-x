@@ -473,5 +473,138 @@ CallFuncN * CallFuncN::clone() const
 	return a;
 }
 
+//
+// CallFuncND
+//
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+CCCallFuncND * CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    CCCallFuncND* pRet = new CCCallFuncND();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _data = d;
+        _callFuncND = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+void CCCallFuncND::execute()
+{
+    if (_callFuncND)
+    {
+        (_selectorTarget->*_callFuncND)(_target, _data);
+    }
+}
+
+CCCallFuncND * CCCallFuncND::clone() const
+{
+	// no copy constructor
+	auto a = new CCCallFuncND();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncND, _data);
+    }
+    
+	a->autorelease();
+	return a;
+}
+
+//
+// CallFuncO
+//
+CCCallFuncO::CCCallFuncO() :
+_object(NULL)
+{
+}
+
+CCCallFuncO::~CCCallFuncO()
+{
+    CC_SAFE_RELEASE(_object);
+}
+
+void CCCallFuncO::execute()
+{
+    if (_callFuncO) {
+        (_selectorTarget->*_callFuncO)(_object);
+    }
+}
+
+CCCallFuncO * CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    CCCallFuncO *pRet = new CCCallFuncO();
+    
+    if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return NULL;
+}
+
+bool CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+{
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
+        _object = object;
+        CC_SAFE_RETAIN(_object);
+        
+        _callFuncO = selector;
+        return true;
+    }
+    
+    return false;
+}
+
+CCCallFuncO * CCCallFuncO::clone() const
+{
+	// no copy constructor
+	auto a = new CCCallFuncO();
+    
+    if( _selectorTarget)
+    {
+        a->initWithTarget(_selectorTarget, _callFuncO, _object);
+    }
+    
+	a->autorelease();
+	return a;
+}
+
+Object* CCCallFuncO::getObject() const
+{
+    return _object;
+}
+    
+void CCCallFuncO::setObject(Object* obj)
+{
+    if (obj != _object)
+    {
+        CC_SAFE_RELEASE(_object);
+        _object = obj;
+        CC_SAFE_RETAIN(_object);
+    }
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#pragma warning (pop)
+#endif
 
 NS_CC_END

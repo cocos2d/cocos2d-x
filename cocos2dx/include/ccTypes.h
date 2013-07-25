@@ -83,7 +83,7 @@ struct Color4B
     a(_a)
     {}
     
-    Color4B(): r(0.f), g(0.f), b(0.f), a(0.f) {}
+    Color4B(): r(0), g(0), b(0), a(0) {}
     
     // This function should use Color4F, so implement it in .cpp file.
     explicit Color4B(const Color4F &color4F);
