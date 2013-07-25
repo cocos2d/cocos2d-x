@@ -153,4 +153,7 @@ const int kCCTransitionOrientationRightOver = TransitionScene::ORIENTATION_RIGHT
 const int kCCTransitionOrientationUpOver = TransitionScene::ORIENTATION_UP_OVER;
 const int kCCTransitionOrientationDownOver = TransitionScene::ORIENTATION_DOWN_OVER;
 
+const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
+const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
+
 NS_CC_END
