@@ -416,7 +416,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
 	bool bRet = false;
     unsigned long nSize = 0;
@@ -433,7 +433,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     /*
      * FileUtils::fullPathFromRelativePath() is not thread-safe.
@@ -451,7 +451,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt,
+                                Format eFmt,
                                 int nWidth,
                                 int nHeight,
                                 int nBitsPerComponent)
@@ -465,11 +465,11 @@ bool Image::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == kFmtRawData)
+        if (eFmt == FORMAT_RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == kFmtWebp)
+        else if (eFmt == FORMAT_WEBP)
         {
             bRet = _initWithWebpData(pData, nDataLen);
         }

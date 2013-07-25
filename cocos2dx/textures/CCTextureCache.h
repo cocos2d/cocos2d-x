@@ -161,7 +161,7 @@ public:
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-    Image::EImageFormat computeImageFormatType(std::string& filename);
+    Image::Format computeImageFormatType(std::string& filename);
 
 public:
     struct AsyncStruct
@@ -179,7 +179,7 @@ protected:
     {
         AsyncStruct *asyncStruct;
         Image        *image;
-        Image::EImageFormat imageType;
+        Image::Format imageType;
     } ImageInfo;
     
     std::thread* _loadingThread;
