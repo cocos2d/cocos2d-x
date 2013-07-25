@@ -539,7 +539,7 @@ std::string TestBox2DDetector::title()
 }
 void TestBox2DDetector::draw()
 {
-	ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+	ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 	kmGLPushMatrix();
 

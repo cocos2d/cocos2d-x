@@ -211,7 +211,7 @@ void DrawNode::render()
 #if CC_TEXTURE_ATLAS_USE_VAO     
     ccGLBindVAO(_vao);
 #else
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex

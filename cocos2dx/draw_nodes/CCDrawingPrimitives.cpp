@@ -125,7 +125,7 @@ void ccDrawPoint( const Point& point )
     p.x = point.x;
     p.y = point.y;
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
     s_pShader->use();
     s_pShader->setUniformsForBuiltins();
 
@@ -148,7 +148,7 @@ void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
     s_pShader->use();
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
@@ -205,7 +205,7 @@ void ccDrawLine( const Point& origin, const Point& destination )
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 16);
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -245,7 +245,7 @@ void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolyg
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
     // iPhone and 32-bit machines optimization
     if( sizeof(Point) == sizeof(Vertex2F) )
@@ -297,7 +297,7 @@ void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F co
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     Vertex2F* newPoli = new Vertex2F[numberOfPoints];
@@ -362,7 +362,7 @@ void ccDrawCircle( const Point& center, float radius, float angle, unsigned int 
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
@@ -407,7 +407,7 @@ void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
     
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
     
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
@@ -448,7 +448,7 @@ void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& de
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
@@ -505,7 +505,7 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
@@ -539,7 +539,7 @@ void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& 
     s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));

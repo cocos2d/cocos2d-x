@@ -506,7 +506,7 @@ void ProgressTimer::draw(void)
 
     ccGLBlendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
     ccGLBindTexture2D( _sprite->getTexture()->getName() );
 

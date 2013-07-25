@@ -123,7 +123,7 @@ void ShaderNode::draw()
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POSITION);
 
     glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 

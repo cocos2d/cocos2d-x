@@ -607,7 +607,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	// Attributes
 	//
     
-	ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+	ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
 #define kQuadSize sizeof(_quad.bl)
 	long offset = (long)&_quad;

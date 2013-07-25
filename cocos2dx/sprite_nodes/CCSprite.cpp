@@ -554,7 +554,7 @@ void Sprite::draw(void)
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
     ccGLBindTexture2D( _texture->getName() );
-    ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN

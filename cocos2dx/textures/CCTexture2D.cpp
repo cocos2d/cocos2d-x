@@ -591,7 +591,7 @@ void Texture2D::drawAtPoint(const Point& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_TexCoords );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
@@ -625,7 +625,7 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_TexCoords );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 

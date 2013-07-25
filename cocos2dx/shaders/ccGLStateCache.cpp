@@ -232,7 +232,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
     ccGLBindVAO(0);
     
     /* Position */
-    bool enablePosition = flags & kVertexAttribFlag_Position;
+    bool enablePosition = flags & VERTEX_ATTRIB_FLAG_POSITION;
 
     if( enablePosition != s_bVertexAttribPosition ) {
         if( enablePosition )
@@ -244,7 +244,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
     }
 
     /* Color */
-    bool enableColor = (flags & kVertexAttribFlag_Color) != 0 ? true : false;
+    bool enableColor = (flags & VERTEX_ATTRIB_FLAG_COLOR) != 0 ? true : false;
 
     if( enableColor != s_bVertexAttribColor ) {
         if( enableColor )
@@ -256,7 +256,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
     }
 
     /* Tex Coords */
-    bool enableTexCoords = (flags & kVertexAttribFlag_TexCoords) != 0 ? true : false;
+    bool enableTexCoords = (flags & VERTEX_ATTRIB_FLAG_TEX_COORDS) != 0 ? true : false;
 
     if( enableTexCoords != s_bVertexAttribTexCoords ) {
         if( enableTexCoords )

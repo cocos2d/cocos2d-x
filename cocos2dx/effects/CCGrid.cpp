@@ -315,7 +315,7 @@ void Grid3D::blit(void)
 {
     int n = _gridSize.width * _gridSize.height;
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_TexCoords );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();;
 
@@ -537,7 +537,7 @@ void TiledGrid3D::blit(void)
     //
     // Attributes
     //
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_TexCoords );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
 #ifdef EMSCRIPTEN
     int numQuads = _gridSize.width * _gridSize.height;
 
