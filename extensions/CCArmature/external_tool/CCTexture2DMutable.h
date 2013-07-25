@@ -45,7 +45,7 @@ public:
     bool initWithImageFile(const char *imageFilex);
     
 	/** Intializes with a texture2d with data */
-	bool initWithData(const void* data, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize);
+	bool initWithData(const void* data, int dataLen, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize);
     
     
     cocos2d::Color4B pixelAt(const cocos2d::Point& pt);

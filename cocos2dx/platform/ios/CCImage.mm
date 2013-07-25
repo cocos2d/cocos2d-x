@@ -38,7 +38,6 @@ typedef struct
 {
     unsigned int height;
     unsigned int width;
-    int          bitsPerComponent;
     bool         hasAlpha;
     bool         isPremultipliedAlpha;
     bool         hasShadow;
@@ -104,7 +103,6 @@ static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
     
     // change to RGBA8888
     pImageinfo->hasAlpha = true;
-    pImageinfo->bitsPerComponent = 8;
     pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
     colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
@@ -390,7 +388,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         pInfo->data                 = data;
         pInfo->hasAlpha             = true;
         pInfo->isPremultipliedAlpha = true;
-        pInfo->bitsPerComponent     = 8;
         pInfo->width                = dim.width;
         pInfo->height               = dim.height;
         bRet                        = true;
@@ -461,8 +458,8 @@ bool Image::initWithStringShadowStroke(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _bitDepth = info.bitsPerComponent;
     _hasAlpha = info.hasAlpha;
+    _renderFormat = kTexture2DPixelFormat_RGBA8888;
     _preMulti = info.isPremultipliedAlpha;
     _data = info.data;
     

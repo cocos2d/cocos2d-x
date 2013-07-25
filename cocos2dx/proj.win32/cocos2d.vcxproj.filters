@@ -333,9 +333,6 @@
     <ClCompile Include="..\textures\CCTextureCache.cpp">
       <Filter>textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\CCTexturePVR.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
@@ -757,9 +754,6 @@
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\textures\CCTextureCache.h">
-      <Filter>textures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\textures\CCTexturePVR.h">
       <Filter>textures</Filter>
     </ClInclude>
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h">

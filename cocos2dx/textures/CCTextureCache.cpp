@@ -332,11 +332,7 @@ Texture2D * TextureCache::addImage(const char * path)
         // all images are handled by UIImage except PVR extension that is handled by our own handler
         do 
         {
-            if (std::string::npos != lowerCase.find(".pvr"))
-            {
-                texture = this->addPVRImage(fullpath.c_str());
-            }
-            else if (std::string::npos != lowerCase.find(".pkm"))
+            if (std::string::npos != lowerCase.find(".pkm"))
             {
                 // ETC1 file format, only supportted on Android
                 texture = this->addETCImage(fullpath.c_str());
@@ -370,39 +366,6 @@ Texture2D * TextureCache::addImage(const char * path)
     }
 
     CC_SAFE_RELEASE(pImage);
-
-    return texture;
-}
-
-Texture2D * TextureCache::addPVRImage(const char* path)
-{
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
-
-    Texture2D* texture = NULL;
-    std::string key(path);
-    
-    if( (texture = (Texture2D*)_textures->objectForKey(key.c_str())) ) 
-    {
-        return texture;
-    }
-
-    // Split up directory and filename
-    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(key.c_str());
-    texture = new Texture2D();
-    if(texture != NULL && texture->initWithPVRFile(fullpath.c_str()) )
-    {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str());
-#endif
-        _textures->setObject(texture, key.c_str());
-        texture->autorelease();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't add PVRImage:%s in TextureCache",key.c_str());
-        CC_SAFE_DELETE(texture);
-    }
 
     return texture;
 }

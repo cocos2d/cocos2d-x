@@ -77,6 +77,7 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
 }
 
 bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+
 {
     bool bRet = true;
 
@@ -119,7 +120,8 @@ bool GridBase::initWithSize(const Size& gridSize)
     // we only use rgba8888
     Texture2DPixelFormat format = kTexture2DPixelFormat_RGBA8888;
 
-    void *data = calloc((int)(POTWide * POTHigh * 4), 1);
+    int dataLen = (int)(POTWide * POTHigh * 4);
+    void *data = calloc(dataLen, 1);
     if (! data)
     {
         CCLOG("cocos2d: Grid: not enough memory.");
@@ -128,7 +130,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     }
 
     Texture2D *pTexture = new Texture2D();
-    pTexture->initWithData(data, format, POTWide, POTHigh, s);
+    pTexture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
 
     free(data);
 

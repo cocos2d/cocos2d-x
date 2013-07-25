@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CC_IMAGE_H__
 
 #include "cocoa/CCObject.h"
+#include "textures/CCTexture2D.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
@@ -41,6 +42,14 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+ 
+/**
+    @brief Structure which can tell where mipmap begins and how long is it
+*/
+typedef struct _MipmapInfo {
+    unsigned char* address;
+    int len;
+}MipmapInfo;
 
 class CC_DLL Image : public Object
 {
@@ -49,6 +58,14 @@ public:
     
     Image();
     ~Image();
+    
+    /**
+     @brief Determine how many mipmaps can we have. 
+     Its same as define but it respects namespaces
+    */
+    enum {
+        CC_MIPMAP_MAX = 16,
+    };
 
     typedef enum
     {
@@ -56,9 +73,11 @@ public:
         kFmtPng,
         kFmtTiff,
         kFmtWebp,
+        kFmtPvr,
+        kFmtEtc,
         kFmtRawData,
         kFmtUnKnown
-    }ImageFormat;
+    }FileType;
 
     typedef enum
     {
@@ -73,13 +92,6 @@ public:
         kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
     }TextAlign;
 
-
-    typedef enum
-    {
-        kColorGray = 0,
-        kColorRGB,
-    }ColorType;
-
     /**
     @brief  Load the image from the specified path. 
     @param strPath   the absolute file path.
@@ -90,21 +102,14 @@ public:
 
     /**
     @brief  Load image from stream buffer.
-
-    @warning kFmtRawData only supports RGBA8888.
-    @param pBuffer  stream buffer which holds the image data.
-    @param nLength  data length expressed in (number of) bytes.
-    @param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData.
+    @param data  stream buffer which holds the image data.
+    @param dataLen  data length expressed in (number of) bytes.
     @return true if loaded correctly.
     */
-    bool initWithImageData(void * pData, 
-                           int nDataLen, 
-                           int nWidth = 0,
-                           int nHeight = 0,
-                           int nBitsPerComponent = 8);
+    bool initWithImageData(void * data, int dataLen);
 
     // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti);
+    bool initWithRawData(void *data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent = 8, bool bPreMulti = false);
 
     /**
     @brief    Create image with specified string.
@@ -152,15 +157,18 @@ public:
     
         
     unsigned char *   getData()               { return _data; }
-    int               getDataLen()            { return _width * _height * ((_colorType == kColorGray ? 1 : 3) + (_hasAlpha ? 1 : 0)); }
-    ColorType        getColorType()          { return _colorType; }
-    unsigned short    getBitDepth()              { return _bitDepth; }
-    unsigned short    getWidth()              { return _width; }
-    unsigned short    getHeight()             { return _height; }
+    int               getDataLen()            { return _dataLen; }
+    FileType          getFileType()           {return _fileType; }
+    Texture2DPixelFormat getRenderFormat()    { return _renderFormat; }
+    int               getWidth()              { return _width; }
+    int               getHeight()             { return _height; }
+    bool              isPremultipliedAlpha()  { return _preMulti;   }
+    int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
+    MipmapInfo*           getMipmaps()        { return _mipmaps; }
 
-
-    bool hasAlpha()                     { return _hasAlpha;   }
-    bool isPremultipliedAlpha()         { return _preMulti;   }
+    int               getBitPerPixel();
+    bool              hasAlpha();
+    bool              isCompressed();
 
 
     /**
@@ -171,10 +179,14 @@ public:
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
 protected:
-    bool _initWithJpgData(void *pData, int nDatalen);
-    bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void *pData, int nDataLen);
-    bool _initWithWebpData(void *pData, int nDataLen);
+    bool _initWithJpgData(void *data, int dataLen);
+    bool _initWithPngData(void *data, int dataLen);
+    bool _initWithTiffData(void *data, int dataLen);
+    bool _initWithWebpData(void *data, int dataLen);
+    bool _initWithPVRData(void *data, int dataLen);
+    bool _initWithPVRv2Data(void *data, int dataLen);
+    bool _initWithPVRv3Data(void *data, int dataLen);
+    bool _initWithETCData(void *data, int dataLen);
 
     bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool _saveImageToJPG(const char *pszFilePath);
@@ -184,13 +196,16 @@ protected:
 #endif
 
     unsigned char *_data;
-    unsigned short _bitDepth;
-    unsigned short _width;
-    unsigned short _height;
-    ColorType _colorType;
+    int _dataLen;
+    int _width;
+    int _height;
+    FileType       _fileType;
+    Texture2DPixelFormat _renderFormat;
     bool _hasAlpha;
     bool _preMulti;
-    int _dataLen;
+    bool _compressed;
+    MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
+    int _numberOfMipmaps;
 
 
 private:
@@ -207,11 +222,15 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
 
-    ImageFormat detectFormat(void* pData, int nDatalen);
-    bool isPng(void *pData, int nDatalen);
-    bool isJpg(void *pData, int nDatalen);
-    bool isTiff(void *pData, int nDatalen);
-    bool isWebp(void *pData, int nDatalen);
+    FileType detectFormat(void* data, int dataLen);
+    bool isPng(void *data, int dataLen);
+    bool isJpg(void *data, int dataLen);
+    bool isTiff(void *data, int dataLen);
+    bool isWebp(void *data, int dataLen);
+    bool isPvr(void *data, int dataLen);
+    bool isEtc(void *data, int dataLen);
+
+    bool _testFormatForPvrTCSupport(int format);
 };
 
 // end of platform group

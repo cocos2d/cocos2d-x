@@ -38,18 +38,18 @@
 
 NS_CC_BEGIN
 
-bool Image::_initWithWebpData(void *pData, int nDataLen)
+bool Image::_initWithWebpData(void *data, int dataLen)
 {
 	bool bRet = false;
 	do
 	{
         WebPDecoderConfig config;
         if (WebPInitDecoderConfig(&config) == 0) break;
-        if (WebPGetFeatures((uint8_t*)pData, nDataLen, &config.input) != VP8_STATUS_OK) break;
+        if (WebPGetFeatures((uint8_t*)data, dataLen, &config.input) != VP8_STATUS_OK) break;
         if (config.input.width == 0 || config.input.height == 0) break;
         
         config.output.colorspace = MODE_RGBA;
-        _bitDepth = 8;
+        _renderFormat = kTexture2DPixelFormat_RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
         _hasAlpha = true;
@@ -62,7 +62,7 @@ bool Image::_initWithWebpData(void *pData, int nDataLen)
         config.output.u.RGBA.size = bufferSize;
         config.output.is_external_memory = 1;
 
-        if (WebPDecode((uint8_t*)pData, nDataLen, &config) != VP8_STATUS_OK)
+        if (WebPDecode((uint8_t*)data, dataLen, &config) != VP8_STATUS_OK)
         {
             delete []_data;
             _data = NULL;

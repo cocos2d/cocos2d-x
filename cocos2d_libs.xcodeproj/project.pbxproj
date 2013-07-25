@@ -396,8 +396,6 @@
 		A03F2B5A1780BAE9006731B9 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254C1780BAE8006731B9 /* CCTextureCache.h */; };
 		A03F2B5B1780BAE9006731B9 /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */; };
 		A03F2B5C1780BAE9006731B9 /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254E1780BAE8006731B9 /* CCTextureETC.h */; };
-		A03F2B5D1780BAE9006731B9 /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254F1780BAE8006731B9 /* CCTexturePVR.cpp */; };
-		A03F2B5E1780BAE9006731B9 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25501780BAE8006731B9 /* CCTexturePVR.h */; };
 		A03F2B5F1780BAE9006731B9 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */; };
 		A03F2B601780BAE9006731B9 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25531780BAE8006731B9 /* CCParallaxNode.h */; };
 		A03F2B611780BAE9006731B9 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */; };
@@ -1032,7 +1030,6 @@
 		A07A4CA01783777C0073F6A7 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25491780BAE8006731B9 /* CCTextureAtlas.cpp */; };
 		A07A4CA11783777C0073F6A7 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254B1780BAE8006731B9 /* CCTextureCache.cpp */; };
 		A07A4CA21783777C0073F6A7 /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */; };
-		A07A4CA31783777C0073F6A7 /* CCTexturePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254F1780BAE8006731B9 /* CCTexturePVR.cpp */; };
 		A07A4CA41783777C0073F6A7 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */; };
 		A07A4CA51783777C0073F6A7 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */; };
 		A07A4CA61783777C0073F6A7 /* CCTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25561780BAE8006731B9 /* CCTMXLayer.cpp */; };
@@ -1191,7 +1188,6 @@
 		A07A4D531783777C0073F6A7 /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254A1780BAE8006731B9 /* CCTextureAtlas.h */; };
 		A07A4D541783777C0073F6A7 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254C1780BAE8006731B9 /* CCTextureCache.h */; };
 		A07A4D551783777C0073F6A7 /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254E1780BAE8006731B9 /* CCTextureETC.h */; };
-		A07A4D561783777C0073F6A7 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25501780BAE8006731B9 /* CCTexturePVR.h */; };
 		A07A4D571783777C0073F6A7 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25531780BAE8006731B9 /* CCParallaxNode.h */; };
 		A07A4D581783777C0073F6A7 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25551780BAE8006731B9 /* CCTileMapAtlas.h */; };
 		A07A4D591783777C0073F6A7 /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25571780BAE8006731B9 /* CCTMXLayer.h */; };
@@ -2204,8 +2200,6 @@
 		A03F254C1780BAE8006731B9 /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
 		A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
 		A03F254E1780BAE8006731B9 /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
-		A03F254F1780BAE8006731B9 /* CCTexturePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexturePVR.cpp; sourceTree = "<group>"; };
-		A03F25501780BAE8006731B9 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
 		A03F25531780BAE8006731B9 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
@@ -3779,8 +3773,6 @@
 				A03F254C1780BAE8006731B9 /* CCTextureCache.h */,
 				A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */,
 				A03F254E1780BAE8006731B9 /* CCTextureETC.h */,
-				A03F254F1780BAE8006731B9 /* CCTexturePVR.cpp */,
-				A03F25501780BAE8006731B9 /* CCTexturePVR.h */,
 			);
 			path = textures;
 			sourceTree = "<group>";
@@ -5164,7 +5156,6 @@
 				A03F2B581780BAE9006731B9 /* CCTextureAtlas.h in Headers */,
 				A03F2B5A1780BAE9006731B9 /* CCTextureCache.h in Headers */,
 				A03F2B5C1780BAE9006731B9 /* CCTextureETC.h in Headers */,
-				A03F2B5E1780BAE9006731B9 /* CCTexturePVR.h in Headers */,
 				A03F2B601780BAE9006731B9 /* CCParallaxNode.h in Headers */,
 				A03F2B621780BAE9006731B9 /* CCTileMapAtlas.h in Headers */,
 				A03F2B641780BAE9006731B9 /* CCTMXLayer.h in Headers */,
@@ -5726,7 +5717,6 @@
 				A07A4D531783777C0073F6A7 /* CCTextureAtlas.h in Headers */,
 				A07A4D541783777C0073F6A7 /* CCTextureCache.h in Headers */,
 				A07A4D551783777C0073F6A7 /* CCTextureETC.h in Headers */,
-				A07A4D561783777C0073F6A7 /* CCTexturePVR.h in Headers */,
 				A07A4D571783777C0073F6A7 /* CCParallaxNode.h in Headers */,
 				A07A4D581783777C0073F6A7 /* CCTileMapAtlas.h in Headers */,
 				A07A4D591783777C0073F6A7 /* CCTMXLayer.h in Headers */,
@@ -6499,7 +6489,6 @@
 				A03F2B571780BAE9006731B9 /* CCTextureAtlas.cpp in Sources */,
 				A03F2B591780BAE9006731B9 /* CCTextureCache.cpp in Sources */,
 				A03F2B5B1780BAE9006731B9 /* CCTextureETC.cpp in Sources */,
-				A03F2B5D1780BAE9006731B9 /* CCTexturePVR.cpp in Sources */,
 				A03F2B5F1780BAE9006731B9 /* CCParallaxNode.cpp in Sources */,
 				A03F2B611780BAE9006731B9 /* CCTileMapAtlas.cpp in Sources */,
 				A03F2B631780BAE9006731B9 /* CCTMXLayer.cpp in Sources */,
@@ -6936,7 +6925,6 @@
 				A07A4CA01783777C0073F6A7 /* CCTextureAtlas.cpp in Sources */,
 				A07A4CA11783777C0073F6A7 /* CCTextureCache.cpp in Sources */,
 				A07A4CA21783777C0073F6A7 /* CCTextureETC.cpp in Sources */,
-				A07A4CA31783777C0073F6A7 /* CCTexturePVR.cpp in Sources */,
 				A07A4CA41783777C0073F6A7 /* CCParallaxNode.cpp in Sources */,
 				A07A4CA51783777C0073F6A7 /* CCTileMapAtlas.cpp in Sources */,
 				A07A4CA61783777C0073F6A7 /* CCTMXLayer.cpp in Sources */,
@@ -7350,9 +7338,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\\\"",
-					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
-					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
@@ -7372,9 +7358,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\\\"",
-					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
-					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
+					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
 			};
@@ -7635,12 +7619,7 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\\\"",
-					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
-					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
@@ -7660,12 +7639,7 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(SDKROOT)/usr/include/libxml2\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries\\\"",
-					"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries",
-					"$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
