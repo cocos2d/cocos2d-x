@@ -97,9 +97,12 @@ STATICLIBS = \
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
 LIBS = -lrt -lz
 
+HTMLTPL_DIR = $(COCOS_ROOT)/tools/emscripten-template
+HTMLTPL_FILE = index.html
+
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -f $(TARGET).js $(TARGET).data $(TARGET).data.js $(BIN_DIR)/index.html core
+	rm -rf $(TARGET).js $(TARGET).data $(TARGET).data.js $(BIN_DIR) core
 
 .PHONY: all clean
 
@@ -108,7 +111,7 @@ clean:
 ifdef EXECUTABLE
 TARGET := $(BIN_DIR)/$(EXECUTABLE)
 
-all: $(TARGET).js $(TARGET).data $(BIN_DIR)/index.html
+all: $(TARGET).js $(TARGET).data $(BIN_DIR)/$(HTMLTPL_FILE)
 
 run: $(TARGET)
 	cd $(dir $^) && ./$(notdir $^)

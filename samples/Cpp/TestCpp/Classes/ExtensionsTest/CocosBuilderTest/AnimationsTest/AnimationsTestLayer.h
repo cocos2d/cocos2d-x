@@ -15,8 +15,8 @@ public:
     AnimationsTestLayer();
     virtual ~AnimationsTestLayer();
     
-    virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName);
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName);
+    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
     virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
     
     void onControlButtonIdleClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
