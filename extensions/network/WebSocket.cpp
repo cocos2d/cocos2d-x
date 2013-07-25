@@ -28,11 +28,14 @@
  ****************************************************************************/
 
 #include "WebSocket.h"
+
 #include <thread>
 #include <mutex>
 #include <queue>
 #include <signal.h>
 #include <errno.h>
+
+#include "libwebsockets.h"
 
 NS_CC_EXT_BEGIN
 
@@ -444,7 +447,7 @@ void WebSocket::onSubThreadEnded()
 
 int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                      struct libwebsocket *wsi,
-                     enum libwebsocket_callback_reasons reason,
+                     int reason,
                      void *user, void *in, size_t len)
 {
 	//CCLOG("socket callback for %d reason", reason);
