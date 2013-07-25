@@ -377,7 +377,7 @@ void DrawPrimitives::drawCircle( const Point& center, float radius, float angle,
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void CC_DLL DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
@@ -423,7 +423,7 @@ void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float a
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void CC_DLL DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
 {
     DrawPrimitives::drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
