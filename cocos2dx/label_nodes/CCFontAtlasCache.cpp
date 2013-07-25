@@ -46,7 +46,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, 
         }
         else
         {
-            return 0;
+            return nullptr;
         }
     }
     
@@ -68,7 +68,7 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
         }
         else
         {
-            return 0;
+            return nullptr;
         }
     }
     
