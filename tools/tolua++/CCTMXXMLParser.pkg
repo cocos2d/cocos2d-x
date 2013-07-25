@@ -55,7 +55,7 @@ class CCTMXMapInfo : public CCObject
     void setLayerAttribs(int val);
     int getLayerAttribs();
     void setStoringCharacters(bool val);
-    bool getStoringCharacters();
+    bool isStoringCharacters() const;
     void setProperties(CCDictionary* pval);
     CCDictionary* getProperties();
     void setTileProperties(CCDictionary* tileProperties);
@@ -69,8 +69,8 @@ class CCTMXMapInfo : public CCObject
     void endElement(void *ctx, const char *name);
     void textHandler(void *ctx, const char *ch, int len);
     bool parseXMLFile(const char *xmlFilename);
-	bool parseXMLString(const char *xmlString);
+    bool parseXMLString(const char *xmlString);
 
-    static CCTMXMapInfo * formatWithTMXFile(const char *tmxFile);
-	static CCTMXMapInfo * formatWithXML(const char *tmxString, const char* resourcePath);
+    static CCTMXMapInfo*  create(const char *tmxFile);
+    static CCTMXMapInfo*  createWithXML(const char* tmxString, const char* resourcePath);
 };
