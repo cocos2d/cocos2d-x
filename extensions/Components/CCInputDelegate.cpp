@@ -31,7 +31,7 @@ InputDelegate::InputDelegate(void)
 , _accelerometerEnabled(false)
 , _keypadEnabled(false)
 , _touchPriority(0)
-, _touchMode(kTouchesAllAtOnce)
+, _touchMode(Layer::TOUCHES_ALL_AT_ONCE)
 {
 
 }
@@ -106,7 +106,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
         _touchEnabled = enabled;
         if (enabled)
         {
-            if( _touchMode == kTouchesAllAtOnce )
+            if( _touchMode == Layer::TOUCHES_ALL_AT_ONCE )
             {
                 Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
             }

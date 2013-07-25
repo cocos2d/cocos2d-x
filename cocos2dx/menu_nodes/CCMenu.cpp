@@ -122,7 +122,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
     if (Layer::init())
     {
         setTouchPriority(Menu::HANDLER_PRIORITY);
-        setTouchMode(kTouchesOneByOne);
+        setTouchMode(Layer::TOUCHES_ONE_BY_ONE);
         setTouchEnabled(true);
 
         _enabled = true;
