@@ -156,4 +156,104 @@ const int kCCTransitionOrientationDownOver = TransitionScene::ORIENTATION_DOWN_O
 const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
 
+void ccDrawInit()
+{
+    DrawPrimitives::init();
+}
+
+void ccDrawFree()
+{
+    DrawPrimitives::free();
+}
+
+void ccDrawPoint( const Point& point )
+{
+    DrawPrimitives::drawPoint(point);
+}
+
+void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
+{
+    DrawPrimitives::drawPoints(points, numberOfPoints);
+}
+
+void ccDrawLine( const Point& origin, const Point& destination )
+{
+    DrawPrimitives::drawLine(origin, destination);
+}
+
+void ccDrawRect( Point origin, Point destination )
+{
+    DrawPrimitives::drawRect(origin, destination);
+}
+
+void ccDrawSolidRect( Point origin, Point destination, Color4F color )
+{
+    DrawPrimitives::drawSolidRect(origin, destination, color);
+}
+
+void ccDrawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon )
+{
+    DrawPrimitives::drawPoly(vertices, numOfVertices, closePolygon);
+}
+
+void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+{
+    DrawPrimitives::drawSolidPoly(poli, numberOfPoints, color);
+}
+
+void ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+{
+    DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, scaleX, scaleY);
+}
+
+void ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+{
+    DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter);
+}
+
+void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+{
+    DrawPrimitives::drawSolidCircle(center, radius, angle, segments, scaleX, scaleY);
+}
+
+void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+{
+    DrawPrimitives::drawSolidCircle(center, radius, angle, segments);
+}
+
+void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+{
+    DrawPrimitives::drawQuadBezier(origin, control, destination, segments);
+}
+
+void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+{
+    DrawPrimitives::drawCubicBezier(origin, control1, control2, destination, segments);
+}
+
+void ccDrawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments )
+{
+    DrawPrimitives::drawCatmullRom(arrayOfControlPoints, segments);
+}
+
+void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
+{
+    DrawPrimitives::drawCardinalSpline(config, tension, segments);
+}
+
+void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+{
+    DrawPrimitives::drawColor4B(r, g, b, a);
+}
+
+void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
+{
+    DrawPrimitives::drawColor4F(r, g, b, a);
+}
+
+void ccPointSize( GLfloat pointSize )
+{
+    DrawPrimitives::setPointSize(pointSize);
+}
+
 NS_CC_END
