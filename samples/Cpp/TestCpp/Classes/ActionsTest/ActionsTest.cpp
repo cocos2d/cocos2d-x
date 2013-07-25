@@ -142,7 +142,7 @@ void ActionsDemo::onExit()
     BaseTest::onExit();
 }
 
-void ActionsDemo::restartCallback(Object* pSender)
+void ActionsDemo::restartCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( restartAction() );
@@ -150,7 +150,7 @@ void ActionsDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::nextCallback(Object* pSender)
+void ActionsDemo::nextCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( nextAction() );
@@ -158,7 +158,7 @@ void ActionsDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::backCallback(Object* pSender)
+void ActionsDemo::backCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( backAction() );
@@ -852,7 +852,7 @@ std::string ActionCallFuncND::subtitle()
     return "simulates CallFuncND with std::bind()";
 }
 
-void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* pSender, bool cleanup)
+void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* sender, bool cleanup)
 {
     _grossini->removeFromParentAndCleanup(cleanup);
 }
@@ -1013,11 +1013,11 @@ void ActionRepeatForever::onEnter()
     _grossini->runAction(action);
 }
 
-void ActionRepeatForever::repeatForever(Node* pSender)
+void ActionRepeatForever::repeatForever(Node* sender)
 {
     auto repeat = RepeatForever::create( RotateBy::create(1.0f, 360) );
 
-    pSender->runAction(repeat);
+    sender->runAction(repeat);
 }
 
 std::string ActionRepeatForever::subtitle()
@@ -1700,7 +1700,7 @@ void Issue1305::onEnter()
     scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
 }
 
-void Issue1305::log(Node* pSender)
+void Issue1305::log(Node* sender)
 {
     cocos2d::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
@@ -1885,9 +1885,9 @@ std::string Issue1327::subtitle()
     return "See console: You should see: 0, 45, 90, 135, 180";
 }
 
-void Issue1327::logSprRotation(Sprite* pSender)
+void Issue1327::logSprRotation(Sprite* sender)
 {
-    log("%f", pSender->getRotation());
+    log("%f", sender->getRotation());
 }
 
 //Issue1398

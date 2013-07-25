@@ -36,26 +36,26 @@ NS_CC_BEGIN
 
 static Texture2D* getDefaultTexture()
 {
-    Texture2D* pTexture = NULL;
+    Texture2D* texture = NULL;
     Image* pImage = NULL;
     do 
     {
         bool bRet = false;
         const char* key = "__firePngData";
-        pTexture = TextureCache::getInstance()->textureForKey(key);
-        CC_BREAK_IF(pTexture != NULL);
+        texture = TextureCache::getInstance()->textureForKey(key);
+        CC_BREAK_IF(texture != NULL);
 
         pImage = new Image();
         CC_BREAK_IF(NULL == pImage);
         bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), Image::Format::PNG);
         CC_BREAK_IF(!bRet);
 
-        pTexture = TextureCache::getInstance()->addUIImage(pImage, key);
+        texture = TextureCache::getInstance()->addUIImage(pImage, key);
     } while (0);
 
     CC_SAFE_RELEASE(pImage);
 
-    return pTexture;
+    return texture;
 }
 
 ParticleFire* ParticleFire::create()
@@ -147,10 +147,10 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
         
         // additive
@@ -250,10 +250,10 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         _startSizeVar = 2.0f;
         _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
         // additive
         this->setBlendAdditive(false);
@@ -356,10 +356,10 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         return true;
@@ -463,10 +463,10 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -572,10 +572,10 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -680,10 +680,10 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -789,10 +789,10 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.5f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -897,10 +897,10 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.5f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -1002,10 +1002,10 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -1111,10 +1111,10 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive
@@ -1219,10 +1219,10 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         _endColorVar.b = 0.0f;
         _endColorVar.a = 0.0f;
 
-        Texture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        Texture2D* texture = getDefaultTexture();
+        if (texture != NULL)
         {
-            setTexture(pTexture);
+            setTexture(texture);
         }
 
         // additive

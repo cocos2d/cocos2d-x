@@ -82,7 +82,7 @@ std::string ActionManagerTest::title()
     return "No title";
 }
 
-void ActionManagerTest::restartCallback(Object* pSender)
+void ActionManagerTest::restartCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild(restartActionManagerAction()); 
@@ -91,7 +91,7 @@ void ActionManagerTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void ActionManagerTest::nextCallback(Object* pSender)
+void ActionManagerTest::nextCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild( nextActionManagerAction() );
@@ -99,7 +99,7 @@ void ActionManagerTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void ActionManagerTest::backCallback(Object* pSender)
+void ActionManagerTest::backCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild( backActionManagerAction() );

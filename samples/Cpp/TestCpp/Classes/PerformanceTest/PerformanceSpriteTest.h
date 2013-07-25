@@ -37,9 +37,9 @@ public:
     void initWithSubTest(int nSubTest, int nNodes);
     void updateNodes();
 
-    void testNCallback(Object* pSender);
-    void onIncrease(Object* pSender);
-    void onDecrease(Object* pSender);
+    void testNCallback(Object* sender);
+    void onIncrease(Object* sender);
+    void onDecrease(Object* sender);
 
     virtual void doTest(Sprite* sprite) = 0;
 

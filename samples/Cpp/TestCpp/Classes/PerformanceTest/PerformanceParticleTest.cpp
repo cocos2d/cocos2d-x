@@ -255,12 +255,12 @@ void ParticleMainScene::createParticleSystem()
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(Object* pSender)
+void ParticleMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((Node*)pSender)->getTag();
+    subtestNumber = static_cast<Node*>(sender)->getTag();
 
-    ParticleMenuLayer* menu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
-    menu->restartCallback(pSender);
+    auto menu = static_cast<ParticleMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void ParticleMainScene::updateQuantityLabel()

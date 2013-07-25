@@ -264,11 +264,11 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        Texture2D *pTexture = TextureCache::getInstance()->addImage(texturePath.c_str());
+        Texture2D *texture = TextureCache::getInstance()->addImage(texturePath.c_str());
 
-        if (pTexture)
+        if (texture)
         {
-            addSpriteFramesWithDictionary(dict, pTexture);
+            addSpriteFramesWithDictionary(dict, texture);
             _loadedFileNames->insert(pszPlist);
         }
         else

@@ -1452,7 +1452,7 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TileDemo::restartCallback(Object* pSender)
+void TileDemo::restartCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild(restartTileMapAction()); 
@@ -1461,7 +1461,7 @@ void TileDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void TileDemo::nextCallback(Object* pSender)
+void TileDemo::nextCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( nextTileMapAction() );
@@ -1469,7 +1469,7 @@ void TileDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void TileDemo::backCallback(Object* pSender)
+void TileDemo::backCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( backTileMapAction() );
@@ -1477,9 +1477,9 @@ void TileDemo::backCallback(Object* pSender)
     s->release();
 } 
 
-void TileDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void TileDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     
     Point diff = touch->getDelta();
     Node *node = getChildByTag(kTagTileMap);

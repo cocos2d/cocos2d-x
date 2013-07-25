@@ -354,11 +354,11 @@ SpriteMainScene::~SpriteMainScene()
     }
 }
 
-void SpriteMainScene::testNCallback(Object* pSender)
+void SpriteMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((MenuItemFont*) pSender)->getTag();
-    SpriteMenuLayer* menu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
-    menu->restartCallback(pSender);
+    subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
@@ -374,7 +374,7 @@ void SpriteMainScene::updateNodes()
     }
 }
 
-void SpriteMainScene::onIncrease(Object* pSender)
+void SpriteMainScene::onIncrease(Object* sender)
 {
     if( quantityNodes >= kMaxNodes)
         return;
@@ -389,7 +389,7 @@ void SpriteMainScene::onIncrease(Object* pSender)
     updateNodes();
 }
 
-void SpriteMainScene::onDecrease(Object* pSender)
+void SpriteMainScene::onDecrease(Object* sender)
 {
     if( quantityNodes <= 0 )
         return;

@@ -64,17 +64,17 @@ std::string BaseTest::subtitle()
 	return "";
 }
 
-void BaseTest::restartCallback(Object* pSender)
+void BaseTest::restartCallback(Object* sender)
 {
 	log("override restart!");
 }
 
-void BaseTest::nextCallback(Object* pSender)
+void BaseTest::nextCallback(Object* sender)
 {
 	log("override next!");
 }
 
-void BaseTest::backCallback(Object* pSender)
+void BaseTest::backCallback(Object* sender)
 {
 	log("override back!");
 }

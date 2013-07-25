@@ -56,73 +56,73 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-Sprite* Sprite::createWithTexture(Texture2D *pTexture)
+Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
-    Sprite *pobSprite = new Sprite();
-    if (pobSprite && pobSprite->initWithTexture(pTexture))
+    Sprite *sprite = new Sprite();
+    if (sprite && sprite->initWithTexture(texture))
     {
-        pobSprite->autorelease();
-        return pobSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pobSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
-Sprite* Sprite::createWithTexture(Texture2D *pTexture, const Rect& rect)
+Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect)
 {
-    Sprite *pobSprite = new Sprite();
-    if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
+    Sprite *sprite = new Sprite();
+    if (sprite && sprite->initWithTexture(texture, rect))
     {
-        pobSprite->autorelease();
-        return pobSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pobSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
-Sprite* Sprite::create(const char *pszFileName)
+Sprite* Sprite::create(const char *filename)
 {
-    Sprite *pobSprite = new Sprite();
-    if (pobSprite && pobSprite->initWithFile(pszFileName))
+    Sprite *sprite = new Sprite();
+    if (sprite && sprite->initWithFile(filename))
     {
-        pobSprite->autorelease();
-        return pobSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pobSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
-Sprite* Sprite::create(const char *pszFileName, const Rect& rect)
+Sprite* Sprite::create(const char *filename, const Rect& rect)
 {
-    Sprite *pobSprite = new Sprite();
-    if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
+    Sprite *sprite = new Sprite();
+    if (sprite && sprite->initWithFile(filename, rect))
     {
-        pobSprite->autorelease();
-        return pobSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pobSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    Sprite *pobSprite = new Sprite();
-    if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
+    Sprite *sprite = new Sprite();
+    if (pSpriteFrame && sprite && sprite->initWithSpriteFrame(pSpriteFrame))
     {
-        pobSprite->autorelease();
-        return pobSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pobSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
-Sprite* Sprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Sprite* Sprite::createWithSpriteFrameName(const char *spriteFrameName)
 {
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
-    sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
+    sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName);
     CCASSERT(pFrame != NULL, msg);
 #endif
     
@@ -147,7 +147,7 @@ bool Sprite::init(void)
 }
 
 // designated initializer
-bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated)
+bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
     if (NodeRGBA::init())
     {
@@ -185,7 +185,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
         // update texture (calls updateBlendFunc)
-        setTexture(pTexture);
+        setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
         
         // by default use "Self Render".
@@ -200,31 +200,31 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
     }
 }
 
-bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect)
+bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 {
-    return initWithTexture(pTexture, rect, false);
+    return initWithTexture(texture, rect, false);
 }
 
-bool Sprite::initWithTexture(Texture2D *pTexture)
+bool Sprite::initWithTexture(Texture2D *texture)
 {
-    CCASSERT(pTexture != NULL, "Invalid texture for sprite");
+    CCASSERT(texture != NULL, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
-    rect.size = pTexture->getContentSize();
+    rect.size = texture->getContentSize();
     
-    return initWithTexture(pTexture, rect);
+    return initWithTexture(texture, rect);
 }
 
-bool Sprite::initWithFile(const char *pszFilename)
+bool Sprite::initWithFile(const char *filename)
 {
-    CCASSERT(pszFilename != NULL, "Invalid filename for sprite");
+    CCASSERT(filename != NULL, "Invalid filename for sprite");
 
-    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
-    if (pTexture)
+    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    if (texture)
     {
         Rect rect = Rect::ZERO;
-        rect.size = pTexture->getContentSize();
-        return initWithTexture(pTexture, rect);
+        rect.size = texture->getContentSize();
+        return initWithTexture(texture, rect);
     }
 
     // don't release here.
@@ -233,14 +233,14 @@ bool Sprite::initWithFile(const char *pszFilename)
     return false;
 }
 
-bool Sprite::initWithFile(const char *pszFilename, const Rect& rect)
+bool Sprite::initWithFile(const char *filename, const Rect& rect)
 {
-    CCASSERT(pszFilename != NULL, "");
+    CCASSERT(filename != NULL, "");
 
-    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
-    if (pTexture)
+    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
+    if (texture)
     {
-        return initWithTexture(pTexture, rect);
+        return initWithTexture(texture, rect);
     }
 
     // don't release here.
@@ -259,11 +259,11 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
     return bRet;
 }
 
-bool Sprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool Sprite::initWithSpriteFrameName(const char *spriteFrameName)
 {
-    CCASSERT(pszSpriteFrameName != NULL, "");
+    CCASSERT(spriteFrameName != NULL, "");
 
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(pFrame);
 }
 
@@ -284,9 +284,9 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
     CCASSERT(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *pTexture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
+    Texture2D *texture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
 
-    const Size& size = pTexture->getContentSize();
+    const Size& size = texture->getContentSize();
     Rect rect = Rect(0 ,0, size.width, size.height);
 
     return initWithTexture(texture, rect);
@@ -382,14 +382,14 @@ void Sprite::setTextureCoords(Rect rect)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
         left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
+        right   = left+(rect.size.height*2-2)/(2*atlasWidth);
+        top     = (2*rect.origin.y+1)/(2*atlasHeight);
+        bottom  = top+(rect.size.width*2-2)/(2*atlasHeight);
 #else
         left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
+        right   = (rect.origin.x+rect.size.height) / atlasWidth;
+        top     = rect.origin.y/atlasHeight;
+        bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (_flipX)
@@ -1017,9 +1017,9 @@ SpriteBatchNode* Sprite::getBatchNode(void)
     return _batchNode;
 }
 
-void Sprite::setBatchNode(SpriteBatchNode *pobSpriteBatchNode)
+void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 {
-    _batchNode = pobSpriteBatchNode; // weak reference
+    _batchNode = spriteBatchNode; // weak reference
 
     // self render
     if( ! _batchNode ) {

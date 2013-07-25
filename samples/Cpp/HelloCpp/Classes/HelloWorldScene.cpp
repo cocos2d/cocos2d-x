@@ -77,7 +77,7 @@ bool HelloWorld::init()
 }
 
 
-void HelloWorld::menuCloseCallback(Object* pSender)
+void HelloWorld::menuCloseCallback(Object* sender)
 {
     Director::getInstance()->end();
 

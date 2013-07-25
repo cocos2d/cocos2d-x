@@ -129,13 +129,13 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(Object * pSender)
+void TestController::menuCallback(Object * sender)
 {
 
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
-    MenuItem* menuItem = (MenuItem *)(pSender);
+    MenuItem* menuItem = static_cast<MenuItem *>(sender);
     int idx = menuItem->getZOrder() - 10000;
 
     // create the test scene and run it
@@ -148,7 +148,7 @@ void TestController::menuCallback(Object * pSender)
     }
 }
 
-void TestController::closeCallback(Object * pSender)
+void TestController::closeCallback(Object * sender)
 {
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -156,16 +156,16 @@ void TestController::closeCallback(Object * pSender)
 #endif
 }
 
-void TestController::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void TestController::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
-void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void TestController::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

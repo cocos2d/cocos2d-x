@@ -529,9 +529,9 @@ void ScrollViewDemo::setup()
     this->setTouchEnabled(true);
 }
 
-void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
 {
-	Touch *touch = (Touch*)pTouches->anyObject();
+	Touch *touch = static_cast<Touch*>(touches->anyObject());
     Node *clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     Rect rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
@@ -539,10 +539,10 @@ void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
     if (!_scrolling) return;
-	Touch *touch = (Touch*)pTouches->anyObject();
+	Touch *touch = static_cast<Touch*>(touches->anyObject());
     Node *clipper = this->getChildByTag(kTagClipperNode);
     Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = point - _lastPoint;
@@ -551,7 +551,7 @@ void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesEnded(Set  *touches, Event  *event)
 {
     if (!_scrolling) return;
     _scrolling = false;
