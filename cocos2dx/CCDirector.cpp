@@ -963,7 +963,7 @@ void Director::setScheduler(Scheduler* pScheduler)
     }
 }
 
-Scheduler* Director::getScheduler()
+Scheduler* Director::getScheduler() const
 {
     return _scheduler;
 }
@@ -978,7 +978,7 @@ void Director::setActionManager(ActionManager* pActionManager)
     }    
 }
 
-ActionManager* Director::getActionManager()
+ActionManager* Director::getActionManager() const
 {
     return _actionManager;
 }
@@ -993,7 +993,7 @@ void Director::setTouchDispatcher(TouchDispatcher* pTouchDispatcher)
     }    
 }
 
-TouchDispatcher* Director::getTouchDispatcher()
+TouchDispatcher* Director::getTouchDispatcher() const
 {
     return _touchDispatcher;
 }
@@ -1005,7 +1005,7 @@ void Director::setKeyboardDispatcher(KeyboardDispatcher* pKeyboardDispatcher)
     _keyboardDispatcher = pKeyboardDispatcher;
 }
 
-KeyboardDispatcher* Director::getKeyboardDispatcher()
+KeyboardDispatcher* Director::getKeyboardDispatcher() const
 {
     return _keyboardDispatcher;
 }
@@ -1017,7 +1017,7 @@ void Director::setKeypadDispatcher(KeypadDispatcher* pKeypadDispatcher)
     _keypadDispatcher = pKeypadDispatcher;
 }
 
-KeypadDispatcher* Director::getKeypadDispatcher()
+KeypadDispatcher* Director::getKeypadDispatcher() const
 {
     return _keypadDispatcher;
 }
@@ -1031,7 +1031,7 @@ void Director::setAccelerometer(Accelerometer* pAccelerometer)
     }
 }
 
-Accelerometer* Director::getAccelerometer()
+Accelerometer* Director::getAccelerometer() const
 {
     return _accelerometer;
 }

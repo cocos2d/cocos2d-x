@@ -74,7 +74,7 @@ void CocosPepperInstance::DidChangeView(const pp::View& view)
 
 bool CocosPepperInstance::Init(uint32_t argc, const char* argn[], const char* argv[])
 {
-    CCLog("CocosPepperInstance::Init: %x %p", pp_instance(),
+    log("CocosPepperInstance::Init: %x %p", pp_instance(),
           pp::Module::Get()->get_browser_interface());
     nacl_io_init_ppapi(pp_instance(),
                        pp::Module::Get()->get_browser_interface());

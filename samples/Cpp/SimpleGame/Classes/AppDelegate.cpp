@@ -14,9 +14,9 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    Director *director = Director::getInstance();
     
-    pDirector->setOpenGLView(EGLView::getInstance());
+    director->setOpenGLView(EGLView::getInstance());
     
     Size screenSize = EGLView::getInstance()->getFrameSize();
     Size designSize = Size(480, 320);
@@ -26,12 +26,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {
         searchPaths.push_back("hd");
         searchPaths.push_back("sd");
-        pDirector->setContentScaleFactor(640.0f/designSize.height);
+        director->setContentScaleFactor(640.0f/designSize.height);
     }
     else
     {
         searchPaths.push_back("sd");
-        pDirector->setContentScaleFactor(320.0f/designSize.height);
+        director->setContentScaleFactor(320.0f/designSize.height);
     }
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
@@ -39,16 +39,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    Scene *pScene = HelloWorld::scene();
+    Scene *scene = HelloWorld::scene();
 
     // run
-    pDirector->runWithScene(pScene);
+    director->runWithScene(scene);
 
     return true;
 }

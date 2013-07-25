@@ -449,9 +449,9 @@ public:
     /// @{
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture) override;
-    virtual Texture2D* getTexture(void) override;
+    virtual Texture2D* getTexture() const override;
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
-    inline const BlendFunc& getBlendFunc(void) const override { return _blendFunc; }
+    inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     /// @{

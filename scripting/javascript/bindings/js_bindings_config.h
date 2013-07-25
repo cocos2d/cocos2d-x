@@ -44,8 +44,8 @@
 #else
 #define JSB_PRECONDITION( condition, ...) do {							\
 	if( ! (condition) ) {														\
-        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
-        cocos2d::CCLog(__VA_ARGS__);                                        \
+        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        cocos2d::log(__VA_ARGS__);                                        \
 		JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();	\
 		if( ! JS_IsExceptionPending( globalContext ) ) {						\
 			JS_ReportError( globalContext, __VA_ARGS__ );							\
@@ -55,8 +55,8 @@
 } while(0)
 #define JSB_PRECONDITION2( condition, context, ret_value, ...) do {             \
     if( ! (condition) ) {														\
-        cocos2d::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
-        cocos2d::CCLog(__VA_ARGS__);                                        \
+        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );			\
+        cocos2d::log(__VA_ARGS__);                                        \
         if( ! JS_IsExceptionPending( context ) ) {							\
             JS_ReportError( context, __VA_ARGS__ );								\
         }																		\

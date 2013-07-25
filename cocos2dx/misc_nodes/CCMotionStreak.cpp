@@ -153,7 +153,7 @@ void MotionStreak::tintWithColor(const Color3B& colors)
     }
 }
 
-Texture2D* MotionStreak::getTexture(void)
+Texture2D* MotionStreak::getTexture(void) const
 {
     return _texture;
 }

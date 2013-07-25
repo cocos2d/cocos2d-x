@@ -247,17 +247,13 @@ NotificationObserver::NotificationObserver(Object *target,
     _selector = selector;
     _object = obj;
     
-    _name = new char[strlen(name)+1];
-    memset(_name,0,strlen(name)+1);
-    
-    string orig (name);
-    orig.copy(_name,strlen(name),0);
+    _name = name;
     _handler = 0;
 }
 
 NotificationObserver::~NotificationObserver()
 {
-    CC_SAFE_DELETE_ARRAY(_name);
+
 }
 
 void NotificationObserver::performSelector(Object *obj)
@@ -282,17 +278,17 @@ SEL_CallFuncO NotificationObserver::getSelector() const
     return _selector;
 }
 
-char *NotificationObserver::getName() const
+const char* NotificationObserver::getName() const
 {
-    return _name;
+    return _name.c_str();
 }
 
-Object *NotificationObserver::getObject() const
+Object* NotificationObserver::getObject() const
 {
     return _object;
 }
 
-int NotificationObserver::getHandler()
+int NotificationObserver::getHandler() const
 {
     return _handler;
 }

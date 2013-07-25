@@ -414,6 +414,7 @@ Developers:
         Added some guards to prevent Eclipse to compile twice the same class.
         Linux Eclipse projects updates
         Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
+        Use of a single emscripten HTML template file.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -552,6 +553,12 @@ Retired Core Developers:
         
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        
+    bmanGH
+        Use gl caching functions in TexturePVR::createGLTexture()
+        
+    metadao
+        make create_project.py more pythonic and fix some typoes
 
 
 Cocos2d-x can not grow so fast without the active community.

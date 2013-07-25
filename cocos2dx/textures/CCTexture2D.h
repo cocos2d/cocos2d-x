@@ -238,28 +238,60 @@ public:
     bool hasPremultipliedAlpha() const;
     bool hasMipmaps() const;
 
+    /** Gets the pixel format of the texture */
+    Texture2DPixelFormat getPixelFormat() const;
+    
+    /** Gets the width of the texture in pixels */
+    unsigned int getPixelsWide() const;
+    
+    /** Gets the height of the texture in pixels */
+    unsigned int getPixelsHigh() const;
+    
+    /** Gets the texture name */
+    GLuint getName() const;
+    
+    /** Gets max S */
+    GLfloat getMaxS() const;
+    /** Sets max S */
+    void setMaxS(GLfloat maxS);
+    
+    /** Gets max T */
+    GLfloat getMaxT() const;
+    /** Sets max T */
+    void setMaxT(GLfloat maxT);
+    
+    Size getContentSize() const;
+    
+    void setShaderProgram(GLProgram* program);
+    GLProgram* getShaderProgram() const;
+    
 private:
     bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
     bool _PVRHaveAlphaPremultiplied;
 
+protected:
     /** pixel format of the texture */
-    CC_PROPERTY_READONLY(Texture2DPixelFormat, _pixelFormat, PixelFormat)
+    Texture2DPixelFormat _pixelFormat;
+
     /** width in pixels */
-    CC_PROPERTY_READONLY(unsigned int, _pixelsWide, PixelsWide)
+    unsigned int _pixelsWide;
+
     /** height in pixels */
-    CC_PROPERTY_READONLY(unsigned int, _pixelsHigh, PixelsHigh)
+    unsigned int _pixelsHigh;
 
     /** texture name */
-    CC_PROPERTY_READONLY(GLuint, _name, Name)
+    GLuint _name;
 
     /** texture max S */
-    CC_PROPERTY(GLfloat, _maxS, MaxS)
+    GLfloat _maxS;
+    
     /** texture max T */
-    CC_PROPERTY(GLfloat, _maxT, MaxT)
+    GLfloat _maxT;
+
     /** content size */
-    CC_PROPERTY_READONLY(Size, _contentSize, ContentSize)
+    Size _contentSize;
 
     /** whether or not the texture has their Alpha premultiplied */
     bool _hasPremultipliedAlpha;
@@ -267,7 +299,7 @@ private:
     bool _hasMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
-    CC_PROPERTY(GLProgram*, _shaderProgram, ShaderProgram);
+    GLProgram* _shaderProgram;
 };
 
 // end of textures group
