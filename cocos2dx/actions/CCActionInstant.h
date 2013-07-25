@@ -346,11 +346,12 @@ protected:
  @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
  * ND means: Node and Data. Data is void *, so it could be anything.
  */
-class CC_DLL CC_DEPRECATED_ATTRIBUTE CallFuncND : public CallFuncN
+
+class CC_DLL CC_DEPRECATED_ATTRIBUTE CCCallFuncND : public CallFunc
 {
 public:
     /** creates the action with the callback and the data to pass as an argument */
-    static CallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    static CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
     
     virtual long getClassTypeInfo() {
         static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
@@ -363,7 +364,7 @@ public:
     //
     // Overrides
     //
-	virtual CallFuncND* clone() const override;
+	virtual CCCallFuncND* clone() const override;
     virtual void execute() override;
     
 protected:
@@ -379,17 +380,17 @@ protected:
  @since v0.99.5
  */
 
-class CC_DLL CC_DEPRECATED_ATTRIBUTE CallFuncO : public CallFunc, public TypeInfo
+class CC_DLL CC_DEPRECATED_ATTRIBUTE CCCallFuncO : public CallFunc, public TypeInfo
 {
 public:
     /** creates the action with the callback
      
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
-    static CallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    static CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
     
-    CallFuncO();
-    virtual ~CallFuncO();
+    CCCallFuncO();
+    virtual ~CCCallFuncO();
     
     /** initializes the action with the callback
      
@@ -405,23 +406,11 @@ public:
     //
     // Overrides
     //
-	virtual CallFuncO* clone() const override;
+	virtual CCCallFuncO* clone() const override;
     virtual void execute() override;
     
-    inline Object* getObject()
-    {
-        return _object;
-    }
-    
-    inline void setObject(Object* obj)
-    {
-        if (obj != _object)
-        {
-            CC_SAFE_RELEASE(_object);
-            _object = obj;
-            CC_SAFE_RETAIN(_object);
-        }
-    }
+    Object* getObject() const;
+    void setObject(Object* obj);
     
 protected:
     /** object to be passed as argument */
