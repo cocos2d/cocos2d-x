@@ -46,23 +46,6 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @typedef ccDirectorProjection
- Possible OpenGL projections used by director
- */
-typedef enum {
-    /// sets a 2D projection (orthogonal projection)
-    kDirectorProjection2D,
-    
-    /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-    kDirectorProjection3D,
-    
-    /// it calls "updateProjection" on the projection delegate.
-    kDirectorProjectionCustom,
-    
-    /// Default projection is 3D projection
-    kDirectorProjectionDefault = kDirectorProjection3D,
-} ccDirectorProjection;
-
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
@@ -99,6 +82,24 @@ and when to execute the Scenes.
 class CC_DLL Director : public Object, public TypeInfo
 {
 public:
+    /** @typedef ccDirectorProjection
+     Possible OpenGL projections used by director
+     */
+    enum Projection
+    {
+        /// sets a 2D projection (orthogonal projection)
+        PROJECTION_2D,
+        
+        /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+        PROJECTION_3D,
+        
+        /// it calls "updateProjection" on the projection delegate.
+        PROJECTION_CUSTOM,
+        
+        /// Default projection is 3D projection
+        PROJECTION_DEFAULT = PROJECTION_3D,
+    };
+    
     /** returns a shared instance of the director */
     static Director* getInstance();
 
@@ -147,8 +148,8 @@ public:
     /** Sets an OpenGL projection
      @since v0.8.2
      */
-    inline ccDirectorProjection getProjection(void) { return _projection; }
-    void setProjection(ccDirectorProjection kProjection);
+    inline Projection getProjection(void) { return _projection; }
+    void setProjection(Projection kProjection);
     
     /** Sets the glViewport*/
     void setViewport();
@@ -477,7 +478,7 @@ protected:
     bool _nextDeltaTimeZero;
     
     /* projection used */
-    ccDirectorProjection _projection;
+    Projection _projection;
 
     /* window size in points */
     Size    _winSizeInPoints;

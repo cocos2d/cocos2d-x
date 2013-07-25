@@ -103,11 +103,11 @@ public:
     //char * description();
 
     /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
-    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, TextAlignment alignment, const char *fontName, float fontSize);
+    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::TextAlignment alignment, const char *fontName, float fontSize);
     /** creates a LabelTTF from a fontname and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
-    bool initWithPlaceHolder(const char *placeholder, const Size& dimensions, TextAlignment alignment, const char *fontName, float fontSize);
+    bool initWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::TextAlignment alignment, const char *fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name and font size */
     bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 

@@ -51,7 +51,7 @@ RenderTexture::RenderTexture()
 , _texture(0)
 , _textureCopy(0)
 , _UITextureImage(NULL)
-, _pixelFormat(kTexture2DPixelFormat_RGBA8888)
+, _pixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
@@ -102,11 +102,11 @@ void RenderTexture::listenToBackground(cocos2d::Object *obj)
     if (_UITextureImage)
     {
         const Size& s = _texture->getContentSizeInPixels();
-        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), Texture2D::PIXEL_FORMAT_RGBA8888, s);
         
         if ( _textureCopy )
         {
-            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), kTexture2DPixelFormat_RGBA8888, s);
+            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), Texture2D::PIXEL_FORMAT_RGBA8888, s);
         }
     }
     else
@@ -140,7 +140,7 @@ void RenderTexture::listenToForeground(cocos2d::Object *obj)
 #endif
 }
 
-RenderTexture * RenderTexture::create(int w, int h, Texture2DPixelFormat eFormat)
+RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
 {
     RenderTexture *pRet = new RenderTexture();
 
@@ -153,7 +153,7 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2DPixelFormat eFormat
     return NULL;
 }
 
-RenderTexture * RenderTexture::create(int w ,int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
     RenderTexture *pRet = new RenderTexture();
 
@@ -170,7 +170,7 @@ RenderTexture * RenderTexture::create(int w, int h)
 {
     RenderTexture *pRet = new RenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, kTexture2DPixelFormat_RGBA8888, 0))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, Texture2D::PIXEL_FORMAT_RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -179,14 +179,14 @@ RenderTexture * RenderTexture::create(int w, int h)
     return NULL;
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
 {
     return initWithWidthAndHeight(w, h, eFormat, 0);
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCASSERT(eFormat != kTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCASSERT(eFormat != Texture2D::PIXEL_FORMAT_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     void *data = NULL;
@@ -221,7 +221,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
         _texture = new Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+            _texture->initWithData(data, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
         }
         else
         {
@@ -235,7 +235,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eF
             _textureCopy = new Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, (Texture2DPixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+                _textureCopy->initWithData(data, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
             }
             else
             {
@@ -550,16 +550,16 @@ bool RenderTexture::saveToFile(const char *szFilePath)
     Image *pImage = newImage(true);
     if (pImage)
     {
-        bRet = pImage->saveToFile(szFilePath, kImageFormatJPEG);
+        bRet = pImage->saveToFile(szFilePath, Image::FORMAT_JPG);
     }
 
     CC_SAFE_DELETE(pImage);
     return bRet;
 }
-bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
+bool RenderTexture::saveToFile(const char *fileName, Image::Format format)
 {
     bool bRet = false;
-    CCASSERT(format == kImageFormatJPEG || format == kImageFormatPNG,
+    CCASSERT(format == Image::FORMAT_JPG || format == Image::FORMAT_PNG,
              "the image can only be saved as JPG or PNG format");
 
     Image *pImage = newImage(true);
@@ -578,7 +578,7 @@ bool RenderTexture::saveToFile(const char *fileName, tImageFormat format)
 /* get buffer as Image */
 Image* RenderTexture::newImage(bool flipImage)
 {
-    CCASSERT(_pixelFormat == kTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
+    CCASSERT(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA8888, "only RGBA8888 can be saved as image");
 
     if (NULL == _texture)
     {
@@ -624,11 +624,11 @@ Image* RenderTexture::newImage(bool flipImage)
                        nSavedBufferWidth * 4);
             }
 
-            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+            pImage->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::FORMAT_RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         else
         {
-            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::kFmtRawData, nSavedBufferWidth, nSavedBufferHeight, 8);
+            pImage->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::FORMAT_RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         
     } while (0);

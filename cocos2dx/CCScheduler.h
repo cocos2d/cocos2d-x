@@ -37,12 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-// Priority level reserved for system services.
-#define kPrioritySystem INT_MIN
-
-// Minimum priority level for user scheduling.
-#define kPriorityNonSystemMin (kPrioritySystem+1)
-
 class Set;
 //
 // Timer
@@ -121,6 +115,12 @@ The 'custom selectors' should be avoided when possible. It is faster, and consum
 class CC_DLL Scheduler : public Object
 {
 public:
+    // Priority level reserved for system services.
+    static const int PRIORITY_SYSTEM;
+    
+    // Minimum priority level for user scheduling.
+    static const int PRIORITY_NON_SYSTEM_MIN;
+    
     Scheduler();
     ~Scheduler(void);
 

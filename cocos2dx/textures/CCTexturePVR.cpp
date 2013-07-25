@@ -46,35 +46,35 @@ NS_CC_BEGIN
 static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 	
 	// 0: BGRA_8888
-	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true, kTexture2DPixelFormat_RGBA8888},
+	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true, Texture2D::PIXEL_FORMAT_RGBA8888},
 	// 1: RGBA_8888
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true, kTexture2DPixelFormat_RGBA8888},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true, Texture2D::PIXEL_FORMAT_RGBA8888},
 	// 2: RGBA_4444
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true, kTexture2DPixelFormat_RGBA4444},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true, Texture2D::PIXEL_FORMAT_RGBA4444},
 	// 3: RGBA_5551
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true, kTexture2DPixelFormat_RGB5A1},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true, Texture2D::PIXEL_FORMAT_RGB5A1},
 	// 4: RGB_565
-	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false, kTexture2DPixelFormat_RGB565},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false, Texture2D::PIXEL_FORMAT_RGB565},
 	// 5: RGB_888
-	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false, kTexture2DPixelFormat_RGB888},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false, Texture2D::PIXEL_FORMAT_RGB888},
 	// 6: A_8
-	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false, kTexture2DPixelFormat_A8},
+	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false, Texture2D::PIXEL_FORMAT_A8},
 	// 7: L_8
-	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false, kTexture2DPixelFormat_I8},
+	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false, Texture2D::PIXEL_FORMAT_I8},
 	// 8: LA_88
-	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true, kTexture2DPixelFormat_AI88},
+	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true, Texture2D::PIXEL_FORMAT_AI88},
 
 // Not all platforms include GLES/gl2ext.h so these PVRTC enums are not always
 // available.
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 	// 9: PVRTC 2BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, kTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false, Texture2D::PIXEL_FORMAT_PRVTC2},
 	// 10: PVRTC 2BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true, kTexture2DPixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true, Texture2D::PIXEL_FORMAT_PRVTC2},
 	// 11: PVRTC 4BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, kTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false, Texture2D::PIXEL_FORMAT_PRVTC4},
 	// 12: PVRTC 4BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, kTexture2DPixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true, Texture2D::PIXEL_FORMAT_PRVTC4},
 #endif
 };
 
@@ -235,7 +235,7 @@ TexturePVR::TexturePVR()
 , _hasPremultipliedAlpha(false)
 , _forcePremultipliedAlpha(false)
 , _retainName(false)
-, _format(kTexture2DPixelFormat_Default)
+, _format(Texture2D::PIXEL_FORMAT_DEFAULT)
 , _pixelFormatInfo(NULL)
 {
 }

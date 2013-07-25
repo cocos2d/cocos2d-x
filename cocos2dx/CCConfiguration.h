@@ -35,15 +35,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum _ccConfigurationType {
-    ConfigurationError,
-    ConfigurationString,
-    ConfigurationInt,
-    ConfigurationDouble,
-    ConfigurationBoolean
-} ccConfigurationType;
-
-
 /**
  * @addtogroup global
  * @{
@@ -55,6 +46,15 @@ typedef enum _ccConfigurationType {
 class CC_DLL Configuration : public Object
 {
 public:
+    enum Type
+    {
+        ERROR,
+        STRING,
+        INT,
+        DOUBLE,
+        BOOLEAN,
+    };
+    
     /** returns a shared instance of Configuration */
     static Configuration *getInstance();
 

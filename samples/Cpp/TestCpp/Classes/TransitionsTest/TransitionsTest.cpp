@@ -18,7 +18,7 @@ class FlipXLeftOver : public TransitionFlipX
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipX::create(t, s, kTransitionOrientationLeftOver);
+        return TransitionFlipX::create(t, s, TransitionScene::ORIENTATION_LEFT_OVER);
     }
 };
 
@@ -27,7 +27,7 @@ class FlipXRightOver : public TransitionFlipX
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipX::create(t, s, kTransitionOrientationRightOver);
+        return TransitionFlipX::create(t, s, TransitionScene::ORIENTATION_RIGHT_OVER);
     }
 };
 
@@ -36,7 +36,7 @@ class FlipYUpOver : public TransitionFlipY
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipY::create(t, s, kTransitionOrientationUpOver); 
+        return TransitionFlipY::create(t, s, TransitionScene::ORIENTATION_UP_OVER); 
     }
 };
 
@@ -45,7 +45,7 @@ class FlipYDownOver : public TransitionFlipY
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipY::create(t, s, kTransitionOrientationDownOver); 
+        return TransitionFlipY::create(t, s, TransitionScene::ORIENTATION_DOWN_OVER); 
     }
 };
 
@@ -54,7 +54,7 @@ class FlipAngularLeftOver : public TransitionFlipAngular
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipAngular::create(t, s, kTransitionOrientationLeftOver); 
+        return TransitionFlipAngular::create(t, s, TransitionScene::ORIENTATION_LEFT_OVER); 
     }
 };
 
@@ -63,7 +63,7 @@ class FlipAngularRightOver : public TransitionFlipAngular
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionFlipAngular::create(t, s, kTransitionOrientationRightOver);
+        return TransitionFlipAngular::create(t, s, TransitionScene::ORIENTATION_RIGHT_OVER);
     }
 };
 
@@ -72,7 +72,7 @@ class ZoomFlipXLeftOver : public TransitionZoomFlipX
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipX::create(t, s, kTransitionOrientationLeftOver); 
+        return TransitionZoomFlipX::create(t, s, TransitionScene::ORIENTATION_LEFT_OVER); 
     }
 };
 
@@ -81,7 +81,7 @@ class ZoomFlipXRightOver : public TransitionZoomFlipX
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipX::create(t, s, kTransitionOrientationRightOver);
+        return TransitionZoomFlipX::create(t, s, TransitionScene::ORIENTATION_RIGHT_OVER);
     }
 };
 
@@ -90,7 +90,7 @@ class ZoomFlipYUpOver : public TransitionZoomFlipY
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipY::create(t, s, kTransitionOrientationUpOver); 
+        return TransitionZoomFlipY::create(t, s, TransitionScene::ORIENTATION_UP_OVER); 
 
     }
 };
@@ -100,7 +100,7 @@ class ZoomFlipYDownOver : public TransitionZoomFlipY
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipY::create(t, s, kTransitionOrientationDownOver); 
+        return TransitionZoomFlipY::create(t, s, TransitionScene::ORIENTATION_DOWN_OVER); 
     }
 };
 
@@ -109,7 +109,7 @@ class ZoomFlipAngularLeftOver : public TransitionZoomFlipAngular
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipAngular::create(t, s, kTransitionOrientationLeftOver); 
+        return TransitionZoomFlipAngular::create(t, s, TransitionScene::ORIENTATION_LEFT_OVER); 
     }
 };
 
@@ -118,7 +118,7 @@ class ZoomFlipAngularRightOver : public TransitionZoomFlipAngular
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        return TransitionZoomFlipAngular::create(t, s, kTransitionOrientationRightOver);
+        return TransitionZoomFlipAngular::create(t, s, TransitionScene::ORIENTATION_RIGHT_OVER);
     }
 };
 
