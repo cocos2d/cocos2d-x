@@ -13125,7 +13125,7 @@ static int tolua_Cocos2d_CCImage_initWithImageFile00(lua_State* tolua_S)
  {
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   const char* strPath = ((const char*)  tolua_tostring(tolua_S,2,0));
-  Image::EImageFormat imageType = ((Image::EImageFormat) (int)  tolua_tonumber(tolua_S,3,Image::kFmtPng));
+  Image::Format imageType = ((Image::Format) (int)  tolua_tonumber(tolua_S,3,Image::FORMAT_PNG));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithImageFile'", NULL);
 #endif
@@ -13166,7 +13166,7 @@ static int tolua_Cocos2d_CCImage_initWithImageData00(lua_State* tolua_S)
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   void* pData = ((void*)  tolua_touserdata(tolua_S,2,0));
   int nDataLen = ((int)  tolua_tonumber(tolua_S,3,0));
-  Image::EImageFormat eFmt = ((Image::EImageFormat) (int)  tolua_tonumber(tolua_S,4,Image::kFmtUnKnown));
+  Image::Format eFmt = ((Image::Format) (int)  tolua_tonumber(tolua_S,4,Image::FORMAT_UNKOWN));
   int nWidth = ((int)  tolua_tonumber(tolua_S,5,0));
   int nHeight = ((int)  tolua_tonumber(tolua_S,6,0));
   int nBitsPerComponent = ((int)  tolua_tonumber(tolua_S,7,8));
@@ -64205,8 +64205,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kCCDirectorProjection2D",Director::PROJECTION_2D);
   tolua_constant(tolua_S,"kCCDirectorProjection3D",Director::PROJECTION_3D);
-  tolua_constant(tolua_S,"kCCDirectorProjectionCustom",kDirectorProjectionCustom);
-  tolua_constant(tolua_S,"kCCDirectorProjectionDefault",kDirectorProjectionDefault);
+    tolua_constant(tolua_S,"kCCDirectorProjectionCustom",Director::PROJECTION_CUSTOM);
+    tolua_constant(tolua_S,"kCCDirectorProjectionDefault",Director::PROJECTION_DEFAULT);
   tolua_cclass(tolua_S,"CCDirector","CCDirector","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCDirector");
    tolua_function(tolua_S,"getRunningScene",tolua_Cocos2d_CCDirector_getRunningScene00);
@@ -64293,12 +64293,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCImage_new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCImage_new00_local);
    tolua_function(tolua_S,"delete",tolua_Cocos2d_CCImage_delete00);
-   tolua_constant(tolua_S,"kFmtJpg",Image::kFmtJpg);
-   tolua_constant(tolua_S,"kFmtPng",Image::kFmtPng);
-   tolua_constant(tolua_S,"kFmtTiff",Image::kFmtTiff);
-   tolua_constant(tolua_S,"kFmtWebp",Image::kFmtWebp);
-   tolua_constant(tolua_S,"kFmtRawData",Image::kFmtRawData);
-   tolua_constant(tolua_S,"kFmtUnKnown",Image::kFmtUnKnown);
+   tolua_constant(tolua_S,"kFmtJpg",Image::FORMAT_JPG);
+   tolua_constant(tolua_S,"kFmtPng",Image::FORMAT_PNG);
+   tolua_constant(tolua_S,"kFmtTiff",Image::FORMAT_TIFF);
+   tolua_constant(tolua_S,"kFmtWebp",Image::FORMAT_WEBP);
+   tolua_constant(tolua_S,"kFmtRawData",Image::FORMAT_RAW_DATA);
+   tolua_constant(tolua_S,"kFmtUnKnown",Image::FORMAT_UNKOWN);
    tolua_constant(tolua_S,"kAlignCenter",Image::kAlignCenter);
    tolua_constant(tolua_S,"kAlignTop",Image::kAlignTop);
    tolua_constant(tolua_S,"kAlignTopRight",Image::kAlignTopRight);
@@ -64831,8 +64831,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCTextureCache_getInstance00);
    tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCTextureCache_destroyInstance00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCImageFormatJPEG",kImageFormatJPEG);
-  tolua_constant(tolua_S,"kCCImageFormatPNG",kImageFormatPNG);
+    tolua_constant(tolua_S,"kCCImageFormatJPEG",Image::FORMAT_JPG);
+  tolua_constant(tolua_S,"kCCImageFormatPNG",Image::FORMAT_PNG);
   tolua_cclass(tolua_S,"CCRenderTexture","CCRenderTexture","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCRenderTexture");
    tolua_function(tolua_S,"getSprite",tolua_Cocos2d_CCRenderTexture_getSprite00);
@@ -66129,18 +66129,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"visit",tolua_Cocos2d_CCParallaxNode_visit00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCParallaxNode_create00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCParticleDurationInfinity",kParticleDurationInfinity);
-  tolua_constant(tolua_S,"kCCParticleStartSizeEqualToEndSize",kParticleStartSizeEqualToEndSize);
-  tolua_constant(tolua_S,"kCCParticleStartRadiusEqualToEndRadius",kParticleStartRadiusEqualToEndRadius);
-  tolua_constant(tolua_S,"kParticleStartSizeEqualToEndSize",kParticleStartSizeEqualToEndSize);
-  tolua_constant(tolua_S,"kParticleDurationInfinity",kParticleDurationInfinity);
-  tolua_constant(tolua_S,"kCCParticleModeGravity",kParticleModeGravity);
-  tolua_constant(tolua_S,"kCCParticleModeRadius",kParticleModeRadius);
-  tolua_constant(tolua_S,"kCCPositionTypeFree",kPositionTypeFree);
-  tolua_constant(tolua_S,"kCCPositionTypeRelative",kPositionTypeRelative);
-  tolua_constant(tolua_S,"kCCPositionTypeGrouped",kPositionTypeGrouped);
-  tolua_constant(tolua_S,"kPositionTypeFree",kPositionTypeFree);
-  tolua_constant(tolua_S,"kPositionTypeGrouped",kPositionTypeGrouped);
+    tolua_constant(tolua_S,"kCCParticleDurationInfinity",ParticleSystem::DURATION_INFINITY);
+    tolua_constant(tolua_S,"kCCParticleStartSizeEqualToEndSize",ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
+    tolua_constant(tolua_S,"kCCParticleStartRadiusEqualToEndRadius",ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS);
+  tolua_constant(tolua_S,"kParticleStartSizeEqualToEndSize",ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
+  tolua_constant(tolua_S,"kParticleDurationInfinity",ParticleSystem::DURATION_INFINITY);
+    tolua_constant(tolua_S,"kCCParticleModeGravity",ParticleSystem::MODE_GRAVITY);
+    tolua_constant(tolua_S,"kCCParticleModeRadius",ParticleSystem::MODE_RADIUS);
+    tolua_constant(tolua_S,"kCCPositionTypeFree",ParticleSystem::POSITION_TYPE_FREE);
+    tolua_constant(tolua_S,"kCCPositionTypeRelative",ParticleSystem::POSITION_TYPE_RELATIVE);
+    tolua_constant(tolua_S,"kCCPositionTypeGrouped",ParticleSystem::POSITION_TYPE_GROUPED);
+  tolua_constant(tolua_S,"kPositionTypeFree",ParticleSystem::POSITION_TYPE_FREE);
+  tolua_constant(tolua_S,"kPositionTypeGrouped",ParticleSystem::POSITION_TYPE_GROUPED);
   tolua_cclass(tolua_S,"CCParticleSystem","CCParticleSystem","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCParticleSystem");
    tolua_function(tolua_S,"getGravity",tolua_Cocos2d_CCParticleSystem_getGravity00);
