@@ -851,6 +851,13 @@ CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionCustom = Director::PROJEC
 CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionDefault = Director::PROJECTION_DEFAULT;
 CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
+CC_DEPRECATED_ATTRIBUTE const int ConfigurationError = Configuration::ERROR;
+CC_DEPRECATED_ATTRIBUTE const int ConfigurationString = Configuration::STRING;
+CC_DEPRECATED_ATTRIBUTE const int ConfigurationInt = Configuration::INT;
+CC_DEPRECATED_ATTRIBUTE const int ConfigurationDouble = Configuration::DOUBLE;
+CC_DEPRECATED_ATTRIBUTE const int ConfigurationBoolean = Configuration::BOOLEAN;
+CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
+
 #define kCCVerticalTextAlignmentTop     kVerticalTextAlignmentTop
 #define kCCVerticalTextAlignmentCenter  kVerticalTextAlignmentCenter
 #define kCCVerticalTextAlignmentBottom  kVerticalTextAlignmentBottom
