@@ -218,7 +218,7 @@ public:
     VolatileTexture(Texture2D *t);
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::EImageFormat format);
+    static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::Format format);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
@@ -248,7 +248,7 @@ protected:
     Texture2D::PixelFormat _pixelFormat;
 
     std::string _fileName;
-    Image::EImageFormat _fmtImage;
+    Image::Format _fmtImage;
 
     ccTexParams      _texParams;
     std::string      _text;
