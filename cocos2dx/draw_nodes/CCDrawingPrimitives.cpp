@@ -106,18 +106,18 @@ static void lazy_init( void )
 }
 
 // When switching from backround to foreground on android, we want the params to be initialized again
-void ccDrawInit()
+void DrawPrimitives::init()
 {
     lazy_init();
 }
 
-void ccDrawFree()
+void DrawPrimitives::free()
 {
 	CC_SAFE_RELEASE_NULL(s_pShader);
 	s_bInitialized = false;
 }
 
-void ccDrawPoint( const Point& point )
+void DrawPrimitives::drawPoint( const Point& point )
 {
     lazy_init();
 
@@ -144,7 +144,7 @@ void ccDrawPoint( const Point& point )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
+void DrawPrimitives::drawPoints( const Point *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
@@ -192,7 +192,7 @@ void ccDrawPoints( const Point *points, unsigned int numberOfPoints )
 }
 
 
-void ccDrawLine( const Point& origin, const Point& destination )
+void DrawPrimitives::drawLine( const Point& origin, const Point& destination )
 {
     lazy_init();
 
@@ -217,15 +217,15 @@ void ccDrawLine( const Point& origin, const Point& destination )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawRect( Point origin, Point destination )
+void DrawPrimitives::drawRect( Point origin, Point destination )
 {
-    ccDrawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
-    ccDrawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
-    ccDrawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
-    ccDrawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
+    DrawPrimitives::drawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
+    DrawPrimitives::drawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
+    DrawPrimitives::drawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
+    DrawPrimitives::drawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
 }
 
-void ccDrawSolidRect( Point origin, Point destination, Color4F color )
+void DrawPrimitives::drawSolidRect( Point origin, Point destination, Color4F color )
 {
     Point vertices[] = {
         origin,
@@ -234,10 +234,10 @@ void ccDrawSolidRect( Point origin, Point destination, Color4F color )
         Point(origin.x, destination.y)
     };
 
-    ccDrawSolidPoly(vertices, 4, color );
+    DrawPrimitives::drawSolidPoly(vertices, 4, color );
 }
 
-void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
+void DrawPrimitives::drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
 {
     lazy_init();
 
@@ -289,7 +289,7 @@ void ccDrawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolyg
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+void DrawPrimitives::drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
 {
     lazy_init();
 
@@ -333,7 +333,7 @@ void ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F co
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -372,17 +372,17 @@ void ccDrawCircle( const Point& center, float radius, float angle, unsigned int 
 #endif // EMSCRIPTEN
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
-    free( vertices );
+    ::free( vertices );
 
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
-    ccDrawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
+    DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
-void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     lazy_init();
     
@@ -418,17 +418,17 @@ void ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned
     
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+1);
     
-    free( vertices );
+    ::free( vertices );
     
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
 {
-    ccDrawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
+    DrawPrimitives::drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
 
-void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+void DrawPrimitives::drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -462,12 +462,12 @@ void ccDrawQuadBezier(const Point& origin, const Point& control, const Point& de
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCatmullRom( PointArray *points, unsigned int segments )
+void DrawPrimitives::drawCatmullRom( PointArray *points, unsigned int segments )
 {
-    ccDrawCardinalSpline( points, 0.5f, segments );
+    DrawPrimitives::drawCardinalSpline( points, 0.5f, segments );
 }
 
-void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
+void DrawPrimitives::drawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
 {
     lazy_init();
 
@@ -519,7 +519,7 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -553,7 +553,7 @@ void ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& 
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
+void DrawPrimitives::drawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
     s_tColor.r = r;
     s_tColor.g = g;
@@ -561,7 +561,7 @@ void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
     s_tColor.a = a;
 }
 
-void ccPointSize( GLfloat pointSize )
+void DrawPrimitives::setPointSize( GLfloat pointSize )
 {
     s_fPointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
 
@@ -569,7 +569,7 @@ void ccPointSize( GLfloat pointSize )
 
 }
 
-void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+void DrawPrimitives::drawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
     s_tColor.r = r/255.0f;
     s_tColor.g = g/255.0f;
