@@ -59,7 +59,7 @@ bool TestSocial::init()
         return false;
     }
 
-    MySocialManager::sharedManager()->loadPlugins();
+    MySocialManager::getInstance()->loadPlugins();
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
@@ -119,7 +119,7 @@ bool TestSocial::init()
 void TestSocial::testSubmit(Object* pSender)
 {
     int nIdx = _caseItem->getSelectedIndex();
-    MySocialManager::sharedManager()->submitScore((MySocialManager::MySocialMode)(nIdx + 1), "0", 30000);
+    MySocialManager::getInstance()->submitScore((MySocialManager::MySocialMode)(nIdx + 1), "0", 30000);
 }
 
 void TestSocial::testUnlock(Object* pSender)
@@ -129,19 +129,19 @@ void TestSocial::testUnlock(Object* pSender)
     info["AchievementID"] = "MyAchiID";
     info["NDDisplayText"] = "Fighter";
     info["NDScore"] = "100";
-    MySocialManager::sharedManager()->unlockAchievement((MySocialManager::MySocialMode)(nIdx + 1), info);
+    MySocialManager::getInstance()->unlockAchievement((MySocialManager::MySocialMode)(nIdx + 1), info);
 }
 
 void TestSocial::testLeaderboard(Object* pSender)
 {
     int nIdx = _caseItem->getSelectedIndex();
-    MySocialManager::sharedManager()->showLeaderboard((MySocialManager::MySocialMode)(nIdx + 1), "0");
+    MySocialManager::getInstance()->showLeaderboard((MySocialManager::MySocialMode)(nIdx + 1), "0");
 }
 
 void TestSocial::testAchievement(Object* pSender)
 {
     int nIdx = _caseItem->getSelectedIndex();
-    MySocialManager::sharedManager()->showAchievement((MySocialManager::MySocialMode)(nIdx + 1));
+    MySocialManager::getInstance()->showAchievement((MySocialManager::MySocialMode)(nIdx + 1));
 }
 
 void TestSocial::menuBackCallback(Object* pSender)

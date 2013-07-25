@@ -60,7 +60,7 @@ bool TestUser::init()
         return false;
     }
 
-    MyUserManager::sharedManager()->loadPlugin();
+    MyUserManager::getInstance()->loadPlugin();
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     Point posMid = Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
@@ -117,12 +117,12 @@ void TestUser::caseChanged(Object* pSender)
 
 void TestUser::testLogin(Object* pSender)
 {
-    MyUserManager::sharedManager()->loginByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
+    MyUserManager::getInstance()->loginByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
 }
 
 void TestUser::testLogout(Object* pSender)
 {
-    MyUserManager::sharedManager()->logoutByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
+    MyUserManager::getInstance()->logoutByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
 }
 
 void TestUser::menuBackCallback(Object* pSender)
