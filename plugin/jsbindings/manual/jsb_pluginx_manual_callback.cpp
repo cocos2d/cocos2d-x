@@ -173,6 +173,47 @@ JSBool js_pluginx_ProtocolAds_setAdsListener(JSContext *cx, uint32_t argc, jsval
     return JS_FALSE;
 }
 
+JSBool js_pluginx_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+        jsval params = argv[0];
+        JSObject* tmp = JSVAL_TO_OBJECT(params);
+        JSB_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
+
+        jsval tempVal;
+		cocos2d::plugin::ProtocolAds::AdsType arg0;
+        ok &= JS_GetProperty(cx, tmp, "AdsType", &tempVal);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "It should be contains 'AdsType' in parameter.");
+        ok &= jsval_to_int32(cx, tempVal, (int32_t *) &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'AdsType' must be int");
+
+        int sizeEnum = 0;
+        if (JS_GetProperty(cx, tmp, "SizeEnum", &tempVal)) {
+            ok &= jsval_to_int32(cx, tempVal, (int32_t *) &sizeEnum);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'SizeEnum' should be int");
+        }
+
+        cocos2d::plugin::ProtocolAds::AdsPos pos;
+        if (JS_GetProperty(cx, tmp, "AdsPos", &tempVal)) {
+            ok &= jsval_to_int32(cx, tempVal, (int32_t *) &pos);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'AdsPos' should be int");
+        }
+
+		cobj->showAds(arg0, sizeEnum, pos);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	return JS_FALSE;
+}
+
 class Pluginx_ShareResult : public cocos2d::plugin::ShareResultListener
 {
 public:
@@ -235,3 +276,137 @@ JSBool js_pluginx_ProtocolShare_setResultListener(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return JS_FALSE;
 }
+
+class Pluginx_SocialResult : public cocos2d::plugin::SocialListener
+{
+public:
+    virtual void onSocialResult(cocos2d::plugin::SocialRetCode ret, const char* msg)
+    {
+        JSContext* cx = s_cx;
+
+        JSBool hasAction;
+        jsval retval;
+        jsval temp_retval;
+        jsval dataVal[2];
+        dataVal[0] = INT_TO_JSVAL(ret);
+        std::string strMsgInfo = msg;
+        dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
+        
+        JSObject* obj = _JSDelegate;
+        
+        if (JS_HasProperty(cx, obj, "onSocialResult", &hasAction) && hasAction) {
+            if(!JS_GetProperty(cx, obj, "onSocialResult", &temp_retval)) {
+                return;
+            }
+            if(temp_retval == JSVAL_VOID) {
+                return;
+            }
+            JSAutoCompartment ac(cx, obj);
+            JS_CallFunctionName(cx, obj, "onSocialResult",
+                                2, dataVal, &retval);
+        }
+    }
+
+    void setJSDelegate(JSObject* pJSDelegate)
+    {
+        _JSDelegate = pJSDelegate;
+    }
+
+private:
+    JSObject* _JSDelegate;
+};
+
+JSBool js_pluginx_ProtocolSocial_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    s_cx = cx;
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+    JSBool ok = JS_TRUE;
+
+    if (argc == 1) {
+        // save the delegate
+        JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
+        Pluginx_SocialResult* nativeDelegate = new Pluginx_SocialResult();
+        nativeDelegate->setJSDelegate(jsDelegate);
+        cobj->setListener(nativeDelegate);
+        
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+
+class Pluginx_UserActionListener : public cocos2d::plugin::UserActionListener
+{
+public:
+    virtual void onActionResult(ProtocolUser* userPlugin, cocos2d::plugin::UserActionResultCode ret, const char* msg)
+    {
+        JSContext* cx = s_cx;
+
+        JSBool hasAction;
+        jsval retval;
+        jsval temp_retval;
+
+        js_proxy_t * p;
+        JS_GET_PROXY(p, userPlugin);
+        
+        if (! p) return;
+        jsval dataVal[3];
+        jsval arg1 = OBJECT_TO_JSVAL(p->obj);
+        dataVal[0] = arg1;
+        dataVal[1] = INT_TO_JSVAL(ret);
+        std::string strMsgInfo = msg;
+        dataVal[2] = std_string_to_jsval(cx, strMsgInfo);
+        
+        JSObject* obj = _JSDelegate;
+        
+        if (JS_HasProperty(cx, obj, "onActionResult", &hasAction) && hasAction) {
+            if(!JS_GetProperty(cx, obj, "onActionResult", &temp_retval)) {
+                return;
+            }
+            if(temp_retval == JSVAL_VOID) {
+                return;
+            }
+            JSAutoCompartment ac(cx, obj);
+            JS_CallFunctionName(cx, obj, "onActionResult",
+                                3, dataVal, &retval);
+        }
+    }
+
+    void setJSDelegate(JSObject* pJSDelegate)
+    {
+        _JSDelegate = pJSDelegate;
+    }
+
+private:
+    JSObject* _JSDelegate;
+};
+
+JSBool js_pluginx_ProtocolUser_setActionListener(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    s_cx = cx;
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
+    JSBool ok = JS_TRUE;
+
+    if (argc == 1) {
+        // save the delegate
+        JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
+        Pluginx_UserActionListener* nativeDelegate = new Pluginx_UserActionListener();
+        nativeDelegate->setJSDelegate(jsDelegate);
+        cobj->setActionListener(nativeDelegate);
+        
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+

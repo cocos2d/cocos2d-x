@@ -42,3 +42,14 @@ plugin.ProtocolShare.ShareResultCode.ShareFail = 1;
 plugin.ProtocolShare.ShareResultCode.ShareCancel = 2;
 plugin.ProtocolShare.ShareResultCode.ShareTimeOut = 3;
 
+plugin.ProtocolSocial.SocialRetCode = {};
+plugin.ProtocolSocial.SocialRetCode.ScoreSubmitSuccess = 1;
+plugin.ProtocolSocial.SocialRetCode.ScoreSubmitFailed = 2;
+plugin.ProtocolSocial.SocialRetCode.AchUnlockSuccess = 3;
+plugin.ProtocolSocial.SocialRetCode.AchUnlockFailed = 4;
+
+plugin.ProtocolUser.UserActionResultCode = {};
+plugin.ProtocolUser.UserActionResultCode.LoginSucceed = 0;
+plugin.ProtocolUser.UserActionResultCode.LoginFailed = 1;
+plugin.ProtocolUser.UserActionResultCode.LogoutSucceed = 2;
+
