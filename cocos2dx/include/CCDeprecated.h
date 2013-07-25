@@ -791,7 +791,7 @@ CC_DEPRECATED_ATTRIBUTE typedef FontDefinition ccFontDefinition;
 
 CC_DEPRECATED_ATTRIBUTE typedef VerticalTextAlignment CCVerticalTextAlignment;
 CC_DEPRECATED_ATTRIBUTE typedef TextAlignment CCTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef ProgressTimerType CCProgressTimerType;
+CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
@@ -842,8 +842,9 @@ CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = VERTEX_ATTRIB_FLAG
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = VERTEX_ATTRIB_FLAG_TEX_COORDS;
 CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
-#define kCCProgressTimerTypeRadial kProgressTimerTypeRadial
-#define kCCProgressTimerTypeBar    kProgressTimerTypeBar
+#define kCCProgressTimerTypeRadial ProgressTimer::RADIAL
+#define kCCProgressTimerTypeBar    ProgressTimer::BAR
+CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection2D = Director::PROJECTION_2D;
 CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection3D = Director::PROJECTION_3D; 

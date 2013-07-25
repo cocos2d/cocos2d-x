@@ -66325,8 +66325,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"createWithTexture",tolua_Cocos2d_CCParticleBatchNode_createWithTexture00);
    tolua_variable(tolua_S,"__CCTextureProtocol__",tolua_get_CCParticleBatchNode___CCTextureProtocol__,NULL);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCProgressTimerTypeRadial",kProgressTimerTypeRadial);
-  tolua_constant(tolua_S,"kCCProgressTimerTypeBar",kProgressTimerTypeBar);
+  tolua_constant(tolua_S,"kCCProgressTimerTypeRadial",ProgressTimer::RADIAL);
+  tolua_constant(tolua_S,"kCCProgressTimerTypeBar",ProgressTimer::BAR);
   tolua_cclass(tolua_S,"CCProgressTimer","CCProgressTimer","CCNodeRGBA",NULL);
   tolua_beginmodule(tolua_S,"CCProgressTimer");
    tolua_function(tolua_S,"getType",tolua_Cocos2d_CCProgressTimer_getType00);
