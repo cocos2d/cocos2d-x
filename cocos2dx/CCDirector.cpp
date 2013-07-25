@@ -221,11 +221,11 @@ void Director::setDefaultValues(void)
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
@@ -864,8 +864,8 @@ void Director::createStatsLabel()
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    Texture2DPixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+    Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);

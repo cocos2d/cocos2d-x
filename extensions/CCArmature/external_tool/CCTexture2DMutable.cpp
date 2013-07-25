@@ -40,7 +40,7 @@ void* Texture2DMutable::keepData(void* data, unsigned int lenght)
 	return newData;
 }
 
-bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize)
+bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const cocos2d::Size& contentSize)
 {
     image_ = new cocos2d::Image();
     image_->initWithImageFile(imageFile);
@@ -57,22 +57,22 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
     bool                      hasAlpha = image_->hasAlpha();
     Size                    imageSize = Size((float)(image_->getWidth()), (float)(image_->getHeight()));
     size_t                    bpp = image_->getBitsPerComponent();
-    cocos2d::Texture2DPixelFormat pixelFormat;
+    cocos2d::Texture2D::PixelFormat pixelFormat;
     
     // compute pixel format
     if(hasAlpha)
     {
-        pixelFormat = kTexture2DPixelFormat_Default;
+        pixelFormat = Texture2D::PIXEL_FORMAT_DEFAULT;
     }
     else
     {
         if (bpp >= 8)
         {
-            pixelFormat = kTexture2DPixelFormat_RGB888;
+            pixelFormat = Texture2D::PIXEL_FORMAT_RGB888;
         }
         else
         {
-            pixelFormat = kTexture2DPixelFormat_RGB565;
+            pixelFormat = Texture2D::PIXEL_FORMAT_RGB565;
         }
         
     }
@@ -80,18 +80,18 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
     return initWithData(image_->getData(), pixelFormat, imageSize.width, imageSize.height, imageSize);
 }
 
-bool Texture2DMutable::initWithData(const void* data, Texture2DPixelFormat pixelFormat, unsigned int width, unsigned int height, const Size& size)
+bool Texture2DMutable::initWithData(const void* data, Texture2D::PixelFormat pixelFormat, unsigned int width, unsigned int height, const Size& size)
 {
 	if(!Texture2D::initWithData(data, pixelFormat, width, height, size)) {
         return false;
     }
         
     switch (pixelFormat) {
-        case kTexture2DPixelFormat_RGBA8888:	bytesPerPixel_ = 4; break;
-        case kTexture2DPixelFormat_A8:			bytesPerPixel_ = 1; break;
-        case kTexture2DPixelFormat_RGBA4444:
-        case kTexture2DPixelFormat_RGB565:
-        case kTexture2DPixelFormat_RGB5A1:
+        case Texture2D::PIXEL_FORMAT_RGBA8888:	bytesPerPixel_ = 4; break;
+        case Texture2D::PIXEL_FORMAT_A8:			bytesPerPixel_ = 1; break;
+        case Texture2D::PIXEL_FORMAT_RGBA4444:
+        case Texture2D::PIXEL_FORMAT_RGB565:
+        case Texture2D::PIXEL_FORMAT_RGB5A1:
             bytesPerPixel_ = 2;
             break;
         default:break;
@@ -120,35 +120,35 @@ Color4B Texture2DMutable::pixelAt(const Point& pt)
     //! unsigned int x = pt.x, y = pt.y
 	unsigned int x = pt.x, y = _pixelsHigh - pt.y;
     
-	if(_pixelFormat == kTexture2DPixelFormat_RGBA8888){
+	if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA8888){
 		unsigned int *pixel = (unsigned int *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		c.r = *pixel & 0xff;
 		c.g = (*pixel >> 8) & 0xff;
 		c.b = (*pixel >> 16) & 0xff;
 		c.a = (*pixel >> 24) & 0xff;
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGBA4444){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		c.a = ((*pixel & 0xf) << 4) | (*pixel & 0xf);
 		c.b = (((*pixel >> 4) & 0xf) << 4) | ((*pixel >> 4) & 0xf);
 		c.g = (((*pixel >> 8) & 0xf) << 4) | ((*pixel >> 8) & 0xf);
 		c.r = (((*pixel >> 12) & 0xf) << 4) | ((*pixel >> 12) & 0xf);
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGB5A1){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		c.r = ((*pixel >> 11) & 0x1f)<<3;
 		c.g = ((*pixel >> 6) & 0x1f)<<3;
 		c.b = ((*pixel >> 1) & 0x1f)<<3;
 		c.a = (*pixel & 0x1)*255;
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGB565){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGB565){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		c.b = (*pixel & 0x1f)<<3;
 		c.g = ((*pixel >> 5) & 0x3f)<<2;
 		c.r = ((*pixel >> 11) & 0x1f)<<3;
 		c.a = 255;
-	} else if(_pixelFormat == kTexture2DPixelFormat_A8){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_A8){
 		GLubyte *pixel = (GLubyte *)data_;
 		c.a = pixel[(y * _pixelsWide) + x];
 		// Default white
@@ -174,22 +174,22 @@ bool Texture2DMutable::setPixelAt(const Point& pt, Color4B c)
 	//	Shifted bit placement based on little-endian, let's make this more
 	//	portable =/
     
-	if(_pixelFormat == kTexture2DPixelFormat_RGBA8888){
+	if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA8888){
 		unsigned int *pixel = (unsigned int *)data_;
 		pixel[(y * _pixelsWide) + x] = (c.a << 24) | (c.b << 16) | (c.g << 8) | c.r;
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGBA4444){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		*pixel = ((c.r >> 4) << 12) | ((c.g >> 4) << 8) | ((c.b >> 4) << 4) | (c.a >> 4);
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGB5A1){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		*pixel = ((c.r >> 3) << 11) | ((c.g >> 3) << 6) | ((c.b >> 3) << 1) | (c.a > 0);
-	} else if(_pixelFormat == kTexture2DPixelFormat_RGB565){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_RGB565){
 		GLushort *pixel = (GLushort *)data_;
 		pixel = pixel + (y * _pixelsWide) + x;
 		*pixel = ((c.r >> 3) << 11) | ((c.g >> 2) << 5) | (c.b >> 3);
-	} else if(_pixelFormat == kTexture2DPixelFormat_A8){
+	} else if(_pixelFormat == Texture2D::PIXEL_FORMAT_A8){
 		GLubyte *pixel = (GLubyte *)data_;
 		pixel[(y * _pixelsWide) + x] = c.a;
 	} else {
@@ -264,19 +264,19 @@ void Texture2DMutable::apply()
     
 	switch(_pixelFormat)
 	{
-		case kTexture2DPixelFormat_RGBA8888:
+		case Texture2D::PIXEL_FORMAT_RGBA8888:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _pixelsWide, _pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data_);
 			break;
-		case kTexture2DPixelFormat_RGBA4444:
+		case Texture2D::PIXEL_FORMAT_RGBA4444:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _pixelsWide, _pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data_);
 			break;
-		case kTexture2DPixelFormat_RGB5A1:
+		case Texture2D::PIXEL_FORMAT_RGB5A1:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _pixelsWide, _pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data_);
 			break;
-		case kTexture2DPixelFormat_RGB565:
+		case Texture2D::PIXEL_FORMAT_RGB565:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _pixelsWide, _pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data_);
 			break;
-		case kTexture2DPixelFormat_A8:
+		case Texture2D::PIXEL_FORMAT_A8:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, _pixelsWide, _pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data_);
 			break;
 		default:

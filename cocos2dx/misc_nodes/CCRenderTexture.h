@@ -55,10 +55,10 @@ class CC_DLL RenderTexture : public Node
 {
 public:
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static RenderTexture * create(int w ,int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static RenderTexture * create(int w, int h, Texture2DPixelFormat eFormat);
+    static RenderTexture * create(int w, int h, Texture2D::PixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
@@ -67,10 +67,10 @@ public:
     virtual ~RenderTexture();
     
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();

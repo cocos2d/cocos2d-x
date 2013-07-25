@@ -17554,7 +17554,7 @@ static int tolua_Cocos2d_CCTexture2D_getPixelFormat00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPixelFormat'", NULL);
 #endif
   {
-   Texture2DPixelFormat tolua_ret = (Texture2DPixelFormat)  self->getPixelFormat();
+   Texture2D::PixelFormat tolua_ret = (Texture2D::PixelFormat)  self->getPixelFormat();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -18211,7 +18211,7 @@ static int tolua_Cocos2d_CCTexture2D_getBitsPerPixelForFormat01(lua_State* tolua
  else
  {
   const Texture2D* self = (const Texture2D*)  tolua_tousertype(tolua_S,1,0);
-  Texture2DPixelFormat format = ((Texture2DPixelFormat) (int)  tolua_tonumber(tolua_S,2,0));
+  Texture2D::PixelFormat format = ((Texture2D::PixelFormat) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBitsPerPixelForFormat'", NULL);
 #endif
@@ -18241,7 +18241,7 @@ static int tolua_Cocos2d_CCTexture2D_setDefaultAlphaPixelFormat00(lua_State* tol
  else
 #endif
  {
-  Texture2DPixelFormat format = ((Texture2DPixelFormat) (int)  tolua_tonumber(tolua_S,2,0));
+  Texture2D::PixelFormat format = ((Texture2D::PixelFormat) (int)  tolua_tonumber(tolua_S,2,0));
   {
    Texture2D::setDefaultAlphaPixelFormat(format);
   }
@@ -18270,7 +18270,7 @@ static int tolua_Cocos2d_CCTexture2D_getDefaultAlphaPixelFormat00(lua_State* tol
 #endif
  {
   {
-   Texture2DPixelFormat tolua_ret = (Texture2DPixelFormat)  Texture2D::getDefaultAlphaPixelFormat();
+   Texture2D::PixelFormat tolua_ret = (Texture2D::PixelFormat)  Texture2D::getDefaultAlphaPixelFormat();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -19834,7 +19834,7 @@ static int tolua_Cocos2d_CCRenderTexture_create00(lua_State* tolua_S)
  {
   int w = ((int)  tolua_tonumber(tolua_S,2,0));
   int h = ((int)  tolua_tonumber(tolua_S,3,0));
-  Texture2DPixelFormat eFormat = ((Texture2DPixelFormat) (int)  tolua_tonumber(tolua_S,4,0));
+  Texture2D::PixelFormat eFormat = ((Texture2D::PixelFormat) (int)  tolua_tonumber(tolua_S,4,0));
   unsigned int uDepthStencilFormat = (( unsigned int)  tolua_tonumber(tolua_S,5,0));
   {
    RenderTexture* tolua_ret = (RenderTexture*)  RenderTexture::create(w,h,eFormat,uDepthStencilFormat);
@@ -19869,7 +19869,7 @@ static int tolua_Cocos2d_CCRenderTexture_create01(lua_State* tolua_S)
  {
   int w = ((int)  tolua_tonumber(tolua_S,2,0));
   int h = ((int)  tolua_tonumber(tolua_S,3,0));
-  Texture2DPixelFormat eFormat = ((Texture2DPixelFormat) (int)  tolua_tonumber(tolua_S,4,0));
+  Texture2D::PixelFormat eFormat = ((Texture2D::PixelFormat) (int)  tolua_tonumber(tolua_S,4,0));
   {
    RenderTexture* tolua_ret = (RenderTexture*)  RenderTexture::create(w,h,eFormat);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -64732,24 +64732,24 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"GL_RENDERBUFFER_BINDING",GL_RENDERBUFFER_BINDING);
   tolua_constant(tolua_S,"GL_MAX_RENDERBUFFER_SIZE",GL_MAX_RENDERBUFFER_SIZE);
   tolua_constant(tolua_S,"GL_INVALID_FRAMEBUFFER_OPERATION",GL_INVALID_FRAMEBUFFER_OPERATION);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA8888",kTexture2DPixelFormat_RGBA8888);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB888",kTexture2DPixelFormat_RGB888);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB565",kTexture2DPixelFormat_RGB565);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_A8",kTexture2DPixelFormat_A8);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_I8",kTexture2DPixelFormat_I8);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_AI88",kTexture2DPixelFormat_AI88);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA4444",kTexture2DPixelFormat_RGBA4444);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB5A1",kTexture2DPixelFormat_RGB5A1);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",kTexture2DPixelFormat_PVRTC4);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",kTexture2DPixelFormat_PVRTC2);
-  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",kTexture2DPixelFormat_Default);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_RGBA8888",kTexture2DPixelFormat_RGBA8888);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB888",kTexture2DPixelFormat_RGB888);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB565",kTexture2DPixelFormat_RGB565);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_A8",kTexture2DPixelFormat_A8);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_RGBA4444",kTexture2DPixelFormat_RGBA4444);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_RGB5A1",kTexture2DPixelFormat_RGB5A1);
-  tolua_constant(tolua_S,"kTexture2DPixelFormat_Default",kTexture2DPixelFormat_Default);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA8888",Texture2D::PIXEL_FORMAT_RGBA8888);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB888",Texture2D::PIXEL_FORMAT_RGB888);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB565",Texture2D::PIXEL_FORMAT_RGB565);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_A8",Texture2D::PIXEL_FORMAT_A8);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_I8",Texture2D::PIXEL_FORMAT_I8);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_AI88",Texture2D::PIXEL_FORMAT_AI88);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGBA4444",Texture2D::PIXEL_FORMAT_RGBA4444);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_RGB5A1",Texture2D::PIXEL_FORMAT_RGB5A1);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",Texture2D::PIXEL_FORMAT_PRVTC4);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",Texture2D::PIXEL_FORMAT_PRVTC2);
+  tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",Texture2D::PIXEL_FORMAT_DEFAULT);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGBA8888",Texture2D::PIXEL_FORMAT_RGBA8888);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB888",Texture2D::PIXEL_FORMAT_RGB888);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB565",Texture2D::PIXEL_FORMAT_RGB565);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_A8",Texture2D::PIXEL_FORMAT_A8);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGBA4444",Texture2D::PIXEL_FORMAT_RGBA4444);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_RGB5A1",Texture2D::PIXEL_FORMAT_RGB5A1);
+  tolua_constant(tolua_S,"Texture2D::PIXEL_FORMAT_DEFAULT",Texture2D::PIXEL_FORMAT_DEFAULT);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",tolua_collect_ccTexParams);
   #else

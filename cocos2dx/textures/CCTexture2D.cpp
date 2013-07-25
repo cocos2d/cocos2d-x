@@ -55,7 +55,7 @@ NS_CC_BEGIN
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static Texture2DPixelFormat g_defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
+static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PIXEL_FORMAT_DEFAULT;
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
@@ -64,7 +64,7 @@ Texture2D::Texture2D()
 : _PVRHaveAlphaPremultiplied(true)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _pixelFormat(kTexture2DPixelFormat_Default)
+, _pixelFormat(Texture2D::PIXEL_FORMAT_DEFAULT)
 , _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
@@ -89,7 +89,7 @@ Texture2D::~Texture2D()
     }
 }
 
-Texture2DPixelFormat Texture2D::getPixelFormat() const
+Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
     return _pixelFormat;
 }
@@ -172,11 +172,11 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize)
+bool Texture2D::initWithData(const void *data, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize)
 {
     unsigned int bitsPerPixel;
     //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == kTexture2DPixelFormat_RGB888)
+    if(pixelFormat == Texture2D::PIXEL_FORMAT_RGB888)
     {
         bitsPerPixel = 24;
     }
@@ -217,28 +217,28 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
 
     switch(pixelFormat)
     {
-    case kTexture2DPixelFormat_RGBA8888:
+    case Texture2D::PIXEL_FORMAT_RGBA8888:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         break;
-    case kTexture2DPixelFormat_RGB888:
+    case Texture2D::PIXEL_FORMAT_RGB888:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         break;
-    case kTexture2DPixelFormat_RGBA4444:
+    case Texture2D::PIXEL_FORMAT_RGBA4444:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
         break;
-    case kTexture2DPixelFormat_RGB5A1:
+    case Texture2D::PIXEL_FORMAT_RGB5A1:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
         break;
-    case kTexture2DPixelFormat_RGB565:
+    case Texture2D::PIXEL_FORMAT_RGB565:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
         break;
-    case kTexture2DPixelFormat_AI88:
+    case Texture2D::PIXEL_FORMAT_AI88:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
         break;
-    case kTexture2DPixelFormat_A8:
+    case Texture2D::PIXEL_FORMAT_A8:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
         break;
-    case kTexture2DPixelFormat_I8:
+    case Texture2D::PIXEL_FORMAT_I8:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
         break;
     default:
@@ -301,7 +301,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     unsigned short*           outPixel16 = NULL;
     bool                      hasAlpha = image->hasAlpha();
     Size                    imageSize = Size((float)(image->getWidth()), (float)(image->getHeight()));
-    Texture2DPixelFormat    pixelFormat;
+    Texture2D::PixelFormat    pixelFormat;
     size_t                    bpp = image->getBitsPerComponent();
 
     // compute pixel format
@@ -313,11 +313,11 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     {
         if (bpp >= 8)
         {
-            pixelFormat = kTexture2DPixelFormat_RGB888;
+            pixelFormat = Texture2D::PIXEL_FORMAT_RGB888;
         }
         else 
         {
-            pixelFormat = kTexture2DPixelFormat_RGB565;
+            pixelFormat = Texture2D::PIXEL_FORMAT_RGB565;
         }
         
     }
@@ -325,7 +325,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     // Repack the pixel data into the right format
     unsigned int length = width * height;
 
-    if (pixelFormat == kTexture2DPixelFormat_RGB565)
+    if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB565)
     {
         if (hasAlpha)
         {
@@ -360,7 +360,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             }
         }    
     }
-    else if (pixelFormat == kTexture2DPixelFormat_RGBA4444)
+    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
         
@@ -377,7 +377,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);  // A
         }
     }
-    else if (pixelFormat == kTexture2DPixelFormat_RGB5A1)
+    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
         inPixel32 = (unsigned int*)image->getData();   
@@ -393,7 +393,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);  // A
         }
     }
-    else if (pixelFormat == kTexture2DPixelFormat_A8)
+    else if (pixelFormat == Texture2D::PIXEL_FORMAT_A8)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
         inPixel32 = (unsigned int*)image->getData();
@@ -406,7 +406,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
         }
     }
     
-    if (hasAlpha && pixelFormat == kTexture2DPixelFormat_RGB888)
+    if (hasAlpha && pixelFormat == Texture2D::PIXEL_FORMAT_RGB888)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
         inPixel32 = (unsigned int*)image->getData();
@@ -789,34 +789,34 @@ const char* Texture2D::getStringForFormat() const
 {
 	switch (_pixelFormat) 
 	{
-		case kTexture2DPixelFormat_RGBA8888:
+		case Texture2D::PIXEL_FORMAT_RGBA8888:
 			return  "RGBA8888";
 
-		case kTexture2DPixelFormat_RGB888:
+		case Texture2D::PIXEL_FORMAT_RGB888:
 			return  "RGB888";
 
-		case kTexture2DPixelFormat_RGB565:
+		case Texture2D::PIXEL_FORMAT_RGB565:
 			return  "RGB565";
 
-		case kTexture2DPixelFormat_RGBA4444:
+		case Texture2D::PIXEL_FORMAT_RGBA4444:
 			return  "RGBA4444";
 
-		case kTexture2DPixelFormat_RGB5A1:
+		case Texture2D::PIXEL_FORMAT_RGB5A1:
 			return  "RGB5A1";
 
-		case kTexture2DPixelFormat_AI88:
+		case Texture2D::PIXEL_FORMAT_AI88:
 			return  "AI88";
 
-		case kTexture2DPixelFormat_A8:
+		case Texture2D::PIXEL_FORMAT_A8:
 			return  "A8";
 
-		case kTexture2DPixelFormat_I8:
+		case Texture2D::PIXEL_FORMAT_I8:
 			return  "I8";
 
-		case kTexture2DPixelFormat_PVRTC4:
+		case Texture2D::PIXEL_FORMAT_PRVTC4:
 			return  "PVRTC4";
 
-		case kTexture2DPixelFormat_PVRTC2:
+		case Texture2D::PIXEL_FORMAT_PRVTC2:
 			return  "PVRTC2";
 
 		default:
@@ -833,50 +833,50 @@ const char* Texture2D::getStringForFormat() const
 //
 // implementation Texture2D (PixelFormat)
 
-void Texture2D::setDefaultAlphaPixelFormat(Texture2DPixelFormat format)
+void Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
 
-Texture2DPixelFormat Texture2D::getDefaultAlphaPixelFormat()
+Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int Texture2D::getBitsPerPixelForFormat(Texture2DPixelFormat format) const
+unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const
 {
 	unsigned int ret=0;
 
 	switch (format) {
-		case kTexture2DPixelFormat_RGBA8888:
+		case Texture2D::PIXEL_FORMAT_RGBA8888:
 			ret = 32;
 			break;
-		case kTexture2DPixelFormat_RGB888:
+		case Texture2D::PIXEL_FORMAT_RGB888:
 			// It is 32 and not 24, since its internal representation uses 32 bits.
 			ret = 32;
 			break;
-		case kTexture2DPixelFormat_RGB565:
+		case Texture2D::PIXEL_FORMAT_RGB565:
 			ret = 16;
 			break;
-		case kTexture2DPixelFormat_RGBA4444:
+		case Texture2D::PIXEL_FORMAT_RGBA4444:
 			ret = 16;
 			break;
-		case kTexture2DPixelFormat_RGB5A1:
+		case Texture2D::PIXEL_FORMAT_RGB5A1:
 			ret = 16;
 			break;
-		case kTexture2DPixelFormat_AI88:
+		case Texture2D::PIXEL_FORMAT_AI88:
 			ret = 16;
 			break;
-		case kTexture2DPixelFormat_A8:
+		case Texture2D::PIXEL_FORMAT_A8:
 			ret = 8;
 			break;
-		case kTexture2DPixelFormat_I8:
+		case Texture2D::PIXEL_FORMAT_I8:
 			ret = 8;
 			break;
-		case kTexture2DPixelFormat_PVRTC4:
+		case Texture2D::PIXEL_FORMAT_PRVTC4:
 			ret = 4;
 			break;
-		case kTexture2DPixelFormat_PVRTC2:
+		case Texture2D::PIXEL_FORMAT_PRVTC2:
 			ret = 2;
 			break;
 		default:

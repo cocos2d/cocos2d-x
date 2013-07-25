@@ -126,4 +126,16 @@ const int kCCTextAlignmentLeft = Label::TEXT_ALIGNMENT_LEFT;
 const int kCCTextAlignmentCenter = Label::TEXT_ALIGNMENT_CENTER;
 const int kCCTextAlignmentRight = Label::TEXT_ALIGNMENT_RIGHT;
 
+const int kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PIXEL_FORMAT_RGBA8888;
+const int kCCTexture2DPixelFormat_RGB888 = Texture2D::PIXEL_FORMAT_RGB888;
+const int kCCTexture2DPixelFormat_RGB565 = Texture2D::PIXEL_FORMAT_RGB565;
+const int kCCTexture2DPixelFormat_A8 = Texture2D::PIXEL_FORMAT_A8;
+const int kCCTexture2DPixelFormat_I8 = Texture2D::PIXEL_FORMAT_I8;
+const int kCCTexture2DPixelFormat_AI88 = Texture2D::PIXEL_FORMAT_AI88;
+const int kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PIXEL_FORMAT_RGBA4444;
+const int kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PIXEL_FORMAT_RGB5A1;
+const int kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PIXEL_FORMAT_PRVTC4;
+const int kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PIXEL_FORMAT_PRVTC2;
+const int kCCTexture2DPixelFormat_Default = Texture2D::PIXEL_FORMAT_DEFAULT;
+
 NS_CC_END

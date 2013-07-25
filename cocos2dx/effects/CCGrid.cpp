@@ -117,7 +117,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
-    Texture2DPixelFormat format = kTexture2DPixelFormat_RGBA8888;
+    Texture2D::PixelFormat format = Texture2D::PIXEL_FORMAT_RGBA8888;
 
     void *data = calloc((int)(POTWide * POTHigh * 4), 1);
     if (! data)
