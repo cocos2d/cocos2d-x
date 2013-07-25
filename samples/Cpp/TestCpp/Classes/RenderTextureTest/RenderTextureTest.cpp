@@ -147,8 +147,8 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
     char jpg[20];
     sprintf(jpg, "image-%d.jpg", counter);
 
-    _target->saveToFile(png, kImageFormatPNG);
-    _target->saveToFile(jpg, kImageFormatJPEG);
+    _target->saveToFile(png, Image::FORMAT_PNG);
+    _target->saveToFile(jpg, Image::FORMAT_JPG);
     
 
     Image *pImage = _target->newImage();

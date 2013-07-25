@@ -902,8 +902,9 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesOneByOne;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesAllAtOnce;
 CC_DEPRECATED_ATTRIBUTE typedef enum Layer::TouchesMode ccTouchesMode;
 
-#define kCCImageFormatPNG   kImageFormatPNG
-#define kCCImageFormatJPEG  kImageFormatJPEG
+CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatPNG;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatJPEG;
+CC_DEPRECATED_ATTRIBUTE typedef enum Image::Format tImageFormat;
 
 #define kCCTransitionOrientationLeftOver    kTransitionOrientationLeftOver
 #define kCCTransitionOrientationRightOver   kTransitionOrientationRightOver

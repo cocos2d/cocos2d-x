@@ -145,4 +145,7 @@ const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
 const int kCCTouchesOneByOne = Layer::TOUCHES_ONE_BY_ONE;
 const int kCCTouchesAllAtOnce = Layer::TOUCHES_ALL_AT_ONCE;
 
+const int kCCImageFormatPNG = Image::FORMAT_PNG;
+const int kCCImageFormatJPEG = Image::FORMAT_JPG;
+
 NS_CC_END

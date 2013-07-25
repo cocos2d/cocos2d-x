@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
 #include "kazmath/mat4.h"
+#include "platform/CCImage.h"
 
 NS_CC_BEGIN
 
@@ -36,11 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef enum eImageFormat
-{
-    kImageFormatJPEG      = 0,
-    kImageFormatPNG       = 1,
-} tImageFormat;
 /**
 @brief RenderTexture is a generic rendering target. To render things into it,
 simply construct a render target, call begin on it, call visit on any cocos
@@ -117,7 +113,7 @@ public:
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
-    bool saveToFile(const char *name, tImageFormat format);
+    bool saveToFile(const char *name, Image::Format format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
