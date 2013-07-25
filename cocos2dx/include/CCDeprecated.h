@@ -836,11 +836,11 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 #define    kCCAttributeNamePosition        kAttributeNamePosition
 #define    kCCAttributeNameTexCoord        kAttributeNameTexCoord
 
-#define kCCVertexAttribFlag_None         kVertexAttribFlag_None
-#define kCCVertexAttribFlag_Position     kVertexAttribFlag_Position
-#define kCCVertexAttribFlag_Color        kVertexAttribFlag_Color
-#define kCCVertexAttribFlag_TexCoords    kVertexAttribFlag_TexCoords
-#define kCCVertexAttribFlag_PosColorTex  kVertexAttribFlag_PosColorTex
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = VERTEX_ATTRIB_FLAT_NONE;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = VERTEX_ATTRIB_FLAG_POSITION;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = VERTEX_ATTRIB_FLAG_COLOR;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = VERTEX_ATTRIB_FLAG_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
 #define kCCProgressTimerTypeRadial kProgressTimerTypeRadial
 #define kCCProgressTimerTypeBar    kProgressTimerTypeBar

@@ -762,7 +762,7 @@ void LayerColor::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_Color );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_COLOR );
 
     //
     // Attributes

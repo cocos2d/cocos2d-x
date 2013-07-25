@@ -331,7 +331,7 @@ void MotionStreak::draw()
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
     ccGLBindTexture2D( _texture->getName() );
