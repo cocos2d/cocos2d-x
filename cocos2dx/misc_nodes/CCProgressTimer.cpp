@@ -45,7 +45,7 @@ const char kProgressTextureCoords = 0x4b;
 
 
 ProgressTimer::ProgressTimer()
-:_type(kProgressTimerTypeRadial)
+:_type(RADIAL)
 ,_percentage(0.0f)
 ,_sprite(NULL)
 ,_vertexDataCount(0)
@@ -78,7 +78,7 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     _vertexDataCount = 0;
 
     setAnchorPoint(Point(0.5f,0.5f));
-    _type = kProgressTimerTypeRadial;
+    _type = RADIAL;
     _reverseDirection = false;
     setMidpoint(Point(0.5f, 0.5f));
     setBarChangeRate(Point(1,1));
@@ -121,7 +121,7 @@ void ProgressTimer::setSprite(Sprite *pSprite)
     }        
 }
 
-void ProgressTimer::setType(ProgressTimerType type)
+void ProgressTimer::setType(Type type)
 {
     if (type != _type)
     {
@@ -225,10 +225,10 @@ void ProgressTimer::updateProgress(void)
 {
     switch (_type)
     {
-    case kProgressTimerTypeRadial:
+    case RADIAL:
         updateRadial();
         break;
-    case kProgressTimerTypeBar:
+    case BAR:
         updateBar();
         break;
     default:
@@ -527,11 +527,11 @@ void ProgressTimer::draw(void)
     glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
 #endif // EMSCRIPTEN
 
-    if(_type == kProgressTimerTypeRadial)
+    if(_type == RADIAL)
     {
         glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
     } 
-    else if (_type == kProgressTimerTypeBar)
+    else if (_type == BAR)
     {
         if (!_reverseDirection) 
         {
