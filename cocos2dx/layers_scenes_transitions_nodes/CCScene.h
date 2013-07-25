@@ -55,7 +55,7 @@ public:
     Scene();
     virtual ~Scene();
     
-    bool init();
+    virtual bool init() override;
 
 };
 
