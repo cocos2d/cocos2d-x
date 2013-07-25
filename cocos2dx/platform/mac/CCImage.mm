@@ -542,7 +542,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
     std::string strTemp = FileUtils::getInstance()->fullPathForFilename(strPath);
 	if (_enabledScale)
@@ -585,7 +585,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
 	return ret;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     /*
      * FileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
@@ -786,7 +786,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 //bool Image::initWithImageData(void * pData, int nDataLen, EImageFormat eFmt/* = eSrcFmtPng*/)
 bool Image::initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt,
+                           Format eFmt,
                            int nWidth,
                            int nHeight,
                            int nBitsPerComponent)
@@ -797,11 +797,11 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == kFmtRawData)
+        if (eFmt == FORMAT_RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == Image::kFmtWebp)
+        else if (eFmt == Image::FORMAT_WEBP)
         {
             bRet = _initWithWebpData(pData, nDataLen);
         }
@@ -813,7 +813,7 @@ bool Image::initWithImageData(void * pData,
                 _height = (short)info.height;
                 _width = (short)info.width;
                 _bitsPerComponent = info.bitsPerComponent;
-                if (eFmt == kFmtJpg)
+                if (eFmt == FORMAT_JPG)
                 {
                     _hasAlpha = true;
                     _preMulti = false;

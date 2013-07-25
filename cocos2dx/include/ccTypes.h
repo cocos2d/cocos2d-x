@@ -304,7 +304,7 @@ struct BlendFunc
     const static BlendFunc BLEND_FUNC_DISABLE;
 };
 
-class Label
+class Label : public Object
 {
 public:
     // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
