@@ -390,26 +390,26 @@ CC_DEPRECATED_ATTRIBUTE inline Rect CCRectMake(float x, float y, float width, fl
 }
 
 
-CC_DEPRECATED_ATTRIBUTE const Point CCPointZero = Point::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Point CCPointZero;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
-CC_DEPRECATED_ATTRIBUTE const Size CCSizeZero = Size::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Size CCSizeZero;
 
 /* The "zero" rectangle -- equivalent to Rect(0, 0, 0, 0). */
-CC_DEPRECATED_ATTRIBUTE const Rect CCRectZero = Rect::ZERO;
+CC_DEPRECATED_ATTRIBUTE extern const Rect CCRectZero;
 
 
-CC_DEPRECATED_ATTRIBUTE const Color3B ccWHITE = Color3B::WHITE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccYELLOW = Color3B::YELLOW;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccGREEN = Color3B::GREEN;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccBLUE = Color3B::BLUE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccRED = Color3B::RED;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccMAGENTA = Color3B::MAGENTA;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccBLACK = Color3B::BLACK;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccORANGE = Color3B::ORANGE;
-CC_DEPRECATED_ATTRIBUTE const Color3B ccGRAY = Color3B::GRAY;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccWHITE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccYELLOW;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGREEN;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLUE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccRED;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccMAGENTA;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLACK;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccORANGE;
+CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGRAY;
 
-CC_DEPRECATED_ATTRIBUTE const BlendFunc kBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kCCBlendFuncDisable;
 
 CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(GLubyte r, GLubyte g, GLubyte b)
 {
@@ -471,9 +471,20 @@ CC_DEPRECATED_ATTRIBUTE static inline Tex2F tex2(const float u, const float v)
     return t;
 }
 
-#define CCAffineTransformMake AffineTransformMake
-#define CCPointApplyAffineTransform PointApplyAffineTransform
-#define CCSizeApplyAffineTransform SizeApplyAffineTransform
+CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty)
+{
+    return AffineTransformMake(a, b, c, d, tx, ty);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Point CCPointApplyAffineTransform(const Point& point, const AffineTransform& t)
+{
+    return PointApplyAffineTransform(point, t);
+}
+
+CC_DEPRECATED_ATTRIBUTE static inline Size CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t)
+{
+    return SizeApplyAffineTransform(size, t);
+}
 
 CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformMakeIdentity()
 {
@@ -515,8 +526,10 @@ CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformInvert(co
     return AffineTransformInvert(t);
 }
 
-#define CCAffineTransformIdentity   AffineTransformIdentity
-
+CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformIdentity()
+{
+    return AffineTransformMakeIdentity();
+}
 
 // CC prefix compatibility
 CC_DEPRECATED_ATTRIBUTE typedef Object CCObject;
@@ -791,119 +804,131 @@ CC_DEPRECATED_ATTRIBUTE typedef FontShadow ccFontShadow;
 CC_DEPRECATED_ATTRIBUTE typedef FontStroke ccFontStroke;
 CC_DEPRECATED_ATTRIBUTE typedef FontDefinition ccFontDefinition;
 
-CC_DEPRECATED_ATTRIBUTE typedef VerticalTextAlignment CCVerticalTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef TextAlignment CCTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef ProgressTimerType CCProgressTimerType;
+CC_DEPRECATED_ATTRIBUTE typedef Label::VerticalTextAlignment CCVerticalTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef Label::TextAlignment CCTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
-#define kCCVertexAttrib_Position     kVertexAttrib_Position
-#define kCCVertexAttrib_Color        kVertexAttrib_Color
-#define kCCVertexAttrib_TexCoords    kVertexAttrib_TexCoords
-#define kCCVertexAttrib_MAX          kVertexAttrib_MAX
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Position;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Color;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_TexCoords;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_MAX;
 
-#define kCCUniformPMatrix    kUniformPMatrix
-#define kCCUniformMVMatrix   kUniformMVMatrix
-#define kCCUniformMVPMatrix  kUniformMVPMatrix
-#define kCCUniformTime       kUniformTime
-#define kCCUniformSinTime    kUniformSinTime
-#define kCCUniformCosTime    kUniformCosTime
-#define kCCUniformRandom01   kUniformRandom01
-#define kCCUniformSampler    kUniformSampler
-#define kCCUniform_MAX       kUniform_MAX
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformPMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVPMatrix;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSinTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformCosTime;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformRandom01;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSampler;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCUniform_MAX;
 
-
-#define kCCShader_PositionTextureColor              kShader_PositionTextureColor
-#define kCCShader_PositionTextureColorAlphaTest     kShader_PositionTextureColorAlphaTest
-#define kCCShader_PositionColor                     kShader_PositionColor
-#define kCCShader_PositionTexture                   kShader_PositionTexture
-#define kCCShader_PositionTexture_uColor            kShader_PositionTexture_uColor
-#define kCCShader_PositionTextureA8Color            kShader_PositionTextureA8Color
-#define kCCShader_Position_uColor                   kShader_Position_uColor
-#define kCCShader_PositionLengthTexureColor         kShader_PositionLengthTexureColor
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColorAlphaTest;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTexture;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTexture_uColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureA8Color;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_Position_uColor;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionLengthTexureColor;
 
 // uniform names
-#define kCCUniformPMatrix_s				kUniformPMatrix_s
-#define kCCUniformMVMatrix_s			kUniformMVMatrix_s
-#define kCCUniformMVPMatrix_s			kUniformMVPMatrix_s
-#define kCCUniformTime_s				kUniformTime_s
-#define kCCUniformSinTime_s				kUniformSinTime_s
-#define kCCUniformCosTime_s				kUniformCosTime_s
-#define kCCUniformRandom01_s			kUniformRandom01_s
-#define kCCUniformSampler_s				kUniformSampler_s
-#define kCCUniformAlphaTestValue		kUniformAlphaTestValue
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformPMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformMVMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformMVPMatrix_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformSinTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformCosTime_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformRandom01_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformSampler_s;
+CC_DEPRECATED_ATTRIBUTE extern const char* kCCUniformAlphaTestValue;
 
 // Attribute names
-#define    kCCAttributeNameColor           kAttributeNameColor
-#define    kCCAttributeNamePosition        kAttributeNamePosition
-#define    kCCAttributeNameTexCoord        kAttributeNameTexCoord
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameColor;
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNamePosition;
+CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 
-#define kCCVertexAttribFlag_None         kVertexAttribFlag_None
-#define kCCVertexAttribFlag_Position     kVertexAttribFlag_Position
-#define kCCVertexAttribFlag_Color        kVertexAttribFlag_Color
-#define kCCVertexAttribFlag_TexCoords    kVertexAttribFlag_TexCoords
-#define kCCVertexAttribFlag_PosColorTex  kVertexAttribFlag_PosColorTex
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_None;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Position;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Color;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_TexCoords;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_PosColorTex;
 
-#define kCCProgressTimerTypeRadial kProgressTimerTypeRadial
-#define kCCProgressTimerTypeBar    kProgressTimerTypeBar
+CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeRadial;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeBar;
+CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
 
-#define kCCDirectorProjection2D         kDirectorProjection2D
-#define kCCDirectorProjection3D         kDirectorProjection3D
-#define kCCDirectorProjectionCustom     kDirectorProjectionCustom
-#define kCCDirectorProjectionDefault    kDirectorProjectionDefault
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection2D;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjection3D; 
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionCustom;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCDirectorProjectionDefault;
+CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
-#define kCCVerticalTextAlignmentTop     kVerticalTextAlignmentTop
-#define kCCVerticalTextAlignmentCenter  kVerticalTextAlignmentCenter
-#define kCCVerticalTextAlignmentBottom  kVerticalTextAlignmentBottom
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationError;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationString;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationInt;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationDouble;
+CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationBoolean;
+CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
 
-#define kCCTextAlignmentLeft        kTextAlignmentLeft
-#define kCCTextAlignmentCenter      kTextAlignmentCenter
-#define kCCTextAlignmentRight       kTextAlignmentRight
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentTop;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCVerticalTextAlignmentBottom;
 
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentLeft;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentCenter;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentRight;
 
-#define kCCTexture2DPixelFormat_RGBA8888    kTexture2DPixelFormat_RGBA8888
-#define kCCTexture2DPixelFormat_RGB888      kTexture2DPixelFormat_RGB888
-#define kCCTexture2DPixelFormat_RGB565      kTexture2DPixelFormat_RGB565
-#define kCCTexture2DPixelFormat_A8          kTexture2DPixelFormat_A8
-#define kCCTexture2DPixelFormat_I8          kTexture2DPixelFormat_I8
-#define kCCTexture2DPixelFormat_AI88        kTexture2DPixelFormat_AI88
-#define kCCTexture2DPixelFormat_RGBA4444    kTexture2DPixelFormat_RGBA4444
-#define kCCTexture2DPixelFormat_RGB5A1      kTexture2DPixelFormat_RGB5A1
-#define kCCTexture2DPixelFormat_PVRTC4      kTexture2DPixelFormat_PVRTC4
-#define kCCTexture2DPixelFormat_PVRTC2      kTexture2DPixelFormat_PVRTC2
-#define kCCTexture2DPixelFormat_Default       kTexture2DPixelFormat_Default
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA8888;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB888;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB565;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_A8;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_I8;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_AI88;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA4444;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB5A1;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC4;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC2;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_Default;
+CC_DEPRECATED_ATTRIBUTE typedef enum Texture2D::PixelFormat CCTexture2DPixelFormat;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
-#define kCCParticleDurationInfinity   kParticleDurationInfinity
-#define kCCParticleStartSizeEqualToEndSize   kParticleStartSizeEqualToEndSize
-#define kCCParticleStartRadiusEqualToEndRadius   kParticleStartRadiusEqualToEndRadius
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDurationInfinity;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartSizeEqualToEndSize;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartRadiusEqualToEndRadius;
 
-#define kCCParticleModeGravity      kParticleModeGravity
-#define kCCParticleModeRadius       kParticleModeRadius
-#define kCCPositionTypeFree         kPositionTypeFree
-#define kCCPositionTypeRelative     kPositionTypeRelative
-#define kCCPositionTypeGrouped      kPositionTypeGrouped
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeGravity;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeRadius;
 
-#define kCCBlendFuncDisable   kBlendFuncDisable
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeFree;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeRelative;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeGrouped;
+CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
-#define kCCMenuHandlerPriority        kMenuHandlerPriority
-#define kCCMenuStateWaiting           kMenuStateWaiting
-#define kCCMenuStateTrackingTouch     kMenuStateTrackingTouch
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateWaiting;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateTrackingTouch;
+CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
 
-#define kCCTouchesOneByOne      kTouchesOneByOne
-#define kCCTouchesAllAtOnce     kTouchesAllAtOnce
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesOneByOne;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesAllAtOnce;
+CC_DEPRECATED_ATTRIBUTE typedef enum Layer::TouchesMode ccTouchesMode;
 
-#define kCCImageFormatPNG   kImageFormatPNG
-#define kCCImageFormatJPEG  kImageFormatJPEG
+CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatPNG;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCImageFormatJPEG;
+CC_DEPRECATED_ATTRIBUTE typedef enum Image::Format tImageFormat;
 
-#define kCCTransitionOrientationLeftOver    kTransitionOrientationLeftOver
-#define kCCTransitionOrientationRightOver   kTransitionOrientationRightOver
-#define kCCTransitionOrientationUpOver      kTransitionOrientationUpOver
-#define kCCTransitionOrientationDownOver    kTransitionOrientationDownOver
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationLeftOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationRightOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationUpOver;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTransitionOrientationDownOver;
+CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
 
-#define kCCPrioritySystem           kPrioritySystem
-#define kCCPriorityNonSystemMin     kPriorityNonSystemMin
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
 
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag

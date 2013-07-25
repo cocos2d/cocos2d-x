@@ -36,16 +36,8 @@ NS_CC_BEGIN
  * @addtogroup menu
  * @{
  */
-typedef enum  
-{
-    kMenuStateWaiting,
-    kMenuStateTrackingTouch
-} tMenuState;
 
-enum {
-    //* priority used by the menu for the event handler
-    kMenuHandlerPriority = -128,
-};
+
 
 /** @brief A Menu
 * 
@@ -56,6 +48,17 @@ enum {
 class CC_DLL Menu : public LayerRGBA
 {
 public:
+    enum
+    {
+        HANDLER_PRIORITY = -128,
+    };
+    
+    enum State
+    {
+        STATE_WAITING,
+        STATE_TRACKING_TOUCH,
+    };
+    
     /** creates an empty Menu */
     static Menu* create();
 
@@ -133,7 +136,7 @@ protected:
     bool _enabled;
 
     MenuItem* itemForTouch(Touch * touch);
-    tMenuState _state;
+    State _state;
     MenuItem *_selectedItem;
 };
 

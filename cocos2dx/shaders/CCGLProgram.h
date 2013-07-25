@@ -40,52 +40,6 @@ NS_CC_BEGIN
  * @{
  */
 
-enum {
-    kVertexAttrib_Position,
-    kVertexAttrib_Color,
-    kVertexAttrib_TexCoords,
-
-    kVertexAttrib_MAX,
-};
-
-enum {
-	kUniformPMatrix,
-	kUniformMVMatrix,
-	kUniformMVPMatrix,
-	kUniformTime,
-	kUniformSinTime,
-	kUniformCosTime,
-	kUniformRandom01,
-	kUniformSampler,
-    
-	kUniform_MAX,
-};
-
-#define kShader_PositionTextureColor              "ShaderPositionTextureColor"
-#define kShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
-#define kShader_PositionColor                     "ShaderPositionColor"
-#define kShader_PositionTexture                   "ShaderPositionTexture"
-#define kShader_PositionTexture_uColor            "ShaderPositionTexture_uColor"
-#define kShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
-#define kShader_Position_uColor                   "ShaderPosition_uColor"
-#define kShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
-
-// uniform names
-#define kUniformPMatrix_s				"CC_PMatrix"
-#define kUniformMVMatrix_s			"CC_MVMatrix"
-#define kUniformMVPMatrix_s			"CC_MVPMatrix"
-#define kUniformTime_s				"CC_Time"
-#define kUniformSinTime_s				"CC_SinTime"
-#define kUniformCosTime_s				"CC_CosTime"
-#define kUniformRandom01_s			"CC_Random01"
-#define kUniformSampler_s				"CC_Texture0"
-#define kUniformAlphaTestValue		"CC_alpha_value"
-
-// Attribute names
-#define    kAttributeNameColor           "a_color"
-#define    kAttributeNamePosition        "a_position"
-#define    kAttributeNameTexCoord        "a_texCoord"
-
 struct _hashUniformEntry;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
@@ -100,6 +54,54 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 class CC_DLL GLProgram : public Object
 {
 public:
+    enum
+    {
+        VERTEX_ATTRIB_POSITION,
+        VERTEX_ATTRIB_COLOR,
+        VERTEX_ATTRIB_TEX_COORDS,
+        
+        VERTEX_ATTRIB_MAX,
+    };
+    
+    enum
+    {
+        UNIFORM_P_MATRIX,
+        UNIFORM_MV_MATRIX,
+        UNIFORM_MVP_MATRIX,
+        UNIFORM_TIME,
+        UNIFORM_SIN_TIME,
+        UNIFORM_COS_TIME,
+        UNIFORM_RANDOM01,
+        UNIFORM_SAMPLER,
+        
+        UNIFORM_MAX,
+    };
+    
+    static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
+    static const char* SHADER_NAME_POSITION_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE;
+    static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
+    static const char* SHADER_NAME_POSITION_U_COLOR;
+    static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
+    
+    // uniform names
+    static const char* UNIFORM_NAME_P_MATRIX;
+    static const char* UNIFORM_NAME_MV_MATRIX;
+    static const char* UNIFORM_NAME_MVP_MATRIX;
+    static const char* UNIFORM_NAME_TIME;
+    static const char* UNIFORM_NAME_SIN_TIME;
+    static const char* UNIFORM_NAME_COS_TIME;
+    static const char* UNIFORM_NAME_RANDOM01;
+    static const char* UNIFORM_NAME_SAMPLER;
+    static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
+    
+    // Attribute names
+    static const char* ATTRIBUTE_NAME_COLOR;
+    static const char* ATTRIBUTE_NAME_POSITION;
+    static const char* ATTRIBUTE_NAME_TEX_COORD;
+    
     GLProgram();
     virtual ~GLProgram();
     /** Initializes the GLProgram with a vertex and fragment with bytes array */
@@ -116,9 +118,9 @@ public:
     - kUniformPMatrix
     - kUniformMVMatrix
     - kUniformMVPMatrix
-    - kUniformSampler
+    - GLProgram::UNIFORM_SAMPLER
 
- And it will bind "kUniformSampler" to 0
+ And it will bind "GLProgram::UNIFORM_SAMPLER" to 0
 
  */
     void updateUniforms();
@@ -198,7 +200,7 @@ private:
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;
-    GLint             _uniforms[kUniform_MAX];
+    GLint             _uniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
     bool              _usesTime;
 };
