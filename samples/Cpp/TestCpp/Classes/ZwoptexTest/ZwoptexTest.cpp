@@ -24,10 +24,10 @@ Layer* nextZwoptexTest()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backZwoptexTest()
@@ -37,18 +37,18 @@ Layer* backZwoptexTest()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartZwoptexTest()
 {
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 //------------------------------------------------------------------
@@ -210,8 +210,8 @@ std::string ZwoptexGenericTest::subtitle()
 
 void ZwoptexTestScene::runThisTest()
 {
-    Layer* pLayer = nextZwoptexTest();
-    addChild(pLayer);
+    Layer* layer = nextZwoptexTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

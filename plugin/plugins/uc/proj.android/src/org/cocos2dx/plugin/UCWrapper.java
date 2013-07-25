@@ -109,13 +109,13 @@ public class UCWrapper {
         Configuration config = ctx.getResources().getConfiguration();
         int orientation = config.orientation;
 
-        if (orientation != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
-            orientation != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        if (orientation != Configuration.ORIENTATION_LANDSCAPE &&
+            orientation != Configuration.ORIENTATION_PORTRAIT)
         {
-            orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            orientation = Configuration.ORIENTATION_PORTRAIT;
         }
 
-        return (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        return (orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
     public static String getSDKVersion() {

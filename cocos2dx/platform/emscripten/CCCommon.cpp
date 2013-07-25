@@ -28,7 +28,20 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
+// XXX deprecated
 void CCLog(const char * pszFormat, ...)
+{
+    char buf[MAX_LEN];
+
+    va_list args;
+    va_start(args, pszFormat);        
+    vsnprintf(buf, MAX_LEN, pszFormat, args);
+    va_end(args);
+	
+	fprintf(stderr, "cocos2d-x debug info %s\n",  buf);
+}
+
+void log(const char * pszFormat, ...)
 {
     char buf[MAX_LEN];
 
@@ -43,7 +56,7 @@ void CCLog(const char * pszFormat, ...)
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
 //    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
-	CCLog(pszMsg);
+	log(pszMsg);
 }
 
 void LuaLog(const char * pszFormat)

@@ -97,9 +97,9 @@ UserDefaultTest::~UserDefaultTest()
 
 void UserDefaultTestScene::runThisTest()
 {
-    Layer* pLayer = new UserDefaultTest();
-    addChild(pLayer);
+    Layer* layer = new UserDefaultTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }

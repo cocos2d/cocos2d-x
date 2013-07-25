@@ -86,6 +86,8 @@
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
 		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
+		1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
+		1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
 		1A6FB50617854BC200CDF010 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196951785201F00D62A44 /* tolua_event.c */; };
 		1A6FB50717854BC200CDF010 /* tolua_is.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196971785201F00D62A44 /* tolua_is.c */; };
 		1A6FB50817854BC200CDF010 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196981785201F00D62A44 /* tolua_map.c */; };
@@ -2066,6 +2068,7 @@
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDeprecated-ext.h"; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
@@ -4443,6 +4446,7 @@
 				A03F2FD9178145F2006731B9 /* AssetsManager */,
 				A03F2FDC178145F2006731B9 /* CCArmature */,
 				A03F3027178145F2006731B9 /* CCBReader */,
+				1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */,
 				A03F305A178145F3006731B9 /* cocos-ext.h */,
 				A03F305B178145F3006731B9 /* Components */,
 				A03F3064178145F3006731B9 /* ExtensionMacros.h */,
@@ -5769,42 +5773,7 @@
 				A03F31E0178145F3006731B9 /* spine-cocos2dx.h in Headers */,
 				A03F31E1178145F3006731B9 /* spine.h in Headers */,
 				1AE019861790023400D574A8 /* SocketIO.h in Headers */,
-				3C6AE8C5179D570D00B4FC38 /* CCJsonReader.h in Headers */,
-				3C6AE8C9179D570D00B4FC38 /* DictionaryHelper.h in Headers */,
-				3C6AE8CB179D570D00B4FC38 /* EncodedHelper.h in Headers */,
-				3C6AE917179D571E00B4FC38 /* UIAction.h in Headers */,
-				3C6AE91B179D571E00B4FC38 /* UIActionFrame.h in Headers */,
-				3C6AE923179D571E00B4FC38 /* UIActionManager.h in Headers */,
-				3C6AE927179D571E00B4FC38 /* UIActionNode.h in Headers */,
-				3C6AE92B179D571E00B4FC38 /* UIContainerWidget.h in Headers */,
-				3C6AE92F179D571E00B4FC38 /* UIRootWidget.h in Headers */,
-				3C6AE933179D571E00B4FC38 /* UIWidget.h in Headers */,
-				3C6AE937179D571E00B4FC38 /* UICCLabelAtlas.h in Headers */,
-				3C6AE93B179D571E00B4FC38 /* UIClippingLayer.h in Headers */,
-				3C6AE93F179D571E00B4FC38 /* CCSReader.h in Headers */,
-				3C6AE943179D571E00B4FC38 /* CocosGUI.h in Headers */,
-				3C6AE947179D571E00B4FC38 /* UIHelper.h in Headers */,
-				3C6AE94B179D571E00B4FC38 /* UIInputManager.h in Headers */,
-				3C6AE94F179D571E00B4FC38 /* UILayer.h in Headers */,
-				3C6AE953179D571E00B4FC38 /* UIButton.h in Headers */,
-				3C6AE957179D571E00B4FC38 /* UICheckBox.h in Headers */,
-				3C6AE95B179D571E00B4FC38 /* UIControlButton.h in Headers */,
-				3C6AE95F179D571E00B4FC38 /* UIImageView.h in Headers */,
-				3C6AE963179D571E00B4FC38 /* UILabel.h in Headers */,
-				3C6AE967179D571E00B4FC38 /* UILabelAtlas.h in Headers */,
-				3C6AE96B179D571E00B4FC38 /* UILabelBMFont.h in Headers */,
-				3C6AE96F179D571E00B4FC38 /* UIListView.h in Headers */,
-				3C6AE973179D571E00B4FC38 /* UILoadingBar.h in Headers */,
-				3C6AE977179D571E00B4FC38 /* UINodeContainer.h in Headers */,
-				3C6AE97B179D571E00B4FC38 /* UIPageView.h in Headers */,
-				3C6AE97F179D571E00B4FC38 /* UIPanel.h in Headers */,
-				3C6AE983179D571E00B4FC38 /* UIScrollView.h in Headers */,
-				3C6AE987179D571E00B4FC38 /* UISlider.h in Headers */,
-				3C6AE98B179D571E00B4FC38 /* UISwitch.h in Headers */,
-				3C6AE98F179D571E00B4FC38 /* UITextArea.h in Headers */,
-				3C6AE993179D571E00B4FC38 /* UITextButton.h in Headers */,
-				3C6AE997179D571E00B4FC38 /* UITextField.h in Headers */,
-				3C6AE99D179D5E3F00B4FC38 /* CCComRender.h in Headers */,
+				1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6230,42 +6199,7 @@
 				A07A4EF71783867C0073F6A7 /* spine-cocos2dx.h in Headers */,
 				A07A4EF81783867C0073F6A7 /* spine.h in Headers */,
 				1AE019871790023400D574A8 /* SocketIO.h in Headers */,
-				3C6AE8C6179D570D00B4FC38 /* CCJsonReader.h in Headers */,
-				3C6AE8CA179D570D00B4FC38 /* DictionaryHelper.h in Headers */,
-				3C6AE8CC179D570D00B4FC38 /* EncodedHelper.h in Headers */,
-				3C6AE918179D571E00B4FC38 /* UIAction.h in Headers */,
-				3C6AE91C179D571E00B4FC38 /* UIActionFrame.h in Headers */,
-				3C6AE924179D571E00B4FC38 /* UIActionManager.h in Headers */,
-				3C6AE928179D571E00B4FC38 /* UIActionNode.h in Headers */,
-				3C6AE92C179D571E00B4FC38 /* UIContainerWidget.h in Headers */,
-				3C6AE930179D571E00B4FC38 /* UIRootWidget.h in Headers */,
-				3C6AE934179D571E00B4FC38 /* UIWidget.h in Headers */,
-				3C6AE938179D571E00B4FC38 /* UICCLabelAtlas.h in Headers */,
-				3C6AE93C179D571E00B4FC38 /* UIClippingLayer.h in Headers */,
-				3C6AE940179D571E00B4FC38 /* CCSReader.h in Headers */,
-				3C6AE944179D571E00B4FC38 /* CocosGUI.h in Headers */,
-				3C6AE948179D571E00B4FC38 /* UIHelper.h in Headers */,
-				3C6AE94C179D571E00B4FC38 /* UIInputManager.h in Headers */,
-				3C6AE950179D571E00B4FC38 /* UILayer.h in Headers */,
-				3C6AE954179D571E00B4FC38 /* UIButton.h in Headers */,
-				3C6AE958179D571E00B4FC38 /* UICheckBox.h in Headers */,
-				3C6AE95C179D571E00B4FC38 /* UIControlButton.h in Headers */,
-				3C6AE960179D571E00B4FC38 /* UIImageView.h in Headers */,
-				3C6AE964179D571E00B4FC38 /* UILabel.h in Headers */,
-				3C6AE968179D571E00B4FC38 /* UILabelAtlas.h in Headers */,
-				3C6AE96C179D571E00B4FC38 /* UILabelBMFont.h in Headers */,
-				3C6AE970179D571E00B4FC38 /* UIListView.h in Headers */,
-				3C6AE974179D571E00B4FC38 /* UILoadingBar.h in Headers */,
-				3C6AE978179D571E00B4FC38 /* UINodeContainer.h in Headers */,
-				3C6AE97C179D571E00B4FC38 /* UIPageView.h in Headers */,
-				3C6AE980179D571E00B4FC38 /* UIPanel.h in Headers */,
-				3C6AE984179D571E00B4FC38 /* UIScrollView.h in Headers */,
-				3C6AE988179D571E00B4FC38 /* UISlider.h in Headers */,
-				3C6AE98C179D571E00B4FC38 /* UISwitch.h in Headers */,
-				3C6AE990179D571E00B4FC38 /* UITextArea.h in Headers */,
-				3C6AE994179D571E00B4FC38 /* UITextButton.h in Headers */,
-				3C6AE998179D571E00B4FC38 /* UITextField.h in Headers */,
-				3C6AE99E179D5E3F00B4FC38 /* CCComRender.h in Headers */,
+				1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,10 @@ enum
 
 void ClickAndMoveTestScene::runThisTest()
 {
-    Layer* pLayer = new MainLayer();
-    pLayer->autorelease();
+    Layer* layer = new MainLayer();
+    layer->autorelease();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
 
@@ -19,7 +19,7 @@ MainLayer::MainLayer()
 {
     setTouchEnabled(true);
     
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     
     Layer* layer = LayerColor::create(Color4B(255,255,0,255));
     addChild(layer, -1);

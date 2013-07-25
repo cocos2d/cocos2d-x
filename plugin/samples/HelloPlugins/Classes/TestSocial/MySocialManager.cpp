@@ -41,7 +41,7 @@ MySocialManager::~MySocialManager()
     unloadPlugins();
 }
 
-MySocialManager* MySocialManager::sharedManager()
+MySocialManager* MySocialManager::getInstance()
 {
     if (s_pManager == NULL) {
         s_pManager = new MySocialManager();

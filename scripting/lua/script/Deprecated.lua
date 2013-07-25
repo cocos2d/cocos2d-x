@@ -16,26 +16,26 @@ rawset(_G,"ccpLineIntersect",ccpLineIntersect)
 
 
 local function CCPointMake(x,y)
-    deprecatedTip("CCPointMake","CCPoint:__call")
-    return CCPoint:__call(x,y)
+    deprecatedTip("CCPointMake(x,y)","CCPoint(x,y)")
+    return CCPoint(x,y)
 end 
 rawset(_G,"CCPointMake",CCPointMake)
 
 local function ccp(x,y)
-    deprecatedTip("ccp","CCPoint:__call")
-    return CCPoint:__call(x,y)
+    deprecatedTip("ccp(x,y)","CCPoint(x,y)")
+    return CCPoint(x,y)
 end 
 rawset(_G,"ccp",ccp)
 
 local function CCSizeMake(width,height)
-    deprecatedTip("CCSizeMake","CCSize:__call")
-    return CCSize:__call(width,height)
+    deprecatedTip("CCSizeMake(width,height)","CCSize(width,height)")
+    return CCSize(width,height)
 end
 rawset(_G,"CCSizeMake",CCSizeMake)
 
 local function CCRectMake(x,y,width,height)
-    deprecatedTip("CCRectMake","CCRect:__call")
-    return CCRect:__call(x,y,width,height)
+    deprecatedTip("CCRectMake(x,y,width,height)","CCRect(x,y,width,height)")
+    return CCRect(x,y,width,height)
 end
 rawset(_G,"CCRectMake",CCRectMake)
 
@@ -162,8 +162,8 @@ rawset(_G,"ccpClamp",ccpClamp)
 
 
 local function ccpFromSize(sz)
-    deprecatedTip("ccpFromSize","CCPoint:__call")
-    return CCPoint:__call(sz)
+    deprecatedTip("ccpFromSize(sz)","CCPoint(sz)")
+    return CCPoint(sz)
 end
 rawset(_G,"ccpFromSize",ccpFromSize)
 
@@ -180,8 +180,8 @@ end
 rawset(_G,"ccpFuzzyEqual",ccpFuzzyEqual)
 
 local function ccpCompMult(pt1,pt2)
-    deprecatedTip("ccpCompMult","CCPoint:__call")
-    return CCPoint:__call(pt1.x * pt2.x , pt1.y * pt2.y)
+    deprecatedTip("ccpCompMult","CCPoint")
+    return CCPoint(pt1.x * pt2.x , pt1.y * pt2.y)
 end
 rawset(_G,"ccpCompMult",ccpCompMult)
 
@@ -450,9 +450,3 @@ local function sharedEngine()
     return SimpleAudioEngine:getInstance()
 end
 rawset(SimpleAudioEngine,"sharedEngine",sharedEngine)
-
-
-
-
-
-

@@ -173,10 +173,10 @@ Layer* nextParallaxAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backParallaxAction()
@@ -186,18 +186,18 @@ Layer* backParallaxAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartParallaxAction()
 {
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -246,8 +246,8 @@ void ParallaxDemo::backCallback(Object* pSender)
 
 void ParallaxTestScene::runThisTest()
 {
-    Layer* pLayer = nextParallaxAction();
+    Layer* layer = nextParallaxAction();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

@@ -37,19 +37,19 @@ USING_NS_CC_EXT;
 public: \
 static Scene* sceneWithTitle(const char * title) \
 { \
-    Scene* pScene = Scene::create(); \
+    Scene* scene = Scene::create(); \
     controlScene* controlLayer = new controlScene(); \
     if (controlLayer && controlLayer->init()) \
     { \
         controlLayer->autorelease(); \
         controlLayer->getSceneTitleLabel()->setString(title); \
-        pScene->addChild(controlLayer); \
+        scene->addChild(controlLayer); \
     } \
     else \
     { \
         CC_SAFE_DELETE(controlLayer); \
     } \
-    return pScene; \
+    return scene; \
 }
 
 

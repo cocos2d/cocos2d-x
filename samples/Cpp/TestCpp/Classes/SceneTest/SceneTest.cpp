@@ -28,7 +28,7 @@ SceneTestLayer1::SceneTestLayer1()
     addChild( menu );
     
     Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
     ActionInterval* rotate = RotateBy::create(2, 360);
@@ -63,29 +63,29 @@ SceneTestLayer1::~SceneTestLayer1()
 void SceneTestLayer1::onPushScene(Object* pSender)
 {
     Scene* scene = new SceneTestScene();
-    Layer* pLayer = new SceneTestLayer2();
-    scene->addChild( pLayer, 0 );
+    Layer* layer = new SceneTestLayer2();
+    scene->addChild( layer, 0 );
     Director::getInstance()->pushScene( scene );
     scene->release();
-    pLayer->release();
+    layer->release();
 }
 
 void SceneTestLayer1::onPushSceneTran(Object* pSender)
 {
     Scene* scene = new SceneTestScene();
-    Layer* pLayer = new SceneTestLayer2();
-    scene->addChild( pLayer, 0 );
+    Layer* layer = new SceneTestLayer2();
+    scene->addChild( layer, 0 );
 
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
     scene->release();
-    pLayer->release();
+    layer->release();
 }
 
 
 void SceneTestLayer1::onQuit(Object* pSender)
 {
     //getCocosApp()->exit();
-    //CCDirector::getInstance()->popScene();
+    //CCDirector::getInstance()->poscene();
 
     //// HA HA... no more terminate on sdk v3.0
     //// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -113,7 +113,7 @@ SceneTestLayer2::SceneTestLayer2()
     addChild( menu );
 
     Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
     ActionInterval* rotate = RotateBy::create(2, 360);
@@ -137,21 +137,21 @@ void SceneTestLayer2::onGoBack(Object* pSender)
 
 void SceneTestLayer2::onReplaceScene(Object* pSender)
 {
-    Scene* pScene = new SceneTestScene();
-    Layer* pLayer = SceneTestLayer3::create();
-    pScene->addChild( pLayer, 0 );
-    Director::getInstance()->replaceScene( pScene );
-    pScene->release();
+    Scene* scene = new SceneTestScene();
+    Layer* layer = SceneTestLayer3::create();
+    scene->addChild( layer, 0 );
+    Director::getInstance()->replaceScene( scene );
+    scene->release();
 }
 
 
 void SceneTestLayer2::onReplaceSceneTran(Object* pSender)
 {
-    Scene* pScene = new SceneTestScene();
-    Layer* pLayer = SceneTestLayer3::create();
-    pScene->addChild( pLayer, 0 );
-    Director::getInstance()->replaceScene( TransitionFlipX::create(2, pScene) );
-    pScene->release();
+    Scene* scene = new SceneTestScene();
+    Layer* layer = SceneTestLayer3::create();
+    scene->addChild( layer, 0 );
+    Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
+    scene->release();
 }
 
 //------------------------------------------------------------------
@@ -172,7 +172,7 @@ bool SceneTestLayer3::init()
         Size s = Director::getInstance()->getWinSize();
 
         MenuItemFont *item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
-        MenuItemFont *item1 = MenuItemFont::create("Touch to popScene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        MenuItemFont *item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
         MenuItemFont *item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
         MenuItemFont *item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
@@ -182,7 +182,7 @@ bool SceneTestLayer3::init()
 
         this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
 
-        Sprite* sprite = Sprite::create(s_pPathGrossini);
+        Sprite* sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
         sprite->setPosition( Point(s.width/2, 40) );
         ActionInterval* rotate = RotateBy::create(2, 360);
@@ -195,7 +195,7 @@ bool SceneTestLayer3::init()
 
 void SceneTestLayer3::testDealloc(float dt)
 {
-    CCLog("Layer3:testDealloc");
+    log("Layer3:testDealloc");
 }
 
 void SceneTestLayer3::item0Clicked(Object* pSender)
@@ -222,9 +222,9 @@ void SceneTestLayer3::item3Clicked(Object* pSender)
 
 void SceneTestScene::runThisTest()
 {
-    Layer* pLayer = new SceneTestLayer1();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new SceneTestLayer1();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

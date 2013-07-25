@@ -49,7 +49,7 @@ IntervalLayer::IntervalLayer()
     addChild(_label4);
 
     // Sprite
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
     sprite->setPosition( Point(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
     
     JumpBy* jump = JumpBy::create(3, Point(s.width-80,0), 50, 4);
@@ -123,9 +123,9 @@ void IntervalLayer::step4(float dt)
 
 void IntervalTestScene::runThisTest()
 {
-    Layer* pLayer = new IntervalLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new IntervalLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }
