@@ -866,17 +866,18 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentLeft;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentCenter;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCTextAlignmentRight;
 
-#define kCCTexture2DPixelFormat_RGBA8888    kTexture2DPixelFormat_RGBA8888
-#define kCCTexture2DPixelFormat_RGB888      kTexture2DPixelFormat_RGB888
-#define kCCTexture2DPixelFormat_RGB565      kTexture2DPixelFormat_RGB565
-#define kCCTexture2DPixelFormat_A8          kTexture2DPixelFormat_A8
-#define kCCTexture2DPixelFormat_I8          kTexture2DPixelFormat_I8
-#define kCCTexture2DPixelFormat_AI88        kTexture2DPixelFormat_AI88
-#define kCCTexture2DPixelFormat_RGBA4444    kTexture2DPixelFormat_RGBA4444
-#define kCCTexture2DPixelFormat_RGB5A1      kTexture2DPixelFormat_RGB5A1
-#define kCCTexture2DPixelFormat_PVRTC4      kTexture2DPixelFormat_PVRTC4
-#define kCCTexture2DPixelFormat_PVRTC2      kTexture2DPixelFormat_PVRTC2
-#define kCCTexture2DPixelFormat_Default     kTexture2DPixelFormat_Default
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA8888;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB888;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB565;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_A8;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_I8;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_AI88;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGBA4444;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_RGB5A1;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC4;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_PVRTC2;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCTexture2DPixelFormat_Default;
+CC_DEPRECATED_ATTRIBUTE typedef enum Texture2D::PixelFormat CCTexture2DPixelFormat;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 

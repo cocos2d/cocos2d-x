@@ -641,7 +641,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 : _texture(t)
 , _cashedImageType(kInvalid)
 , _textureData(NULL)
-, _pixelFormat(kTexture2DPixelFormat_RGBA8888)
+, _pixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888)
 , _fileName("")
 , _fmtImage(Image::kFmtPng)
 , _text("")
@@ -705,7 +705,7 @@ VolatileTexture* VolatileTexture::findVolotileTexture(Texture2D *tt)
     return vt;
 }
 
-void VolatileTexture::addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize)
+void VolatileTexture::addDataTexture(Texture2D *tt, void* data, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
 {
     if (_isReloading)
     {
@@ -785,7 +785,7 @@ void VolatileTexture::reloadAllTextures()
 
                 if (std::string::npos != lowerCase.find(".pvr")) 
                 {
-                    Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
+                    Texture2D::PixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
 
                     vt->_texture->initWithPVRFile(vt->_fileName.c_str());
@@ -799,7 +799,7 @@ void VolatileTexture::reloadAllTextures()
 
                     if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->_fmtImage))
                     {
-                        Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
+                        Texture2D::PixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
                         Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
                         vt->_texture->initWithImage(pImage);
                         Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
