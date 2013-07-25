@@ -26,10 +26,10 @@ class CCTMXTiledMap : public CCNode
     void setProperties(CCDictionary* pval);
     CCDictionary* getProperties();
 
-    CCTMXLayer* layerNamed(const char *layerName);
-    CCTMXObjectGroup* objectGroupNamed(const char *groupName);
-    CCString *propertyNamed(const char *propertyName);
-    CCDictionary *propertiesForGID(int GID);
+    CCTMXLayer* getLayer(const char *layerName);
+    CCTMXObjectGroup* getObjectGroup(const char *groupName);
+    CCString* getProperty(const char *propertyName);
+    CCDictionary* getPropertiesForGID(int GID);
 
     static CCTMXTiledMap * create(const char *tmxFile);
 	static CCTMXTiledMap* createWithXML(const char* tmxString, const char* resourcePath);
