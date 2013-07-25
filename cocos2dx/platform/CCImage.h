@@ -57,7 +57,15 @@ public:
         FORMAT_TIFF,
         FORMAT_WEBP,
         FORMAT_RAW_DATA,
-        FORMAT_UNKOWN
+        FORMAT_UNKOWN,
+        
+        // don't use them
+        kFmtJpg = FORMAT_JPG,
+        kFmtPng = FORMAT_PNG,
+        kFmtTiff = FORMAT_TIFF,
+        kFmtWebp = FORMAT_WEBP,
+        kFmtRawData = FORMAT_RAW_DATA,
+        kFmtUnKnown = FORMAT_UNKOWN
     };
 
     typedef enum
