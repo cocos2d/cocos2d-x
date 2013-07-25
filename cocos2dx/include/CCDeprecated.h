@@ -409,7 +409,7 @@ CC_DEPRECATED_ATTRIBUTE extern const Color3B ccBLACK;
 CC_DEPRECATED_ATTRIBUTE extern const Color3B ccORANGE;
 CC_DEPRECATED_ATTRIBUTE extern const Color3B ccGRAY;
 
-CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kBlendFuncDisable;
+CC_DEPRECATED_ATTRIBUTE extern const BlendFunc kCCBlendFuncDisable;
 
 CC_DEPRECATED_ATTRIBUTE static inline Color3B ccc3(GLubyte r, GLubyte g, GLubyte b)
 {
@@ -893,11 +893,10 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeRelative;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeGrouped;
 CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
-#define kCCBlendFuncDisable   kBlendFuncDisable
-
-#define kCCMenuHandlerPriority        kMenuHandlerPriority
-#define kCCMenuStateWaiting           kMenuStateWaiting
-#define kCCMenuStateTrackingTouch     kMenuStateTrackingTouch
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateWaiting;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateTrackingTouch;
+CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
 
 #define kCCTouchesOneByOne      kTouchesOneByOne
 #define kCCTouchesAllAtOnce     kTouchesAllAtOnce

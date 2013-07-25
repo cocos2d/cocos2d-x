@@ -121,7 +121,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 {
     if (Layer::init())
     {
-        setTouchPriority(kMenuHandlerPriority);
+        setTouchPriority(Menu::HANDLER_PRIORITY);
         setTouchMode(kTouchesOneByOne);
         setTouchEnabled(true);
 
@@ -149,7 +149,7 @@ bool Menu::initWithArray(Array* pArrayOfItems)
     
         //    [self alignItemsVertically];
         _selectedItem = NULL;
-        _state = kMenuStateWaiting;
+        _state = Menu::STATE_WAITING;
         
         // enable cascade color and opacity on menus
         setCascadeColorEnabled(true);
@@ -181,7 +181,7 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 
 void Menu::onExit()
 {
-    if (_state == kMenuStateTrackingTouch)
+    if (_state == Menu::STATE_TRACKING_TOUCH)
     {
         if (_selectedItem)
         {
@@ -189,7 +189,7 @@ void Menu::onExit()
             _selectedItem = NULL;
         }
         
-        _state = kMenuStateWaiting;
+        _state = Menu::STATE_WAITING;
     }
 
     Layer::onExit();
@@ -225,7 +225,7 @@ void Menu::registerWithTouchDispatcher()
 bool Menu::ccTouchBegan(Touch* touch, Event* event)
 {
     CC_UNUSED_PARAM(event);
-    if (_state != kMenuStateWaiting || ! _visible || !_enabled)
+    if (_state != Menu::STATE_WAITING || ! _visible || !_enabled)
     {
         return false;
     }
@@ -241,7 +241,7 @@ bool Menu::ccTouchBegan(Touch* touch, Event* event)
     _selectedItem = this->itemForTouch(touch);
     if (_selectedItem)
     {
-        _state = kMenuStateTrackingTouch;
+        _state = Menu::STATE_TRACKING_TOUCH;
         _selectedItem->selected();
         return true;
     }
@@ -252,31 +252,31 @@ void Menu::ccTouchEnded(Touch *touch, Event* event)
 {
     CC_UNUSED_PARAM(touch);
     CC_UNUSED_PARAM(event);
-    CCASSERT(_state == kMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
+    CCASSERT(_state == Menu::STATE_TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     if (_selectedItem)
     {
         _selectedItem->unselected();
         _selectedItem->activate();
     }
-    _state = kMenuStateWaiting;
+    _state = Menu::STATE_WAITING;
 }
 
 void Menu::ccTouchCancelled(Touch *touch, Event* event)
 {
     CC_UNUSED_PARAM(touch);
     CC_UNUSED_PARAM(event);
-    CCASSERT(_state == kMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
+    CCASSERT(_state == Menu::STATE_TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     if (_selectedItem)
     {
         _selectedItem->unselected();
     }
-    _state = kMenuStateWaiting;
+    _state = Menu::STATE_WAITING;
 }
 
 void Menu::ccTouchMoved(Touch* touch, Event* event)
 {
     CC_UNUSED_PARAM(event);
-    CCASSERT(_state == kMenuStateTrackingTouch, "[Menu ccTouchMoved] -- invalid state");
+    CCASSERT(_state == Menu::STATE_TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->itemForTouch(touch);
     if (currentItem != _selectedItem) 
     {
