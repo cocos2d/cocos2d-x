@@ -146,7 +146,7 @@ bool Director::init(void)
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, kPrioritySystem, false);
+    _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
     // touchDispatcher
     _touchDispatcher = new TouchDispatcher();
     _touchDispatcher->init();
@@ -210,22 +210,22 @@ void Director::setDefaultValues(void)
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if( strcmp(projection, "3d") == 0 )
-		_projection = kDirectorProjection3D;
+		_projection = PROJECTION_3D;
 	else if (strcmp(projection, "2d") == 0)
-		_projection = kDirectorProjection2D;
+		_projection = PROJECTION_2D;
 	else if (strcmp(projection, "custom") == 0)
-		_projection = kDirectorProjectionCustom;
+		_projection = PROJECTION_CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
@@ -385,7 +385,7 @@ void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     _nextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void Director::setProjection(ccDirectorProjection kProjection)
+void Director::setProjection(Projection kProjection)
 {
     Size size = _winSizeInPoints;
 
@@ -393,7 +393,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
 
     switch (kProjection)
     {
-    case kDirectorProjection2D:
+    case PROJECTION_2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
@@ -405,7 +405,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kDirectorProjection3D:
+    case PROJECTION_3D:
         {
             float zeye = this->getZEye();
 
@@ -431,7 +431,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kDirectorProjectionCustom:
+    case PROJECTION_CUSTOM:
         if (_projectionDelegate)
         {
             _projectionDelegate->updateProjection();
@@ -864,8 +864,8 @@ void Director::createStatsLabel()
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    Texture2DPixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+    Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);

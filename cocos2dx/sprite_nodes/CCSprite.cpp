@@ -182,7 +182,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _quad.tr.colors = tmpColor;
         
         // shader program
-        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -554,7 +554,7 @@ void Sprite::draw(void)
     ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
     ccGLBindTexture2D( _texture->getName() );
-    ccGLEnableVertexAttribs( kVertexAttribFlag_PosColorTex );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN
@@ -566,15 +566,15 @@ void Sprite::draw(void)
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -1102,7 +1102,7 @@ void Sprite::setTexture(Texture2D *texture)
         if (NULL == texture)
         {
             Image* image = new Image();
-            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::FORMAT_RAW_DATA, 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
             texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);

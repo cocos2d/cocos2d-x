@@ -208,9 +208,9 @@ void TMXLayer::parseInternalProperties()
             {
                 alphaFuncValue = alphaFuncVal->floatValue();
             }
-            setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest));
+            setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
-            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kUniformAlphaTestValue);
+            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
             // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
             

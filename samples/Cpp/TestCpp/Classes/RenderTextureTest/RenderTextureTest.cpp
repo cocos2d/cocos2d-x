@@ -98,7 +98,7 @@ RenderTextureSave::RenderTextureSave()
     Size s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, kTexture2DPixelFormat_RGBA8888);
+    _target = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA8888);
     _target->retain();
     _target->setPosition(Point(s.width / 2, s.height / 2));
 
@@ -147,8 +147,8 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
     char jpg[20];
     sprintf(jpg, "image-%d.jpg", counter);
 
-    _target->saveToFile(png, kImageFormatPNG);
-    _target->saveToFile(jpg, kImageFormatJPEG);
+    _target->saveToFile(png, Image::FORMAT_PNG);
+    _target->saveToFile(jpg, Image::FORMAT_JPG);
     
 
     Image *pImage = _target->newImage();
@@ -243,7 +243,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     
     
     /* A2 & B2 setup */
-    RenderTexture *rend = RenderTexture::create(32, 64, kTexture2DPixelFormat_RGBA8888);
+    RenderTexture *rend = RenderTexture::create(32, 64, Texture2D::PIXEL_FORMAT_RGBA8888);
 
     if (NULL == rend)
     {
@@ -441,7 +441,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     Sprite *sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    RenderTexture *rend = RenderTexture::create(s.width, s.height, kTexture2DPixelFormat_RGBA4444, GL_DEPTH24_STENCIL8);
+    RenderTexture *rend = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -505,7 +505,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     Size s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, kTexture2DPixelFormat_RGBA4444);
+    RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -591,7 +591,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     {
 		Size s = Director::getInstance()->getWinSize();
         rt = new RenderTexture();
-        rt->initWithWidthAndHeight(s.width, s.height, kTexture2DPixelFormat_RGBA8888);
+        rt->initWithWidthAndHeight(s.width, s.height, Texture2D::PIXEL_FORMAT_RGBA8888);
 	}
 	rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	rt->end();
@@ -607,22 +607,22 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	// Attributes
 	//
     
-	ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+	ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
 #define kQuadSize sizeof(_quad.bl)
 	long offset = (long)&_quad;
     
 	// vertex
 	int diff = offsetof( V3F_C4B_T2F, vertices);
-	glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
     
 	// texCoods
 	diff = offsetof( V3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
 	// color
 	diff = offsetof( V3F_C4B_T2F, colors);
-	glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

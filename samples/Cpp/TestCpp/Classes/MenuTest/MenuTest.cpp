@@ -26,8 +26,8 @@ enum {
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
     setTouchEnabled(true);
-    setTouchPriority(kMenuHandlerPriority + 1);
-    setTouchMode(kTouchesOneByOne);
+    setTouchPriority(Menu::HANDLER_PRIORITY + 1);
+    setTouchMode(Layer::TOUCHES_ONE_BY_ONE);
 
     // Font Item    
     Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -149,7 +149,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 void MenuLayerMainMenu::allowTouches(float dt)
 {
     Director* director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(kMenuHandlerPriority+1, this);
+    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -158,7 +158,7 @@ void MenuLayerMainMenu::menuCallbackDisabled(Object* sender)
 {
     // hijack all touch events for 5 seconds
     Director* director = Director::getInstance();
-    director->getTouchDispatcher()->setPriority(kMenuHandlerPriority-1, this);
+    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -491,10 +491,10 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     MenuItemFont::setFontSize(48);
     item1 = MenuItemFont::create("Toggle priority", [&](Object *sender) {
 		if( _priority) {
-			_menu2->setHandlerPriority(kMenuHandlerPriority + 20);
+			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
 			_priority = false;
 		} else {
-			_menu2->setHandlerPriority(kMenuHandlerPriority - 20);
+			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
 			_priority = true;
 		}
 	});
