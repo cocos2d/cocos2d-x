@@ -236,9 +236,9 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
     if( enablePosition != s_bVertexAttribPosition ) {
         if( enablePosition )
-            glEnableVertexAttribArray( kVertexAttrib_Position );
+            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
         else
-            glDisableVertexAttribArray( kVertexAttrib_Position );
+            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
 
         s_bVertexAttribPosition = enablePosition;
     }
@@ -248,9 +248,9 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
     if( enableColor != s_bVertexAttribColor ) {
         if( enableColor )
-            glEnableVertexAttribArray( kVertexAttrib_Color );
+            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
         else
-            glDisableVertexAttribArray( kVertexAttrib_Color );
+            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
 
         s_bVertexAttribColor = enableColor;
     }
@@ -260,9 +260,9 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
     if( enableTexCoords != s_bVertexAttribTexCoords ) {
         if( enableTexCoords )
-            glEnableVertexAttribArray( kVertexAttrib_TexCoords );
+            glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
         else
-            glDisableVertexAttribArray( kVertexAttrib_TexCoords );
+            glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
 
         s_bVertexAttribTexCoords = enableTexCoords;
     }

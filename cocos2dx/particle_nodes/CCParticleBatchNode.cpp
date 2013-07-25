@@ -102,7 +102,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
     _blendFunc.src = CC_BLEND_SRC;
     _blendFunc.dst = CC_BLEND_DST;
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     
     return true;
 }

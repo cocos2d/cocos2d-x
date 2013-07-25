@@ -182,7 +182,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated
         _quad.tr.colors = tmpColor;
         
         // shader program
-        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -566,15 +566,15 @@ void Sprite::draw(void)
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

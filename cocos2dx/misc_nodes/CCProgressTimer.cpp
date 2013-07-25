@@ -84,7 +84,7 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setBarChangeRate(Point(1,1));
     setSprite(sp);
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -514,17 +514,17 @@ void ProgressTimer::draw(void)
     setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
 
     int offset = 0;
-    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Vertex2F);
-    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Color4B);
-    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
 #else
-    glVertexAttribPointer( kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-    glVertexAttribPointer( kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-    glVertexAttribPointer( kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
 #endif // EMSCRIPTEN
 
     if(_type == RADIAL)

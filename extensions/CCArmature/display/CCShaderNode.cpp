@@ -72,7 +72,7 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
     GLProgram *shader = new GLProgram();
     shader->initWithVertexShaderFilename(vert, frag);
 
-    shader->addAttribute("aVertex", kVertexAttrib_Position);
+    shader->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
@@ -125,7 +125,7 @@ void ShaderNode::draw()
 
     ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POSITION);
 
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
