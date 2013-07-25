@@ -12,11 +12,11 @@ ButtonTestLayer::~ButtonTestLayer()
     CC_SAFE_RELEASE(mControlEventLabel);
 }
 
-SEL_MenuHandler ButtonTestLayer::onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName) {
+SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBControlSelector(Object * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;
