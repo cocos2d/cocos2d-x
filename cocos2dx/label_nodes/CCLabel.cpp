@@ -35,7 +35,7 @@ Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fon
 {
     FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(tttFilePath, fontSize, glyphs);
     if (!tempAtlas)
-        return 0;
+        return nullptr;
      
     // create the actual label
     StringTTF* templabel = StringTTF::create(tempAtlas, kTextAlignmentCenter, lineSize);
@@ -45,10 +45,8 @@ Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fon
         templabel->setText(label, lineSize, kTextAlignmentCenter, false);
         return templabel;
     }
-    else
-    {
-        return 0;
-    }
+
+    return nullptr;
 }
 
 Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize )
