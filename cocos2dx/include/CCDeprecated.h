@@ -526,8 +526,10 @@ CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformInvert(co
     return AffineTransformInvert(t);
 }
 
-#define CCAffineTransformIdentity   AffineTransformIdentity
-
+CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformIdentity()
+{
+    return AffineTransformMakeIdentity();
+}
 
 // CC prefix compatibility
 CC_DEPRECATED_ATTRIBUTE typedef Object CCObject;
