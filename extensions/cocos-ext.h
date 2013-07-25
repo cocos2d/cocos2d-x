@@ -3,8 +3,6 @@
 
 #include "ExtensionMacros.h"
 
-#include "AssetsManager/AssetsManager.h"
-
 #include "CCBReader/CCBFileLoader.h"
 #include "CCBReader/CCBMemberVariableAssigner.h"
 #include "CCBReader/CCBReader.h"
@@ -41,6 +39,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
+#include "network/WebSocket.h"
 #include "network/SocketIO.h"
 
 // Physics integration
