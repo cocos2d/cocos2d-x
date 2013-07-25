@@ -61,16 +61,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
 
 UpdateLayer::UpdateLayer()
@@ -149,16 +149,16 @@ bool UpdateLayer::init()
     pItemEnter = MenuItemFont::create("enter", CC_CALLBACK_1(UpdateLayer::enter, this));
     pItemUpdate = MenuItemFont::create("update", CC_CALLBACK_1(UpdateLayer::update, this));
     
-    pItemEnter->setPosition(ccp(size.width/2, size.height/2 + 50));
-    pItemReset->setPosition(ccp(size.width/2, size.height/2));
-    pItemUpdate->setPosition(ccp(size.width/2, size.height/2 - 50));
+    pItemEnter->setPosition(Point(size.width/2, size.height/2 + 50));
+    pItemReset->setPosition(Point(size.width/2, size.height/2));
+    pItemUpdate->setPosition(Point(size.width/2, size.height/2 - 50));
     
     Menu *menu = Menu::create(pItemUpdate, pItemEnter, pItemReset, NULL);
-    menu->setPosition(ccp(0,0));
+    menu->setPosition(Point(0,0));
     addChild(menu);
     
     pProgressLabel = LabelTTF::create("", "Arial", 20);
-    pProgressLabel->setPosition(ccp(100, 50));
+    pProgressLabel->setPosition(Point(100, 50));
     addChild(pProgressLabel);
     
     return true;

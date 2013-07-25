@@ -29,6 +29,13 @@
 #include "sprite_nodes/CCSprite.h"
 #include "script_support/CCScriptSupport.h"
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 NS_CC_BEGIN
 //
 // InstantAction
@@ -476,13 +483,10 @@ CallFuncN * CallFuncN::clone() const
 //
 // CallFuncND
 //
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-CCCallFuncND * CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+
+__CCCallFuncND * __CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selector, void* d)
 {
-    CCCallFuncND* pRet = new CCCallFuncND();
+    __CCCallFuncND* pRet = new __CCCallFuncND();
     
     if (pRet && pRet->initWithTarget(selectorTarget, selector, d)) {
         pRet->autorelease();
@@ -493,7 +497,7 @@ CCCallFuncND * CCCallFuncND::create(Object* selectorTarget, SEL_CallFuncND selec
     return NULL;
 }
 
-bool CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
+bool __CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d)
 {
     if (CallFunc::initWithTarget(selectorTarget))
     {
@@ -505,7 +509,7 @@ bool CCCallFuncND::initWithTarget(Object* selectorTarget, SEL_CallFuncND selecto
     return false;
 }
 
-void CCCallFuncND::execute()
+void __CCCallFuncND::execute()
 {
     if (_callFuncND)
     {
@@ -513,10 +517,10 @@ void CCCallFuncND::execute()
     }
 }
 
-CCCallFuncND * CCCallFuncND::clone() const
+__CCCallFuncND * __CCCallFuncND::clone() const
 {
 	// no copy constructor
-	auto a = new CCCallFuncND();
+	auto a = new __CCCallFuncND();
     
     if( _selectorTarget)
     {
@@ -530,26 +534,26 @@ CCCallFuncND * CCCallFuncND::clone() const
 //
 // CallFuncO
 //
-CCCallFuncO::CCCallFuncO() :
+__CCCallFuncO::__CCCallFuncO() :
 _object(NULL)
 {
 }
 
-CCCallFuncO::~CCCallFuncO()
+__CCCallFuncO::~__CCCallFuncO()
 {
     CC_SAFE_RELEASE(_object);
 }
 
-void CCCallFuncO::execute()
+void __CCCallFuncO::execute()
 {
     if (_callFuncO) {
         (_selectorTarget->*_callFuncO)(_object);
     }
 }
 
-CCCallFuncO * CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+__CCCallFuncO * __CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
 {
-    CCCallFuncO *pRet = new CCCallFuncO();
+    __CCCallFuncO *pRet = new __CCCallFuncO();
     
     if (pRet && pRet->initWithTarget(selectorTarget, selector, object)) {
         pRet->autorelease();
@@ -560,7 +564,7 @@ CCCallFuncO * CCCallFuncO::create(Object* selectorTarget, SEL_CallFuncO selector
     return NULL;
 }
 
-bool CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
+bool __CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object)
 {
     if (CallFunc::initWithTarget(selectorTarget))
     {
@@ -574,10 +578,10 @@ bool CCCallFuncO::initWithTarget(Object* selectorTarget, SEL_CallFuncO selector,
     return false;
 }
 
-CCCallFuncO * CCCallFuncO::clone() const
+__CCCallFuncO * __CCCallFuncO::clone() const
 {
 	// no copy constructor
-	auto a = new CCCallFuncO();
+	auto a = new __CCCallFuncO();
     
     if( _selectorTarget)
     {
@@ -588,12 +592,12 @@ CCCallFuncO * CCCallFuncO::clone() const
 	return a;
 }
 
-Object* CCCallFuncO::getObject() const
+Object* __CCCallFuncO::getObject() const
 {
     return _object;
 }
     
-void CCCallFuncO::setObject(Object* obj)
+void __CCCallFuncO::setObject(Object* obj)
 {
     if (obj != _object)
     {
@@ -603,8 +607,10 @@ void CCCallFuncO::setObject(Object* obj)
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+NS_CC_END
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
-
-NS_CC_END
