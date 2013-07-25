@@ -79,8 +79,7 @@ CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderLibrary CCNodeLoaderLibrary;
 CC_DEPRECATED_ATTRIBUTE typedef MenuItemLoader CCMenuItemLoader;
 CC_DEPRECATED_ATTRIBUTE typedef LayerColorLoader CCLayerColorLoader;
 CC_DEPRECATED_ATTRIBUTE typedef LabelTTFLoader CCLabelTTFLoader;
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
+
 
 #if CC_ENABLE_BOX2D_INTEGRATION || CC_ENABLE_CHIPMUNK_INTEGRATION
 CC_DEPRECATED_ATTRIBUTE typedef PhysicsSprite CCPhysicsSprite;
