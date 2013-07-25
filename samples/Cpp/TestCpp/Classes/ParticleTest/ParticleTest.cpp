@@ -1,11 +1,5 @@
 #include "ParticleTest.h"
-// #include "CCActionInterval.h"
-// #include "CCMenu.h"
-// #include "CCLabelTTF.h"
-// #include "CCLabelAtlas.h"
-// #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
-/*#include "support/CCPointExtension.h"*/
 
 enum {
     kTagParticleCount = 1,
@@ -653,7 +647,7 @@ void RadiusMode1::onEnter()
     _emitter->setDuration(kParticleDurationInfinity);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(0);
@@ -737,7 +731,7 @@ void RadiusMode2::onEnter()
     _emitter->setDuration(kParticleDurationInfinity);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(100);
@@ -821,7 +815,7 @@ void Issue704::onEnter()
     _emitter->setDuration(kParticleDurationInfinity);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(50);
@@ -1406,7 +1400,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setDuration(kParticleDurationInfinity);
 
         // Gravity Mode
-        setEmitterMode(kParticleModeGravity);
+        setEmitterMode(ParticleSystem::MODE_GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -1727,7 +1721,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setDuration(kParticleDurationInfinity);
 
         // radius mode
-        particleSystem->setEmitterMode(kParticleModeRadius);
+        particleSystem->setEmitterMode(ParticleSystem::MODE_RADIUS);
 
         // radius mode: 100 pixels from center
         particleSystem->setStartRadius(100);

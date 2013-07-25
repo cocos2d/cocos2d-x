@@ -875,8 +875,9 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 #define kCCParticleStartSizeEqualToEndSize   kParticleStartSizeEqualToEndSize
 #define kCCParticleStartRadiusEqualToEndRadius   kParticleStartRadiusEqualToEndRadius
 
-#define kCCParticleModeGravity      kParticleModeGravity
-#define kCCParticleModeRadius       kParticleModeRadius
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
+
 #define kCCPositionTypeFree         kPositionTypeFree
 #define kCCPositionTypeRelative     kPositionTypeRelative
 #define kCCPositionTypeGrouped      kPositionTypeGrouped
