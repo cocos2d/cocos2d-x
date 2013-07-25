@@ -433,7 +433,7 @@ Texture2D * TextureCache::addPVRImage(const char* path)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str(), Image::kFmtRawData);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str(), Image::FORMAT_RAW_DATA);
 #endif
         _textures->setObject(texture, key.c_str());
         texture->autorelease();
@@ -643,7 +643,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _textureData(NULL)
 , _pixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888)
 , _fileName("")
-, _fmtImage(Image::kFmtPng)
+, _fmtImage(Image::FORMAT_PNG)
 , _text("")
 , _uiImage(NULL)
 {
@@ -660,7 +660,7 @@ VolatileTexture::~VolatileTexture()
     CC_SAFE_RELEASE(_uiImage);
 }
 
-void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName, Image::EImageFormat format)
+void VolatileTexture::addImageTexture(Texture2D *tt, const char* imageFileName, Image::Format format)
 {
     if (_isReloading)
     {
