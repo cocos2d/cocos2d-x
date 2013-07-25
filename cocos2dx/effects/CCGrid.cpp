@@ -161,7 +161,7 @@ void GridBase::setActive(bool bActive)
     if (! bActive)
     {
         Director *pDirector = Director::getInstance();
-        ccDirectorProjection proj = pDirector->getProjection();
+        Director::Projection proj = pDirector->getProjection();
         pDirector->setProjection(proj);
     }
 }
@@ -203,7 +203,7 @@ void GridBase::beforeDraw(void)
     _directorProjection = director->getProjection();
 
     // 2d projection
-    //    [director setProjection:kDirectorProjection2D];
+    //    [director setProjection:Director::PROJECTION_2D];
     set2DProjection();
     _grabber->beforeRender(_texture);
 }

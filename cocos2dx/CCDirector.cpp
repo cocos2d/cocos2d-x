@@ -210,11 +210,11 @@ void Director::setDefaultValues(void)
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if( strcmp(projection, "3d") == 0 )
-		_projection = kDirectorProjection3D;
+		_projection = PROJECTION_3D;
 	else if (strcmp(projection, "2d") == 0)
-		_projection = kDirectorProjection2D;
+		_projection = PROJECTION_2D;
 	else if (strcmp(projection, "custom") == 0)
-		_projection = kDirectorProjectionCustom;
+		_projection = PROJECTION_CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
@@ -385,7 +385,7 @@ void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     _nextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void Director::setProjection(ccDirectorProjection kProjection)
+void Director::setProjection(Projection kProjection)
 {
     Size size = _winSizeInPoints;
 
@@ -393,7 +393,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
 
     switch (kProjection)
     {
-    case kDirectorProjection2D:
+    case PROJECTION_2D:
         {
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
@@ -405,7 +405,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
         }
         break;
 
-    case kDirectorProjection3D:
+    case PROJECTION_3D:
         {
             float zeye = this->getZEye();
 
@@ -431,7 +431,7 @@ void Director::setProjection(ccDirectorProjection kProjection)
         }
         break;
             
-    case kDirectorProjectionCustom:
+    case PROJECTION_CUSTOM:
         if (_projectionDelegate)
         {
             _projectionDelegate->updateProjection();
