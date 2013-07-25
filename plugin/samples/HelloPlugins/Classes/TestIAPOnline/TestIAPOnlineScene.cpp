@@ -74,7 +74,7 @@ bool TestIAPOnline::init()
         return false;
     }
 
-    MyIAPOLManager::sharedManager()->loadPlugins();
+    MyIAPOLManager::getInstance()->loadPlugins();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -153,7 +153,7 @@ void TestIAPOnline::eventMenuCallback(Object* pSender)
         // pInfo["QHAppOrderID"] = "Order ID in game";      // The order ID in game (Game defined this)
     }
 
-    MyIAPOLManager::sharedManager()->payByMode(pInfo, mode);
+    MyIAPOLManager::getInstance()->payByMode(pInfo, mode);
 }
 
 void TestIAPOnline::menuBackCallback(Object* pSender)

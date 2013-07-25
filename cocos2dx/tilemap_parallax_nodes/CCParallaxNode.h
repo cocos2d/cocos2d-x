@@ -56,6 +56,9 @@ public:
     ParallaxNode();
     virtual ~ParallaxNode();
 
+    // prevents compiler warning: "Included function hides overloaded virtual functions"
+    using Node::addChild;
+
     void addChild(Node * child, int z, const Point& parallaxRatio, const Point& positionOffset);
 
     /** Sets an array of layers for the Parallax node */

@@ -181,15 +181,15 @@ public class IAPOnlineQH360 implements InterfaceIAP {
 
         // optional params : ext, app order id, pay type
         String ext1 = pInfo.get("QHExtra1");
-        if (null == ext1 && ! TextUtils.isEmpty(ext1)) {
+        if (null != ext1 && ! TextUtils.isEmpty(ext1)) {
             bundle.putString(ProtocolKeys.APP_EXT_1, ext1);
         }
         String ext2 = pInfo.get("QHExtra2");
-        if (null == ext2 && ! TextUtils.isEmpty(ext2)) {
+        if (null != ext2 && ! TextUtils.isEmpty(ext2)) {
             bundle.putString(ProtocolKeys.APP_EXT_2, ext2);
         }
         String appOrderId = pInfo.get("QHAppOrderID");
-        if (null == appOrderId && ! TextUtils.isEmpty(appOrderId)) {
+        if (null != appOrderId && ! TextUtils.isEmpty(appOrderId)) {
             bundle.putString(ProtocolKeys.APP_ORDER_ID, appOrderId);
         }
 

@@ -22,14 +22,14 @@ static void removeSelector(std::string &str) {
     }
 }
 
-SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBMenuItemSelector(cocos2d::Object * pTarget,
+SEL_MenuHandler CCBScriptCallbackProxy::onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget,
                                                                        const char * pSelectorName) {
     this->callBackProp = pSelectorName;
     removeSelector(this->callBackProp);
     return menu_selector(CCBScriptCallbackProxy::menuItemCallback);
 }
 
-SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBControlSelector(Object * pTarget,
+SEL_CCControlHandler CCBScriptCallbackProxy::onResolveCCBCCControlSelector(Object * pTarget,
                                                                            const char * pSelectorName) {
     
     this->callBackProp = pSelectorName;
@@ -273,7 +273,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
+	NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     
     ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     

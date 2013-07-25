@@ -785,7 +785,7 @@ void VolatileTexture::reloadAllTextures()
 
                 if (std::string::npos != lowerCase.find(".pvr")) 
                 {
-                    Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
+                    Texture2DPixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
 
                     vt->_texture->initWithPVRFile(vt->_fileName.c_str());
@@ -799,7 +799,7 @@ void VolatileTexture::reloadAllTextures()
 
                     if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->_fmtImage))
                     {
-                        Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
+                        Texture2DPixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                         Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
                         vt->_texture->initWithImage(pImage);
                         Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
