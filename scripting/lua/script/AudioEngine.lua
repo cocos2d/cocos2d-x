@@ -1,6 +1,6 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
 local M = {}
-local sharedEngine = SimpleAudioEngine:sharedEngine()
+local sharedEngine = SimpleAudioEngine:getInstance()
 
 function M.stopAllEffects()
     sharedEngine:stopAllEffects()
