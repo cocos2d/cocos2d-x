@@ -125,10 +125,10 @@ Node::~Node()
         Object* child;
         CCARRAY_FOREACH(_children, child)
         {
-            Node* pChild = static_cast<Node*>(child);
-            if (pChild)
+            Node* node = static_cast<Node*>(child);
+            if (node)
             {
-                pChild->_parent = NULL;
+                node->_parent = NULL;
             }
         }
     }

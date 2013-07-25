@@ -37,33 +37,33 @@ protected:
     virtual ~InputDelegate(void);
     
 public:
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
-
-    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
-    
-    virtual void didAccelerate(Acceleration* pAccelerationValue);
-public:
-    virtual bool isTouchEnabled();
+    virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    virtual bool isAccelerometerEnabled();
+    virtual bool isAccelerometerEnabled() const;
     virtual void setAccelerometerEnabled(bool value);
 
-    virtual bool isKeypadEnabled();
+    virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
     
-    virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
+    virtual void setTouchMode(Touch::DispatchMode mode);
+    virtual Touch::DispatchMode getTouchMode() const;
     
     virtual void setTouchPriority(int priority);
-    virtual int  getTouchPriority();
-    
+    virtual int  getTouchPriority() const;
+
+    virtual void didAccelerate(Acceleration* accelerationValue);
+
+    // Overrides
+    virtual bool ccTouchBegan(Touch *touch, Event *event) override;
+    virtual void ccTouchMoved(Touch *touch, Event *event) override;
+    virtual void ccTouchEnded(Touch *touch, Event *event) override;
+    virtual void ccTouchCancelled(Touch *touch, Event *event) override;
+    virtual void ccTouchesBegan(Set *touches, Event *event) override;
+    virtual void ccTouchesMoved(Set *touches, Event *event) override;
+    virtual void ccTouchesEnded(Set *touches, Event *event) override;
+    virtual void ccTouchesCancelled(Set *touches, Event *event) override;
+
 protected:   
     bool _touchEnabled;
     bool _accelerometerEnabled;
@@ -71,7 +71,7 @@ protected:
     
 private:
      int _touchPriority;
-     ccTouchesMode _touchMode;
+    Touch::DispatchMode _touchMode;
 };
 
 NS_CC_EXT_END

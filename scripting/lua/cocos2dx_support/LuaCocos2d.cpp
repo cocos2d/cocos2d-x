@@ -13188,7 +13188,7 @@ static int tolua_Cocos2d_CCImage_initWithImageFile00(lua_State* tolua_S)
  {
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   const char* strPath = ((const char*)  tolua_tostring(tolua_S,2,0));
-  Image::Format imageType = ((Image::Format) (int)  tolua_tonumber(tolua_S,3,Image::Format::PNG));
+  Image::Format imageType = ((Image::Format) (int)  tolua_tonumber(tolua_S,3,Image::FORMAT_PNG));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithImageFile'", NULL);
 #endif
@@ -13229,7 +13229,7 @@ static int tolua_Cocos2d_CCImage_initWithImageData00(lua_State* tolua_S)
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   void* pData = ((void*)  tolua_touserdata(tolua_S,2,0));
   int nDataLen = ((int)  tolua_tonumber(tolua_S,3,0));
-  Image::Format eFmt = ((Image::Format) (int)  tolua_tonumber(tolua_S,4,Image::Format::UNKOWN));
+  Image::Format eFmt = ((Image::Format) (int)  tolua_tonumber(tolua_S,4,Image::FORMAT_UNKOWN));
   int nWidth = ((int)  tolua_tonumber(tolua_S,5,0));
   int nHeight = ((int)  tolua_tonumber(tolua_S,6,0));
   int nBitsPerComponent = ((int)  tolua_tonumber(tolua_S,7,8));
@@ -64427,12 +64427,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCImage_new00_local);
    tolua_function(tolua_S,".call",tolua_Cocos2d_CCImage_new00_local);
    tolua_function(tolua_S,"delete",tolua_Cocos2d_CCImage_delete00);
-   tolua_constant(tolua_S,"kFmtJpg",Image::Format::JPG);
-   tolua_constant(tolua_S,"kFmtPng",Image::Format::PNG);
-   tolua_constant(tolua_S,"kFmtTiff",Image::Format::TIFF);
-   tolua_constant(tolua_S,"kFmtWebp",Image::Format::WEBP);
-   tolua_constant(tolua_S,"kFmtRawData",Image::Format::RAW_DATA);
-   tolua_constant(tolua_S,"kFmtUnKnown",Image::Format::UNKOWN);
+   tolua_constant(tolua_S,"kFmtJpg",Image::FORMAT_JPG);
+   tolua_constant(tolua_S,"kFmtPng",Image::FORMAT_PNG);
+   tolua_constant(tolua_S,"kFmtTiff",Image::FORMAT_TIFF);
+   tolua_constant(tolua_S,"kFmtWebp",Image::FORMAT_WEBP);
+   tolua_constant(tolua_S,"kFmtRawData",Image::FORMAT_RAW_DATA);
+   tolua_constant(tolua_S,"kFmtUnKnown",Image::FORMAT_UNKOWN);
    tolua_constant(tolua_S,"kAlignCenter",Image::kAlignCenter);
    tolua_constant(tolua_S,"kAlignTop",Image::kAlignTop);
    tolua_constant(tolua_S,"kAlignTopRight",Image::kAlignTopRight);
@@ -64965,8 +64965,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCTextureCache_getInstance00);
    tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCTextureCache_destroyInstance00);
   tolua_endmodule(tolua_S);
-    tolua_constant(tolua_S,"kCCImageFormatJPEG",Image::Format::JPG);
-  tolua_constant(tolua_S,"kCCImageFormatPNG",Image::Format::PNG);
+    tolua_constant(tolua_S,"kCCImageFormatJPEG",Image::FORMAT_JPG);
+  tolua_constant(tolua_S,"kCCImageFormatPNG",Image::FORMAT_PNG);
   tolua_cclass(tolua_S,"CCRenderTexture","CCRenderTexture","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCRenderTexture");
    tolua_function(tolua_S,"getSprite",tolua_Cocos2d_CCRenderTexture_getSprite00);

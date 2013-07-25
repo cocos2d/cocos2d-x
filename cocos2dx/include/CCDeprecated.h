@@ -913,9 +913,9 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateWaiting;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateTrackingTouch;
 CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesOneByOne;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCTouchesAllAtOnce;
-CC_DEPRECATED_ATTRIBUTE typedef enum Layer::TouchesMode ccTouchesMode;
+CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesOneByOne;
+CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesAllAtOnce;
+CC_DEPRECATED_ATTRIBUTE typedef enum Touch::DispatchMode ccTouchDispatchMode;
 
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatPNG;
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatJPEG;
