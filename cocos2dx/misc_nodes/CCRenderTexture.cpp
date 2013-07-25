@@ -530,11 +530,11 @@ void RenderTexture::draw()
 		Object *pElement;
 		CCARRAY_FOREACH(_children, pElement)
         {
-            Node *pChild = static_cast<Node*>(pElement);
+            Node *child = static_cast<Node*>(pElement);
 
-            if (pChild != _sprite)
+            if (child != _sprite)
             {
-                pChild->visit();
+                child->visit();
             }
 		}
         

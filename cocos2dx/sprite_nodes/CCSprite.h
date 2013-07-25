@@ -464,12 +464,12 @@ public:
     virtual void setRotationY(float fRotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
-    virtual void removeChild(Node* pChild, bool bCleanup) override;
+    virtual void removeChild(Node* child, bool bCleanup) override;
     virtual void removeAllChildrenWithCleanup(bool bCleanup) override;
-    virtual void reorderChild(Node *pChild, int zOrder) override;
-    virtual void addChild(Node *pChild) override;
-    virtual void addChild(Node *pChild, int zOrder) override;
-    virtual void addChild(Node *pChild, int zOrder, int tag) override;
+    virtual void reorderChild(Node *child, int zOrder) override;
+    virtual void addChild(Node *child) override;
+    virtual void addChild(Node *child, int zOrder) override;
+    virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float fScale) override;
     virtual void setVertexZ(float fVertexZ) override;

@@ -609,27 +609,27 @@ void Sprite::draw(void)
 
 // Node overrides
 
-void Sprite::addChild(Node* pChild)
+void Sprite::addChild(Node* child)
 {
-    Node::addChild(pChild);
+    Node::addChild(child);
 }
 
-void Sprite::addChild(Node *pChild, int zOrder)
+void Sprite::addChild(Node *child, int zOrder)
 {
-    Node::addChild(pChild, zOrder);
+    Node::addChild(child, zOrder);
 }
 
-void Sprite::addChild(Node *pChild, int zOrder, int tag)
+void Sprite::addChild(Node *child, int zOrder, int tag)
 {
-    CCASSERT(pChild != NULL, "Argument must be non-NULL");
+    CCASSERT(child != NULL, "Argument must be non-NULL");
 
     if (_batchNode)
     {
-        Sprite* pChildSprite = dynamic_cast<Sprite*>(pChild);
-        CCASSERT( pChildSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(pChildSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        Sprite* childSprite = dynamic_cast<Sprite*>(child);
+        CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
         //put it in descendants array of batch node
-        _batchNode->appendChild(pChildSprite);
+        _batchNode->appendChild(childSprite);
 
         if (!_reorderChildDirty)
         {
@@ -637,16 +637,16 @@ void Sprite::addChild(Node *pChild, int zOrder, int tag)
         }
     }
     //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
-    Node::addChild(pChild, zOrder, tag);
+    Node::addChild(child, zOrder, tag);
     _hasChildren = true;
 }
 
-void Sprite::reorderChild(Node *pChild, int zOrder)
+void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(pChild != NULL, "");
-    CCASSERT(_children->containsObject(pChild), "");
+    CCASSERT(child != NULL, "");
+    CCASSERT(_children->containsObject(child), "");
 
-    if (zOrder == pChild->getZOrder())
+    if (zOrder == child->getZOrder())
     {
         return;
     }
@@ -657,17 +657,17 @@ void Sprite::reorderChild(Node *pChild, int zOrder)
         _batchNode->reorderBatch(true);
     }
 
-    Node::reorderChild(pChild, zOrder);
+    Node::reorderChild(child, zOrder);
 }
 
-void Sprite::removeChild(Node *pChild, bool bCleanup)
+void Sprite::removeChild(Node *child, bool bCleanup)
 {
     if (_batchNode)
     {
-        _batchNode->removeSpriteFromAtlas((Sprite*)(pChild));
+        _batchNode->removeSpriteFromAtlas((Sprite*)(child));
     }
 
-    Node::removeChild(pChild, bCleanup);
+    Node::removeChild(child, bCleanup);
     
 }
 
@@ -678,10 +678,10 @@ void Sprite::removeAllChildrenWithCleanup(bool bCleanup)
         Object* pObject = NULL;
         CCARRAY_FOREACH(_children, pObject)
         {
-            Sprite* pChild = dynamic_cast<Sprite*>(pObject);
-            if (pChild)
+            Sprite* child = dynamic_cast<Sprite*>(pObject);
+            if (child)
             {
-                _batchNode->removeSpriteFromAtlas(pChild);
+                _batchNode->removeSpriteFromAtlas(child);
             }
         }
     }
@@ -754,10 +754,10 @@ void Sprite::setDirtyRecursively(bool bValue)
         Object* pObject = NULL;
         CCARRAY_FOREACH(_children, pObject)
         {
-            Sprite* pChild = dynamic_cast<Sprite*>(pObject);
-            if (pChild)
+            Sprite* child = dynamic_cast<Sprite*>(pObject);
+            if (child)
             {
-                pChild->setDirtyRecursively(true);
+                child->setDirtyRecursively(true);
             }
         }
     }
