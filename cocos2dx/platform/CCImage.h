@@ -50,7 +50,7 @@ public:
     Image();
     virtual ~Image();
 
-    enum Format
+    typedef enum Format
     {
         FORMAT_JPG,
         FORMAT_PNG,
@@ -66,19 +66,29 @@ public:
         kFmtWebp = FORMAT_WEBP,
         kFmtRawData = FORMAT_RAW_DATA,
         kFmtUnKnown = FORMAT_UNKOWN
-    };
+    }EImageFormat;
 
-    typedef enum
+    typedef enum TextAlign
     {
-        kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
-        kAlignTop           = 0x13, ///< Horizontal center and vertical top.
-        kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
-        kAlignRight         = 0x32, ///< Horizontal right and vertical center.
-        kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
-        kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
-        kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
-        kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
-        kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
+        TEXT_ALIGN_CENTER           = 0x33, ///< Horizontal center and vertical center.
+        TEXT_ALIGN_TOP              = 0x13, ///< Horizontal center and vertical top.
+        TEXT_ALIGN_TOP_RIGHT        = 0x12, ///< Horizontal right and vertical top.
+        TEXT_ALIGN_RIGHT            = 0x32, ///< Horizontal right and vertical center.
+        TEXT_ALIGN_BOTTOM_RIGHT      = 0x22, ///< Horizontal right and vertical bottom.
+        TEXT_ALIGN_BOTTOM           = 0x23, ///< Horizontal center and vertical bottom.
+        TEXT_ALIGN_BOTTOM_LEFT      = 0x21, ///< Horizontal left and vertical bottom.
+        TEXT_ALIGN_LEFT             = 0x31, ///< Horizontal left and vertical center.
+        TEXT_ALIGN_TOP_LEFT         = 0x11, ///< Horizontal left and vertical top.
+        
+        kAlignCenter        = TEXT_ALIGN_CENTER,
+        kAlignTop           = TEXT_ALIGN_TOP, 
+        kAlignTopRight      = TEXT_ALIGN_TOP_RIGHT, 
+        kAlignRight         = TEXT_ALIGN_RIGHT, 
+        kAlignBottomRight   = TEXT_ALIGN_BOTTOM_RIGHT,
+        kAlignBottom        = TEXT_ALIGN_BOTTOM, 
+        kAlignBottomLeft    = TEXT_ALIGN_BOTTOM_LEFT, 
+        kAlignLeft          = TEXT_ALIGN_LEFT, 
+        kAlignTopLeft       = TEXT_ALIGN_TOP_LEFT, 
     }ETextAlign;
     
     /**
@@ -121,7 +131,7 @@ public:
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,
-        ETextAlign      eAlignMask = kAlignCenter,
+        TextAlign       eAlignMask = TEXT_ALIGN_CENTER,
         const char *    pFontName = 0,
         int             nSize = 0);
     
@@ -131,7 +141,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
+                                            TextAlign       eAlignMask  = TEXT_ALIGN_CENTER,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
