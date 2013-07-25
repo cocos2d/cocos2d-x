@@ -390,7 +390,8 @@ bool Image::initWithString(
         SIZE size = {nWidth, nHeight};
         CC_BREAK_IF(! dc.drawText(pText, size, eAlignMask));
 
-        _data = new unsigned char[size.cx * size.cy * 4];
+        _dataLen = size.cx * size.cy * 4;
+        _data = new unsigned char[_dataLen];
         CC_BREAK_IF(! _data);
 
         struct
@@ -406,7 +407,7 @@ bool Image::initWithString(
         _height   = (short)size.cy;
         _hasAlpha = true;
         _preMulti = false;
-        _bitDepth = 8;
+        _renderFormat = kTexture2DPixelFormat_RGBA8888;
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
            ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;

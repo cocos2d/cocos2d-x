@@ -146,12 +146,6 @@ public:
     */
     void dumpCachedTextureInfo();
     
-    /** Returns a Texture2D object given an PVR filename
-    * If the file image was not previously loaded, it will create a new Texture2D
-    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-    */
-    Texture2D* addPVRImage(const char* filename);
-    
     /** Returns a Texture2D object given an ETC filename
      * If the file image was not previously loaded, it will create a new Texture2D
      *  object and it will return it. Otherwise it will return a reference of a previously loaded image

@@ -41,7 +41,6 @@ typedef struct
 {
     unsigned int height;
     unsigned int width;
-    int         bitsPerComponent;
     bool        hasAlpha;
     bool        isPremultipliedAlpha;
     unsigned char*  data;
@@ -191,7 +190,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 			pInfo->data = dataNew;
 			pInfo->hasAlpha = true;
 			pInfo->isPremultipliedAlpha = true;
-			pInfo->bitsPerComponent = 8;
 			bRet = true;
 		}
 		[bitmap release];
@@ -218,7 +216,7 @@ bool Image::initWithString(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _bitDepth = info.bitsPerComponent;
+    _renderFormat = kTexture2DPixelFormat_RGBA8888;
     _hasAlpha = info.hasAlpha;
     _preMulti = info.isPremultipliedAlpha;
 	if (_data) {
