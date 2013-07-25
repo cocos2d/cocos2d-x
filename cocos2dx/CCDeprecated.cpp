@@ -142,4 +142,7 @@ const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
 const int kCCMenuStateWaiting = Menu::STATE_WAITING;
 const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
 
+const int kCCTouchesOneByOne = Layer::TOUCHES_ONE_BY_ONE;
+const int kCCTouchesAllAtOnce = Layer::TOUCHES_ALL_AT_ONCE;
+
 NS_CC_END

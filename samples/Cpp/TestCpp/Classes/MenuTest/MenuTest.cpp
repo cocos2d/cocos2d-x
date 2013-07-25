@@ -27,7 +27,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 {
     setTouchEnabled(true);
     setTouchPriority(Menu::HANDLER_PRIORITY + 1);
-    setTouchMode(kTouchesOneByOne);
+    setTouchMode(Layer::TOUCHES_ONE_BY_ONE);
 
     // Font Item    
     Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));

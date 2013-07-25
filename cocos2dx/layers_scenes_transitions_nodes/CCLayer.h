@@ -39,11 +39,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum {
-	kTouchesAllAtOnce,
-	kTouchesOneByOne,
-} ccTouchesMode;
-
 /**
  * @addtogroup layer
  * @{
@@ -63,6 +58,12 @@ All features from Node are valid, plus the following new features:
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
 public:
+    enum TouchesMode
+    {
+        TOUCHES_ALL_AT_ONCE,
+        TOUCHES_ONE_BY_ONE,
+    };
+    
     /** creates a fullscreen black layer */
     static Layer *create(void);
     Layer();
@@ -103,7 +104,7 @@ public:
     virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    virtual void setTouchMode(ccTouchesMode mode);
+    virtual void setTouchMode(TouchesMode mode);
     virtual int getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
@@ -148,7 +149,7 @@ protected:
     
 private:
     int _touchPriority;
-    ccTouchesMode _touchMode;
+    TouchesMode _touchMode;
     
     int executeScriptTouchHandler(int eventType, Touch* touch);
     int executeScriptTouchesHandler(int eventType, Set* touches);

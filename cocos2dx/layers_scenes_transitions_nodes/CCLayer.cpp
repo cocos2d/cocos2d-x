@@ -48,7 +48,7 @@ Layer::Layer()
 , _keyboardEnabled(false)
 , _keypadEnabled(false)
 , _touchPriority(0)
-, _touchMode(kTouchesAllAtOnce)
+, _touchMode(Layer::TOUCHES_ALL_AT_ONCE)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -96,7 +96,7 @@ void Layer::registerWithTouchDispatcher()
 {
     TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
 
-    if( _touchMode == kTouchesAllAtOnce ) {
+    if( _touchMode == Layer::TOUCHES_ALL_AT_ONCE ) {
         pDispatcher->addStandardDelegate(this, 0);
     } else {
         pDispatcher->addTargetedDelegate(this, _touchPriority, true);
@@ -155,7 +155,7 @@ void Layer::setTouchEnabled(bool enabled)
     }
 }
 
-void Layer::setTouchMode(ccTouchesMode mode)
+void Layer::setTouchMode(TouchesMode mode)
 {
     if(_touchMode != mode)
     {

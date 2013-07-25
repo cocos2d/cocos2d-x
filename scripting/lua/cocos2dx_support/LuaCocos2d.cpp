@@ -64981,8 +64981,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCSpriteFrameCache_getInstance00);
    tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCSpriteFrameCache_destroyInstance00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCTouchesAllAtOnce",kTouchesAllAtOnce);
-  tolua_constant(tolua_S,"kCCTouchesOneByOne",kTouchesOneByOne);
+  tolua_constant(tolua_S,"kCCTouchesAllAtOnce",Layer::TOUCHES_ALL_AT_ONCE);
+  tolua_constant(tolua_S,"kCCTouchesOneByOne",Layer::TOUCHES_ONE_BY_ONE);
   tolua_cclass(tolua_S,"CCLayer","CCLayer","CCNode",NULL);
   tolua_beginmodule(tolua_S,"CCLayer");
    tolua_function(tolua_S,"setTouchEnabled",tolua_Cocos2d_CCLayer_setTouchEnabled00);
