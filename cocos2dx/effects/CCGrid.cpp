@@ -117,7 +117,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
-    Texture2D::PixelFormat format = Texture2D::PIXEL_FORMAT_RGBA8888;
+    Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
     void *data = calloc((int)(POTWide * POTHigh * 4), 1);
     if (! data)
@@ -203,7 +203,7 @@ void GridBase::beforeDraw(void)
     _directorProjection = director->getProjection();
 
     // 2d projection
-    //    [director setProjection:Director::PROJECTION_2D];
+    //    [director setProjection:Director::Projection::_2D];
     set2DProjection();
     _grabber->beforeRender(_texture);
 }

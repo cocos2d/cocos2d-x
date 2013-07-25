@@ -191,8 +191,8 @@ private:
     const char* getCurrentAlignment();
 private:
     LabelTTF* _plabel;
-    Label::TextAlignment _horizAlign;
-    Label::VerticalTextAlignment _vertAlign;
+    Label::HAlignment _horizAlign;
+    Label::VAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo

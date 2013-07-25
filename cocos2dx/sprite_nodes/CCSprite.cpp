@@ -1054,14 +1054,12 @@ void Sprite::updateBlendFunc(void)
     // it is possible to have an untextured sprite
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         setOpacityModifyRGB(false);
     }
     else
     {
-        _blendFunc.src = CC_BLEND_SRC;
-        _blendFunc.dst = CC_BLEND_DST;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }
 }

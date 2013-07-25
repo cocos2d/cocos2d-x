@@ -51,7 +51,7 @@ RenderTexture::RenderTexture()
 , _texture(0)
 , _textureCopy(0)
 , _UITextureImage(NULL)
-, _pixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888)
+, _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
@@ -102,11 +102,11 @@ void RenderTexture::listenToBackground(cocos2d::Object *obj)
     if (_UITextureImage)
     {
         const Size& s = _texture->getContentSizeInPixels();
-        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), Texture2D::PIXEL_FORMAT_RGBA8888, s);
+        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), Texture2D::PixelFormat::RGBA8888, s);
         
         if ( _textureCopy )
         {
-            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), Texture2D::PIXEL_FORMAT_RGBA8888, s);
+            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), Texture2D::PixelFormat::RGBA8888, s);
         }
     }
     else
@@ -170,7 +170,7 @@ RenderTexture * RenderTexture::create(int w, int h)
 {
     RenderTexture *pRet = new RenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, Texture2D::PIXEL_FORMAT_RGBA8888, 0))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -186,7 +186,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCASSERT(eFormat != Texture2D::PIXEL_FORMAT_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCASSERT(eFormat != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     void *data = NULL;
@@ -276,8 +276,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         _texture->release();
         _sprite->setScaleY(-1);
 
-        BlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-        _sprite->setBlendFunc(tBlendFunc);
+        _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -578,7 +577,7 @@ bool RenderTexture::saveToFile(const char *fileName, Image::Format format)
 /* get buffer as Image */
 Image* RenderTexture::newImage(bool flipImage)
 {
-    CCASSERT(_pixelFormat == Texture2D::PIXEL_FORMAT_RGBA8888, "only RGBA8888 can be saved as image");
+    CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
     if (NULL == _texture)
     {

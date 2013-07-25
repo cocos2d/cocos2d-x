@@ -171,7 +171,7 @@ protected:
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture
     Image*     _UITextureImage;
-    GLenum       _pixelFormat;
+    Texture2D::PixelFormat _pixelFormat;
     
     // code for "auto" update
     GLbitfield   _clearFlags;

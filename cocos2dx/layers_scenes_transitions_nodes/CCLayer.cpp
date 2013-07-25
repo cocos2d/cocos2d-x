@@ -691,8 +691,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
     {
 
         // default blend function
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
         _displayedColor.r = _realColor.r = color.r;
         _displayedColor.g = _realColor.g = color.g;

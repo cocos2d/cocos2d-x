@@ -215,7 +215,7 @@ void Effect5::onExit()
 {
     EffectAdvanceTextLayer::onExit();
 
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 //------------------------------------------------------------------

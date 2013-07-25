@@ -45,7 +45,7 @@ const Color3B ccBLACK = Color3B::BLACK;
 const Color3B ccORANGE = Color3B::ORANGE;
 const Color3B ccGRAY = Color3B::GRAY;
 
-const BlendFunc kCCBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+const BlendFunc kCCBlendFuncDisable = BlendFunc::DISABLE;
 
 const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
 const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
@@ -96,10 +96,10 @@ const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
 const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
 
-const int kCCDirectorProjection2D = Director::PROJECTION_2D;
-const int kCCDirectorProjection3D = Director::PROJECTION_3D;
-const int kCCDirectorProjectionCustom = Director::PROJECTION_CUSTOM;
-const int kCCDirectorProjectionDefault = Director::PROJECTION_DEFAULT;
+const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
+const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
+const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
+const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
 
 const int ConfigurationError = Configuration::ERROR;
 const int ConfigurationString = Configuration::STRING;
@@ -118,25 +118,25 @@ const int kCCPositionTypeFree =  ParticleSystem::POSITION_TYPE_FREE;
 const int kCCPositionTypeRelative =  ParticleSystem::POSITION_TYPE_RELATIVE;
 const int kCCPositionTypeGrouped =  ParticleSystem::POSITION_TYPE_GROUPED;
 
-const int kCCVerticalTextAlignmentTop = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
-const int kCCVerticalTextAlignmentCenter = Label::VERTICAL_TEXT_ALIGNMENT_CENTER;
-const int kCCVerticalTextAlignmentBottom = Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
+const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
+const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
 
-const int kCCTextAlignmentLeft = Label::TEXT_ALIGNMENT_LEFT;
-const int kCCTextAlignmentCenter = Label::TEXT_ALIGNMENT_CENTER;
-const int kCCTextAlignmentRight = Label::TEXT_ALIGNMENT_RIGHT;
+const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
+const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
+const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
 
-const int kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PIXEL_FORMAT_RGBA8888;
-const int kCCTexture2DPixelFormat_RGB888 = Texture2D::PIXEL_FORMAT_RGB888;
-const int kCCTexture2DPixelFormat_RGB565 = Texture2D::PIXEL_FORMAT_RGB565;
-const int kCCTexture2DPixelFormat_A8 = Texture2D::PIXEL_FORMAT_A8;
-const int kCCTexture2DPixelFormat_I8 = Texture2D::PIXEL_FORMAT_I8;
-const int kCCTexture2DPixelFormat_AI88 = Texture2D::PIXEL_FORMAT_AI88;
-const int kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PIXEL_FORMAT_RGBA4444;
-const int kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PIXEL_FORMAT_RGB5A1;
-const int kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PIXEL_FORMAT_PRVTC4;
-const int kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PIXEL_FORMAT_PRVTC2;
-const int kCCTexture2DPixelFormat_Default = Texture2D::PIXEL_FORMAT_DEFAULT;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PRVTC4;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PRVTC2;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
 
 const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
 const int kCCMenuStateWaiting = Menu::STATE_WAITING;

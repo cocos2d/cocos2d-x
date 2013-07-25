@@ -300,8 +300,15 @@ struct BlendFunc
     GLenum src;
     //! destination blend function
     GLenum dst;
-    
-    const static BlendFunc BLEND_FUNC_DISABLE;
+
+    //! Blending disabled. Uses {GL_ONE, GL_ZERO}
+    const static BlendFunc DISABLE;
+    //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+    const static BlendFunc ALPHA_PREMULTIPLIED;
+    //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+    const static BlendFunc ALPHA_NON_PREMULTIPLIED;
+    //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
+    const static BlendFunc ADDITIVE;
 };
 
 class Label : public Object
@@ -309,20 +316,20 @@ class Label : public Object
 public:
     // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
     //! Vertical text alignment type
-    enum VerticalTextAlignment
+    enum class VAlignment
     {
-        VERTICAL_TEXT_ALIGNMENT_TOP,
-        VERTICAL_TEXT_ALIGNMENT_CENTER,
-        VERTICAL_TEXT_ALIGNMENT_BOTTOM,
+        TOP,
+        CENTER,
+        BOTTOM,
     };
     
     // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
     //! Horizontal text alignment type
-    enum TextAlignment
+    enum class HAlignment
     {
-        TEXT_ALIGNMENT_LEFT,
-        TEXT_ALIGNMENT_CENTER,
-        TEXT_ALIGNMENT_RIGHT,
+        LEFT,
+        CENTER,
+        RIGHT,
     };
 };
 
@@ -400,8 +407,8 @@ struct FontDefinition
 public:
     
     FontDefinition():_fontSize(0),
-    _alignment(Label::TEXT_ALIGNMENT_CENTER),
-    _vertAlignment(Label::VERTICAL_TEXT_ALIGNMENT_TOP),
+    _alignment(Label::HAlignment::CENTER),
+    _vertAlignment(Label::VAlignment::TOP),
     _fontFillColor(Color3B::WHITE)
     { _dimensions = Size(0,0); }
     
@@ -410,9 +417,9 @@ public:
     // font size
     int                   _fontSize;
     // horizontal alignment
-    Label::Label::Label::TextAlignment         _alignment;
+    Label::HAlignment         _alignment;
     // vertical alignment
-    Label::Label::Label::VerticalTextAlignment _vertAlignment;
+    Label::VAlignment _vertAlignment;
     // renering box
     Size                  _dimensions;
     // font color

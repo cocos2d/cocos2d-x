@@ -87,7 +87,7 @@ void TextureTest::performTestsPNG(const char* filename)
     TextureCache *cache = TextureCache::getInstance();
 
     log("RGBA 8888");
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -97,7 +97,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     log("RGBA 4444");
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -107,7 +107,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     log("RGBA 5551");
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB5A1);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
     gettimeofday(&now, NULL);
     texture = cache->addImage(filename);
     if( texture )
@@ -117,7 +117,7 @@ void TextureTest::performTestsPNG(const char* filename)
     cache->removeTexture(texture);
 
     log("RGB 565");
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB565);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
     gettimeofday(&now, NULL);    
     texture = cache->addImage(filename);
     if( texture )

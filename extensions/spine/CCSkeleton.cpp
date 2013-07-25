@@ -56,8 +56,7 @@ void CCSkeleton::initialize () {
 	debugBones = false;
 	timeScale = 1;
 
-	blendFunc.src = GL_ONE;
-	blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+	blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 	setOpacityModifyRGB(true);
 
 	setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));

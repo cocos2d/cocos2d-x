@@ -220,10 +220,8 @@ void AtlasNode::setBlendFunc(const BlendFunc &blendFunc)
 
 void AtlasNode::updateBlendFunc()
 {
-    if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() ) {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
+    if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() )
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 }
 
 void AtlasNode::setTexture(Texture2D *texture)
