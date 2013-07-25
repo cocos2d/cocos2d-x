@@ -237,7 +237,7 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
 {
     CC_UNUSED_PARAM(pAccelerationValue);
     
-    if(kScriptTypeNone == _scriptType)
+    if(kScriptTypeNone != _scriptType)
     {
         BasicScriptData data(this,(void*)pAccelerationValue);
         ScriptEvent event(kAccelerometerEvent,&data);
