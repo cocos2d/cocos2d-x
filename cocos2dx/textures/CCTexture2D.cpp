@@ -433,7 +433,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextAlignment hAlignment/* =  kTextAlignmentCenter */, VerticalTextAlignment vAlignment/* =  kVerticalTextAlignmentTop */)
+bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, Label::TextAlignment hAlignment/* =  Label::TEXT_ALIGNMENT_CENTER */, Label::VerticalTextAlignment vAlignment/* =  Label::VERTICAL_TEXT_ALIGNMENT_TOP */)
 {
     FontDefinition tempDef;
     
@@ -461,20 +461,20 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     bool bRet = false;
     Image::ETextAlign eAlign;
     
-    if (kVerticalTextAlignmentTop == textDefinition._vertAlignment)
+    if (Label::VERTICAL_TEXT_ALIGNMENT_TOP == textDefinition._vertAlignment)
     {
-        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignTop
-        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignTop
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
     }
-    else if (kVerticalTextAlignmentCenter == textDefinition._vertAlignment)
+    else if (Label::VERTICAL_TEXT_ALIGNMENT_CENTER == textDefinition._vertAlignment)
     {
-        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignCenter
-        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignLeft : Image::kAlignRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignCenter
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignLeft : Image::kAlignRight;
     }
-    else if (kVerticalTextAlignmentBottom == textDefinition._vertAlignment)
+    else if (Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM == textDefinition._vertAlignment)
     {
-        eAlign = (kTextAlignmentCenter == textDefinition._alignment) ? Image::kAlignBottom
-        : (kTextAlignmentLeft == textDefinition._alignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignBottom
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
     }
     else
     {

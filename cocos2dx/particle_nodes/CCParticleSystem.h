@@ -139,15 +139,15 @@ public:
     enum PositionType
     {
         /** Living particles are attached to the world and are unaffected by emitter repositioning. */
-        FREE,
+        POSITION_TYPE_FREE,
         
         /** Living particles are attached to the world but will follow the emitter repositioning.
          Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
          */
-        RELATIVE,
+        POSITION_TYPE_RELATIVE,
         
         /** Living particles are attached to the emitter and are translated along with it. */
-        GROUPED,
+        POSITION_TYPE_GROUPED,
     };
     
     //* @enum

@@ -39766,7 +39766,7 @@ static int tolua_Cocos2d_CCLabelBMFont_setAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelBMFont* self = (LabelBMFont*)  tolua_tousertype(tolua_S,1,0);
-  TextAlignment alignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAlignment'", NULL);
 #endif
@@ -40256,7 +40256,7 @@ static int tolua_Cocos2d_CCLabelBMFont_create00(lua_State* tolua_S)
   const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,kLabelAutomaticWidth));
-  TextAlignment alignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,5,kTextAlignmentLeft));
+  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,5,Label::TEXT_ALIGNMENT_LEFT));
   {
    LabelBMFont* tolua_ret = (LabelBMFont*)  LabelBMFont::create(str,fntFile,width,alignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -40293,7 +40293,7 @@ static int tolua_Cocos2d_CCLabelBMFont_create01(lua_State* tolua_S)
   const char* str = ((const char*)  tolua_tostring(tolua_S,2,0));
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,3,0));
   float width = ((float)  tolua_tonumber(tolua_S,4,0));
-  TextAlignment alignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
+  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,5,0));
   Point imageOffset = *((Point*)  tolua_tousertype(tolua_S,6,0));
   {
    LabelBMFont* tolua_ret = (LabelBMFont*)  LabelBMFont::create(str,fntFile,width,alignment,imageOffset);
@@ -40539,7 +40539,7 @@ static int tolua_Cocos2d_CCLabelTTF_getHorizontalAlignment00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHorizontalAlignment'", NULL);
 #endif
   {
-   TextAlignment tolua_ret = (TextAlignment)  self->getHorizontalAlignment();
+   Label::TextAlignment tolua_ret = (Label::TextAlignment)  self->getHorizontalAlignment();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -40568,7 +40568,7 @@ static int tolua_Cocos2d_CCLabelTTF_setHorizontalAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelTTF* self = (LabelTTF*)  tolua_tousertype(tolua_S,1,0);
-  TextAlignment alignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setHorizontalAlignment'", NULL);
 #endif
@@ -40604,7 +40604,7 @@ static int tolua_Cocos2d_CCLabelTTF_getVerticalAlignment00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getVerticalAlignment'", NULL);
 #endif
   {
-   VerticalTextAlignment tolua_ret = (VerticalTextAlignment)  self->getVerticalAlignment();
+   Label::VerticalTextAlignment tolua_ret = (Label::VerticalTextAlignment)  self->getVerticalAlignment();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -40633,7 +40633,7 @@ static int tolua_Cocos2d_CCLabelTTF_setVerticalAlignment00(lua_State* tolua_S)
 #endif
  {
   LabelTTF* self = (LabelTTF*)  tolua_tousertype(tolua_S,1,0);
-  VerticalTextAlignment verticalAlignment = ((VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
+  Label::VerticalTextAlignment verticalAlignment = ((Label::VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setVerticalAlignment'", NULL);
 #endif
@@ -40879,8 +40879,8 @@ static int tolua_Cocos2d_CCLabelTTF_create00(lua_State* tolua_S)
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   const Size* dimensions = ((const Size*)  tolua_tousertype(tolua_S,5,0));
-  TextAlignment hAlignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
-  VerticalTextAlignment vAlignment = ((VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,7,0));
+  Label::TextAlignment hAlignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
+  Label::VerticalTextAlignment vAlignment = ((Label::VerticalTextAlignment) (int)  tolua_tonumber(tolua_S,7,0));
   {
    LabelTTF* tolua_ret = (LabelTTF*)  LabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment,vAlignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -40918,7 +40918,7 @@ static int tolua_Cocos2d_CCLabelTTF_create01(lua_State* tolua_S)
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,3,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,4,0));
   const Size* dimensions = ((const Size*)  tolua_tousertype(tolua_S,5,0));
-  TextAlignment hAlignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
+  Label::TextAlignment hAlignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,6,0));
   {
    LabelTTF* tolua_ret = (LabelTTF*)  LabelTTF::create(str,fontName,fontSize,*dimensions,hAlignment);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
@@ -49816,7 +49816,7 @@ static int tolua_Cocos2d_CCTextFieldTTF_textFieldWithPlaceHolder00(lua_State* to
  {
   const char* placeholder = ((const char*)  tolua_tostring(tolua_S,2,0));
   Size dimensions = *((Size*)  tolua_tousertype(tolua_S,3,0));
-  TextAlignment alignment = ((TextAlignment) (int)  tolua_tonumber(tolua_S,4,0));
+  Label::TextAlignment alignment = ((Label::TextAlignment) (int)  tolua_tonumber(tolua_S,4,0));
   const char* fontName = ((const char*)  tolua_tostring(tolua_S,5,0));
   float fontSize = ((float)  tolua_tonumber(tolua_S,6,0));
   {
@@ -63879,12 +63879,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"src",tolua_get_BlendFunc_unsigned_src,tolua_set_BlendFunc_unsigned_src);
    tolua_variable(tolua_S,"dst",tolua_get_BlendFunc_unsigned_dst,tolua_set_BlendFunc_unsigned_dst);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentTop",kVerticalTextAlignmentTop);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentCenter",kVerticalTextAlignmentCenter);
-  tolua_constant(tolua_S,"kCCVerticalTextAlignmentBottom",kVerticalTextAlignmentBottom);
-  tolua_constant(tolua_S,"kCCTextAlignmentLeft",kTextAlignmentLeft);
-  tolua_constant(tolua_S,"kCCTextAlignmentCenter",kTextAlignmentCenter);
-  tolua_constant(tolua_S,"kCCTextAlignmentRight",kTextAlignmentRight);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentTop",Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentCenter",Label::VERTICAL_TEXT_ALIGNMENT_CENTER);
+  tolua_constant(tolua_S,"kCCVerticalTextAlignmentBottom",Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM);
+  tolua_constant(tolua_S,"kCCTextAlignmentLeft",Label::TEXT_ALIGNMENT_LEFT);
+  tolua_constant(tolua_S,"kCCTextAlignmentCenter",Label::TEXT_ALIGNMENT_CENTER);
+  tolua_constant(tolua_S,"kCCTextAlignmentRight",Label::TEXT_ALIGNMENT_RIGHT);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"T2F_Quad","T2F_Quad","",tolua_collect_T2F_Quad);
   #else

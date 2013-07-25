@@ -114,8 +114,16 @@ const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_
 const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
 const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
 
-const int kCCPositionTypeFree =  ParticleSystem::FREE;
-const int kCCPositionTypeRelative =  ParticleSystem::RELATIVE;
-const int kCCPositionTypeGrouped =  ParticleSystem::GROUPED;
+const int kCCPositionTypeFree =  ParticleSystem::POSITION_TYPE_FREE;
+const int kCCPositionTypeRelative =  ParticleSystem::POSITION_TYPE_RELATIVE;
+const int kCCPositionTypeGrouped =  ParticleSystem::POSITION_TYPE_GROUPED;
+
+const int kCCVerticalTextAlignmentTop = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
+const int kCCVerticalTextAlignmentCenter = Label::VERTICAL_TEXT_ALIGNMENT_CENTER;
+const int kCCVerticalTextAlignmentBottom = Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+
+const int kCCTextAlignmentLeft = Label::TEXT_ALIGNMENT_LEFT;
+const int kCCTextAlignmentCenter = Label::TEXT_ALIGNMENT_CENTER;
+const int kCCTextAlignmentRight = Label::TEXT_ALIGNMENT_RIGHT;
 
 NS_CC_END
