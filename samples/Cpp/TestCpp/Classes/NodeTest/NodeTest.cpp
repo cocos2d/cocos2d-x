@@ -512,12 +512,12 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::PROJECTION_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::PROJECTION_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -584,12 +584,12 @@ void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::PROJECTION_3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::PROJECTION_2D);
     TestCocosNodeDemo::onExit();
 }
 

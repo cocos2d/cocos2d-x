@@ -64203,8 +64203,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"isDispatchEvents",tolua_Cocos2d_CCTouchDispatcher_isDispatchEvents00);
    tolua_function(tolua_S,"setDispatchEvents",tolua_Cocos2d_CCTouchDispatcher_setDispatchEvents00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCDirectorProjection2D",kDirectorProjection2D);
-  tolua_constant(tolua_S,"kCCDirectorProjection3D",kDirectorProjection3D);
+  tolua_constant(tolua_S,"kCCDirectorProjection2D",Director::PROJECTION_2D);
+  tolua_constant(tolua_S,"kCCDirectorProjection3D",Director::PROJECTION_3D);
   tolua_constant(tolua_S,"kCCDirectorProjectionCustom",kDirectorProjectionCustom);
   tolua_constant(tolua_S,"kCCDirectorProjectionDefault",kDirectorProjectionDefault);
   tolua_cclass(tolua_S,"CCDirector","CCDirector","CCObject",NULL);

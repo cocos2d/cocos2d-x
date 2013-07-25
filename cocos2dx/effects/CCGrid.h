@@ -99,7 +99,7 @@ protected:
     Grabber *_grabber;
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
-    ccDirectorProjection _directorProjection;
+    Director::Projection _directorProjection;
 };
 
 /**

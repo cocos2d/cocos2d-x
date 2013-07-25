@@ -845,10 +845,11 @@ CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 #define kCCProgressTimerTypeRadial kProgressTimerTypeRadial
 #define kCCProgressTimerTypeBar    kProgressTimerTypeBar
 
-#define kCCDirectorProjection2D         kDirectorProjection2D
-#define kCCDirectorProjection3D         kDirectorProjection3D
-#define kCCDirectorProjectionCustom     kDirectorProjectionCustom
-#define kCCDirectorProjectionDefault    kDirectorProjectionDefault
+CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection2D = Director::PROJECTION_2D;
+CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjection3D = Director::PROJECTION_3D; 
+CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionCustom = Director::PROJECTION_CUSTOM;
+CC_DEPRECATED_ATTRIBUTE const int kCCDirectorProjectionDefault = Director::PROJECTION_DEFAULT;
+CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
 #define kCCVerticalTextAlignmentTop     kVerticalTextAlignmentTop
 #define kCCVerticalTextAlignmentCenter  kVerticalTextAlignmentCenter
