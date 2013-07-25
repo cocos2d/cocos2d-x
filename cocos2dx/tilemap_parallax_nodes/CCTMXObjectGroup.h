@@ -52,16 +52,16 @@ public:
     inline void setGroupName(const char *groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
-    String* getPropertyNamed(const char* propertyName) const;
+    String* getProperty(const char* propertyName) const;
     
-    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char* propertyName) const { return getPropertyNamed(propertyName); };
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char* propertyName) const { return getProperty(propertyName); };
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    Dictionary* getObjectNamed(const char *objectName) const;
+    Dictionary* getObject(const char *objectName) const;
     
-    CC_DEPRECATED_ATTRIBUTE Dictionary* objectNamed(const char *objectName) const { return getObjectNamed(objectName); };
+    CC_DEPRECATED_ATTRIBUTE Dictionary* objectNamed(const char *objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
     inline const Point& getPositionOffset() const { return _positionOffset; };
