@@ -117,7 +117,7 @@ public:
     /** Create an array */
     static Array* create();
     /** Create an array with some objects */
-    static Array* create(Object* pObject, ...);
+    static Array* create(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object */
     static Array* createWithObject(Object* pObject);
     /** Create an array with capacity */
@@ -142,7 +142,7 @@ public:
     /** Initializes an array with one object */
     bool initWithObject(Object* pObject);
     /** Initializes an array with some objects */
-    bool initWithObjects(Object* pObject, ...);
+    bool initWithObjects(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
     /** Initializes an array with an existing array */

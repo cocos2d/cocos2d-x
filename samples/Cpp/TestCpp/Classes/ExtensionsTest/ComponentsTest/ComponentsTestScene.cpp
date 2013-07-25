@@ -81,9 +81,9 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         
 
         MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
-        	ExtensionsTestScene *pScene = new ExtensionsTestScene();
-            pScene->runThisTest();
-            pScene->release();
+        	ExtensionsTestScene *scene = new ExtensionsTestScene();
+            scene->runThisTest();
+            scene->release();
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
@@ -99,6 +99,6 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
 
 void runComponentsTestLayerTest()
 {
-    Scene *pScene = ComponentsTestLayer::scene();
-    Director::getInstance()->replaceScene(pScene);
+    Scene *scene = ComponentsTestLayer::scene();
+    Director::getInstance()->replaceScene(scene);
 }

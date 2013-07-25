@@ -39,13 +39,15 @@ TMXObjectGroup::TMXObjectGroup()
     _objects->retain();
     _properties = new Dictionary();
 }
+
 TMXObjectGroup::~TMXObjectGroup()
 {
     CCLOGINFO( "cocos2d: deallocing: %p", this);
     CC_SAFE_RELEASE(_objects);
     CC_SAFE_RELEASE(_properties);
 }
-Dictionary* TMXObjectGroup::objectNamed(const char *objectName)
+
+Dictionary* TMXObjectGroup::getObjectNamed(const char *objectName) const
 {
     if (_objects && _objects->count() > 0)
     {
@@ -53,7 +55,7 @@ Dictionary* TMXObjectGroup::objectNamed(const char *objectName)
         CCARRAY_FOREACH(_objects, pObj)
         {
             Dictionary* pDict = static_cast<Dictionary*>(pObj);
-            String *name = (String*)pDict->objectForKey("name");
+            String *name = static_cast<String*>(pDict->objectForKey("name"));
             if (name && name->_string == objectName)
             {
                 return pDict;
@@ -63,30 +65,10 @@ Dictionary* TMXObjectGroup::objectNamed(const char *objectName)
     // object not found
     return NULL;    
 }
-String* TMXObjectGroup::propertyNamed(const char* propertyName)
-{
-    return (String*)_properties->objectForKey(propertyName);
-}
 
-Dictionary* TMXObjectGroup::getProperties()
-{ 
-    return _properties;
-}
-void TMXObjectGroup::setProperties(Dictionary * properties)
+String* TMXObjectGroup::getPropertyNamed(const char* propertyName) const
 {
-    CC_SAFE_RETAIN(properties);
-    CC_SAFE_RELEASE(_properties);
-    _properties = properties;
-}
-Array* TMXObjectGroup::getObjects()
-{
-    return _objects;
-}
-void TMXObjectGroup::setObjects(Array* objects)
-{
-    CC_SAFE_RETAIN(objects);
-    CC_SAFE_RELEASE(_objects);
-    _objects = objects;
+    return static_cast<String*>(_properties->objectForKey(propertyName));
 }
 
 NS_CC_END

@@ -503,7 +503,7 @@ void ParticleBatchNode::setTexture(Texture2D* texture)
     }
 }
 
-Texture2D* ParticleBatchNode::getTexture(void)
+Texture2D* ParticleBatchNode::getTexture(void) const
 {
     return _textureAtlas->getTexture();
 }

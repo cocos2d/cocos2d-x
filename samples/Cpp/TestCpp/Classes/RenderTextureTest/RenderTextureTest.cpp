@@ -23,10 +23,10 @@ static Layer* nextTestCase()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 static Layer* backTestCase()
@@ -36,18 +36,18 @@ static Layer* backTestCase()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartTestCase()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 void RenderTextureTest::onEnter()
@@ -284,8 +284,8 @@ std::string RenderTextureIssue937::subtitle()
 
 void RenderTextureScene::runThisTest()
 {
-    Layer* pLayer = nextTestCase();
-    addChild(pLayer);
+    Layer* layer = nextTestCase();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

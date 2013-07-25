@@ -140,9 +140,9 @@ void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
 
-    ExtensionsTestScene* pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene* scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 void NotificationCenterTest::toggleSwitch(Object *sender)
@@ -167,9 +167,9 @@ void NotificationCenterTest::doNothing(cocos2d::Object *sender)
 
 void runNotificationCenterTest()
 {
-    Scene* pScene = Scene::create();
-    NotificationCenterTest* pLayer = new NotificationCenterTest();
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Scene* scene = Scene::create();
+    NotificationCenterTest* layer = new NotificationCenterTest();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

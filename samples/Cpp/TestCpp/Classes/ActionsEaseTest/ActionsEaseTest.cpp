@@ -552,10 +552,10 @@ Layer* nextEaseAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backEaseAction()
@@ -565,18 +565,18 @@ Layer* backEaseAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartEaseAction()
 {
-    Layer* pLayer = createEaseLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEaseLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -609,9 +609,9 @@ void EaseSpriteDemo::onEnter()
     BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
-    _grossini = Sprite::create(s_pPathGrossini); _grossini->retain();
-    _tamara = Sprite::create(s_pPathSister1); _tamara->retain();
-    _kathia = Sprite::create(s_pPathSister2); _kathia->retain();
+    _grossini = Sprite::create(s_pathGrossini); _grossini->retain();
+    _tamara = Sprite::create(s_pathSister1); _tamara->retain();
+    _kathia = Sprite::create(s_pathSister2); _kathia->retain();
     
     addChild( _grossini, 3);
     addChild( _kathia, 2);
@@ -649,8 +649,8 @@ void EaseSpriteDemo::backCallback(Object* pSender)
 
 void ActionsEaseTestScene::runThisTest()
 {
-    Layer* pLayer = nextEaseAction();
-    addChild(pLayer);
+    Layer* layer = nextEaseAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

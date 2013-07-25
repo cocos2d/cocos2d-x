@@ -241,9 +241,6 @@ public:
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
-
     //
     // Overrides
     //
@@ -251,10 +248,14 @@ public:
     virtual void setColor(const Color3B &color) override;
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
+    /** BlendFunction. Conforms to BlendProtocol protocol */
+    virtual const BlendFunc& getBlendFunc() const override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
     virtual void updateColor();
 
+    BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
 };

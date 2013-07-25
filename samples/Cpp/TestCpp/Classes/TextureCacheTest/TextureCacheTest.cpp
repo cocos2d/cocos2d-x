@@ -129,9 +129,9 @@ void TextureCacheTest::addSprite()
 
 void TextureCacheTestScene::runThisTest()
 {
-    Layer* pLayer = new TextureCacheTest();
-    addChild(pLayer);
+    Layer* layer = new TextureCacheTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }

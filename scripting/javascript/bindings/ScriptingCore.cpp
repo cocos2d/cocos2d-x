@@ -519,7 +519,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
-            CCLog("(evaluatedOK == JS_FALSE)");
+            cocos2d::log("(evaluatedOK == JS_FALSE)");
             JS_ReportPendingException(cx);
         }
     }

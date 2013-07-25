@@ -88,36 +88,26 @@ Each layer is created using an TMXLayer (subclass of SpriteBatchNode). If you ha
 unless the layer visibility is off. In that case, the layer won't be created at all.
 You can obtain the layers (TMXLayer objects) at runtime by:
 - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
-- map->layerNamed(name_of_the_layer);
+- map->getLayer(name_of_the_layer);
 
 Each object group is created using a TMXObjectGroup which is a subclass of MutableArray.
 You can obtain the object groups at runtime by:
-- map->objectGroupNamed(name_of_the_object_group);
+- map->getObjectGroup(name_of_the_object_group);
 
 Each object is a TMXObject.
 
 Each property is stored as a key-value pair in an MutableDictionary.
 You can obtain the properties at runtime by:
 
-map->propertyNamed(name_of_the_property);
-layer->propertyNamed(name_of_the_property);
-objectGroup->propertyNamed(name_of_the_property);
-object->propertyNamed(name_of_the_property);
+map->getProperty(name_of_the_property);
+layer->getProperty(name_of_the_property);
+objectGroup->getProperty(name_of_the_property);
+object->getProperty(name_of_the_property);
 
 @since v0.8.1
 */
 class CC_DLL TMXTiledMap : public Node
 {
-    /** the map's size property measured in tiles */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _mapSize, MapSize);
-    /** the tiles's size property measured in pixels */
-    CC_SYNTHESIZE_PASS_BY_REF(Size, _tileSize, TileSize);
-    /** map orientation */
-    CC_SYNTHESIZE(int, _mapOrientation, MapOrientation);
-    /** object groups */
-    CC_PROPERTY(Array*, _objectGroups, ObjectGroups);
-    /** properties */
-    CC_PROPERTY(Dictionary*, _properties, Properties);
 public:
     TMXTiledMap();
     virtual ~TMXTiledMap();
@@ -135,22 +125,65 @@ public:
     bool initWithXML(const char* tmxString, const char* resourcePath);
 
     /** return the TMXLayer for the specific layer */
-    TMXLayer* layerNamed(const char *layerName);
+    TMXLayer* getLayer(const char *layerName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
-    TMXObjectGroup* objectGroupNamed(const char *groupName);
+    TMXObjectGroup* getObjectGroup(const char *groupName) const;
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    String *propertyNamed(const char *propertyName);
+    String *getProperty(const char *propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
-    Dictionary* propertiesForGID(int GID);
+    Dictionary* getPropertiesForGID(int GID) const;
+    CC_DEPRECATED_ATTRIBUTE Dictionary* propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
+    /** the map's size property measured in tiles */
+    inline const Size& getMapSize() const { return _mapSize; };
+    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+
+    /** the tiles's size property measured in pixels */
+    inline const Size& getTileSize() const { return _tileSize; };
+    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+
+    /** map orientation */
+    inline int getMapOrientation() const { return _mapOrientation; };
+    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
+
+    /** object groups */
+    inline Array* getObjectGroups() const { return _objectGroups; };
+    inline void setObjectGroups(Array* groups) {
+        CC_SAFE_RETAIN(groups);
+        CC_SAFE_RELEASE(_objectGroups);
+        _objectGroups = groups;
+    };
+    
+    /** properties */
+    inline Dictionary* getProperties() const { return _properties; };
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
+    
 private:
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 protected:
+    /** the map's size property measured in tiles */
+    Size _mapSize;
+    /** the tiles's size property measured in pixels */
+    Size _tileSize;
+    /** map orientation */
+    int _mapOrientation;
+    /** object groups */
+    Array* _objectGroups;
+    /** properties */
+    Dictionary* _properties;
+    
     //! tile properties
     Dictionary* _tileProperties;
 

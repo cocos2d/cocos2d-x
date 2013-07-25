@@ -117,9 +117,9 @@ void MutiTouchTestLayer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
 
 void MutiTouchTestScene::runThisTest()
 {
-    MutiTouchTestLayer* pLayer = MutiTouchTestLayer::create();
+    MutiTouchTestLayer* layer = MutiTouchTestLayer::create();
 
-    addChild(pLayer, 0);
+    addChild(layer, 0);
 
     Director::getInstance()->replaceScene(this);
 }

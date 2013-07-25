@@ -255,19 +255,19 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     // You can get original request type from: response->request->reqType
     if (0 != strlen(response->getHttpRequest()->getTag())) 
     {
-        CCLog("%s completed", response->getHttpRequest()->getTag());
+        log("%s completed", response->getHttpRequest()->getTag());
     }
     
     int statusCode = response->getResponseCode();
     char statusString[64] = {};
     sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
     _labelStatusCode->setString(statusString);
-    CCLog("response code: %d", statusCode);
+    log("response code: %d", statusCode);
     
     if (!response->isSucceed()) 
     {
-        CCLog("response failed");
-        CCLog("error buffer: %s", response->getErrorBuffer());
+        log("response failed");
+        log("error buffer: %s", response->getErrorBuffer());
         return;
     }
     
@@ -283,17 +283,17 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
 
 void HttpClientTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 void runHttpClientTest()
 {
-    Scene *pScene = Scene::create();
-    HttpClientTest *pLayer = new HttpClientTest();
-    pScene->addChild(pLayer);
+    Scene *scene = Scene::create();
+    HttpClientTest *layer = new HttpClientTest();
+    scene->addChild(layer);
     
-    Director::getInstance()->replaceScene(pScene);
-    pLayer->release();
+    Director::getInstance()->replaceScene(scene);
+    layer->release();
 }

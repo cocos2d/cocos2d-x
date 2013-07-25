@@ -170,6 +170,6 @@ void MyIAPOnlineResult::onPayResult(PayResultCode ret, const char* msg, TProduct
     MessageBox(goodInfo , msg);
 
     if (ret == kPaySuccess) {
-        CCLog("Pay success locally, should check the real result by game server!");
+        log("Pay success locally, should check the real result by game server!");
     }
 }

@@ -61,9 +61,9 @@ CurrentLanguageTest::CurrentLanguageTest()
 
 void CurrentLanguageTestScene::runThisTest()
 {
-    Layer* pLayer = new CurrentLanguageTest();
-    addChild(pLayer);
+    Layer* layer = new CurrentLanguageTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }
