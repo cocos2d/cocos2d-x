@@ -859,7 +859,7 @@ bool Image::initWithString(
 	const char *    pText, 
 	int             nWidth, 
 	int             nHeight,
-	ETextAlign      eAlignMask,
+	TextAlign      eAlignMask,
 	const char *    pFontName,
 	int             nSize)
 {

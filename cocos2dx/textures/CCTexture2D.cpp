@@ -459,22 +459,22 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 #endif
 
     bool bRet = false;
-    Image::ETextAlign eAlign;
+    Image::TextAlign eAlign;
     
     if (Label::VERTICAL_TEXT_ALIGNMENT_TOP == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignTop
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignTopLeft : Image::kAlignTopRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_TOP
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_TOP_LEFT : Image::TEXT_ALIGN_TOP_RIGHT;
     }
     else if (Label::VERTICAL_TEXT_ALIGNMENT_CENTER == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignCenter
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignLeft : Image::kAlignRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_CENTER
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_LEFT : Image::TEXT_ALIGN_RIGHT;
     }
     else if (Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::kAlignBottom
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::kAlignBottomLeft : Image::kAlignBottomRight;
+        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_BOTTOM
+        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_BOTTOM_LEFT : Image::TEXT_ALIGN_BOTTOM_RIGHT;
     }
     else
     {
