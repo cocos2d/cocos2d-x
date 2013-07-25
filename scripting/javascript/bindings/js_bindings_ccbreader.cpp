@@ -273,7 +273,7 @@ JSBool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uin
 JSBool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
-    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::sharedNodeLoaderLibrary();
+	NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
     
     ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     
