@@ -158,27 +158,27 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
 
-        if (FORMAT_PNG == eFmt)
+        if (Format::PNG == eFmt)
         {
-            bRet = _initWithPngData(pData, nDataLen);
+            bRet = initWithPngData(pData, nDataLen);
             break;
         }
-        else if (FORMAT_JPG == eFmt)
+        else if (Format::JPG == eFmt)
         {
-            bRet = _initWithJpgData(pData, nDataLen);
+            bRet = initWithJpgData(pData, nDataLen);
             break;
         }
-        else if (FORMAT_TIFF == eFmt)
+        else if (Format::TIFF == eFmt)
         {
-            bRet = _initWithTiffData(pData, nDataLen);
+            bRet = initWithTiffData(pData, nDataLen);
             break;
         }
-        else if (FORMAT_WEBP == eFmt)
+        else if (Format::WEBP == eFmt)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
             break;
         }
-        else if (FORMAT_RAW_DATA == eFmt)
+        else if (Format::RAW_DATA == eFmt)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
@@ -198,7 +198,7 @@ bool Image::initWithImageData(void * pData,
                     && pHead[6] == 0x1A
                     && pHead[7] == 0x0A)
                 {
-                    bRet = _initWithPngData(pData, nDataLen);
+                    bRet = initWithPngData(pData, nDataLen);
                     break;
                 }
             }
@@ -211,7 +211,7 @@ bool Image::initWithImageData(void * pData,
                     || (pHead[0] == 0x4d && pHead[1] == 0x4d)
                     )
                 {
-                    bRet = _initWithTiffData(pData, nDataLen);
+                    bRet = initWithTiffData(pData, nDataLen);
                     break;
                 }
             }
@@ -223,7 +223,7 @@ bool Image::initWithImageData(void * pData,
                 if (   pHead[0] == 0xff
                     && pHead[1] == 0xd8)
                 {
-                    bRet = _initWithJpgData(pData, nDataLen);
+                    bRet = initWithJpgData(pData, nDataLen);
                     break;
                 }
             }
@@ -726,11 +726,11 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 
         if (std::string::npos != strLowerCasePath.find(".png"))
         {
-            CC_BREAK_IF(!_saveImageToPNG(pszFilePath, bIsToRGB));
+            CC_BREAK_IF(!saveImageToPNG(pszFilePath, bIsToRGB));
         }
         else if (std::string::npos != strLowerCasePath.find(".jpg"))
         {
-            CC_BREAK_IF(!_saveImageToJPG(pszFilePath));
+            CC_BREAK_IF(!saveImageToJPG(pszFilePath));
         }
         else
         {
