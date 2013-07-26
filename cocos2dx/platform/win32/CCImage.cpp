@@ -370,7 +370,7 @@ bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
-                               ETextAlign      eAlignMask/* = kAlignCenter*/,
+                               TextAlign       eAlignMask/* = kAlignCenter*/,
                                const char *    pFontName/* = nil*/,
                                int             nSize/* = 0*/)
 {
