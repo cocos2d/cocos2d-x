@@ -209,7 +209,7 @@ Touch::DispatchMode Layer::getTouchMode() const
     return _touchMode;
 }
 
-bool Layer::getSwallowsTouches() const
+bool Layer::isSwallowsTouches() const
 {
 	return _swallowsTouches;
 }
