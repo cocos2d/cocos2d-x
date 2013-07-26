@@ -149,7 +149,7 @@ int NotificationCenter::removeAllObservers(Object *target)
 void NotificationCenter::registerScriptObserver( Object *target, int handler,const char* name)
 {
     
-    if (this->observerExisted(target, name))
+    if (this->observerExisted(target, name, NULL))
         return;
     
     NotificationObserver *observer = new NotificationObserver(target, NULL, name, NULL);
