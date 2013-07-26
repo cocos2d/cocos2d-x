@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(EGLView::getInstance());
 
     // JS-Test in Html5 uses 800x450 as design resolution
-    EGLView::getInstance()->setDesignResolutionSize(800, 450, kResolutionFixedHeight);
+    EGLView::getInstance()->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
     // turn on display FPS
     pDirector->setDisplayStats(true);
 

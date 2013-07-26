@@ -55,25 +55,25 @@ void CC_DLL MessageBox(const char * pszMsg, const char * pszTitle);
 /**
 @brief Enum the language type supported now
 */
-typedef enum LanguageType
+enum class LanguageType
 {
-    kLanguageEnglish = 0,
-    kLanguageChinese,
-    kLanguageFrench,
-    kLanguageItalian,
-    kLanguageGerman,
-    kLanguageSpanish,
-    kLanguageRussian,
-    kLanguageKorean,
-    kLanguageJapanese,
-    kLanguageHungarian,
-    kLanguagePortuguese,
-    kLanguageArabic,
-    kLanguageNorwegian,
-    kLanguagePolish
-} ccLanguageType;
+    ENGLISH = 0,
+    CHINESE,
+    FRENCH,
+    ITALIAN,
+    GERMAN,
+    SPANISH,
+    RUSSIAN,
+    KOREAN,
+    JAPANESE,
+    HUNGARIAN,
+    PORTUGUESE,
+    ARABIC,
+    NORWEGIAN,
+    POLISH
+};
 
-// end of platform group
+// END of platform group
 /// @}
 
 NS_CC_END
