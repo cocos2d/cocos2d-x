@@ -856,9 +856,9 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Color;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_TexCoords;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_PosColorTex;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeRadial;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeBar;
 CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
+CC_DEPRECATED_ATTRIBUTE extern ProgressTimer::Type kCCProgressTimerTypeRadial;
+CC_DEPRECATED_ATTRIBUTE extern ProgressTimer::Type kCCProgressTimerTypeBar;
 
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection2D;
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection3D; 

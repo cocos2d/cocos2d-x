@@ -93,8 +93,8 @@ const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
 const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
 const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
-const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
-const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
+ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
+ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::BAR;
 
 const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
 const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
