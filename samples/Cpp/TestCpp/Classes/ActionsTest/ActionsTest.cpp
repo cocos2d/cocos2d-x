@@ -1297,7 +1297,7 @@ void ActionFollow::draw()
 	float y = winSize.height;
     
 	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	ccDrawPoly(vertices, 4, true);
+	DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
 std::string ActionFollow::subtitle()
@@ -1565,10 +1565,10 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1,50);
+    DrawPrimitives::drawCatmullRom(_array1,50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 std::string ActionCatmullRomStacked::title()
@@ -1660,14 +1660,14 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 
@@ -2012,10 +2012,10 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1, 50);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 string ActionCatmullRom::title()
@@ -2090,14 +2090,14 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 

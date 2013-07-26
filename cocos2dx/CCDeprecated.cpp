@@ -243,12 +243,12 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
 
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
-    DrawPrimitives::drawColor4B(r, g, b, a);
+    DrawPrimitives::setColor4B(r, g, b, a);
 }
 
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
-    DrawPrimitives::drawColor4F(r, g, b, a);
+    DrawPrimitives::setColor4F(r, g, b, a);
 }
 
 void ccPointSize( GLfloat pointSize )
