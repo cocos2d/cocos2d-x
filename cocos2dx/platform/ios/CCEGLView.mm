@@ -48,7 +48,7 @@ bool EGLView::isOpenGLReady()
     
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    assert(_resolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
+    assert(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
 	
 	_scaleX = _scaleY = contentScaleFactor;
 	[[CCEAGLView sharedEGLView] setNeedsLayout];

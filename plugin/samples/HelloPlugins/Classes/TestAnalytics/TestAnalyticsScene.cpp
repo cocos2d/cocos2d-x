@@ -225,7 +225,7 @@ void TestAnalytics::eventMenuCallback(Object* pSender)
 
 void TestAnalytics::loadPlugins()
 {
-    ccLanguageType langType = Application::getInstance()->getCurrentLanguage();
+    LanguageType langType = Application::getInstance()->getCurrentLanguage();
     
     std::string umengKey  = "";
     std::string flurryKey = "";
@@ -240,7 +240,7 @@ void TestAnalytics::loadPlugins()
     flurryKey = FLURRY_KEY_ANDROID;
 #endif
     
-    if (kLanguageChinese == langType)
+    if (LanguageType::CHINESE == langType)
     {
         pluginName = "AnalyticsUmeng";
         strAppKey = umengKey;
