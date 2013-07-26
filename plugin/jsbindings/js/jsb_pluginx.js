@@ -16,11 +16,6 @@ plugin.ProtocolAds.AdsResultCode.PointsSpendFailed = 4;
 plugin.ProtocolAds.AdsResultCode.NetworkError = 5;
 plugin.ProtocolAds.AdsResultCode.UnknownError = 6;
 
-plugin.ProtocolAds.AdsType = {};
-plugin.ProtocolAds.AdsType.BannerAd = 0;
-plugin.ProtocolAds.AdsType.FullScreenAd = 1;
-plugin.ProtocolAds.AdsType.MoreApp = 2;
-
 plugin.ProtocolAds.AdsPos = {};
 plugin.ProtocolAds.AdsPos.PosCenter = 0;
 plugin.ProtocolAds.AdsPos.PosTop = 1;
