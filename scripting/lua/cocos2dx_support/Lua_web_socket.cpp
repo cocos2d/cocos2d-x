@@ -278,36 +278,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: sendTextMsg of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendTextMsg00
-static int tolua_Cocos2d_WebSocket_sendTextMsg00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,2,0,&tolua_err)               ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        const char *pData  = ((const char*)  tolua_tostring(tolua_S,2,0));
-        if (NULL != self && NULL != pData && strlen(pData) > 0) {
-            std::string strData = pData;
-            self->send(strData);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'sendStrMsg'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
 
 /* method: close of class WebSocket */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_close00
@@ -337,45 +307,45 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: sendBinaryMsg of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendBinaryMsg00
-static int tolua_Cocos2d_WebSocket_sendBinaryMsg00(lua_State* tolua_S)
+/* method: sendString of class WebSocket */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_sendString00
+static int tolua_Cocos2d_WebSocket_sendString00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !tolua_istable(tolua_S, 2, 0, &tolua_err)             ||
-        !tolua_isnumber(tolua_S,3, 0,&tolua_err)             ||
-        !tolua_isnoobj(tolua_S, 4,&tolua_err)
+        !tolua_isusertype(tolua_S, 1, "WebSocket", 0, &tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)                ||
+        !tolua_isnoobj(tolua_S, 3, &tolua_err)
         )
         goto tolua_lerror;
     else
 #endif
     {
         LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        int   nLength      = lua_tonumber(tolua_S, 3);
-        
-        if (NULL != self && nLength > 0) {
-            unsigned char* binaryArray = new unsigned char[nLength];
-            if (NULL == binaryArray) {
-                return 0;
-            }
-            for (int i = 0; i < nLength; i++) {
-                binaryArray[i] = (unsigned char)tolua_tofieldnumber(tolua_S, 2, i+1, 0);
-            }
-            self->send(binaryArray, nLength);
-            delete [] binaryArray;
+        size_t size = 0;
+        const char* data = (const char*) lua_tolstring(tolua_S, 2, &size);
+        if ( NULL == data)
+            return 0;
+
+        if (strlen(data) != size)
+        {
+            self->send((const unsigned char*)data, size);
+        }
+        else
+        {
+            self->send(data);
         }
     }
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'sendBinaryMsg'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'sendString'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
+
 
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
     tolua_open(tolua_S);
@@ -401,9 +371,8 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
         tolua_function(tolua_S, "createByAProtocol", tolua_Cocos2d_WebSocket_createByAProtocol00);
         tolua_function(tolua_S, "createByProtocolArray", tolua_Cocos2d_WebSocket_createByProtocolArray00);
         tolua_function(tolua_S, "getReadyState", tolua_Cocos2d_WebSocket_getReadyState00);
-        tolua_function(tolua_S, "sendTextMsg", tolua_Cocos2d_WebSocket_sendTextMsg00);
         tolua_function(tolua_S, "close", tolua_Cocos2d_WebSocket_close00);
-        tolua_function(tolua_S, "sendBinaryMsg", tolua_Cocos2d_WebSocket_sendBinaryMsg00);
+        tolua_function(tolua_S, "sendString", tolua_Cocos2d_WebSocket_sendString00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
 	return 1;
