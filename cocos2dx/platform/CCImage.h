@@ -50,46 +50,35 @@ public:
     Image();
     virtual ~Image();
 
-    typedef enum Format
+    /** Supported formats for Image */
+    enum class Format
     {
-        FORMAT_JPG,
-        FORMAT_PNG,
-        FORMAT_TIFF,
-        FORMAT_WEBP,
-        FORMAT_RAW_DATA,
-        FORMAT_UNKOWN,
-        
-        // don't use them
-        kFmtJpg = FORMAT_JPG,
-        kFmtPng = FORMAT_PNG,
-        kFmtTiff = FORMAT_TIFF,
-        kFmtWebp = FORMAT_WEBP,
-        kFmtRawData = FORMAT_RAW_DATA,
-        kFmtUnKnown = FORMAT_UNKOWN
-    }EImageFormat;
+        //! JPEG
+        JPG,
+        //! PNG
+        PNG,
+        //! TIFF
+        TIFF,
+        //! WebP
+        WEBP,
+        //! Raw Data
+        RAW_DATA,
+        //! Unknown format
+        UNKOWN
+    };
 
-    typedef enum TextAlign
+    enum class TextAlign
     {
-        TEXT_ALIGN_CENTER           = 0x33, ///< Horizontal center and vertical center.
-        TEXT_ALIGN_TOP              = 0x13, ///< Horizontal center and vertical top.
-        TEXT_ALIGN_TOP_RIGHT        = 0x12, ///< Horizontal right and vertical top.
-        TEXT_ALIGN_RIGHT            = 0x32, ///< Horizontal right and vertical center.
-        TEXT_ALIGN_BOTTOM_RIGHT      = 0x22, ///< Horizontal right and vertical bottom.
-        TEXT_ALIGN_BOTTOM           = 0x23, ///< Horizontal center and vertical bottom.
-        TEXT_ALIGN_BOTTOM_LEFT      = 0x21, ///< Horizontal left and vertical bottom.
-        TEXT_ALIGN_LEFT             = 0x31, ///< Horizontal left and vertical center.
-        TEXT_ALIGN_TOP_LEFT         = 0x11, ///< Horizontal left and vertical top.
-        
-        kAlignCenter        = TEXT_ALIGN_CENTER,
-        kAlignTop           = TEXT_ALIGN_TOP, 
-        kAlignTopRight      = TEXT_ALIGN_TOP_RIGHT, 
-        kAlignRight         = TEXT_ALIGN_RIGHT, 
-        kAlignBottomRight   = TEXT_ALIGN_BOTTOM_RIGHT,
-        kAlignBottom        = TEXT_ALIGN_BOTTOM, 
-        kAlignBottomLeft    = TEXT_ALIGN_BOTTOM_LEFT, 
-        kAlignLeft          = TEXT_ALIGN_LEFT, 
-        kAlignTopLeft       = TEXT_ALIGN_TOP_LEFT, 
-    }ETextAlign;
+        CENTER        = 0x33, ///< Horizontal center and vertical center.
+        TOP           = 0x13, ///< Horizontal center and vertical top.
+        TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
+        RIGHT         = 0x32, ///< Horizontal right and vertical center.
+        BOTTOEM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
+        BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
+        BOTTOEM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
+        LEFT          = 0x31, ///< Horizontal left and vertical center.
+        TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
+    };
     
     /**
     @brief  Load the image from the specified path. 
@@ -97,7 +86,7 @@ public:
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, Format imageType = FORMAT_PNG);
+    bool initWithImageFile(const char * strPath, Format imageType = Format::PNG);
 
     /**
     @brief  Load image from stream buffer.
@@ -110,7 +99,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           Format eFmt = FORMAT_UNKOWN,
+                           Format eFmt = Format::UNKOWN,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -131,7 +120,7 @@ public:
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,
-        TextAlign       eAlignMask = TEXT_ALIGN_CENTER,
+        TextAlign       eAlignMask = TextAlign::CENTER,
         const char *    pFontName = 0,
         int             nSize = 0);
     
@@ -141,7 +130,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                            TextAlign       eAlignMask  = TEXT_ALIGN_CENTER,
+                                        TextAlign       eAlignMask  = TextAlign::CENTER,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
@@ -183,13 +172,13 @@ public:
     //
     
 protected:
-    bool _initWithJpgData(void *pData, int nDatalen);
-    bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void *pData, int nDataLen);
-    bool _initWithWebpData(void *pData, int nDataLen);
+    bool initWithJpgData(void *pData, int nDatalen);
+    bool initWithPngData(void *pData, int nDatalen);
+    bool initWithTiffData(void *pData, int nDataLen);
+    bool initWithWebpData(void *pData, int nDataLen);
 
-    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool _saveImageToJPG(const char *pszFilePath);
+    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveImageToJPG(const char *pszFilePath);
 
     unsigned short   _width;
     unsigned short   _height;
@@ -212,7 +201,7 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = FORMAT_PNG);
+    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = Format::PNG);
 };
 
 // end of platform group

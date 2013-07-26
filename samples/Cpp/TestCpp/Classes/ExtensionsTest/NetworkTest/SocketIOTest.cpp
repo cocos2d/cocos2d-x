@@ -81,7 +81,7 @@ SocketIOTestLayer::SocketIOTestLayer(void)
     menuRequest->addChild(itemTestEndpointDisconnect);
     
 	// Sahred Status Label
-    _sioClientStatus = LabelTTF::create("Not connected...", "Arial", 14, Size(320, 100), Label::TEXT_ALIGNMENT_LEFT);
+    _sioClientStatus = LabelTTF::create("Not connected...", "Arial", 14, Size(320, 100), Label::HAlignment::LEFT);
     _sioClientStatus->setAnchorPoint(Point(0, 0));
     _sioClientStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y));
     this->addChild(_sioClientStatus);

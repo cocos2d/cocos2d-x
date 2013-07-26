@@ -31,7 +31,7 @@ InputDelegate::InputDelegate(void)
 , _accelerometerEnabled(false)
 , _keypadEnabled(false)
 , _touchPriority(0)
-, _touchMode(Layer::TOUCHES_ALL_AT_ONCE)
+, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
 
 }
@@ -94,7 +94,7 @@ void InputDelegate::didAccelerate(Acceleration* pAccelerationValue)
    CC_UNUSED_PARAM(pAccelerationValue);
 }
 
-bool InputDelegate::isTouchEnabled()
+bool InputDelegate::isTouchEnabled() const
 {
     return _touchEnabled;
 }
@@ -106,7 +106,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
         _touchEnabled = enabled;
         if (enabled)
         {
-            if( _touchMode == Layer::TOUCHES_ALL_AT_ONCE )
+            if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE )
             {
                 Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
             }
@@ -122,7 +122,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
     }
 }
 
-void InputDelegate::setTouchMode(ccTouchesMode mode)
+void InputDelegate::setTouchMode(Touch::DispatchMode mode)
 {
     if(_touchMode != mode)
     {
@@ -150,17 +150,17 @@ void InputDelegate::setTouchPriority(int priority)
     }
 }
 
-int InputDelegate::getTouchPriority()
+int InputDelegate::getTouchPriority() const
 {
     return _touchPriority;
 }
 
-int InputDelegate::getTouchMode()
+Touch::DispatchMode InputDelegate::getTouchMode() const
 {
     return _touchMode;
 }
 
-bool InputDelegate::isAccelerometerEnabled()
+bool InputDelegate::isAccelerometerEnabled() const
 {
     return _accelerometerEnabled;
 }
@@ -183,7 +183,7 @@ void InputDelegate::setAccelerometerEnabled(bool enabled)
     }
 }
 
-bool InputDelegate::isKeypadEnabled()
+bool InputDelegate::isKeypadEnabled() const
 {
     return _keypadEnabled;
 }

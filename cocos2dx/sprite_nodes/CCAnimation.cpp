@@ -174,12 +174,12 @@ void Animation::addSpriteFrame(SpriteFrame *pFrame)
     _totalDelayUnits++;
 }
 
-void Animation::addSpriteFrameWithFileName(const char *pszFileName)
+void Animation::addSpriteFrameWithFileName(const char *filename)
 {
-    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFileName);
+    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
     Rect rect = Rect::ZERO;
-    rect.size = pTexture->getContentSize();
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(pTexture, rect);
+    rect.size = texture->getContentSize();
+    SpriteFrame *pFrame = SpriteFrame::createWithTexture(texture, rect);
     addSpriteFrame(pFrame);
 }
 

@@ -42,9 +42,9 @@ struct Color3B
     Color3B(): r(0), g(0), b(0) {}
     
     Color3B(GLubyte _r, GLubyte _g, GLubyte _b)
-    :r(_r),
-    g(_g),
-    b(_b)
+        : r(_r)
+        , g(_g)
+        , b(_b)
     {}
     
     bool equals(const Color3B &other)
@@ -77,10 +77,10 @@ struct Color4F;
 struct Color4B
 {
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
-    :r(_r),
-    g(_g),
-    b(_b),
-    a(_a)
+        : r(_r)
+        , g(_g)
+        , b(_b)
+        , a(_a)
     {}
     
     Color4B(): r(0), g(0), b(0), a(0) {}
@@ -101,24 +101,24 @@ struct Color4B
 struct Color4F
 {
     Color4F(float _r, float _g, float _b, float _a)
-    :r(_r),
-    g(_g),
-    b(_b),
-    a(_a)
+        : r(_r)
+        , g(_g)
+        , b(_b)
+        , a(_a)
     {}
     
     explicit Color4F(const Color3B &color3B)
-    :r(color3B.r)
-    ,g(color3B.g)
-    ,b(color3B.b)
-    ,a(1.f)
+        : r(color3B.r)
+        , g(color3B.g)
+        , b(color3B.b)
+        , a(1.f)
     {}
     
     explicit Color4F(const Color4B &color4B)
-    :r(color4B.r / 255.0f),
-    g(color4B.g / 255.0f),
-    b(color4B.b / 255.0f),
-    a(color4B.a / 255.0f)
+        : r(color4B.r / 255.0f)
+        , g(color4B.g / 255.0f)
+        , b(color4B.b / 255.0f)
+        , a(color4B.a / 255.0f)
     {}
     
     Color4F(): r(0.f), g(0.f), b(0.f), a(0.f) {}
@@ -157,9 +157,9 @@ struct Vertex2F
 struct Vertex3F
 {
     Vertex3F(float _x, float _y, float _z)
-    :x(_x),
-    y(_y),
-    z(_z)
+        : x(_x)
+        , y(_y)
+        , z(_z)
     {}
     
     Vertex3F(): x(0.f), y(0.f), z(0.f) {}
@@ -300,8 +300,15 @@ struct BlendFunc
     GLenum src;
     //! destination blend function
     GLenum dst;
-    
-    const static BlendFunc BLEND_FUNC_DISABLE;
+
+    //! Blending disabled. Uses {GL_ONE, GL_ZERO}
+    const static BlendFunc DISABLE;
+    //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+    const static BlendFunc ALPHA_PREMULTIPLIED;
+    //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+    const static BlendFunc ALPHA_NON_PREMULTIPLIED;
+    //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
+    const static BlendFunc ADDITIVE;
 };
 
 class Label : public Object
@@ -309,20 +316,20 @@ class Label : public Object
 public:
     // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
     //! Vertical text alignment type
-    enum VerticalTextAlignment
+    enum class VAlignment
     {
-        VERTICAL_TEXT_ALIGNMENT_TOP,
-        VERTICAL_TEXT_ALIGNMENT_CENTER,
-        VERTICAL_TEXT_ALIGNMENT_BOTTOM,
+        TOP,
+        CENTER,
+        BOTTOM,
     };
     
     // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
     //! Horizontal text alignment type
-    enum TextAlignment
+    enum class HAlignment
     {
-        TEXT_ALIGNMENT_LEFT,
-        TEXT_ALIGNMENT_CENTER,
-        TEXT_ALIGNMENT_RIGHT,
+        LEFT,
+        CENTER,
+        RIGHT,
     };
 };
 
@@ -359,10 +366,12 @@ struct FontShadow
 public:
     
     // shadow is not enabled by default
-    FontShadow(): _shadowEnabled(false),
-    _shadowBlur(0),
-    _shadowOpacity(0){}
-    
+    FontShadow()
+        : _shadowEnabled(false)
+        , _shadowBlur(0)
+        , _shadowOpacity(0)
+    {}
+
     // true if shadow enabled
     bool   _shadowEnabled;
     // shadow x and y offset
@@ -383,7 +392,7 @@ public:
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeSize(0)
-	    {}
+    {}
     
     // true if stroke enabled
     bool      _strokeEnabled;
@@ -399,20 +408,22 @@ struct FontDefinition
 {
 public:
     
-    FontDefinition():_fontSize(0),
-    _alignment(Label::TEXT_ALIGNMENT_CENTER),
-    _vertAlignment(Label::VERTICAL_TEXT_ALIGNMENT_TOP),
-    _fontFillColor(Color3B::WHITE)
-    { _dimensions = Size(0,0); }
+    FontDefinition()
+        : _fontSize(0)
+        , _alignment(Label::HAlignment::CENTER)
+        , _vertAlignment(Label::VAlignment::TOP)
+        , _fontFillColor(Color3B::WHITE)
+        , _dimensions(Size::ZERO)
+    {}
     
     // font name
     std::string           _fontName;
     // font size
     int                   _fontSize;
     // horizontal alignment
-    Label::Label::Label::TextAlignment         _alignment;
+    Label::HAlignment         _alignment;
     // vertical alignment
-    Label::Label::Label::VerticalTextAlignment _vertAlignment;
+    Label::VAlignment _vertAlignment;
     // renering box
     Size                  _dimensions;
     // font color

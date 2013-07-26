@@ -97,7 +97,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
         glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &_VAOname);
-        ccGLBindVAO(0);
+        GL::bindVAO(0);
 #endif
     }
     
@@ -350,8 +350,8 @@ void ParticleSystemQuad::draw()
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLBindTexture2D( _texture->getName() );
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::bindTexture2D( _texture->getName() );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     CCASSERT( _particleIdx == _particleCount, "Abnormal error in particle quad");
 
@@ -359,7 +359,7 @@ void ParticleSystemQuad::draw()
     //
     // Using VBO and VAO
     //
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
@@ -378,7 +378,7 @@ void ParticleSystemQuad::draw()
 
     #define kQuadSize sizeof(_quads[0].bl)
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     // vertices
@@ -474,10 +474,10 @@ void ParticleSystemQuad::setupVBOandVAO()
     // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
     glDeleteVertexArrays(1, &_VAOname);
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
     
     glGenVertexArrays(1, &_VAOname);
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #define kQuadSize sizeof(_quads[0].bl)
 
@@ -502,7 +502,7 @@ void ParticleSystemQuad::setupVBOandVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -598,7 +598,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             glDeleteBuffers(2, &_buffersVBO[0]);
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &_VAOname);
-            ccGLBindVAO(0);
+            GL::bindVAO(0);
 #endif
         }
     }

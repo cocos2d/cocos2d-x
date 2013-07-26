@@ -317,9 +317,10 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
 
       replace('\t', '    ')
 
+
     result = string.gsub(result, '(\"const )(CC%u%w*)', '%1_%2')
 
-    local skip_contents = { "CCPointMake", "CCSizeMake", "CCRectMake", "CCLOG", "CCLog", "CCAssert" }
+    local skip_contents = { "CCPointMake", "CCSizeMake", "CCRectMake", "CCLOG", "CCLog", "CCAssert", "CCTexture2DPixelFormat", "CCTextAlignment", "CCVerticalTextAlignment" }
 
     local function remove_prefix()
         result = string.gsub(result, '[^_\"k]CC%u%w+', function(m)
@@ -339,7 +340,12 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
     end
     remove_prefix()
 
-    result = string.gsub(result, '([^\"]k)CC(%u%w*)', '%1%2')
+
+    result = string.gsub(result, "(tolua_tonumber%(tolua_S,%d,)(kCC)", "%1(int)%2")
+
+    result = string.gsub(result, "(self%->setEmitterMode%()", "%1(ParticleSystem::Mode)")
+
+    result = string.gsub(result, '(tolua_constant%(tolua_S,"kCC[%w_]*",)(kCC)', '%1(int)%2')
 
     replace("Animation*", "cocos2d::Animation*")
     replace("Animation::create", "cocos2d::Animation::create")

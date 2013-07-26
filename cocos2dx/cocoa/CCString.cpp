@@ -227,12 +227,12 @@ String* String::createWithFormat(const char* format, ...)
     return pRet;
 }
 
-String* String::createWithContentsOfFile(const char* pszFileName)
+String* String::createWithContentsOfFile(const char* filename)
 {
     unsigned long size = 0;
     unsigned char* pData = 0;
     String* pRet = NULL;
-    pData = FileUtils::getInstance()->getFileData(pszFileName, "rb", &size);
+    pData = FileUtils::getInstance()->getFileData(filename, "rb", &size);
     pRet = String::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);
     return pRet;

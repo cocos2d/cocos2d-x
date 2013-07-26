@@ -17,7 +17,7 @@ SEL_MenuHandler AnimationsTestLayer::onResolveCCBCCMenuItemSelector(Object * pTa
     return NULL;
 }
 
-SEL_CCControlHandler AnimationsTestLayer::onResolveCCBCCControlSelector(Object *pTarget, const char*pSelectorName) {
+Control::Handler AnimationsTestLayer::onResolveCCBCCControlSelector(Object *pTarget, const char*pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonIdleClicked", AnimationsTestLayer::onControlButtonIdleClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonWaveClicked", AnimationsTestLayer::onControlButtonWaveClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonJumpClicked", AnimationsTestLayer::onControlButtonJumpClicked);
