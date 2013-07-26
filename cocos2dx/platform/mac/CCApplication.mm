@@ -60,9 +60,9 @@ void Application::setAnimationInterval(double interval)
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-TargetPlatform Application::getTargetPlatform()
+Application::Platform Application::getTargetPlatform()
 {
-    return kTargetMacOS;
+    return Platform::MACOS;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
-ccLanguageType Application::getCurrentLanguage()
+LanguageType Application::getCurrentLanguage()
 {
     // get the current language and country config
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -92,52 +92,52 @@ ccLanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
-    ccLanguageType ret = kLanguageEnglish;
+    LanguageType ret = LanguageType::ENGLISH;
     if ([languageCode isEqualToString:@"zh"])
     {
-        ret = kLanguageChinese;
+        ret = LanguageType::CHINESE;
     }
     else if ([languageCode isEqualToString:@"en"])
     {
-        ret = kLanguageEnglish;
+        ret = LanguageType::ENGLISH;;
     }
     else if ([languageCode isEqualToString:@"fr"]){
-        ret = kLanguageFrench;
+        ret = LanguageType::FRENCH;
     }
     else if ([languageCode isEqualToString:@"it"]){
-        ret = kLanguageItalian;
+        ret = LanguageType::ITALIAN;
     }
     else if ([languageCode isEqualToString:@"de"]){
-        ret = kLanguageGerman;
+        ret = LanguageType::GERMAN;
     }
     else if ([languageCode isEqualToString:@"es"]){
-        ret = kLanguageSpanish;
+        ret = LanguageType::SPANISH;
     }
     else if ([languageCode isEqualToString:@"ru"]){
-        ret = kLanguageRussian;
+        ret = LanguageType::RUSSIAN;
     }
     else if ([languageCode isEqualToString:@"ko"]){
-        ret = kLanguageKorean;
+        ret = LanguageType::KOREAN;
     }
     else if ([languageCode isEqualToString:@"ja"]){
-        ret = kLanguageJapanese;
+        ret = LanguageType::JAPANESE;
     }
     else if ([languageCode isEqualToString:@"hu"]){
-        ret = kLanguageHungarian;
+        ret = LanguageType::HUNGARIAN;
     }
     else if ([languageCode isEqualToString:@"pt"])
     {
-        ret = kLanguagePortuguese;
+        ret = LanguageType::PORTUGUESE;
     }
     else if ([languageCode isEqualToString:@"ar"])
     {
-        ret = kLanguageArabic;
+        ret = LanguageType::ARABIC;
     }
     else if ([languageCode isEqualToString:@"nb"]){
-        ret = kLanguageNorwegian;
+        ret = LanguageType::NORWEGIAN;
     }
     else if ([languageCode isEqualToString:@"pl"]){
-        ret = kLanguagePolish;
+        ret = LanguageType::POLISH;
     }
     return ret;
 }

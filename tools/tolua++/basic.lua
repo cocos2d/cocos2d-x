@@ -341,7 +341,8 @@ TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
     remove_prefix()
 
 
-    result = string.gsub(result, "(tolua_tonumber%(tolua_S,%d,)(kCC)", "%1(int)%2")
+    result = string.gsub(result, '(tolua_tonumber%(tolua_S,%d,)(kCC)', '%1(int)%2')
+    result = string.gsub(result, '(tolua_constant%(tolua_S,"k%w*",)(k)', '%1(int)%2')
 
     result = string.gsub(result, "(self%->setEmitterMode%()", "%1(ParticleSystem::Mode)")
 

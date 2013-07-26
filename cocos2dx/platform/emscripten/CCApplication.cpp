@@ -85,9 +85,9 @@ const std::string& Application::getResourceRootPath(void)
     return _resourceRootPath;
 }
 
-TargetPlatform Application::getTargetPlatform()
+Application::Platform Application::getTargetPlatform()
 {
-    return kTargetEmscripten;
+    return Platform::EMSCRIPTEN;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -105,9 +105,9 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
-ccLanguageType Application::getCurrentLanguage()
+LanguageType Application::getCurrentLanguage()
 {
-    return kLanguageEnglish;
+    return LanguageType::ENGLISH;
 }
 
 NS_CC_END;
