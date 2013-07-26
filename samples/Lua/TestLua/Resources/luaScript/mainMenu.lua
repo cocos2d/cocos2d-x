@@ -96,7 +96,7 @@ local TESTS_COUNT = table.getn(_allTests)
 -- create scene
 local function CreateTestScene(nIdx)
     local scene = _allTests[nIdx].create_func()
-    CCDirector:sharedDirector():purgeCachedData()
+    CCDirector:getInstance():purgeCachedData()
     return scene
 end
 -- create menu
@@ -104,7 +104,7 @@ function CreateTestMenu()
     local menuLayer = CCLayer:create()
 
     local function closeCallback()
-        CCDirector:sharedDirector():endToLua()
+        CCDirector:getInstance():endToLua()
     end
 
     local function menuCallback(tag)
@@ -112,15 +112,15 @@ function CreateTestMenu()
         local Idx = tag - 10000
         local testScene = CreateTestScene(Idx)
         if testScene then
-            CCDirector:sharedDirector():replaceScene(testScene)
+            CCDirector:getInstance():replaceScene(testScene)
         end
     end
 
     -- add close menu
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local CloseItem = CCMenuItemImage:create(s_pPathClose, s_pPathClose)
     CloseItem:registerScriptTapHandler(closeCallback)
-    CloseItem:setPosition(ccp(s.width - 30, s.height - 30))
+    CloseItem:setPosition(CCPoint(s.width - 30, s.height - 30))
 
     local CloseMenu = CCMenu:create()
     CloseMenu:setPosition(0, 0)
@@ -138,11 +138,11 @@ function CreateTestMenu()
             testMenuItem:setEnabled(false)
         end
         testMenuItem:registerScriptTapHandler(menuCallback)
-        testMenuItem:setPosition(ccp(s.width / 2, (s.height - (index) * LINE_SPACE)))
+        testMenuItem:setPosition(CCPoint(s.width / 2, (s.height - (index) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 
-    MainMenu:setContentSize(CCSizeMake(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)))
+    MainMenu:setContentSize(CCSize(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)))
     MainMenu:setPosition(CurPos.x, CurPos.y)
     menuLayer:addChild(MainMenu)
 
@@ -157,7 +157,7 @@ function CreateTestMenu()
         local nMoveY = y - BeginPos.y
         local curPosx, curPosy = MainMenu:getPosition()
         local nextPosy = curPosy + nMoveY
-        local winSize = CCDirector:sharedDirector():getWinSize()
+        local winSize = CCDirector:getInstance():getWinSize()
         if nextPosy < 0 then
             MainMenu:setPosition(0, 0)
             return

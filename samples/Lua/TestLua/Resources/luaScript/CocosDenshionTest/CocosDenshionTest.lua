@@ -7,7 +7,7 @@ local LINE_SPACE = 40
 local function CocosDenshionTest()
     local ret = CCLayer:create()
     local m_pItmeMenu = nil
-    local m_tBeginPos = ccp(0, 0)
+    local m_tBeginPos = CCPoint(0, 0)
     local m_nSoundId = 0
 
     local testItems = {
@@ -102,11 +102,11 @@ local function CocosDenshionTest()
         local  pMenuItem = CCMenuItemLabel:create(label)
         pMenuItem:registerScriptTapHandler(menuCallback)
         m_pItmeMenu:addChild(pMenuItem, i + 10000 -1)
-        pMenuItem:setPosition( ccp( VisibleRect:center().x, (VisibleRect:top().y - i * LINE_SPACE) ))
+        pMenuItem:setPosition( CCPoint( VisibleRect:center().x, (VisibleRect:top().y - i * LINE_SPACE) ))
     end
 
-    m_pItmeMenu:setContentSize(CCSizeMake(VisibleRect:getVisibleRect().size.width, (m_nTestCount + 1) * LINE_SPACE))
-    m_pItmeMenu:setPosition(ccp(0, 0))
+    m_pItmeMenu:setContentSize(CCSize(VisibleRect:getVisibleRect().size.width, (m_nTestCount + 1) * LINE_SPACE))
+    m_pItmeMenu:setPosition(CCPoint(0, 0))
     ret:addChild(m_pItmeMenu)
     ret:setTouchEnabled(true)
 
@@ -122,7 +122,7 @@ local function CocosDenshionTest()
         if event == "enter" then
 
         elseif event == "exit" then
-            --SimpleAudioEngine:sharedEngine():endToLua()
+            --SimpleAudioEngine:getInstance():endToLua()
         end
     end
 
@@ -133,21 +133,21 @@ local function CocosDenshionTest()
         if eventType == "began" then
             prev.x = x
             prev.y = y
-            m_tBeginPos = ccp(x, y)
+            m_tBeginPos = CCPoint(x, y)
             return true
         elseif  eventType == "moved" then
-            local touchLocation = ccp(x, y)
+            local touchLocation = CCPoint(x, y)
             local nMoveY = touchLocation.y - m_tBeginPos.y
             local curPosX, curPosY = m_pItmeMenu:getPosition()
-            local curPos = ccp(curPosX, curPosY)
-            local nextPos = ccp(curPos.x, curPos.y + nMoveY)
+            local curPos = CCPoint(curPosX, curPosY)
+            local nextPos = CCPoint(curPos.x, curPos.y + nMoveY)
 
             if nextPos.y < 0.0 then
-                m_pItmeMenu:setPosition(ccp(0, 0))
+                m_pItmeMenu:setPosition(CCPoint(0, 0))
             end
 
             if nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().size.height) then
-                m_pItmeMenu:setPosition(ccp(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().size.height)))
+                m_pItmeMenu:setPosition(CCPoint(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().size.height)))
             end
 
             m_pItmeMenu:setPosition(nextPos)

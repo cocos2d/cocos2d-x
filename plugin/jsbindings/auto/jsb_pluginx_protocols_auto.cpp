@@ -734,6 +734,28 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) 
 JSClass  *jsb_ProtocolAds_class;
 JSObject *jsb_ProtocolAds_prototype;
 
+JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	JSBool ok = JS_TRUE;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 2) {
+		TAdsInfo arg0;
+		cocos2d::plugin::ProtocolAds::AdsPos arg1;
+		#pragma warning NO CONVERSION TO NATIVE FOR TAdsInfo;
+		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->showAds(arg0, arg1);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+	return JS_FALSE;
+}
 JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -743,8 +765,8 @@ JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, js
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::plugin::ProtocolAds::AdsType arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
+		TAdsInfo arg0;
+		#pragma warning NO CONVERSION TO NATIVE FOR TAdsInfo;
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->hideAds(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -767,28 +789,6 @@ JSBool js_pluginx_protocols_ProtocolAds_queryPoints(JSContext *cx, uint32_t argc
 	}
 
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-	return JS_FALSE;
-}
-JSBool js_pluginx_protocols_ProtocolAds_onAdsResult(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 2) {
-		cocos2d::plugin::AdsResultCode arg0;
-		const char* arg1;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		std::string arg1_tmp; ok &= jsval_to_std_string(cx, argv[1], &arg1_tmp); arg1 = arg1_tmp.c_str();
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->onAdsResult(arg0, arg1);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp)
@@ -831,24 +831,28 @@ JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint3
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
-JSBool js_pluginx_protocols_ProtocolAds_onPlayerGetPoints(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-		int arg0;
-		ok &= jsval_to_int32(cx, argv[0], (int32_t *)&arg0);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->onPlayerGetPoints(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	if (argc == 0) {
+		cocos2d::plugin::AdsListener* ret = cobj->getAdsListener();
+		jsval jsret;
+		do {
+			if (ret) {
+				js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::plugin::AdsListener>(cx, ret);
+				jsret = OBJECT_TO_JSVAL(proxy->obj);
+			} else {
+				jsret = JSVAL_NULL;
+			}
+		} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
 
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
 	return JS_FALSE;
 }
 
@@ -889,12 +893,12 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("showAds", js_pluginx_protocols_ProtocolAds_showAds, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("hideAds", js_pluginx_protocols_ProtocolAds_hideAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("queryPoints", js_pluginx_protocols_ProtocolAds_queryPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("onAdsResult", js_pluginx_protocols_ProtocolAds_onAdsResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("spendPoints", js_pluginx_protocols_ProtocolAds_spendPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolAds_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("onPlayerGetPoints", js_pluginx_protocols_ProtocolAds_onPlayerGetPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAdsListener", js_pluginx_protocols_ProtocolAds_getAdsListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 

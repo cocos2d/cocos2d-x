@@ -63,12 +63,12 @@ JSBool js_pluginx_protocols_ProtocolAds_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_ProtocolAds_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
+JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_queryPoints(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_onAdsResult(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool js_pluginx_protocols_ProtocolAds_onPlayerGetPoints(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_ProtocolShare_class;
 extern JSObject *jsb_ProtocolShare_prototype;
