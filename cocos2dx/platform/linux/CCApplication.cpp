@@ -107,10 +107,10 @@ Application* Application::sharedApplication()
 LanguageType Application::getCurrentLanguage()
 {
 	char *pLanguageName = getenv("LANG");
-	LanguageType ret = LanguageType::English;
+	LanguageType ret = LanguageType::ENGLISH;
 	if (!pLanguageName)
 	{
-		return LanguageType::English;
+		return LanguageType::ENGLISH;
 	}
 	strtok(pLanguageName, "_");
 	if (!pLanguageName)
