@@ -94,13 +94,14 @@ Image::~Image()
 bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
     // operations underneath. Consequently, loading images via IMG_Load (an SDL
     // API) will be a lot faster than running libpng et al as compiled with
     // Emscripten.
-    SDL_Surface *iSurf = IMG_Load(strPath);
+    SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
     bRet = initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
@@ -116,7 +117,6 @@ bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/
     SDL_FreeSurface(iSurf);
 #else
     unsigned long nSize = 0;
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
     unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
