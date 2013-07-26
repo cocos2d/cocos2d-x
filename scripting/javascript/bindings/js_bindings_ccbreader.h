@@ -39,7 +39,7 @@ public:
         
     virtual CCBSelectorResolver * createNew();
     void menuItemCallback(Object *pSender);
-    void controlCallback(Object *pSender, cocos2d::extension::ControlEvent event);
+    void controlCallback(Object *pSender, cocos2d::extension::Control::EventType event);
     void setCallbackProperty(const char *prop);
     void setJSOwner(jsval ownr);
     jsval getJSOwner();

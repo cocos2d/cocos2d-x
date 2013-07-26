@@ -593,7 +593,7 @@ ControlSlider* ShaderBlur::createSliderCtl()
     slider->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 3.0f));
 
     // When the value of the slider will change, the given selector will be call
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), ControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
 
     return slider;
  
@@ -623,7 +623,7 @@ bool ShaderBlur::init()
     return false;
 }
 
-void ShaderBlur::sliderAction(Object* sender, ControlEvent controlEvent)
+void ShaderBlur::sliderAction(Object* sender, Control::EventType controlEvent)
 {
     ControlSlider* pSlider = (ControlSlider*)sender;
     _blurSprite->setBlurSize(pSlider->getValue());

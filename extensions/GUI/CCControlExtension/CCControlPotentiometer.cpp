@@ -126,7 +126,7 @@ void ControlPotentiometer::setValue(float value)
     _progressTimer->setPercentage(percent * 100.0f);
     _thumbSprite->setRotation(percent * 360.0f);
     
-    sendActionsForControlEvents(ControlEventValueChanged);    
+    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);    
 }
 
 float ControlPotentiometer::getValue()

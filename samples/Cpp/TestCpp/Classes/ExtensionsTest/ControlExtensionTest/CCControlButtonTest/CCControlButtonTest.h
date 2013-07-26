@@ -46,14 +46,14 @@ public:
     ControlButtonTest_Event();
     ~ControlButtonTest_Event();
     bool init();
-    void touchDownAction(Object *sender, ControlEvent controlEvent);
-    void touchDragInsideAction(Object *sender, ControlEvent controlEvent);
-    void touchDragOutsideAction(Object *sender, ControlEvent controlEvent);
-    void touchDragEnterAction(Object *sender, ControlEvent controlEvent);
-    void touchDragExitAction(Object *sender, ControlEvent controlEvent);
-    void touchUpInsideAction(Object *sender, ControlEvent controlEvent);
-    void touchUpOutsideAction(Object *sender, ControlEvent controlEvent);
-    void touchCancelAction(Object *sender, ControlEvent controlEvent);
+    void touchDownAction(Object *sender, Control::EventType controlEvent);
+    void touchDragInsideAction(Object *sender, Control::EventType controlEvent);
+    void touchDragOutsideAction(Object *sender, Control::EventType controlEvent);
+    void touchDragEnterAction(Object *sender, Control::EventType controlEvent);
+    void touchDragExitAction(Object *sender, Control::EventType controlEvent);
+    void touchUpInsideAction(Object *sender, Control::EventType controlEvent);
+    void touchUpOutsideAction(Object *sender, Control::EventType controlEvent);
+    void touchCancelAction(Object *sender, Control::EventType controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayValueLabel, DisplayValueLabel)
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Event)

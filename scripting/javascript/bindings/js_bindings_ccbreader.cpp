@@ -56,7 +56,7 @@ void CCBScriptCallbackProxy::menuItemCallback(Object *pSender) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
-void CCBScriptCallbackProxy::controlCallback(Object *pSender, ControlEvent event) {
+void CCBScriptCallbackProxy::controlCallback(Object *pSender, Control::EventType event) {
     ScriptingCore::getInstance()->executeFunctionWithOwner(owner, callBackProp.c_str() );
 }
 
