@@ -201,8 +201,11 @@ Instead of using Camera as a "follower", use this action instead.
 class CC_DLL Follow : public Action
 {
 public:
-    /** creates the action with a set boundary,
-     It will work with no boundary if @param rect is equal to Rect::ZERO.
+    /**
+     * Creates the action with a set boundary or with no boundary.
+     *
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
      */
     static Follow* create(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
@@ -222,7 +225,12 @@ public:
     /** alter behavior - turn on/off boundary */
     inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
-    /** initializes the action with a set boundary */
+    /**
+     * Initializes the action with a set boundary or with no boundary.
+     *
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     */
     bool initWithTarget(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
     //
