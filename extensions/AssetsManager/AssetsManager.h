@@ -44,19 +44,19 @@ class AssetsManagerDelegateProtocol;
 class AssetsManager
 {
 public:
-    enum ErrorCode
+    enum class ErrorCode
     {
         // Error caused by creating a file to store downloaded data
-        ERROR_CREATE_FILE,
+        CREATE_FILE,
         /** Error caused by network
          -- network unavaivable
          -- timeout
          -- ...
          */
-        ERROR_NETWORK,
+        NETWORK,
         /** There is not a new version
          */
-        ERROR_NO_NEW_VERSION,
+        NO_NEW_VERSION,
         /** Error caused in uncompressing stage
          -- can not open zip file
          -- can not read file global information
@@ -64,13 +64,7 @@ public:
          -- can not create a directory
          -- ...
          */
-        ERROR_UNCOMPRESS,
-        
-        // keep compatability
-        kCreateFile = ERROR_CREATE_FILE,
-        kNetwork = ERROR_NETWORK,
-        kNoNewVersion = ERROR_NO_NEW_VERSION,
-        kUncompress = ERROR_UNCOMPRESS,
+        UNCOMPRESS,
     };
     
     /* @brief Creates a AssetsManager with new package url, version code url and storage path.

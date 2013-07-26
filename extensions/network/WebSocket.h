@@ -63,15 +63,22 @@ public:
     /**
      *  @brief Errors in websocket
      */
-    enum ErrorCode
+    enum class ErrorCode
     {
-        ERROR_TIME_OUT,
-        ERROR_CONNECTION_FAILURE,
-        ERROR_UNKNOWN,
-        
-        kErrorTimeout = ERROR_TIME_OUT,
-        kErrorConnectionFailure = ERROR_CONNECTION_FAILURE,
-        kErrorUnknown = ERROR_UNKNOWN,
+        TIME_OUT,
+        CONNECTION_FAILURE,
+        UNKNOWN,
+    };
+    
+    /**
+     *  Websocket state
+     */
+    enum class State
+    {
+        CONNECTING,
+        OPEN,
+        CLOSING,
+        CLOSED,
     };
 
     /**
@@ -113,17 +120,6 @@ public:
      *  @brief Closes the connection to server.
      */
     void close();
-
-    /**
-     *  Websocket state
-     */
-    enum State
-    {
-        kStateConnecting = 0,
-        kStateOpen,
-        kStateClosing,
-        kStateClosed
-    };
     
     /**
      *  @brief Gets current state of connection.
