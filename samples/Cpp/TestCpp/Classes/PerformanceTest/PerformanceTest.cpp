@@ -91,7 +91,7 @@ void PerformBasicLayer::onEnter()
     addChild(menu);
 }
 
-void PerformBasicLayer::toMainLayer(Object* pSender)
+void PerformBasicLayer::toMainLayer(Object* sender)
 {
     PerformanceTestScene* scene = new PerformanceTestScene();
     scene->runThisTest();
@@ -99,12 +99,12 @@ void PerformBasicLayer::toMainLayer(Object* pSender)
     scene->release();
 }
 
-void PerformBasicLayer::restartCallback(Object* pSender)
+void PerformBasicLayer::restartCallback(Object* sender)
 {
     showCurrentTest();
 }
 
-void PerformBasicLayer::nextCallback(Object* pSender)
+void PerformBasicLayer::nextCallback(Object* sender)
 {
     _curCase++;
     _curCase = _curCase % _maxCases;
@@ -112,7 +112,7 @@ void PerformBasicLayer::nextCallback(Object* pSender)
     showCurrentTest();
 }
 
-void PerformBasicLayer::backCallback(Object* pSender)
+void PerformBasicLayer::backCallback(Object* sender)
 {
     _curCase--;
     if( _curCase < 0 )

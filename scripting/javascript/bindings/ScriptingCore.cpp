@@ -1817,9 +1817,9 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     
     ok &= JS_DefineProperty(cx, tmp, "fontSize", int32_to_jsval(cx, t._fontSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, (int32_t)t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, (int32_t)t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     ok &= JS_DefineProperty(cx, tmp, "fontFillColor", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -2245,8 +2245,8 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     // defaul values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
-    Label::TextAlignment         defaultTextAlignment    = Label::TEXT_ALIGNMENT_LEFT;
-    Label::VerticalTextAlignment defaultTextVAlignment   = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
+    Label::HAlignment         defaultTextAlignment    = Label::HAlignment::LEFT;
+    Label::VAlignment defaultTextVAlignment   = Label::VAlignment::TOP;
     
     // by default shadow and stroke are off
     out->_shadow._shadowEnabled = false;
@@ -2291,7 +2291,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_alignment = (Label::TextAlignment)(int)fontAlign;
+        out->_alignment = (Label::HAlignment)(int)fontAlign;
     }
     else
     {
@@ -2305,7 +2305,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_vertAlignment = (Label::VerticalTextAlignment)(int)fontAlign;
+        out->_vertAlignment = (Label::VAlignment)(int)fontAlign;
     }
     else
     {

@@ -481,6 +481,7 @@
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\ccTypes.cpp" />
+    <ClCompile Include="..\CCDeprecated.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">

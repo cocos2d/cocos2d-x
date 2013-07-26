@@ -8,7 +8,7 @@ enum {
 };
 
 typedef enum {
-      CC_GL_ALL = 0,
+//      CC_GL_ALL = 0,
 } ccGLServerState;
 
 

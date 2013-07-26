@@ -74,43 +74,42 @@ public:
     /** @typedef Texture2D::PixelFormat
      Possible texture pixel formats
      */
-    enum PixelFormat
+    enum class PixelFormat
     {
         
         //! 32-bit texture: RGBA8888
-        PIXEL_FORMAT_RGBA8888,
+        RGBA8888,
         //! 24-bit texture: RGBA888
-        PIXEL_FORMAT_RGB888,
+        RGB888,
         //! 16-bit texture without Alpha channel
-        PIXEL_FORMAT_RGB565,
+        RGB565,
         //! 8-bit textures used as masks
-        PIXEL_FORMAT_A8,
+        A8,
         //! 8-bit intensity texture
-        PIXEL_FORMAT_I8,
+        I8,
         //! 16-bit textures used as masks
-        PIXEL_FORMAT_AI88,
+        AI88,
         //! 16-bit textures: RGBA4444
-        PIXEL_FORMAT_RGBA4444,
+        RGBA4444,
         //! 16-bit textures: RGB5A1
-        PIXEL_FORMAT_RGB5A1,
+        RGB5A1,
         //! 4-bit PVRTC-compressed texture: PVRTC4
-        PIXEL_FORMAT_PRVTC4,
+        PRVTC4,
         //! 2-bit PVRTC-compressed texture: PVRTC2
-        PIXEL_FORMAT_PRVTC2,
-        
-        
+        PRVTC2,
+
         //! Default texture format: RGBA8888
-        PIXEL_FORMAT_DEFAULT = PIXEL_FORMAT_RGBA8888
-    } ;
+        DEFAULT = RGBA8888
+    };
     
     /** sets the default pixel format for UIImagescontains alpha channel.
      If the UIImage contains alpha channel, then the options are:
-     - generate 32-bit textures: Texture2D::PIXEL_FORMAT_RGBA8888 (default one)
-     - generate 24-bit textures: Texture2D::PIXEL_FORMAT_RGB888
-     - generate 16-bit textures: Texture2D::PIXEL_FORMAT_RGBA4444
-     - generate 16-bit textures: Texture2D::PIXEL_FORMAT_RGB5A1
-     - generate 16-bit textures: Texture2D::PIXEL_FORMAT_RGB565
-     - generate 8-bit textures: Texture2D::PIXEL_FORMAT_A8 (only use it if you use just 1 color)
+     - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
+     - generate 24-bit textures: Texture2D::PixelFormat::RGB888
+     - generate 16-bit textures: Texture2D::PixelFormat::RGBA4444
+     - generate 16-bit textures: Texture2D::PixelFormat::RGB5A1
+     - generate 16-bit textures: Texture2D::PixelFormat::RGB565
+     - generate 8-bit textures: Texture2D::PixelFormat::A8 (only use it if you use just 1 color)
 
      How does it work ?
      - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
@@ -169,7 +168,7 @@ public:
     bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), Label::TextAlignment hAlignment = Label::TEXT_ALIGNMENT_CENTER, Label::VerticalTextAlignment vAlignment = Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), Label::HAlignment hAlignment = Label::HAlignment::CENTER, Label::VAlignment vAlignment = Label::VAlignment::TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     

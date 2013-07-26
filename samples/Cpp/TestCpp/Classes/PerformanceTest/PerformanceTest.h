@@ -16,12 +16,12 @@ public:
 
     virtual void onEnter();
 
-    virtual void restartCallback(Object* pSender);
-    virtual void nextCallback(Object* pSender);
-    virtual void backCallback(Object* pSender);
+    virtual void restartCallback(Object* sender);
+    virtual void nextCallback(Object* sender);
+    virtual void backCallback(Object* sender);
     virtual void showCurrentTest() = 0;
 
-    virtual void toMainLayer(Object* pSender);
+    virtual void toMainLayer(Object* sender);
 
 protected:
     bool _controlMenuVisible;

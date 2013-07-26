@@ -127,27 +127,27 @@ emitter.startSpin = 0;
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
-    enum 
+    enum class Mode
     {
-        MODE_GRAVITY,
-        MODE_RADIUS,
+        GRAVITY,
+        RADIUS,
     };
     
     /** @typedef PositionType
      possible types of particle positions
      */
-    enum PositionType
+    enum class PositionType
     {
         /** Living particles are attached to the world and are unaffected by emitter repositioning. */
-        POSITION_TYPE_FREE,
+        FREE,
         
         /** Living particles are attached to the world but will follow the emitter repositioning.
          Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
          */
-        POSITION_TYPE_RELATIVE,
+        RELATIVE,
         
         /** Living particles are attached to the emitter and are translated along with it. */
-        POSITION_TYPE_GROUPED,
+        GROUPED,
     };
     
     //* @enum
@@ -300,8 +300,8 @@ public:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    inline int getEmitterMode() const { return _emitterMode; };
-    inline void setEmitterMode(int mode) { _emitterMode = mode; };
+    inline Mode getEmitterMode() const { return _emitterMode; };
+    inline void setEmitterMode(Mode mode) { _emitterMode = mode; };
     
     /** start size in pixels of each particle */
     inline float getStartSize() const { return _startSize; };
@@ -487,7 +487,7 @@ protected:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    int _emitterMode;
+    Mode _emitterMode;
 
     /** start size in pixels of each particle */
     float _startSize;

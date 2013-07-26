@@ -139,7 +139,7 @@ public:
     
     /** Value for clear Stencil. Valid only when autoDraw is true */
     inline int getClearStencil() const { return _clearStencil; };
-    inline void setClearStencil(float clearStencil) { _clearStencil = clearStencil; };
+    inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
     
     /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
      Will be enabled in the future.
@@ -171,7 +171,7 @@ protected:
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture
     Image*     _UITextureImage;
-    GLenum       _pixelFormat;
+    Texture2D::PixelFormat _pixelFormat;
     
     // code for "auto" update
     GLbitfield   _clearFlags;
