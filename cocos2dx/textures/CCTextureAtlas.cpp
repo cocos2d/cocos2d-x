@@ -664,7 +664,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
         _dirty = false;
     }
 
-    GL::enableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
     // vertices
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
