@@ -38,7 +38,7 @@ bool SimpleAudioEngineOpenSL::initEngine()
 			const char* errorInfo = dlerror();
 			if (errorInfo)
 			{
-				LOGD(errorInfo);
+				LOGD("%s", errorInfo);
 				bRet = false;
 				break;
 			}
