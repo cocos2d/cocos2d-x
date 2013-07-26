@@ -51,14 +51,24 @@ Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fon
     }
 }
 
-Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize )
+Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize)
 {
-    
     FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
-    //if (!tempAtlas)
-    //    return 0;
+
+    if (!tempAtlas)
+        return 0;
     
-    return StringBMFont::create(label, bmfontFilePath, lineSize);
+    StringTTF* templabel = StringTTF::create(tempAtlas, kTextAlignmentLeft, lineSize);
+    
+    if (templabel)
+    {
+        templabel->setText(label, lineSize, kTextAlignmentLeft, false);
+        return templabel;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 Label::Label()
@@ -68,5 +78,13 @@ Label::Label()
 Label::~Label()
 {
 }
+
+
+// TESTING STUFF THAT NEEDS TO GO ////////////////////////////////////////////////////////////////
+Label* Label::createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize)
+{
+   return StringBMFont::create(label, bmfontFilePath, lineSize);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 NS_CC_END

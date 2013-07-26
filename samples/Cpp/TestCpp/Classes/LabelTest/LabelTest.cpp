@@ -40,7 +40,7 @@ Layer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    31
+#define MAX_LAYER    32
 
 Layer* createAtlasLayer(int nIndex)
 {
@@ -77,8 +77,9 @@ Layer* createAtlasLayer(int nIndex)
         case 26: return new LabelBMFontBounds();
         case 27: return new TTFFontShadowAndStroke();
         case 28: return new LabelBMFontNewTest();
-        case 29: return new NewLabelBMFontTest();
-        case 30: return new NewLabelTTFTest();
+        case 29: return new NewLabelBMFontTestOld();
+        case 30: return new NewLabelBMFontTest();
+        case 31: return new NewLabelTTFTest();
     }
 
     return NULL;
@@ -1693,8 +1694,9 @@ NewLabelBMFontTest::NewLabelBMFontTest()
 {
     Size size = Director::getInstance()->getWinSize();
 
-    label = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
+    label = Label::createWithBMFont("Hello world, this uses new label with FTN file", "fonts/bitmapFontTest2.fnt", size.width);
     label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point(0.5, 0.5));
     label->retain();
     addChild(label);
 }
@@ -1713,6 +1715,39 @@ std::string NewLabelBMFontTest::subtitle()
 {
     return "Uses the new Label() with BMFont";
 }
+
+
+
+//
+/// NEW LABEL with BMFont
+//
+NewLabelBMFontTestOld::NewLabelBMFontTestOld()
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    label = Label::createWithBMFontOLD("Hello world, this uses new label with FTN file", "fonts/bitmapFontTest2.fnt", size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point(0.5, 0.5));
+    label->retain();
+    addChild(label);
+}
+
+NewLabelBMFontTestOld::~NewLabelBMFontTestOld()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelBMFontTestOld::title()
+{
+    return "Label() using BMFont OLD";
+}
+
+std::string NewLabelBMFontTestOld::subtitle()
+{
+    return "Uses the new Label() with BMFont OLD";
+}
+
+
 
 //
 /// NEW LABEL with FontDefinition

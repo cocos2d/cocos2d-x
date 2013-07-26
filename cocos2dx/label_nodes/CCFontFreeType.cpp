@@ -132,11 +132,6 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
     return true;
 }
 
-int FontFreeType::getUTF16TextLenght(unsigned short int *pText)
-{
-    return cc_wcslen(pText);
-}
-
 GlyphDef * FontFreeType::getGlyphDefintionsForText(const char *pText, int &outNumGlyphs, bool UTF16text)
 {
     unsigned short* utf16String = 0;
@@ -287,51 +282,9 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     return ( kerning.x >> 6 );
 }
 
-Size * FontFreeType::getAdvancesForText(const char *pText, int &outNumLetters, bool UTF16text)
-{
-    unsigned short* utf16String = 0;
-    
-    if (UTF16text)
-    {
-        utf16String = (unsigned short* )pText;
-    }
-    else
-    {
-        utf16String = cc_utf8_to_utf16(pText);
-    }
-    
-    Size *ret = getAdvancesForTextUTF16(utf16String, outNumLetters);
-    
-    if (!UTF16text)
-        delete [] utf16String;
-    
-    return ret;
-}
-
 int FontFreeType::getFontMaxHeight()
 {
     return (_fontRef->size->metrics.height >> 6);
-}
-
-Size FontFreeType::getTextWidthAndHeight(const char *pText, bool UTF16text)
-{
-    Size retSize;
-    retSize.width  = 0;
-    retSize.height = 0;
-    
-    int numLetters;
-    Size *tempSizes = getAdvancesForText(pText, numLetters, UTF16text);
-    
-    for (int c = 0; c<numLetters; ++c)
-    {
-        retSize.width += tempSizes[c].width;
-    }
-    
-    retSize.height = (_fontRef->size->metrics.height >> 6);
-    
-    delete [] tempSizes;
-    
-    return retSize;
 }
 
 unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight)
@@ -359,41 +312,9 @@ unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outW
     return _fontRef->glyph->bitmap.buffer;
 }
 
-unsigned short int * FontFreeType::getUTF16Text(const char *pText, int &outNumLetters)
+int FontFreeType::getLetterPadding()
 {
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
-    
-    if(!utf16String)
-        return 0;
-    
-    outNumLetters = cc_wcslen(utf16String);
-    return utf16String;
-}
-
-unsigned short int  * FontFreeType::trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd)
-{
-    if ( newBegin<0 || newEnd<=0 )
-        return 0;
-    
-    if ( newBegin>=newEnd )
-        return 0;
-    
-    if (newEnd >= cc_wcslen(pText))
-        return 0;
-    
-    int newLenght = newEnd - newBegin + 2;
-    unsigned short* trimmedString = new unsigned short[newLenght];
-    
-    for(int c = 0; c < (newLenght-1); ++c)
-    {
-        trimmedString[c] = pText[newBegin + c];
-    }
-    
-    // last char
-    trimmedString[newLenght-1] = 0x0000;
-
-    // done 
-    return trimmedString;
+    return _letterPadding;
 }
 
 NS_CC_END

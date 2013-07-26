@@ -209,7 +209,7 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         retAtlas->addTexture(getTexture(c), c);
     
     // set the common line height
-    retAtlas->setCommonLineHeight(getCommonLineHeight());
+    retAtlas->setCommonLineHeight(getCommonLineHeight() * 0.8);
     
     // add all the letter definitions
     std::map<unsigned short, LetterDefinition>::iterator ITER;
@@ -221,10 +221,13 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         tempDefinition.V                = (*ITER).second.V;
         tempDefinition.width            = (*ITER).second.width;
         tempDefinition.height           = (*ITER).second.height;
-        tempDefinition.offsetX          = (*ITER).second.offsetX;
+        // carloX not useed here tempDefinition.offsetX          = (*ITER).second.offsetX;
+        tempDefinition.offsetX          = 0;
         tempDefinition.offsetY          = (*ITER).second.offsetY;
         tempDefinition.textureID        = (*ITER).second.textureID;
         tempDefinition.commonLineHeight = (*ITER).second.commonLineHeight;
+        tempDefinition.anchorX = 0.0f;
+        tempDefinition.anchorY = 1.0f;
         retAtlas->addLetterDefinition(tempDefinition);
     }
     
