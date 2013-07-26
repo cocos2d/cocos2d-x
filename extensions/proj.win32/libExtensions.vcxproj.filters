@@ -357,6 +357,7 @@
     <ClCompile Include="..\network\SocketIO.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCDeprecated-ext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
