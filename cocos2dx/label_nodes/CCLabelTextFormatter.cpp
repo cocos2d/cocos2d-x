@@ -249,10 +249,10 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
             float shift = 0;
             switch (theLabel->getTextAlignment())
             {
-                case kTextAlignmentCenter:
+                case TextHAlignment::CENTER:
                     shift = theLabel->getLabelContentSize().width/2.0f - lineWidth/2.0f;
                     break;
-                case kTextAlignmentRight:
+                case TextHAlignment::RIGHT:
                     shift = theLabel->getLabelContentSize().width - lineWidth;
                     break;
                 default:

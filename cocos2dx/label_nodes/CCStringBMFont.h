@@ -58,9 +58,9 @@ public:
     static void purgeCachedData();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static StringBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment, Point imageOffset);
+    static StringBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment, Point imageOffset);
     
-	static StringBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment);
+	static StringBMFont * create(const char *str, const char *fntFile, float width, TextHAlignment alignment);
 
 	static StringBMFont * create(const char *str, const char *fntFile, float width);
 
@@ -72,7 +72,7 @@ public:
 
     bool init();
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextAlignment alignment = kTextAlignmentLeft, Point imageOffset = Point::ZERO);
+    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextHAlignment alignment = TextHAlignment::LEFT, Point imageOffset = Point::ZERO);
 
     /** updates the font chars based on the string to render */
     // super method
@@ -82,7 +82,7 @@ public:
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();
-    virtual void setAlignment(TextAlignment alignment);
+    virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale);
@@ -125,7 +125,7 @@ public:
     virtual void              assignNewUTF8String(unsigned short *newString);
     virtual float             getMaxLineWidth();
     virtual bool              breakLineWithoutSpace();
-    virtual TextAlignment     getTextAlignment();
+    virtual TextHAlignment getTextAlignment();
     virtual Size              getLabelContentSize();
     virtual void              setLabelContentSize(const Size &newSize);
     
@@ -163,7 +163,7 @@ protected:
     std::string _initialStringUTF8;
     
     // alignment of all lines
-    TextAlignment _alignment;
+    TextHAlignment _alignment;
     // max width until a line break is added
     float _width;
     

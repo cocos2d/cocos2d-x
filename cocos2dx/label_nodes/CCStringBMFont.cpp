@@ -82,23 +82,23 @@ StringBMFont * StringBMFont::create()
     return NULL;
 }
 
-StringBMFont * StringBMFont::create(const char *str, const char *fntFile, float width, TextAlignment alignment)
+StringBMFont * StringBMFont::create(const char *str, const char *fntFile, float width, TextHAlignment alignment)
 {
     return StringBMFont::create(str, fntFile, width, alignment, Point::ZERO);
 }
 
 StringBMFont * StringBMFont::create(const char *str, const char *fntFile, float width)
 {
-    return StringBMFont::create(str, fntFile, width, kTextAlignmentLeft, Point::ZERO);
+    return StringBMFont::create(str, fntFile, width, TextHAlignment::LEFT, Point::ZERO);
 }
 
 StringBMFont * StringBMFont::create(const char *str, const char *fntFile)
 {
-    return StringBMFont::create(str, fntFile, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
+    return StringBMFont::create(str, fntFile, kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
 }
 
 //LabelBMFont - Creation & Init
-StringBMFont *StringBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
+StringBMFont *StringBMFont::create(const char *str, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     StringBMFont *pRet = new StringBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
@@ -112,10 +112,10 @@ StringBMFont *StringBMFont::create(const char *str, const char *fntFile, float w
 
 bool StringBMFont::init()
 {
-    return initWithString(NULL, NULL, kLabelAutomaticWidth, kTextAlignmentLeft, Point::ZERO);
+    return initWithString(NULL, NULL, kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
 }
 
-bool StringBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
+bool StringBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextHAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
     CCAssert(!_configuration, "re-init is no longer supported");
     CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for StringBMFont");
@@ -182,7 +182,7 @@ bool StringBMFont::initWithString(const char *theString, const char *fntFile, fl
 StringBMFont::StringBMFont()
 : _string(NULL)
 , _initialString(NULL)
-, _alignment(kTextAlignmentCenter)
+, _alignment(TextHAlignment::CENTER)
 , _width(-1.0f)
 , _configuration(NULL)
 , _lineBreakWithoutSpaces(false)
@@ -361,7 +361,7 @@ void StringBMFont::setAnchorPoint(const Point& point)
 }
 
 // StringBMFont - Alignment
-void StringBMFont::setAlignment(TextAlignment alignment)
+void StringBMFont::setAlignment(TextHAlignment alignment)
 {
     this->_alignment = alignment;
     updateLabel();
@@ -682,7 +682,7 @@ void StringBMFont::multilineText()
 
 void StringBMFont::alignText()
 {
-    if (_alignment != kTextAlignmentLeft)
+    if (_alignment != TextHAlignment::LEFT)
     {
         LabelTextFormatter::alignText(this);
     }
@@ -703,7 +703,7 @@ float StringBMFont::getMaxLineWidth()
     return _width;
 }
 
-TextAlignment StringBMFont::getTextAlignment()
+TextHAlignment StringBMFont::getTextAlignment()
 {
     return _alignment;
 }

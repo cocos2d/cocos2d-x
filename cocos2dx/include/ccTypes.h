@@ -311,26 +311,25 @@ struct BlendFunc
     const static BlendFunc ADDITIVE;
 };
 
-class Label : public Object
+// Label::VAlignment
+// Label::HAlignment
+
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+//! Vertical text alignment type
+enum class TextVAlignment
 {
-public:
-    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-    //! Vertical text alignment type
-    enum class VAlignment
-    {
-        TOP,
-        CENTER,
-        BOTTOM,
-    };
-    
-    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-    //! Horizontal text alignment type
-    enum class HAlignment
-    {
-        LEFT,
-        CENTER,
-        RIGHT,
-    };
+    TOP,
+    CENTER,
+    BOTTOM,
+};
+
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+//! Horizontal text alignment type
+enum class TextHAlignment
+{
+    LEFT,
+    CENTER,
+    RIGHT,
 };
 
 // types for animation in particle systems
@@ -359,6 +358,7 @@ struct AnimationFrameData
 /**
  types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  */
+
 
 // shadow attributes
 struct FontShadow
@@ -410,8 +410,8 @@ public:
     
     FontDefinition()
         : _fontSize(0)
-        , _alignment(Label::HAlignment::CENTER)
-        , _vertAlignment(Label::VAlignment::TOP)
+        , _alignment(TextHAlignment::CENTER)
+        , _vertAlignment(TextVAlignment::TOP)
         , _fontFillColor(Color3B::WHITE)
         , _dimensions(Size::ZERO)
     {}
@@ -421,9 +421,9 @@ public:
     // font size
     int                   _fontSize;
     // horizontal alignment
-    Label::HAlignment         _alignment;
+    TextHAlignment        _alignment;
     // vertical alignment
-    Label::VAlignment _vertAlignment;
+    TextVAlignment _vertAlignment;
     // renering box
     Size                  _dimensions;
     // font color

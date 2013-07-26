@@ -38,11 +38,11 @@ Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fon
         return nullptr;
      
     // create the actual label
-    StringTTF* templabel = StringTTF::create(tempAtlas, kTextAlignmentCenter, lineSize);
+    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::CENTER, lineSize);
     
     if (templabel)
     {
-        templabel->setText(label, lineSize, kTextAlignmentCenter, false);
+        templabel->setText(label, lineSize, TextHAlignment::CENTER, false);
         return templabel;
     }
 
@@ -56,11 +56,11 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, i
     if (!tempAtlas)
         return 0;
     
-    StringTTF* templabel = StringTTF::create(tempAtlas, kTextAlignmentLeft, lineSize);
+    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::LEFT, lineSize);
     
     if (templabel)
     {
-        templabel->setText(label, lineSize, kTextAlignmentLeft, false);
+        templabel->setText(label, lineSize, TextHAlignment::LEFT, false);
         return templabel;
     }
     else

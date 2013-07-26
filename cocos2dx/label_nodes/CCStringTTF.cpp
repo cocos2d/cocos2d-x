@@ -30,15 +30,15 @@
 
 NS_CC_BEGIN
 
-StringTTF::StringTTF(FontAtlas *pAtlas, TextAlignment alignment):   _currentUTF8String(0),
-                                                                    _fontAtlas(pAtlas),
-                                                                    _alignment(alignment),
-                                                                    _lineBreakWithoutSpaces(false),
-                                                                    _advances(0)
+StringTTF::StringTTF(FontAtlas *pAtlas, TextHAlignment alignment):   _currentUTF8String(0),
+                                                                        _fontAtlas(pAtlas),
+                                                                        _alignment(alignment),
+                                                                        _lineBreakWithoutSpaces(false),
+                                                                        _advances(0)
 {
 }
 
-StringTTF* StringTTF::create(FontAtlas *pAtlas, TextAlignment alignment, int lineSize)
+StringTTF* StringTTF::create(FontAtlas *pAtlas, TextHAlignment alignment, int lineSize)
 {
     StringTTF *ret = new StringTTF(pAtlas, alignment);
     
@@ -86,10 +86,10 @@ bool StringTTF::init()
 
 void StringTTF::setString(const char *stringToRender)
 {
-    setText(stringToRender, 0, kTextAlignmentCenter, false);
+    setText(stringToRender, 0, TextHAlignment::CENTER, false);
 }
 
-bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignment alignment, bool lineBreakWithoutSpaces)
+bool StringTTF::setText(const char *stringToRender, float lineWidth, TextHAlignment alignment, bool lineBreakWithoutSpaces)
 {
     if (!_fontAtlas)
         return false;
@@ -124,7 +124,7 @@ bool StringTTF::setText(const char *stringToRender, float lineWidth, TextAlignme
     return true;
 }
 
-void StringTTF::setAlignment(TextAlignment alignment)
+void StringTTF::setAlignment(TextHAlignment alignment)
 {
     // store the new alignment
     if (alignment != _alignment)
@@ -492,7 +492,7 @@ void StringTTF::assignNewUTF8String(unsigned short *newString)
     setCurrentString(newString);
 }
 
-TextAlignment StringTTF::getTextAlignment()
+TextHAlignment StringTTF::getTextAlignment()
 {
     return _alignment;
 }

@@ -52,7 +52,7 @@ public:
     virtual unsigned short          getCharAtStringPosition(int position)                                   = 0;
     virtual unsigned short *        getUTF8String()                                                         = 0;
     virtual void                    assignNewUTF8String(unsigned short *newString)                          = 0;
-    virtual cocos2d::TextAlignment  getTextAlignment()                                                      = 0;
+    virtual TextHAlignment          getTextAlignment()                                                      = 0;
     
     // label related stuff
     virtual float                   getMaxLineWidth()                                                       = 0;
