@@ -117,7 +117,7 @@ bool HelloWorld::init()
 	return bRet;
 }
 
-void HelloWorld::menuCloseCallback(Object* pSender)
+void HelloWorld::menuCloseCallback(Object* sender)
 {
 	// "close" menu item clicked
 	Director::getInstance()->end();
@@ -190,7 +190,7 @@ void HelloWorld::gameLogic(float dt)
 void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 {
 	// Choose one of the touches to work with
-	Touch* touch = (Touch*)( touches->anyObject() );
+	Touch* touch = static_cast<Touch*>( touches->anyObject() );
 	Point location = touch->getLocation();
     
 	log("++++++++after  x:%f, y:%f", location.x, location.y);

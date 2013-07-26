@@ -83,7 +83,7 @@ public:
     bool initWithFile(const char* fileImage, unsigned int capacity);
 
     /** Inserts a child into the ParticleBatchNode */
-    void insertChild(ParticleSystem* pSystem, int index);
+    void insertChild(ParticleSystem* system, int index);
 
     void removeChildAtIndex(unsigned int index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);

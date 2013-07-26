@@ -67,36 +67,36 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
             break;
             ///
         case 2:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 3:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 5:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;                
         case 6:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 8:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 9:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
@@ -110,13 +110,13 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
         batchNode->retain();
     }
 
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_DEFAULT);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 }
 
 Sprite* SubTest::createSpriteWithTag(int tag)
 {
     // create 
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 
     Sprite* sprite = NULL;
     switch (subtestNumber)
@@ -194,7 +194,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             break;
     }
 
-    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_DEFAULT);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 
     return sprite;
 }
@@ -354,11 +354,11 @@ SpriteMainScene::~SpriteMainScene()
     }
 }
 
-void SpriteMainScene::testNCallback(Object* pSender)
+void SpriteMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((MenuItemFont*) pSender)->getTag();
-    SpriteMenuLayer* menu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
-    menu->restartCallback(pSender);
+    subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
@@ -374,7 +374,7 @@ void SpriteMainScene::updateNodes()
     }
 }
 
-void SpriteMainScene::onIncrease(Object* pSender)
+void SpriteMainScene::onIncrease(Object* sender)
 {
     if( quantityNodes >= kMaxNodes)
         return;
@@ -389,7 +389,7 @@ void SpriteMainScene::onIncrease(Object* pSender)
     updateNodes();
 }
 
-void SpriteMainScene::onDecrease(Object* pSender)
+void SpriteMainScene::onDecrease(Object* sender)
 {
     if( quantityNodes <= 0 )
         return;

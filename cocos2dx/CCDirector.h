@@ -85,19 +85,19 @@ public:
     /** @typedef ccDirectorProjection
      Possible OpenGL projections used by director
      */
-    enum Projection
+    enum class Projection
     {
         /// sets a 2D projection (orthogonal projection)
-        PROJECTION_2D,
+        _2D,
         
         /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-        PROJECTION_3D,
+        _3D,
         
         /// it calls "updateProjection" on the projection delegate.
-        PROJECTION_CUSTOM,
+        CUSTOM,
         
         /// Default projection is 3D projection
-        PROJECTION_DEFAULT = PROJECTION_3D,
+        DEFAULT = _3D,
     };
     
     /** returns a shared instance of the director */
@@ -127,7 +127,7 @@ public:
     /** Whether or not to display the FPS on the bottom-left corner */
     inline bool isDisplayStats(void) { return _displayStats; }
     /** Display the FPS on the bottom-left corner */
-    inline void setDisplayStats(bool bDisplayStats) { _displayStats = bDisplayStats; }
+    inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
     /** seconds per frame */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
@@ -137,7 +137,7 @@ public:
     void setOpenGLView(EGLView *pobOpenGLView);
 
     inline bool isNextDeltaTimeZero(void) { return _nextDeltaTimeZero; }
-    void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
+    void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
     /** Whether or not the Director is paused */
     inline bool isPaused(void) { return _paused; }
@@ -149,7 +149,7 @@ public:
      @since v0.8.2
      */
     inline Projection getProjection(void) { return _projection; }
-    void setProjection(Projection kProjection);
+    void setProjection(Projection projection);
     
     /** Sets the glViewport*/
     void setViewport();
@@ -201,12 +201,12 @@ public:
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
      */
-    Point convertToGL(const Point& obPoint);
+    Point convertToGL(const Point& point);
 
     /** converts an OpenGL coordinate to a UIKit coordinate
      Useful to convert node points to window points for calls such as glScissor
      */
-    Point convertToUI(const Point& obPoint);
+    Point convertToUI(const Point& point);
 
     /// XXX: missing description 
     float getZEye(void) const;
@@ -219,14 +219,14 @@ public:
      *
      * It will call pushScene: and then it will call startAnimation
      */
-    void runWithScene(Scene *pScene);
+    void runWithScene(Scene *scene);
 
     /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      */
-    void pushScene(Scene *pScene);
+    void pushScene(Scene *scene);
 
     /** Pops out a scene from the queue.
      * This scene will replace the running one.
@@ -251,7 +251,7 @@ public:
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
      */
-    void replaceScene(Scene *pScene);
+    void replaceScene(Scene *scene);
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.

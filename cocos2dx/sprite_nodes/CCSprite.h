@@ -101,40 +101,40 @@ public:
      * After creation, the rect of sprite will be the size of the image,
      * and the offset will be (0,0).
      *
-     * @param   pszFileName The string which indicates a path to image file, e.g., "scene1/monster.png".
+     * @param   filename The string which indicates a path to image file, e.g., "scene1/monster.png".
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* create(const char *pszFileName);
+    static Sprite* create(const char *filename);
     
     /**
      * Creates a sprite with an image filename and a rect.
      *
-     * @param   pszFileName The string wich indicates a path to image file, e.g., "scene1/monster.png"
-     * @param   rect        Only the contents inside rect of pszFileName's texture will be applied for this sprite.
+     * @param   filename The string wich indicates a path to image file, e.g., "scene1/monster.png"
+     * @param   rect        Only the contents inside rect of filename's texture will be applied for this sprite.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* create(const char *pszFileName, const Rect& rect);
+    static Sprite* create(const char *filename, const Rect& rect);
     
     /**
      * Creates a sprite with an exsiting texture contained in a Texture2D object
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to a Texture2D object.
+     * @param   texture    A pointer to a Texture2D object.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* createWithTexture(Texture2D *pTexture);
+    static Sprite* createWithTexture(Texture2D *texture);
     
     /**
      * Creates a sprite with a texture and a rect.
      *
      * After creation, the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to an existing Texture2D object.
+     * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* createWithTexture(Texture2D *pTexture, const Rect& rect);
+    static Sprite* createWithTexture(Texture2D *texture, const Rect& rect);
     
     /**
      * Creates a sprite with an sprite frame.
@@ -147,13 +147,13 @@ public:
     /**
      * Creates a sprite with an sprite frame name.
      *
-     * A SpriteFrame will be fetched from the SpriteFrameCache by pszSpriteFrameName param.
+     * A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   pszSpriteFrameName A null terminated string which indicates the sprite frame name.
+     * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
      * @return  A valid sprite object that is marked as autoreleased.
      */
-    static Sprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static Sprite* createWithSpriteFrameName(const char *spriteFrameName);
     
     /// @}  end of creators group
     
@@ -181,23 +181,23 @@ public:
      *
      * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to an existing Texture2D object.
+     * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithTexture(Texture2D *pTexture);
+    virtual bool initWithTexture(Texture2D *texture);
     
     /**
      * Initializes a sprite with a texture and a rect.
      *
      * After initialization, the offset will be (0,0).
      *
-     * @param   pTexture    A pointer to an exisiting Texture2D object.
+     * @param   texture    A pointer to an exisiting Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithTexture(Texture2D *pTexture, const Rect& rect);
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
     
     /**
      * Initializes a sprite with a texture and a rect in points, optionally rotated.
@@ -205,12 +205,12 @@ public:
      * After initialization, the offset will be (0,0).
      * @note    This is the designated initializer.
      *
-     * @param   pTexture    A Texture2D object whose texture will be applied to this sprite.
+     * @param   texture    A Texture2D object whose texture will be applied to this sprite.
      * @param   rect        A rectangle assigned the contents of texture.
      * @param   rotated     Whether or not the texture rectangle is rotated.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated);
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
     
     /**
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
@@ -226,35 +226,35 @@ public:
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   pszSpriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
+     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+    virtual bool initWithSpriteFrameName(const char *spriteFrameName);
     
     /**
      * Initializes a sprite with an image filename.
      *
-     * This method will find pszFilename from local file system, load its content to Texture2D,
+     * This method will find filename from local file system, load its content to Texture2D,
      * then use Texture2D to create a sprite.
      * After initialization, the rect used will be the size of the image. The offset will be (0,0).
      *
-     * @param   pszFilename The path to an image file in local file system
+     * @param   filename The path to an image file in local file system
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithFile(const char *pszFilename);
+    virtual bool initWithFile(const char *filename);
     
     /**
      * Initializes a sprite with an image filename, and a rect.
      *
-     * This method will find pszFilename from local file system, load its content to Texture2D,
+     * This method will find filename from local file system, load its content to Texture2D,
      * then use Texture2D to create a sprite.
      * After initialization, the offset will be (0,0).
      *
-     * @param   pszFilename The path to an image file in local file system.
+     * @param   filename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithFile(const char *pszFilename, const Rect& rect);
+    virtual bool initWithFile(const char *filename, const Rect& rect);
     
     /// @} end of initializers
 
@@ -283,7 +283,7 @@ public:
      * layer->addChild(batch);
      * @endcode
      */
-    virtual void setBatchNode(SpriteBatchNode *pobSpriteBatchNode);
+    virtual void setBatchNode(SpriteBatchNode *spriteBatchNode);
      
     /// @} end of BatchNode methods
     
@@ -464,12 +464,12 @@ public:
     virtual void setRotationY(float fRotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
-    virtual void removeChild(Node* pChild, bool bCleanup) override;
+    virtual void removeChild(Node* child, bool bCleanup) override;
     virtual void removeAllChildrenWithCleanup(bool bCleanup) override;
-    virtual void reorderChild(Node *pChild, int zOrder) override;
-    virtual void addChild(Node *pChild) override;
-    virtual void addChild(Node *pChild, int zOrder) override;
-    virtual void addChild(Node *pChild, int zOrder, int tag) override;
+    virtual void reorderChild(Node *child, int zOrder) override;
+    virtual void addChild(Node *child) override;
+    virtual void addChild(Node *child, int zOrder) override;
+    virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float fScale) override;
     virtual void setVertexZ(float fVertexZ) override;

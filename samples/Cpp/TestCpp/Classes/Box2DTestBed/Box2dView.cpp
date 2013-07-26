@@ -191,7 +191,7 @@ void Box2DView::draw()
 {
     Layer::draw();
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 

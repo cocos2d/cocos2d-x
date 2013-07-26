@@ -115,6 +115,7 @@ ParticleSystem::ParticleSystem()
 , _positionType(POSITION_TYPE_FREE)
 , _isAutoRemoveOnFinish(false)
 , _emitterMode(MODE_GRAVITY)
+, _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -130,8 +131,6 @@ ParticleSystem::ParticleSystem()
     modeB.endRadiusVar = 0;            
     modeB.rotatePerSecond = 0;
     modeB.rotatePerSecondVar = 0;
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
 }
 // implementation ParticleSystem
 
@@ -257,7 +256,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             _endSpin= dictionary->valueForKey("rotationEnd")->floatValue();
             _endSpinVar= dictionary->valueForKey("rotationEndVariance")->floatValue();
 
-            _emitterMode = dictionary->valueForKey("emitterType")->intValue();
+            _emitterMode = (Mode) dictionary->valueForKey("emitterType")->intValue();
 
             // Mode A: Gravity + tangential accel + radial accel
             if (_emitterMode == MODE_GRAVITY)
@@ -415,8 +414,7 @@ bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
     _isActive = true;
 
     // default blend function
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     // default movement type;
     _positionType = POSITION_TYPE_FREE;
@@ -815,8 +813,7 @@ void ParticleSystem::updateBlendFunc()
             }
             else
             {
-                _blendFunc.src = GL_SRC_ALPHA;
-                _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+                _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
             }
         }
     }
@@ -832,21 +829,14 @@ void ParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE;
+        _blendFunc = BlendFunc::ADDITIVE;
     }
     else
     {
         if( _texture && ! _texture->hasPremultipliedAlpha() )
-        {
-            _blendFunc.src = GL_SRC_ALPHA;
-            _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        } 
+            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         else 
-        {
-            _blendFunc.src = CC_BLEND_SRC;
-            _blendFunc.dst = CC_BLEND_DST;
-        }
+            _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     }
 }
 
