@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri Jul 26 13:43:49 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Jul 26 15:15:53 2013.
 */
 
 /****************************************************************************
@@ -24059,6 +24059,71 @@ static int tolua_Cocos2d_CCLayer_getTouchPriority00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getTouchPriority'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSwallowsTouches of class  Layer */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayer_setSwallowsTouches00
+static int tolua_Cocos2d_CCLayer_setSwallowsTouches00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLayer",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Layer* self = (Layer*)  tolua_tousertype(tolua_S,1,0);
+  bool swallowsTouches = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSwallowsTouches'", NULL);
+#endif
+  {
+   self->setSwallowsTouches(swallowsTouches);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSwallowsTouches'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isSwallowsTouches of class  Layer */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCLayer_isSwallowsTouches00
+static int tolua_Cocos2d_CCLayer_isSwallowsTouches00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const Layer* self = (const Layer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSwallowsTouches'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isSwallowsTouches();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isSwallowsTouches'.",&tolua_err);
  return 0;
 #endif
 }
@@ -64979,6 +65044,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getTouchMode",tolua_Cocos2d_CCLayer_getTouchMode00);
    tolua_function(tolua_S,"setTouchPriority",tolua_Cocos2d_CCLayer_setTouchPriority00);
    tolua_function(tolua_S,"getTouchPriority",tolua_Cocos2d_CCLayer_getTouchPriority00);
+   tolua_function(tolua_S,"setSwallowsTouches",tolua_Cocos2d_CCLayer_setSwallowsTouches00);
+   tolua_function(tolua_S,"isSwallowsTouches",tolua_Cocos2d_CCLayer_isSwallowsTouches00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLayer_create00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus

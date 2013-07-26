@@ -107,7 +107,7 @@ public:
 
     /** swallowsTouches of the touch events. Default is true */
     virtual void setSwallowsTouches(bool swallowsTouches);
-    virtual bool getSwallowsTouches() const;
+    virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
