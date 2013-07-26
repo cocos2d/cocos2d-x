@@ -55,7 +55,7 @@ NS_CC_BEGIN
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PIXEL_FORMAT_DEFAULT;
+static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
@@ -64,7 +64,7 @@ Texture2D::Texture2D()
 : _PVRHaveAlphaPremultiplied(true)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _pixelFormat(Texture2D::PIXEL_FORMAT_DEFAULT)
+, _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
@@ -85,7 +85,7 @@ Texture2D::~Texture2D()
 
     if(_name)
     {
-        ccGLDeleteTexture(_name);
+        GL::deleteTexture(_name);
     }
 }
 
@@ -176,7 +176,7 @@ bool Texture2D::initWithData(const void *data, Texture2D::PixelFormat pixelForma
 {
     unsigned int bitsPerPixel;
     //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == Texture2D::PIXEL_FORMAT_RGB888)
+    if(pixelFormat == Texture2D::PixelFormat::RGB888)
     {
         bitsPerPixel = 24;
     }
@@ -206,7 +206,7 @@ bool Texture2D::initWithData(const void *data, Texture2D::PixelFormat pixelForma
 
 
     glGenTextures(1, &_name);
-    ccGLBindTexture2D(_name);
+    GL::bindTexture2D(_name);
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -217,28 +217,28 @@ bool Texture2D::initWithData(const void *data, Texture2D::PixelFormat pixelForma
 
     switch(pixelFormat)
     {
-    case Texture2D::PIXEL_FORMAT_RGBA8888:
+    case Texture2D::PixelFormat::RGBA8888:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         break;
-    case Texture2D::PIXEL_FORMAT_RGB888:
+    case Texture2D::PixelFormat::RGB888:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         break;
-    case Texture2D::PIXEL_FORMAT_RGBA4444:
+    case Texture2D::PixelFormat::RGBA4444:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
         break;
-    case Texture2D::PIXEL_FORMAT_RGB5A1:
+    case Texture2D::PixelFormat::RGB5A1:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
         break;
-    case Texture2D::PIXEL_FORMAT_RGB565:
+    case Texture2D::PixelFormat::RGB565:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
         break;
-    case Texture2D::PIXEL_FORMAT_AI88:
+    case Texture2D::PixelFormat::AI88:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
         break;
-    case Texture2D::PIXEL_FORMAT_A8:
+    case Texture2D::PixelFormat::A8:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
         break;
-    case Texture2D::PIXEL_FORMAT_I8:
+    case Texture2D::PixelFormat::I8:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
         break;
     default:
@@ -313,11 +313,11 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     {
         if (bpp >= 8)
         {
-            pixelFormat = Texture2D::PIXEL_FORMAT_RGB888;
+            pixelFormat = Texture2D::PixelFormat::RGB888;
         }
         else 
         {
-            pixelFormat = Texture2D::PIXEL_FORMAT_RGB565;
+            pixelFormat = Texture2D::PixelFormat::RGB565;
         }
         
     }
@@ -325,7 +325,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
     // Repack the pixel data into the right format
     unsigned int length = width * height;
 
-    if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB565)
+    if (pixelFormat == Texture2D::PixelFormat::RGB565)
     {
         if (hasAlpha)
         {
@@ -360,7 +360,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             }
         }    
     }
-    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444)
+    else if (pixelFormat == Texture2D::PixelFormat::RGBA4444)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
         
@@ -377,7 +377,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             ((((*inPixel32 >> 24) & 0xFF) >> 4) << 0);  // A
         }
     }
-    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1)
+    else if (pixelFormat == Texture2D::PixelFormat::RGB5A1)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
         inPixel32 = (unsigned int*)image->getData();   
@@ -393,7 +393,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
             ((((*inPixel32 >> 24) & 0xFF) >> 7) << 0);  // A
         }
     }
-    else if (pixelFormat == Texture2D::PIXEL_FORMAT_A8)
+    else if (pixelFormat == Texture2D::PixelFormat::A8)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "AAAAAAAA"
         inPixel32 = (unsigned int*)image->getData();
@@ -406,7 +406,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
         }
     }
     
-    if (hasAlpha && pixelFormat == Texture2D::PIXEL_FORMAT_RGB888)
+    if (hasAlpha && pixelFormat == Texture2D::PixelFormat::RGB888)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
         inPixel32 = (unsigned int*)image->getData();
@@ -433,7 +433,7 @@ bool Texture2D::initPremultipliedATextureWithImage(Image *image, unsigned int wi
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, Label::TextAlignment hAlignment/* =  Label::TEXT_ALIGNMENT_CENTER */, Label::VerticalTextAlignment vAlignment/* =  Label::VERTICAL_TEXT_ALIGNMENT_TOP */)
+bool Texture2D::initWithString(const char *text, const char *fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, Label::HAlignment hAlignment/* =  Label::HAlignment::CENTER */, Label::VAlignment vAlignment/* =  Label::VAlignment::TOP */)
 {
     FontDefinition tempDef;
     
@@ -461,20 +461,20 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     bool bRet = false;
     Image::TextAlign eAlign;
     
-    if (Label::VERTICAL_TEXT_ALIGNMENT_TOP == textDefinition._vertAlignment)
+    if (Label::VAlignment::TOP == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_TOP
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_TOP_LEFT : Image::TEXT_ALIGN_TOP_RIGHT;
+        eAlign = (Label::HAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::TOP
+        : (Label::HAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::TOP_LEFT : Image::TextAlign::TOP_RIGHT;
     }
-    else if (Label::VERTICAL_TEXT_ALIGNMENT_CENTER == textDefinition._vertAlignment)
+    else if (Label::VAlignment::CENTER == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_CENTER
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_LEFT : Image::TEXT_ALIGN_RIGHT;
+        eAlign = (Label::HAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::CENTER
+        : (Label::HAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::LEFT : Image::TextAlign::RIGHT;
     }
-    else if (Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM == textDefinition._vertAlignment)
+    else if (Label::VAlignment::BOTTOM == textDefinition._vertAlignment)
     {
-        eAlign = (Label::TEXT_ALIGNMENT_CENTER == textDefinition._alignment) ? Image::TEXT_ALIGN_BOTTOM
-        : (Label::TEXT_ALIGNMENT_LEFT == textDefinition._alignment) ? Image::TEXT_ALIGN_BOTTOM_LEFT : Image::TEXT_ALIGN_BOTTOM_RIGHT;
+        eAlign = (Label::HAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::BOTTOM
+        : (Label::HAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::BOTTOEM_LEFT : Image::TextAlign::BOTTOEM_RIGHT;
     }
     else
     {
@@ -591,11 +591,11 @@ void Texture2D::drawAtPoint(const Point& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
 
 #ifdef EMSCRIPTEN
@@ -625,11 +625,11 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
@@ -662,7 +662,7 @@ bool Texture2D::initWithPVRFile(const char* file)
         _pixelsWide = pvr->getWidth();
         _pixelsHigh = pvr->getHeight();
         _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
-        _hasPremultipliedAlpha = PVRHaveAlphaPremultiplied_;
+        _hasPremultipliedAlpha = (pvr->isForcePremultipliedAlpha()) ? pvr->hasPremultipliedAlpha() : _PVRHaveAlphaPremultiplied;
         _pixelFormat = pvr->getFormat();
         _hasMipmaps = pvr->getNumberOfMipmaps() > 1;       
 
@@ -718,7 +718,7 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 void Texture2D::generateMipmap()
 {
     CCASSERT( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
 }
@@ -734,7 +734,7 @@ void Texture2D::setTexParameters(const ccTexParams &texParams)
         (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
@@ -747,7 +747,7 @@ void Texture2D::setTexParameters(const ccTexParams &texParams)
 
 void Texture2D::setAliasTexParameters()
 {
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {
@@ -767,7 +767,7 @@ void Texture2D::setAliasTexParameters()
 
 void Texture2D::setAntiAliasTexParameters()
 {
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {
@@ -789,34 +789,34 @@ const char* Texture2D::getStringForFormat() const
 {
 	switch (_pixelFormat) 
 	{
-		case Texture2D::PIXEL_FORMAT_RGBA8888:
+		case Texture2D::PixelFormat::RGBA8888:
 			return  "RGBA8888";
 
-		case Texture2D::PIXEL_FORMAT_RGB888:
+		case Texture2D::PixelFormat::RGB888:
 			return  "RGB888";
 
-		case Texture2D::PIXEL_FORMAT_RGB565:
+		case Texture2D::PixelFormat::RGB565:
 			return  "RGB565";
 
-		case Texture2D::PIXEL_FORMAT_RGBA4444:
+		case Texture2D::PixelFormat::RGBA4444:
 			return  "RGBA4444";
 
-		case Texture2D::PIXEL_FORMAT_RGB5A1:
+		case Texture2D::PixelFormat::RGB5A1:
 			return  "RGB5A1";
 
-		case Texture2D::PIXEL_FORMAT_AI88:
+		case Texture2D::PixelFormat::AI88:
 			return  "AI88";
 
-		case Texture2D::PIXEL_FORMAT_A8:
+		case Texture2D::PixelFormat::A8:
 			return  "A8";
 
-		case Texture2D::PIXEL_FORMAT_I8:
+		case Texture2D::PixelFormat::I8:
 			return  "I8";
 
-		case Texture2D::PIXEL_FORMAT_PRVTC4:
+		case Texture2D::PixelFormat::PRVTC4:
 			return  "PVRTC4";
 
-		case Texture2D::PIXEL_FORMAT_PRVTC2:
+		case Texture2D::PixelFormat::PRVTC2:
 			return  "PVRTC2";
 
 		default:
@@ -848,35 +848,35 @@ unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) 
 	unsigned int ret=0;
 
 	switch (format) {
-		case Texture2D::PIXEL_FORMAT_RGBA8888:
+		case Texture2D::PixelFormat::RGBA8888:
 			ret = 32;
 			break;
-		case Texture2D::PIXEL_FORMAT_RGB888:
+		case Texture2D::PixelFormat::RGB888:
 			// It is 32 and not 24, since its internal representation uses 32 bits.
 			ret = 32;
 			break;
-		case Texture2D::PIXEL_FORMAT_RGB565:
+		case Texture2D::PixelFormat::RGB565:
 			ret = 16;
 			break;
-		case Texture2D::PIXEL_FORMAT_RGBA4444:
+		case Texture2D::PixelFormat::RGBA4444:
 			ret = 16;
 			break;
-		case Texture2D::PIXEL_FORMAT_RGB5A1:
+		case Texture2D::PixelFormat::RGB5A1:
 			ret = 16;
 			break;
-		case Texture2D::PIXEL_FORMAT_AI88:
+		case Texture2D::PixelFormat::AI88:
 			ret = 16;
 			break;
-		case Texture2D::PIXEL_FORMAT_A8:
+		case Texture2D::PixelFormat::A8:
 			ret = 8;
 			break;
-		case Texture2D::PIXEL_FORMAT_I8:
+		case Texture2D::PixelFormat::I8:
 			ret = 8;
 			break;
-		case Texture2D::PIXEL_FORMAT_PRVTC4:
+		case Texture2D::PixelFormat::PRVTC4:
 			ret = 4;
 			break;
-		case Texture2D::PIXEL_FORMAT_PRVTC2:
+		case Texture2D::PixelFormat::PRVTC2:
 			ret = 2;
 			break;
 		default:

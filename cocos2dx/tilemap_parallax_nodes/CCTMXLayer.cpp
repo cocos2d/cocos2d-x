@@ -390,13 +390,13 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
         Object* pObject = nullptr;
         CCARRAY_FOREACH(_children, pObject)
         {
-            Sprite* pChild = static_cast<Sprite*>(pObject);
-            if (pChild)
+            Sprite* child = static_cast<Sprite*>(pObject);
+            if (child)
             {
-                unsigned int ai = pChild->getAtlasIndex();
+                unsigned int ai = child->getAtlasIndex();
                 if ( ai >= indexForZ )
                 {
-                    pChild->setAtlasIndex(ai+1);
+                    child->setAtlasIndex(ai+1);
                 }
             }
         }
@@ -596,13 +596,13 @@ void TMXLayer::removeTileAt(const Point& pos)
                 Object* pObject = nullptr;
                 CCARRAY_FOREACH(_children, pObject)
                 {
-                    Sprite* pChild = static_cast<Sprite*>(pObject);
-                    if (pChild)
+                    Sprite* child = static_cast<Sprite*>(pObject);
+                    if (child)
                     {
-                        unsigned int ai = pChild->getAtlasIndex();
+                        unsigned int ai = child->getAtlasIndex();
                         if ( ai >= atlasIndex )
                         {
-                            pChild->setAtlasIndex(ai-1);
+                            child->setAtlasIndex(ai-1);
                         }
                     }
                 }

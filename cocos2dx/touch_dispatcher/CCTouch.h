@@ -38,6 +38,14 @@ NS_CC_BEGIN
 class CC_DLL Touch : public Object
 {
 public:
+    /** how the touches are dispathced */
+    enum class DispatchMode {
+        /** All at once */
+        ALL_AT_ONCE,
+        /** one by one */
+        ONE_BY_ONE,
+    };
+
     Touch() 
         : _id(0),
         _startPointCaptured(false)

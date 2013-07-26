@@ -223,11 +223,11 @@ public:
             return -1;
         }
 
-        if (eAlignMask == Image::TEXT_ALIGN_CENTER) {
+        if (eAlignMask == Image::TextAlign::CENTER) {
             iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth) / 2
             - SHIFT6(face->glyph->metrics.horiBearingX );
 
-        } else if (eAlignMask == Image::TEXT_ALIGN_RIGHT) {
+        } else if (eAlignMask == Image::TextAlign::RIGHT) {
             iRet = (iMaxLineWidth - vLines[iLineIndex].iLineWidth)
             - SHIFT6(face->glyph->metrics.horiBearingX );
         } else {
@@ -240,14 +240,14 @@ public:
     int computeLineStartY(FT_Face face, Image::TextAlign eAlignMask, int txtHeight, int borderHeight)
     {
         int iRet = 0;
-        if (eAlignMask == Image::TEXT_ALIGN_CENTER || eAlignMask == Image::TEXT_ALIGN_LEFT ||
-            eAlignMask == Image::TEXT_ALIGN_RIGHT ) {
+        if (eAlignMask == Image::TextAlign::CENTER || eAlignMask == Image::TextAlign::LEFT ||
+            eAlignMask == Image::TextAlign::RIGHT ) {
             //vertical center
             iRet = (borderHeight - txtHeight)/2;
 
-        } else if (eAlignMask == Image::TEXT_ALIGN_BOTTOM_RIGHT ||
-                   eAlignMask == Image::TEXT_ALIGN_BOTTOM ||
-                   eAlignMask == Image::TEXT_ALIGN_BOTTOM_LEFT ) {
+        } else if (eAlignMask == Image::TextAlign::BOTTOM_RIGHT ||
+                   eAlignMask == Image::TextAlign::BOTTOM ||
+                   eAlignMask == Image::TextAlign::BOTTOM_LEFT ) {
             //vertical bottom
             iRet = borderHeight - txtHeight;
         }

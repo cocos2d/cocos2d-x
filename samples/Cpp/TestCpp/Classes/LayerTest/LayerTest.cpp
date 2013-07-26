@@ -89,7 +89,7 @@ void LayerTest::onEnter()
     BaseTest::onEnter();
 }
 
-void LayerTest::restartCallback(Object* pSender)
+void LayerTest::restartCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild(restartAction());
@@ -98,7 +98,7 @@ void LayerTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void LayerTest::nextCallback(Object* pSender)
+void LayerTest::nextCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( nextAction() );
@@ -106,7 +106,7 @@ void LayerTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void LayerTest::backCallback(Object* pSender)
+void LayerTest::backCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( backAction() );
@@ -470,22 +470,22 @@ void LayerTest1::updateSize(Point &touchLocation)
     l->setContentSize( newSize );
 }
 
-void LayerTest1::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    ccTouchesMoved(pTouches, pEvent);
+    ccTouchesMoved(touches, event);
 }
 
-void LayerTest1::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     Point touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 }
 
-void LayerTest1::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    ccTouchesMoved(pTouches, pEvent);
+    ccTouchesMoved(touches, event);
 }
 
 std::string LayerTest1::title()
@@ -858,10 +858,7 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
     layer3->setEndOpacity(255);
-    BlendFunc blend;
-    blend.src = GL_SRC_ALPHA;
-    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
-    layer3->setBlendFunc(blend);
+    layer3->setBlendFunc( BlendFunc::ALPHA_NON_PREMULTIPLIED );
     addChild(layer3);
 }
 

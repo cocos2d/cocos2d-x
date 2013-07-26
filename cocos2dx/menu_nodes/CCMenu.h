@@ -53,10 +53,10 @@ public:
         HANDLER_PRIORITY = -128,
     };
     
-    enum State
+    enum class State
     {
-        STATE_WAITING,
-        STATE_TRACKING_TOUCH,
+        WAITING,
+        TRACKING_TOUCH,
     };
     
     /** creates an empty Menu */

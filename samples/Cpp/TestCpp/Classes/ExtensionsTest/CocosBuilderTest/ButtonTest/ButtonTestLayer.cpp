@@ -16,7 +16,7 @@ SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;

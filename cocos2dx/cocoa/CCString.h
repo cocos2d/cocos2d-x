@@ -115,7 +115,7 @@ public:
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      */
-    static String* createWithContentsOfFile(const char* pszFileName);
+    static String* createWithContentsOfFile(const char* filename);
 
     virtual void acceptVisitor(DataVisitor &visitor);
     virtual String* clone() const;

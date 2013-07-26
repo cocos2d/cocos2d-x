@@ -76,7 +76,7 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     bool bRet = true;
 
@@ -84,7 +84,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFli
     _reuseGrid = 0;
     _gridSize = gridSize;
 
-    _texture = pTexture;
+    _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = bFlipped;
 
@@ -117,7 +117,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
-    Texture2D::PixelFormat format = Texture2D::PIXEL_FORMAT_RGBA8888;
+    Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
     void *data = calloc((int)(POTWide * POTHigh * 4), 1);
     if (! data)
@@ -127,20 +127,20 @@ bool GridBase::initWithSize(const Size& gridSize)
         return false;
     }
 
-    Texture2D *pTexture = new Texture2D();
-    pTexture->initWithData(data, format, POTWide, POTHigh, s);
+    Texture2D *texture = new Texture2D();
+    texture->initWithData(data, format, POTWide, POTHigh, s);
 
     free(data);
 
-    if (! pTexture)
+    if (! texture)
     {
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
 
-    initWithSize(gridSize, pTexture, false);
+    initWithSize(gridSize, texture, false);
 
-    pTexture->release();
+    texture->release();
 
     return true;
 }
@@ -192,8 +192,7 @@ void GridBase::set2DProjection()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadIdentity();
 
-
-    ccSetProjectionMatrixDirty();
+    GL::setProjectionMatrixDirty();
 }
 
 void GridBase::beforeDraw(void)
@@ -203,7 +202,7 @@ void GridBase::beforeDraw(void)
     _directorProjection = director->getProjection();
 
     // 2d projection
-    //    [director setProjection:Director::PROJECTION_2D];
+    //    [director setProjection:Director::Projection::_2D];
     set2DProjection();
     _grabber->beforeRender(_texture);
 }
@@ -228,7 +227,7 @@ void GridBase::afterDraw(cocos2d::Node *target)
         kmGLTranslatef(-offset.x, -offset.y, 0);
     }
 
-    ccGLBindTexture2D(_texture->getName());
+    GL::bindTexture2D(_texture->getName());
 
     // restore projection for default FBO .fixed bug #543 #544
 //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
@@ -253,13 +252,13 @@ void GridBase::calculateVertexPoints(void)
 
 // implementation of Grid3D
 
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     Grid3D *pRet= new Grid3D();
 
     if (pRet)
     {
-        if (pRet->initWithSize(gridSize, pTexture, bFlipped))
+        if (pRet->initWithSize(gridSize, texture, bFlipped))
         {
             pRet->autorelease();
         }
@@ -315,7 +314,7 @@ void Grid3D::blit(void)
 {
     int n = _gridSize.width * _gridSize.height;
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();;
 
@@ -486,13 +485,13 @@ TiledGrid3D::~TiledGrid3D(void)
     CC_SAFE_FREE(_indices);
 }
 
-TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *pTexture, bool bFlipped)
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
 {
     TiledGrid3D *pRet= new TiledGrid3D();
 
     if (pRet)
     {
-        if (pRet->initWithSize(gridSize, pTexture, bFlipped))
+        if (pRet->initWithSize(gridSize, texture, bFlipped))
         {
             pRet->autorelease();
         }
@@ -537,7 +536,7 @@ void TiledGrid3D::blit(void)
     //
     // Attributes
     //
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
 #ifdef EMSCRIPTEN
     int numQuads = _gridSize.width * _gridSize.height;
 

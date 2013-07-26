@@ -221,7 +221,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -297,7 +297,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uHoriFlag = (int)eAlign & 0x0f;
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
@@ -465,13 +465,13 @@ bool Image::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == FORMAT_RAW_DATA)
+        if (eFmt == Format::RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == FORMAT_WEBP)
+        else if (eFmt == Format::WEBP)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
         }
         else // init with png or jpg file data
         {
@@ -515,25 +515,25 @@ bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, 
     return bRet;
 }
 
-bool Image::_initWithJpgData(void *pData, int nDatalen)
+bool Image::initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_initWithPngData(void *pData, int nDatalen)
+bool Image::initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToJPG(const char *pszFilePath)
+bool Image::saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
 	return false;

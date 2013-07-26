@@ -94,7 +94,7 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* pSender)
+void SchedulerTestLayer::backCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = backSchedulerTest();
@@ -104,7 +104,7 @@ void SchedulerTestLayer::backCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* pSender)
+void SchedulerTestLayer::nextCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = nextSchedulerTest();
@@ -114,7 +114,7 @@ void SchedulerTestLayer::nextCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* pSender)
+void SchedulerTestLayer::restartCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = restartSchedulerTest();
@@ -874,9 +874,9 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* pSender, Control::EventType controlEvent)
+void SchedulerTimeScale::sliderAction(Object* sender, Control::EventType controlEvent)
 {
-    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(pSender);
+    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
     scale = pSliderCtl->getValue();
 

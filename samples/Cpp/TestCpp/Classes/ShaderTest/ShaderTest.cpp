@@ -62,7 +62,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 }
 
-void ShaderTestDemo::backCallback(Object* pSender)
+void ShaderTestDemo::backCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild( backAction() );
@@ -70,7 +70,7 @@ void ShaderTestDemo::backCallback(Object* pSender)
     s->release();
 }
 
-void ShaderTestDemo::nextCallback(Object* pSender)
+void ShaderTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
@@ -88,7 +88,7 @@ std::string ShaderTestDemo::subtitle()
     return "";
 }
 
-void ShaderTestDemo::restartCallback(Object* pSender)
+void ShaderTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild(restartAction()); 
@@ -208,7 +208,7 @@ void ShaderNode::draw()
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
@@ -521,16 +521,16 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
-    ccGLBlendFunc(blend.src, blend.dst);
+    GL::blendFunc(blend.src, blend.dst);
 
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
 
-    ccGLBindTexture2D( getTexture()->getName());
+    GL::bindTexture2D( getTexture()->getName());
 
     //
     // Attributes

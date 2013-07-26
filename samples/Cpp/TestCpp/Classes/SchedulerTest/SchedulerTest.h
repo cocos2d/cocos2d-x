@@ -16,9 +16,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void backCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void restartCallback(Object* pSender);
+    void backCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void restartCallback(Object* sender);
 };
 
 // class SchedulerTestLayer : Layer
@@ -228,7 +228,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     ControlSlider* sliderCtl();
-    void sliderAction(Object* pSender, Control::EventType controlEvent);
+    void sliderAction(Object* sender, Control::EventType controlEvent);
     ControlSlider* _sliderCtl;
 };
 

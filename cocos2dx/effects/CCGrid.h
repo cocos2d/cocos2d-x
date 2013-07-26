@@ -59,7 +59,7 @@ public:
 
     virtual ~GridBase(void);
 
-    bool initWithSize(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped);
     bool initWithSize(const Size& gridSize);
 
     /** whether or not the grid is active */
@@ -112,7 +112,7 @@ class CC_DLL Grid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static Grid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
     static Grid3D* create(const Size& gridSize);
 
@@ -154,7 +154,7 @@ class CC_DLL TiledGrid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *pTexture, bool bFlipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize);
 

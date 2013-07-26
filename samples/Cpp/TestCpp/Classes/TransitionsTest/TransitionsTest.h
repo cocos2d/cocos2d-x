@@ -17,9 +17,9 @@ public:
     TestLayer1(void);
     ~TestLayer1(void);
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 
     void step(float dt);
 
@@ -35,9 +35,9 @@ public:
     TestLayer2(void);
     ~TestLayer2(void);
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 
     void step(float dt);
 
