@@ -74,7 +74,7 @@ void NotificationCenter::purgeNotificationCenter(void)
 //
 // internal functions
 //
-bool NotificationCenter::observerExisted(Object *target,const char *name)
+bool NotificationCenter::observerExisted(Object *target,const char *name, Object *sender)
 {
     Object* obj = NULL;
     CCARRAY_FOREACH(_observers, obj)
@@ -83,7 +83,7 @@ bool NotificationCenter::observerExisted(Object *target,const char *name)
         if (!observer)
             continue;
         
-        if (!strcmp(observer->getName(),name) && observer->getTarget() == target)
+        if (!strcmp(observer->getName(),name) && observer->getTarget() == target && observer->getSender() == sender)
             return true;
     }
     return false;
@@ -95,12 +95,12 @@ bool NotificationCenter::observerExisted(Object *target,const char *name)
 void NotificationCenter::addObserver(Object *target, 
                                        SEL_CallFuncO selector,
                                        const char *name,
-                                       Object *obj)
+                                       Object *sender)
 {
-    if (this->observerExisted(target, name))
+    if (this->observerExisted(target, name, sender))
         return;
     
-    NotificationObserver *observer = new NotificationObserver(target, selector, name, obj);
+    NotificationObserver *observer = new NotificationObserver(target, selector, name, sender);
     if (!observer)
         return;
     
@@ -177,7 +177,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const char* nam
     }
 }
 
-void NotificationCenter::postNotification(const char *name, Object *object)
+void NotificationCenter::postNotification(const char *name, Object *sender)
 {
     Array* ObserversCopy = Array::createWithCapacity(_observers->count());
     ObserversCopy->addObjectsFromArray(_observers);
@@ -188,7 +188,7 @@ void NotificationCenter::postNotification(const char *name, Object *object)
         if (!observer)
             continue;
         
-        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
+        if (!strcmp(name,observer->getName()) && (observer->getSender() == sender || observer->getSender() == NULL || sender == NULL))
         {
             if (0 != observer->getHandler())
             {
@@ -198,7 +198,7 @@ void NotificationCenter::postNotification(const char *name, Object *object)
             }
             else
             {
-                observer->performSelector(object);
+                observer->performSelector(sender);
             }
         }
     }
@@ -241,11 +241,11 @@ int NotificationCenter::getObserverHandlerByName(const char* name)
 NotificationObserver::NotificationObserver(Object *target, 
                                                SEL_CallFuncO selector,
                                                const char *name,
-                                               Object *obj)
+                                               Object *sender)
 {
     _target = target;
     _selector = selector;
-    _object = obj;
+    _sender = sender;
     
     _name = name;
     _handler = 0;
@@ -256,14 +256,14 @@ NotificationObserver::~NotificationObserver()
 
 }
 
-void NotificationObserver::performSelector(Object *obj)
+void NotificationObserver::performSelector(Object *sender)
 {
     if (_target)
     {
-		if (obj) {
-			(_target->*_selector)(obj);
+		if (sender) {
+			(_target->*_selector)(sender);
 		} else {
-			(_target->*_selector)(_object);
+			(_target->*_selector)(_sender);
 		}
     }
 }
@@ -283,9 +283,9 @@ const char* NotificationObserver::getName() const
     return _name.c_str();
 }
 
-Object* NotificationObserver::getObject() const
+Object* NotificationObserver::getSender() const
 {
-    return _object;
+    return _sender;
 }
 
 int NotificationObserver::getHandler() const
