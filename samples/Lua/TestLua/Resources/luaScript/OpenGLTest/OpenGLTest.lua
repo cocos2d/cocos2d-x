@@ -8,7 +8,7 @@ local function OpenGLTestMainLayer()
     local curCase  = 0
     local accum    = 0
     local labelBMFont = nil
-    local size = CCDirector:sharedDirector():getWinSize()
+    local size = CCDirector:getInstance():getWinSize()
     local curLayer = nil
     local schedulEntry = nil
     local  function OrderCallbackMenu()
@@ -31,7 +31,7 @@ local function OpenGLTestMainLayer()
         end
 
         local ordercallbackmenu = CCMenu:create()
-        local size = CCDirector:sharedDirector():getWinSize()
+        local size = CCDirector:getInstance():getWinSize()
         local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
         item1:registerScriptTapHandler(backCallback)
         ordercallbackmenu:addChild(item1,kItemTagBasic)
@@ -42,11 +42,11 @@ local function OpenGLTestMainLayer()
         ordercallbackmenu:addChild(item3,kItemTagBasic) 
         item3:registerScriptTapHandler(nextCallback)
                 
-        item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-        item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-        item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+        item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
         
-        ordercallbackmenu:setPosition(ccp(0, 0))
+        ordercallbackmenu:setPosition(CCPoint(0, 0))
 
         return ordercallbackmenu
     end
@@ -127,12 +127,12 @@ local function OpenGLTestMainLayer()
         --Title
         local lableTitle = CCLabelTTF:create(GetTitle(), "Arial", 40)
         layer:addChild(lableTitle, 15)
-        lableTitle:setPosition(ccp(size.width/2, size.height-32))
+        lableTitle:setPosition(CCPoint(size.width/2, size.height-32))
         lableTitle:setColor(Color3B(255,255,40))
         --SubTitle
         local subLabelTitle = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
         layer:addChild(subLabelTitle, 15)
-        subLabelTitle:setPosition(ccp(size.width/2, size.height-80)) 
+        subLabelTitle:setPosition(CCPoint(size.width/2, size.height-80)) 
     end
 
     local function updateRetroEffect(fTime)
@@ -192,8 +192,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -254,8 +254,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -316,8 +316,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -378,8 +378,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -440,8 +440,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -502,8 +502,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSizeMake(256,256))
-        glNode:setAnchorPoint(ccp(0.5, 0.5))
+        glNode:setContentSize(CCSize(256,256))
+        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -554,7 +554,7 @@ local function OpenGLTestMainLayer()
         glGetActiveLayer:addChild(sprite)
         local glNode = gl.glNodeCreate()
         glGetActiveLayer:addChild(glNode,-10)
-        local scheduler = CCDirector:sharedDirector():getScheduler()
+        local scheduler = CCDirector:getInstance():getScheduler()
 
         local function getCurrentResult()
             local var = {}
@@ -602,8 +602,8 @@ local function OpenGLTestMainLayer()
         local glNode   = gl.glNodeCreate()
         texImage2dLayer:addChild(glNode, 10)
         glNode:setPosition(size.width/2, size.height/2)
-        glNode:setContentSize(CCSizeMake(128,128))
-        glNode:setAnchorPoint(ccp(0.5,0.5))
+        glNode:setContentSize(CCSize(128,128))
+        glNode:setAnchorPoint(CCPoint(0.5,0.5))
         local shaderCache = CCShaderCache:getInstance()
         local shader = shaderCache:getProgram("ShaderPositionTexture")
         local function initGL()
@@ -717,7 +717,7 @@ local function OpenGLTestMainLayer()
         readPixelsLayer:addChild(green,12)
         readPixelsLayer:addChild(red,13)
 
-        local scheduler = CCDirector:sharedDirector():getScheduler()
+        local scheduler = CCDirector:getInstance():getScheduler()
 
         local function getCurrentResult()
             local x = size.width
@@ -782,7 +782,7 @@ local function OpenGLTestMainLayer()
         local glNode = gl.glNodeCreate()
         clearLayer:addChild(glNode,10)
         --gl.init()
-        local scheduler = CCDirector:sharedDirector():getScheduler()
+        local scheduler = CCDirector:getInstance():getScheduler()
 
         local function clearDraw()
             gl.clear(gl.COLOR_BUFFER_BIT)
@@ -1150,7 +1150,7 @@ local function OpenGLTestMainLayer()
         local curScene = CCScene:create()
         if nil ~= curScene then
             if nil ~= curLayer then
-                local scheduler = CCDirector:sharedDirector():getScheduler()
+                local scheduler = CCDirector:getInstance():getScheduler()
                 if nil ~= schedulEntry then
                     scheduler:unscheduleScriptEntry(schedulEntry)
                 end
@@ -1160,7 +1160,7 @@ local function OpenGLTestMainLayer()
                 curScene:addChild(curLayer)
                 curLayer:addChild(OrderCallbackMenu(),15)
                 curScene:addChild(CreateBackMenuItem())
-                CCDirector:sharedDirector():replaceScene(curScene)
+                CCDirector:getInstance():replaceScene(curScene)
             end            
         end 
     end

@@ -2,11 +2,11 @@ local kTagAction1 = 1
 local kTagAction2 = 2
 local kTagSlider = 1
 
-local s = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local s = CCDirector:getInstance():getWinSize()
+local scheduler = CCDirector:getInstance():getScheduler()
 
 local function createSimpleMoveBy()
-    return CCMoveBy:create(3, CCPointMake(s.width - 130, 0))
+    return CCMoveBy:create(3, CCPoint(s.width - 130, 0))
 end
 
 local function createSimpleDelayTime()
@@ -14,8 +14,8 @@ local function createSimpleDelayTime()
 end
 
 local function positionForTwo()
-	grossini:setPosition(CCPointMake(60, s.height * 1 / 5))
-    tamara:setPosition(CCPointMake(60, s.height * 4 / 5))
+	grossini:setPosition(CCPoint(60, s.height * 1 / 5))
+    tamara:setPosition(CCPoint(60, s.height * 4 / 5))
     kathia:setVisible(false)
 end
 
@@ -30,9 +30,9 @@ local function getBaseLayer()
     layer:addChild(kathia, 2)
     layer:addChild(tamara, 1)
 
-    grossini:setPosition(CCPointMake(60, s.height * 1 / 5))
-    kathia:setPosition(CCPointMake(60, s.height * 2.5 / 5))
-    tamara:setPosition(CCPointMake(60, s.height * 4 / 5))
+    grossini:setPosition(CCPoint(60, s.height * 1 / 5))
+    kathia:setPosition(CCPoint(60, s.height * 2.5 / 5))
+    tamara:setPosition(CCPoint(60, s.height * 4 / 5))
 
 	Helper.initWithLayer(layer)
 
@@ -614,7 +614,7 @@ end
 local function SpeedTest()
 	local layer = getBaseLayer()
 
-	local jump1 = CCJumpBy:create(4, CCPointMake(- s.width + 80, 0), 100, 4)
+	local jump1 = CCJumpBy:create(4, CCPoint(- s.width + 80, 0), 100, 4)
     local jump2 = jump1:reverse()
     local rot1 = CCRotateBy:create(4, 360 * 2)
     local rot2 = rot1:reverse()

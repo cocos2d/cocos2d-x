@@ -132,8 +132,8 @@ end
 rawset(_G,"ccpDistance",ccpDistance)
 
 local function ccpNormalize(pt)
-    deprecatedTip("ccpNormalize","CCPoint:getDistance")
-    return pt:getDistance()
+    deprecatedTip("ccpNormalize","CCPoint:normalize")
+    return pt:normalize()
 end
 rawset(_G,"ccpNormalize",ccpNormalize)
 
@@ -384,10 +384,8 @@ local function CCCallFuncNDeprecated( )
     return CCCallFunc
 end
 _G["CCCallFuncN"] = CCCallFuncNDeprecated()
-
 --functions of _G will be deprecated end
-local color = ccColor4B()
-local r = color.r
+
 
 --functions of CCControl will be deprecated end
 local CCControlDeprecated = { }
@@ -780,8 +778,8 @@ end
 rawset(CCTMXObjectGroup,"propertyNamed", CCTMXObjectGroupDeprecated.propertyNamed)
 
 function CCTMXObjectGroupDeprecated.objectNamed(self, objectName)
-    deprecatedTip("CCTMXObjectGroup:objectNamed","CCTMXObjectGroup:getObjectNamed")
-    return self:getObjectNamed(objectName)
+    deprecatedTip("CCTMXObjectGroup:objectNamed","CCTMXObjectGroup:getObject")
+    return self:getObject(objectName)
 end
 rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 --functions of CCTMXObject will be deprecated end
