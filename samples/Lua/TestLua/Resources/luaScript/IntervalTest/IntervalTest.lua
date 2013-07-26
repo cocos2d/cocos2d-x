@@ -1,4 +1,4 @@
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local scheduler = CCDirector:getInstance():getScheduler()
 local SID_STEP1    = 100
 local SID_STEP2    = 101
 local SID_STEP3    = 102
@@ -12,11 +12,11 @@ local function IntervalLayer()
     local m_time3 = 0
     local m_time4 = 0
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     -- sun
     local  sun = CCParticleSun:create()
-    sun:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
-    sun:setPosition( ccp(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
+    sun:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
+    sun:setPosition( CCPoint(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
 
     sun:setTotalParticles(130)
     sun:setLife(0.6)
@@ -77,8 +77,8 @@ local function IntervalLayer()
             scheduler:unscheduleScriptEntry(schedulerEntry2)
             scheduler:unscheduleScriptEntry(schedulerEntry3)
             scheduler:unscheduleScriptEntry(schedulerEntry4)
-            if CCDirector:sharedDirector():isPaused() then
-                CCDirector:sharedDirector():resume()
+            if CCDirector:getInstance():isPaused() then
+                CCDirector:getInstance():resume()
             end
         end
     end
@@ -86,11 +86,11 @@ local function IntervalLayer()
     ret:registerScriptHandler(onNodeEvent)
 
 
-    m_label0:setPosition(ccp(s.width*1/6, s.height/2))
-    m_label1:setPosition(ccp(s.width*2/6, s.height/2))
-    m_label2:setPosition(ccp(s.width*3/6, s.height/2))
-    m_label3:setPosition(ccp(s.width*4/6, s.height/2))
-    m_label4:setPosition(ccp(s.width*5/6, s.height/2))
+    m_label0:setPosition(CCPoint(s.width*1/6, s.height/2))
+    m_label1:setPosition(CCPoint(s.width*2/6, s.height/2))
+    m_label2:setPosition(CCPoint(s.width*3/6, s.height/2))
+    m_label3:setPosition(CCPoint(s.width*4/6, s.height/2))
+    m_label4:setPosition(CCPoint(s.width*5/6, s.height/2))
 
     ret:addChild(m_label0)
     ret:addChild(m_label1)
@@ -100,9 +100,9 @@ local function IntervalLayer()
 
     -- Sprite
     local  sprite = CCSprite:create(s_pPathGrossini)
-    sprite:setPosition( ccp(VisibleRect:left().x + 40, VisibleRect:bottom().y + 50) )
+    sprite:setPosition( CCPoint(VisibleRect:left().x + 40, VisibleRect:bottom().y + 50) )
 
-    local  jump = CCJumpBy:create(3, ccp(s.width-80,0), 50, 4)
+    local  jump = CCJumpBy:create(3, CCPoint(s.width-80,0), 50, 4)
 
     ret:addChild(sprite)
     local arr = CCArray:create()
@@ -112,16 +112,16 @@ local function IntervalLayer()
     -- pause button
     local  item1 = CCMenuItemFont:create("Pause")
     local function onPause(tag, pSender)
-        if CCDirector:sharedDirector():isPaused() then
-            CCDirector:sharedDirector():resume()
+        if CCDirector:getInstance():isPaused() then
+            CCDirector:getInstance():resume()
         else
-            CCDirector:sharedDirector():pause()
+            CCDirector:getInstance():pause()
         end
     end
 
     item1:registerScriptTapHandler(onPause)
     local  menu = CCMenu:createWithItem(item1)
-    menu:setPosition( ccp(s.width/2, s.height-50) )
+    menu:setPosition( CCPoint(s.width/2, s.height-50) )
 
     ret:addChild( menu )
 
