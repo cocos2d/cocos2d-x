@@ -45,6 +45,31 @@ typedef struct _hashUniformEntry
     UT_hash_handle  hh;          // hash entry
 } tHashUniformEntry;
 
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
+const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTexture_uColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTextureA8Color";
+const char* GLProgram::SHADER_NAME_POSITION_U_COLOR = "ShaderPosition_uColor";
+const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositionLengthTextureColor";
+
+// uniform names
+const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
+const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
+const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
+const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
+const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
+const char* GLProgram::UNIFORM_NAME_COS_TIME = "CC_CosTime";
+const char* GLProgram::UNIFORM_NAME_RANDOM01 = "CC_Random01";
+const char* GLProgram::UNIFORM_NAME_SAMPLER	= "CC_Texture0";
+const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
+
+// Attribute names
+const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
+const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+
 GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
@@ -65,7 +90,7 @@ GLProgram::~GLProgram()
 
     if (_program) 
     {
-        ccGLDeleteProgram(_program);
+        GL::deleteProgram(_program);
     }
 
     tHashUniformEntry *current_element, *tmp;
@@ -197,28 +222,28 @@ void GLProgram::addAttribute(const char* attributeName, GLuint index)
 
 void GLProgram::updateUniforms()
 {
-    _uniforms[kUniformPMatrix] = glGetUniformLocation(_program, kUniformPMatrix_s);
-	_uniforms[kUniformMVMatrix] = glGetUniformLocation(_program, kUniformMVMatrix_s);
-	_uniforms[kUniformMVPMatrix] = glGetUniformLocation(_program, kUniformMVPMatrix_s);
+    _uniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
+	_uniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, GLProgram::UNIFORM_NAME_MV_MATRIX);
+	_uniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, GLProgram::UNIFORM_NAME_MVP_MATRIX);
 	
-	_uniforms[kUniformTime] = glGetUniformLocation(_program, kUniformTime_s);
-	_uniforms[kUniformSinTime] = glGetUniformLocation(_program, kUniformSinTime_s);
-	_uniforms[kUniformCosTime] = glGetUniformLocation(_program, kUniformCosTime_s);
+	_uniforms[GLProgram::UNIFORM_TIME] = glGetUniformLocation(_program, GLProgram::UNIFORM_NAME_TIME);
+	_uniforms[GLProgram::UNIFORM_SIN_TIME] = glGetUniformLocation(_program, GLProgram::UNIFORM_NAME_SIN_TIME);
+	_uniforms[GLProgram::UNIFORM_COS_TIME] = glGetUniformLocation(_program, GLProgram::UNIFORM_NAME_COS_TIME);
 	
 	_usesTime = (
-                 _uniforms[kUniformTime] != -1 ||
-                 _uniforms[kUniformSinTime] != -1 ||
-                 _uniforms[kUniformCosTime] != -1
+                 _uniforms[GLProgram::UNIFORM_TIME] != -1 ||
+                 _uniforms[GLProgram::UNIFORM_SIN_TIME] != -1 ||
+                 _uniforms[GLProgram::UNIFORM_COS_TIME] != -1
                  );
     
-	_uniforms[kUniformRandom01] = glGetUniformLocation(_program, kUniformRandom01_s);
+	_uniforms[UNIFORM_RANDOM01] = glGetUniformLocation(_program, UNIFORM_NAME_RANDOM01);
 
-    _uniforms[kUniformSampler] = glGetUniformLocation(_program, kUniformSampler_s);
+    _uniforms[UNIFORM_SAMPLER] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER);
 
     this->use();
     
     // Since sample most probably won't change, set it to 0 now.
-    this->setUniformLocationWith1i(_uniforms[kUniformSampler], 0);
+    this->setUniformLocationWith1i(_uniforms[GLProgram::UNIFORM_SAMPLER], 0);
 }
 
 bool GLProgram::link()
@@ -247,7 +272,7 @@ bool GLProgram::link()
     if (status == GL_FALSE)
     {
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
-        ccGLDeleteProgram(_program);
+        GL::deleteProgram(_program);
         _program = 0;
     }
 #endif
@@ -257,7 +282,7 @@ bool GLProgram::link()
 
 void GLProgram::use()
 {
-    ccGLUseProgram(_program);
+    GL::useProgram(_program);
 }
 
 const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
@@ -509,9 +534,9 @@ void GLProgram::setUniformsForBuiltins()
 	
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
     
-    setUniformLocationWithMatrix4fv(_uniforms[kUniformPMatrix], matrixP.mat, 1);
-    setUniformLocationWithMatrix4fv(_uniforms[kUniformMVMatrix], matrixMV.mat, 1);
-    setUniformLocationWithMatrix4fv(_uniforms[kUniformMVPMatrix], matrixMVP.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
+    setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.mat, 1);
 	
 	if(_usesTime)
     {
@@ -521,14 +546,14 @@ void GLProgram::setUniformsForBuiltins()
 		// Getting Mach time per frame per shader using time could be extremely expensive.
         float time = director->getTotalFrames() * director->getAnimationInterval();
 		
-        setUniformLocationWith4f(_uniforms[kUniformTime], time/10.0, time, time*2, time*4);
-        setUniformLocationWith4f(_uniforms[kUniformSinTime], time/8.0, time/4.0, time/2.0, sinf(time));
-        setUniformLocationWith4f(_uniforms[kUniformCosTime], time/8.0, time/4.0, time/2.0, cosf(time));
+        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
+        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
+        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
 	}
 	
-	if (_uniforms[kUniformRandom01] != -1)
+	if (_uniforms[GLProgram::UNIFORM_RANDOM01] != -1)
     {
-        setUniformLocationWith4f(_uniforms[kUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+        setUniformLocationWith4f(_uniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 	}
 }
 
@@ -539,7 +564,7 @@ void GLProgram::reset()
     
 
     // it is already deallocated by android
-    //ccGLDeleteProgram(_program);
+    //GL::deleteProgram(_program);
     _program = 0;
 
     

@@ -62,7 +62,7 @@ TextureAtlas::~TextureAtlas()
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     glDeleteVertexArrays(1, &_VAOname);
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
 #endif
     CC_SAFE_RELEASE(_texture);
     
@@ -121,13 +121,13 @@ TextureAtlas * TextureAtlas::create(const char* file, int capacity)
 
 TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, int capacity)
 {
-    TextureAtlas * pTextureAtlas = new TextureAtlas();
-    if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
+    TextureAtlas * textureAtlas = new TextureAtlas();
+    if (textureAtlas && textureAtlas->initWithTexture(texture, capacity))
     {
-        pTextureAtlas->autorelease();
-        return pTextureAtlas;
+        textureAtlas->autorelease();
+        return textureAtlas;
     }
-    CC_SAFE_DELETE(pTextureAtlas);
+    CC_SAFE_DELETE(textureAtlas);
     return NULL;
 }
 
@@ -252,7 +252,7 @@ void TextureAtlas::setupIndices()
 void TextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #define kQuadSize sizeof(_quads[0].bl)
 
@@ -262,22 +262,22 @@ void TextureAtlas::setupVBOandVAO()
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
 
     // vertices
-    glEnableVertexAttribArray(kVertexAttrib_Position);
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
 
     // colors
-    glEnableVertexAttribArray(kVertexAttrib_Color);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
 
     // tex coords
-    glEnableVertexAttribArray(kVertexAttrib_TexCoords);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -295,7 +295,7 @@ void TextureAtlas::setupVBO()
 void TextureAtlas::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
-	ccGLBindVAO(0);
+	GL::bindVAO(0);
     
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
@@ -601,7 +601,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
     if(!numberOfQuads)
         return;
 
-    ccGLBindTexture2D(_texture->getName());
+    GL::bindTexture2D(_texture->getName());
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 
@@ -630,7 +630,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
         _dirty = false;
     }
 
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
@@ -664,16 +664,16 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
         _dirty = false;
     }
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
     // vertices
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
 
     // colors
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
 
     // tex coords
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 

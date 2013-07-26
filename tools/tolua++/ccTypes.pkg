@@ -52,6 +52,7 @@ struct Color4B
 struct Color4F
 {
 	Color4F(void);
+    Color4F(GLfloat _r, GLfloat _g, GLfloat _b, GLfloat _a);
     Color4F(const Color3B &color3B);
     Color4F(const Color4B &color4B);
     bool equals(const Color4F &other);

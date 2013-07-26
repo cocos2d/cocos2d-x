@@ -48,7 +48,7 @@ MyShareManager::~MyShareManager()
 	}
 }
 
-MyShareManager* MyShareManager::sharedManager()
+MyShareManager* MyShareManager::getInstance()
 {
 	if (s_pManager == NULL) {
 		s_pManager = new MyShareManager();

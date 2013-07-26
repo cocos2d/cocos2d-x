@@ -27,7 +27,7 @@ class CCTMXLayer : public CCSpriteBatchNode
     void setTileGID(unsigned int gid, const CCPoint& tileCoordinate, ccTMXTileFlags flags);
     void removeTileAt(CCPoint tileCoordinate);
     CCPoint getPositionAt(CCPoint tileCoordinate);
-    CCString *getPropertyNamed(const char *propertyName) const;
+    CCString* getProperty(const char *propertyName) const;
     void setupTiles();
 
     void setLayerName(const char *layerName);

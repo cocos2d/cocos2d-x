@@ -202,17 +202,17 @@ void ParticleMainScene::createParticleSystem()
     switch( subtestNumber)
     {
     case 1:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 2:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 3:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
@@ -222,17 +222,17 @@ void ParticleMainScene::createParticleSystem()
 //         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     case 4:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 5:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 6:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
@@ -252,15 +252,15 @@ void ParticleMainScene::createParticleSystem()
     doTest();
 
     // restore the default pixel format
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(Object* pSender)
+void ParticleMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((Node*)pSender)->getTag();
+    subtestNumber = static_cast<Node*>(sender)->getTag();
 
-    ParticleMenuLayer* menu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
-    menu->restartCallback(pSender);
+    auto menu = static_cast<ParticleMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void ParticleMainScene::updateQuantityLabel()

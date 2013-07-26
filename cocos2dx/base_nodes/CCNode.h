@@ -515,19 +515,10 @@ public:
     virtual int getOrderOfArrival() const;
     
     
-    /**
-     * Sets the state of OpenGL server side.
-     *
-     * @param glServerState     The state of OpenGL server side.
-     */
-    virtual void setGLServerState(ccGLServerState serverState);
-    /**
-     * Returns the state of OpenGL server side.
-     *
-     * @return The state of OpenGL server side.
-     */
-    virtual ccGLServerState getGLServerState() const;
-    
+    /** @deprecated No longer needed */
+    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
+    /** @deprecated No longer needed */
+    CC_DEPRECATED_ATTRIBUTE int getGLServerState() const { return 0; }
     
     /**
      * Sets whether the anchor point will be (0,0) when you position this node.
@@ -823,7 +814,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
      * @param The shader program which fetchs from ShaderCache.
@@ -1359,9 +1350,7 @@ protected:
     Object *_userObject;            ///< A user assigned Object
     
     GLProgram *_shaderProgram;      ///< OpenGL shader
-    
-    ccGLServerState _GLServerState;   ///< OpenGL servier side state
-    
+
     int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same zOrder
     
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates

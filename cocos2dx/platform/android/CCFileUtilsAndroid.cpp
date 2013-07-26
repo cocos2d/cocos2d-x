@@ -59,7 +59,12 @@ FileUtils* FileUtils::getInstance()
     if (s_sharedFileUtils == NULL)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
-        s_sharedFileUtils->init();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsAndroid");
+        }
     }
     return s_sharedFileUtils;
 }
@@ -132,35 +137,35 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath)
 }
 
 
-unsigned char* FileUtilsAndroid::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* pszMode, unsigned long * pSize)
 {    
-    return doGetFileData(pszFileName, pszMode, pSize, false);
+    return doGetFileData(filename, pszMode, pSize, false);
 }
 
-unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, unsigned long * pSize)
 {
-    return doGetFileData(pszFileName, pszMode, pSize, true);
+    return doGetFileData(filename, pszMode, pSize, true);
 }
 
-unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize, bool forAsync)
+unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* pszMode, unsigned long * pSize, bool forAsync)
 {
     unsigned char * pData = 0;
     
-    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
+    if ((! filename) || (! pszMode) || 0 == strlen(filename))
     {
         return 0;
     }
     
-    string fullPath = fullPathForFilename(pszFileName);
+    string fullPath = fullPathForFilename(filename);
     
     if (fullPath[0] != '/')
     {
         
-        string fullPath(pszFileName);
+        string fullPath(filename);
         // fullPathForFilename is not thread safe.
         if (! forAsync)
         {
-            fullPath = fullPathForFilename(pszFileName);
+            fullPath = fullPathForFilename(filename);
         }
 
         const char* relativepath = fullPath.c_str();
@@ -200,7 +205,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
         do
         {
             // read rrom other path than user set it
-	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
+	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
             FILE *fp = fopen(fullPath.c_str(), pszMode);
             CC_BREAK_IF(!fp);
             
@@ -222,7 +227,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const ch
     if (! pData)
     {
         std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
+        msg.append(filename).append(") failed!");
         CCLOG(msg.c_str());
     }
     

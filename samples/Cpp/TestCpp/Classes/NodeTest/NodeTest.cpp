@@ -103,7 +103,7 @@ void TestCocosNodeDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TestCocosNodeDemo::restartCallback(Object* pSender)
+void TestCocosNodeDemo::restartCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
@@ -112,7 +112,7 @@ void TestCocosNodeDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::nextCallback(Object* pSender)
+void TestCocosNodeDemo::nextCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
@@ -120,7 +120,7 @@ void TestCocosNodeDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::backCallback(Object* pSender)
+void TestCocosNodeDemo::backCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
@@ -512,12 +512,12 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -584,12 +584,12 @@ void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -797,8 +797,7 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.png");
-        BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-        background->setBlendFunc(blendFunc);
+        background->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
@@ -823,7 +822,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.jpg");
-        background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
+        background->setBlendFunc(BlendFunc::DISABLE);
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }

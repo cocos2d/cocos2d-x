@@ -7,9 +7,11 @@ COCOS2DX_ROOT="$DIR"/../..
 
 build_android()
 {
-    cd $COCOS2DX_ROOT/samples/$1/$2/proj.android
-    ln -s ../../../../android_build_objs obj
+    echo "Current dir: `pwd`"
+    pushd $1/proj.android
+    ln -s $COCOS2DX_ROOT/android_build_objs obj
     ./build_native.sh
+    popd
 }
 
 if [ "$GEN_JSB"x = "YES"x ]; then
@@ -38,17 +40,42 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
+
+    # Generate jsbinding glue codes
+    echo "Generating jsbindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
     cd $COCOS2DX_ROOT
+
+    # Create a directory for temporary objects
     mkdir android_build_objs
-    build_android Cpp HelloCpp
-    build_android Cpp TestCpp
-    build_android Cpp AssetsManagerTest
-    build_android Javascript TestJavascript
-    build_android Lua HelloLua
-    build_android Lua TestLua
+
+    # Build samples
+    echo "Building samples ..."
+    cd $COCOS2DX_ROOT/samples/Cpp
+    build_android HelloCpp
+    build_android TestCpp
+    build_android AssetsManagerTest
+
+    cd $COCOS2DX_ROOT/samples/Javascript
+    build_android TestJavascript
+    build_android CocosDragonJS
+    build_android CrystalCraze
+    build_android MoonWarriors
+    build_android WatermelonWithMe
+
+    cd $COCOS2DX_ROOT/samples/Lua
+    build_android HelloLua
+    build_android TestLua
+
+    # Build template
+    echo "Building template ..."
+    cd $COCOS2DX_ROOT/template
+    build_android multi-platform-cpp
+    build_android multi-platform-js
+    build_android multi-platform-lua
+
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
     export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin

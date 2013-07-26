@@ -46,7 +46,7 @@ EGLViewProtocol::EGLViewProtocol()
 : _delegate(NULL)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
-, _resolutionPolicy(kResolutionUnKnown)
+, _resolutionPolicy(ResolutionPolicy::UNKNOWN)
 {
 }
 
@@ -57,7 +57,7 @@ EGLViewProtocol::~EGLViewProtocol()
 
 void EGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
-    CCASSERT(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
+    CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");
     
     if (width == 0.0f || height == 0.0f)
     {
@@ -69,22 +69,22 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
     _scaleX = (float)_screenSize.width / _designResolutionSize.width;
     _scaleY = (float)_screenSize.height / _designResolutionSize.height;
     
-    if (resolutionPolicy == kResolutionNoBorder)
+    if (resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
         _scaleX = _scaleY = MAX(_scaleX, _scaleY);
     }
     
-    if (resolutionPolicy == kResolutionShowAll)
+    if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
         _scaleX = _scaleY = MIN(_scaleX, _scaleY);
     }
 
-    if ( resolutionPolicy == kResolutionFixedHeight) {
+    if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
     	_scaleX = _scaleY;
     	_designResolutionSize.width = ceilf(_screenSize.width/_scaleX);
     }
 
-    if ( resolutionPolicy == kResolutionFixedWidth) {
+    if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
     	_scaleY = _scaleX;
     	_designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
     }
@@ -120,7 +120,7 @@ void EGLViewProtocol::setFrameSize(float width, float height)
 
 Size  EGLViewProtocol::getVisibleSize() const
 {
-    if (_resolutionPolicy == kResolutionNoBorder)
+    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
         return Size(_screenSize.width/_scaleX, _screenSize.height/_scaleY);
     }
@@ -132,7 +132,7 @@ Size  EGLViewProtocol::getVisibleSize() const
 
 Point EGLViewProtocol::getVisibleOrigin() const
 {
-    if (_resolutionPolicy == kResolutionNoBorder)
+    if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
         return Point((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
                            (_designResolutionSize.height - _screenSize.height/_scaleY)/2);

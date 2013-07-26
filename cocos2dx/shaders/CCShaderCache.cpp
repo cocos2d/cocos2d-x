@@ -100,14 +100,14 @@ void ShaderCache::loadDefaultShaders()
     GLProgram *p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
 
-    _programs->setObject(p, kShader_PositionTextureColor);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
     p->release();
 
     // Position Texture Color alpha test
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
 
-    _programs->setObject(p, kShader_PositionTextureColorAlphaTest);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     p->release();
 
     //
@@ -116,7 +116,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionColor);
 
-    _programs->setObject(p, kShader_PositionColor);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_COLOR);
     p->release();
 
     //
@@ -125,7 +125,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTexture);
 
-    _programs->setObject(p, kShader_PositionTexture);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE);
     p->release();
 
     //
@@ -134,7 +134,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTexture_uColor);
 
-    _programs->setObject(p ,kShader_PositionTexture_uColor);
+    _programs->setObject(p ,GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
     p->release();
 
     //
@@ -143,7 +143,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureA8Color);
     
-    _programs->setObject(p, kShader_PositionTextureA8Color);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
     p->release();
 
     //
@@ -152,7 +152,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_Position_uColor);
     
-    _programs->setObject(p, kShader_Position_uColor);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_U_COLOR);
     p->release();
     
     //
@@ -161,7 +161,7 @@ void ShaderCache::loadDefaultShaders()
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
     
-    _programs->setObject(p, kShader_PositionLengthTexureColor);
+    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->release();
 }
 
@@ -170,54 +170,54 @@ void ShaderCache::reloadDefaultShaders()
     // reset all programs and reload them
     
     // Position Texture Color shader
-    GLProgram *p = programForKey(kShader_PositionTextureColor);    
+    GLProgram *p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);    
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
 
     // Position Texture Color alpha test
-    p = programForKey(kShader_PositionTextureColorAlphaTest);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     p->reset();    
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
     
     //
     // Position, Color shader
     //
-    p = programForKey(kShader_PositionColor);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionColor);
     
     //
     // Position Texture shader
     //
-    p = programForKey(kShader_PositionTexture);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTexture);
     
     //
     // Position, Texture attribs, 1 Color as uniform shader
     //
-    p = programForKey(kShader_PositionTexture_uColor);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTexture_uColor);
     
     //
     // Position Texture A8 Color shader
     //
-    p = programForKey(kShader_PositionTextureA8Color);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTextureA8Color);
     
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
-    p = programForKey(kShader_Position_uColor);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_U_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_Position_uColor);
     
     //
 	// Position, Legth(TexCoords, Color (used by Draw Node basically )
 	//
-    p = programForKey(kShader_PositionLengthTexureColor);
+    p = programForKey(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->reset();
     loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
 }
@@ -228,60 +228,60 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
         case kShaderType_PositionTextureColor:
             p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
             
             break;
         case kShaderType_PositionTextureColorAlphaTest:
             p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
             break;
         case kShaderType_PositionColor:  
             p->initWithVertexShaderByteArray(ccPositionColor_vert ,ccPositionColor_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
 
             break;
         case kShaderType_PositionTexture:
             p->initWithVertexShaderByteArray(ccPositionTexture_vert ,ccPositionTexture_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
             break;
         case kShaderType_PositionTexture_uColor:
             p->initWithVertexShaderByteArray(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
             break;
         case kShaderType_PositionTextureA8Color:
             p->initWithVertexShaderByteArray(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
             break;
         case kShaderType_Position_uColor:
             p->initWithVertexShaderByteArray(ccPosition_uColor_vert, ccPosition_uColor_frag);    
             
-            p->addAttribute("aVertex", kVertexAttrib_Position);    
+            p->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);    
             
             break;
         case kShaderType_PositionLengthTexureColor:
             p->initWithVertexShaderByteArray(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
             
-            p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-            p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
-            p->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
             
             break;
         default:

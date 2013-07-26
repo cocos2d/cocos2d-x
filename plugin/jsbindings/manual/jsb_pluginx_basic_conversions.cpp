@@ -206,6 +206,11 @@ JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
+JSBool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
 JSBool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
@@ -217,6 +222,21 @@ JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret)
 }
 
 JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }

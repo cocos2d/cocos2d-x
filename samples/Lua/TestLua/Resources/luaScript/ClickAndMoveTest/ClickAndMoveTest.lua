@@ -1,4 +1,4 @@
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 local layer = nil
 local kTagSprite = 1
 
@@ -9,9 +9,9 @@ local function initWithLayer()
     layer:addChild(bgLayer, -1)
 
     layer:addChild(sprite, 0, kTagSprite)
-    sprite:setPosition(CCPointMake(20,150))
+    sprite:setPosition(CCPoint(20,150))
 
-    sprite:runAction(CCJumpTo:create(4, CCPointMake(300,48), 100, 4))
+    sprite:runAction(CCJumpTo:create(4, CCPoint(300,48), 100, 4))
 
     bgLayer:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(
                                                  CCFadeIn:create(1),
@@ -20,7 +20,7 @@ local function initWithLayer()
     local function onTouchEnded(x, y)
         local s = layer:getChildByTag(kTagSprite)
         s:stopAllActions()
-        s:runAction(CCMoveTo:create(1, CCPointMake(x, y)))
+        s:runAction(CCMoveTo:create(1, CCPoint(x, y)))
         local posX, posY = s:getPosition()
         local o = x - posX
         local a = y - posY

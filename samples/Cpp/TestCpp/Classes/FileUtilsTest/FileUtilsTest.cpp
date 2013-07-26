@@ -68,7 +68,7 @@ void FileUtilsDemo::onEnter()
     BaseTest::onEnter();    
 }
 
-void FileUtilsDemo::backCallback(Object* pSender)
+void FileUtilsDemo::backCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = backAction();
@@ -78,7 +78,7 @@ void FileUtilsDemo::backCallback(Object* pSender)
     scene->release();
 }
 
-void FileUtilsDemo::nextCallback(Object* pSender)
+void FileUtilsDemo::nextCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = nextAction();
@@ -88,7 +88,7 @@ void FileUtilsDemo::nextCallback(Object* pSender)
     scene->release();
 }
 
-void FileUtilsDemo::restartCallback(Object* pSender)
+void FileUtilsDemo::restartCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = restartAction();

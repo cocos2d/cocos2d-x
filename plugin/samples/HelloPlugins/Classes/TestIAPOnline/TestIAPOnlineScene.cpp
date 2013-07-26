@@ -74,7 +74,7 @@ bool TestIAPOnline::init()
         return false;
     }
 
-    MyIAPOLManager::sharedManager()->loadPlugins();
+    MyIAPOLManager::getInstance()->loadPlugins();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -130,10 +130,10 @@ void TestIAPOnline::eventMenuCallback(Object* pSender)
     pInfo["Nd91ProductId"] = "685994";
 
     if (mode == MyIAPOLManager::eQH360) {
-        CCLog("To test the IAP online in plugin qh360, you should do this:");
-        CCLog("1. Login by UserQH360");
-        CCLog("2. Get QH360 user info by your game server (userID, AccessToken)");
-        CCLog("3. Fill the product info");
+        log("To test the IAP online in plugin qh360, you should do this:");
+        log("1. Login by UserQH360");
+        log("2. Get QH360 user info by your game server (userID, AccessToken)");
+        log("3. Fill the product info");
 
         /**
          * @warning ProductInfo you need filled
@@ -153,7 +153,7 @@ void TestIAPOnline::eventMenuCallback(Object* pSender)
         // pInfo["QHAppOrderID"] = "Order ID in game";      // The order ID in game (Game defined this)
     }
 
-    MyIAPOLManager::sharedManager()->payByMode(pInfo, mode);
+    MyIAPOLManager::getInstance()->payByMode(pInfo, mode);
 }
 
 void TestIAPOnline::menuBackCallback(Object* pSender)

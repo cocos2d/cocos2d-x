@@ -70,7 +70,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     
 }
 
-void ChipmunkTestLayer::toggleDebugCallback(Object* pSender)
+void ChipmunkTestLayer::toggleDebugCallback(Object* sender)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     _debugLayer->setVisible(! _debugLayer->isVisible());
