@@ -173,47 +173,6 @@ JSBool js_pluginx_ProtocolAds_setAdsListener(JSContext *cx, uint32_t argc, jsval
     return JS_FALSE;
 }
 
-JSBool js_pluginx_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-	if (argc == 1) {
-        jsval params = argv[0];
-        JSObject* tmp = JSVAL_TO_OBJECT(params);
-        JSB_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
-
-        jsval tempVal;
-		cocos2d::plugin::ProtocolAds::AdsType arg0;
-        ok &= JS_GetProperty(cx, tmp, "AdsType", &tempVal);
-		JSB_PRECONDITION2(ok, cx, JS_FALSE, "It should be contains 'AdsType' in parameter.");
-        ok &= jsval_to_int32(cx, tempVal, (int32_t *) &arg0);
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'AdsType' must be int");
-
-        int sizeEnum = 0;
-        if (JS_GetProperty(cx, tmp, "SizeEnum", &tempVal)) {
-            ok &= jsval_to_int32(cx, tempVal, (int32_t *) &sizeEnum);
-            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'SizeEnum' should be int");
-        }
-
-        cocos2d::plugin::ProtocolAds::AdsPos pos;
-        if (JS_GetProperty(cx, tmp, "AdsPos", &tempVal)) {
-            ok &= jsval_to_int32(cx, tempVal, (int32_t *) &pos);
-            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Value of 'AdsPos' should be int");
-        }
-
-		cobj->showAds(arg0, sizeEnum, pos);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	}
-
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
-
 class Pluginx_ShareResult : public cocos2d::plugin::ShareResultListener
 {
 public:
