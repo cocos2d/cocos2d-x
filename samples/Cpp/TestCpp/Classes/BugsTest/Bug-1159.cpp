@@ -56,7 +56,7 @@ bool Bug1159Layer::init()
     return false;
 }
 
-void Bug1159Layer::callBack(Object* pSender)
+void Bug1159Layer::callBack(Object* sender)
 {
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
 }

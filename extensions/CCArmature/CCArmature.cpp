@@ -122,10 +122,7 @@ bool Armature::init(const char *name)
         _topBoneList = new Array();
         _topBoneList->init();
 
-
-        _blendFunc.src = CC_BLEND_SRC;
-        _blendFunc.dst = CC_BLEND_DST;
-
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _name = name == NULL ? "" : name;
 
@@ -427,7 +424,7 @@ void Armature::draw()
     if (_parentBone == NULL)
     {
         CC_NODE_DRAW_SETUP();
-        ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+        GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
 
     Object *object = NULL;
@@ -483,7 +480,7 @@ void Armature::draw()
             node->visit();
 
             CC_NODE_DRAW_SETUP();
-            ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+            GL::blendFunc(_blendFunc.src, _blendFunc.dst);
         }
     }
 

@@ -40,8 +40,8 @@ NS_CC_BEGIN
 //CCLabelTTF
 //
 LabelTTF::LabelTTF()
-: _alignment(Label::TEXT_ALIGNMENT_CENTER)
-, _vAlignment(Label::VERTICAL_TEXT_ALIGNMENT_TOP)
+: _alignment(Label::HAlignment::CENTER)
+, _vAlignment(Label::VAlignment::TOP)
 , _fontName(NULL)
 , _fontSize(0.0)
 , _string("")
@@ -73,18 +73,18 @@ LabelTTF * LabelTTF::create()
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return LabelTTF::create(string, fontName, fontSize,
-                              Size::ZERO, Label::TEXT_ALIGNMENT_CENTER, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+                              Size::ZERO, Label::HAlignment::CENTER, Label::VAlignment::TOP);
 }
 
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                const Size& dimensions, Label::TextAlignment hAlignment)
+                                const Size& dimensions, Label::HAlignment hAlignment)
 {
-    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, Label::VAlignment::TOP);
 }
 
 LabelTTF* LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                               const Size &dimensions, Label::TextAlignment hAlignment, 
-                               Label::VerticalTextAlignment vAlignment)
+                               const Size &dimensions, Label::HAlignment hAlignment, 
+                               Label::VAlignment vAlignment)
 {
     LabelTTF *pRet = new LabelTTF();
     if(pRet && pRet->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
@@ -114,20 +114,20 @@ bool LabelTTF::init()
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize, 
-                                const Size& dimensions, Label::TextAlignment alignment)
+                                const Size& dimensions, Label::HAlignment alignment)
 {
-    return this->initWithString(label, fontName, fontSize, dimensions, alignment, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+    return this->initWithString(label, fontName, fontSize, dimensions, alignment, Label::VAlignment::TOP);
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                Size::ZERO, Label::TEXT_ALIGNMENT_LEFT, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+                                Size::ZERO, Label::HAlignment::LEFT, Label::VAlignment::TOP);
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
-                                const cocos2d::Size &dimensions, Label::TextAlignment hAlignment,
-                                Label::VerticalTextAlignment vAlignment)
+                                const cocos2d::Size &dimensions, Label::HAlignment hAlignment,
+                                Label::VAlignment vAlignment)
 {
     if (Sprite::init())
     {
@@ -193,12 +193,12 @@ const char* LabelTTF::description() const
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }
 
-Label::TextAlignment LabelTTF::getHorizontalAlignment() const
+Label::HAlignment LabelTTF::getHorizontalAlignment() const
 {
     return _alignment;
 }
 
-void LabelTTF::setHorizontalAlignment(Label::TextAlignment alignment)
+void LabelTTF::setHorizontalAlignment(Label::HAlignment alignment)
 {
     if (alignment != _alignment)
     {
@@ -212,12 +212,12 @@ void LabelTTF::setHorizontalAlignment(Label::TextAlignment alignment)
     }
 }
 
-Label::VerticalTextAlignment LabelTTF::getVerticalAlignment() const
+Label::VAlignment LabelTTF::getVerticalAlignment() const
 {
     return _vAlignment;
 }
 
-void LabelTTF::setVerticalAlignment(Label::VerticalTextAlignment verticalAlignment)
+void LabelTTF::setVerticalAlignment(Label::VAlignment verticalAlignment)
 {
     if (verticalAlignment != _vAlignment)
     {

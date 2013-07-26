@@ -234,7 +234,7 @@ void MotionStreakTest::modeCallback(Object *pSender)
     streak->setFastMode(! fastMode);
 }
 
-void MotionStreakTest::restartCallback(Object* pSender)
+void MotionStreakTest::restartCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
@@ -243,7 +243,7 @@ void MotionStreakTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void MotionStreakTest::nextCallback(Object* pSender)
+void MotionStreakTest::nextCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
@@ -251,7 +251,7 @@ void MotionStreakTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void MotionStreakTest::backCallback(Object* pSender)
+void MotionStreakTest::backCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );

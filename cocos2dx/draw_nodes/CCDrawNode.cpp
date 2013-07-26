@@ -103,8 +103,7 @@ DrawNode::DrawNode()
 , _buffer(NULL)
 , _dirty(false)
 {
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
 DrawNode::~DrawNode()
@@ -117,7 +116,7 @@ DrawNode::~DrawNode()
     
 #if CC_TEXTURE_ATLAS_USE_VAO      
     glDeleteVertexArrays(1, &_vao);
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
     _vao = 0;
 #endif
     
@@ -154,8 +153,7 @@ void DrawNode::ensureCapacity(int count)
 
 bool DrawNode::init()
 {
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     
@@ -163,7 +161,7 @@ bool DrawNode::init()
     
 #if CC_TEXTURE_ATLAS_USE_VAO    
     glGenVertexArrays(1, &_vao);
-    ccGLBindVAO(_vao);
+    GL::bindVAO(_vao);
 #endif
     
     glGenBuffers(1, &_vbo);
@@ -182,7 +180,7 @@ bool DrawNode::init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
 #if CC_TEXTURE_ATLAS_USE_VAO 
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
 #endif
     
     CHECK_GL_ERROR_DEBUG();
@@ -209,9 +207,9 @@ void DrawNode::render()
         _dirty = false;
     }
 #if CC_TEXTURE_ATLAS_USE_VAO     
-    ccGLBindVAO(_vao);
+    GL::bindVAO(_vao);
 #else
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex
@@ -234,7 +232,7 @@ void DrawNode::render()
 void DrawNode::draw()
 {
     CC_NODE_DRAW_SETUP();
-    ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     render();
 }

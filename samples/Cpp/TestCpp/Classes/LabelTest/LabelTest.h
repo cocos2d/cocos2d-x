@@ -16,9 +16,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 
@@ -181,18 +181,18 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 private:
-    void  setAlignmentLeft(Object* pSender);
-    void  setAlignmentCenter(Object* pSender);
-    void  setAlignmentRight(Object* pSender);
-    void  setAlignmentTop(Object* pSender);
-    void  setAlignmentMiddle(Object* pSender);
-    void  setAlignmentBottom(Object* pSender);
+    void  setAlignmentLeft(Object* sender);
+    void  setAlignmentCenter(Object* sender);
+    void  setAlignmentRight(Object* sender);
+    void  setAlignmentTop(Object* sender);
+    void  setAlignmentMiddle(Object* sender);
+    void  setAlignmentBottom(Object* sender);
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
     LabelTTF* _plabel;
-    Label::TextAlignment _horizAlign;
-    Label::VerticalTextAlignment _vertAlign;
+    Label::HAlignment _horizAlign;
+    Label::VAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -227,9 +227,9 @@ public:
     virtual std::string subtitle();
     void stringChanged(Object *sender);
     void alignmentChanged(Object *sender);
-    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesEnded(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
 
 public:
     LabelBMFont *_labelShouldRetain;

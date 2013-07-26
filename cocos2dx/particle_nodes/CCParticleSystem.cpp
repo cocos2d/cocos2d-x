@@ -112,9 +112,10 @@ ParticleSystem::ParticleSystem()
 , _texture(NULL)
 , _opacityModifyRGB(false)
 , _isBlendAdditive(false)
-, _positionType(POSITION_TYPE_FREE)
+, _positionType(PositionType::FREE)
 , _isAutoRemoveOnFinish(false)
-, _emitterMode(MODE_GRAVITY)
+, _emitterMode(Mode::GRAVITY)
+, _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 {
     modeA.gravity = Point::ZERO;
     modeA.speed = 0;
@@ -130,8 +131,6 @@ ParticleSystem::ParticleSystem()
     modeB.endRadiusVar = 0;            
     modeB.rotatePerSecond = 0;
     modeB.rotatePerSecondVar = 0;
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
 }
 // implementation ParticleSystem
 
@@ -257,10 +256,10 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             _endSpin= dictionary->valueForKey("rotationEnd")->floatValue();
             _endSpinVar= dictionary->valueForKey("rotationEndVariance")->floatValue();
 
-            _emitterMode = dictionary->valueForKey("emitterType")->intValue();
+            _emitterMode = (Mode) dictionary->valueForKey("emitterType")->intValue();
 
             // Mode A: Gravity + tangential accel + radial accel
-            if (_emitterMode == MODE_GRAVITY)
+            if (_emitterMode == Mode::GRAVITY)
             {
                 // gravity
                 modeA.gravity.x = dictionary->valueForKey("gravityx")->floatValue();
@@ -283,7 +282,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
             }
 
             // or Mode B: radius movement
-            else if (_emitterMode == MODE_RADIUS)
+            else if (_emitterMode == Mode::RADIUS)
             {
                 modeB.startRadius = dictionary->valueForKey("maxRadius")->floatValue();
                 modeB.startRadiusVar = dictionary->valueForKey("maxRadiusVariance")->floatValue();
@@ -415,14 +414,13 @@ bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
     _isActive = true;
 
     // default blend function
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     // default movement type;
-    _positionType = POSITION_TYPE_FREE;
+    _positionType = PositionType::FREE;
 
     // by default be in mode A:
-    _emitterMode = MODE_GRAVITY;
+    _emitterMode = Mode::GRAVITY;
 
     // default: modulate
     // XXX: not used
@@ -520,11 +518,11 @@ void ParticleSystem::initParticle(tParticle* particle)
     particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
     // position
-    if (_positionType == POSITION_TYPE_FREE)
+    if (_positionType == PositionType::FREE)
     {
         particle->startPos = this->convertToWorldSpace(Point::ZERO);
     }
-    else if (_positionType == POSITION_TYPE_RELATIVE)
+    else if (_positionType == PositionType::RELATIVE)
     {
         particle->startPos = _position;
     }
@@ -533,7 +531,7 @@ void ParticleSystem::initParticle(tParticle* particle)
     float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * CCRANDOM_MINUS1_1() );    
 
     // Mode Gravity: A
-    if (_emitterMode == MODE_GRAVITY)
+    if (_emitterMode == Mode::GRAVITY)
     {
         Point v(cosf( a ), sinf( a ));
         float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
@@ -628,11 +626,11 @@ void ParticleSystem::update(float dt)
     _particleIdx = 0;
 
     Point currentPosition = Point::ZERO;
-    if (_positionType == POSITION_TYPE_FREE)
+    if (_positionType == PositionType::FREE)
     {
         currentPosition = this->convertToWorldSpace(Point::ZERO);
     }
-    else if (_positionType == POSITION_TYPE_RELATIVE)
+    else if (_positionType == PositionType::RELATIVE)
     {
         currentPosition = _position;
     }
@@ -649,7 +647,7 @@ void ParticleSystem::update(float dt)
             if (p->timeToLive > 0) 
             {
                 // Mode A: gravity, direction, tangential accel & radial accel
-                if (_emitterMode == MODE_GRAVITY)
+                if (_emitterMode == Mode::GRAVITY)
                 {
                     Point tmp, radial, tangential;
 
@@ -706,7 +704,7 @@ void ParticleSystem::update(float dt)
 
                 Point    newPos;
 
-                if (_positionType == POSITION_TYPE_FREE || _positionType == POSITION_TYPE_RELATIVE)
+                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
                 {
                     Point diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;
@@ -815,8 +813,7 @@ void ParticleSystem::updateBlendFunc()
             }
             else
             {
-                _blendFunc.src = GL_SRC_ALPHA;
-                _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+                _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
             }
         }
     }
@@ -832,21 +829,14 @@ void ParticleSystem::setBlendAdditive(bool additive)
 {
     if( additive )
     {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE;
+        _blendFunc = BlendFunc::ADDITIVE;
     }
     else
     {
         if( _texture && ! _texture->hasPremultipliedAlpha() )
-        {
-            _blendFunc.src = GL_SRC_ALPHA;
-            _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        } 
+            _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         else 
-        {
-            _blendFunc.src = CC_BLEND_SRC;
-            _blendFunc.dst = CC_BLEND_DST;
-        }
+            _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     }
 }
 
@@ -858,170 +848,170 @@ bool ParticleSystem::isBlendAdditive() const
 // ParticleSystem - Properties of Gravity Mode 
 void ParticleSystem::setTangentialAccel(float t)
 {
-    CCASSERT( _emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.tangentialAccel = t;
 }
 
 float ParticleSystem::getTangentialAccel() const
 {
-    CCASSERT( _emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.tangentialAccel;
 }
 
 void ParticleSystem::setTangentialAccelVar(float t)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.tangentialAccelVar = t;
 }
 
 float ParticleSystem::getTangentialAccelVar() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.tangentialAccelVar;
 }    
 
 void ParticleSystem::setRadialAccel(float t)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.radialAccel = t;
 }
 
 float ParticleSystem::getRadialAccel() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.radialAccel;
 }
 
 void ParticleSystem::setRadialAccelVar(float t)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.radialAccelVar = t;
 }
 
 float ParticleSystem::getRadialAccelVar() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.radialAccelVar;
 }
 
 void ParticleSystem::setRotationIsDir(bool t)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.rotationIsDir = t;
 }
 
 bool ParticleSystem::getRotationIsDir() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.rotationIsDir;
 }
 
 void ParticleSystem::setGravity(const Point& g)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.gravity = g;
 }
 
 const Point& ParticleSystem::getGravity()
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.gravity;
 }
 
 void ParticleSystem::setSpeed(float speed)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.speed = speed;
 }
 
 float ParticleSystem::getSpeed() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.speed;
 }
 
 void ParticleSystem::setSpeedVar(float speedVar)
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.speedVar = speedVar;
 }
 
 float ParticleSystem::getSpeedVar() const
 {
-    CCASSERT(_emitterMode == MODE_GRAVITY, "Particle Mode should be Gravity");
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.speedVar;
 }
 
 // ParticleSystem - Properties of Radius Mode
 void ParticleSystem::setStartRadius(float startRadius)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.startRadius = startRadius;
 }
 
 float ParticleSystem::getStartRadius() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.startRadius;
 }
 
 void ParticleSystem::setStartRadiusVar(float startRadiusVar)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.startRadiusVar = startRadiusVar;
 }
 
 float ParticleSystem::getStartRadiusVar() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.startRadiusVar;
 }
 
 void ParticleSystem::setEndRadius(float endRadius)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.endRadius = endRadius;
 }
 
 float ParticleSystem::getEndRadius() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.endRadius;
 }
 
 void ParticleSystem::setEndRadiusVar(float endRadiusVar)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.endRadiusVar = endRadiusVar;
 }
 
 float ParticleSystem::getEndRadiusVar() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.endRadiusVar;
 }
 
 void ParticleSystem::setRotatePerSecond(float degrees)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.rotatePerSecond = degrees;
 }
 
 float ParticleSystem::getRotatePerSecond() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.rotatePerSecond;
 }
 
 void ParticleSystem::setRotatePerSecondVar(float degrees)
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     modeB.rotatePerSecondVar = degrees;
 }
 
 float ParticleSystem::getRotatePerSecondVar() const
 {
-    CCASSERT(_emitterMode == MODE_RADIUS, "Particle Mode should be Radius");
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
     return modeB.rotatePerSecondVar;
 }
 
