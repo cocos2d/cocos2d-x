@@ -44,8 +44,8 @@ EditBoxImplTizen::EditBoxImplTizen(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
-, _editBoxInputMode(kEditBoxInputModeSingleLine)
-, _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
+, _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
+, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(kKeyboardReturnTypeDefault)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
@@ -118,7 +118,7 @@ void EditBoxImplTizen::setPlaceholderFontColor(const Color3B& color)
     _labelPlaceHolder->setColor(color);
 }
 
-void EditBoxImplTizen::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplTizen::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
 }
@@ -133,12 +133,12 @@ int EditBoxImplTizen::getMaxLength()
     return _maxLength;
 }
 
-void EditBoxImplTizen::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplTizen::setInputFlag(EditBox::InputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
 }
 
-void EditBoxImplTizen::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplTizen::setReturnType(EditBox::KeyboardReturnType returnType)
 {
     _keyboardReturnType = returnType;
 }
@@ -301,7 +301,7 @@ void EditBoxImplTizen::openKeyboard()
     case kEditBoxInputModeUrl:
         keypadStyle = KEYPAD_STYLE_URL;
         break;
-    case kEditBoxInputModeSingleLine:
+    case EditBox::InputMode::SINGLE_LINE:
         bSingleLineEnabled = true;
         break;
     default:

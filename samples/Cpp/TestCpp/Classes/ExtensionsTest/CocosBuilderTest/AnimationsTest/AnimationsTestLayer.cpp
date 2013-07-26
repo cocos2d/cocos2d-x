@@ -17,7 +17,7 @@ SEL_MenuHandler AnimationsTestLayer::onResolveCCBCCMenuItemSelector(Object * pTa
     return NULL;
 }
 
-SEL_CCControlHandler AnimationsTestLayer::onResolveCCBCCControlSelector(Object *pTarget, const char*pSelectorName) {
+Control::Handler AnimationsTestLayer::onResolveCCBCCControlSelector(Object *pTarget, const char*pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonIdleClicked", AnimationsTestLayer::onControlButtonIdleClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonWaveClicked", AnimationsTestLayer::onControlButtonWaveClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonJumpClicked", AnimationsTestLayer::onControlButtonJumpClicked);
@@ -39,18 +39,18 @@ void AnimationsTestLayer::setAnimationManager(cocos2d::extension::CCBAnimationMa
     CC_SAFE_RETAIN(mAnimationManager);
 }
 
-void AnimationsTestLayer::onControlButtonIdleClicked(Object *pSender, ControlEvent pControlEvent) {
+void AnimationsTestLayer::onControlButtonIdleClicked(Object *pSender, Control::EventType pControlEvent) {
     mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Idle", 0.3f);
 }
 
-void AnimationsTestLayer::onControlButtonWaveClicked(Object *pSender, ControlEvent pControlEvent) {
+void AnimationsTestLayer::onControlButtonWaveClicked(Object *pSender, Control::EventType pControlEvent) {
     mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Wave", 0.3f);
 }
 
-void AnimationsTestLayer::onControlButtonJumpClicked(Object *pSender, ControlEvent pControlEvent) {
+void AnimationsTestLayer::onControlButtonJumpClicked(Object *pSender, Control::EventType pControlEvent) {
     mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Jump", 0.3f);
 }
 
-void AnimationsTestLayer::onControlButtonFunkyClicked(Object *pSender, ControlEvent pControlEvent) {
+void AnimationsTestLayer::onControlButtonFunkyClicked(Object *pSender, Control::EventType pControlEvent) {
     mAnimationManager->runAnimationsForSequenceNamedTweenDuration("Funky", 0.3f);
 }

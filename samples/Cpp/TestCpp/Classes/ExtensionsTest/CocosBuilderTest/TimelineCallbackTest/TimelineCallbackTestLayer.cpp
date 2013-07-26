@@ -18,7 +18,7 @@ SEL_MenuHandler TimelineCallbackTestLayer::onResolveCCBCCMenuItemSelector(Object
     return NULL;
 }
 
-SEL_CCControlHandler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;
 }
 

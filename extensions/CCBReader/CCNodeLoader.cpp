@@ -811,7 +811,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             
             if(target != NULL) {
                 if(selectorName.length() > 0) {
-                    SEL_CCControlHandler selControlHandler = 0;
+                    Control::Handler selControlHandler = 0;
                     
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
@@ -832,7 +832,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                         blockControlData->mSELControlHandler = selControlHandler;
                         
                         blockControlData->mTarget = target;
-                        blockControlData->mControlEvents = controlEvents;
+                        blockControlData->mControlEvents = (Control::EventType)controlEvents;
                         
                         return blockControlData;
                     }

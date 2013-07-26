@@ -20,7 +20,7 @@ SEL_MenuHandler MenuTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, 
     return NULL;
 }
 
-SEL_CCControlHandler MenuTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler MenuTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;
 }
 
