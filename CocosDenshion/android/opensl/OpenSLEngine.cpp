@@ -331,7 +331,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
-		LOGD(errorInfo);
+		LOGD("%s", errorInfo);
 		return;
 	}
 

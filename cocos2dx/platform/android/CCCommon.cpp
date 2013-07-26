@@ -34,14 +34,11 @@ NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
 {
-    char buf[MAX_LEN];
-
     va_list args;
     va_start(args, pszFormat);        
-    vsnprintf(buf, MAX_LEN, pszFormat, args);
+    __android_log_vprint(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat, args);
     va_end(args);
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
@@ -51,7 +48,7 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
 
 void CCLuaLog(const char * pszFormat)
 {
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat);
+    __android_log_write(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat);
 }
 
 NS_CC_END
