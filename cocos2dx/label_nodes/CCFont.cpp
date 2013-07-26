@@ -22,31 +22,64 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CCFontAtlasFactory_h_
-#define _CCFontAtlasFactory_h_
-
-#include "cocos2d.h"
-#include "CCFontAtlas.h"
+#include "CCFont.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 
-class CC_DLL FontAtlasFactory
+unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
 {
+    unsigned short* utf16String = cc_utf8_to_utf16(pText);
     
-public:
+    if(!utf16String)
+        return 0;
     
-    static FontAtlas * createAtlasFromTTF(const char* tttFilePath, int fontSize, GlyphCollection glyphs);
-    static FontAtlas * createAtlasFromFNT(const char* tttFilePath);
-    
-private:
-    
-    static const char   * getGlyphCollection(GlyphCollection glyphs);
-    
-    // carloX: this needs to be moved somewhere else, but it's good enough for now
-    static FontAtlas    * createFontAtlasFromFNTConfig(CCBMFontConfiguration *theConfig);
+    outNumLetters = cc_wcslen(utf16String);
+    return utf16String;
+}
 
-};
+int Font::getUTF16TextLenght(unsigned short int *pText)
+{
+     return cc_wcslen(pText);
+}
+
+unsigned short int  * Font::trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd)
+{
+    if ( newBegin<0 || newEnd<=0 )
+        return 0;
+    
+    if ( newBegin>=newEnd )
+        return 0;
+    
+    if (newEnd >= cc_wcslen(pText))
+        return 0;
+    
+    int newLenght = newEnd - newBegin + 2;
+    unsigned short* trimmedString = new unsigned short[newLenght];
+    
+    for(int c = 0; c < (newLenght-1); ++c)
+    {
+        trimmedString[c] = pText[newBegin + c];
+    }
+    
+    // last char
+    trimmedString[newLenght-1] = 0x0000;
+    
+    // done
+    return trimmedString;
+}
+
+Rect Font::getRectForChar(unsigned short theChar)
+{
+    Rect temp;
+    temp.size.width  = 0;
+    temp.size.height = 0;
+    temp.origin.x = 0;
+    temp.origin.y = 0;
+    
+    return temp;
+}
 
 NS_CC_END
 
-#endif /* defined(_CCFontAtlasFactory_h_) */
+

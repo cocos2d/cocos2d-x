@@ -22,38 +22,34 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CCFont_h_
-#define _CCFont_h_
+#ifndef _CCFontFNT_h_
+#define _CCFontFNT_h_
 
-#include <string>
 #include "cocos2d.h"
+#include "CCFont.h"
 
 NS_CC_BEGIN
 
-class GlyphDef;
-
-class CC_DLL Font : public Object
+class FontFNT : public Font
 {
+    
 public:
     
-    virtual ~Font() {}
+    FontFNT(CCBMFontConfiguration *theContfig) :  _configuration(theContfig) {}
+    virtual ~FontFNT();
+    virtual Size* getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
+    virtual Rect  getRectForChar(unsigned short theChar);
     
-    virtual Size                * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)                         = 0;
+private:
     
-    virtual bool                  createFontObject(const std::string &fontName, int fontSize)                                { return false; }
-    virtual int                   getLetterPadding()                                                                         { return 0;     }
-    virtual unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight)                      { return 0;     }
-    virtual int                   getFontMaxHeight()                                                                         { return 0;     }
-    virtual GlyphDef            * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs, bool    UTF16text = false) { return 0;     }
-    virtual Rect                  getRectForChar(unsigned short theChar);
+    int  getAdvanceForChar(unsigned short theChar);
+    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar);
+    Rect getRectForCharInternal(unsigned short theChar);
     
-    virtual unsigned short int  * getUTF16Text(const char *pText, int &outNumLetters);
-    virtual int                   getUTF16TextLenght(unsigned short int *pText);
-    virtual unsigned short int  * trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd);
+    CCBMFontConfiguration *   _configuration;
     
 };
 
 NS_CC_END
 
-
-#endif
+#endif /* defined(__cocos2d_libs__CCFontFNT__) */

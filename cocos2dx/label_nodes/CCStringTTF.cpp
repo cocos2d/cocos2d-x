@@ -262,7 +262,7 @@ Sprite * StringTTF::createNewSpriteFromLetterDefinition(FontLetterDefinition &th
         return 0;
     
     tempSprite->initWithSpriteFrame(pFrame);
-    tempSprite->setAnchorPoint(Point(0.0, 1.0));
+    tempSprite->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));
     tempSprite->setBatchNode(this);
     
     return tempSprite;
@@ -287,7 +287,7 @@ Sprite * StringTTF::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, Fon
         {
             spriteToUpdate->setTexture(theTexture);
             spriteToUpdate->setDisplayFrame(frame);
-            spriteToUpdate->setAnchorPoint(Point(0.0, 1.0));
+            spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));
             spriteToUpdate->setBatchNode(this);
         }
         
@@ -410,7 +410,7 @@ float StringTTF::getLetterPosXRight( Sprite* sp )
 
 int StringTTF::getCommonLineHeight()
 {
-    return _commonLineHeight * 0.8;
+    return _commonLineHeight;
 }
 
 int StringTTF::getKerningForCharsPair(unsigned short first, unsigned short second)
@@ -420,7 +420,8 @@ int StringTTF::getKerningForCharsPair(unsigned short first, unsigned short secon
 
 int StringTTF::getXOffsetForChar(unsigned short c)
 {
-    return 0;
+    FontLetterDefinition tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
+    return (tempDefinition.offsetX);
 }
 
 int StringTTF::getYOffsetForChar(unsigned short c)
@@ -446,23 +447,7 @@ int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
 
 Rect StringTTF::getRectForChar(unsigned short c)
 {
-    Rect uvRect;
-    
-    uvRect.origin.x     = 0.0;
-    uvRect.origin.y     = 0.0;
-    uvRect.size.width   = 0.0;
-    uvRect.size.height  = 0.0;
-    
-    // Not needed for StringTTF
-    
-    /*
-    uvRect.size.height = tempDefinition.height;
-    uvRect.size.width  = tempDefinition.width;
-    uvRect.origin.x    = tempDefinition.U;
-    uvRect.origin.y    = tempDefinition.V;
-    */
-    
-    return uvRect;
+    return _fontAtlas->getFont()->getRectForChar(c);
 }
 
 // string related stuff

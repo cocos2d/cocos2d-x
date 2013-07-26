@@ -18,7 +18,8 @@ std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinition;
 
 FontAtlas::FontAtlas(Font *theFont) : _font(theFont)
 {
-    _font->retain();
+    if (_font)
+        _font->retain();
 }
 
 FontAtlas::~FontAtlas()

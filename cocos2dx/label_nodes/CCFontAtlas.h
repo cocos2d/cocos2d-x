@@ -40,6 +40,8 @@ struct FontLetterDefinition
     float           offsetY;
     int             textureID;
     float           commonLineHeight;
+    float           anchorX;
+    float           anchorY;
 };
 
 class CC_DLL FontAtlas : public Object
@@ -60,7 +62,6 @@ public:
     
     unsigned short int * getUTF16Text(const char *pText, int &outNumLetters);
     Font * getFont();
-    
     
 private:
     

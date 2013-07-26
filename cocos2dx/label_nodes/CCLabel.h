@@ -28,7 +28,6 @@
 
 #include "sprite_nodes/CCSpriteBatchNode.h"
 
-
 NS_CC_BEGIN
 
 enum class GlyphCollection {
@@ -47,6 +46,15 @@ public:
     
     virtual ~Label();
     Label();
+    
+    
+    // needs to go - TEST STUFF /////////////////////////////////////////////////////////////////////////
+    static Label* createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize = 0);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+private:
+    
+    
 };
 
 NS_CC_END
