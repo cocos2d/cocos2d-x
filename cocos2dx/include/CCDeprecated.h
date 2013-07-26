@@ -967,6 +967,13 @@ CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetEmscripten;
 CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetTizen;
 CC_DEPRECATED_ATTRIBUTE typedef Application::Platform TargetPlatform;
 
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionExactFit;
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionNoBorder;
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionShowAll;
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionFixedHeight;
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionFixedWidth;
+CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionUnKnown;
+
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
 #define kCCTMXTileDiagonalFlag        kTMXTileDiagonalFlag
