@@ -57,7 +57,7 @@ class Cocos2DQt5MainloopIntegration : public QObject {
     protected:
         virtual void timerEvent(QTimerEvent *event)
         {
-            cocos2d::CCDirector::sharedDirector()->mainLoop();
+            cocos2d::Director::getInstance()->mainLoop();
         }
 
     private:
@@ -68,7 +68,7 @@ class Cocos2DQt5MainloopIntegration : public QObject {
 NS_CC_BEGIN
 
 // Application singleton
-static CCApplication *
+static Application *
 application = NULL;
 
 static int
@@ -77,14 +77,21 @@ global_fake_argc = 1;
 static char *
 global_fake_argv[1];
 
-CCApplication *
-CCApplication::sharedApplication()
+// @deprecated Use getInstance() instead
+Application *
+Application::sharedApplication()
+{
+    return getInstance();
+}
+
+Application *
+Application::getInstance()
 {
     CC_ASSERT(application != NULL);
     return application;
 }
 
-CCApplication::CCApplication()
+Application::Application()
     : m_application(NULL)
     , m_animationInterval(1000 / 60)
     , m_resourceRootPath("")
@@ -101,7 +108,7 @@ CCApplication::CCApplication()
     application = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     delete m_mainloop;
     delete m_application;
@@ -111,7 +118,7 @@ CCApplication::~CCApplication()
 }
 
 int
-CCApplication::run()
+Application::run()
 {
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching()) {
@@ -124,7 +131,7 @@ CCApplication::run()
 }
 
 void
-CCApplication::setAnimationInterval(double interval)
+Application::setAnimationInterval(double interval)
 {
     // Interval is expressed in seconds
     m_animationInterval = interval * 1000;
@@ -133,32 +140,32 @@ CCApplication::setAnimationInterval(double interval)
 }
 
 void
-CCApplication::setResourceRootPath(const std::string &rootResDir)
+Application::setResourceRootPath(const std::string &rootResDir)
 {
     m_resourceRootPath = rootResDir;
     if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/') {
         m_resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
 const std::string &
-CCApplication::getResourceRootPath()
+Application::getResourceRootPath()
 {
     return m_resourceRootPath;
 }
 
 TargetPlatform
-CCApplication::getTargetPlatform()
+Application::getTargetPlatform()
 {
     return kTargetLinux;
 }
 
 ccLanguageType
-CCApplication::getCurrentLanguage()
+Application::getCurrentLanguage()
 {
     QLocale locale;
 

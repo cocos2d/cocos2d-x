@@ -33,7 +33,7 @@
 
 NS_CC_BEGIN
 
-int CCDevice::getDPI()
+int Device::getDPI()
 {
     QGuiApplication *app = static_cast<QGuiApplication*>(QGuiApplication::instance());
     QScreen *screen = app->primaryScreen();

@@ -3,8 +3,13 @@ DEFINES += CC_TARGET_QT5
 
 CONFIG += silent
 
-QMAKE_CXXFLAGS += -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-psabi
-QMAKE_CFLAGS += -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-psabi
+# Disable some warnings to make compiler output easier to read during development
+DISABLED_WARNINGS = -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-psabi
+QMAKE_CXXFLAGS += $${DISABLED_WARNINGS} -Wno-reorder
+QMAKE_CFLAGS += $${DISABLED_WARNINGS}
+
+# C++11 support (GCC 4.6; for newer versions, change to -std=c++11)
+QMAKE_CXXFLAGS += -Doverride= -std=c++0x
 
 OS_TYPE = linux
 

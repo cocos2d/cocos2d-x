@@ -41,7 +41,7 @@ namespace CocosDenshion {
 static QString
 fullPath(const char *filename)
 {
-    return QString::fromStdString(CCFileUtils::sharedFileUtils()->fullPathForFilename(filename));
+    return QString::fromStdString(FileUtils::getInstance()->fullPathForFilename(filename));
 }
 
 class CocosQt5AudioBackend {
@@ -119,7 +119,7 @@ simple_audio_engine = NULL;
 @brief Get the shared Engine object,it will new one when first time be called
 */
 SimpleAudioEngine *
-SimpleAudioEngine::sharedEngine()
+SimpleAudioEngine::getInstance()
 {
     if (simple_audio_engine == NULL) {
         simple_audio_engine = new SimpleAudioEngine;
@@ -283,8 +283,11 @@ SimpleAudioEngine::setEffectsVolume(float volume)
 @bLoop Whether to loop the effect playing, default value is false
 */
 unsigned int
-SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+        float pitch, float pan, float gain)
 {
+    // TODO: Handle pitch, pan and gain
+
     CocosQt5AudioBackend::gcEffects();
 
     QString filename = fullPath(pszFilePath);

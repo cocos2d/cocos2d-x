@@ -49,7 +49,7 @@ NS_CC_BEGIN
 
 class Cocos2DQt5OpenGLIntegration : public QWindow {
     public:
-        Cocos2DQt5OpenGLIntegration(CCEGLView *view, int width, int height);
+        Cocos2DQt5OpenGLIntegration(EGLView *view, int width, int height);
         ~Cocos2DQt5OpenGLIntegration();
 
         virtual void touchEvent(QTouchEvent *event);
@@ -58,11 +58,11 @@ class Cocos2DQt5OpenGLIntegration : public QWindow {
         void swapBuffers();
 
     private:
-        CCEGLView *m_egl_view;
+        EGLView *m_egl_view;
         QOpenGLContext *m_context;
 };
 
-Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(CCEGLView *view, int width, int height)
+Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(EGLView *view, int width, int height)
     : m_egl_view(view)
     , m_context(NULL)
 {
@@ -114,7 +114,7 @@ bool
 Cocos2DQt5OpenGLIntegration::event(QEvent *event)
 {
     if (event->type() == QEvent::Close) {
-        CCDirector::sharedDirector()->end();
+        Director::getInstance()->end();
     }
 
     return QWindow::event(event);
@@ -128,28 +128,35 @@ Cocos2DQt5OpenGLIntegration::swapBuffers()
 }
 
 
-/* Global CCEGLView singleton for this module */
-static CCEGLView *
+/* Global EGLView singleton for this module */
+static EGLView *
 egl_view = NULL;
 
 
-CCEGLView *
-CCEGLView::sharedOpenGLView()
+/** @deprecated Use getInstance() instead */
+EGLView *
+EGLView::sharedOpenGLView()
+{
+    return getInstance();
+}
+
+EGLView *
+EGLView::getInstance()
 {
     if (egl_view == NULL) {
-        egl_view = new CCEGLView;
+        egl_view = new EGLView;
     }
 
     return egl_view;
 }
 
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
     : m_integration(NULL)
 {
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
     if (m_integration) {
         delete m_integration;
@@ -157,7 +164,7 @@ CCEGLView::~CCEGLView()
 }
 
 void
-CCEGLView::setFrameSize(float width, float height)
+EGLView::setFrameSize(float width, float height)
 {
     if (m_integration == NULL) {
         m_integration = new Cocos2DQt5OpenGLIntegration(this,
@@ -166,11 +173,11 @@ CCEGLView::setFrameSize(float width, float height)
         m_integration->resize(width, height);
     }
 
-    CCEGLViewProtocol::setFrameSize(width, height);
+    EGLViewProtocol::setFrameSize(width, height);
 }
 
 void
-CCEGLView::swapBuffers()
+EGLView::swapBuffers()
 {
     if (m_integration != NULL) {
         m_integration->swapBuffers();
@@ -178,14 +185,14 @@ CCEGLView::swapBuffers()
 }
 
 void
-CCEGLView::setIMEKeyboardState(bool bOpen)
+EGLView::setIMEKeyboardState(bool bOpen)
 {
     QGuiApplication *app = static_cast<QGuiApplication*>(QGuiApplication::instance());
     app->inputMethod()->setVisible(bOpen);
 }
 
 void
-CCEGLView::end()
+EGLView::end()
 {
     QGuiApplication::exit(0);
 }

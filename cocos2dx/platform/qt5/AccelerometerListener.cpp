@@ -29,7 +29,7 @@
 
 #include <QObject>
 
-AccelerometerListener::AccelerometerListener(CCAccelerometer *accelerometer)
+AccelerometerListener::AccelerometerListener(Accelerometer *accelerometer)
     : QObject()
     , m_accelerometer(accelerometer)
 {

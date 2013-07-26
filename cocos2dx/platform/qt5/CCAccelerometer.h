@@ -31,20 +31,21 @@
 
 #include "platform/CCCommon.h"
 #include "platform/CCAccelerometerDelegate.h"
+#include <functional>
 
 class QAccelerometer;
 class AccelerometerListener;
 
 NS_CC_BEGIN
 
-class CCAccelerometer {
+class Accelerometer {
     public:
-        CCAccelerometer();
-        ~CCAccelerometer();
+        Accelerometer();
+        ~Accelerometer();
 
-        static CCAccelerometer *sharedAccelerometer();
+        static Accelerometer *sharedAccelerometer();
 
-        void setDelegate(CCAccelerometerDelegate *pDelegate);
+        void setDelegate(std::function<void(Acceleration*)> function);
         void setAccelerometerInterval(float interval);
 
         /* Functions to be called from AccelerometerListener */
@@ -53,7 +54,7 @@ class CCAccelerometer {
     private:
         QAccelerometer *m_accelerometer;
         AccelerometerListener *m_listener;
-        CCAccelerometerDelegate *m_delegate;
+        std::function<void(Acceleration*)> m_function;
 };
 
 NS_CC_END

@@ -38,13 +38,13 @@ class AccelerometerListener : public QObject {
     Q_OBJECT
 
     public:
-        AccelerometerListener(CCAccelerometer *accelerometer);
+        AccelerometerListener(Accelerometer *accelerometer);
 
     public slots:
         void onReadingChanged();
 
     private:
-        CCAccelerometer *m_accelerometer;
+        Accelerometer *m_accelerometer;
 };
 
 #endif /* COCOS2DX_ACCELEROMETER_LISTENER_QT5_H */
