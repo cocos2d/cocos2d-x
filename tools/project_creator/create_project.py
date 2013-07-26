@@ -76,17 +76,18 @@ def checkParams():
 # end of checkParams(context) function
 
 def replaceString(filepath, src_string, dst_string):
-    content = ""
-    f1 = open(filepath, "rb")
-    for line in f1:
-        if src_string in line:
-            content += line.replace(src_string, dst_string)
-        else:
-            content += line
-    f1.close()
-    f2 = open(filepath, "wb")
-    f2.write(content)
-    f2.close()
+	content = ""
+	f1 = open(filepath, "rb")
+	for line in f1:
+		strline = line.decode('utf8')
+		if src_string in strline:
+			content += strline.replace(src_string, dst_string)
+		else: 
+			content += strline
+	f1.close()
+	f2 = open(filepath, "wb")
+	f2.write(content.encode('utf8'))
+	f2.close()
 # end of replaceString
 
 def processPlatformProjects(context, platform):
@@ -138,23 +139,18 @@ def processPlatformProjects(context, platform):
             replaceString(os.path.join(proj_path, dst), context["src_project_name"], context["dst_project_name"])
                   
     # done!
-    print "proj.%s\t\t: Done!" % platform
+    print ("proj.%s\t\t: Done!" % platform)
 # end of processPlatformProjects
 
-
-
-# -------------- main --------------
-# dump argvs
-# print sys.argv
-if __name__ == '__main__':
+def createPlatformProjects(): 
     # prepare valid "context" dictionary
     context, platforms_list  = checkParams()
     # print context, platforms_list
 
     # copy "lauguage"(cpp/lua/javascript) platform.proj into cocos2d-x/projects/<project_name>/folder
     if os.path.exists(context["dst_project_path"]):
-        print "Error:" + context["dst_project_path"] + " folder is already existing"
-        print "Please remove the old project or choose a new PROJECT_NAME in -project parameter"
+        print ("Error:" + context["dst_project_path"] + " folder is already existing")
+        print ("Please remove the old project or choose a new PROJECT_NAME in -project parameter")
         sys.exit()
     else:
         shutil.copytree(context["src_project_path"], context["dst_project_path"], True)
@@ -165,6 +161,16 @@ if __name__ == '__main__':
     #    exec "import %s.handle_project_files" % (platform)
     #    exec "%s.handle_project_files.handle_project_files(context)" % (platform)
 
-    print "New project has been created in this path: " + context["dst_project_path"].replace("/tools/project-creator/../..", "")
-    print "Have Fun!"
+    print ("New project has been created in this path: " + context["dst_project_path"].replace("/tools/project-creator/../..", ""))
+    print ("Have Fun!")
+
+
+
+
+
+# -------------- main --------------
+# dump argvs
+# print sys.argv
+if __name__ == '__main__':
+    createPlatformProjects()
 
