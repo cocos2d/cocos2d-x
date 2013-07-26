@@ -416,7 +416,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
 	bool bRet = false;
     unsigned long nSize = 0;
@@ -433,7 +433,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     /*
      * FileUtils::fullPathFromRelativePath() is not thread-safe.
@@ -451,7 +451,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt,
+                                Format eFmt,
                                 int nWidth,
                                 int nHeight,
                                 int nBitsPerComponent)
@@ -465,13 +465,13 @@ bool Image::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == kFmtRawData)
+        if (eFmt == Format::RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == kFmtWebp)
+        else if (eFmt == Format::WEBP)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
         }
         else // init with png or jpg file data
         {
@@ -515,25 +515,25 @@ bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, 
     return bRet;
 }
 
-bool Image::_initWithJpgData(void *pData, int nDatalen)
+bool Image::initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_initWithPngData(void *pData, int nDatalen)
+bool Image::initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToJPG(const char *pszFilePath)
+bool Image::saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
 	return false;

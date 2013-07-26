@@ -91,7 +91,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
 
@@ -128,7 +128,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     bool bRet = false;
     unsigned long nSize = 0;
@@ -148,7 +148,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt/* = eSrcFmtPng*/, 
+                                Format eFmt/* = eSrcFmtPng*/, 
                                 int nWidth/* = 0*/,
                                 int nHeight/* = 0*/,
                                 int nBitsPerComponent/* = 8*/)
@@ -158,27 +158,27 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
 
-        if (kFmtPng == eFmt)
+        if (Format::PNG == eFmt)
         {
-            bRet = _initWithPngData(pData, nDataLen);
+            bRet = initWithPngData(pData, nDataLen);
             break;
         }
-        else if (kFmtJpg == eFmt)
+        else if (Format::JPG == eFmt)
         {
-            bRet = _initWithJpgData(pData, nDataLen);
+            bRet = initWithJpgData(pData, nDataLen);
             break;
         }
-        else if (kFmtTiff == eFmt)
+        else if (Format::TIFF == eFmt)
         {
-            bRet = _initWithTiffData(pData, nDataLen);
+            bRet = initWithTiffData(pData, nDataLen);
             break;
         }
-        else if (kFmtWebp == eFmt)
+        else if (Format::WEBP == eFmt)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
             break;
         }
-        else if (kFmtRawData == eFmt)
+        else if (Format::RAW_DATA == eFmt)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;
@@ -198,7 +198,7 @@ bool Image::initWithImageData(void * pData,
                     && pHead[6] == 0x1A
                     && pHead[7] == 0x0A)
                 {
-                    bRet = _initWithPngData(pData, nDataLen);
+                    bRet = initWithPngData(pData, nDataLen);
                     break;
                 }
             }
@@ -211,7 +211,7 @@ bool Image::initWithImageData(void * pData,
                     || (pHead[0] == 0x4d && pHead[1] == 0x4d)
                     )
                 {
-                    bRet = _initWithTiffData(pData, nDataLen);
+                    bRet = initWithTiffData(pData, nDataLen);
                     break;
                 }
             }
@@ -223,7 +223,7 @@ bool Image::initWithImageData(void * pData,
                 if (   pHead[0] == 0xff
                     && pHead[1] == 0xd8)
                 {
-                    bRet = _initWithJpgData(pData, nDataLen);
+                    bRet = initWithJpgData(pData, nDataLen);
                     break;
                 }
             }
@@ -281,7 +281,7 @@ my_error_exit (j_common_ptr cinfo)
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool Image::_initWithJpgData(void * data, int nSize)
+bool Image::initWithJpgData(void * data, int nSize)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -378,7 +378,7 @@ bool Image::_initWithJpgData(void * data, int nSize)
     return bRet;
 }
 
-bool Image::_initWithPngData(void * pData, int nDatalen)
+bool Image::initWithPngData(void * pData, int nDatalen)
 {
 // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -611,7 +611,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool Image::_initWithTiffData(void* pData, int nDataLen)
+bool Image::initWithTiffData(void* pData, int nDataLen)
 {
     bool bRet = false;
     do 
@@ -726,11 +726,11 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 
         if (std::string::npos != strLowerCasePath.find(".png"))
         {
-            CC_BREAK_IF(!_saveImageToPNG(pszFilePath, bIsToRGB));
+            CC_BREAK_IF(!saveImageToPNG(pszFilePath, bIsToRGB));
         }
         else if (std::string::npos != strLowerCasePath.find(".jpg"))
         {
-            CC_BREAK_IF(!_saveImageToJPG(pszFilePath));
+            CC_BREAK_IF(!saveImageToJPG(pszFilePath));
         }
         else
         {
@@ -743,7 +743,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     return bRet;
 }
 
-bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
     bool bRet = false;
     do 
@@ -883,7 +883,7 @@ bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
     } while (0);
     return bRet;
 }
-bool Image::_saveImageToJPG(const char * pszFilePath)
+bool Image::saveImageToJPG(const char * pszFilePath)
 {
     bool bRet = false;
     do 

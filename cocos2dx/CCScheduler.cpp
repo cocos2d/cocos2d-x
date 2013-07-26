@@ -240,6 +240,12 @@ SEL_SCHEDULE Timer::getSelector() const
 
 // implementation of Scheduler
 
+// Priority level reserved for system services.
+const int Scheduler::PRIORITY_SYSTEM = INT_MIN;
+
+// Minimum priority level for user scheduling.
+const int Scheduler::PRIORITY_NON_SYSTEM_MIN = PRIORITY_SYSTEM + 1;
+
 Scheduler::Scheduler(void)
 : _timeScale(1.0f)
 , _updatesNegList(NULL)
@@ -577,7 +583,7 @@ void Scheduler::unscheduleUpdateForTarget(const Object *target)
 
 void Scheduler::unscheduleAll(void)
 {
-    unscheduleAllWithMinPriority(kPrioritySystem);
+    unscheduleAllWithMinPriority(PRIORITY_SYSTEM);
 }
 
 void Scheduler::unscheduleAllWithMinPriority(int nMinPriority)
@@ -759,7 +765,7 @@ bool Scheduler::isTargetPaused(Object *target)
 
 Set* Scheduler::pauseAllTargets()
 {
-    return pauseAllTargetsWithMinPriority(kPrioritySystem);
+    return pauseAllTargetsWithMinPriority(PRIORITY_SYSTEM);
 }
 
 Set* Scheduler::pauseAllTargetsWithMinPriority(int nMinPriority)

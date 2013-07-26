@@ -49,9 +49,8 @@ MotionStreak::MotionStreak()
 , _vertices(NULL)
 , _colorPointer(NULL)
 , _texCoords(NULL)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
-    _blendFunc.src = GL_SRC_ALPHA;
-    _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 }
 
 MotionStreak::~MotionStreak()
@@ -123,11 +122,10 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
     // Set blend mode
-    _blendFunc.src = GL_SRC_ALPHA;
-    _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader program
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     setTexture(texture);
     setColor(color);
@@ -331,25 +329,25 @@ void MotionStreak::draw()
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    ccGLBindTexture2D( _texture->getName() );
+    GL::bindTexture2D( _texture->getName() );
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
     setGLBufferData(_vertices, (sizeof(Vertex2F) * _maxPoints * 2), 0);
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_colorPointer, (sizeof(GLubyte) * _maxPoints * 2 * 4), 2);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 #else
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);

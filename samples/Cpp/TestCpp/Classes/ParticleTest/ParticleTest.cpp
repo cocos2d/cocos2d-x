@@ -1,11 +1,5 @@
 #include "ParticleTest.h"
-// #include "CCActionInterval.h"
-// #include "CCMenu.h"
-// #include "CCLabelTTF.h"
-// #include "CCLabelAtlas.h"
-// #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "../testResource.h"
-/*#include "support/CCPointExtension.h"*/
 
 enum {
     kTagParticleCount = 1,
@@ -200,7 +194,7 @@ void DemoBigFlower::onEnter()
     // size, in pixels
     _emitter->setStartSize(80.0f);
     _emitter->setStartSizeVar(40.0f);
-    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
     
     // emits per second
     _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
@@ -285,7 +279,7 @@ void DemoRotFlower::onEnter()
     // size, in pixels
     _emitter->setStartSize(30.0f);
     _emitter->setStartSizeVar(00.0f);
-    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
     
     // emits per second
     _emitter->setEmissionRate(_emitter->getTotalParticles()/_emitter->getLife());
@@ -650,10 +644,10 @@ void RadiusMode1::onEnter()
     _emitter->setTexture(TextureCache::getInstance()->addImage("Images/stars-grayscale.png"));
 
     // duration
-    _emitter->setDuration(kParticleDurationInfinity);
+    _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(0);
@@ -701,7 +695,7 @@ void RadiusMode1::onEnter()
     // size, in pixels
     _emitter->setStartSize(32);
     _emitter->setStartSizeVar(0);
-    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
 
     // emits per second
     _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
@@ -734,15 +728,15 @@ void RadiusMode2::onEnter()
     _emitter->setTexture(TextureCache::getInstance()->addImage("Images/stars-grayscale.png"));
 
     // duration
-    _emitter->setDuration(kParticleDurationInfinity);
+    _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(100);
     _emitter->setStartRadiusVar(0);
-    _emitter->setEndRadius(kParticleStartRadiusEqualToEndRadius);
+    _emitter->setEndRadius(ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS);
     _emitter->setEndRadiusVar(0);
 
     // radius mode: degrees per second
@@ -785,7 +779,7 @@ void RadiusMode2::onEnter()
     // size, in pixels
     _emitter->setStartSize(32);
     _emitter->setStartSizeVar(0);
-    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
 
     // emits per second
     _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
@@ -818,15 +812,15 @@ void Issue704::onEnter()
     _emitter->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 
     // duration
-    _emitter->setDuration(kParticleDurationInfinity);
+    _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(kParticleModeRadius);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(50);
     _emitter->setStartRadiusVar(0);
-    _emitter->setEndRadius(kParticleStartRadiusEqualToEndRadius);
+    _emitter->setEndRadius(ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS);
     _emitter->setEndRadiusVar(0);
 
     // radius mode: degrees per second
@@ -869,7 +863,7 @@ void Issue704::onEnter()
     // size, in pixels
     _emitter->setStartSize(16);
     _emitter->setStartSizeVar(0);
-    _emitter->setEndSize(kParticleStartSizeEqualToEndSize);
+    _emitter->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
 
     // emits per second
     _emitter->setEmissionRate(_emitter->getTotalParticles() / _emitter->getLife());
@@ -1120,19 +1114,19 @@ std::string ParticleDemo::subtitle()
     return "No titile";
 }
 
-void ParticleDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    ccTouchesEnded(pTouches, pEvent);
+    ccTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    return ccTouchesEnded(pTouches, pEvent);
+    return ccTouchesEnded(touches, event);
 }
 
-void ParticleDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void ParticleDemo::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     
     Point location = touch->getLocation();
 
@@ -1159,20 +1153,20 @@ void ParticleDemo::update(float dt)
     }
 }
 
-void ParticleDemo::toggleCallback(Object* pSender)
+void ParticleDemo::toggleCallback(Object* sender)
 {
     if (_emitter != NULL)
     {
-        if( _emitter->getPositionType() == kPositionTypeGrouped )
-            _emitter->setPositionType( kPositionTypeFree );
-        else if (_emitter->getPositionType() == kPositionTypeFree)
-            _emitter->setPositionType(kPositionTypeRelative);
-        else if (_emitter->getPositionType() == kPositionTypeRelative)
-            _emitter->setPositionType( kPositionTypeGrouped );
+        if (_emitter->getPositionType() == ParticleSystem::PositionType::GROUPED)
+            _emitter->setPositionType(ParticleSystem::PositionType::FREE);
+        else if (_emitter->getPositionType() == ParticleSystem::PositionType::FREE)
+            _emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
+        else if (_emitter->getPositionType() == ParticleSystem::PositionType::RELATIVE)
+            _emitter->setPositionType(ParticleSystem::PositionType::GROUPED );
     }
 }
 
-void ParticleDemo::restartCallback(Object* pSender)
+void ParticleDemo::restartCallback(Object* sender)
 {
     if (_emitter != NULL)
     {
@@ -1180,7 +1174,7 @@ void ParticleDemo::restartCallback(Object* pSender)
     }
 }
 
-void ParticleDemo::nextCallback(Object* pSender)
+void ParticleDemo::nextCallback(Object* sender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( nextParticleAction() );
@@ -1188,7 +1182,7 @@ void ParticleDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ParticleDemo::backCallback(Object* pSender)
+void ParticleDemo::backCallback(Object* sender)
 {
     Scene* s = new ParticleTestScene();
     s->addChild( backParticleAction() );
@@ -1403,10 +1397,10 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setBlendAdditive(false);
 
         // duration
-        setDuration(kParticleDurationInfinity);
+        setDuration(ParticleSystem::DURATION_INFINITY);
 
         // Gravity Mode
-        setEmitterMode(kParticleModeGravity);
+        setEmitterMode(ParticleSystem::Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -1436,7 +1430,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         // size, in pixels
         setStartSize(25.0f);
         setStartSizeVar(0);
-        setEndSize(kParticleStartSizeEqualToEndSize);
+        setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
 
         // emits per seconds
         setEmissionRate(getTotalParticles()/getLife());
@@ -1513,7 +1507,7 @@ void MultipleParticleSystems::onEnter()
 
         particleSystem->setPosition(Point(i*50 ,i*50));
 
-        particleSystem->setPositionType(kPositionTypeGrouped);
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         addChild(particleSystem);
     }
 
@@ -1570,7 +1564,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
-        particleSystem->setPositionType(kPositionTypeGrouped);         
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setPosition(Point(i*50 ,i*50));
 
         batchNode->setTexture(particleSystem->getTexture());
@@ -1633,7 +1627,7 @@ void AddAndDeleteParticleSystems::onEnter()
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         _batchNode->setTexture(particleSystem->getTexture());
 
-        particleSystem->setPositionType(kPositionTypeGrouped);         
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
         particleSystem->setPosition(Point(i*15 +100,i*15+100));
@@ -1660,7 +1654,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
 
-        particleSystem->setPositionType(kPositionTypeGrouped);         
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
         particleSystem->setPosition(Point(rand() % 300 ,rand() % 400));
@@ -1724,15 +1718,15 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setTexture(_batchNode->getTexture());
 
         // duration
-        particleSystem->setDuration(kParticleDurationInfinity);
+        particleSystem->setDuration(ParticleSystem::DURATION_INFINITY);
 
         // radius mode
-        particleSystem->setEmitterMode(kParticleModeRadius);
+        particleSystem->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
         // radius mode: 100 pixels from center
         particleSystem->setStartRadius(100);
         particleSystem->setStartRadiusVar(0);
-        particleSystem->setEndRadius(kParticleStartRadiusEqualToEndRadius);
+        particleSystem->setEndRadius(ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS);
         particleSystem->setEndRadiusVar(0);    // not used when start == end
 
         // radius mode: degrees per second
@@ -1776,7 +1770,7 @@ void ReorderParticleSystems::onEnter()
         // size, in pixels
         particleSystem->setStartSize(32);
         particleSystem->setStartSizeVar(0);
-        particleSystem->setEndSize(kParticleStartSizeEqualToEndSize);
+        particleSystem->setEndSize(ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE);
 
         // emits per second
         particleSystem->setEmissionRate(particleSystem->getTotalParticles()/particleSystem->getLife());
@@ -1787,7 +1781,7 @@ void ReorderParticleSystems::onEnter()
 
 
         _batchNode->addChild(particleSystem);
-        particleSystem->setPositionType(kPositionTypeFree);
+        particleSystem->setPositionType(ParticleSystem::PositionType::FREE);
 
         particleSystem->release();
 
@@ -1864,8 +1858,7 @@ void PremultipliedAlphaTest::onEnter()
     //this->emitter.blendFunc = (BlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
     // Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
-    BlendFunc tBlendFunc = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-    _emitter->setBlendFunc(tBlendFunc);
+    _emitter->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
     CCASSERT(_emitter->isOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless");
 

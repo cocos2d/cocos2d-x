@@ -94,7 +94,7 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* pSender)
+void SchedulerTestLayer::backCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = backSchedulerTest();
@@ -104,7 +104,7 @@ void SchedulerTestLayer::backCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* pSender)
+void SchedulerTestLayer::nextCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = nextSchedulerTest();
@@ -114,7 +114,7 @@ void SchedulerTestLayer::nextCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* pSender)
+void SchedulerTestLayer::restartCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = restartSchedulerTest();
@@ -359,7 +359,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 {
     log("Pausing");
     Director* director = Director::getInstance();
-    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
+    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
     CC_SAFE_RETAIN(_pausedTargets);
 }
 
@@ -463,7 +463,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         Director* director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kPrioritySystem, false);
+        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
 }
 
@@ -548,7 +548,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
+    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -874,9 +874,9 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent)
+void SchedulerTimeScale::sliderAction(Object* sender, ControlEvent controlEvent)
 {
-    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(pSender);
+    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
     scale = pSliderCtl->getValue();
 

@@ -37,16 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-/** Types of progress
- @since v0.99.1
- */
-typedef enum {
-    /// Radial Counter-Clockwise
-    kProgressTimerTypeRadial,
-    /// Bar
-    kProgressTimerTypeBar,
-} ProgressTimerType;
-
 /**
  @brief ProgressTimer is a subclass of Node.
  It renders the inner sprite according to the percentage.
@@ -59,6 +49,17 @@ class CC_DLL ProgressTimer : public NodeRGBA
 #endif // EMSCRIPTEN
 {
 public:
+    /** Types of progress
+     @since v0.99.1
+     */
+    enum Type
+    {
+        /// Radial Counter-Clockwise
+        RADIAL,
+        /// Bar
+        BAR,
+    };
+    
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static ProgressTimer* create(Sprite* sp);
 
@@ -69,7 +70,7 @@ public:
     bool initWithSprite(Sprite* sp);
 
     /** Change the percentage to change progress. */
-    inline ProgressTimerType getType() const { return _type; }
+    inline Type getType() const { return _type; }
 
     /** Percentages are from 0 to 100 */
     inline float getPercentage() const {return _percentage; }
@@ -79,7 +80,7 @@ public:
 
     void setPercentage(float fPercentage);
     void setSprite(Sprite *pSprite);
-    void setType(ProgressTimerType type);
+    void setType(Type type);
     void setReverseProgress(bool reverse);
 
     inline bool isReverseDirection() { return _reverseDirection; };
@@ -126,7 +127,7 @@ protected:
     void updateColor(void);
     Point boundaryTexCoord(char index);
 
-    ProgressTimerType _type;
+    Type _type;
     Point _midpoint;
     Point _barChangeRate;
     float _percentage;

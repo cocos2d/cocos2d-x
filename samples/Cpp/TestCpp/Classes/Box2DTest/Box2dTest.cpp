@@ -141,7 +141,7 @@ void Box2DTestLayer::draw()
     Layer::draw();
 
 #if CC_ENABLE_BOX2D_INTEGRATION
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 
@@ -213,7 +213,7 @@ void Box2DTestLayer::ccTouchesEnded(Set* touches, Event* event)
 
     for( it = touches->begin(); it != touches->end(); it++) 
     {
-        touch = (Touch*)(*it);
+        touch = static_cast<Touch*>(*it);
 
         if(!touch)
             break;
