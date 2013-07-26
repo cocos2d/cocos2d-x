@@ -228,7 +228,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
-        CCLOG(msg.c_str());
+        CCLOG("%s", msg.c_str());
     }
     
     return pData;
