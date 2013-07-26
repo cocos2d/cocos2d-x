@@ -57,16 +57,7 @@ All features from Node are valid, plus the following new features:
 */
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
-public:
-    /** Different ways to dispatch touches */
-    enum class TouchDispatchMode
-    {
-        /** Dispatches all the events at once, in set of events */
-        ALL_AT_ONCE,
-        /** Dispatches the touches one at the time */
-        ONE_BY_ONE,
-    };
-    
+public:    
     /** creates a fullscreen black layer */
     static Layer *create(void);
     Layer();
