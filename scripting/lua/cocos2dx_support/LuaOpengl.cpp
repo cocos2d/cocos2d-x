@@ -5769,7 +5769,62 @@ static int tolua_Cocos2d_CCShaderCache_addProgram00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-
+int tolua_Cocos2d_CCDrawNode_drawPolygon00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+	tolua_Error tolua_err;
+	if (
+		!tolua_isusertype(tolua_S,1,"CCDrawNode",0,&tolua_err) ||
+		!tolua_istable(tolua_S, 2, 0, &tolua_err) ||
+		!tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
+		!tolua_isusertype(tolua_S,4,"const Color4F",0,&tolua_err) ||
+		!tolua_isnumber(tolua_S, 5, 0, &tolua_err) ||
+		!tolua_isusertype(tolua_S,6,"const Color4F",0,&tolua_err) ||
+		!tolua_isnoobj(tolua_S,7,&tolua_err)
+		)
+		goto tolua_lerror;
+	else
+#endif
+	{
+		DrawNode* self = (DrawNode*)  tolua_tousertype(tolua_S,1,0);
+        size_t size = lua_tonumber(tolua_S, 3);
+        
+        if (NULL != self && size > 0)
+		{
+			Point* points = new Point[size];
+			if (NULL == points)
+                return 0;
+			
+			Point* point = NULL;
+			for (int i = 0; i < size; i++)
+			{
+				point = static_cast<Point*>(tolua_tofieldusertype(tolua_S, 2, i + 1,NULL));
+				if (NULL == point)
+				{
+					CC_SAFE_DELETE_ARRAY(points);
+					return 0;
+				}				
+				points[i] = Point(*point);
+			}
+			
+			const Color4F* fillColor = ((const Color4F*)  tolua_tousertype(tolua_S,4,0));
+			float borderWidth  = (float)tolua_tonumber(tolua_S, 5, 0);
+			const Color4F* borderColor = ((const Color4F*)  tolua_tousertype(tolua_S,6,0));
+			if (NULL != fillColor && NULL != borderColor)
+			{
+				self->drawPolygon(points, size, *fillColor, borderWidth, *borderColor);
+			}
+			
+			CC_SAFE_DELETE_ARRAY(points);
+        }
+	}
+	return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+	tolua_error(tolua_S,"#ferror in function 'addProgram'.",&tolua_err);
+	return 0;
+#endif
+}
 
 TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
 {

@@ -2,7 +2,7 @@ require "DrawPrimitives"
 
 local function drawPrimitivesMainLayer()
     local kItemTagBasic = 1000
-    local testCount = 1
+    local testCount = 2
     local maxCases = testCount
     local curCase  = 0
     local size = CCDirector:getInstance():getWinSize()
@@ -149,9 +149,54 @@ local function drawPrimitivesMainLayer()
         return layer
     end
 
+    local function createDrawNodeTest()
+        local layer = CCLayer:create()
+
+        InitTitle(layer)
+
+        local draw = CCDrawNode:create()
+        layer:addChild(draw, 10)
+
+        --Draw 10 circles
+        for i=1, 10 do
+            draw:drawDot(CCPoint(size.width/2, size.height/2), 10*(10-i), Color4F(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+        end
+
+        --Draw polygons
+        points = { CCPoint(size.height/4, 0), CCPoint(size.width, size.height / 5), CCPoint(size.width / 3 * 2, size.height) }
+        draw:drawPolygon(points, table.getn(points), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,1))
+
+        local o = 80
+        local w = 20
+        local h = 50
+        local star1 = { CCPoint( o + w, o - h), CCPoint(o + w * 2, o), CCPoint(o + w * 2 + h, o + w), CCPoint(o + w * 2, o + w * 2) }
+        
+        draw:drawPolygon(star1, table.getn(star1), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1))
+
+        o = 180
+        w = 20
+        h = 50
+        local star2 = {
+            CCPoint(o, o), CCPoint(o + w, o - h), CCPoint(o + w * 2, o),        --lower spike
+            CCPoint(o + w * 2 + h, o + w ), CCPoint(o + w * 2, o + w * 2),      --right spike
+            CCPoint(o + w, o + w * 2 + h), CCPoint(o, o + w * 2),               --top spike
+            CCPoint(o - h, o + w),                                              --left spike
+        };
+        
+        draw:drawPolygon(star2, table.getn(star2), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1))
+
+        draw:drawSegment(CCPoint(20,size.height), CCPoint(20,size.height/2), 10, Color4F(0, 1, 0, 1))
+
+        draw:drawSegment(CCPoint(10,size.height/2), CCPoint(size.width/2, size.height/2), 40, Color4F(1, 0, 1, 0.5))
+
+        return layer
+    end
+
     local function createLayerByCurCase(curCase)
         if 0 == curCase then
             return createDrawPrimitivesEffect()
+        elseif 1 == curCase then
+            return createDrawNodeTest()
         end
     end
 
