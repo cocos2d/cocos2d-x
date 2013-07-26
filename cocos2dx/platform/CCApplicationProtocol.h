@@ -12,18 +12,20 @@ class CC_DLL ApplicationProtocol
 {
 public:
 
+    // Since WINDOWS and ANDROID are defined as macros, we could not just use these keywords in enumeration(Platform).
+    // Therefore, 'OS_' prefix is added to avoid conflicts with the definitions of system macros.
     enum class Platform
     {
-        WINDOWS,
-        LINUX,
-        MACOS,
-        ANDROID,
-        IPHONE,
-        IPAD,
-        BLACKBERRY,
-        NACL,
-        EMSCRIPTEN,
-        TIZEN
+        OS_WINDOWS,
+        OS_LINUX,
+        OS_MACOS,
+        OS_ANDROID,
+        OS_IPHONE,
+        OS_IPAD,
+        OS_BLACKBERRY,
+        OS_NACL,
+        OS_EMSCRIPTEN,
+        OS_TIZEN
     };
 
 

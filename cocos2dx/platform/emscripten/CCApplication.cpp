@@ -87,7 +87,7 @@ const std::string& Application::getResourceRootPath(void)
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::EMSCRIPTEN;
+    return Platform::OS_EMSCRIPTEN;
 }
 
 //////////////////////////////////////////////////////////////////////////

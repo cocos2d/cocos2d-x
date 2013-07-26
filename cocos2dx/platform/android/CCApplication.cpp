@@ -134,7 +134,7 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::ANDROID;
+    return Platform::OS_ANDROID;
 }
 
 NS_CC_END

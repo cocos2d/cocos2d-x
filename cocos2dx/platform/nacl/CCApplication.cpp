@@ -92,7 +92,7 @@ void Application::setAnimationInterval(double interval)
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::NACL;
+    return Platform::OS_NACL;
 }
 
 Application* Application::getInstance()
