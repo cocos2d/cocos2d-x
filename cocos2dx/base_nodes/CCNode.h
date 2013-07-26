@@ -823,7 +823,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      * @code
-     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+     * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
      * @param The shader program which fetchs from ShaderCache.

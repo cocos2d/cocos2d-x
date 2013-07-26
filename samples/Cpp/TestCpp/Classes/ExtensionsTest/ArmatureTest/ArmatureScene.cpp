@@ -154,7 +154,7 @@ void ArmatureTestLayer::onEnter()
 
 	addChild(menu, 100);
 
-	setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+	setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
 }
 void ArmatureTestLayer::onExit()
@@ -539,7 +539,7 @@ std::string TestBox2DDetector::title()
 }
 void TestBox2DDetector::draw()
 {
-	ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+	ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
 	kmGLPushMatrix();
 

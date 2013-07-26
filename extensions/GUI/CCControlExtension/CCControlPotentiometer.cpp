@@ -59,7 +59,7 @@ ControlPotentiometer* ControlPotentiometer::create(const char* backgroundFile, c
 
         // Prepare progress for potentiometer
         ProgressTimer *progressTimer  = ProgressTimer::create(Sprite::create(progressFile));
-        //progressTimer.type              = kProgressTimerTypeRadialCW;
+        //progressTimer.type              = ProgressTimer::RADIALCW;
         if (pRet->initWithTrackSprite_ProgressTimer_ThumbSprite(backgroundSprite, progressTimer, thumbSprite))
         {
             pRet->autorelease();

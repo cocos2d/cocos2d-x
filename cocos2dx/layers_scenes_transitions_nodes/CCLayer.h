@@ -39,11 +39,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum {
-	kTouchesAllAtOnce,
-	kTouchesOneByOne,
-} ccTouchesMode;
-
 /**
  * @addtogroup layer
  * @{
@@ -63,6 +58,12 @@ All features from Node are valid, plus the following new features:
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
 public:
+    enum TouchesMode
+    {
+        TOUCHES_ALL_AT_ONCE,
+        TOUCHES_ONE_BY_ONE,
+    };
+    
     /** creates a fullscreen black layer */
     static Layer *create(void);
     Layer();
@@ -103,16 +104,16 @@ public:
     virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    virtual void setTouchMode(ccTouchesMode mode);
+    virtual void setTouchMode(TouchesMode mode);
     virtual int getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority() const;
 	
-	/** swallowsTouches of the touch events. Default is true */
+    /** swallowsTouches of the touch events. Default is true */
     virtual void setSwallowsTouches(bool swallowsTouches);
-    virtual bool getSwallowsTouches() const;
+	virtual bool getSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
@@ -152,8 +153,8 @@ protected:
     
 private:
     int _touchPriority;
-    ccTouchesMode _touchMode;
-	bool _swallowsTouches;
+    TouchesMode _touchMode;
+    bool _swallowsTouches;
     
     int executeScriptTouchHandler(int eventType, Touch* touch);
     int executeScriptTouchesHandler(int eventType, Set* touches);

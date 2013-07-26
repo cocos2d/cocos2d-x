@@ -191,7 +191,7 @@ void Box2DView::draw()
 {
     Layer::draw();
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 

@@ -94,7 +94,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _descendants = new Array();
     _descendants->initWithCapacity(capacity);
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 

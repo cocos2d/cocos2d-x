@@ -41,13 +41,13 @@ class GLProgram;
 
 /** vertex attrib flags */
 enum {
-    kVertexAttribFlag_None        = 0,
+    VERTEX_ATTRIB_FLAT_NONE       = 0,
 
-    kVertexAttribFlag_Position    = 1 << 0,
-    kVertexAttribFlag_Color       = 1 << 1,
-    kVertexAttribFlag_TexCoords   = 1 << 2,
+    VERTEX_ATTRIB_FLAG_POSITION   = 1 << 0,
+    VERTEX_ATTRIB_FLAG_COLOR      = 1 << 1,
+    VERTEX_ATTRIB_FLAG_TEX_COORDS = 1 << 2,
 
-    kVertexAttribFlag_PosColorTex = ( kVertexAttribFlag_Position | kVertexAttribFlag_Color | kVertexAttribFlag_TexCoords ),
+    VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = (VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_COLOR | VERTEX_ATTRIB_FLAG_TEX_COORDS),
 };
 
 /** GL server side states */
@@ -105,9 +105,9 @@ void CC_DLL ccSetProjectionMatrixDirty(void);
 /** Will enable the vertex attribs that are passed as flags.
  Possible flags:
 
-    * kVertexAttribFlag_Position
-    * kVertexAttribFlag_Color
-    * kVertexAttribFlag_TexCoords
+    * VERTEX_ATTRIB_FLAG_POSITION
+    * VERTEX_ATTRIB_FLAG_COLOR
+    * VERTEX_ATTRIB_FLAG_TEX_COORDS
 
  These flags can be ORed. The flags that are not present, will be disabled.
 
