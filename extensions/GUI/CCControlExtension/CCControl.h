@@ -30,11 +30,12 @@
 #ifndef __CCCONTROL_H__
 #define __CCCONTROL_H__
 
-#include "CCInvocation.h"
 #include "CCControlUtils.h"
 #include "cocos2d.h"
 
 NS_CC_EXT_BEGIN
+
+
 
 class Invocation;
 
@@ -48,30 +49,6 @@ class Invocation;
 /** Number of kinds of control event. */
 #define kControlEventTotalNumber 9
 
-/** Kinds of possible events for the control objects. */
-enum 
-{
-    ControlEventTouchDown           = 1 << 0,    // A touch-down event in the control.
-    ControlEventTouchDragInside     = 1 << 1,    // An event where a finger is dragged inside the bounds of the control.
-    ControlEventTouchDragOutside    = 1 << 2,    // An event where a finger is dragged just outside the bounds of the control. 
-    ControlEventTouchDragEnter      = 1 << 3,    // An event where a finger is dragged into the bounds of the control.
-    ControlEventTouchDragExit       = 1 << 4,    // An event where a finger is dragged from within a control to outside its bounds.
-    ControlEventTouchUpInside       = 1 << 5,    // A touch-up event in the control where the finger is inside the bounds of the control. 
-    ControlEventTouchUpOutside      = 1 << 6,    // A touch-up event in the control where the finger is outside the bounds of the control.
-    ControlEventTouchCancel         = 1 << 7,    // A system event canceling the current touches for the control.
-    ControlEventValueChanged        = 1 << 8      // A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
-};
-typedef unsigned int ControlEvent;
-
-/** The possible state for a control.  */
-enum 
-{
-    ControlStateNormal       = 1 << 0, // The normal, or default state of a control¡ªthat is, enabled but neither selected nor highlighted.
-    ControlStateHighlighted  = 1 << 1, // Highlighted state of a control. A control enters this state when a touch down, drag inside or drag enter is performed. You can retrieve and set this value through the highlighted property.
-    ControlStateDisabled     = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
-    ControlStateSelected     = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
-};
-typedef unsigned int ControlState;
 
 /*
  * @class
@@ -88,6 +65,31 @@ typedef unsigned int ControlState;
 class Control : public LayerRGBA
 {
 public:
+    /** Kinds of possible events for the control objects. */
+    enum class EventType
+    {
+        TOUCH_DOWN           = 1 << 0,    // A touch-down event in the control.
+        DRAG_INSIDE          = 1 << 1,    // An event where a finger is dragged inside the bounds of the control.
+        DRAG_OUTSIDE         = 1 << 2,    // An event where a finger is dragged just outside the bounds of the control.
+        DRAG_ENTER           = 1 << 3,    // An event where a finger is dragged into the bounds of the control.
+        DRAG_EXIT            = 1 << 4,    // An event where a finger is dragged from within a control to outside its bounds.
+        TOUCH_UP_INSIDE      = 1 << 5,    // A touch-up event in the control where the finger is inside the bounds of the control.
+        TOUCH_UP_OUTSIDE     = 1 << 6,    // A touch-up event in the control where the finger is outside the bounds of the control.
+        TOUCH_CANCEL         = 1 << 7,    // A system event canceling the current touches for the control.
+        VALUE_CHANGED        = 1 << 8      // A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
+    };
+    
+    typedef void (Object::*Handler)(Object*, EventType);
+    
+    /** The possible state for a control.  */
+    enum class State
+    {
+        NORMAL         = 1 << 0, // The normal, or default state of a control¡ªthat is, enabled but neither selected nor highlighted.
+        HIGH_LIGHTED   = 1 << 1, // Highlighted state of a control. A control enters this state when a touch down, drag inside or drag enter is performed. You can retrieve and set this value through the highlighted property.
+        DISABLED       = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
+        SELECTED       = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
+    };
+    
     static Control* create();
 
     Control();
@@ -118,7 +120,7 @@ public:
      * @param controlEvents A bitmask whose set flags specify the control events for
      * which action messages are sent. See "CCControlEvent" for bitmask constants.
      */
-    virtual void sendActionsForControlEvents(ControlEvent controlEvents);
+    virtual void sendActionsForControlEvents(EventType controlEvents);
 
     /**
      * Adds a target and action for a particular event (or events) to an internal
@@ -133,7 +135,7 @@ public:
      * @param controlEvents A bitmask specifying the control events for which the
      * action message is sent. See "CCControlEvent" for bitmask constants.
      */
-    virtual void addTargetWithActionForControlEvents(Object* target, SEL_CCControlHandler action, ControlEvent controlEvents);
+    virtual void addTargetWithActionForControlEvents(Object* target, Handler action, EventType controlEvents);
 
     /**
      * Removes a target and action for a particular event (or events) from an
@@ -147,7 +149,7 @@ public:
      * @param controlEvents A bitmask specifying the control events associated with
      * target and action. See "CCControlEvent" for bitmask constants.
      */
-    virtual void removeTargetWithActionForControlEvents(Object* target, SEL_CCControlHandler action, ControlEvent controlEvents);
+    virtual void removeTargetWithActionForControlEvents(Object* target, Handler action, EventType controlEvents);
 
     /**
      * Returns a point corresponding to the touh location converted into the
@@ -187,7 +189,7 @@ protected:
      * @return an Invocation object able to construct messages using a given 
      * target-action pair.
      */
-    Invocation* invocationWithTargetAndActionForControlEvent(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
+    Invocation* invocationWithTargetAndActionForControlEvent(Object* target, Handler action, EventType controlEvent);
 
     /**
     * Returns the Invocation list for the given control event. If the list does
@@ -199,7 +201,7 @@ protected:
     * @return the Invocation list for the given control event.
     */
     //<Invocation*>
-    Array* dispatchListforControlEvent(ControlEvent controlEvent);
+    Array* dispatchListforControlEvent(EventType controlEvent);
 
     /**
      * Adds a target and action for a particular event to an internal dispatch 
@@ -214,7 +216,7 @@ protected:
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    void addTargetWithActionForControlEvent(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
+    void addTargetWithActionForControlEvent(Object* target, Handler action, EventType controlEvent);
     
     /**
      * Removes a target and action for a particular event from an internal dispatch
@@ -228,7 +230,7 @@ protected:
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    void removeTargetWithActionForControlEvent(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
+    void removeTargetWithActionForControlEvent(Object* target, Handler action, EventType controlEvent);
 
 protected:
     bool _enabled;
@@ -249,7 +251,7 @@ protected:
     bool _isOpacityModifyRGB;
 
     /** The current control state constant. */
-    CC_SYNTHESIZE_READONLY(ControlState, _state, State);
+    CC_SYNTHESIZE_READONLY(State, _state, State);
 };
 
 // end of GUI group
