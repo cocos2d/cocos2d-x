@@ -708,17 +708,6 @@ rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine
 --functions of SimpleAudioEngine will be deprecated end
 
 
---functions of WebSocket will be deprecated begin
-local WebSocketDeprecated = { }
-function WebSocketDeprecated.sendBinaryMsg(self,table,size)
-    deprecatedTip("sendBinaryMsg","sendBinaryStringMsg")
-    local strMsg = string.char(unpack(table))
-    return self:sendBinaryStringMsg(strMsg)
-end
-rawset(WebSocket,"sendBinaryMsg",WebSocketDeprecated.sendBinaryMsg)
---functions of WebSocket will be deprecated end
-
-
 --functions of CCTMXTiledMap will be deprecated begin
 local CCTMXTiledMapDeprecated = { }
 function CCTMXTiledMapDeprecated.layerNamed(self,layerName)

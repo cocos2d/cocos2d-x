@@ -326,6 +326,7 @@ int tolua_Cocos2d_registerScriptTouchHandler00(lua_State* tolua_S)
             touchesMode = Touch::DispatchMode::ONE_BY_ONE;
         self->setTouchMode(touchesMode);
         self->setTouchPriority(priority);
+		self->setSwallowsTouches(swallowTouches);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kTouchesHandler);
     }
     return 0;
