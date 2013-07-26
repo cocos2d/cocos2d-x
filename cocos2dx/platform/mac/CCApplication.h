@@ -65,12 +65,12 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    virtual ccLanguageType getCurrentLanguage();
+    virtual LanguageType getCurrentLanguage();
 		
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform();
+    virtual Platform getTargetPlatform();
 
     /**
      *  Sets the Resource root path.
