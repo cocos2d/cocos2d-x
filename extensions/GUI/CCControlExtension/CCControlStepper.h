@@ -39,16 +39,16 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef enum
-{
-    kControlStepperPartMinus,
-    kControlStepperPartPlus,
-    kControlStepperPartNone,
-} ControlStepperPart;
-
 class ControlStepper : public Control
 {
 public:
+    enum class Part
+    {
+        MINUS,
+        PLUS,
+        NONE
+    };
+    
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
 
     ControlStepper();
@@ -100,7 +100,7 @@ protected:
     /** The step, or increment, value for the stepper. */
     double                  _stepValue;
     bool                    _touchInsideFlag;
-    ControlStepperPart    _touchedPart;
+    Part                    _touchedPart;
     int                     _autorepeatCount;
 
     // Weak links to children
