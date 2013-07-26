@@ -242,7 +242,7 @@ public:
 	 */
 	int computeLineStart(FT_Face face, Image::TextAlign eAlignMask, int line) {
 				int lineWidth = textLines.at(line).lineWidth;
-		if (eAlignMask == Image::TEXT_ALIGN_CENTER || eAlignMask == Image::TextAlign::TOP || eAlignMask == Image::TextAlign::BOTTOM) {
+		if (eAlignMask == Image::TextAlign::CENTER || eAlignMask == Image::TextAlign::TOP || eAlignMask == Image::TextAlign::BOTTOM) {
 			return (iMaxLineWidth - lineWidth) / 2;
 		} else if (eAlignMask == Image::TextAlign::RIGHT || eAlignMask == Image::TextAlign::TOP_RIGHT || eAlignMask == Image::TextAlign::BOTTOM_RIGHT) {
 			return (iMaxLineWidth - lineWidth);

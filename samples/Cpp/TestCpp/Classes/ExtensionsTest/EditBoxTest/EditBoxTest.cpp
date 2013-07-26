@@ -48,7 +48,7 @@ EditBoxTest::EditBoxTest()
     _editName->setPlaceHolder("Name:");
     _editName->setPlaceholderFontColor(Color3B::WHITE);
     _editName->setMaxLength(8);
-    _editName->setReturnType(kKeyboardReturnTypeDone);
+    _editName->setReturnType(EditBox::KeyboardReturnType::DONE);
     _editName->setDelegate(this);
     addChild(_editName);
     
@@ -63,7 +63,7 @@ EditBoxTest::EditBoxTest()
     _editPassword->setFontColor(Color3B::GREEN);
     _editPassword->setPlaceHolder("Password:");
     _editPassword->setMaxLength(6);
-    _editPassword->setInputFlag(kEditBoxInputFlagPassword);
+    _editPassword->setInputFlag(EditBox::InputFlag::PASSWORD);
     _editPassword->setInputMode(EditBox::InputMode::SINGLE_LINE);
     _editPassword->setDelegate(this);
     addChild(_editPassword);
@@ -73,7 +73,7 @@ EditBoxTest::EditBoxTest()
     _editEmail->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     _editEmail->setAnchorPoint(Point(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
-    _editEmail->setInputMode(kEditBoxInputModeEmailAddr);
+    _editEmail->setInputMode(EditBox::InputMode::EMAIL_ADDRESS);
     _editEmail->setDelegate(this);
     addChild(_editEmail);
     

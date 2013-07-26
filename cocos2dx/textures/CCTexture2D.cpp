@@ -474,7 +474,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     else if (Label::VAlignment::BOTTOM == textDefinition._vertAlignment)
     {
         eAlign = (Label::HAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::BOTTOM
-        : (Label::HAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::BOTTOEM_LEFT : Image::TextAlign::BOTTOEM_RIGHT;
+        : (Label::HAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::BOTTOM_LEFT : Image::TextAlign::BOTTOM_RIGHT;
     }
     else
     {
