@@ -157,14 +157,14 @@ void ControlSwitchSprite::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     getShaderProgram()->setUniformsForBuiltins();
 
-    ccGLBindTexture2DN(0, getTexture()->getName());
+    GL::bindTexture2DN(0, getTexture()->getName());
     glUniform1i(_textureLocation, 0);
 
-    ccGLBindTexture2DN(1, _maskTexture->getName());
+    GL::bindTexture2DN(1, _maskTexture->getName());
     glUniform1i(_maskLocation, 1);
 
 #define kQuadSize sizeof(_quad.bl)
@@ -189,7 +189,7 @@ void ControlSwitchSprite::draw()
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    ccGLBindTexture2DN(0, 0);
+    GL::bindTexture2DN(0, 0);
 }
 
 void ControlSwitchSprite::needsLayout()

@@ -622,7 +622,7 @@ void EaseSpriteDemo::onEnter()
     _tamara->setPosition(Point(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*4/5));
 }
 
-void EaseSpriteDemo::restartCallback(Object* pSender)
+void EaseSpriteDemo::restartCallback(Object* sender)
 {
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild(restartEaseAction()); 
@@ -631,7 +631,7 @@ void EaseSpriteDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void EaseSpriteDemo::nextCallback(Object* pSender)
+void EaseSpriteDemo::nextCallback(Object* sender)
 {
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( nextEaseAction() );
@@ -639,7 +639,7 @@ void EaseSpriteDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void EaseSpriteDemo::backCallback(Object* pSender)
+void EaseSpriteDemo::backCallback(Object* sender)
 {
     Scene* s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( backEaseAction() );

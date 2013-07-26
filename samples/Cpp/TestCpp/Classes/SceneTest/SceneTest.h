@@ -14,9 +14,9 @@ public:
     virtual void onEnterTransitionDidFinish();
 
     void testDealloc(float dt);
-    void onPushScene(Object* pSender);
-    void onPushSceneTran(Object* pSender);
-    void onQuit(Object* pSender);
+    void onPushScene(Object* sender);
+    void onPushSceneTran(Object* sender);
+    void onQuit(Object* sender);
 
     //CREATE_NODE(SceneTestLayer1);
 } ;
@@ -28,9 +28,9 @@ public:
     SceneTestLayer2();
 
     void testDealloc(float dt);
-    void onGoBack(Object* pSender);
-    void onReplaceScene(Object* pSender);
-    void onReplaceSceneTran(Object* pSender);
+    void onGoBack(Object* sender);
+    void onReplaceScene(Object* sender);
+    void onReplaceSceneTran(Object* sender);
 
     //CREATE_NODE(SceneTestLayer2);
 } ;
@@ -41,10 +41,10 @@ public:
     SceneTestLayer3();
     bool init();
     virtual void testDealloc(float dt);
-    void item0Clicked(Object* pSender);
-    void item1Clicked(Object* pSender);
-    void item2Clicked(Object* pSender);
-    void item3Clicked(Object* pSender);
+    void item0Clicked(Object* sender);
+    void item1Clicked(Object* sender);
+    void item2Clicked(Object* sender);
+    void item3Clicked(Object* sender);
     CREATE_FUNC(SceneTestLayer3)
 } ;
 

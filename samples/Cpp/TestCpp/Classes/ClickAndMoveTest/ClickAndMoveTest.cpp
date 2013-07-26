@@ -37,9 +37,9 @@ MainLayer::MainLayer()
                       )); 
 }
 
-void MainLayer::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void MainLayer::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*) pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
     
     Point location = touch->getLocation();
 

@@ -90,7 +90,7 @@ GLProgram::~GLProgram()
 
     if (_program) 
     {
-        ccGLDeleteProgram(_program);
+        GL::deleteProgram(_program);
     }
 
     tHashUniformEntry *current_element, *tmp;
@@ -272,7 +272,7 @@ bool GLProgram::link()
     if (status == GL_FALSE)
     {
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
-        ccGLDeleteProgram(_program);
+        GL::deleteProgram(_program);
         _program = 0;
     }
 #endif
@@ -282,7 +282,7 @@ bool GLProgram::link()
 
 void GLProgram::use()
 {
-    ccGLUseProgram(_program);
+    GL::useProgram(_program);
 }
 
 const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
@@ -564,7 +564,7 @@ void GLProgram::reset()
     
 
     // it is already deallocated by android
-    //ccGLDeleteProgram(_program);
+    //GL::deleteProgram(_program);
     _program = 0;
 
     

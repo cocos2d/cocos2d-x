@@ -61,21 +61,21 @@ void ZwoptexTest::onEnter()
     BaseTest::onEnter();
 }
 
-void ZwoptexTest::restartCallback(Object* pSender)
+void ZwoptexTest::restartCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void ZwoptexTest::nextCallback(Object* pSender)
+void ZwoptexTest::nextCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void ZwoptexTest::backCallback(Object* pSender)
+void ZwoptexTest::backCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());

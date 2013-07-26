@@ -35,10 +35,10 @@ void PlayerController::update(float delta)
 
 }
 
-void PlayerController::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void PlayerController::ccTouchesEnded(Set  *touches, Event  *event)
 {
     // Choose one of the touches to work with
-	Touch* touch = (Touch*)( pTouches->anyObject() );
+	Touch* touch = static_cast<Touch*>( touches->anyObject() );
 	Point location = touch->getLocation();
     
 

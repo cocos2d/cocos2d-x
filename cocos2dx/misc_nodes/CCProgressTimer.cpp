@@ -504,11 +504,11 @@ void ProgressTimer::draw(void)
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLBlendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
+    GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
-    ccGLBindTexture2D( _sprite->getTexture()->getName() );
+    GL::bindTexture2D( _sprite->getTexture()->getName() );
 
 #ifdef EMSCRIPTEN
     setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
