@@ -118,82 +118,71 @@ CC_DEPRECATED_ATTRIBUTE typedef AtlasAttachmentLoader CCAtlasAttachmentLoader;
 CC_DEPRECATED_ATTRIBUTE typedef VertexIndex CCVertexIndex;
 CC_DEPRECATED_ATTRIBUTE typedef RegionAttachment CCRegionAttachment;
 
-CC_DEPRECATED_ATTRIBUTE typedef ControlStepperPart CCControlStepperPart;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMap CCNodeLoaderMap;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMapEntry CCNodeLoaderMapEntry;
 CC_DEPRECATED_ATTRIBUTE typedef EventRegistry CCEventRegistry;
 CC_DEPRECATED_ATTRIBUTE typedef AttachmentType CCAttachmentType;
 
+
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction kCCScrollViewDirectionNone = ScrollView::Direction::NONE;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction kCCScrollViewDirectionHorizontal = ScrollView::Direction::HORIZONTAL;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction kCCScrollViewDirectionVertical = ScrollView::Direction::VERTICAL;
+CC_DEPRECATED_ATTRIBUTE const ScrollView::Direction kCCScrollViewDirectionBoth = ScrollView::Direction::BOTH;
 CC_DEPRECATED_ATTRIBUTE typedef ScrollView::Direction CCScrollViewDirection;
-CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionNone;
-CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionHorizontal;
-CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionVertical;
-CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionBoth;
 
-
+CC_DEPRECATED_ATTRIBUTE const TableView::VerticalFillOrder kCCTableViewFillTopDown = TableView::VerticalFillOrder::TOP_DOWN;
+CC_DEPRECATED_ATTRIBUTE const TableView::VerticalFillOrder kCCTableViewFillBottomUp = TableView::VerticalFillOrder::BOTTOM_UP;
 CC_DEPRECATED_ATTRIBUTE typedef TableView::VerticalFillOrder CCTableViewVerticalFillOrder;
-CC_DEPRECATED_ATTRIBUTE extern const TableView::VerticalFillOrder kCCTableViewFillTopDown;
-CC_DEPRECATED_ATTRIBUTE extern const TableView::VerticalFillOrder kCCTableViewFillBottomUp;
 
+CC_DEPRECATED_ATTRIBUTE const EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault = EditBox::KeyboardReturnType::DEFAULT;
+CC_DEPRECATED_ATTRIBUTE const EditBox::KeyboardReturnType  kKeyboardReturnTypeDone = EditBox::KeyboardReturnType::DONE;
+CC_DEPRECATED_ATTRIBUTE const EditBox::KeyboardReturnType  kKeyboardReturnTypeSend = EditBox::KeyboardReturnType::SEND;
+CC_DEPRECATED_ATTRIBUTE const EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch = EditBox::KeyboardReturnType::SEARCH;
+CC_DEPRECATED_ATTRIBUTE const EditBox::KeyboardReturnType  kKeyboardReturnTypeGo = EditBox::KeyboardReturnType::GO;
 
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDone;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSend;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeGo;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeAny = EditBox::InputMode::ANY;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeEmailAddr = EditBox::InputMode::EMAIL_ADDRESS;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeNumeric = EditBox::InputMode::NUMERIC;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModePhoneNumber = EditBox::InputMode::PHONE_NUMBER;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeUrl = EditBox::InputMode::URL;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeDecimal = EditBox::InputMode::DECIMAL;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputMode kEditBoxInputModeSingleLine = EditBox::InputMode::SINGLE_LINE;
 
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeAny;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeEmailAddr;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeNumeric;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModePhoneNumber;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeUrl;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeDecimal;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeSingleLine;
-
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagPassword;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagSensitive;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputFlag kEditBoxInputFlagPassword = EditBox::InputFlag::PASSWORD;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputFlag kEditBoxInputFlagSensitive = EditBox::InputFlag::SENSITIVE;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord = EditBox::InputFlag::INITIAL_CAPS_WORD;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence = EditBox::InputFlag::INITIAL_CAPS_SENTENCE;
+CC_DEPRECATED_ATTRIBUTE const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters = EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS;
 
 CC_DEPRECATED_ATTRIBUTE typedef EditBox::KeyboardReturnType KeyboardReturnType;
 CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputMode EditBoxInputMode;
 CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputFlag EditBoxInputFlag;
 
-#define kCCControlStepperPartMinus kControlStepperPartMinus
-#define kCCControlStepperPartPlus kControlStepperPartPlus
-#define kCCControlStepperPartNone kControlStepperPartNone
+CC_DEPRECATED_ATTRIBUTE typedef ControlStepper::Part ControlStepperPart;
+CC_DEPRECATED_ATTRIBUTE const ControlStepper::Part kCCControlStepperPartMinus = ControlStepper::Part::MINUS;
+CC_DEPRECATED_ATTRIBUTE const ControlStepper::Part kCCControlStepperPartPlus = ControlStepper::Part::PLUS;
+CC_DEPRECATED_ATTRIBUTE const ControlStepper::Part kCCControlStepperPartNone = ControlStepper::Part::NONE;
 
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDown;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragInside;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragOutside;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragEnter;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragExit;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpInside;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpOutside;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchCancel;
-CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventValueChanged;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchDown = Control::EventType::TOUCH_DOWN;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchDragInside = Control::EventType::DRAG_INSIDE;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchDragOutside = Control::EventType::DRAG_OUTSIDE;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchDragEnter = Control::EventType::DRAG_ENTER;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchDragExit = Control::EventType::DRAG_EXIT;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchUpInside = Control::EventType::TOUCH_UP_INSIDE;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchUpOutside = Control::EventType::TOUCH_UP_OUTSIDE;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventTouchCancel = Control::EventType::TOUCH_CANCEL;
+CC_DEPRECATED_ATTRIBUTE const Control::EventType CCControlEventValueChanged = Control::EventType::VALUE_CHANGED;
+
 CC_DEPRECATED_ATTRIBUTE typedef Control::EventType CCControlEvent;
 
-CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateNormal;
-CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateHighlighted;
-CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateDisabled;
-CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateSelected;
+CC_DEPRECATED_ATTRIBUTE const Control::State CCControlStateNormal = Control::State::NORMAL;
+CC_DEPRECATED_ATTRIBUTE const Control::State CCControlStateHighlighted = Control::State::HIGH_LIGHTED;
+CC_DEPRECATED_ATTRIBUTE const Control::State CCControlStateDisabled = Control::State::DISABLED;
+CC_DEPRECATED_ATTRIBUTE const Control::State CCControlStateSelected = Control::State::SELECTED;
 CC_DEPRECATED_ATTRIBUTE typedef Control::State CCControlState;
 
 CC_DEPRECATED_ATTRIBUTE typedef Control::Handler SEL_CCControlHandler;
 
-
-#define kCCCreateFile kCreateFile
-#define kCCNetwork kNetwork
-#define kCCNoNewVersion kNoNewVersion
-#define kCCUncompress kUncompress
-
-#define kCCHttpGet kHttpGet
-#define kCCHttpPut kHttpPut
-#define kCCHttpPost kHttpPost
-#define kCCHttpDelete kHttpDelete
-#define kCCHttpUnkown kHttpUnkown
 
 NS_CC_EXT_END
 
