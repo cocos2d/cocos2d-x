@@ -3,8 +3,8 @@ local streak = nil
 local titleLabel = nil
 local subtitleLabel = nil
 
-local s = CCDirector:sharedDirector():getWinSize()
-local scheduler = CCDirector:sharedDirector():getScheduler()
+local s = CCDirector:getInstance():getWinSize()
+local scheduler = CCDirector:getInstance():getScheduler()
 
 local firstTick = nil
 
@@ -25,7 +25,7 @@ local function getBaseLayer()
 	itemMode:registerScriptTapHandler(modeCallback)
     local menuMode = CCMenu:create()
 	menuMode:addChild(itemMode)
-    menuMode:setPosition(ccp(s.width / 2, s.height / 4))
+    menuMode:setPosition(CCPoint(s.width / 2, s.height / 4))
     layer:addChild(menuMode)
 
     Helper.initWithLayer(layer)
@@ -47,7 +47,7 @@ local function MotionStreakTest1_update(dt)
 		return
 	end
 
-	streak:setPosition(target:convertToWorldSpace(ccp(0, 0)))
+	streak:setPosition(target:convertToWorldSpace(CCPoint(0, 0)))
 end
 
 local function MotionStreakTest1_onEnterOrExit(tag)
@@ -63,11 +63,11 @@ local function MotionStreakTest1()
 
 	root = CCSprite:create(s_pPathR1)
     layer:addChild(root, 1)
-    root:setPosition(ccp(s.width / 2, s.height / 2))
+    root:setPosition(CCPoint(s.width / 2, s.height / 2))
 
     target = CCSprite:create(s_pPathR1)
     root:addChild(target)
-    target:setPosition(ccp(s.width / 4, 0))
+    target:setPosition(CCPoint(s.width / 4, 0))
 
     streak = CCMotionStreak:create(2, 3, 32, Color3B(0, 255, 0), s_streak)
     layer:addChild(streak)
@@ -75,7 +75,7 @@ local function MotionStreakTest1()
     local a1 = CCRotateBy:create(2, 360)
 
     local action1 = CCRepeatForever:create(a1)
-    local motion = CCMoveBy:create(2, CCPointMake(100,0))
+    local motion = CCMoveBy:create(2, CCPoint(100,0))
     root:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(motion, motion:reverse())))
     root:runAction(action1)
 
@@ -106,7 +106,7 @@ local function MotionStreakTest2()
     streak = CCMotionStreak:create(3, 3, 64, Color3B(255, 255, 255), s_streak)
     layer:addChild(streak)
 
-    streak:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    streak:setPosition(CCPoint(s.width / 2, s.height / 2))
 
 	local function onTouchMoved(x, y)
 		if firstTick == true then
@@ -114,7 +114,7 @@ local function MotionStreakTest2()
 			return
 		end
 
-		streak:setPosition(ccp(x, y))
+		streak:setPosition(CCPoint(x, y))
     end
 
     local function onTouch(eventType, x, y)
@@ -149,7 +149,7 @@ local function Issue1358_update(dt)
 	end
 	fAngle = fAngle + 1.0
     streak:setPosition(
-		ccp(center.x + math.cos(fAngle / 180 * math.pi) * fRadius, center.y + math.sin(fAngle/ 180 * math.pi) * fRadius))
+		CCPoint(center.x + math.cos(fAngle / 180 * math.pi) * fRadius, center.y + math.sin(fAngle/ 180 * math.pi) * fRadius))
 end
 
 local function Issue1358_onEnterOrExit(tag)
@@ -166,7 +166,7 @@ local function Issue1358()
 	streak = CCMotionStreak:create(2.0, 1.0, 50.0, Color3B(255, 255, 0), "Images/Icon.png")
     layer:addChild(streak)
 
-    center = ccp(s.width / 2, s.height / 2)
+    center = CCPoint(s.width / 2, s.height / 2)
     fRadius = s.width / 3
     fAngle = 0
 

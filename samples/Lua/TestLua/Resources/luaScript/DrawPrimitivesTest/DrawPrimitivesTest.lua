@@ -43,7 +43,7 @@ local function drawPrimitivesMainLayer()
         item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
         item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
         
-        ordercallbackmenu:setPosition(ccp(0, 0))
+        ordercallbackmenu:setPosition(CCPoint(0, 0))
 
         return ordercallbackmenu
     end

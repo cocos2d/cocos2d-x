@@ -14,7 +14,7 @@ local function createTestLayer(title, subtitle)
 
     local  grossini = CCSprite:create("Images/grossinis_sister2.png")
     bg:addChild(grossini, 1, kTagSprite1)
-    grossini:setPosition( ccp(VisibleRect:left().x+VisibleRect:getVisibleRect().size.width/3.0, VisibleRect:bottom().y+ 200) )
+    grossini:setPosition( CCPoint(VisibleRect:left().x+VisibleRect:getVisibleRect().size.width/3.0, VisibleRect:bottom().y+ 200) )
     local  sc = CCScaleBy:create(2, 5)
     local  sc_back = sc:reverse()
     local arr = CCArray:create()
@@ -24,7 +24,7 @@ local function createTestLayer(title, subtitle)
 
     local  tamara = CCSprite:create("Images/grossinis_sister1.png")
     bg:addChild(tamara, 1, kTagSprite2)
-    tamara:setPosition( ccp(VisibleRect:left().x+2*VisibleRect:getVisibleRect().size.width/3.0,VisibleRect:bottom().y+200) )
+    tamara:setPosition( CCPoint(VisibleRect:left().x+2*VisibleRect:getVisibleRect().size.width/3.0,VisibleRect:bottom().y+200) )
     local  sc2 = CCScaleBy:create(2, 5)
     local  sc2_back = sc2:reverse()
     arr = CCArray:create()
@@ -50,9 +50,9 @@ local function Effect1()
     --     Lens3D is Grid3D and it's size is (15,10)
     --     Waves3D is Grid3D and it's size is (15,10)
 
-    local size = CCDirector:sharedDirector():getWinSize()
-    local  lens = CCLens3D:create(0.0, CCSizeMake(15,10), ccp(size.width/2,size.height/2), 240)
-    local  waves = CCWaves3D:create(10, CCSizeMake(15,10), 18, 15)
+    local size = CCDirector:getInstance():getWinSize()
+    local  lens = CCLens3D:create(0.0, CCSize(15,10), CCPoint(size.width/2,size.height/2), 240)
+    local  waves = CCWaves3D:create(10, CCSize(15,10), 18, 15)
 
     local  reuse = CCReuseGrid:create(1)
     local  delay = CCDelayTime:create(8)
@@ -86,9 +86,9 @@ local function Effect2()
     --     ShakyTiles is TiledGrid3D and it's size is (15,10)
     --     Shuffletiles is TiledGrid3D and it's size is (15,10)
     --       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    local  shaky = CCShakyTiles3D:create(5, CCSizeMake(15,10), 4, false)
-    local  shuffle = CCShuffleTiles:create(0, CCSizeMake(15,10), 3)
-    local  turnoff = CCTurnOffTiles:create(0, CCSizeMake(15,10), 3)
+    local  shaky = CCShakyTiles3D:create(5, CCSize(15,10), 4, false)
+    local  shuffle = CCShuffleTiles:create(0, CCSize(15,10), 3)
+    local  turnoff = CCTurnOffTiles:create(0, CCSize(15,10), 3)
     local  turnon = turnoff:reverse()
 
     -- reuse 2 times:
@@ -122,14 +122,14 @@ local function Effect3()
     local  target1 = bg:getChildByTag(kTagSprite1)
     local  target2 = bg:getChildByTag(kTagSprite2)
 
-    local  waves = CCWaves:create(5, CCSizeMake(15,10), 5, 20, true, false)
-    local  shaky = CCShaky3D:create(5, CCSizeMake(15,10), 4, false)
+    local  waves = CCWaves:create(5, CCSize(15,10), 5, 20, true, false)
+    local  shaky = CCShaky3D:create(5, CCSize(15,10), 4, false)
 
     target1:runAction( CCRepeatForever:create( waves ) )
     target2:runAction( CCRepeatForever:create( shaky ) )
 
     -- moving background. Testing issue #244
-    local  move = CCMoveBy:create(3, ccp(200,0) )
+    local  move = CCMoveBy:create(3, CCPoint(200,0) )
     local arr = CCArray:create()
     arr:addObject(move)
     arr:addObject(move:reverse())
@@ -174,8 +174,8 @@ end
 
 local function Effect4()
     local ret = createTestLayer("Jumpy Lens3D")
-    local  lens = CCLens3D:create(10, CCSizeMake(32,24), ccp(100,180), 150)
-    local  move = CCJumpBy:create(5, ccp(380,0), 100, 4)
+    local  lens = CCLens3D:create(10, CCSize(32,24), CCPoint(100,180), 150)
+    local  move = CCJumpBy:create(5, CCPoint(380,0), 100, 4)
     local  move_back = move:reverse()
     local arr = CCArray:create()
     arr:addObject(move)
@@ -187,7 +187,7 @@ local function Effect4()
     --        so we make an encapsulation for CCLens3D to achieve that.
     --    */
 
-    local  director = CCDirector:sharedDirector()
+    local  director = CCDirector:getInstance()
     -- local  pTarget = Lens3DTarget:create(lens)
     -- -- Please make sure the target been added to its parent.
     -- ret:addChild(pTarget)
@@ -205,7 +205,7 @@ end
 local function Effect5()
     local ret = createTestLayer("Test Stop-Copy-Restar")
 
-    local  effect = CCLiquid:create(2, CCSizeMake(32,24), 1, 20)
+    local  effect = CCLiquid:create(2, CCSize(32,24), 1, 20)
     local arr = CCArray:create()
     arr:addObject(effect)
     arr:addObject(CCDelayTime:create(2))
@@ -216,7 +216,7 @@ local function Effect5()
     bg:runAction(stopEffect)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCDirector:sharedDirector():setProjection(kCCDirectorProjection3D)
+            CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
         end
     end
 
@@ -235,7 +235,7 @@ local function Issue631()
                        "Effect image should be 100% opaque. Testing issue #631")
     local arr = CCArray:create()
     arr:addObject(CCDelayTime:create(2.0))
-    arr:addObject(CCShaky3D:create(5.0, CCSizeMake(5, 5), 16, false))
+    arr:addObject(CCShaky3D:create(5.0, CCSize(5, 5), 16, false))
     local  effect = CCSequence:create(arr)
 
     -- cleanup
@@ -246,7 +246,7 @@ local function Issue631()
     local  layer = CCLayerColor:create( Color4B(255,0,0,255) )
     ret:addChild(layer, -10)
     local  sprite = CCSprite:create("Images/grossini.png")
-    sprite:setPosition( ccp(50,80) )
+    sprite:setPosition( CCPoint(50,80) )
     layer:addChild(sprite, 10)
 
     -- foreground

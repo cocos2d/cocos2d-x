@@ -6,62 +6,62 @@ local function doTest()
 
     -- set default value
 
-    CCUserDefault:sharedUserDefault():setStringForKey("string", "value1")
-    CCUserDefault:sharedUserDefault():setIntegerForKey("integer", 10)
-    CCUserDefault:sharedUserDefault():setFloatForKey("float", 2.3)
-    CCUserDefault:sharedUserDefault():setDoubleForKey("double", 2.4)
-    CCUserDefault:sharedUserDefault():setBoolForKey("bool", true)
+    CCUserDefault:getInstance():setStringForKey("string", "value1")
+    CCUserDefault:getInstance():setIntegerForKey("integer", 10)
+    CCUserDefault:getInstance():setFloatForKey("float", 2.3)
+    CCUserDefault:getInstance():setDoubleForKey("double", 2.4)
+    CCUserDefault:getInstance():setBoolForKey("bool", true)
 
     -- print value
 
-    local ret = CCUserDefault:sharedUserDefault():getStringForKey("string")
+    local ret = CCUserDefault:getInstance():getStringForKey("string")
     cclog("string is %s", ret)
 
-    local d = CCUserDefault:sharedUserDefault():getDoubleForKey("double")
+    local d = CCUserDefault:getInstance():getDoubleForKey("double")
     cclog("double is %f", d)
 
-    local i = CCUserDefault:sharedUserDefault():getIntegerForKey("integer")
+    local i = CCUserDefault:getInstance():getIntegerForKey("integer")
     cclog("integer is %d", i)
 
-    local f = CCUserDefault:sharedUserDefault():getFloatForKey("float")
+    local f = CCUserDefault:getInstance():getFloatForKey("float")
     cclog("float is %f", f)
 
-    local b = CCUserDefault:sharedUserDefault():getBoolForKey("bool")
+    local b = CCUserDefault:getInstance():getBoolForKey("bool")
     if b == true then
         cclog("bool is true")
     else
         cclog("bool is false")
     end
 
-    --CCUserDefault:sharedUserDefault():flush()
+    --CCUserDefault:getInstance():flush()
 
     cclog("********************** after change value ***********************")
 
     -- change the value
 
-    CCUserDefault:sharedUserDefault():setStringForKey("string", "value2")
-    CCUserDefault:sharedUserDefault():setIntegerForKey("integer", 11)
-    CCUserDefault:sharedUserDefault():setFloatForKey("float", 2.5)
-    CCUserDefault:sharedUserDefault():setDoubleForKey("double", 2.6)
-    CCUserDefault:sharedUserDefault():setBoolForKey("bool", false)
+    CCUserDefault:getInstance():setStringForKey("string", "value2")
+    CCUserDefault:getInstance():setIntegerForKey("integer", 11)
+    CCUserDefault:getInstance():setFloatForKey("float", 2.5)
+    CCUserDefault:getInstance():setDoubleForKey("double", 2.6)
+    CCUserDefault:getInstance():setBoolForKey("bool", false)
 
-    CCUserDefault:sharedUserDefault():flush()
+    CCUserDefault:getInstance():flush()
 
     -- print value
 
-    ret = CCUserDefault:sharedUserDefault():getStringForKey("string")
+    ret = CCUserDefault:getInstance():getStringForKey("string")
     cclog("string is %s", ret)
 
-    d = CCUserDefault:sharedUserDefault():getDoubleForKey("double")
+    d = CCUserDefault:getInstance():getDoubleForKey("double")
     cclog("double is %f", d)
 
-    i = CCUserDefault:sharedUserDefault():getIntegerForKey("integer")
+    i = CCUserDefault:getInstance():getIntegerForKey("integer")
     cclog("integer is %d", i)
 
-    f = CCUserDefault:sharedUserDefault():getFloatForKey("float")
+    f = CCUserDefault:getInstance():getFloatForKey("float")
     cclog("float is %f", f)
 
-    b = CCUserDefault:sharedUserDefault():getBoolForKey("bool")
+    b = CCUserDefault:getInstance():getBoolForKey("bool")
     if b == true then
         cclog("bool is true")
     else
@@ -71,10 +71,10 @@ end
 
 function UserDefaultTestMain()
     local ret = CCScene:create()
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
     local  label = CCLabelTTF:create("CCUserDefault test see log", "Arial", 28)
     ret:addChild(label, 0)
-    label:setPosition( ccp(s.width/2, s.height-50) )
+    label:setPosition( CCPoint(s.width/2, s.height-50) )
     doTest()
     return ret
 end
