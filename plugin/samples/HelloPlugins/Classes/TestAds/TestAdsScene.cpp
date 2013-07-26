@@ -32,12 +32,6 @@ const std::string s_aTestCases[] = {
 	"Admob",
 };
 
-const std::string s_aTestTypes[] = {
-	"Banner",
-	"Full Screen",
-    "More App",
-};
-
 const std::string s_aTestPoses[] = {
 	"Pos: Center",
 	"Pos: Top",
@@ -130,18 +124,6 @@ bool TestAds::init()
 	_caseItem->setPosition(posMid + Point(-200, 120));
 	pMenu->addChild(_caseItem);
 
-	// type item
-	_typeItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::typeChanged, this),
-												MenuItemFont::create( s_aTestTypes[0].c_str() ),
-												NULL );
-	int typeLen = sizeof(s_aTestTypes) / sizeof(std::string);
-	for (int i = 1; i < typeLen; ++i)
-	{
-		_typeItem->getSubItems()->addObject( MenuItemFont::create( s_aTestTypes[i].c_str() ) );
-	}
-	_typeItem->setPosition(posMid + Point(0, 120));
-	pMenu->addChild(_typeItem);
-
 	// poses item
 	_posItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::posChanged, this),
 												MenuItemFont::create( s_aTestPoses[0].c_str() ),
@@ -157,7 +139,10 @@ bool TestAds::init()
 	// init options
 	_ads = _admob;
 	_pos = ProtocolAds::kPosCenter;
-	_type = ProtocolAds::kBannerAd;
+
+    // init the AdsInfo
+    adInfo["AdmobType"] = "1";
+    adInfo["AdmobSizeEnum"] = "1";
 
     this->addChild(pMenu, 1);
 
@@ -166,30 +151,22 @@ bool TestAds::init()
 
 void TestAds::testShow(Object* pSender)
 {
-    int nSize = 0;
-	if (_ads == _admob)
-	{
-	    nSize = 0;
-	}
-
     if (_ads)
 	{
-        _ads->showAds(_type, nSize, _pos);
+        _ads->showAds(adInfo, _pos);
 	}
 }
 
 void TestAds::testHide(Object* pSender)
 {
-	_ads->hideAds(_type);
+	_ads->hideAds(adInfo);
 }
 
 void TestAds::menuBackCallback(Object* pSender)
 {
     if (_admob != NULL)
     {
-        _admob->hideAds(ProtocolAds::kBannerAd);
-        _admob->hideAds(ProtocolAds::kFullScreenAd);
-        _admob->hideAds(ProtocolAds::kMoreApp);
+        _admob->hideAds(adInfo);
     	PluginManager::getInstance()->unloadPlugin("AdsAdmob");
     	_admob = NULL;
     }
@@ -217,13 +194,6 @@ void TestAds::caseChanged(Object* pSender)
 		break;
 	}
 	log("case selected change to : %s", strLog.c_str());
-}
-
-void TestAds::typeChanged(Object* pSender)
-{
-	int selectIndex = _typeItem->getSelectedIndex();
-	_type = (ProtocolAds::AdsType) selectIndex;
-	log("type selected change to : %d", _type);
 }
 
 void TestAds::posChanged(Object* pSender)

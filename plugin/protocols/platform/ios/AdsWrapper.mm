@@ -32,12 +32,31 @@ using namespace cocos2d::plugin;
 
 + (void) onAdsResult:(id) obj withRet:(AdsResult) ret withMsg:(NSString*) msg
 {
-    PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
-    ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
-    if (pAds) {
+    PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
+    ProtocolAds* adsPlugin = dynamic_cast<ProtocolAds*>(plugin);
+    if (adsPlugin) {
         const char* chMsg = [msg UTF8String];
         AdsResultCode cRet = (AdsResultCode) ret;
-        pAds->onAdsResult(cRet, chMsg);
+        AdsListener* listener = adsPlugin->getAdsListener();
+        if (listener)
+        {
+            listener->onAdsResult(cRet, chMsg);
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Can't find the C++ object of the ads plugin");
+    }
+}
+
++ (void) onPlayerGetPoints:(id) obj withPoints: (int) points
+{
+    PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
+    ProtocolAds* adsPlugin = dynamic_cast<ProtocolAds*>(plugin);
+    if (adsPlugin) {
+        AdsListener* listener = adsPlugin->getAdsListener();
+        if (listener)
+        {
+            listener->onPlayerGetPoints(adsPlugin, points);
+        }
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the ads plugin");
     }
