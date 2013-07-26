@@ -201,9 +201,7 @@ protected:
     int _height;
     FileType       _fileType;
     Texture2DPixelFormat _renderFormat;
-    bool _hasAlpha;
     bool _preMulti;
-    bool _compressed;
     MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
 

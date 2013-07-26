@@ -39,7 +39,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "support/ccUtils.h"
 #include "platform/CCPlatformMacros.h"
-#include "textures/CCTextureETC.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -59,16 +58,6 @@ static Texture2DPixelFormat g_defaultAlphaPixelFormat = kTexture2DPixelFormat_De
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static bool PVRHaveAlphaPremultiplied_ = false;
-
-
-TexturePixelFormatInfo::TexturePixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
-:internalFormat(internalFormat)
-,format(format)
-,type(type)
-,bpp(bpp)
-,compressed(compressed)
-,alpha(alpha)
-{}
 
 //////////////////////////////////////////////////////////////////////////
 //conventer function
@@ -509,14 +498,14 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2DPi
 
     const TexturePixelFormatInfo& info = g_texturePixelFormatInfoTables.at(pixelFormat);
 
-    if (info.compressed && !Configuration::getInstance()->supportsPVRTC())
+    if (info.compressed && !Configuration::getInstance()->supportsPVRTC() && !Configuration::getInstance()->supportsETC())
     {
-        CCLOG("cocos2d: WARNING: PVRTC images are not supported");
+        CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
         return false;
     }
 
-    //Set the row align only when mipmapsNum == 1
-    if (mipmapsNum == 1)
+    //Set the row align only when mipmapsNum == 1 and the data is uncompressed
+    if (mipmapsNum == 1 && !info.compressed)
     {
         unsigned int bytesPerRow = pixelsWide * info.bpp / 8;
 
@@ -645,7 +634,7 @@ bool Texture2D::initWithImage(Image *uiImage, Texture2DPixelFormat format)
 
     unsigned char*            tempData = uiImage->getData();
     Size                      imageSize = Size((float)imageWidth, (float)imageHeight);
-    Texture2DPixelFormat      pixelFormat;
+    Texture2DPixelFormat      pixelFormat = kTexture2DPixelFormat_None;
     Texture2DPixelFormat      renderFormat = uiImage->getRenderFormat();
     size_t	                  tempDataLen = uiImage->getDataLen();
 
@@ -1160,34 +1149,6 @@ void Texture2D::drawInRect(const Rect& rect)
     glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-bool Texture2D::initWithETCFile(const char* file)
-{
-    bool bRet = false;
-    // nothing to do with Object::init
-    
-    TextureETC *etc = new TextureETC;
-    bRet = etc->initWithFile(file);
-    
-    if (bRet)
-    {
-        _name = etc->getName();
-        _maxS = 1.0f;
-        _maxT = 1.0f;
-        _pixelsWide = etc->getWidth();
-        _pixelsHigh = etc->getHeight();
-        _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
-        _hasPremultipliedAlpha = true;
-        
-        etc->release();
-    }
-    else
-    {
-        CCLOG("cocos2d: Couldn't load ETC image %s", file);
-    }
-    
-    return bRet;
 }
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)

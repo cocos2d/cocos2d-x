@@ -405,7 +405,6 @@ bool Image::initWithString(
 
         _width    = (short)size.cx;
         _height   = (short)size.cy;
-        _hasAlpha = true;
         _preMulti = false;
         _renderFormat = kTexture2DPixelFormat_RGBA8888;
         // copy pixed data

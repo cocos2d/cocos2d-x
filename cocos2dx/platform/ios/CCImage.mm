@@ -38,7 +38,6 @@ typedef struct
 {
     unsigned int height;
     unsigned int width;
-    bool         hasAlpha;
     bool         isPremultipliedAlpha;
     bool         hasShadow;
     CGSize       shadowOffset;
@@ -56,90 +55,6 @@ typedef struct
     unsigned char*  data;
     
 } tImageInfo;
-
-static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
-{
-    if(cgImage == NULL) 
-    {
-        return false;
-    }
-    
-    // get image info
-    
-    pImageinfo->width = CGImageGetWidth(cgImage);
-    pImageinfo->height = CGImageGetHeight(cgImage);
-    
-    CGImageAlphaInfo info = CGImageGetAlphaInfo(cgImage);
-    pImageinfo->hasAlpha = (info == kCGImageAlphaPremultipliedLast) 
-                            || (info == kCGImageAlphaPremultipliedFirst) 
-                            || (info == kCGImageAlphaLast) 
-                            || (info == kCGImageAlphaFirst);
-    
-    // If OS version < 5.x, add condition to support jpg
-    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if(systemVersion < 5.0f)
-    {
-        pImageinfo->hasAlpha = (pImageinfo->hasAlpha || (info == kCGImageAlphaNoneSkipLast));
-    }
-    
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(cgImage);
-    if (colorSpace)
-    {
-        if (pImageinfo->hasAlpha)
-        {
-            info = kCGImageAlphaPremultipliedLast;
-            pImageinfo->isPremultipliedAlpha = true;
-        }
-        else 
-        {
-            info = kCGImageAlphaNoneSkipLast;
-            pImageinfo->isPremultipliedAlpha = false;
-        }
-    }
-    else
-    {
-        return false;
-    }
-    
-    // change to RGBA8888
-    pImageinfo->hasAlpha = true;
-    pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
-    colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
-                                                 pImageinfo->width, 
-                                                 pImageinfo->height,
-                                                 8, 
-                                                 4 * pImageinfo->width, 
-                                                 colorSpace, 
-                                                 info | kCGBitmapByteOrder32Big);
-    
-    CGContextClearRect(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height));
-    //CGContextTranslateCTM(context, 0, 0);
-    CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);
-    
-    CGContextRelease(context);
-    CFRelease(colorSpace);
-  
-    return true;
-}
-
-static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
-{
-    bool ret = false;
-    
-    if (pBuffer) 
-    {
-        CGImageRef CGImage;
-        NSData *data;
-        
-        data = [NSData dataWithBytes:pBuffer length:length];
-        CGImage = [[UIImage imageWithData:data] CGImage];
-        
-        ret = _initWithImage(CGImage, pImageinfo);
-    }
-    
-    return ret;
-}
 
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
@@ -386,7 +301,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
                
         // output params
         pInfo->data                 = data;
-        pInfo->hasAlpha             = true;
         pInfo->isPremultipliedAlpha = true;
         pInfo->width                = dim.width;
         pInfo->height               = dim.height;
@@ -458,7 +372,6 @@ bool Image::initWithStringShadowStroke(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _hasAlpha = info.hasAlpha;
     _renderFormat = kTexture2DPixelFormat_RGBA8888;
     _preMulti = info.isPremultipliedAlpha;
     _data = info.data;
@@ -477,7 +390,7 @@ bool Image::_iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
     }
         
     int bitsPerComponent = 8;            
-    int bitsPerPixel = _hasAlpha ? 32 : 24;
+    int bitsPerPixel = hasAlpha() ? 32 : 24;
     if ((! saveToPNG) || bIsToRGB)
     {
         bitsPerPixel = 24;
@@ -490,7 +403,7 @@ bool Image::_iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
     
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-    if ((saveToPNG && _hasAlpha && bIsToRGB)
+    if ((saveToPNG && hasAlpha() && bIsToRGB)
        || (! saveToPNG))
     {
         pixels = new unsigned char[myDataLength];
@@ -510,7 +423,7 @@ bool Image::_iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
         
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if (saveToPNG && _hasAlpha && (! bIsToRGB))
+    if (saveToPNG && hasAlpha() && (! bIsToRGB))
     {
         bitmapInfo |= kCGImageAlphaPremultipliedLast;
     }

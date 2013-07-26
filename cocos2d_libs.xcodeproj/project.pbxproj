@@ -394,8 +394,6 @@
 		A03F2B581780BAE9006731B9 /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254A1780BAE8006731B9 /* CCTextureAtlas.h */; };
 		A03F2B591780BAE9006731B9 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254B1780BAE8006731B9 /* CCTextureCache.cpp */; };
 		A03F2B5A1780BAE9006731B9 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254C1780BAE8006731B9 /* CCTextureCache.h */; };
-		A03F2B5B1780BAE9006731B9 /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */; };
-		A03F2B5C1780BAE9006731B9 /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254E1780BAE8006731B9 /* CCTextureETC.h */; };
 		A03F2B5F1780BAE9006731B9 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */; };
 		A03F2B601780BAE9006731B9 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25531780BAE8006731B9 /* CCParallaxNode.h */; };
 		A03F2B611780BAE9006731B9 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */; };
@@ -1029,7 +1027,6 @@
 		A07A4C9F1783777C0073F6A7 /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25471780BAE8006731B9 /* CCTexture2D.cpp */; };
 		A07A4CA01783777C0073F6A7 /* CCTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25491780BAE8006731B9 /* CCTextureAtlas.cpp */; };
 		A07A4CA11783777C0073F6A7 /* CCTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254B1780BAE8006731B9 /* CCTextureCache.cpp */; };
-		A07A4CA21783777C0073F6A7 /* CCTextureETC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */; };
 		A07A4CA41783777C0073F6A7 /* CCParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */; };
 		A07A4CA51783777C0073F6A7 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */; };
 		A07A4CA61783777C0073F6A7 /* CCTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03F25561780BAE8006731B9 /* CCTMXLayer.cpp */; };
@@ -1187,7 +1184,6 @@
 		A07A4D521783777C0073F6A7 /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25481780BAE8006731B9 /* CCTexture2D.h */; };
 		A07A4D531783777C0073F6A7 /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254A1780BAE8006731B9 /* CCTextureAtlas.h */; };
 		A07A4D541783777C0073F6A7 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254C1780BAE8006731B9 /* CCTextureCache.h */; };
-		A07A4D551783777C0073F6A7 /* CCTextureETC.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F254E1780BAE8006731B9 /* CCTextureETC.h */; };
 		A07A4D571783777C0073F6A7 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25531780BAE8006731B9 /* CCParallaxNode.h */; };
 		A07A4D581783777C0073F6A7 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25551780BAE8006731B9 /* CCTileMapAtlas.h */; };
 		A07A4D591783777C0073F6A7 /* CCTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F25571780BAE8006731B9 /* CCTMXLayer.h */; };
@@ -1761,10 +1757,10 @@
 		A07A50DB17838A0C0073F6A7 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A509617838A0C0073F6A7 /* Util.h */; };
 		A07A50DC17838A0C0073F6A7 /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A509717838A0C0073F6A7 /* WeakPtr.h */; };
 		A07A50DD17838A0C0073F6A7 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A509917838A0C0073F6A7 /* libjs_static.a */; };
-		A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
-		A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52C91784AC360073F6A7 /* etc1.cpp */; };
-		A07A52CD1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
-		A07A52CE1784AC360073F6A7 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = A07A52CA1784AC360073F6A7 /* etc1.h */; };
+		B33AFB6917A20BE40022B711 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B33AFB6717A20BE40022B711 /* etc1.cpp */; };
+		B33AFB6A17A20BE40022B711 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B33AFB6717A20BE40022B711 /* etc1.cpp */; };
+		B33AFB6B17A20BE40022B711 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B33AFB6817A20BE40022B711 /* etc1.h */; };
+		B33AFB6C17A20BE40022B711 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B33AFB6817A20BE40022B711 /* etc1.h */; };
 		B3D8DD58179922A10039C204 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD53179922A10039C204 /* libcurl.a */; };
 		B3D8DD59179922A10039C204 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD54179922A10039C204 /* libjpeg.a */; };
 		B3D8DD5A179922A10039C204 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD55179922A10039C204 /* libpng.a */; };
@@ -2198,8 +2194,6 @@
 		A03F254A1780BAE8006731B9 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
 		A03F254B1780BAE8006731B9 /* CCTextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCache.cpp; sourceTree = "<group>"; };
 		A03F254C1780BAE8006731B9 /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
-		A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureETC.cpp; sourceTree = "<group>"; };
-		A03F254E1780BAE8006731B9 /* CCTextureETC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureETC.h; sourceTree = "<group>"; };
 		A03F25521780BAE8006731B9 /* CCParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParallaxNode.cpp; sourceTree = "<group>"; };
 		A03F25531780BAE8006731B9 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		A03F25541780BAE8006731B9 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
@@ -2900,8 +2894,8 @@
 		A07A509617838A0C0073F6A7 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		A07A509717838A0C0073F6A7 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		A07A509917838A0C0073F6A7 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
-		A07A52C91784AC360073F6A7 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
-		A07A52CA1784AC360073F6A7 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etc1.h; sourceTree = "<group>"; };
+		B33AFB6717A20BE40022B711 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = etc1.cpp; path = common/etc/etc1.cpp; sourceTree = "<group>"; };
+		B33AFB6817A20BE40022B711 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = etc1.h; path = common/etc/etc1.h; sourceTree = "<group>"; };
 		B3D8DD53179922A10039C204 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		B3D8DD54179922A10039C204 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
 		B3D8DD55179922A10039C204 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
@@ -3566,6 +3560,7 @@
 		A03F1F611780BAE5006731B9 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				B33AFB6417A20B150022B711 /* etc */,
 				A07A4D9D17837B910073F6A7 /* ios */,
 				A03F20D21780BAE5006731B9 /* mac */,
 			);
@@ -3764,15 +3759,12 @@
 		A03F25461780BAE8006731B9 /* textures */ = {
 			isa = PBXGroup;
 			children = (
-				A07A52C81784AC360073F6A7 /* etc */,
 				A03F25471780BAE8006731B9 /* CCTexture2D.cpp */,
 				A03F25481780BAE8006731B9 /* CCTexture2D.h */,
 				A03F25491780BAE8006731B9 /* CCTextureAtlas.cpp */,
 				A03F254A1780BAE8006731B9 /* CCTextureAtlas.h */,
 				A03F254B1780BAE8006731B9 /* CCTextureCache.cpp */,
 				A03F254C1780BAE8006731B9 /* CCTextureCache.h */,
-				A03F254D1780BAE8006731B9 /* CCTextureETC.cpp */,
-				A03F254E1780BAE8006731B9 /* CCTextureETC.h */,
 			);
 			path = textures;
 			sourceTree = "<group>";
@@ -4966,13 +4958,13 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		A07A52C81784AC360073F6A7 /* etc */ = {
+		B33AFB6417A20B150022B711 /* etc */ = {
 			isa = PBXGroup;
 			children = (
-				A07A52C91784AC360073F6A7 /* etc1.cpp */,
-				A07A52CA1784AC360073F6A7 /* etc1.h */,
+				B33AFB6717A20BE40022B711 /* etc1.cpp */,
+				B33AFB6817A20BE40022B711 /* etc1.h */,
 			);
-			path = etc;
+			name = etc;
 			sourceTree = "<group>";
 		};
 		B3D8D4471799219B0039C204 /* mac */ = {
@@ -5041,6 +5033,7 @@
 				A03F25A51780BAE8006731B9 /* CCObject.h in Headers */,
 				A03F25A71780BAE8006731B9 /* CCSet.h in Headers */,
 				A03F25A91780BAE8006731B9 /* CCString.h in Headers */,
+				B33AFB6B17A20BE40022B711 /* etc1.h in Headers */,
 				A03F25AE1780BAE8006731B9 /* CCDrawingPrimitives.h in Headers */,
 				A03F25B01780BAE8006731B9 /* CCDrawNode.h in Headers */,
 				A03F25B21780BAE8006731B9 /* CCGrabber.h in Headers */,
@@ -5155,7 +5148,6 @@
 				A03F2B561780BAE9006731B9 /* CCTexture2D.h in Headers */,
 				A03F2B581780BAE9006731B9 /* CCTextureAtlas.h in Headers */,
 				A03F2B5A1780BAE9006731B9 /* CCTextureCache.h in Headers */,
-				A03F2B5C1780BAE9006731B9 /* CCTextureETC.h in Headers */,
 				A03F2B601780BAE9006731B9 /* CCParallaxNode.h in Headers */,
 				A03F2B621780BAE9006731B9 /* CCTileMapAtlas.h in Headers */,
 				A03F2B641780BAE9006731B9 /* CCTMXLayer.h in Headers */,
@@ -5177,7 +5169,6 @@
 				A07A4E051783815B0073F6A7 /* CCStdC.h in Headers */,
 				A07A4E071783815B0073F6A7 /* CCWindow.h in Headers */,
 				A07A4E091783815B0073F6A7 /* EAGLView.h in Headers */,
-				A07A52CD1784AC360073F6A7 /* etc1.h in Headers */,
 				466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5614,6 +5605,7 @@
 				A07A4CDD1783777C0073F6A7 /* ccMacros.h in Headers */,
 				A07A4CDE1783777C0073F6A7 /* CCProtocols.h in Headers */,
 				A07A4CDF1783777C0073F6A7 /* ccTypeInfo.h in Headers */,
+				B33AFB6C17A20BE40022B711 /* etc1.h in Headers */,
 				A07A4CE01783777C0073F6A7 /* ccTypes.h in Headers */,
 				A07A4CE11783777C0073F6A7 /* cocos2d.h in Headers */,
 				A07A4CE21783777C0073F6A7 /* aabb.h in Headers */,
@@ -5716,7 +5708,6 @@
 				A07A4D521783777C0073F6A7 /* CCTexture2D.h in Headers */,
 				A07A4D531783777C0073F6A7 /* CCTextureAtlas.h in Headers */,
 				A07A4D541783777C0073F6A7 /* CCTextureCache.h in Headers */,
-				A07A4D551783777C0073F6A7 /* CCTextureETC.h in Headers */,
 				A07A4D571783777C0073F6A7 /* CCParallaxNode.h in Headers */,
 				A07A4D581783777C0073F6A7 /* CCTileMapAtlas.h in Headers */,
 				A07A4D591783777C0073F6A7 /* CCTMXLayer.h in Headers */,
@@ -5753,7 +5744,6 @@
 				A07A4DBA17837B910073F6A7 /* decode.h in Headers */,
 				A07A4DBB17837B910073F6A7 /* encode.h in Headers */,
 				A07A4DBC17837B910073F6A7 /* types.h in Headers */,
-				A07A52CE1784AC360073F6A7 /* etc1.h in Headers */,
 				466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6409,6 +6399,7 @@
 				A03F25A41780BAE8006731B9 /* CCObject.cpp in Sources */,
 				A03F25A61780BAE8006731B9 /* CCSet.cpp in Sources */,
 				A03F25A81780BAE8006731B9 /* CCString.cpp in Sources */,
+				B33AFB6917A20BE40022B711 /* etc1.cpp in Sources */,
 				A03F25AC1780BAE8006731B9 /* cocos2d.cpp in Sources */,
 				A03F25AD1780BAE8006731B9 /* CCDrawingPrimitives.cpp in Sources */,
 				A03F25AF1780BAE8006731B9 /* CCDrawNode.cpp in Sources */,
@@ -6488,7 +6479,6 @@
 				A03F2B551780BAE9006731B9 /* CCTexture2D.cpp in Sources */,
 				A03F2B571780BAE9006731B9 /* CCTextureAtlas.cpp in Sources */,
 				A03F2B591780BAE9006731B9 /* CCTextureCache.cpp in Sources */,
-				A03F2B5B1780BAE9006731B9 /* CCTextureETC.cpp in Sources */,
 				A03F2B5F1780BAE9006731B9 /* CCParallaxNode.cpp in Sources */,
 				A03F2B611780BAE9006731B9 /* CCTileMapAtlas.cpp in Sources */,
 				A03F2B631780BAE9006731B9 /* CCTMXLayer.cpp in Sources */,
@@ -6509,7 +6499,6 @@
 				A07A4E061783815B0073F6A7 /* CCThread.mm in Sources */,
 				A07A4E081783815B0073F6A7 /* CCWindow.m in Sources */,
 				A07A4E0A1783815B0073F6A7 /* EAGLView.mm in Sources */,
-				A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */,
 				46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6896,6 +6885,7 @@
 				A07A4C821783777C0073F6A7 /* CCShaderCache.cpp in Sources */,
 				A07A4C831783777C0073F6A7 /* ccShaders.cpp in Sources */,
 				A07A4C841783777C0073F6A7 /* CCAnimation.cpp in Sources */,
+				B33AFB6A17A20BE40022B711 /* etc1.cpp in Sources */,
 				A07A4C851783777C0073F6A7 /* CCAnimationCache.cpp in Sources */,
 				A07A4C861783777C0073F6A7 /* CCSprite.cpp in Sources */,
 				A07A4C871783777C0073F6A7 /* CCSpriteBatchNode.cpp in Sources */,
@@ -6924,7 +6914,6 @@
 				A07A4C9F1783777C0073F6A7 /* CCTexture2D.cpp in Sources */,
 				A07A4CA01783777C0073F6A7 /* CCTextureAtlas.cpp in Sources */,
 				A07A4CA11783777C0073F6A7 /* CCTextureCache.cpp in Sources */,
-				A07A4CA21783777C0073F6A7 /* CCTextureETC.cpp in Sources */,
 				A07A4CA41783777C0073F6A7 /* CCParallaxNode.cpp in Sources */,
 				A07A4CA51783777C0073F6A7 /* CCTileMapAtlas.cpp in Sources */,
 				A07A4CA61783777C0073F6A7 /* CCTMXLayer.cpp in Sources */,
@@ -6947,7 +6936,6 @@
 				A07A4D9717837B690073F6A7 /* CCThread.mm in Sources */,
 				A07A4D9917837B690073F6A7 /* EAGLView.mm in Sources */,
 				A07A4D9C17837B690073F6A7 /* AccelerometerSimulation.m in Sources */,
-				A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */,
 				46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

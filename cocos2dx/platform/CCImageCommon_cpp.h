@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "png.h"
 #include "jpeglib.h"
 #include "tiffio.h"
-#include "etc/etc1.h"
+#include "etc1.h"
 
 #include "CCCommon.h"
 #include "CCStdC.h"
@@ -233,9 +233,7 @@ Image::Image()
 , _height(0)
 , _fileType(kFmtUnKnown)
 , _renderFormat(kTexture2DPixelFormat_None)
-, _hasAlpha(false)
 , _preMulti(false)
-, _compressed(false)
 , _numberOfMipmaps(0)
 {
 
@@ -337,7 +335,7 @@ bool Image::initWithImageData(void * data, int dataLen)
         case kFmtPvr:
             return _initWithPVRData(data, dataLen);
         case kFmtEtc:
-            return _initWithETCData(data,, dataLen);
+            return _initWithETCData(data, dataLen);
         default:
             CCAssert(false, "unsupport data format!");
             return false;
@@ -362,7 +360,7 @@ bool Image::isPng(void *data, int dataLen)
 
 bool Image::isEtc(void *data, int dataLen)
 {
-    return (bool)etc1_pkm_is_valid(data);
+    return (bool)etc1_pkm_is_valid((etc1_byte*)data);
 }
 
 bool Image::isJpg(void *data, int dataLen)
@@ -569,7 +567,6 @@ bool Image::_initWithJpgData(void * data, int dataLen)
         /* init image info */
         _width  = (short)(cinfo.output_width);
         _height = (short)(cinfo.output_height);
-        _hasAlpha = false;
         _preMulti = false;
         row_pointer[0] = new unsigned char[cinfo.output_width*cinfo.output_components];
         CC_BREAK_IF(! row_pointer[0]);
@@ -684,8 +681,6 @@ bool Image::_initWithPngData(void * data, int dataLen)
         png_read_update_info(png_ptr, info_ptr);
         bit_depth = png_get_bit_depth(png_ptr, info_ptr);
         color_type = png_get_color_type(png_ptr, info_ptr);
-
-        _hasAlpha = color_type & PNG_COLOR_MASK_ALPHA;
 
         switch (color_type)
         {
@@ -875,7 +870,6 @@ bool Image::_initWithTiffData(void* data, int dataLen)
 
         npixels = w * h;
         
-        _hasAlpha = true;
         _renderFormat = kTexture2DPixelFormat_RGBA8888;
         _width = w;
         _height = h;
@@ -932,7 +926,6 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
     unsigned int dataLength = 0, dataOffset = 0, dataSize = 0;
     unsigned int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
     unsigned int width = 0, height = 0;
-    unsigned char *bytes = NULL;
     int formatFlags;
     
     //Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
@@ -994,16 +987,6 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
     //Get size of mipmap
     _width = width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
     _height = height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
-
-    //Do we use alpha ?
-    if (CC_SWAP_INT32_LITTLE_TO_HOST(header->bitmaskAlpha))
-    {
-        _hasAlpha = true;
-    }
-    else
-    {
-        _hasAlpha = false;
-    }
 
     //Get ptr to where data starts..
     dataLength = CC_SWAP_INT32_LITTLE_TO_HOST(header->dataLength);
@@ -1113,9 +1096,12 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
     
     // flags
 	uint32_t flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
-	
-	// PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
-    _preMulti = true;
+
+    // PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
+    if (flags & kPVR3TextureFlagPremultipliedAlpha)
+    {
+        _preMulti = true;
+    }
     
 	// sizing
 	uint32_t width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
@@ -1124,9 +1110,7 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
 	_height = height;
 	uint32_t dataOffset = 0, dataSize = 0;
 	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
-	uint8_t *bytes = NULL;
 	
-	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
     _dataLen = dataLen - (sizeof(ccPVRv3TexHeader) + header->metadataLength);
     _data = new unsigned char[_dataLen];
     memcpy(_data, (unsigned char*)data + sizeof(ccPVRv3TexHeader) + header->metadataLength, _dataLen);
@@ -1193,7 +1177,53 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
 
 bool Image::_initWithETCData(void *data, int dataLen)
 {
+    etc1_byte* header = (etc1_byte*)data;
+    
+    //check the data
+    if(!etc1_pkm_is_valid(header))
+    {
+        return  false;
+    }
 
+    _width = etc1_pkm_get_width(header);
+    _height = etc1_pkm_get_height(header);
+
+    if( 0 == _width || 0 == _height )
+    {
+        return false;
+    }
+
+    if(Configuration::getInstance()->supportsETC())
+    {
+        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
+#ifdef GL_ETC1_RGB8_OES
+        _renderFormat = kTexture2DPixelFormat_ETC;
+        _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
+        _data = new unsigned char[_dataLen];
+        memcpy(_data, (unsigned char*)data + ETC_PKM_HEADER_SIZE, _dataLen);
+        return true;
+#endif
+    }
+    else
+    {
+         //if it is not gles or device do not support ETC, decode texture by software
+        int bytePerPixel = 3;
+        unsigned int stride = _width * bytePerPixel;
+        _renderFormat = kTexture2DPixelFormat_RGB888;
+        
+        _dataLen =  _width * _height * bytePerPixel;
+        _data = new unsigned char[_dataLen];
+        
+        if (etc1_decode_image((unsigned char*)data + ETC_PKM_HEADER_SIZE, (etc1_byte*)_data, _width, _height, bytePerPixel, stride) != 0)
+        {
+            _dataLen = 0;
+            CC_SAFE_DELETE_ARRAY(_data);
+            return false;
+        }
+        
+        return true;
+    }
+    return false;
 }
 
 bool Image::_initWithPVRData(void *data, int dataLen)
@@ -1210,7 +1240,6 @@ bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, i
 
         _height   = (short)nHeight;
         _width    = (short)nWidth;
-        _hasAlpha = true;
         _preMulti = bPreMulti;
         _renderFormat = kTexture2DPixelFormat_RGBA8888;
 
@@ -1229,6 +1258,13 @@ bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, i
 
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
+    //only support for kTexture2DPixelFormat_RGB888 or kTexture2DPixelFormat_RGBA8888 uncompressed data
+    if (isCompressed() || (_renderFormat != kTexture2DPixelFormat_RGB888 && _renderFormat != kTexture2DPixelFormat_RGBA8888))
+    {
+        CCLOG("cocos2d: Image: saveToFile is only support for kTexture2DPixelFormat_RGB888 or kTexture2DPixelFormat_RGBA8888 uncompressed data for now");
+        return false;
+    }
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     assert(false);
     return false;
@@ -1311,7 +1347,7 @@ bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 #endif
         png_init_io(png_ptr, fp);
 
-        if (!bIsToRGB && _hasAlpha)
+        if (!bIsToRGB && hasAlpha())
         {
             png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB_ALPHA,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
@@ -1337,7 +1373,7 @@ bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
             break;
         }
 
-        if (!_hasAlpha)
+        if (hasAlpha())
         {
             for (int i = 0; i < (int)_height; i++)
             {
@@ -1442,7 +1478,7 @@ bool Image::_saveImageToJPG(const char * pszFilePath)
 
         row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */
 
-        if (_hasAlpha)
+        if (hasAlpha())
         {
             unsigned char *pTempData = new unsigned char[_width * _height * 3];
             if (NULL == pTempData)

@@ -145,12 +145,6 @@ public:
     * @since v1.0
     */
     void dumpCachedTextureInfo();
-    
-    /** Returns a Texture2D object given an ETC filename
-     * If the file image was not previously loaded, it will create a new Texture2D
-     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-     */
-    Texture2D* addETCImage(const char* filename);
 
 private:
     void addImageAsyncCallBack(float dt);
@@ -212,7 +206,7 @@ public:
 
     static void addImageTexture(Texture2D *tt, const char* imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, Texture2DPixelFormat pixelFormat, const Size& contentSize);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2DPixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
     static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
@@ -236,6 +230,7 @@ protected:
     ccCachedImageType _cashedImageType;
 
     void *_textureData;
+    int  _dataLen;
     Size _textureSize;
     Texture2DPixelFormat _pixelFormat;
 

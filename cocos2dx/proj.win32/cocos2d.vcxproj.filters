@@ -103,11 +103,11 @@
     <Filter Include="support\component">
       <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="textures\etc">
-      <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="keyboard_dispatcher">
       <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\etc">
+      <UniqueIdentifier>{47fda93e-6eb4-4abc-b5bc-725bf667a395}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -465,22 +465,19 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\ccFPSImages.c" />
-    <ClCompile Include="..\textures\CCTextureETC.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\component\CCComponent.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\etc\etc1.cpp">
-      <Filter>textures\etc</Filter>
-    </ClCompile>
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\ccTypes.cpp" />
+    <ClCompile Include="..\platform\third_party\common\etc\etc1.cpp">
+      <Filter>platform\etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -943,9 +940,6 @@
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTextureETC.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
@@ -953,14 +947,14 @@
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\etc\etc1.h">
-      <Filter>textures\etc</Filter>
-    </ClInclude>
     <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
       <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCDeprecated.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\etc\etc1.h">
+      <Filter>platform\etc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
