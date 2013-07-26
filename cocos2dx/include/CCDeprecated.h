@@ -810,20 +810,20 @@ CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Position;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_Color;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_TexCoords;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttrib_MAX;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttrib_MAX = GLProgram::VERTEX_ATTRIB_MAX;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformPMatrix;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVMatrix;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformMVPMatrix;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformTime;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSinTime;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformCosTime;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformRandom01;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniformSampler;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCUniform_MAX;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformPMatrix = GLProgram::UNIFORM_P_MATRIX;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformMVMatrix = GLProgram::UNIFORM_MV_MATRIX;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformMVPMatrix = GLProgram::UNIFORM_MVP_MATRIX;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformTime = GLProgram::UNIFORM_TIME;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformSinTime = GLProgram::UNIFORM_SIN_TIME;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformCosTime = GLProgram::UNIFORM_COS_TIME;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformRandom01 = GLProgram::UNIFORM_RANDOM01;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniformSampler = GLProgram::UNIFORM_SAMPLER;
+CC_DEPRECATED_ATTRIBUTE const int kCCUniform_MAX = GLProgram::UNIFORM_MAX;
 
 CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColor;
 CC_DEPRECATED_ATTRIBUTE extern const char* kCCShader_PositionTextureColorAlphaTest;
@@ -850,129 +850,138 @@ CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameColor;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNamePosition;
 CC_DEPRECATED_ATTRIBUTE extern const char*    kCCAttributeNameTexCoord;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_None;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Position;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Color;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_TexCoords;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_PosColorTex;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+CC_DEPRECATED_ATTRIBUTE const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
-CC_DEPRECATED_ATTRIBUTE extern const ProgressTimer::Type kCCProgressTimerTypeRadial;
-CC_DEPRECATED_ATTRIBUTE extern const ProgressTimer::Type kCCProgressTimerTypeBar;
+CC_DEPRECATED_ATTRIBUTE const ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::Type::RADIAL;
+CC_DEPRECATED_ATTRIBUTE const ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::Type::BAR;
 CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type ProgressTimerType;
 
-CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection2D;
-CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection3D; 
-CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionCustom;
-CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionDefault;
+CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
+CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
+CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
+CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
 CC_DEPRECATED_ATTRIBUTE typedef Director::Projection ccDirectorProjection;
 
-CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentTop;
-CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentCenter;
-CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentBottom;
+CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
+CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
+CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
 
-CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentLeft;
-CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentCenter;
-CC_DEPRECATED_ATTRIBUTE extern const Label::HAlignment kCCTextAlignmentRight;
+CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
+CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
+CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
 
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2;
-CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PRVTC4;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PRVTC2;
+CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
+
 CC_DEPRECATED_ATTRIBUTE typedef Texture2D::PixelFormat CCTexture2DPixelFormat;
+
+
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
+
+CC_DEPRECATED_ATTRIBUTE const int kParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
+CC_DEPRECATED_ATTRIBUTE const int kParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
+CC_DEPRECATED_ATTRIBUTE const int kParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
+
+CC_DEPRECATED_ATTRIBUTE const ParticleSystem::Mode kCCParticleModeGravity = ParticleSystem::Mode::GRAVITY;
+CC_DEPRECATED_ATTRIBUTE const ParticleSystem::Mode kCCParticleModeRadius = ParticleSystem::Mode::RADIUS;
+CC_DEPRECATED_ATTRIBUTE const int kCCParticleDefaultCapacity = kParticleDefaultCapacity;
+
+CC_DEPRECATED_ATTRIBUTE const ParticleSystem::PositionType kCCPositionTypeFree =  ParticleSystem::PositionType::FREE;
+CC_DEPRECATED_ATTRIBUTE const ParticleSystem::PositionType kCCPositionTypeRelative =  ParticleSystem::PositionType::RELATIVE;
+CC_DEPRECATED_ATTRIBUTE const ParticleSystem::PositionType kCCPositionTypeGrouped =  ParticleSystem::PositionType::GROUPED;
+
+CC_DEPRECATED_ATTRIBUTE typedef ParticleSystem::PositionType tPositionType;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDurationInfinity;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartSizeEqualToEndSize;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartRadiusEqualToEndRadius;
 
-CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::Mode kCCParticleModeGravity;
-CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::Mode kCCParticleModeRadius;
+CC_DEPRECATED_ATTRIBUTE const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
+CC_DEPRECATED_ATTRIBUTE const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
+CC_DEPRECATED_ATTRIBUTE const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDefaultCapacity;
-
-CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeFree;
-CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeRelative;
-CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeGrouped;
-CC_DEPRECATED_ATTRIBUTE typedef ParticleSystem::PositionType tPositionType;
-
-CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
-CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateWaiting;
-CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateTrackingTouch;
 CC_DEPRECATED_ATTRIBUTE typedef Menu::State tMenuState;
 
-CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesOneByOne;
-CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesAllAtOnce;
+CC_DEPRECATED_ATTRIBUTE const Touch::DispatchMode kCCTouchesOneByOne = Touch::DispatchMode::ONE_BY_ONE;
+CC_DEPRECATED_ATTRIBUTE const Touch::DispatchMode kCCTouchesAllAtOnce = Touch::DispatchMode::ALL_AT_ONCE;
+
 CC_DEPRECATED_ATTRIBUTE typedef Touch::DispatchMode ccTouchesMode;
 
-CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatPNG;
-CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatJPEG;
+CC_DEPRECATED_ATTRIBUTE const Image::Format kCCImageFormatPNG = Image::Format::PNG;
+CC_DEPRECATED_ATTRIBUTE const Image::Format kCCImageFormatJPEG = Image::Format::JPG;
+
 CC_DEPRECATED_ATTRIBUTE typedef Image::Format tImageFormat;
 
-CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationLeftOver;
-CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationRightOver;
-CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationUpOver;
-CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationDownOver;
+CC_DEPRECATED_ATTRIBUTE const TransitionScene::Orientation kCCTransitionOrientationLeftOver = TransitionScene::Orientation::LEFT_OVER;
+CC_DEPRECATED_ATTRIBUTE const TransitionScene::Orientation kCCTransitionOrientationRightOver = TransitionScene::Orientation::RIGHT_OVER;
+CC_DEPRECATED_ATTRIBUTE const TransitionScene::Orientation kCCTransitionOrientationUpOver = TransitionScene::Orientation::UP_OVER;
+CC_DEPRECATED_ATTRIBUTE const TransitionScene::Orientation kCCTransitionOrientationDownOver = TransitionScene::Orientation::DOWN_OVER;
+
 CC_DEPRECATED_ATTRIBUTE typedef TransitionScene::Orientation tOrientation;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
+CC_DEPRECATED_ATTRIBUTE const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
+CC_DEPRECATED_ATTRIBUTE const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCActionTagInvalid;
+CC_DEPRECATED_ATTRIBUTE const int kCCActionTagInvalid = kActionTagInvalid;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeTagInvalid = kNodeTagInvalid;
 
-
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeTagInvalid;
-
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnEnter;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnExit;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnEnterTransitionDidFinish;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnExitTransitionDidStart;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnCleanup;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnEnter = kNodeOnEnter;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnExit = kNodeOnExit;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnCleanup = kNodeOnCleanup;
 
 
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageEnglish;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageChinese;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageFrench;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageItalian;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageGerman;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageSpanish;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageRussian;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageKorean;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageJapanese;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageHungarian;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguagePortuguese;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageArabic;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageNorwegian;
-CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguagePolish;
-
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageEnglish     = LanguageType::ENGLISH;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageChinese     = LanguageType::CHINESE;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageFrench      = LanguageType::FRENCH;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageItalian     = LanguageType::ITALIAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageGerman      = LanguageType::GERMAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageSpanish     = LanguageType::SPANISH;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageRussian     = LanguageType::RUSSIAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageKorean      = LanguageType::KOREAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageJapanese    = LanguageType::JAPANESE;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageHungarian   = LanguageType::HUNGARIAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguagePortuguese  = LanguageType::PORTUGUESE;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageArabic      = LanguageType::ARABIC;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguageNorwegian   = LanguageType::NORWEGIAN;
+CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguagePolish      = LanguageType::POLISH;
 CC_DEPRECATED_ATTRIBUTE typedef LanguageType ccLanguageType;
 
 
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetWindows;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetLinux;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetMacOS;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetAndroid;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetIphone;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetIpad;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetBlackBerry;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetNaCl;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetEmscripten;
-CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetTizen;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetMacOS        = Application::Platform::OS_MAC;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetBlackBerry   = Application::Platform::OS_BLACKBERRY;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
 CC_DEPRECATED_ATTRIBUTE typedef Application::Platform TargetPlatform;
 
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionExactFit;
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionNoBorder;
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionShowAll;
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionFixedHeight;
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionFixedWidth;
-CC_DEPRECATED_ATTRIBUTE extern const ResolutionPolicy kResolutionUnKnown;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACT_FIT;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionNoBorder      = ResolutionPolicy::NO_BORDER;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionShowAll       = ResolutionPolicy::SHOW_ALL;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionFixedHeight   = ResolutionPolicy::FIXED_HEIGHT;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionFixedWidth    = ResolutionPolicy::FIXED_WIDTH;
+CC_DEPRECATED_ATTRIBUTE const ResolutionPolicy kResolutionUnKnown       = ResolutionPolicy::UNKNOWN;
+
 
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
