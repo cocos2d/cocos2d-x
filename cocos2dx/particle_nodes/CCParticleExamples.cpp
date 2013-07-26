@@ -94,7 +94,7 @@ bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        this->_emitterMode = MODE_GRAVITY;
+        this->_emitterMode = Mode::GRAVITY;
 
         // Gravity Mode: gravity
         this->modeA.gravity = Point(0,0);
@@ -199,7 +199,7 @@ bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         _duration= DURATION_INFINITY;
 
         // Gravity Mode
-        this->_emitterMode = MODE_GRAVITY;
+        this->_emitterMode = Mode::GRAVITY;
 
         // Gravity Mode: gravity
         this->modeA.gravity = Point(0,-90);
@@ -303,7 +303,7 @@ bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -407,7 +407,7 @@ bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -516,7 +516,7 @@ bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -624,7 +624,7 @@ bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(-200,200));
@@ -733,7 +733,7 @@ bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -841,7 +841,7 @@ bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         // duration
         _duration = 0.1f;
 
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -950,7 +950,7 @@ bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // Emitter mode: Gravity Mode
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -1055,7 +1055,7 @@ bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         _duration = DURATION_INFINITY;
 
         // set gravity mode.
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,-1));
@@ -1162,7 +1162,7 @@ bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         // duration
         _duration = DURATION_INFINITY;
 
-        setEmitterMode(MODE_GRAVITY);
+        setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(10,-10));
