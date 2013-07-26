@@ -82,7 +82,7 @@ public:
      *
      * @return The title for the specified state.
      */
-    virtual String* getTitleForState(ControlState state);
+    virtual String* getTitleForState(State state);
 
     /**
      * Sets the title string to use for the specified state.
@@ -93,7 +93,7 @@ public:
      * @param state The state that uses the specified title. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleForState(String* title, ControlState state);
+    virtual void setTitleForState(String* title, State state);
 
     /**
      * Returns the title color used for a state.
@@ -104,7 +104,7 @@ public:
      * @return The color of the title for the specified state.
      */
 
-    virtual Color3B getTitleColorForState(ControlState state) const;
+    virtual Color3B getTitleColorForState(State state) const;
 
     /**
      * Sets the color of the title to use for the specified state.
@@ -113,7 +113,7 @@ public:
      * @param state The state that uses the specified color. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleColorForState(Color3B color, ControlState state);
+    virtual void setTitleColorForState(Color3B color, State state);
 
     /**
      * Returns the title label used for a state.
@@ -121,7 +121,7 @@ public:
      * @param state The state that uses the title label. Possible values are described
      * in "CCControlState".
      */
-    virtual Node* getTitleLabelForState(ControlState state);
+    virtual Node* getTitleLabelForState(State state);
 
     /**
      * Sets the title label to use for the specified state.
@@ -132,13 +132,13 @@ public:
      * @param state The state that uses the specified title. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleLabelForState(Node* label, ControlState state);
+    virtual void setTitleLabelForState(Node* label, State state);
 
-    virtual void setTitleTTFForState(const char * fntFile, ControlState state);
-    virtual const char * getTitleTTFForState(ControlState state);
+    virtual void setTitleTTFForState(const char * fntFile, State state);
+    virtual const char * getTitleTTFForState(State state);
 
-    virtual void setTitleTTFSizeForState(float size, ControlState state);
-    virtual float getTitleTTFSizeForState(ControlState state);
+    virtual void setTitleTTFSizeForState(float size, State state);
+    virtual float getTitleTTFSizeForState(State state);
 
     /**
      * Sets the font of the label, changes the label to a LabelBMFont if neccessary.
@@ -146,8 +146,8 @@ public:
      * @param state The state that uses the specified fntFile. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleBMFontForState(const char * fntFile, ControlState state);
-    virtual const char * getTitleBMFontForState(ControlState state);
+    virtual void setTitleBMFontForState(const char * fntFile, State state);
+    virtual const char * getTitleBMFontForState(State state);
 
     /**
      * Returns the background sprite used for a state.
@@ -155,7 +155,7 @@ public:
      * @param state The state that uses the background sprite. Possible values are
      * described in "CCControlState".
      */
-    virtual Scale9Sprite* getBackgroundSpriteForState(ControlState state);
+    virtual Scale9Sprite* getBackgroundSpriteForState(State state);
 
     /**
      * Sets the background sprite to use for the specified button state.
@@ -164,7 +164,7 @@ public:
      * @param state The state that uses the specified image. The values are described
      * in "CCControlState".
      */
-    virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, ControlState state);
+    virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, State state);
 
     /**
      * Sets the background spriteFrame to use for the specified button state.
@@ -173,16 +173,16 @@ public:
      * @param state The state that uses the specified image. The values are described
      * in "CCControlState".
      */
-    virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, ControlState state);
+    virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, State state);
 
     //set the margins at once (so we only have to do one call of needsLayout)
     virtual void setMargins(int marginH, int marginV);
 
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+    virtual bool ccTouchBegan(Touch *pTouch, cocos2d::Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, cocos2d::Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, cocos2d::Event *pEvent) override;
+    virtual void ccTouchCancelled(Touch *pTouch, cocos2d::Event *pEvent) override;
     virtual GLubyte getOpacity(void) const override;
     virtual void setOpacity(GLubyte var) override;
 	virtual const Color3B& getColor(void) const override;

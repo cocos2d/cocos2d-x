@@ -30,7 +30,7 @@ public:
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget,
                                                                     const char * pSelectorName);
 
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::Object * pTarget,
+    virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget,
                                                                                    const char * pSelectorName);
     virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName,
                                            cocos2d::Node * pNode);
@@ -39,7 +39,7 @@ public:
         
     virtual CCBSelectorResolver * createNew();
     void menuItemCallback(Object *pSender);
-    void controlCallback(Object *pSender, cocos2d::extension::ControlEvent event);
+    void controlCallback(Object *pSender, cocos2d::extension::Control::EventType event);
     void setCallbackProperty(const char *prop);
     void setJSOwner(jsval ownr);
     jsval getJSOwner();

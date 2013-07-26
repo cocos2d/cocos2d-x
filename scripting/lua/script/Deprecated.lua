@@ -773,3 +773,20 @@ end
 rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 --functions of CCTMXObject will be deprecated end
 
+
+--functions of WebSocket will be deprecated begin
+local WebSocketDeprecated = { }
+function WebSocketDeprecated.sendTextMsg(self, string)
+    deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")
+    return self:sendString(string)
+end
+rawset(WebSocket,"sendTextMsg", WebSocketDeprecated.sendTextMsg)
+
+function WebSocketDeprecated.sendBinaryMsg(self, table,tablesize)
+    deprecatedTip("WebSocket:sendBinaryMsg","WebSocket:sendString")
+    string.char(unpack(table))
+    return self:sendString(string.char(unpack(table)))
+end
+rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
+--functions of WebSocket will be deprecated end
+

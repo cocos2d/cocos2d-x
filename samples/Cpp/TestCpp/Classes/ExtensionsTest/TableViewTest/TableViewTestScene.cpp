@@ -24,17 +24,17 @@ bool TableViewTestLayer::init()
 	Size winSize = Director::getInstance()->getWinSize();
 
     TableView* tableView = TableView::create(this, Size(250, 60));
-    tableView->setDirection(kScrollViewDirectionHorizontal);
+    tableView->setDirection(ScrollView::Direction::HORIZONTAL);
     tableView->setPosition(Point(20,winSize.height/2-30));
     tableView->setDelegate(this);
     this->addChild(tableView);
     tableView->reloadData();
 
 	tableView = TableView::create(this, Size(60, 250));
-	tableView->setDirection(kScrollViewDirectionVertical);
+	tableView->setDirection(ScrollView::Direction::VERTICAL);
 	tableView->setPosition(Point(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
-	tableView->setVerticalFillOrder(kTableViewFillTopDown);
+	tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
 	this->addChild(tableView);
 	tableView->reloadData();
 

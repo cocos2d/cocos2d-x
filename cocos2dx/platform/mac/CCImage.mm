@@ -308,7 +308,7 @@ static bool _isValidFontName(const char *fontName)
     return ret;
 }
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, cocos2d::Color3B* pStrokeColor)
+static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo, cocos2d::Color3B* pStrokeColor)
 {
     bool bRet = false;
 
@@ -344,8 +344,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
 		
 		
 		// alignment, linebreak
-		unsigned uHoriFlag = eAlign & 0x0f;
-		unsigned uVertFlag = (eAlign >> 4) & 0x0f;
+		unsigned uHoriFlag = (int)eAlign & 0x0f;
+		unsigned uVertFlag = ((int)eAlign >> 4) & 0x0f;
 		NSTextAlignment align = (2 == uHoriFlag) ? NSRightTextAlignment
 			: (3 == uHoriFlag) ? NSCenterTextAlignment
 			: NSLeftTextAlignment;
@@ -859,7 +859,7 @@ bool Image::initWithString(
 	const char *    pText, 
 	int             nWidth, 
 	int             nHeight,
-	ETextAlign      eAlignMask,
+	TextAlign      eAlignMask,
 	const char *    pFontName,
 	int             nSize)
 {

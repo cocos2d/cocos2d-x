@@ -32,7 +32,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setProjection(Director::Projection::_2D);
 
     // Set the design resolution
-    EGLView::getInstance()->setDesignResolutionSize(320, 480, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(320, 480, ResolutionPolicy::SHOW_ALL);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

@@ -102,8 +102,8 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
     titleButton->setColor(Color3B(159, 168, 176));
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
-    button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
+    button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
+    button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
 
     return button;
 }
@@ -140,8 +140,8 @@ bool ControlButtonTest_Event::init()
         titleButton->setColor(Color3B(159, 168, 176));
         
         ControlButton *controlButton = ControlButton::create(titleButton, backgroundButton);
-        controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-        controlButton->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
+        controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
+        controlButton->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
         
         controlButton->setAnchorPoint(Point(0.5f, 1));
         controlButton->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -154,55 +154,55 @@ bool ControlButtonTest_Event::init()
         addChild(background);
         
         // Sets up event handlers
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDownAction), ControlEventTouchDown);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragInsideAction), ControlEventTouchDragInside);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragOutsideAction), ControlEventTouchDragOutside);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragEnterAction), ControlEventTouchDragEnter);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragExitAction), ControlEventTouchDragExit);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpInsideAction), ControlEventTouchUpInside);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpOutsideAction), ControlEventTouchUpOutside);
-        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchCancelAction), ControlEventTouchCancel);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDownAction), Control::EventType::TOUCH_DOWN);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragInsideAction), Control::EventType::DRAG_INSIDE);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragOutsideAction), Control::EventType::DRAG_OUTSIDE);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragEnterAction), Control::EventType::DRAG_ENTER);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchDragExitAction), Control::EventType::DRAG_EXIT);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpInsideAction), Control::EventType::TOUCH_UP_INSIDE);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchUpOutsideAction), Control::EventType::TOUCH_UP_OUTSIDE);
+        controlButton->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlButtonTest_Event::touchCancelAction), Control::EventType::TOUCH_CANCEL);
         return true;
     }
     return false;
 }
 
-void ControlButtonTest_Event::touchDownAction(Object *senderz, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchDownAction(Object *senderz, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragInsideAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchDragInsideAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Inside")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragOutsideAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchDragOutsideAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Outside")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragEnterAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchDragEnterAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Enter")->getCString());
 }
 
-void ControlButtonTest_Event::touchDragExitAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchDragExitAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Drag Exit")->getCString());
 }
 
-void ControlButtonTest_Event::touchUpInsideAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchUpInsideAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Up Inside.")->getCString());
 }
 
-void ControlButtonTest_Event::touchUpOutsideAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchUpOutsideAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Up Outside.")->getCString());
 }
 
-void ControlButtonTest_Event::touchCancelAction(Object *sender, ControlEvent controlEvent)
+void ControlButtonTest_Event::touchCancelAction(Object *sender, Control::EventType controlEvent)
 {
     _displayValueLabel->setString(String::createWithFormat("Touch Cancel")->getCString());
 }
@@ -269,8 +269,8 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     titleButton->setColor(Color3B(159, 168, 176));
     
     ControlButton *button = ControlButton::create(titleButton, backgroundButton);
-    button->setBackgroundSpriteForState(backgroundHighlightedButton, ControlStateHighlighted);
-    button->setTitleColorForState(Color3B::WHITE, ControlStateHighlighted);
+    button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
+    button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
     
     return button;
 }

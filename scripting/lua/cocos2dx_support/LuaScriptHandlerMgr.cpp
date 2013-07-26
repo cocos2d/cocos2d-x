@@ -471,7 +471,7 @@ int tolua_Cocos2d_registerControlEventHandler00(lua_State* tolua_S)
     {
         Control* control = (Control*)  tolua_tousertype(tolua_S,1,0);
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ControlEvent controlevent = (ControlEvent)tolua_tonumber(tolua_S,3,0);
+        int controlevent = (int)tolua_tonumber(tolua_S,3,0);
         for (int i = 0; i < kControlEventTotalNumber; i++)
         {
             if ((controlevent & (1 << i)))
@@ -503,7 +503,7 @@ int tolua_Cocos2d_unregisterControlEventHandler00(lua_State* tolua_S)
 #endif
     {
         Control* control = (Control*)  tolua_tousertype(tolua_S,1,0);
-        ControlEvent controlevent = (ControlEvent)tolua_tonumber(tolua_S,2,0);
+        int controlevent = (int)tolua_tonumber(tolua_S,2,0);
         for (int i = 0; i < kControlEventTotalNumber; i++)
         {
             if ((controlevent & (1 << i)))

@@ -9,49 +9,49 @@ CurrentLanguageTest::CurrentLanguageTest()
     LabelTTF *labelLanguage = LabelTTF::create("", "Arial", 20);
     labelLanguage->setPosition(VisibleRect::center());
 
-    ccLanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
+    LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
     switch (currentLanguageType)
     {
-    case kLanguageEnglish:
+    case LanguageType::ENGLISH:
         labelLanguage->setString("current language is English");
         break;
-    case kLanguageChinese:
+    case LanguageType::CHINESE:
         labelLanguage->setString("current language is Chinese");
         break;
-    case kLanguageFrench:
+    case LanguageType::FRENCH:
         labelLanguage->setString("current language is French");
         break;
-    case kLanguageGerman:
+    case LanguageType::GERMAN:
         labelLanguage->setString("current language is German");
         break;
-    case kLanguageItalian:
+    case LanguageType::ITALIAN:
         labelLanguage->setString("current language is Italian");
         break;
-    case kLanguageRussian:
+    case LanguageType::RUSSIAN:
         labelLanguage->setString("current language is Russian");
         break;
-    case kLanguageSpanish:
+    case LanguageType::SPANISH:
         labelLanguage->setString("current language is Spanish");
         break;
-    case kLanguageKorean:
+    case LanguageType::KOREAN:
         labelLanguage->setString("current language is Korean");
         break;
-    case kLanguageJapanese:
+    case LanguageType::JAPANESE:
         labelLanguage->setString("current language is Japanese");
         break;
-    case kLanguageHungarian:
+    case LanguageType::HUNGARIAN:
         labelLanguage->setString("current language is Hungarian");
         break;
-    case kLanguagePortuguese:
+    case LanguageType::PORTUGUESE:
         labelLanguage->setString("current language is Portuguese");
         break;
-    case kLanguageArabic:
+    case LanguageType::ARABIC:
         labelLanguage->setString("current language is Arabic");
         break;
-    case kLanguageNorwegian:
+    case LanguageType::NORWEGIAN:
         labelLanguage->setString("current language is Norwegian");
         break;
-    case kLanguagePolish:
+    case LanguageType::POLISH:
         labelLanguage->setString("current language is Polish");
         break;
     }

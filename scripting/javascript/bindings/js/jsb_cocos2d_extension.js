@@ -45,7 +45,7 @@ cc.KEYBOARD_RETURNTYPE_SEARCH = 3;
 cc.KEYBOARD_RETURNTYPE_GO = 4;
 
 /**
- * The EditBoxInputMode defines the type of text that the user is allowed * to enter.
+ * The EditBox::InputMode defines the type of text that the user is allowed * to enter.
  * @constant
  * @type Number
  */

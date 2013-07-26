@@ -117,54 +117,72 @@ CC_DEPRECATED_ATTRIBUTE typedef AttachmentTimeline CCAttachmentTimeline;
 CC_DEPRECATED_ATTRIBUTE typedef AtlasAttachmentLoader CCAtlasAttachmentLoader;
 CC_DEPRECATED_ATTRIBUTE typedef VertexIndex CCVertexIndex;
 CC_DEPRECATED_ATTRIBUTE typedef RegionAttachment CCRegionAttachment;
-CC_DEPRECATED_ATTRIBUTE typedef ScrollViewDirection CCScrollViewDirection;
-CC_DEPRECATED_ATTRIBUTE typedef TableViewVerticalFillOrder CCTableViewVerticalFillOrder;
+
 CC_DEPRECATED_ATTRIBUTE typedef ControlStepperPart CCControlStepperPart;
-CC_DEPRECATED_ATTRIBUTE typedef ControlEvent CCControlEvent;
-CC_DEPRECATED_ATTRIBUTE typedef ControlState CCControlState;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMap CCNodeLoaderMap;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMapEntry CCNodeLoaderMapEntry;
 CC_DEPRECATED_ATTRIBUTE typedef EventRegistry CCEventRegistry;
 CC_DEPRECATED_ATTRIBUTE typedef AttachmentType CCAttachmentType;
 
-#define kCCTableViewFillTopDown kTableViewFillTopDown
-#define kCCTableViewFillBottomUp kTableViewFillBottomUp
-#define kCCScrollViewDirectionNone kScrollViewDirectionNone
-#define kCCScrollViewDirectionHorizontal kScrollViewDirectionHorizontal
-#define kCCScrollViewDirectionVertical kScrollViewDirectionVertical
-#define kCCScrollViewDirectionBoth kScrollViewDirectionBoth
-#define kCCKeyboardReturnTypeDefault kKeyboardReturnTypeDefault
-#define kCCKeyboardReturnTypeDone kKeyboardReturnTypeDone
-#define kCCKeyboardReturnTypeSend kKeyboardReturnTypeSend
-#define kCCKeyboardReturnTypeSearch kKeyboardReturnTypeSearch
-#define kCCKeyboardReturnTypeGo kKeyboardReturnTypeGo
+CC_DEPRECATED_ATTRIBUTE typedef ScrollView::Direction CCScrollViewDirection;
+CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionNone;
+CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionHorizontal;
+CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionVertical;
+CC_DEPRECATED_ATTRIBUTE extern const ScrollView::Direction kCCScrollViewDirectionBoth;
 
-#define kCCEditBoxInputModeAny kEditBoxInputModeAny
-#define kCCEditBoxInputModeEmailAddr kEditBoxInputModeEmailAddr
-#define kCCEditBoxInputModeNumeric kEditBoxInputModeNumeric
-#define kCCEditBoxInputModePhoneNumber kEditBoxInputModePhoneNumber
-#define kCCEditBoxInputModeUrl kEditBoxInputModeUrl
-#define kCCEditBoxInputModeDecimal kEditBoxInputModeDecimal
-#define kCCEditBoxInputModeSingleLine kEditBoxInputModeSingleLine
+
+CC_DEPRECATED_ATTRIBUTE typedef TableView::VerticalFillOrder CCTableViewVerticalFillOrder;
+CC_DEPRECATED_ATTRIBUTE extern const TableView::VerticalFillOrder kCCTableViewFillTopDown;
+CC_DEPRECATED_ATTRIBUTE extern const TableView::VerticalFillOrder kCCTableViewFillBottomUp;
+
+
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDone;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSend;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeGo;
+
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeAny;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeEmailAddr;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeNumeric;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModePhoneNumber;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeUrl;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeDecimal;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeSingleLine;
+
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagPassword;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagSensitive;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters;
+
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::KeyboardReturnType KeyboardReturnType;
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputMode EditBoxInputMode;
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputFlag EditBoxInputFlag;
 
 #define kCCControlStepperPartMinus kControlStepperPartMinus
 #define kCCControlStepperPartPlus kControlStepperPartPlus
 #define kCCControlStepperPartNone kControlStepperPartNone
 
-#define CCControlEventTouchDown ControlEventTouchDown
-#define CCControlEventTouchDragInside ControlEventTouchDragInside
-#define CCControlEventTouchDragOutside ControlEventTouchDragOutside
-#define CCControlEventTouchDragEnter ControlEventTouchDragEnter
-#define CCControlEventTouchDragExit ControlEventTouchDragExit
-#define CCControlEventTouchUpInside ControlEventTouchUpInside
-#define CCControlEventTouchUpOutside ControlEventTouchUpOutside
-#define CCControlEventTouchCancel ControlEventTouchCancel
-#define CCControlEventValueChanged ControlEventValueChanged
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDown;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragInside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragOutside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragEnter;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragExit;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpInside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpOutside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchCancel;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventValueChanged;
+CC_DEPRECATED_ATTRIBUTE typedef Control::EventType CCControlEvent;
 
-#define CCControlStateNormal ControlStateNormal
-#define CCControlStateHighlighted ControlStateHighlighted
-#define CCControlStateDisabled ControlStateDisabled
-#define CCControlStateSelected ControlStateSelected
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateNormal;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateHighlighted;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateDisabled;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateSelected;
+CC_DEPRECATED_ATTRIBUTE typedef Control::State CCControlState;
+
+CC_DEPRECATED_ATTRIBUTE typedef Control::Handler SEL_CCControlHandler;
+
 
 #define kCCCreateFile kCreateFile
 #define kCCNetwork kNetwork

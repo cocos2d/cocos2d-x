@@ -149,7 +149,7 @@ void ControlSlider::setEnabled(bool enabled)
 
      this->needsLayout();
 
-     this->sendActionsForControlEvents(ControlEventValueChanged);
+     this->sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
  }
 
  void ControlSlider::setMinimumValue(float minimumValue)

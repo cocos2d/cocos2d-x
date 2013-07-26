@@ -93,8 +93,8 @@ const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
 const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
 const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
-const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
-const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
+const ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::Type::RADIAL;
+const ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::Type::BAR;
 
 const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
 const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
@@ -161,6 +161,40 @@ const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
 const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
 const int kCCNodeOnCleanup = kNodeOnCleanup;
 
+const LanguageType kLanguageEnglish     = LanguageType::ENGLISH;
+const LanguageType kLanguageChinese     = LanguageType::CHINESE;
+const LanguageType kLanguageFrench      = LanguageType::FRENCH;
+const LanguageType kLanguageItalian     = LanguageType::ITALIAN;
+const LanguageType kLanguageGerman      = LanguageType::GERMAN;
+const LanguageType kLanguageSpanish     = LanguageType::SPANISH;
+const LanguageType kLanguageRussian     = LanguageType::RUSSIAN;
+const LanguageType kLanguageKorean      = LanguageType::KOREAN;
+const LanguageType kLanguageJapanese    = LanguageType::JAPANESE;
+const LanguageType kLanguageHungarian   = LanguageType::HUNGARIAN;
+const LanguageType kLanguagePortuguese  = LanguageType::PORTUGUESE;
+const LanguageType kLanguageArabic      = LanguageType::ARABIC;
+const LanguageType kLanguageNorwegian   = LanguageType::NORWEGIAN;
+const LanguageType kLanguagePolish      = LanguageType::POLISH;
+
+
+
+const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
+const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
+const Application::Platform kTargetMacOS        = Application::Platform::OS_MAC;
+const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
+const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
+const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
+const Application::Platform kTargetBlackBerry   = Application::Platform::OS_BLACKBERRY;
+const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
+const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
+const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
+
+const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACT_FIT;
+const ResolutionPolicy kResolutionNoBorder      = ResolutionPolicy::NO_BORDER;
+const ResolutionPolicy kResolutionShowAll       = ResolutionPolicy::SHOW_ALL;
+const ResolutionPolicy kResolutionFixedHeight   = ResolutionPolicy::FIXED_HEIGHT;
+const ResolutionPolicy kResolutionFixedWidth    = ResolutionPolicy::FIXED_WIDTH;
+const ResolutionPolicy kResolutionUnKnown       = ResolutionPolicy::UNKNOWN;
 
 void ccDrawInit()
 {

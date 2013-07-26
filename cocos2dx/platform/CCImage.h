@@ -67,18 +67,18 @@ public:
         UNKOWN
     };
 
-    typedef enum
+    enum class TextAlign
     {
-        kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
-        kAlignTop           = 0x13, ///< Horizontal center and vertical top.
-        kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
-        kAlignRight         = 0x32, ///< Horizontal right and vertical center.
-        kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
-        kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
-        kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
-        kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
-        kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
-    }ETextAlign;
+        CENTER        = 0x33, ///< Horizontal center and vertical center.
+        TOP           = 0x13, ///< Horizontal center and vertical top.
+        TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
+        RIGHT         = 0x32, ///< Horizontal right and vertical center.
+        BOTTOM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
+        BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
+        BOTTOM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
+        LEFT          = 0x31, ///< Horizontal left and vertical center.
+        TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
+    };
     
     /**
     @brief  Load the image from the specified path. 
@@ -120,7 +120,7 @@ public:
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,
-        ETextAlign      eAlignMask = kAlignCenter,
+        TextAlign       eAlignMask = TextAlign::CENTER,
         const char *    pFontName = 0,
         int             nSize = 0);
     
@@ -130,7 +130,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
+                                        TextAlign       eAlignMask  = TextAlign::CENTER,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
