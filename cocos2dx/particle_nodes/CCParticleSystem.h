@@ -127,27 +127,27 @@ emitter.startSpin = 0;
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
-    enum Mode
+    enum class Mode
     {
-        MODE_GRAVITY,
-        MODE_RADIUS,
+        GRAVITY,
+        RADIUS,
     };
     
     /** @typedef PositionType
      possible types of particle positions
      */
-    enum PositionType
+    enum class PositionType
     {
         /** Living particles are attached to the world and are unaffected by emitter repositioning. */
-        POSITION_TYPE_FREE,
+        FREE,
         
         /** Living particles are attached to the world but will follow the emitter repositioning.
          Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
          */
-        POSITION_TYPE_RELATIVE,
+        RELATIVE,
         
         /** Living particles are attached to the emitter and are translated along with it. */
-        POSITION_TYPE_GROUPED,
+        GROUPED,
     };
     
     //* @enum
