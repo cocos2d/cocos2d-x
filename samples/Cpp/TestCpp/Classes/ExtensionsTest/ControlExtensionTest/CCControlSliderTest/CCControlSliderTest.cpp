@@ -58,7 +58,7 @@ bool ControlSliderTest::init()
 		slider->setTag(1);
 
         // When the value of the slider will change, the given selector will be call
-        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), ControlEventValueChanged);
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), Control::EventType::VALUE_CHANGED);
 
 		ControlSlider *restrictSlider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         restrictSlider->setAnchorPoint(Point(0.5f, 1.0f));
@@ -71,7 +71,7 @@ bool ControlSliderTest::init()
 		restrictSlider->setTag(2);
 
 	//same with restricted
-		restrictSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), ControlEventValueChanged);
+		restrictSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), Control::EventType::VALUE_CHANGED);
 
         addChild(slider);    
 		addChild(restrictSlider);
@@ -80,7 +80,7 @@ bool ControlSliderTest::init()
     return false;
 }
 
-void ControlSliderTest::valueChanged(Object *sender, ControlEvent controlEvent)
+void ControlSliderTest::valueChanged(Object *sender, Control::EventType controlEvent)
 {
     ControlSlider* pSlider = (ControlSlider*)sender;
     // Change value of label.

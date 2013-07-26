@@ -356,7 +356,7 @@ public:
     virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info);
     
     /* callback funtions */
-    void touchDownAction(Object *sender, ControlEvent controlEvent);
+    void touchDownAction(Object *sender, Control::EventType controlEvent);
     
 protected:
     EditBoxImpl*      _editBoxImpl;

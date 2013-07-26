@@ -51,7 +51,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Object *sender, ControlEvent controlEvent)
+void EditBox::touchDownAction(Object *sender, Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }
@@ -64,12 +64,12 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
     {
         if (pPressed9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, ControlStateHighlighted);
+            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, Control::State::HIGH_LIGHTED);
         }
         
         if (pDisabled9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, ControlStateDisabled);
+            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, Control::State::DISABLED);
         }
         pRet->autorelease();
     }
@@ -91,7 +91,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(Point(0, 0));
-        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), ControlEventTouchUpInside);
+        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), Control::EventType::TOUCH_UP_INSIDE);
         
         return true;
     }

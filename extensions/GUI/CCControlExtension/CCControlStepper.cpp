@@ -213,7 +213,7 @@ void ControlStepper::setValueWithSendingEvent(double value, bool send)
     
     if (send)
     {
-        this->sendActionsForControlEvents(ControlEventValueChanged);
+        this->sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
     }
 }
 

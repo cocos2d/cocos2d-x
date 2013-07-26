@@ -147,7 +147,7 @@ void ControlHuePicker::updateSliderPosition(Point location)
     setHue(angleDeg);
     
     // send Control callback
-    sendActionsForControlEvents(ControlEventValueChanged);
+    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
 }
 
 bool ControlHuePicker::checkSliderPosition(Point location)
@@ -186,7 +186,7 @@ void ControlHuePicker::ccTouchMoved(Touch* touch, Event* event)
 
     //small modification: this allows changing of the colour, even if the touch leaves the bounding area
 //     updateSliderPosition(touchLocation);
-//     sendActionsForControlEvents(ControlEventValueChanged);
+//     sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
     // Check the touch position on the slider
     checkSliderPosition(touchLocation);
 }

@@ -120,8 +120,6 @@ CC_DEPRECATED_ATTRIBUTE typedef RegionAttachment CCRegionAttachment;
 CC_DEPRECATED_ATTRIBUTE typedef ScrollViewDirection CCScrollViewDirection;
 CC_DEPRECATED_ATTRIBUTE typedef TableViewVerticalFillOrder CCTableViewVerticalFillOrder;
 CC_DEPRECATED_ATTRIBUTE typedef ControlStepperPart CCControlStepperPart;
-CC_DEPRECATED_ATTRIBUTE typedef ControlEvent CCControlEvent;
-CC_DEPRECATED_ATTRIBUTE typedef ControlState CCControlState;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMap CCNodeLoaderMap;
 CC_DEPRECATED_ATTRIBUTE typedef NodeLoaderMapEntry CCNodeLoaderMapEntry;
 CC_DEPRECATED_ATTRIBUTE typedef EventRegistry CCEventRegistry;
@@ -151,20 +149,26 @@ CC_DEPRECATED_ATTRIBUTE typedef AttachmentType CCAttachmentType;
 #define kCCControlStepperPartPlus kControlStepperPartPlus
 #define kCCControlStepperPartNone kControlStepperPartNone
 
-#define CCControlEventTouchDown ControlEventTouchDown
-#define CCControlEventTouchDragInside ControlEventTouchDragInside
-#define CCControlEventTouchDragOutside ControlEventTouchDragOutside
-#define CCControlEventTouchDragEnter ControlEventTouchDragEnter
-#define CCControlEventTouchDragExit ControlEventTouchDragExit
-#define CCControlEventTouchUpInside ControlEventTouchUpInside
-#define CCControlEventTouchUpOutside ControlEventTouchUpOutside
-#define CCControlEventTouchCancel ControlEventTouchCancel
-#define CCControlEventValueChanged ControlEventValueChanged
 
-#define CCControlStateNormal ControlStateNormal
-#define CCControlStateHighlighted ControlStateHighlighted
-#define CCControlStateDisabled ControlStateDisabled
-#define CCControlStateSelected ControlStateSelected
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDown;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragInside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragOutside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragEnter;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragExit;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpInside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchUpOutside;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchCancel;
+CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventValueChanged;
+CC_DEPRECATED_ATTRIBUTE typedef Control::EventType CCControlEvent;
+
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateNormal;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateHighlighted;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateDisabled;
+CC_DEPRECATED_ATTRIBUTE extern const Control::State CCControlStateSelected;
+CC_DEPRECATED_ATTRIBUTE typedef Control::State CCControlState;
+
+CC_DEPRECATED_ATTRIBUTE typedef Control::Handler SEL_CCControlHandler;
+
 
 #define kCCCreateFile kCreateFile
 #define kCCNetwork kNetwork

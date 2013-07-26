@@ -56457,7 +56457,7 @@ static int tolua_Cocos2d_CCControl_sendActionsForControlEvents00(lua_State* tolu
 #endif
  {
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,2,0));
+  Control::EventType controlEvents = ((Control::EventType) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sendActionsForControlEvents'", NULL);
 #endif
@@ -56494,7 +56494,7 @@ static int tolua_Cocos2d_CCControl_addTargetWithActionForControlEvents00(lua_Sta
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
   Object* target = ((Object*)  tolua_tousertype(tolua_S,2,0));
   SEL_CCControlHandler action = *((SEL_CCControlHandler*)  tolua_tousertype(tolua_S,3,0));
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
+  Control::EventType controlEvents = ((Control::EventType) (int)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addTargetWithActionForControlEvents'", NULL);
 #endif
@@ -56531,7 +56531,7 @@ static int tolua_Cocos2d_CCControl_removeTargetWithActionForControlEvents00(lua_
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
   Object* target = ((Object*)  tolua_tousertype(tolua_S,2,0));
   SEL_CCControlHandler action = *((SEL_CCControlHandler*)  tolua_tousertype(tolua_S,3,0));
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
+  Control::EventType controlEvents = ((Control::EventType) (int)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeTargetWithActionForControlEvents'", NULL);
 #endif
@@ -60046,7 +60046,7 @@ static int tolua_Cocos2d_CCControlColourPicker_hueSliderValueChanged00(lua_State
  {
   ControlColourPicker* self = (ControlColourPicker*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  Control::EventType controlEvent = ((Control::EventType) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hueSliderValueChanged'", NULL);
 #endif
@@ -60081,7 +60081,7 @@ static int tolua_Cocos2d_CCControlColourPicker_colourSliderValueChanged00(lua_St
  {
   ControlColourPicker* self = (ControlColourPicker*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  Control::EventType controlEvent = ((Control::EventType) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'colourSliderValueChanged'", NULL);
 #endif
@@ -63594,7 +63594,7 @@ static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
  {
   EditBox* self = (EditBox*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  Control::EventType controlEvent = ((Control::EventType) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'touchDownAction'", NULL);
 #endif
@@ -66733,18 +66733,18 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"updateWithBatchNode",tolua_Cocos2d_CCScale9Sprite_updateWithBatchNode00);
    tolua_function(tolua_S,"setSpriteFrame",tolua_Cocos2d_CCScale9Sprite_setSpriteFrame00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"CCControlEventTouchDown",ControlEventTouchDown);
-  tolua_constant(tolua_S,"CCControlEventTouchDragInside",ControlEventTouchDragInside);
-  tolua_constant(tolua_S,"CCControlEventTouchDragOutside",ControlEventTouchDragOutside);
-  tolua_constant(tolua_S,"CCControlEventTouchDragEnter",ControlEventTouchDragEnter);
-  tolua_constant(tolua_S,"CCControlEventTouchDragExit",ControlEventTouchDragExit);
-  tolua_constant(tolua_S,"CCControlEventTouchUpInside",ControlEventTouchUpInside);
-  tolua_constant(tolua_S,"CCControlEventTouchUpOutside",ControlEventTouchUpOutside);
-  tolua_constant(tolua_S,"CCControlEventTouchCancel",ControlEventTouchCancel);
-  tolua_constant(tolua_S,"CCControlEventValueChanged",ControlEventValueChanged);
-  tolua_constant(tolua_S,"CCControlStateNormal",ControlStateNormal);
-  tolua_constant(tolua_S,"CCControlStateHighlighted",ControlStateHighlighted);
-  tolua_constant(tolua_S,"CCControlStateDisabled",ControlStateDisabled);
+  tolua_constant(tolua_S,"CCControlEventTouchDown",Control::EventType::TOUCH_DOWN);
+  tolua_constant(tolua_S,"CCControlEventTouchDragInside",Control::EventType::DRAG_INSIDE);
+  tolua_constant(tolua_S,"CCControlEventTouchDragOutside",Control::EventType::DRAG_OUTSIDE);
+  tolua_constant(tolua_S,"CCControlEventTouchDragEnter",Control::EventType::DRAG_ENTER);
+  tolua_constant(tolua_S,"CCControlEventTouchDragExit",Control::EventType::DRAG_EXIT);
+  tolua_constant(tolua_S,"CCControlEventTouchUpInside",Control::EventType::TOUCH_UP_INSIDE);
+  tolua_constant(tolua_S,"CCControlEventTouchUpOutside",Control::EventType::TOUCH_UP_OUTSIDE);
+  tolua_constant(tolua_S,"CCControlEventTouchCancel",Control::EventType::TOUCH_CANCEL);
+  tolua_constant(tolua_S,"CCControlEventValueChanged",Control::EventType::VALUE_CHANGED);
+  tolua_constant(tolua_S,"CCControlStateNormal",Control::State::NORMAL);
+  tolua_constant(tolua_S,"CCControlStateHighlighted",Control::State::HIGH_LIGHTED);
+  tolua_constant(tolua_S,"CCControlStateDisabled",Control::State::DISABLED);
   tolua_constant(tolua_S,"CCControlStateSelected",ControlStateSelected);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCControl","CCControl","CCLayerRGBA",tolua_collect_CCControl);
