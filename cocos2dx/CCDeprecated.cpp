@@ -178,16 +178,23 @@ const LanguageType kLanguagePolish      = LanguageType::POLISH;
 
 
 
-const Application::Platform kTargetWindows      = Application::Platform::WINDOWS;
-const Application::Platform kTargetLinux        = Application::Platform::LINUX;
-const Application::Platform kTargetMacOS        = Application::Platform::MACOS;
-const Application::Platform kTargetAndroid      = Application::Platform::ANDROID;
-const Application::Platform kTargetIphone       = Application::Platform::IPHONE;
-const Application::Platform kTargetIpad         = Application::Platform::IPAD;
-const Application::Platform kTargetBlackBerry   = Application::Platform::BLACKBERRY;
-const Application::Platform kTargetNaCl         = Application::Platform::NACL;
-const Application::Platform kTargetEmscripten   = Application::Platform::EMSCRIPTEN;
-const Application::Platform kTargetTizen        = Application::Platform::TIZEN;
+const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
+const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
+const Application::Platform kTargetMacOS        = Application::Platform::OS_MACOS;
+const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
+const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
+const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
+const Application::Platform kTargetBlackBerry   = Application::Platform::OS_BLACKBERRY;
+const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
+const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
+const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
+
+const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACTFIT;
+const ResolutionPolicy kResolutionNoBorder      = ResolutionPolicy::NO_BORDER;
+const ResolutionPolicy kResolutionShowAll       = ResolutionPolicy::SHOW_ALL;
+const ResolutionPolicy kResolutionFixedHeight   = ResolutionPolicy::FIXED_HEIGHT;
+const ResolutionPolicy kResolutionFixedWidth    = ResolutionPolicy::FIXED_WIDTH;
+const ResolutionPolicy kResolutionUnKnown       = ResolutionPolicy::UNKNOWN;
 
 void ccDrawInit()
 {

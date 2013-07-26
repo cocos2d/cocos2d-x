@@ -91,7 +91,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
