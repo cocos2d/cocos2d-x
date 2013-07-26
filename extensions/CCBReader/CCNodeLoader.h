@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "CCBReader.h"
 #include "CCBValue.h"
+#include "../GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -35,9 +36,9 @@ struct BlockData {
 };
 
 struct BlockControlData {
-    SEL_CCControlHandler mSELControlHandler;
+    Control::Handler mSELControlHandler;
     Object * mTarget;
-    int mControlEvents;
+    Control::EventType mControlEvents;
 };
 
 /* Forward declaration. */

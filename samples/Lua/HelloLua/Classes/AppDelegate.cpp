@@ -26,7 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     Director *pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
     
-    EGLView::getInstance()->setDesignResolutionSize(480, 320, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

@@ -61,12 +61,12 @@ private:
     MyAdsListener* _listener;
 
     cocos2d::MenuItemToggle* _caseItem;
-    cocos2d::MenuItemToggle* _typeItem;
     cocos2d::MenuItemToggle* _posItem;
 
     cocos2d::plugin::ProtocolAds* _ads;
     cocos2d::plugin::ProtocolAds::AdsPos _pos;
-    cocos2d::plugin::ProtocolAds::AdsType _type;
+    
+    cocos2d::plugin::TAdsInfo adInfo;
 };
 
 #endif // __TEST_ADS_SCENE_H__

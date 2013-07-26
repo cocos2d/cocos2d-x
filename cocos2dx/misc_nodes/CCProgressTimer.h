@@ -52,7 +52,7 @@ public:
     /** Types of progress
      @since v0.99.1
      */
-    enum Type
+    enum class Type
     {
         /// Radial Counter-Clockwise
         RADIAL,

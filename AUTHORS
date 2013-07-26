@@ -416,6 +416,7 @@ Developers:
         Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
         Creation of CCDeprecated-ext.h
         Use of a single emscripten HTML template file.
+        Added some guards in fileutils. Fixed a bug in emscripten file utils.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -539,6 +540,9 @@ Developers:
         
     Rafael (rafaelx)
         A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
+        
+    metalbass
+        Fixing an issue that sigslot::_connection_base# (from 0 to 8) don't have virtual destructors.
 
 Retired Core Developers:
     WenSheng Yang

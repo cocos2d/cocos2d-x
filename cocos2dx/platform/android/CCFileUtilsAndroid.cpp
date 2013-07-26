@@ -59,7 +59,12 @@ FileUtils* FileUtils::getInstance()
     if (s_sharedFileUtils == NULL)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
-        s_sharedFileUtils->init();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsAndroid");
+        }
     }
     return s_sharedFileUtils;
 }

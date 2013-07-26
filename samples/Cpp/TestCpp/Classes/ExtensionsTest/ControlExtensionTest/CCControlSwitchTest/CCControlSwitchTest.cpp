@@ -70,20 +70,20 @@ bool ControlSwitchTest::init()
         switchControl->setPosition(Point(layer_width + 10 + switchControl->getContentSize().width / 2, 0));
         layer->addChild(switchControl);
 
-        switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSwitchTest::valueChanged), ControlEventValueChanged);
+        switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSwitchTest::valueChanged), Control::EventType::VALUE_CHANGED);
         
         // Set the layer size
         layer->setContentSize(Size(layer_width, 0));
         layer->setAnchorPoint(Point(0.5f, 0.5f));
         
         // Update the value label
-        valueChanged(switchControl, ControlEventValueChanged);
+        valueChanged(switchControl, Control::EventType::VALUE_CHANGED);
         return true;
     }
     return false;
 }
 
-void ControlSwitchTest::valueChanged(Object* sender, ControlEvent controlEvent)
+void ControlSwitchTest::valueChanged(Object* sender, Control::EventType controlEvent)
 {
     ControlSwitch* pSwitch = (ControlSwitch*)sender;
     if (pSwitch->isOn())
