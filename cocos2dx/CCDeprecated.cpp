@@ -93,8 +93,8 @@ const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
 const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
 const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
-const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
-const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
+const ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::Type::RADIAL;
+const ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::Type::BAR;
 
 const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
 const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
@@ -161,6 +161,33 @@ const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
 const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
 const int kCCNodeOnCleanup = kNodeOnCleanup;
 
+const LanguageType kLanguageEnglish     = LanguageType::ENGLISH;
+const LanguageType kLanguageChinese     = LanguageType::CHINESE;
+const LanguageType kLanguageFrench      = LanguageType::FRENCH;
+const LanguageType kLanguageItalian     = LanguageType::ITALIAN;
+const LanguageType kLanguageGerman      = LanguageType::GERMAN;
+const LanguageType kLanguageSpanish     = LanguageType::SPANISH;
+const LanguageType kLanguageRussian     = LanguageType::RUSSIAN;
+const LanguageType kLanguageKorean      = LanguageType::KOREAN;
+const LanguageType kLanguageJapanese    = LanguageType::JAPANESE;
+const LanguageType kLanguageHungarian   = LanguageType::HUNGARIAN;
+const LanguageType kLanguagePortuguese  = LanguageType::PORTUGUESE;
+const LanguageType kLanguageArabic      = LanguageType::ARABIC;
+const LanguageType kLanguageNorwegian   = LanguageType::NORWEGIAN;
+const LanguageType kLanguagePolish      = LanguageType::POLISH;
+
+
+
+const Application::Platform kTargetWindows      = Application::Platform::WINDOWS;
+const Application::Platform kTargetLinux        = Application::Platform::LINUX;
+const Application::Platform kTargetMacOS        = Application::Platform::MACOS;
+const Application::Platform kTargetAndroid      = Application::Platform::ANDROID;
+const Application::Platform kTargetIphone       = Application::Platform::IPHONE;
+const Application::Platform kTargetIpad         = Application::Platform::IPAD;
+const Application::Platform kTargetBlackBerry   = Application::Platform::BLACKBERRY;
+const Application::Platform kTargetNaCl         = Application::Platform::NACL;
+const Application::Platform kTargetEmscripten   = Application::Platform::EMSCRIPTEN;
+const Application::Platform kTargetTizen        = Application::Platform::TIZEN;
 
 void ccDrawInit()
 {

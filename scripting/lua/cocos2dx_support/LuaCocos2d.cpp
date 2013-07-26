@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri Jul 26 13:43:49 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Jul 26 17:17:54 2013.
 */
 
 /****************************************************************************
@@ -64082,10 +64082,10 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"createWithContentsOfFile",tolua_Cocos2d_CCString_createWithContentsOfFile00);
   tolua_endmodule(tolua_S);
   tolua_function(tolua_S,"clampf",tolua_Cocos2d_clampf00);
-  tolua_constant(tolua_S,"kResolutionExactFit",kResolutionExactFit);
-  tolua_constant(tolua_S,"kResolutionNoBorder",kResolutionNoBorder);
-  tolua_constant(tolua_S,"kResolutionShowAll",kResolutionShowAll);
-  tolua_constant(tolua_S,"kResolutionUnKnown",kResolutionUnKnown);
+  tolua_constant(tolua_S,"kResolutionExactFit",(int)kResolutionExactFit);
+  tolua_constant(tolua_S,"kResolutionNoBorder",(int)kResolutionNoBorder);
+  tolua_constant(tolua_S,"kResolutionShowAll",(int)kResolutionShowAll);
+  tolua_constant(tolua_S,"kResolutionUnKnown",(int)kResolutionUnKnown);
   tolua_cclass(tolua_S,"CCEGLViewProtocol","CCEGLViewProtocol","",NULL);
   tolua_beginmodule(tolua_S,"CCEGLViewProtocol");
    tolua_function(tolua_S,"getFrameSize",tolua_Cocos2d_CCEGLViewProtocol_getFrameSize00);
@@ -64178,25 +64178,25 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_function(tolua_S,"CCAffineTransformConcat",tolua_Cocos2d_CCAffineTransformConcat00);
   tolua_function(tolua_S,"CCAffineTransformEqualToTransform",tolua_Cocos2d_CCAffineTransformEqualToTransform00);
   tolua_function(tolua_S,"CCAffineTransformInvert",tolua_Cocos2d_CCAffineTransformInvert00);
-  tolua_constant(tolua_S,"kLanguageEnglish",kLanguageEnglish);
-  tolua_constant(tolua_S,"kLanguageChinese",kLanguageChinese);
-  tolua_constant(tolua_S,"kLanguageFrench",kLanguageFrench);
-  tolua_constant(tolua_S,"kLanguageItalian",kLanguageItalian);
-  tolua_constant(tolua_S,"kLanguageGerman",kLanguageGerman);
-  tolua_constant(tolua_S,"kLanguageSpanish",kLanguageSpanish);
-  tolua_constant(tolua_S,"kLanguageRussian",kLanguageRussian);
-  tolua_constant(tolua_S,"kLanguageKorean",kLanguageKorean);
-  tolua_constant(tolua_S,"kLanguageJapanese",kLanguageJapanese);
-  tolua_constant(tolua_S,"kLanguageHungarian",kLanguageHungarian);
-  tolua_constant(tolua_S,"kLanguagePortuguese",kLanguagePortuguese);
-  tolua_constant(tolua_S,"kLanguageArabic",kLanguageArabic);
-  tolua_constant(tolua_S,"kTargetWindows",kTargetWindows);
-  tolua_constant(tolua_S,"kTargetLinux",kTargetLinux);
-  tolua_constant(tolua_S,"kTargetMacOS",kTargetMacOS);
-  tolua_constant(tolua_S,"kTargetAndroid",kTargetAndroid);
-  tolua_constant(tolua_S,"kTargetIphone",kTargetIphone);
-  tolua_constant(tolua_S,"kTargetIpad",kTargetIpad);
-  tolua_constant(tolua_S,"kTargetBlackBerry",kTargetBlackBerry);
+  tolua_constant(tolua_S,"kLanguageEnglish",(int)kLanguageEnglish);
+  tolua_constant(tolua_S,"kLanguageChinese",(int)kLanguageChinese);
+  tolua_constant(tolua_S,"kLanguageFrench",(int)kLanguageFrench);
+  tolua_constant(tolua_S,"kLanguageItalian",(int)kLanguageItalian);
+  tolua_constant(tolua_S,"kLanguageGerman",(int)kLanguageGerman);
+  tolua_constant(tolua_S,"kLanguageSpanish",(int)kLanguageSpanish);
+  tolua_constant(tolua_S,"kLanguageRussian",(int)kLanguageRussian);
+  tolua_constant(tolua_S,"kLanguageKorean",(int)kLanguageKorean);
+  tolua_constant(tolua_S,"kLanguageJapanese",(int)kLanguageJapanese);
+  tolua_constant(tolua_S,"kLanguageHungarian",(int)kLanguageHungarian);
+  tolua_constant(tolua_S,"kLanguagePortuguese",(int)kLanguagePortuguese);
+  tolua_constant(tolua_S,"kLanguageArabic",(int)kLanguageArabic);
+  tolua_constant(tolua_S,"kTargetWindows",(int)kTargetWindows);
+  tolua_constant(tolua_S,"kTargetLinux",(int)kTargetLinux);
+  tolua_constant(tolua_S,"kTargetMacOS",(int)kTargetMacOS);
+  tolua_constant(tolua_S,"kTargetAndroid",(int)kTargetAndroid);
+  tolua_constant(tolua_S,"kTargetIphone",(int)kTargetIphone);
+  tolua_constant(tolua_S,"kTargetIpad",(int)kTargetIpad);
+  tolua_constant(tolua_S,"kTargetBlackBerry",(int)kTargetBlackBerry);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCApplication","CCApplication","",tolua_collect_CCApplication);
   #else
@@ -64291,8 +64291,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getScriptHandler",tolua_Cocos2d_CCNotificationCenter_getScriptHandler00);
    tolua_function(tolua_S,"getObserverHandlerByName",tolua_Cocos2d_CCNotificationCenter_getObserverHandlerByName00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kTypeBackClicked",kTypeBackClicked);
-  tolua_constant(tolua_S,"kTypeMenuClicked",kTypeMenuClicked);
+  tolua_constant(tolua_S,"kTypeBackClicked",(int)kTypeBackClicked);
+  tolua_constant(tolua_S,"kTypeMenuClicked",(int)kTypeMenuClicked);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCImage","CCImage","CCObject",tolua_collect_CCImage);
   #else
@@ -66852,23 +66852,23 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"startAutorepeat",tolua_Cocos2d_CCControlStepper_startAutorepeat00);
    tolua_function(tolua_S,"stopAutorepeat",tolua_Cocos2d_CCControlStepper_stopAutorepeat00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kKeyboardReturnTypeDefault",kKeyboardReturnTypeDefault);
-  tolua_constant(tolua_S,"kKeyboardReturnTypeDone",kKeyboardReturnTypeDone);
-  tolua_constant(tolua_S,"kKeyboardReturnTypeSend",kKeyboardReturnTypeSend);
-  tolua_constant(tolua_S,"kKeyboardReturnTypeSearch",kKeyboardReturnTypeSearch);
-  tolua_constant(tolua_S,"kKeyboardReturnTypeGo",kKeyboardReturnTypeGo);
-  tolua_constant(tolua_S,"kEditBoxInputModeAny",kEditBoxInputModeAny);
-  tolua_constant(tolua_S,"kEditBoxInputModeEmailAddr",kEditBoxInputModeEmailAddr);
-  tolua_constant(tolua_S,"kEditBoxInputModeNumeric",kEditBoxInputModeNumeric);
-  tolua_constant(tolua_S,"kEditBoxInputModePhoneNumber",kEditBoxInputModePhoneNumber);
-  tolua_constant(tolua_S,"kEditBoxInputModeUrl",kEditBoxInputModeUrl);
-  tolua_constant(tolua_S,"kEditBoxInputModeDecimal",kEditBoxInputModeDecimal);
-  tolua_constant(tolua_S,"kEditBoxInputModeSingleLine",kEditBoxInputModeSingleLine);
-  tolua_constant(tolua_S,"kEditBoxInputFlagPassword",kEditBoxInputFlagPassword);
-  tolua_constant(tolua_S,"kEditBoxInputFlagSensitive",kEditBoxInputFlagSensitive);
-  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsWord",kEditBoxInputFlagInitialCapsWord);
-  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsSentence",kEditBoxInputFlagInitialCapsSentence);
-  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsAllCharacters",kEditBoxInputFlagInitialCapsAllCharacters);
+  tolua_constant(tolua_S,"kKeyboardReturnTypeDefault",(int)kKeyboardReturnTypeDefault);
+  tolua_constant(tolua_S,"kKeyboardReturnTypeDone",(int)kKeyboardReturnTypeDone);
+  tolua_constant(tolua_S,"kKeyboardReturnTypeSend",(int)kKeyboardReturnTypeSend);
+  tolua_constant(tolua_S,"kKeyboardReturnTypeSearch",(int)kKeyboardReturnTypeSearch);
+  tolua_constant(tolua_S,"kKeyboardReturnTypeGo",(int)kKeyboardReturnTypeGo);
+  tolua_constant(tolua_S,"kEditBoxInputModeAny",(int)kEditBoxInputModeAny);
+  tolua_constant(tolua_S,"kEditBoxInputModeEmailAddr",(int)kEditBoxInputModeEmailAddr);
+  tolua_constant(tolua_S,"kEditBoxInputModeNumeric",(int)kEditBoxInputModeNumeric);
+  tolua_constant(tolua_S,"kEditBoxInputModePhoneNumber",(int)kEditBoxInputModePhoneNumber);
+  tolua_constant(tolua_S,"kEditBoxInputModeUrl",(int)kEditBoxInputModeUrl);
+  tolua_constant(tolua_S,"kEditBoxInputModeDecimal",(int)kEditBoxInputModeDecimal);
+  tolua_constant(tolua_S,"kEditBoxInputModeSingleLine",(int)kEditBoxInputModeSingleLine);
+  tolua_constant(tolua_S,"kEditBoxInputFlagPassword",(int)kEditBoxInputFlagPassword);
+  tolua_constant(tolua_S,"kEditBoxInputFlagSensitive",(int)kEditBoxInputFlagSensitive);
+  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsWord",(int)kEditBoxInputFlagInitialCapsWord);
+  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsSentence",(int)kEditBoxInputFlagInitialCapsSentence);
+  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsAllCharacters",(int)kEditBoxInputFlagInitialCapsAllCharacters);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
   #else

@@ -856,9 +856,9 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_Color;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_TexCoords;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCVertexAttribFlag_PosColorTex;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeRadial;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCProgressTimerTypeBar;
-CC_DEPRECATED_ATTRIBUTE typedef enum ProgressTimer::Type ProgressTimerType;
+CC_DEPRECATED_ATTRIBUTE extern const ProgressTimer::Type kCCProgressTimerTypeRadial;
+CC_DEPRECATED_ATTRIBUTE extern const ProgressTimer::Type kCCProgressTimerTypeBar;
+CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type ProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection2D;
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection3D; 
@@ -936,6 +936,36 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnEnterTransitionDidFinish;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnExitTransitionDidStart;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnCleanup;
 
+
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageEnglish;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageChinese;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageFrench;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageItalian;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageGerman;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageSpanish;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageRussian;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageKorean;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageJapanese;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageHungarian;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguagePortuguese;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageArabic;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguageNorwegian;
+CC_DEPRECATED_ATTRIBUTE extern const LanguageType kLanguagePolish;
+
+CC_DEPRECATED_ATTRIBUTE typedef LanguageType ccLanguageType;
+
+
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetWindows;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetLinux;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetMacOS;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetAndroid;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetIphone;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetIpad;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetBlackBerry;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetNaCl;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetEmscripten;
+CC_DEPRECATED_ATTRIBUTE extern const Application::Platform kTargetTizen;
+CC_DEPRECATED_ATTRIBUTE typedef Application::Platform TargetPlatform;
 
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag

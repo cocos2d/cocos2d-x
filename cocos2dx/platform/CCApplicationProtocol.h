@@ -3,20 +3,6 @@
 
 NS_CC_BEGIN
 
-enum TargetPlatform
-{
-    kTargetWindows,
-    kTargetLinux,
-    kTargetMacOS,
-    kTargetAndroid,
-    kTargetIphone,
-    kTargetIpad,
-    kTargetBlackBerry,
-    kTargetNaCl,
-    kTargetEmscripten,
-    kTargetTizen
-};
-
 /**
  * @addtogroup platform
  * @{
@@ -25,6 +11,21 @@ enum TargetPlatform
 class CC_DLL ApplicationProtocol
 {
 public:
+
+    enum class Platform
+    {
+        WINDOWS,
+        LINUX,
+        MACOS,
+        ANDROID,
+        IPHONE,
+        IPAD,
+        BLACKBERRY,
+        NACL,
+        EMSCRIPTEN,
+        TIZEN
+    };
+
 
     virtual ~ApplicationProtocol() {}
 
@@ -57,12 +58,12 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    virtual ccLanguageType getCurrentLanguage() = 0;
+    virtual LanguageType getCurrentLanguage() = 0;
     
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform() = 0;
+    virtual Platform getTargetPlatform() = 0;
 };
 
 // end of platform group

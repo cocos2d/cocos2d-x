@@ -49,7 +49,7 @@ public:
     */
     static Application* getInstance();
     
-        /** @deprecated Use getInstance() instead */
+    /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /**
@@ -62,12 +62,12 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    virtual ccLanguageType getCurrentLanguage();
+    virtual LanguageType getCurrentLanguage();
     
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform();
+    virtual Platform getTargetPlatform();
 
 protected:
     static Application * sm_pSharedApplication;
