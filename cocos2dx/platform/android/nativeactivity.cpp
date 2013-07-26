@@ -219,17 +219,149 @@ static void engine_term_display(struct engine* engine) {
     engine->surface = EGL_NO_SURFACE;
 }
 
+/*
+ * Get X, Y positions and ID's for all pointers
+ */
+static void getTouchPos(AInputEvent *event, int ids[], float xs[], float ys[]) {
+    int pointerCount = AMotionEvent_getPointerCount(event);
+    for(int i = 0; i < pointerCount; ++i) {
+        ids[i] = AMotionEvent_getPointerId(event, i);
+        xs[i] = AMotionEvent_getX(event, i);
+        ys[i] = AMotionEvent_getY(event, i);
+    }
+}
+
+/*
+ * Handle Touch Inputs
+ */
+static int32_t handle_touch_input(AInputEvent *event) {
+
+    pthread_t thisthread = pthread_self();
+    LOGI("handle_touch_input(%X), pthread_self() = %X", event, thisthread);
+
+    switch(AMotionEvent_getAction(event) &
+           AMOTION_EVENT_ACTION_MASK) {
+
+    case AMOTION_EVENT_ACTION_DOWN:
+        {
+            LOGI("AMOTION_EVENT_ACTION_DOWN");
+            int pointerId = AMotionEvent_getPointerId(event, 0);
+            float xP = AMotionEvent_getX(event,0);
+            float yP = AMotionEvent_getY(event,0);
+
+            LOGI("Event: Action DOWN x=%f y=%f pointerID=%d\n",
+                 xP, yP, pointerId);
+            int pId = pointerId;
+            float x = xP;
+            float y = yP;
+
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            return 1;
+        }
+        break;
+
+    case AMOTION_EVENT_ACTION_POINTER_DOWN:
+        {
+            LOGI("AMOTION_EVENT_ACTION_POINTER_DOWN");
+            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_MASK;
+            int pointerId = AMotionEvent_getPointerId(event, pointerIndex);
+            float xP = AMotionEvent_getX(event,pointerIndex);
+            float yP = AMotionEvent_getY(event,pointerIndex);
+
+            LOGI("Event: Action POINTER DOWN x=%f y=%f pointerID=%d\n",
+                 xP, yP, pointerId);
+            int pId = pointerId;
+            float x = xP;
+            float y = yP;
+
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            return 1;
+        }
+        break;
+
+    case AMOTION_EVENT_ACTION_MOVE:
+        {
+            LOGI("AMOTION_EVENT_ACTION_MOVE");
+            int pointerCount = AMotionEvent_getPointerCount(event);
+            int ids[pointerCount];
+            float xs[pointerCount], ys[pointerCount];
+            getTouchPos(event, ids, xs, ys);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(pointerCount, ids, xs, ys);
+            return 1;
+        }
+        break;
+
+    case AMOTION_EVENT_ACTION_UP:
+        {
+            LOGI("AMOTION_EVENT_ACTION_UP");
+            int pointerId = AMotionEvent_getPointerId(event, 0);
+            float xP = AMotionEvent_getX(event,0);
+            float yP = AMotionEvent_getY(event,0);
+            LOGI("Event: Action UP x=%f y=%f pointerID=%d\n",
+                 xP, yP, pointerId);
+            int pId = pointerId;
+            float x = xP;
+            float y = yP;
+
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            return 1;
+        }
+        break;
+
+    case AMOTION_EVENT_ACTION_POINTER_UP:
+        {
+            LOGI("AMOTION_EVENT_ACTION_POINTER_UP");
+            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_MASK;
+            int pointerId = AMotionEvent_getPointerId(event, pointerIndex);
+            float xP = AMotionEvent_getX(event,pointerIndex);
+            float yP = AMotionEvent_getY(event,pointerIndex);
+            LOGI("Event: Action POINTER UP x=%f y=%f pointerID=%d\n",
+                 xP, yP, pointerIndex);
+            int pId = pointerId;
+            float x = xP;
+            float y = yP;
+
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            return 1;
+        }
+        break;
+
+    case AMOTION_EVENT_ACTION_CANCEL:
+        {
+            LOGI("AMOTION_EVENT_ACTION_CANCEL");
+            int pointerCount = AMotionEvent_getPointerCount(event);
+            int ids[pointerCount];
+            float xs[pointerCount], ys[pointerCount];
+            getTouchPos(event, ids, xs, ys);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(pointerCount, ids, xs, ys);
+            return 1;
+        }
+        break;
+
+    default:
+        LOGI("handle_touch_input() default case.... NOT HANDLE");
+        return 0;
+        break;
+    }
+}
+
 /**
  * Process the next input event.
  */
 static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) {
+
+    pthread_t thisthread = pthread_self();
+    LOGI("engine_handle_input(%X, %X), pthread_self() = %X", app, event, thisthread);
+
     struct engine* engine = (struct engine*)app->userData;
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
         engine->animating = 1;
         engine->state.x = AMotionEvent_getX(event, 0);
         engine->state.y = AMotionEvent_getY(event, 0);
-        return 1;
+
+        return handle_touch_input(event);
     }
+
     return 0;
 }
 
