@@ -47,6 +47,13 @@ public:
     virtual ~Label();
     Label();
     
+    virtual void setAlignment(TextAlignment alignment)              = 0;
+    virtual void setWidth(float width)                              = 0;
+    virtual void setLineBreakWithoutSpace(bool breakWithoutSpace)   = 0;
+    virtual void setScale(float scale)                              = 0;
+    virtual void setScaleX(float scaleX)                            = 0;
+    virtual void setScaleY(float scaleY)                            = 0;
+    
     
     // needs to go - TEST STUFF /////////////////////////////////////////////////////////////////////////
     static Label* createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize = 0);
