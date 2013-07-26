@@ -186,7 +186,7 @@ void TMXLayer::setupTiles()
 }
 
 // TMXLayer - Properties
-String* TMXLayer::getPropertyNamed(const char *propertyName) const
+String* TMXLayer::getProperty(const char *propertyName) const
 {
     return static_cast<String*>(_properties->objectForKey(propertyName));
 }
@@ -195,22 +195,22 @@ void TMXLayer::parseInternalProperties()
 {
     // if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-    String *vertexz = getPropertyNamed("cc_vertexz");
+    String *vertexz = getProperty("cc_vertexz");
     if (vertexz) 
     {
         // If "automatic" is on, then parse the "cc_alpha_func" too
         if (vertexz->_string == "automatic")
         {
             _useAutomaticVertexZ = true;
-            String *alphaFuncVal = getPropertyNamed("cc_alpha_func");
+            String *alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = 0.0f;
             if (alphaFuncVal != NULL)
             {
                 alphaFuncValue = alphaFuncVal->floatValue();
             }
-            setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest));
+            setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
-            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kUniformAlphaTestValue);
+            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
             // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
             
@@ -390,13 +390,13 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
         Object* pObject = nullptr;
         CCARRAY_FOREACH(_children, pObject)
         {
-            Sprite* pChild = static_cast<Sprite*>(pObject);
-            if (pChild)
+            Sprite* child = static_cast<Sprite*>(pObject);
+            if (child)
             {
-                unsigned int ai = pChild->getAtlasIndex();
+                unsigned int ai = child->getAtlasIndex();
                 if ( ai >= indexForZ )
                 {
-                    pChild->setAtlasIndex(ai+1);
+                    child->setAtlasIndex(ai+1);
                 }
             }
         }
@@ -596,13 +596,13 @@ void TMXLayer::removeTileAt(const Point& pos)
                 Object* pObject = nullptr;
                 CCARRAY_FOREACH(_children, pObject)
                 {
-                    Sprite* pChild = static_cast<Sprite*>(pObject);
-                    if (pChild)
+                    Sprite* child = static_cast<Sprite*>(pObject);
+                    if (child)
                     {
-                        unsigned int ai = pChild->getAtlasIndex();
+                        unsigned int ai = child->getAtlasIndex();
                         if ( ai >= atlasIndex )
                         {
-                            pChild->setAtlasIndex(ai-1);
+                            child->setAtlasIndex(ai-1);
                         }
                     }
                 }

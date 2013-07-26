@@ -23,7 +23,7 @@ public:
 
     void addNewSpriteAtPosition(Point p);
     void update(float dt);
-    void toggleDebugCallback(Object* pSender);
+    void toggleDebugCallback(Object* sender);
     virtual void ccTouchesEnded(Set* touches, Event* event);
     virtual void didAccelerate(Acceleration* pAccelerationValue);
 

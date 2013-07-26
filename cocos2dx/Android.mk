@@ -8,6 +8,7 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
+CCDeprecated.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \

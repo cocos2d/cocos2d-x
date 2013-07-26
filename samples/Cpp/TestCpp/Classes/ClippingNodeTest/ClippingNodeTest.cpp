@@ -529,9 +529,9 @@ void ScrollViewDemo::setup()
     this->setTouchEnabled(true);
 }
 
-void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
 {
-	Touch *touch = (Touch*)pTouches->anyObject();
+	Touch *touch = static_cast<Touch*>(touches->anyObject());
     Node *clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     Rect rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
@@ -539,10 +539,10 @@ void ScrollViewDemo::ccTouchesBegan(Set *pTouches, Event *pEvent)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
     if (!_scrolling) return;
-	Touch *touch = (Touch*)pTouches->anyObject();
+	Touch *touch = static_cast<Touch*>(touches->anyObject());
     Node *clipper = this->getChildByTag(kTagClipperNode);
     Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = point - _lastPoint;
@@ -551,7 +551,7 @@ void ScrollViewDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void ScrollViewDemo::ccTouchesEnded(Set  *touches, Event  *event)
 {
     if (!_scrolling) return;
     _scrolling = false;
@@ -627,7 +627,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForClippingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
 
-        ccDrawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
+        DrawPrimitives::drawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
         
         kmGLPushMatrix();
         this->transform();
@@ -637,7 +637,7 @@ void RawStencilBufferTest::draw()
         this->setupStencilForDrawingOnPlane(i);
         CHECK_GL_ERROR_DEBUG();
         
-        ccDrawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
+        DrawPrimitives::drawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
         
         kmGLPushMatrix();
         this->transform();
@@ -723,8 +723,8 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program );
 #endif
@@ -756,8 +756,8 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram( program );
 #endif
@@ -812,7 +812,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    ccDrawSolidRect(Point::ZERO, Point(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Point::ZERO, Point(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);
@@ -821,8 +821,8 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
+    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program);
 #endif

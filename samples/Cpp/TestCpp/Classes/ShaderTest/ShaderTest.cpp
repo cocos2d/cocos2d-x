@@ -62,7 +62,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 }
 
-void ShaderTestDemo::backCallback(Object* pSender)
+void ShaderTestDemo::backCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild( backAction() );
@@ -70,7 +70,7 @@ void ShaderTestDemo::backCallback(Object* pSender)
     s->release();
 }
 
-void ShaderTestDemo::nextCallback(Object* pSender)
+void ShaderTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
@@ -88,7 +88,7 @@ std::string ShaderTestDemo::subtitle()
     return "";
 }
 
-void ShaderTestDemo::restartCallback(Object* pSender)
+void ShaderTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new ShaderTestScene();
     s->addChild(restartAction()); 
@@ -166,7 +166,7 @@ void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
     GLProgram *shader = new GLProgram();
     shader->initWithVertexShaderFilename(vert, frag);
 
-    shader->addAttribute("aVertex", kVertexAttrib_Position);
+    shader->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
@@ -208,9 +208,9 @@ void ShaderNode::draw()
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
@@ -499,9 +499,9 @@ void SpriteBlur::initProgram()
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-    getShaderProgram()->addAttribute(kAttributeNameColor, kVertexAttrib_Color);
-    getShaderProgram()->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -521,16 +521,16 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
-    ccGLEnableVertexAttribs(kVertexAttribFlag_PosColorTex );
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
-    ccGLBlendFunc(blend.src, blend.dst);
+    GL::blendFunc(blend.src, blend.dst);
 
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
 
-    ccGLBindTexture2D( getTexture()->getName());
+    GL::bindTexture2D( getTexture()->getName());
 
     //
     // Attributes
@@ -540,15 +540,15 @@ void SpriteBlur::draw()
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(kVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(kVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -646,8 +646,8 @@ bool ShaderRetroEffect::init()
         GLProgram *p = new GLProgram();
         p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
 
-        p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-        p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+        p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
         p->link();
         p->updateUniforms();
@@ -740,8 +740,8 @@ ShaderFail::ShaderFail()
     GLProgram *p = new GLProgram();
     p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
     
-    p->addAttribute(kAttributeNamePosition, kVertexAttrib_Position);
-    p->addAttribute(kAttributeNameTexCoord, kVertexAttrib_TexCoords);
+    p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     p->link();
     p->updateUniforms();

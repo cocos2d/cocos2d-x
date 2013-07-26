@@ -45,9 +45,9 @@ public:
     Grabber(void);
     ~Grabber(void);
 
-    void grab(Texture2D *pTexture);
-    void beforeRender(Texture2D *pTexture);
-    void afterRender(Texture2D *pTexture);
+    void grab(Texture2D *texture);
+    void beforeRender(Texture2D *texture);
+    void afterRender(Texture2D *texture);
 
 protected:
     GLuint _FBO;

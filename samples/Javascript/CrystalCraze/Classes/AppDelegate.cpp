@@ -29,7 +29,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     Director *pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
-    pDirector->setProjection(kDirectorProjection2D);
+    pDirector->setProjection(Director::Projection::_2D);
 
 
     Size screenSize = EGLView::getInstance()->getFrameSize();

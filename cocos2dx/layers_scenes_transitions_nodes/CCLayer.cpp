@@ -48,7 +48,7 @@ Layer::Layer()
 , _keyboardEnabled(false)
 , _keypadEnabled(false)
 , _touchPriority(0)
-, _touchMode(kTouchesAllAtOnce)
+, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -96,7 +96,7 @@ void Layer::registerWithTouchDispatcher()
 {
     TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
 
-    if( _touchMode == kTouchesAllAtOnce ) {
+    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
         pDispatcher->addStandardDelegate(this, 0);
     } else {
         pDispatcher->addTargetedDelegate(this, _touchPriority, true);
@@ -155,7 +155,7 @@ void Layer::setTouchEnabled(bool enabled)
     }
 }
 
-void Layer::setTouchMode(ccTouchesMode mode)
+void Layer::setTouchMode(Touch::DispatchMode mode)
 {
     if(_touchMode != mode)
     {
@@ -188,7 +188,7 @@ int Layer::getTouchPriority() const
     return _touchPriority;
 }
 
-int Layer::getTouchMode() const
+Touch::DispatchMode Layer::getTouchMode() const
 {
     return _touchMode;
 }
@@ -237,7 +237,7 @@ void Layer::didAccelerate(Acceleration* pAccelerationValue)
 {
     CC_UNUSED_PARAM(pAccelerationValue);
     
-    if(kScriptTypeNone == _scriptType)
+    if(kScriptTypeNone != _scriptType)
     {
         BasicScriptData data(this,(void*)pAccelerationValue);
         ScriptEvent event(kAccelerometerEvent,&data);
@@ -622,8 +622,7 @@ void LayerRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
 LayerColor::LayerColor()
 {
     // default blend function
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
     
 LayerColor::~LayerColor()
@@ -691,8 +690,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
     {
 
         // default blend function
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
         _displayedColor.r = _realColor.r = color.r;
         _displayedColor.g = _realColor.g = color.g;
@@ -708,7 +706,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionColor));
+        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_COLOR));
         return true;
     }
     return false;
@@ -762,23 +760,23 @@ void LayerColor::draw()
 {
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position | kVertexAttribFlag_Color );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
 
     //
     // Attributes
     //
 #ifdef EMSCRIPTEN
     setGLBufferData(_squareVertices, 4 * sizeof(Vertex2F), 0);
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
-    glVertexAttribPointer(kVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
-    glVertexAttribPointer(kVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 #endif // EMSCRIPTEN
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

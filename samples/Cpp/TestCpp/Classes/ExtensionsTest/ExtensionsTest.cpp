@@ -111,16 +111,16 @@ void ExtensionsMainLayer::onEnter()
     addChild(_itemMenu);
 }
 
-void ExtensionsMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ExtensionsMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
-void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

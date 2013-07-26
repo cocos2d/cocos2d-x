@@ -80,6 +80,16 @@ static std::map<int,int> ports_sockets;
 // name ~> globals
 static std::map<std::string, js::RootedObject*> globals;
 
+
+static void ReportException(JSContext *cx)
+{
+    if (JS_IsExceptionPending(cx)) {
+        if (!JS_ReportPendingException(cx)) {
+            JS_ClearPendingException(cx);
+        }
+    }
+}
+
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
                                               jsval &dataVal, jsval &retval) {
 
@@ -487,7 +497,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
 	JS::CompileOptions options(cx);
 	options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
     
-    // a) check js file first
+    // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
     unsigned long length = 0;
     void *data = futil->getFileData(byteCodePath.c_str(),
@@ -499,6 +509,9 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // b) no jsc file, check js file
     if (!script) {
+        /* Clear any pending exception from previous failed decoding.  */
+        ReportException(cx);
+        
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         String* content = String::createWithContentsOfFile(path);
         if (content) {
@@ -1804,9 +1817,9 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     
     ok &= JS_DefineProperty(cx, tmp, "fontSize", int32_to_jsval(cx, t._fontSize), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentH", int32_to_jsval(cx, (int32_t)t._alignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    ok &= JS_DefineProperty(cx, tmp, "fontAlignmentV", int32_to_jsval(cx, (int32_t)t._vertAlignment), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     ok &= JS_DefineProperty(cx, tmp, "fontFillColor", cccolor3b_to_jsval(cx, t._fontFillColor), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
@@ -2232,8 +2245,8 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     // defaul values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
-    TextAlignment         defaultTextAlignment    = kTextAlignmentLeft;
-    VerticalTextAlignment defaultTextVAlignment   = kVerticalTextAlignmentTop;
+    Label::HAlignment         defaultTextAlignment    = Label::HAlignment::LEFT;
+    Label::VAlignment defaultTextVAlignment   = Label::VAlignment::TOP;
     
     // by default shadow and stroke are off
     out->_shadow._shadowEnabled = false;
@@ -2278,7 +2291,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_alignment = (TextAlignment)(int)fontAlign;
+        out->_alignment = (Label::HAlignment)(int)fontAlign;
     }
     else
     {
@@ -2292,7 +2305,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_vertAlignment = (VerticalTextAlignment)(int)fontAlign;
+        out->_vertAlignment = (Label::VAlignment)(int)fontAlign;
     }
     else
     {
