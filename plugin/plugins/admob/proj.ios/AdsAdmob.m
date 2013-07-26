@@ -54,7 +54,7 @@
     self.strPublishID = (NSString*) [devInfo objectForKey:@"AdmobID"];
 }
 
-- (void) showAds: (int) type size:(int) sizeEnum position:(int) pos
+- (void) showAds: (NSMutableDictionary*) info position:(int) pos
 {
     if (self.strPublishID == nil ||
         [self.strPublishID length] == 0) {
@@ -62,31 +62,45 @@
         return;
     }
 
+    NSString* strType = [info objectForKey:@"AdmobType"];
+    int type = [strType intValue];
     switch (type) {
     case kTypeBanner:
-        [self showBanner:sizeEnum atPos:pos];
-        break;
+        {
+            NSString* strSize = [info objectForKey:@"AdmobSizeEnum"];
+            int sizeEnum = [strSize intValue];
+            [self showBanner:sizeEnum atPos:pos];
+            break;
+        }
     case kTypeFullScreen:
         OUTPUT_LOG(@"Now not support full screen view in Admob");
         break;
-    case kTypeMoreApp:
-        OUTPUT_LOG(@"Now not support more app ads in Admob");
-        break;
     default:
+        OUTPUT_LOG(@"The value of 'AdmobType' is wrong (should be 1 or 2)");
         break;
     }
 }
 
-- (void) hideAds: (int) type
+- (void) hideAds: (NSMutableDictionary*) info
 {
-    if (type == kTypeBanner) {
-        if (nil != self.bannerView) {
-            [self.bannerView removeFromSuperview];
-            [self.bannerView release];
-            self.bannerView = nil;
+    NSString* strType = [info objectForKey:@"AdmobType"];
+    int type = [strType intValue];
+    switch (type) {
+    case kTypeBanner:
+        {
+            if (nil != self.bannerView) {
+                [self.bannerView removeFromSuperview];
+                [self.bannerView release];
+                self.bannerView = nil;
+            }
+            break;
         }
-    } else {
+    case kTypeFullScreen:
         OUTPUT_LOG(@"Now not support full screen view in Admob");
+        break;
+    default:
+        OUTPUT_LOG(@"The value of 'AdmobType' is wrong (should be 1 or 2)");
+        break;
     }
 }
 
@@ -117,7 +131,7 @@
 
 - (void) showBanner: (int) sizeEnum atPos:(int) pos
 {
-    GADAdSize size;
+    GADAdSize size = kGADAdSizeBanner;
     switch (sizeEnum) {
         case kSizeBanner:
             size = kGADAdSizeBanner;

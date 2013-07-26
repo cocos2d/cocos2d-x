@@ -153,8 +153,15 @@ configDeveloperInfo : function () {},
 plugin.ProtocolAds = {
 
 /**
+ * @method showAds
+ * @param {TAdsInfo}
+ * @param {cocos2d::plugin::ProtocolAds::AdsPos}
+ */
+showAds : function () {},
+
+/**
  * @method hideAds
- * @param {cocos2d::plugin::ProtocolAds::AdsType}
+ * @param {TAdsInfo}
  */
 hideAds : function () {},
 
@@ -162,13 +169,6 @@ hideAds : function () {},
  * @method queryPoints
  */
 queryPoints : function () {},
-
-/**
- * @method onAdsResult
- * @param {cocos2d::plugin::AdsResultCode}
- * @param {const char*}
- */
-onAdsResult : function () {},
 
 /**
  * @method spendPoints
@@ -183,10 +183,10 @@ spendPoints : function () {},
 configDeveloperInfo : function () {},
 
 /**
- * @method onPlayerGetPoints
- * @param {int}
+ * @method getAdsListener
+ * @return A value converted from C/C++ "cocos2d::plugin::AdsListener*"
  */
-onPlayerGetPoints : function () {},
+getAdsListener : function () {},
 
 };
 
