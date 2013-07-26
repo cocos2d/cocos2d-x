@@ -31,9 +31,9 @@ local function main()
 
         -- create dog animate
         local textureDog = CCTextureCache:getInstance():addImage("dog.png")
-        local rect = CCRectMake(0, 0, frameWidth, frameHeight)
+        local rect = CCRect(0, 0, frameWidth, frameHeight)
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
-        rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
+        rect = CCRect(frameWidth, 0, frameWidth, frameHeight)
         local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
         local spriteDog = CCSprite:createWithSpriteFrame(frame0)
@@ -86,7 +86,7 @@ local function main()
         end
 
         -- add crop
-        local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
+        local frameCrop = CCSpriteFrame:create("crop.png", CCRect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
@@ -151,14 +151,14 @@ local function main()
 
         local function menuCallbackClosePopup()
             -- stop test sound effect
-            SimpleAudioEngine:sharedEngine():stopEffect(effectID)
+            SimpleAudioEngine:getInstance():stopEffect(effectID)
             menuPopup:setVisible(false)
         end
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
             local effectPath = CCFileUtils:getInstance():fullPathForFilename("effect1.wav")
-            effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
+            effectID = SimpleAudioEngine:getInstance():playEffect(effectPath)
             menuPopup:setVisible(true)
         end
 
@@ -189,9 +189,9 @@ local function main()
     -- uncomment below for the BlackBerry version
     -- local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("background.ogg")
     local bgMusicPath = CCFileUtils:getInstance():fullPathForFilename("background.mp3")
-    SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
+    SimpleAudioEngine:getInstance():playBackgroundMusic(bgMusicPath, true)
     local effectPath = CCFileUtils:getInstance():fullPathForFilename("effect1.wav")
-    SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)
+    SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
     -- run
     local sceneGame = CCScene:create()

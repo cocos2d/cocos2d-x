@@ -132,8 +132,8 @@ end
 rawset(_G,"ccpDistance",ccpDistance)
 
 local function ccpNormalize(pt)
-    deprecatedTip("ccpNormalize","CCPoint:getDistance")
-    return pt:getDistance()
+    deprecatedTip("ccpNormalize","CCPoint:normalize")
+    return pt:normalize()
 end
 rawset(_G,"ccpNormalize",ccpNormalize)
 
@@ -384,10 +384,8 @@ local function CCCallFuncNDeprecated( )
     return CCCallFunc
 end
 _G["CCCallFuncN"] = CCCallFuncNDeprecated()
-
 --functions of _G will be deprecated end
-local color = ccColor4B()
-local r = color.r
+
 
 --functions of CCControl will be deprecated end
 local CCControlDeprecated = { }
@@ -710,17 +708,6 @@ rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine
 --functions of SimpleAudioEngine will be deprecated end
 
 
---functions of WebSocket will be deprecated begin
-local WebSocketDeprecated = { }
-function WebSocketDeprecated.sendBinaryMsg(self,table,size)
-    deprecatedTip("sendBinaryMsg","sendBinaryStringMsg")
-    local strMsg = string.char(unpack(table))
-    return self:sendBinaryStringMsg(strMsg)
-end
-rawset(WebSocket,"sendBinaryMsg",WebSocketDeprecated.sendBinaryMsg)
---functions of WebSocket will be deprecated end
-
-
 --functions of CCTMXTiledMap will be deprecated begin
 local CCTMXTiledMapDeprecated = { }
 function CCTMXTiledMapDeprecated.layerNamed(self,layerName)
@@ -780,8 +767,8 @@ end
 rawset(CCTMXObjectGroup,"propertyNamed", CCTMXObjectGroupDeprecated.propertyNamed)
 
 function CCTMXObjectGroupDeprecated.objectNamed(self, objectName)
-    deprecatedTip("CCTMXObjectGroup:objectNamed","CCTMXObjectGroup:getObjectNamed")
-    return self:getObjectNamed(objectName)
+    deprecatedTip("CCTMXObjectGroup:objectNamed","CCTMXObjectGroup:getObject")
+    return self:getObject(objectName)
 end
 rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 --functions of CCTMXObject will be deprecated end
