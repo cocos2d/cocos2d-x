@@ -106,7 +106,7 @@ Speed* Speed::create(ActionInterval* pAction, float fSpeed)
 
 bool Speed::initWithAction(ActionInterval *pAction, float fSpeed)
 {
-    CCAssert(pAction != NULL, "");
+    CCASSERT(pAction != NULL, "");
     pAction->retain();
     _innerAction = pAction;
     _speed = fSpeed;    
@@ -196,7 +196,7 @@ Follow* Follow::reverse() const
 
 bool Follow::initWithTarget(Node *pFollowedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    CCAssert(pFollowedNode != NULL, "");
+    CCASSERT(pFollowedNode != NULL, "");
  
     pFollowedNode->retain();
     _followedNode = pFollowedNode;

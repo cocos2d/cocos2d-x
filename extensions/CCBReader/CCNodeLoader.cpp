@@ -437,7 +437,7 @@ Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * pCC
         }
         default:
         {
-            CCLog("Unknown CCB type.");
+            log("Unknown CCB type.");
         }
             break;
     }

@@ -84,9 +84,9 @@ bool ControlScene::init()
 
 void ControlScene::toExtensionsMainLayer(Object* sender)
 {
-    ExtensionsTestScene* pScene = new ExtensionsTestScene();
-    pScene->runThisTest();
-    pScene->release();
+    ExtensionsTestScene* scene = new ExtensionsTestScene();
+    scene->runThisTest();
+    scene->release();
 }
 
 void ControlScene::previousCallback(Object* sender)

@@ -97,7 +97,7 @@ Node::Node(void)
     _scheduler = director->getScheduler();
     _scheduler->retain();
 
-    ScriptEngineProtocol* pEngine = ScriptEngineManager::sharedManager()->getScriptEngine();
+    ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
     _componentContainer = new ComponentContainer(this);
 }
@@ -108,7 +108,7 @@ Node::~Node()
     
     if (_updateScriptHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
 
     CC_SAFE_RELEASE(_actionManager);
@@ -208,7 +208,7 @@ void Node::setVertexZ(float var)
 /// rotation getter
 float Node::getRotation() const
 {
-    CCAssert(_rotationX == _rotationY, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+    CCASSERT(_rotationX == _rotationY, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
     return _rotationX;
 }
 
@@ -244,7 +244,7 @@ void Node::setRotationY(float fRotationY)
 /// scale getter
 float Node::getScale(void) const
 {
-    CCAssert( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+    CCASSERT( _scaleX == _scaleY, "CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
     return _scaleX;
 }
 
@@ -445,14 +445,15 @@ void Node::setUserData(void *var)
     _userData = var;
 }
 
-unsigned int Node::getOrderOfArrival() const
+int Node::getOrderOfArrival() const
 {
     return _orderOfArrival;
 }
 
-void Node::setOrderOfArrival(unsigned int uOrderOfArrival)
+void Node::setOrderOfArrival(int orderOfArrival)
 {
-    _orderOfArrival = uOrderOfArrival;
+    CCASSERT(orderOfArrival >=0, "Invalid orderOfArrival");
+    _orderOfArrival = orderOfArrival;
 }
 
 ccGLServerState Node::getGLServerState() const
@@ -505,16 +506,12 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
-    if ( _scriptType == kScriptTypeLua)
+    if ( _scriptType != kScriptTypeNone)
     {
         int action = kNodeOnCleanup;
-        BasicScriptData data((void*)this,(void*)&action);
+        BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-    else if(_scriptType == kScriptTypeJavascript)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
     
     // timers
@@ -536,7 +533,7 @@ void Node::childrenAlloc(void)
 
 Node* Node::getChildByTag(int aTag)
 {
-    CCAssert( aTag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( aTag != kNodeTagInvalid, "Invalid tag");
 
     if(_children && _children->count() > 0)
     {
@@ -557,8 +554,8 @@ Node* Node::getChildByTag(int aTag)
 */
 void Node::addChild(Node *child, int zOrder, int tag)
 {    
-    CCAssert( child != NULL, "Argument must be non-nil");
-    CCAssert( child->_parent == NULL, "child already added. It can't be added again");
+    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
 
     if( ! _children )
     {
@@ -584,13 +581,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 
 void Node::addChild(Node *child, int zOrder)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != NULL, "Argument must be non-nil");
     this->addChild(child, zOrder, child->_tag);
 }
 
 void Node::addChild(Node *child)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != NULL, "Argument must be non-nil");
     this->addChild(child, child->_ZOrder, child->_tag);
 }
 
@@ -627,7 +624,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
-    CCAssert( tag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( tag != kNodeTagInvalid, "Invalid tag");
 
     Node *child = this->getChildByTag(tag);
 
@@ -715,7 +712,7 @@ void Node::insertChild(Node* child, int z)
 
 void Node::reorderChild(Node *child, int zOrder)
 {
-    CCAssert( child != NULL, "Child must be non-nil");
+    CCASSERT( child != NULL, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->_setZOrder(zOrder);
@@ -753,7 +750,7 @@ void Node::sortAllChildren()
 
  void Node::draw()
  {
-     //CCAssert(0);
+     //CCASSERT(0);
      // override me
      // Only use- this function to draw your stuff.
      // DON'T draw your stuff outside this method
@@ -874,16 +871,12 @@ void Node::onEnter()
 
     _running = true;
 
-    if (_scriptType == kScriptTypeLua)
+    if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
-        BasicScriptData data((void*)this,(void*)&action);
+        BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-    else if(_scriptType == kScriptTypeJavascript)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 }
 
@@ -893,31 +886,24 @@ void Node::onEnterTransitionDidFinish()
 
     arrayMakeObjectsPerformSelector(_children, onEnterTransitionDidFinish, Node*);
 
-    if (_scriptType == kScriptTypeLua)
+    if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
-        BasicScriptData data((void*)this,(void*)&action);
+        BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-    else if (_scriptType == kScriptTypeJavascript)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 }
 
 void Node::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
-    if (_scriptType == kScriptTypeLua)
+    if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExitTransitionDidStart;
-        BasicScriptData data((void*)this,(void*)&action);
+        BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);    }
-    else if (_scriptType == kScriptTypeJavascript)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 }
 
@@ -926,16 +912,12 @@ void Node::onExit()
     this->pauseSchedulerAndActions();
 
     _running = false;
-    if (_scriptType == kScriptTypeLua)
+    if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
-        BasicScriptData data((void*)this,(void*)&action);
+        BasicScriptData data(this,(void*)&action);
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-    else if ( _scriptType == kScriptTypeJavascript)
-    {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
     arrayMakeObjectsPerformSelector(_children, onExit, Node*);    
@@ -953,7 +935,7 @@ void Node::setActionManager(ActionManager* actionManager)
 
 Action * Node::runAction(Action* action)
 {
-    CCAssert( action != NULL, "Argument must be non-nil");
+    CCASSERT( action != NULL, "Argument must be non-nil");
     _actionManager->addAction(action, this, !_running);
     return action;
 }
@@ -970,13 +952,13 @@ void Node::stopAction(Action* action)
 
 void Node::stopActionByTag(int tag)
 {
-    CCAssert( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
     _actionManager->removeActionByTag(tag, this);
 }
 
 Action * Node::getActionByTag(int tag)
 {
-    CCAssert( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
 }
 
@@ -1024,7 +1006,7 @@ void Node::unscheduleUpdate()
     _scheduler->unscheduleUpdateForTarget(this);
     if (_updateScriptHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
         _updateScriptHandler = 0;
     }
 }
@@ -1041,8 +1023,8 @@ void Node::schedule(SEL_SCHEDULE selector, float interval)
 
 void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay)
 {
-    CCAssert( selector, "Argument must be non-nil");
-    CCAssert( interval >=0, "Argument must be positive");
+    CCASSERT( selector, "Argument must be non-nil");
+    CCASSERT( interval >=0, "Argument must be positive");
 
     _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
 }
@@ -1086,7 +1068,7 @@ void Node::update(float fDelta)
         //only lua use
         SchedulerScriptData data(_updateScriptHandler,fDelta);
         ScriptEvent event(kScheduleEvent,&data);
-        ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     
     if (_componentContainer && !_componentContainer->isEmpty())

@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "CCGrabber.h"
 #include "ccMacros.h"
 #include "textures/CCTexture2D.h"
-#include "platform/platform.h"
 
 NS_CC_BEGIN
 
@@ -53,7 +52,7 @@ void Grabber::grab(Texture2D *pTexture)
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
+        CCASSERT(0, "Frame Grabber: could not attach texture to framebuffer");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);

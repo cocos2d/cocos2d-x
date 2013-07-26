@@ -73,9 +73,9 @@ bool GameOverLayer::init()
 		
         
         MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
-            ExtensionsTestScene *pScene = new ExtensionsTestScene();
-            pScene->runThisTest();
-            pScene->release();
+            ExtensionsTestScene *scene = new ExtensionsTestScene();
+            scene->runThisTest();
+            scene->release();
         });
         
         itemBack->setColor(Color3B(0, 0, 0));

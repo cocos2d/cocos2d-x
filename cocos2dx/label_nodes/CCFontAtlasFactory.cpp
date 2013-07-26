@@ -14,16 +14,16 @@
 
 NS_CC_BEGIN
 
-static const char *glpyhsASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ";
+static const char *glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ";
 
-static const char *glpyhsNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+static const char *glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 
 FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* tttFilePath, int fontSize, GlyphCollection glyphs)
 {
     FontDefinitionTTF *def = FontDefinitionTTF::create(tttFilePath, fontSize, getGlyphCollection(glyphs));
     if(!def)
-        return 0;
+        return nullptr;
     
     // create the font atlas from the font definition
     FontAtlas *tempAtlas = def->createFontAtlas();
@@ -50,11 +50,11 @@ const char * FontAtlasFactory::getGlyphCollection(GlyphCollection glyphs)
     switch (glyphs)
     {
         case GlyphCollection::NEHE:
-            return glpyhsNEHE;
+            return glyphNEHE;
             break;
             
         case GlyphCollection::ASCII:
-            return glpyhsASCII;
+            return glyphASCII;
             break;
             
         default:

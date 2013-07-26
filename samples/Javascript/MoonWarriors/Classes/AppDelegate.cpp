@@ -53,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
     
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #if JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("main.debug.js");
 #else

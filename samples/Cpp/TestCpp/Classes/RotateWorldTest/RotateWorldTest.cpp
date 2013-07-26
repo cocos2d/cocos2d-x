@@ -41,9 +41,9 @@ void SpriteLayer::onEnter()
     x = size.width;
     y = size.height;
     
-    Sprite* sprite = Sprite::create(s_pPathGrossini);
-    Sprite* spriteSister1 = Sprite::create(s_pPathSister1);
-    Sprite* spriteSister2 = Sprite::create(s_pPathSister2);
+    Sprite* sprite = Sprite::create(s_pathGrossini);
+    Sprite* spriteSister1 = Sprite::create(s_pathSister1);
+    Sprite* spriteSister2 = Sprite::create(s_pathSister2);
     
     sprite->setScale(1.5f);
     spriteSister1->setScale(1.5f);
@@ -126,9 +126,9 @@ void RotateWorldMainLayer::onEnter()
 
 void RotateWorldTestScene::runThisTest()
 {
-    Layer* pLayer = RotateWorldMainLayer::create();
+    Layer* layer = RotateWorldMainLayer::create();
 
-    addChild(pLayer);
+    addChild(layer);
     runAction( RotateBy::create(4, -360) );
 
     Director::getInstance()->replaceScene(this);

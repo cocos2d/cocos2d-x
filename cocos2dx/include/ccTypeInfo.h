@@ -41,7 +41,7 @@ public:
 
 static inline unsigned int getHashCodeByString(const char *key)
 {
-	unsigned int len = strlen(key);
+	size_t len = strlen(key);
 	const char *end=key+len;
 	unsigned int hash;
 

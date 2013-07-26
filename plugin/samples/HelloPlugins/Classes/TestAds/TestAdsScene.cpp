@@ -103,7 +103,7 @@ bool TestAds::init()
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
 
 	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));
@@ -216,31 +216,31 @@ void TestAds::caseChanged(Object* pSender)
 	default:
 		break;
 	}
-	CCLog("case selected change to : %s", strLog.c_str());
+	log("case selected change to : %s", strLog.c_str());
 }
 
 void TestAds::typeChanged(Object* pSender)
 {
 	int selectIndex = _typeItem->getSelectedIndex();
 	_type = (ProtocolAds::AdsType) selectIndex;
-	CCLog("type selected change to : %d", _type);
+	log("type selected change to : %d", _type);
 }
 
 void TestAds::posChanged(Object* pSender)
 {
 	int selectIndex = _posItem->getSelectedIndex();
 	_pos = (ProtocolAds::AdsPos) selectIndex;
-	CCLog("pos selected change to : %d", _pos);
+	log("pos selected change to : %d", _pos);
 }
 
 void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
 {
-	CCLog("OnAdsResult, code : %d, msg : %s", code, msg);
+	log("OnAdsResult, code : %d, msg : %s", code, msg);
 }
 
 void MyAdsListener::onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points)
 {
-	CCLog("Player get points : %d", points);
+	log("Player get points : %d", points);
 
 	// @warning should add code to give game-money to player here
 

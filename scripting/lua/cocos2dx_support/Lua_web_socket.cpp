@@ -28,11 +28,11 @@ static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int n
         return 0;
     }
     
-    if (NULL == ScriptEngineManager::sharedManager()->getScriptEngine()) {
+    if (NULL == ScriptEngineManager::getInstance()->getScriptEngine()) {
         return 0;
     }
     
-    LuaStack *pStack = LuaEngine::defaultEngine()->getLuaStack();
+    LuaStack *pStack = LuaEngine::getInstance()->getLuaStack();
     if (NULL == pStack) {
         return 0;
     }
@@ -70,7 +70,7 @@ void LuaWebSocket::onOpen(WebSocket* ws)
         if (0 != nHandler) {
             CommonScriptData data(nHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
 }
@@ -91,7 +91,7 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
             if (0 != nHandler) {
                     CommonScriptData commonData(nHandler,data.bytes);
                     ScriptEvent event(kCommonEvent,(void*)&commonData);
-                    ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
             }
         }
     }
@@ -106,7 +106,7 @@ void LuaWebSocket::onClose(WebSocket* ws)
         {
             CommonScriptData data(nHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
 }
@@ -120,7 +120,7 @@ void LuaWebSocket::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
         {
             CommonScriptData data(nHandler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
 }

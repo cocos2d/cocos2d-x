@@ -32,7 +32,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 ****************************************************************************/
 #include "CCLabelBMFont.h"
 #include "cocoa/CCString.h"
-#include "platform/platform.h"
 #include "cocoa/CCDictionary.h"
 #include "CCConfiguration.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
@@ -185,7 +184,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
     String *contents = String::createWithContentsOfFile(fullpath.c_str());
 
-    CCAssert(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
+    CCASSERT(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
     
     set<unsigned int> *validCharsString = new set<unsigned int>();
 
@@ -270,7 +269,7 @@ void CCBMFontConfiguration::parseImageFileName(std::string line, const char *fnt
     int index = line.find('=')+1;
     int index2 = line.find(' ', index);
     std::string value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
+    CCASSERT(atoi(value.c_str()) == 0, "LabelBMFont file could not be found");
     // file 
     index = line.find('"')+1;
     index2 = line.find('"', index);
@@ -311,17 +310,17 @@ void CCBMFontConfiguration::parseCommonArguments(std::string line)
     index = line.find("scaleW=") + strlen("scaleW=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCASSERT(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // scaleH. sanity check
     index = line.find("scaleH=") + strlen("scaleH=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
+    CCASSERT(atoi(value.c_str()) <= Configuration::getInstance()->getMaxTextureSize(), "CCLabelBMFont: page can't be larger than supported");
     // pages. sanity check
     index = line.find("pages=") + strlen("pages=");
     index2 = line.find(' ', index);
     value = line.substr(index, index2-index);
-    CCAssert(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
+    CCASSERT(atoi(value.c_str()) == 1, "CCBitfontAtlas: only supports 1 page");
 
     // packed (ignore) What does this mean ??
 }
@@ -466,8 +465,8 @@ bool LabelBMFont::init()
 
 bool LabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kLabelAutomaticWidth*/, TextAlignment alignment/* = kTextAlignmentLeft*/, Point imageOffset/* = Point::ZERO*/)
 {
-    CCAssert(!_configuration, "re-init is no longer supported");
-    CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFont");
+    CCASSERT(!_configuration, "re-init is no longer supported");
+    CCASSERT( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for LabelBMFont");
     
     Texture2D *texture = NULL;
     
@@ -1214,7 +1213,7 @@ void LabelBMFont::setFntFile(const char* fntFile)
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 
-        CCAssert( newConf, "CCLabelBMFont: Impossible to create font. Please check file");
+        CCASSERT( newConf, "CCLabelBMFont: Impossible to create font. Please check file");
 
         _fntFile = fntFile;
 

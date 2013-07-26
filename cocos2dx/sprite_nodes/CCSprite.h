@@ -53,9 +53,6 @@ struct transformValues_;
  * @{
  */
 
-#define SpriteIndexNotInitialized 0xffffffff     /// Sprite invalid index on the SpriteBatchNode
-
-
 /** 
  * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
@@ -85,6 +82,9 @@ class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
 #endif // EMSCRIPTEN
 {
 public:
+
+    static const int kSpriteIndexNotInitialized = -1; /// Sprite invalid index on the SpriteBatchNode
+
     /// @{
     /// @name Creators
     
@@ -375,13 +375,13 @@ public:
     /** 
      * Returns the index used on the TextureAtlas. 
      */
-    inline unsigned int getAtlasIndex(void) const { return _atlasIndex; }
+    inline int getAtlasIndex(void) const { return _atlasIndex; }
     
     /** 
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
-    inline void setAtlasIndex(unsigned int uAtlasIndex) { _atlasIndex = uAtlasIndex; }
+    inline void setAtlasIndex(int atlasIndex) { _atlasIndex = atlasIndex; }
 
     /** 
      * Returns the rect of the Sprite in points 
@@ -449,9 +449,9 @@ public:
     /// @{
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture) override;
-    virtual Texture2D* getTexture(void) override;
+    virtual Texture2D* getTexture() const override;
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
-    inline const BlendFunc& getBlendFunc(void) const override { return _blendFunc; }
+    inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     /// @{
@@ -499,29 +499,29 @@ protected:
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
-    TextureAtlas*     _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    unsigned int        _atlasIndex;          /// Absolute (real) Index on the SpriteSheet
-    SpriteBatchNode*  _batchNode;         /// Used batch node (weak reference)
+    TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
+    int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
+    SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
     
-    bool                _dirty;               /// Whether the sprite needs to be updated
-    bool                _recursiveDirty;      /// Whether all of the sprite's children needs to be updated
-    bool                _hasChildren;         /// Whether the sprite contains children
-    bool                _shouldBeHidden;      /// should not be drawn because one of the ancestors is not visible
-    AffineTransform   _transformToBatch;
+    bool                _dirty;             /// Whether the sprite needs to be updated
+    bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
+    bool                _hasChildren;       /// Whether the sprite contains children
+    bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
+    AffineTransform     _transformToBatch;
     
     //
     // Data used when the sprite is self-rendered
     //
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
-    Texture2D*       _texture;            /// Texture2D object that is used to render the sprite
+    Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
 
     //
     // Shared data
     //
 
     // texture
-    Rect _rect;                            /// Retangle of Texture2D
-    bool   _rectRotated;                      /// Whether the texture is rotated
+    Rect _rect;                             /// Retangle of Texture2D
+    bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
     Point _offsetPosition;

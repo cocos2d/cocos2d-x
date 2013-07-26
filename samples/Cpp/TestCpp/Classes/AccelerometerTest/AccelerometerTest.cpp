@@ -85,9 +85,9 @@ void AccelerometerTest::didAccelerate(Acceleration* pAccelerationValue)
 //------------------------------------------------------------------
 void AccelerometerTestScene::runThisTest()
 {
-    Layer* pLayer = new AccelerometerTest();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new AccelerometerTest();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

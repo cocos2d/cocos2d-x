@@ -92,7 +92,7 @@ class CC_DLL Sequence : public ActionInterval
 {
 public:
     /** helper constructor to create an array of sequenceable actions */
-    static Sequence* create(FiniteTimeAction *pAction1, ...);
+    static Sequence* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
     /** helper constructor to create an array of sequenceable actions given an array */
     static Sequence* create(Array *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
@@ -221,7 +221,7 @@ class CC_DLL Spawn : public ActionInterval
 {
 public:
     /** helper constructor to create an array of spawned actions */
-    static Spawn* create(FiniteTimeAction *pAction1, ...);
+    static Spawn* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** helper constructor to create an array of spawned actions */
     static Spawn* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
@@ -424,10 +424,10 @@ class CC_DLL JumpBy : public ActionInterval
 {
 public:
     /** creates the action */
-    static JumpBy* create(float duration, const Point& position, float height, unsigned int jumps);
+    static JumpBy* create(float duration, const Point& position, float height, int jumps);
 
     /** initializes the action */
-    bool initWithDuration(float duration, const Point& position, float height, unsigned int jumps);
+    bool initWithDuration(float duration, const Point& position, float height, int jumps);
 
     //
     // Overrides
@@ -441,7 +441,7 @@ protected:
     Point           _startPosition;
     Point           _delta;
     float           _height;
-    unsigned int    _jumps;
+    int             _jumps;
     Point           _previousPos;
 };
 
@@ -580,10 +580,10 @@ class CC_DLL Blink : public ActionInterval
 {
 public:
     /** creates the action */
-    static Blink* create(float duration, unsigned int uBlinks);
+    static Blink* create(float duration, int blinks);
 
     /** initializes the action */
-    bool initWithDuration(float duration, unsigned int uBlinks);
+    bool initWithDuration(float duration, int blinks);
 
     //
     // Overrides
@@ -595,7 +595,7 @@ public:
     virtual void stop() override;
     
 protected:
-    unsigned int _times;
+    int _times;
     bool _originalState;
 };
 
@@ -776,6 +776,12 @@ public:
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(Animation *pAnimation);
 
+    /** sets the Animation object to be animated */
+    void setAnimation( Animation* animation );
+    /** returns the Animation object that is being animated */
+    Animation* getAnimation() { return _animation; }
+    const Animation* getAnimation() const { return _animation; }
+
     //
     // Overrides
     //
@@ -785,14 +791,12 @@ public:
     virtual void stop(void) override;
     virtual void update(float t) override;
 
-public:
-    CC_SYNTHESIZE_RETAIN(Animation*, _animation, Animation)
-
 protected:
     std::vector<float>* _splitTimes;
-    int                _nextFrame;
-    SpriteFrame*  _origFrame;
+    int             _nextFrame;
+    SpriteFrame*    _origFrame;
     unsigned int    _executedLoops;
+    Animation*      _animation;
 };
 
 /** Overrides the target of an action so that it always runs on the target
@@ -810,6 +814,12 @@ public:
     /** Init an action with the specified action and forced target */
     bool initWithTarget(Node* target, FiniteTimeAction* pAction);
 
+    /** Sets the target that the action will be forced to run with */
+    void setForcedTarget(Node* forcedTarget);
+    /** returns the target that the action is forced to run with */
+    Node* getForcedTarget() { return _forcedTarget; }
+    const Node* getForcedTarget() const { return _forcedTarget; }
+
     //
     // Overrides
     //
@@ -819,11 +829,9 @@ public:
     virtual void stop(void) override;
     virtual void update(float time) override;
 
-public:
-    /** This is the target that the action will be forced to run with */
-    CC_SYNTHESIZE_RETAIN(Node*, _forcedTarget, ForcedTarget);
 private:
     FiniteTimeAction* _action;
+    Node* _forcedTarget;
 };
 
 // end of actions group

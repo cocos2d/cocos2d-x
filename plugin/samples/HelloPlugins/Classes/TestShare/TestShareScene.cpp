@@ -77,34 +77,34 @@ bool TestShare::init()
     //    you may modify it.
 
     EGLView* pEGLView = EGLView::getInstance();
-    Point posBR = ccp(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
-    Point posTL = ccp(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
+    Point posBR = Point(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
+    Point posTL = Point(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
 
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestShare::menuBackCallback, this));
     Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(ccpAdd(posBR, ccp(- backSize.width / 2, backSize.height / 2)));
+    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     this->addChild(pMenu, 1);
 
-    Point posStep = ccp(150, -150);
-    Point beginPos = ccpAdd(posTL, ccpMult(posStep, 0.5f));
+    Point posStep = Point(150, -150);
+    Point beginPos = posTL + (posStep * 0.5f);
     int line = 0;
     int row = 0;
     for (int i = 0; i < sizeof(s_EventMenuItem)/sizeof(s_EventMenuItem[0]); i++) {
     	MenuItemImage* pMenuItem = MenuItemImage::create(s_EventMenuItem[i].id.c_str(), s_EventMenuItem[i].id.c_str(), CC_CALLBACK_1(TestShare::eventMenuCallback, this));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
 
-        Point pos = ccpAdd(beginPos, ccp(posStep.x * row, posStep.y * line));
+        Point pos = beginPos + Point(posStep.x * row, posStep.y * line);
         Size itemSize = pMenuItem->getContentSize();
         if ((pos.x + itemSize.width / 2) > posBR.x)
 		{
 			line += 1;
 			row = 0;
-			pos = ccpAdd(beginPos, ccp(posStep.x * row, posStep.y * line));
+			pos = beginPos + Point(posStep.x * row, posStep.y * line);
 		}
         row += 1;
         pMenuItem->setPosition(pos);

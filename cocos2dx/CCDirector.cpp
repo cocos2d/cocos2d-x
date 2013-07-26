@@ -24,11 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// cocos2d includes
+#include "CCDirector.h"
+
 // standard includes
 #include <string>
 
-// cocos2d includes
-#include "CCDirector.h"
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCConfiguration.h"
@@ -43,7 +44,6 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
-#include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "label_nodes/CCLabelBMFont.h"
@@ -128,7 +128,7 @@ bool Director::init(void)
     _drawsLabel = NULL;
     _totalFrames = _frames = 0;
     _FPS = new char[10];
-    _lastUpdate = new struct cc_timeval();
+    _lastUpdate = new struct timeval;
 
     // paused ?
     _paused = false;
@@ -216,7 +216,7 @@ void Director::setDefaultValues(void)
 	else if (strcmp(projection, "custom") == 0)
 		_projection = kDirectorProjectionCustom;
 	else
-		CCAssert(false, "Invalid projection value");
+		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
@@ -235,7 +235,7 @@ void Director::setDefaultValues(void)
 void Director::setGLDefaultValues(void)
 {
     // This method SHOULD be called only after openGLView_ was initialized
-    CCAssert(_openGLView, "opengl view should not be null");
+    CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
     // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
@@ -305,9 +305,9 @@ void Director::drawScene(void)
 
 void Director::calculateDeltaTime(void)
 {
-    struct cc_timeval now;
+    struct timeval now;
 
-    if (Time::gettimeofdayCocos2d(&now, NULL) != 0)
+    if (gettimeofday(&now, NULL) != 0)
     {
         CCLOG("error in gettimeofday");
         _deltaTime = 0;
@@ -342,7 +342,7 @@ float Director::getDeltaTime() const
 }
 void Director::setOpenGLView(EGLView *pobOpenGLView)
 {
-    CCAssert(pobOpenGLView, "opengl view should not be null");
+    CCASSERT(pobOpenGLView, "opengl view should not be null");
 
     if (_openGLView != pobOpenGLView)
     {
@@ -452,6 +452,7 @@ void Director::purgeCachedData(void)
     LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
+        SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
         TextureCache::getInstance()->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
@@ -576,8 +577,8 @@ Point Director::getVisibleOrigin() const
 
 void Director::runWithScene(Scene *pScene)
 {
-    CCAssert(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
-    CCAssert(_runningScene == NULL, "_runningScene should be null");
+    CCASSERT(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
+    CCASSERT(_runningScene == NULL, "_runningScene should be null");
 
     pushScene(pScene);
     startAnimation();
@@ -585,8 +586,8 @@ void Director::runWithScene(Scene *pScene)
 
 void Director::replaceScene(Scene *pScene)
 {
-    CCAssert(_runningScene, "Use runWithScene: instead to start the director");
-    CCAssert(pScene != NULL, "the scene should not be null");
+    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    CCASSERT(pScene != NULL, "the scene should not be null");
 
     unsigned int index = _scenesStack->count();
 
@@ -598,7 +599,7 @@ void Director::replaceScene(Scene *pScene)
 
 void Director::pushScene(Scene *pScene)
 {
-    CCAssert(pScene, "the scene should not null");
+    CCASSERT(pScene, "the scene should not null");
 
     _sendCleanupToScene = false;
 
@@ -608,7 +609,7 @@ void Director::pushScene(Scene *pScene)
 
 void Director::popScene(void)
 {
-    CCAssert(_runningScene != NULL, "running scene should not null");
+    CCASSERT(_runningScene != NULL, "running scene should not null");
 
     _scenesStack->removeLastObject();
     unsigned int c = _scenesStack->count();
@@ -631,7 +632,7 @@ void Director::popToRootScene(void)
 
 void Director::popToSceneStackLevel(int level)
 {
-    CCAssert(_runningScene != NULL, "A running Scene is needed");
+    CCASSERT(_runningScene != NULL, "A running Scene is needed");
     int c = (int)_scenesStack->count();
 
     // level 0? -> end
@@ -788,7 +789,7 @@ void Director::resume(void)
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: Director: Error in gettimeofday");
     }
@@ -835,8 +836,8 @@ void Director::showStats(void)
 
 void Director::calculateMPF()
 {
-    struct cc_timeval now;
-    Time::gettimeofdayCocos2d(&now, NULL);
+    struct timeval now;
+    gettimeofday(&now, NULL);
     
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
 }
@@ -962,7 +963,7 @@ void Director::setScheduler(Scheduler* pScheduler)
     }
 }
 
-Scheduler* Director::getScheduler()
+Scheduler* Director::getScheduler() const
 {
     return _scheduler;
 }
@@ -977,7 +978,7 @@ void Director::setActionManager(ActionManager* pActionManager)
     }    
 }
 
-ActionManager* Director::getActionManager()
+ActionManager* Director::getActionManager() const
 {
     return _actionManager;
 }
@@ -992,7 +993,7 @@ void Director::setTouchDispatcher(TouchDispatcher* pTouchDispatcher)
     }    
 }
 
-TouchDispatcher* Director::getTouchDispatcher()
+TouchDispatcher* Director::getTouchDispatcher() const
 {
     return _touchDispatcher;
 }
@@ -1004,7 +1005,7 @@ void Director::setKeyboardDispatcher(KeyboardDispatcher* pKeyboardDispatcher)
     _keyboardDispatcher = pKeyboardDispatcher;
 }
 
-KeyboardDispatcher* Director::getKeyboardDispatcher()
+KeyboardDispatcher* Director::getKeyboardDispatcher() const
 {
     return _keyboardDispatcher;
 }
@@ -1016,7 +1017,7 @@ void Director::setKeypadDispatcher(KeypadDispatcher* pKeypadDispatcher)
     _keypadDispatcher = pKeypadDispatcher;
 }
 
-KeypadDispatcher* Director::getKeypadDispatcher()
+KeypadDispatcher* Director::getKeypadDispatcher() const
 {
     return _keypadDispatcher;
 }
@@ -1030,7 +1031,7 @@ void Director::setAccelerometer(Accelerometer* pAccelerometer)
     }
 }
 
-Accelerometer* Director::getAccelerometer()
+Accelerometer* Director::getAccelerometer() const
 {
     return _accelerometer;
 }
@@ -1044,7 +1045,7 @@ Accelerometer* Director::getAccelerometer()
 // so we now only support DisplayLinkDirector
 void DisplayLinkDirector::startAnimation(void)
 {
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
     }

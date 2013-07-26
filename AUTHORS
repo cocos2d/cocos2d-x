@@ -327,6 +327,7 @@ Developers:
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
+        Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -412,6 +413,7 @@ Developers:
         Linux OpenAL support.
         Added some guards to prevent Eclipse to compile twice the same class.
         Linux Eclipse projects updates
+        Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -532,6 +534,9 @@ Developers:
         
     James Munro (jdmunro)
         Added JSB support for ccpDistanceSQ.
+        
+    Rafael (rafaelx)
+        A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
 
 Retired Core Developers:
     WenSheng Yang
@@ -547,6 +552,12 @@ Retired Core Developers:
         
     michaelcontento
         [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        
+    bmanGH
+        Use gl caching functions in TexturePVR::createGLTexture()
+        
+    metadao
+        make create_project.py more pythonic and fix some typoes
 
 
 Cocos2d-x can not grow so fast without the active community.

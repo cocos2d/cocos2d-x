@@ -1030,7 +1030,7 @@ local function TextureAsync()
         local  tex = tolua.cast(pObj, "CCTexture2D")
         local director = CCDirector:sharedDirector()
 
-        --CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
+        --CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
 
         -- IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 

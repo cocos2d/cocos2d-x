@@ -30,18 +30,15 @@ NS_CC_BEGIN
 
 class PointObject : Object
 {
-    CC_SYNTHESIZE(Point, _ratio, Ratio)
-    CC_SYNTHESIZE(Point, _offset, Offset)
-    CC_SYNTHESIZE(Node *,_child, Child)    // weak ref
-
 public:
-    static PointObject * pointWithPoint(Point ratio, Point offset)
+    static PointObject * create(Point ratio, Point offset)
     {
         PointObject *pRet = new PointObject();
         pRet->initWithPoint(ratio, offset);
         pRet->autorelease();
         return pRet;
     }
+    
     bool initWithPoint(Point ratio, Point offset)
     {
         _ratio = ratio;
@@ -49,6 +46,20 @@ public:
         _child = NULL;
         return true;
     }
+    
+    inline const Point& getRatio() const { return _ratio; };
+    inline void setRatio(const Point& ratio) { _ratio = ratio; };
+
+    inline const Point& getOffset() const { return _offset; };
+    inline void setOffset(const Point& offset) { _offset = offset; };
+    
+    inline Node* getChild() const { return _child; };
+    inline void setChild(Node* child) { _child = child; };
+    
+private:
+    Point _ratio;
+    Point _offset;
+    Node *_child; // weak ref
 };
 
 ParallaxNode::ParallaxNode()
@@ -56,6 +67,7 @@ ParallaxNode::ParallaxNode()
     _parallaxArray = ccArrayNew(5);        
     _lastPosition = Point(-100,-100);
 }
+
 ParallaxNode::~ParallaxNode()
 {
     if( _parallaxArray )
@@ -77,13 +89,13 @@ void ParallaxNode::addChild(Node * child, int zOrder, int tag)
     CC_UNUSED_PARAM(zOrder);
     CC_UNUSED_PARAM(child);
     CC_UNUSED_PARAM(tag);
-    CCAssert(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
+    CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
 void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point& offset)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
-    PointObject *obj = PointObject::pointWithPoint(ratio, offset);
+    CCASSERT( child != NULL, "Argument must be non-nil");
+    PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
 
