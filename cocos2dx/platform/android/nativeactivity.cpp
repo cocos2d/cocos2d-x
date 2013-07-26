@@ -70,9 +70,9 @@ static void cocos_init(cocos_dimensions d, AAssetManager* assetmanager) {
 
     cocos2d::FileUtilsAndroid::setassetmanager(assetmanager);
 
-    if (!cocos2d::Director::sharedDirector()->getOpenGLView())
+    if (!cocos2d::Director::getInstance()->getOpenGLView())
     {
-        cocos2d::EGLView *view = cocos2d::EGLView::sharedOpenGLView();
+        cocos2d::EGLView *view = cocos2d::EGLView::getInstance();
         view->setFrameSize(d.w, d.h);
 
         cocos_android_app_init();
@@ -188,7 +188,7 @@ static void engine_draw_frame(struct engine* engine) {
         return;
     }
 
-    cocos2d::Director::sharedDirector()->mainLoop();
+    cocos2d::Director::getInstance()->mainLoop();
     LOG_RENDER_DEBUG("engine_draw_frame : just called cocos' mainLoop()");
 
     /* // Just fill the screen with a color. */
@@ -286,8 +286,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                         engine->accelerometerSensor, (1000L/60)*1000);
             }
 
-            if (cocos2d::Director::sharedDirector()->getOpenGLView()) {
-                cocos2d::Application::sharedApplication()->applicationWillEnterForeground();
+            if (cocos2d::Director::getInstance()->getOpenGLView()) {
+                cocos2d::Application::getInstance()->applicationWillEnterForeground();
             }
 
             break;
@@ -299,8 +299,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                         engine->accelerometerSensor);
             }
 
-            cocos2d::Application::sharedApplication()->applicationDidEnterBackground();
-            cocos2d::NotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+            cocos2d::Application::getInstance()->applicationDidEnterBackground();
+            cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
 
             // Also stop animating.
             engine->animating = 0;
