@@ -47,7 +47,7 @@ void ScrollViewLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const
 
 void ScrollViewLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_DIRECTION) == 0) {
-        ((ScrollView *)pNode)->setDirection(ScrollViewDirection(pIntegerLabeled));
+        ((ScrollView *)pNode)->setDirection(ScrollView::Direction(pIntegerLabeled));
     } else {
         NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
     }

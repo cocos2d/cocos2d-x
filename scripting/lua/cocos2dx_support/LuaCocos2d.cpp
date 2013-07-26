@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri Jul 26 19:56:18 2013.
+** Generated automatically by tolua++-1.0.92 on Fri Jul 26 21:56:17 2013.
 */
 
 /****************************************************************************
@@ -55831,7 +55831,7 @@ static int tolua_Cocos2d_CCControl_getState00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getState'", NULL);
 #endif
   {
-   ControlState tolua_ret = (ControlState)  self->getState();
+   CCControlState tolua_ret = (CCControlState)  self->getState();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -56398,7 +56398,7 @@ static int tolua_Cocos2d_CCControl_sendActionsForControlEvents00(lua_State* tolu
 #endif
  {
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sendActionsForControlEvents'", NULL);
 #endif
@@ -56435,7 +56435,7 @@ static int tolua_Cocos2d_CCControl_addTargetWithActionForControlEvents00(lua_Sta
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
   Object* target = ((Object*)  tolua_tousertype(tolua_S,2,0));
   SEL_CCControlHandler action = *((SEL_CCControlHandler*)  tolua_tousertype(tolua_S,3,0));
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
+  CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addTargetWithActionForControlEvents'", NULL);
 #endif
@@ -56472,7 +56472,7 @@ static int tolua_Cocos2d_CCControl_removeTargetWithActionForControlEvents00(lua_
   Control* self = (Control*)  tolua_tousertype(tolua_S,1,0);
   Object* target = ((Object*)  tolua_tousertype(tolua_S,2,0));
   SEL_CCControlHandler action = *((SEL_CCControlHandler*)  tolua_tousertype(tolua_S,3,0));
-  ControlEvent controlEvents = ((ControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
+  CCControlEvent controlEvents = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeTargetWithActionForControlEvents'", NULL);
 #endif
@@ -58120,7 +58120,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleForState00(lua_State* tolua_S)
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleForState'", NULL);
 #endif
@@ -58158,7 +58158,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleForState00(lua_State* tolua_S)
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   String* title = ((String*)  tolua_tousertype(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleForState'", NULL);
 #endif
@@ -58191,7 +58191,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleColorForState00(lua_State* tolu
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleColorForState'", NULL);
 #endif
@@ -58237,7 +58237,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleColorForState00(lua_State* tolu
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   Color3B color = *((Color3B*)  tolua_tousertype(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleColorForState'", NULL);
 #endif
@@ -58270,7 +58270,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleLabelForState00(lua_State* tolu
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleLabelForState'", NULL);
 #endif
@@ -58308,7 +58308,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleLabelForState00(lua_State* tolu
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   Node* label = ((Node*)  tolua_tousertype(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleLabelForState'", NULL);
 #endif
@@ -58343,7 +58343,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleTTFForState00(lua_State* tolua_
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleTTFForState'", NULL);
 #endif
@@ -58376,7 +58376,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleTTFForState00(lua_State* tolua_
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleTTFForState'", NULL);
 #endif
@@ -58412,7 +58412,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleTTFSizeForState00(lua_State* to
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   float size = ((float)  tolua_tonumber(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleTTFSizeForState'", NULL);
 #endif
@@ -58445,7 +58445,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleTTFSizeForState00(lua_State* to
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleTTFSizeForState'", NULL);
 #endif
@@ -58481,7 +58481,7 @@ static int tolua_Cocos2d_CCControlButton_setTitleBMFontForState00(lua_State* tol
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   const char* fntFile = ((const char*)  tolua_tostring(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTitleBMFontForState'", NULL);
 #endif
@@ -58514,7 +58514,7 @@ static int tolua_Cocos2d_CCControlButton_getTitleBMFontForState00(lua_State* tol
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTitleBMFontForState'", NULL);
 #endif
@@ -58548,7 +58548,7 @@ static int tolua_Cocos2d_CCControlButton_getBackgroundSpriteForState00(lua_State
 #endif
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,2,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBackgroundSpriteForState'", NULL);
 #endif
@@ -58586,7 +58586,7 @@ static int tolua_Cocos2d_CCControlButton_setBackgroundSpriteForState00(lua_State
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   Scale9Sprite* sprite = ((Scale9Sprite*)  tolua_tousertype(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBackgroundSpriteForState'", NULL);
 #endif
@@ -58621,7 +58621,7 @@ static int tolua_Cocos2d_CCControlButton_setBackgroundSpriteFrameForState00(lua_
  {
   ControlButton* self = (ControlButton*)  tolua_tousertype(tolua_S,1,0);
   SpriteFrame* spriteFrame = ((SpriteFrame*)  tolua_tousertype(tolua_S,2,0));
-  ControlState state = ((ControlState) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlState state = ((CCControlState) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBackgroundSpriteFrameForState'", NULL);
 #endif
@@ -59987,7 +59987,7 @@ static int tolua_Cocos2d_CCControlColourPicker_hueSliderValueChanged00(lua_State
  {
   ControlColourPicker* self = (ControlColourPicker*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlEvent controlEvent = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hueSliderValueChanged'", NULL);
 #endif
@@ -60022,7 +60022,7 @@ static int tolua_Cocos2d_CCControlColourPicker_colourSliderValueChanged00(lua_St
  {
   ControlColourPicker* self = (ControlColourPicker*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlEvent controlEvent = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'colourSliderValueChanged'", NULL);
 #endif
@@ -63535,7 +63535,7 @@ static int tolua_Cocos2d_CCEditBox_touchDownAction00(lua_State* tolua_S)
  {
   EditBox* self = (EditBox*)  tolua_tousertype(tolua_S,1,0);
   Object* sender = ((Object*)  tolua_tousertype(tolua_S,2,0));
-  ControlEvent controlEvent = ((ControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
+  CCControlEvent controlEvent = ((CCControlEvent) (int)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'touchDownAction'", NULL);
 #endif
@@ -66646,19 +66646,19 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"updateWithBatchNode",tolua_Cocos2d_CCScale9Sprite_updateWithBatchNode00);
    tolua_function(tolua_S,"setSpriteFrame",tolua_Cocos2d_CCScale9Sprite_setSpriteFrame00);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"CCControlEventTouchDown",ControlEventTouchDown);
-  tolua_constant(tolua_S,"CCControlEventTouchDragInside",ControlEventTouchDragInside);
-  tolua_constant(tolua_S,"CCControlEventTouchDragOutside",ControlEventTouchDragOutside);
-  tolua_constant(tolua_S,"CCControlEventTouchDragEnter",ControlEventTouchDragEnter);
-  tolua_constant(tolua_S,"CCControlEventTouchDragExit",ControlEventTouchDragExit);
-  tolua_constant(tolua_S,"CCControlEventTouchUpInside",ControlEventTouchUpInside);
-  tolua_constant(tolua_S,"CCControlEventTouchUpOutside",ControlEventTouchUpOutside);
-  tolua_constant(tolua_S,"CCControlEventTouchCancel",ControlEventTouchCancel);
-  tolua_constant(tolua_S,"CCControlEventValueChanged",ControlEventValueChanged);
-  tolua_constant(tolua_S,"CCControlStateNormal",ControlStateNormal);
-  tolua_constant(tolua_S,"CCControlStateHighlighted",ControlStateHighlighted);
-  tolua_constant(tolua_S,"CCControlStateDisabled",ControlStateDisabled);
-  tolua_constant(tolua_S,"CCControlStateSelected",ControlStateSelected);
+  tolua_constant(tolua_S,"CCControlEventTouchDown",(int)CCControlEventTouchDown);
+  tolua_constant(tolua_S,"CCControlEventTouchDragInside",(int)CCControlEventTouchDragInside);
+  tolua_constant(tolua_S,"CCControlEventTouchDragOutside",(int)CCControlEventTouchDragOutside);
+  tolua_constant(tolua_S,"CCControlEventTouchDragEnter",(int)CCControlEventTouchDragEnter);
+  tolua_constant(tolua_S,"CCControlEventTouchDragExit",(int)CCControlEventTouchDragExit);
+  tolua_constant(tolua_S,"CCControlEventTouchUpInside",(int)CCControlEventTouchUpInside);
+  tolua_constant(tolua_S,"CCControlEventTouchUpOutside",(int)CCControlEventTouchUpOutside);
+  tolua_constant(tolua_S,"CCControlEventTouchCancel",(int)CCControlEventTouchCancel);
+  tolua_constant(tolua_S,"CCControlEventValueChanged",(int)CCControlEventValueChanged);
+  tolua_constant(tolua_S,"CCControlStateNormal",(int)CCControlStateNormal);
+  tolua_constant(tolua_S,"CCControlStateHighlighted",(int)CCControlStateHighlighted);
+  tolua_constant(tolua_S,"CCControlStateDisabled",(int)CCControlStateDisabled);
+  tolua_constant(tolua_S,"CCControlStateSelected",(int)CCControlStateSelected);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCControl","CCControl","CCLayerRGBA",tolua_collect_CCControl);
   #else

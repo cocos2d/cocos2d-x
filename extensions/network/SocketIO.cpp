@@ -100,20 +100,19 @@ SIOClientImpl::SIOClientImpl(const std::string& host, int port) :
 	s << host << ":" << port;
 	_uri = s.str();
 
-	_ws = NULL;	
-
+	_ws = nullptr;
 }
 
-SIOClientImpl::~SIOClientImpl() {
-
-	if(_connected) disconnect();
+SIOClientImpl::~SIOClientImpl()
+{
+	if (_connected) disconnect();
 
 	CC_SAFE_DELETE(_clients);
 	CC_SAFE_DELETE(_ws);
-
 }
 
-void SIOClientImpl::handshake() {
+void SIOClientImpl::handshake()
+{
 	log("SIOClientImpl::handshake() called");
 
 	std::stringstream pre;
@@ -135,8 +134,8 @@ void SIOClientImpl::handshake() {
 	return;
 }
 
-void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response) {
-
+void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response)
+{
 	log("SIOClientImpl::handshakeResponse() called");
 
 	if (0 != strlen(response->getHttpRequest()->getTag())) 
@@ -185,18 +184,21 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
 	int heartbeat = 0, timeout = 0;
 
 	pos = res.find(":");
-	if(pos >= 0) {
+	if(pos >= 0)
+    {
 		sid = res.substr(0, pos);
 		res.erase(0, pos+1);
 	}
 
 	pos = res.find(":");
-    if(pos >= 0){
+    if(pos >= 0)
+    {
         heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
     }
 
 	pos = res.find(":");
-    if(pos >= 0){
+    if(pos >= 0)
+    {
         timeout = atoi(res.substr(pos+1, res.size()).c_str());
     }
 
@@ -210,15 +212,15 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
 
 }
 
-void SIOClientImpl::openSocket() {
-	
+void SIOClientImpl::openSocket()
+{
 	log("SIOClientImpl::openSocket() called");
 
 	std::stringstream s;
 	s << _uri << "/socket.io/1/websocket/" << _sid;
 
 	_ws = new WebSocket();
-	if(!_ws->init(*this, s.str())) 
+	if (!_ws->init(*this, s.str())) 
 	{
 		CC_SAFE_DELETE(_ws);
 	}
@@ -226,23 +228,21 @@ void SIOClientImpl::openSocket() {
 	return;
 }
 
-bool SIOClientImpl::init() {
-
+bool SIOClientImpl::init()
+{
 	log("SIOClientImpl::init() successful");
 	return true;
-
 }
 
-void SIOClientImpl::connect() {
-
+void SIOClientImpl::connect()
+{
 	this->handshake();
-
 }
 
-void SIOClientImpl::disconnect() {
-
-	if(_ws->getReadyState() == WebSocket::kStateOpen) {
-
+void SIOClientImpl::disconnect()
+{
+	if(_ws->getReadyState() == WebSocket::State::OPEN)
+    {
 		std::string s = "0::";
 
 		_ws->send(s);
@@ -250,7 +250,6 @@ void SIOClientImpl::disconnect() {
 		log("Disconnect sent");
 
 		_ws->close();
-
 	}
 
 	Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
@@ -258,79 +257,71 @@ void SIOClientImpl::disconnect() {
 	_connected = false;
 
 	SocketIO::instance()->removeSocket(_uri);
-		
 }
 
-SIOClientImpl* SIOClientImpl::create(const std::string& host, int port) {
-
+SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
+{
 	SIOClientImpl *s = new SIOClientImpl(host, port);
 
-	if(s && s->init()) {
-
+	if (s && s->init())
+    {
 		return s;
-
 	}
 
-	return NULL;
-
+	return nullptr;
 }
 
-SIOClient* SIOClientImpl::getClient(const std::string& endpoint) { 
-	
+SIOClient* SIOClientImpl::getClient(const std::string& endpoint)
+{	
 	return static_cast<SIOClient*>(_clients->objectForKey(endpoint));
-
 }
 
-void SIOClientImpl::addClient(const std::string& endpoint, SIOClient* client) { 
-	
+void SIOClientImpl::addClient(const std::string& endpoint, SIOClient* client)
+{
 	_clients->setObject(client, endpoint); 
-
 }
 
-void SIOClientImpl::connectToEndpoint(const std::string& endpoint) { 
-	
+void SIOClientImpl::connectToEndpoint(const std::string& endpoint)
+{
 	std::string path = endpoint == "/" ? "" : endpoint;
 
 	std::string s = "1::" + path;
 
 	_ws->send(s);
-
 }
 
-void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint) { 
-	
+void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
+{
 	_clients->removeObjectForKey(endpoint);
 
-	if(_clients->count() == 0 || endpoint == "/") {
-		
+	if(_clients->count() == 0 || endpoint == "/")
+    {
 		log("SIOClientImpl::disconnectFromEndpoint out of endpoints, checking for disconnect");
 		
 		if(_connected) this->disconnect();
-		
-	} else {
-
+	}
+    else
+    {
 		std::string path = endpoint == "/" ? "" : endpoint;
 
 		std::string s = "0::" + path;
 
 		_ws->send(s);
-
 	}
-	
 }
 
-void SIOClientImpl::heartbeat(float dt) {
-	
+void SIOClientImpl::heartbeat(float dt)
+{
 	std::string s = "2::";
 
 	_ws->send(s);
 
 	log("Heartbeat sent");
-
 }
 
 
-void SIOClientImpl::send(std::string endpoint, std::string s) {
+void SIOClientImpl::send(std::string endpoint, std::string s)
+{
 	std::stringstream pre;
 
 	std::string path = endpoint == "/" ? "" : endpoint;
@@ -342,11 +333,10 @@ void SIOClientImpl::send(std::string endpoint, std::string s) {
 	log("sending message: %s", msg.c_str());
 
 	_ws->send(msg);
-
 }
 
-void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::string args) {
-	
+void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::string args)
+{
 	std::stringstream pre;
 
 	std::string path = endpoint == "/" ? "" : endpoint;
@@ -358,33 +348,30 @@ void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::strin
 	log("emitting event with data: %s", msg.c_str());
 
 	_ws->send(msg);
-
 }
 
-void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws) {
-
+void SIOClientImpl::onOpen(cocos2d::extension::WebSocket* ws)
+{
 	_connected = true;
 
 	SocketIO::instance()->addSocket(_uri, this);
 
 	DictElement* e = NULL;
 
-	CCDICT_FOREACH(_clients, e) {
-
+	CCDICT_FOREACH(_clients, e)
+    {
 		SIOClient *c = static_cast<SIOClient*>(e->getObject());
 
 		c->onOpen();
-		
 	}
 
 	Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9), false);
 	
 	log("SIOClientImpl::onOpen socket connected!");
-
 }
 
-void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data) {
-
+void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data)
+{
 	log("SIOClientImpl::onMessage received: %s", data.bytes);
 
 	int control = atoi(&data.bytes[0]);
@@ -406,25 +393,26 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	payload.erase(0, pos+1);
 
 	pos = payload.find(":");
-	if(pos >= 0) {
-
+	if(pos >= 0)
+    {
 		endpoint = payload.substr(0, pos);
 		payload.erase(0, pos+1);
-
-	} else {
-
+	}
+    else
+    {
 		endpoint = payload;
 	}
 
-	if(endpoint == "") endpoint = "/";
+	if (endpoint == "") endpoint = "/";
 
 
 	s_data = payload;
 	SIOClient *c = NULL;
 	c = getClient(endpoint);
-	if(c == NULL) log("SIOClientImpl::onMessage client lookup returned NULL");
+	if (c == NULL) log("SIOClientImpl::onMessage client lookup returned NULL");
 
-	switch(control) {
+	switch(control)
+    {
 		case 0: 
 			log("Received Disconnect Signal for Endpoint: %s\n", endpoint.c_str());
 			if(c) c->receivedDisconnect();
@@ -448,11 +436,13 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 		case 5:
 			log("Event Received with data: %s \n", s_data.c_str());
 
-			if(c) {
+			if(c)
+            {
 				eventname = "";
 				pos = s_data.find(":");
 				pos2 = s_data.find(",");
-				if(pos2 > pos) {
+				if(pos2 > pos)
+                {
 					s_data = s_data.substr(pos+1, pos2-pos-1);
 					std::remove_copy(s_data.begin(), s_data.end(),
 						 std::back_inserter(eventname), '"');
@@ -477,29 +467,25 @@ void SIOClientImpl::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::
 	return;
 }
 
-void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws) {
-
-	if(_clients->count() > 0) {
-
+void SIOClientImpl::onClose(cocos2d::extension::WebSocket* ws)
+{
+	if(_clients->count() > 0)
+    {
 		DictElement *e;
 
-		CCDICT_FOREACH(_clients, e) {
-
+		CCDICT_FOREACH(_clients, e)
+        {
 			SIOClient *c = static_cast<SIOClient *>(e->getObject());
 
 			c->receivedDisconnect();
-
 		}
-
 	}
 
 	this->release();
-
 }
 
-void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error) {
-
-
+void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error)
+{
 }
 
 //begin SIOClient methods
@@ -512,56 +498,58 @@ SIOClient::SIOClient(const std::string& host, int port, const std::string& path,
 	, _delegate(&delegate)
 {
 
-
 }
 
-SIOClient::~SIOClient(void) {
-	
-	if(_connected) {
+SIOClient::~SIOClient(void)
+{
+	if (_connected)
+    {
 		_socket->disconnectFromEndpoint(_path);
 	}
-
 }
 
-void SIOClient::onOpen() {
-
-	if(_path != "/") {
-
-			_socket->connectToEndpoint(_path);
-
+void SIOClient::onOpen()
+{
+	if (_path != "/")
+    {
+        _socket->connectToEndpoint(_path);
 	}
-	
 }
 
-void SIOClient::onConnect() {
-
+void SIOClient::onConnect()
+{
 	_connected = true;
 	_delegate->onConnect(this);
-	
 }
 
-void SIOClient::send(std::string s) {
-
-	if(_connected) {
+void SIOClient::send(std::string s)
+{
+	if (_connected)
+    {
 		_socket->send(_path, s);
-	} else {
+	}
+    else
+    {
 		_delegate->onError(this, "Client not yet connected");
 	}
 
 }
 
-void SIOClient::emit(std::string eventname, std::string args) {
-
-	if(_connected) {
+void SIOClient::emit(std::string eventname, std::string args)
+{
+	if(_connected)
+    {
 		_socket->emit(_path, eventname, args);
-	} else {
+	}
+    else
+    {
 		_delegate->onError(this, "Client not yet connected");
 	}
 
 }
 
-void SIOClient::disconnect() {
-
+void SIOClient::disconnect()
+{
 	_connected = false;
 
 	_socket->disconnectFromEndpoint(_path);
@@ -569,31 +557,28 @@ void SIOClient::disconnect() {
 	_delegate->onClose(this);
 	
 	this->release();
-	
 }
 
-void SIOClient::receivedDisconnect() {
-
+void SIOClient::receivedDisconnect()
+{
 	_connected = false;
 
 	_delegate->onClose(this);
 
 	this->release();
-
 }
 
-void SIOClient::on(const std::string& eventName, SIOEvent e) {
-
+void SIOClient::on(const std::string& eventName, SIOEvent e)
+{
 	_eventRegistry[eventName] = e;
-
 }
 
-void SIOClient::fireEvent(const std::string& eventName, const std::string& data) {
-
+void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
+{
 	log("SIOClient::fireEvent called with event name: %s and data: %s", eventName.c_str(), data.c_str());
 
-	if(_eventRegistry[eventName]) {
-
+	if(_eventRegistry[eventName])
+    {
 		SIOEvent e = _eventRegistry[eventName];
 
 		e(this, data);
@@ -602,71 +587,75 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 	}
 
 	log("SIOClient::fireEvent no event with name %s found", eventName.c_str());
-
 }
 
 //begin SocketIO methods
-SocketIO *SocketIO::_inst = NULL;
+SocketIO *SocketIO::_inst = nullptr;
 
-SocketIO::SocketIO() {
-
+SocketIO::SocketIO()
+{
 	_sockets = Dictionary::create();
 	_sockets->retain();
-
 }
 
-SocketIO::~SocketIO(void) {
+SocketIO::~SocketIO(void)
+{
 	CC_SAFE_DELETE(_sockets);
 	delete _inst;	
 }
 
-SocketIO* SocketIO::instance() {
-
-	if(!_inst)
-		_inst = new SocketIO();
+SocketIO* SocketIO::instance()
+{
+	if(!_inst) _inst = new SocketIO();
 	
 	return _inst;
-
 }
 
-SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri) {
-
+SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string& uri)
+{
 	std::string host = uri;
 	int port = 0;
     int pos = 0;
 
 	pos = host.find("//");
-	if(pos >= 0) {
+	if (pos >= 0)
+    {
 		host.erase(0, pos+2);
 	}
 
 	pos = host.find(":");
-    if(pos >= 0){
+    if (pos >= 0)
+    {
         port = atoi(host.substr(pos+1, host.size()).c_str());
     }
 
 	pos = host.find("/", 0);
     std::string path = "/";
-    if(pos >= 0){
+    if (pos >= 0)
+    {
         path += host.substr(pos + 1, host.size());
     }
 
 	pos = host.find(":");
-    if(pos >= 0){
+    if (pos >= 0)
+    {
         host.erase(pos, host.size());
-    }else if((pos = host.find("/"))>=0) {
+    }
+    else if ((pos = host.find("/"))>=0)
+    {
     	host.erase(pos, host.size());
     }
 
 	std::stringstream s;
 	s << host << ":" << port;
 	
-	SIOClientImpl* socket = NULL;
-	SIOClient *c = NULL;
+	SIOClientImpl* socket = nullptr;
+	SIOClient *c = nullptr;
 
 	socket = SocketIO::instance()->getSocket(s.str());
 
-	if(socket == NULL) {
+	if(socket == nullptr)
+    {
 		//create a new socket, new client, connect
 		socket = SIOClientImpl::create(host, port);
 
@@ -675,40 +664,37 @@ SIOClient* SocketIO::connect(SocketIO::SIODelegate& delegate, const std::string&
 		socket->addClient(path, c);
 
 		socket->connect();
-
-		
-
-	} else {
+	}
+    else
+    {
 		//check if already connected to endpoint, handle
 		c = socket->getClient(path);
 
-		if(c == NULL) {
-
+		if(c == NULL)
+        {
 			c = new SIOClient(host, port, path, socket, delegate);
 	
 			socket->addClient(path, c);
 
 			socket->connectToEndpoint(path);
-
 		}
-
 	}		
 	
 	return c;
-
 }
 
-SIOClientImpl* SocketIO::getSocket(const std::string& uri) { 
-	
+SIOClientImpl* SocketIO::getSocket(const std::string& uri)
+{
 	return static_cast<SIOClientImpl*>(_sockets->objectForKey(uri)); 
-		
 }
 
-void SocketIO::addSocket(const std::string& uri, SIOClientImpl* socket) { 
+void SocketIO::addSocket(const std::string& uri, SIOClientImpl* socket)
+{
 	_sockets->setObject(socket, uri); 
 }
 
-void SocketIO::removeSocket(const std::string& uri) { 
+void SocketIO::removeSocket(const std::string& uri)
+{
 	_sockets->removeObjectForKey(uri);
 }
 

@@ -37,11 +37,6 @@ NS_CC_EXT_BEGIN
 class TableView;
 class ArrayForObjectSorting;
 
-typedef enum {
-    kTableViewFillTopDown,
-    kTableViewFillBottomUp
-} TableViewVerticalFillOrder;
-
 /**
  * Sole purpose of this delegate is to single touch event in this version.
  */
@@ -137,6 +132,12 @@ public:
 class TableView : public ScrollView, public ScrollViewDelegate
 {
 public:
+    
+    enum class VerticalFillOrder
+    {
+        TOP_DOWN,
+        BOTTOM_UP
+    };
     /**
      * An intialized table view object
      *
@@ -174,8 +175,8 @@ public:
     /**
      * determines how cell is ordered and filled in the view.
      */
-    void setVerticalFillOrder(TableViewVerticalFillOrder order);
-    TableViewVerticalFillOrder getVerticalFillOrder();
+    void setVerticalFillOrder(VerticalFillOrder order);
+    VerticalFillOrder getVerticalFillOrder();
 
     /**
      * Updates the content of the cell at a given index.
@@ -228,7 +229,7 @@ protected:
     /**
      * vertical direction of cell filling
      */
-    TableViewVerticalFillOrder _vordering;
+    VerticalFillOrder _vordering;
 
     /**
      * index set to query the indexes of the cells used.
@@ -257,7 +258,7 @@ protected:
      */
     TableViewDelegate* _tableViewDelegate;
 
-	ScrollViewDirection _oldDirection;
+	Direction _oldDirection;
 
     int __indexFromOffset(Point offset);
     unsigned int _indexFromOffset(Point offset);

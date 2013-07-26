@@ -53,7 +53,7 @@ bool ControlColourPickerTest::init()
         layer->addChild(colourPicker);
 
         // Add the target-action pair
-        colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPickerTest::colourValueChanged), ControlEventValueChanged);
+        colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPickerTest::colourValueChanged), Control::EventType::VALUE_CHANGED);
 
 
         layer_width += colourPicker->getContentSize().width;
@@ -77,7 +77,7 @@ bool ControlColourPickerTest::init()
         layer->setAnchorPoint(Point (0.5f, 0.5f));
 
         // Update the color text
-        colourValueChanged(colourPicker, ControlEventValueChanged);
+        colourValueChanged(colourPicker, Control::EventType::VALUE_CHANGED);
         return true;
     }
     return false;
@@ -89,7 +89,7 @@ ControlColourPickerTest::~ControlColourPickerTest()
     CC_SAFE_RELEASE(_colorLabel);
 }
 
-void ControlColourPickerTest::colourValueChanged(Object *sender, ControlEvent controlEvent)
+void ControlColourPickerTest::colourValueChanged(Object *sender, Control::EventType controlEvent)
 {
     ControlColourPicker* pPicker = (ControlColourPicker*)sender;
     _colorLabel->setString(String::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());

@@ -91,7 +91,7 @@ public:
     virtual std::string subtitle();
     virtual bool init();
     ControlSlider* createSliderCtl();
-    void sliderAction(Object* sender, ControlEvent controlEvent);
+    void sliderAction(Object* sender, Control::EventType controlEvent);
 protected:
     SpriteBlur* _blurSprite;
     ControlSlider* _sliderCtl;

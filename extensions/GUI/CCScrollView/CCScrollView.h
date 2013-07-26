@@ -36,13 +36,6 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef enum {
-	kScrollViewDirectionNone = -1,
-    kScrollViewDirectionHorizontal = 0,
-    kScrollViewDirectionVertical,
-    kScrollViewDirectionBoth
-} ScrollViewDirection;
-
 class ScrollView;
 
 class ScrollViewDelegate
@@ -61,6 +54,13 @@ public:
 class ScrollView : public Layer
 {
 public:
+    enum class Direction
+    {
+        NONE = -1,
+        HORIZONTAL = 0,
+        VERTICAL,
+        BOTH
+    };
     /**
      * Returns an autoreleased scroll view object.
      *
@@ -172,8 +172,8 @@ public:
     /**
      * direction allowed to scroll. ScrollViewDirectionBoth by default.
      */
-    ScrollViewDirection getDirection() const { return _direction; }
-    virtual void setDirection(ScrollViewDirection eDirection) { _direction = eDirection; }
+    Direction getDirection() const { return _direction; }
+    virtual void setDirection(Direction eDirection) { _direction = eDirection; }
 
     ScrollViewDelegate* getDelegate() { return _delegate; }
     void setDelegate(ScrollViewDelegate* pDelegate) { _delegate = pDelegate; }
@@ -254,7 +254,7 @@ protected:
      */
     ScrollViewDelegate* _delegate;
 
-    ScrollViewDirection _direction;
+    Direction _direction;
     /**
      * If YES, the view is being dragged.
      */

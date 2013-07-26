@@ -201,7 +201,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 // Menu Callbacks
 void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendText->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendText->getReadyState() == WebSocket::State::OPEN)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
@@ -216,7 +216,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 
 void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendBinary->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendBinary->getReadyState() == WebSocket::State::OPEN)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
         char buf[] = "Hello WebSocket,\0 I'm\0 a\0 binary\0 message\0.";
