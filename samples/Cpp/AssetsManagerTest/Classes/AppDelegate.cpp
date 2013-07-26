@@ -204,12 +204,12 @@ void UpdateLayer::createDownloadedDir()
 
 void UpdateLayer::onError(AssetsManager::ErrorCode errorCode)
 {
-    if (errorCode == AssetsManager::kNoNewVersion)
+    if (errorCode == AssetsManager::ErrorCode::NO_NEW_VERSION)
     {
         pProgressLabel->setString("no new version");
     }
     
-    if (errorCode == AssetsManager::kNetwork)
+    if (errorCode == AssetsManager::ErrorCode::NETWORK)
     {
         pProgressLabel->setString("network error");
     }

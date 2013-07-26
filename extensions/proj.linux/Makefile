@@ -107,7 +107,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../Components/CCComAudio.cpp \
 ../Components/CCComController.cpp \
 ../Components/CCInputDelegate.cpp \
-../CCDprecated-ext.cpp
+../CCDeprecated-ext.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
