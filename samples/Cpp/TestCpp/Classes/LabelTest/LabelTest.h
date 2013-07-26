@@ -4,6 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
+
 class AtlasDemo : public BaseTest
 {
 protected:
@@ -314,6 +315,101 @@ public:
 private:
     LabelBMFont *label1;
 };
+
+class LabelBMFontNewTest : public AtlasDemo
+{
+public:
+    LabelBMFontNewTest();
+    
+    virtual void draw();
+    virtual std::string title();
+    virtual std::string subtitle();
+private:
+    StringBMFont *label1;
+};
+
+class NewLabelTTFTestLongLine : public AtlasDemo
+{
+public:
+
+    NewLabelTTFTestLongLine();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelTTFTestUnicode : public AtlasDemo
+{
+public:
+
+    NewLabelTTFTestUnicode();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelTTFColorTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFColorTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelTTFFontsTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFFontsTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
+class NewLabelBMFontTest : public AtlasDemo
+{
+public:
+
+    NewLabelBMFontTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+
+class NewLabelBMFontTestOld : public AtlasDemo
+{
+public:
+    
+    NewLabelBMFontTestOld();
+    ~NewLabelBMFontTestOld();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+private:
+    Label *label;
+};
+
+
+class NewLabelFontDefTest : public AtlasDemo
+{
+public:
+
+    NewLabelFontDefTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+
 
 // we don't support linebreak mode
 

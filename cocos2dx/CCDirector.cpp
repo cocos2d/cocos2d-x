@@ -208,7 +208,7 @@ void Director::setDefaultValues(void)
 	_displayStats = conf->getBool("cocos2d.x.display_fps", false);
 
 	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
+	const char *projection = conf->getCString("cocos2d.x.gl.projection", "2d");
 	if( strcmp(projection, "3d") == 0 )
 		_projection = Projection::_3D;
 	else if (strcmp(projection, "2d") == 0)
