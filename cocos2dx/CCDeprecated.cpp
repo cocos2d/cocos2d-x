@@ -189,7 +189,7 @@ const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL
 const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
 const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
 
-const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACTFIT;
+const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACT_FIT;
 const ResolutionPolicy kResolutionNoBorder      = ResolutionPolicy::NO_BORDER;
 const ResolutionPolicy kResolutionShowAll       = ResolutionPolicy::SHOW_ALL;
 const ResolutionPolicy kResolutionFixedHeight   = ResolutionPolicy::FIXED_HEIGHT;

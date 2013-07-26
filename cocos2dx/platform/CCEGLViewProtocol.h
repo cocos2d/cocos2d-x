@@ -7,7 +7,7 @@ enum class ResolutionPolicy
 {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
     // Distortion can occur, and the application may appear stretched or compressed.
-    EXACTFIT,
+    EXACT_FIT,
     // The entire application fills the specified area, without distortion but possibly with some cropping,
     // while maintaining the original aspect ratio of the application.
     NO_BORDER,
@@ -84,7 +84,7 @@ public:
      * @param width Design resolution width.
      * @param height Design resolution height.
      * @param resolutionPolicy The resolution policy desired, you may choose:
-     *                         [1] EXACTFIT Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
+     *                         [1] EXACT_FIT Fill screen by stretch-to-fit: if the design resolution ratio of width to height is different from the screen resolution ratio, your game view will be stretched.
      *                         [2] NO_BORDER Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
      *                         [3] SHOW_ALL  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
      */
