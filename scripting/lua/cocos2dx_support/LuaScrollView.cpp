@@ -591,7 +591,7 @@ static int tolua_Cocos2d_ScrollView_getDirection00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDirection'", NULL);
 #endif
         {
-            ScrollViewDirection tolua_ret = (ScrollViewDirection)  self->getDirection();
+            ScrollView::Direction tolua_ret = (ScrollView::Direction)  self->getDirection();
             tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
         }
     }
@@ -752,7 +752,7 @@ static int tolua_Cocos2d_ScrollView_setDirection00(lua_State* tolua_S)
 #endif
     {
         LuaScrollView* self = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        ScrollViewDirection eDirection = ((ScrollViewDirection) (int)  tolua_tonumber(tolua_S,2,0));
+        ScrollView::Direction eDirection = ((ScrollView::Direction) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDirection'", NULL);
 #endif
@@ -1562,10 +1562,10 @@ TOLUA_API int tolua_scroll_view_open(lua_State* tolua_S)
     tolua_reg_scrollview_type(tolua_S);
     tolua_module(tolua_S,NULL,0);
     tolua_beginmodule(tolua_S,NULL);
-     tolua_constant(tolua_S,"kScrollViewDirectionNone",kScrollViewDirectionNone);
-     tolua_constant(tolua_S,"kScrollViewDirectionHorizontal",kScrollViewDirectionHorizontal);
-     tolua_constant(tolua_S,"kScrollViewDirectionVertical",kScrollViewDirectionVertical);
-     tolua_constant(tolua_S,"kScrollViewDirectionBoth",kScrollViewDirectionBoth);
+    tolua_constant(tolua_S,"kScrollViewDirectionNone",(int)ScrollView::Direction::NONE);
+    tolua_constant(tolua_S,"kScrollViewDirectionHorizontal",(int)ScrollView::Direction::HORIZONTAL);
+    tolua_constant(tolua_S,"kScrollViewDirectionVertical",(int)ScrollView::Direction::VERTICAL);
+    tolua_constant(tolua_S,"kScrollViewDirectionBoth",(int)ScrollView::Direction::BOTH);
      tolua_constant(tolua_S,"kScrollViewScriptScroll",LuaScrollView::kScrollViewScriptScroll);
      tolua_constant(tolua_S,"kScrollViewScriptZoom",LuaScrollView::kScrollViewScriptZoom);
      #ifdef __cplusplus

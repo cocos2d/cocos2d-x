@@ -63,7 +63,7 @@ bool ControlStepperTest::init()
         
         ControlStepper *stepper   = this->makeControlStepper();
         stepper->setPosition(Point(layer_width + 10 + stepper->getContentSize().width / 2, 0));
-        stepper->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlStepperTest::valueChanged), ControlEventValueChanged);
+        stepper->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlStepperTest::valueChanged), Control::EventType::VALUE_CHANGED);
         layer->addChild(stepper);
         
         layer_width                 += stepper->getContentSize().width;
@@ -73,7 +73,7 @@ bool ControlStepperTest::init()
         layer->setAnchorPoint(Point(0.5f, 0.5f));
         
         // Update the value label
-        this->valueChanged(stepper, ControlEventValueChanged);
+        this->valueChanged(stepper, Control::EventType::VALUE_CHANGED);
         return true;
     }
     return false;
@@ -87,7 +87,7 @@ ControlStepper *ControlStepperTest::makeControlStepper()
     return ControlStepper::create(minusSprite, plusSprite);
 }
 
-void ControlStepperTest::valueChanged(Object *sender, ControlEvent controlEvent)
+void ControlStepperTest::valueChanged(Object *sender, Control::EventType controlEvent)
 {
     ControlStepper* pControl = (ControlStepper*)sender;
     // Change value of label.

@@ -75,7 +75,7 @@ public:
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(Point location);
 
-    /** Set the numeric value of the stepper. If send is true, the ControlEventValueChanged is sent. */
+    /** Set the numeric value of the stepper. If send is true, the Control::EventType::VALUE_CHANGED is sent. */
     void setValue(double value, bool send);
 
     /** Start the autorepeat increment/decrement. */

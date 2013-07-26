@@ -9,7 +9,7 @@ SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuItemSelector(Object * pTarget
     return NULL;    
 }
 
-SEL_CCControlHandler TestHeaderLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler TestHeaderLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
 
     return NULL;
 }

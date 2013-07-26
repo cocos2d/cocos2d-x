@@ -240,7 +240,7 @@ public:
         return true;
     }
 
-    int drawText(const char * pszText, SIZE& tSize, Image::ETextAlign eAlign)
+    int drawText(const char * pszText, SIZE& tSize, Image::TextAlign eAlign)
     {
         int nRet = 0;
         wchar_t * pwszBuffer = 0;
@@ -249,8 +249,8 @@ public:
             CC_BREAK_IF(! pszText);
 
             DWORD dwFmt = DT_WORDBREAK;
-            DWORD dwHoriFlag = eAlign & 0x0f;
-            DWORD dwVertFlag = (eAlign & 0xf0) >> 4;
+            DWORD dwHoriFlag = (int)eAlign & 0x0f;
+            DWORD dwVertFlag = ((int)eAlign & 0xf0) >> 4;
 
             switch (dwHoriFlag)
             {
@@ -370,7 +370,7 @@ bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
-                               ETextAlign      eAlignMask/* = kAlignCenter*/,
+                               TextAlign       eAlignMask/* = kAlignCenter*/,
                                const char *    pFontName/* = nil*/,
                                int             nSize/* = 0*/)
 {

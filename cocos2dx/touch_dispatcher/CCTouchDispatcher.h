@@ -37,15 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef enum
-{
-    ccTouchSelectorBeganBit = 1 << 0,
-    ccTouchSelectorMovedBit = 1 << 1,
-    ccTouchSelectorEndedBit = 1 << 2,
-    ccTouchSelectorCancelledBit = 1 << 3,
-    ccTouchSelectorAllBits = ( ccTouchSelectorBeganBit | ccTouchSelectorMovedBit | ccTouchSelectorEndedBit | ccTouchSelectorCancelledBit),
-} ccTouchSelectorFlag;
-
 
 enum {
     CCTOUCHBEGAN,

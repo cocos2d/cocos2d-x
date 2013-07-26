@@ -32,11 +32,11 @@ void ControlButtonLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, co
 
 void ControlButtonLoader::onHandlePropTypeString(Node * pNode, Node * pParent, const char * pPropertyName, const char * pString, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLE_NORMAL) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), ControlStateNormal);
+        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_HIGHLIGHTED) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), ControlStateHighlighted);
+        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_DISABLED) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), ControlStateDisabled);
+        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::DISABLED);
     } else {
         ControlLoader::onHandlePropTypeString(pNode, pParent, pPropertyName, pString, pCCBReader);
     }
@@ -44,11 +44,11 @@ void ControlButtonLoader::onHandlePropTypeString(Node * pNode, Node * pParent, c
 
 void ControlButtonLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLETTF_NORMAL) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, ControlStateNormal);
+        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_HIGHLIGHTED) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, ControlStateHighlighted);
+        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_DISABLED) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, ControlStateDisabled);
+        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::DISABLED);
     } else {
         ControlLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, pCCBReader);
     }
@@ -56,11 +56,11 @@ void ControlButtonLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, 
 
 void ControlButtonLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, const char * pPropertyName, float pFloatScale, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_NORMAL) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, ControlStateNormal);
+        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_HIGHLIGHTED) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, ControlStateHighlighted);
+        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_DISABLED) == 0) {
-        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, ControlStateDisabled);
+        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::DISABLED);
     } else {
         ControlLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, pCCBReader);
     }
@@ -85,15 +85,15 @@ void ControlButtonLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, con
 void ControlButtonLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL) == 0) {
         if(pSpriteFrame != NULL) {
-            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, ControlStateNormal);
+            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::NORMAL);
         }
     } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED) == 0) {
         if(pSpriteFrame != NULL) {
-            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, ControlStateHighlighted);
+            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::HIGH_LIGHTED);
         }
     } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED) == 0) {
         if(pSpriteFrame != NULL) {
-            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, ControlStateDisabled);
+            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::DISABLED);
         }
     } else {
         ControlLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pSpriteFrame, pCCBReader);
@@ -102,11 +102,11 @@ void ControlButtonLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
 
 void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_NORMAL) == 0) {
-        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, ControlStateNormal);
+        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_HIGHLIGHTED) == 0) {
-        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, ControlStateHighlighted);
+        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_TITLECOLOR_DISABLED) == 0) {
-        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, ControlStateDisabled);
+        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::DISABLED);
     } else {
         ControlLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pColor3B, pCCBReader);
     }
