@@ -105,12 +105,13 @@ const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
 const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
 const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
 
-const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
-const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
+const ParticleSystem::Mode kCCParticleModeGravity = ParticleSystem::Mode::GRAVITY;
+const ParticleSystem::Mode kCCParticleModeRadius = ParticleSystem::Mode::RADIUS;
+const int kCCParticleDefaultCapacity = kParticleDefaultCapacity;
 
-const int kCCPositionTypeFree =  ParticleSystem::POSITION_TYPE_FREE;
-const int kCCPositionTypeRelative =  ParticleSystem::POSITION_TYPE_RELATIVE;
-const int kCCPositionTypeGrouped =  ParticleSystem::POSITION_TYPE_GROUPED;
+const ParticleSystem::PositionType kCCPositionTypeFree =  ParticleSystem::PositionType::FREE;
+const ParticleSystem::PositionType kCCPositionTypeRelative =  ParticleSystem::PositionType::RELATIVE;
+const ParticleSystem::PositionType kCCPositionTypeGrouped =  ParticleSystem::PositionType::GROUPED;
 
 const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
 const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
@@ -149,6 +150,17 @@ const TransitionScene::Orientation kCCTransitionOrientationDownOver = Transition
 
 const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
+
+const int kCCActionTagInvalid = kActionTagInvalid;
+
+const int kCCNodeTagInvalid = kNodeTagInvalid;
+
+const int kCCNodeOnEnter = kNodeOnEnter;
+const int kCCNodeOnExit = kNodeOnExit;
+const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
+const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
+const int kCCNodeOnCleanup = kNodeOnCleanup;
+
 
 void ccDrawInit()
 {

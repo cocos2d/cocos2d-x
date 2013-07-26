@@ -893,12 +893,14 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDurationInfinity;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartSizeEqualToEndSize;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleStartRadiusEqualToEndRadius;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeGravity;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleModeRadius;
+CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::Mode kCCParticleModeGravity;
+CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::Mode kCCParticleModeRadius;
 
-CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeFree;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeRelative;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeGrouped;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDefaultCapacity;
+
+CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeFree;
+CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeRelative;
+CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeGrouped;
 CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
@@ -908,7 +910,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
 
 CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesOneByOne;
 CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesAllAtOnce;
-CC_DEPRECATED_ATTRIBUTE typedef enum Touch::DispatchMode ccTouchDispatchMode;
+CC_DEPRECATED_ATTRIBUTE typedef enum Touch::DispatchMode ccTouchesMode;
 
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatPNG;
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatJPEG;
@@ -922,6 +924,18 @@ CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
+
+CC_DEPRECATED_ATTRIBUTE extern const int kCCActionTagInvalid;
+
+
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeTagInvalid;
+
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnEnter;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnExit;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnEnterTransitionDidFinish;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnExitTransitionDidStart;
+CC_DEPRECATED_ATTRIBUTE extern const int kCCNodeOnCleanup;
+
 
 #define kCCTMXTileHorizontalFlag      kTMXTileHorizontalFlag
 #define kCCTMXTileVerticalFlag        kTMXTileVerticalFlag
