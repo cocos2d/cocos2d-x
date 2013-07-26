@@ -130,6 +130,9 @@ private:
     unsigned short int *        _currentUTF8String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;
+    Color3B                     _displayedColor;
+    Color3B                     _realColor;
+    bool                        _cascadeColorEnabled;
     
 };
 

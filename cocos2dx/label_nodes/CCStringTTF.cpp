@@ -30,11 +30,14 @@
 
 NS_CC_BEGIN
 
-StringTTF::StringTTF(FontAtlas *pAtlas, TextHAlignment alignment):   _currentUTF8String(0),
+StringTTF::StringTTF(FontAtlas *pAtlas, TextHAlignment alignment):      _currentUTF8String(0),
                                                                         _fontAtlas(pAtlas),
                                                                         _alignment(alignment),
                                                                         _lineBreakWithoutSpaces(false),
-                                                                        _advances(0)
+                                                                        _advances(0),
+                                                                        _displayedColor(Color3B::WHITE),
+                                                                        _realColor(Color3B::WHITE),
+                                                                        _cascadeColorEnabled(true)
 {
 }
 
@@ -113,6 +116,7 @@ bool StringTTF::setText(const char *stringToRender, float lineWidth, TextHAlignm
     
     numLetter = cc_wcslen(utf16String);
     SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), numLetter);
+    _cascadeColorEnabled = true;
     
     // 
     setCurrentString(utf16String);
@@ -559,22 +563,42 @@ void StringTTF::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 
 const Color3B& StringTTF::getColor(void) const
 {
-    Color3B temp;
-    return temp;
+    return _realColor;
 }
 
 const Color3B& StringTTF::getDisplayedColor() const
 {
-    Color3B temp;
-    return temp;
+    return _displayedColor;
 }
 
 void StringTTF::setColor(const Color3B& color)
 {
+    _displayedColor = _realColor = color;
+	
+	if( _cascadeColorEnabled )
+    {
+		Color3B parentColor = Color3B::WHITE;
+        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
+        
+        if (pParent && pParent->isCascadeColorEnabled())
+            parentColor = pParent->getDisplayedColor();
+        
+        updateDisplayedColor(parentColor);
+	}
 }
 
 void StringTTF::updateDisplayedColor(const Color3B& parentColor)
 {
+    _displayedColor.r = _realColor.r * parentColor.r/255.0;
+	_displayedColor.g = _realColor.g * parentColor.g/255.0;
+	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    
+    Object* pObj;
+	CCARRAY_FOREACH(_children, pObj)
+    {
+        Sprite *item = static_cast<Sprite*>( pObj );
+		item->updateDisplayedColor(_displayedColor);
+	}
 }
 
 bool StringTTF::isCascadeColorEnabled() const
@@ -584,6 +608,7 @@ bool StringTTF::isCascadeColorEnabled() const
 
 void StringTTF::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
+    _cascadeColorEnabled = cascadeColorEnabled;
 }
 
 NS_CC_END
