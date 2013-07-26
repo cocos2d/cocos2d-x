@@ -209,7 +209,7 @@ void DrawNode::render()
 #if CC_TEXTURE_ATLAS_USE_VAO     
     GL::bindVAO(_vao);
 #else
-    GL::enableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     // vertex

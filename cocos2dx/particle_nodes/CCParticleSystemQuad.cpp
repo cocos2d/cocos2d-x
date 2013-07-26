@@ -378,7 +378,7 @@ void ParticleSystemQuad::draw()
 
     #define kQuadSize sizeof(_quads[0].bl)
 
-    GL::enableVertexAttribs( VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     // vertices
