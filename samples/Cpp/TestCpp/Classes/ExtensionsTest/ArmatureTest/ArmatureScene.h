@@ -31,7 +31,7 @@ public:
 	virtual void runThisTest();
 
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* pSender);
+	virtual void MainMenuCallback(Object* sender);
 };
 
 enum {
@@ -60,9 +60,9 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	void restartCallback(Object* pSender);
-	void nextCallback(Object* pSender);
-	void backCallback(Object* pSender);
+	void restartCallback(Object* sender);
+	void nextCallback(Object* sender);
+	void backCallback(Object* sender);
 
 	virtual void draw();
 };
@@ -139,7 +139,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
 	virtual void registerWithTouchDispatcher();
 
 	int displayIndex;
@@ -151,7 +151,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onEnter();
 	virtual std::string title();
 	virtual std::string subtitle();
-	virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
 	virtual void registerWithTouchDispatcher();
 
 	int animationID;
@@ -195,7 +195,7 @@ class TestArmatureNesting : public ArmatureTestLayer
 public:
 	virtual void onEnter();
 	virtual std::string title();
-	virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+	virtual bool ccTouchBegan(Touch  *touch, Event  *event);
 	virtual void registerWithTouchDispatcher();
 
 	cocos2d::extension::armature::Armature *armature;

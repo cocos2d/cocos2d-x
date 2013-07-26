@@ -29,7 +29,7 @@ NS_CC_EXT_BEGIN
 
 void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
     if(strcmp(pPropertyName, PROPERTY_EMITERMODE) == 0) {
-        ((ParticleSystemQuad *)pNode)->setEmitterMode(pIntegerLabeled);
+        ((ParticleSystemQuad *)pNode)->setEmitterMode((ParticleSystem::Mode)pIntegerLabeled);
     } else {
         NodeLoader::onHandlePropTypeIntegerLabeled(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
     }

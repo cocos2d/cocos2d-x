@@ -18,7 +18,7 @@ public:
 
     void step(float dt);
     void createParticleSystem();
-    void testNCallback(Object* pSender);
+    void testNCallback(Object* sender);
     void updateQuantityLabel();
     int getSubTestNum() { return subtestNumber; }
     int getParticlesNum() { return quantityParticles; }

@@ -27,7 +27,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 {
     setTouchEnabled(true);
     setTouchPriority(Menu::HANDLER_PRIORITY + 1);
-    setTouchMode(Layer::TOUCHES_ONE_BY_ONE);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 
     // Font Item    
     Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -114,20 +114,20 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * pEvent)
+bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * event)
 {
     return true;
 }
 
-void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * event)
 {
 }
 
@@ -168,7 +168,7 @@ void MenuLayerMainMenu::menuCallback2(Object* sender)
     static_cast<LayerMultiplex*>(_parent)->switchTo(2);
 }
 
-void MenuLayerMainMenu::menuCallbackPriorityTest(Object* pSender)
+void MenuLayerMainMenu::menuCallbackPriorityTest(Object* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(4);
 }
@@ -509,7 +509,7 @@ MenuLayerPriorityTest::~MenuLayerPriorityTest()
 
 }
 
-void MenuLayerPriorityTest::menuCallback(Object* pSender)
+void MenuLayerPriorityTest::menuCallback(Object* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 //    [[Director sharedDirector] poscene];
@@ -590,12 +590,12 @@ void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
     Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
 }
 
-bool RemoveMenuItemWhenMove::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool RemoveMenuItemWhenMove::ccTouchBegan(Touch  *touch, Event  *event)
 {
     return true;
 }
 
-void RemoveMenuItemWhenMove::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
 {
     if (item)
     {

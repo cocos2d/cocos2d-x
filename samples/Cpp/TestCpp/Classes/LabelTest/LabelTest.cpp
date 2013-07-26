@@ -132,7 +132,7 @@ void AtlasDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void AtlasDemo::restartCallback(Object* pSender)
+void AtlasDemo::restartCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild(restartAtlasAction()); 
@@ -141,7 +141,7 @@ void AtlasDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void AtlasDemo::nextCallback(Object* pSender)
+void AtlasDemo::nextCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild( nextAtlasAction() );
@@ -149,7 +149,7 @@ void AtlasDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void AtlasDemo::backCallback(Object* pSender)
+void AtlasDemo::backCallback(Object* sender)
 {
     Scene* s = new AtlasTestScene();
     s->addChild( backAtlasAction() );
@@ -348,19 +348,19 @@ LabelTTFAlignment::LabelTTFAlignment()
     Size s = Director::getInstance()->getWinSize();
 
     LabelTTF* ttf0 = LabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
-                                          Size(256, 32), Label::TEXT_ALIGNMENT_LEFT);
+                                          Size(256, 32), Label::HAlignment::LEFT);
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2));
     ttf0->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf0);
 
     LabelTTF* ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
-                                          Size(245, 32), Label::TEXT_ALIGNMENT_CENTER);
+                                          Size(245, 32), Label::HAlignment::CENTER);
     ttf1->setPosition(Point(s.width/2,(s.height/6)*3));
     ttf1->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf1);
 
     LabelTTF* ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
-                                          Size(245, 32), Label::TEXT_ALIGNMENT_RIGHT);
+                                          Size(245, 32), Label::HAlignment::RIGHT);
     ttf2->setPosition(Point(s.width/2,(s.height/6)*4));
     ttf2->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf2);
@@ -523,8 +523,8 @@ Atlas4::Atlas4()
 void Atlas4::draw()
 {
     Size s = Director::getInstance()->getWinSize();
-    ccDrawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
-    ccDrawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
+    DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
+    DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
 }
 
 void Atlas4::step(float dt)
@@ -953,8 +953,8 @@ LabelTTFTest::LabelTTFTest()
     this->addChild(menu);
 
     _plabel = NULL;
-    _horizAlign = Label::TEXT_ALIGNMENT_LEFT;
-    _vertAlign = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
+    _horizAlign = Label::HAlignment::LEFT;
+    _vertAlign = Label::VAlignment::TOP;
 
     this->updateAlignment();
 }
@@ -986,39 +986,39 @@ void  LabelTTFTest::updateAlignment()
     this->addChild(_plabel);
 }
 
-void LabelTTFTest::setAlignmentLeft(Object* pSender)
+void LabelTTFTest::setAlignmentLeft(Object* sender)
 {
-    _horizAlign = Label::TEXT_ALIGNMENT_LEFT;
+    _horizAlign = Label::HAlignment::LEFT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentCenter(Object* pSender)
+void LabelTTFTest::setAlignmentCenter(Object* sender)
 {
-    _horizAlign = Label::TEXT_ALIGNMENT_CENTER;
+    _horizAlign = Label::HAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentRight(Object* pSender)
+void LabelTTFTest::setAlignmentRight(Object* sender)
 {
-    _horizAlign = Label::TEXT_ALIGNMENT_RIGHT;
+    _horizAlign = Label::HAlignment::RIGHT;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentTop(Object* pSender)
+void LabelTTFTest::setAlignmentTop(Object* sender)
 {
-    _vertAlign = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
+    _vertAlign = Label::VAlignment::TOP;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentMiddle(Object* pSender)
+void LabelTTFTest::setAlignmentMiddle(Object* sender)
 {
-    _vertAlign = Label::VERTICAL_TEXT_ALIGNMENT_CENTER;
+    _vertAlign = Label::VAlignment::CENTER;
     this->updateAlignment();
 }
 
-void LabelTTFTest::setAlignmentBottom(Object* pSender)
+void LabelTTFTest::setAlignmentBottom(Object* sender)
 {
-    _vertAlign = Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+    _vertAlign = Label::VAlignment::BOTTOM;
     this->updateAlignment();
 }
 
@@ -1027,24 +1027,24 @@ const char* LabelTTFTest::getCurrentAlignment()
     const char* vertical = NULL;
     const char* horizontal = NULL;
     switch (_vertAlign) {
-        case Label::VERTICAL_TEXT_ALIGNMENT_TOP:
+        case Label::VAlignment::TOP:
             vertical = "Top";
             break;
-        case Label::VERTICAL_TEXT_ALIGNMENT_CENTER:
+        case Label::VAlignment::CENTER:
             vertical = "Middle";
             break;
-        case Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM:
+        case Label::VAlignment::BOTTOM:
             vertical = "Bottom";
             break;
     }
     switch (_horizAlign) {
-        case Label::TEXT_ALIGNMENT_LEFT:
+        case Label::HAlignment::LEFT:
             horizontal = "Left";
             break;
-        case Label::TEXT_ALIGNMENT_CENTER:
+        case Label::HAlignment::CENTER:
             horizontal = "Center";
             break;
-        case Label::TEXT_ALIGNMENT_RIGHT:
+        case Label::HAlignment::RIGHT:
             horizontal = "Right";
             break;
     }
@@ -1070,8 +1070,8 @@ LabelTTFMultiline::LabelTTFMultiline()
                                             "Paint Boy",
                                             32,
                                             Size(s.width/2,200),
-                                            Label::TEXT_ALIGNMENT_CENTER,
-                                            Label::VERTICAL_TEXT_ALIGNMENT_TOP);
+                                            Label::HAlignment::CENTER,
+                                            Label::VAlignment::TOP);
 
     center->setPosition(Point(s.width / 2, 150));
 
@@ -1141,7 +1141,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Size size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, Label::TEXT_ALIGNMENT_CENTER);
+    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, Label::HAlignment::CENTER);
     this->_labelShouldRetain->retain();
 
     this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
@@ -1250,13 +1250,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->_labelShouldRetain->setAlignment(Label::TEXT_ALIGNMENT_LEFT);
+        this->_labelShouldRetain->setAlignment(Label::HAlignment::LEFT);
         break;
     case CenterAlign:
-        this->_labelShouldRetain->setAlignment(Label::TEXT_ALIGNMENT_CENTER);
+        this->_labelShouldRetain->setAlignment(Label::HAlignment::CENTER);
         break;
     case RightAlign:
-        this->_labelShouldRetain->setAlignment(Label::TEXT_ALIGNMENT_RIGHT);
+        this->_labelShouldRetain->setAlignment(Label::HAlignment::RIGHT);
         break;
 
     default:
@@ -1266,9 +1266,9 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     this->snapArrowsToEdge();
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
-    Touch *touch = (Touch *)pTouches->anyObject();
+    Touch *touch = (Touch *)touches->anyObject();
     Point location = touch->getLocationInView();
 
     if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
@@ -1278,7 +1278,7 @@ void BitmapFontMultiLineAlignment::ccTouchesBegan(cocos2d::Set *pTouches, cocos2
     }
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
     _drag = false;
     this->snapArrowsToEdge();
@@ -1286,14 +1286,14 @@ void BitmapFontMultiLineAlignment::ccTouchesEnded(cocos2d::Set *pTouches, cocos2
     this->_arrowsBarShouldRetain->setVisible(false);
 }
 
-void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent)
+void BitmapFontMultiLineAlignment::ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event)
 {
     if (! _drag)
     {
         return;
     }
 
-    Touch *touch = (Touch *)pTouches->anyObject();
+    Touch *touch = (Touch *)touches->anyObject();
     Point location = touch->getLocationInView();
 
     Size winSize = Director::getInstance()->getWinSize();
@@ -1348,11 +1348,11 @@ BMFontOneAtlas::BMFontOneAtlas()
 {
     Size s = Director::getInstance()->getWinSize();
 
-    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, Label::TEXT_ALIGNMENT_LEFT, Point::ZERO);
+    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, Label::HAlignment::LEFT, Point::ZERO);
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/3*2));
 
-    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, Label::TEXT_ALIGNMENT_LEFT, Point(0, 128));
+    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, Label::HAlignment::LEFT, Point(0, 128));
     addChild(label2);
     label2->setPosition(Point(s.width/2, s.height/3*1));
 }
@@ -1379,7 +1379,7 @@ BMFontUnicode::BMFontUnicode()
 
     Size s = Director::getInstance()->getWinSize();
 
-    auto label1 = LabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, Label::TEXT_ALIGNMENT_LEFT);
+    auto label1 = LabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, Label::HAlignment::LEFT);
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/5*4));
 
@@ -1611,6 +1611,6 @@ void LabelBMFontBounds::draw()
         Point(labelSize.width + origin.width, labelSize.height + origin.height),
         Point(origin.width, labelSize.height + origin.height)
     };
-    ccDrawPoly(vertices, 4, true);
+    DrawPrimitives::drawPoly(vertices, 4, true);
 }
 

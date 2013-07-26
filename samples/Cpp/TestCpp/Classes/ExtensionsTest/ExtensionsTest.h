@@ -8,8 +8,8 @@ class ExtensionsMainLayer : public Layer
 public:
     virtual void onEnter();
 
-	virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
+	virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
 
 	Point _beginPos;
     Menu* _itemMenu;

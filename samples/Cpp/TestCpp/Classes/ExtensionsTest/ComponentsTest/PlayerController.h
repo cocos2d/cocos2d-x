@@ -12,7 +12,7 @@ protected:
     virtual ~PlayerController(void);
     
 public:
-    virtual void ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
+    virtual void ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event);
     
 public:
     virtual bool init();

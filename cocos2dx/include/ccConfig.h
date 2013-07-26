@@ -51,10 +51,10 @@ THE SOFTWARE.
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
  In order to use them, you have to use the following functions, instead of the the GL ones:
     - ccGLUseProgram() instead of glUseProgram()
-    - ccGLDeleteProgram() instead of glDeleteProgram()
-    - ccGLBlendFunc() instead of glBlendFunc()
+    - GL::deleteProgram() instead of glDeleteProgram()
+    - GL::blendFunc() instead of glBlendFunc()
 
- If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
+ If this functionality is disabled, then ccGLUseProgram(), GL::deleteProgram(), GL::blendFunc() will call the GL ones, without using the cache.
 
  It is recommended to enable whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
