@@ -1708,21 +1708,24 @@ NewLabelTTFColorTest::NewLabelTTFColorTest()
     Size size = Director::getInstance()->getWinSize();
 
     // Green
-    auto label1 = Label::createWithTTF("Green", "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
-    label1->setPosition( Point(size.width/2, size.height/5) );
+    auto label1 = Label::createWithTTF("Green", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label1->setPosition( Point(size.width/2, size.height/5 * 1.5) );
     label1->setColor( Color3B::GREEN );
+    label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
 
     // Red
-    auto label2 = Label::createWithTTF("Red", "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
-    label2->setPosition( Point(size.width/2, size.height/5 * 2) );
+    auto label2 = Label::createWithTTF("Red", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label2->setPosition( Point(size.width/2, size.height/5 * 2.0) );
     label2->setColor( Color3B::RED );
+    label2->setAnchorPoint(Point(0.5, 0.5));
     addChild(label2);
 
     // Blue
-    auto label3 = Label::createWithTTF("Blue", "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
-    label3->setPosition( Point(size.width/2, size.height/5 * 3) );
+    auto label3 = Label::createWithTTF("Blue", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label3->setPosition( Point(size.width/2, size.height/5 * 2.5) );
     label3->setColor( Color3B::BLUE );
+    label3->setAnchorPoint(Point(0.5, 0.5));
     addChild(label3);
 }
 
