@@ -56,31 +56,25 @@ public:
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) = 0;
 };
 
-/** Orientation Type used by some transitions
-*/
-typedef enum {
-    /// An horizontal orientation where the Left is nearer
-	kTransitionOrientationLeftOver = 0,
-	/// An horizontal orientation where the Right is nearer
-	kTransitionOrientationRightOver = 1,
-	/// A vertical orientation where the Up is nearer
-	kTransitionOrientationUpOver = 0,
-	/// A vertical orientation where the Bottom is nearer
-	kTransitionOrientationDownOver = 1,
-    
-	// Deprecated
-    //	kOrientationLeftOver = kTransitionOrientationLeftOver,
-    //	kOrientationRightOver = kTransitionOrientationRightOver,
-    //	kOrientationUpOver = kTransitionOrientationUpOver,
-    //	kOrientationDownOver = kTransitionOrientationDownOver,
-} tOrientation;
-
 /** @brief Base class for Transition scenes
 */
 class CC_DLL TransitionScene : public Scene
 {
-
 public:
+    /** Orientation Type used by some transitions
+     */
+    enum Orientation
+    {
+        /// An horizontal orientation where the Left is nearer
+        ORIENTATION_LEFT_OVER = 0,
+        /// An horizontal orientation where the Right is nearer
+        ORIENTATION_RIGHT_OVER = 1,
+        /// A vertical orientation where the Up is nearer
+        ORIENTATION_UP_OVER = 0,
+        /// A vertical orientation where the Bottom is nearer
+        ORIENTATION_DOWN_OVER = 1,
+    };
+    
     /** creates a base transition with duration and incoming scene */
     static TransitionScene * create(float t, Scene *scene);
 
@@ -125,16 +119,16 @@ class CC_DLL TransitionSceneOriented : public TransitionScene
 {
 public:
     /** creates a base transition with duration and incoming scene */
-    static TransitionSceneOriented * create(float t,Scene* scene, tOrientation orientation);
+    static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
 
     TransitionSceneOriented();
     virtual ~TransitionSceneOriented();
 
     /** initializes a transition with duration and incoming scene */
-    bool initWithDuration(float t,Scene* scene,tOrientation orientation);
+    bool initWithDuration(float t,Scene* scene,Orientation orientation);
 
 protected:
-    tOrientation _orientation;
+    Orientation _orientation;
 };
 
 /** @brief TransitionRotoZoom:
@@ -345,7 +339,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipX : public TransitionSceneOriented
 {
 public:
-    static TransitionFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipX* create(float t, Scene* s, Orientation o);
     static TransitionFlipX* create(float t, Scene* s);
 
     TransitionFlipX();
@@ -364,7 +358,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipY : public TransitionSceneOriented
 {
 public:
-    static TransitionFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipY* create(float t, Scene* s, Orientation o);
     static TransitionFlipY* create(float t, Scene* s);
 
     TransitionFlipY();
@@ -383,7 +377,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 {
 public:
-    static TransitionFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionFlipAngular* create(float t, Scene* s, Orientation o);
     static TransitionFlipAngular* create(float t, Scene* s);
 
     TransitionFlipAngular();
@@ -402,7 +396,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 {
 public:
-    static TransitionZoomFlipX* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipX* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipX* create(float t, Scene* s);
 
     TransitionZoomFlipX();
@@ -421,7 +415,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 {
 public:
-    static TransitionZoomFlipY* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipY* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipY* create(float t, Scene* s);
 
     TransitionZoomFlipY();
@@ -440,7 +434,7 @@ The front face is the outgoing scene and the back face is the incoming scene.
 class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 {
 public:
-    static TransitionZoomFlipAngular* create(float t, Scene* s, tOrientation o);
+    static TransitionZoomFlipAngular* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipAngular* create(float t, Scene* s);
 
     TransitionZoomFlipAngular();

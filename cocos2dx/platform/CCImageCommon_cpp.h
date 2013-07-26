@@ -91,7 +91,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
     bool bRet = false;
 
@@ -128,7 +128,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     bool bRet = false;
     unsigned long nSize = 0;
@@ -148,7 +148,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt/* = eSrcFmtPng*/, 
+                                Format eFmt/* = eSrcFmtPng*/, 
                                 int nWidth/* = 0*/,
                                 int nHeight/* = 0*/,
                                 int nBitsPerComponent/* = 8*/)
@@ -158,27 +158,27 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
 
-        if (kFmtPng == eFmt)
+        if (FORMAT_PNG == eFmt)
         {
             bRet = _initWithPngData(pData, nDataLen);
             break;
         }
-        else if (kFmtJpg == eFmt)
+        else if (FORMAT_JPG == eFmt)
         {
             bRet = _initWithJpgData(pData, nDataLen);
             break;
         }
-        else if (kFmtTiff == eFmt)
+        else if (FORMAT_TIFF == eFmt)
         {
             bRet = _initWithTiffData(pData, nDataLen);
             break;
         }
-        else if (kFmtWebp == eFmt)
+        else if (FORMAT_WEBP == eFmt)
         {
             bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
-        else if (kFmtRawData == eFmt)
+        else if (FORMAT_RAW_DATA == eFmt)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
             break;

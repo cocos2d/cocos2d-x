@@ -50,15 +50,15 @@ public:
     Image();
     virtual ~Image();
 
-    typedef enum
+    enum Format
     {
-        kFmtJpg = 0,
-        kFmtPng,
-        kFmtTiff,
-        kFmtWebp,
-        kFmtRawData,
-        kFmtUnKnown
-    }EImageFormat;
+        FORMAT_JPG,
+        FORMAT_PNG,
+        FORMAT_TIFF,
+        FORMAT_WEBP,
+        FORMAT_RAW_DATA,
+        FORMAT_UNKOWN
+    };
 
     typedef enum
     {
@@ -79,7 +79,7 @@ public:
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath, Format imageType = FORMAT_PNG);
 
     /**
     @brief  Load image from stream buffer.
@@ -92,7 +92,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt = kFmtUnKnown,
+                           Format eFmt = FORMAT_UNKOWN,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -194,7 +194,7 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = FORMAT_PNG);
 };
 
 // end of platform group

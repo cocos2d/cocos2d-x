@@ -151,7 +151,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     kmGLPushMatrix();
     kmGLLoadIdentity();
     
-    ccDrawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
     
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
@@ -308,8 +308,8 @@ void ClippingNode::visit()
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-        GLProgram *program = ShaderCache::getInstance()->programForKey(kShader_PositionTextureColorAlphaTest);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kUniformAlphaTestValue);
+        GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         // set our alphaThreshold
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node

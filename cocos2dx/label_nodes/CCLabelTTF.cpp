@@ -31,17 +31,17 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 #if CC_USE_LA88_LABELS
-#define SHADER_PROGRAM kShader_PositionTextureColor
+#define SHADER_PROGRAM GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR
 #else
-#define SHADER_PROGRAM kShader_PositionTextureA8Color
+#define SHADER_PROGRAM GLProgram::SHADER_NAME_POSITION_TEXTUREA8Color
 #endif
 
 //
 //CCLabelTTF
 //
 LabelTTF::LabelTTF()
-: _alignment(kTextAlignmentCenter)
-, _vAlignment(kVerticalTextAlignmentTop)
+: _alignment(Label::TEXT_ALIGNMENT_CENTER)
+, _vAlignment(Label::VERTICAL_TEXT_ALIGNMENT_TOP)
 , _fontName(NULL)
 , _fontSize(0.0)
 , _string("")
@@ -73,18 +73,18 @@ LabelTTF * LabelTTF::create()
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return LabelTTF::create(string, fontName, fontSize,
-                              Size::ZERO, kTextAlignmentCenter, kVerticalTextAlignmentTop);
+                              Size::ZERO, Label::TEXT_ALIGNMENT_CENTER, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
 }
 
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                const Size& dimensions, TextAlignment hAlignment)
+                                const Size& dimensions, Label::TextAlignment hAlignment)
 {
-    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kVerticalTextAlignmentTop);
+    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
 }
 
 LabelTTF* LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                               const Size &dimensions, TextAlignment hAlignment, 
-                               VerticalTextAlignment vAlignment)
+                               const Size &dimensions, Label::TextAlignment hAlignment, 
+                               Label::VerticalTextAlignment vAlignment)
 {
     LabelTTF *pRet = new LabelTTF();
     if(pRet && pRet->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
@@ -114,20 +114,20 @@ bool LabelTTF::init()
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize, 
-                                const Size& dimensions, TextAlignment alignment)
+                                const Size& dimensions, Label::TextAlignment alignment)
 {
-    return this->initWithString(label, fontName, fontSize, dimensions, alignment, kVerticalTextAlignmentTop);
+    return this->initWithString(label, fontName, fontSize, dimensions, alignment, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                Size::ZERO, kTextAlignmentLeft, kVerticalTextAlignmentTop);
+                                Size::ZERO, Label::TEXT_ALIGNMENT_LEFT, Label::VERTICAL_TEXT_ALIGNMENT_TOP);
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
-                                const cocos2d::Size &dimensions, TextAlignment hAlignment,
-                                VerticalTextAlignment vAlignment)
+                                const cocos2d::Size &dimensions, Label::TextAlignment hAlignment,
+                                Label::VerticalTextAlignment vAlignment)
 {
     if (Sprite::init())
     {
@@ -193,12 +193,12 @@ const char* LabelTTF::description() const
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }
 
-TextAlignment LabelTTF::getHorizontalAlignment() const
+Label::TextAlignment LabelTTF::getHorizontalAlignment() const
 {
     return _alignment;
 }
 
-void LabelTTF::setHorizontalAlignment(TextAlignment alignment)
+void LabelTTF::setHorizontalAlignment(Label::TextAlignment alignment)
 {
     if (alignment != _alignment)
     {
@@ -212,12 +212,12 @@ void LabelTTF::setHorizontalAlignment(TextAlignment alignment)
     }
 }
 
-VerticalTextAlignment LabelTTF::getVerticalAlignment() const
+Label::VerticalTextAlignment LabelTTF::getVerticalAlignment() const
 {
     return _vAlignment;
 }
 
-void LabelTTF::setVerticalAlignment(VerticalTextAlignment verticalAlignment)
+void LabelTTF::setVerticalAlignment(Label::VerticalTextAlignment verticalAlignment)
 {
     if (verticalAlignment != _vAlignment)
     {

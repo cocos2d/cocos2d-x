@@ -1313,7 +1313,7 @@ void TexturePixelFormat::onEnter()
     addChild(background, -1);
     
     // RGBA 8888 image (32-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
     Sprite *sprite1 = Sprite::create("Images/test-rgba1.png");
     sprite1->setPosition(Point(1*s.width/7, s.height/2+32));
     addChild(sprite1, 0);
@@ -1322,7 +1322,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite1->getTexture());
 
     // RGBA 4444 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA4444);
     Sprite *sprite2 = Sprite::create("Images/test-rgba1.png");
     sprite2->setPosition(Point(2*s.width/7, s.height/2-32));
     addChild(sprite2, 0);
@@ -1331,7 +1331,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite2->getTexture());
 
     // RGB5A1 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB5A1);
     Sprite *sprite3 = Sprite::create("Images/test-rgba1.png");
     sprite3->setPosition(Point(3*s.width/7, s.height/2+32));
     addChild(sprite3, 0);
@@ -1340,7 +1340,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite3->getTexture());
 
     // RGB888 image
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB888);
     Sprite *sprite4 = Sprite::create("Images/test-rgba1.png");
     sprite4->setPosition(Point(4*s.width/7, s.height/2-32));
     addChild(sprite4, 0);
@@ -1349,7 +1349,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite4->getTexture());
 
     // RGB565 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB565);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGB565);
     Sprite *sprite5 = Sprite::create("Images/test-rgba1.png");
     sprite5->setPosition(Point(5*s.width/7, s.height/2+32));
     addChild(sprite5, 0);
@@ -1358,7 +1358,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite5->getTexture());
 
     // A8 image (8-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_A8);
     Sprite *sprite6 = Sprite::create("Images/test-rgba1.png");
     sprite6->setPosition(Point(6*s.width/7, s.height/2-32));
     addChild(sprite6, 0);
@@ -1382,7 +1382,7 @@ void TexturePixelFormat::onEnter()
     sprite5->runAction(seq_4ever5);
 
     // restore default
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_DEFAULT);
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
 
@@ -1937,7 +1937,7 @@ TexturePVRv3Premult::TexturePVRv3Premult()
     transformSprite(pvr2);
     
     // PNG
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PIXEL_FORMAT_RGBA8888);
     TextureCache::getInstance()->removeTextureForKey("Images/grossinis_sister1-testalpha.png");
     Sprite *png = Sprite::create("Images/grossinis_sister1-testalpha.png");
     addChild(png, 0);
