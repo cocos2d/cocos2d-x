@@ -85,7 +85,7 @@ Texture2D::~Texture2D()
 
     if(_name)
     {
-        ccGLDeleteTexture(_name);
+        GL::deleteTexture(_name);
     }
 }
 
@@ -206,7 +206,7 @@ bool Texture2D::initWithData(const void *data, Texture2D::PixelFormat pixelForma
 
 
     glGenTextures(1, &_name);
-    ccGLBindTexture2D(_name);
+    GL::bindTexture2D(_name);
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -591,11 +591,11 @@ void Texture2D::drawAtPoint(const Point& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
 
 #ifdef EMSCRIPTEN
@@ -625,11 +625,11 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
@@ -718,7 +718,7 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 void Texture2D::generateMipmap()
 {
     CCASSERT( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
 }
@@ -734,7 +734,7 @@ void Texture2D::setTexParameters(const ccTexParams &texParams)
         (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
@@ -747,7 +747,7 @@ void Texture2D::setTexParameters(const ccTexParams &texParams)
 
 void Texture2D::setAliasTexParameters()
 {
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {
@@ -767,7 +767,7 @@ void Texture2D::setAliasTexParameters()
 
 void Texture2D::setAntiAliasTexParameters()
 {
-    ccGLBindTexture2D( _name );
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {

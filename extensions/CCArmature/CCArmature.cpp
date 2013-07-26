@@ -424,7 +424,7 @@ void Armature::draw()
     if (_parentBone == NULL)
     {
         CC_NODE_DRAW_SETUP();
-        ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+        GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
 
     Object *object = NULL;
@@ -480,7 +480,7 @@ void Armature::draw()
             node->visit();
 
             CC_NODE_DRAW_SETUP();
-            ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+            GL::blendFunc(_blendFunc.src, _blendFunc.dst);
         }
     }
 

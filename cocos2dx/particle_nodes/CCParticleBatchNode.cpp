@@ -408,7 +408,7 @@ void ParticleBatchNode::draw(void)
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     _textureAtlas->drawQuads();
 

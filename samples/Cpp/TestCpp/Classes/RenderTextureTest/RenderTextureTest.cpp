@@ -599,15 +599,15 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	CC_NODE_DRAW_SETUP();
     
 	BlendFunc blend = getBlendFunc();
-	ccGLBlendFunc(blend.src, blend.dst);
+    GL::blendFunc(blend.src, blend.dst);
     
-    ccGLBindTexture2D(getTexture()->getName());
+    GL::bindTexture2D(getTexture()->getName());
     
 	//
 	// Attributes
 	//
     
-	ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     
 #define kQuadSize sizeof(_quad.bl)
 	long offset = (long)&_quad;

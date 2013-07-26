@@ -539,7 +539,7 @@ std::string TestBox2DDetector::title()
 }
 void TestBox2DDetector::draw()
 {
-	ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 	kmGLPushMatrix();
 

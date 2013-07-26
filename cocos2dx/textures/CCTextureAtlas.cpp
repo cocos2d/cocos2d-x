@@ -62,7 +62,7 @@ TextureAtlas::~TextureAtlas()
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     glDeleteVertexArrays(1, &_VAOname);
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
 #endif
     CC_SAFE_RELEASE(_texture);
     
@@ -252,7 +252,7 @@ void TextureAtlas::setupIndices()
 void TextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #define kQuadSize sizeof(_quads[0].bl)
 
@@ -277,7 +277,7 @@ void TextureAtlas::setupVBOandVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    ccGLBindVAO(0);
+    GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -295,7 +295,7 @@ void TextureAtlas::setupVBO()
 void TextureAtlas::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
-	ccGLBindVAO(0);
+	GL::bindVAO(0);
     
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
@@ -601,7 +601,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
     if(!numberOfQuads)
         return;
 
-    ccGLBindTexture2D(_texture->getName());
+    GL::bindTexture2D(_texture->getName());
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 
@@ -630,7 +630,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
         _dirty = false;
     }
 
-    ccGLBindVAO(_VAOname);
+    GL::bindVAO(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
@@ -664,7 +664,7 @@ void TextureAtlas::drawNumberOfQuads(int numberOfQuads, int start)
         _dirty = false;
     }
 
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+    GL::enableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
     // vertices
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));

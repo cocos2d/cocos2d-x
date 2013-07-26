@@ -13188,7 +13188,7 @@ static int tolua_Cocos2d_CCImage_initWithImageFile00(lua_State* tolua_S)
  {
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   const char* strPath = ((const char*)  tolua_tostring(tolua_S,2,0));
-  Image::Format imageType = ((Image::Format) (int)  tolua_tonumber(tolua_S,3,Image::FORMAT_PNG));
+     Image::Format imageType = ((Image::Format) (int)  tolua_tonumber(tolua_S,3,Image::Format::PNG));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithImageFile'", NULL);
 #endif
@@ -13229,7 +13229,7 @@ static int tolua_Cocos2d_CCImage_initWithImageData00(lua_State* tolua_S)
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
   void* pData = ((void*)  tolua_touserdata(tolua_S,2,0));
   int nDataLen = ((int)  tolua_tonumber(tolua_S,3,0));
-  Image::Format eFmt = ((Image::Format) (int)  tolua_tonumber(tolua_S,4,Image::FORMAT_UNKOWN));
+     Image::Format eFmt = ((Image::Format) (int)  tolua_tonumber(tolua_S,4,Image::Format::UNKOWN));
   int nWidth = ((int)  tolua_tonumber(tolua_S,5,0));
   int nHeight = ((int)  tolua_tonumber(tolua_S,6,0));
   int nBitsPerComponent = ((int)  tolua_tonumber(tolua_S,7,8));

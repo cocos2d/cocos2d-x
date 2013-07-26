@@ -329,10 +329,10 @@ void MotionStreak::draw()
 
     CC_NODE_DRAW_SETUP();
 
-    ccGLEnableVertexAttribs(VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    ccGLBindTexture2D( _texture->getName() );
+    GL::bindTexture2D( _texture->getName() );
 
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
