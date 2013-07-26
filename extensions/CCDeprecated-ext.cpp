@@ -41,11 +41,11 @@ const Control::State CCControlStateHighlighted = Control::State::HIGH_LIGHTED;
 const Control::State CCControlStateDisabled = Control::State::DISABLED;
 const Control::State CCControlStateSelected = Control::State::SELECTED;
 
-const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault = EditBox::EditBox::KeyboardReturnType::DEFAULT;
-const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDone = EditBox::EditBox::KeyboardReturnType::DONE;
-const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSend = EditBox::EditBox::KeyboardReturnType::SEND;
-const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch = EditBox::EditBox::KeyboardReturnType::SEARCH;
-const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeGo = EditBox::EditBox::KeyboardReturnType::GO;
+const EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault = EditBox::KeyboardReturnType::DEFAULT;
+const EditBox::KeyboardReturnType  kKeyboardReturnTypeDone = EditBox::KeyboardReturnType::DONE;
+const EditBox::KeyboardReturnType  kKeyboardReturnTypeSend = EditBox::KeyboardReturnType::SEND;
+const EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch = EditBox::KeyboardReturnType::SEARCH;
+const EditBox::KeyboardReturnType  kKeyboardReturnTypeGo = EditBox::KeyboardReturnType::GO;
 
 const EditBox::InputMode kEditBoxInputModeAny = EditBox::InputMode::ANY;
 const EditBox::InputMode kEditBoxInputModeEmailAddr = EditBox::InputMode::EMAIL_ADDRESS;
