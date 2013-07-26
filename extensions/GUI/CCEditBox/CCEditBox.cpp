@@ -31,9 +31,9 @@ NS_CC_EXT_BEGIN
 EditBox::EditBox(void)
 : _editBoxImpl(NULL)
 , _delegate(NULL)
-, _editBoxInputMode(kEditBoxInputModeSingleLine)
-, _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
-, _keyboardReturnType(kKeyboardReturnTypeDefault)
+, _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
+, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _keyboardReturnType(KeyboardReturnType::DEFAULT)
 , _fontSize(-1)
 , _placeholderFontSize(-1)
 , _colText(Color3B::WHITE)
@@ -233,7 +233,7 @@ const char* EditBox::getPlaceHolder(void)
     return _placeHolder.c_str();
 }
 
-void EditBox::setInputMode(EditBoxInputMode inputMode)
+void EditBox::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
     if (_editBoxImpl != NULL)
@@ -257,7 +257,7 @@ int EditBox::getMaxLength()
     return _maxLength;
 }
 
-void EditBox::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBox::setInputFlag(EditBox::InputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
     if (_editBoxImpl != NULL)
@@ -266,7 +266,7 @@ void EditBox::setInputFlag(EditBoxInputFlag inputFlag)
     }
 }
 
-void EditBox::setReturnType(KeyboardReturnType returnType)
+void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 {
     if (_editBoxImpl != NULL)
     {

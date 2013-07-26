@@ -64,7 +64,7 @@ EditBoxTest::EditBoxTest()
     _editPassword->setPlaceHolder("Password:");
     _editPassword->setMaxLength(6);
     _editPassword->setInputFlag(kEditBoxInputFlagPassword);
-    _editPassword->setInputMode(kEditBoxInputModeSingleLine);
+    _editPassword->setInputMode(EditBox::InputMode::SINGLE_LINE);
     _editPassword->setDelegate(this);
     addChild(_editPassword);
     

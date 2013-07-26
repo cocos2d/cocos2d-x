@@ -63079,7 +63079,7 @@ static int tolua_Cocos2d_CCEditBox_setInputMode00(lua_State* tolua_S)
 #endif
  {
   EditBox* self = (EditBox*)  tolua_tousertype(tolua_S,1,0);
-  EditBoxInputMode inputMode = ((EditBoxInputMode) (int)  tolua_tonumber(tolua_S,2,0));
+  EditBox::InputMode inputMode = ((EditBox::InputMode) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setInputMode'", NULL);
 #endif
@@ -63177,7 +63177,7 @@ static int tolua_Cocos2d_CCEditBox_setInputFlag00(lua_State* tolua_S)
 #endif
  {
   EditBox* self = (EditBox*)  tolua_tousertype(tolua_S,1,0);
-  EditBoxInputFlag inputFlag = ((EditBoxInputFlag) (int)  tolua_tonumber(tolua_S,2,0));
+  EditBox::InputFlag inputFlag = ((EditBox::InputFlag) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setInputFlag'", NULL);
 #endif
@@ -63210,7 +63210,7 @@ static int tolua_Cocos2d_CCEditBox_setReturnType00(lua_State* tolua_S)
 #endif
  {
   EditBox* self = (EditBox*)  tolua_tousertype(tolua_S,1,0);
-  KeyboardReturnType returnType = ((KeyboardReturnType) (int)  tolua_tonumber(tolua_S,2,0));
+  EditBox::KeyboardReturnType returnType = ((EditBox::KeyboardReturnType) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setReturnType'", NULL);
 #endif
@@ -66863,12 +66863,12 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kEditBoxInputModePhoneNumber",kEditBoxInputModePhoneNumber);
   tolua_constant(tolua_S,"kEditBoxInputModeUrl",kEditBoxInputModeUrl);
   tolua_constant(tolua_S,"kEditBoxInputModeDecimal",kEditBoxInputModeDecimal);
-  tolua_constant(tolua_S,"kEditBoxInputModeSingleLine",kEditBoxInputModeSingleLine);
+  tolua_constant(tolua_S,"EditBox::InputMode::SINGLE_LINE",EditBox::InputMode::SINGLE_LINE);
   tolua_constant(tolua_S,"kEditBoxInputFlagPassword",kEditBoxInputFlagPassword);
   tolua_constant(tolua_S,"kEditBoxInputFlagSensitive",kEditBoxInputFlagSensitive);
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsWord",kEditBoxInputFlagInitialCapsWord);
   tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsSentence",kEditBoxInputFlagInitialCapsSentence);
-  tolua_constant(tolua_S,"kEditBoxInputFlagInitialCapsAllCharacters",kEditBoxInputFlagInitialCapsAllCharacters);
+  tolua_constant(tolua_S,"EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS",EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCEditBox","CCEditBox","CCControlButton",tolua_collect_CCEditBox);
   #else
