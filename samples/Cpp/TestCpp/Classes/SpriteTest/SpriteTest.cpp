@@ -168,7 +168,7 @@ void SpriteTestDemo::onEnter()
     BaseTest::onEnter();  
 }
 
-void SpriteTestDemo::restartCallback(Object* pSender)
+void SpriteTestDemo::restartCallback(Object* sender)
 {
     Scene* s = new SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
@@ -177,7 +177,7 @@ void SpriteTestDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void SpriteTestDemo::nextCallback(Object* pSender)
+void SpriteTestDemo::nextCallback(Object* sender)
 {
     Scene* s = new SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
@@ -185,7 +185,7 @@ void SpriteTestDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void SpriteTestDemo::backCallback(Object* pSender)
+void SpriteTestDemo::backCallback(Object* sender)
 {
     Scene* s = new SpriteTestScene();
     s->addChild( backSpriteTestAction() );
@@ -875,12 +875,12 @@ void SpriteZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
     
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void SpriteZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     SpriteTestDemo::onExit();
 }
 
@@ -960,12 +960,12 @@ void SpriteBatchNodeZVertex::onEnter()
 {
     SpriteTestDemo::onEnter();
 
-    Director::getInstance()->setProjection(Director::PROJECTION_3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void SpriteBatchNodeZVertex::onExit()
 {
-    Director::getInstance()->setProjection(Director::PROJECTION_2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     SpriteTestDemo::onExit();
 }
 

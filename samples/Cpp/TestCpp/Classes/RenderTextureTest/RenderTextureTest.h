@@ -12,9 +12,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 class RenderTextureSave : public RenderTextureTest

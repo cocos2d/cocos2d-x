@@ -79,33 +79,33 @@ private:
         return true;
     }
 
-    bool touchHits(Touch *pTouch)
+    bool touchHits(Touch  *touch)
     {
         const Rect area(0, 0, _child->getContentSize().width, _child->getContentSize().height);
-        return area.containsPoint(_child->convertToNodeSpace(pTouch->getLocation()));
+        return area.containsPoint(_child->convertToNodeSpace(touch->getLocation()));
     }
 
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent)
+    virtual bool ccTouchBegan(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(pEvent);
-        const bool hits = touchHits(pTouch);
+        CC_UNUSED_PARAM(event);
+        const bool hits = touchHits(touch);
         if (hits)
             scaleButtonTo(0.9f);
         return hits;
     }
 
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent)
+    virtual void ccTouchEnded(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(pEvent);
-        const bool hits = touchHits(pTouch);
+        CC_UNUSED_PARAM(event);
+        const bool hits = touchHits(touch);
         if (hits && _onTriggered)
             _onTriggered();
         scaleButtonTo(1);
     }
 
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent)
+    virtual void ccTouchCancelled(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(pEvent);
+        CC_UNUSED_PARAM(event);
         scaleButtonTo(1);
     }
 

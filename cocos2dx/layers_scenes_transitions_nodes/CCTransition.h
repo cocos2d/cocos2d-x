@@ -63,16 +63,16 @@ class CC_DLL TransitionScene : public Scene
 public:
     /** Orientation Type used by some transitions
      */
-    enum Orientation
+    enum class Orientation
     {
         /// An horizontal orientation where the Left is nearer
-        ORIENTATION_LEFT_OVER = 0,
+        LEFT_OVER = 0,
         /// An horizontal orientation where the Right is nearer
-        ORIENTATION_RIGHT_OVER = 1,
+        RIGHT_OVER = 1,
         /// A vertical orientation where the Up is nearer
-        ORIENTATION_UP_OVER = 0,
+        UP_OVER = 0,
         /// A vertical orientation where the Bottom is nearer
-        ORIENTATION_DOWN_OVER = 1,
+        DOWN_OVER = 1,
     };
     
     /** creates a base transition with duration and incoming scene */

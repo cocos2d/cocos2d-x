@@ -16,7 +16,7 @@ class TestHeaderLayer
         virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);
     
-        void onBackClicked(cocos2d::Object * pSender);
+        void onBackClicked(cocos2d::Object * sender);
 };
 
 #endif

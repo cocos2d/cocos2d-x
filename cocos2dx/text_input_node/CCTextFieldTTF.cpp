@@ -70,7 +70,7 @@ TextFieldTTF::~TextFieldTTF()
 // static constructor
 //////////////////////////////////////////////////////////////////////////
 
-TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::TextAlignment alignment, const char *fontName, float fontSize)
+TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::HAlignment alignment, const char *fontName, float fontSize)
 {
     TextFieldTTF *pRet = new TextFieldTTF();
     if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
@@ -106,7 +106,7 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, c
 // initialize
 //////////////////////////////////////////////////////////////////////////
 
-bool TextFieldTTF::initWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::TextAlignment alignment, const char *fontName, float fontSize)
+bool TextFieldTTF::initWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::HAlignment alignment, const char *fontName, float fontSize)
 {
     if (placeholder)
     {

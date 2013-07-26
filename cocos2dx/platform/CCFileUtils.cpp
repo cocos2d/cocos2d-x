@@ -498,15 +498,15 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtils::getFileData(const char* filename, const char* pszMode, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
-    CCASSERT(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
+    CCASSERT(filename != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
     *pSize = 0;
     do
     {
         // read the file from hardware
-        std::string fullPath = fullPathForFilename(pszFileName);
+        std::string fullPath = fullPathForFilename(filename);
         FILE *fp = fopen(fullPath.c_str(), pszMode);
         CC_BREAK_IF(!fp);
         
@@ -521,14 +521,14 @@ unsigned char* FileUtils::getFileData(const char* pszFileName, const char* pszMo
     if (! pBuffer)
     {
         std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
+        msg.append(filename).append(") failed!");
         
         CCLOG("%s", msg.c_str());
     }
     return pBuffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
+unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * pSize)
 {
     unsigned char * pBuffer = NULL;
     unzFile pFile = NULL;
@@ -536,13 +536,13 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
     do 
     {
-        CC_BREAK_IF(!pszZipFilePath || !pszFileName);
+        CC_BREAK_IF(!pszZipFilePath || !filename);
         CC_BREAK_IF(strlen(pszZipFilePath) == 0);
 
         pFile = unzOpen(pszZipFilePath);
         CC_BREAK_IF(!pFile);
 
-        int nRet = unzLocateFile(pFile, pszFileName, 1);
+        int nRet = unzLocateFile(pFile, filename, 1);
         CC_BREAK_IF(UNZ_OK != nRet);
 
         char szFilePathA[260];
@@ -569,13 +569,13 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
     return pBuffer;
 }
 
-std::string FileUtils::getNewFilename(const char* pszFileName)
+std::string FileUtils::getNewFilename(const char* filename)
 {
     const char* pszNewFileName = NULL;
     // in Lookup Filename dictionary ?
-    String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(pszFileName) : NULL;
+    String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(filename) : NULL;
     if( NULL == fileNameFound || fileNameFound->length() == 0) {
-        pszNewFileName = pszFileName;
+        pszNewFileName = filename;
     }
     else {
         pszNewFileName = fileNameFound->getCString();
@@ -607,19 +607,19 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 }
 
 
-std::string FileUtils::fullPathForFilename(const char* pszFileName)
+std::string FileUtils::fullPathForFilename(const char* filename)
 {
-    CCASSERT(pszFileName != NULL, "CCFileUtils: Invalid path");
+    CCASSERT(filename != NULL, "CCFileUtils: Invalid path");
     
-    std::string strFileName = pszFileName;
-    if (isAbsolutePath(pszFileName))
+    std::string strFileName = filename;
+    if (isAbsolutePath(filename))
     {
-        //CCLOG("Return absolute path( %s ) directly.", pszFileName);
-        return pszFileName;
+        //CCLOG("Return absolute path( %s ) directly.", filename);
+        return filename;
     }
     
     // Already Cached ?
-    std::map<std::string, std::string>::iterator cacheIter = _fullPathCache.find(pszFileName);
+    std::map<std::string, std::string>::iterator cacheIter = _fullPathCache.find(filename);
     if (cacheIter != _fullPathCache.end())
     {
         //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
@@ -627,7 +627,7 @@ std::string FileUtils::fullPathForFilename(const char* pszFileName)
     }
     
     // Get the new file name.
-    std::string newFilename = getNewFilename(pszFileName);
+    std::string newFilename = getNewFilename(filename);
     
     string fullpath = "";
     
@@ -643,25 +643,25 @@ std::string FileUtils::fullPathForFilename(const char* pszFileName)
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
-                _fullPathCache.insert(std::pair<std::string, std::string>(pszFileName, fullpath));
+                _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
 //                CCLOG("Returning path: %s", fullpath.c_str());
                 return fullpath;
             }
         }
     }
     
-//    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", pszFileName);
+//    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename);
 
     // The file wasn't found, return the file name passed in.
-    return pszFileName;
+    return filename;
 }
 
-const char* FileUtils::fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile)
+const char* FileUtils::fullPathFromRelativeFile(const char *filename, const char *pszRelativeFile)
 {
     std::string relativeFile = pszRelativeFile;
     String *pRet = String::create("");
     pRet->_string = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->_string += getNewFilename(pszFilename);
+    pRet->_string += getNewFilename(filename);
     return pRet->getCString();
 }
 

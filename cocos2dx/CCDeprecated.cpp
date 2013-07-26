@@ -45,7 +45,7 @@ const Color3B ccBLACK = Color3B::BLACK;
 const Color3B ccORANGE = Color3B::ORANGE;
 const Color3B ccGRAY = Color3B::GRAY;
 
-const BlendFunc kCCBlendFuncDisable = BlendFunc::BLEND_FUNC_DISABLE;
+const BlendFunc kCCBlendFuncDisable = BlendFunc::DISABLE;
 
 const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
 const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
@@ -83,78 +83,84 @@ const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER;
 const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 
 // Attribute names
-const char*    kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
-const char*    kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
-const char*    kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
+const char* kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
+const char* kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
+const char* kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
 
-const int kCCVertexAttribFlag_None = VERTEX_ATTRIB_FLAT_NONE;
-const int kCCVertexAttribFlag_Position = VERTEX_ATTRIB_FLAG_POSITION;
-const int kCCVertexAttribFlag_Color = VERTEX_ATTRIB_FLAG_COLOR;
-const int kCCVertexAttribFlag_TexCoords = VERTEX_ATTRIB_FLAG_TEX_COORDS;
-const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
+const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
+const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
+const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
+const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
 const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
 const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
 
-const int kCCDirectorProjection2D = Director::PROJECTION_2D;
-const int kCCDirectorProjection3D = Director::PROJECTION_3D;
-const int kCCDirectorProjectionCustom = Director::PROJECTION_CUSTOM;
-const int kCCDirectorProjectionDefault = Director::PROJECTION_DEFAULT;
-
-const int ConfigurationError = Configuration::ERROR;
-const int ConfigurationString = Configuration::STRING;
-const int ConfigurationInt = Configuration::INT;
-const int ConfigurationDouble = Configuration::DOUBLE;
-const int ConfigurationBoolean = Configuration::BOOLEAN;
+const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
+const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
+const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
+const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
 
 const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
 const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
 const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
 
-const int kCCParticleModeGravity = ParticleSystem::MODE_GRAVITY;
-const int kCCParticleModeRadius = ParticleSystem::MODE_RADIUS;
+const ParticleSystem::Mode kCCParticleModeGravity = ParticleSystem::Mode::GRAVITY;
+const ParticleSystem::Mode kCCParticleModeRadius = ParticleSystem::Mode::RADIUS;
+const int kCCParticleDefaultCapacity = kParticleDefaultCapacity;
 
-const int kCCPositionTypeFree =  ParticleSystem::POSITION_TYPE_FREE;
-const int kCCPositionTypeRelative =  ParticleSystem::POSITION_TYPE_RELATIVE;
-const int kCCPositionTypeGrouped =  ParticleSystem::POSITION_TYPE_GROUPED;
+const ParticleSystem::PositionType kCCPositionTypeFree =  ParticleSystem::PositionType::FREE;
+const ParticleSystem::PositionType kCCPositionTypeRelative =  ParticleSystem::PositionType::RELATIVE;
+const ParticleSystem::PositionType kCCPositionTypeGrouped =  ParticleSystem::PositionType::GROUPED;
 
-const int kCCVerticalTextAlignmentTop = Label::VERTICAL_TEXT_ALIGNMENT_TOP;
-const int kCCVerticalTextAlignmentCenter = Label::VERTICAL_TEXT_ALIGNMENT_CENTER;
-const int kCCVerticalTextAlignmentBottom = Label::VERTICAL_TEXT_ALIGNMENT_BOTTOM;
+const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
+const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
+const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
 
-const int kCCTextAlignmentLeft = Label::TEXT_ALIGNMENT_LEFT;
-const int kCCTextAlignmentCenter = Label::TEXT_ALIGNMENT_CENTER;
-const int kCCTextAlignmentRight = Label::TEXT_ALIGNMENT_RIGHT;
+const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
+const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
+const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
 
-const int kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PIXEL_FORMAT_RGBA8888;
-const int kCCTexture2DPixelFormat_RGB888 = Texture2D::PIXEL_FORMAT_RGB888;
-const int kCCTexture2DPixelFormat_RGB565 = Texture2D::PIXEL_FORMAT_RGB565;
-const int kCCTexture2DPixelFormat_A8 = Texture2D::PIXEL_FORMAT_A8;
-const int kCCTexture2DPixelFormat_I8 = Texture2D::PIXEL_FORMAT_I8;
-const int kCCTexture2DPixelFormat_AI88 = Texture2D::PIXEL_FORMAT_AI88;
-const int kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PIXEL_FORMAT_RGBA4444;
-const int kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PIXEL_FORMAT_RGB5A1;
-const int kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PIXEL_FORMAT_PRVTC4;
-const int kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PIXEL_FORMAT_PRVTC2;
-const int kCCTexture2DPixelFormat_Default = Texture2D::PIXEL_FORMAT_DEFAULT;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PRVTC4;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PRVTC2;
+const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
 
 const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
-const int kCCMenuStateWaiting = Menu::STATE_WAITING;
-const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
+const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
+const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
 
-const int kCCTouchesOneByOne = Layer::TOUCHES_ONE_BY_ONE;
-const int kCCTouchesAllAtOnce = Layer::TOUCHES_ALL_AT_ONCE;
+const Touch::DispatchMode kCCTouchesOneByOne = Touch::DispatchMode::ONE_BY_ONE;
+const Touch::DispatchMode kCCTouchesAllAtOnce = Touch::DispatchMode::ALL_AT_ONCE;
 
-const int kCCImageFormatPNG = Image::FORMAT_PNG;
-const int kCCImageFormatJPEG = Image::FORMAT_JPG;
+const Image::Format kCCImageFormatPNG = Image::Format::PNG;
+const Image::Format kCCImageFormatJPEG = Image::Format::JPG;
 
-const int kCCTransitionOrientationLeftOver = TransitionScene::ORIENTATION_LEFT_OVER;
-const int kCCTransitionOrientationRightOver = TransitionScene::ORIENTATION_RIGHT_OVER;
-const int kCCTransitionOrientationUpOver = TransitionScene::ORIENTATION_UP_OVER;
-const int kCCTransitionOrientationDownOver = TransitionScene::ORIENTATION_DOWN_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationLeftOver = TransitionScene::Orientation::LEFT_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationRightOver = TransitionScene::Orientation::RIGHT_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationUpOver = TransitionScene::Orientation::UP_OVER;
+const TransitionScene::Orientation kCCTransitionOrientationDownOver = TransitionScene::Orientation::DOWN_OVER;
 
 const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
+
+const int kCCActionTagInvalid = kActionTagInvalid;
+
+const int kCCNodeTagInvalid = kNodeTagInvalid;
+
+const int kCCNodeOnEnter = kNodeOnEnter;
+const int kCCNodeOnExit = kNodeOnExit;
+const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
+const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
+const int kCCNodeOnCleanup = kNodeOnCleanup;
+
 
 void ccDrawInit()
 {
@@ -243,12 +249,12 @@ void ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segm
 
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
-    DrawPrimitives::drawColor4B(r, g, b, a);
+    DrawPrimitives::setDrawColor4B(r, g, b, a);
 }
 
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
-    DrawPrimitives::drawColor4F(r, g, b, a);
+    DrawPrimitives::setDrawColor4F(r, g, b, a);
 }
 
 void ccPointSize( GLfloat pointSize )

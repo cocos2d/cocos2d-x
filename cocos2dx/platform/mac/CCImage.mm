@@ -80,17 +80,17 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     {
         if(hasAlpha || bpp >= 8)
         {
-            pixelFormat = Texture2D::PIXEL_FORMAT_DEFAULT;
+            pixelFormat = Texture2D::PixelFormat::DEFAULT;
         }
         else 
         {
-            pixelFormat = Texture2D::PIXEL_FORMAT_RGB565;
+            pixelFormat = Texture2D::PixelFormat::RGB565;
         }
     } 
     else  
     {
         // NOTE: No colorspace means a mask image
-        pixelFormat = Texture2D::PIXEL_FORMAT_A8;
+        pixelFormat = Texture2D::PixelFormat::A8;
     }
     
     imageSize.width = CGImageGetWidth(image);
@@ -100,9 +100,9 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     
     switch(pixelFormat) 
     {      
-        case Texture2D::PIXEL_FORMAT_RGBA8888:
-        case Texture2D::PIXEL_FORMAT_RGBA4444:
-        case Texture2D::PIXEL_FORMAT_RGB5A1:
+        case Texture2D::PixelFormat::RGBA8888:
+        case Texture2D::PixelFormat::RGBA4444:
+        case Texture2D::PixelFormat::RGB5A1:
             colorSpace = CGColorSpaceCreateDeviceRGB();
             data = new unsigned char[POTHigh * POTWide * 4];
             info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
@@ -110,14 +110,14 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
             CGColorSpaceRelease(colorSpace);
             break;
             
-        case Texture2D::PIXEL_FORMAT_RGB565:
+        case Texture2D::PixelFormat::RGB565:
             colorSpace = CGColorSpaceCreateDeviceRGB();
             data = new unsigned char[POTHigh * POTWide * 4];
             info = kCGImageAlphaNoneSkipLast;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
             CGColorSpaceRelease(colorSpace);
             break;
-        case Texture2D::PIXEL_FORMAT_A8:
+        case Texture2D::PixelFormat::A8:
             data = new unsigned char[POTHigh * POTWide];
             info = kCGImageAlphaOnly;
             context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
@@ -138,7 +138,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
     
     // Repack the pixel data into the right format
     
-    if(pixelFormat == Texture2D::PIXEL_FORMAT_RGB565) 
+    if(pixelFormat == Texture2D::PixelFormat::RGB565) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
         tempData = new unsigned char[POTHigh * POTWide * 2];
@@ -153,7 +153,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
         data = tempData;
         
     }
-    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444) 
+    else if (pixelFormat == Texture2D::PixelFormat::RGBA4444) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
         tempData = new unsigned char[POTHigh * POTWide * 2];
@@ -172,7 +172,7 @@ static bool _initPremultipliedATextureWithImage(CGImageRef image, NSUInteger POT
         data = tempData;
         
     }
-    else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1) 
+    else if (pixelFormat == Texture2D::PixelFormat::RGB5A1) 
     {
         //Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
         tempData = new unsigned char[POTHigh * POTWide * 2];
@@ -627,21 +627,21 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 	{
 		if (bpp >= 8)
 		{
-			pixelFormat = Texture2D::PIXEL_FORMAT_RGB888;
+			pixelFormat = Texture2D::PixelFormat::RGB888;
 		}
 		else
 		{
 			CCLOG("cocos2d: Texture2D: Using RGB565 texture since image has no alpha");
-			pixelFormat = Texture2D::PIXEL_FORMAT_RGB565;
+			pixelFormat = Texture2D::PixelFormat::RGB565;
 		}
 	}
 	
 	switch(pixelFormat) {          
-		case Texture2D::PIXEL_FORMAT_RGBA8888:
-		case Texture2D::PIXEL_FORMAT_RGBA4444:
-		case Texture2D::PIXEL_FORMAT_RGB5A1:
-		case Texture2D::PIXEL_FORMAT_RGB565:
-		case Texture2D::PIXEL_FORMAT_A8:
+		case Texture2D::PixelFormat::RGBA8888:
+		case Texture2D::PixelFormat::RGBA4444:
+		case Texture2D::PixelFormat::RGB5A1:
+		case Texture2D::PixelFormat::RGB565:
+		case Texture2D::PixelFormat::A8:
 			tempData = (unsigned char*)(this->getData());
 			CCASSERT(tempData != NULL, "NULL image data.");
 			
@@ -666,7 +666,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 			}
 			
 			break;    
-		case Texture2D::PIXEL_FORMAT_RGB888:
+		case Texture2D::PixelFormat::RGB888:
 			tempData = (unsigned char*)(this->getData());
 			CCASSERT(tempData != NULL, "NULL image data.");
 			if(this->getWidth() == (short)POTWide && this->getHeight() == (short)POTHigh)
@@ -695,7 +695,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 	
 	// Repack the pixel data into the right format
 	
-	if(pixelFormat == Texture2D::PIXEL_FORMAT_RGB565) {
+	if(pixelFormat == Texture2D::PixelFormat::RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
@@ -713,7 +713,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 		delete [] data;
 		data = tempData;
 	}
-	else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGBA4444) {
+	else if (pixelFormat == Texture2D::PixelFormat::RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
@@ -732,7 +732,7 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 		delete [] data;
 		data = tempData;
 	}
-	else if (pixelFormat == Texture2D::PIXEL_FORMAT_RGB5A1) {
+	else if (pixelFormat == Texture2D::PixelFormat::RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		tempData = new unsigned char[POTHigh * POTWide * 2];
 		inPixel32 = (unsigned int*)data;
@@ -751,10 +751,10 @@ bool Image::potImageData(unsigned int POTWide, unsigned int POTHigh)
 		delete []data;
 		data = tempData;
 	}
-	else if (pixelFormat == Texture2D::PIXEL_FORMAT_A8)
+	else if (pixelFormat == Texture2D::PixelFormat::A8)
 	{
 		// fix me, how to convert to A8
-		pixelFormat = Texture2D::PIXEL_FORMAT_RGBA8888;
+		pixelFormat = Texture2D::PixelFormat::RGBA8888;
 		
 		//
 		//The code can not work, how to convert to A8?
@@ -797,13 +797,13 @@ bool Image::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == FORMAT_RAW_DATA)
+        if (eFmt == Format::RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == Image::FORMAT_WEBP)
+        else if (eFmt == Image::Format::WEBP)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
         }
         else
         {
@@ -813,7 +813,7 @@ bool Image::initWithImageData(void * pData,
                 _height = (short)info.height;
                 _width = (short)info.width;
                 _bitsPerComponent = info.bitsPerComponent;
-                if (eFmt == FORMAT_JPG)
+                if (eFmt == Format::JPG)
                 {
                     _hasAlpha = true;
                     _preMulti = false;

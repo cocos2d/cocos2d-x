@@ -213,7 +213,7 @@ void Box2DTestLayer::ccTouchesEnded(Set* touches, Event* event)
 
     for( it = touches->begin(); it != touches->end(); it++) 
     {
-        touch = (Touch*)(*it);
+        touch = static_cast<Touch*>(*it);
 
         if(!touch)
             break;

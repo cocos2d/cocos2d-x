@@ -32,9 +32,9 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 class ActionManual : public ActionsDemo
@@ -240,7 +240,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void callback(Node* pSender);
+    void callback(Node* sender);
 };
 
 class ActionCallFuncND : public ActionsDemo
@@ -249,7 +249,7 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void doRemoveFromParentAndCleanup(Node* pSender, bool cleanup);
+    void doRemoveFromParentAndCleanup(Node* sender, bool cleanup);
 };
 
 class ActionCallFuncO : public ActionsDemo
@@ -351,7 +351,7 @@ class Issue1305 : public ActionsDemo
 public:
     virtual void onEnter();
     virtual void onExit();
-    void log(Node* pSender);
+    void log(Node* sender);
     void addSprite(float dt);
     virtual std::string title();
     virtual std::string subtitle();
@@ -393,7 +393,7 @@ public:
     virtual void onEnter();
     virtual std::string subtitle();
     virtual std::string title();
-    void logSprRotation(Sprite* pSender);
+    void logSprRotation(Sprite* sender);
 };
 
 class Issue1398 : public ActionsDemo
