@@ -155,7 +155,7 @@ void EditBoxImplWin::setText(const char* pText)
 
             std::string strToShow;
 
-            if (kEditBoxInputFlagPassword == _editBoxInputFlag)
+			if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
                 long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
