@@ -170,7 +170,7 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::WINDOWS;
+    return Platform::OS_WINDOWS;
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)

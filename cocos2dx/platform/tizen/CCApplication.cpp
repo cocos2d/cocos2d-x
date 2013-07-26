@@ -157,7 +157,7 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::TIZEN;
+    return Platform::OS_TIZEN;
 }
 
 NS_CC_END

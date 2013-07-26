@@ -138,11 +138,11 @@ Application::Platform Application::getTargetPlatform()
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) // idiom for iOS <= 3.2, otherwise: [UIDevice userInterfaceIdiom] is faster.
     {
-        return Platform::IPAD;
+        return Platform::OS_IPAD;
     }
     else 
     {
-        return Platform::IPHONE;
+        return Platform::OS_IPHONE;
     }
 }
 

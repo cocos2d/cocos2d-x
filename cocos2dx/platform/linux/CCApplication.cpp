@@ -86,7 +86,7 @@ const std::string& Application::getResourceRootPath(void)
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::LINUX;
+    return Platform::OS_LINUX;
 }
 
 //////////////////////////////////////////////////////////////////////////

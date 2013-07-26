@@ -62,7 +62,7 @@ void Application::setAnimationInterval(double interval)
 
 Application::Platform Application::getTargetPlatform()
 {
-    return Platform::MACOS;
+    return Platform::OS_MACOS;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
