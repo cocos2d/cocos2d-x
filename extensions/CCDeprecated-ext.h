@@ -132,11 +132,11 @@ CC_DEPRECATED_ATTRIBUTE typedef AttachmentType CCAttachmentType;
 #define kCCScrollViewDirectionVertical kScrollViewDirectionVertical
 #define kCCScrollViewDirectionBoth kScrollViewDirectionBoth
 
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDone;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSend;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch;
-CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeGo;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeDone;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSend;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::KeyboardReturnType  kKeyboardReturnTypeGo;
 
 CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeAny;
 CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeEmailAddr;
@@ -152,7 +152,7 @@ CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitial
 CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence;
 CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters;
 
-CC_DEPRECATED_ATTRIBUTE typedef EditBox::EditBox::KeyboardReturnType KeyboardReturnType;
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::KeyboardReturnType KeyboardReturnType;
 CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputMode EditBoxInputMode;
 CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputFlag EditBoxInputFlag;
 
