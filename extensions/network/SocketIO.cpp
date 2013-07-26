@@ -120,7 +120,7 @@ void SIOClientImpl::handshake()
 
 	HttpRequest* request = new HttpRequest();
 	request->setUrl(pre.str().c_str());
-    request->setRequestType(HttpRequest::kHttpGet);
+    request->setRequestType(HttpRequest::Type::GET);
 
     request->setResponseCallback(this, httpresponse_selector(SIOClientImpl::handshakeResponse));
     request->setTag("handshake");
