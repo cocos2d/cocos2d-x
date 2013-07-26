@@ -705,7 +705,7 @@ void Director::purgeDirector()
     LabelBMFont::purgeCachedData();
 
     // purge all managed caches
-    ccDrawFree();
+    DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
     TextureCache::destroyInstance();
