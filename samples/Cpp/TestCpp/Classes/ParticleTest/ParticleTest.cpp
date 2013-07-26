@@ -647,7 +647,7 @@ void RadiusMode1::onEnter()
     _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(0);
@@ -731,7 +731,7 @@ void RadiusMode2::onEnter()
     _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(100);
@@ -815,7 +815,7 @@ void Issue704::onEnter()
     _emitter->setDuration(ParticleSystem::DURATION_INFINITY);
 
     // radius mode
-    _emitter->setEmitterMode(ParticleSystem::MODE_RADIUS);
+    _emitter->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
     // radius mode: start and end radius in pixels
     _emitter->setStartRadius(50);
@@ -1157,12 +1157,12 @@ void ParticleDemo::toggleCallback(Object* sender)
 {
     if (_emitter != NULL)
     {
-        if (_emitter->getPositionType() == ParticleSystem::POSITION_TYPE_GROUPED)
-            _emitter->setPositionType(ParticleSystem::POSITION_TYPE_FREE);
-        else if (_emitter->getPositionType() == ParticleSystem::POSITION_TYPE_FREE)
-            _emitter->setPositionType(ParticleSystem::POSITION_TYPE_RELATIVE);
-        else if (_emitter->getPositionType() == ParticleSystem::POSITION_TYPE_RELATIVE)
-            _emitter->setPositionType(ParticleSystem::POSITION_TYPE_GROUPED );
+        if (_emitter->getPositionType() == ParticleSystem::PositionType::GROUPED)
+            _emitter->setPositionType(ParticleSystem::PositionType::FREE);
+        else if (_emitter->getPositionType() == ParticleSystem::PositionType::FREE)
+            _emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
+        else if (_emitter->getPositionType() == ParticleSystem::PositionType::RELATIVE)
+            _emitter->setPositionType(ParticleSystem::PositionType::GROUPED );
     }
 }
 
@@ -1400,7 +1400,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setDuration(ParticleSystem::DURATION_INFINITY);
 
         // Gravity Mode
-        setEmitterMode(ParticleSystem::MODE_GRAVITY);
+        setEmitterMode(ParticleSystem::Mode::GRAVITY);
 
         // Gravity Mode: gravity
         setGravity(Point(0,0));
@@ -1507,7 +1507,7 @@ void MultipleParticleSystems::onEnter()
 
         particleSystem->setPosition(Point(i*50 ,i*50));
 
-        particleSystem->setPositionType(ParticleSystem::POSITION_TYPE_GROUPED);
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         addChild(particleSystem);
     }
 
@@ -1564,7 +1564,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
-        particleSystem->setPositionType(ParticleSystem::POSITION_TYPE_GROUPED);
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setPosition(Point(i*50 ,i*50));
 
         batchNode->setTexture(particleSystem->getTexture());
@@ -1627,7 +1627,7 @@ void AddAndDeleteParticleSystems::onEnter()
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         _batchNode->setTexture(particleSystem->getTexture());
 
-        particleSystem->setPositionType(ParticleSystem::POSITION_TYPE_GROUPED);
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
         particleSystem->setPosition(Point(i*15 +100,i*15+100));
@@ -1654,7 +1654,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
         ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
 
-        particleSystem->setPositionType(ParticleSystem::POSITION_TYPE_GROUPED);
+        particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setTotalParticles(200);
 
         particleSystem->setPosition(Point(rand() % 300 ,rand() % 400));
@@ -1721,7 +1721,7 @@ void ReorderParticleSystems::onEnter()
         particleSystem->setDuration(ParticleSystem::DURATION_INFINITY);
 
         // radius mode
-        particleSystem->setEmitterMode(ParticleSystem::MODE_RADIUS);
+        particleSystem->setEmitterMode(ParticleSystem::Mode::RADIUS);
 
         // radius mode: 100 pixels from center
         particleSystem->setStartRadius(100);
@@ -1781,7 +1781,7 @@ void ReorderParticleSystems::onEnter()
 
 
         _batchNode->addChild(particleSystem);
-        particleSystem->setPositionType(ParticleSystem::POSITION_TYPE_FREE);
+        particleSystem->setPositionType(ParticleSystem::PositionType::FREE);
 
         particleSystem->release();
 
