@@ -18,7 +18,7 @@ public:
     {
         OS_WINDOWS,
         OS_LINUX,
-        OS_MACOS,
+        OS_MAC,
         OS_ANDROID,
         OS_IPHONE,
         OS_IPAD,
