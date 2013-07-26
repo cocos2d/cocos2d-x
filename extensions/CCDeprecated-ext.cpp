@@ -61,4 +61,14 @@ const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord = EditBox::InputFlag::
 const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence = EditBox::InputFlag::INITIAL_CAPS_SENTENCE;
 const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters = EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS;
 
+
+const ScrollView::Direction kCCScrollViewDirectionNone = ScrollView::Direction::NONE;
+const ScrollView::Direction kCCScrollViewDirectionHorizontal = ScrollView::Direction::HORIZONTAL;
+const ScrollView::Direction kCCScrollViewDirectionVertical = ScrollView::Direction::VERTICAL;
+const ScrollView::Direction kCCScrollViewDirectionBoth = ScrollView::Direction::BOTH;
+
+const TableView::VerticalFillOrder kCCTableViewFillTopDown = TableView::VerticalFillOrder::TOP_DOWN;
+const TableView::VerticalFillOrder kCCTableViewFillBottomUp = TableView::VerticalFillOrder::BOTTOM_UP;
+
+
 NS_CC_EXT_END
