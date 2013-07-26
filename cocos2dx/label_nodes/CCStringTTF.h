@@ -67,6 +67,7 @@ public:
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
+    
     // CCLabelTextFormat protocol implementation
     
     // sprite related stuff
