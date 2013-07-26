@@ -36,14 +36,14 @@ class CC_DLL StringTTF : public Label, public LabelTextFormatProtocol
 {
 public:
     
-    static StringTTF* create(FontAtlas *pAtlas, TextAlignment alignment = kTextAlignmentLeft, int lineSize = 0);
+    static StringTTF* create(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
     
     // main interface
-    bool setText(const char *stringToRender, float lineWidth, TextAlignment alignment = kTextAlignmentLeft, bool lineBreakWithoutSpaces = false);
+    bool setText(const char *stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
     void setString(const char *stringToRender);
     const char* getString() const { return "not implemented"; }
     
-    virtual void setAlignment(TextAlignment alignment);
+    virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale);
@@ -91,7 +91,7 @@ public:
     virtual unsigned short              getCharAtStringPosition(int position);
     virtual unsigned short *            getUTF8String();
     virtual void                        assignNewUTF8String(unsigned short *newString);
-    virtual TextAlignment               getTextAlignment();
+    virtual TextHAlignment              getTextAlignment();
     
     // label related stuff
     virtual float                       getMaxLineWidth() ;
@@ -103,7 +103,7 @@ public:
 private:
     
      //
-     StringTTF(FontAtlas *pAtlas, TextAlignment alignment = kTextAlignmentLeft);
+    StringTTF(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT);
     ~StringTTF();
     
     bool init();
@@ -126,7 +126,7 @@ private:
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
-    TextAlignment               _alignment;
+    TextHAlignment              _alignment;
     unsigned short int *        _currentUTF8String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;

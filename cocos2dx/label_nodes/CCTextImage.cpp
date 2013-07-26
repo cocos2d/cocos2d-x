@@ -88,7 +88,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     if (!_pageTexture)
         return false;
     
-    bool textureCreated = _pageTexture->initWithData(_pageData, kTexture2DPixelFormat_Default, _width, _height, imageSize);
+    bool textureCreated = _pageTexture->initWithData(_pageData, kCCTexture2DPixelFormat_Default, _width, _height, imageSize);
     
 //    _pageTexture->setPremultipliedAlpha(true);
 

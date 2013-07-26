@@ -23,18 +23,20 @@
  ****************************************************************************/
 
 
-#ifndef __COCOS2D_CCLABEL_H
-#define __COCOS2D_CCLABEL_H
+#ifndef _COCOS2D_CCLABEL_H_
+#define _COCOS2D_CCLABEL_H_
 
 #include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_BEGIN
 
 enum class GlyphCollection {
+    
     DYNAMIC,
     NEHE,
     ASCII,
     CUSTOM
+    
 };
 
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol
@@ -45,9 +47,9 @@ public:
     static Label* createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize = 0 );
     
     virtual ~Label();
-    Label();
+             Label();
     
-    virtual void setAlignment(TextAlignment alignment)              = 0;
+    virtual void setAlignment(TextHAlignment alignment)          = 0;
     virtual void setWidth(float width)                              = 0;
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace)   = 0;
     virtual void setScale(float scale)                              = 0;
