@@ -75,7 +75,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
-        request->setRequestType(HttpRequest::kHttpGet);
+        request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test1");
         HttpClient::getInstance()->send(request);
@@ -87,7 +87,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)
         HttpRequest* request = new HttpRequest();
         // required fields
         request->setUrl("http://httpbin.org/ip");
-        request->setRequestType(HttpRequest::kHttpGet);
+        request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         // optional fields                            
         request->setTag("GET test2");
@@ -102,7 +102,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/get");
-        request->setRequestType(HttpRequest::kHttpGet);
+        request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("GET test3");
         HttpClient::getInstance()->send(request);
@@ -120,7 +120,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/post");
-        request->setRequestType(HttpRequest::kHttpPost);
+        request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         
         // write the post data
@@ -136,7 +136,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/post");
-        request->setRequestType(HttpRequest::kHttpPost);
+        request->setRequestType(HttpRequest::Type::POST);
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
         request->setHeaders(headers);
@@ -159,7 +159,7 @@ void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Object *sender)
 {
     HttpRequest* request = new HttpRequest();
     request->setUrl("http://httpbin.org/post");
-    request->setRequestType(HttpRequest::kHttpPost);
+    request->setRequestType(HttpRequest::Type::POST);
     request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
     
     // write the post data
@@ -182,7 +182,7 @@ void HttpClientTest::onMenuPutTestClicked(Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/put");
-        request->setRequestType(HttpRequest::kHttpPut);
+        request->setRequestType(HttpRequest::Type::PUT);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
 
         // write the post data
@@ -198,7 +198,7 @@ void HttpClientTest::onMenuPutTestClicked(Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/put");
-        request->setRequestType(HttpRequest::kHttpPut);
+        request->setRequestType(HttpRequest::Type::PUT);
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
         request->setHeaders(headers);
@@ -223,7 +223,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
-        request->setRequestType(HttpRequest::kHttpDelete);
+        request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("DELETE test1");
         HttpClient::getInstance()->send(request);
@@ -234,7 +234,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Object *sender)
     {
         HttpRequest* request = new HttpRequest();
         request->setUrl("http://httpbin.org/delete");
-        request->setRequestType(HttpRequest::kHttpDelete);
+        request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(this, httpresponse_selector(HttpClientTest::onHttpRequestCompleted));
         request->setTag("DELETE test2");
         HttpClient::getInstance()->send(request);
