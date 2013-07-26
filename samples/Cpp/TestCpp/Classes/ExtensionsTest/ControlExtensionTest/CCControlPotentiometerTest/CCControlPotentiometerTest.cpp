@@ -67,7 +67,7 @@ bool ControlPotentiometerTest::init()
         potentiometer->setPosition(Point(layer_width + 10 + potentiometer->getContentSize().width / 2, 0));
 
         // When the value of the slider will change, the given selector will be call
-        potentiometer->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlPotentiometerTest::valueChanged), ControlEventValueChanged);
+        potentiometer->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlPotentiometerTest::valueChanged), Control::EventType::VALUE_CHANGED);
         
 		layer->addChild(potentiometer);
         
@@ -78,13 +78,13 @@ bool ControlPotentiometerTest::init()
         layer->setAnchorPoint(Point(0.5f, 0.5f));
         
         // Update the value label
-        this->valueChanged(potentiometer, ControlEventValueChanged);
+        this->valueChanged(potentiometer, Control::EventType::VALUE_CHANGED);
         return true;
 	}
 	return false;
 }
 
-void ControlPotentiometerTest::valueChanged(Object *sender, ControlEvent controlEvent)
+void ControlPotentiometerTest::valueChanged(Object *sender, Control::EventType controlEvent)
 {
     ControlPotentiometer* pControl = (ControlPotentiometer*)sender;
 	// Change value of label.
