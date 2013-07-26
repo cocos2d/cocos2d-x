@@ -53,6 +53,7 @@ struct LineBreakLine {
 };
 
 NS_CC_BEGIN
+
 class BitmapDC
 {
 public:
