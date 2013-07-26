@@ -864,7 +864,7 @@ CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection2
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjection3D; 
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionCustom;
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionDefault;
-CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
+CC_DEPRECATED_ATTRIBUTE typedef Director::Projection ccDirectorProjection;
 
 CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentTop;
 CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentCenter;
@@ -885,7 +885,7 @@ CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFor
 CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4;
 CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2;
 CC_DEPRECATED_ATTRIBUTE extern const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default;
-CC_DEPRECATED_ATTRIBUTE typedef enum Texture2D::PixelFormat CCTexture2DPixelFormat;
+CC_DEPRECATED_ATTRIBUTE typedef Texture2D::PixelFormat CCTexture2DPixelFormat;
 
 #define kCCLabelAutomaticWidth  kLabelAutomaticWidth
 
@@ -901,26 +901,26 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCParticleDefaultCapacity;
 CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeFree;
 CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeRelative;
 CC_DEPRECATED_ATTRIBUTE extern const ParticleSystem::PositionType kCCPositionTypeGrouped;
-CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
+CC_DEPRECATED_ATTRIBUTE typedef ParticleSystem::PositionType tPositionType;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
 CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateWaiting;
 CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateTrackingTouch;
-CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
+CC_DEPRECATED_ATTRIBUTE typedef Menu::State tMenuState;
 
 CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesOneByOne;
 CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesAllAtOnce;
-CC_DEPRECATED_ATTRIBUTE typedef enum Touch::DispatchMode ccTouchesMode;
+CC_DEPRECATED_ATTRIBUTE typedef Touch::DispatchMode ccTouchesMode;
 
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatPNG;
 CC_DEPRECATED_ATTRIBUTE extern const Image::Format kCCImageFormatJPEG;
-CC_DEPRECATED_ATTRIBUTE typedef enum Image::Format tImageFormat;
+CC_DEPRECATED_ATTRIBUTE typedef Image::Format tImageFormat;
 
 CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationLeftOver;
 CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationRightOver;
 CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationUpOver;
 CC_DEPRECATED_ATTRIBUTE extern const TransitionScene::Orientation kCCTransitionOrientationDownOver;
-CC_DEPRECATED_ATTRIBUTE typedef enum TransitionScene::Orientation tOrientation;
+CC_DEPRECATED_ATTRIBUTE typedef TransitionScene::Orientation tOrientation;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPrioritySystem;
 CC_DEPRECATED_ATTRIBUTE extern const int kCCPriorityNonSystemMin;
