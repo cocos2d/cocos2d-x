@@ -180,7 +180,7 @@ const LanguageType kLanguagePolish      = LanguageType::POLISH;
 
 const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
 const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
-const Application::Platform kTargetMacOS        = Application::Platform::OS_MACOS;
+const Application::Platform kTargetMacOS        = Application::Platform::OS_MAC;
 const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
 const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
 const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
