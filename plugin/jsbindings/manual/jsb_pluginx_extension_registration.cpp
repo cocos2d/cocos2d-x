@@ -33,7 +33,6 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_ProtocolIAP_prototype, "setResultListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ProtocolAds_prototype, "setAdsListener", js_pluginx_ProtocolAds_setAdsListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_ProtocolAds_prototype, "showAds", js_pluginx_ProtocolAds_showAds, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ProtocolShare_prototype, "setResultListener", js_pluginx_ProtocolShare_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ProtocolSocial_prototype, "setListener", js_pluginx_ProtocolSocial_setListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ProtocolUser_prototype, "setActionListener", js_pluginx_ProtocolUser_setActionListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
