@@ -1,5 +1,5 @@
 
-local s = CCDirector:sharedDirector():getWinSize()
+local s = CCDirector:getInstance():getWinSize()
 
 ------------------------------------
 --  SpriteProgressToRadial
@@ -13,7 +13,7 @@ local function SpriteProgressToRadial()
 
     local left = CCProgressTimer:create(CCSprite:create(s_pPathSister1))
     left:setType(kCCProgressTimerTypeRadial)
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(to1))
 	layer:addChild(left)
 
@@ -21,7 +21,7 @@ local function SpriteProgressToRadial()
     right:setType(kCCProgressTimerTypeRadial)
     -- Makes the ridial CCW
     right:setReverseProgress(true)
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
@@ -42,20 +42,20 @@ local function SpriteProgressToHorizontal()
     local left = CCProgressTimer:create(CCSprite:create(s_pPathSister1))
     left:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the left since the midpoint is 0 for the x
-    left:setMidpoint(CCPointMake(0, 0))
+    left:setMidpoint(CCPoint(0, 0))
     -- Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-    left:setBarChangeRate(CCPointMake(1, 0))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setBarChangeRate(CCPoint(1, 0))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(to1))
 	layer:addChild(left)
 
     local right = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     right:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the left since the midpoint is 1 for the x
-    right:setMidpoint(CCPointMake(1, 0))
+    right:setMidpoint(CCPoint(1, 0))
     -- Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
-    right:setBarChangeRate(CCPointMake(1, 0))
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setBarChangeRate(CCPoint(1, 0))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
@@ -77,20 +77,20 @@ local function SpriteProgressToVertical()
     left:setType(kCCProgressTimerTypeBar)
 
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    left:setMidpoint(CCPointMake(0,0))
+    left:setMidpoint(CCPoint(0,0))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left:setBarChangeRate(CCPointMake(0, 1))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setBarChangeRate(CCPoint(0, 1))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(to1))
 	layer:addChild(left)
 
     local right = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     right:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    right:setMidpoint(CCPointMake(0, 1))
+    right:setMidpoint(CCPoint(0, 1))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    right:setBarChangeRate(CCPointMake(0, 1))
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setBarChangeRate(CCPoint(0, 1))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(to2))
 	layer:addChild(right)
 
@@ -110,21 +110,21 @@ local function SpriteProgressToRadialMidpointChanged()
 	-- Our image on the left should be a radial progress indicator, clockwise
     local left = CCProgressTimer:create(CCSprite:create(s_pPathBlock))
     left:setType(kCCProgressTimerTypeRadial)
-    left:setMidpoint(CCPointMake(0.25, 0.75))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setMidpoint(CCPoint(0.25, 0.75))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(left)
 
 	-- Our image on the left should be a radial progress indicator, counter clockwise
     local right = CCProgressTimer:create(CCSprite:create(s_pPathBlock))
     right:setType(kCCProgressTimerTypeRadial)
-    right:setMidpoint(CCPointMake(0.75, 0.25))
+    right:setMidpoint(CCPoint(0.75, 0.25))
 
 	--[[
 	   Note the reverse property (default=NO) is only added to the right image. That's how
        we get a counter clockwise progress.
 	]]
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
     layer:addChild(right)
 
@@ -145,30 +145,30 @@ local function SpriteProgressBarVarious()
     left:setType(kCCProgressTimerTypeBar)
 
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    left:setMidpoint(CCPointMake(0.5, 0.5))
+    left:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left:setBarChangeRate(CCPointMake(1, 0))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setBarChangeRate(CCPoint(1, 0))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(left)
 
     local middle = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     middle:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    middle:setMidpoint(CCPointMake(0.5, 0.5))
+    middle:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    middle:setBarChangeRate(CCPointMake(1, 1))
-    middle:setPosition(CCPointMake(s.width/2, s.height/2))
+    middle:setBarChangeRate(CCPoint(1, 1))
+    middle:setPosition(CCPoint(s.width/2, s.height/2))
     middle:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(middle)
 
     local right = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     right:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    right:setMidpoint(CCPointMake(0.5, 0.5))
+    right:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    right:setBarChangeRate(CCPointMake(0, 1))
-    right:setPosition(CCPointMake(s.width-100, s.height/2))
+    right:setBarChangeRate(CCPoint(0, 1))
+    right:setPosition(CCPoint(s.width-100, s.height/2))
     right:runAction(CCRepeatForever:create(CCProgressTo:create(2, 100)))
 	layer:addChild(right)
 
@@ -197,10 +197,10 @@ local function SpriteProgressBarTintAndFade()
     left:setType(kCCProgressTimerTypeBar)
 
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    left:setMidpoint(CCPointMake(0.5, 0.5))
+    left:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left:setBarChangeRate(CCPointMake(1, 0))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setBarChangeRate(CCPoint(1, 0))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
     left:runAction(CCRepeatForever:create(CCSequence:create(array)))
 	layer:addChild(left)
@@ -210,10 +210,10 @@ local function SpriteProgressBarTintAndFade()
     local middle = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     middle:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    middle:setMidpoint(CCPointMake(0.5, 0.5))
+    middle:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    middle:setBarChangeRate(CCPointMake(1, 1))
-    middle:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    middle:setBarChangeRate(CCPoint(1, 1))
+    middle:setPosition(CCPoint(s.width / 2, s.height / 2))
     middle:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 
     local fade2 = CCSequence:createWithTwoActions(
@@ -227,10 +227,10 @@ local function SpriteProgressBarTintAndFade()
     local right = CCProgressTimer:create(CCSprite:create(s_pPathSister2))
     right:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    right:setMidpoint(CCPointMake(0.5, 0.5))
+    right:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    right:setBarChangeRate(CCPointMake(0, 1))
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setBarChangeRate(CCPoint(0, 1))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
     right:runAction(CCRepeatForever:create(CCSequence:create(array)))
     right:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(
@@ -253,35 +253,35 @@ local function SpriteProgressWithSpriteFrame()
 
 	local to = CCProgressTo:create(6, 100)
 
-    CCSpriteFrameCache:sharedSpriteFrameCache():addSpriteFramesWithFile("zwoptex/grossini.plist")
+    CCSpriteFrameCache:getInstance():addSpriteFramesWithFile("zwoptex/grossini.plist")
 
     local left = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_01.png"))
     left:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    left:setMidpoint(CCPointMake(0.5, 0.5))
+    left:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    left:setBarChangeRate(CCPointMake(1, 0))
-    left:setPosition(CCPointMake(100, s.height / 2))
+    left:setBarChangeRate(CCPoint(1, 0))
+    left:setPosition(CCPoint(100, s.height / 2))
     left:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(left)
 
     local middle = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_02.png"))
     middle:setType(kCCProgressTimerTypeBar)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    middle:setMidpoint(CCPointMake(0.5, 0.5))
+    middle:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    middle:setBarChangeRate(CCPointMake(1, 1))
-    middle:setPosition(CCPointMake(s.width / 2, s.height / 2))
+    middle:setBarChangeRate(CCPoint(1, 1))
+    middle:setPosition(CCPoint(s.width / 2, s.height / 2))
     middle:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(middle)
 
     local right = CCProgressTimer:create(CCSprite:createWithSpriteFrameName("grossini_dance_03.png"))
     right:setType(kCCProgressTimerTypeRadial)
     -- Setup for a bar starting from the bottom since the midpoint is 0 for the y
-    right:setMidpoint(CCPointMake(0.5, 0.5))
+    right:setMidpoint(CCPoint(0.5, 0.5))
     -- Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
-    right:setBarChangeRate(CCPointMake(0, 1))
-    right:setPosition(CCPointMake(s.width - 100, s.height / 2))
+    right:setBarChangeRate(CCPoint(0, 1))
+    right:setPosition(CCPoint(s.width - 100, s.height / 2))
     right:runAction(CCRepeatForever:create(CCProgressTo:create(6, 100)))
 	layer:addChild(right)
 
@@ -305,5 +305,5 @@ function ProgressActionsTest()
 	scene:addChild(SpriteProgressToRadial())
 	scene:addChild(CreateBackMenuItem())
 
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end

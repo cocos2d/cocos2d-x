@@ -16,11 +16,6 @@ plugin.ProtocolAds.AdsResultCode.PointsSpendFailed = 4;
 plugin.ProtocolAds.AdsResultCode.NetworkError = 5;
 plugin.ProtocolAds.AdsResultCode.UnknownError = 6;
 
-plugin.ProtocolAds.AdsType = {};
-plugin.ProtocolAds.AdsType.BannerAd = 0;
-plugin.ProtocolAds.AdsType.FullScreenAd = 1;
-plugin.ProtocolAds.AdsType.MoreApp = 2;
-
 plugin.ProtocolAds.AdsPos = {};
 plugin.ProtocolAds.AdsPos.PosCenter = 0;
 plugin.ProtocolAds.AdsPos.PosTop = 1;
@@ -41,4 +36,15 @@ plugin.ProtocolShare.ShareResultCode.ShareSuccess = 0;
 plugin.ProtocolShare.ShareResultCode.ShareFail = 1;
 plugin.ProtocolShare.ShareResultCode.ShareCancel = 2;
 plugin.ProtocolShare.ShareResultCode.ShareTimeOut = 3;
+
+plugin.ProtocolSocial.SocialRetCode = {};
+plugin.ProtocolSocial.SocialRetCode.ScoreSubmitSuccess = 1;
+plugin.ProtocolSocial.SocialRetCode.ScoreSubmitFailed = 2;
+plugin.ProtocolSocial.SocialRetCode.AchUnlockSuccess = 3;
+plugin.ProtocolSocial.SocialRetCode.AchUnlockFailed = 4;
+
+plugin.ProtocolUser.UserActionResultCode = {};
+plugin.ProtocolUser.UserActionResultCode.LoginSucceed = 0;
+plugin.ProtocolUser.UserActionResultCode.LoginFailed = 1;
+plugin.ProtocolUser.UserActionResultCode.LogoutSucceed = 2;
 

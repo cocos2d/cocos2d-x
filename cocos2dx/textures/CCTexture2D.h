@@ -45,37 +45,6 @@ class Image;
 
 //CONSTANTS:
 
-/** @typedef Texture2DPixelFormat
-Possible texture pixel formats
-*/
-typedef enum {
-
-    //! 32-bit texture: RGBA8888
-    kTexture2DPixelFormat_RGBA8888,
-    //! 24-bit texture: RGBA888
-    kTexture2DPixelFormat_RGB888,
-    //! 16-bit texture without Alpha channel
-    kTexture2DPixelFormat_RGB565,
-    //! 8-bit textures used as masks
-    kTexture2DPixelFormat_A8,
-    //! 8-bit intensity texture
-    kTexture2DPixelFormat_I8,
-    //! 16-bit textures used as masks
-    kTexture2DPixelFormat_AI88,
-    //! 16-bit textures: RGBA4444
-    kTexture2DPixelFormat_RGBA4444,
-    //! 16-bit textures: RGB5A1
-    kTexture2DPixelFormat_RGB5A1,    
-    //! 4-bit PVRTC-compressed texture: PVRTC4
-    kTexture2DPixelFormat_PVRTC4,
-    //! 2-bit PVRTC-compressed texture: PVRTC2
-    kTexture2DPixelFormat_PVRTC2,
-
-
-    //! Default texture format: RGBA8888
-    kTexture2DPixelFormat_Default = kTexture2DPixelFormat_RGBA8888
-} Texture2DPixelFormat;
-
 class GLProgram;
 
 /**
@@ -102,14 +71,45 @@ class CC_DLL Texture2D : public Object
 #endif // EMSCRIPTEN
 {
 public:
+    /** @typedef Texture2D::PixelFormat
+     Possible texture pixel formats
+     */
+    enum class PixelFormat
+    {
+        
+        //! 32-bit texture: RGBA8888
+        RGBA8888,
+        //! 24-bit texture: RGBA888
+        RGB888,
+        //! 16-bit texture without Alpha channel
+        RGB565,
+        //! 8-bit textures used as masks
+        A8,
+        //! 8-bit intensity texture
+        I8,
+        //! 16-bit textures used as masks
+        AI88,
+        //! 16-bit textures: RGBA4444
+        RGBA4444,
+        //! 16-bit textures: RGB5A1
+        RGB5A1,
+        //! 4-bit PVRTC-compressed texture: PVRTC4
+        PRVTC4,
+        //! 2-bit PVRTC-compressed texture: PVRTC2
+        PRVTC2,
+
+        //! Default texture format: RGBA8888
+        DEFAULT = RGBA8888
+    };
+    
     /** sets the default pixel format for UIImagescontains alpha channel.
      If the UIImage contains alpha channel, then the options are:
-     - generate 32-bit textures: kTexture2DPixelFormat_RGBA8888 (default one)
-     - generate 24-bit textures: kTexture2DPixelFormat_RGB888
-     - generate 16-bit textures: kTexture2DPixelFormat_RGBA4444
-     - generate 16-bit textures: kTexture2DPixelFormat_RGB5A1
-     - generate 16-bit textures: kTexture2DPixelFormat_RGB565
-     - generate 8-bit textures: kTexture2DPixelFormat_A8 (only use it if you use just 1 color)
+     - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
+     - generate 24-bit textures: Texture2D::PixelFormat::RGB888
+     - generate 16-bit textures: Texture2D::PixelFormat::RGBA4444
+     - generate 16-bit textures: Texture2D::PixelFormat::RGB5A1
+     - generate 16-bit textures: Texture2D::PixelFormat::RGB565
+     - generate 8-bit textures: Texture2D::PixelFormat::A8 (only use it if you use just 1 color)
 
      How does it work ?
      - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
@@ -119,13 +119,13 @@ public:
 
      @since v0.8
      */
-    static void setDefaultAlphaPixelFormat(Texture2DPixelFormat format);
+    static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
 
     /** returns the alpha pixel format
      @since v0.8
      */
-    static Texture2DPixelFormat getDefaultAlphaPixelFormat();
-    CC_DEPRECATED_ATTRIBUTE static Texture2DPixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
+    static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
+    CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
 
     /** treats (or not) PVR files as if they have alpha premultiplied.
      Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
@@ -148,7 +148,7 @@ public:
     void* keepData(void *data, unsigned int length);
 
     /** Initializes with a texture2d with data */
-    bool initWithData(const void* data, Texture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void* data, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
 
     /**
     Drawing extensions to make it easy to draw basic quads using a Texture2D object.
@@ -168,7 +168,7 @@ public:
     bool initWithImage(Image * uiImage);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextAlignment hAlignment = kTextAlignmentCenter, VerticalTextAlignment vAlignment = kVerticalTextAlignmentTop);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), Label::HAlignment hAlignment = Label::HAlignment::CENTER, Label::VAlignment vAlignment = Label::VAlignment::TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     
@@ -186,6 +186,7 @@ public:
     @since v0.8
     */
     void setTexParameters(const ccTexParams& texParams);
+    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const ccTexParams* texParams) { return setTexParameters(*texParams); };
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
@@ -229,8 +230,8 @@ public:
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int getBitsPerPixelForFormat(Texture2DPixelFormat format) const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2DPixelFormat format) const { return getBitsPerPixelForFormat(format); };
+    unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** content size */
     const Size& getContentSizeInPixels();
@@ -239,7 +240,7 @@ public:
     bool hasMipmaps() const;
 
     /** Gets the pixel format of the texture */
-    Texture2DPixelFormat getPixelFormat() const;
+    Texture2D::PixelFormat getPixelFormat() const;
     
     /** Gets the width of the texture in pixels */
     unsigned int getPixelsWide() const;
@@ -273,7 +274,7 @@ private:
 
 protected:
     /** pixel format of the texture */
-    Texture2DPixelFormat _pixelFormat;
+    Texture2D::PixelFormat _pixelFormat;
 
     /** width in pixels */
     unsigned int _pixelsWide;

@@ -70,7 +70,7 @@ bool TestShare::init()
         return false;
     }
 
-    MyShareManager::sharedManager()->loadSharePlugin();
+    MyShareManager::getInstance()->loadSharePlugin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -120,7 +120,7 @@ void TestShare::eventMenuCallback(Object* pSender)
     pInfo["SharedText"] = "Share message : HelloShare!";
     // pInfo["SharedImagePath"] = "Full/path/to/image";
     MyShareManager::MyShareMode mode = (MyShareManager::MyShareMode) (pMenuItem->getTag() - TAG_SHARE_BY_TWWITER + 1);
-    MyShareManager::sharedManager()->shareByMode(pInfo, mode);
+    MyShareManager::getInstance()->shareByMode(pInfo, mode);
 }
 
 void TestShare::menuBackCallback(Object* pSender)

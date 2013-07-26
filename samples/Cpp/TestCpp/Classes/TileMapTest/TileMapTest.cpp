@@ -150,12 +150,12 @@ void TMXOrthoTest::onEnter()
 {
     TileDemo::onEnter();
 
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TileDemo::onExit();
 }
 
@@ -659,10 +659,10 @@ void TMXOrthoObjectsTest::draw()
         
         glLineWidth(3);
         
-        ccDrawLine( Point((float)x, (float)y), Point((float)(x+width), (float)y) );
-        ccDrawLine( Point((float)(x+width), (float)y), Point((float)(x+width), (float)(y+height)) );
-        ccDrawLine( Point((float)(x+width), (float)(y+height)), Point((float)x, (float)(y+height)) );
-        ccDrawLine( Point((float)x, (float)(y+height)), Point((float)x, (float)y) );
+        DrawPrimitives::drawLine( Point((float)x, (float)y), Point((float)(x+width), (float)y) );
+        DrawPrimitives::drawLine( Point((float)(x+width), (float)y), Point((float)(x+width), (float)(y+height)) );
+        DrawPrimitives::drawLine( Point((float)(x+width), (float)(y+height)), Point((float)x, (float)(y+height)) );
+        DrawPrimitives::drawLine( Point((float)x, (float)(y+height)), Point((float)x, (float)y) );
         
         glLineWidth(1);
     }
@@ -736,10 +736,10 @@ void TMXIsoObjectsTest::draw()
         
         glLineWidth(3);
         
-        ccDrawLine( Point(x,y), Point(x+width,y) );
-        ccDrawLine( Point(x+width,y), Point(x+width,y+height) );
-        ccDrawLine( Point(x+width,y+height), Point(x,y+height) );
-        ccDrawLine( Point(x,y+height), Point(x,y) );
+        DrawPrimitives::drawLine( Point(x,y), Point(x+width,y) );
+        DrawPrimitives::drawLine( Point(x+width,y), Point(x+width,y+height) );
+        DrawPrimitives::drawLine( Point(x+width,y+height), Point(x,y+height) );
+        DrawPrimitives::drawLine( Point(x,y+height), Point(x,y) );
         
         glLineWidth(1);
     }
@@ -973,13 +973,13 @@ void TMXIsoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:kDirectorProjection3D);
+    //    Director::getInstance()->setProjection:Director::Projection::_3D);
     TileDemo::onExit();
 }
 
@@ -1042,13 +1042,13 @@ void TMXOrthoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:kDirectorProjection3D);
+    //    Director::getInstance()->setProjection:Director::Projection::_3D);
     TileDemo::onExit();
 }
 
@@ -1452,7 +1452,7 @@ void TileDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TileDemo::restartCallback(Object* pSender)
+void TileDemo::restartCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild(restartTileMapAction()); 
@@ -1461,7 +1461,7 @@ void TileDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void TileDemo::nextCallback(Object* pSender)
+void TileDemo::nextCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( nextTileMapAction() );
@@ -1469,7 +1469,7 @@ void TileDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void TileDemo::backCallback(Object* pSender)
+void TileDemo::backCallback(Object* sender)
 {
     Scene* s = new TileMapTestScene();
     s->addChild( backTileMapAction() );
@@ -1477,9 +1477,9 @@ void TileDemo::backCallback(Object* pSender)
     s->release();
 } 
 
-void TileDemo::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void TileDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     
     Point diff = touch->getDelta();
     Node *node = getChildByTag(kTagTileMap);
@@ -1540,10 +1540,10 @@ void TMXGIDObjectsTest::draw()
 
         glLineWidth(3);
 
-        ccDrawLine(Point(x, y), Point(x + width, y));
-        ccDrawLine(Point(x + width, y), Point(x + width, y + height));
-        ccDrawLine(Point(x + width,y + height), Point(x,y + height));
-        ccDrawLine(Point(x,y + height), Point(x,y));
+        DrawPrimitives::drawLine(Point(x, y), Point(x + width, y));
+        DrawPrimitives::drawLine(Point(x + width, y), Point(x + width, y + height));
+        DrawPrimitives::drawLine(Point(x + width,y + height), Point(x,y + height));
+        DrawPrimitives::drawLine(Point(x,y + height), Point(x,y));
 
         glLineWidth(1);
     }

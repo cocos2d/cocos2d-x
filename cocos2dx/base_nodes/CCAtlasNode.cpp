@@ -90,8 +90,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _colorUnmodified = Color3B::WHITE;
     _isOpacityModifyRGB = true;
 
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(texture, itemsToRender);
@@ -110,7 +109,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTexture_uColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR));
     _uniformColor = glGetUniformLocation( getShaderProgram()->getProgram(), "u_color");
 
     return true;
@@ -142,7 +141,7 @@ void AtlasNode::draw(void)
 {
     CC_NODE_DRAW_SETUP();
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
     getShaderProgram()->setUniformLocationWith4fv(_uniformColor, colors, 1);
@@ -220,10 +219,8 @@ void AtlasNode::setBlendFunc(const BlendFunc &blendFunc)
 
 void AtlasNode::updateBlendFunc()
 {
-    if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() ) {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
+    if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() )
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 }
 
 void AtlasNode::setTexture(Texture2D *texture)

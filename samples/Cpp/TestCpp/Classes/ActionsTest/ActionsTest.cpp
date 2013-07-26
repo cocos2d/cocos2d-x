@@ -142,7 +142,7 @@ void ActionsDemo::onExit()
     BaseTest::onExit();
 }
 
-void ActionsDemo::restartCallback(Object* pSender)
+void ActionsDemo::restartCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( restartAction() );
@@ -150,7 +150,7 @@ void ActionsDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::nextCallback(Object* pSender)
+void ActionsDemo::nextCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( nextAction() );
@@ -158,7 +158,7 @@ void ActionsDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::backCallback(Object* pSender)
+void ActionsDemo::backCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( backAction() );
@@ -852,7 +852,7 @@ std::string ActionCallFuncND::subtitle()
     return "simulates CallFuncND with std::bind()";
 }
 
-void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* pSender, bool cleanup)
+void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* sender, bool cleanup)
 {
     _grossini->removeFromParentAndCleanup(cleanup);
 }
@@ -1013,11 +1013,11 @@ void ActionRepeatForever::onEnter()
     _grossini->runAction(action);
 }
 
-void ActionRepeatForever::repeatForever(Node* pSender)
+void ActionRepeatForever::repeatForever(Node* sender)
 {
     auto repeat = RepeatForever::create( RotateBy::create(1.0f, 360) );
 
-    pSender->runAction(repeat);
+    sender->runAction(repeat);
 }
 
 std::string ActionRepeatForever::subtitle()
@@ -1297,7 +1297,7 @@ void ActionFollow::draw()
 	float y = winSize.height;
     
 	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	ccDrawPoly(vertices, 4, true);
+	DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
 std::string ActionFollow::subtitle()
@@ -1565,10 +1565,10 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1,50);
+    DrawPrimitives::drawCatmullRom(_array1,50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 std::string ActionCatmullRomStacked::title()
@@ -1660,14 +1660,14 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 
@@ -1700,7 +1700,7 @@ void Issue1305::onEnter()
     scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
 }
 
-void Issue1305::log(Node* pSender)
+void Issue1305::log(Node* sender)
 {
     cocos2d::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
@@ -1885,9 +1885,9 @@ std::string Issue1327::subtitle()
     return "See console: You should see: 0, 45, 90, 135, 180";
 }
 
-void Issue1327::logSprRotation(Sprite* pSender)
+void Issue1327::logSprRotation(Sprite* sender)
 {
-    log("%f", pSender->getRotation());
+    log("%f", sender->getRotation());
 }
 
 //Issue1398
@@ -2012,10 +2012,10 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1, 50);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 string ActionCatmullRom::title()
@@ -2090,14 +2090,14 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 

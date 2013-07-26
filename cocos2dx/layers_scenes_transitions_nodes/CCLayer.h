@@ -39,11 +39,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum {
-	kTouchesAllAtOnce,
-	kTouchesOneByOne,
-} ccTouchesMode;
-
 /**
  * @addtogroup layer
  * @{
@@ -62,7 +57,7 @@ All features from Node are valid, plus the following new features:
 */
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
-public:
+public:    
     /** creates a fullscreen black layer */
     static Layer *create(void);
     Layer();
@@ -70,18 +65,18 @@ public:
     virtual bool init();
     
     // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    virtual bool ccTouchBegan(Touch *touch, Event *event);
+    virtual void ccTouchMoved(Touch *touch, Event *event);
+    virtual void ccTouchEnded(Touch *touch, Event *event);
+    virtual void ccTouchCancelled(Touch *touch, Event *event);
 
     // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(Set *touches, Event *event);
+    virtual void ccTouchesMoved(Set *touches, Event *event);
+    virtual void ccTouchesEnded(Set *touches, Event *event);
+    virtual void ccTouchesCancelled(Set *touches, Event *event);
     
-    virtual void didAccelerate(Acceleration* pAccelerationValue);
+    virtual void didAccelerate(Acceleration* accelerationValue);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -103,12 +98,16 @@ public:
     virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode() const;
+    virtual void setTouchMode(Touch::DispatchMode mode);
+    virtual Touch::DispatchMode getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority() const;
+
+    /** swallowsTouches of the touch events. Default is true */
+    virtual void setSwallowsTouches(bool swallowsTouches);
+    virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
@@ -148,7 +147,8 @@ protected:
     
 private:
     int _touchPriority;
-    ccTouchesMode _touchMode;
+    Touch::DispatchMode _touchMode;
+    bool _swallowsTouches;
     
     int executeScriptTouchHandler(int eventType, Touch* touch);
     int executeScriptTouchesHandler(int eventType, Set* touches);

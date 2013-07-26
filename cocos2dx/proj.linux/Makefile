@@ -136,7 +136,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
 ../ccTypes.cpp \
-../cocos2d.cpp 
+../cocos2d.cpp \
+../CCDeprecated.cpp
 
 COCOS_ROOT = ../..
 

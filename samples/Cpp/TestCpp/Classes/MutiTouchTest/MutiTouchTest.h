@@ -9,10 +9,10 @@ public:
     bool init();
 
     virtual void registerWithTouchDispatcher(void);
-    virtual void ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
-    virtual void ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
-    virtual void ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
-    virtual void ccTouchesCancelled(cocos2d::Set *pTouches, cocos2d::Event *pEvent);
+    virtual void ccTouchesBegan(cocos2d::Set  *touches, cocos2d::Event  *event);
+    virtual void ccTouchesMoved(cocos2d::Set  *touches, cocos2d::Event  *event);
+    virtual void ccTouchesEnded(cocos2d::Set  *touches, cocos2d::Event  *event);
+    virtual void ccTouchesCancelled(cocos2d::Set  *touches, cocos2d::Event  *event);
 
     CREATE_FUNC(MutiTouchTestLayer)
 };

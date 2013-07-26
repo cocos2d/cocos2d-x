@@ -43,6 +43,9 @@ Color4B::Color4B(const Color4F &color4F)
   a((GLubyte)(color4F.a * 255.0f))
 {}
 
-const BlendFunc BlendFunc::BLEND_FUNC_DISABLE = {GL_ONE, GL_ZERO};
+const BlendFunc BlendFunc::DISABLE = {GL_ONE, GL_ZERO};
+const BlendFunc BlendFunc::ALPHA_PREMULTIPLIED = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+const BlendFunc BlendFunc::ALPHA_NON_PREMULTIPLIED = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+const BlendFunc BlendFunc::ADDITIVE = {GL_SRC_ALPHA, GL_ONE};
 
 NS_CC_END

@@ -18,6 +18,8 @@ class CCLayer : public CCNode
     virtual int getTouchMode() const;
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority() const;
+    virtual void setSwallowsTouches(bool swallowsTouches);
+    virtual bool isSwallowsTouches() const;
 
     static CCLayer *create(void);
 };

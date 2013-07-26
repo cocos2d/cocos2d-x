@@ -42,7 +42,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
 	/* override functions */
-	virtual ccLanguageType getCurrentLanguage();
+	virtual LanguageType getCurrentLanguage();
 
 	/**
      *  Sets the Resource root path.
@@ -59,7 +59,7 @@ public:
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform();
+    virtual Platform getTargetPlatform();
 protected:
     long       _animationInterval;  //micro second
     std::string _resourceRootPath;

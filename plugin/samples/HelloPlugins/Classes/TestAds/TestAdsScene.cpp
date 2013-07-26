@@ -32,12 +32,6 @@ const std::string s_aTestCases[] = {
 	"Admob",
 };
 
-const std::string s_aTestTypes[] = {
-	"Banner",
-	"Full Screen",
-    "More App",
-};
-
 const std::string s_aTestPoses[] = {
 	"Pos: Center",
 	"Pos: Top",
@@ -89,8 +83,8 @@ bool TestAds::init()
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    Point posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
-    Point posBR = ccp(origin.x + visibleSize.width, origin.y);
+    Point posMid = Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    Point posBR = Point(origin.x + visibleSize.width, origin.y);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -99,7 +93,7 @@ bool TestAds::init()
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestAds::menuBackCallback, this));
     Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(ccpAdd(posBR, ccp(- backSize.width / 2, backSize.height / 2)));
+    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
@@ -107,15 +101,15 @@ bool TestAds::init()
 
 	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));
-	pItemShow->setAnchorPoint(ccp(0.5f, 0));
+	pItemShow->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
-	pItemShow->setPosition(ccpAdd(posMid, ccp(-100, -120)));
+	pItemShow->setPosition(posMid + Point(-100, -120));
 
 	LabelTTF* label2 = LabelTTF::create("HideAds", "Arial", 24);
 	MenuItemLabel* pItemHide = MenuItemLabel::create(label2, CC_CALLBACK_1(TestAds::testHide, this));
-	pItemHide->setAnchorPoint(ccp(0.5f, 0));
+	pItemHide->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
-	pItemHide->setPosition(ccpAdd(posMid, ccp(100, -120)));
+	pItemHide->setPosition(posMid + Point(100, -120));
 
 	// create optional menu
 	// cases item
@@ -127,20 +121,8 @@ bool TestAds::init()
 	{
 		_caseItem->getSubItems()->addObject( MenuItemFont::create( s_aTestCases[i].c_str() ) );
 	}
-	_caseItem->setPosition(ccpAdd(posMid, ccp(-200, 120)));
+	_caseItem->setPosition(posMid + Point(-200, 120));
 	pMenu->addChild(_caseItem);
-
-	// type item
-	_typeItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::typeChanged, this),
-												MenuItemFont::create( s_aTestTypes[0].c_str() ),
-												NULL );
-	int typeLen = sizeof(s_aTestTypes) / sizeof(std::string);
-	for (int i = 1; i < typeLen; ++i)
-	{
-		_typeItem->getSubItems()->addObject( MenuItemFont::create( s_aTestTypes[i].c_str() ) );
-	}
-	_typeItem->setPosition(ccpAdd(posMid, ccp(0, 120)));
-	pMenu->addChild(_typeItem);
 
 	// poses item
 	_posItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::posChanged, this),
@@ -151,13 +133,16 @@ bool TestAds::init()
 	{
 		_posItem->getSubItems()->addObject( MenuItemFont::create( s_aTestPoses[i].c_str() ) );
 	}
-	_posItem->setPosition(ccpAdd(posMid, ccp(200, 120)));
+	_posItem->setPosition(posMid + Point(200, 120));
 	pMenu->addChild(_posItem);
 
 	// init options
 	_ads = _admob;
 	_pos = ProtocolAds::kPosCenter;
-	_type = ProtocolAds::kBannerAd;
+
+    // init the AdsInfo
+    adInfo["AdmobType"] = "1";
+    adInfo["AdmobSizeEnum"] = "1";
 
     this->addChild(pMenu, 1);
 
@@ -166,30 +151,22 @@ bool TestAds::init()
 
 void TestAds::testShow(Object* pSender)
 {
-    int nSize = 0;
-	if (_ads == _admob)
-	{
-	    nSize = 0;
-	}
-
     if (_ads)
 	{
-        _ads->showAds(_type, nSize, _pos);
+        _ads->showAds(adInfo, _pos);
 	}
 }
 
 void TestAds::testHide(Object* pSender)
 {
-	_ads->hideAds(_type);
+	_ads->hideAds(adInfo);
 }
 
 void TestAds::menuBackCallback(Object* pSender)
 {
     if (_admob != NULL)
     {
-        _admob->hideAds(ProtocolAds::kBannerAd);
-        _admob->hideAds(ProtocolAds::kFullScreenAd);
-        _admob->hideAds(ProtocolAds::kMoreApp);
+        _admob->hideAds(adInfo);
     	PluginManager::getInstance()->unloadPlugin("AdsAdmob");
     	_admob = NULL;
     }
@@ -217,13 +194,6 @@ void TestAds::caseChanged(Object* pSender)
 		break;
 	}
 	log("case selected change to : %s", strLog.c_str());
-}
-
-void TestAds::typeChanged(Object* pSender)
-{
-	int selectIndex = _typeItem->getSelectedIndex();
-	_type = (ProtocolAds::AdsType) selectIndex;
-	log("type selected change to : %d", _type);
 }
 
 void TestAds::posChanged(Object* pSender)

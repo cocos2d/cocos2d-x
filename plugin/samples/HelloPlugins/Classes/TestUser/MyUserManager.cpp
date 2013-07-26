@@ -49,7 +49,7 @@ MyUserManager::~MyUserManager()
 	}
 }
 
-MyUserManager* MyUserManager::sharedManager()
+MyUserManager* MyUserManager::getInstance()
 {
 	if (s_pManager == NULL) {
 		s_pManager = new MyUserManager();

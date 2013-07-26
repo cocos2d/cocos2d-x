@@ -44,10 +44,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
     
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedHeight);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::FIXED_HEIGHT);
     
     // register lua engine
-    LuaEngine* pEngine = LuaEngine::defaultEngine();
+    LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();

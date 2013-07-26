@@ -41,7 +41,11 @@ extern "C" {
 			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
 			if (pAds != NULL)
 			{
-				pAds->onAdsResult((AdsResultCode) ret, strMsg.c_str());
+			    AdsListener* listener = pAds->getAdsListener();
+			    if (listener)
+				{
+			        listener->onAdsResult((AdsResultCode) ret, strMsg.c_str());
+				}
 			}
 		}
 	}
@@ -56,7 +60,11 @@ extern "C" {
 			ProtocolAds* pAds = dynamic_cast<ProtocolAds*>(pPlugin);
 			if (pAds != NULL)
 			{
-				pAds->onPlayerGetPoints(points);
+			    AdsListener* listener = pAds->getAdsListener();
+                if (listener)
+                {
+                    listener->onPlayerGetPoints(pAds, points);
+                }
 			}
 		}
 	}
@@ -98,7 +106,7 @@ void ProtocolAds::configDeveloperInfo(TAdsDeveloperInfo devInfo)
     }
 }
 
-void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
+void ProtocolAds::showAds(TAdsInfo info, AdsPos pos)
 {
 	PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
 	PluginJniMethodInfo t;
@@ -107,16 +115,31 @@ void ProtocolAds::showAds(AdsType type, int sizeEnum, AdsPos pos)
 	if (PluginJniHelper::getMethodInfo(t
 		, pData->jclassName.c_str()
 		, "showAds"
-		, "(III)V"))
+		, "(Ljava/util/Hashtable;I)V"))
 	{
-		t.env->CallVoidMethod(pData->jobj, t.methodID, type, sizeEnum, pos);
+	    jobject obj_Map = PluginUtils::createJavaMapObject(&info);
+		t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map, pos);
+		t.env->DeleteLocalRef(obj_Map);
 		t.env->DeleteLocalRef(t.classID);
 	}
 }
 
-void ProtocolAds::hideAds(AdsType type)
+void ProtocolAds::hideAds(TAdsInfo info)
 {
-	PluginUtils::callJavaFunctionWithName_oneParam(this, "hideAds", "(I)V", type);
+    PluginJavaData* pData = PluginUtils::getPluginJavaData(this);
+    PluginJniMethodInfo t;
+
+    PluginUtils::outputLog("ProtocolAds", "Class name : %s", pData->jclassName.c_str());
+    if (PluginJniHelper::getMethodInfo(t
+        , pData->jclassName.c_str()
+        , "hideAds"
+        , "(Ljava/util/Hashtable;)V"))
+    {
+        jobject obj_Map = PluginUtils::createJavaMapObject(&info);
+        t.env->CallVoidMethod(pData->jobj, t.methodID, obj_Map);
+        t.env->DeleteLocalRef(obj_Map);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 void ProtocolAds::queryPoints()
@@ -127,29 +150,6 @@ void ProtocolAds::queryPoints()
 void ProtocolAds::spendPoints(int points)
 {
 	PluginUtils::callJavaFunctionWithName_oneParam(this, "spendPoints", "(I)V", points);
-}
-
-void ProtocolAds::setAdsListener(AdsListener* pListener)
-{
-	_listener = pListener;
-}
-
-void ProtocolAds::onAdsResult(AdsResultCode code, const char* msg)
-{
-	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::adsResult invoked!");
-	if (_listener != NULL)
-	{
-		_listener->onAdsResult(code, msg);
-	}
-}
-
-void ProtocolAds::onPlayerGetPoints(int points)
-{
-	PluginUtils::outputLog("ProtocolAds", "ProtocolAds::onPlayerGetPoints invoked!");
-	if (_listener != NULL)
-	{
-		_listener->onPlayerGetPoints(this, points);
-	}
 }
 
 }} // namespace cocos2d { namespace plugin {

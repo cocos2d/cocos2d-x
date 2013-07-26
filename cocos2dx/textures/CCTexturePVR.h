@@ -53,7 +53,7 @@ typedef struct _ccPVRTexturePixelFormatInfo {
 	uint32_t bpp;
 	bool compressed;
 	bool alpha;
-	Texture2DPixelFormat ccPixelFormat;
+	Texture2D::PixelFormat ccPixelFormat;
 } ccPVRTexturePixelFormatInfo;
 
 /**
@@ -115,7 +115,7 @@ public:
     inline bool isForcePremultipliedAlpha() const { return _forcePremultipliedAlpha; }
     /** how many mipmaps the texture has. 1 means one level (level 0 */
     inline unsigned int getNumberOfMipmaps() const { return _numberOfMipmaps; }
-    inline Texture2DPixelFormat getFormat() const { return _format; }
+    inline Texture2D::PixelFormat getFormat() const { return _format; }
     inline bool isRetainName() const { return _retainName; }
     inline void setRetainName(bool retainName) { _retainName = retainName; }
 
@@ -136,7 +136,7 @@ protected:
     
     // cocos2d integration
     bool _retainName;
-    Texture2DPixelFormat _format;
+    Texture2D::PixelFormat _format;
     
    const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 };
