@@ -158,8 +158,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         _opacityModifyRGB = true;
         
-        _blendFunc.src = CC_BLEND_SRC;
-        _blendFunc.dst = CC_BLEND_DST;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         
         _flipX = _flipY = false;
         

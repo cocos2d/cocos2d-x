@@ -74,8 +74,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     _textureAtlas = new TextureAtlas();
 
     if (0 == capacity)
@@ -166,7 +165,6 @@ void SpriteBatchNode::visit(void)
     setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
-
 }
 
 void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
@@ -293,10 +291,10 @@ void SpriteBatchNode::sortAllChildren()
 void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 {
     unsigned int count = 0;
-    Array* pArray = sprite->getChildren();
-    if (pArray != NULL)
+    Array* array = sprite->getChildren();
+    if (array != NULL)
     {
-        count = pArray->count();
+        count = array->count();
     }
     
     int oldIndex = 0;
@@ -315,7 +313,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     {
         bool needNewIndex=true;
 
-        if (static_cast<Sprite*>(pArray->data->arr[0])->getZOrder() >= 0)
+        if (static_cast<Sprite*>(array->data->arr[0])->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -331,7 +329,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
         }
 
         Object* pObj = NULL;
-        CCARRAY_FOREACH(pArray,pObj)
+        CCARRAY_FOREACH(array,pObj)
         {
             Sprite* child = static_cast<Sprite*>(pObj);
             if (needNewIndex && child->getZOrder() >= 0)

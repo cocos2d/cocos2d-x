@@ -866,13 +866,6 @@ CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionC
 CC_DEPRECATED_ATTRIBUTE extern const Director::Projection kCCDirectorProjectionDefault;
 CC_DEPRECATED_ATTRIBUTE typedef enum Director::Projection ccDirectorProjection;
 
-CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationError;
-CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationString;
-CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationInt;
-CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationDouble;
-CC_DEPRECATED_ATTRIBUTE extern const int ConfigurationBoolean;
-CC_DEPRECATED_ATTRIBUTE typedef enum Configuration::Type ccConfigurationType;
-
 CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentTop;
 CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentCenter;
 CC_DEPRECATED_ATTRIBUTE extern const Label::VAlignment kCCVerticalTextAlignmentBottom;
@@ -909,8 +902,8 @@ CC_DEPRECATED_ATTRIBUTE extern const int kCCPositionTypeGrouped;
 CC_DEPRECATED_ATTRIBUTE typedef enum ParticleSystem::PositionType tPositionType;
 
 CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuHandlerPriority;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateWaiting;
-CC_DEPRECATED_ATTRIBUTE extern const int kCCMenuStateTrackingTouch;
+CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateWaiting;
+CC_DEPRECATED_ATTRIBUTE extern const Menu::State kCCMenuStateTrackingTouch;
 CC_DEPRECATED_ATTRIBUTE typedef enum Menu::State tMenuState;
 
 CC_DEPRECATED_ATTRIBUTE extern const Touch::DispatchMode kCCTouchesOneByOne;

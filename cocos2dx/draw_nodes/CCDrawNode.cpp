@@ -103,8 +103,7 @@ DrawNode::DrawNode()
 , _buffer(NULL)
 , _dirty(false)
 {
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
 DrawNode::~DrawNode()
@@ -154,8 +153,7 @@ void DrawNode::ensureCapacity(int count)
 
 bool DrawNode::init()
 {
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     

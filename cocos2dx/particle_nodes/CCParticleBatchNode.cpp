@@ -99,8 +99,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
     _children = new Array();
     _children->initWithCapacity(capacity);
 
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     
