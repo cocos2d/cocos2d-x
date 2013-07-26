@@ -47,18 +47,18 @@ THE SOFTWARE.
 /**
  @file
  Drawing OpenGL ES primitives.
- - ccDrawPoint, ccDrawPoints
- - ccDrawLine
- - ccDrawRect, ccDrawSolidRect
- - ccDrawPoly, ccDrawSolidPoly
- - ccDrawCircle
- - ccDrawQuadBezier
- - ccDrawCubicBezier
- - ccDrawCatmullRom
- - ccDrawCardinalSpline
+ - drawPoint, drawPoints
+ - drawLine
+ - drawRect, drawSolidRect
+ - drawPoly, drawSolidPoly
+ - drawCircle
+ - drawQuadBezier
+ - drawCubicBezier
+ - drawCatmullRom
+ - drawCardinalSpline
  
  You can change the color, point size, width by calling:
- - ccDrawColor4B(), ccDrawColor4F()
+ - drawColor4B(), drawColor4F()
  - ccPointSize()
  - glLineWidth()
  
@@ -75,86 +75,91 @@ NS_CC_BEGIN
 
 class PointArray;
 
-/** Initializes the drawing primitives */
-void CC_DLL ccDrawInit();
+class CC_DLL DrawPrimitives
+{
+public:
+    /** Initializes the drawing primitives */
+    static void init();
 
-/** Frees allocated resources by the drawing primitives */
-void CC_DLL ccDrawFree();
+    /** Frees allocated resources by the drawing primitives */
+    static void free();
 
-/** draws a point given x and y coordinate measured in points */
-void CC_DLL ccDrawPoint( const Point& point );
+    /** draws a point given x and y coordinate measured in points */
+    static void drawPoint( const Point& point );
 
-/** draws an array of points.
- @since v0.7.2
- */
-void CC_DLL ccDrawPoints( const Point *points, unsigned int numberOfPoints );
+    /** draws an array of points.
+     @since v0.7.2
+     */
+    static void drawPoints( const Point *points, unsigned int numberOfPoints );
 
-/** draws a line given the origin and destination point measured in points */
-void CC_DLL ccDrawLine( const Point& origin, const Point& destination );
+    /** draws a line given the origin and destination point measured in points */
+    static void drawLine( const Point& origin, const Point& destination );
 
-/** draws a rectangle given the origin and destination point measured in points. */
-void CC_DLL ccDrawRect( Point origin, Point destination );
+    /** draws a rectangle given the origin and destination point measured in points. */
+    static void drawRect( Point origin, Point destination );
 
-/** draws a solid rectangle given the origin and destination point measured in points.
-    @since 1.1
- */
-void CC_DLL ccDrawSolidRect( Point origin, Point destination, Color4F color );
+    /** draws a solid rectangle given the origin and destination point measured in points.
+        @since 1.1
+     */
+    static void drawSolidRect( Point origin, Point destination, Color4F color );
 
-/** draws a polygon given a pointer to Point coordinates and the number of vertices measured in points.
-The polygon can be closed or open
-*/
-void CC_DLL ccDrawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon );
+    /** draws a polygon given a pointer to Point coordinates and the number of vertices measured in points.
+    The polygon can be closed or open
+    */
+    static void drawPoly( const Point *vertices, unsigned int numOfVertices, bool closePolygon );
 
-/** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
- */
-void CC_DLL ccDrawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color );
+    /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
+     */
+    static void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color );
 
-/** draws a circle given the center, radius and number of segments. */
-void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
-void CC_DLL ccDrawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
+    /** draws a circle given the center, radius and number of segments. */
+    static void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
+    static void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
-/** draws a solid circle given the center, radius and number of segments. */
-void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
-void CC_DLL ccDrawSolidCircle( const Point& center, float radius, float angle, unsigned int segments);
+    /** draws a solid circle given the center, radius and number of segments. */
+    static void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
+    static void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments);
 
-/** draws a quad bezier path
- @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v0.8
- */
-void CC_DLL ccDrawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments);
+    /** draws a quad bezier path
+     @warning This function could be pretty slow. Use it only for debugging purposes.
+     @since v0.8
+     */
+    static void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments);
 
-/** draws a cubic bezier path
- @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v0.8
- */
-void CC_DLL ccDrawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments);
+    /** draws a cubic bezier path
+     @warning This function could be pretty slow. Use it only for debugging purposes.
+     @since v0.8
+     */
+    static void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments);
 
-/** draws a Catmull Rom path.
- @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v2.0
- */
-void CC_DLL ccDrawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
+    /** draws a Catmull Rom path.
+     @warning This function could be pretty slow. Use it only for debugging purposes.
+     @since v2.0
+     */
+    static void drawCatmullRom( PointArray *arrayOfControlPoints, unsigned int segments );
 
-/** draws a Cardinal Spline path.
- @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v2.0
- */
-void CC_DLL ccDrawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
+    /** draws a Cardinal Spline path.
+     @warning This function could be pretty slow. Use it only for debugging purposes.
+     @since v2.0
+     */
+    static void drawCardinalSpline( PointArray *config, float tension,  unsigned int segments );
 
-/** set the drawing color with 4 unsigned bytes
- @since v2.0
- */
-void CC_DLL ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+    /** set the drawing color with 4 unsigned bytes
+     @since v2.0
+     */
+    static void drawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
-/** set the drawing color with 4 floats
- @since v2.0
- */
-void CC_DLL ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
+    /** set the drawing color with 4 floats
+     @since v2.0
+     */
+    static void drawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
-/** set the point size in points. Default 1.
- @since v2.0
- */
-void CC_DLL ccPointSize( GLfloat pointSize );
+    /** set the point size in points. Default 1.
+     @since v2.0
+     */
+    static void setPointSize( GLfloat pointSize );
+
+};
 
 // end of global group
 /// @}
