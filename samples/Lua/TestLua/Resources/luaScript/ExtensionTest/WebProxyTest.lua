@@ -28,7 +28,7 @@
         if nil ~= wsSendText then
             if kStateOpen == wsSendText:getReadyState() then
                sendTextStatus:setString("Send Text WS is waiting...")
-               wsSendText:sendTextMsg("Hello WebSocket中文, I'm a text message.")
+               wsSendText:sendString("Hello WebSocket中文, I'm a text message.")
             else
                 local warningStr = "send text websocket instance wasn't ready..."
                 print(warningStr)
@@ -47,10 +47,7 @@
         if nil ~= wsSendBinary then
             if kStateOpen == wsSendBinary:getReadyState() then
                sendBinaryStatus:setString("Send Binary WS is waiting...")
-               local buf = "Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0."
-               local nLength = string.len(buf)
-               t = {string.byte(buf,1,-1)}
-               wsSendBinary:sendBinaryMsg(t,table.getn(t))
+               wsSendBinary:sendString("Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0.")
             else
                 local warningStr = "send binary websocket instance wasn't ready..."
                 sendBinaryStatus:setString(warningStr)
