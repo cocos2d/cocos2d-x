@@ -540,6 +540,9 @@ Developers:
         
     Rafael (rafaelx)
         A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
+        
+    metalbass
+        Fixing an issue that sigslot::_connection_base# (from 0 to 8) don't have virtual destructors.
 
 Retired Core Developers:
     WenSheng Yang
