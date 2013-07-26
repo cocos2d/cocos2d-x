@@ -49,6 +49,7 @@ Layer::Layer()
 , _keypadEnabled(false)
 , _touchPriority(0)
 , _touchMode(kTouchesAllAtOnce)
+, _swallowsTouches(true)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -99,7 +100,7 @@ void Layer::registerWithTouchDispatcher()
     if( _touchMode == kTouchesAllAtOnce ) {
         pDispatcher->addStandardDelegate(this, 0);
     } else {
-        pDispatcher->addTargetedDelegate(this, _touchPriority, true);
+        pDispatcher->addTargetedDelegate(this, _touchPriority, _swallowsTouches);
     }
 }
 
@@ -183,6 +184,20 @@ void Layer::setTouchPriority(int priority)
     }
 }
 
+void Layer::setSwallowsTouches(bool swallowsTouches)
+{
+	if (_swallowsTouches != swallowsTouches)
+	{
+		_swallowsTouches = swallowsTouches;
+        
+		if( _touchEnabled)
+        {
+			setTouchEnabled(false);
+			setTouchEnabled(true);
+		}
+	}
+}
+
 int Layer::getTouchPriority() const
 {
     return _touchPriority;
@@ -191,6 +206,11 @@ int Layer::getTouchPriority() const
 int Layer::getTouchMode() const
 {
     return _touchMode;
+}
+
+bool Layer::getSwallowsTouches() const
+{
+	return _swallowsTouches;
 }
 
 /// isAccelerometerEnabled getter

@@ -9,16 +9,16 @@ local function AccelerometerMainLayer()
 	
 	local pLabel = CCLabelTTF:create(title(), "Arial", 32)
     pLayer:addChild(pLabel, 1)
-    pLabel:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - 50) )
+    pLabel:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:top().y - 50) )
 
     local pBall = CCSprite:create("Images/ball.png")
-    pBall:setPosition(ccp(VisibleRect:center().x, VisibleRect:center().y))
+    pBall:setPosition(CCPoint(VisibleRect:center().x, VisibleRect:center().y))
     pLayer:addChild(pBall)
 
     pBall:retain()
     
     local function didAccelerate(x,y,z,timestamp)
-    	local pDir = CCDirector:sharedDirector()
+    	local pDir = CCDirector:getInstance()
 
     	if nil == pBall then
     		return
@@ -28,12 +28,12 @@ local function AccelerometerMainLayer()
 
     	local ptNowX,ptNowY = pBall:getPosition()
     	
-    	local ptTmp = pDir:convertToUI(CCPointMake(ptNowX,ptNowY))	
+    	local ptTmp = pDir:convertToUI(CCPoint(ptNowX,ptNowY))	
     	ptTmp.x   = ptTmp.x + x * 9.81
     	ptTmp.y   = ptTmp.y - y * 9.81
 
 
-    	local ptNext = pDir:convertToGL(CCPointMake(ptTmp.x,ptTmp.y))
+    	local ptNext = pDir:convertToGL(CCPoint(ptTmp.x,ptTmp.y))
     	local nMinX  = math.floor(VisibleRect:left().x + szBall.width / 2.0)
     	local nMaxX  = math.floor(VisibleRect:right().x - szBall.width / 2.0)
    		if ptNext.x <   nMinX then
@@ -50,7 +50,7 @@ local function AccelerometerMainLayer()
    			ptNext.y = nMaxY
    		end
    		
-    	pBall:setPosition(CCPointMake(ptNext.x,ptNext.y))
+    	pBall:setPosition(CCPoint(ptNext.x,ptNext.y))
     	
     	
     end

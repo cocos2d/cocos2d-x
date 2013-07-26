@@ -10,4 +10,4 @@ require "luaScript/mainMenu"
 -- run
 local scene = CCScene:create()
 scene:addChild(CreateTestMenu())
-CCDirector:sharedDirector():runWithScene(scene)
+CCDirector:getInstance():runWithScene(scene)

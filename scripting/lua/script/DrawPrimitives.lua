@@ -51,7 +51,7 @@ function ccDrawColor4f(r,g,b,a)
 end
 
 function ccPointSize(pointSize)
-    dp_pointSize = pointSize * CCDirector:sharedDirector():getContentScaleFactor()
+    dp_pointSize = pointSize * CCDirector:getInstance():getContentScaleFactor()
 end
 
 function ccDrawColor4B(r,g,b,a)

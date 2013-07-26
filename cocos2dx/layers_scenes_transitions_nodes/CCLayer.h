@@ -109,6 +109,10 @@ public:
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority() const;
+	
+	/** swallowsTouches of the touch events. Default is true */
+    virtual void setSwallowsTouches(bool swallowsTouches);
+    virtual bool getSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
@@ -149,6 +153,7 @@ protected:
 private:
     int _touchPriority;
     ccTouchesMode _touchMode;
+	bool _swallowsTouches;
     
     int executeScriptTouchHandler(int eventType, Touch* touch);
     int executeScriptTouchesHandler(int eventType, Set* touches);
