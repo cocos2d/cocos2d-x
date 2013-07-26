@@ -90,8 +90,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, unsigned int tileWidth, unsi
     _colorUnmodified = Color3B::WHITE;
     _isOpacityModifyRGB = true;
 
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(texture, itemsToRender);

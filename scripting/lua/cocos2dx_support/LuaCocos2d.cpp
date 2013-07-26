@@ -66133,8 +66133,8 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create02);
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCLabelTTF_create03);
   tolua_endmodule(tolua_S);
-  tolua_constant(tolua_S,"kCCMenuStateWaiting",Menu::STATE_WAITING);
-  tolua_constant(tolua_S,"kCCMenuStateTrackingTouch",Menu::STATE_TRACKING_TOUCH);
+  tolua_constant(tolua_S,"kCCMenuStateWaiting",Menu::State::WAITING);
+  tolua_constant(tolua_S,"kCCMenuStateTrackingTouch",Menu::State::TRACKING_TOUCH);
   tolua_constant(tolua_S,"kCCMenuHandlerPriority",Menu::HANDLER_PRIORITY);
   tolua_cclass(tolua_S,"CCMenu","CCMenu","CCLayerRGBA",NULL);
   tolua_beginmodule(tolua_S,"CCMenu");

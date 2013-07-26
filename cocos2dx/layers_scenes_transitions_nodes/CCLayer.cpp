@@ -622,8 +622,7 @@ void LayerRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
 LayerColor::LayerColor()
 {
     // default blend function
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
     
 LayerColor::~LayerColor()

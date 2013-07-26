@@ -127,7 +127,7 @@ emitter.startSpin = 0;
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
-    enum 
+    enum Mode
     {
         MODE_GRAVITY,
         MODE_RADIUS,
@@ -300,8 +300,8 @@ public:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    inline int getEmitterMode() const { return _emitterMode; };
-    inline void setEmitterMode(int mode) { _emitterMode = mode; };
+    inline Mode getEmitterMode() const { return _emitterMode; };
+    inline void setEmitterMode(Mode mode) { _emitterMode = mode; };
     
     /** start size in pixels of each particle */
     inline float getStartSize() const { return _startSize; };
@@ -487,7 +487,7 @@ protected:
      - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
      - kParticleModeRadius: uses radius movement + rotation
      */
-    int _emitterMode;
+    Mode _emitterMode;
 
     /** start size in pixels of each particle */
     float _startSize;

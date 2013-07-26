@@ -83,9 +83,9 @@ const char* kCCUniformSampler_s	= GLProgram::UNIFORM_NAME_SAMPLER;
 const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 
 // Attribute names
-const char*    kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
-const char*    kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
-const char*    kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
+const char* kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
+const char* kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
+const char* kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
 
 const int kCCVertexAttribFlag_None = VERTEX_ATTRIB_FLAT_NONE;
 const int kCCVertexAttribFlag_Position = VERTEX_ATTRIB_FLAG_POSITION;
@@ -100,12 +100,6 @@ const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
 const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
 const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
 const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
-
-const int ConfigurationError = Configuration::ERROR;
-const int ConfigurationString = Configuration::STRING;
-const int ConfigurationInt = Configuration::INT;
-const int ConfigurationDouble = Configuration::DOUBLE;
-const int ConfigurationBoolean = Configuration::BOOLEAN;
 
 const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
 const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
@@ -139,8 +133,8 @@ const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFo
 const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
 
 const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
-const int kCCMenuStateWaiting = Menu::STATE_WAITING;
-const int kCCMenuStateTrackingTouch = Menu::STATE_TRACKING_TOUCH;
+const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
+const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
 
 const Touch::DispatchMode kCCTouchesOneByOne = Touch::DispatchMode::ONE_BY_ONE;
 const Touch::DispatchMode kCCTouchesAllAtOnce = Touch::DispatchMode::ALL_AT_ONCE;
