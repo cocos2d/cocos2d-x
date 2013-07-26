@@ -235,19 +235,19 @@ void AnimationCache::addAnimationsWithDictionary(Dictionary* dictionary)
             parseVersion2(animations);
             break;
         default:
-            CCAssert(false, "Invalid animation format");
+            CCASSERT(false, "Invalid animation format");
     }
 }
 
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void AnimationCache::addAnimationsWithFile(const char* plist)
 {
-    CCAssert( plist, "Invalid texture file name");
+    CCASSERT( plist, "Invalid texture file name");
 
     std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
     Dictionary* dict = Dictionary::createWithContentsOfFile(path.c_str());
 
-    CCAssert( dict, "CCAnimationCache: File could not be found");
+    CCASSERT( dict, "CCAnimationCache: File could not be found");
 
     addAnimationsWithDictionary(dict);
 }

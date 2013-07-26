@@ -58,9 +58,9 @@ CurlTest::~CurlTest()
 
 void CurlTestScene::runThisTest()
 {
-    Layer* pLayer = new CurlTest();
-    addChild(pLayer);
+    Layer* layer = new CurlTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }

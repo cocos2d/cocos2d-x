@@ -49,7 +49,6 @@ THE SOFTWARE.
 #include "support/base64.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
-#include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
 #include "support/CCProfiling.h"
@@ -170,7 +169,7 @@ bool ParticleSystem::initWithFile(const char *plistFile)
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(_plistFile.c_str());
 
-    CCAssert( dict != NULL, "Particles: file not found");
+    CCASSERT( dict != NULL, "Particles: file not found");
     
     // XXX compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
@@ -293,7 +292,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 modeB.rotatePerSecondVar = dictionary->valueForKey("rotatePerSecondVariance")->floatValue();
 
             } else {
-                CCAssert( false, "Invalid emitterType in config file");
+                CCASSERT( false, "Invalid emitterType in config file");
                 CC_BREAK_IF(true);
             }
 
@@ -353,24 +352,24 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                 else
                 {                        
                     const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
-                    CCAssert(textureData, "");
+                    CCASSERT(textureData, "");
                     
                     int dataLen = strlen(textureData);
                     if(dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    
                         int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
-                        CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
+                        CCASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
                         int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
-                        CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
+                        CCASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
                         // For android, we should retain it in VolatileTexture::addImage which invoked in TextureCache::getInstance()->addUIImage()
                         image = new Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
-                        CCAssert(isOK, "CCParticleSystem: error init image with Data");
+                        CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
                         setTexture(TextureCache::getInstance()->addUIImage(image, textureName.c_str()));
@@ -378,7 +377,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         image->release();
                     }
                 }
-                CCAssert( this->_texture != NULL, "CCParticleSystem: error loading the texture");
+                CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
             }
             bRet = true;
         }
@@ -799,7 +798,7 @@ void ParticleSystem::setTexture(Texture2D* var)
 
 void ParticleSystem::updateBlendFunc()
 {
-    CCAssert(! _batchNode, "Can't change blending functions when the particle is being batched");
+    CCASSERT(! _batchNode, "Can't change blending functions when the particle is being batched");
 
     if(_texture)
     {
@@ -822,7 +821,7 @@ void ParticleSystem::updateBlendFunc()
     }
 }
 
-Texture2D * ParticleSystem::getTexture()
+Texture2D * ParticleSystem::getTexture() const
 {
     return _texture;
 }
@@ -858,170 +857,170 @@ bool ParticleSystem::isBlendAdditive() const
 // ParticleSystem - Properties of Gravity Mode 
 void ParticleSystem::setTangentialAccel(float t)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.tangentialAccel = t;
 }
 
 float ParticleSystem::getTangentialAccel() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccel;
 }
 
 void ParticleSystem::setTangentialAccelVar(float t)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.tangentialAccelVar = t;
 }
 
 float ParticleSystem::getTangentialAccelVar() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.tangentialAccelVar;
 }    
 
 void ParticleSystem::setRadialAccel(float t)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.radialAccel = t;
 }
 
 float ParticleSystem::getRadialAccel() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccel;
 }
 
 void ParticleSystem::setRadialAccelVar(float t)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.radialAccelVar = t;
 }
 
 float ParticleSystem::getRadialAccelVar() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.radialAccelVar;
 }
 
 void ParticleSystem::setRotationIsDir(bool t)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.rotationIsDir = t;
 }
 
 bool ParticleSystem::getRotationIsDir() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.rotationIsDir;
 }
 
 void ParticleSystem::setGravity(const Point& g)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.gravity = g;
 }
 
 const Point& ParticleSystem::getGravity()
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.gravity;
 }
 
 void ParticleSystem::setSpeed(float speed)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.speed = speed;
 }
 
 float ParticleSystem::getSpeed() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speed;
 }
 
 void ParticleSystem::setSpeedVar(float speedVar)
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     modeA.speedVar = speedVar;
 }
 
 float ParticleSystem::getSpeedVar() const
 {
-    CCAssert( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
+    CCASSERT( _emitterMode == kParticleModeGravity, "Particle Mode should be Gravity");
     return modeA.speedVar;
 }
 
 // ParticleSystem - Properties of Radius Mode
 void ParticleSystem::setStartRadius(float startRadius)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.startRadius = startRadius;
 }
 
 float ParticleSystem::getStartRadius() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadius;
 }
 
 void ParticleSystem::setStartRadiusVar(float startRadiusVar)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.startRadiusVar = startRadiusVar;
 }
 
 float ParticleSystem::getStartRadiusVar() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.startRadiusVar;
 }
 
 void ParticleSystem::setEndRadius(float endRadius)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.endRadius = endRadius;
 }
 
 float ParticleSystem::getEndRadius() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadius;
 }
 
 void ParticleSystem::setEndRadiusVar(float endRadiusVar)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.endRadiusVar = endRadiusVar;
 }
 
 float ParticleSystem::getEndRadiusVar() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.endRadiusVar;
 }
 
 void ParticleSystem::setRotatePerSecond(float degrees)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.rotatePerSecond = degrees;
 }
 
 float ParticleSystem::getRotatePerSecond() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecond;
 }
 
 void ParticleSystem::setRotatePerSecondVar(float degrees)
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     modeB.rotatePerSecondVar = degrees;
 }
 
 float ParticleSystem::getRotatePerSecondVar() const
 {
-    CCAssert( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
+    CCASSERT( _emitterMode == kParticleModeRadius, "Particle Mode should be Radius");
     return modeB.rotatePerSecondVar;
 }
 
@@ -1030,218 +1029,14 @@ bool ParticleSystem::isActive() const
     return _isActive;
 }
 
-unsigned int ParticleSystem::getParticleCount() const
-{
-    return _particleCount;
-}
-
-float ParticleSystem::getDuration()
-{
-    return _duration;
-}
-
-void ParticleSystem::setDuration(float var)
-{
-    _duration = var;
-}
-
-const Point& ParticleSystem::getSourcePosition() const
-{
-    return _sourcePosition;
-}
-
-void ParticleSystem::setSourcePosition(const Point& var)
-{
-    _sourcePosition = var;
-}
-
-const Point& ParticleSystem::getPosVar() const
-{
-    return _posVar;
-}
-
-void ParticleSystem::setPosVar(const Point& var)
-{
-    _posVar = var;
-}
-
-float ParticleSystem::getLife()
-{
-    return _life;
-}
-
-void ParticleSystem::setLife(float var)
-{
-    _life = var;
-}
-
-float ParticleSystem::getLifeVar()
-{
-    return _lifeVar;
-}
-
-void ParticleSystem::setLifeVar(float var)
-{
-    _lifeVar = var;
-}
-
-float ParticleSystem::getAngle()
-{
-    return _angle;
-}
-
-void ParticleSystem::setAngle(float var)
-{
-    _angle = var;
-}
-
-float ParticleSystem::getAngleVar()
-{
-    return _angleVar;
-}
-
-void ParticleSystem::setAngleVar(float var)
-{
-    _angleVar = var;
-}
-
-float ParticleSystem::getStartSize()
-{
-    return _startSize;
-}
-
-void ParticleSystem::setStartSize(float var)
-{
-    _startSize = var;
-}
-
-float ParticleSystem::getStartSizeVar()
-{
-    return _startSizeVar;
-}
-
-void ParticleSystem::setStartSizeVar(float var)
-{
-    _startSizeVar = var;
-}
-
-float ParticleSystem::getEndSize()
-{
-    return _endSize;
-}
-
-void ParticleSystem::setEndSize(float var)
-{
-    _endSize = var;
-}
-
-float ParticleSystem::getEndSizeVar()
-{
-    return _endSizeVar;
-}
-
-void ParticleSystem::setEndSizeVar(float var)
-{
-    _endSizeVar = var;
-}
-
-const Color4F& ParticleSystem::getStartColor() const
-{
-    return _startColor;
-}
-
-void ParticleSystem::setStartColor(const Color4F& var)
-{
-    _startColor = var;
-}
-
-const Color4F& ParticleSystem::getStartColorVar() const
-{
-    return _startColorVar;
-}
-
-void ParticleSystem::setStartColorVar(const Color4F& var)
-{
-    _startColorVar = var;
-}
-
-const Color4F& ParticleSystem::getEndColor() const
-{
-    return _endColor;
-}
-
-void ParticleSystem::setEndColor(const Color4F& var)
-{
-    _endColor = var;
-}
-
-const Color4F& ParticleSystem::getEndColorVar() const
-{
-    return _endColorVar;
-}
-
-void ParticleSystem::setEndColorVar(const Color4F& var)
-{
-    _endColorVar = var;
-}
-
-float ParticleSystem::getStartSpin()
-{
-    return _startSpin;
-}
-
-void ParticleSystem::setStartSpin(float var)
-{
-    _startSpin = var;
-}
-
-float ParticleSystem::getStartSpinVar()
-{
-    return _startSpinVar;
-}
-
-void ParticleSystem::setStartSpinVar(float var)
-{
-    _startSpinVar = var;
-}
-
-float ParticleSystem::getEndSpin()
-{
-    return _endSpin;
-}
-
-void ParticleSystem::setEndSpin(float var)
-{
-    _endSpin = var;
-}
-float ParticleSystem::getEndSpinVar()
-{
-    return _endSpinVar;
-}
-
-void ParticleSystem::setEndSpinVar(float var)
-{
-    _endSpinVar = var;
-}
-
-float ParticleSystem::getEmissionRate()
-{
-    return _emissionRate;
-}
-
-void ParticleSystem::setEmissionRate(float var)
-{
-    _emissionRate = var;
-}
-
-unsigned int ParticleSystem::getTotalParticles()
+unsigned int ParticleSystem::getTotalParticles() const
 {
     return _totalParticles;
 }
 
 void ParticleSystem::setTotalParticles(unsigned int var)
 {
-    CCAssert( var <= _allocatedParticles, "Particle: resizing particle array only supported for quads");
+    CCASSERT( var <= _allocatedParticles, "Particle: resizing particle array only supported for quads");
     _totalParticles = var;
 }
 
@@ -1258,26 +1053,6 @@ void ParticleSystem::setBlendFunc(const BlendFunc &blendFunc)
     }
 }
 
-bool ParticleSystem::getOpacityModifyRGB()
-{
-    return _opacityModifyRGB;
-}
-
-void ParticleSystem::setOpacityModifyRGB(bool bOpacityModifyRGB)
-{
-    _opacityModifyRGB = bOpacityModifyRGB;
-}
-
-tPositionType ParticleSystem::getPositionType()
-{
-    return _positionType;
-}
-
-void ParticleSystem::setPositionType(tPositionType var)
-{
-    _positionType = var;
-}
-
 bool ParticleSystem::isAutoRemoveOnFinish() const
 {
     return _isAutoRemoveOnFinish;
@@ -1288,20 +1063,10 @@ void ParticleSystem::setAutoRemoveOnFinish(bool var)
     _isAutoRemoveOnFinish = var;
 }
 
-int ParticleSystem::getEmitterMode()
-{
-    return _emitterMode;
-}
-
-void ParticleSystem::setEmitterMode(int var)
-{
-    _emitterMode = var;
-}
-
 
 // ParticleSystem - methods for batchNode rendering
 
-ParticleBatchNode* ParticleSystem::getBatchNode(void)
+ParticleBatchNode* ParticleSystem::getBatchNode(void) const
 {
     return _batchNode;
 }

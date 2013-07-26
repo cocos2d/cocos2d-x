@@ -95,7 +95,7 @@ public:
      */
     inline const char* getStrKey() const
     {
-        CCAssert(_strKey[0] != '\0', "Should not call this function for integer dictionary");
+        CCASSERT(_strKey[0] != '\0', "Should not call this function for integer dictionary");
         return _strKey;
     }
 
@@ -108,7 +108,7 @@ public:
      */
     inline intptr_t getIntKey() const
     {
-        CCAssert(_strKey[0] == '\0', "Should not call this function for string dictionary");
+        CCASSERT(_strKey[0] == '\0', "Should not call this function for string dictionary");
         return _intKey;
     }
     
@@ -162,9 +162,9 @@ public:
  *
  *  // Get the object for key
  *  String* pStr1 = (String*)pDict->objectForKey("key1");
- *  CCLog("{ key1: %s }", pStr1->getCString());
+ *  log("{ key1: %s }", pStr1->getCString());
  *  Integer* pInteger = (Integer*)pDict->objectForKey("key3");
- *  CCLog("{ key3: %d }", pInteger->getValue());
+ *  log("{ key3: %d }", pInteger->getValue());
  *  @endcode
  *
  */

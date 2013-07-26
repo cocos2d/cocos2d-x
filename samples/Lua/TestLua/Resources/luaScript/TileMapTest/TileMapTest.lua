@@ -1199,7 +1199,7 @@ local function TMXOrthoFromXMLTest()
     local file = resources.."/orthogonal-test1.tmx"
 
     local  str = CCString:createWithContentsOfFile(CCFileUtils:sharedFileUtils():fullPathForFilename(file)):getCString()
-    --    CCAssert(str != NULL, "Unable to open file")
+    --    CCASSERT(str != NULL, "Unable to open file")
     if (str == nil) then
         cclog("Unable to open file")
     end

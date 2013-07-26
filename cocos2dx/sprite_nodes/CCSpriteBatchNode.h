@@ -41,7 +41,6 @@ NS_CC_BEGIN
  * @{
  */
 
-#define kDefaultSpriteBatchCapacity   29
 
 class Sprite;
 
@@ -62,23 +61,19 @@ class Sprite;
 */
 class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
+    static const int kDefaultSpriteBatchCapacity = 29;
+
 public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, unsigned int capacity);
-    static SpriteBatchNode* createWithTexture(Texture2D* tex) {
-        return SpriteBatchNode::createWithTexture(tex, kDefaultSpriteBatchCapacity);
-    }
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = kDefaultSpriteBatchCapacity);
 
     /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, unsigned int capacity);
-    static SpriteBatchNode* create(const char* fileImage) {
-        return SpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
-    }
+    static SpriteBatchNode* create(const char* fileImage, int capacity = kDefaultSpriteBatchCapacity);
 
     SpriteBatchNode();
     virtual ~SpriteBatchNode();
@@ -86,12 +81,12 @@ public:
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
+    bool initWithTexture(Texture2D *tex, int capacity);
     /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool initWithFile(const char* fileImage, int capacity);
     bool init();
 
     // property
@@ -132,7 +127,7 @@ public:
     // Overrides
     //
     // TextureProtocol
-    virtual Texture2D* getTexture(void) override;
+    virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc& getBlendFunc(void) const override;
@@ -153,16 +148,16 @@ protected:
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void insertQuadFromSprite(Sprite *sprite, unsigned int index);
+    void insertQuadFromSprite(Sprite *sprite, int index);
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, unsigned int index);
+    void updateQuadFromSprite(Sprite *sprite, int index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
-    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, unsigned int z, int aTag);
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, int z, int aTag);
 
 private:
     void updateAtlasIndex(Sprite* sprite, int* curIndex);
@@ -173,7 +168,7 @@ protected:
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
 
-    // all descendants: children, gran children, etc...
+    // all descendants: children, grand children, etc...
     Array* _descendants;
 };
 

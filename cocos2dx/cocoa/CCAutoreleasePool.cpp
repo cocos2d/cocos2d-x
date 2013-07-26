@@ -43,7 +43,7 @@ void AutoreleasePool::addObject(Object* pObject)
 {
     _managedObjectArray->addObject(pObject);
 
-    CCAssert(pObject->_reference > 1, "reference count should be greater than 1");
+    CCASSERT(pObject->_reference > 1, "reference count should be greater than 1");
     ++(pObject->_autoReleaseCount);
     pObject->release(); // no ref count, in this case autorelease pool added.
 }
@@ -177,7 +177,7 @@ void PoolManager::pop()
 
 void PoolManager::removeObject(Object* pObject)
 {
-    CCAssert(_curReleasePool, "current auto release pool should not be null");
+    CCASSERT(_curReleasePool, "current auto release pool should not be null");
 
     _curReleasePool->removeObject(pObject);
 }
@@ -195,7 +195,7 @@ AutoreleasePool* PoolManager::getCurReleasePool()
         push();
     }
 
-    CCAssert(_curReleasePool, "current auto release pool should not be null");
+    CCASSERT(_curReleasePool, "current auto release pool should not be null");
 
     return _curReleasePool;
 }

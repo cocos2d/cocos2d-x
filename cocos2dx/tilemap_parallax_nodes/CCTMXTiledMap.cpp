@@ -58,17 +58,17 @@ TMXTiledMap* TMXTiledMap::createWithXML(const char* tmxString, const char* resou
 
 bool TMXTiledMap::initWithTMXFile(const char *tmxFile)
 {
-    CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
+    CCASSERT(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
     
     setContentSize(Size::ZERO);
 
-    TMXMapInfo *mapInfo = TMXMapInfo::formatWithTMXFile(tmxFile);
+    TMXMapInfo *mapInfo = TMXMapInfo::create(tmxFile);
 
     if (! mapInfo)
     {
         return false;
     }
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -78,9 +78,9 @@ bool TMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
 {
     setContentSize(Size::ZERO);
 
-    TMXMapInfo *mapInfo = TMXMapInfo::formatWithXML(tmxString, resourcePath);
+    TMXMapInfo *mapInfo = TMXMapInfo::createWithXML(tmxString, resourcePath);
 
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
+    CCASSERT( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo);
 
     return true;
@@ -99,30 +99,6 @@ TMXTiledMap::~TMXTiledMap()
     CC_SAFE_RELEASE(_properties);
     CC_SAFE_RELEASE(_objectGroups);
     CC_SAFE_RELEASE(_tileProperties);
-}
-
-Array* TMXTiledMap::getObjectGroups()
-{
-    return _objectGroups;
-}
-
-void TMXTiledMap::setObjectGroups(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_objectGroups);
-    _objectGroups = var;
-}
-
-Dictionary * TMXTiledMap::getProperties()
-{
-    return _properties;
-}
-
-void TMXTiledMap::setProperties(Dictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_properties);
-    _properties = var;
 }
 
 // private
@@ -230,9 +206,9 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 }
 
 // public
-TMXLayer * TMXTiledMap::layerNamed(const char *layerName)
+TMXLayer * TMXTiledMap::getLayer(const char *layerName) const
 {
-    CCAssert(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
+    CCASSERT(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
     Object* pObj = NULL;
     CCARRAY_FOREACH(_children, pObj) 
     {
@@ -250,9 +226,9 @@ TMXLayer * TMXTiledMap::layerNamed(const char *layerName)
     return NULL;
 }
 
-TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
+TMXObjectGroup * TMXTiledMap::getObjectGroup(const char *groupName) const
 {
-    CCAssert(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
+    CCASSERT(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
 
     std::string sGroupName = groupName;
     if (_objectGroups && _objectGroups->count()>0)
@@ -273,14 +249,14 @@ TMXObjectGroup * TMXTiledMap::objectGroupNamed(const char *groupName)
     return NULL;
 }
 
-String* TMXTiledMap::propertyNamed(const char *propertyName)
+String* TMXTiledMap::getProperty(const char *propertyName) const
 {
-    return (String*)_properties->objectForKey(propertyName);
+    return static_cast<String*>(_properties->objectForKey(propertyName));
 }
 
-Dictionary* TMXTiledMap::propertiesForGID(int GID)
+Dictionary* TMXTiledMap::getPropertiesForGID(int GID) const
 {
-    return (Dictionary*)_tileProperties->objectForKey(GID);
+    return static_cast<Dictionary*>(_tileProperties->objectForKey(GID));
 }
         
 

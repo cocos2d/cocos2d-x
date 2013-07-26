@@ -14,7 +14,7 @@ class TestHeaderLayer
 
         virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
         virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-        virtual void onNodeLoaded(cocos2d::Node * pNode, cocos2d::extension::NodeLoader * pNodeLoader);
+        virtual void onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader);
     
         void onBackClicked(cocos2d::Object * pSender);
 };

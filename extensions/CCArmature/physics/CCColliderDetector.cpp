@@ -77,7 +77,7 @@ ColliderDetector::~ColliderDetector()
 bool ColliderDetector::init()
 {
     _colliderBodyList = Array::create();
-    CCAssert(_colliderBodyList, "create _colliderBodyList failed!");
+    CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
     _colliderBodyList->retain();
 
     return true;

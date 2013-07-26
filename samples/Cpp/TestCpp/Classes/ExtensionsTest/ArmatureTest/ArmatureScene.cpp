@@ -13,38 +13,38 @@ static int s_nActionIdx = -1;
 
 Layer *CreateLayer(int index)
 {
- 	Layer *pLayer = NULL;
+ 	Layer *layer = NULL;
 	switch(index)
 	{
 	case TEST_DRAGON_BONES_2_0:
-		pLayer = new TestDragonBones20(); break;
+		layer = new TestDragonBones20(); break;
 	case TEST_COCOSTUDIO_WITH_SKELETON:
-		pLayer = new TestCSWithSkeleton(); break;
+		layer = new TestCSWithSkeleton(); break;
 	case TEST_COCOSTUDIO_WITHOUT_SKELETON:
-		pLayer = new TestCSWithoutSkeleton(); break;
+		layer = new TestCSWithoutSkeleton(); break;
 	case TEST_PERFORMANCE:
-		pLayer = new TestPerformance(); break;
+		layer = new TestPerformance(); break;
 	case TEST_CHANGE_ZORDER:
-		pLayer = new TestChangeZorder(); break;
+		layer = new TestChangeZorder(); break;
 	case TEST_ANIMATION_EVENT:
-		pLayer = new TestAnimationEvent(); break;
+		layer = new TestAnimationEvent(); break;
 	case  TEST_PARTICLE_DISPLAY:
-		pLayer = new TestParticleDisplay(); break;
+		layer = new TestParticleDisplay(); break;
 	case TEST_USE_DIFFERENT_PICTURE:
-		pLayer = new TestUseMutiplePicture(); break;
+		layer = new TestUseMutiplePicture(); break;
 	case TEST_BOX2D_DETECTOR:
-		pLayer = new TestBox2DDetector(); break;
+		layer = new TestBox2DDetector(); break;
 	case TEST_BOUDINGBOX:
-		pLayer = new TestBoundingBox(); break;
+		layer = new TestBoundingBox(); break;
 	case TEST_ANCHORPOINT:
-		pLayer = new TestAnchorPoint(); break;
+		layer = new TestAnchorPoint(); break;
 	case TEST_ARMATURE_NESTING:
-		pLayer = new TestArmatureNesting(); break;
+		layer = new TestArmatureNesting(); break;
 	default:
 		break;
 	}
 
-	return pLayer;
+	return layer;
 }
 
 
@@ -53,10 +53,10 @@ Layer* NextTest()
 	++s_nActionIdx;
 	s_nActionIdx = s_nActionIdx % TEST_LAYER_COUNT;
 
-	Layer* pLayer = CreateLayer(s_nActionIdx);
-	pLayer->autorelease();
+	Layer* layer = CreateLayer(s_nActionIdx);
+	layer->autorelease();
 
-	return pLayer;
+	return layer;
 }
 
 Layer* BackTest()
@@ -65,18 +65,18 @@ Layer* BackTest()
 	if( s_nActionIdx < 0 )
 		s_nActionIdx += TEST_LAYER_COUNT;    
 
-	Layer* pLayer = CreateLayer(s_nActionIdx);
-	pLayer->autorelease();
+	Layer* layer = CreateLayer(s_nActionIdx);
+	layer->autorelease();
 
-	return pLayer;
+	return layer;
 }
 
 Layer* RestartTest()
 {
-	Layer* pLayer = CreateLayer(s_nActionIdx);
-	pLayer->autorelease();
+	Layer* layer = CreateLayer(s_nActionIdx);
+	layer->autorelease();
 
-	return pLayer;
+	return layer;
 }
 
 
@@ -141,9 +141,9 @@ void ArmatureTestLayer::onEnter()
 	}    
 
 	// add menu
-	MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(ArmatureTestLayer::backCallback,this));
-	MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(ArmatureTestLayer::restartCallback, this));
-	MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(ArmatureTestLayer::nextCallback, this));
+	MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(ArmatureTestLayer::backCallback,this));
+	MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(ArmatureTestLayer::restartCallback, this));
+	MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(ArmatureTestLayer::nextCallback, this));
 
 	Menu *menu = Menu::create(item1, item2, item3, NULL);
 
@@ -241,7 +241,7 @@ void TestCSWithoutSkeleton::onEnter()
 	Armature *armature = NULL;
 	armature = Armature::create("TestBone");
 	armature->getAnimation()->playByIndex(0);
-    armature->setAnchorPoint(Point(0.5, -0.1));
+    armature->setAnchorPoint(Point(0.5f, -0.1f));
 	armature->setScale(0.2f);
 	armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y-100));
 	addChild(armature);

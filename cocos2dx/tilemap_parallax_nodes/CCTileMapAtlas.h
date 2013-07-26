@@ -80,10 +80,13 @@ public:
     void setTile(const Color3B& tile, const Point& position);
     /** dealloc the map from memory */
     void releaseMap();
+    
+    inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
+    inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
 private:
     void loadTGAfile(const char *file);
     void calculateItemsToRender();
-    void updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index);
+    void updateAtlasValueAt(const Point& pos, const Color3B& value, int index);
     void updateAtlasValues();
 
 protected:
@@ -91,10 +94,8 @@ protected:
     Dictionary* _posToAtlasIndex;
     //! numbers of tiles to render
     int _itemsToRender;
-    
-private:
     /** TileMap info */
-    CC_PROPERTY(struct sImageTGA*, _TGAInfo, TGAInfo);
+    struct sImageTGA* _TGAInfo;
 };
 
 // end of tilemap_parallax_nodes group

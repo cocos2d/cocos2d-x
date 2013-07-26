@@ -69,14 +69,14 @@ static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFun
 static int sceneIdx=-1;
 Layer* createTextureTest(int index)
 {
-    Layer* pLayer = (createFunctions[index])();;
+    Layer* layer = (createFunctions[index])();;
 
-    if (pLayer)
+    if (layer)
     {
-        pLayer->autorelease();
+        layer->autorelease();
     }
 
-    return pLayer;
+    return layer;
 }
 
 Layer* nextTextureTest();
@@ -438,7 +438,7 @@ void TexturePVRTest::onEnter()
     }
     else
     {
-        CCLog("This test is not supported.");
+        log("This test is not supported.");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
     
@@ -470,7 +470,7 @@ void TexturePVR4BPP::onEnter()
     }
     else
     {
-        CCLog("This test is not supported in cocos2d-mac");
+        log("This test is not supported in cocos2d-mac");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
@@ -523,7 +523,7 @@ void TexturePVRBGRA8888::onEnter()
     }
     else
     {
-        CCLog("BGRA8888 images are not supported");
+        log("BGRA8888 images are not supported");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
@@ -825,7 +825,7 @@ void TexturePVR4BPPv3::onEnter()
     }
     else
     {
-        CCLog("This test is not supported");
+        log("This test is not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -860,7 +860,7 @@ void TexturePVRII4BPPv3::onEnter()
     }
     else
     {
-        CCLog("This test is not supported");
+        log("This test is not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -918,7 +918,7 @@ void TexturePVRBGRA8888v3::onEnter()
     }
     else
     {
-        CCLog("BGRA images are not supported");
+        log("BGRA images are not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -1498,7 +1498,7 @@ void TextureAsync::imageLoaded(Object* pObj)
     Texture2D* tex = static_cast<Texture2D*>(pObj);
     Director *director = Director::getInstance();
 
-    //CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+    //CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
 
     // IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
@@ -1514,7 +1514,7 @@ void TextureAsync::imageLoaded(Object* pObj)
 
     _imageOffset++;
 
-    CCLog("Image loaded: %p", tex);
+    log("Image loaded: %p", tex);
 }
 
 std::string TextureAsync::title()
@@ -1612,33 +1612,33 @@ void TextureSizeTest::onEnter()
     TextureDemo::onEnter();
     Sprite *sprite = NULL;
     
-    CCLog("Loading 512x512 image...");
+    log("Loading 512x512 image...");
     sprite = Sprite::create("Images/texture512x512.png");
     if( sprite )
-        CCLog("OK");
+        log("OK");
     else
-        CCLog("Error");
+        log("Error");
 
-    CCLog("Loading 1024x1024 image...");
+    log("Loading 1024x1024 image...");
     sprite = Sprite::create("Images/texture1024x1024.png");
     if( sprite )
-        CCLog("OK");
+        log("OK");
     else
-        CCLog("Error");
+        log("Error");
 //     @todo
-//     CCLog("Loading 2048x2048 image...");
+//     log("Loading 2048x2048 image...");
 //     sprite = Sprite::create("Images/texture2048x2048.png");
 //     if( sprite )
-//         CCLog("OK");
+//         log("OK");
 //     else
-//         CCLog("Error");
+//         log("Error");
 //     
-//     CCLog("Loading 4096x4096 image...");
+//     log("Loading 4096x4096 image...");
 //     sprite = Sprite::create("Images/texture4096x4096.png");
 //     if( sprite )
-//         CCLog("OK");
+//         log("OK");
 //     else
-//         CCLog("Error");
+//         log("Error");
 }
 
 std::string TextureSizeTest::title()
@@ -1793,8 +1793,8 @@ std::string TextureDrawInRect::subtitle()
 //------------------------------------------------------------------
 void TextureTestScene::runThisTest()
 {
-    Layer* pLayer = nextTextureTest();
-    addChild(pLayer);
+    Layer* layer = nextTextureTest();
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
 

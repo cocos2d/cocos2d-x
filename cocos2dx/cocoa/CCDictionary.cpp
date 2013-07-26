@@ -36,11 +36,11 @@ NS_CC_BEGIN
 
 DictElement::DictElement(const char* pszKey, Object* pObject)
 {
-    CCAssert(pszKey && strlen(pszKey) > 0, "Invalid key value.");
+    CCASSERT(pszKey && strlen(pszKey) > 0, "Invalid key value.");
     _intKey = 0;
     const char* pStart = pszKey;
     
-    int len = strlen(pszKey);
+    size_t len = strlen(pszKey);
     if (len > MAX_KEY_LEN )
     {
         char* pEnd = (char*)&pszKey[len-1];
@@ -157,7 +157,7 @@ Object* Dictionary::objectForKey(const std::string& key)
     if (_dictType == kDictUnknown) return NULL;
     // Dictionary only supports one kind of key, string or integer.
     // This method uses string as key, therefore we should make sure that the key type of this Dictionary is string.
-    CCAssert(_dictType == kDictStr, "this dictionary does not use string as key.");
+    CCASSERT(_dictType == kDictStr, "this dictionary does not use string as key.");
 
     Object* pRetObject = NULL;
     DictElement *pElement = NULL;
@@ -175,7 +175,7 @@ Object* Dictionary::objectForKey(intptr_t key)
     if (_dictType == kDictUnknown) return NULL;
     // Dictionary only supports one kind of key, string or integer.
     // This method uses integer as key, therefore we should make sure that the key type of this Dictionary is integer.
-    CCAssert(_dictType == kDictInt, "this dictionary does not use integer as key.");
+    CCASSERT(_dictType == kDictInt, "this dictionary does not use integer as key.");
 
     Object* pRetObject = NULL;
     DictElement *pElement = NULL;
@@ -209,13 +209,13 @@ const String* Dictionary::valueForKey(intptr_t key)
 
 void Dictionary::setObject(Object* pObject, const std::string& key)
 {
-    CCAssert(key.length() > 0 && pObject != NULL, "Invalid Argument!");
+    CCASSERT(key.length() > 0 && pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
     {
         _dictType = kDictStr;
     }
 
-    CCAssert(_dictType == kDictStr, "this dictionary doesn't use string as key.");
+    CCASSERT(_dictType == kDictStr, "this dictionary doesn't use string as key.");
 
     DictElement *pElement = NULL;
     HASH_FIND_STR(_elements, key.c_str(), pElement);
@@ -235,13 +235,13 @@ void Dictionary::setObject(Object* pObject, const std::string& key)
 
 void Dictionary::setObject(Object* pObject, intptr_t key)
 {
-    CCAssert(pObject != NULL, "Invalid Argument!");
+    CCASSERT(pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
     {
         _dictType = kDictInt;
     }
 
-    CCAssert(_dictType == kDictInt, "this dictionary doesn't use integer as key.");
+    CCASSERT(_dictType == kDictInt, "this dictionary doesn't use integer as key.");
 
     DictElement *pElement = NULL;
     HASH_FIND_PTR(_elements, &key, pElement);
@@ -267,8 +267,8 @@ void Dictionary::removeObjectForKey(const std::string& key)
         return;
     }
     
-    CCAssert(_dictType == kDictStr, "this dictionary doesn't use string as its key");
-    CCAssert(key.length() > 0, "Invalid Argument!");
+    CCASSERT(_dictType == kDictStr, "this dictionary doesn't use string as its key");
+    CCASSERT(key.length() > 0, "Invalid Argument!");
     DictElement *pElement = NULL;
     HASH_FIND_STR(_elements, key.c_str(), pElement);
     removeObjectForElememt(pElement);
@@ -281,7 +281,7 @@ void Dictionary::removeObjectForKey(intptr_t key)
         return;
     }
     
-    CCAssert(_dictType == kDictInt, "this dictionary doesn't use integer as its key");
+    CCASSERT(_dictType == kDictInt, "this dictionary doesn't use integer as its key");
     DictElement *pElement = NULL;
     HASH_FIND_PTR(_elements, &key, pElement);
     removeObjectForElememt(pElement);

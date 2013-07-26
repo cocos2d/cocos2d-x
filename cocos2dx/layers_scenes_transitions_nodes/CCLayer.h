@@ -150,8 +150,8 @@ private:
     int _touchPriority;
     ccTouchesMode _touchMode;
     
-    int  excuteScriptTouchHandler(int nEventType, Touch *pTouch);
-    int  excuteScriptTouchHandler(int nEventType, Set *pTouches);
+    int executeScriptTouchHandler(int eventType, Touch* touch);
+    int executeScriptTouchesHandler(int eventType, Set* touches);
 };
 
 #ifdef __apple__
@@ -241,9 +241,6 @@ public:
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
-
     //
     // Overrides
     //
@@ -251,10 +248,14 @@ public:
     virtual void setColor(const Color3B &color) override;
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
+    /** BlendFunction. Conforms to BlendProtocol protocol */
+    virtual const BlendFunc& getBlendFunc() const override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
     virtual void updateColor();
 
+    BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
 };
@@ -303,20 +304,45 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
      */
-    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
-    virtual bool isCompressedInterpolation() const;
+    void setCompressedInterpolation(bool bCompressedInterpolation);
+    bool isCompressedInterpolation() const;
+
+    /** Sets the start color of the gradient */
+    void setStartColor( const Color3B& startColor );
+    /** Returns the start color of the gradient */
+    const Color3B& getStartColor() const;
+
+    /** Sets the end color of the gradient */
+    void setEndColor( const Color3B& endColor );
+    /** Returns the end color of the gradient */
+    const Color3B& getEndColor() const;
+
+    /** Returns the start opacity of the gradient */
+    void setStartOpacity( GLubyte startOpacity );
+    /** Returns the start opacity of the gradient */
+    GLubyte getStartOpacity() const;
+
+    /** Returns the end opacity of the gradient */
+    void setEndOpacity( GLubyte endOpacity );
+    /** Returns the end opacity of the gradient */
+    GLubyte getEndOpacity() const;
+
+    /** Sets the directional vector that will be used for the gradient.
+    The default value is vertical direction (0,-1). 
+     */
+    void setVector(const Point& alongVector);
+    /** Returns the directional vector used for the gradient */
+    const Point& getVector() const;
 
 protected:
     virtual void updateColor() override;
 
-    CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
-    CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
-    CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
-    CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
-
-protected:
-    bool _compressedInterpolation;
+    Color3B _startColor;
+    Color3B _endColor;
+    GLubyte _startOpacity;
+    GLubyte _endOpacity;
+    Point   _alongVector;
+    bool    _compressedInterpolation;
 };
 
 

@@ -31,9 +31,9 @@ ParticleMenuLayer::ParticleMenuLayer(bool bControlMenuVisible, int nMaxCases, in
 
 void ParticleMenuLayer::showCurrentTest()
 {
-    ParticleMainScene* pScene = (ParticleMainScene*)getParent();
-    int subTest = pScene->getSubTestNum();
-    int parNum  = pScene->getParticlesNum();
+    ParticleMainScene* scene = (ParticleMainScene*)getParent();
+    int subTest = scene->getSubTestNum();
+    int parNum  = scene->getParticlesNum();
 
     ParticleMainScene* pNewScene = NULL;
 
@@ -114,9 +114,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
-    ParticleMenuLayer* pMenu = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    ParticleMenuLayer* menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(40);
@@ -259,8 +259,8 @@ void ParticleMainScene::testNCallback(Object* pSender)
 {
     subtestNumber = ((Node*)pSender)->getTag();
 
-    ParticleMenuLayer* pMenu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    ParticleMenuLayer* menu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
+    menu->restartCallback(pSender);
 }
 
 void ParticleMainScene::updateQuantityLabel()
@@ -559,9 +559,9 @@ void ParticlePerformTest4::doTest()
 
 void runParticleTest()
 {
-    ParticleMainScene* pScene = new ParticlePerformTest1;
-    pScene->initWithSubTest(1, kNodesIncrease);
+    ParticleMainScene* scene = new ParticlePerformTest1;
+    scene->initWithSubTest(1, kNodesIncrease);
 
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

@@ -173,7 +173,7 @@ bool LabelTTF::initWithStringAndTextDefinition(const char *string, FontDefinitio
 
 void LabelTTF::setString(const char *string)
 {
-    CCAssert(string != NULL, "Invalid string");
+    CCASSERT(string != NULL, "Invalid string");
     
     if (_string.compare(string))
     {

@@ -115,7 +115,7 @@ jsval c_class_to_jsval( JSContext *cx, void* handle, JSObject* object, JSClass *
 	jsobj = jsb_get_jsobject_for_proxy(handle);
 	if( !jsobj ) {
 		jsobj = JS_NewObject(cx, klass, object, NULL);
-		CCAssert(jsobj, "Invalid object");
+		CCASSERT(jsobj, "Invalid object");
 		jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
 		jsb_set_jsobject_for_proxy(jsobj, handle);
 	}
@@ -204,7 +204,7 @@ jsval long_to_jsval( JSContext *cx, long number )
 	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
 	return STRING_TO_JSVAL(ret_obj);
 #else
-	CCAssert( sizeof(int)==4, "Error!");
+	CCASSERT( sizeof(int)==4, "Error!");
 	return INT_TO_JSVAL(number);
 #endif
 }
@@ -218,7 +218,7 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 	return STRING_TO_JSVAL(ret_obj);
     
 #else
-	CCAssert( sizeof(long long)==8, "Error!");
+	CCASSERT( sizeof(long long)==8, "Error!");
 	JSObject *typedArray = JS_NewUint32Array( cx, 2 );
 	uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray, cx);
 	buffer[0] = number >> 32;

@@ -76,7 +76,7 @@ AtlasNode * AtlasNode::create(const char *tile, unsigned int tileWidth, unsigned
 
 bool AtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
 {
-    CCAssert(tile != NULL, "title should not be null");
+    CCASSERT(tile != NULL, "title should not be null");
     Texture2D *texture = TextureCache::getInstance()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
@@ -134,7 +134,7 @@ void AtlasNode::calculateMaxItems()
 
 void AtlasNode::updateAtlasValues()
 {
-    CCAssert(false, "CCAtlasNode:Abstract updateAtlasValue not overridden");
+    CCASSERT(false, "CCAtlasNode:Abstract updateAtlasValue not overridden");
 }
 
 // AtlasNode - draw
@@ -233,24 +233,24 @@ void AtlasNode::setTexture(Texture2D *texture)
     this->updateOpacityModifyRGB();
 }
 
-Texture2D * AtlasNode::getTexture()
+Texture2D * AtlasNode::getTexture() const
 {
     return _textureAtlas->getTexture();
 }
 
-void AtlasNode::setTextureAtlas(TextureAtlas* var)
+void AtlasNode::setTextureAtlas(TextureAtlas* textureAtlas)
 {
-    CC_SAFE_RETAIN(var);
+    CC_SAFE_RETAIN(textureAtlas);
     CC_SAFE_RELEASE(_textureAtlas);
-    _textureAtlas = var;
+    _textureAtlas = textureAtlas;
 }
 
-TextureAtlas * AtlasNode::getTextureAtlas()
+TextureAtlas * AtlasNode::getTextureAtlas() const
 {
     return _textureAtlas;
 }
 
-unsigned int AtlasNode::getQuadsToDraw()
+unsigned int AtlasNode::getQuadsToDraw() const
 {
     return _quadsToDraw;
 }

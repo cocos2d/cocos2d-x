@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccConfig.h"
 #include "ccMacros.h"
 #include "CCConfiguration.h"
-#include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
 #include "support/ccUtils.h"
@@ -112,7 +111,6 @@ GLuint Texture2D::getName() const
 
 Size Texture2D::getContentSize() const
 {
-
     Size ret;
     ret.width = _contentSize.width / CC_CONTENT_SCALE_FACTOR();
     ret.height = _contentSize.height / CC_CONTENT_SCALE_FACTOR();
@@ -125,7 +123,7 @@ const Size& Texture2D::getContentSizeInPixels()
     return _contentSize;
 }
 
-GLfloat Texture2D::getMaxS()
+GLfloat Texture2D::getMaxS() const
 {
     return _maxS;
 }
@@ -135,7 +133,7 @@ void Texture2D::setMaxS(GLfloat maxS)
     _maxS = maxS;
 }
 
-GLfloat Texture2D::getMaxT()
+GLfloat Texture2D::getMaxT() const
 {
     return _maxT;
 }
@@ -145,7 +143,7 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getShaderProgram(void)
+GLProgram* Texture2D::getShaderProgram() const
 {
     return _shaderProgram;
 }
@@ -244,7 +242,7 @@ bool Texture2D::initWithData(const void *data, Texture2DPixelFormat pixelFormat,
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
         break;
     default:
-        CCAssert(0, "NSInternalInconsistencyException");
+        CCASSERT(0, "NSInternalInconsistencyException");
 
     }
 
@@ -480,7 +478,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     }
     else
     {
-        CCAssert(false, "Not supported alignment format!");
+        CCASSERT(false, "Not supported alignment format!");
         return false;
     }
     
@@ -556,7 +554,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 #else
     bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
 
-    CCAssert(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
+    CCASSERT(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
 
     Image* pImage = new Image();
     do
@@ -719,7 +717,7 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void Texture2D::generateMipmap()
 {
-    CCAssert( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+    CCASSERT( _pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
     ccGLBindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
@@ -732,7 +730,7 @@ bool Texture2D::hasMipmaps() const
 
 void Texture2D::setTexParameters(const ccTexParams &texParams)
 {
-    CCAssert( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
+    CCASSERT( (_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
         (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
@@ -822,7 +820,7 @@ const char* Texture2D::getStringForFormat() const
 			return  "PVRTC2";
 
 		default:
-			CCAssert(false , "unrecognized pixel format");
+			CCASSERT(false , "unrecognized pixel format");
 			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
 			break;
 	}
@@ -883,7 +881,7 @@ unsigned int Texture2D::getBitsPerPixelForFormat(Texture2DPixelFormat format) co
 			break;
 		default:
 			ret = -1;
-			CCAssert(false , "unrecognized pixel format");
+			CCASSERT(false , "unrecognized pixel format");
 			CCLOG("bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
 			break;
 	}

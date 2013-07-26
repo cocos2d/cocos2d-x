@@ -34,9 +34,9 @@ void BaseTest::onEnter()
 
     // add menu
 	// CC_CALLBACK_1 == std::bind( function_ptr, instance, std::placeholders::_1, ...)
-    MenuItemImage *item1 = MenuItemImage::create(s_pPathB1, s_pPathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create(s_pPathR1, s_pPathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create(s_pPathF1, s_pPathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
+    MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
+    MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
+    MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
 
     Menu *menu = Menu::create(item1, item2, item3, NULL);
 
@@ -66,15 +66,15 @@ std::string BaseTest::subtitle()
 
 void BaseTest::restartCallback(Object* pSender)
 {
-	CCLog("override restart!");
+	log("override restart!");
 }
 
 void BaseTest::nextCallback(Object* pSender)
 {
-	CCLog("override next!");
+	log("override next!");
 }
 
 void BaseTest::backCallback(Object* pSender)
 {
-	CCLog("override back!");
+	log("override back!");
 }

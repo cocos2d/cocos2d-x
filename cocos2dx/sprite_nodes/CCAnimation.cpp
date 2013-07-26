@@ -88,7 +88,7 @@ Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f
     return pAnimation;
 }
 
-Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
+Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
     Animation *pAnimation = new Animation();
     pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);

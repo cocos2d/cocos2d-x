@@ -33,26 +33,10 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
 #include "support/base64.h"
-#include "platform/platform.h"
 
 using namespace std;
-/*
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #include "expat.h"
-#else
-    #include <libxml/parser.h>
-    #include <libxml/tree.h>
-    #include <libxml/xmlmemory.h>
-#endif
-*/
 
 NS_CC_BEGIN
-
-/*
-void tmx_startElement(void *ctx, const xmlChar *name, const xmlChar **atts);
-void tmx_endElement(void *ctx, const xmlChar *name);
-void tmx_characters(void *ctx, const xmlChar *ch, int len);
-*/
 
 static const char* valueForKey(const char *key, std::map<std::string, std::string>* dict)
 {
@@ -85,6 +69,7 @@ TMXLayerInfo::~TMXLayerInfo()
         _tiles = NULL;
     }
 }
+
 Dictionary * TMXLayerInfo::getProperties()
 {
     return _properties;
@@ -105,10 +90,12 @@ TMXTilesetInfo::TMXTilesetInfo()
     ,_imageSize(Size::ZERO)
 {
 }
+
 TMXTilesetInfo::~TMXTilesetInfo()
 {
     CCLOGINFO("cocos2d: deallocing: %p", this);
 }
+
 Rect TMXTilesetInfo::rectForGID(unsigned int gid)
 {
     Rect rect;
@@ -124,7 +111,7 @@ Rect TMXTilesetInfo::rectForGID(unsigned int gid)
 
 // implementation TMXMapInfo
 
-TMXMapInfo * TMXMapInfo::formatWithTMXFile(const char *tmxFile)
+TMXMapInfo * TMXMapInfo::create(const char *tmxFile)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithTMXFile(tmxFile))
@@ -136,7 +123,7 @@ TMXMapInfo * TMXMapInfo::formatWithTMXFile(const char *tmxFile)
     return NULL;
 }
 
-TMXMapInfo * TMXMapInfo::formatWithXML(const char* tmxString, const char* resourcePath)
+TMXMapInfo * TMXMapInfo::createWithXML(const char* tmxString, const char* resourcePath)
 {
     TMXMapInfo *pRet = new TMXMapInfo();
     if(pRet->initWithXML(tmxString, resourcePath))
@@ -213,66 +200,6 @@ TMXMapInfo::~TMXMapInfo()
     CC_SAFE_RELEASE(_properties);
     CC_SAFE_RELEASE(_tileProperties);
     CC_SAFE_RELEASE(_objectGroups);
-}
-
-Array* TMXMapInfo::getLayers()
-{
-    return _layers;
-}
-
-void TMXMapInfo::setLayers(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_layers);
-    _layers = var;
-}
-
-Array* TMXMapInfo::getTilesets()
-{
-    return _tilesets;
-}
-
-void TMXMapInfo::setTilesets(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_tilesets);
-    _tilesets = var;
-}
-
-Array* TMXMapInfo::getObjectGroups()
-{
-    return _objectGroups;
-}
-
-void TMXMapInfo::setObjectGroups(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_objectGroups);
-    _objectGroups = var;
-}
-
-Dictionary * TMXMapInfo::getProperties()
-{
-    return _properties;
-}
-
-void TMXMapInfo::setProperties(Dictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_properties);
-    _properties = var;
-}
-
-Dictionary* TMXMapInfo::getTileProperties()
-{
-    return _tileProperties;
-}
-
-void TMXMapInfo::setTileProperties(Dictionary* tileProperties)
-{
-    CC_SAFE_RETAIN(tileProperties);
-    CC_SAFE_RELEASE(_tileProperties);
-    _tileProperties = tileProperties;
 }
 
 bool TMXMapInfo::parseXMLString(const char *xmlString)
@@ -500,9 +427,9 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 layerAttribs = pTMXMapInfo->getLayerAttribs();
                 pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
             }
-            CCAssert( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
+            CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
-        CCAssert( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
+        CCASSERT( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
     } 
     else if (elementName == "object")
@@ -718,7 +645,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
 
             int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
-            CCAssert(inflatedLen == sizeHint, "");
+            CCASSERT(inflatedLen == sizeHint, "");
 
             inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
             
@@ -769,7 +696,7 @@ void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
     TMXMapInfo *pTMXMapInfo = this;
     std::string pText((char*)ch,0,len);
 
-    if (pTMXMapInfo->getStoringCharacters())
+    if (pTMXMapInfo->isStoringCharacters())
     {
         std::string currentString = pTMXMapInfo->getCurrentString();
         currentString += pText;

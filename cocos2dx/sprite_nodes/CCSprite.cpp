@@ -123,7 +123,7 @@ Sprite* Sprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-    CCAssert(pFrame != NULL, msg);
+    CCASSERT(pFrame != NULL, msg);
 #endif
     
     return createWithSpriteFrame(pFrame);
@@ -207,7 +207,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture, const Rect& rect)
 
 bool Sprite::initWithTexture(Texture2D *pTexture)
 {
-    CCAssert(pTexture != NULL, "Invalid texture for sprite");
+    CCASSERT(pTexture != NULL, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
     rect.size = pTexture->getContentSize();
@@ -217,7 +217,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture)
 
 bool Sprite::initWithFile(const char *pszFilename)
 {
-    CCAssert(pszFilename != NULL, "Invalid filename for sprite");
+    CCASSERT(pszFilename != NULL, "Invalid filename for sprite");
 
     Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
     if (pTexture)
@@ -235,7 +235,7 @@ bool Sprite::initWithFile(const char *pszFilename)
 
 bool Sprite::initWithFile(const char *pszFilename, const Rect& rect)
 {
-    CCAssert(pszFilename != NULL, "");
+    CCASSERT(pszFilename != NULL, "");
 
     Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
     if (pTexture)
@@ -251,7 +251,7 @@ bool Sprite::initWithFile(const char *pszFilename, const Rect& rect)
 
 bool Sprite::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    CCAssert(pSpriteFrame != NULL, "");
+    CCASSERT(pSpriteFrame != NULL, "");
 
     bool bRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
     setDisplayFrame(pSpriteFrame);
@@ -261,7 +261,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 bool Sprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCAssert(pszSpriteFrameName != NULL, "");
+    CCASSERT(pszSpriteFrameName != NULL, "");
 
     SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
     return initWithSpriteFrame(pFrame);
@@ -281,7 +281,7 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage)
 /*
 Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 {
-    CCAssert(pImage != NULL);
+    CCASSERT(pImage != NULL);
 
     // XXX: possible bug. See issue #349. New API should be added
     Texture2D *pTexture = TextureCache::getInstance()->addCGImage(pImage, pszKey);
@@ -448,7 +448,7 @@ void Sprite::setTextureCoords(Rect rect)
 
 void Sprite::updateTransform(void)
 {
-    CCAssert(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
+    CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
@@ -469,7 +469,7 @@ void Sprite::updateTransform(void)
             }
             else 
             {
-                CCAssert( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+                CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
                 _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , ((Sprite*)_parent)->_transformToBatch );
             }
 
@@ -547,7 +547,7 @@ void Sprite::draw(void)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
 
-    CCAssert(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
+    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
 
     CC_NODE_DRAW_SETUP();
     
@@ -621,13 +621,13 @@ void Sprite::addChild(Node *pChild, int zOrder)
 
 void Sprite::addChild(Node *pChild, int zOrder, int tag)
 {
-    CCAssert(pChild != NULL, "Argument must be non-NULL");
+    CCASSERT(pChild != NULL, "Argument must be non-NULL");
 
     if (_batchNode)
     {
         Sprite* pChildSprite = dynamic_cast<Sprite*>(pChild);
-        CCAssert( pChildSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCAssert(pChildSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        CCASSERT( pChildSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
+        CCASSERT(pChildSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
         //put it in descendants array of batch node
         _batchNode->appendChild(pChildSprite);
 
@@ -643,8 +643,8 @@ void Sprite::addChild(Node *pChild, int zOrder, int tag)
 
 void Sprite::reorderChild(Node *pChild, int zOrder)
 {
-    CCAssert(pChild != NULL, "");
-    CCAssert(_children->containsObject(pChild), "");
+    CCASSERT(pChild != NULL, "");
+    CCASSERT(_children->containsObject(pChild), "");
 
     if (zOrder == pChild->getZOrder())
     {
@@ -695,7 +695,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i = 0,j = 0,length = _children->data->num;
+        int i = 0, j = 0, length = _children->data->num;
         Node** x = (Node**)_children->data->arr;
         Node *tempItem = NULL;
 
@@ -841,7 +841,7 @@ void Sprite::setAnchorPoint(const Point& anchor)
 
 void Sprite::ignoreAnchorPointForPosition(bool value)
 {
-    CCAssert(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
+    CCASSERT(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
     Node::ignoreAnchorPointForPosition(value);
 }
 
@@ -903,7 +903,7 @@ void Sprite::updateColor(void)
     // renders using batch node
     if (_batchNode)
     {
-        if (_atlasIndex != SpriteIndexNotInitialized)
+        if (_atlasIndex != kSpriteIndexNotInitialized)
         {
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
@@ -981,15 +981,15 @@ void Sprite::setDisplayFrame(SpriteFrame *pNewFrame)
 
 void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
-    CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCASSERT(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
     Animation *a = AnimationCache::getInstance()->animationByName(animationName);
 
-    CCAssert(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
+    CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = (AnimationFrame*)a->getFrames()->objectAtIndex(frameIndex);
+    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->objectAtIndex(frameIndex) );
 
-    CCAssert(frame, "CCSprite#setDisplayFrame. Invalid frame");
+    CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 
     setDisplayFrame(frame->getSpriteFrame());
 }
@@ -1023,7 +1023,7 @@ void Sprite::setBatchNode(SpriteBatchNode *pobSpriteBatchNode)
 
     // self render
     if( ! _batchNode ) {
-        _atlasIndex = SpriteIndexNotInitialized;
+        _atlasIndex = kSpriteIndexNotInitialized;
         setTextureAtlas(NULL);
         _recursiveDirty = false;
         setDirty(false);
@@ -1049,7 +1049,7 @@ void Sprite::setBatchNode(SpriteBatchNode *pobSpriteBatchNode)
 
 void Sprite::updateBlendFunc(void)
 {
-    CCAssert (! _batchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
+    CCASSERT(! _batchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 
     // it is possible to have an untextured sprite
     if (! _texture || ! _texture->hasPremultipliedAlpha())
@@ -1089,9 +1089,9 @@ static unsigned char cc_2x2_white_image[] = {
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
-    CCAssert(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
-    CCAssert( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
+    CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
     
     if (NULL == texture)
     {
@@ -1103,7 +1103,7 @@ void Sprite::setTexture(Texture2D *texture)
         {
             Image* image = new Image();
             bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), Image::kFmtRawData, 2, 2, 8);
-            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
             texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
@@ -1119,7 +1119,7 @@ void Sprite::setTexture(Texture2D *texture)
     }
 }
 
-Texture2D* Sprite::getTexture(void)
+Texture2D* Sprite::getTexture(void) const
 {
     return _texture;
 }

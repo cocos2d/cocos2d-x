@@ -90,7 +90,7 @@ private:
         CC_UNUSED_PARAM(pEvent);
         const bool hits = touchHits(pTouch);
         if (hits)
-            scaleButtonTo(0.9);
+            scaleButtonTo(0.9f);
         return hits;
     }
 
@@ -111,7 +111,7 @@ private:
 
     void scaleButtonTo(float scale)
     {
-        auto action = ScaleTo::create(0.1, scale);
+        auto action = ScaleTo::create(0.1f, scale);
         action->setTag(900);
         stopActionByTag(900);
         runAction(action);
@@ -246,43 +246,43 @@ void CocosDenshionTest::onExit()
 {
     Layer::onExit();
 
-    SimpleAudioEngine::getInstance()->end();
+    SimpleAudioEngine::end();
 }
 
 void CocosDenshionTest::addButtons()
 {
     LabelTTF *lblMusic = LabelTTF::create("Control Music", "Arial", 24);
-    addChildAt(lblMusic, 0.25, 0.9);
+    addChildAt(lblMusic, 0.25f, 0.9f);
 
     Button *btnPlay = Button::createWithText("play");
     btnPlay->onTriggered([]() {
         SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_FILE, true);
     });
-    addChildAt(btnPlay, 0.1, 0.75);
+    addChildAt(btnPlay, 0.1f, 0.75f);
 
     Button *btnStop = Button::createWithText("stop");
     btnStop->onTriggered([]() {
         SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     });
-    addChildAt(btnStop, 0.25, 0.75);
+    addChildAt(btnStop, 0.25f, 0.75f);
 
     Button *btnRewindMusic = Button::createWithText("rewind");
     btnRewindMusic->onTriggered([]() {
         SimpleAudioEngine::getInstance()->rewindBackgroundMusic();
     });
-    addChildAt(btnRewindMusic, 0.4, 0.75);
+    addChildAt(btnRewindMusic, 0.4f, 0.75f);
 
     Button *btnPause = Button::createWithText("pause");
     btnPause->onTriggered([]() {
         SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     });
-    addChildAt(btnPause, 0.1, 0.65);
+    addChildAt(btnPause, 0.1f, 0.65f);
 
     Button *btnResumeMusic = Button::createWithText("resume");
     btnResumeMusic->onTriggered([]() {
         SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     });
-    addChildAt(btnResumeMusic, 0.25, 0.65);
+    addChildAt(btnResumeMusic, 0.25f, 0.65f);
 
     Button *btnIsPlayingMusic = Button::createWithText("is playing");
     btnIsPlayingMusic->onTriggered([]() {
@@ -291,10 +291,10 @@ void CocosDenshionTest::addButtons()
         else
             CCLOG("background music is not playing");
     });
-    addChildAt(btnIsPlayingMusic, 0.4, 0.65);
+    addChildAt(btnIsPlayingMusic, 0.4f, 0.65f);
 
     LabelTTF *lblSound = LabelTTF::create("Control Effects", "Arial", 24);
-    addChildAt(lblSound, 0.75, 0.9);
+    addChildAt(lblSound, 0.75f, 0.9f);
 
     Button *btnPlayEffect = Button::createWithText("play");
     btnPlayEffect->onTriggered([this]() {
@@ -303,7 +303,7 @@ void CocosDenshionTest::addButtons()
         const float gain = _sliderGain->getValue();
         _soundId = SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE, false, pitch, pan, gain);
     });
-    addChildAt(btnPlayEffect, 0.6, 0.8);
+    addChildAt(btnPlayEffect, 0.6f, 0.8f);
 
     Button *btnPlayEffectInLoop = Button::createWithText("play in loop");
     btnPlayEffectInLoop->onTriggered([this]() {
@@ -312,82 +312,82 @@ void CocosDenshionTest::addButtons()
         const float gain = _sliderGain->getValue();
         _soundId = SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE, true, pitch, pan, gain);
     });
-    addChildAt(btnPlayEffectInLoop, 0.75, 0.8);
+    addChildAt(btnPlayEffectInLoop, 0.75f, 0.8f);
 
     Button *btnStopEffect = Button::createWithText("stop");
     btnStopEffect->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->stopEffect(_soundId);
     });
-    addChildAt(btnStopEffect, 0.9, 0.8);
+    addChildAt(btnStopEffect, 0.9f, 0.8f);
 
     Button *btnUnloadEffect = Button::createWithText("unload");
     btnUnloadEffect->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->unloadEffect(EFFECT_FILE);
     });
-    addChildAt(btnUnloadEffect, 0.6, 0.7);
+    addChildAt(btnUnloadEffect, 0.6f, 0.7f);
 
     Button *btnPauseEffect = Button::createWithText("pause");
     btnPauseEffect->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->pauseEffect(_soundId);
     });
-    addChildAt(btnPauseEffect, 0.75, 0.7);
+    addChildAt(btnPauseEffect, 0.75f, 0.7f);
 
     Button *btnResumeEffect = Button::createWithText("resume");
     btnResumeEffect->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->resumeEffect(_soundId);
     });
-    addChildAt(btnResumeEffect, 0.9, 0.7);
+    addChildAt(btnResumeEffect, 0.9f, 0.7f);
 
     Button *btnPauseAll = Button::createWithText("pause all");
     btnPauseAll->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->pauseAllEffects();
     });
-    addChildAt(btnPauseAll, 0.6, 0.6);
+    addChildAt(btnPauseAll, 0.6f, 0.6f);
 
     Button *btnResumeAll = Button::createWithText("resume all");
     btnResumeAll->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->resumeAllEffects();
     });
-    addChildAt(btnResumeAll, 0.75, 0.6);
+    addChildAt(btnResumeAll, 0.75f, 0.6f);
 
     Button *btnStopAll = Button::createWithText("stop all");
     btnStopAll->onTriggered([this]() {
         SimpleAudioEngine::getInstance()->stopAllEffects();
     });
-    addChildAt(btnStopAll, 0.9, 0.6);
+    addChildAt(btnStopAll, 0.9f, 0.6f);
 }
 
 void CocosDenshionTest::addSliders()
 {
     auto lblPitch = LabelTTF::create("Pitch", "Arial", 14);
-    addChildAt(lblPitch, 0.67, 0.4);
+    addChildAt(lblPitch, 0.67f, 0.4f);
     _sliderPitch = AudioSlider::create(AudioSlider::Horizontal);
     _sliderPitch->setValue(0.5, 2, 1);
-    addChildAt(_sliderPitch, 0.85, 0.4);
+    addChildAt(_sliderPitch, 0.85f, 0.4f);
 
     auto lblPan = LabelTTF::create("Pan", "Arial", 14);
-    addChildAt(lblPan, 0.67, 0.3);
+    addChildAt(lblPan, 0.67f, 0.3f);
     _sliderPan = AudioSlider::create(AudioSlider::Horizontal);
     _sliderPan->setValue(-1, 1, 0);
-    addChildAt(_sliderPan, 0.85, 0.3);
+    addChildAt(_sliderPan, 0.85f, 0.3f);
 
     auto lblGain = LabelTTF::create("Gain", "Arial", 14);
-    addChildAt(lblGain, 0.67, 0.2);
+    addChildAt(lblGain, 0.67f, 0.2f);
     _sliderGain = AudioSlider::create(AudioSlider::Horizontal);
     _sliderGain->setValue(0, 1, 1);
-    addChildAt(_sliderGain, 0.85, 0.2);
+    addChildAt(_sliderGain, 0.85f, 0.2f);
 
     auto lblEffectsVolume = LabelTTF::create("Effects Volume", "Arial", 14);
-    addChildAt(lblEffectsVolume, 0.62, 0.5);
+    addChildAt(lblEffectsVolume, 0.62f, 0.5f);
     _sliderEffectsVolume = AudioSlider::create(AudioSlider::Horizontal);
     _sliderEffectsVolume->setValue(0, 1, 1);
-    addChildAt(_sliderEffectsVolume, 0.85, 0.5);
+    addChildAt(_sliderEffectsVolume, 0.85f, 0.5f);
 
     auto lblMusicVolume = LabelTTF::create("Music Volume", "Arial", 14);
-    addChildAt(lblMusicVolume, 0.12, 0.5);
+    addChildAt(lblMusicVolume, 0.12f, 0.5f);
     _sliderMusicVolume = AudioSlider::create(AudioSlider::Horizontal);
     _sliderMusicVolume->setValue(0, 1, 1);
-    addChildAt(_sliderMusicVolume, 0.35, 0.5);
+    addChildAt(_sliderMusicVolume, 0.35f, 0.5f);
 }
 
 void CocosDenshionTest::addChildAt(Node *node, float percentageX, float percentageY)
@@ -414,9 +414,9 @@ void CocosDenshionTest::updateVolumes(float)
 
 void CocosDenshionTestScene::runThisTest()
 {
-    Layer* pLayer = new CocosDenshionTest();
-    addChild(pLayer);
-    pLayer->autorelease();
+    Layer* layer = new CocosDenshionTest();
+    addChild(layer);
+    layer->autorelease();
 
     Director::getInstance()->replaceScene(this);
 }

@@ -328,32 +328,57 @@ private:
     StringBMFont *label1;
 };
 
-class NewLabelTTFTest : public AtlasDemo
+class NewLabelTTFTestLongLine : public AtlasDemo
 {
 public:
 
-    NewLabelTTFTest();
-    ~NewLabelTTFTest();
+    NewLabelTTFTestLongLine();
 
     virtual std::string title();
     virtual std::string subtitle();
-
-private:
-    Label *label;
 };
+
+class NewLabelTTFTestUnicode : public AtlasDemo
+{
+public:
+
+    NewLabelTTFTestUnicode();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelTTFColorTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFColorTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelTTFFontsTest : public AtlasDemo
+{
+public:
+
+    NewLabelTTFFontsTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 
 class NewLabelBMFontTest : public AtlasDemo
 {
 public:
 
     NewLabelBMFontTest();
-    ~NewLabelBMFontTest();
 
     virtual std::string title();
     virtual std::string subtitle();
 
 private:
-    Label *label;
 };
 
 
@@ -377,13 +402,11 @@ class NewLabelFontDefTest : public AtlasDemo
 public:
 
     NewLabelFontDefTest();
-    ~NewLabelFontDefTest();
 
     virtual std::string title();
     virtual std::string subtitle();
 
 private:
-    Node *label;
 };
 
 
