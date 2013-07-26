@@ -298,7 +298,7 @@ void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
     // TODO need to be implemented.
 }
 
-void EditBoxImplMac::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplMac::setInputMode(EditBox::InputMode inputMode)
 {
 }
 
@@ -312,12 +312,12 @@ int EditBoxImplMac::getMaxLength()
     return _maxTextLength;
 }
 
-void EditBoxImplMac::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplMac::setInputFlag(EditBox::InputFlag inputFlag)
 {
     // TODO: NSSecureTextField
 }
 
-void EditBoxImplMac::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplMac::setReturnType(EditBox::KeyboardReturnType returnType)
 {
 }
 

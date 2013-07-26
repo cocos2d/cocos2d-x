@@ -394,26 +394,26 @@ void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 	_labelPlaceHolder->setColor(color);
 }
 
-void EditBoxImplIOS::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
 {
     switch (inputMode)
     {
-        case kEditBoxInputModeEmailAddr:
+        case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
-        case kEditBoxInputModeNumeric:
+        case EditBox::InputMode::NUMERIC:
             _systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
-        case kEditBoxInputModePhoneNumber:
+        case EditBox::InputMode::PHONE_NUMBER:
             _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
             break;
-        case kEditBoxInputModeUrl:
+        case EditBox::InputMode::URL:
             _systemControl.textField.keyboardType = UIKeyboardTypeURL;
             break;
-        case kEditBoxInputModeDecimal:
+        case EditBox::InputMode::DECIMAL:
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
-        case kEditBoxInputModeSingleLine:
+        case EditBox::InputMode::SINGLE_LINE:
             _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
         default:
@@ -432,23 +432,23 @@ int EditBoxImplIOS::getMaxLength()
     return _maxTextLength;
 }
 
-void EditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplIOS::setInputFlag(EditBox::InputFlag inputFlag)
 {
     switch (inputFlag)
     {
-        case kEditBoxInputFlagPassword:
+        case EditBox::InputFlag::PASSWORD:
             _systemControl.textField.secureTextEntry = YES;
             break;
-        case kEditBoxInputFlagInitialCapsWord:
+        case EditBox::InputFlag::INITIAL_CAPS_WORD:
             _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
             break;
-        case kEditBoxInputFlagInitialCapsSentence:
+        case EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
             _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
-        case kEditBoxInputFlagInitialCapsAllCharacters:
+        case EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
             _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
-        case kEditBoxInputFlagSensitive:
+        case EditBox::InputFlag::SENSITIVE:
             _systemControl.textField.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
         default:
@@ -456,22 +456,22 @@ void EditBoxImplIOS::setInputFlag(EditBoxInputFlag inputFlag)
     }
 }
 
-void EditBoxImplIOS::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplIOS::setReturnType(EditBox::KeyboardReturnType returnType)
 {
     switch (returnType) {
-        case kKeyboardReturnTypeDefault:
+        case EditBox::KeyboardReturnType::DEFAULT:
             _systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;
-        case kKeyboardReturnTypeDone:
+        case EditBox::KeyboardReturnType::DONE:
             _systemControl.textField.returnKeyType = UIReturnKeyDone;
             break;
-        case kKeyboardReturnTypeSend:
+        case EditBox::KeyboardReturnType::SEND:
             _systemControl.textField.returnKeyType = UIReturnKeySend;
             break;
-        case kKeyboardReturnTypeSearch:
+        case EditBox::KeyboardReturnType::SEARCH:
             _systemControl.textField.returnKeyType = UIReturnKeySearch;
             break;
-        case kKeyboardReturnTypeGo:
+        case EditBox::KeyboardReturnType::GO:
             _systemControl.textField.returnKeyType = UIReturnKeyGo;
             break;
         default:

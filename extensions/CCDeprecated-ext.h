@@ -131,24 +131,34 @@ CC_DEPRECATED_ATTRIBUTE typedef AttachmentType CCAttachmentType;
 #define kCCScrollViewDirectionHorizontal kScrollViewDirectionHorizontal
 #define kCCScrollViewDirectionVertical kScrollViewDirectionVertical
 #define kCCScrollViewDirectionBoth kScrollViewDirectionBoth
-#define kCCKeyboardReturnTypeDefault kKeyboardReturnTypeDefault
-#define kCCKeyboardReturnTypeDone kKeyboardReturnTypeDone
-#define kCCKeyboardReturnTypeSend kKeyboardReturnTypeSend
-#define kCCKeyboardReturnTypeSearch kKeyboardReturnTypeSearch
-#define kCCKeyboardReturnTypeGo kKeyboardReturnTypeGo
 
-#define kCCEditBoxInputModeAny kEditBoxInputModeAny
-#define kCCEditBoxInputModeEmailAddr kEditBoxInputModeEmailAddr
-#define kCCEditBoxInputModeNumeric kEditBoxInputModeNumeric
-#define kCCEditBoxInputModePhoneNumber kEditBoxInputModePhoneNumber
-#define kCCEditBoxInputModeUrl kEditBoxInputModeUrl
-#define kCCEditBoxInputModeDecimal kEditBoxInputModeDecimal
-#define kCCEditBoxInputModeSingleLine kEditBoxInputModeSingleLine
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDone;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSend;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeGo;
+
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeAny;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeEmailAddr;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeNumeric;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModePhoneNumber;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeUrl;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeDecimal;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputMode kEditBoxInputModeSingleLine;
+
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagPassword;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagSensitive;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence;
+CC_DEPRECATED_ATTRIBUTE extern const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters;
+
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::EditBox::KeyboardReturnType KeyboardReturnType;
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputMode EditBoxInputMode;
+CC_DEPRECATED_ATTRIBUTE typedef EditBox::InputFlag EditBoxInputFlag;
 
 #define kCCControlStepperPartMinus kControlStepperPartMinus
 #define kCCControlStepperPartPlus kControlStepperPartPlus
 #define kCCControlStepperPartNone kControlStepperPartNone
-
 
 CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDown;
 CC_DEPRECATED_ATTRIBUTE extern const Control::EventType CCControlEventTouchDragInside;

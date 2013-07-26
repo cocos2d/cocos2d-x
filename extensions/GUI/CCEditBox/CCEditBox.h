@@ -32,98 +32,6 @@
 
 NS_CC_EXT_BEGIN
 
-
-enum KeyboardReturnType {
-    kKeyboardReturnTypeDefault = 0,
-    kKeyboardReturnTypeDone,
-    kKeyboardReturnTypeSend,
-    kKeyboardReturnTypeSearch,
-    kKeyboardReturnTypeGo
-};
-
-
-/**
- * \brief The EditBoxInputMode defines the type of text that the user is allowed
- * to enter.
- */
-enum EditBoxInputMode
-{
-    /**
-     * The user is allowed to enter any text, including line breaks.
-     */
-    kEditBoxInputModeAny = 0,
-    
-    /**
-     * The user is allowed to enter an e-mail address.
-     */
-    kEditBoxInputModeEmailAddr,
-
-    /**
-     * The user is allowed to enter an integer value.
-     */
-    kEditBoxInputModeNumeric,
-
-    /**
-     * The user is allowed to enter a phone number.
-     */
-    kEditBoxInputModePhoneNumber,
-
-    /**
-     * The user is allowed to enter a URL.
-     */
-    kEditBoxInputModeUrl,
-
-    /**
-     * The user is allowed to enter a real number value.
-     * This extends kEditBoxInputModeNumeric by allowing a decimal point.
-     */
-    kEditBoxInputModeDecimal,
-
-    /**
-     * The user is allowed to enter any text, except for line breaks.
-     */
-    kEditBoxInputModeSingleLine
-};
-
-/**
- * \brief The EditBoxInputFlag defines how the input text is displayed/formatted.
- */
-enum EditBoxInputFlag
-{
-    /**
-     * Indicates that the text entered is confidential data that should be
-     * obscured whenever possible. This implies EDIT_BOX_INPUT_FLAG_SENSITIVE.
-     */
-    kEditBoxInputFlagPassword = 0,
-
-    /**
-     * Indicates that the text entered is sensitive data that the
-     * implementation must never store into a dictionary or table for use
-     * in predictive, auto-completing, or other accelerated input schemes.
-     * A credit card number is an example of sensitive data.
-     */
-    kEditBoxInputFlagSensitive,
-
-    /**
-     * This flag is a hint to the implementation that during text editing,
-     * the initial letter of each word should be capitalized.
-     */
-    kEditBoxInputFlagInitialCapsWord,
-
-    /**
-     * This flag is a hint to the implementation that during text editing,
-     * the initial letter of each sentence should be capitalized.
-     */
-    kEditBoxInputFlagInitialCapsSentence,
-
-    /**
-     * Capitalize all characters automatically.
-     */
-    kEditBoxInputFlagInitialCapsAllCharacters
-
-};
-
-
 class EditBox;
 class EditBoxImpl;
 
@@ -173,6 +81,95 @@ class EditBox
 , public IMEDelegate
 {
 public:
+    enum class KeyboardReturnType
+    {
+        DEFAULT,
+        DONE,
+        SEND,
+        SEARCH,
+        GO
+    };
+    
+    /**
+     * \brief The EditBox::InputMode defines the type of text that the user is allowed
+     * to enter.
+     */
+    enum class InputMode
+    {
+        /**
+         * The user is allowed to enter any text, including line breaks.
+         */
+        ANY,
+        
+        /**
+         * The user is allowed to enter an e-mail address.
+         */
+        EMAIL_ADDRESS,
+        
+        /**
+         * The user is allowed to enter an integer value.
+         */
+        NUMERIC,
+        
+        /**
+         * The user is allowed to enter a phone number.
+         */
+        PHONE_NUMBER,
+        
+        /**
+         * The user is allowed to enter a URL.
+         */
+        URL,
+        
+        /**
+         * The user is allowed to enter a real number value.
+         * This extends kEditBoxInputModeNumeric by allowing a decimal point.
+         */
+        DECIMAL,
+        
+        /**
+         * The user is allowed to enter any text, except for line breaks.
+         */
+        SINGLE_LINE,
+    };
+    
+    /**
+     * \brief The EditBox::InputFlag defines how the input text is displayed/formatted.
+     */
+    enum class InputFlag
+    {
+        /**
+         * Indicates that the text entered is confidential data that should be
+         * obscured whenever possible. This implies EDIT_BOX_INPUT_FLAG_SENSITIVE.
+         */
+        PASSWORD,
+        
+        /**
+         * Indicates that the text entered is sensitive data that the
+         * implementation must never store into a dictionary or table for use
+         * in predictive, auto-completing, or other accelerated input schemes.
+         * A credit card number is an example of sensitive data.
+         */
+        SENSITIVE,
+        
+        /**
+         * This flag is a hint to the implementation that during text editing,
+         * the initial letter of each word should be capitalized.
+         */
+        INITIAL_CAPS_WORD,
+        
+        /**
+         * This flag is a hint to the implementation that during text editing,
+         * the initial letter of each sentence should be capitalized.
+         */
+        INITIAL_CAPS_SENTENCE,
+        
+        /**
+         * Capitalize all characters automatically.
+         */
+        INTIAL_CAPS_ALL_CHARACTERS,
+    };
+    
     /**
      * create a edit box with size.
      * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
@@ -310,9 +307,9 @@ public:
     
     /**
      * Set the input mode of the edit box.
-     * @param inputMode One of the EditBoxInputMode constants.
+     * @param inputMode One of the EditBox::InputMode constants.
      */
-    void setInputMode(EditBoxInputMode inputMode);
+    void setInputMode(InputMode inputMode);
     
     /**
      * Sets the maximum input length of the edit box.
@@ -332,15 +329,15 @@ public:
     
     /**
      * Set the input flags that are to be applied to the edit box.
-     * @param inputFlag One of the EditBoxInputFlag constants.
+     * @param inputFlag One of the EditBox::InputFlag constants.
      */
-    void setInputFlag(EditBoxInputFlag inputFlag);
+    void setInputFlag(InputFlag inputFlag);
     
     /**
      * Set the return type that are to be applied to the edit box.
-     * @param returnType One of the KeyboardReturnType constants.
+     * @param returnType One of the EditBox::KeyboardReturnType constants.
      */
-    void setReturnType(KeyboardReturnType returnType);
+    void setReturnType(EditBox::KeyboardReturnType returnType);
     
     /* override functions */
     virtual void setPosition(const Point& pos);
@@ -362,9 +359,9 @@ protected:
     EditBoxImpl*      _editBoxImpl;
     EditBoxDelegate*  _delegate;
     
-    EditBoxInputMode    _editBoxInputMode;
-    EditBoxInputFlag    _editBoxInputFlag;
-    KeyboardReturnType  _keyboardReturnType;
+    InputMode    _editBoxInputMode;
+    InputFlag    _editBoxInputFlag;
+    EditBox::KeyboardReturnType  _keyboardReturnType;
     
     std::string _text;
     std::string _placeHolder;

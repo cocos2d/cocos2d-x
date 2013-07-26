@@ -41,4 +41,24 @@ const Control::State CCControlStateHighlighted = Control::State::HIGH_LIGHTED;
 const Control::State CCControlStateDisabled = Control::State::DISABLED;
 const Control::State CCControlStateSelected = Control::State::SELECTED;
 
+const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDefault = EditBox::EditBox::KeyboardReturnType::DEFAULT;
+const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeDone = EditBox::EditBox::KeyboardReturnType::DONE;
+const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSend = EditBox::EditBox::KeyboardReturnType::SEND;
+const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeSearch = EditBox::EditBox::KeyboardReturnType::SEARCH;
+const EditBox::EditBox::KeyboardReturnType  kKeyboardReturnTypeGo = EditBox::EditBox::KeyboardReturnType::GO;
+
+const EditBox::InputMode kEditBoxInputModeAny = EditBox::InputMode::ANY;
+const EditBox::InputMode kEditBoxInputModeEmailAddr = EditBox::InputMode::EMAIL_ADDRESS;
+const EditBox::InputMode kEditBoxInputModeNumeric = EditBox::InputMode::NUMERIC;
+const EditBox::InputMode kEditBoxInputModePhoneNumber = EditBox::InputMode::PHONE_NUMBER;
+const EditBox::InputMode kEditBoxInputModeUrl = EditBox::InputMode::URL;
+const EditBox::InputMode kEditBoxInputModeDecimal = EditBox::InputMode::DECIMAL;
+const EditBox::InputMode kEditBoxInputModeSingleLine = EditBox::InputMode::SINGLE_LINE;
+
+const EditBox::InputFlag kEditBoxInputFlagPassword = EditBox::InputFlag::PASSWORD;
+const EditBox::InputFlag kEditBoxInputFlagSensitive = EditBox::InputFlag::SENSITIVE;
+const EditBox::InputFlag kEditBoxInputFlagInitialCapsWord = EditBox::InputFlag::INITIAL_CAPS_WORD;
+const EditBox::InputFlag kEditBoxInputFlagInitialCapsSentence = EditBox::InputFlag::INITIAL_CAPS_SENTENCE;
+const EditBox::InputFlag kEditBoxInputFlagInitialCapsAllCharacters = EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS;
+
 NS_CC_EXT_END
