@@ -168,9 +168,8 @@ bool Image::initWithString(
 
         _width    = (short)dc._width;
         _height   = (short)dc._height;
-        _hasAlpha = true;
         _preMulti = true;
-        _bitDepth = 8;
+        _renderFormat = kTexture2DPixelFormat_RGBA8888;
 
         bRet = true;
     } while (0);
@@ -220,9 +219,8 @@ bool Image::initWithStringShadowStroke(
 
 	        _width    = (short)dc._width;
 	        _height   = (short)dc._height;
-	        _hasAlpha = true;
 	        _preMulti = true;
-	        _bitDepth = 8;
+		    _renderFormat = kTexture2DPixelFormat_RGBA8888;
 
 	        // swap the alpha channel (ARGB to RGBA)
 	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );

@@ -449,9 +449,8 @@ bool Image::initWithString(
 
 		_width = (short)dc.iMaxLineWidth;
 		_height = (short)dc.iMaxLineHeight;
-		_hasAlpha = true;
+        _renderFormat = kTexture2DPixelFormat_RGBA8888;
 		_preMulti = true;
-		_bitDepth = 8;
 
 		bRet = true;
 

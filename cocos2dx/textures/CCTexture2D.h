@@ -105,7 +105,8 @@ typedef struct _ccTexParams {
 
 
 
-typedef struct _TexturePixelFormatInfo {
+class TexturePixelFormatInfo {
+public:
     GLenum internalFormat;
     GLenum format;
     GLenum type;
@@ -113,9 +114,9 @@ typedef struct _TexturePixelFormatInfo {
     bool compressed;
     bool alpha;
 
-    struct _TexturePixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
+    TexturePixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
         :internalFormat(internalFormat), format(format), type(type), bpp(bpp), compressed(compressed), alpha(alpha){}
-} TexturePixelFormatInfo;
+};
 
 typedef const std::map<Texture2DPixelFormat, const TexturePixelFormatInfo> ConstTexturePixelFormatInfoMap;
 typedef const ConstTexturePixelFormatInfoMap::value_type ConstTexturePixelFormatInfoMapValue;
@@ -140,7 +141,7 @@ static ConstTexturePixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
 #endif
 
 #ifdef GL_ETC1_RGB8_OES
-    ConstTexturePixelFormatInfoMapValue(kTexture2DPixelFormat_ETC, TexturePixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
+    ConstTexturePixelFormatInfoMapValue(kTexture2DPixelFormat_ETC, TexturePixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
 #endif
 };
 
@@ -244,9 +245,6 @@ public:
     bool initWithString(const char *text, const char *fontName, float fontSize);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
-    
-    /** Initializes a texture from a ETC file */
-    bool initWithETCFile(const char* file);
 
     /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

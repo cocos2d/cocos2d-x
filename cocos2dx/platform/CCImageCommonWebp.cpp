@@ -52,7 +52,6 @@ bool Image::_initWithWebpData(void *data, int dataLen)
         _renderFormat = kTexture2DPixelFormat_RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
-        _hasAlpha = true;
         
         int bufferSize = _width * _height * 4;
         _data = new unsigned char[bufferSize];
