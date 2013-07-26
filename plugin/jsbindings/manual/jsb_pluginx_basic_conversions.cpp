@@ -221,6 +221,21 @@ JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
+JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
+JSBool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret)
+{
+    return jsval_to_TProductInfo(cx, v, ret);
+}
+
 JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
 {
     JSBool jsret = JS_FALSE;
