@@ -228,7 +228,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     ControlSlider* sliderCtl();
-    void sliderAction(Object* sender, ControlEvent controlEvent);
+    void sliderAction(Object* sender, Control::EventType controlEvent);
     ControlSlider* _sliderCtl;
 };
 
@@ -241,7 +241,7 @@ public:
     virtual std::string subtitle();
     void onEnter();
     ControlSlider* sliderCtl();
-    void sliderAction(Object* sender, ControlEvent controlEvent);
+    void sliderAction(Object* sender, Control::EventType controlEvent);
     Scheduler *sched1;
     Scheduler *sched2;
     ActionManager *actionManager1;

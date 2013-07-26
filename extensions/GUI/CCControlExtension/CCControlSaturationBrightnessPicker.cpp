@@ -174,7 +174,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
     if (dist <= _background->getBoundingBox().size.width*0.5f)
     {
         updateSliderPosition(location);
-        sendActionsForControlEvents(ControlEventValueChanged);
+        sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
         return true;
     }
     return false;
@@ -203,7 +203,7 @@ void ControlSaturationBrightnessPicker::ccTouchMoved(Touch* touch, Event* event)
 
     //small modification: this allows changing of the colour, even if the touch leaves the bounding area
 //     updateSliderPosition(touchLocation);
-//     sendActionsForControlEvents(ControlEventValueChanged);
+//     sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
     // Check the touch position on the slider
     checkSliderPosition(touchLocation);
 }

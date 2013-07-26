@@ -40,9 +40,9 @@ EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
-, _editBoxInputMode(kEditBoxInputModeSingleLine)
-, _editBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
-, _keyboardReturnType(kKeyboardReturnTypeDefault)
+, _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
+, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _keyboardReturnType(EditBox::EditBox::KeyboardReturnType::DEFAULT)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
@@ -113,7 +113,7 @@ void EditBoxImplWin::setPlaceholderFontColor(const Color3B& color)
     _labelPlaceHolder->setColor(color);
 }
 
-void EditBoxImplWin::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplWin::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
 }
@@ -128,12 +128,12 @@ int EditBoxImplWin::getMaxLength()
     return _maxLength;
 }
 
-void EditBoxImplWin::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplWin::setInputFlag(EditBox::InputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
 }
 
-void EditBoxImplWin::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplWin::setReturnType(EditBox::KeyboardReturnType returnType)
 {
     _keyboardReturnType = returnType;
 }

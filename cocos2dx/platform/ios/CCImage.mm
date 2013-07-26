@@ -172,7 +172,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -221,7 +221,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -297,7 +297,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uHoriFlag = (int)eAlign & 0x0f;
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
@@ -543,7 +543,7 @@ bool Image::initWithString(
                             const char * pText,
                             int         nWidth /* = 0 */,
                             int         nHeight /* = 0 */,
-                            ETextAlign eAlignMask /* = kAlignCenter */,
+                            TextAlign   eAlignMask /* = kAlignCenter */,
                             const char * pFontName /* = nil */,
                             int         nSize /* = 0 */)
 {
@@ -554,7 +554,7 @@ bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,
-                                         ETextAlign eAlignMask ,
+                                         TextAlign   eAlignMask ,
                                          const char * pFontName ,
                                          int         nSize ,
                                          float       textTintR,
