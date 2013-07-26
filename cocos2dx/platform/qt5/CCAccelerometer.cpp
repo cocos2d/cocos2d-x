@@ -33,29 +33,29 @@
 
 NS_CC_BEGIN
 
-static CCAccelerometer *
+static Accelerometer *
 shared_accelerometer = NULL;
 
-CCAccelerometer::CCAccelerometer()
+Accelerometer::Accelerometer()
     : m_accelerometer(new QAccelerometer)
     , m_listener(new AccelerometerListener(this))
-    , m_delegate(NULL)
+    , m_function(nullptr)
 {
     QObject::connect(m_accelerometer, SIGNAL(readingChanged()),
             m_listener, SLOT(onReadingChanged()));
 }
 
-CCAccelerometer::~CCAccelerometer()
+Accelerometer::~Accelerometer()
 {
     delete m_listener;
     delete m_accelerometer;
 }
 
-CCAccelerometer *
-CCAccelerometer::sharedAccelerometer()
+Accelerometer *
+Accelerometer::sharedAccelerometer()
 {
     if (shared_accelerometer == NULL) {
-        shared_accelerometer = new CCAccelerometer;
+        shared_accelerometer = new Accelerometer;
     }
 
     return shared_accelerometer;
@@ -63,13 +63,13 @@ CCAccelerometer::sharedAccelerometer()
 
 
 void
-CCAccelerometer::setDelegate(CCAccelerometerDelegate *pDelegate)
+Accelerometer::setDelegate(std::function<void(Acceleration*)> function)
 {
-    m_delegate = pDelegate;
+    m_function = function;
 }
 
 void
-CCAccelerometer::setAccelerometerInterval(float interval)
+Accelerometer::setAccelerometerInterval(float interval)
 {
     if (interval == 0.0) {
         m_accelerometer->setDataRate(0.0);
@@ -80,21 +80,21 @@ CCAccelerometer::setAccelerometerInterval(float interval)
 }
 
 void
-CCAccelerometer::readingChanged()
+Accelerometer::readingChanged()
 {
-    if (m_delegate == NULL) {
+    if (m_function == NULL) {
         return;
     }
 
     QAccelerometerReading *reading = m_accelerometer->reading();
 
-    CCAcceleration accel;
+    Acceleration accel;
     accel.x = reading->x();
     accel.y = reading->y();
     accel.z = reading->z();
     accel.timestamp = reading->timestamp();
 
-    m_delegate->didAccelerate(&accel);
+    m_function(&accel);
 }
 
 NS_CC_END

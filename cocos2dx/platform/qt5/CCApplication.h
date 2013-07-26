@@ -38,13 +38,13 @@ class Cocos2DQt5MainloopIntegration;
 
 NS_CC_BEGIN
 
-class CCApplication : public CCApplicationProtocol {
+class Application : public ApplicationProtocol {
     public:
-        CCApplication();
-        virtual ~CCApplication();
+        Application();
+        virtual ~Application();
 
         /**
-          @brief	Callback by CCDirector for limit FPS.
+          @brief	Callback by Director for limit FPS.
           @interval       The time, which expressed in second in second, between current frame and next.
           */
         void setAnimationInterval(double interval);
@@ -55,10 +55,13 @@ class CCApplication : public CCApplicationProtocol {
         int run();
 
         /**
-          @brief	Get current applicaiton instance.
+          @brief	Get current application instance.
           @return Current application instance pointer.
           */
-        static CCApplication* sharedApplication();
+        static Application* getInstance();
+
+        /** @deprecated Use getInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
 
         /* override functions */
         virtual ccLanguageType getCurrentLanguage();

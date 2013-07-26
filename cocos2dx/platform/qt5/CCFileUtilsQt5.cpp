@@ -44,10 +44,10 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CCFileUtilsQt5 : public CCFileUtils
+class CC_DLL FileUtilsQt5 : public FileUtils
 {
     public:
-        CCFileUtilsQt5();
+        FileUtilsQt5();
 
         /* override funtions */
         virtual bool init();
@@ -55,23 +55,23 @@ class CC_DLL CCFileUtilsQt5 : public CCFileUtils
         virtual bool isFileExist(const std::string& strFilePath);
 };
 
-CCFileUtils *
-CCFileUtils::sharedFileUtils()
+FileUtils *
+FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsQt5();
+        s_sharedFileUtils = new FileUtilsQt5();
         s_sharedFileUtils->init();
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsQt5::CCFileUtilsQt5()
+FileUtilsQt5::FileUtilsQt5()
 {
 }
 
 bool
-CCFileUtilsQt5::init()
+FileUtilsQt5::init()
 {
     // Determine directory of the application executable
     QDir app_dir = QDir("/proc/self/exe").canonicalPath();
@@ -79,13 +79,13 @@ CCFileUtilsQt5::init()
 
     // Resources should be placed alongside the binary (same directory)
     QString path = app_dir.path() + "/Resources/";
-    m_strDefaultResRootPath = path.toStdString();
+    _defaultResRootPath = path.toStdString();
 
-    return CCFileUtils::init();
+    return FileUtils::init();
 }
 
 std::string
-CCFileUtilsQt5::getWritablePath()
+FileUtilsQt5::getWritablePath()
 {
     QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
@@ -97,7 +97,7 @@ CCFileUtilsQt5::getWritablePath()
     return dir.path().toStdString();
 }
 
-bool CCFileUtilsQt5::isFileExist(const std::string& strFilePath)
+bool FileUtilsQt5::isFileExist(const std::string& strFilePath)
 {
     QString filePath = QString::fromStdString(strFilePath);
 
@@ -106,8 +106,8 @@ bool CCFileUtilsQt5::isFileExist(const std::string& strFilePath)
         return true;
     }
 
-    // If not found, look for file in m_strDefaultResRootPath
-    QString defaultResRootPath = QString::fromStdString(m_strDefaultResRootPath);
+    // If not found, look for file in _defaultResRootPath
+    QString defaultResRootPath = QString::fromStdString(_defaultResRootPath);
     return QFile(QDir(defaultResRootPath).filePath(filePath)).exists();
 }
 

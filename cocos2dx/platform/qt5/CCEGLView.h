@@ -37,12 +37,15 @@ NS_CC_BEGIN
 
 class Cocos2DQt5OpenGLIntegration;
 
-class CCEGLView : public CCEGLViewProtocol {
+class EGLView : public EGLViewProtocol {
     public:
-        CCEGLView();
-        virtual ~CCEGLView();
+        EGLView();
+        virtual ~EGLView();
 
-        static CCEGLView *sharedOpenGLView();
+        static EGLView *getInstance();
+
+        /** @deprecated Use getInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static EGLView *sharedOpenGLView();
 
         virtual bool isOpenGLReady() { return (m_integration != NULL); }
 
