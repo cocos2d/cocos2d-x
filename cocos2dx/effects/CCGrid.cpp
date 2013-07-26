@@ -192,8 +192,7 @@ void GridBase::set2DProjection()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadIdentity();
 
-
-    ccSetProjectionMatrixDirty();
+    GL::setProjectionMatrixDirty();
 }
 
 void GridBase::beforeDraw(void)
@@ -228,7 +227,7 @@ void GridBase::afterDraw(cocos2d::Node *target)
         kmGLTranslatef(-offset.x, -offset.y, 0);
     }
 
-    ccGLBindTexture2D(_texture->getName());
+    GL::bindTexture2D(_texture->getName());
 
     // restore projection for default FBO .fixed bug #543 #544
 //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
@@ -315,7 +314,7 @@ void Grid3D::blit(void)
 {
     int n = _gridSize.width * _gridSize.height;
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();;
 
@@ -537,7 +536,7 @@ void TiledGrid3D::blit(void)
     //
     // Attributes
     //
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_TEX_COORDS );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS );
 #ifdef EMSCRIPTEN
     int numQuads = _gridSize.width * _gridSize.height;
 

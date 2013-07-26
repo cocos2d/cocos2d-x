@@ -246,7 +246,7 @@ TexturePVR::~TexturePVR()
 
     if (_name != 0 && ! _retainName)
     {
-        ccGLDeleteTexture(_name);
+        GL::deleteTexture(_name);
     }
 }
 
@@ -540,14 +540,14 @@ bool TexturePVR::createGLTexture()
     {
         if (_name != 0)
         {
-            ccGLDeleteTexture(_name);
+            GL::deleteTexture(_name);
         }
         
         // From PVR sources: "PVR files are never row aligned."
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
         
         glGenTextures(1, &_name);
-        ccGLBindTexture2D(_name);
+        GL::bindTexture2D(_name);
         
         // Default: Anti alias.
 		if (_numberOfMipmaps == 1)

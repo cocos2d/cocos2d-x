@@ -52,6 +52,8 @@ NS_CC_BEGIN
     #define M_PI       3.14159265358979323846
 #endif
 
+namespace DrawPrimitives {
+
 static bool s_initialized = false;
 static GLProgram* s_shader = NULL;
 static int s_colorLocation = -1;
@@ -106,18 +108,18 @@ static void lazy_init( void )
 }
 
 // When switching from backround to foreground on android, we want the params to be initialized again
-void DrawPrimitives::init()
+void init()
 {
     lazy_init();
 }
 
-void DrawPrimitives::free()
+void free()
 {
 	CC_SAFE_RELEASE_NULL(s_shader);
 	s_initialized = false;
 }
 
-void DrawPrimitives::drawPoint( const Point& point )
+void drawPoint( const Point& point )
 {
     lazy_init();
 
@@ -125,7 +127,7 @@ void DrawPrimitives::drawPoint( const Point& point )
     p.x = point.x;
     p.y = point.y;
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     s_shader->use();
     s_shader->setUniformsForBuiltins();
 
@@ -144,11 +146,11 @@ void DrawPrimitives::drawPoint( const Point& point )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawPoints( const Point *points, unsigned int numberOfPoints )
+void drawPoints( const Point *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     s_shader->use();
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
@@ -192,7 +194,7 @@ void DrawPrimitives::drawPoints( const Point *points, unsigned int numberOfPoint
 }
 
 
-void DrawPrimitives::drawLine( const Point& origin, const Point& destination )
+void drawLine( const Point& origin, const Point& destination )
 {
     lazy_init();
 
@@ -205,7 +207,7 @@ void DrawPrimitives::drawLine( const Point& origin, const Point& destination )
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 16);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -217,15 +219,15 @@ void DrawPrimitives::drawLine( const Point& origin, const Point& destination )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawRect( Point origin, Point destination )
+void drawRect( Point origin, Point destination )
 {
-    DrawPrimitives::drawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
-    DrawPrimitives::drawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
-    DrawPrimitives::drawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
-    DrawPrimitives::drawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
+    drawLine(Point(origin.x, origin.y), Point(destination.x, origin.y));
+    drawLine(Point(destination.x, origin.y), Point(destination.x, destination.y));
+    drawLine(Point(destination.x, destination.y), Point(origin.x, destination.y));
+    drawLine(Point(origin.x, destination.y), Point(origin.x, origin.y));
 }
 
-void DrawPrimitives::drawSolidRect( Point origin, Point destination, Color4F color )
+void drawSolidRect( Point origin, Point destination, Color4F color )
 {
     Point vertices[] = {
         origin,
@@ -234,10 +236,10 @@ void DrawPrimitives::drawSolidRect( Point origin, Point destination, Color4F col
         Point(origin.x, destination.y)
     };
 
-    DrawPrimitives::drawSolidPoly(vertices, 4, color );
+    drawSolidPoly(vertices, 4, color );
 }
 
-void DrawPrimitives::drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
+void drawPoly( const Point *poli, unsigned int numberOfPoints, bool closePolygon )
 {
     lazy_init();
 
@@ -245,7 +247,7 @@ void DrawPrimitives::drawPoly( const Point *poli, unsigned int numberOfPoints, b
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // iPhone and 32-bit machines optimization
     if( sizeof(Point) == sizeof(Vertex2F) )
@@ -289,7 +291,7 @@ void DrawPrimitives::drawPoly( const Point *poli, unsigned int numberOfPoints, b
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
+void drawSolidPoly( const Point *poli, unsigned int numberOfPoints, Color4F color )
 {
     lazy_init();
 
@@ -297,7 +299,7 @@ void DrawPrimitives::drawSolidPoly( const Point *poli, unsigned int numberOfPoin
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     Vertex2F* newPoli = new Vertex2F[numberOfPoints];
@@ -333,7 +335,7 @@ void DrawPrimitives::drawSolidPoly( const Point *poli, unsigned int numberOfPoin
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -362,7 +364,7 @@ void DrawPrimitives::drawCircle( const Point& center, float radius, float angle,
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
@@ -377,12 +379,12 @@ void DrawPrimitives::drawCircle( const Point& center, float radius, float angle,
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void drawCircle( const Point& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
-    DrawPrimitives::drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
+    drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
-void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     lazy_init();
     
@@ -407,7 +409,7 @@ void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float a
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, sizeof(GLfloat)*2*(segments+2));
@@ -423,12 +425,12 @@ void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float a
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
+void drawSolidCircle( const Point& center, float radius, float angle, unsigned int segments)
 {
-    DrawPrimitives::drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
+    drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
 
-void DrawPrimitives::drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
+void drawQuadBezier(const Point& origin, const Point& control, const Point& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -448,7 +450,7 @@ void DrawPrimitives::drawQuadBezier(const Point& origin, const Point& control, c
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
@@ -462,12 +464,12 @@ void DrawPrimitives::drawQuadBezier(const Point& origin, const Point& control, c
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawCatmullRom( PointArray *points, unsigned int segments )
+void drawCatmullRom( PointArray *points, unsigned int segments )
 {
-    DrawPrimitives::drawCardinalSpline( points, 0.5f, segments );
+    drawCardinalSpline( points, 0.5f, segments );
 }
 
-void DrawPrimitives::drawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
+void drawCardinalSpline( PointArray *config, float tension,  unsigned int segments )
 {
     lazy_init();
 
@@ -505,7 +507,7 @@ void DrawPrimitives::drawCardinalSpline( PointArray *config, float tension,  uns
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*)&s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
@@ -519,7 +521,7 @@ void DrawPrimitives::drawCardinalSpline( PointArray *config, float tension,  uns
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
+void drawCubicBezier(const Point& origin, const Point& control1, const Point& control2, const Point& destination, unsigned int segments)
 {
     lazy_init();
 
@@ -539,7 +541,7 @@ void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1,
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, (segments + 1) * sizeof(Vertex2F));
@@ -553,7 +555,7 @@ void DrawPrimitives::drawCubicBezier(const Point& origin, const Point& control1,
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void DrawPrimitives::setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
+void setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
     s_color.r = r;
     s_color.g = g;
@@ -561,7 +563,7 @@ void DrawPrimitives::setDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a 
     s_color.a = a;
 }
 
-void DrawPrimitives::setPointSize( GLfloat pointSize )
+void setPointSize( GLfloat pointSize )
 {
     s_pointSize = pointSize * CC_CONTENT_SCALE_FACTOR();
 
@@ -569,12 +571,14 @@ void DrawPrimitives::setPointSize( GLfloat pointSize )
 
 }
 
-void DrawPrimitives::setDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+void setDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
     s_color.r = r/255.0f;
     s_color.g = g/255.0f;
     s_color.b = b/255.0f;
     s_color.a = a/255.0f;
 }
+
+} // DrawPrimitives namespace
 
 NS_CC_END

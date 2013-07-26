@@ -119,7 +119,7 @@ void CCSkeleton::update (float deltaTime) {
 void CCSkeleton::draw () {
 	CC_NODE_DRAW_SETUP();
 
-	ccGLBlendFunc(blendFunc.src, blendFunc.dst);
+	GL::blendFunc(blendFunc.src, blendFunc.dst);
 	Color3B color = getColor();
 	skeleton->r = color.r / (float)255;
 	skeleton->g = color.g / (float)255;

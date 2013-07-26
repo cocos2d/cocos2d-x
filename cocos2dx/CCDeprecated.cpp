@@ -87,11 +87,11 @@ const char* kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
 const char* kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
 const char* kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
 
-const int kCCVertexAttribFlag_None = VERTEX_ATTRIB_FLAT_NONE;
-const int kCCVertexAttribFlag_Position = VERTEX_ATTRIB_FLAG_POSITION;
-const int kCCVertexAttribFlag_Color = VERTEX_ATTRIB_FLAG_COLOR;
-const int kCCVertexAttribFlag_TexCoords = VERTEX_ATTRIB_FLAG_TEX_COORDS;
-const int kCCVertexAttribFlag_PosColorTex = VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
+const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
+const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
+const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
+const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
+const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
 
 const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
 const int kCCProgressTimerTypeBar = ProgressTimer::BAR;

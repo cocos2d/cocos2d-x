@@ -77,7 +77,6 @@ Node::Node(void)
 , _userData(NULL)
 , _userObject(NULL)
 , _shaderProgram(NULL)
-, _GLServerState(ccGLServerState(0))
 , _orderOfArrival(0)
 , _running(false)
 , _transformDirty(true)
@@ -454,16 +453,6 @@ void Node::setOrderOfArrival(int orderOfArrival)
 {
     CCASSERT(orderOfArrival >=0, "Invalid orderOfArrival");
     _orderOfArrival = orderOfArrival;
-}
-
-ccGLServerState Node::getGLServerState() const
-{
-    return _GLServerState;
-}
-
-void Node::setGLServerState(ccGLServerState glServerState)
-{
-    _GLServerState = glServerState;
 }
 
 void Node::setUserObject(Object *pUserObject)

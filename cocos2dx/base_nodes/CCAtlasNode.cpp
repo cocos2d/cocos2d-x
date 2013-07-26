@@ -141,7 +141,7 @@ void AtlasNode::draw(void)
 {
     CC_NODE_DRAW_SETUP();
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
     getShaderProgram()->setUniformLocationWith4fv(_uniformColor, colors, 1);

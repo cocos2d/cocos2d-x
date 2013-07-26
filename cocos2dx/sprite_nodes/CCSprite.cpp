@@ -550,10 +550,10 @@ void Sprite::draw(void)
 
     CC_NODE_DRAW_SETUP();
     
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    ccGLBindTexture2D( _texture->getName() );
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::bindTexture2D( _texture->getName() );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN

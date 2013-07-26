@@ -440,7 +440,7 @@ void Director::setProjection(Projection projection)
     }
 
     _projection = projection;
-    ccSetProjectionMatrixDirty();
+    GL::setProjectionMatrixDirty();
 }
 
 void Director::purgeCachedData(void)
@@ -463,11 +463,11 @@ void Director::setAlphaBlending(bool bOn)
 {
     if (bOn)
     {
-        ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        GL::blendFunc(CC_BLEND_SRC, CC_BLEND_DST);
     }
     else
     {
-        ccGLBlendFunc(GL_ONE, GL_ZERO);
+        GL::blendFunc(GL_ONE, GL_ZERO);
     }
 
     CHECK_GL_ERROR_DEBUG();
@@ -713,7 +713,7 @@ void Director::purgeDirector()
     UserDefault::destroyInstance();
     NotificationCenter::destroyInstance();
 
-    ccGLInvalidateStateCache();
+    GL::invalidateStateCache();
     
     CHECK_GL_ERROR_DEBUG();
     

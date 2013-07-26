@@ -398,7 +398,7 @@ void SpriteBatchNode::draw(void)
 
     arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     _textureAtlas->drawQuads();
 
