@@ -25,7 +25,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    ScriptEngineManager::purgeSharedManager();
+    ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -43,8 +43,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = Application::getInstance()->getTargetPlatform();
-    if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
+    Platform platform = Application::getInstance()->getTargetPlatform();
+    if (platform == Application::Platform::OS_IPHONE || platform == Application::Platform::OS_IPAD || platform == Application::Platform::OS_MAC)
     {
         std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), "Published files iOS");
@@ -75,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
         
     }
-    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    else if (platform == Application::Platform::OS_ANDROID || platform == Application::Platform::OS_WINDOWS)
     {
         if (screenSize.height > 960)
         {
