@@ -184,7 +184,7 @@ namespace CocosDenshion {
             int ret = 0;
             std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
         
-            if (! getJNIStaticMethodInfo(methodInfo, "playEffect", "(Ljava/lang/String;Z)I")) {
+            if (! getJNIStaticMethodInfo(methodInfo, "playEffect", "(Ljava/lang/String;ZFFF)I")) {
                 return ret;
             }
         
@@ -192,7 +192,8 @@ namespace CocosDenshion {
             ret = methodInfo.env->CallStaticIntMethod(methodInfo.classID,
                                                       methodInfo.methodID,
                                                       stringArg,
-                                                      bLoop);
+                                                      bLoop,
+                                                      pitch, pan, gain);
             methodInfo.env->DeleteLocalRef(stringArg);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         
