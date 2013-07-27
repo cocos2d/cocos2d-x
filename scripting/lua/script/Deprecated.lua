@@ -775,19 +775,22 @@ rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 
 
 --functions of WebSocket will be deprecated begin
-local WebSocketDeprecated = { }
-function WebSocketDeprecated.sendTextMsg(self, string)
-    deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")
-    return self:sendString(string)
-end
-rawset(WebSocket,"sendTextMsg", WebSocketDeprecated.sendTextMsg)
+local targetPlatform = CCApplication:getInstance():getTargetPlatform()
+if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+    local WebSocketDeprecated = { }
+    function WebSocketDeprecated.sendTextMsg(self, string)
+        deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")
+        return self:sendString(string)
+    end
+    rawset(WebSocket,"sendTextMsg", WebSocketDeprecated.sendTextMsg)
 
-function WebSocketDeprecated.sendBinaryMsg(self, table,tablesize)
-    deprecatedTip("WebSocket:sendBinaryMsg","WebSocket:sendString")
-    string.char(unpack(table))
-    return self:sendString(string.char(unpack(table)))
+    function WebSocketDeprecated.sendBinaryMsg(self, table,tablesize)
+        deprecatedTip("WebSocket:sendBinaryMsg","WebSocket:sendString")
+        string.char(unpack(table))
+        return self:sendString(string.char(unpack(table)))
+    end
+    rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 end
-rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 --functions of WebSocket will be deprecated end
 
 
@@ -817,15 +820,17 @@ function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
 end
 rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
 
-function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,xScale,yScale)
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
     deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
-    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,xScale,yScale)
+    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
 end
 rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
 
-function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,scaleX,scaleY)
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,...)
     deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
-    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,scaleX,scaleY)
+    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,...)
 end
 rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
 
@@ -871,3 +876,8 @@ function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
 end
 rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
 --functions of CCDrawPrimitives will be deprecated end
+
+--enums of CCParticleSystem will be deprecated begin
+_G["kParticleStartSizeEqualToEndSize"] = _G["kCCParticleStartSizeEqualToEndSize"]
+_G["kParticleDurationInfinity"] = _G["kCCParticleDurationInfinity"]
+--enums of CCParticleSystem will be deprecated end
