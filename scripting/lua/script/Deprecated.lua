@@ -790,3 +790,84 @@ end
 rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 --functions of WebSocket will be deprecated end
 
+
+--functions of CCDrawPrimitives will be deprecated begin
+local CCDrawPrimitivesDeprecated = { }
+function CCDrawPrimitivesDeprecated.ccDrawPoint(pt)
+    deprecatedTip("ccDrawPoint","CCDrawPrimitives.ccDrawPoint")
+    return CCDrawPrimitives.ccDrawPoint(pt)
+end
+rawset(_G, "ccDrawPoint", CCDrawPrimitivesDeprecated.ccDrawPoint)
+
+function CCDrawPrimitivesDeprecated.ccDrawLine(origin,destination)
+    deprecatedTip("ccDrawLine","CCDrawPrimitives.ccDrawLine")
+    return CCDrawPrimitives.ccDrawLine(origin,destination)
+end
+rawset(_G, "ccDrawLine", CCDrawPrimitivesDeprecated.ccDrawLine)
+
+function CCDrawPrimitivesDeprecated.ccDrawRect(origin,destination)
+    deprecatedTip("ccDrawRect","CCDrawPrimitives.ccDrawRect")
+    return CCDrawPrimitives.ccDrawRect(origin,destination)
+end
+rawset(_G, "ccDrawRect", CCDrawPrimitivesDeprecated.ccDrawRect)
+
+function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
+    deprecatedTip("ccDrawSolidRect","CCDrawPrimitives.ccDrawSolidRect")
+    return CCDrawPrimitives.ccDrawSolidRect(origin,destination,color)
+end
+rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
+
+function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,xScale,yScale)
+    deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
+    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,xScale,yScale)
+end
+rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
+
+function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,scaleX,scaleY)
+    deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
+    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,scaleX,scaleY)
+end
+rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
+
+function CCDrawPrimitivesDeprecated.ccDrawQuadBezier(origin,control,destination,segments)
+    deprecatedTip("ccDrawQuadBezier","CCDrawPrimitives.ccDrawQuadBezier")
+    return CCDrawPrimitives.ccDrawQuadBezier(origin,control,destination,segments)
+end
+rawset(_G, "ccDrawQuadBezier", CCDrawPrimitivesDeprecated.ccDrawQuadBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+    deprecatedTip("ccDrawCubicBezier","CCDrawPrimitives.ccDrawCubicBezier")
+    return CCDrawPrimitives.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+end
+rawset(_G, "ccDrawCubicBezier", CCDrawPrimitivesDeprecated.ccDrawCubicBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCatmullRom(arrayOfControlPoints,segments)
+    deprecatedTip("ccDrawCatmullRom","CCDrawPrimitives.ccDrawCatmullRom")
+    return CCDrawPrimitives.ccDrawCatmullRom(arrayOfControlPoints,segments)
+end
+rawset(_G, "ccDrawCatmullRom", CCDrawPrimitivesDeprecated.ccDrawCatmullRom)
+
+function CCDrawPrimitivesDeprecated.ccDrawCardinalSpline(config,tension,segments)
+    deprecatedTip("ccDrawCardinalSpline","CCDrawPrimitives.ccDrawCardinalSpline")
+    return CCDrawPrimitives.ccDrawCardinalSpline(config,tension,segments)
+end
+rawset(_G, "ccDrawCardinalSpline", CCDrawPrimitivesDeprecated.ccDrawCardinalSpline)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4B(r,g,b,a)
+    deprecatedTip("ccDrawColor4B","CCDrawPrimitives.ccDrawColor4B")
+    return CCDrawPrimitives.ccDrawColor4B(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4B", CCDrawPrimitivesDeprecated.ccDrawColor4B)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4F(r,g,b,a)
+    deprecatedTip("ccDrawColor4F","CCDrawPrimitives.ccDrawColor4F")
+    return CCDrawPrimitives.ccDrawColor4F(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
+
+function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
+    deprecatedTip("ccPointSize","CCDrawPrimitives.ccPointSize")
+    return CCDrawPrimitives.ccPointSize(pointSize)
+end
+rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
+--functions of CCDrawPrimitives will be deprecated end
