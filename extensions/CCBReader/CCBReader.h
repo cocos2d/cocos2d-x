@@ -28,109 +28,7 @@
     return NULL; \
 }
 
-#define kCCBVersion 5
-
-enum {
-    kCCBPropTypePosition = 0,
-    kCCBPropTypeSize,
-    kCCBPropTypePoint,
-    kCCBPropTypePointLock,
-    kCCBPropTypeScaleLock,
-    kCCBPropTypeDegrees,
-    kCCBPropTypeInteger,
-    kCCBPropTypeFloat,
-    kCCBPropTypeFloatVar,
-    kCCBPropTypeCheck,
-    kCCBPropTypeSpriteFrame,
-    kCCBPropTypeTexture,
-    kCCBPropTypeByte,
-    kCCBPropTypeColor3,
-    kCCBPropTypeColor4FVar,
-    kCCBPropTypeFlip,
-    kCCBPropTypeBlendmode,
-    kCCBPropTypeFntFile,
-    kCCBPropTypeText,
-    kCCBPropTypeFontTTF,
-    kCCBPropTypeIntegerLabeled,
-    kCCBPropTypeBlock,
-	kCCBPropTypeAnimation,
-    kCCBPropTypeCCBFile,
-    kCCBPropTypeString,
-    kCCBPropTypeBlockControl,
-    kCCBPropTypeFloatScale,
-    kCCBPropTypeFloatXY
-};
-
-enum {
-    kCCBFloat0 = 0,
-    kCCBFloat1,
-    kCCBFloatMinus1,
-    kCCBFloat05,
-    kCCBFloatInteger,
-    kCCBFloatFull
-};
-
-enum {
-    kCCBPlatformAll = 0,
-    kCCBPlatformIOS,
-    kCCBPlatformMac
-};
-
-enum {
-    kCCBTargetTypeNone = 0,
-    kCCBTargetTypeDocumentRoot = 1,
-    kCCBTargetTypeOwner = 2,
-};
-
-enum
-{
-    kCCBKeyframeEasingInstant,
-    
-    kCCBKeyframeEasingLinear,
-    
-    kCCBKeyframeEasingCubicIn,
-    kCCBKeyframeEasingCubicOut,
-    kCCBKeyframeEasingCubicInOut,
-    
-    kCCBKeyframeEasingElasticIn,
-    kCCBKeyframeEasingElasticOut,
-    kCCBKeyframeEasingElasticInOut,
-    
-    kCCBKeyframeEasingBounceIn,
-    kCCBKeyframeEasingBounceOut,
-    kCCBKeyframeEasingBounceInOut,
-    
-    kCCBKeyframeEasingBackIn,
-    kCCBKeyframeEasingBackOut,
-    kCCBKeyframeEasingBackInOut,
-};
-
-enum
-{
-    kCCBPositionTypeRelativeBottomLeft,
-    kCCBPositionTypeRelativeTopLeft,
-    kCCBPositionTypeRelativeTopRight,
-    kCCBPositionTypeRelativeBottomRight,
-    kCCBPositionTypePercent,
-    kCCBPositionTypeMultiplyResolution,
-};
-
-enum
-{
-    kCCBSizeTypeAbsolute,
-    kCCBSizeTypePercent,
-    kCCBSizeTypeRelativeContainer,
-    kCCBSizeTypeHorizontalPercent,
-    kCCBSizeTypeVerticalPercent,
-    kCCBSizeTypeMultiplyResolution,
-};
-
-enum
-{
-    kCCBScaleTypeAbsolute,
-    kCCBScaleTypeMultiplyResolution
-};
-
+#define CCB_VERSION 5
 
 NS_CC_EXT_BEGIN
 
@@ -142,7 +40,7 @@ NS_CC_EXT_BEGIN
 class CCBFile : public Node
 {
 private:
-    Node *mCCBFileNode;
+    Node *_CCBFileNode;
     
 public:
     CCBFile();
@@ -167,47 +65,91 @@ class CCBKeyframe;
  */
 class CCBReader : public Object 
 {
-private:
-    
-    Data *mData;
-    unsigned char *mBytes;
-    int mCurrentByte;
-    int mCurrentBit;
-    
-    std::vector<std::string> mStringCache;
-    std::set<std::string> mLoadedSpriteSheets;
-    
-    Object *mOwner;
-    
-    CCBAnimationManager *mActionManager; //retain
-    Dictionary* mActionManagers;
-
-    std::set<std::string> *mAnimatedProps;
-
-    NodeLoaderLibrary *mNodeLoaderLibrary;
-    NodeLoaderListener *mNodeLoaderListener;
-    CCBMemberVariableAssigner *mCCBMemberVariableAssigner;
-    CCBSelectorResolver *mCCBSelectorResolver;
-    
-    std::vector<std::string> mOwnerOutletNames;
-    Array* mOwnerOutletNodes;
-    Array* mNodesWithAnimationManagers;
-    Array* mAnimationManagersForNodes;
-    
-    std::vector<std::string> mOwnerCallbackNames;
-    Array* mOwnerCallbackNodes;
-    std::string mCCBRootPath;
-    bool hasScriptingOwner;    
-    bool init();
 public:
+    enum class PropertyType {
+        POSITION = 0,
+        SIZE,
+        POINT,
+        POINT_LOCK,
+        SCALE_LOCK,
+        DEGREES,
+        INTEGER,
+        FLOAT,
+        FLOAT_VAR,
+        CHECK,
+        SPRITEFRAME,
+        TEXTURE,
+        BYTE,
+        COLOR3,
+        COLOR4F_VAR,
+        FLIP,
+        BLEND_MODE,
+        FNT_FILE,
+        TEXT,
+        FONT_TTF,
+        INTEGER_LABELED,
+        BLOCK,
+        ANIMATION,
+        CCB_FILE,
+        STRING,
+        BLOCK_CONTROL,
+        FLOAT_SCALE,
+        FLOAT_XY
+    };
     
-    bool jsControlled;
+    enum class FloatType {
+        _0 = 0,
+        _1,
+        MINUS1,
+        _05,
+        INTEGER,
+        FULL
+    };
+    
+    enum class PlatformType {
+        ALL = 0,
+        IOS,
+        MAC
+    };
+    
+    enum class TargetType {
+        NONE = 0,
+        DOCUMENT_ROOT = 1,
+        OWNER = 2,
+    };
+    
+    enum class PositionType
+    {
+        RELATIVE_BOTTOM_LEFT,
+        RELATIVE_TOP_LEFT,
+        RELATIVE_TOP_RIGHT,
+        RELATIVE_BOTTOM_RIGHT,
+        PERCENT,
+        MULTIPLY_RESOLUTION,
+    };
+    
+    enum class SizeType
+    {
+        ABSOLUTE,
+        PERCENT,
+        RELATIVE_CONTAINER,
+        HORIZONTAL_PERCENT,
+        VERTICAL_PERCENT,
+        MULTIPLY_RESOLUTION,
+    };
+    
+    enum class ScaleType
+    {
+        ABSOLUTE,
+        MULTIPLY_RESOLUTION
+    };
+    
     CCBReader(NodeLoaderLibrary *pNodeLoaderLibrary, CCBMemberVariableAssigner *pCCBMemberVariableAssigner = NULL, CCBSelectorResolver *pCCBSelectorResolver = NULL, NodeLoaderListener *pNodeLoaderListener = NULL);
-    CCBReader(CCBReader *pCCBReader);
+    CCBReader(CCBReader *ccbReader);
     virtual ~CCBReader();
     CCBReader();
    
-    void setCCBRootPath(const char* pCCBRootPath);
+    void setCCBRootPath(const char* ccbRootPath);
     const std::string& getCCBRootPath() const;
 
     Node* readNodeGraphFromFile(const char *pCCBFileName);
@@ -279,7 +221,7 @@ public:
 private:
     void cleanUpNodeGraph(Node *pNode);
     bool readSequences();
-    CCBKeyframe* readKeyframe(int type);
+    CCBKeyframe* readKeyframe(PropertyType type);
     
     bool readHeader();
     bool readStringCache();
@@ -291,6 +233,41 @@ private:
     void alignBits();
 
     friend class NodeLoader;
+
+private:
+    Data *_data;
+    unsigned char *_bytes;
+    int _currentByte;
+    int _currentBit;
+    
+    std::vector<std::string> _stringCache;
+    std::set<std::string> _loadedSpriteSheets;
+    
+    Object *_owner;
+    
+    CCBAnimationManager *_actionManager; //retain
+    Dictionary* _actionManagers;
+    
+    std::set<std::string> *_animatedProps;
+    
+    NodeLoaderLibrary *_nodeLoaderLibrary;
+    NodeLoaderListener *_nodeLoaderListener;
+    CCBMemberVariableAssigner *_CCBMemberVariableAssigner;
+    CCBSelectorResolver *_CCBSelectorResolver;
+    
+    std::vector<std::string> _ownerOutletNames;
+    Array* _ownerOutletNodes;
+    Array* _nodesWithAnimationManagers;
+    Array* _animationManagersForNodes;
+    
+    std::vector<std::string> _ownerCallbackNames;
+    Array* _ownerCallbackNodes;
+    std::string _CCBRootPath;
+    
+    bool _jsControlled;
+    
+    bool _hasScriptingOwner;
+    bool init();
 };
 
 // end of effects group

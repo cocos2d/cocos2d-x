@@ -808,15 +808,15 @@ void Sprite::setSkewY(float sy)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setScaleX(float fScaleX)
+void Sprite::setScaleX(float scaleX)
 {
-    Node::setScaleX(fScaleX);
+    Node::setScaleX(scaleX);
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setScaleY(float fScaleY)
+void Sprite::setScaleY(float scaleY)
 {
-    Node::setScaleY(fScaleY);
+    Node::setScaleY(scaleY);
     SET_DIRTY_RECURSIVELY();
 }
 

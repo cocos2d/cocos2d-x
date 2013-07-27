@@ -8,7 +8,7 @@
 
 NS_CC_EXT_BEGIN
 
-void MenuItemImageLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * pCCBReader) {
+void MenuItemImageLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char * pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_NORMALDISPLAYFRAME) == 0) {
         if(pSpriteFrame != NULL) {
             ((MenuItemImage *)pNode)->setNormalSpriteFrame(pSpriteFrame);
@@ -22,7 +22,7 @@ void MenuItemImageLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
             ((MenuItemImage *)pNode)->setDisabledSpriteFrame(pSpriteFrame);
         }
     } else {
-        MenuItemLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pSpriteFrame, pCCBReader);
+        MenuItemLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pSpriteFrame, ccbReader);
     }
 }
 
