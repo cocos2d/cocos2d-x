@@ -11,10 +11,8 @@ class NodeLoader;
 typedef std::map<std::string, NodeLoader *> NodeLoaderMap;
 typedef std::pair<std::string, NodeLoader *> NodeLoaderMapEntry;
 
-class NodeLoaderLibrary : public Object {
-private:
-    NodeLoaderMap mNodeLoaders;
-
+class NodeLoaderLibrary : public Object
+{
 public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
 
@@ -45,6 +43,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedNodeLoaderLibrary() { NodeLoaderLibrary::destroyInstance(); };
         
     CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * newDefaultCCNodeLoaderLibrary() { return NodeLoaderLibrary::newDefaultNodeLoaderLibrary(); };
+    
+private:
+    NodeLoaderMap _nodeLoaders;
 };
 
 NS_CC_EXT_END
