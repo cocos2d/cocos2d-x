@@ -601,10 +601,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         }
 
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpPost);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::Type::POST);
         }
         else {
-            cc_request->setRequestType(cocos2d::extension::HttpRequest::kHttpGet);
+            cc_request->setRequestType(cocos2d::extension::HttpRequest::Type::GET);
         }
         
         cc_request->setUrl(url.c_str());
