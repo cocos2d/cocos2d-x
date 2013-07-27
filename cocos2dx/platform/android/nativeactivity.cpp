@@ -263,7 +263,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
     case AMOTION_EVENT_ACTION_POINTER_DOWN:
         {
             LOGI("AMOTION_EVENT_ACTION_POINTER_DOWN");
-            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_MASK;
+            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
             int pointerId = AMotionEvent_getPointerId(event, pointerIndex);
             float xP = AMotionEvent_getX(event,pointerIndex);
             float yP = AMotionEvent_getY(event,pointerIndex);
@@ -311,7 +311,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
     case AMOTION_EVENT_ACTION_POINTER_UP:
         {
             LOGI("AMOTION_EVENT_ACTION_POINTER_UP");
-            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_MASK;
+            int pointerIndex = AMotionEvent_getAction(event) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
             int pointerId = AMotionEvent_getPointerId(event, pointerIndex);
             float xP = AMotionEvent_getX(event,pointerIndex);
             float yP = AMotionEvent_getY(event,pointerIndex);
