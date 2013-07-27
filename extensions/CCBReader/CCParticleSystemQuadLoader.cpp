@@ -27,43 +27,43 @@
 
 NS_CC_EXT_BEGIN
 
-void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_EMITERMODE) == 0) {
         ((ParticleSystemQuad *)pNode)->setEmitterMode((ParticleSystem::Mode)pIntegerLabeled);
     } else {
-        NodeLoader::onHandlePropTypeIntegerLabeled(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+        NodeLoader::onHandlePropTypeIntegerLabeled(pNode, pParent, pPropertyName, pIntegerLabeled, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, const char * pPropertyName, Point pPoint, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_POSVAR) == 0) {
         ((ParticleSystemQuad *)pNode)->setPosVar(pPoint);
     } else if(strcmp(pPropertyName, PROPERTY_GRAVITY) == 0) {
         ((ParticleSystemQuad *)pNode)->setGravity(pPoint);
     } else {
-        NodeLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, pCCBReader);
+        NodeLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_EMISSIONRATE) == 0) {
         ((ParticleSystemQuad *)pNode)->setEmissionRate(pFloat);
     } else if(strcmp(pPropertyName, PROPERTY_DURATION) == 0) {
         ((ParticleSystemQuad *)pNode)->setDuration(pFloat);
     } else {
-        NodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);
+        NodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeInteger(Node * pNode, Node * pParent, const char * pPropertyName, int pInteger, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeInteger(Node * pNode, Node * pParent, const char * pPropertyName, int pInteger, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TOTALPARTICLES) == 0) {
         ((ParticleSystemQuad *)pNode)->setTotalParticles(pInteger);
     } else {
-        NodeLoader::onHandlePropTypeInteger(pNode, pParent, pPropertyName, pInteger, pCCBReader);
+        NodeLoader::onHandlePropTypeInteger(pNode, pParent, pPropertyName, pInteger, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeFloatVar(Node * pNode, Node * pParent, const char * pPropertyName, float * pFloatVar, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_LIFE) == 0) {
         ((ParticleSystemQuad *)pNode)->setLife(pFloatVar[0]);
         ((ParticleSystemQuad *)pNode)->setLifeVar(pFloatVar[1]);
@@ -101,11 +101,11 @@ void ParticleSystemQuadLoader::onHandlePropTypeFloatVar(Node * pNode, Node * pPa
         ((ParticleSystemQuad *)pNode)->setRotatePerSecond(pFloatVar[0]);
         ((ParticleSystemQuad *)pNode)->setRotatePerSecondVar(pFloatVar[1]);
     } else {
-        NodeLoader::onHandlePropTypeFloatVar(pNode, pParent, pPropertyName, pFloatVar, pCCBReader);
+        NodeLoader::onHandlePropTypeFloatVar(pNode, pParent, pPropertyName, pFloatVar, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, Color4F * pColor4FVar, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * pParent, const char * pPropertyName, Color4F * pColor4FVar, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_STARTCOLOR) == 0) {
         ((ParticleSystemQuad *)pNode)->setStartColor(pColor4FVar[0]);
         ((ParticleSystemQuad *)pNode)->setStartColorVar(pColor4FVar[1]);
@@ -113,23 +113,23 @@ void ParticleSystemQuadLoader::onHandlePropTypeColor4FVar(Node * pNode, Node * p
         ((ParticleSystemQuad *)pNode)->setEndColor(pColor4FVar[0]);
         ((ParticleSystemQuad *)pNode)->setEndColorVar(pColor4FVar[1]);
     } else {
-        NodeLoader::onHandlePropTypeColor4FVar(pNode, pParent, pPropertyName, pColor4FVar, pCCBReader);
+        NodeLoader::onHandlePropTypeColor4FVar(pNode, pParent, pPropertyName, pColor4FVar, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(Node * pNode, Node * pParent, const char * pPropertyName, BlendFunc pBlendFunc, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_BLENDFUNC) == 0) {
         ((ParticleSystemQuad *)pNode)->setBlendFunc(pBlendFunc);
     } else {
-        NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, pCCBReader);
+        NodeLoader::onHandlePropTypeBlendFunc(pNode, pParent, pPropertyName, pBlendFunc, ccbReader);
     }
 }
 
-void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * pCCBReader) {
+void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pParent, const char * pPropertyName, Texture2D * pTexture2D, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TEXTURE) == 0) {
         ((ParticleSystemQuad *)pNode)->setTexture(pTexture2D);
     } else {
-        NodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pTexture2D, pCCBReader);
+        NodeLoader::onHandlePropTypeTexture(pNode, pParent, pPropertyName, pTexture2D, ccbReader);
     }
 }
 

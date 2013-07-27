@@ -109,6 +109,11 @@ NS_CC_END
 #undef RELATIVE
 #endif
 
+// Conflicted with CCBReader::SizeType::RELATIVE and CCBReader::ScaleType::RELATIVE, so we need to undef it.
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+
 // Conflicted with HttpRequest::Type::DELETE, so we need to undef it.
 #ifdef DELETE
 #undef DELETE
