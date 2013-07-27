@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Jul 27 10:06:58 2013.
+** Generated automatically by tolua++-1.0.92 on Sat Jul 27 22:32:13 2013.
 */
 
 /****************************************************************************
@@ -20327,12 +20327,12 @@ static int tolua_Cocos2d_CCSprite_setScaleX00(lua_State* tolua_S)
 #endif
  {
   Sprite* self = (Sprite*)  tolua_tousertype(tolua_S,1,0);
-  float scaleX = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fScaleX = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleX'", NULL);
 #endif
   {
-   self->setScaleX(scaleX);
+   self->setScaleX(fScaleX);
   }
  }
  return 0;
@@ -20360,12 +20360,12 @@ static int tolua_Cocos2d_CCSprite_setScaleY00(lua_State* tolua_S)
 #endif
  {
   Sprite* self = (Sprite*)  tolua_tousertype(tolua_S,1,0);
-  float scaleY = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fScaleY = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setScaleY'", NULL);
 #endif
   {
-   self->setScaleY(scaleY);
+   self->setScaleY(fScaleY);
   }
  }
  return 0;
