@@ -881,3 +881,12 @@ rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
 _G["kParticleStartSizeEqualToEndSize"] = _G["kCCParticleStartSizeEqualToEndSize"]
 _G["kParticleDurationInfinity"] = _G["kCCParticleDurationInfinity"]
 --enums of CCParticleSystem will be deprecated end
+
+--enums of CCRenderTexture will be deprecated begin
+local CCRenderTextureDeprecated = { }
+function CCRenderTextureDeprecated.newCCImage(self)
+    deprecatedTip("CCRenderTexture:newCCImage","CCRenderTexture:newImage")
+    return self:newImage()
+end
+rawset(CCRenderTexture, "newCCImage", CCRenderTextureDeprecated.newCCImage)
+--enums of CCRenderTexture will be deprecated end
