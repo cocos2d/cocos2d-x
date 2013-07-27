@@ -14,10 +14,6 @@
 
 #include <ctype.h>
 
-#ifdef __CC_PLATFORM_IOS
-#include <UIKit/UIDevice.h>
-#endif
-
 using namespace std;
 
 NS_CC_EXT_BEGIN;
@@ -79,7 +75,7 @@ CCBReader::CCBReader(NodeLoaderLibrary * pNodeLoaderLibrary, CCBMemberVariableAs
     init();
 }
 
-CCBReader::CCBReader(CCBReader * pCCBReader) 
+CCBReader::CCBReader(CCBReader * ccbReader) 
 : mData(NULL)
 , mBytes(NULL)
 , mCurrentByte(-1)
@@ -94,22 +90,22 @@ CCBReader::CCBReader(CCBReader * pCCBReader)
 , mOwnerCallbackNodes(NULL)
 , hasScriptingOwner(false)
 {
-    this->mLoadedSpriteSheets = pCCBReader->mLoadedSpriteSheets;
-    this->mNodeLoaderLibrary = pCCBReader->mNodeLoaderLibrary;
+    this->mLoadedSpriteSheets = ccbReader->mLoadedSpriteSheets;
+    this->mNodeLoaderLibrary = ccbReader->mNodeLoaderLibrary;
     this->mNodeLoaderLibrary->retain();
 
-    this->mCCBMemberVariableAssigner = pCCBReader->mCCBMemberVariableAssigner;
-    this->mCCBSelectorResolver = pCCBReader->mCCBSelectorResolver;
-    this->mNodeLoaderListener = pCCBReader->mNodeLoaderListener;
+    this->mCCBMemberVariableAssigner = ccbReader->mCCBMemberVariableAssigner;
+    this->mCCBSelectorResolver = ccbReader->mCCBSelectorResolver;
+    this->mNodeLoaderListener = ccbReader->mNodeLoaderListener;
 
-    this->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
-    this->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
+    this->mOwnerCallbackNames = ccbReader->mOwnerCallbackNames;
+    this->mOwnerCallbackNodes = ccbReader->mOwnerCallbackNodes;
     this->mOwnerCallbackNodes->retain();
-    this->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
-    this->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
+    this->mOwnerOutletNames = ccbReader->mOwnerOutletNames;
+    this->mOwnerOutletNodes = ccbReader->mOwnerOutletNodes;
     this->mOwnerOutletNodes->retain();
     
-    this->mCCBRootPath = pCCBReader->getCCBRootPath();
+    this->mCCBRootPath = ccbReader->getCCBRootPath();
     
     init();
 }
@@ -279,13 +275,13 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     Dictionary* animationManagers = Dictionary::create();
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
     
-    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1 && !jsControlled)
+    if (pNodeGraph && mActionManager->getAutoPlaySequenceId() != -1 && !_jsControlled)
     {
         // Auto play animations
         mActionManager->runAnimationsForSequenceIdTweenDuration(mActionManager->getAutoPlaySequenceId(), 0);
     }
     // Assign actionManagers to userObject
-    if(jsControlled) {
+    if(_jsControlled) {
         mNodesWithAnimationManagers = new Array();
         mAnimationManagersForNodes = new Array();
     }
@@ -297,7 +293,7 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
         CCBAnimationManager* manager = static_cast<CCBAnimationManager*>(animationManagers->objectForKey((intptr_t)pNode));
         pNode->setUserObject(manager);
 
-        if (jsControlled)
+        if (_jsControlled)
         {
             mNodesWithAnimationManagers->addObject(pNode);
             mAnimationManagersForNodes->addObject(manager);
@@ -395,25 +391,27 @@ bool CCBReader::readHeader()
 
     /* Read version. */
     int version = this->readInt(false);
-    if(version != kCCBVersion) {
-        log("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, kCCBVersion);
+    if(version != CCB_VERSION) {
+        log("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, CCB_VERSION);
         return false;
     }
 
     // Read JS check
-    jsControlled = this->readBool();
-    mActionManager->jsControlled = jsControlled;
+    _jsControlled = this->readBool();
+    mActionManager->_jsControlled = _jsControlled;
 
     return true;
 }
 
-unsigned char CCBReader::readByte() {
+unsigned char CCBReader::readByte()
+{
     unsigned char byte = this->mBytes[this->mCurrentByte];
     this->mCurrentByte++;
     return byte;
 }
 
-bool CCBReader::readBool() {
+bool CCBReader::readBool()
+{
     return 0 == this->readByte() ? false : true;
 }
 
@@ -496,19 +494,21 @@ int CCBReader::readInt(bool pSigned) {
 }
 
 
-float CCBReader::readFloat() {
-    unsigned char type = this->readByte();
+float CCBReader::readFloat()
+{
+    FloatType type = static_cast<FloatType>(this->readByte());
     
-    switch (type) {
-        case kCCBFloat0:
+    switch (type)
+    {
+        case FloatType::_0:
             return 0;    
-        case kCCBFloat1:
+        case FloatType::_1:
             return 1;
-        case kCCBFloatMinus1:
+        case FloatType::MINUS1:
             return -1;
-        case kCCBFloat05:
+        case FloatType::_05:
             return 0.5f;
-        case kCCBFloatInteger:
+        case FloatType::INTEGER:
             return (float)this->readInt(true);
         default:
             {
@@ -537,25 +537,28 @@ float CCBReader::readFloat() {
     }
 }
 
-std::string CCBReader::readCachedString() {
+std::string CCBReader::readCachedString()
+{
     int n = this->readInt(false);
     return this->mStringCache[n];
 }
 
-Node * CCBReader::readNodeGraph(Node * pParent) {
+Node * CCBReader::readNodeGraph(Node * pParent)
+{
     /* Read class name. */
     std::string className = this->readCachedString();
 
-    std::string jsControlledName;
+    std::string _jsControlledName;
     
-    if(jsControlled) {
-        jsControlledName = this->readCachedString();
+    if(_jsControlled) {
+        _jsControlledName = this->readCachedString();
     }
     
     // Read assignment type and name
-    int memberVarAssignmentType = this->readInt(false);
+    TargetType memberVarAssignmentType = static_cast<TargetType>(this->readInt(false));
     std::string memberVarAssignmentName;
-    if(memberVarAssignmentType != kCCBTargetTypeNone) {
+    if(memberVarAssignmentType != TargetType::NONE)
+    {
         memberVarAssignmentName = this->readCachedString();
     }
     
@@ -576,9 +579,9 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
     }
     
     // Assign controller
-    if(jsControlled && node == mActionManager->getRootNode())
+    if(_jsControlled && node == mActionManager->getRootNode())
     {
-        mActionManager->setDocumentControllerName(jsControlledName);
+        mActionManager->setDocumentControllerName(_jsControlledName);
     }
 
     // Read animated properties
@@ -606,7 +609,7 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
             
             for (int k = 0; k < numKeyframes; ++k)
             {
-                CCBKeyframe *keyframe = readKeyframe(seqProp->getType());
+                CCBKeyframe *keyframe = readKeyframe(static_cast<PropertyType>(seqProp->getType()));
                 
                 seqProp->getKeyframes()->addObject(keyframe);
             }
@@ -654,16 +657,16 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
      [[JSCocoa sharedController] setObject:node withName:memberVarAssignmentName];
      }*/
 #else
-    if (memberVarAssignmentType != kCCBTargetTypeNone)
+    if (memberVarAssignmentType != TargetType::NONE)
     {
-        if(!jsControlled)
+        if(!_jsControlled)
         {
             Object * target = NULL;
-            if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) 
+            if(memberVarAssignmentType == TargetType::DOCUMENT_ROOT)
             {
                 target = mActionManager->getRootNode();
             } 
-            else if(memberVarAssignmentType == kCCBTargetTypeOwner) 
+            else if(memberVarAssignmentType == TargetType::OWNER)
             {
                 target = this->mOwner;
             }
@@ -673,13 +676,15 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
                 
                 bool assigned = false;
-                if (memberVarAssignmentType != kCCBTargetTypeNone)
+                if (memberVarAssignmentType != TargetType::NONE)
                 {
-                    if(targetAsCCBMemberVariableAssigner != NULL) {
+                    if(targetAsCCBMemberVariableAssigner != NULL)
+                    {
                         assigned = targetAsCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
                     }
                     
-                    if(!assigned && this->mCCBMemberVariableAssigner != NULL) {
+                    if(!assigned && this->mCCBMemberVariableAssigner != NULL)
+                    {
                         assigned = this->mCCBMemberVariableAssigner->onAssignCCBMemberVariable(target, memberVarAssignmentName.c_str(), node);
                     }
                 }
@@ -687,10 +692,13 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
         }
         else
         {
-            if(memberVarAssignmentType == kCCBTargetTypeDocumentRoot) {
+            if(memberVarAssignmentType == TargetType::DOCUMENT_ROOT)
+            {
                 mActionManager->addDocumentOutletName(memberVarAssignmentName);
                 mActionManager->addDocumentOutletNode(node);
-            } else {
+            }
+            else
+            {
                 mOwnerOutletNames.push_back(memberVarAssignmentName);
                 mOwnerOutletNodes->addObject(node);
             }
@@ -698,11 +706,11 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
     }
     
     // Assign custom properties.
-    if (ccNodeLoader->getCustomProperties()->count() > 0) {
-            
+    if (ccNodeLoader->getCustomProperties()->count() > 0)
+    {
         bool customAssigned = false;
         
-        if(!jsControlled)
+        if(!_jsControlled)
         {
             Object * target = node;
             if(target != NULL)
@@ -753,38 +761,38 @@ Node * CCBReader::readNodeGraph(Node * pParent) {
     return node;
 }
 
-CCBKeyframe* CCBReader::readKeyframe(int type)
+CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
 {
     CCBKeyframe *keyframe = new CCBKeyframe();
     keyframe->autorelease();
     
     keyframe->setTime(readFloat());
     
-    int easingType = readInt(false);
+    CCBKeyframe::EasingType easingType = static_cast<CCBKeyframe::EasingType>(readInt(false));
     float easingOpt = 0;
     Object *value = NULL;
     
-    if (easingType == kCCBKeyframeEasingCubicIn
-        || easingType == kCCBKeyframeEasingCubicOut
-        || easingType == kCCBKeyframeEasingCubicInOut
-        || easingType == kCCBKeyframeEasingElasticIn
-        || easingType == kCCBKeyframeEasingElasticOut
-        || easingType == kCCBKeyframeEasingElasticInOut)
+    if (easingType == CCBKeyframe::EasingType::CUBIC_IN
+        || easingType == CCBKeyframe::EasingType::CUBIC_OUT
+        || easingType == CCBKeyframe::EasingType::CUBIC_INOUT
+        || easingType == CCBKeyframe::EasingType::ELASTIC_IN
+        || easingType == CCBKeyframe::EasingType::ELASTIC_OUT
+        || easingType == CCBKeyframe::EasingType::ELASTIC_INOUT)
     {
         easingOpt = readFloat();
     }
     keyframe->setEasingType(easingType);
     keyframe->setEasingOpt(easingOpt);
     
-    if (type == kCCBPropTypeCheck)
+    if (type == PropertyType::CHECK)
     {
         value = CCBValue::create(readBool());
     }
-    else if (type == kCCBPropTypeByte)
+    else if (type == PropertyType::BYTE)
     {
         value = CCBValue::create(readByte());
     }
-    else if (type == kCCBPropTypeColor3)
+    else if (type == PropertyType::COLOR3)
     {
         int r = readByte();
         int g = readByte();
@@ -793,12 +801,12 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
         Color3B c = Color3B(r,g,b);
         value = Color3BWapper::create(c);
     }
-    else if (type == kCCBPropTypeDegrees)
+    else if (type == PropertyType::DEGREES)
     {
         value = CCBValue::create(readFloat());
     }
-    else if (type == kCCBPropTypeScaleLock || type == kCCBPropTypePosition
-	     || type == kCCBPropTypeFloatXY)
+    else if (type == PropertyType::SCALE_LOCK || type == PropertyType::POSITION
+	     || type == PropertyType::FLOAT_XY)
     {
         float a = readFloat();
         float b = readFloat();
@@ -807,7 +815,7 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
                                 CCBValue::create(b),
                                 NULL);
     }
-    else if (type == kCCBPropTypeSpriteFrame)
+    else if (type == PropertyType::SPRITEFRAME)
     {
         std::string spriteSheet = readCachedString();
         std::string spriteFile = readCachedString();
@@ -846,7 +854,8 @@ CCBKeyframe* CCBReader::readKeyframe(int type)
 }
 
 
-bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
+bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq)
+{
     int numKeyframes = readInt(false);
     if(!numKeyframes) return true;
     
@@ -870,7 +879,7 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq) {
         keyframe->setTime(time);
         keyframe->setValue(value);
         
-        if(jsControlled) {
+        if(_jsControlled) {
             string callbackIdentifier;
             mActionManager->getKeyframeCallbacks()->addObject(String::createWithFormat("%d:%s",callbackType, callbackName.c_str()));
         }
@@ -983,7 +992,7 @@ bool CCBReader::endsWith(const char* pString, const char* pEnding) {
 }
 
 bool CCBReader::isJSControlled() {
-    return jsControlled;
+    return _jsControlled;
 }
 
 void CCBReader::addOwnerCallbackName(std::string name) {

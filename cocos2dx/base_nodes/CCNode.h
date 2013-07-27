@@ -224,9 +224,9 @@ public:
      *
      * The deafult value is 1.0 if you haven't changed it before
      *
-     * @param fScaleX   The scale factor on X axis.
+     * @param scaleX   The scale factor on X axis.
      */
-    virtual void setScaleX(float fScaleX);
+    virtual void setScaleX(float scaleX);
     /**
      * Returns the scale factor on X axis of this node
      *
@@ -242,9 +242,9 @@ public:
      *
      * The Default value is 1.0 if you haven't changed it before.
      *
-     * @param fScaleY   The scale factor on Y axis.
+     * @param scaleY   The scale factor on Y axis.
      */
-    virtual void setScaleY(float fScaleY);
+    virtual void setScaleY(float scaleY);
     /**
      * Returns the scale factor on Y axis of this node
      *

@@ -7,7 +7,7 @@ NS_CC_EXT_BEGIN
 CCBKeyframe::CCBKeyframe()
 : mValue(NULL)
 , mTime(0.0f)
-, mEasingType(0)
+, mEasingType(EasingType::INSTANT)
 , mEasingOpt(0.0f)
 {}
 
@@ -38,14 +38,14 @@ void CCBKeyframe::setTime(float fTime)
     mTime = fTime;
 }
 
-int CCBKeyframe::getEasingType()
+CCBKeyframe::EasingType CCBKeyframe::getEasingType()
 {
     return mEasingType;
 }
 
-void CCBKeyframe::setEasingType(int nEasingType)
+void CCBKeyframe::setEasingType(CCBKeyframe::EasingType easingType)
 {
-    mEasingType = nEasingType;
+    mEasingType = easingType;
 }
 
 float CCBKeyframe::getEasingOpt()

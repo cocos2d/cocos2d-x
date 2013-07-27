@@ -43,7 +43,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-#define cccontrol_selector(_SELECTOR) (Control::Handler)(&_SELECTOR)
+#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
 
 class Invocation : public Object
 {

@@ -24,7 +24,7 @@ public:
     void setName(const char* pName);
     
     int getType();
-    void setType(int nType);
+    void setType(int type);
     
     Array* getKeyframes();
 };

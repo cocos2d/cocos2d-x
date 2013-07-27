@@ -10,7 +10,7 @@
 
 NS_CC_EXT_BEGIN
 
-void LayerLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+void LayerLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TOUCH_ENABLED) == 0) {
         ((Layer *)pNode)->setTouchEnabled(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_ACCELEROMETER_ENABLED) == 0) {
@@ -23,7 +23,7 @@ void LayerLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char
         CCLOG("The property '%s' is not supported!", PROPERTY_KEYBOARD_ENABLED);
         // This comes closest: ((Layer *)pNode)->setKeypadEnabled(pCheck);
     } else {
-        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
+        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, ccbReader);
     }
 }
 
