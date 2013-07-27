@@ -287,12 +287,12 @@ end
 local function drawCardinalSpline(array)
 	kmGLPushMatrix()
 	kmGLTranslatef(50, 50, 0)
-	ccDrawCardinalSpline(array, 0, 100)
+	CCDrawPrimitives.ccDrawCardinalSpline(array, 0, 100)
 	kmGLPopMatrix()
 
 	kmGLPushMatrix()
 	kmGLTranslatef(size.width / 2, 50, 0)
-	ccDrawCardinalSpline(array, 1, 100)
+	CCDrawPrimitives.ccDrawCardinalSpline(array, 1, 100)
 	kmGLPopMatrix()
 end
 
@@ -336,10 +336,10 @@ end
 local function drawCatmullRom(array1, array2)
 	kmGLPushMatrix()
 	kmGLTranslatef(50, 50, 0)
-	ccDrawCatmullRom(array1, 50)
+	CCDrawPrimitives.ccDrawCatmullRom(array1, 50)
 	kmGLPopMatrix()
 
-	ccDrawCatmullRom(array2,50)
+	CCDrawPrimitives.ccDrawCatmullRom(array2,50)
 end
 
 local function ActionCatmullRom()
