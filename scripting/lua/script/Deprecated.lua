@@ -775,18 +775,109 @@ rawset(CCTMXObjectGroup,"objectNamed", CCTMXObjectGroupDeprecated.objectNamed)
 
 
 --functions of WebSocket will be deprecated begin
-local WebSocketDeprecated = { }
-function WebSocketDeprecated.sendTextMsg(self, string)
-    deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")
-    return self:sendString(string)
-end
-rawset(WebSocket,"sendTextMsg", WebSocketDeprecated.sendTextMsg)
+local targetPlatform = CCApplication:getInstance():getTargetPlatform()
+if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+    local WebSocketDeprecated = { }
+    function WebSocketDeprecated.sendTextMsg(self, string)
+        deprecatedTip("WebSocket:sendTextMsg","WebSocket:sendString")
+        return self:sendString(string)
+    end
+    rawset(WebSocket,"sendTextMsg", WebSocketDeprecated.sendTextMsg)
 
-function WebSocketDeprecated.sendBinaryMsg(self, table,tablesize)
-    deprecatedTip("WebSocket:sendBinaryMsg","WebSocket:sendString")
-    string.char(unpack(table))
-    return self:sendString(string.char(unpack(table)))
+    function WebSocketDeprecated.sendBinaryMsg(self, table,tablesize)
+        deprecatedTip("WebSocket:sendBinaryMsg","WebSocket:sendString")
+        string.char(unpack(table))
+        return self:sendString(string.char(unpack(table)))
+    end
+    rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 end
-rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 --functions of WebSocket will be deprecated end
 
+
+--functions of CCDrawPrimitives will be deprecated begin
+local CCDrawPrimitivesDeprecated = { }
+function CCDrawPrimitivesDeprecated.ccDrawPoint(pt)
+    deprecatedTip("ccDrawPoint","CCDrawPrimitives.ccDrawPoint")
+    return CCDrawPrimitives.ccDrawPoint(pt)
+end
+rawset(_G, "ccDrawPoint", CCDrawPrimitivesDeprecated.ccDrawPoint)
+
+function CCDrawPrimitivesDeprecated.ccDrawLine(origin,destination)
+    deprecatedTip("ccDrawLine","CCDrawPrimitives.ccDrawLine")
+    return CCDrawPrimitives.ccDrawLine(origin,destination)
+end
+rawset(_G, "ccDrawLine", CCDrawPrimitivesDeprecated.ccDrawLine)
+
+function CCDrawPrimitivesDeprecated.ccDrawRect(origin,destination)
+    deprecatedTip("ccDrawRect","CCDrawPrimitives.ccDrawRect")
+    return CCDrawPrimitives.ccDrawRect(origin,destination)
+end
+rawset(_G, "ccDrawRect", CCDrawPrimitivesDeprecated.ccDrawRect)
+
+function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
+    deprecatedTip("ccDrawSolidRect","CCDrawPrimitives.ccDrawSolidRect")
+    return CCDrawPrimitives.ccDrawSolidRect(origin,destination,color)
+end
+rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
+
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
+    deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
+    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
+end
+rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
+
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,...)
+    deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
+    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,...)
+end
+rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
+
+function CCDrawPrimitivesDeprecated.ccDrawQuadBezier(origin,control,destination,segments)
+    deprecatedTip("ccDrawQuadBezier","CCDrawPrimitives.ccDrawQuadBezier")
+    return CCDrawPrimitives.ccDrawQuadBezier(origin,control,destination,segments)
+end
+rawset(_G, "ccDrawQuadBezier", CCDrawPrimitivesDeprecated.ccDrawQuadBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+    deprecatedTip("ccDrawCubicBezier","CCDrawPrimitives.ccDrawCubicBezier")
+    return CCDrawPrimitives.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+end
+rawset(_G, "ccDrawCubicBezier", CCDrawPrimitivesDeprecated.ccDrawCubicBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCatmullRom(arrayOfControlPoints,segments)
+    deprecatedTip("ccDrawCatmullRom","CCDrawPrimitives.ccDrawCatmullRom")
+    return CCDrawPrimitives.ccDrawCatmullRom(arrayOfControlPoints,segments)
+end
+rawset(_G, "ccDrawCatmullRom", CCDrawPrimitivesDeprecated.ccDrawCatmullRom)
+
+function CCDrawPrimitivesDeprecated.ccDrawCardinalSpline(config,tension,segments)
+    deprecatedTip("ccDrawCardinalSpline","CCDrawPrimitives.ccDrawCardinalSpline")
+    return CCDrawPrimitives.ccDrawCardinalSpline(config,tension,segments)
+end
+rawset(_G, "ccDrawCardinalSpline", CCDrawPrimitivesDeprecated.ccDrawCardinalSpline)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4B(r,g,b,a)
+    deprecatedTip("ccDrawColor4B","CCDrawPrimitives.ccDrawColor4B")
+    return CCDrawPrimitives.ccDrawColor4B(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4B", CCDrawPrimitivesDeprecated.ccDrawColor4B)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4F(r,g,b,a)
+    deprecatedTip("ccDrawColor4F","CCDrawPrimitives.ccDrawColor4F")
+    return CCDrawPrimitives.ccDrawColor4F(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
+
+function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
+    deprecatedTip("ccPointSize","CCDrawPrimitives.ccPointSize")
+    return CCDrawPrimitives.ccPointSize(pointSize)
+end
+rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
+--functions of CCDrawPrimitives will be deprecated end
+
+--enums of CCParticleSystem will be deprecated begin
+_G["kParticleStartSizeEqualToEndSize"] = _G["kCCParticleStartSizeEqualToEndSize"]
+_G["kParticleDurationInfinity"] = _G["kCCParticleDurationInfinity"]
+--enums of CCParticleSystem will be deprecated end

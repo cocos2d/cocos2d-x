@@ -655,7 +655,7 @@ local function DemoBigFlower()
     -- size, in pixels
     emitter:setStartSize(80.0)
     emitter:setStartSizeVar(40.0)
-    emitter:setEndSize(kParticleStartSizeEqualToEndSize)
+    emitter:setEndSize(kCCParticleStartSizeEqualToEndSize)
 
     -- emits per second
     emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
@@ -728,7 +728,7 @@ local function DemoRotFlower()
     -- size, in pixels
     emitter:setStartSize(30.0)
     emitter:setStartSizeVar(0)
-    emitter:setEndSize(kParticleStartSizeEqualToEndSize)
+    emitter:setEndSize(kCCParticleStartSizeEqualToEndSize)
 
     -- emits per second
     emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
