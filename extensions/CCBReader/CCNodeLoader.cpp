@@ -917,22 +917,22 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     CC_SAFE_DELETE_ARRAY(pBytes);
 
     data->retain();
-    reader->mData = data;
-    reader->mBytes = data->getBytes();
-    reader->mCurrentByte = 0;
-    reader->mCurrentBit = 0;
-    CC_SAFE_RETAIN(pCCBReader->mOwner);
-    reader->mOwner = pCCBReader->mOwner;
+    reader->_data = data;
+    reader->_bytes = data->getBytes();
+    reader->_currentByte = 0;
+    reader->_currentBit = 0;
+    CC_SAFE_RETAIN(pCCBReader->_owner);
+    reader->_owner = pCCBReader->_owner;
     
-    reader->getAnimationManager()->mOwner = reader->mOwner;
+    reader->getAnimationManager()->_owner = reader->_owner;
 
     // The assignments below are done in the CCBReader constructor.
-//     reader->mOwnerOutletNames = pCCBReader->mOwnerOutletNames;
-//     reader->mOwnerOutletNodes = pCCBReader->mOwnerOutletNodes;
-//     reader->mOwnerOutletNodes->retain();
-//     reader->mOwnerCallbackNames = pCCBReader->mOwnerCallbackNames;
-//     reader->mOwnerCallbackNodes = pCCBReader->mOwnerCallbackNodes;
-//     reader->mOwnerCallbackNodes->retain();
+//     reader->_ownerOutletNames = pCCBReader->_ownerOutletNames;
+//     reader->_ownerOutletNodes = pCCBReader->_ownerOutletNodes;
+//     reader->_ownerOutletNodes->retain();
+//     reader->_ownerCallbackNames = pCCBReader->_ownerCallbackNames;
+//     reader->_ownerCallbackNodes = pCCBReader->_ownerCallbackNodes;
+//     reader->_ownerCallbackNodes->retain();
 
     data->release();
     
@@ -944,7 +944,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         reader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(reader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
-    if (reader->isJSControlled() && pCCBReader->isJSControlled() && NULL != reader->mOwner)
+    if (reader->isJSControlled() && pCCBReader->isJSControlled() && NULL != reader->_owner)
     {
         //set variables and callback to owner
         //set callback

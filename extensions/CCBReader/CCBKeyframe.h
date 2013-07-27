@@ -48,10 +48,10 @@ public:
     void setEasingOpt(float fEasingOpt);
     
 private:
-    Object *mValue;
-    float mTime;
-    EasingType mEasingType;
-    float mEasingOpt;
+    Object *_value;
+    float _time;
+    EasingType _easingType;
+    float _easingOpt;
 };
 
 NS_CC_EXT_END

@@ -26,7 +26,7 @@ CCBAnimationManager::CCBAnimationManager()
 , _delegate(NULL)
 , _runningSequence(NULL)
 , _jsControlled(false)
-, mOwner(NULL)
+, _owner(NULL)
 {
     init();
 }
@@ -42,7 +42,7 @@ bool CCBAnimationManager::init()
     _documentCallbackNames = new Array();
     _documentCallbackNodes = new Array();
     _keyframeCallbacks = new Array();
-    mKeyframeCallFuncs = new Dictionary();
+    _keyframeCallFuncs = new Dictionary();
 
     _target = NULL;
     _animationCompleteCallbackFunc = NULL;
@@ -76,7 +76,7 @@ CCBAnimationManager::~CCBAnimationManager()
     CC_SAFE_RELEASE(_documentCallbackNames);
     CC_SAFE_RELEASE(_documentCallbackNodes);
     
-    CC_SAFE_RELEASE(mKeyframeCallFuncs);
+    CC_SAFE_RELEASE(_keyframeCallFuncs);
     CC_SAFE_RELEASE(_keyframeCallbacks);
     CC_SAFE_RELEASE(_target);
 }
@@ -602,7 +602,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
 	
         if(_jsControlled) {
             String* callbackName = String::createWithFormat("%d:%s", selectorTarget, selectorName.c_str());
-            CallFunc *callback = ((CallFunc*)(mKeyframeCallFuncs->objectForKey(callbackName->getCString())))->clone();
+            CallFunc *callback = ((CallFunc*)(_keyframeCallFuncs->objectForKey(callbackName->getCString())))->clone();
 
             if(callback != NULL) {
                 actions->addObject(callback);
@@ -615,7 +615,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
             if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
                 target = _rootNode;
             else if (selectorTarget == CCBReader::TargetType::OWNER)
-                target = mOwner;
+                target = _owner;
             
             if(target != NULL)
             {
@@ -859,7 +859,7 @@ void CCBAnimationManager::setAnimationCompletedCallback(Object *target, SEL_Call
 }
 
 void CCBAnimationManager::setCallFunc(CallFunc* callFunc, const std::string &callbackNamed) {
-    mKeyframeCallFuncs->setObject((Object*)callFunc, callbackNamed);
+    _keyframeCallFuncs->setObject((Object*)callFunc, callbackNamed);
 }
 
 void CCBAnimationManager::sequenceCompleted()
@@ -915,22 +915,22 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::create(SpriteFrame *pSpriteFrame)
 
 bool CCBSetSpriteFrame::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    mSpriteFrame = pSpriteFrame;
-    CC_SAFE_RETAIN(mSpriteFrame);
+    _spriteFrame = pSpriteFrame;
+    CC_SAFE_RETAIN(_spriteFrame);
     
     return true;
 }
 
 CCBSetSpriteFrame::~CCBSetSpriteFrame()
 {
-    CC_SAFE_RELEASE_NULL(mSpriteFrame);
+    CC_SAFE_RELEASE_NULL(_spriteFrame);
 }
 
 CCBSetSpriteFrame* CCBSetSpriteFrame::clone() const
 {
 	// no copy constructor
 	auto a = new CCBSetSpriteFrame();
-    a->initWithSpriteFrame(mSpriteFrame);
+    a->initWithSpriteFrame(_spriteFrame);
 	a->autorelease();
 	return a;
 }
@@ -943,7 +943,7 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 
 void CCBSetSpriteFrame::update(float time)
 {
-    ((Sprite*)_target)->setDisplayFrame(mSpriteFrame);
+    ((Sprite*)_target)->setDisplayFrame(_spriteFrame);
 }
 
 
@@ -970,10 +970,10 @@ CCBSoundEffect::~CCBSoundEffect()
 }
 
 bool CCBSoundEffect::initWithSoundFile(const std::string &filename, float pitch, float pan, float gain) {
-    mSoundFile = filename;
-    mPitch = pitch;
-    mPan = pan;
-    mGain = gain;
+    _soundFile = filename;
+    _pitch = pitch;
+    _pan = pan;
+    _gain = gain;
     return true;
 }
 
@@ -981,7 +981,7 @@ CCBSoundEffect* CCBSoundEffect::clone() const
 {
 	// no copy constructor
 	auto a = new CCBSoundEffect();
-    a->initWithSoundFile(mSoundFile, mPitch, mPan, mGain);
+    a->initWithSoundFile(_soundFile, _pitch, _pan, _gain);
 	a->autorelease();
 	return a;
 }
@@ -994,7 +994,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 
 void CCBSoundEffect::update(float time)
 {
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(mSoundFile.c_str());
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(_soundFile.c_str());
 }
 
 
@@ -1024,7 +1024,7 @@ bool CCBRotateTo::initWithDuration(float fDuration, float fAngle)
 {
     if (ActionInterval::initWithDuration(fDuration))
     {
-        mDstAngle = fAngle;
+        _dstAngle = fAngle;
         
         return true;
     }
@@ -1038,7 +1038,7 @@ CCBRotateTo* CCBRotateTo::clone() const
 {
 	// no copy constructor	
 	auto a = new CCBRotateTo();
-    a->initWithDuration(_duration, mDstAngle);
+    a->initWithDuration(_duration, _dstAngle);
 	a->autorelease();
 	return a;
 }
@@ -1052,13 +1052,13 @@ CCBRotateTo* CCBRotateTo::reverse() const
 void CCBRotateTo::startWithTarget(Node *pNode)
 {
     ActionInterval::startWithTarget(pNode);
-    mStartAngle = _target->getRotation();
-    mDiffAngle = mDstAngle - mStartAngle;
+    _startAngle = _target->getRotation();
+    _diffAngle = _dstAngle - _startAngle;
 }
 
 void CCBRotateTo::update(float time)
 {
-    _target->setRotation(mStartAngle + (mDiffAngle * time))
+    _target->setRotation(_startAngle + (_diffAngle * time))
     ;
 }
 
@@ -1092,7 +1092,7 @@ bool CCBRotateXTo::initWithDuration(float fDuration, float fAngle)
 {
     if (ActionInterval::initWithDuration(fDuration))
     {
-        mDstAngle = fAngle;
+        _dstAngle = fAngle;
         
         return true;
     }
@@ -1110,15 +1110,15 @@ void CCBRotateXTo::startWithTarget(Node *pNode)
     _target = pNode;
     _elapsed = 0.0f;
     _firstTick = true;
-    mStartAngle = _target->getRotationX();
-    mDiffAngle = mDstAngle - mStartAngle;
+    _startAngle = _target->getRotationX();
+    _diffAngle = _dstAngle - _startAngle;
 }
 
 CCBRotateXTo* CCBRotateXTo::clone() const
 {
 	// no copy constructor
 	auto a = new CCBRotateXTo();
-    a->initWithDuration(_duration, mDstAngle);
+    a->initWithDuration(_duration, _dstAngle);
 	a->autorelease();
 	return a;
 }
@@ -1131,7 +1131,7 @@ CCBRotateXTo* CCBRotateXTo::reverse() const
 
 void CCBRotateXTo::update(float time)
 {
-    _target->setRotationX(mStartAngle + (mDiffAngle * time))
+    _target->setRotationX(_startAngle + (_diffAngle * time))
     ;
 }
 
@@ -1165,7 +1165,7 @@ bool CCBRotateYTo::initWithDuration(float fDuration, float fAngle)
 {
     if (ActionInterval::initWithDuration(fDuration))
     {
-        mDstAngle = fAngle;
+        _dstAngle = fAngle;
         
         return true;
     }
@@ -1179,7 +1179,7 @@ CCBRotateYTo* CCBRotateYTo::clone() const
 {
 	// no copy constructor
 	auto a = new CCBRotateYTo();
-    a->initWithDuration(_duration, mDstAngle);
+    a->initWithDuration(_duration, _dstAngle);
 	a->autorelease();
 	return a;
 }
@@ -1198,13 +1198,13 @@ void CCBRotateYTo::startWithTarget(Node *pNode)
     _target = pNode;
     _elapsed = 0.0f;
     _firstTick = true;
-    mStartAngle = _target->getRotationY();
-    mDiffAngle = mDstAngle - mStartAngle;
+    _startAngle = _target->getRotationY();
+    _diffAngle = _dstAngle - _startAngle;
 }
 
 void CCBRotateYTo::update(float time)
 {
-    _target->setRotationY(mStartAngle + (mDiffAngle * time))
+    _target->setRotationY(_startAngle + (_diffAngle * time))
     ;
 }
 

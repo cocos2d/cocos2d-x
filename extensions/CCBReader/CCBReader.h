@@ -40,7 +40,7 @@ NS_CC_EXT_BEGIN
 class CCBFile : public Node
 {
 private:
-    Node *mCCBFileNode;
+    Node *_CCBFileNode;
     
 public:
     CCBFile();
@@ -149,7 +149,7 @@ public:
     virtual ~CCBReader();
     CCBReader();
    
-    void setCCBRootPath(const char* pCCBRootPath);
+    void setCCBRootPath(const char* ccbRootPath);
     const std::string& getCCBRootPath() const;
 
     Node* readNodeGraphFromFile(const char *pCCBFileName);
@@ -235,38 +235,38 @@ private:
     friend class NodeLoader;
 
 private:
-    Data *mData;
-    unsigned char *mBytes;
-    int mCurrentByte;
-    int mCurrentBit;
+    Data *_data;
+    unsigned char *_bytes;
+    int _currentByte;
+    int _currentBit;
     
-    std::vector<std::string> mStringCache;
-    std::set<std::string> mLoadedSpriteSheets;
+    std::vector<std::string> _stringCache;
+    std::set<std::string> _loadedSpriteSheets;
     
-    Object *mOwner;
+    Object *_owner;
     
-    CCBAnimationManager *mActionManager; //retain
-    Dictionary* mActionManagers;
+    CCBAnimationManager *_actionManager; //retain
+    Dictionary* _actionManagers;
     
-    std::set<std::string> *mAnimatedProps;
+    std::set<std::string> *_animatedProps;
     
-    NodeLoaderLibrary *mNodeLoaderLibrary;
-    NodeLoaderListener *mNodeLoaderListener;
-    CCBMemberVariableAssigner *mCCBMemberVariableAssigner;
-    CCBSelectorResolver *mCCBSelectorResolver;
+    NodeLoaderLibrary *_nodeLoaderLibrary;
+    NodeLoaderListener *_nodeLoaderListener;
+    CCBMemberVariableAssigner *_CCBMemberVariableAssigner;
+    CCBSelectorResolver *_CCBSelectorResolver;
     
-    std::vector<std::string> mOwnerOutletNames;
-    Array* mOwnerOutletNodes;
-    Array* mNodesWithAnimationManagers;
-    Array* mAnimationManagersForNodes;
+    std::vector<std::string> _ownerOutletNames;
+    Array* _ownerOutletNodes;
+    Array* _nodesWithAnimationManagers;
+    Array* _animationManagersForNodes;
     
-    std::vector<std::string> mOwnerCallbackNames;
-    Array* mOwnerCallbackNodes;
-    std::string mCCBRootPath;
+    std::vector<std::string> _ownerCallbackNames;
+    Array* _ownerCallbackNodes;
+    std::string _CCBRootPath;
     
     bool _jsControlled;
     
-    bool hasScriptingOwner;
+    bool _hasScriptingOwner;
     bool init();
 };
 
