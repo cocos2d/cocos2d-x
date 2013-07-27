@@ -139,6 +139,12 @@ public:
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
     
+    // Backward compatibility
+    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kCCCreateFile = ErrorCode::CREATE_FILE;
+    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kCCNetwork = ErrorCode::NETWORK;
+    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kCCNoNewVersion = ErrorCode::NO_NEW_VERSION;
+    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kCCUncompress = ErrorCode::UNCOMPRESS;
+    
 protected:
     bool downLoad();
     void checkStoragePath();
