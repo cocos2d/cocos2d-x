@@ -27,14 +27,14 @@ class CCBValue : public Object
 {
 public:
     
-    enum Type
+    enum class Type
     {
-        TYPE_INT,
-        TYPE_FLOAT,
-        TYPE_BOOL,
-        TYPE_UNSIGNED_CHAR,
-        TYPE_STRING,
-        TYPE_ARRAY
+        INT,
+        FLOAT,
+        BOOL,
+        UNSIGNED_CHAR,
+        STRING,
+        ARRAY
     };
     
     static CCBValue* create(int nValue);
