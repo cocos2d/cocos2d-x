@@ -21,30 +21,22 @@ public:
     const Color3B& getColor() const;
 };
 
-enum
-{
-    kIntValue,
-    kFloatValue,
-    kBoolValue,
-    kUnsignedCharValue,
-    kStringValue,
-    kArrayValue
-};
+
 
 class CCBValue : public Object
 {
-private:
-    union 
-    {
-        int nValue;
-        float fValue;
-    } mValue;
-    
-    std::string _value;
-    Array* _arrValue;
-    int mType;
-    
 public:
+    
+    enum Type
+    {
+        TYPE_INT,
+        TYPE_FLOAT,
+        TYPE_BOOL,
+        TYPE_UNSIGNED_CHAR,
+        TYPE_STRING,
+        TYPE_ARRAY
+    };
+    
     static CCBValue* create(int nValue);
     static CCBValue* create(bool bValue);
     static CCBValue* create(float fValue);
@@ -60,7 +52,18 @@ public:
     const char* getStringValue();
     Array *getArrayValue();
     
-    int getType();
+    Type getType();
+    
+private:
+    union
+    {
+        int nValue;
+        float fValue;
+    } mValue;
+    
+    std::string _value;
+    Array* _arrValue;
+    Type mType;
 };
 
 NS_CC_EXT_END

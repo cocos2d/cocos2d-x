@@ -39,9 +39,9 @@ int CCBSequenceProperty::getType()
     return mType;
 }
 
-void CCBSequenceProperty::setType(int nType)
+void CCBSequenceProperty::setType(int type)
 {
-    mType = nType;
+    mType = type;
 }
 
 Array* CCBSequenceProperty::getKeyframes()
