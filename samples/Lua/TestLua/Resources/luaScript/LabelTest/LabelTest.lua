@@ -333,8 +333,8 @@ end
 
 function Atlas4.draw()
     local s = CCDirector:getInstance():getWinSize()
-    ccDrawLine( CCPoint(0, s.height/2), CCPoint(s.width, s.height/2) )
-    ccDrawLine( CCPoint(s.width/2, 0), CCPoint(s.width/2, s.height) )
+    CCDrawPrimitives.ccDrawLine( CCPoint(0, s.height/2), CCPoint(s.width, s.height/2) )
+    CCDrawPrimitives.ccDrawLine( CCPoint(s.width/2, 0), CCPoint(s.width/2, s.height) )
 end
 
 function Atlas4.step(dt)
