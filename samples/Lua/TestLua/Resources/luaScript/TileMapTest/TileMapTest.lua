@@ -695,10 +695,10 @@ local function draw()
 
         glLineWidth(3)
 
-        ccDrawLine( CCPoint(x, y), CCPoint((x+width), y) )
-        ccDrawLine( CCPoint((x+width), y), CCPoint((x+width), (y+height)) )
-        ccDrawLine( CCPoint((x+width), (y+height)), CCPoint(x, (y+height)) )
-        ccDrawLine( CCPoint(x, (y+height)), CCPoint(x, y) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x, y), CCPoint((x+width), y) )
+        CCDrawPrimitives.ccDrawLine( CCPoint((x+width), y), CCPoint((x+width), (y+height)) )
+        CCDrawPrimitives.ccDrawLine( CCPoint((x+width), (y+height)), CCPoint(x, (y+height)) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x, (y+height)), CCPoint(x, y) )
 
         glLineWidth(1)
     end
@@ -764,10 +764,10 @@ local function draw()
 
         glLineWidth(3)
 
-        ccDrawLine( CCPoint(x,y), CCPoint(x+width,y) )
-        ccDrawLine( CCPoint(x+width,y), CCPoint(x+width,y+height) )
-        ccDrawLine( CCPoint(x+width,y+height), CCPoint(x,y+height) )
-        ccDrawLine( CCPoint(x,y+height), CCPoint(x,y) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x,y), CCPoint(x+width,y) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x+width,y), CCPoint(x+width,y+height) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x+width,y+height), CCPoint(x,y+height) )
+        CCDrawPrimitives.ccDrawLine( CCPoint(x,y+height), CCPoint(x,y) )
 
         glLineWidth(1)
     end
