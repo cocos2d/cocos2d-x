@@ -46,15 +46,15 @@ void NodeLoaderLibrary::registerDefaultNodeLoaders() {
 
 void NodeLoaderLibrary::registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) {
     pNodeLoader->retain();
-    this->mNodeLoaders.insert(NodeLoaderMapEntry(pClassName, pNodeLoader));
+    this->_nodeLoaders.insert(NodeLoaderMapEntry(pClassName, pNodeLoader));
 }
 
 void NodeLoaderLibrary::unregisterNodeLoader(const char * pClassName) {
-    NodeLoaderMap::iterator ccNodeLoadersIterator = this->mNodeLoaders.find(pClassName);
-    if (ccNodeLoadersIterator != this->mNodeLoaders.end())
+    NodeLoaderMap::iterator ccNodeLoadersIterator = this->_nodeLoaders.find(pClassName);
+    if (ccNodeLoadersIterator != this->_nodeLoaders.end())
     {
         ccNodeLoadersIterator->second->release();
-        mNodeLoaders.erase(ccNodeLoadersIterator);
+        _nodeLoaders.erase(ccNodeLoadersIterator);
     }
     else
     {
@@ -63,18 +63,18 @@ void NodeLoaderLibrary::unregisterNodeLoader(const char * pClassName) {
 }
 
 NodeLoader * NodeLoaderLibrary::getNodeLoader(const char* pClassName) {
-    NodeLoaderMap::iterator ccNodeLoadersIterator = this->mNodeLoaders.find(pClassName);
-    assert(ccNodeLoadersIterator != this->mNodeLoaders.end());
+    NodeLoaderMap::iterator ccNodeLoadersIterator = this->_nodeLoaders.find(pClassName);
+    assert(ccNodeLoadersIterator != this->_nodeLoaders.end());
     return ccNodeLoadersIterator->second;
 }
 
 void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
     if(pReleaseNodeLoaders) {
-        for(NodeLoaderMap::iterator it = this->mNodeLoaders.begin(); it != this->mNodeLoaders.end(); it++) {
+        for(NodeLoaderMap::iterator it = this->_nodeLoaders.begin(); it != this->_nodeLoaders.end(); it++) {
             it->second->release();
         }
     }
-    this->mNodeLoaders.clear();
+    this->_nodeLoaders.clear();
 }
 
 
