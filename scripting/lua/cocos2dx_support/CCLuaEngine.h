@@ -145,6 +145,7 @@ private:
     void extendWebsocket(lua_State* lua_S);
     void extendGLNode(lua_State* lua_S);
     void extendScrollView(lua_State* lua_S);
+    void extendDrawNode(lua_State* lua_S);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;
