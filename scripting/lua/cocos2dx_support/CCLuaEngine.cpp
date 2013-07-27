@@ -614,7 +614,7 @@ void LuaEngine::extendLuaObject()
     extendWebsocket(lua_S);
     extendGLNode(lua_S);
     extendScrollView(lua_S);
-	extendDrawNode(lua_S);
+    extendDrawNode(lua_S);
     
     _stack->clean();
 }
