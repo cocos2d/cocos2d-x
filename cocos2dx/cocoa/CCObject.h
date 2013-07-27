@@ -57,6 +57,7 @@ public:
     {
         // use "clone" instead
         CC_ASSERT(false);
+        return nullptr;
     }
 };
 

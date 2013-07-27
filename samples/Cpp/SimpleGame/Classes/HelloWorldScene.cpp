@@ -69,26 +69,26 @@ bool HelloWorld::init()
 		// 1. Add a menu item with "X" image, which is clicked to quit the program.
 
 		// Create a "close" menu item with close icon, it's an auto release object.
-		MenuItemImage *pCloseItem = MenuItemImage::create(
+		MenuItemImage *closeItem = MenuItemImage::create(
 			"CloseNormal.png",
 			"CloseSelected.png",
             CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
-		CC_BREAK_IF(! pCloseItem);
+		CC_BREAK_IF(! closeItem);
         
 		// Place the menu item bottom-right conner.
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Point origin = Director::getInstance()->getVisibleOrigin();
         
-		pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2,
-                                    origin.y + pCloseItem->getContentSize().height/2));
+		closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2,
+                                    origin.y + closeItem->getContentSize().height/2));
 
 		// Create a menu with the "close" menu item, it's an auto release object.
-		Menu* pMenu = Menu::create(pCloseItem, NULL);
-		pMenu->setPosition(Point::ZERO);
-		CC_BREAK_IF(! pMenu);
+		Menu* menu = Menu::create(closeItem, NULL);
+		menu->setPosition(Point::ZERO);
+		CC_BREAK_IF(! menu);
 
 		// Add the menu to HelloWorld layer as a child layer.
-		this->addChild(pMenu, 1);
+		this->addChild(menu, 1);
 
 		/////////////////////////////
 		// 2. add your codes below...
@@ -109,7 +109,7 @@ bool HelloWorld::init()
 		// see http://www.cocos2d-x.org/boards/6/topics/1478
 		this->schedule( schedule_selector(HelloWorld::updateGame) );
 
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music-aac.wav", true);
+		CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background-music-aac.wav", true);
 
 		bRet = true;
 	} while (0);
@@ -117,7 +117,7 @@ bool HelloWorld::init()
 	return bRet;
 }
 
-void HelloWorld::menuCloseCallback(Object* pSender)
+void HelloWorld::menuCloseCallback(Object* sender)
 {
 	// "close" menu item clicked
 	Director::getInstance()->end();
@@ -190,10 +190,10 @@ void HelloWorld::gameLogic(float dt)
 void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 {
 	// Choose one of the touches to work with
-	Touch* touch = (Touch*)( touches->anyObject() );
+	Touch* touch = static_cast<Touch*>( touches->anyObject() );
 	Point location = touch->getLocation();
     
-	CCLog("++++++++after  x:%f, y:%f", location.x, location.y);
+	log("++++++++after  x:%f, y:%f", location.x, location.y);
 
 	// Set up initial location of projectile
 	Size winSize = Director::getInstance()->getVisibleSize();
@@ -234,7 +234,7 @@ void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
 	projectile->setTag(2);
 	_projectiles->addObject(projectile);
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.wav");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("pew-pew-lei.wav");
 }
 
 void HelloWorld::updateGame(float dt)

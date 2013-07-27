@@ -383,7 +383,7 @@ bool Image::initWithString(
 
         if (! dc.setFont(pFontName, nSize))
         {
-            CCLog("Can't found font(%s), use system default", pFontName);
+            log("Can't found font(%s), use system default", pFontName);
         }
 
         // draw text
@@ -406,7 +406,7 @@ bool Image::initWithString(
         _width    = (short)size.cx;
         _height   = (short)size.cy;
         _preMulti = false;
-        _renderFormat = kTexture2DPixelFormat_RGBA8888;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
            ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;

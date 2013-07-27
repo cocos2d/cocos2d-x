@@ -24,13 +24,13 @@ HelloCocosBuilderLayer::~HelloCocosBuilderLayer()
     CC_SAFE_RELEASE(mTestTitleLabelTTF);
 }
 
-void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pNodeName, NodeLoader * pNodeLoader) {
+void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * nodeName, NodeLoader * nodeLoader) {
     /* Create an autorelease NodeLoaderLibrary. */
     NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 
     ccNodeLoaderLibrary->registerNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
-    if(pNodeName != NULL && pNodeLoader != NULL) {
-        ccNodeLoaderLibrary->registerNodeLoader(pNodeName, pNodeLoader);
+    if(nodeName != NULL && nodeLoader != NULL) {
+        ccNodeLoaderLibrary->registerNodeLoader(nodeName, nodeLoader);
     }
 
     /* Create an autorelease CCBReader. */
@@ -61,18 +61,18 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * pN
 }
 
 
-void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * pNode,  cocos2d::extension::NodeLoader * pNodeLoader) {
+void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * node,  cocos2d::extension::NodeLoader * nodeLoader) {
     RotateBy * ccRotateBy = RotateBy::create(20.0f, 360);
     RepeatForever * ccRepeatForever = RepeatForever::create(ccRotateBy);
     this->mBurstSprite->runAction(ccRepeatForever);
 }
 
 
-SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName) {
+SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;    
 }
 
-SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBControlSelector(Object * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMenuTestClicked", HelloCocosBuilderLayer::onMenuTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpriteTestClicked", HelloCocosBuilderLayer::onSpriteTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onButtonTestClicked", HelloCocosBuilderLayer::onButtonTestClicked);
@@ -99,25 +99,25 @@ bool HelloCocosBuilderLayer::onAssignCCBCustomProperty(Object* pTarget, const ch
         if (0 == strcmp(pMemberVariableName, "mCustomPropertyInt"))
         {
             this->mCustomPropertyInt = pCCBValue->getIntValue();
-            CCLog("mCustomPropertyInt = %d", mCustomPropertyInt);
+            log("mCustomPropertyInt = %d", mCustomPropertyInt);
             bRet = true;
         }
         else if ( 0 == strcmp(pMemberVariableName, "mCustomPropertyFloat"))
         {
             this->mCustomPropertyFloat = pCCBValue->getFloatValue();
-            CCLog("mCustomPropertyFloat = %f", mCustomPropertyFloat);
+            log("mCustomPropertyFloat = %f", mCustomPropertyFloat);
             bRet = true;
         }
         else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyBoolean"))
         {
             this->mCustomPropertyBoolean = pCCBValue->getBoolValue();
-            CCLog("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
+            log("mCustomPropertyBoolean = %d", mCustomPropertyBoolean);
             bRet = true;
         }
         else if ( 0  == strcmp(pMemberVariableName, "mCustomPropertyString"))
         {
             this->mCustomPropertyString = pCCBValue->getStringValue();
-            CCLog("mCustomPropertyString = %s", mCustomPropertyString.c_str());
+            log("mCustomPropertyString = %s", mCustomPropertyString.c_str());
             bRet = true;
         }
         
@@ -126,19 +126,19 @@ bool HelloCocosBuilderLayer::onAssignCCBCustomProperty(Object* pTarget, const ch
     return bRet;
 }
 
-void HelloCocosBuilderLayer::onMenuTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void HelloCocosBuilderLayer::onMenuTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent) {
     this->openTest("ccb/ccb/TestMenus.ccbi", "TestMenusLayer", MenuTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onSpriteTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void HelloCocosBuilderLayer::onSpriteTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent) {
     this->openTest("ccb/ccb/TestSprites.ccbi", "TestSpritesLayer", SpriteTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onButtonTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void HelloCocosBuilderLayer::onButtonTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent) {
     this->openTest("ccb/ccb/TestButtons.ccbi", "TestButtonsLayer", ButtonTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent) {
 
     /* Create an autorelease NodeLoaderLibrary. */
     NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
@@ -179,16 +179,16 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * pSender, cocos2d::
     //this->openTest("TestAnimations.ccbi", "TestAnimationsLayer", AnimationsTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onParticleSystemTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void HelloCocosBuilderLayer::onParticleSystemTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent) {
     this->openTest("ccb/ccb/TestParticleSystems.ccbi", "TestParticleSystemsLayer", ParticleSystemTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onScrollViewTestClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent)
+void HelloCocosBuilderLayer::onScrollViewTestClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent)
 {
     this->openTest("ccb/ccb/TestScrollViews.ccbi", "TestScrollViewsLayer", ScrollViewTestLayerLoader::loader());
 }
 
-void HelloCocosBuilderLayer::onTimelineCallbackSoundClicked(Object * pSender, cocos2d::extension::ControlEvent pControlEvent)
+void HelloCocosBuilderLayer::onTimelineCallbackSoundClicked(Object * sender, cocos2d::extension::ControlEvent pControlEvent)
 {
     this->openTest("ccb/ccb/TestTimelineCallback.ccbi", "TimelineCallbackTestLayer", TimelineCallbackTestLayerLoader::loader());
 }

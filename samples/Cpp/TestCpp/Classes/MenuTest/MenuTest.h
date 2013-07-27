@@ -14,19 +14,19 @@ public:
     ~MenuLayerMainMenu();
 
 public:
-    virtual bool ccTouchBegan(Touch *touch, Event * pEvent);
-    virtual void ccTouchEnded(Touch *touch, Event * pEvent);
-    virtual void ccTouchCancelled(Touch *touch, Event * pEvent);
-    virtual void ccTouchMoved(Touch *touch, Event * pEvent);
+    virtual bool ccTouchBegan(Touch *touch, Event * event);
+    virtual void ccTouchEnded(Touch *touch, Event * event);
+    virtual void ccTouchCancelled(Touch *touch, Event * event);
+    virtual void ccTouchMoved(Touch *touch, Event * event);
 
     void allowTouches(float dt);
-    void menuCallback(Object* pSender);
-    void menuCallbackConfig(Object* pSender);
-    void menuCallbackDisabled(Object* pSender);
-    void menuCallback2(Object* pSender);
-    void menuCallbackPriorityTest(Object* pSender);
+    void menuCallback(Object* sender);
+    void menuCallbackConfig(Object* sender);
+    void menuCallbackDisabled(Object* sender);
+    void menuCallback2(Object* sender);
+    void menuCallbackPriorityTest(Object* sender);
     void menuCallbackBugsTest(Object *pSender);
-    void onQuit(Object* pSender);
+    void onQuit(Object* sender);
     void menuMovingCallback(Object *pSender);
 
     //CREATE_NODE(MenuLayer1);
@@ -46,9 +46,9 @@ public:
     ~MenuLayer2();
 
 public:
-    void menuCallback(Object* pSender);
-    void menuCallbackOpacity(Object* pSender);
-    void menuCallbackAlign(Object* pSender);
+    void menuCallback(Object* sender);
+    void menuCallbackOpacity(Object* sender);
+    void menuCallbackAlign(Object* sender);
 
     //CREATE_NODE(MenuLayer2);
 };
@@ -72,8 +72,8 @@ public:
     ~MenuLayer4();
 
 public:
-    void menuCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void menuCallback(Object* sender);
+    void backCallback(Object* sender);
 
     //CREATE_NODE(MenuLayer4);
 };
@@ -84,7 +84,7 @@ public:
     MenuLayerPriorityTest();
     ~MenuLayerPriorityTest();
 
-    void menuCallback(Object* pSender);
+    void menuCallback(Object* sender);
 private:
     Menu* _menu1;
     Menu* _menu2;
@@ -108,8 +108,8 @@ public:
     ~RemoveMenuItemWhenMove();
     
     virtual void registerWithTouchDispatcher(void);
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual bool ccTouchBegan(Touch  *touch, Event  *event);
+    virtual void ccTouchMoved(Touch  *touch, Event  *event);
     
     void goBack(Object *pSender);
     

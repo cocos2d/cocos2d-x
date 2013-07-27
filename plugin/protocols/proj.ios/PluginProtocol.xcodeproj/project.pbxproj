@@ -21,6 +21,8 @@
 		FAC2A7FA1777F8C200035D22 /* ShareWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7F81777F8C200035D22 /* ShareWrapper.mm */; };
 		FAD55520177D1FA900968F54 /* ProtocolUser.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAD5551D177D1FA900968F54 /* ProtocolUser.mm */; };
 		FAD55521177D1FA900968F54 /* UserWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAD5551F177D1FA900968F54 /* UserWrapper.mm */; };
+		FADBF89B179E509500F59B1D /* ProtocolSocial.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADBF898179E509500F59B1D /* ProtocolSocial.mm */; };
+		FADBF89C179E509500F59B1D /* SocialWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADBF89A179E509500F59B1D /* SocialWrapper.mm */; };
 		FADC44CA176EABCF00B2D5ED /* AdsWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +72,11 @@
 		FAD5551E177D1FA900968F54 /* UserWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserWrapper.h; sourceTree = "<group>"; };
 		FAD5551F177D1FA900968F54 /* UserWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UserWrapper.mm; sourceTree = "<group>"; };
 		FAD55522177D213F00968F54 /* ProtocolUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolUser.h; sourceTree = "<group>"; };
+		FADBF896179E504B00F59B1D /* ProtocolSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolSocial.h; sourceTree = "<group>"; };
+		FADBF897179E509500F59B1D /* InterfaceSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceSocial.h; sourceTree = "<group>"; };
+		FADBF898179E509500F59B1D /* ProtocolSocial.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolSocial.mm; sourceTree = "<group>"; };
+		FADBF899179E509500F59B1D /* SocialWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialWrapper.h; sourceTree = "<group>"; };
+		FADBF89A179E509500F59B1D /* SocialWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SocialWrapper.mm; sourceTree = "<group>"; };
 		FADC44C8176EABCF00B2D5ED /* AdsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsWrapper.h; sourceTree = "<group>"; };
 		FADC44C9176EABCF00B2D5ED /* AdsWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdsWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +126,7 @@
 		FA09A336168ADC05008C1C7B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				FADBF896179E504B00F59B1D /* ProtocolSocial.h */,
 				FAD55522177D213F00968F54 /* ProtocolUser.h */,
 				FAC2A7F41777F88700035D22 /* ProtocolShare.h */,
 				FAB6DF931755D7D100C90D89 /* PluginFactory.h */,
@@ -136,6 +144,10 @@
 		FA0CB8B5168D3CC200E36B11 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				FADBF897179E509500F59B1D /* InterfaceSocial.h */,
+				FADBF898179E509500F59B1D /* ProtocolSocial.mm */,
+				FADBF899179E509500F59B1D /* SocialWrapper.h */,
+				FADBF89A179E509500F59B1D /* SocialWrapper.mm */,
 				FAD5551C177D1FA900968F54 /* InterfaceUser.h */,
 				FAD5551D177D1FA900968F54 /* ProtocolUser.mm */,
 				FAD5551E177D1FA900968F54 /* UserWrapper.h */,
@@ -226,6 +238,8 @@
 				FAC2A7FA1777F8C200035D22 /* ShareWrapper.mm in Sources */,
 				FAD55520177D1FA900968F54 /* ProtocolUser.mm in Sources */,
 				FAD55521177D1FA900968F54 /* UserWrapper.mm in Sources */,
+				FADBF89B179E509500F59B1D /* ProtocolSocial.mm in Sources */,
+				FADBF89C179E509500F59B1D /* SocialWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

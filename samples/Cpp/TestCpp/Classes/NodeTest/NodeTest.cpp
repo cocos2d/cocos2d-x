@@ -52,10 +52,10 @@ Layer* nextCocosNodeAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backCocosNodeAction()
@@ -65,18 +65,18 @@ Layer* backCocosNodeAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartCocosNodeAction()
 {
-    Layer* pLayer = createCocosNodeLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createCocosNodeLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -103,7 +103,7 @@ void TestCocosNodeDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void TestCocosNodeDemo::restartCallback(Object* pSender)
+void TestCocosNodeDemo::restartCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
@@ -112,7 +112,7 @@ void TestCocosNodeDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::nextCallback(Object* pSender)
+void TestCocosNodeDemo::nextCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
@@ -120,7 +120,7 @@ void TestCocosNodeDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void TestCocosNodeDemo::backCallback(Object* pSender)
+void TestCocosNodeDemo::backCallback(Object* sender)
 {
     Scene* s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
@@ -140,10 +140,10 @@ void Test2::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
     
-    Sprite *sp1 = Sprite::create(s_pPathSister1);
-    Sprite *sp2 = Sprite::create(s_pPathSister2);
-    Sprite *sp3 = Sprite::create(s_pPathSister1);
-    Sprite *sp4 = Sprite::create(s_pPathSister2);
+    Sprite *sp1 = Sprite::create(s_pathSister1);
+    Sprite *sp2 = Sprite::create(s_pathSister2);
+    Sprite *sp3 = Sprite::create(s_pathSister1);
+    Sprite *sp4 = Sprite::create(s_pathSister2);
     
     sp1->setPosition(Point(100, s.height /2 ));
     sp2->setPosition(Point(380, s.height /2 ));
@@ -189,8 +189,8 @@ std::string Test2::title()
 
 Test4::Test4()
 {
-    Sprite *sp1 = Sprite::create(s_pPathSister1);
-    Sprite *sp2 = Sprite::create(s_pPathSister2);
+    Sprite *sp1 = Sprite::create(s_pathSister1);
+    Sprite *sp2 = Sprite::create(s_pathSister2);
     
     sp1->setPosition( Point(100,160) );
     sp2->setPosition( Point(380,160) );
@@ -228,8 +228,8 @@ std::string Test4::title()
 //------------------------------------------------------------------
 Test5::Test5()
 {
-    Sprite* sp1 = Sprite::create(s_pPathSister1);
-    Sprite* sp2 = Sprite::create(s_pPathSister2);
+    Sprite* sp1 = Sprite::create(s_pathSister1);
+    Sprite* sp2 = Sprite::create(s_pathSister2);
     
     sp1->setPosition(Point(100,160));
     sp2->setPosition(Point(380,160));
@@ -280,11 +280,11 @@ std::string Test5::title()
 //------------------------------------------------------------------
 Test6::Test6()
 {
-    Sprite* sp1 = Sprite::create(s_pPathSister1);
-    Sprite* sp11 = Sprite::create(s_pPathSister1);
+    Sprite* sp1 = Sprite::create(s_pathSister1);
+    Sprite* sp11 = Sprite::create(s_pathSister1);
 
-    Sprite* sp2 = Sprite::create(s_pPathSister2);
-    Sprite* sp21 = Sprite::create(s_pPathSister2);
+    Sprite* sp2 = Sprite::create(s_pathSister2);
+    Sprite* sp21 = Sprite::create(s_pathSister2);
         
     sp1->setPosition(Point(100,160));
     sp2->setPosition(Point(380,160));
@@ -343,7 +343,7 @@ StressTest1::StressTest1()
 {
     Size s = Director::getInstance()->getWinSize();
 
-    Sprite *sp1 = Sprite::create(s_pPathSister1);
+    Sprite *sp1 = Sprite::create(s_pathSister1);
     addChild(sp1, 0, kTagSprite1);
     
     sp1->setPosition( Point(s.width/2, s.height/2) );        
@@ -398,7 +398,7 @@ StressTest2::StressTest2()
     
     Layer* sublayer = Layer::create();
     
-    Sprite *sp1 = Sprite::create(s_pPathSister1);
+    Sprite *sp1 = Sprite::create(s_pathSister1);
     sp1->setPosition( Point(80, s.height/2) );
     
     ActionInterval* move = MoveBy::create(3, Point(350,0));
@@ -512,12 +512,12 @@ std::string NodeToWorld::title()
 void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -536,7 +536,7 @@ CameraOrbitTest::CameraOrbitTest()
 
     // LEFT
     s = p->getContentSize();
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     sprite->setScale(0.5f);
     p->addChild(sprite, 0);        
     sprite->setPosition( Point(s.width/4*1, s.height/2) );
@@ -544,7 +544,7 @@ CameraOrbitTest::CameraOrbitTest()
     sprite->runAction( RepeatForever::create( orbit ) );
     
     // CENTER
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     sprite->setScale( 1.0f );
     p->addChild(sprite, 0);        
     sprite->setPosition( Point(s.width/4*2, s.height/2) );
@@ -553,7 +553,7 @@ CameraOrbitTest::CameraOrbitTest()
     
     
     // RIGHT
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     sprite->setScale( 2.0f );
     p->addChild(sprite, 0);        
     sprite->setPosition( Point(s.width/4*3, s.height/2) );
@@ -584,12 +584,12 @@ void CameraZoomTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraZoomTest::onExit()
 {
-    Director::getInstance()->setProjection(kDirectorProjection2D);
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     TestCocosNodeDemo::onExit();
 }
 
@@ -601,7 +601,7 @@ CameraZoomTest::CameraZoomTest()
     Camera *cam;
     
     // LEFT
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     addChild( sprite, 0);        
     sprite->setPosition( Point(s.width/4*1, s.height/2) );
     cam = sprite->getCamera();
@@ -609,12 +609,12 @@ CameraZoomTest::CameraZoomTest()
     cam->setCenterXYZ(0, 0, 0);
     
     // CENTER
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     addChild( sprite, 0, 40);
     sprite->setPosition(Point(s.width/4*2, s.height/2));
     
     // RIGHT
-    sprite = Sprite::create(s_pPathGrossini);
+    sprite = Sprite::create(s_pathGrossini);
     addChild( sprite, 0, 20);
     sprite->setPosition(Point(s.width/4*3, s.height/2));
 
@@ -797,8 +797,7 @@ NodeOpaqueTest::NodeOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.png");
-        BlendFunc blendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-        background->setBlendFunc(blendFunc);
+        background->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
@@ -823,7 +822,7 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     for (int i = 0; i < 50; i++)
     {
         background = Sprite::create("Images/background1.jpg");
-        background->setBlendFunc(BlendFunc::BLEND_FUNC_DISABLE);
+        background->setBlendFunc(BlendFunc::DISABLE);
         background->setAnchorPoint(Point::ZERO);
         addChild(background);
     }
@@ -841,8 +840,8 @@ std::string NodeNonOpaqueTest::subtitle()
 
 void CocosNodeTestScene::runThisTest()
 {
-    Layer* pLayer = nextCocosNodeAction();
-    addChild(pLayer);
+    Layer* layer = nextCocosNodeAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

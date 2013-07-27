@@ -372,7 +372,7 @@ bool Image::initWithStringShadowStroke(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _renderFormat = kTexture2DPixelFormat_RGBA8888;
+    _renderFormat = Texture2D::PixelFormat::RGBA8888;
     _preMulti = info.isPremultipliedAlpha;
     _data = info.data;
     

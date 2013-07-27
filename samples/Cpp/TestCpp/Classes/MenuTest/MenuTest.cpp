@@ -26,8 +26,8 @@ enum {
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
     setTouchEnabled(true);
-    setTouchPriority(kMenuHandlerPriority + 1);
-    setTouchMode(kTouchesOneByOne);
+    setTouchPriority(Menu::HANDLER_PRIORITY + 1);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 
     // Font Item    
     Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -114,20 +114,20 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
-bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * pEvent)
+bool MenuLayerMainMenu::ccTouchBegan(Touch *touch, Event * event)
 {
     return true;
 }
 
-void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchEnded(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchCancelled(Touch *touch, Event * event)
 {
 }
 
-void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * pEvent)
+void MenuLayerMainMenu::ccTouchMoved(Touch *touch, Event * event)
 {
 }
 
@@ -148,19 +148,19 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->setPriority(kMenuHandlerPriority+1, this);
+    Director* director = Director::getInstance();
+    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
     unscheduleAllSelectors();
-    CCLog("TOUCHES ALLOWED AGAIN");
+    log("TOUCHES ALLOWED AGAIN");
 }
 
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->setPriority(kMenuHandlerPriority-1, this);
+    Director* director = Director::getInstance();
+    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
-    CCLog("TOUCHES DISABLED FOR 5 SECONDS");
+    log("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
 void MenuLayerMainMenu::menuCallback2(Object* sender)
@@ -168,7 +168,7 @@ void MenuLayerMainMenu::menuCallback2(Object* sender)
     static_cast<LayerMultiplex*>(_parent)->switchTo(2);
 }
 
-void MenuLayerMainMenu::menuCallbackPriorityTest(Object* pSender)
+void MenuLayerMainMenu::menuCallbackPriorityTest(Object* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(4);
 }
@@ -324,7 +324,7 @@ MenuLayer3::MenuLayer3()
     
     
     MenuItemSprite* item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {
-		CCLog("sprite clicked!");
+		log("sprite clicked!");
 	});
     _disabledItem = item3;  item3->retain();
     _disabledItem->setEnabled( false );
@@ -491,10 +491,10 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     MenuItemFont::setFontSize(48);
     item1 = MenuItemFont::create("Toggle priority", [&](Object *sender) {
 		if( _priority) {
-			_menu2->setHandlerPriority(kMenuHandlerPriority + 20);
+			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
 			_priority = false;
 		} else {
-			_menu2->setHandlerPriority(kMenuHandlerPriority - 20);
+			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
 			_priority = true;
 		}
 	});
@@ -509,10 +509,10 @@ MenuLayerPriorityTest::~MenuLayerPriorityTest()
 
 }
 
-void MenuLayerPriorityTest::menuCallback(Object* pSender)
+void MenuLayerPriorityTest::menuCallback(Object* sender)
 {
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
-//    [[Director sharedDirector] popScene];
+//    [[Director sharedDirector] poscene];
 }
 
 // BugsTest
@@ -536,7 +536,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
     menu->setTouchEnabled(false);
     menu->setTouchEnabled(true);
     
-    CCLog("NO CRASHES");
+    log("NO CRASHES");
 }
 
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
@@ -545,7 +545,7 @@ void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
     menu->setTouchEnabled(true);
     menu->setTouchEnabled(false);
     
-    CCLog("NO CRASHES. AND MENU SHOULD STOP WORKING");
+    log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
 
 void BugsTest::backMenuCallback(cocos2d::Object *pSender)
@@ -590,12 +590,12 @@ void RemoveMenuItemWhenMove::registerWithTouchDispatcher(void)
     Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, -129, false);
 }
 
-bool RemoveMenuItemWhenMove::ccTouchBegan(Touch *pTouch, Event *pEvent)
+bool RemoveMenuItemWhenMove::ccTouchBegan(Touch  *touch, Event  *event)
 {
     return true;
 }
 
-void RemoveMenuItemWhenMove::ccTouchMoved(Touch *pTouch, Event *pEvent)
+void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
 {
     if (item)
     {
@@ -607,24 +607,24 @@ void RemoveMenuItemWhenMove::ccTouchMoved(Touch *pTouch, Event *pEvent)
 
 void MenuTestScene::runThisTest()
 {
-    Layer* pLayer1 = new MenuLayerMainMenu();
-    Layer* pLayer2 = new MenuLayer2();
-    Layer* pLayer3 = new MenuLayer3();
-    Layer* pLayer4 = new MenuLayer4();
-    Layer* pLayer5 = new MenuLayerPriorityTest();
-    Layer* pLayer6 = new BugsTest();
-    Layer* pLayer7 = new RemoveMenuItemWhenMove();
+    Layer* layer1 = new MenuLayerMainMenu();
+    Layer* layer2 = new MenuLayer2();
+    Layer* layer3 = new MenuLayer3();
+    Layer* layer4 = new MenuLayer4();
+    Layer* layer5 = new MenuLayerPriorityTest();
+    Layer* layer6 = new BugsTest();
+    Layer* layer7 = new RemoveMenuItemWhenMove();
 
-    LayerMultiplex* layer = LayerMultiplex::create(pLayer1, pLayer2, pLayer3, pLayer4, pLayer5, pLayer6, pLayer7, NULL);
+    LayerMultiplex* layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, layer7, NULL);
     addChild(layer, 0); 
 
-    pLayer1->release();
-    pLayer2->release();
-    pLayer3->release();
-    pLayer4->release();
-    pLayer5->release();
-    pLayer6->release();
-    pLayer7->release();
+    layer1->release();
+    layer2->release();
+    layer3->release();
+    layer4->release();
+    layer5->release();
+    layer6->release();
+    layer7->release();
 
     Director::getInstance()->replaceScene(this);
 }

@@ -1403,7 +1403,7 @@ local function runTextureTest()
    		 -- gettimeofday(&now, NULL)    
     	 pTexture = pCache:addImage(strFileName)
     	 if nil ~= pTexture then
-        	--CCLog("  ms:%f", calculateDeltaTime(&now) )
+        	--log("  ms:%f", calculateDeltaTime(&now) )
         	print("add sucess")
     	 else
        	    print(" ERROR")

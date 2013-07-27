@@ -44,13 +44,13 @@ Box2DTestLayer::Box2DTestLayer()
     
     scheduleUpdate();
 #else
-    LabelTTF *pLabel = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
+    LabelTTF *label = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
     Size size = Director::getInstance()->getWinSize();
-    pLabel->setPosition(Point(size.width/2, size.height/2));
+    label->setPosition(Point(size.width/2, size.height/2));
     
-    addChild(pLabel);
+    addChild(label);
 #endif
 }
 
@@ -141,7 +141,7 @@ void Box2DTestLayer::draw()
     Layer::draw();
 
 #if CC_ENABLE_BOX2D_INTEGRATION
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 
@@ -213,7 +213,7 @@ void Box2DTestLayer::ccTouchesEnded(Set* touches, Event* event)
 
     for( it = touches->begin(); it != touches->end(); it++) 
     {
-        touch = (Touch*)(*it);
+        touch = static_cast<Touch*>(*it);
 
         if(!touch)
             break;
@@ -248,9 +248,9 @@ void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration*
 
 void Box2DTestScene::runThisTest()
 {
-    Layer* pLayer = new Box2DTestLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new Box2DTestLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }

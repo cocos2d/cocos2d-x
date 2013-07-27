@@ -36,10 +36,10 @@ Layer* nextActionManagerAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backActionManagerAction()
@@ -49,18 +49,18 @@ Layer* backActionManagerAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartActionManagerAction()
 {
-    Layer* pLayer = createActionManagerLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createActionManagerLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 //------------------------------------------------------------------
@@ -82,7 +82,7 @@ std::string ActionManagerTest::title()
     return "No title";
 }
 
-void ActionManagerTest::restartCallback(Object* pSender)
+void ActionManagerTest::restartCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild(restartActionManagerAction()); 
@@ -91,7 +91,7 @@ void ActionManagerTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void ActionManagerTest::nextCallback(Object* pSender)
+void ActionManagerTest::nextCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild( nextActionManagerAction() );
@@ -99,7 +99,7 @@ void ActionManagerTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void ActionManagerTest::backCallback(Object* pSender)
+void ActionManagerTest::backCallback(Object* sender)
 {
     Scene* s = new ActionManagerTestScene();
     s->addChild( backActionManagerAction() );
@@ -117,7 +117,7 @@ void CrashTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* child = Sprite::create(s_pPathGrossini);
+    Sprite* child = Sprite::create(s_pathGrossini);
     child->setPosition( VisibleRect::center() );
     addChild(child, 1);
 
@@ -158,7 +158,7 @@ void LogicTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* grossini = Sprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, 2);
     grossini->setPosition(VisibleRect::center());
 
@@ -203,14 +203,14 @@ void PauseTest::onEnter()
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    Sprite* grossini = Sprite::create(s_pPathGrossini);
+    Sprite* grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
     Action* action = MoveBy::create(1, Point(150,0));
 
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->addAction(action, grossini, true);
+    Director* director = Director::getInstance();
+    director->getActionManager()->addAction(action, grossini, true);
 
     schedule( schedule_selector(PauseTest::unpause), 3); 
 }
@@ -219,8 +219,8 @@ void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
     Node* node = getChildByTag( kTagGrossini );
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->resumeTarget(node);
+    Director* director = Director::getInstance();
+    director->getActionManager()->resumeTarget(node);
 }
 
 std::string PauseTest::title()
@@ -246,7 +246,7 @@ void RemoveTest::onEnter()
     ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
-    Sprite* pChild = Sprite::create(s_pPathGrossini);
+    Sprite* pChild = Sprite::create(s_pathGrossini);
     pChild->setPosition( VisibleRect::center() );
 
     addChild(pChild, 1, kTagGrossini);
@@ -255,8 +255,8 @@ void RemoveTest::onEnter()
 
 void RemoveTest::stopAction()
 {
-    Node* pSprite = getChildByTag(kTagGrossini);
-    pSprite->stopActionByTag(kTagSequence);
+    Node* sprite = getChildByTag(kTagGrossini);
+    sprite->stopActionByTag(kTagSequence);
 }
 
 std::string RemoveTest::title()
@@ -282,14 +282,14 @@ void ResumeTest::onEnter()
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 
-    Sprite* pGrossini = Sprite::create(s_pPathGrossini);
+    Sprite* pGrossini = Sprite::create(s_pathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
     pGrossini->setPosition(VisibleRect::center());
 
     pGrossini->runAction(ScaleBy::create(2, 2));
 
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->pauseTarget(pGrossini);
+    Director* director = Director::getInstance();
+    director->getActionManager()->pauseTarget(pGrossini);
     pGrossini->runAction(RotateBy::create(2, 360));
 
     this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
@@ -300,8 +300,8 @@ void ResumeTest::resumeGrossini(float time)
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
     Node* pGrossini = getChildByTag(kTagGrossini);
-    Director* pDirector = Director::getInstance();
-    pDirector->getActionManager()->resumeTarget(pGrossini);
+    Director* director = Director::getInstance();
+    director->getActionManager()->resumeTarget(pGrossini);
 }
 
 //------------------------------------------------------------------
@@ -311,8 +311,8 @@ void ResumeTest::resumeGrossini(float time)
 //------------------------------------------------------------------
 void ActionManagerTestScene::runThisTest()
 {
-    Layer* pLayer = nextActionManagerAction();
-    addChild(pLayer);
+    Layer* layer = nextActionManagerAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

@@ -8,6 +8,7 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_SRC_FILES := \
 CCConfiguration.cpp \
+CCDeprecated.cpp \
 CCScheduler.cpp \
 CCCamera.cpp \
 ccFPSImages.c \
@@ -82,7 +83,6 @@ platform/CCImageCommonWebp.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
-platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CCDevice.cpp \
 platform/android/CCEGLView.cpp \
@@ -172,8 +172,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
-LOCAL_EXPORT_CFLAGS   := -Wno-psabi -Wno-deprecated-declarations -DUSE_FILE32API
+LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
 
 include $(BUILD_STATIC_LIBRARY)
 

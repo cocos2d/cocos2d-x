@@ -325,20 +325,20 @@ bool EGLView::initGL()
 
     if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
     {
-        CCLog("Ready for GLSL");
+        log("Ready for GLSL");
     }
     else 
     {
-        CCLog("Not totally ready :(");
+        log("Not totally ready :(");
     }
 
     if (glewIsSupported("GL_VERSION_2_0"))
     {
-        CCLog("Ready for OpenGL 2.0");
+        log("Ready for OpenGL 2.0");
     }
     else
     {
-        CCLog("OpenGL 2.0 not supported");
+        log("OpenGL 2.0 not supported");
     }
 
     // Enable point size by default on linux.

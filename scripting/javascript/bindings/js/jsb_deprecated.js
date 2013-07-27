@@ -45,4 +45,15 @@ var cc = cc || {};
         return cc.Node.prototype.getParentToNodeTransform.apply(this, arguments);
     };
     
+    cc.Node.prototype.numberOfRunningActions = function() {
+        logW("cc.Node.numberOfRunningActions", "cc.Node.getNumberOfRunningActions");
+        return cc.Node.prototype.getNumberOfRunningActions.apply(this, arguments);
+    };
+
+    cc.Node.prototype.numberOfRunningActionsInTarget = function() {
+        logW("cc.Node.numberOfRunningActionsInTarget", "cc.Node.getNumberOfRunningActionsInTarget");
+        return cc.Node.prototype.getNumberOfRunningActionsInTarget.apply(this, arguments);
+    };
+
+
 })();

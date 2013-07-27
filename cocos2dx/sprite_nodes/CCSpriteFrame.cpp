@@ -141,7 +141,7 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
-const Point& SpriteFrame::getOffset(void)
+const Point& SpriteFrame::getOffset() const
 {
     return _offset;
 }
@@ -152,7 +152,7 @@ void SpriteFrame::setOffset(const Point& offsets)
     _offsetInPixels = CC_POINT_POINTS_TO_PIXELS( _offset );
 }
 
-const Point& SpriteFrame::getOffsetInPixels(void)
+const Point& SpriteFrame::getOffsetInPixels() const
 {
     return _offsetInPixels;
 }

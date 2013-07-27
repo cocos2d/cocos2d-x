@@ -36,16 +36,8 @@ NS_CC_BEGIN
  * @addtogroup menu
  * @{
  */
-typedef enum  
-{
-    kMenuStateWaiting,
-    kMenuStateTrackingTouch
-} tMenuState;
 
-enum {
-    //* priority used by the menu for the event handler
-    kMenuHandlerPriority = -128,
-};
+
 
 /** @brief A Menu
 * 
@@ -55,18 +47,23 @@ enum {
 */
 class CC_DLL Menu : public LayerRGBA
 {
-    /** whether or not the menu will receive events */
-    bool _enabled;
-    
 public:
-    Menu() : _selectedItem(NULL) {}
-    virtual ~Menu(){}
-
+    enum
+    {
+        HANDLER_PRIORITY = -128,
+    };
+    
+    enum class State
+    {
+        WAITING,
+        TRACKING_TOUCH,
+    };
+    
     /** creates an empty Menu */
     static Menu* create();
 
     /** creates a Menu with MenuItem objects */
-    static Menu* create(MenuItem* item, ...);
+    static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** creates a Menu with a Array of MenuItem objects */
     static Menu* createWithArray(Array* pArrayOfItems);
@@ -79,6 +76,9 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
+
+    Menu() : _selectedItem(NULL) {}
+    virtual ~Menu(){}
 
     /** initializes an empty Menu */
     bool init();
@@ -101,48 +101,42 @@ public:
     void alignItemsHorizontallyWithPadding(float padding);
 
     /** align items in rows of columns */
-    void alignItemsInColumns(unsigned int columns, ...);
-    void alignItemsInColumns(unsigned int columns, va_list args);
+    void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
+    void alignItemsInColumns(int columns, va_list args);
     void alignItemsInColumnsWithArray(Array* rows);
 
     /** align items in columns of rows */
-    void alignItemsInRows(unsigned int rows, ...);
-    void alignItemsInRows(unsigned int rows, va_list args);
+    void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
+    void alignItemsInRows(int rows, va_list args);
     void alignItemsInRowsWithArray(Array* columns);
 
     /** set event handler priority. By default it is: kMenuTouchPriority */
     void setHandlerPriority(int newPriority);
 
-    //super methods
-    virtual void addChild(Node * child);
-    virtual void addChild(Node * child, int zOrder);
-    virtual void addChild(Node * child, int zOrder, int tag);
     virtual void registerWithTouchDispatcher();
     virtual void removeChild(Node* child, bool cleanup);
 
-    /**
-    @brief For phone event handle functions
-    */
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
-    virtual void ccTouchCancelled(Touch *touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-
-    /**
-    @since v0.99.5
-    override onExit
-    */
-    virtual void onExit();
-
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const { return false;}
-    
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
 
+    // overrides
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
+    virtual void ccTouchEnded(Touch* touch, Event* event) override;
+    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
+    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+    virtual void onExit() override;
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) const override { return false;}
+
 protected:
+    /** whether or not the menu will receive events */
+    bool _enabled;
+
     MenuItem* itemForTouch(Touch * touch);
-    tMenuState _state;
+    State _state;
     MenuItem *_selectedItem;
 };
 

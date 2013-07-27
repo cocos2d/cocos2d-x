@@ -16,7 +16,7 @@
         <meta-data android:name="QHOPENSDK_APPID" android:value="Your app_id" />
         <meta-data android:name="QHOPENSDK_APPKEY" android:value="Your app_key" />
         <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="Your app_private_key" />
-        <meta-data android:name="QHOPENSDK_CHANNEL" android:value="Your channel or delete this line" />
+        <meta-data android:name="QHOPENSDK_CHANNEL" android:value="QH360" />
     </applicationCfg>
     <permissionCfg>
         <uses-permission android:name="android.permission.SEND_SMS" />

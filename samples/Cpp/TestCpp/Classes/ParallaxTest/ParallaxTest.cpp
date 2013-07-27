@@ -132,9 +132,9 @@ Parallax2::Parallax2()
     addChild(voidNode, 0, kTagNode);
 }
 
-void Parallax2::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void Parallax2::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     Point diff = touch->getDelta();
     
     Node* node = getChildByTag(kTagNode);
@@ -173,10 +173,10 @@ Layer* nextParallaxAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backParallaxAction()
@@ -186,18 +186,18 @@ Layer* backParallaxAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartParallaxAction()
 {
-    Layer* pLayer = createParallaxTestLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createParallaxTestLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -219,7 +219,7 @@ void ParallaxDemo::onEnter()
     BaseTest::onEnter();
 }
 
-void ParallaxDemo::restartCallback(Object* pSender)
+void ParallaxDemo::restartCallback(Object* sender)
 {
     Scene* s = new ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
@@ -228,7 +228,7 @@ void ParallaxDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void ParallaxDemo::nextCallback(Object* pSender)
+void ParallaxDemo::nextCallback(Object* sender)
 {
     Scene* s = new ParallaxTestScene();
     s->addChild( nextParallaxAction() );
@@ -236,7 +236,7 @@ void ParallaxDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ParallaxDemo::backCallback(Object* pSender)
+void ParallaxDemo::backCallback(Object* sender)
 {
     Scene* s = new ParallaxTestScene();
     s->addChild( backParallaxAction() );
@@ -246,8 +246,8 @@ void ParallaxDemo::backCallback(Object* pSender)
 
 void ParallaxTestScene::runThisTest()
 {
-    Layer* pLayer = nextParallaxAction();
+    Layer* layer = nextParallaxAction();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

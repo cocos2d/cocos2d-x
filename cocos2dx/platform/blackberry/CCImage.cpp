@@ -427,7 +427,7 @@ bool Image::initWithString(
         _width = (short)dc.iMaxLineWidth;
         _height = (short)dc.iMaxLineHeight;
         _preMulti = true;
-        _renderFormat = kTexture2DPixelFormat_RGBA8888;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
         
         bRet = true;
         

@@ -160,7 +160,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     // If there is no specified center region
     if ( _capInsetsInternal.equals(Rect::ZERO) )
     {
-        // CCLog("... cap insets not specified : using default cap insets ...");
+        // log("... cap insets not specified : using default cap insets ...");
         _capInsetsInternal = Rect(w/3, h/3, w/3, h/3);
     }
 
@@ -223,7 +223,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     Rect rightbottombounds = Rect(x, y, right_w, bottom_h);
 
     if (!rotated) {
-        // CCLog("!rotated");
+        // log("!rotated");
 
         AffineTransform t = AffineTransformMakeIdentity();
         t = AffineTransformTranslate(t, rect.origin.x, rect.origin.y);
@@ -286,7 +286,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         // set up transformation of coordinates
         // to handle the case where the sprite is stored rotated
         // in the spritesheet
-        // CCLog("rotated");
+        // log("rotated");
 
         AffineTransform t = AffineTransformMakeIdentity();
 
@@ -450,7 +450,7 @@ void Scale9Sprite::updatePositions()
 
 bool Scale9Sprite::initWithFile(const char* file, Rect rect,  Rect capInsets)
 {
-    CCAssert(file != NULL, "Invalid file for sprite");
+    CCASSERT(file != NULL, "Invalid file for sprite");
     
     SpriteBatchNode *batchnode = SpriteBatchNode::create(file, 9);
     bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
@@ -471,7 +471,7 @@ Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect,  Rect capInsets)
 
 bool Scale9Sprite::initWithFile(const char* file, Rect rect)
 {
-    CCAssert(file != NULL, "Invalid file for sprite");
+    CCASSERT(file != NULL, "Invalid file for sprite");
     bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
     return pReturn;
 }
@@ -529,10 +529,10 @@ Scale9Sprite* Scale9Sprite::create(const char* file)
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets)
 {
     Texture2D* texture = spriteFrame->getTexture();
-    CCAssert(texture != NULL, "CCTexture must be not nil");
+    CCASSERT(texture != NULL, "CCTexture must be not nil");
 
     SpriteBatchNode *batchnode = SpriteBatchNode::createWithTexture(texture, 9);
-    CCAssert(batchnode != NULL, "CCSpriteBatchNode must be not nil");
+    CCASSERT(batchnode != NULL, "CCSpriteBatchNode must be not nil");
 
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
     return pReturn;
@@ -551,7 +551,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, Rect
 }
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
 {
-    CCAssert(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+    CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
     bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
     return pReturn;
 }
@@ -570,10 +570,10 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
 
 bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, Rect capInsets)
 {
-    CCAssert((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
+    CCASSERT((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
 
-    SpriteFrame *frame = SpriteFrameCache::getInstance()->spriteFrameByName(spriteFrameName);
-    CCAssert(frame != NULL, "CCSpriteFrame must be non-NULL");
+    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    CCASSERT(frame != NULL, "CCSpriteFrame must be non-NULL");
 
     if (NULL == frame) return false;
 
@@ -601,7 +601,7 @@ bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
 
 Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
-    CCAssert(spriteFrameName != NULL, "spriteFrameName must be non-NULL");
+    CCASSERT(spriteFrameName != NULL, "spriteFrameName must be non-NULL");
 
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
@@ -611,7 +611,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameNam
     }
     CC_SAFE_DELETE(pReturn);
 
-    CCLog("Could not allocate Scale9Sprite()");
+    log("Could not allocate Scale9Sprite()");
     return NULL;
     
 }

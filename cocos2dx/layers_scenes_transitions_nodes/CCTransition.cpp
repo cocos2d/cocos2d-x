@@ -65,7 +65,7 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCAssert( scene != NULL, "Argument scene must be non-nil");
+    CCASSERT( scene != NULL, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
@@ -82,7 +82,7 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         }
         _outScene->retain();
 
-        CCAssert( _inScene != _outScene, "Incoming scene must be different from the outgoing scene" );
+        CCASSERT( _inScene != _outScene, "Incoming scene must be different from the outgoing scene" );
         
         sceneOrder();
 
@@ -206,7 +206,7 @@ TransitionSceneOriented::~TransitionSceneOriented()
 {
 }
 
-TransitionSceneOriented * TransitionSceneOriented::create(float t, Scene *scene, tOrientation orientation)
+TransitionSceneOriented * TransitionSceneOriented::create(float t, Scene *scene, Orientation orientation)
 {
     TransitionSceneOriented * pScene = new TransitionSceneOriented();
     pScene->initWithDuration(t,scene,orientation);
@@ -214,7 +214,7 @@ TransitionSceneOriented * TransitionSceneOriented::create(float t, Scene *scene,
     return pScene;
 }
 
-bool TransitionSceneOriented::initWithDuration(float t, Scene *scene, tOrientation orientation)
+bool TransitionSceneOriented::initWithDuration(float t, Scene *scene, Orientation orientation)
 {
     if ( TransitionScene::initWithDuration(t, scene) )
     {
@@ -740,7 +740,7 @@ void TransitionFlipX::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation == kTransitionOrientationRightOver )
+    if( _orientation == TransitionScene::Orientation::RIGHT_OVER )
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -776,7 +776,7 @@ void TransitionFlipX::onEnter()
     _outScene->runAction(outA);
 }
 
-TransitionFlipX* TransitionFlipX::create(float t, Scene* s, tOrientation o)
+TransitionFlipX* TransitionFlipX::create(float t, Scene* s, Orientation o)
 {
     TransitionFlipX* pScene = new TransitionFlipX();
     pScene->initWithDuration(t, s, o);
@@ -787,7 +787,7 @@ TransitionFlipX* TransitionFlipX::create(float t, Scene* s, tOrientation o)
 
 TransitionFlipX* TransitionFlipX::create(float t, Scene* s)
 {
-    return TransitionFlipX::create(t, s, kTransitionOrientationRightOver);
+    return TransitionFlipX::create(t, s, TransitionScene::Orientation::RIGHT_OVER);
 }
 
 //
@@ -810,7 +810,7 @@ void TransitionFlipY::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation == kTransitionOrientationUpOver ) 
+    if( _orientation == TransitionScene::Orientation::UP_OVER ) 
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -846,7 +846,7 @@ void TransitionFlipY::onEnter()
 
 }
 
-TransitionFlipY* TransitionFlipY::create(float t, Scene* s, tOrientation o)
+TransitionFlipY* TransitionFlipY::create(float t, Scene* s, Orientation o)
 {
     TransitionFlipY* pScene = new TransitionFlipY();
     pScene->initWithDuration(t, s, o);
@@ -857,7 +857,7 @@ TransitionFlipY* TransitionFlipY::create(float t, Scene* s, tOrientation o)
 
 TransitionFlipY* TransitionFlipY::create(float t, Scene* s)
 {
-    return TransitionFlipY::create(t, s, kTransitionOrientationUpOver);
+    return TransitionFlipY::create(t, s, TransitionScene::Orientation::UP_OVER);
 }
 
 //
@@ -881,7 +881,7 @@ void TransitionFlipAngular::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation == kTransitionOrientationRightOver ) 
+    if( _orientation == TransitionScene::Orientation::RIGHT_OVER ) 
     {
         inDeltaZ = 90;
         inAngleZ = 270;
@@ -916,7 +916,7 @@ void TransitionFlipAngular::onEnter()
     _outScene->runAction(outA);
 }
 
-TransitionFlipAngular* TransitionFlipAngular::create(float t, Scene* s, tOrientation o)
+TransitionFlipAngular* TransitionFlipAngular::create(float t, Scene* s, Orientation o)
 {
     TransitionFlipAngular* pScene = new TransitionFlipAngular();
     pScene->initWithDuration(t, s, o);
@@ -927,7 +927,7 @@ TransitionFlipAngular* TransitionFlipAngular::create(float t, Scene* s, tOrienta
 
 TransitionFlipAngular* TransitionFlipAngular::create(float t, Scene* s)
 {
-    return TransitionFlipAngular::create(t, s, kTransitionOrientationRightOver);
+    return TransitionFlipAngular::create(t, s, TransitionScene::Orientation::RIGHT_OVER);
 }
 
 //
@@ -950,7 +950,7 @@ void TransitionZoomFlipX::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation == kTransitionOrientationRightOver ) {
+    if( _orientation == TransitionScene::Orientation::RIGHT_OVER ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -994,7 +994,7 @@ void TransitionZoomFlipX::onEnter()
     _outScene->runAction(outA);
 }
 
-TransitionZoomFlipX* TransitionZoomFlipX::create(float t, Scene* s, tOrientation o)
+TransitionZoomFlipX* TransitionZoomFlipX::create(float t, Scene* s, Orientation o)
 {
     TransitionZoomFlipX* pScene = new TransitionZoomFlipX();
     pScene->initWithDuration(t, s, o);
@@ -1005,7 +1005,7 @@ TransitionZoomFlipX* TransitionZoomFlipX::create(float t, Scene* s, tOrientation
 
 TransitionZoomFlipX* TransitionZoomFlipX::create(float t, Scene* s)
 {
-    return TransitionZoomFlipX::create(t, s, kTransitionOrientationRightOver);
+    return TransitionZoomFlipX::create(t, s, TransitionScene::Orientation::RIGHT_OVER);
 }
 
 //
@@ -1029,7 +1029,7 @@ void TransitionZoomFlipY::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation== kTransitionOrientationUpOver ) {
+    if( _orientation== TransitionScene::Orientation::UP_OVER ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -1073,7 +1073,7 @@ void TransitionZoomFlipY::onEnter()
     _outScene->runAction(outA);
 }
 
-TransitionZoomFlipY* TransitionZoomFlipY::create(float t, Scene* s, tOrientation o)
+TransitionZoomFlipY* TransitionZoomFlipY::create(float t, Scene* s, Orientation o)
 {
     TransitionZoomFlipY* pScene = new TransitionZoomFlipY();
     pScene->initWithDuration(t, s, o);
@@ -1084,7 +1084,7 @@ TransitionZoomFlipY* TransitionZoomFlipY::create(float t, Scene* s, tOrientation
 
 TransitionZoomFlipY* TransitionZoomFlipY::create(float t, Scene* s)
 {
-    return TransitionZoomFlipY::create(t, s, kTransitionOrientationUpOver);
+    return TransitionZoomFlipY::create(t, s, TransitionScene::Orientation::UP_OVER);
 }
 
 //
@@ -1108,7 +1108,7 @@ void TransitionZoomFlipAngular::onEnter()
     float inDeltaZ, inAngleZ;
     float outDeltaZ, outAngleZ;
 
-    if( _orientation == kTransitionOrientationRightOver ) {
+    if( _orientation == TransitionScene::Orientation::RIGHT_OVER ) {
         inDeltaZ = 90;
         inAngleZ = 270;
         outDeltaZ = 90;
@@ -1154,7 +1154,7 @@ void TransitionZoomFlipAngular::onEnter()
     _outScene->runAction(outA);
 }
 
-TransitionZoomFlipAngular* TransitionZoomFlipAngular::create(float t, Scene* s, tOrientation o)
+TransitionZoomFlipAngular* TransitionZoomFlipAngular::create(float t, Scene* s, Orientation o)
 {
     TransitionZoomFlipAngular* pScene = new TransitionZoomFlipAngular();
     pScene->initWithDuration(t, s, o);
@@ -1165,7 +1165,7 @@ TransitionZoomFlipAngular* TransitionZoomFlipAngular::create(float t, Scene* s, 
 
 TransitionZoomFlipAngular* TransitionZoomFlipAngular::create(float t, Scene* s)
 {
-    return TransitionZoomFlipAngular::create(t, s, kTransitionOrientationRightOver);
+    return TransitionZoomFlipAngular::create(t, s, TransitionScene::Orientation::RIGHT_OVER);
 }
 
 //

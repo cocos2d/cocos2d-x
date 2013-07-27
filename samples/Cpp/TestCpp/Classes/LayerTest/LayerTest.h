@@ -18,9 +18,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 class LayerTestCascadingOpacityA : public LayerTest
@@ -74,9 +74,9 @@ public:
 
     void updateSize(Point &touchLocation);
 
-    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
+    virtual void ccTouchesEnded(Set  *touches, Event  *event);
 };
 
 class LayerTest2 : public LayerTest

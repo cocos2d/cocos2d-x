@@ -215,7 +215,7 @@ void Effect5::onExit()
 {
     EffectAdvanceTextLayer::onExit();
 
-    Director::getInstance()->setProjection(kDirectorProjection3D);
+    Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 //------------------------------------------------------------------
@@ -303,10 +303,10 @@ Layer* nextEffectAdvanceAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backEffectAdvanceAction()
@@ -316,18 +316,18 @@ Layer* backEffectAdvanceAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartEffectAdvanceAction()
 {
-    Layer* pLayer = createEffectAdvanceLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createEffectAdvanceLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 
@@ -368,7 +368,7 @@ std::string EffectAdvanceTextLayer::subtitle()
     return "";
 }
 
-void EffectAdvanceTextLayer::restartCallback(Object* pSender)
+void EffectAdvanceTextLayer::restartCallback(Object* sender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
@@ -377,7 +377,7 @@ void EffectAdvanceTextLayer::restartCallback(Object* pSender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::nextCallback(Object* pSender)
+void EffectAdvanceTextLayer::nextCallback(Object* sender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
@@ -386,7 +386,7 @@ void EffectAdvanceTextLayer::nextCallback(Object* pSender)
     s->release();
 }
 
-void EffectAdvanceTextLayer::backCallback(Object* pSender)
+void EffectAdvanceTextLayer::backCallback(Object* sender)
 {
     Scene* s = new EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );
@@ -396,8 +396,8 @@ void EffectAdvanceTextLayer::backCallback(Object* pSender)
 
 void EffectAdvanceScene::runThisTest()
 {
-    Layer* pLayer = nextEffectAdvanceAction();
+    Layer* layer = nextEffectAdvanceAction();
 
-    addChild(pLayer);
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

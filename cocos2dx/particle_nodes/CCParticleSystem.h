@@ -40,45 +40,6 @@ NS_CC_BEGIN
 
 class ParticleBatchNode;
 
-//* @enum
-enum {
-    /** The Particle emitter lives forever */
-    kParticleDurationInfinity = -1,
-
-    /** The starting size of the particle is equal to the ending size */
-    kParticleStartSizeEqualToEndSize = -1,
-
-    /** The starting radius of the particle is equal to the ending radius */
-    kParticleStartRadiusEqualToEndRadius = -1
-};
-
-//* @enum
-enum {
-    /** Gravity mode (A mode) */
-    kParticleModeGravity,
-
-    /** Radius mode (B mode) */
-    kParticleModeRadius,    
-};
-
-
-/** @typedef tPositionType
-possible types of particle positions
-*/
-typedef enum {
-    /** Living particles are attached to the world and are unaffected by emitter repositioning. */
-    kPositionTypeFree,
-
-    /** Living particles are attached to the world but will follow the emitter repositioning.
-    Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
-    */
-    kPositionTypeRelative,
-
-    /** Living particles are attached to the emitter and are translated along with it. */
-    kPositionTypeGrouped,
-}tPositionType;
-
-
 /**
 Structure that contains the values of each particle
 */
@@ -164,97 +125,99 @@ emitter.startSpin = 0;
 
 */
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
-{    
-protected:
-    std::string _plistFile;
-    //! time elapsed since the start of the system (in seconds)
-    float _elapsed;
-
-    // Different modes
-    //! Mode A:Gravity + Tangential Accel + Radial Accel
-    struct {
-        /** Gravity value. Only available in 'Gravity' mode. */
-        Point gravity;
-        /** speed of each particle. Only available in 'Gravity' mode.  */
-        float speed;
-        /** speed variance of each particle. Only available in 'Gravity' mode. */
-        float speedVar;
-        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccel;
-        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccelVar;
-        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
-        float radialAccel;
-        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float radialAccelVar;
-        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
-        bool rotationIsDir;
-    } modeA;
-
-    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
-    struct {
-        /** The starting radius of the particles. Only available in 'Radius' mode. */
-        float startRadius;
-        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
-        float startRadiusVar;
-        /** The ending radius of the particles. Only available in 'Radius' mode. */
-        float endRadius;
-        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
-        float endRadiusVar;            
-        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
-        float rotatePerSecond;
-        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
-        float rotatePerSecondVar;
-    } modeB;
-
-    //! Array of particles
-    tParticle *_particles;
-
-    // color modulate
-    //    BOOL colorModulate;
-
-    //! How many particles can be emitted per second
-    float _emitCounter;
-
-    //!  particle idx
-    unsigned int _particleIdx;
-
-    // Optimization
-    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
-    //SEL                        updateParticleSel;
-
-    /** weak reference to the SpriteBatchNode that renders the Sprite */
-    CC_PROPERTY(ParticleBatchNode*, _batchNode, BatchNode);
-
-    // index of system in batch node array
-    CC_SYNTHESIZE(unsigned int, _atlasIndex, AtlasIndex);
-
-    //true if scaled or rotated
-    bool _transformSystemDirty;
-    // Number of allocated particles
-    unsigned int _allocatedParticles;
-
-    /** Is the emitter active */
-    bool _isActive;
-    /** Quantity of particles that are being simulated at the moment */
-    CC_PROPERTY_READONLY(unsigned int, _particleCount, ParticleCount)
-    /** How many seconds the emitter will run. -1 means 'forever' */
-    CC_PROPERTY(float, _duration, Duration)
-    /** sourcePosition of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _sourcePosition, SourcePosition)
-    /** Position variance of the emitter */
-    CC_PROPERTY_PASS_BY_REF(Point, _posVar, PosVar)
-    /** life, and life variation of each particle */
-    CC_PROPERTY(float, _life, Life)
-    /** life variance of each particle */
-    CC_PROPERTY(float, _lifeVar, LifeVar)
-    /** angle and angle variation of each particle */
-    CC_PROPERTY(float, _angle, Angle)
-    /** angle variance of each particle */
-    CC_PROPERTY(float, _angleVar, AngleVar)
-
-//////////////////////////////////////////////////////////////////////////
+{
 public:
+    enum class Mode
+    {
+        GRAVITY,
+        RADIUS,
+    };
+    
+    /** @typedef PositionType
+     possible types of particle positions
+     */
+    enum class PositionType
+    {
+        /** Living particles are attached to the world and are unaffected by emitter repositioning. */
+        FREE,
+        
+        /** Living particles are attached to the world but will follow the emitter repositioning.
+         Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
+         */
+        RELATIVE,
+        
+        /** Living particles are attached to the emitter and are translated along with it. */
+        GROUPED,
+    };
+    
+    //* @enum
+    enum {
+        /** The Particle emitter lives forever */
+        DURATION_INFINITY = -1,
+        
+        /** The starting size of the particle is equal to the ending size */
+        START_SIZE_EQUAL_TO_END_SIZE = -1,
+        
+        /** The starting radius of the particle is equal to the ending radius */
+        START_RADIUS_EQUAL_TO_END_RADIUS = -1,
+    };
+    
+    /** creates an initializes a ParticleSystem from a plist file.
+    This plist files can be created manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v2.0
+    */
+    static ParticleSystem * create(const char *plistFile);
+
+    //! create a system with a fixed number of particles
+    static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
+
+    ParticleSystem();
+    virtual ~ParticleSystem();
+
+    /** initializes a ParticleSystem*/
+    bool init();
+    /** initializes a ParticleSystem from a plist file.
+    This plist files can be created manually or with Particle Designer:
+    http://particledesigner.71squared.com/
+    @since v0.99.3
+    */
+    bool initWithFile(const char *plistFile);
+
+    /** initializes a QuadParticleSystem from a Dictionary.
+    @since v0.99.3
+    */
+    bool initWithDictionary(Dictionary *dictionary);
+    
+    /** initializes a particle system from a NSDictionary and the path from where to load the png
+     @since v2.1
+     */
+    bool initWithDictionary(Dictionary *dictionary, const char *dirname);
+
+    //! Initializes a system with a fixed number of particles
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
+
+    //! Add a particle to the emitter
+    bool addParticle();
+    //! Initializes a particle
+    void initParticle(tParticle* particle);
+    //! stop emitting particles. Running particles will continue to run until they die
+    void stopSystem();
+    //! Kill all living particles.
+    void resetSystem();
+    //! whether or not the system is full
+    bool isFull();
+
+    //! should be overridden by subclasses
+    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
+    //! should be overridden by subclasses
+    virtual void postStep();
+
+    virtual void updateWithNoTime(void);
+
+    virtual bool isAutoRemoveOnFinish() const;
+    virtual void setAutoRemoveOnFinish(bool var);
+
     // mode A
     virtual const Point& getGravity();
     virtual void setGravity(const Point& g);
@@ -290,131 +253,281 @@ public:
     virtual void setRotation(float newRotation);
     virtual void setScaleX(float newScaleX);
     virtual void setScaleY(float newScaleY);
-    
+
     virtual bool isActive() const;
     virtual bool isBlendAdditive() const;
     virtual void setBlendAdditive(bool value);
-//////////////////////////////////////////////////////////////////////////
+
+    virtual ParticleBatchNode* getBatchNode() const;
+    virtual void setBatchNode(ParticleBatchNode* batchNode);
+    
+    // index of system in batch node array
+    inline int getAtlasIndex() const { return _atlasIndex; };
+    inline void setAtlasIndex(int index) { _atlasIndex = index; };
+
+    /** Quantity of particles that are being simulated at the moment */
+    inline unsigned int getParticleCount() const { return _particleCount; };
+    
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    inline float getDuration() const { return _duration; };
+    inline void setDuration(float duration) { _duration = duration; };
+    
+    /** sourcePosition of the emitter */
+    inline const Point& getSourcePosition() const { return _sourcePosition; };
+    inline void setSourcePosition(const Point& pos) { _sourcePosition = pos; };
+    
+    /** Position variance of the emitter */
+    inline const Point& getPosVar() const { return _posVar; };
+    inline void setPosVar(const Point& pos) { _posVar = pos; };
+
+    /** life, and life variation of each particle */
+    inline float getLife() const { return _life; };
+    inline void setLife(float life) { _life = life; };
+
+    /** life variance of each particle */
+    inline float getLifeVar() const { return _lifeVar; };
+    inline void setLifeVar(float lifeVar) { _lifeVar = lifeVar; };
+
+    /** angle and angle variation of each particle */
+    inline float getAngle() const { return _angle; };
+    inline void setAngle(float angle) { _angle = angle; };
+
+    /** angle variance of each particle */
+    inline float getAngleVar() const { return _angleVar; };
+    inline void setAngleVar(float angleVar) { _angleVar = angleVar; };
+    
+    /** Switch between different kind of emitter modes:
+     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+     - kParticleModeRadius: uses radius movement + rotation
+     */
+    inline Mode getEmitterMode() const { return _emitterMode; };
+    inline void setEmitterMode(Mode mode) { _emitterMode = mode; };
     
     /** start size in pixels of each particle */
-    CC_PROPERTY(float, _startSize, StartSize)
+    inline float getStartSize() const { return _startSize; };
+    inline void setStartSize(float startSize) { _startSize = startSize; };
+
     /** size variance in pixels of each particle */
-    CC_PROPERTY(float, _startSizeVar, StartSizeVar)
+    inline float getStartSizeVar() const { return _startSizeVar; };
+    inline void setStartSizeVar(float sizeVar) { _startSizeVar = sizeVar; };
+
     /** end size in pixels of each particle */
-    CC_PROPERTY(float, _endSize, EndSize)
+    inline float getEndSize() const { return _endSize; };
+    inline void setEndSize(float endSize) { _endSize = endSize; };
+
     /** end size variance in pixels of each particle */
-    CC_PROPERTY(float, _endSizeVar, EndSizeVar)
+    inline float getEndSizeVar() const { return _endSizeVar; };
+    inline void setEndSizeVar(float sizeVar) { _endSizeVar = sizeVar; };
+
     /** start color of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _startColor, StartColor)
+    inline const Color4F& getStartColor() const { return _startColor; };
+    inline void setStartColor(const Color4F& color) { _startColor = color; };
+
     /** start color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _startColorVar, StartColorVar)
+    inline const Color4F& getStartColorVar() const { return _startColorVar; };
+    inline void setStartColorVar(const Color4F& color) { _startColorVar = color; };
+
     /** end color and end color variation of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _endColor, EndColor)
+    inline const Color4F& getEndColor() const { return _endColor; };
+    inline void setEndColor(const Color4F& color) { _endColor = color; };
+
     /** end color variance of each particle */
-    CC_PROPERTY_PASS_BY_REF(Color4F, _endColorVar, EndColorVar)
+    inline const Color4F& getEndColorVar() const { return _endColorVar; };
+    inline void setEndColorVar(const Color4F& color) { _endColorVar = color; };
+
     //* initial angle of each particle
-    CC_PROPERTY(float, _startSpin, StartSpin)
+    inline float getStartSpin() const { return _startSpin; };
+    inline void setStartSpin(float spin) { _startSpin = spin; };
+
     //* initial angle of each particle
-    CC_PROPERTY(float, _startSpinVar, StartSpinVar)
+    inline float getStartSpinVar() const { return _startSpinVar; };
+    inline void setStartSpinVar(float pinVar) { _startSpinVar = pinVar; };
+
     //* initial angle of each particle
-    CC_PROPERTY(float, _endSpin, EndSpin)
+    inline float getEndSpin() const { return _endSpin; };
+    inline void setEndSpin(float endSpin) { _endSpin = endSpin; };
+
     //* initial angle of each particle
-    CC_PROPERTY(float, _endSpinVar, EndSpinVar)
+    inline float getEndSpinVar() const { return _endSpinVar; };
+    inline void setEndSpinVar(float endSpinVar) { _endSpinVar = endSpinVar; };
+
     /** emission rate of the particles */
-    CC_PROPERTY(float, _emissionRate, EmissionRate)
+    inline float getEmissionRate() const { return _emissionRate; };
+    inline void setEmissionRate(float rate) { _emissionRate = rate; };
+
     /** maximum particles of the system */
-    CC_PROPERTY(unsigned int, _totalParticles, TotalParticles)
-    /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY(Texture2D*, _texture, Texture)
-    /** conforms to CocosNodeTexture protocol */
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
+    virtual unsigned int getTotalParticles() const;
+    virtual void setTotalParticles(unsigned int totalParticles);
+
     /** does the alpha value modify color */
-    CC_PROPERTY(bool, _opacityModifyRGB, OpacityModifyRGB)
-
-    /** whether or not the particles are using blend additive.
-    If enabled, the following blending function will be used.
-    @code
-    source blend function = GL_SRC_ALPHA;
-    dest blend function = GL_ONE;
-    @endcode
-    */
-    bool _isBlendAdditive;
-    /** particles movement type: Free or Grouped
-    @since v0.8
-    */
-    CC_PROPERTY(tPositionType, _positionType, PositionType)
-    /** whether or not the node will be auto-removed when it has no particles left.
-    By default it is false.
-    @since v0.8
-    */
-protected:
-    bool _isAutoRemoveOnFinish;
-public:
-    virtual bool isAutoRemoveOnFinish() const;
-    virtual void setAutoRemoveOnFinish(bool var);
-
-    /** Switch between different kind of emitter modes:
-    - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
-    - kParticleModeRadius: uses radius movement + rotation
-    */
-    CC_PROPERTY(int, _emitterMode, EmitterMode)
-
-public:
-    ParticleSystem();
-    virtual ~ParticleSystem();
-
-    /** creates an initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @since v2.0
-    */
-    static ParticleSystem * create(const char *plistFile);
-
-    //! create a system with a fixed number of particles
-    static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
-
-    /** initializes a ParticleSystem*/
-    bool init();
-    /** initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @since v0.99.3
-    */
-    bool initWithFile(const char *plistFile);
-
-    /** initializes a QuadParticleSystem from a Dictionary.
-    @since v0.99.3
-    */
-    bool initWithDictionary(Dictionary *dictionary);
+    inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
+    inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
+    CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
-    /** initializes a particle system from a NSDictionary and the path from where to load the png
-     @since v2.1
+    /** particles movement type: Free or Grouped
+     @since v0.8
      */
-    bool initWithDictionary(Dictionary *dictionary, const char *dirname);
-
-    //! Initializes a system with a fixed number of particles
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    //! Add a particle to the emitter
-    bool addParticle();
-    //! Initializes a particle
-    void initParticle(tParticle* particle);
-    //! stop emitting particles. Running particles will continue to run until they die
-    void stopSystem();
-    //! Kill all living particles.
-    void resetSystem();
-    //! whether or not the system is full
-    bool isFull();
-
-    //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
-    //! should be overridden by subclasses
-    virtual void postStep();
-
-    virtual void update(float dt);
-    virtual void updateWithNoTime(void);
-
+    inline PositionType getPositionType() const { return _positionType; };
+    inline void setPositionType(PositionType type) { _positionType = type; };
+    
+    // Overrides
+    virtual void update(float dt) override;
+    virtual Texture2D* getTexture() const override;
+    virtual void setTexture(Texture2D *texture) override;
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    virtual const BlendFunc &getBlendFunc() const override;
 protected:
     virtual void updateBlendFunc();
+
+protected:
+    /** whether or not the particles are using blend additive.
+     If enabled, the following blending function will be used.
+     @code
+     source blend function = GL_SRC_ALPHA;
+     dest blend function = GL_ONE;
+     @endcode
+     */
+    bool _isBlendAdditive;
+
+    /** whether or not the node will be auto-removed when it has no particles left.
+     By default it is false.
+     @since v0.8
+     */
+    bool _isAutoRemoveOnFinish;
+
+    std::string _plistFile;
+    //! time elapsed since the start of the system (in seconds)
+    float _elapsed;
+
+    // Different modes
+    //! Mode A:Gravity + Tangential Accel + Radial Accel
+    struct {
+        /** Gravity value. Only available in 'Gravity' mode. */
+        Point gravity;
+        /** speed of each particle. Only available in 'Gravity' mode.  */
+        float speed;
+        /** speed variance of each particle. Only available in 'Gravity' mode. */
+        float speedVar;
+        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccel;
+        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccelVar;
+        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
+        float radialAccel;
+        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float radialAccelVar;
+        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
+        bool rotationIsDir;
+    } modeA;
+
+    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+    struct {
+        /** The starting radius of the particles. Only available in 'Radius' mode. */
+        float startRadius;
+        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
+        float startRadiusVar;
+        /** The ending radius of the particles. Only available in 'Radius' mode. */
+        float endRadius;
+        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
+        float endRadiusVar;
+        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+        float rotatePerSecond;
+        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
+        float rotatePerSecondVar;
+    } modeB;
+
+    //! Array of particles
+    tParticle *_particles;
+
+    // color modulate
+    //    BOOL colorModulate;
+
+    //! How many particles can be emitted per second
+    float _emitCounter;
+
+    //!  particle idx
+    unsigned int _particleIdx;
+
+    // Optimization
+    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
+    //SEL                        updateParticleSel;
+
+    /** weak reference to the SpriteBatchNode that renders the Sprite */
+    ParticleBatchNode* _batchNode;
+
+    // index of system in batch node array
+    int _atlasIndex;
+
+    //true if scaled or rotated
+    bool _transformSystemDirty;
+    // Number of allocated particles
+    unsigned int _allocatedParticles;
+
+    /** Is the emitter active */
+    bool _isActive;
+    
+    /** Quantity of particles that are being simulated at the moment */
+    unsigned int _particleCount;
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    float _duration;
+    /** sourcePosition of the emitter */
+    Point _sourcePosition;
+    /** Position variance of the emitter */
+    Point _posVar;
+    /** life, and life variation of each particle */
+    float _life;
+    /** life variance of each particle */
+    float _lifeVar;
+    /** angle and angle variation of each particle */
+    float _angle;
+    /** angle variance of each particle */
+    float _angleVar;
+
+    /** Switch between different kind of emitter modes:
+     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+     - kParticleModeRadius: uses radius movement + rotation
+     */
+    Mode _emitterMode;
+
+    /** start size in pixels of each particle */
+    float _startSize;
+    /** size variance in pixels of each particle */
+    float _startSizeVar;
+    /** end size in pixels of each particle */
+    float _endSize;
+    /** end size variance in pixels of each particle */
+    float _endSizeVar;
+    /** start color of each particle */
+    Color4F _startColor;
+    /** start color variance of each particle */
+    Color4F _startColorVar;
+    /** end color and end color variation of each particle */
+    Color4F _endColor;
+    /** end color variance of each particle */
+    Color4F _endColorVar;
+    //* initial angle of each particle
+    float _startSpin;
+    //* initial angle of each particle
+    float _startSpinVar;
+    //* initial angle of each particle
+    float _endSpin;
+    //* initial angle of each particle
+    float _endSpinVar;
+    /** emission rate of the particles */
+    float _emissionRate;
+    /** maximum particles of the system */
+    unsigned int _totalParticles;
+    /** conforms to CocosNodeTexture protocol */
+    Texture2D* _texture;
+    /** conforms to CocosNodeTexture protocol */
+    BlendFunc _blendFunc;
+    /** does the alpha value modify color */
+    bool _opacityModifyRGB;
+
+    /** particles movement type: Free or Grouped
+     @since v0.8
+     */
+    PositionType _positionType;
 };
 
 // end of particle_nodes group

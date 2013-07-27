@@ -33,6 +33,13 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <cstring>
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 NS_CC_BEGIN
     
 static unsigned int _globalFontSize = kItemSize;
@@ -112,15 +119,11 @@ void MenuItem::activate()
 			_callback(this);
         }
         
-        if (kScriptTypeLua == _scriptType)
+        if (kScriptTypeNone != _scriptType)
         {
-            BasicScriptData data((void*)this);
+            BasicScriptData data(this);
             ScriptEvent scriptEvent(kMenuClickedEvent,&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
-        }
-        else if (kScriptTypeJavascript == _scriptType)
-        {
-            ScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
     }
 }
@@ -135,7 +138,7 @@ bool MenuItem::isEnabled() const
     return _enabled;
 }
 
-Rect MenuItem::rect()
+Rect MenuItem::rect() const
 {
     return Rect( _position.x - _contentSize.width * _anchorPoint.x,
                       _position.y - _contentSize.height * _anchorPoint.y,
@@ -165,18 +168,6 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 //CCMenuItemLabel
 //
 
-const Color3B& MenuItemLabel::getDisabledColor() const
-{
-    return _disabledColor;
-}
-void MenuItemLabel::setDisabledColor(const Color3B& var)
-{
-    _disabledColor = var;
-}
-Node *MenuItemLabel::getLabel()
-{
-    return _label;
-}
 void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
@@ -344,7 +335,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const char *value, const char *cha
 // XXX: deprecated
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
 
 	_target = target;
 	CC_SAFE_RETAIN(_target);
@@ -353,7 +344,7 @@ bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFil
 
 bool MenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "value length must be greater than 0");
     LabelAtlas *label = new LabelAtlas();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     label->autorelease();
@@ -373,7 +364,7 @@ void MenuItemFont::setFontSize(unsigned int s)
     _globalFontSize = s;
 }
 
-unsigned int MenuItemFont::fontSize()
+unsigned int MenuItemFont::getFontSize()
 {
     return _globalFontSize;
 }
@@ -388,7 +379,7 @@ void MenuItemFont::setFontName(const char *name)
     _globalFontNameRelease = true;
 }
 
-const char * MenuItemFont::fontName()
+const char * MenuItemFont::getFontName()
 {
     return _globalFontName.c_str();
 }
@@ -422,7 +413,7 @@ MenuItemFont * MenuItemFont::create(const char *value)
 // XXX: deprecated
 bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
 	_target = target;
     CC_SAFE_RETAIN(target);
@@ -431,7 +422,7 @@ bool MenuItemFont::initWithString(const char *value, Object* target, SEL_MenuHan
 
 bool MenuItemFont::initWithString(const char *value, const ccMenuCallback& callback)
 {
-    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
+    CCASSERT( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
 
     _fontName = _globalFontName;
     _fontSize = _globalFontSize;
@@ -457,7 +448,7 @@ void MenuItemFont::setFontSizeObj(unsigned int s)
     recreateLabel();
 }
 
-unsigned int MenuItemFont::fontSizeObj()
+unsigned int MenuItemFont::getFontSizeObj() const
 {
     return _fontSize;
 }
@@ -468,7 +459,7 @@ void MenuItemFont::setFontNameObj(const char* name)
     recreateLabel();
 }
 
-const char* MenuItemFont::fontNameObj()
+const char* MenuItemFont::getFontNameObj() const
 {
     return _fontName.c_str();
 }
@@ -476,11 +467,6 @@ const char* MenuItemFont::fontNameObj()
 //
 //CCMenuItemSprite
 //
-
-Node * MenuItemSprite::getNormalImage()
-{
-    return _normalImage;
-}
 
 void MenuItemSprite::setNormalImage(Node* pImage)
 {
@@ -503,11 +489,6 @@ void MenuItemSprite::setNormalImage(Node* pImage)
     }
 }
 
-Node * MenuItemSprite::getSelectedImage()
-{
-    return _selectedImage;
-}
-
 void MenuItemSprite::setSelectedImage(Node* pImage)
 {
     if (pImage != _normalImage)
@@ -526,11 +507,6 @@ void MenuItemSprite::setSelectedImage(Node* pImage)
         _selectedImage = pImage;
         this->updateImagesVisibility();
     }
-}
-
-Node * MenuItemSprite::getDisabledImage()
-{
-    return _disabledImage;
 }
 
 void MenuItemSprite::setDisabledImage(Node* pImage)
@@ -822,18 +798,6 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 // MenuItemToggle
 //
 
-void MenuItemToggle::setSubItems(Array* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(_subItems);
-    _subItems = var;
-}
-
-Array* MenuItemToggle::getSubItems()
-{
-    return _subItems;
-}
-
 // XXX: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems)
 {
@@ -963,6 +927,7 @@ MenuItemToggle::~MenuItemToggle()
 {
     CC_SAFE_RELEASE(_subItems);
 }
+
 void MenuItemToggle::setSelectedIndex(unsigned int index)
 {
     if( index != _selectedIndex && _subItems->count() > 0 )
@@ -981,20 +946,19 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         item->setPosition( Point( s.width/2, s.height/2 ) );
     }
 }
-unsigned int MenuItemToggle::getSelectedIndex()
-{
-    return _selectedIndex;
-}
+
 void MenuItemToggle::selected()
 {
     MenuItem::selected();
-    ((MenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->selected();
+    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->selected();
 }
+
 void MenuItemToggle::unselected()
 {
     MenuItem::unselected();
-    ((MenuItem*)(_subItems->objectAtIndex(_selectedIndex)))->unselected();
+    static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex))->unselected();
 }
+
 void MenuItemToggle::activate()
 {
     // update index
@@ -1023,9 +987,15 @@ void MenuItemToggle::setEnabled(bool enabled)
     }
 }
 
-MenuItem* MenuItemToggle::selectedItem()
+MenuItem* MenuItemToggle::getSelectedItem()
 {
-    return (MenuItem*)_subItems->objectAtIndex(_selectedIndex);
+    return static_cast<MenuItem*>(_subItems->objectAtIndex(_selectedIndex));
 }
 
 NS_CC_END
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif

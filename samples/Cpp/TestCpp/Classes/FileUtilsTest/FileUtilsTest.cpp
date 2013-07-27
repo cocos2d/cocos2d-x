@@ -23,11 +23,11 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -37,26 +37,26 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 void FileUtilsTestScene::runThisTest()
 {
-    Layer* pLayer = nextAction();
-    addChild(pLayer);
+    Layer* layer = nextAction();
+    addChild(layer);
     
     Director::getInstance()->replaceScene(this);
 }
@@ -68,34 +68,34 @@ void FileUtilsDemo::onEnter()
     BaseTest::onEnter();    
 }
 
-void FileUtilsDemo::backCallback(Object* pSender)
+void FileUtilsDemo::backCallback(Object* sender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = backAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = backAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
-void FileUtilsDemo::nextCallback(Object* pSender)
+void FileUtilsDemo::nextCallback(Object* sender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = nextAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = nextAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
-void FileUtilsDemo::restartCallback(Object* pSender)
+void FileUtilsDemo::restartCallback(Object* sender)
 {
-    Scene* pScene = new FileUtilsTestScene();
-    Layer* pLayer = restartAction();
+    Scene* scene = new FileUtilsTestScene();
+    Layer* layer = restartAction();
     
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 string FileUtilsDemo::title()
@@ -138,7 +138,7 @@ void TestResolutionDirectories::onEnter()
     for( int i=1; i<7; i++) {
         String *filename = String::createWithFormat("test%d.txt", i);
         ret = sharedFileUtils->fullPathForFilename(filename->getCString());
-        CCLog("%s -> %s", filename->getCString(), ret.c_str());
+        log("%s -> %s", filename->getCString(), ret.c_str());
     }
 }
 
@@ -181,10 +181,10 @@ void TestSearchPath::onEnter()
     if (fp)
     {
         size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
-        CCAssert(ret == 0, "fwrite function returned nonzero value");
+        CCASSERT(ret == 0, "fwrite function returned nonzero value");
         fclose(fp);
         if (ret == 0)
-            CCLog("Writing file to writable path succeed.");
+            log("Writing file to writable path succeed.");
     }
     
     searchPaths.insert(searchPaths.begin(), writablePath);
@@ -201,12 +201,12 @@ void TestSearchPath::onEnter()
     for( int i=1; i<3; i++) {
         String *filename = String::createWithFormat("file%d.txt", i);
         ret = sharedFileUtils->fullPathForFilename(filename->getCString());
-        CCLog("%s -> %s", filename->getCString(), ret.c_str());
+        log("%s -> %s", filename->getCString(), ret.c_str());
     }
     
     // Gets external.txt from writable path
     string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
-    CCLog("external file path = %s", fullPath.c_str());
+    log("external file path = %s", fullPath.c_str());
     if (fullPath.length() > 0)
     {
         fp = fopen(fullPath.c_str(), "rb");
@@ -215,7 +215,7 @@ void TestSearchPath::onEnter()
             char szReadBuf[100] = {0};
             int read = fread(szReadBuf, 1, strlen(szBuf), fp);
             if (read > 0)
-                CCLog("The content of file from writable path: %s", szReadBuf);
+                log("The content of file from writable path: %s", szReadBuf);
             fclose(fp);
         }
     }
@@ -363,9 +363,9 @@ void TextWritePlist::onEnter()
     std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string fullPath = writablePath + "text.plist";
     if(root->writeToFile(fullPath.c_str()))
-        CCLog("see the plist file at %s", fullPath.c_str());
+        log("see the plist file at %s", fullPath.c_str());
     else
-        CCLog("write plist file failed");
+        log("write plist file failed");
     
     LabelTTF *label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
     this->addChild(label);

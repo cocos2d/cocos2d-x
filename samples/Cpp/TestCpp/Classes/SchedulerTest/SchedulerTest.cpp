@@ -54,11 +54,11 @@ Layer* nextSchedulerTest()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backSchedulerTest()
@@ -68,20 +68,20 @@ Layer* backSchedulerTest()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartSchedulerTest()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 //------------------------------------------------------------------
@@ -94,34 +94,34 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* pSender)
+void SchedulerTestLayer::backCallback(Object* sender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = backSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = backSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* pSender)
+void SchedulerTestLayer::nextCallback(Object* sender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = nextSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = nextSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* pSender)
+void SchedulerTestLayer::restartCallback(Object* sender)
 {
-    Scene* pScene = new SchedulerTestScene();
-    Layer* pLayer = restartSchedulerTest();
+    Scene* scene = new SchedulerTestScene();
+    Layer* layer = restartSchedulerTest();
 
-    pScene->addChild(pLayer);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    scene->addChild(layer);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }
 
 std::string SchedulerTestLayer::title()
@@ -261,19 +261,19 @@ void SchedulerPauseResumeAll::onExit()
 
 void SchedulerPauseResumeAll::tick1(float dt)
 {
-    CCLog("tick1");
+    log("tick1");
 }
 
 void SchedulerPauseResumeAll::tick2(float dt)
 {
-    CCLog("tick2");
+    log("tick2");
 }
 
 void SchedulerPauseResumeAll::pause(float dt)
 {
-    CCLog("Pausing");
-    Director* pDirector = Director::getInstance();
-    _pausedTargets = pDirector->getScheduler()->pauseAllTargets();
+    log("Pausing");
+    Director* director = Director::getInstance();
+    _pausedTargets = director->getScheduler()->pauseAllTargets();
     CC_SAFE_RETAIN(_pausedTargets);
     
     unsigned int c = _pausedTargets->count();
@@ -281,15 +281,15 @@ void SchedulerPauseResumeAll::pause(float dt)
     if (c > 2)
     {
         // should have only 2 items: ActionManager, self
-        CCLog("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+        log("Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
     }
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
 {
-    CCLog("Resuming");
-    Director* pDirector = Director::getInstance();
-    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    log("Resuming");
+    Director* director = Director::getInstance();
+    director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
@@ -347,27 +347,27 @@ void SchedulerPauseResumeAllUser::onExit()
 
 void SchedulerPauseResumeAllUser::tick1(float dt)
 {
-    CCLog("tick1");
+    log("tick1");
 }
 
 void SchedulerPauseResumeAllUser::tick2(float dt)
 {
-    CCLog("tick2");
+    log("tick2");
 }
 
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
-    CCLog("Pausing");
-    Director* pDirector = Director::getInstance();
-    _pausedTargets = pDirector->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
+    log("Pausing");
+    Director* director = Director::getInstance();
+    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
     CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
-    CCLog("Resuming");
-    Director* pDirector = Director::getInstance();
-    pDirector->getScheduler()->resumeTargets(_pausedTargets);
+    log("Resuming");
+    Director* director = Director::getInstance();
+    director->getScheduler()->resumeTargets(_pausedTargets);
     CC_SAFE_RELEASE_NULL(_pausedTargets);
 }
 
@@ -463,7 +463,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         Director* director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kPrioritySystem, false);
+        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
 }
 
@@ -548,7 +548,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
+    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -635,7 +635,7 @@ TestNode::~TestNode()
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    CCLog("%s", _pstring->getCString());
+    log("%s", _pstring->getCString());
 }
 
 //------------------------------------------------------------------
@@ -695,17 +695,17 @@ void SchedulerUpdate::onEnter()
 void SchedulerUpdate::removeUpdates(float dt)
 {
     Array* children = getChildren();
-    Node* pNode;
+    Node* node;
     Object* pObject;
     CCARRAY_FOREACH(children, pObject)
     {
-        pNode = static_cast<Node*>(pObject);
+        node = static_cast<Node*>(pObject);
 
-        if (! pNode)
+        if (! node)
         {
             break;
         }
-        pNode->unscheduleAllSelectors();
+        node->unscheduleAllSelectors();
     }
 }
 
@@ -856,7 +856,7 @@ std::string SchedulerDelayAndRepeat::subtitle()
 
 void SchedulerDelayAndRepeat::update(float dt)
 {
-    CCLog("update called:%f", dt);
+    log("update called:%f", dt);
 }
 
 // SchedulerTimeScale
@@ -874,9 +874,9 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent)
+void SchedulerTimeScale::sliderAction(Object* sender, ControlEvent controlEvent)
 {
-    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(pSender);
+    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
     scale = pSliderCtl->getValue();
 
@@ -1095,7 +1095,7 @@ class TestNode2 : public Node
 {
 public:
 	~TestNode2() {
-		cocos2d::CCLog("Delete TestNode (should not crash)");
+		cocos2d::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
 	}
 
@@ -1154,8 +1154,8 @@ std::string SchedulerIssue2268::subtitle()
 //------------------------------------------------------------------
 void SchedulerTestScene::runThisTest()
 {
-    Layer* pLayer = nextSchedulerTest();
-    addChild(pLayer);
+    Layer* layer = nextSchedulerTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

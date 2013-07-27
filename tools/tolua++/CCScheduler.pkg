@@ -5,7 +5,7 @@ class CCTimer : public CCObject
     void setInterval(float fInterval);
     void update(float dt);
 
-	static CCTimer* timerWithScriptHandler(LUA_FUNCTION funcID, float fSeconds);
+	static CCTimer* createWithScriptHandler(LUA_FUNCTION funcID, float fSeconds);
 };
 
 class CCScheduler : public CCObject

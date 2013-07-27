@@ -352,14 +352,14 @@ TextLayer::TextLayer(void)
 //  bg->setAnchorPoint( Point::ZERO );
     bg->setPosition(VisibleRect::center());
 
-    Sprite* grossini = Sprite::create(s_pPathSister2);
+    Sprite* grossini = Sprite::create(s_pathSister2);
     node->addChild(grossini, 1);
     grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc = ScaleBy::create(2, 5);
     ActionInterval* sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
-    Sprite* tamara = Sprite::create(s_pPathSister1);
+    Sprite* tamara = Sprite::create(s_pathSister1);
     node->addChild(tamara, 1);
     tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     ActionInterval* sc2 = ScaleBy::create(2, 5);
@@ -372,7 +372,7 @@ TextLayer::TextLayer(void)
 void TextLayer::checkAnim(float dt)
 {
     Node* s2 = getChildByTag(kTagBackground);
-    if ( s2->numberOfRunningActions() == 0 && s2->getGrid() != NULL)
+    if ( s2->getNumberOfRunningActions() == 0 && s2->getGrid() != NULL)
         s2->setGrid(NULL);;
 }
 
@@ -388,10 +388,10 @@ TextLayer::~TextLayer(void)
 
 TextLayer* TextLayer::create()
 {
-    TextLayer* pLayer = new TextLayer();
-    pLayer->autorelease();
+    TextLayer* layer = new TextLayer();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 void TextLayer::onEnter()
@@ -408,12 +408,12 @@ void TextLayer::newScene()
     s->release();
 }
 
-void TextLayer::restartCallback(Object* pSender)
+void TextLayer::restartCallback(Object* sender)
 {
     newScene();
 }
 
-void TextLayer::nextCallback(Object* pSender)
+void TextLayer::nextCallback(Object* sender)
 {
     // update the action index
     actionIdx++;
@@ -422,7 +422,7 @@ void TextLayer::nextCallback(Object* pSender)
     newScene();
 }
 
-void TextLayer::backCallback(Object* pSender)
+void TextLayer::backCallback(Object* sender)
 {
     // update the action index
     actionIdx--;

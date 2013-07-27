@@ -35,7 +35,7 @@ public:
 class MyPurchase
 {
 public:
-	static MyPurchase* sharedPurchase();
+	static MyPurchase* getInstance();
     static void purgePurchase();
 
     typedef enum {

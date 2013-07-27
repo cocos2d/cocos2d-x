@@ -66,7 +66,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
         if ((__array__) && (__array__)->data->num > 0)                                                           \
             for(Object** __arr__ = (__array__)->data->arr,                                                     \
                 **__end__ = (__array__)->data->arr + (__array__)->data->num-1; __arr__ <= __end__; __arr__++)    \
-                CCAssert(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
+                CCASSERT(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
     } while(false)
 #else
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
@@ -117,7 +117,7 @@ public:
     /** Create an array */
     static Array* create();
     /** Create an array with some objects */
-    static Array* create(Object* pObject, ...);
+    static Array* create(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object */
     static Array* createWithObject(Object* pObject);
     /** Create an array with capacity */
@@ -142,7 +142,7 @@ public:
     /** Initializes an array with one object */
     bool initWithObject(Object* pObject);
     /** Initializes an array with some objects */
-    bool initWithObjects(Object* pObject, ...);
+    bool initWithObjects(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
     /** Initializes an array with an existing array */

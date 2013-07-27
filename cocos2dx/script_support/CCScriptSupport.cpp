@@ -27,7 +27,7 @@
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
-    cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::sharedManager()->getScriptEngine();
+    cocos2d::ScriptEngineProtocol* pEngine = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine();
     if (pEngine && pEngine->handleAssert(msg))
     {
         return true;
@@ -49,7 +49,7 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int nHandler)
 
 ScriptHandlerEntry::~ScriptHandlerEntry(void)
 {
-    ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
+    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
 }
 
 // #pragma mark -
@@ -97,7 +97,7 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int nHandler,
 
 TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
 {
-    ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_handler);
+    ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_handler);
     LUALOG("[LUA] Remove touch event handler: %d", _handler);
 }
 
@@ -136,7 +136,7 @@ void ScriptEngineManager::removeScriptEngine(void)
     }
 }
 
-ScriptEngineManager* ScriptEngineManager::sharedManager(void)
+ScriptEngineManager* ScriptEngineManager::getInstance()
 {
     if (!s_pSharedScriptEngineManager)
     {
@@ -145,7 +145,7 @@ ScriptEngineManager* ScriptEngineManager::sharedManager(void)
     return s_pSharedScriptEngineManager;
 }
 
-void ScriptEngineManager::purgeSharedManager(void)
+void ScriptEngineManager::destroyInstance()
 {
     if (s_pSharedScriptEngineManager)
     {

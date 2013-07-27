@@ -41,21 +41,16 @@ class GridBase;
 class CC_DLL GridAction : public ActionInterval
 {
 public:
-	/** returns a new clone of the action */
-	virtual GridAction * clone() const = 0;
-
-	/** returns a new reversed action.
-	 The reversed action is created with the ReverseTime action.
-	 */
-    virtual GridAction* reverse() const;
-
-    virtual void startWithTarget(Node *pTarget);
-
     /** initializes the action with size and duration */
     bool initWithDuration(float duration, const Size& gridSize);
 
     /** returns the grid */
-    virtual GridBase* getGrid(void);
+    virtual GridBase* getGrid();
+
+    // overrides
+	virtual GridAction * clone() const override = 0;
+    virtual GridAction* reverse() const override;
+    virtual void startWithTarget(Node *target) override;
 
 protected:
     Size _gridSize;
@@ -68,57 +63,64 @@ protected:
 class CC_DLL Grid3DAction : public GridAction
 {
 public:
-	/** returns a new clone of the action */
-	virtual Grid3DAction * clone() const = 0;
 
     /** returns the grid */
     virtual GridBase* getGrid(void);
     /** returns the vertex than belongs to certain position in the grid */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& position);
+    Vertex3F getVertex(const Point& position) const;
+
+    /** @deprecated Use getVertex() instead */
+    CC_DEPRECATED_ATTRIBUTE inline Vertex3F vertex(const Point& position) { return getVertex(position); }
+
     /** returns the non-transformed vertex than belongs to certain position in the grid */
-    CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& position);
-    
-    /** returns the vertex than belongs to certain position in the grid */
-    Vertex3F getVertex(const Point& position);
-    /** returns the non-transformed vertex than belongs to certain position in the grid */
-    Vertex3F getOriginalVertex(const Point& position);
-    
+    Vertex3F getOriginalVertex(const Point& position) const;
+
+    /** @deprecated Use getOriginalVertex() instead */
+    CC_DEPRECATED_ATTRIBUTE inline Vertex3F originalVertex(const Point& position) { return getOriginalVertex(position); }
+
     /** sets a new vertex to a certain position of the grid */
     void setVertex(const Point& position, const Vertex3F& vertex);
+
+    // Overrides
+	virtual Grid3DAction * clone() const override = 0;
 };
 
 /** @brief Base class for TiledGrid3D actions */
 class CC_DLL TiledGrid3DAction : public GridAction
 {
 public:
-	/** returns a new clone of the action */
-	virtual TiledGrid3DAction * clone() const = 0;
+    /** creates the action with size and duration */
+    static TiledGrid3DAction* create(float duration, const Size& gridSize);
 
     /** returns the tile that belongs to a certain position of the grid */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& position);
+    Quad3 getTile(const Point& position) const;
+
+    /** @deprecatd Use getTile() instead */
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& position) { return getTile(position); }
+
     /** returns the non-transformed tile that belongs to a certain position of the grid */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& position);
-    
-    /** returns the tile that belongs to a certain position of the grid */
-    Quad3 getTile(const Point& position);
-    /** returns the non-transformed tile that belongs to a certain position of the grid */
-    Quad3 getOriginalTile(const Point& position);
-    
+    Quad3 getOriginalTile(const Point& position) const;
+
+    /** @deprecatd Use getOriginalTile() instead */
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& position) { return getOriginalTile(position); }
+
     /** sets a new tile to a certain position of the grid */
     void setTile(const Point& position, const Quad3& coords);
 
     /** returns the grid */
     virtual GridBase* getGrid(void);
 
-public:
-    /** creates the action with size and duration */
-    static TiledGrid3DAction* create(float duration, const Size& gridSize);
+    // Override
+    virtual TiledGrid3DAction * clone() const override = 0;
 };
 
 /** @brief AccelDeccelAmplitude action */
 class CC_DLL AccelDeccelAmplitude : public ActionInterval
 {
 public:
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    static AccelDeccelAmplitude* create(Action *pAction, float duration);
+
     virtual ~AccelDeccelAmplitude(void);
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
@@ -128,17 +130,14 @@ public:
 	/** returns a new reversed action */
 	virtual AccelDeccelAmplitude* reverse() const;
 
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
-
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 
-public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static AccelDeccelAmplitude* create(Action *pAction, float duration);
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
 
 protected:
     float _rate;
@@ -149,27 +148,25 @@ protected:
 class CC_DLL AccelAmplitude : public ActionInterval
 {
 public:
-    ~AccelAmplitude(void);
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    static AccelAmplitude* create(Action *pAction, float duration);
+
+    virtual ~AccelAmplitude(void);
+
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
-
-	/** returns a new clone of the action */
-	virtual AccelAmplitude* clone() const;
-
-	/** returns a new reversed action */
-	virtual AccelAmplitude* reverse() const;
 
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+	virtual AccelAmplitude* clone() const override;
+	virtual AccelAmplitude* reverse() const override;
 
-public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static AccelAmplitude* create(Action *pAction, float duration);
 protected:
     float _rate;
     ActionInterval *_other;
@@ -179,27 +176,23 @@ protected:
 class CC_DLL DeccelAmplitude : public ActionInterval
 {
 public:
-    ~DeccelAmplitude(void);
+    /** creates the action with an inner action that has the amplitude property, and a duration time */
+    static DeccelAmplitude* create(Action *pAction, float duration);
+
+    virtual ~DeccelAmplitude();
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
     bool initWithAction(Action *pAction, float duration);
-
-	/** returns a new clone of the action */
-	virtual DeccelAmplitude* clone() const;
-
-	/** returns a new reversed action */
-	virtual DeccelAmplitude* reverse() const;
 
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float fRate) { _rate = fRate; }
 
-    virtual void startWithTarget(Node *pTarget);
-    virtual void update(float time);
-
-public:
-    /** creates the action with an inner action that has the amplitude property, and a duration time */
-    static DeccelAmplitude* create(Action *pAction, float duration);
+    // overrides
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+	virtual DeccelAmplitude* clone() const;
+	virtual DeccelAmplitude* reverse() const;
 
 protected:
     float _rate;
@@ -214,37 +207,30 @@ protected:
 class CC_DLL StopGrid : public ActionInstant
 {
 public:
-    virtual void startWithTarget(Node *pTarget);
-
-	/** returns a new clone of the action */
-	virtual StopGrid* clone() const;
-
-	/** returns a new reversed action */
-	virtual StopGrid* reverse() const;
-
-public:
     /** Allocates and initializes the action */
     static StopGrid* create(void);
+
+    // Overrides
+    virtual void startWithTarget(Node *target) override;
+	virtual StopGrid* clone() const override;
+	virtual StopGrid* reverse() const override;
 };
 
 /** @brief ReuseGrid action */
 class CC_DLL ReuseGrid : public ActionInstant
 {
 public:
+    /** creates an action with the number of times that the current grid will be reused */
+    static ReuseGrid* create(int times);
+
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
 
-    virtual void startWithTarget(Node *pTarget);
+    // Override
+    virtual void startWithTarget(Node *target) override;
+	virtual ReuseGrid* clone() const override;
+	virtual ReuseGrid* reverse() const override;
 
-	/** returns a new clone of the action */
-	virtual ReuseGrid* clone() const;
-
-	/** returns a new reversed action */
-	virtual ReuseGrid* reverse() const;
-
-public:
-    /** creates an action with the number of times that the current grid will be reused */
-    static ReuseGrid* create(int times);
 protected:
     int _times;
 };

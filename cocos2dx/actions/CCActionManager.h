@@ -67,7 +67,7 @@ public:
      If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
      When the target is paused, the queued actions won't be 'ticked'.
      */
-    void addAction(Action *pAction, Node *pTarget, bool paused);
+    void addAction(Action *pAction, Node *target, bool paused);
 
     /** Removes all actions from all the targets.
     */
@@ -76,34 +76,37 @@ public:
     /** Removes all actions from a certain target.
      All the actions that belongs to the target will be removed.
      */
-    void removeAllActionsFromTarget(Object *pTarget);
+    void removeAllActionsFromTarget(Object *target);
 
     /** Removes an action given an action reference.
     */
     void removeAction(Action *pAction);
 
     /** Removes an action given its tag and the target */
-    void removeActionByTag(unsigned int tag, Object *pTarget);
+    void removeActionByTag(unsigned int tag, Object *target);
 
     /** Gets an action given its tag an a target
      @return the Action the with the given tag
      */
-    Action* getActionByTag(unsigned int tag, Object *pTarget);
+    Action* getActionByTag(unsigned int tag, const Object *target) const;
 
     /** Returns the numbers of actions that are running in a certain target. 
      * Composable actions are counted as 1 action. Example:
      * - If you are running 1 Sequence of 7 actions, it will return 1.
      * - If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    unsigned int numberOfRunningActionsInTarget(Object *pTarget);
+    unsigned int getNumberOfRunningActionsInTarget(const Object *target) const;
+
+    /** @deprecated use getNumberOfRunningActionsInTarget() instead */
+    CC_DEPRECATED_ATTRIBUTE inline unsigned int numberOfRunningActionsInTarget(Object *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
     */
-    void pauseTarget(Object *pTarget);
+    void pauseTarget(Object *target);
 
     /** Resumes the target. All queued actions will be resumed.
     */
-    void resumeTarget(Object *pTarget);
+    void resumeTarget(Object *target);
     
     /** Pauses all running actions, returning a list of targets whose actions were paused.
      */

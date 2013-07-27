@@ -57,7 +57,7 @@ EGLViewProtocol::~EGLViewProtocol()
 
 void EGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
-    CCAssert(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
+    CCASSERT(resolutionPolicy != kResolutionUnKnown, "should set resolutionPolicy");
     
     if (width == 0.0f || height == 0.0f)
     {

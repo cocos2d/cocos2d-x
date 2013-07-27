@@ -389,7 +389,8 @@
 //comment nextline since it wasn't defined in glew.h of windows
 // #define GL_RGB565                                           0x8D62
 #define GL_DEPTH_COMPONENT16                                0x81A5
-#define GL_STENCIL_INDEX                                    0x1901
+//comment nextline since it wasn't defined in gl.h of IOS7 sdk
+//#define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48
 
 #define GL_RENDERBUFFER_WIDTH                               0x8D42
@@ -427,7 +428,7 @@
 
 
 typedef enum {
-    kCCTexture2DPixelFormat_Automatic = 0,
+//    kCCTexture2DPixelFormat_Automatic = 0,
     //! 32-bit texture: RGBA8888
     kCCTexture2DPixelFormat_RGBA8888,
     //! 24-bit texture: RGBA888
@@ -449,18 +450,8 @@ typedef enum {
     //! 2-bit PVRTC-compressed texture: PVRTC2
     kCCTexture2DPixelFormat_PVRTC2,
 
-    //! Default texture format: automatic
-    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Automatic,
-
-    // backward compatibility stuff
-    kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
-    kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-    kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
-    kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-    kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-    kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-    kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-    kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
+    //! Default texture format: RGBA8888
+    kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 } CCTexture2DPixelFormat;
 
 class ccTexParams {
@@ -504,10 +495,10 @@ class CCTexture2D : public CCObject
     void setAliasTexParameters();
     void generateMipmap();
 
-	const char* stringForFormat() const;
-    unsigned int bitsPerPixelForFormat() const;
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
+	const char* getStringForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+	unsigned int getBitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+    static CCTexture2DPixelFormat getDefaultAlphaPixelFormat();
 };

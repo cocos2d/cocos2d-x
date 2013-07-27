@@ -14,57 +14,23 @@ extern "C" {
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+#include "LuaScriptHandlerMgr.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-class GLNode:public Node
+
+    
+void GLNode::draw()
 {
-public:
-    
-    GLNode():_scriptDrawHandler(0)
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::kGLNodeDrawHandler);
+    if (0 != handler)
     {
-        
-    }
-    virtual ~GLNode()
-    {
-        if (0 != _scriptDrawHandler) {
-                this->unregisterScriptDrawHandler();
-        }
-    }
-    
-    virtual void draw()
-    {
-        if (0 != _scriptDrawHandler)
-        {
-            CommonScriptData data(_scriptDrawHandler,"");
+            CommonScriptData data(handler,"");
             ScriptEvent event(kCommonEvent,(void*)&data);
-            ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-        }
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
-    
-    void registerScriptDrawHandler(int nHandler)
-    {
-        this->unregisterScriptDrawHandler();
-        _scriptDrawHandler = nHandler;
-    }
-    
-    void unregisterScriptDrawHandler()
-    {
-        if (0 != _scriptDrawHandler)
-        {
-            ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptDrawHandler);
-            LUALOG("[LUA] Remove GLNode script handler: %d", _scriptDrawHandler);
-            _scriptDrawHandler = 0;
-        }
-    }
-    int getScriptDrawHandler()
-    {
-        return 0;
-    }
-private:
-    int _scriptDrawHandler;
-};
+}
 
 /* function to release collected object via destructor */
 static void tolua_reg_gl_type(lua_State* tolua_S)
@@ -112,7 +78,9 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
         if (NULL != glNode)
         {
             glNode->autorelease();
-            tolua_pushusertype(tolua_S,(void*)glNode,"GLNode");
+            int nID = (int)glNode->_ID;
+            int* pLuaID = &glNode->_luaID;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)glNode,"GLNode");
             //tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
         else
@@ -124,64 +92,6 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: registerScriptDrawHandler of class  GLNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_registerScriptDrawHandler00
-static int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err))
-        goto tolua_lerror;
-    else
-#endif
-    {
-        GLNode* self = (GLNode*)  tolua_tousertype(tolua_S,1,0);
-        LUA_FUNCTION funcID = (  toluafix_ref_function(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'registerScriptDrawHandler'", NULL);
-#endif
-        if(NULL != self)
-            self->registerScriptDrawHandler(funcID);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptDrawHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: unregisterScriptDrawHandler of class  GLNode */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00
-static int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err))
-        goto tolua_lerror;
-    else
-#endif
-    {
-        GLNode* self = (GLNode*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unregisterScriptDrawHandler'", NULL);
-#endif
-        if(NULL != self)
-            self->unregisterScriptDrawHandler();
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptDrawHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -5285,7 +5195,7 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
     if (
         !tolua_isusertype(tolua_S,1,"CCGLProgram",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_istable(tolua_S,3,0,&tolua_err) ||
         !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,5,&tolua_err)
         )
@@ -5295,15 +5205,19 @@ static int tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00(lua_State* tolu
     {
         GLProgram* self = (GLProgram*)  tolua_tousertype(tolua_S,1,0);
         int location = ((int)  tolua_tonumber(tolua_S,2,0));
-        float floats = ((float)  tolua_tonumber(tolua_S,3,0));
         unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+        float* floatArray = new float[numberOfArrays * 4];
+        for (int i = 1; i <= numberOfArrays * 4; ++i)
+        {
+            floatArray[i - 1] = (float)tolua_tofieldnumber(tolua_S, 3, i, 0);
+        }
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
 #endif
-        {
-            self->setUniformLocationWith4fv(location,&floats,numberOfArrays);
-            tolua_pushnumber(tolua_S,(lua_Number)floats);
-        }
+
+        self->setUniformLocationWith4fv(location,(GLfloat*)floatArray,numberOfArrays);
+        CC_SAFE_DELETE_ARRAY(floatArray);
+
     }
     return 1;
 #ifndef TOLUA_RELEASE
@@ -5866,8 +5780,6 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
       tolua_cclass(tolua_S,"GLNode","GLNode","CCNode",tolua_collect_GLNode);
         tolua_beginmodule(tolua_S,"GLNode");
             tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
-            tolua_function(tolua_S, "registerScriptDrawHandler", tolua_Cocos2d_GLNode_registerScriptDrawHandler00);
-            tolua_function(tolua_S, "unregisterScriptDrawHandler", tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
             tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);
         tolua_endmodule(tolua_S);
     tolua_module(tolua_S, "gl", 0);

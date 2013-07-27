@@ -35,7 +35,7 @@ public:
 class MyShareManager
 {
 public:
-	static MyShareManager* sharedManager();
+	static MyShareManager* getInstance();
     static void purgeManager();
 
     typedef enum {

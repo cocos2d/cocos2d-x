@@ -103,11 +103,11 @@ public:
     //char * description();
 
     /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
-    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, TextAlignment alignment, const char *fontName, float fontSize);
+    static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::HAlignment alignment, const char *fontName, float fontSize);
     /** creates a LabelTTF from a fontname and font size */
     static TextFieldTTF * textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
-    bool initWithPlaceHolder(const char *placeholder, const Size& dimensions, TextAlignment alignment, const char *fontName, float fontSize);
+    bool initWithPlaceHolder(const char *placeholder, const Size& dimensions, Label::HAlignment alignment, const char *fontName, float fontSize);
     /** initializes the TextFieldTTF with a font name and font size */
     bool initWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize);
 
@@ -125,8 +125,10 @@ public:
     // properties
     //////////////////////////////////////////////////////////////////////////
 
-    CC_SYNTHESIZE(TextFieldDelegate *, _delegate, Delegate);
-    CC_SYNTHESIZE_READONLY(int, _charCount, CharCount);
+    inline TextFieldDelegate* getDelegate() const { return _delegate; };
+    inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
+
+    inline int getCharCount() const { return _charCount; };
     virtual const Color3B& getColorSpaceHolder();
     virtual void setColorSpaceHolder(const Color3B& color);
 
@@ -135,6 +137,9 @@ public:
     virtual void setString(const char *text);
     virtual const char* getString(void) const;
 protected:
+    TextFieldDelegate * _delegate;
+    int _charCount;
+    
     std::string * _inputText;
 
     // place holder text property

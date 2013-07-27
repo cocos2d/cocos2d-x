@@ -110,23 +110,23 @@ typedef enum
 
 
 // v2
-typedef const std::map<uint64_t, Texture2DPixelFormat> _pixel_formathash;
+typedef const std::map<uint64_t, Texture2D::PixelFormat> _pixel_formathash;
 
 static _pixel_formathash::value_type v2_pixel_formathash_value[] =
 {
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_BGRA_8888,	kTexture2DPixelFormat_BGRA8888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_8888,	kTexture2DPixelFormat_RGBA8888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_4444,	kTexture2DPixelFormat_RGBA4444),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_5551,	kTexture2DPixelFormat_RGB5A1),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_565,	    kTexture2DPixelFormat_RGB565),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_888,	    kTexture2DPixelFormat_RGB888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_A_8,	        kTexture2DPixelFormat_A8),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_I_8,	        kTexture2DPixelFormat_I8),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_AI_88,	    kTexture2DPixelFormat_AI88),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_BGRA_8888,	Texture2D::PixelFormat::BGRA8888),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_8888,	Texture2D::PixelFormat::RGBA8888),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_4444,	Texture2D::PixelFormat::RGBA4444),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_5551,	Texture2D::PixelFormat::RGB5A1),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_565,	    Texture2D::PixelFormat::RGB565),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_888,	    Texture2D::PixelFormat::RGB888),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_A_8,	        Texture2D::PixelFormat::A8),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_I_8,	        Texture2D::PixelFormat::I8),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_AI_88,	    Texture2D::PixelFormat::AI88),
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,	    kTexture2DPixelFormat_PVRTC2A),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,	    kTexture2DPixelFormat_PVRTC4A),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
+    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
 #endif
 };
 
@@ -136,21 +136,21 @@ static _pixel_formathash v2_pixel_formathash(v2_pixel_formathash_value, v2_pixel
 // v3
 static _pixel_formathash::value_type v3_pixel_formathash_value[] =
 {
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_BGRA_8888,	kTexture2DPixelFormat_BGRA8888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_8888,	kTexture2DPixelFormat_RGBA8888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_4444,	kTexture2DPixelFormat_RGBA4444),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_5551,	kTexture2DPixelFormat_RGB5A1),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_565,	    kTexture2DPixelFormat_RGB565),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_888,	    kTexture2DPixelFormat_RGB888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_A_8,	        kTexture2DPixelFormat_A8),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_L_8,	        kTexture2DPixelFormat_I8),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_LA_88,	    kTexture2DPixelFormat_AI88),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_BGRA_8888,	Texture2D::PixelFormat::BGRA8888),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_8888,	Texture2D::PixelFormat::RGBA8888),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_4444,	Texture2D::PixelFormat::RGBA4444),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_5551,	Texture2D::PixelFormat::RGB5A1),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_565,	    Texture2D::PixelFormat::RGB565),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_888,	    Texture2D::PixelFormat::RGB888),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_A_8,	        Texture2D::PixelFormat::A8),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_L_8,	        Texture2D::PixelFormat::I8),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_LA_88,	    Texture2D::PixelFormat::AI88),
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	    kTexture2DPixelFormat_PVRTC2),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	    kTexture2DPixelFormat_PVRTC2A),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	    kTexture2DPixelFormat_PVRTC4),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA,	    kTexture2DPixelFormat_PVRTC4A),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	    Texture2D::PixelFormat::PVRTC2),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	    Texture2D::PixelFormat::PVRTC4),
+    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
 #endif
 };
 
@@ -231,8 +231,8 @@ Image::Image()
 , _dataLen(0)
 , _width(0)
 , _height(0)
-, _fileType(kFmtUnKnown)
-, _renderFormat(kTexture2DPixelFormat_None)
+, _fileType(Format::UNKOWN)
+, _renderFormat(Texture2D::PixelFormat::NONE)
 , _preMulti(false)
 , _numberOfMipmaps(0)
 {
@@ -324,20 +324,20 @@ bool Image::initWithImageData(void * data, int dataLen)
 
         switch (_fileType)
         {
-        case kFmtPng:
+        case Format::PNG:
             return _initWithPngData(data, dataLen);
-        case kFmtJpg:
+        case Format::JPG:
             return _initWithJpgData(data, dataLen);
-        case kFmtTiff:
+        case Format::TIFF:
             return _initWithTiffData(data, dataLen);
-        case kFmtWebp:
+        case Format::WEBP:
             return _initWithWebpData(data, dataLen);
-        case kFmtPvr:
+        case Format::PVR:
             return _initWithPVRData(data, dataLen);
-        case kFmtEtc:
+        case Format::ETC:
             return _initWithETCData(data, dataLen);
         default:
-            CCAssert(false, "unsupport data format!");
+            CCAssert(false, "unsupport image format!");
             return false;
         }
     } while (0);
@@ -417,31 +417,31 @@ bool Image::isPvr(void *data, int dataLen)
 }
 
 
-Image::FileType Image::detectFormat(void* data, int dataLen)
+Image::Format Image::detectFormat(void* data, int dataLen)
 {
     if (isPng(data, dataLen))
     {
-        return kFmtPng;
+        return Format::PNG;
     }else if (isJpg(data, dataLen))
     {
-        return kFmtJpg;
+        return Format::JPG;
     }else if (isTiff(data, dataLen))
     {
-        return kFmtTiff;
+        return Format::TIFF;
     }else if (isWebp(data, dataLen))
     {
-        return kFmtWebp;
+        return Format::WEBP;
     }else if (isPvr(data, dataLen))
     {
-        return kFmtPvr;
+        return Format::PVR;
     }else if (isEtc(data, dataLen))
     {
-        return kFmtEtc;
+        return Format::ETC;
     }
     
     else
     {
-        return kFmtUnKnown;
+        return Format::UNKOWN;
     }
 }
 
@@ -533,7 +533,7 @@ bool Image::_initWithJpgData(void * data, int dataLen)
 			/* If we get here, the JPEG code has signaled an error.
 			 * We need to clean up the JPEG object, close the input file, and return.
 			 */
-			CCLog("%d", bRet);
+			log("%d", bRet);
 			jpeg_destroy_decompress(&cinfo);
 			break;
 		}
@@ -554,11 +554,11 @@ bool Image::_initWithJpgData(void * data, int dataLen)
         // we only support RGB or grayscale
         if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
         {
-            _renderFormat = kTexture2DPixelFormat_I8;
+            _renderFormat = Texture2D::PixelFormat::I8;
         }else
         {
             cinfo.out_color_space = JCS_RGB;
-            _renderFormat = kTexture2DPixelFormat_RGB888;
+            _renderFormat = Texture2D::PixelFormat::RGB888;
         }
 
         /* Start decompression jpeg here */
@@ -685,16 +685,16 @@ bool Image::_initWithPngData(void * data, int dataLen)
         switch (color_type)
         {
         case PNG_COLOR_TYPE_GRAY:
-            _renderFormat = kTexture2DPixelFormat_I8;
+            _renderFormat = Texture2D::PixelFormat::I8;
             break;
         case PNG_COLOR_TYPE_GRAY_ALPHA:
-            _renderFormat = kTexture2DPixelFormat_AI88;
+            _renderFormat = Texture2D::PixelFormat::AI88;
             break;
         case PNG_COLOR_TYPE_RGB:
-            _renderFormat = kTexture2DPixelFormat_RGB888;
+            _renderFormat = Texture2D::PixelFormat::RGB888;
             break;
         case PNG_COLOR_TYPE_RGB_ALPHA:
-            _renderFormat = kTexture2DPixelFormat_RGBA8888;
+            _renderFormat = Texture2D::PixelFormat::RGBA8888;
             break;
         default:
             break;
@@ -870,7 +870,7 @@ bool Image::_initWithTiffData(void* data, int dataLen)
 
         npixels = w * h;
         
-        _renderFormat = kTexture2DPixelFormat_RGBA8888;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _width = w;
         _height = h;
 
@@ -1197,7 +1197,7 @@ bool Image::_initWithETCData(void *data, int dataLen)
     {
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #ifdef GL_ETC1_RGB8_OES
-        _renderFormat = kTexture2DPixelFormat_ETC;
+        _renderFormat = Texture2D::PixelFormat::ETC;
         _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
         _data = new unsigned char[_dataLen];
         memcpy(_data, (unsigned char*)data + ETC_PKM_HEADER_SIZE, _dataLen);
@@ -1209,7 +1209,7 @@ bool Image::_initWithETCData(void *data, int dataLen)
          //if it is not gles or device do not support ETC, decode texture by software
         int bytePerPixel = 3;
         unsigned int stride = _width * bytePerPixel;
-        _renderFormat = kTexture2DPixelFormat_RGB888;
+        _renderFormat = Texture2D::PixelFormat::RGB888;
         
         _dataLen =  _width * _height * bytePerPixel;
         _data = new unsigned char[_dataLen];
@@ -1241,7 +1241,7 @@ bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, i
         _height   = (short)nHeight;
         _width    = (short)nWidth;
         _preMulti = bPreMulti;
-        _renderFormat = kTexture2DPixelFormat_RGBA8888;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
         // only RGBA8888 supported
         int nBytesPerComponent = 4;
@@ -1258,10 +1258,10 @@ bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, i
 
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
-    //only support for kTexture2DPixelFormat_RGB888 or kTexture2DPixelFormat_RGBA8888 uncompressed data
-    if (isCompressed() || (_renderFormat != kTexture2DPixelFormat_RGB888 && _renderFormat != kTexture2DPixelFormat_RGBA8888))
+    //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
+    if (isCompressed() || (_renderFormat != Texture2D::PixelFormat::RGB888 && _renderFormat != Texture2D::PixelFormat::RGBA8888))
     {
-        CCLOG("cocos2d: Image: saveToFile is only support for kTexture2DPixelFormat_RGB888 or kTexture2DPixelFormat_RGBA8888 uncompressed data for now");
+        CCLOG("cocos2d: Image: saveToFile is only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data for now");
         return false;
     }
 
@@ -1288,11 +1288,11 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 
         if (std::string::npos != strLowerCasePath.find(".png"))
         {
-            CC_BREAK_IF(!_saveImageToPNG(pszFilePath, bIsToRGB));
+            CC_BREAK_IF(!saveImageToPNG(pszFilePath, bIsToRGB));
         }
         else if (std::string::npos != strLowerCasePath.find(".jpg"))
         {
-            CC_BREAK_IF(!_saveImageToJPG(pszFilePath));
+            CC_BREAK_IF(!saveImageToJPG(pszFilePath));
         }
         else
         {
@@ -1306,7 +1306,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 #endif
 }
 
-bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
     bool bRet = false;
     do 
@@ -1446,7 +1446,7 @@ bool Image::_saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
     } while (0);
     return bRet;
 }
-bool Image::_saveImageToJPG(const char * pszFilePath)
+bool Image::saveImageToJPG(const char * pszFilePath)
 {
     bool bRet = false;
     do 

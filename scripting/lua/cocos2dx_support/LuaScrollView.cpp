@@ -14,87 +14,47 @@ extern "C" {
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
+#include "LuaScriptHandlerMgr.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-class LuaScrollView:public ScrollView,public ScrollViewDelegate
+
+LuaScrollView::~LuaScrollView()
 {
-public:
-    virtual ~LuaScrollView()
-    {
-        unregisterScriptHandler(LuaScrollView::kScrollViewScriptScroll);
-        unregisterScriptHandler(LuaScrollView::kScrollViewScriptZoom);
-    }
+
+}
     
-    virtual void scrollViewDidScroll(ScrollView* view)
+void LuaScrollView::scrollViewDidScroll(ScrollView* view)
+{
+    LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
+    if (NULL != luaView)
     {
-        LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
-        if (NULL != luaView)
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)luaView, ScriptHandlerMgr::kScrollViewScrollHandler);
+        if (0 != handler)
         {
-            int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptScroll);
-            if (0 != nHandler)
-            {
-                CommonScriptData data(nHandler,"");
-                ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-            }
+            CommonScriptData data(handler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
+}
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+void LuaScrollView::scrollViewDidZoom(ScrollView* view)
+{
+    LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
+    if (NULL != luaView)
     {
-        LuaScrollView* luaView = dynamic_cast<LuaScrollView*>(view);
-        if (NULL != luaView)
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)luaView, ScriptHandlerMgr::kScrollViewZoomHandler);
+        if (0 != handler)
         {
-            int nHandler = luaView->getScriptHandler(LuaScrollView::kScrollViewScriptZoom);
-            if (0 != nHandler)
-            {
-                CommonScriptData data(nHandler,"");
-                ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&event);
-            }
+            CommonScriptData data(handler,"");
+            ScriptEvent event(kCommonEvent,(void*)&data);
+            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         }
     }
-    
-    void initLuaScrollView()
-    {
-        _mapScriptHandler.clear();
-    }
-    
-    enum ScrollViewScriptHandlerType
-    {
-        kScrollViewScriptScroll   = 0,
-        kScrollViewScriptZoom,
-    };
-    
-    void registerScriptHandler(int nFunID,ScrollViewScriptHandlerType scriptHandlerType)
-    {
-        unregisterScriptHandler(scriptHandlerType);
-        _mapScriptHandler[scriptHandlerType] = nFunID;
-    }
-    
-    void unregisterScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
-    {
-        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-        
-        if (_mapScriptHandler.end() != Iter)
-        {
-            _mapScriptHandler.erase(Iter);
-        }
-    }
-    
-    int  getScriptHandler(ScrollViewScriptHandlerType scriptHandlerType)
-    {
-        std::map<int,int>::iterator Iter = _mapScriptHandler.find(scriptHandlerType);
-        
-        if (_mapScriptHandler.end() != Iter)
-            return Iter->second;
-        return 0;
-    }
-private:
-    std::map<int,int> _mapScriptHandler;
-};
+}
+
 
 #ifdef __cplusplus
 static int tolua_collect_ScrollView (lua_State* tolua_S)
@@ -223,7 +183,6 @@ static int tolua_Cocos2d_ScrollView_create00(lua_State* tolua_S)
             LuaScrollView* tolua_ret = new LuaScrollView();
             if (NULL != tolua_ret && tolua_ret->initWithViewSize(size,container) )
             {
-                tolua_ret->initLuaScrollView();
                 tolua_ret->autorelease();
                 int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
                 int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -260,7 +219,6 @@ static int tolua_Cocos2d_ScrollView_create01(lua_State* tolua_S)
         LuaScrollView* tolua_ret = new LuaScrollView();
         if (NULL != tolua_ret && tolua_ret->init() )
         {
-            tolua_ret->initLuaScrollView();
             tolua_ret->autorelease();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -1597,68 +1555,6 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: registerScriptHandler of class ScrollView */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ScrollView_registerScriptHandler00
-static int tolua_Cocos2d_ScrollView_registerScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            int nFunID = (  toluafix_ref_function(tolua_S,2,0));
-            LuaScrollView::ScrollViewScriptHandlerType handlerType = ((LuaScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,3,0));
-            self->registerScriptHandler(nFunID, handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: unregisterScriptHandler of class ScrollView */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ScrollView_unregisterScriptHandler00
-static int tolua_Cocos2d_ScrollView_unregisterScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            LuaScrollView::ScrollViewScriptHandlerType handlerType = ((LuaScrollView::ScrollViewScriptHandlerType) (int)  tolua_tonumber(tolua_S,2,0));
-            self->unregisterScriptHandler(handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 
 TOLUA_API int tolua_scroll_view_open(lua_State* tolua_S)
 {
@@ -1723,8 +1619,6 @@ TOLUA_API int tolua_scroll_view_open(lua_State* tolua_S)
         tolua_function(tolua_S,"setZoomScale",tolua_Cocos2d_ScrollView_setZoomScale00);
         tolua_function(tolua_S,"setZoomScale",tolua_Cocos2d_ScrollView_setZoomScale01);
         tolua_function(tolua_S, "setDelegate", tolua_Cocos2d_ScrollView_setDelegate00);
-        tolua_function(tolua_S, "registerScriptHandler", tolua_Cocos2d_ScrollView_registerScriptHandler00);
-        tolua_function(tolua_S, "unregisterScriptHandler", tolua_Cocos2d_ScrollView_unregisterScriptHandler00);
      tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     return 1;

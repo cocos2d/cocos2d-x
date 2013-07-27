@@ -89,7 +89,7 @@ bool TestAnalytics::init()
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    Point posBR = ccp(origin.x + visibleSize.width, origin.y);
+    Point posBR = Point(origin.x + visibleSize.width, origin.y);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -98,11 +98,11 @@ bool TestAnalytics::init()
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestAnalytics::menuBackCallback, this));
     Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(ccpAdd(posBR, ccp(- backSize.width / 2, backSize.height / 2)));
+    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( PointZero );
+    pMenu->setPosition( Point::ZERO );
     this->addChild(pMenu, 1);
 
     float yPos = 0;
@@ -111,15 +111,15 @@ bool TestAnalytics::init()
         MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestAnalytics::eventMenuCallback, this));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
         yPos = visibleSize.height - 35*i - 100;
-        pMenuItem->setPosition( ccp(visibleSize.width / 2, yPos));
+        pMenuItem->setPosition( Point(visibleSize.width / 2, yPos));
     }
 
     std::string strName = _pluginAnalytics->getPluginName();
     std::string strVer = _pluginAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, CCSizeMake(visibleSize.width, 0), kTextAlignmentCenter);
-    pLabel->setPosition(ccp(visibleSize.width / 2, yPos - 80));
+    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Point(visibleSize.width, 0), kTextAlignmentCenter);
+    pLabel->setPosition(Point(visibleSize.width / 2, yPos - 80));
     addChild(pLabel);
 
     return true;
@@ -153,7 +153,7 @@ void TestAnalytics::eventMenuCallback(Object* pSender)
     case TAG_LOG_ONLINE_CONFIG:
         {
             PluginParam param("abc");
-            CCLog("Online config = %s", _pluginAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL).c_str());
+            log("Online config = %s", _pluginAnalytics->callStringFuncWithParam("getConfigParams", &param, NULL).c_str());
         }
         break;
     case TAG_LOG_EVENT_ID_DURATION:
@@ -259,7 +259,7 @@ void TestAnalytics::loadPlugins()
     _pluginAnalytics->setSessionContinueMillis(10000);
     
     const char* sdkVer = _pluginAnalytics->getSDKVersion().c_str();
-    CCLog("SDK version : %s", sdkVer);
+    log("SDK version : %s", sdkVer);
     
     _pluginAnalytics->callFuncWithParam("updateOnlineConfig", NULL);
     

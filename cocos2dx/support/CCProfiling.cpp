@@ -91,7 +91,7 @@ void Profiler::displayTimers()
     CCDICT_FOREACH(_activeTimers, pElement)
     {
         ProfilingTimer* timer = static_cast<ProfilingTimer*>(pElement->getObject());
-        CCLog("%s", timer->description());
+        log("%s", timer->description());
     }
 }
 
@@ -141,7 +141,7 @@ void ProfilingBeginTimingBlock(const char *timerName)
         timer = p->createAndAddTimerWithName(timerName);
     }
 
-    gettimeofday((struct timeval *)&timer->_startTime, NULL);
+    gettimeofday(&timer->_startTime, NULL);
 
     timer->numberOfCalls++;
 }
@@ -151,12 +151,13 @@ void ProfilingEndTimingBlock(const char *timerName)
     Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
-    CCAssert(timer, "CCProfilingTimer  not found");
+    CCASSERT(timer, "CCProfilingTimer  not found");
 
     struct timeval currentTime;
     gettimeofday(&currentTime, NULL);
 
-    double duration = Time::timersubCocos2d((struct cc_timeval *)&timer->_startTime, (struct cc_timeval *)&currentTime);
+    double duration = (currentTime.tv_sec*1000.0 + currentTime.tv_usec/1000.0) -
+                      (timer->_startTime.tv_sec*1000.0 + timer->_startTime.tv_usec/1000.0);
 
     // milliseconds
     timer->_averageTime = (timer->_averageTime + duration) / 2.0f;
@@ -171,7 +172,7 @@ void ProfilingResetTimingBlock(const char *timerName)
     Profiler* p = Profiler::getInstance();
     ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
-    CCAssert(timer, "CCProfilingTimer not found");
+    CCASSERT(timer, "CCProfilingTimer not found");
 
     timer->reset();
 }

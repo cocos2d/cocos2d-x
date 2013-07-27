@@ -56,17 +56,15 @@ Instead, use the newer TMX file format: TMXTiledMap
 */
 class CC_DLL TileMapAtlas : public AtlasNode 
 {
-    /** TileMap info */
-    CC_PROPERTY(struct sImageTGA*, _TGAInfo, TGAInfo);
 public:
+    /** creates a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
+     The tile file will be loaded using the TextureMgr.
+     */
+    static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    
     TileMapAtlas();
     virtual ~TileMapAtlas();
     
-    /** creates a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-    The tile file will be loaded using the TextureMgr.
-    */
-    static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-   
     /** initializes a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
     The file will be loaded using the TextureMgr.
     */
@@ -74,17 +72,21 @@ public:
     /** returns a tile from position x,y.
     For the moment only channel R is used
     */
-    Color3B tileAt(const Point& position);
+    Color3B getTileAt(const Point& position) const;
+    CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Point& position) const { return getTileAt(position); };
     /** sets a tile at position x,y.
     For the moment only channel R is used
     */
     void setTile(const Color3B& tile, const Point& position);
     /** dealloc the map from memory */
     void releaseMap();
+    
+    inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
+    inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
 private:
     void loadTGAfile(const char *file);
     void calculateItemsToRender();
-    void updateAtlasValueAt(const Point& pos, const Color3B& value, unsigned int index);
+    void updateAtlasValueAt(const Point& pos, const Color3B& value, int index);
     void updateAtlasValues();
 
 protected:
@@ -92,6 +94,8 @@ protected:
     Dictionary* _posToAtlasIndex;
     //! numbers of tiles to render
     int _itemsToRender;
+    /** TileMap info */
+    struct sImageTGA* _TGAInfo;
 };
 
 // end of tilemap_parallax_nodes group

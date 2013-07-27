@@ -61,18 +61,6 @@ void SpriteFrameCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedSpriteFrameCache);
 }
 
-// XXX: deprecated
-SpriteFrameCache* SpriteFrameCache::sharedSpriteFrameCache(void)
-{
-    return SpriteFrameCache::getInstance();
-}
-
-// XXX: deprecated
-void SpriteFrameCache::purgeSharedSpriteFrameCache(void)
-{
-    return SpriteFrameCache::destroyInstance();
-}
-
 bool SpriteFrameCache::init(void)
 {
     _spriteFrames= new Dictionary();
@@ -110,7 +98,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(Dictionary* dictionary, Tex
     }
 
     // check the format
-    CCAssert(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
     DictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
@@ -225,7 +213,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, Texture2D *
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
 {
-    CCAssert(textureFileName, "texture name should not be null");
+    CCASSERT(textureFileName, "texture name should not be null");
     Texture2D *texture = TextureCache::getInstance()->addImage(textureFileName);
 
     if (texture)
@@ -240,7 +228,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* te
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
-    CCAssert(pszPlist, "plist filename should not be NULL");
+    CCASSERT(pszPlist, "plist filename should not be NULL");
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
@@ -276,11 +264,11 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        Texture2D *pTexture = TextureCache::getInstance()->addImage(texturePath.c_str());
+        Texture2D *texture = TextureCache::getInstance()->addImage(texturePath.c_str());
 
-        if (pTexture)
+        if (texture)
         {
-            addSpriteFramesWithDictionary(dict, pTexture);
+            addSpriteFramesWithDictionary(dict, texture);
             _loadedFileNames->insert(pszPlist);
         }
         else
@@ -405,7 +393,7 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
     _spriteFrames->removeObjectsForKeys(keysToRemove);
 }
 
-SpriteFrame* SpriteFrameCache::spriteFrameByName(const char *pszName)
+SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const char *pszName)
 {
     SpriteFrame* frame = (SpriteFrame*)_spriteFrames->objectForKey(pszName);
     if (!frame)

@@ -16,8 +16,8 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
-    SimpleAudioEngine::sharedEngine()->end();
-    //CCScriptEngineManager::purgeSharedManager();
+    SimpleAudioEngine::getInstance()->end();
+    //CCScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -35,8 +35,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    LuaEngine* pEngine = LuaEngine::defaultEngine();
-    ScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    LuaEngine* pEngine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 
     std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
     pEngine->executeScriptFile(path.c_str());
@@ -48,12 +48,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

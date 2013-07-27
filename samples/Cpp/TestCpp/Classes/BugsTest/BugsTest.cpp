@@ -11,12 +11,12 @@
 
 #define TEST_BUG(__bug__)									\
 {															\
-	Scene* pScene = Scene::create();					\
-	Bug##__bug__##Layer* pLayer = new Bug##__bug__##Layer();	\
-	pLayer->init();                                         \
-	pScene->addChild(pLayer);                               \
-	Director::getInstance()->replaceScene(pScene);     \
-	pLayer->autorelease();                                  \
+	Scene* scene = Scene::create();					\
+	Bug##__bug__##Layer* layer = new Bug##__bug__##Layer();	\
+	layer->init();                                         \
+	scene->addChild(layer);                               \
+	Director::getInstance()->replaceScene(scene);     \
+	layer->autorelease();                                  \
 }
 
 enum
@@ -70,16 +70,16 @@ void BugsTestMainLayer::onEnter()
     setTouchEnabled(true);
 }
 
-void BugsTestMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void BugsTestMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*) pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
 
     _beginPos = touch->getLocation();    
 }
 
-void BugsTestMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void BugsTestMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*) pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
@@ -117,17 +117,17 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontSize(24);
     MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu* pMenu = Menu::create(pMainItem, NULL);
-    pMenu->setPosition( Point::ZERO );
-    addChild(pMenu);
+    Menu* menu = Menu::create(pMainItem, NULL);
+    menu->setPosition( Point::ZERO );
+    addChild(menu);
 }
 
-void BugsTestBaseLayer::backCallback(Object* pSender)
+void BugsTestBaseLayer::backCallback(Object* sender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
-    BugsTestScene* pScene = new BugsTestScene();
-    pScene->runThisTest();
-    pScene->autorelease();
+    BugsTestScene* scene = new BugsTestScene();
+    scene->runThisTest();
+    scene->autorelease();
 }
 
 ////////////////////////////////////////////////////////
@@ -137,9 +137,9 @@ void BugsTestBaseLayer::backCallback(Object* pSender)
 ////////////////////////////////////////////////////////
 void BugsTestScene::runThisTest()
 {
-    Layer* pLayer = new BugsTestMainLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new BugsTestMainLayer();
+    addChild(layer);
+    layer->release();
 
     Director::getInstance()->replaceScene(this);
 }
