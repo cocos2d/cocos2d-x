@@ -47,21 +47,6 @@ const Color3B ccGRAY = Color3B::GRAY;
 
 const BlendFunc kCCBlendFuncDisable = BlendFunc::DISABLE;
 
-const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
-const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
-const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORDS;
-const int kCCVertexAttrib_MAX = GLProgram::VERTEX_ATTRIB_MAX;
-
-const int kCCUniformPMatrix = GLProgram::UNIFORM_P_MATRIX;
-const int kCCUniformMVMatrix = GLProgram::UNIFORM_MV_MATRIX;
-const int kCCUniformMVPMatrix = GLProgram::UNIFORM_MVP_MATRIX;
-const int kCCUniformTime = GLProgram::UNIFORM_TIME;
-const int kCCUniformSinTime = GLProgram::UNIFORM_SIN_TIME;
-const int kCCUniformCosTime = GLProgram::UNIFORM_COS_TIME;
-const int kCCUniformRandom01 = GLProgram::UNIFORM_RANDOM01;
-const int kCCUniformSampler = GLProgram::UNIFORM_SAMPLER;
-const int kCCUniform_MAX = GLProgram::UNIFORM_MAX;
-
 const char* kCCShader_PositionTextureColor = GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR;
 const char* kCCShader_PositionTextureColorAlphaTest = GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
 const char* kCCShader_PositionColor = GLProgram::SHADER_NAME_POSITION_COLOR;
@@ -86,115 +71,6 @@ const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 const char* kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
 const char* kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
 const char* kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
-
-const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
-const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
-const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
-const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
-const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
-
-const ProgressTimer::Type kCCProgressTimerTypeRadial = ProgressTimer::Type::RADIAL;
-const ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::Type::BAR;
-
-const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
-const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
-const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
-const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
-
-const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
-const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
-const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
-
-const ParticleSystem::Mode kCCParticleModeGravity = ParticleSystem::Mode::GRAVITY;
-const ParticleSystem::Mode kCCParticleModeRadius = ParticleSystem::Mode::RADIUS;
-const int kCCParticleDefaultCapacity = kParticleDefaultCapacity;
-
-const ParticleSystem::PositionType kCCPositionTypeFree =  ParticleSystem::PositionType::FREE;
-const ParticleSystem::PositionType kCCPositionTypeRelative =  ParticleSystem::PositionType::RELATIVE;
-const ParticleSystem::PositionType kCCPositionTypeGrouped =  ParticleSystem::PositionType::GROUPED;
-
-const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
-const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
-const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
-
-const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
-const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
-const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
-
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PRVTC4;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PRVTC2;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
-
-const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
-const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
-const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
-
-const Touch::DispatchMode kCCTouchesOneByOne = Touch::DispatchMode::ONE_BY_ONE;
-const Touch::DispatchMode kCCTouchesAllAtOnce = Touch::DispatchMode::ALL_AT_ONCE;
-
-const Image::Format kCCImageFormatPNG = Image::Format::PNG;
-const Image::Format kCCImageFormatJPEG = Image::Format::JPG;
-
-const TransitionScene::Orientation kCCTransitionOrientationLeftOver = TransitionScene::Orientation::LEFT_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationRightOver = TransitionScene::Orientation::RIGHT_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationUpOver = TransitionScene::Orientation::UP_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationDownOver = TransitionScene::Orientation::DOWN_OVER;
-
-const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
-const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
-
-const int kCCActionTagInvalid = kActionTagInvalid;
-
-const int kCCNodeTagInvalid = kNodeTagInvalid;
-
-const int kCCNodeOnEnter = kNodeOnEnter;
-const int kCCNodeOnExit = kNodeOnExit;
-const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
-const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
-const int kCCNodeOnCleanup = kNodeOnCleanup;
-
-const LanguageType kLanguageEnglish     = LanguageType::ENGLISH;
-const LanguageType kLanguageChinese     = LanguageType::CHINESE;
-const LanguageType kLanguageFrench      = LanguageType::FRENCH;
-const LanguageType kLanguageItalian     = LanguageType::ITALIAN;
-const LanguageType kLanguageGerman      = LanguageType::GERMAN;
-const LanguageType kLanguageSpanish     = LanguageType::SPANISH;
-const LanguageType kLanguageRussian     = LanguageType::RUSSIAN;
-const LanguageType kLanguageKorean      = LanguageType::KOREAN;
-const LanguageType kLanguageJapanese    = LanguageType::JAPANESE;
-const LanguageType kLanguageHungarian   = LanguageType::HUNGARIAN;
-const LanguageType kLanguagePortuguese  = LanguageType::PORTUGUESE;
-const LanguageType kLanguageArabic      = LanguageType::ARABIC;
-const LanguageType kLanguageNorwegian   = LanguageType::NORWEGIAN;
-const LanguageType kLanguagePolish      = LanguageType::POLISH;
-
-
-
-const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
-const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
-const Application::Platform kTargetMacOS        = Application::Platform::OS_MAC;
-const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
-const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
-const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
-const Application::Platform kTargetBlackBerry   = Application::Platform::OS_BLACKBERRY;
-const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
-const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
-const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
-
-const ResolutionPolicy kResolutionExactFit      = ResolutionPolicy::EXACT_FIT;
-const ResolutionPolicy kResolutionNoBorder      = ResolutionPolicy::NO_BORDER;
-const ResolutionPolicy kResolutionShowAll       = ResolutionPolicy::SHOW_ALL;
-const ResolutionPolicy kResolutionFixedHeight   = ResolutionPolicy::FIXED_HEIGHT;
-const ResolutionPolicy kResolutionFixedWidth    = ResolutionPolicy::FIXED_WIDTH;
-const ResolutionPolicy kResolutionUnKnown       = ResolutionPolicy::UNKNOWN;
 
 void ccDrawInit()
 {
