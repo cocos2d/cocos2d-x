@@ -34,7 +34,7 @@ CCBValue* CCBValue::create(int nValue)
     if (ret)
     {
         ret->_value.intValue = nValue;
-        ret->_type = TYPE_INT;
+		ret->_type = Type::INT;
         ret->autorelease();
     }
     
@@ -47,7 +47,7 @@ CCBValue* CCBValue::create(float fValue)
     if (ret)
     {
         ret->_value.floatValue = fValue;
-        ret->_type = TYPE_FLOAT;
+		ret->_type = Type::FLOAT;
         ret->autorelease();
     }
     
@@ -60,7 +60,7 @@ CCBValue* CCBValue::create(bool vValue)
     if (ret)
     {
         ret->_value.intValue = vValue ? 1 : 0;
-        ret->_type = TYPE_BOOL;
+		ret->_type = Type::BOOL;
         ret->autorelease();
     }
     
@@ -73,7 +73,7 @@ CCBValue* CCBValue::create(unsigned char byte)
     if (ret)
     {
         ret->_value.intValue = byte;
-        ret->_type = TYPE_UNSIGNED_CHAR;
+		ret->_type = Type::UNSIGNED_CHAR;
         ret->autorelease();
     }
     
@@ -86,7 +86,7 @@ CCBValue* CCBValue::create(const char *pStringValue)
     if (ret)
     {
         ret->_strValue = pStringValue;
-        ret->_type = TYPE_STRING;
+		ret->_type = Type::STRING;
         ret->autorelease();
     }
     
@@ -100,7 +100,7 @@ CCBValue* CCBValue::create(Array *pArrValue)
     if (ret)
     {
         ret->_arrValue = pArrValue;
-        ret->_type = TYPE_ARRAY;
+        ret->_type = Type::ARRAY;
         ret->autorelease();
     }
     
@@ -110,35 +110,35 @@ CCBValue* CCBValue::create(Array *pArrValue)
 
 int CCBValue::getIntValue()
 {
-    CCASSERT(_type == TYPE_INT, "The type of CCBValue isn't integer.");
+	CCASSERT(_type == Type::INT, "The type of CCBValue isn't integer.");
     
     return _value.intValue;
 }
 
 float CCBValue::getFloatValue()
 {
-    CCASSERT(_type == TYPE_FLOAT, "The type of CCBValue isn't float.");
+	CCASSERT(_type == Type::FLOAT, "The type of CCBValue isn't float.");
     
     return _value.floatValue;
 }
 
 bool CCBValue::getBoolValue()
 {
-    CCASSERT(_type == TYPE_BOOL, "The type of CCBValue isn't boolean.");
+	CCASSERT(_type == Type::BOOL, "The type of CCBValue isn't boolean.");
     
     return _value.intValue == 1 ? true : false;
 }
 
 unsigned char CCBValue::getByteValue()
 {
-    CCASSERT(_type == TYPE_UNSIGNED_CHAR, "The type of CCBValue isn't unsigned char.");
+	CCASSERT(_type == Type::UNSIGNED_CHAR, "The type of CCBValue isn't unsigned char.");
     
     return (unsigned char)(_value.intValue);
 }
 
 Array* CCBValue::getArrayValue()
 {
-    CCASSERT(_type == TYPE_ARRAY, "The type of CCBValue isn't array.");
+	CCASSERT(_type == Type::ARRAY, "The type of CCBValue isn't array.");
     
     return _arrValue;
 }
@@ -146,7 +146,7 @@ Array* CCBValue::getArrayValue()
 
 const char* CCBValue::getStringValue()
 {
-    CCASSERT(_type == TYPE_STRING, "The type of CCBValue isn't string.");
+	CCASSERT(_type == Type::STRING, "The type of CCBValue isn't string.");
     
     return _strValue.c_str();
 }
