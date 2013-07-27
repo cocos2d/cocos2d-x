@@ -61,11 +61,11 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -75,20 +75,20 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->init();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->init();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 void ActionsTestScene::runThisTest()
@@ -115,13 +115,13 @@ void ActionsDemo::onEnter()
     BaseTest::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
-    _grossini = Sprite::create(s_pPathGrossini);
+    _grossini = Sprite::create(s_pathGrossini);
     _grossini->retain();
 
-    _tamara = Sprite::create(s_pPathSister1); 
+    _tamara = Sprite::create(s_pathSister1); 
     _tamara->retain();
 
-    _kathia = Sprite::create(s_pPathSister2);
+    _kathia = Sprite::create(s_pathSister2);
     _kathia->retain();
 
     addChild(_grossini, 1);
@@ -142,7 +142,7 @@ void ActionsDemo::onExit()
     BaseTest::onExit();
 }
 
-void ActionsDemo::restartCallback(Object* pSender)
+void ActionsDemo::restartCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( restartAction() );
@@ -150,7 +150,7 @@ void ActionsDemo::restartCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::nextCallback(Object* pSender)
+void ActionsDemo::nextCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( nextAction() );
@@ -158,7 +158,7 @@ void ActionsDemo::nextCallback(Object* pSender)
     s->release();
 }
 
-void ActionsDemo::backCallback(Object* pSender)
+void ActionsDemo::backCallback(Object* sender)
 {
     Scene* s = new ActionsTestScene();
     s->addChild( backAction() );
@@ -852,7 +852,7 @@ std::string ActionCallFuncND::subtitle()
     return "simulates CallFuncND with std::bind()";
 }
 
-void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* pSender, bool cleanup)
+void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* sender, bool cleanup)
 {
     _grossini->removeFromParentAndCleanup(cleanup);
 }
@@ -1013,11 +1013,11 @@ void ActionRepeatForever::onEnter()
     _grossini->runAction(action);
 }
 
-void ActionRepeatForever::repeatForever(Node* pSender)
+void ActionRepeatForever::repeatForever(Node* sender)
 {
     auto repeat = RepeatForever::create( RotateBy::create(1.0f, 360) );
 
-    pSender->runAction(repeat);
+    sender->runAction(repeat);
 }
 
 std::string ActionRepeatForever::subtitle()
@@ -1254,8 +1254,8 @@ void ActionOrbit::onEnter()
 
     auto move = MoveBy::create(3, Point(100,-100));
     auto move_back = move->reverse();
-    auto  seq = Sequence::create(move, move_back, NULL);
-    auto  rfe = RepeatForever::create(seq);
+    auto seq = Sequence::create(move, move_back, NULL);
+    auto rfe = RepeatForever::create(seq);
     _kathia->runAction(rfe);
     _tamara->runAction(rfe->clone() );
     _grossini->runAction( rfe->clone() );
@@ -1279,10 +1279,10 @@ void ActionFollow::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     _grossini->setPosition(Point(-200, s.height / 2));
-    auto move      = MoveBy::create(2, Point(s.width * 3, 0));
+    auto move = MoveBy::create(2, Point(s.width * 3, 0));
     auto move_back = move->reverse();
-    auto seq       = Sequence::create(move, move_back, NULL);
-    auto rep               = RepeatForever::create(seq);
+    auto seq = Sequence::create(move, move_back, NULL);
+    auto rep = RepeatForever::create(seq);
 
     _grossini->runAction(rep);
 
@@ -1297,7 +1297,7 @@ void ActionFollow::draw()
 	float y = winSize.height;
     
 	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	ccDrawPoly(vertices, 4, true);
+	DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
 std::string ActionFollow::subtitle()
@@ -1313,7 +1313,7 @@ void ActionTargeted::onEnter()
 
     auto jump1 = JumpBy::create(2,Point::ZERO,100,3);
     auto jump2 = jump1->clone();
-    auto rot1 =  RotateBy::create(1, 360);
+    auto rot1 = RotateBy::create(1, 360);
     auto rot2 = rot1->clone();
 
     auto t1 = TargetedAction::create(_kathia, jump2);
@@ -1510,7 +1510,6 @@ void ActionCatmullRomStacked::onEnter()
     
     _tamara->runAction(seq);
     
-    
     _tamara->runAction(
         RepeatForever::create(
             Sequence::create(
@@ -1547,7 +1546,6 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Point(-10,0)),
                 NULL)));
     
-    
     array->retain();
     _array1 = array;
     array2->retain();
@@ -1567,10 +1565,10 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1,50);
+    DrawPrimitives::drawCatmullRom(_array1,50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 std::string ActionCatmullRomStacked::title()
@@ -1662,14 +1660,14 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 
@@ -1702,9 +1700,9 @@ void Issue1305::onEnter()
     scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
 }
 
-void Issue1305::log(Node* pSender)
+void Issue1305::log(Node* sender)
 {
-    CCLog("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    cocos2d::log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
 }
 
 void Issue1305::onExit()
@@ -1775,22 +1773,22 @@ void Issue1305_2::onEnter()
 
 void Issue1305_2::printLog1()
 {
-    CCLog("1st block");
+    log("1st block");
 }
 
 void Issue1305_2::printLog2()
 {
-    CCLog("2nd block");
+    log("2nd block");
 }
 
 void Issue1305_2::printLog3()
 {
-    CCLog("3rd block");
+    log("3rd block");
 }
 
 void Issue1305_2::printLog4()
 {
-    CCLog("4th block");
+    log("4th block");
 }
 
 std::string Issue1305_2::title()
@@ -1887,16 +1885,16 @@ std::string Issue1327::subtitle()
     return "See console: You should see: 0, 45, 90, 135, 180";
 }
 
-void Issue1327::logSprRotation(Sprite* pSender)
+void Issue1327::logSprRotation(Sprite* sender)
 {
-    CCLog("%f", pSender->getRotation());
+    log("%f", sender->getRotation());
 }
 
 //Issue1398
 void Issue1398::incrementInteger()
 {
     _testInteger++;
-    CCLog("incremented to %d", _testInteger);
+    log("incremented to %d", _testInteger);
 }
 
 void Issue1398::onEnter()
@@ -1905,7 +1903,7 @@ void Issue1398::onEnter()
     this->centerSprites(0);
 
     _testInteger = 0;
-    CCLog("testInt = %d", _testInteger);
+    log("testInt = %d", _testInteger);
 
     this->runAction(
         Sequence::create(
@@ -1923,7 +1921,7 @@ void Issue1398::onEnter()
 void Issue1398::incrementIntegerCallback(void* data)
 {
     this->incrementInteger();
-    CCLog("%s", (char*)data);
+    log("%s", (char*)data);
 }
 
 std::string Issue1398::subtitle()
@@ -2014,10 +2012,10 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCatmullRom(_array1, 50);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
     kmGLPopMatrix();
     
-    ccDrawCatmullRom(_array2,50);
+    DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
 string ActionCatmullRom::title()
@@ -2092,14 +2090,14 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    ccDrawCardinalSpline(_array, 0, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    ccDrawCardinalSpline(_array, 1, 100);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
     kmGLPopMatrix();
 }
 
@@ -2153,7 +2151,7 @@ string PauseResumeActions::subtitle()
 
 void PauseResumeActions::pause(float dt)
 {
-    CCLog("Pausing");
+    log("Pausing");
     Director *director = Director::getInstance();
 
     CC_SAFE_RELEASE(_pausedTargets);
@@ -2163,7 +2161,7 @@ void PauseResumeActions::pause(float dt)
 
 void PauseResumeActions::resume(float dt)
 {
-    CCLog("Resuming");
+    log("Resuming");
     Director *director = Director::getInstance();
     director->getActionManager()->resumeTargets(_pausedTargets);
 }

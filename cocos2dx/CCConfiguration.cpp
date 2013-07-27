@@ -254,7 +254,7 @@ const char *Configuration::getCString( const char *key, const char *default_valu
 		if( String *str=dynamic_cast<String*>(ret) )
 			return str->getCString();
 
-		CCAssert(false, "Key found, but from different type");
+		CCASSERT(false, "Key found, but from different type");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -270,7 +270,7 @@ bool Configuration::getBool( const char *key, bool default_value ) const
 			return boolobj->getValue();
 		if( String *strobj=dynamic_cast<String*>(ret) )
 			return strobj->boolValue();
-		CCAssert(false, "Key found, but from different type");
+		CCASSERT(false, "Key found, but from different type");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -291,7 +291,7 @@ double Configuration::getNumber( const char *key, double default_value ) const
 		if( String *strobj=dynamic_cast<String*>(ret) )
 			return strobj->doubleValue();
 
-		CCAssert(false, "Key found, but from different type");
+		CCASSERT(false, "Key found, but from different type");
 	}
 
 	// XXX: Should it throw an exception ?
@@ -315,7 +315,7 @@ void Configuration::setObject( const char *key, Object *value )
 void Configuration::loadConfigFile( const char *filename )
 {
 	Dictionary *dict = Dictionary::createWithContentsOfFile(filename);
-	CCAssert(dict, "cannot create dictionary");
+	CCASSERT(dict, "cannot create dictionary");
 
 	// search for metadata
 	bool metadata_ok = false;

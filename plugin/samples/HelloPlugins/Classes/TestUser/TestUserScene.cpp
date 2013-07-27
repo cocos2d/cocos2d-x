@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "TestUserScene.h"
 #include "MyUserManager.h"
 #include "HelloWorldScene.h"
@@ -37,11 +60,11 @@ bool TestUser::init()
         return false;
     }
 
-    MyUserManager::sharedManager()->loadPlugin();
+    MyUserManager::getInstance()->loadPlugin();
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    Point posMid = ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
-    Point posBR = ccp(origin.x + visibleSize.width, origin.y);
+    Point posMid = Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    Point posBR = Point(origin.x + visibleSize.width, origin.y);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -50,23 +73,23 @@ bool TestUser::init()
     // add a "close" icon to exit the progress. it's an autorelease object
     MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestUser::menuBackCallback, this));
     Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(ccpAdd(posBR, ccp(- backSize.width / 2, backSize.height / 2)));
+    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition(PointZero);
+    pMenu->setPosition(Point::ZERO);
 
     LabelTTF* label1 = LabelTTF::create("Login", "Arial", 32);
     MenuItemLabel* pItemLogin = MenuItemLabel::create(label1, CC_CALLBACK_1(TestUser::testLogin, this));
-    pItemLogin->setAnchorPoint(ccp(0.5f, 0));
+    pItemLogin->setAnchorPoint(Point(0.5f, 0));
     pMenu->addChild(pItemLogin, 0);
-    pItemLogin->setPosition(ccpAdd(posMid, ccp(-100, -120)));
+    pItemLogin->setPosition(posMid + Point(-100, -120));
 
     LabelTTF* label2 = LabelTTF::create("Logout", "Arial", 32);
     MenuItemLabel* pItemLogout = MenuItemLabel::create(label2, CC_CALLBACK_1(TestUser::testLogout, this));
-    pItemLogout->setAnchorPoint(ccp(0.5f, 0));
+    pItemLogout->setAnchorPoint(Point(0.5f, 0));
     pMenu->addChild(pItemLogout, 0);
-    pItemLogout->setPosition(ccpAdd(posMid, ccp(100, -120)));
+    pItemLogout->setPosition(posMid + Point(100, -120));
 
     // create optional menu
     // cases item
@@ -78,7 +101,7 @@ bool TestUser::init()
     {
         _caseItem->getSubItems()->addObject( MenuItemFont::create( s_aTestCases[i].c_str() ) );
     }
-    _caseItem->setPosition(ccpAdd(posMid, ccp(0, 120)));
+    _caseItem->setPosition(posMid + Point(0, 120));
     pMenu->addChild(_caseItem);
 
     _selectedCase = 0;
@@ -94,12 +117,12 @@ void TestUser::caseChanged(Object* pSender)
 
 void TestUser::testLogin(Object* pSender)
 {
-    MyUserManager::sharedManager()->loginByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
+    MyUserManager::getInstance()->loginByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
 }
 
 void TestUser::testLogout(Object* pSender)
 {
-    MyUserManager::sharedManager()->logoutByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
+    MyUserManager::getInstance()->logoutByMode((MyUserManager::MyUserMode) (_selectedCase + 1));
 }
 
 void TestUser::menuBackCallback(Object* pSender)

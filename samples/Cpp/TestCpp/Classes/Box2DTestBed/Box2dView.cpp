@@ -37,18 +37,18 @@ MenuLayer::~MenuLayer(void)
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 {
-    MenuLayer* pLayer = new MenuLayer();
-    pLayer->initWithEntryID(entryId);
-    pLayer->autorelease();
+    MenuLayer* layer = new MenuLayer();
+    layer->initWithEntryID(entryId);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-    Director* pDirector = Director::getInstance();
-	Point visibleOrigin = pDirector->getVisibleOrigin();
-	Size visibleSize = pDirector->getVisibleSize();
+    Director* director = Director::getInstance();
+	Point visibleOrigin = director->getVisibleOrigin();
+	Size visibleSize = director->getVisibleSize();
 
     m_entryID = entryId;
     
@@ -121,8 +121,8 @@ void MenuLayer::backCallback(Object* sender)
 
 void MenuLayer::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+    Director* director = Director::getInstance();
+    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 bool MenuLayer::ccTouchBegan(Touch* touch, Event* event)
@@ -191,7 +191,7 @@ void Box2DView::draw()
 {
     Layer::draw();
 
-    ccGLEnableVertexAttribs( kVertexAttribFlag_Position );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 
@@ -210,8 +210,8 @@ Box2DView::~Box2DView()
 void Box2DView::registerWithTouchDispatcher()
 {
     // higher priority than dragging
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
+    Director* director = Director::getInstance();
+    director->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
 bool Box2DView::ccTouchBegan(Touch* touch, Event* event)

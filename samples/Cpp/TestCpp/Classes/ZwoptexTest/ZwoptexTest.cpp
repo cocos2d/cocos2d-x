@@ -24,10 +24,10 @@ Layer* nextZwoptexTest()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* backZwoptexTest()
@@ -37,18 +37,18 @@ Layer* backZwoptexTest()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 }
 
 Layer* restartZwoptexTest()
 {
-    Layer* pLayer = createZwoptexLayer(sceneIdx);
-    pLayer->autorelease();
+    Layer* layer = createZwoptexLayer(sceneIdx);
+    layer->autorelease();
 
-    return pLayer;
+    return layer;
 } 
 
 //------------------------------------------------------------------
@@ -61,21 +61,21 @@ void ZwoptexTest::onEnter()
     BaseTest::onEnter();
 }
 
-void ZwoptexTest::restartCallback(Object* pSender)
+void ZwoptexTest::restartCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void ZwoptexTest::nextCallback(Object* pSender)
+void ZwoptexTest::nextCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
-void ZwoptexTest::backCallback(Object* pSender)
+void ZwoptexTest::backCallback(Object* sender)
 {
     Scene *s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());
@@ -110,7 +110,7 @@ void ZwoptexGenericTest::onEnter()
     layer1->setPosition(Point(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
-    sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->spriteFrameByName("grossini_dance_01.png"));
+    sprite1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini_dance_01.png"));
     sprite1->setPosition(Point( s.width/2-80, s.height/2));
     addChild(sprite1);
 
@@ -121,7 +121,7 @@ void ZwoptexGenericTest::onEnter()
     layer2->setPosition(Point(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
-    sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->spriteFrameByName("grossini_dance_generic_01.png"));
+    sprite2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini_dance_generic_01.png"));
     sprite2->setPosition(Point( s.width/2 + 80, s.height/2));
     addChild(sprite2);
 
@@ -185,8 +185,8 @@ void ZwoptexGenericTest::flipSprites(float dt)
     char str2[32] = {0};
     sprintf(str1, "grossini_dance_%02d.png", spriteFrameIndex);
     sprintf(str2, "grossini_dance_generic_%02d.png", spriteFrameIndex);
-    sprite1->setDisplayFrame(SpriteFrameCache::getInstance()->spriteFrameByName(str1));
-    sprite2->setDisplayFrame(SpriteFrameCache::getInstance()->spriteFrameByName(str2));
+    sprite1->setDisplayFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str1));
+    sprite2->setDisplayFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str2));
 }
 
 ZwoptexGenericTest::~ZwoptexGenericTest()
@@ -210,8 +210,8 @@ std::string ZwoptexGenericTest::subtitle()
 
 void ZwoptexTestScene::runThisTest()
 {
-    Layer* pLayer = nextZwoptexTest();
-    addChild(pLayer);
+    Layer* layer = nextZwoptexTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

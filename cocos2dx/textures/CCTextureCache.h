@@ -61,16 +61,16 @@ public:
     /** Returns the shared instance of the cache */
     static TextureCache * getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache() { return TextureCache::getInstance(); }
+
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
-
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache() { return TextureCache::destroyInstance(); }
 
     /** Reload all textures
      It's only useful when the value of CC_ENABLE_CACHE_TEXTURE_DATA is 1
@@ -206,7 +206,7 @@ public:
 
     static void addImageTexture(Texture2D *tt, const char* imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2DPixelFormat pixelFormat, const Size& contentSize);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
     static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
@@ -232,7 +232,7 @@ protected:
     void *_textureData;
     int  _dataLen;
     Size _textureSize;
-    Texture2DPixelFormat _pixelFormat;
+    Texture2D::PixelFormat _pixelFormat;
 
     std::string _fileName;
 

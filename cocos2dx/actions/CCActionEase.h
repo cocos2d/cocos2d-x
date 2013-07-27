@@ -56,7 +56,7 @@ public:
     //
 	virtual ActionEase* clone() const override = 0;
     virtual ActionEase* reverse() const override = 0;
-    virtual void startWithTarget(Node *pTarget) override;
+    virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
 

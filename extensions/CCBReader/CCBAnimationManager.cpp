@@ -382,7 +382,7 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
     }
     else 
     {
-        CCLog("CCBReader: Failed to create animation for property: %s", pPropName);
+        log("CCBReader: Failed to create animation for property: %s", pPropName);
     }
     
     return NULL;
@@ -482,8 +482,8 @@ void CCBAnimationManager::setAnimatedProperty(const char *pPropName, Node *pNode
             }
             else
             {
-                CCLog("unsupported property name is %s", pPropName);
-                CCAssert(false, "unsupported property now");
+                log("unsupported property name is %s", pPropName);
+                CCASSERT(false, "unsupported property now");
             }
         }
     }
@@ -497,7 +497,7 @@ void CCBAnimationManager::setFirstFrame(Node *pNode, CCBSequenceProperty *pSeqPr
     {
         // Use base value (no animation)
         Object *baseValue = getBaseValue(pNode, pSeqProp->getName());
-        CCAssert(baseValue, "No baseValue found for property");
+        CCASSERT(baseValue, "No baseValue found for property");
         setAnimatedProperty(pSeqProp->getName(), pNode, baseValue, fTweenDuration);
     }
     else 
@@ -573,7 +573,7 @@ ActionInterval* CCBAnimationManager::getEaseAction(ActionInterval *pAction, int 
     }
     else
     {
-        CCLog("CCBReader: Unkown easing type %d", nEasingType);
+        log("CCBReader: Unkown easing type %d", nEasingType);
         return pAction;
     }
 }
@@ -617,7 +617,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
                     CCBSelectorResolver* targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
 
                     if(targetAsCCBSelectorResolver != NULL) {
-                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCallFuncSelector(target, selectorName.c_str    ());
+                        selCallFunc = targetAsCCBSelectorResolver->onResolveCCBCCCallFuncSelector(target, selectorName.c_str    ());
                     }
                     if(selCallFunc == 0) {
                         CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
@@ -735,7 +735,7 @@ void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuraiton)
 
 void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration)
 {
-    CCAssert(nSeqId != -1, "Sequence id couldn't be found");
+    CCASSERT(nSeqId != -1, "Sequence id couldn't be found");
     
     mRootNode->stopAllActions();
     
@@ -978,7 +978,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 
 void CCBSoundEffect::update(float time)
 {
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(mSoundFile.c_str());
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(mSoundFile.c_str());
 }
 
 
@@ -1029,7 +1029,7 @@ CCBRotateTo* CCBRotateTo::clone() const
 
 CCBRotateTo* CCBRotateTo::reverse() const
 {
-	CCAssert(false, "reverse() is not supported in CCBRotateTo");
+	CCASSERT(false, "reverse() is not supported in CCBRotateTo");
 	return nullptr;
 }
 
@@ -1109,7 +1109,7 @@ CCBRotateXTo* CCBRotateXTo::clone() const
 
 CCBRotateXTo* CCBRotateXTo::reverse() const
 {
-	CCAssert(false, "reverse() is not supported in CCBRotateXTo");
+	CCASSERT(false, "reverse() is not supported in CCBRotateXTo");
 	return nullptr;
 }
 
@@ -1170,7 +1170,7 @@ CCBRotateYTo* CCBRotateYTo::clone() const
 
 CCBRotateYTo* CCBRotateYTo::reverse() const
 {
-	CCAssert(false, "reverse() is not supported in CCBRotateXTo");
+	CCASSERT(false, "reverse() is not supported in CCBRotateXTo");
 	return nullptr;
 }
 

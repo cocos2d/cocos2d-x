@@ -1,11 +1,6 @@
 
 class CCFileUtils
 {
-    /** @deprecated Use getInstance() instead */
-    static CCFileUtils* sharedFileUtils();
-    /** @deprecated Use destroyInstance() instead */
-    static void purgeFileUtils();
-
     static CCFileUtils* getInstance();
     static void destroyInstance();
     

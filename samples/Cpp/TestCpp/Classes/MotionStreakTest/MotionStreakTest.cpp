@@ -11,6 +11,48 @@ Layer* nextMotionAction();
 Layer* backMotionAction();
 Layer* restartMotionAction();
 
+static int sceneIdx = -1;
+
+static std::function<Layer*()> createFunctions[] =
+{
+	CL(MotionStreakTest1),
+    CL(MotionStreakTest2),
+    CL(Issue1358),
+};
+
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+Layer* nextMotionAction()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
+
+Layer* backMotionAction()
+{
+    sceneIdx--;
+    int total = MAX_LAYER;
+    if( sceneIdx < 0 )
+        sceneIdx += total;
+
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
+
+Layer* restartMotionAction()
+{
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
+
+    return layer;
+}
 //------------------------------------------------------------------
 //
 // MotionStreakTest1
@@ -24,12 +66,12 @@ void MotionStreakTest1::onEnter()
     Size s = Director::getInstance()->getWinSize();
   
     // the root object just rotates around
-    _root = Sprite::create(s_pPathR1);
+    _root = Sprite::create(s_pathR1);
     addChild(_root, 1);
     _root->setPosition(Point(s.width/2, s.height/2));
   
     // the target object is offset from root, and the streak is moved to follow it
-    _target = Sprite::create(s_pPathR1);
+    _target = Sprite::create(s_pathR1);
     _root->addChild(_target);
     _target->setPosition(Point(s.width/4, 0));
 
@@ -151,62 +193,6 @@ std::string Issue1358::subtitle()
 //
 //------------------------------------------------------------------
 
-// enum
-// {
-//     IDC_NEXT = 100,
-//     IDC_BACK,
-//     IDC_RESTART
-// };
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    3
-
-Layer* createMotionLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new MotionStreakTest1();
-        case 1: return new MotionStreakTest2();
-        case 2: return new Issue1358();
-    }
-
-    return NULL;
-}
-
-Layer* nextMotionAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    Layer* pLayer = createMotionLayer(sceneIdx);
-    pLayer->autorelease();
-
-    return pLayer;
-}
-
-Layer* backMotionAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    Layer* pLayer = createMotionLayer(sceneIdx);
-    pLayer->autorelease();
-
-    return pLayer;
-}
-
-Layer* restartMotionAction()
-{
-    Layer* pLayer = createMotionLayer(sceneIdx);
-    pLayer->autorelease();
-
-    return pLayer;
-} 
-
-
 MotionStreakTest::MotionStreakTest(void)
 {
 }
@@ -248,7 +234,7 @@ void MotionStreakTest::modeCallback(Object *pSender)
     streak->setFastMode(! fastMode);
 }
 
-void MotionStreakTest::restartCallback(Object* pSender)
+void MotionStreakTest::restartCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
@@ -257,7 +243,7 @@ void MotionStreakTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void MotionStreakTest::nextCallback(Object* pSender)
+void MotionStreakTest::nextCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
@@ -265,7 +251,7 @@ void MotionStreakTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void MotionStreakTest::backCallback(Object* pSender)
+void MotionStreakTest::backCallback(Object* sender)
 {
     Scene* s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
@@ -275,8 +261,8 @@ void MotionStreakTest::backCallback(Object* pSender)
 
 void MotionStreakTestScene::runThisTest()
 {
-    Layer* pLayer = nextMotionAction();
-    addChild(pLayer);
+    Layer* layer = nextMotionAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }

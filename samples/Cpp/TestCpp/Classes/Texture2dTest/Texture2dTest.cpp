@@ -10,6 +10,8 @@ enum {
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(TexturePVRv3Premult),
+
     CL(TextureMemoryAlloc),
     CL(TextureAlias),
     CL(TexturePVRMipMap),
@@ -69,14 +71,14 @@ static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFun
 static int sceneIdx=-1;
 Layer* createTextureTest(int index)
 {
-    Layer* pLayer = (createFunctions[index])();;
+    Layer* layer = (createFunctions[index])();;
 
-    if (pLayer)
+    if (layer)
     {
-        pLayer->autorelease();
+        layer->autorelease();
     }
 
-    return pLayer;
+    return layer;
 }
 
 Layer* nextTextureTest();
@@ -128,7 +130,7 @@ TextureDemo::~TextureDemo()
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
 
-void TextureDemo::restartCallback(Object* pSender)
+void TextureDemo::restartCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(restartTextureTest());
@@ -136,7 +138,7 @@ void TextureDemo::restartCallback(Object* pSender)
     s->autorelease();
 }
 
-void TextureDemo::nextCallback(Object* pSender)
+void TextureDemo::nextCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(nextTextureTest());
@@ -144,7 +146,7 @@ void TextureDemo::nextCallback(Object* pSender)
     s->autorelease();
 }
 
-void TextureDemo::backCallback(Object* pSender)
+void TextureDemo::backCallback(Object* sender)
 {
     Scene *s = new TextureTestScene();
     s->addChild(backTextureTest());
@@ -438,7 +440,7 @@ void TexturePVRTest::onEnter()
     }
     else
     {
-        CCLog("This test is not supported.");
+        log("This test is not supported.");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
     
@@ -470,7 +472,7 @@ void TexturePVR4BPP::onEnter()
     }
     else
     {
-        CCLog("This test is not supported in cocos2d-mac");
+        log("This test is not supported in cocos2d-mac");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
@@ -523,7 +525,7 @@ void TexturePVRBGRA8888::onEnter()
     }
     else
     {
-        CCLog("BGRA8888 images are not supported");
+        log("BGRA8888 images are not supported");
     }
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
@@ -825,7 +827,7 @@ void TexturePVR4BPPv3::onEnter()
     }
     else
     {
-        CCLog("This test is not supported");
+        log("This test is not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -860,7 +862,7 @@ void TexturePVRII4BPPv3::onEnter()
     }
     else
     {
-        CCLog("This test is not supported");
+        log("This test is not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -918,7 +920,7 @@ void TexturePVRBGRA8888v3::onEnter()
     }
     else
     {
-        CCLog("BGRA images are not supported");
+        log("BGRA images are not supported");
     }
     
     TextureCache::getInstance()->dumpCachedTextureInfo();
@@ -1313,7 +1315,7 @@ void TexturePixelFormat::onEnter()
     addChild(background, -1);
     
     // RGBA 8888 image (32-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
     Sprite *sprite1 = Sprite::create("Images/test-rgba1.png");
     sprite1->setPosition(Point(1*s.width/7, s.height/2+32));
     addChild(sprite1, 0);
@@ -1322,7 +1324,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite1->getTexture());
 
     // RGBA 4444 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     Sprite *sprite2 = Sprite::create("Images/test-rgba1.png");
     sprite2->setPosition(Point(2*s.width/7, s.height/2-32));
     addChild(sprite2, 0);
@@ -1331,7 +1333,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite2->getTexture());
 
     // RGB5A1 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
     Sprite *sprite3 = Sprite::create("Images/test-rgba1.png");
     sprite3->setPosition(Point(3*s.width/7, s.height/2+32));
     addChild(sprite3, 0);
@@ -1340,7 +1342,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite3->getTexture());
 
     // RGB888 image
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB888);
     Sprite *sprite4 = Sprite::create("Images/test-rgba1.png");
     sprite4->setPosition(Point(4*s.width/7, s.height/2-32));
     addChild(sprite4, 0);
@@ -1349,7 +1351,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite4->getTexture());
 
     // RGB565 image (16-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB565);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
     Sprite *sprite5 = Sprite::create("Images/test-rgba1.png");
     sprite5->setPosition(Point(5*s.width/7, s.height/2+32));
     addChild(sprite5, 0);
@@ -1358,7 +1360,7 @@ void TexturePixelFormat::onEnter()
     TextureCache::getInstance()->removeTexture(sprite5->getTexture());
 
     // A8 image (8-bit)
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
     Sprite *sprite6 = Sprite::create("Images/test-rgba1.png");
     sprite6->setPosition(Point(6*s.width/7, s.height/2-32));
     addChild(sprite6, 0);
@@ -1382,7 +1384,7 @@ void TexturePixelFormat::onEnter()
     sprite5->runAction(seq_4ever5);
 
     // restore default
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
     TextureCache::getInstance()->dumpCachedTextureInfo();
 }
 
@@ -1412,8 +1414,7 @@ void TextureBlend::onEnter()
         Sprite *cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 100+i);
         cloud->setPosition(Point(50+25*i, 80));
-        BlendFunc blendFunc1 = { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
-        cloud->setBlendFunc(blendFunc1);
+        cloud->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
         // CENTER sprites have also alpha pre-multiplied
         // they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
@@ -1498,7 +1499,7 @@ void TextureAsync::imageLoaded(Object* pObj)
     Texture2D* tex = static_cast<Texture2D*>(pObj);
     Director *director = Director::getInstance();
 
-    //CCAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+    //CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
 
     // IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
@@ -1514,7 +1515,7 @@ void TextureAsync::imageLoaded(Object* pObj)
 
     _imageOffset++;
 
-    CCLog("Image loaded: %p", tex);
+    log("Image loaded: %p", tex);
 }
 
 std::string TextureAsync::title()
@@ -1612,33 +1613,33 @@ void TextureSizeTest::onEnter()
     TextureDemo::onEnter();
     Sprite *sprite = NULL;
     
-    CCLog("Loading 512x512 image...");
+    log("Loading 512x512 image...");
     sprite = Sprite::create("Images/texture512x512.png");
     if( sprite )
-        CCLog("OK");
+        log("OK");
     else
-        CCLog("Error");
+        log("Error");
 
-    CCLog("Loading 1024x1024 image...");
+    log("Loading 1024x1024 image...");
     sprite = Sprite::create("Images/texture1024x1024.png");
     if( sprite )
-        CCLog("OK");
+        log("OK");
     else
-        CCLog("Error");
+        log("Error");
 //     @todo
-//     CCLog("Loading 2048x2048 image...");
+//     log("Loading 2048x2048 image...");
 //     sprite = Sprite::create("Images/texture2048x2048.png");
 //     if( sprite )
-//         CCLog("OK");
+//         log("OK");
 //     else
-//         CCLog("Error");
+//         log("Error");
 //     
-//     CCLog("Loading 4096x4096 image...");
+//     log("Loading 4096x4096 image...");
 //     sprite = Sprite::create("Images/texture4096x4096.png");
 //     if( sprite )
-//         CCLog("OK");
+//         log("OK");
 //     else
-//         CCLog("Error");
+//         log("Error");
 }
 
 std::string TextureSizeTest::title()
@@ -1793,8 +1794,8 @@ std::string TextureDrawInRect::subtitle()
 //------------------------------------------------------------------
 void TextureTestScene::runThisTest()
 {
-    Layer* pLayer = nextTextureTest();
-    addChild(pLayer);
+    Layer* layer = nextTextureTest();
+    addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
 
@@ -1937,7 +1938,7 @@ TexturePVRv3Premult::TexturePVRv3Premult()
     transformSprite(pvr2);
     
     // PNG
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
     TextureCache::getInstance()->removeTextureForKey("Images/grossinis_sister1-testalpha.png");
     Sprite *png = Sprite::create("Images/grossinis_sister1-testalpha.png");
     addChild(png, 0);

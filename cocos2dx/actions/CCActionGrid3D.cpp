@@ -117,7 +117,7 @@ bool FlipX3D::initWithSize(const Size& gridSize, float duration)
     if (gridSize.width != 1 || gridSize.height != 1)
     {
         // Grid size must be (1,1)
-        CCAssert(0, "Grid size must be (1,1)");
+        CCASSERT(0, "Grid size must be (1,1)");
 
         return false;
     }

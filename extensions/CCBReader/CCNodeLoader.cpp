@@ -437,7 +437,7 @@ Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * pCC
         }
         default:
         {
-            CCLog("Unknown CCB type.");
+            log("Unknown CCB type.");
         }
             break;
     }
@@ -581,7 +581,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
                 pCCBReader->getLoadedSpriteSheet().insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->spriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
         
         if (pCCBReader->getAnimatedProperties()->find(pPropertyName) != pCCBReader->getAnimatedProperties()->end())
@@ -754,12 +754,12 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
                     if(targetAsCCBSelectorResolver != NULL) {
-                        selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBMenuItemSelector(target, selectorName.c_str());
+                        selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName.c_str());
                     }
                     if(selMenuHandler == 0) {
                         CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                         if(ccbSelectorResolver != NULL) {
-                            selMenuHandler = ccbSelectorResolver->onResolveCCBMenuItemSelector(target, selectorName.c_str());
+                            selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName.c_str());
                         }
                     }
                     
@@ -816,12 +816,12 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
                     if(targetAsCCBSelectorResolver != NULL) {
-                        selControlHandler = targetAsCCBSelectorResolver->onResolveCCBControlSelector(target, selectorName.c_str());
+                        selControlHandler = targetAsCCBSelectorResolver->onResolveCCBCCControlSelector(target, selectorName.c_str());
                     }
                     if(selControlHandler == 0) {
                         CCBSelectorResolver * ccbSelectorResolver = pCCBReader->getCCBSelectorResolver();
                         if(ccbSelectorResolver != NULL) {
-                            selControlHandler = ccbSelectorResolver->onResolveCCBControlSelector(target, selectorName.c_str());
+                            selControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName.c_str());
                         }
                     }
                     

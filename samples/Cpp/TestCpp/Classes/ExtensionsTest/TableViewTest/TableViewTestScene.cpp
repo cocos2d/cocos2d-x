@@ -7,10 +7,10 @@ USING_NS_CC_EXT;
 
 void runTableViewTest()
 {
-	Scene *pScene = Scene::create();
-	TableViewTestLayer *pLayer = TableViewTestLayer::create();
-	pScene->addChild(pLayer);
-	Director::getInstance()->replaceScene(pScene);
+	Scene *scene = Scene::create();
+	TableViewTestLayer *layer = TableViewTestLayer::create();
+	scene->addChild(layer);
+	Director::getInstance()->replaceScene(scene);
 }
 
 // on "init" you need to initialize your instance
@@ -50,9 +50,9 @@ bool TableViewTestLayer::init()
 
 void TableViewTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-	ExtensionsTestScene *pScene = new ExtensionsTestScene();
-	pScene->runThisTest();
-	pScene->release();
+	ExtensionsTestScene *scene = new ExtensionsTestScene();
+	scene->runThisTest();
+	scene->release();
 }
 
 void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)

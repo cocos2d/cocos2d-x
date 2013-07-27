@@ -3,18 +3,18 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-SEL_MenuHandler TestHeaderLayer::onResolveCCBMenuItemSelector(Object * pTarget, const char * pSelectorName) {
+SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onBackClicked", TestHeaderLayer::onBackClicked);
 
     return NULL;    
 }
 
-SEL_CCControlHandler TestHeaderLayer::onResolveCCBControlSelector(Object * pTarget, const char * pSelectorName) {
+SEL_CCControlHandler TestHeaderLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
 
     return NULL;
 }
 
-void TestHeaderLayer::onNodeLoaded(cocos2d::Node * pNode, cocos2d::extension::NodeLoader * pNodeLoader)
+void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader)
 {
     CCLOG("TestHeaderLayer::onNodeLoaded");
 }

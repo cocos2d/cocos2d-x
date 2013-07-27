@@ -47,31 +47,33 @@ NS_CC_EXT_BEGIN
 
 class ControlHuePicker : public Control
 {
+public:
+    static ControlHuePicker* create(Node* target, Point pos);
+
+    ControlHuePicker();
+    virtual ~ControlHuePicker();
+    virtual bool initWithTargetAndPos(Node* target, Point pos);
+
+    virtual void setEnabled(bool enabled);
+
+    // overrides
+    virtual bool ccTouchBegan(Touch* touch, Event* pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+
+protected:
+    void updateSliderPosition(Point location);
+    bool checkSliderPosition(Point location);
+
     //maunally put in the setters
     CC_SYNTHESIZE_READONLY(float, _hue, Hue);
     virtual void setHue(float val);
     CC_SYNTHESIZE_READONLY(float, _huePercentage, HuePercentage);
     virtual void setHuePercentage(float val);
 
-
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
     CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background);
     CC_SYNTHESIZE_RETAIN(Sprite*, _slider, Slider);
     CC_SYNTHESIZE_READONLY(Point, _startPos, StartPos);
-
-public:
-    ControlHuePicker();
-    virtual ~ControlHuePicker();
-    virtual bool initWithTargetAndPos(Node* target, Point pos);
-
-    static ControlHuePicker* create(Node* target, Point pos);
-    virtual void setEnabled(bool enabled);
-protected:    
-    void updateSliderPosition(Point location);
-    bool checkSliderPosition(Point location);
-
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
 };
 
 // end of GUI group

@@ -63,7 +63,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/platform.cpp \
 ../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \
@@ -137,7 +136,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
 ../ccTypes.cpp \
-../cocos2d.cpp 
+../cocos2d.cpp \
+../CCDeprecated.cpp
 
 COCOS_ROOT = ../..
 

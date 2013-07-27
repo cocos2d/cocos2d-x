@@ -343,7 +343,7 @@ static Rect getRect(Node * pNode)
 {
 	Size contentSize = pNode->getContentSize();
 	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
-	return RectApplyAffineTransform(rect, pNode->nodeToWorldTransform());
+	return RectApplyAffineTransform(rect, pNode->getNodeToWorldTransform());
 }
 
 void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
@@ -399,7 +399,7 @@ void EditBox::unregisterScriptEditBoxHandler(void)
 {
     if (0 != _scriptEditBoxHandler)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(_scriptEditBoxHandler);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_scriptEditBoxHandler);
         _scriptEditBoxHandler = 0;
     }
 }

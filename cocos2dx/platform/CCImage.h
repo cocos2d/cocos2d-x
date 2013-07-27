@@ -57,7 +57,7 @@ public:
     friend class TextureCache;
     
     Image();
-    ~Image();
+    virtual ~Image();
     
     /**
      @brief Determine how many mipmaps can we have. 
@@ -67,17 +67,26 @@ public:
         CC_MIPMAP_MAX = 16,
     };
 
-    typedef enum
+    /** Supported formats for Image */
+    enum class Format
     {
-        kFmtJpg = 0,
-        kFmtPng,
-        kFmtTiff,
-        kFmtWebp,
-        kFmtPvr,
-        kFmtEtc,
-        kFmtRawData,
-        kFmtUnKnown
-    }FileType;
+        //! JPEG
+        JPG,
+        //! PNG
+        PNG,
+        //! TIFF
+        TIFF,
+        //! WebP
+        WEBP,
+        //! PVR
+        PVR,
+        //! ETC
+        ETC,
+        //! Raw Data
+        RAW_DATA,
+        //! Unknown format
+        UNKOWN
+    };
 
     typedef enum
     {
@@ -155,16 +164,17 @@ public:
     
     #endif
     
-        
-    unsigned char *   getData()               { return _data; }
-    int               getDataLen()            { return _dataLen; }
-    FileType          getFileType()           {return _fileType; }
-    Texture2DPixelFormat getRenderFormat()    { return _renderFormat; }
-    int               getWidth()              { return _width; }
-    int               getHeight()             { return _height; }
-    bool              isPremultipliedAlpha()  { return _preMulti;   }
-    int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
-    MipmapInfo*           getMipmaps()        { return _mipmaps; }
+    
+    // Getters
+    inline unsigned char *   getData()               { return _data; }
+    inline int               getDataLen()            { return _dataLen; }
+    inline Format            getFileType()           {return _fileType; }
+    inline Texture2D::PixelFormat getRenderFormat()    { return _renderFormat; }
+    inline int               getWidth()              { return _width; }
+    inline int               getHeight()             { return _height; }
+    inline bool              isPremultipliedAlpha()  { return _preMulti;   }
+    inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
+    inline MipmapInfo*           getMipmaps()        { return _mipmaps; }
 
     int               getBitPerPixel();
     bool              hasAlpha();
@@ -172,10 +182,10 @@ public:
 
 
     /**
-    @brief    Save Image data to the specified file, with specified format.
-    @param    pszFilePath        the file's absolute path, including file suffix.
-    @param    bIsToRGB        whether the image is saved as RGB format.
-    */
+     @brief    Save Image data to the specified file, with specified format.
+     @param    pszFilePath        the file's absolute path, including file suffix.
+     @param    bIsToRGB        whether the image is saved as RGB format.
+     */
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
 protected:
@@ -188,8 +198,8 @@ protected:
     bool _initWithPVRv3Data(void *data, int dataLen);
     bool _initWithETCData(void *data, int dataLen);
 
-    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool _saveImageToJPG(const char *pszFilePath);
+    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveImageToJPG(const char *pszFilePath);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     bool _iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
@@ -199,8 +209,8 @@ protected:
     int _dataLen;
     int _width;
     int _height;
-    FileType       _fileType;
-    Texture2DPixelFormat _renderFormat;
+    Format _fileType;
+    Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
     MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
@@ -220,7 +230,7 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
 
-    FileType detectFormat(void* data, int dataLen);
+    Format detectFormat(void* data, int dataLen);
     bool isPng(void *data, int dataLen);
     bool isJpg(void *data, int dataLen);
     bool isTiff(void *data, int dataLen);

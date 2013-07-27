@@ -15,11 +15,11 @@ public:
     ButtonTestLayer();
     virtual ~ButtonTestLayer();
 
-    virtual cocos2d::SEL_MenuHandler onResolveCCBMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
-    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * pNode);
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
 
-    void onControlButtonClicked(cocos2d::Object * pSender, cocos2d::extension::ControlEvent pControlEvent);
+    void onControlButtonClicked(cocos2d::Object * sender, cocos2d::extension::ControlEvent pControlEvent);
 
 private:
     cocos2d::LabelBMFont * mControlEventLabel;

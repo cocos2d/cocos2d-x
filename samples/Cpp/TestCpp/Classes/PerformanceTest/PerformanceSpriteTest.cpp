@@ -67,36 +67,36 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
             break;
             ///
         case 2:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 3:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 5:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;                
         case 6:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             p->addChild(batchNode, 0);
             break;
 
             ///
         case 8:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
         case 9:
-            Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             p->addChild(batchNode, 0);
             break;
@@ -110,13 +110,13 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
         batchNode->retain();
     }
 
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 }
 
 Sprite* SubTest::createSpriteWithTag(int tag)
 {
     // create 
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 
     Sprite* sprite = NULL;
     switch (subtestNumber)
@@ -194,7 +194,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             break;
     }
 
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_Default);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
 
     return sprite;
 }
@@ -229,7 +229,7 @@ void SubTest::removeByTag(int tag)
 ////////////////////////////////////////////////////////
 void SpriteMenuLayer::showCurrentTest()
 {
-    SpriteMainScene* pScene = NULL;
+    SpriteMainScene* scene = NULL;
     SpriteMainScene* pPreScene = (SpriteMainScene*) getParent();
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
@@ -237,34 +237,34 @@ void SpriteMenuLayer::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        pScene = new SpritePerformTest1;
+        scene = new SpritePerformTest1;
         break;
     case 1:
-        pScene = new SpritePerformTest2;
+        scene = new SpritePerformTest2;
         break;
     case 2:
-        pScene = new SpritePerformTest3;
+        scene = new SpritePerformTest3;
         break;
     case 3:
-        pScene = new SpritePerformTest4;
+        scene = new SpritePerformTest4;
         break;
     case 4:
-        pScene = new SpritePerformTest5;
+        scene = new SpritePerformTest5;
         break;
     case 5:
-        pScene = new SpritePerformTest6;
+        scene = new SpritePerformTest6;
         break;
     case 6:
-        pScene = new SpritePerformTest7;
+        scene = new SpritePerformTest7;
         break;
     }
     s_nSpriteCurCase = _curCase;
 
-    if (pScene)
+    if (scene)
     {
-        pScene->initWithSubTest(nSubTest, nNodes);
-        Director::getInstance()->replaceScene(pScene);
-        pScene->release();
+        scene->initWithSubTest(nSubTest, nNodes);
+        Director::getInstance()->replaceScene(scene);
+        scene->release();
     }
 }
 
@@ -303,20 +303,20 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    SpriteMenuLayer* pMenu = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    SpriteMenuLayer* menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(32);
-    Menu* pSubMenu = Menu::create();
+    Menu* subMenu = Menu::create();
     for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
         MenuItemFont* itemFont = MenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
-        pSubMenu->addChild(itemFont, 10);
+        subMenu->addChild(itemFont, 10);
 
         if( i<= 3)
             itemFont->setColor(Color3B(200,20,20));
@@ -326,9 +326,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
             itemFont->setColor(Color3B(0,20,200));
     }
 
-    pSubMenu->alignItemsHorizontally();
-    pSubMenu->setPosition(Point(s.width/2, 80));
-    addChild(pSubMenu, 2);
+    subMenu->alignItemsHorizontally();
+    subMenu->setPosition(Point(s.width/2, 80));
+    addChild(subMenu, 2);
 
     // add title label
     LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
@@ -354,11 +354,11 @@ SpriteMainScene::~SpriteMainScene()
     }
 }
 
-void SpriteMainScene::testNCallback(Object* pSender)
+void SpriteMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((MenuItemFont*) pSender)->getTag();
-    SpriteMenuLayer* pMenu = (SpriteMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
@@ -374,7 +374,7 @@ void SpriteMainScene::updateNodes()
     }
 }
 
-void SpriteMainScene::onIncrease(Object* pSender)
+void SpriteMainScene::onIncrease(Object* sender)
 {
     if( quantityNodes >= kMaxNodes)
         return;
@@ -389,7 +389,7 @@ void SpriteMainScene::onIncrease(Object* pSender)
     updateNodes();
 }
 
-void SpriteMainScene::onDecrease(Object* pSender)
+void SpriteMainScene::onDecrease(Object* sender)
 {
     if( quantityNodes <= 0 )
         return;
@@ -408,77 +408,77 @@ void SpriteMainScene::onDecrease(Object* pSender)
 // For test functions
 //
 ////////////////////////////////////////////////////////
-void performanceActions(Sprite* pSprite)
+void performanceActions(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
-    pSprite->runAction(permanentScaleLoop);
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceActions20(Sprite* pSprite)
+void performanceActions20(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(Point( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
     RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     ActionInterval* rot_back = rot->reverse();
     Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    pSprite->runAction(permanentRotation);
+    sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
     Action *permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
-    pSprite->runAction(permanentScaleLoop);
+    sprite->runAction(permanentScaleLoop);
 }
 
-void performanceRotationScale(Sprite* pSprite)
+void performanceRotationScale(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setRotation(CCRANDOM_0_1() * 360);
-    pSprite->setScale(CCRANDOM_0_1() * 2);
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setRotation(CCRANDOM_0_1() * 360);
+    sprite->setScale(CCRANDOM_0_1() * 2);
 }
 
-void performancePosition(Sprite* pSprite)
+void performancePosition(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
-void performanceout20(Sprite* pSprite)
+void performanceout20(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
-        pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+        sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
-        pSprite->setPosition(Point( -1000, -1000));
+        sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceOut100(Sprite* pSprite)
+void performanceOut100(Sprite* sprite)
 {
-    pSprite->setPosition(Point( -1000, -1000));
+    sprite->setPosition(Point( -1000, -1000));
 }
 
-void performanceScale(Sprite* pSprite)
+void performanceScale(Sprite* sprite)
 {
     Size size = Director::getInstance()->getWinSize();
-    pSprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
-    pSprite->setScale(CCRANDOM_0_1() * 100 / 50);
+    sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
+    sprite->setScale(CCRANDOM_0_1() * 100 / 50);
 }
 
 ////////////////////////////////////////////////////////
@@ -609,8 +609,8 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 
 void runSpriteTest()
 {
-    SpriteMainScene* pScene = new SpritePerformTest1;
-    pScene->initWithSubTest(1, 50);
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    SpriteMainScene* scene = new SpritePerformTest1;
+    scene->initWithSubTest(1, 50);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

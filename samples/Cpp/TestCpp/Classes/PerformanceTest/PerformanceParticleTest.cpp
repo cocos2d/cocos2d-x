@@ -31,9 +31,9 @@ ParticleMenuLayer::ParticleMenuLayer(bool bControlMenuVisible, int nMaxCases, in
 
 void ParticleMenuLayer::showCurrentTest()
 {
-    ParticleMainScene* pScene = (ParticleMainScene*)getParent();
-    int subTest = pScene->getSubTestNum();
-    int parNum  = pScene->getParticlesNum();
+    ParticleMainScene* scene = (ParticleMainScene*)getParent();
+    int subTest = scene->getSubTestNum();
+    int parNum  = scene->getParticlesNum();
 
     ParticleMainScene* pNewScene = NULL;
 
@@ -114,9 +114,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
-    ParticleMenuLayer* pMenu = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
-    addChild(pMenu, 1, kTagMenuLayer);
-    pMenu->release();
+    ParticleMenuLayer* menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(40);
@@ -202,17 +202,17 @@ void ParticleMainScene::createParticleSystem()
     switch( subtestNumber)
     {
     case 1:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 2:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 3:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
@@ -222,17 +222,17 @@ void ParticleMainScene::createParticleSystem()
 //         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
 //         break;
     case 4:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;
     case 5:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;            
     case 6:
-        Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_A8);
+        Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
         particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
         break;                        
@@ -252,15 +252,15 @@ void ParticleMainScene::createParticleSystem()
     doTest();
 
     // restore the default pixel format
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(Object* pSender)
+void ParticleMainScene::testNCallback(Object* sender)
 {
-    subtestNumber = ((Node*)pSender)->getTag();
+    subtestNumber = static_cast<Node*>(sender)->getTag();
 
-    ParticleMenuLayer* pMenu = (ParticleMenuLayer*)getChildByTag(kTagMenuLayer);
-    pMenu->restartCallback(pSender);
+    auto menu = static_cast<ParticleMenuLayer*>( getChildByTag(kTagMenuLayer) );
+    menu->restartCallback(sender);
 }
 
 void ParticleMainScene::updateQuantityLabel()
@@ -559,9 +559,9 @@ void ParticlePerformTest4::doTest()
 
 void runParticleTest()
 {
-    ParticleMainScene* pScene = new ParticlePerformTest1;
-    pScene->initWithSubTest(1, kNodesIncrease);
+    ParticleMainScene* scene = new ParticlePerformTest1;
+    scene->initWithSubTest(1, kNodesIncrease);
 
-    Director::getInstance()->replaceScene(pScene);
-    pScene->release();
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

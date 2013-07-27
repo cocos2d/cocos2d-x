@@ -28,9 +28,45 @@ THE SOFTWARE.
 #include "utils/CCArmatureDefine.h"
 #include "CCBone.h"
 #include "display/CCBatchNode.h"
+#include "display/CCShaderNode.h"
 #include "animation/CCArmatureAnimation.h"
+#include "physics/CCPhysicsWorld.h"
+#include "utils/CCSpriteFrameCacheHelper.h"
+#include "utils/CCArmatureDataManager.h"
 
 namespace cocos2d { namespace extension { namespace armature {
+
+CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
+CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef SpriteDisplayData CCSpriteDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureDisplayData CCArmatureDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef ParticleDisplayData CCParticleDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef ShaderDisplayData CCShaderDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef BoneData CCBoneData;
+CC_DEPRECATED_ATTRIBUTE typedef FrameData CCFrameData;
+CC_DEPRECATED_ATTRIBUTE typedef MovementBoneData CCMovementBoneData;
+CC_DEPRECATED_ATTRIBUTE typedef MovementData CCMovementData;
+CC_DEPRECATED_ATTRIBUTE typedef AnimationData CCAnimationData;
+CC_DEPRECATED_ATTRIBUTE typedef ContourData CCContourData;
+CC_DEPRECATED_ATTRIBUTE typedef TextureData CCTextureData;
+CC_DEPRECATED_ATTRIBUTE typedef ShaderNode CCShaderNode;
+CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayFactory CCDisplayFactory;
+CC_DEPRECATED_ATTRIBUTE typedef BatchNode CCBatchNode;
+CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED_ATTRIBUTE typedef DisplayManager CCDisplayManager;
+CC_DEPRECATED_ATTRIBUTE typedef ColliderBody CCColliderBody;
+CC_DEPRECATED_ATTRIBUTE typedef ColliderDetector CCColliderDetector;
+CC_DEPRECATED_ATTRIBUTE typedef PhysicsWorld CCPhysicsWorld;
+CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
+CC_DEPRECATED_ATTRIBUTE typedef TweenFunction CCTweenFunction;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureData CCArmatureData;
+CC_DEPRECATED_ATTRIBUTE typedef Bone CCBone;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
+CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
+CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
     
 class  Armature : public NodeRGBA, public BlendProtocol 
 {

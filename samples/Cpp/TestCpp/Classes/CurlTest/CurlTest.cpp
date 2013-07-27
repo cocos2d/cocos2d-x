@@ -22,7 +22,7 @@ CurlTest::CurlTest()
 
 // the test code is
 // http://curl.haxx.se/mail/lib-2009-12/0071.html
-void CurlTest::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void CurlTest::ccTouchesEnded(Set  *touches, Event  *event)
 {
     CURL *curl;
     CURLcode res;
@@ -58,9 +58,9 @@ CurlTest::~CurlTest()
 
 void CurlTestScene::runThisTest()
 {
-    Layer* pLayer = new CurlTest();
-    addChild(pLayer);
+    Layer* layer = new CurlTest();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
-    pLayer->release();
+    layer->release();
 }

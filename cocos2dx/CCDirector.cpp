@@ -24,11 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+// cocos2d includes
+#include "CCDirector.h"
+
 // standard includes
 #include <string>
 
-// cocos2d includes
-#include "CCDirector.h"
 #include "ccFPSImages.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCConfiguration.h"
@@ -43,7 +44,6 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "cocoa/CCAutoreleasePool.h"
-#include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "label_nodes/CCLabelBMFont.h"
@@ -99,12 +99,6 @@ Director* Director::getInstance()
     return s_SharedDirector;
 }
 
-// XXX: deprecated
-Director* Director::sharedDirector()
-{
-    return Director::getInstance();
-}
-
 Director::Director(void)
 {
 
@@ -134,7 +128,7 @@ bool Director::init(void)
     _drawsLabel = NULL;
     _totalFrames = _frames = 0;
     _FPS = new char[10];
-    _lastUpdate = new struct cc_timeval();
+    _lastUpdate = new struct timeval;
 
     // paused ?
     _paused = false;
@@ -152,7 +146,7 @@ bool Director::init(void)
     _scheduler = new Scheduler();
     // action manager
     _actionManager = new ActionManager();
-    _scheduler->scheduleUpdateForTarget(_actionManager, kPrioritySystem, false);
+    _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
     // touchDispatcher
     _touchDispatcher = new TouchDispatcher();
     _touchDispatcher->init();
@@ -216,22 +210,22 @@ void Director::setDefaultValues(void)
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
 	if( strcmp(projection, "3d") == 0 )
-		_projection = kDirectorProjection3D;
+		_projection = Projection::_3D;
 	else if (strcmp(projection, "2d") == 0)
-		_projection = kDirectorProjection2D;
+		_projection = Projection::_2D;
 	else if (strcmp(projection, "custom") == 0)
-		_projection = kDirectorProjectionCustom;
+		_projection = Projection::CUSTOM;
 	else
-		CCAssert(false, "Invalid projection value");
+		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
 	if( strcmp(pixel_format, "rgba8888") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA8888);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
 	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGB5A1);
+		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
@@ -241,7 +235,7 @@ void Director::setDefaultValues(void)
 void Director::setGLDefaultValues(void)
 {
     // This method SHOULD be called only after openGLView_ was initialized
-    CCAssert(_openGLView, "opengl view should not be null");
+    CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
     // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
@@ -311,9 +305,9 @@ void Director::drawScene(void)
 
 void Director::calculateDeltaTime(void)
 {
-    struct cc_timeval now;
+    struct timeval now;
 
-    if (Time::gettimeofdayCocos2d(&now, NULL) != 0)
+    if (gettimeofday(&now, NULL) != 0)
     {
         CCLOG("error in gettimeofday");
         _deltaTime = 0;
@@ -348,7 +342,7 @@ float Director::getDeltaTime() const
 }
 void Director::setOpenGLView(EGLView *pobOpenGLView)
 {
-    CCAssert(pobOpenGLView, "opengl view should not be null");
+    CCASSERT(pobOpenGLView, "opengl view should not be null");
 
     if (_openGLView != pobOpenGLView)
     {
@@ -391,16 +385,15 @@ void Director::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
     _nextDeltaTimeZero = bNextDeltaTimeZero;
 }
 
-void Director::setProjection(ccDirectorProjection kProjection)
+void Director::setProjection(Projection projection)
 {
     Size size = _winSizeInPoints;
 
     setViewport();
 
-    switch (kProjection)
+    switch (projection)
     {
-    case kDirectorProjection2D:
-        {
+        case Projection::_2D:
             kmGLMatrixMode(KM_GL_PROJECTION);
             kmGLLoadIdentity();
             kmMat4 orthoMatrix;
@@ -408,10 +401,9 @@ void Director::setProjection(ccDirectorProjection kProjection)
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
-        }
-        break;
+            break;
 
-    case kDirectorProjection3D:
+        case Projection::_3D:
         {
             float zeye = this->getZEye();
 
@@ -434,23 +426,21 @@ void Director::setProjection(ccDirectorProjection kProjection)
             kmVec3Fill( &up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
+            break;
         }
-        break;
             
-    case kDirectorProjectionCustom:
-        if (_projectionDelegate)
-        {
-            _projectionDelegate->updateProjection();
-        }
-        break;
+        case Projection::CUSTOM:
+            if (_projectionDelegate)
+                _projectionDelegate->updateProjection();
+            break;
             
-    default:
-        CCLOG("cocos2d: Director: unrecognized projection");
-        break;
+        default:
+            CCLOG("cocos2d: Director: unrecognized projection");
+            break;
     }
 
-    _projection = kProjection;
-    ccSetProjectionMatrixDirty();
+    _projection = projection;
+    GL::setProjectionMatrixDirty();
 }
 
 void Director::purgeCachedData(void)
@@ -458,6 +448,7 @@ void Director::purgeCachedData(void)
     LabelBMFont::purgeCachedData();
     if (s_SharedDirector->getOpenGLView())
     {
+        SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
         TextureCache::getInstance()->removeUnusedTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
@@ -472,11 +463,11 @@ void Director::setAlphaBlending(bool bOn)
 {
     if (bOn)
     {
-        ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        GL::blendFunc(CC_BLEND_SRC, CC_BLEND_DST);
     }
     else
     {
-        ccGLBlendFunc(GL_ONE, GL_ZERO);
+        GL::blendFunc(GL_ONE, GL_ZERO);
     }
 
     CHECK_GL_ERROR_DEBUG();
@@ -582,8 +573,8 @@ Point Director::getVisibleOrigin() const
 
 void Director::runWithScene(Scene *pScene)
 {
-    CCAssert(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
-    CCAssert(_runningScene == NULL, "_runningScene should be null");
+    CCASSERT(pScene != NULL, "This command can only be used to start the Director. There is already a scene present.");
+    CCASSERT(_runningScene == NULL, "_runningScene should be null");
 
     pushScene(pScene);
     startAnimation();
@@ -591,8 +582,8 @@ void Director::runWithScene(Scene *pScene)
 
 void Director::replaceScene(Scene *pScene)
 {
-    CCAssert(_runningScene, "Use runWithScene: instead to start the director");
-    CCAssert(pScene != NULL, "the scene should not be null");
+    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    CCASSERT(pScene != NULL, "the scene should not be null");
 
     unsigned int index = _scenesStack->count();
 
@@ -604,7 +595,7 @@ void Director::replaceScene(Scene *pScene)
 
 void Director::pushScene(Scene *pScene)
 {
-    CCAssert(pScene, "the scene should not null");
+    CCASSERT(pScene, "the scene should not null");
 
     _sendCleanupToScene = false;
 
@@ -614,7 +605,7 @@ void Director::pushScene(Scene *pScene)
 
 void Director::popScene(void)
 {
-    CCAssert(_runningScene != NULL, "running scene should not null");
+    CCASSERT(_runningScene != NULL, "running scene should not null");
 
     _scenesStack->removeLastObject();
     unsigned int c = _scenesStack->count();
@@ -637,7 +628,7 @@ void Director::popToRootScene(void)
 
 void Director::popToSceneStackLevel(int level)
 {
-    CCAssert(_runningScene != NULL, "A running Scene is needed");
+    CCASSERT(_runningScene != NULL, "A running Scene is needed");
     int c = (int)_scenesStack->count();
 
     // level 0? -> end
@@ -710,7 +701,7 @@ void Director::purgeDirector()
     LabelBMFont::purgeCachedData();
 
     // purge all managed caches
-    ccDrawFree();
+    DrawPrimitives::free();
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
     TextureCache::destroyInstance();
@@ -722,7 +713,7 @@ void Director::purgeDirector()
     UserDefault::destroyInstance();
     NotificationCenter::destroyInstance();
 
-    ccGLInvalidateStateCache();
+    GL::invalidateStateCache();
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -794,7 +785,7 @@ void Director::resume(void)
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: Director: Error in gettimeofday");
     }
@@ -841,8 +832,8 @@ void Director::showStats(void)
 
 void Director::calculateMPF()
 {
-    struct cc_timeval now;
-    Time::gettimeofdayCocos2d(&now, NULL);
+    struct timeval now;
+    gettimeofday(&now, NULL);
     
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
 }
@@ -869,8 +860,8 @@ void Director::createStatsLabel()
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    Texture2DPixelFormat currentFormat = Texture2D::defaultAlphaPixelFormat();
-    Texture2D::setDefaultAlphaPixelFormat(kTexture2DPixelFormat_RGBA4444);
+    Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
@@ -968,7 +959,7 @@ void Director::setScheduler(Scheduler* pScheduler)
     }
 }
 
-Scheduler* Director::getScheduler()
+Scheduler* Director::getScheduler() const
 {
     return _scheduler;
 }
@@ -983,7 +974,7 @@ void Director::setActionManager(ActionManager* pActionManager)
     }    
 }
 
-ActionManager* Director::getActionManager()
+ActionManager* Director::getActionManager() const
 {
     return _actionManager;
 }
@@ -998,7 +989,7 @@ void Director::setTouchDispatcher(TouchDispatcher* pTouchDispatcher)
     }    
 }
 
-TouchDispatcher* Director::getTouchDispatcher()
+TouchDispatcher* Director::getTouchDispatcher() const
 {
     return _touchDispatcher;
 }
@@ -1010,7 +1001,7 @@ void Director::setKeyboardDispatcher(KeyboardDispatcher* pKeyboardDispatcher)
     _keyboardDispatcher = pKeyboardDispatcher;
 }
 
-KeyboardDispatcher* Director::getKeyboardDispatcher()
+KeyboardDispatcher* Director::getKeyboardDispatcher() const
 {
     return _keyboardDispatcher;
 }
@@ -1022,7 +1013,7 @@ void Director::setKeypadDispatcher(KeypadDispatcher* pKeypadDispatcher)
     _keypadDispatcher = pKeypadDispatcher;
 }
 
-KeypadDispatcher* Director::getKeypadDispatcher()
+KeypadDispatcher* Director::getKeypadDispatcher() const
 {
     return _keypadDispatcher;
 }
@@ -1036,7 +1027,7 @@ void Director::setAccelerometer(Accelerometer* pAccelerometer)
     }
 }
 
-Accelerometer* Director::getAccelerometer()
+Accelerometer* Director::getAccelerometer() const
 {
     return _accelerometer;
 }
@@ -1050,7 +1041,7 @@ Accelerometer* Director::getAccelerometer()
 // so we now only support DisplayLinkDirector
 void DisplayLinkDirector::startAnimation(void)
 {
-    if (Time::gettimeofdayCocos2d(_lastUpdate, NULL) != 0)
+    if (gettimeofday(_lastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
     }

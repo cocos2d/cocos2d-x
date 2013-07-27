@@ -11,11 +11,11 @@
 
 Scene* Bug1159Layer::scene()
 {
-    Scene *pScene = Scene::create();
+    Scene *scene = Scene::create();
     Bug1159Layer* layer = Bug1159Layer::create();
-    pScene->addChild(layer);
+    scene->addChild(layer);
 
-    return pScene;
+    return scene;
 }
 
 bool Bug1159Layer::init()
@@ -56,7 +56,7 @@ bool Bug1159Layer::init()
     return false;
 }
 
-void Bug1159Layer::callBack(Object* pSender)
+void Bug1159Layer::callBack(Object* sender)
 {
     Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
 }

@@ -27,8 +27,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
-    Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    Director *director = Director::getInstance();
+    director->setOpenGLView(EGLView::getInstance());
+
+    director->setDisplayStats(true);
+    director->setAnimationInterval(1.0 / 60);
 
     Size screenSize = EGLView::getInstance()->getFrameSize();
 
@@ -42,17 +45,17 @@ bool AppDelegate::applicationDidFinishLaunching()
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);
-        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+        director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
 
-    Scene * pScene = Scene::create();
-    Layer * pLayer = new TestController();
-    pLayer->autorelease();
+    auto scene = Scene::create();
+    auto layer = new TestController();
+    layer->autorelease();
 
-    pScene->addChild(pLayer);
-    pDirector->runWithScene(pScene);
+    scene->addChild(layer);
+    director->runWithScene(scene);
 
     return true;
 }
@@ -61,14 +64,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

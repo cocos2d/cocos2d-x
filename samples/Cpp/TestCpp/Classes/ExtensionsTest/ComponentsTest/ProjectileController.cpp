@@ -69,7 +69,7 @@ void ProjectileController::update(float delta)
         static_cast<EnemyController*>(target->getComponent("EnemyController"))->die();
     }
     
-    bool isDied = targetsToDelete->count();
+    bool isDied = targetsToDelete->count() > 0;
    
     targetsToDelete->release();
     
@@ -93,6 +93,10 @@ ProjectileController* ProjectileController::create(void)
 	return pRet;
 }
 
+void freeFunction( Node *ignore )
+{
+    log("hello");
+}
 
 void ProjectileController::move(float flocationX, float flocationY)
 {
@@ -121,19 +125,25 @@ void ProjectileController::move(float flocationX, float flocationY)
 	float velocity = 480/1; // 480pixels/1sec
 	float realMoveDuration = length/velocity;
 
-	// Move projectile to actual endpoint
-	_owner->runAction( Sequence::create(
-		MoveTo::create(realMoveDuration, realDest),
-		CallFuncN::create(getOwner()->getParent()->getComponent("SceneController"),
-                            callfuncN_selector(SceneController::spriteMoveFinished)),
-        NULL) );
+    auto callfunc = CallFuncN::create(
+          CC_CALLBACK_1(
+                SceneController::spriteMoveFinished,
+                static_cast<SceneController*>( getOwner()->getParent()->getComponent("SceneController")
+      ) ) );
 
+	// Move projectile to actual endpoint
+	_owner->runAction(
+          Sequence::create(
+               MoveTo::create(realMoveDuration, realDest),
+               callfunc,
+               NULL)
+          );
 }
 
 void ProjectileController::die()
 {
     Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_projectiles = ((SceneController*)com)->getProjectiles();
+    cocos2d::Array *_projectiles = static_cast<SceneController*>(com)->getProjectiles();
     _projectiles->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
 }

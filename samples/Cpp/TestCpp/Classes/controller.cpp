@@ -94,11 +94,11 @@ TestController::TestController()
 : _beginPos(Point::ZERO)
 {
     // add close menu
-    MenuItemImage *pCloseItem = MenuItemImage::create(s_pPathClose, s_pPathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
-    Menu* pMenu =Menu::create(pCloseItem, NULL);
+    MenuItemImage *closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
+    Menu* menu =Menu::create(closeItem, NULL);
 
-    pMenu->setPosition( Point::ZERO );
-    pCloseItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    menu->setPosition( Point::ZERO );
+    closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
     _itemMenu = Menu::create();
@@ -109,10 +109,10 @@ TestController::TestController()
 // #else
         LabelTTF* label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
+        MenuItemLabel* menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
-        _itemMenu->addChild(pMenuItem, i + 10000);
-        pMenuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        _itemMenu->addChild(menuItem, i + 10000);
+        menuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -121,7 +121,7 @@ TestController::TestController()
 
     setTouchEnabled(true);
 
-    addChild(pMenu, 1);
+    addChild(menu, 1);
 
 }
 
@@ -129,26 +129,26 @@ TestController::~TestController()
 {
 }
 
-void TestController::menuCallback(Object * pSender)
+void TestController::menuCallback(Object * sender)
 {
 
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
-    MenuItem* pMenuItem = (MenuItem *)(pSender);
-    int idx = pMenuItem->getZOrder() - 10000;
+    MenuItem* menuItem = static_cast<MenuItem *>(sender);
+    int idx = menuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* pScene = g_aTestNames[idx].callback();
+    TestScene* scene = g_aTestNames[idx].callback();
 
-    if (pScene)
+    if (scene)
     {
-        pScene->runThisTest();
-        pScene->release();
+        scene->runThisTest();
+        scene->release();
     }
 }
 
-void TestController::closeCallback(Object * pSender)
+void TestController::closeCallback(Object * sender)
 {
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -156,16 +156,16 @@ void TestController::closeCallback(Object * pSender)
 #endif
 }
 
-void TestController::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void TestController::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
-void TestController::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void TestController::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = (Touch*)pTouches->anyObject();
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;

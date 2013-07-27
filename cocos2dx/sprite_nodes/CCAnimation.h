@@ -61,17 +61,46 @@ public:
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
 
-	/** returns a copy of the AnimationFrame */
-	virtual AnimationFrame *clone() const;
+    SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
+    
+    void setSpriteFrame(SpriteFrame* frame)
+    {
+        CC_SAFE_RETAIN(frame);
+        CC_SAFE_RELEASE(_spriteFrame);
+        _spriteFrame = frame;
+    }
 
+    /** Gets the units of time the frame takes */
+    float getDelayUnits() const { return _delayUnits; };
+    
+    /** Sets the units of time the frame takes */ 
+    void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
+    
+    /** @brief Gets user infomation
+        A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
+     */
+    Dictionary* getUserInfo() const { return _userInfo; };
+    
+    /** Sets user infomation */
+    void setUserInfo(Dictionary* userInfo)
+    {
+        CC_SAFE_RETAIN(userInfo);
+        CC_SAFE_RELEASE(_userInfo);
+        _userInfo = userInfo;
+    }
+    
+    // Overrides
+	virtual AnimationFrame *clone() const override;
+
+protected:
     /** SpriteFrameName to be used */
-    CC_SYNTHESIZE_RETAIN(SpriteFrame*, _spriteFrame, SpriteFrame)
+    SpriteFrame* _spriteFrame;
 
     /**  how many units of time the frame takes */
-    CC_SYNTHESIZE(float, _delayUnits, DelayUnits)
+    float _delayUnits;
 
     /**  A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    CC_SYNTHESIZE_RETAIN(Dictionary*, _userInfo, UserInfo)
+    Dictionary* _userInfo;
 };
 
 
@@ -88,44 +117,24 @@ You can animate a Animation object by using the Animate action. Example:
 class CC_DLL Animation : public Object, public Clonable
 {
 public:
-    Animation();
-    ~Animation(void);
-public:
     /** Creates an animation
-    @since v0.99.5
-    */
+     @since v0.99.5
+     */
     static Animation* create(void);
 
     /* Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
      The frames will be added with one "delay unit".
      @since v0.99.5
-    */
+     */
     static Animation* createWithSpriteFrames(Array* arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
      */
-    static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
-    static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit) {
-        return Animation::create(arrayOfAnimationFrameNames, delayPerUnit, 1);
-    }
+    static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
-    /** Adds a SpriteFrame to a Animation.
-     The frame will be added with one "delay unit".
-    */
-    void addSpriteFrame(SpriteFrame *pFrame);
-
-    /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
-     */  
-    void addSpriteFrameWithFileName(const char *pszFileName);
-
-    /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
-     The frame will be added with one "delay unit".
-     Added to facilitate the migration from v0.8 to v0.9.
-     */
-    void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
+    Animation();
+    virtual ~Animation(void);
 
     bool init();
 
@@ -139,26 +148,80 @@ public:
     */
     bool initWithAnimationFrames(Array* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
 
-	/** returns a clone fo the animation */
-	virtual Animation *clone() const;
+    /** Adds a SpriteFrame to a Animation.
+     The frame will be added with one "delay unit".
+     */
+    void addSpriteFrame(SpriteFrame *pFrame);
 
+    /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
+     */
+    void addSpriteFrameWithFileName(const char *filename);
+
+    /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
+     */
+    void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
+
+    /** Gets the total Delay units of the Animation. */
+    float getTotalDelayUnits() const { return _totalDelayUnits; };
+    
+    /** Sets the delay in seconds of the "delay unit" */
+    void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
+    
+    /** Gets the delay in seconds of the "delay unit" */
+    float getDelayPerUnit() const { return _delayPerUnit; };
+
+    
+    /** Gets the duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
+    float getDuration() const;
+    
+    /** Gets the array of AnimationFrames */
+    Array* getFrames() const { return _frames; };
+    
+    /** Sets the array of AnimationFrames */
+    void setFrames(Array* frames)
+    {
+        CC_SAFE_RETAIN(frames);
+        CC_SAFE_RELEASE(_frames);
+        _frames = frames;
+    }
+    
+    /** Checks whether to restore the original frame when animation finishes. */
+    bool getRestoreOriginalFrame() const { return _restoreOriginalFrame; };
+    
+    /** Sets whether to restore the original frame when animation finishes */
+    void setRestoreOriginalFrame(bool restoreOriginalFrame) { _restoreOriginalFrame = restoreOriginalFrame; };
+    
+    /** Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+    unsigned int getLoops() const { return _loops; };
+    
+    /** Sets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+    void setLoops(unsigned int loops) { _loops = loops; };
+    
+    // overrides
+	virtual Animation *clone() const override;
+
+protected:
     /** total Delay units of the Animation. */
-    CC_SYNTHESIZE_READONLY(float, _totalDelayUnits, TotalDelayUnits)
+    float _totalDelayUnits;
 
     /** Delay in seconds of the "delay unit" */
-    CC_SYNTHESIZE(float, _delayPerUnit, DelayPerUnit)
+    float _delayPerUnit;
 
     /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
-    CC_PROPERTY_READONLY(float, _duration, Duration)
+    float _duration;
 
     /** array of AnimationFrames */
-    CC_SYNTHESIZE_RETAIN(Array*, _frames, Frames)
+    Array* _frames;
 
     /** whether or not it shall restore the original frame when the animation finishes */
-    CC_SYNTHESIZE(bool, _restoreOriginalFrame, RestoreOriginalFrame)
+    bool _restoreOriginalFrame;
 
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
-    CC_SYNTHESIZE(unsigned int, _loops, Loops)
+    unsigned int _loops;
 };
 
 // end of sprite_nodes group

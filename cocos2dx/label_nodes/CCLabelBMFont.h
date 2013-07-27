@@ -192,9 +192,9 @@ public:
     static void purgeCachedData();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment, Point imageOffset);
+    static LabelBMFont * create(const char *str, const char *fntFile, float width, Label::HAlignment alignment, Point imageOffset);
     
-	static LabelBMFont * create(const char *str, const char *fntFile, float width, TextAlignment alignment);
+	static LabelBMFont * create(const char *str, const char *fntFile, float width, Label::HAlignment alignment);
 
 	static LabelBMFont * create(const char *str, const char *fntFile, float width);
 
@@ -206,7 +206,7 @@ public:
 
     bool init();
     /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, TextAlignment alignment = kTextAlignmentLeft, Point imageOffset = Point::ZERO);
+    bool initWithString(const char *str, const char *fntFile, float width = kLabelAutomaticWidth, Label::HAlignment alignment = Label::HAlignment::LEFT, Point imageOffset = Point::ZERO);
 
     /** updates the font chars based on the string to render */
     void createFontChars();
@@ -218,7 +218,7 @@ public:
     virtual void setCString(const char *label);
     virtual void setAnchorPoint(const Point& var);
     virtual void updateLabel();
-    virtual void setAlignment(TextAlignment alignment);
+    virtual void setAlignment(Label::HAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale);
@@ -265,7 +265,7 @@ protected:
     std::string _initialStringUTF8;
     
     // alignment of all lines
-    TextAlignment _alignment;
+    Label::HAlignment _alignment;
     // max width until a line break is added
     float _width;
     

@@ -122,7 +122,7 @@ void DisplayManager::removeDisplay(int index)
 
 void DisplayManager::changeDisplayByIndex(int index, bool force)
 {
-    CCAssert( (_decoDisplayList ? index < (int)_decoDisplayList->count() : true), "the _index value is out of range");
+    CCASSERT( (_decoDisplayList ? index < (int)_decoDisplayList->count() : true), "the _index value is out of range");
 
     _forceChangeDisplay = force;
 

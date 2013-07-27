@@ -33,10 +33,10 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* backAction()
@@ -46,18 +46,18 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 static Layer* restartAction()
 {
-    Layer* pLayer = (createFunctions[sceneIdx])();
-    pLayer->autorelease();
+    Layer* layer = (createFunctions[sceneIdx])();
+    layer->autorelease();
     
-    return pLayer;
+    return layer;
 }
 
 //------------------------------------------------------------------
@@ -89,7 +89,7 @@ void LayerTest::onEnter()
     BaseTest::onEnter();
 }
 
-void LayerTest::restartCallback(Object* pSender)
+void LayerTest::restartCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild(restartAction());
@@ -98,7 +98,7 @@ void LayerTest::restartCallback(Object* pSender)
     s->release();
 }
 
-void LayerTest::nextCallback(Object* pSender)
+void LayerTest::nextCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( nextAction() );
@@ -106,7 +106,7 @@ void LayerTest::nextCallback(Object* pSender)
     s->release();
 }
 
-void LayerTest::backCallback(Object* pSender)
+void LayerTest::backCallback(Object* sender)
 {
     Scene* s = new LayerTestScene();
     s->addChild( backAction() );
@@ -470,22 +470,22 @@ void LayerTest1::updateSize(Point &touchLocation)
     l->setContentSize( newSize );
 }
 
-void LayerTest1::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    ccTouchesMoved(pTouches, pEvent);
+    ccTouchesMoved(touches, event);
 }
 
-void LayerTest1::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = (Touch*)pTouches->anyObject();
+    Touch *touch = static_cast<Touch*>(touches->anyObject());
     Point touchLocation = touch->getLocation();
 
     updateSize(touchLocation);
 }
 
-void LayerTest1::ccTouchesEnded(Set *pTouches, Event *pEvent)
+void LayerTest1::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    ccTouchesMoved(pTouches, pEvent);
+    ccTouchesMoved(touches, event);
 }
 
 std::string LayerTest1::title()
@@ -540,8 +540,8 @@ LayerTestBlend::LayerTestBlend()
     Size s = Director::getInstance()->getWinSize();
     LayerColor* layer1 = LayerColor::create( Color4B(255, 255, 255, 80) );
     
-    Sprite* sister1 = Sprite::create(s_pPathSister1);
-    Sprite* sister2 = Sprite::create(s_pPathSister2);
+    Sprite* sister1 = Sprite::create(s_pathSister1);
+    Sprite* sister2 = Sprite::create(s_pathSister2);
     
     addChild(sister1);
     addChild(sister2);
@@ -607,7 +607,7 @@ LayerGradientTest::LayerGradientTest()
 
 void LayerGradientTest::toggleItem(Object *sender)
 {
-    LayerGradient *gradient = (LayerGradient*)getChildByTag(kTagLayer);
+    LayerGradient *gradient = static_cast<LayerGradient*>( getChildByTag(kTagLayer) );
     gradient->setCompressedInterpolation(! gradient->isCompressedInterpolation());
 }
 
@@ -615,13 +615,13 @@ void LayerGradientTest::ccTouchesMoved(Set * touches, Event *event)
 {
     Size s = Director::getInstance()->getWinSize();
 
-    Touch* touch = (Touch*) touches->anyObject();
+    Touch* touch = static_cast<Touch*>( touches->anyObject() );
     Point start = touch->getLocation();    
 
     Point diff =  Point(s.width/2,s.height/2) - start;
     diff = diff.normalize();
 
-    LayerGradient *gradient = (LayerGradient*) getChildByTag(1);
+    LayerGradient *gradient = static_cast<LayerGradient*>( getChildByTag(1) );
     gradient->setVector(diff);
 }
 
@@ -716,9 +716,9 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
 void LayerIgnoreAnchorPointPos::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointPos::title()
@@ -764,9 +764,9 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
 void LayerIgnoreAnchorPointRot::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointRot::title()
@@ -815,9 +815,9 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
 void LayerIgnoreAnchorPointScale::onToggle(Object* pObject)
 {
-    Node* pLayer = this->getChildByTag(kLayerIgnoreAnchorPoint);
-    bool ignore = pLayer->isIgnoreAnchorPointForPosition();
-    pLayer->ignoreAnchorPointForPosition(! ignore);
+    Node* layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
+    bool ignore = layer->isIgnoreAnchorPointForPosition();
+    layer->ignoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointScale::title()
@@ -833,8 +833,8 @@ std::string LayerIgnoreAnchorPointScale::subtitle()
 void LayerTestScene::runThisTest()
 {
     sceneIdx = -1;
-    Layer* pLayer = nextAction();
-    addChild(pLayer);
+    Layer* layer = nextAction();
+    addChild(layer);
 
     Director::getInstance()->replaceScene(this);
 }
@@ -858,10 +858,7 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     layer3->setEndColor(Color3B(255, 0, 255));
     layer3->setStartOpacity(255);
     layer3->setEndOpacity(255);
-    BlendFunc blend;
-    blend.src = GL_SRC_ALPHA;
-    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
-    layer3->setBlendFunc(blend);
+    layer3->setBlendFunc( BlendFunc::ALPHA_NON_PREMULTIPLIED );
     addChild(layer3);
 }
 

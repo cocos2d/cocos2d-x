@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "platform/platform.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCThread.h"
 #include "support/ccUtils.h"
@@ -53,12 +52,6 @@ NS_CC_BEGIN
 // implementation TextureCache
 
 TextureCache* TextureCache::_sharedTextureCache = nullptr;
-
-// XXX: deprecated
-TextureCache * TextureCache::sharedTextureCache()
-{
-    return TextureCache::getInstance();
-}
 
 TextureCache * TextureCache::getInstance()
 {
@@ -81,7 +74,7 @@ TextureCache::TextureCache()
 , _asyncRefCount(0)
 , _textures(new Dictionary())
 {
-    CCAssert(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+    CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
 }
 
 TextureCache::~TextureCache()
@@ -104,12 +97,6 @@ void TextureCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedTextureCache);
 }
 
-// XXX deprecated
-void TextureCache::purgeSharedTextureCache()
-{
-    TextureCache::destroyInstance();
-}
-
 const char* TextureCache::description() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %u>", _textures->count())->getCString();
@@ -129,7 +116,7 @@ Dictionary* TextureCache::snapshotTextures()
 
 void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");    
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");    
 
     Texture2D *texture = NULL;
 
@@ -304,7 +291,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
 Texture2D * TextureCache::addImage(const char * path)
 {
-    CCAssert(path != NULL, "TextureCache: fileimage MUST not be NULL");
+    CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
     Texture2D * texture = NULL;
     Image* pImage = NULL;
@@ -364,7 +351,7 @@ Texture2D * TextureCache::addImage(const char * path)
 
 Texture2D* TextureCache::addUIImage(Image *image, const char *key)
 {
-    CCAssert(image != NULL, "TextureCache: image MUST not be nil");
+    CCASSERT(image != NULL, "TextureCache: image MUST not be nil");
 
     Texture2D * texture = NULL;
     // textureForKey() use full path,so the key should be full path
@@ -500,7 +487,7 @@ void TextureCache::dumpCachedTextureInfo()
     CCDICT_FOREACH(_textures, pElement)
     {
         Texture2D* tex = static_cast<Texture2D*>(pElement->getObject());
-        unsigned int bpp = tex->bitsPerPixelForFormat();
+        unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
         unsigned int bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
@@ -527,7 +514,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 : _texture(t)
 , _cashedImageType(kInvalid)
 , _textureData(NULL)
-, _pixelFormat(kTexture2DPixelFormat_RGBA8888)
+, _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
 , _text("")
 , _uiImage(NULL)
@@ -589,7 +576,7 @@ VolatileTexture* VolatileTexture::findVolotileTexture(Texture2D *tt)
     return vt;
 }
 
-void VolatileTexture::addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2DPixelFormat pixelFormat, const Size& contentSize)
+void VolatileTexture::addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
 {
     if (_isReloading)
     {
@@ -668,7 +655,7 @@ void VolatileTexture::reloadAllTextures()
                 
                 if (pImage && pImage->initWithImageData((void*)pBuffer, nSize))
                 {
-                    Texture2DPixelFormat oldPixelFormat = Texture2D::defaultAlphaPixelFormat();
+                    Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
                     vt->_texture->initWithImage(pImage);
                     Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);

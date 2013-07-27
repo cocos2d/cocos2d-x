@@ -57,9 +57,10 @@ $(TARGET).data:
 	mv $(RESTMP)/$(EXECUTABLE).data.js $@.js
 	rm -rf $(RESTMP)
 
-$(BIN_DIR)/index.html: index.html
+$(BIN_DIR)/$(HTMLTPL_FILE): $(HTMLTPL_DIR)/$(HTMLTPL_FILE)
 	@mkdir -p $(@D)
-	cp index.html $(@D)
+	@cp -Rf $(HTMLTPL_DIR)/* $(BIN_DIR)
+	@sed -i -e "s/JS_APPLICATION/$(EXECUTABLE)/g" $(BIN_DIR)/$(HTMLTPL_FILE)
 
 $(OBJ_DIR)/%.o: %.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)

@@ -139,12 +139,21 @@ public:
     
     /** Invokes the callback function of this observer */
     void performSelector(Object *obj);
+    
+    // Getters / Setters
+    Object* getTarget() const;
+    SEL_CallFuncO getSelector() const;
+    const char* getName() const;
+    Object* getObject() const;
+    int getHandler() const;
+    void setHandler(int handler);
+
 private:
-    CC_PROPERTY_READONLY(Object *, _target, Target);
-    CC_PROPERTY_READONLY(SEL_CallFuncO, _selector, Selector);
-    CC_PROPERTY_READONLY(char *, _name, Name);
-    CC_PROPERTY_READONLY(Object *, _object, Object);
-    CC_PROPERTY(int, _handler,Handler);
+    Object* _target;
+    SEL_CallFuncO _selector;
+    std::string _name;
+    Object* _object;
+    int _handler;
 };
 
 NS_CC_END

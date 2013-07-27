@@ -65,7 +65,7 @@ public:
     virtual bool isDone(void) const;
 
     //! called before the action start. It will also set the target.
-    virtual void startWithTarget(Node *pTarget);
+    virtual void startWithTarget(Node *target);
 
     /** 
     called after the action has finished. It will set the 'target' to nil.
@@ -88,7 +88,7 @@ public:
     
     inline Node* getTarget(void) const { return _target; }
     /** The action will modify the target properties. */
-    inline void setTarget(Node *pTarget) { _target = pTarget; }
+    inline void setTarget(Node *target) { _target = target; }
     
     inline Node* getOriginalTarget(void) const { return _originalTarget; }
     /** Set the original target, since target can be nil.
@@ -157,7 +157,6 @@ class RepeatForever;
 class CC_DLL Speed : public Action
 {
 public:
-
     /** create the action */
     static Speed* create(ActionInterval* pAction, float fSpeed);
 
@@ -173,17 +172,14 @@ public:
 
     void setInnerAction(ActionInterval *pAction);
 
-    inline ActionInterval* getInnerAction()
-    {
-        return _innerAction;
-    }
+    inline ActionInterval* getInnerAction() const { return _innerAction; }
 
     //
     // Override
     //
 	virtual Speed* clone() const override;
     virtual Speed* reverse() const override;
-    virtual void startWithTarget(Node* pTarget) override;
+    virtual void startWithTarget(Node* target) override;
     virtual void stop() override;
     virtual void step(float dt) override;
     virtual bool isDone(void) const  override;
@@ -205,8 +201,11 @@ Instead of using Camera as a "follower", use this action instead.
 class CC_DLL Follow : public Action
 {
 public:
-    /** creates the action with a set boundary,
-     It will work with no boundary if @param rect is equal to Rect::ZERO.
+    /**
+     * Creates the action with a set boundary or with no boundary.
+     *
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
      */
     static Follow* create(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
@@ -226,7 +225,12 @@ public:
     /** alter behavior - turn on/off boundary */
     inline void setBoudarySet(bool bValue) { _boundarySet = bValue; }
 
-    /** initializes the action with a set boundary */
+    /**
+     * Initializes the action with a set boundary or with no boundary.
+     *
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     */
     bool initWithTarget(Node *pFollowedNode, const Rect& rect = Rect::ZERO);
 
     //

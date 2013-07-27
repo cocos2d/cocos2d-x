@@ -103,5 +103,9 @@ NS_CC_END
 #undef MessageBox
 #endif
 
+#ifdef RELATIVE
+#undef RELATIVE
+#endif
+
 #endif  // __CC_STD_C_H__
 

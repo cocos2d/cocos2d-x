@@ -63,14 +63,14 @@ ProgressTo* ProgressTo::clone() const
 
 ProgressTo* ProgressTo::reverse() const
 {
-	CCAssert(false, "reverse() not supported in ProgressTo");
+	CCASSERT(false, "reverse() not supported in ProgressTo");
 	return nullptr;
 }
 
-void ProgressTo::startWithTarget(Node *pTarget)
+void ProgressTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
-    _from = ((kProgressTimerCast)(pTarget))->getPercentage();
+    ActionInterval::startWithTarget(target);
+    _from = ((kProgressTimerCast)(target))->getPercentage();
 
     // XXX: Is this correct ?
     // Adding it to support Repeat
@@ -124,9 +124,9 @@ ProgressFromTo* ProgressFromTo::reverse(void) const
     return ProgressFromTo::create(_duration, _to, _from);
 }
 
-void ProgressFromTo::startWithTarget(Node *pTarget)
+void ProgressFromTo::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(pTarget);
+    ActionInterval::startWithTarget(target);
 }
 
 void ProgressFromTo::update(float time)

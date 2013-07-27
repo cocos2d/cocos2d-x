@@ -15,12 +15,12 @@ class TextInputTest : public BaseTest
 public:
     TextInputTest();
 
-    void restartCallback(Object* pSender);
-    void nextCallback(Object* pSender);
-    void backCallback(Object* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 
     std::string title();
-    void addKeyboardNotificationLayer(KeyboardNotificationLayer * pLayer);
+    void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
     
     virtual void onEnter();
 };
@@ -41,8 +41,8 @@ public:
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
     // Layer
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual bool ccTouchBegan(Touch  *touch, Event  *event);
+    virtual void ccTouchEnded(Touch  *touch, Event  *event);
 
 protected:
     Node * _trackNode;
@@ -76,7 +76,7 @@ class TextFieldTTFActionTest : public KeyboardNotificationLayer, public TextFiel
     int                 _charLimit;       // the textfield max char limit
 
 public:
-    void callbackRemoveNodeWhenDidAction(Node * pNode);
+    void callbackRemoveNodeWhenDidAction(Node * node);
 
     // KeyboardNotificationLayer
     virtual std::string subtitle();
@@ -87,11 +87,11 @@ public:
     virtual void onExit();
 
     // TextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(TextFieldTTF * pSender);
-    virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender);
-    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen);
-    virtual bool onDraw(TextFieldTTF * pSender);
+    virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender);
+    virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender);
+    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, int nLen);
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen);
+    virtual bool onDraw(TextFieldTTF * sender);
 };
 
 class TextInputTestScene : public TestScene

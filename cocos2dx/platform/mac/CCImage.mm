@@ -50,8 +50,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 {
     bool bRet = false;
 
-	CCAssert(pText, "Invalid pText");
-	CCAssert(pInfo, "Invalid pInfo");
+	CCASSERT(pText, "Invalid pText");
+	CCASSERT(pInfo, "Invalid pInfo");
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:pText];
@@ -216,8 +216,7 @@ bool Image::initWithString(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _renderFormat = kTexture2DPixelFormat_RGBA8888;
-    _hasAlpha = info.hasAlpha;
+    _renderFormat = Texture2D::PixelFormat::RGBA8888;
     _preMulti = info.isPremultipliedAlpha;
 	if (_data) {
 		CC_SAFE_DELETE_ARRAY(_data);

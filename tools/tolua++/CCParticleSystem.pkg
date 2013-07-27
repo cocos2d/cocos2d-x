@@ -2,8 +2,6 @@ enum {
     kCCParticleDurationInfinity = -1,
     kCCParticleStartSizeEqualToEndSize = -1,
     kCCParticleStartRadiusEqualToEndRadius = -1,
-    kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
-    kParticleDurationInfinity = kCCParticleDurationInfinity,
 };
 
 enum {
@@ -17,10 +15,6 @@ typedef enum {
     kCCPositionTypeGrouped,
 }tCCPositionType;
 
-enum {
-    kPositionTypeFree = kCCPositionTypeFree,
-    kPositionTypeGrouped = kCCPositionTypeGrouped,
-};
 
 class CCParticleSystem : public CCNode
 {

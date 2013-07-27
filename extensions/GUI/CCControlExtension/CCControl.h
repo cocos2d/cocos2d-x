@@ -87,113 +87,91 @@ typedef unsigned int ControlState;
  */
 class Control : public LayerRGBA
 {
-
-    //CCRGBAProtocol
-    bool _isOpacityModifyRGB;
-    
-    /** The current control state constant. */
-    CC_SYNTHESIZE_READONLY(ControlState, _state, State);
-
-    /** True if all of the controls parents are visible */
-protected:
-    bool _hasVisibleParents;
-
 public:
-    /** Tells whether the control is enabled. */
-    virtual void setEnabled(bool bEnabled);
-    virtual bool isEnabled();
-    /** A Boolean value that determines the control selected state. */
-    virtual void setSelected(bool bSelected);
-    virtual bool isSelected();
-    /** A Boolean value that determines whether the control is highlighted. */
-    virtual void setHighlighted(bool bHighlighted);
-    virtual bool isHighlighted();
-    bool hasVisibleParents();
-    /**
-     * Updates the control layout using its current internal state.
-     */
-    virtual void needsLayout();
-    
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool bOpacityModifyRGB);
+    static Control* create();
 
-protected:
-    bool _enabled;
-    bool _selected;
-    bool _highlighted;
-
-    /** 
-     * Table of connection between the ControlEvents and their associated
-     * target-actions pairs. For each ButtonEvents a list of NSInvocation
-     * (which contains the target-action pair) is linked.
-     */
-    Dictionary* _dispatchTable;
-
-public:
     Control();
     virtual bool init(void);
     virtual ~Control();
 
+    /** Tells whether the control is enabled. */
+    virtual void setEnabled(bool bEnabled);
+    virtual bool isEnabled() const;
 
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void registerWithTouchDispatcher();
+    /** A Boolean value that determines the control selected state. */
+    virtual void setSelected(bool bSelected);
+    virtual bool isSelected() const;
+
+    /** A Boolean value that determines whether the control is highlighted. */
+    virtual void setHighlighted(bool bHighlighted);
+    virtual bool isHighlighted() const;
+
+    bool hasVisibleParents() const;
+    /**
+     * Updates the control layout using its current internal state.
+     */
+    virtual void needsLayout();
 
     /**
- * Sends action messages for the given control events.
- *
- * @param controlEvents A bitmask whose set flags specify the control events for
- * which action messages are sent. See "CCControlEvent" for bitmask constants.
- */
+     * Sends action messages for the given control events.
+     *
+     * @param controlEvents A bitmask whose set flags specify the control events for
+     * which action messages are sent. See "CCControlEvent" for bitmask constants.
+     */
     virtual void sendActionsForControlEvents(ControlEvent controlEvents);
 
     /**
-    * Adds a target and action for a particular event (or events) to an internal
-    * dispatch table.
-    * The action message may optionnaly include the sender and the event as 
-    * parameters, in that order.
-    * When you call this method, target is not retained.
-    *
-    * @param target The target object that is, the object to which the action 
-    * message is sent. It cannot be nil. The target is not retained.
-    * @param action A selector identifying an action message. It cannot be NULL.
-    * @param controlEvents A bitmask specifying the control events for which the 
-    * action message is sent. See "CCControlEvent" for bitmask constants.
-    */
+     * Adds a target and action for a particular event (or events) to an internal
+     * dispatch table.
+     * The action message may optionnaly include the sender and the event as
+     * parameters, in that order.
+     * When you call this method, target is not retained.
+     *
+     * @param target The target object that is, the object to which the action
+     * message is sent. It cannot be nil. The target is not retained.
+     * @param action A selector identifying an action message. It cannot be NULL.
+     * @param controlEvents A bitmask specifying the control events for which the
+     * action message is sent. See "CCControlEvent" for bitmask constants.
+     */
     virtual void addTargetWithActionForControlEvents(Object* target, SEL_CCControlHandler action, ControlEvent controlEvents);
 
     /**
-    * Removes a target and action for a particular event (or events) from an 
-    * internal dispatch table.
-    *
-    * @param target The target object—that is, the object to which the action 
-    * message is sent. Pass nil to remove all targets paired with action and the
-    * specified control events.
-    * @param action A selector identifying an action message. Pass NULL to remove
-    * all action messages paired with target.
-    * @param controlEvents A bitmask specifying the control events associated with
-    * target and action. See "CCControlEvent" for bitmask constants.
-    */
+     * Removes a target and action for a particular event (or events) from an
+     * internal dispatch table.
+     *
+     * @param target The target object—that is, the object to which the action
+     * message is sent. Pass nil to remove all targets paired with action and the
+     * specified control events.
+     * @param action A selector identifying an action message. Pass NULL to remove
+     * all action messages paired with target.
+     * @param controlEvents A bitmask specifying the control events associated with
+     * target and action. See "CCControlEvent" for bitmask constants.
+     */
     virtual void removeTargetWithActionForControlEvents(Object* target, SEL_CCControlHandler action, ControlEvent controlEvents);
 
     /**
-    * Returns a point corresponding to the touh location converted into the 
-    * control space coordinates.
-    * @param touch A Touch object that represents a touch.
-    */
+     * Returns a point corresponding to the touh location converted into the
+     * control space coordinates.
+     * @param touch A Touch object that represents a touch.
+     */
     virtual Point getTouchLocation(Touch* touch);
 
-    
     /**
-    * Returns a boolean value that indicates whether a touch is inside the bounds
-    * of the receiver. The given touch must be relative to the world.
-    *
-    * @param touch A Touch object that represents a touch.
-    *
-    * @return YES whether a touch is inside the receiver¡¯s rect.
-    */
+     * Returns a boolean value that indicates whether a touch is inside the bounds
+     * of the receiver. The given touch must be relative to the world.
+     *
+     * @param touch A Touch object that represents a touch.
+     *
+     * @return YES whether a touch is inside the receiver¡¯s rect.
+     */
     virtual bool isTouchInside(Touch * touch);
 
+    // Overrides
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool bOpacityModifyRGB) override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void registerWithTouchDispatcher() override;
 
 protected:
     /**
@@ -211,8 +189,6 @@ protected:
      */
     Invocation* invocationWithTargetAndActionForControlEvent(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
 
-
-
     /**
     * Returns the Invocation list for the given control event. If the list does
     * not exist, it'll create an empty array before returning it.
@@ -224,6 +200,7 @@ protected:
     */
     //<Invocation*>
     Array* dispatchListforControlEvent(ControlEvent controlEvent);
+
     /**
      * Adds a target and action for a particular event to an internal dispatch 
      * table.
@@ -253,7 +230,26 @@ protected:
      */
     void removeTargetWithActionForControlEvent(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
 
-    static Control* create();
+protected:
+    bool _enabled;
+    bool _selected;
+    bool _highlighted;
+
+    /** True if all of the controls parents are visible */
+    bool _hasVisibleParents;
+
+    /**
+     * Table of connection between the ControlEvents and their associated
+     * target-actions pairs. For each ButtonEvents a list of NSInvocation
+     * (which contains the target-action pair) is linked.
+     */
+    Dictionary* _dispatchTable;
+
+    //CCRGBAProtocol
+    bool _isOpacityModifyRGB;
+
+    /** The current control state constant. */
+    CC_SYNTHESIZE_READONLY(ControlState, _state, State);
 };
 
 // end of GUI group

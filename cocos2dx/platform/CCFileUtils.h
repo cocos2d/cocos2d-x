@@ -90,23 +90,23 @@ public:
     /**
      *  Gets resource file data
      *
-     *  @param[in]  pszFileName The resource file name which contains the path.
+     *  @param[in]  filename The resource file name which contains the path.
      *  @param[in]  pszMode The read mode of the file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    virtual unsigned char* getFileData(const char* filename, const char* pszMode, unsigned long * pSize);
 
     /**
      *  Gets resource file data from a zip file.
      *
-     *  @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
+     *  @param[in]  filename The resource file name which contains the relative path of the zip file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * pSize);
 
     
     /** Returns the fullpath for a given filename.
@@ -147,14 +147,14 @@ public:
      	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
      	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
 
-     If the new file can't be found on the file system, it will return the parameter pszFileName directly.
+     If the new file can't be found on the file system, it will return the parameter filename directly.
      
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load different resources for a given file in the different platforms.
 
      @since v2.1
      */
-    virtual std::string fullPathForFilename(const char* pszFileName);
+    virtual std::string fullPathForFilename(const char* filename);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -199,14 +199,14 @@ public:
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
-     *  @param pszFilename The file name.
+     *  @param filename The file name.
      *  @param pszRelativeFile The path of the relative file.
      *  @return The full path.
-     *          e.g. pszFilename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
+     *          e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
-    virtual const char* fullPathFromRelativeFile(const char *pszFilename, const char *pszRelativeFile);
+    virtual const char* fullPathFromRelativeFile(const char *filename, const char *pszRelativeFile);
 
     /** 
      *  Sets the array that contains the search order of the resources.
@@ -318,11 +318,11 @@ protected:
     
     /**
      *  Gets the new filename from the filename lookup dictionary.
-     *  @param pszFileName The original filename.
+     *  @param filename The original filename.
      *  @return The new filename after searching in the filename lookup dictionary.
      *          If the original filename wasn't in the dictionary, it will return the original filename.
      */
-    virtual std::string getNewFilename(const char* pszFileName);
+    virtual std::string getNewFilename(const char* filename);
     
     /**
      *  Gets full path for filename, resolution directory and search path.

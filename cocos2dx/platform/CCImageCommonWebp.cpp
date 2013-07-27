@@ -49,7 +49,7 @@ bool Image::_initWithWebpData(void *data, int dataLen)
         if (config.input.width == 0 || config.input.height == 0) break;
         
         config.output.colorspace = MODE_RGBA;
-        _renderFormat = kTexture2DPixelFormat_RGBA8888;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
         

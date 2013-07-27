@@ -34,25 +34,25 @@ static struct {
 	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
 	},
     { "Scale9SpriteTest", [](Object* sender) {
-            S9SpriteTestScene* pScene = new S9SpriteTestScene();
-            if (pScene)
+            S9SpriteTestScene* scene = new S9SpriteTestScene();
+            if (scene)
             {
-                pScene->runThisTest();
-                pScene->release();
+                scene->runThisTest();
+                scene->release();
             }
         }
 	},
 	{ "CCControlButtonTest", [](Object *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
-		Scene* pScene = pManager->currentControlScene();
-		Director::getInstance()->replaceScene(pScene);
+		Scene* scene = pManager->currentControlScene();
+		Director::getInstance()->replaceScene(scene);
 	}},
 	{ "CocosBuilderTest", [](Object *sender) {
-		TestScene* pScene = new CocosBuilderTestScene();
-		if (pScene)
+		TestScene* scene = new CocosBuilderTestScene();
+		if (scene)
 		{
-			pScene->runThisTest();
-			pScene->release();
+			scene->runThisTest();
+			scene->release();
 		}
 	}},
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
@@ -73,9 +73,9 @@ static struct {
 	},
     { "CommponentTest", [](Object *sender) { runComponentsTestLayerTest(); }
     },
-    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *pScene = new ArmatureTestScene();
-                                             pScene->runThisTest();
-                                             pScene->release();
+    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+                                             scene->runThisTest();
+                                             scene->release();
                                         }
     },
 };
@@ -111,16 +111,16 @@ void ExtensionsMainLayer::onEnter()
     addChild(_itemMenu);
 }
 
-void ExtensionsMainLayer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+void ExtensionsMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
-void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(pTouches->anyObject());
+    Touch* touch = static_cast<Touch*>(touches->anyObject());
 
     Point touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
@@ -153,9 +153,9 @@ void ExtensionsMainLayer::ccTouchesMoved(Set *pTouches, Event *pEvent)
 
 void ExtensionsTestScene::runThisTest()
 {
-    Layer* pLayer = new ExtensionsMainLayer();
-    addChild(pLayer);
-    pLayer->release();
+    Layer* layer = new ExtensionsMainLayer();
+    addChild(layer);
+    layer->release();
     
     Director::getInstance()->replaceScene(this);
 }

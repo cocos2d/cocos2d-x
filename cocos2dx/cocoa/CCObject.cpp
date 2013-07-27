@@ -52,11 +52,11 @@ Object::~Object(void)
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByObject(this);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
     else
     {
-        ScriptEngineProtocol* pEngine = ScriptEngineManager::sharedManager()->getScriptEngine();
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
         if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
         {
             pEngine->removeScriptObjectByObject(this);
@@ -66,7 +66,7 @@ Object::~Object(void)
 
 void Object::release(void)
 {
-    CCAssert(_reference > 0, "reference count should greater than 0");
+    CCASSERT(_reference > 0, "reference count should greater than 0");
     --_reference;
 
     if (_reference == 0)
@@ -77,7 +77,7 @@ void Object::release(void)
 
 void Object::retain(void)
 {
-    CCAssert(_reference > 0, "reference count should greater than 0");
+    CCASSERT(_reference > 0, "reference count should greater than 0");
 
     ++_reference;
 }

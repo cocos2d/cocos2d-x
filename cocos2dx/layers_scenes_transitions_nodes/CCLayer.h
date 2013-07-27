@@ -39,11 +39,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum {
-	kTouchesAllAtOnce,
-	kTouchesOneByOne,
-} ccTouchesMode;
-
 /**
  * @addtogroup layer
  * @{
@@ -62,27 +57,26 @@ All features from Node are valid, plus the following new features:
 */
 class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 {
-public:
+public:    
+    /** creates a fullscreen black layer */
+    static Layer *create(void);
     Layer();
     virtual ~Layer();
     virtual bool init();
     
-    /** creates a fullscreen black layer */
-    static Layer *create(void);
+    // default implements are used to call script callback if exist
+    virtual bool ccTouchBegan(Touch *touch, Event *event);
+    virtual void ccTouchMoved(Touch *touch, Event *event);
+    virtual void ccTouchEnded(Touch *touch, Event *event);
+    virtual void ccTouchCancelled(Touch *touch, Event *event);
 
     // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
-
-    // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent);
-    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(Set *touches, Event *event);
+    virtual void ccTouchesMoved(Set *touches, Event *event);
+    virtual void ccTouchesEnded(Set *touches, Event *event);
+    virtual void ccTouchesCancelled(Set *touches, Event *event);
     
-    virtual void didAccelerate(Acceleration* pAccelerationValue);
+    virtual void didAccelerate(Acceleration* accelerationValue);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -104,8 +98,8 @@ public:
     virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode() const;
+    virtual void setTouchMode(Touch::DispatchMode mode);
+    virtual Touch::DispatchMode getTouchMode() const;
     
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
@@ -149,10 +143,10 @@ protected:
     
 private:
     int _touchPriority;
-    ccTouchesMode _touchMode;
+    Touch::DispatchMode _touchMode;
     
-    int  excuteScriptTouchHandler(int nEventType, Touch *pTouch);
-    int  excuteScriptTouchHandler(int nEventType, Set *pTouches);
+    int executeScriptTouchHandler(int eventType, Touch* touch);
+    int executeScriptTouchesHandler(int eventType, Set* touches);
 };
 
 #ifdef __apple__
@@ -216,24 +210,16 @@ class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
 , public GLBufferedNode
 #endif // EMSCRIPTEN
 {
-protected:
-    Vertex2F _squareVertices[4];
-    Color4F  _squareColors[4];
-
 public:
-    LayerColor();
-    virtual ~LayerColor();
-
-    virtual void draw();
-    virtual void setContentSize(const Size & var);
-
     /** creates a fullscreen black layer */
     static LayerColor* create();
-    
     /** creates a Layer with color, width and height in Points */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
+
+    LayerColor();
+    virtual ~LayerColor();
 
     virtual bool init();
     /** initializes a Layer with color, width and height in Points */
@@ -250,17 +236,23 @@ public:
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-    /** BlendFunction. Conforms to BlendProtocol protocol */
-    CC_PROPERTY_PASS_BY_REF(BlendFunc, _blendFunc, BlendFunc)
-
     //
     // Overrides
     //
+    virtual void draw() override;
     virtual void setColor(const Color3B &color) override;
     virtual void setOpacity(GLubyte opacity) override;
+    virtual void setContentSize(const Size & var) override;
+    /** BlendFunction. Conforms to BlendProtocol protocol */
+    virtual const BlendFunc& getBlendFunc() const override;
+    virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
     virtual void updateColor();
+
+    BlendFunc _blendFunc;
+    Vertex2F _squareVertices[4];
+    Color4F  _squareColors[4];
 };
 
 //
@@ -288,7 +280,6 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
-
     /** Creates a fullscreen black layer */
     static LayerGradient* create();
 
@@ -308,20 +299,45 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: YES
      */
-    virtual void setCompressedInterpolation(bool bCompressedInterpolation);
-    virtual bool isCompressedInterpolation() const;
+    void setCompressedInterpolation(bool bCompressedInterpolation);
+    bool isCompressedInterpolation() const;
 
-    CC_PROPERTY_PASS_BY_REF(Color3B, _startColor, StartColor)
-    CC_PROPERTY_PASS_BY_REF(Color3B, _endColor, EndColor)
-    CC_PROPERTY(GLubyte, _startOpacity, StartOpacity)
-    CC_PROPERTY(GLubyte, _endOpacity, EndOpacity)
-    CC_PROPERTY_PASS_BY_REF(Point, _alongVector, Vector)
+    /** Sets the start color of the gradient */
+    void setStartColor( const Color3B& startColor );
+    /** Returns the start color of the gradient */
+    const Color3B& getStartColor() const;
+
+    /** Sets the end color of the gradient */
+    void setEndColor( const Color3B& endColor );
+    /** Returns the end color of the gradient */
+    const Color3B& getEndColor() const;
+
+    /** Returns the start opacity of the gradient */
+    void setStartOpacity( GLubyte startOpacity );
+    /** Returns the start opacity of the gradient */
+    GLubyte getStartOpacity() const;
+
+    /** Returns the end opacity of the gradient */
+    void setEndOpacity( GLubyte endOpacity );
+    /** Returns the end opacity of the gradient */
+    GLubyte getEndOpacity() const;
+
+    /** Sets the directional vector that will be used for the gradient.
+    The default value is vertical direction (0,-1). 
+     */
+    void setVector(const Point& alongVector);
+    /** Returns the directional vector used for the gradient */
+    const Point& getVector() const;
 
 protected:
     virtual void updateColor() override;
-    
-protected:
-    bool _compressedInterpolation;
+
+    Color3B _startColor;
+    Color3B _endColor;
+    GLubyte _startOpacity;
+    GLubyte _endOpacity;
+    Point   _alongVector;
+    bool    _compressedInterpolation;
 };
 
 
@@ -332,16 +348,11 @@ Features:
 */
 class CC_DLL LayerMultiplex : public Layer
 {
-protected:
-    unsigned int _enabledLayer;
-    Array*     _layers;
 public:
-    LayerMultiplex();
-    virtual ~LayerMultiplex();
-    
+    /** creates and initializes a LayerMultiplex object */
     static LayerMultiplex* create();
-    
-    /** creates a MultiplexLayer with an array of layers.
+
+    /** creates a LayerMultiplex with an array of layers.
      @since v2.1
      */
     static LayerMultiplex* createWithArray(Array* arrayOfLayers);
@@ -355,24 +366,31 @@ public:
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
 
-    void addLayer(Layer* layer);
+    LayerMultiplex();
+    virtual ~LayerMultiplex();
 
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(Layer* layer, va_list params);
-    /** switches to a certain layer indexed by n. 
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-    */
 
     /** initializes a MultiplexLayer with an array of layers
-    @since v2.1
-    */
+     @since v2.1
+     */
     bool initWithArray(Array* arrayOfLayers);
 
+    void addLayer(Layer* layer);
+
+    /** switches to a certain layer indexed by n.
+     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+     */
     void switchTo(unsigned int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
     */
     void switchToAndReleaseMe(unsigned int n);
+
+protected:
+    unsigned int _enabledLayer;
+    Array*     _layers;
 };
 
 

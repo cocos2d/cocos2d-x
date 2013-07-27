@@ -88,7 +88,7 @@ Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f
     return pAnimation;
 }
 
-Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops)
+Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
     Animation *pAnimation = new Animation();
     pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
@@ -174,12 +174,12 @@ void Animation::addSpriteFrame(SpriteFrame *pFrame)
     _totalDelayUnits++;
 }
 
-void Animation::addSpriteFrameWithFileName(const char *pszFileName)
+void Animation::addSpriteFrameWithFileName(const char *filename)
 {
-    Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFileName);
+    Texture2D *texture = TextureCache::getInstance()->addImage(filename);
     Rect rect = Rect::ZERO;
-    rect.size = pTexture->getContentSize();
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(pTexture, rect);
+    rect.size = texture->getContentSize();
+    SpriteFrame *pFrame = SpriteFrame::createWithTexture(texture, rect);
     addSpriteFrame(pFrame);
 }
 

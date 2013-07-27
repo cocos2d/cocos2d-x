@@ -52,24 +52,19 @@ Special features and Limitations:
 */
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
-protected:
-    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
-    GLushort            *_indices;    // indices
-
-#if CC_TEXTURE_ATLAS_USE_VAO
-    GLuint                _VAOname;
-#endif
-
-    GLuint                _buffersVBO[2]; //0: vertex  1: indices
-
 public:
+
+    /** creates a Particle Emitter */
+    static ParticleSystemQuad * create();
+    /** creates a Particle Emitter with a number of particles */
+    static ParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    /** creates an initializes a ParticleSystemQuad from a plist file.
+     This plist files can be created manually or with Particle Designer:
+     */
+    static ParticleSystemQuad * create(const char *plistFile);
+
     ParticleSystemQuad();
     virtual ~ParticleSystemQuad();
-
-    /** creates an initializes a ParticleSystemQuad from a plist file.
-    This plist files can be created manually or with Particle Designer:  
-    */
-    static ParticleSystemQuad * create(const char *plistFile);
 
     /** initializes the indices for the vertices*/
     void initIndices();
@@ -87,21 +82,20 @@ public:
     @since v0.99.4
     */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
-    // super methods
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles);
-    virtual void setTexture(Texture2D* texture);
-    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition);
-    virtual void postStep();
-    virtual void draw();
-    virtual void setBatchNode(ParticleBatchNode* batchNode);
-    virtual void setTotalParticles(unsigned int tp);
-    
+
     /** listen the event that coming to foreground on Android
      */
     void listenBackToForeground(Object *obj);
 
-    static ParticleSystemQuad * create();
-    static ParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    // Overrides
+    virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
+    virtual void setTexture(Texture2D* texture) override;
+    virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
+    virtual void postStep() override;
+    virtual void draw() override;
+    virtual void setBatchNode(ParticleBatchNode* batchNode) override;
+    virtual void setTotalParticles(unsigned int tp) override;
+
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
@@ -109,6 +103,16 @@ private:
     void setupVBO();
 #endif
     bool allocMemory();
+    
+protected:
+    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
+    GLushort            *_indices;    // indices
+    
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint                _VAOname;
+#endif
+    
+    GLuint                _buffersVBO[2]; //0: vertex  1: indices
 };
 
 // end of particle_nodes group

@@ -105,10 +105,10 @@ static bool glew_dynamic_binding()
 	// If the current opengl driver doesn't have framebuffers methods, check if an extension exists
 	if (glGenFramebuffers == NULL)
 	{
-		CCLog("OpenGL: glGenFramebuffers is NULL, try to detect an extension");
+		log("OpenGL: glGenFramebuffers is NULL, try to detect an extension");
 		if (strstr(gl_extensions, "ARB_framebuffer_object"))
 		{
-			CCLog("OpenGL: ARB_framebuffer_object is supported");
+			log("OpenGL: ARB_framebuffer_object is supported");
 
 			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbuffer");
 			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbuffer");
@@ -131,7 +131,7 @@ static bool glew_dynamic_binding()
 		else
 		if (strstr(gl_extensions, "EXT_framebuffer_object"))
 		{
-			CCLog("OpenGL: EXT_framebuffer_object is supported");
+			log("OpenGL: EXT_framebuffer_object is supported");
 			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbufferEXT");
 			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbufferEXT");
 			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffersEXT");
@@ -152,8 +152,8 @@ static bool glew_dynamic_binding()
 		}
 		else
 		{
-			CCLog("OpenGL: No framebuffers extension is supported");
-			CCLog("OpenGL: Any call to Fbo will crash!");
+			log("OpenGL: No framebuffers extension is supported");
+			log("OpenGL: Any call to Fbo will crash!");
 			return false;
 		}
 	}
@@ -228,20 +228,20 @@ bool EGLView::initGL()
 
     if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
     {
-        CCLog("Ready for GLSL");
+        log("Ready for GLSL");
     }
     else
     {
-        CCLog("Not totally ready :(");
+        log("Not totally ready :(");
     }
 
     if (glewIsSupported("GL_VERSION_2_0"))
     {
-        CCLog("Ready for OpenGL 2.0");
+        log("Ready for OpenGL 2.0");
     }
     else
     {
-        CCLog("OpenGL 2.0 not supported");
+        log("OpenGL 2.0 not supported");
     }
 
     if(glew_dynamic_binding() == false)

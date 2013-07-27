@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "CCGrabber.h"
 #include "ccMacros.h"
 #include "textures/CCTexture2D.h"
-#include "platform/platform.h"
 
 NS_CC_BEGIN
 
@@ -39,7 +38,7 @@ Grabber::Grabber(void)
     glGenFramebuffers(1, &_FBO);
 }
 
-void Grabber::grab(Texture2D *pTexture)
+void Grabber::grab(Texture2D *texture)
 {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -47,21 +46,21 @@ void Grabber::grab(Texture2D *pTexture)
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
     // associate texture with FBO
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pTexture->getName(), 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->getName(), 0);
 
     // check if it worked (probably worth doing :) )
     GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        CCAssert(0, "Frame Grabber: could not attach texture to framebuffer");
+        CCASSERT(0, "Frame Grabber: could not attach texture to framebuffer");
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
-void Grabber::beforeRender(Texture2D *pTexture)
+void Grabber::beforeRender(Texture2D *texture)
 {
-    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(texture);
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
@@ -81,9 +80,9 @@ void Grabber::beforeRender(Texture2D *pTexture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void Grabber::afterRender(cocos2d::Texture2D *pTexture)
+void Grabber::afterRender(cocos2d::Texture2D *texture)
 {
-    CC_UNUSED_PARAM(pTexture);
+    CC_UNUSED_PARAM(texture);
 
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 //  glColorMask(true, true, true, true);    // #631

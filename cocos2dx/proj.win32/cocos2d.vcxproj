@@ -142,6 +142,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
   <ItemGroup>
     <ClCompile Include="..\base_nodes\CCAtlasNode.cpp" />
     <ClCompile Include="..\base_nodes\CCNode.cpp" />
+    <ClCompile Include="..\CCDeprecated.cpp" />
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\ccTypes.cpp" />
     <ClCompile Include="..\cocoa\CCAffineTransform.cpp" />
