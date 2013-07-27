@@ -183,6 +183,92 @@ CC_DEPRECATED_ATTRIBUTE typedef Control::State CCControlState;
 
 CC_DEPRECATED_ATTRIBUTE typedef Control::Handler SEL_CCControlHandler;
 
+// For CCBReader
+
+CC_DEPRECATED_ATTRIBUTE const int kIntValue = CCBValue::TYPE_INT;
+CC_DEPRECATED_ATTRIBUTE const int kFloatValue = CCBValue::TYPE_FLOAT;
+CC_DEPRECATED_ATTRIBUTE const int kBoolValue = CCBValue::TYPE_BOOL;
+CC_DEPRECATED_ATTRIBUTE const int kUnsignedCharValue = CCBValue::TYPE_UNSIGNED_CHAR;
+CC_DEPRECATED_ATTRIBUTE const int kStringValue = CCBValue::TYPE_STRING;
+CC_DEPRECATED_ATTRIBUTE const int kArrayValue = CCBValue::TYPE_ARRAY;
+
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypePosition        = CCBReader::PropertyType::POSITION;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeSize            = CCBReader::PropertyType::SIZE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypePoint           = CCBReader::PropertyType::POINT;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypePointLock       = CCBReader::PropertyType::POINT_LOCK;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeScaleLock       = CCBReader::PropertyType::SCALE_LOCK;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeDegrees         = CCBReader::PropertyType::DEGREES;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeInteger         = CCBReader::PropertyType::INTEGER;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFloat           = CCBReader::PropertyType::FLOAT;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFloatVar        = CCBReader::PropertyType::FLOAT_VAR;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeCheck           = CCBReader::PropertyType::CHECK;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeSpriteFrame     = CCBReader::PropertyType::SPRITEFRAME;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeTexture         = CCBReader::PropertyType::TEXTURE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeByte            = CCBReader::PropertyType::BYTE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeColor3          = CCBReader::PropertyType::COLOR3;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeColor4FVar      = CCBReader::PropertyType::COLOR4F_VAR;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFlip            = CCBReader::PropertyType::FLIP;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeBlendmode       = CCBReader::PropertyType::BLEND_MODE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFntFile         = CCBReader::PropertyType::FNT_FILE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeText            = CCBReader::PropertyType::TEXT;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFontTTF         = CCBReader::PropertyType::FONT_TTF;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeIntegerLabeled  = CCBReader::PropertyType::INTEGER_LABELED;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeBlock           = CCBReader::PropertyType::BLOCK;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeAnimation       = CCBReader::PropertyType::ANIMATION;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeCCBFile         = CCBReader::PropertyType::CCB_FILE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeString          = CCBReader::PropertyType::STRING;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeBlockCCControl  = CCBReader::PropertyType::BLOCK_CONTROL;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFloatScale      = CCBReader::PropertyType::FLOAT_SCALE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypeFloatXY         = CCBReader::PropertyType::FLOAT_XY;
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloat0         = CCBReader::FloatType::_0;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloat1         = CCBReader::FloatType::_1;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloatMinus1    = CCBReader::FloatType::MINUS1;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloat05        = CCBReader::FloatType::_05;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloatInteger   = CCBReader::FloatType::INTEGER;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::FloatType kCCBFloatFull      = CCBReader::FloatType::FULL;
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PlatformType kCCBPlatformAll = CCBReader::PlatformType::ALL;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PlatformType kCCBPlatformIOS = CCBReader::PlatformType::IOS;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PlatformType kCCBPlatformMac = CCBReader::PlatformType::MAC;
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::TargetType kCCBTargetTypeNone = CCBReader::TargetType::NONE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::TargetType kCCBTargetTypeDocumentRoot = CCBReader::TargetType::DOCUMENT_ROOT;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::TargetType kCCBTargetTypeOwner = CCBReader::TargetType::OWNER;
+
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingInstant       = CCBKeyframe::EasingType::INSTANT       ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingLinear        = CCBKeyframe::EasingType::LINEAR        ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingCubicIn       = CCBKeyframe::EasingType::CUBIC_IN      ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingCubicOut      = CCBKeyframe::EasingType::CUBIC_OUT     ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingCubicInOut    = CCBKeyframe::EasingType::CUBIC_INOUT   ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingElasticIn     = CCBKeyframe::EasingType::ELASTIC_IN    ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingElasticOut    = CCBKeyframe::EasingType::ELASTIC_OUT   ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingElasticInOut  = CCBKeyframe::EasingType::ELASTIC_INOUT ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBounceIn      = CCBKeyframe::EasingType::BOUNCE_IN     ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBounceOut     = CCBKeyframe::EasingType::BOUNCE_OUT    ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBounceInOut   = CCBKeyframe::EasingType::BOUNCE_INOUT  ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBackIn        = CCBKeyframe::EasingType::BACK_IN       ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBackOut       = CCBKeyframe::EasingType::BACK_OUT      ;
+CC_DEPRECATED_ATTRIBUTE const CCBKeyframe::EasingType    kCCBKeyframeEasingBackInOut     = CCBKeyframe::EasingType::BACK_INOUT    ;
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypeRelativeBottomLeft  =   CCBReader::PositionType::RELATIVE_BOTTOM_LEFT ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypeRelativeTopLeft     =   CCBReader::PositionType::RELATIVE_TOP_LEFT    ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypeRelativeTopRight    =   CCBReader::PositionType::RELATIVE_TOP_RIGHT   ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypeRelativeBottomRight =   CCBReader::PositionType::RELATIVE_BOTTOM_RIGHT;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypePercent             =   CCBReader::PositionType::PERCENT              ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::PositionType    kCCBPositionTypeMultiplyResolution  =   CCBReader::PositionType::MULTIPLY_RESOLUTION  ;
+;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypeAbsolute              =  CCBReader::SizeType::ABSOLUTE           ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypePercent               =  CCBReader::SizeType::PERCENT            ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypeRelativeContainer     =  CCBReader::SizeType::RELATIVE_CONTAINER ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypeHorizontalPercent     =  CCBReader::SizeType::HORIZONTAL_PERCENT ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypeVerticalPercent       =  CCBReader::SizeType::VERTICAL_PERCENT   ;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::SizeType    kCCBSizeTypeMultiplyResolution    =  CCBReader::SizeType::MULTIPLY_RESOLUTION;
+
+
+CC_DEPRECATED_ATTRIBUTE const CCBReader::ScaleType    kCCBScaleTypeAbsolute  = CCBReader::ScaleType::ABSOLUTE;
+CC_DEPRECATED_ATTRIBUTE const CCBReader::ScaleType    kCCBScaleTypeMultiplyResolution  = CCBReader::ScaleType::MULTIPLY_RESOLUTION;
 
 NS_CC_EXT_END
 
