@@ -12,13 +12,13 @@ NS_CC_EXT_BEGIN
 
 class Color3BWapper : public Object
 {
-private:
-    Color3B color;
-    
 public:
     static Color3BWapper* create(const Color3B& color);
     
     const Color3B& getColor() const;
+    
+private:
+    Color3B color;
 };
 
 
@@ -57,13 +57,13 @@ public:
 private:
     union
     {
-        int nValue;
-        float fValue;
-    } mValue;
+        int intValue;
+        float floatValue;
+    } _value;
     
-    std::string _value;
+    std::string _strValue;
     Array* _arrValue;
-    Type mType;
+    Type _type;
 };
 
 NS_CC_EXT_END

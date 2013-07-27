@@ -10,14 +10,6 @@ NS_CC_EXT_BEGIN
 
 class CCBSequence : public Object
 {
-private:
-    float mDuration;
-    std::string mName;
-    int mSequenceId;
-    int mChainedSequenceId;
-    CCBSequenceProperty* mCallbackChannel;
-    CCBSequenceProperty* mSoundChannel;
-
 public:
     CCBSequence();
     ~CCBSequence();
@@ -38,6 +30,14 @@ public:
     
     int getChainedSequenceId();
     void setChainedSequenceId(int nChainedSequenceId);
+    
+private:
+    float _duration;
+    std::string _name;
+    int mSequenceId;
+    int mChainedSequenceId;
+    CCBSequenceProperty* mCallbackChannel;
+    CCBSequenceProperty* mSoundChannel;
 };
 
 

@@ -17,40 +17,13 @@ public:
 
 class CCBAnimationManager : public Object
 {
-private:
-    Array *_sequences;
-    Dictionary *_nodeSequences;
-    Dictionary *_baseValues;
-    int _autoPlaySequenceId;
-    
-    Node *_rootNode;
-    
-    Size _rootContainerSize;
-    
-    CCBAnimationManagerDelegate *_delegate;
-    CCBSequence *_runningSequence;
-    
-    Array *_documentOutletNames;
-    Array *_documentOutletNodes;
-    Array *_documentCallbackNames;
-    Array *_documentCallbackNodes;
-    Array *_keyframeCallbacks;
-    Dictionary *mKeyframeCallFuncs;
-
-    std::string _documentControllerName;
-    std::string _lastCompletedSequenceName;
-
-    SEL_CallFunc _animationCompleteCallbackFunc;
-    Object *_target;
-    
-    
 public:
     bool _jsControlled;
     CCBAnimationManager();
     ~CCBAnimationManager();
 
 
-    Object *mOwner;
+    Object *_owner;
     
     virtual bool init();
     
@@ -125,6 +98,32 @@ private:
     ActionInterval* getEaseAction(ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
+    
+private:
+    Array *_sequences;
+    Dictionary *_nodeSequences;
+    Dictionary *_baseValues;
+    int _autoPlaySequenceId;
+    
+    Node *_rootNode;
+    
+    Size _rootContainerSize;
+    
+    CCBAnimationManagerDelegate *_delegate;
+    CCBSequence *_runningSequence;
+    
+    Array *_documentOutletNames;
+    Array *_documentOutletNodes;
+    Array *_documentCallbackNames;
+    Array *_documentCallbackNodes;
+    Array *_keyframeCallbacks;
+    Dictionary *_keyframeCallFuncs;
+    
+    std::string _documentControllerName;
+    std::string _lastCompletedSequenceName;
+    
+    SEL_CallFunc _animationCompleteCallbackFunc;
+    Object *_target;
 };
 
 class CCBSetSpriteFrame : public ActionInstant
@@ -143,7 +142,7 @@ public:
 	virtual CCBSetSpriteFrame* reverse() const override;
 
 private:
-    SpriteFrame *mSpriteFrame;
+    SpriteFrame *_spriteFrame;
 };
 
 
@@ -160,8 +159,8 @@ public:
 	virtual CCBSoundEffect* reverse() const override;
 
 private:
-    std::string mSoundFile;
-    float mPitch, mPan, mGain;
+    std::string _soundFile;
+    float _pitch, _pan, _gain;
 };
 
 
@@ -178,9 +177,9 @@ public:
     virtual void startWithTarget(Node *pNode) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 
@@ -197,9 +196,9 @@ public:
     virtual void update(float time) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 
@@ -216,9 +215,9 @@ public:
     virtual void update(float time) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 

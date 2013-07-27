@@ -33,8 +33,8 @@ CCBValue* CCBValue::create(int nValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->mValue.nValue = nValue;
-        ret->mType = TYPE_INT;
+        ret->_value.intValue = nValue;
+        ret->_type = TYPE_INT;
         ret->autorelease();
     }
     
@@ -46,8 +46,8 @@ CCBValue* CCBValue::create(float fValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->mValue.fValue = fValue;
-        ret->mType = TYPE_FLOAT;
+        ret->_value.floatValue = fValue;
+        ret->_type = TYPE_FLOAT;
         ret->autorelease();
     }
     
@@ -59,8 +59,8 @@ CCBValue* CCBValue::create(bool vValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->mValue.nValue = vValue ? 1 : 0;
-        ret->mType = TYPE_BOOL;
+        ret->_value.intValue = vValue ? 1 : 0;
+        ret->_type = TYPE_BOOL;
         ret->autorelease();
     }
     
@@ -72,8 +72,8 @@ CCBValue* CCBValue::create(unsigned char byte)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->mValue.nValue = byte;
-        ret->mType = TYPE_UNSIGNED_CHAR;
+        ret->_value.intValue = byte;
+        ret->_type = TYPE_UNSIGNED_CHAR;
         ret->autorelease();
     }
     
@@ -85,8 +85,8 @@ CCBValue* CCBValue::create(const char *pStringValue)
     CCBValue *ret = new CCBValue();
     if (ret)
     {
-        ret->_value = pStringValue;
-        ret->mType = TYPE_STRING;
+        ret->_strValue = pStringValue;
+        ret->_type = TYPE_STRING;
         ret->autorelease();
     }
     
@@ -100,7 +100,7 @@ CCBValue* CCBValue::create(Array *pArrValue)
     if (ret)
     {
         ret->_arrValue = pArrValue;
-        ret->mType = TYPE_ARRAY;
+        ret->_type = TYPE_ARRAY;
         ret->autorelease();
     }
     
@@ -110,35 +110,35 @@ CCBValue* CCBValue::create(Array *pArrValue)
 
 int CCBValue::getIntValue()
 {
-    CCASSERT(mType == TYPE_INT, "The type of CCBValue isn't integer.");
+    CCASSERT(_type == TYPE_INT, "The type of CCBValue isn't integer.");
     
-    return mValue.nValue;
+    return _value.intValue;
 }
 
 float CCBValue::getFloatValue()
 {
-    CCASSERT(mType == TYPE_FLOAT, "The type of CCBValue isn't float.");
+    CCASSERT(_type == TYPE_FLOAT, "The type of CCBValue isn't float.");
     
-    return mValue.fValue;
+    return _value.floatValue;
 }
 
 bool CCBValue::getBoolValue()
 {
-    CCASSERT(mType == TYPE_BOOL, "The type of CCBValue isn't boolean.");
+    CCASSERT(_type == TYPE_BOOL, "The type of CCBValue isn't boolean.");
     
-    return mValue.nValue == 1 ? true : false;
+    return _value.intValue == 1 ? true : false;
 }
 
 unsigned char CCBValue::getByteValue()
 {
-    CCASSERT(mType == TYPE_UNSIGNED_CHAR, "The type of CCBValue isn't unsigned char.");
+    CCASSERT(_type == TYPE_UNSIGNED_CHAR, "The type of CCBValue isn't unsigned char.");
     
-    return (unsigned char)(mValue.nValue);
+    return (unsigned char)(_value.intValue);
 }
 
 Array* CCBValue::getArrayValue()
 {
-    CCASSERT(mType == TYPE_ARRAY, "The type of CCBValue isn't array.");
+    CCASSERT(_type == TYPE_ARRAY, "The type of CCBValue isn't array.");
     
     return _arrValue;
 }
@@ -146,14 +146,14 @@ Array* CCBValue::getArrayValue()
 
 const char* CCBValue::getStringValue()
 {
-    CCASSERT(mType == TYPE_STRING, "The type of CCBValue isn't string.");
+    CCASSERT(_type == TYPE_STRING, "The type of CCBValue isn't string.");
     
-    return _value.c_str();
+    return _strValue.c_str();
 }
 
 CCBValue::Type CCBValue::getType()
 {
-    return mType;
+    return _type;
 }
 
 NS_CC_EXT_END
