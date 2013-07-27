@@ -264,6 +264,8 @@
 		1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */; };
 		1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A96FFCB1791701800E3AF98 /* SocketIOTest.cpp */; };
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
+		1AA62D3817A15EAA0006E64F /* hd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1C178F5F6C008915C5 /* hd */; };
+		1AA62D3B17A15EB00006E64F /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD13F1178E487D00682DBD /* Scale9SpriteTest.cpp */; };
 		A01E166C1784BDA100B0CA4A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A035ADEA178254FF00987F6C /* .gitignore */; };
@@ -6652,6 +6654,8 @@
 				A035AE43178254FF00987F6C /* development.icf in Resources */,
 				A035AE44178254FF00987F6C /* Marker Felt.ttf in Resources */,
 				A035AE4A178254FF00987F6C /* pew-pew-lei.wav in Resources */,
+				1AA62D3817A15EAA0006E64F /* hd in Resources */,
+				1AA62D3B17A15EB00006E64F /* sd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
