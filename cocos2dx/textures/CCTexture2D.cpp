@@ -662,7 +662,9 @@ bool Texture2D::initWithPVRFile(const char* file)
         _pixelsWide = pvr->getWidth();
         _pixelsHigh = pvr->getHeight();
         _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
-        _hasPremultipliedAlpha = (pvr->isForcePremultipliedAlpha()) ? pvr->hasPremultipliedAlpha() : _PVRHaveAlphaPremultiplied;
+        // FIX ME, if premultiply should be false, or the test case in RenderTextureTest(RenderTextureTargetNode) works in wrong effect
+        //_hasPremultipliedAlpha = (pvr->isForcePremultipliedAlpha()) ? pvr->hasPremultipliedAlpha() : _PVRHaveAlphaPremultiplied;
+        _hasPremultipliedAlpha =PVRHaveAlphaPremultiplied_;
         _pixelFormat = pvr->getFormat();
         _hasMipmaps = pvr->getNumberOfMipmaps() > 1;       
 
