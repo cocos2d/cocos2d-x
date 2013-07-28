@@ -205,7 +205,11 @@ void AssetsManager::update()
     }
     
     // Check if there is a new version.
-    if (! checkUpdate()) return;
+    if (! checkUpdate())
+    {
+        _isDownloading = false;
+        return;
+    }
     
     // Is package already downloaded?
     _downloadedVersion = UserDefault::getInstance()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
