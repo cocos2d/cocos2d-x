@@ -214,13 +214,6 @@ public:
    	{
    		return _headers;
    	}
-
-    // Backward compatibility
-    CC_DEPRECATED_ATTRIBUTE static const Type kHttpGet = Type::GET;
-    CC_DEPRECATED_ATTRIBUTE static const Type kHttpPut = Type::PUT;
-    CC_DEPRECATED_ATTRIBUTE static const Type kHttpPost = Type::POST;
-    CC_DEPRECATED_ATTRIBUTE static const Type kHttpDelete = Type::DELETE;
-    CC_DEPRECATED_ATTRIBUTE static const Type kHttpUnkown = Type::UNKNOWN;
     
 protected:
     // properties
