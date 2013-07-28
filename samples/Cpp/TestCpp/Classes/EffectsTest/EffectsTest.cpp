@@ -366,6 +366,12 @@ TextLayer::TextLayer(void)
     ActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );
     
+    LabelTTF* label = LabelTTF::create((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
+    
+    label->setPosition( Point(VisibleRect::center().x,VisibleRect::top().y-80) );
+    addChild(label);
+    label->setTag( kTagLabel );
+    
     schedule( schedule_selector(TextLayer::checkAnim) );
 }
 
