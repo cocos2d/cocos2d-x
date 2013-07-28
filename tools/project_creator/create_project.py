@@ -95,8 +95,9 @@ def processPlatformProjects(context, platform):
     proj_path = os.path.join(context["dst_project_path"], "proj." + platform)
     java_package_path = ""
 
-    # read json config file or the current platform
-    f = open("%s.json" % platform)
+    # read json config file for the current platform
+    conf_path = os.path.join(context["script_dir"], "%s.json" % platform)
+    f = open(conf_path)
     data = json.load(f)
 
     # rename package path, like "org.cocos2dx.hello" to "com.company.game". This is a special process for android
