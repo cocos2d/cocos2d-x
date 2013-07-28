@@ -188,12 +188,12 @@ CC_DEPRECATED_ATTRIBUTE typedef Control::Handler SEL_CCControlHandler;
 
 // For CCBReader
 
-CC_DEPRECATED_ATTRIBUTE const int kIntValue = CCBValue::TYPE_INT;
-CC_DEPRECATED_ATTRIBUTE const int kFloatValue = CCBValue::TYPE_FLOAT;
-CC_DEPRECATED_ATTRIBUTE const int kBoolValue = CCBValue::TYPE_BOOL;
-CC_DEPRECATED_ATTRIBUTE const int kUnsignedCharValue = CCBValue::TYPE_UNSIGNED_CHAR;
-CC_DEPRECATED_ATTRIBUTE const int kStringValue = CCBValue::TYPE_STRING;
-CC_DEPRECATED_ATTRIBUTE const int kArrayValue = CCBValue::TYPE_ARRAY;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kIntValue = CCBValue::Type::INT;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kFloatValue = CCBValue::Type::FLOAT;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kBoolValue = CCBValue::Type::BOOL;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kUnsignedCharValue = CCBValue::Type::UNSIGNED_CHAR;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kStringValue = CCBValue::Type::STRING;
+CC_DEPRECATED_ATTRIBUTE const CCBValue::Type kArrayValue = CCBValue::Type::ARRAY;
 
 
 CC_DEPRECATED_ATTRIBUTE const CCBReader::PropertyType    kCCBPropTypePosition        = CCBReader::PropertyType::POSITION;
