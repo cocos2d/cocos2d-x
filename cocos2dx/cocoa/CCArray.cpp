@@ -156,9 +156,10 @@ bool Array::initWithObject(Object* pObject)
 bool Array::initWithObjects(Object* pObject, ...)
 {
     ccArrayFree(data);
-    bool bRet = false;
+    bool bRet = initWithCapacity(1);
     do 
     {
+        CC_BREAK_IF(!bRet);
         CC_BREAK_IF(pObject == NULL);
 
         va_list args;
