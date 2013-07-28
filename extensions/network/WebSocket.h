@@ -126,16 +126,6 @@ public:
      */
     State getReadyState();
     
-    // Backward compatibility
-    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kErrorTimeout = ErrorCode::TIME_OUT;
-    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kErrorConnectionFailure = ErrorCode::CONNECTION_FAILURE;
-    CC_DEPRECATED_ATTRIBUTE static const ErrorCode kErrorUnknown = ErrorCode::UNKNOWN;
-    
-    CC_DEPRECATED_ATTRIBUTE static const State kStateConnecting = State::CONNECTING;
-    CC_DEPRECATED_ATTRIBUTE static const State kStateOpen = State::OPEN;
-    CC_DEPRECATED_ATTRIBUTE static const State kStateClosing = State::CLOSING;
-    CC_DEPRECATED_ATTRIBUTE static const State kStateClosed = State::CLOSED;
-    
 private:
     virtual void onSubThreadStarted();
     virtual int onSubThreadLoop();
