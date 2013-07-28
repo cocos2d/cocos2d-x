@@ -543,6 +543,9 @@ Developers:
         
     metalbass
         Fixing an issue that sigslot::_connection_base# (from 0 to 8) don't have virtual destructors.
+        
+     thp
+         Port Cocos2D-X to Qt 5
 
 Retired Core Developers:
     WenSheng Yang
