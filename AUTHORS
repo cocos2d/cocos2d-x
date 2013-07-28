@@ -564,6 +564,9 @@ Retired Core Developers:
         
     metadao
         make create_project.py more pythonic and fix some typoes
+        
+    timothyqiu
+        Project creator: use absolute path for json config files
 
 
 Cocos2d-x can not grow so fast without the active community.
