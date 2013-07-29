@@ -38,7 +38,7 @@
 
 NS_CC_BEGIN
 
-bool Image::_initWithWebpData(void *data, int dataLen)
+bool Image::initWithWebpData(void *data, int dataLen)
 {
 	bool bRet = false;
 	do

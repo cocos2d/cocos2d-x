@@ -379,7 +379,7 @@ bool Image::initWithStringShadowStroke(
     return true;
 }
 
-bool Image::_iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;
