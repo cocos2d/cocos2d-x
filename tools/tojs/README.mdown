@@ -1,7 +1,7 @@
 How to Use bindings-generator
 ==================
 
-On Windows:
+On Windows (Not available from 3.0-pre-alpha0, the reason is that Clang3.3 can't work perfectly on windows, therefore, disable windows support temporary.):
 ------------
 
 * Make sure that you have installed `android-ndk-r8d` or higher version.
