@@ -130,7 +130,7 @@ public:
 	 * while -1 means fail
 	 *
 	 */
-	int computeLineStart(TTF_Font *face, Image::ETextAlign eAlignMask, char cText,
+	int computeLineStart(TTF_Font *face, Image::TextAlign eAlignMask, char cText,
                          int iLineIndex) {
         return 0;
         /*
@@ -156,7 +156,7 @@ public:
         */
 	}
 		
-	int computeLineStartY( TTF_Font *face, Image::ETextAlign eAlignMask, int txtHeight, int borderHeight ){
+	int computeLineStartY( TTF_Font *face, Image::TextAlign eAlignMask, int txtHeight, int borderHeight ){
         return 0;
         /*
 		int iRet;
@@ -178,7 +178,7 @@ public:
         */
 	}
     
-	bool getBitmap(const char *text, int nWidth, int nHeight, Image::ETextAlign eAlignMask, const char * pFontName, float fontSize) {
+	bool getBitmap(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize) {
 		const char* pText = text;
         int pxSize = (int)fontSize;
 
@@ -284,7 +284,7 @@ bool Image::initWithString(
                              const char *    pText,
                              int             nWidth/* = 0*/,
                              int             nHeight/* = 0*/,
-                             ETextAlign      eAlignMask/* = kAlignCenter*/,
+                             TextAlign       eAlignMask/* = kAlignCenter*/,
                              const char *    pFontName/* = nil*/,
                              int             nSize/* = 0*/)
 {
