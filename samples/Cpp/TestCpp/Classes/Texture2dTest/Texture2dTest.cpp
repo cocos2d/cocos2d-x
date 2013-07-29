@@ -64,6 +64,11 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureDrawInRect),
     
     CL(TextureETC1),
+    
+    CL(TextureConvertRGB888),
+    CL(TextureConvertRGBA8888),
+    CL(TextureConvertI8),
+    CL(TextureConvertAI88),
 };
 
 static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1997,4 +2002,153 @@ std::string TextureETC1::title()
 std::string TextureETC1::subtitle()
 {
     return "only supported on android";
+}
+
+
+static void addImageToDemo(TextureDemo& demo, float x, float y, const char* path, Texture2D::PixelFormat format)
+{
+    Texture2D::setDefaultAlphaPixelFormat(format);
+    Sprite *sprite = Sprite::create(path);
+    sprite->setPosition(Point(x, y));
+    demo.addChild(sprite, 0);
+    
+    // remove texture from texture manager
+    TextureCache::getInstance()->removeTexture(sprite->getTexture());
+}
+
+//TextureConvertRGB888
+void TextureConvertRGB888::onEnter()
+{
+    TextureDemo::onEnter();
+    
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *background = LayerColor::create(Color4B(255,0,0,255), s.width, s.height);
+    addChild(background, -1);
+    
+    const char* img = "Images/test_image_rgb888.png";
+    addImageToDemo(*this, 1*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA8888);
+    addImageToDemo(*this, 2*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB888);
+    addImageToDemo(*this, 3*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGB565);
+    addImageToDemo(*this, 4*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::A8);
+    addImageToDemo(*this, 5*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::I8);
+    addImageToDemo(*this, 6*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::AI88);
+    addImageToDemo(*this, 7*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA4444);
+    addImageToDemo(*this, 8*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB5A1);
+    
+    // restore default
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
+    TextureCache::getInstance()->dumpCachedTextureInfo();
+}
+
+std::string TextureConvertRGB888::title()
+{
+    return "RGB888 convert test";
+}
+
+std::string TextureConvertRGB888::subtitle()
+{
+    return "RGBA8888,RGB888,RGB565,A8,I8,AI88,RGBA4444,RGB5A1";
+}
+//TextureConvertRGBA8888
+void TextureConvertRGBA8888::onEnter()
+{
+    TextureDemo::onEnter();
+    
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *background = LayerColor::create(Color4B(255,0,0,255), s.width, s.height);
+    addChild(background, -1);
+    
+    const char* img = "Images/test_image_rgba8888.png";
+    addImageToDemo(*this, 1*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA8888);
+    addImageToDemo(*this, 2*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB888);
+    addImageToDemo(*this, 3*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGB565);
+    addImageToDemo(*this, 4*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::A8);
+    addImageToDemo(*this, 5*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::I8);
+    addImageToDemo(*this, 6*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::AI88);
+    addImageToDemo(*this, 7*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA4444);
+    addImageToDemo(*this, 8*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB5A1);
+    
+    // restore default
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
+    TextureCache::getInstance()->dumpCachedTextureInfo();
+}
+
+std::string TextureConvertRGBA8888::title()
+{
+    return "RGBA8888 convert test";
+}
+
+std::string TextureConvertRGBA8888::subtitle()
+{
+    return "RGBA8888,RGB888,RGB565,A8,I8,AI88,RGBA4444,RGB5A1";
+}
+//TextureConvertI8
+void TextureConvertI8::onEnter()
+{
+    TextureDemo::onEnter();
+    
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *background = LayerColor::create(Color4B(255,0,0,255), s.width, s.height);
+    addChild(background, -1);
+    
+    const char* img = "Images/test_image_i8.png";
+    addImageToDemo(*this, 1*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA8888);
+    addImageToDemo(*this, 2*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB888);
+    addImageToDemo(*this, 3*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGB565);
+    addImageToDemo(*this, 4*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::A8);
+    addImageToDemo(*this, 5*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::I8);
+    addImageToDemo(*this, 6*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::AI88);
+    addImageToDemo(*this, 7*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA4444);
+    addImageToDemo(*this, 8*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB5A1);
+    
+    // restore default
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
+    TextureCache::getInstance()->dumpCachedTextureInfo();
+}
+
+std::string TextureConvertI8::title()
+{
+    return "I8 convert test";
+}
+
+std::string TextureConvertI8::subtitle()
+{
+    return "RGBA8888,RGB888,RGB565,A8,I8,AI88,RGBA4444,RGB5A1";
+}
+//TextureConvertAI88
+void TextureConvertAI88::onEnter()
+{
+    TextureDemo::onEnter();
+    
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *background = LayerColor::create(Color4B(255,0,0,255), s.width, s.height);
+    addChild(background, -1);
+    
+    const char* img = "Images/test_image_ai88.png";
+    addImageToDemo(*this, 1*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA8888);
+    addImageToDemo(*this, 2*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB888);
+    addImageToDemo(*this, 3*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGB565);
+    addImageToDemo(*this, 4*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::A8);
+    addImageToDemo(*this, 5*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::I8);
+    addImageToDemo(*this, 6*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::AI88);
+    addImageToDemo(*this, 7*s.width/9, s.height/2+32, img, Texture2D::PixelFormat::RGBA4444);
+    addImageToDemo(*this, 8*s.width/9, s.height/2-32, img, Texture2D::PixelFormat::RGB5A1);
+    
+    // restore default
+    Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::DEFAULT);
+    TextureCache::getInstance()->dumpCachedTextureInfo();
+}
+
+std::string TextureConvertAI88::title()
+{
+    return "AI88 convert test";
+}
+
+std::string TextureConvertAI88::subtitle()
+{
+    return "RGBA8888,RGB888,RGB565,A8,I8,AI88,RGBA4444,RGB5A1";
 }

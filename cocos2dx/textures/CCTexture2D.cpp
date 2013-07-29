@@ -183,8 +183,7 @@ void Texture2D::convertI8ToAI88(const unsigned char* in, int len, unsigned char*
     unsigned short* out16 = (unsigned short*)out;
     for (int i = 0; i < len; ++i)
     {
-        *out16++ = (unsigned short)in[i] << 8  //R
-            | 0xFF;                            //A
+        *out16++ = 0xFF00 | in[i];       //AI
     }
 }
 
@@ -717,7 +716,7 @@ Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, i
     case PixelFormat::RGB5A1:
         *outDataLen = dataLen*2;
         *outData = new unsigned char[*outDataLen];
-        convertAI88ToRGB5A1(data, dataLen, *outData);
+        convertI8ToRGB5A1(data, dataLen, *outData);
         break;
     default:
         // unsupport convertion or don't need to convert
