@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "MySocialManager.h"
 #include "PluginManager.h"
 #include "cocos2d.h"
+#include "Configs.h"
 
 using namespace cocos2d::plugin;
 using namespace cocos2d;
@@ -66,9 +67,9 @@ void MySocialManager::loadPlugins()
         if (NULL != _pNd91)
         {
             TSocialDeveloperInfo pNdInfo;
-            pNdInfo["Nd91AppId"] = "100010";
-            pNdInfo["Nd91AppKey"] = "C28454605B9312157C2F76F27A9BCA2349434E546A6E9C75";
-            pNdInfo["Nd91Orientation"] = "landscape";
+            pNdInfo["Nd91AppId"] = ND91_APPID;
+            pNdInfo["Nd91AppKey"] = ND91_APPKEY;
+            pNdInfo["Nd91Orientation"] = ND91_ORIENTATION;
             if (pNdInfo.empty()) {
                 char msg[256] = { 0 };
                 sprintf(msg, "Developer info is empty. PLZ fill your Nd91 info in %s(nearby line %d)", __FILE__, __LINE__);

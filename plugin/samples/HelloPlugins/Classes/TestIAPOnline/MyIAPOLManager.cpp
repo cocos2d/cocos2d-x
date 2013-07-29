@@ -78,8 +78,8 @@ void MyIAPOLManager::loadPlugins()
         // init qh360 plugin
         s_pQH360 = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPOnlineQH360"));
         TIAPDeveloperInfo pQH360Info;
-        pQH360Info["QHAppName"] = "HelloPlugins";
-        pQH360Info["QHExchangeRate"] = "1";
+        pQH360Info["QHAppName"] = APP_NAME;
+        pQH360Info["QHExchangeRate"] = QH360_EXCHANGE_RATE;
 
         s_pQH360->setDebugMode(true);
         s_pQH360->configDeveloperInfo(pQH360Info);
@@ -88,9 +88,9 @@ void MyIAPOLManager::loadPlugins()
 
     {
         TIAPDeveloperInfo pNdInfo;
-        pNdInfo["Nd91AppId"] = "100010";
-        pNdInfo["Nd91AppKey"] = "C28454605B9312157C2F76F27A9BCA2349434E546A6E9C75";
-        pNdInfo["Nd91Orientation"] = "landscape";
+        pNdInfo["Nd91AppId"] = ND91_APPID;
+        pNdInfo["Nd91AppKey"] = ND91_APPKEY;
+        pNdInfo["Nd91Orientation"] = ND91_ORIENTATION;
         s_pNd91 = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPOnlineNd91"));
         s_pNd91->setDebugMode(true);
         s_pNd91->configDeveloperInfo(pNdInfo);
@@ -103,9 +103,9 @@ void MyIAPOLManager::loadPlugins()
         if (NULL != s_pUC)
         {
             TIAPDeveloperInfo pUCInfo;
-            pUCInfo["UCCpID"] = "20087";
-            pUCInfo["UCGameID"] = "119474";
-            pUCInfo["UCServerID"] = "1333";
+            pUCInfo["UCCpID"] = UC_CPID;
+            pUCInfo["UCGameID"] = UC_GAME_ID;
+            pUCInfo["UCServerID"] = UC_SERVER_ID;
             s_pUC->setDebugMode(true);
             s_pUC->configDeveloperInfo(pUCInfo);
             s_pUC->setResultListener(s_pRetListener);

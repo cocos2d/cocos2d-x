@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "TestAdsScene.h"
 #include "PluginManager.h"
 #include "HelloWorldScene.h"
+#include "Configs.h"
 
 USING_NS_CC;
 using namespace cocos2d::plugin;
@@ -71,9 +72,9 @@ bool TestAds::init()
     TAdsDeveloperInfo devInfo;
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    devInfo["AdmobID"] = "a1517500cc8f794";
+    devInfo["AdmobID"] = ADMOB_ID_IOS;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    devInfo["AdmobID"] = "a1516fb6b16b12f";
+    devInfo["AdmobID"] = ADMOB_ID_ANDROID;
 #endif
     
     _admob->configDeveloperInfo(devInfo);

@@ -41,11 +41,11 @@ if [ -d "${TARGET_ROOT}" ]; then
     
     # Modify mk file
     MK_FILE_PATH="${GAME_PROJECT_DIR}"/jni/Android.mk
-    ${SHELL_DIR}/modifyMk.sh "${MK_FILE_PATH}"
+    ${SHELL_DIR}/modifyMK.sh "${MK_FILE_PATH}"
     
     # Modify Application.mk file (add stl & rtti configuration)
     APP_MK_FILE_PATH="${GAME_PROJECT_DIR}"/jni/Application.mk
-    ${SHELL_DIR}/modifyAppMk.sh "${APP_MK_FILE_PATH}"
+    ${SHELL_DIR}/modifyAppMK.sh "${APP_MK_FILE_PATH}"
     
     # Combin ForRes directory to the res directory of game project
     GAME_RES_DIR="${GAME_PROJECT_DIR}"/res
