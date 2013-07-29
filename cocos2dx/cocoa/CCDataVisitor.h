@@ -51,14 +51,14 @@ class Data;
  *
  * Use cases:
  *  - data serialization,
- *  - pretty printing of \a Object *
- *  - safe value reading from \a Array, \a Dictionary, \a Set
+ *  - pretty printing of Object *
+ *  - safe value reading from Array, Dictionary, Set
  *
  * Usage:
  *  1. subclass DataVisitor
  *  2. overload visit() methods for object that you need to handle
- *  3. handle other objects in \a visitObject()
- *  4. pass your visitor to \a Object::acceptVisitor()
+ *  3. handle other objects in visitObject()
+ *  4. pass your visitor to Object::acceptVisitor()
  */
 class CC_DLL DataVisitor
 {
