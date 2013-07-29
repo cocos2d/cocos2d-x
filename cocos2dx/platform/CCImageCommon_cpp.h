@@ -325,17 +325,17 @@ bool Image::initWithImageData(void * data, int dataLen)
         switch (_fileType)
         {
         case Format::PNG:
-            return _initWithPngData(data, dataLen);
+            return initWithPngData(data, dataLen);
         case Format::JPG:
-            return _initWithJpgData(data, dataLen);
+            return initWithJpgData(data, dataLen);
         case Format::TIFF:
-            return _initWithTiffData(data, dataLen);
+            return initWithTiffData(data, dataLen);
         case Format::WEBP:
-            return _initWithWebpData(data, dataLen);
+            return initWithWebpData(data, dataLen);
         case Format::PVR:
-            return _initWithPVRData(data, dataLen);
+            return initWithPVRData(data, dataLen);
         case Format::ETC:
-            return _initWithETCData(data, dataLen);
+            return initWithETCData(data, dataLen);
         default:
             CCAssert(false, "unsupport image format!");
             return false;
@@ -508,7 +508,7 @@ my_error_exit (j_common_ptr cinfo)
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool Image::_initWithJpgData(void * data, int dataLen)
+bool Image::initWithJpgData(void * data, int dataLen)
 {
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
@@ -603,7 +603,7 @@ bool Image::_initWithJpgData(void * data, int dataLen)
     return bRet;
 }
 
-bool Image::_initWithPngData(void * data, int dataLen)
+bool Image::initWithPngData(void * data, int dataLen)
 {
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
@@ -841,7 +841,7 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(size);
 }
 
-bool Image::_initWithTiffData(void* data, int dataLen)
+bool Image::initWithTiffData(void* data, int dataLen)
 {
     bool bRet = false;
     do 
@@ -902,7 +902,7 @@ bool Image::_initWithTiffData(void* data, int dataLen)
     return bRet;
 }
 
-bool Image::_testFormatForPvrTCSupport(int format)
+bool Image::testFormatForPvrTCSupport(int format)
 {
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
     if (!Configuration::getInstance()->supportsPVRTC())
@@ -921,7 +921,7 @@ bool Image::_testFormatForPvrTCSupport(int format)
     return true;
 }
 
-bool Image::_initWithPVRv2Data(void *data, int dataLen)
+bool Image::initWithPVRv2Data(void *data, int dataLen)
 {
     ccPVRv2TexHeader *header = NULL;
     unsigned int flags, pvrTag;
@@ -961,7 +961,7 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
         return false;
     }
     
-    if (!_testFormatForPvrTCSupport(formatFlags))
+    if (!testFormatForPvrTCSupport(formatFlags))
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
@@ -1054,7 +1054,7 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
     return true;
 }
 
-bool Image::_initWithPVRv3Data(void *data, int dataLen)
+bool Image::initWithPVRv3Data(void *data, int dataLen)
 {
     if (dataLen < sizeof(ccPVRv3TexHeader))
     {
@@ -1073,7 +1073,7 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
 	// parse pixel format
 	uint64_t pixelFormat = header->pixelFormat;
     
-    if (!_testFormatForPvrTCSupport(pixelFormat))
+    if (!testFormatForPvrTCSupport(pixelFormat))
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", pixelFormat);
         return false;
@@ -1177,7 +1177,7 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
 	return true;
 }
 
-bool Image::_initWithETCData(void *data, int dataLen)
+bool Image::initWithETCData(void *data, int dataLen)
 {
     etc1_byte* header = (etc1_byte*)data;
     
@@ -1228,9 +1228,9 @@ bool Image::_initWithETCData(void *data, int dataLen)
     return false;
 }
 
-bool Image::_initWithPVRData(void *data, int dataLen)
+bool Image::initWithPVRData(void *data, int dataLen)
 {
-    return _initWithPVRv2Data(data, dataLen) || _initWithPVRv3Data(data, dataLen);
+    return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
 }
 
 bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
@@ -1271,7 +1271,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     assert(false);
     return false;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    return _iosSaveToFile(pszFilePath, bIsToRGB);
+    return iosSaveToFile(pszFilePath, bIsToRGB);
 #else
     bool bRet = false;
 

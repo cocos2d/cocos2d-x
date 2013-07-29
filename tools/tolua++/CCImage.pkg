@@ -54,7 +54,7 @@ class CCImage : public CCObject
     bool hasAlpha();
     bool isPremultipliedAlpha();
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
-    unsigned short getWidth();
-    unsigned short getHeight();
-    int getBitDepth();
+    int getWidth();
+    int getHeight();
+    int getBitPerPixel();
 };

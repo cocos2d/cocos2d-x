@@ -189,20 +189,20 @@ public:
     bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
 
 protected:
-    bool _initWithJpgData(void *data, int dataLen);
-    bool _initWithPngData(void *data, int dataLen);
-    bool _initWithTiffData(void *data, int dataLen);
-    bool _initWithWebpData(void *data, int dataLen);
-    bool _initWithPVRData(void *data, int dataLen);
-    bool _initWithPVRv2Data(void *data, int dataLen);
-    bool _initWithPVRv3Data(void *data, int dataLen);
-    bool _initWithETCData(void *data, int dataLen);
+    bool initWithJpgData(void *data, int dataLen);
+    bool initWithPngData(void *data, int dataLen);
+    bool initWithTiffData(void *data, int dataLen);
+    bool initWithWebpData(void *data, int dataLen);
+    bool initWithPVRData(void *data, int dataLen);
+    bool initWithPVRv2Data(void *data, int dataLen);
+    bool initWithPVRv3Data(void *data, int dataLen);
+    bool initWithETCData(void *data, int dataLen);
 
     bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool saveImageToJPG(const char *pszFilePath);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    bool _iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
+    bool iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
 #endif
 
     unsigned char *_data;
@@ -238,7 +238,7 @@ private:
     bool isPvr(void *data, int dataLen);
     bool isEtc(void *data, int dataLen);
 
-    bool _testFormatForPvrTCSupport(int format);
+    bool testFormatForPvrTCSupport(int format);
 };
 
 // end of platform group
