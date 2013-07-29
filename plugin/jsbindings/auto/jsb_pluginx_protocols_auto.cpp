@@ -742,10 +742,18 @@ JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, js
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+	if (argc == 1) {
+		TAdsInfo arg0;
+		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+		cobj->showAds(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
 	if (argc == 2) {
 		TAdsInfo arg0;
 		cocos2d::plugin::ProtocolAds::AdsPos arg1;
-		#pragma warning NO CONVERSION TO NATIVE FOR TAdsInfo;
+		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
 		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->showAds(arg0, arg1);
@@ -753,7 +761,7 @@ JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, js
 		return JS_TRUE;
 	}
 
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 	return JS_FALSE;
 }
 JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp)
@@ -766,7 +774,7 @@ JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, js
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		TAdsInfo arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR TAdsInfo;
+		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->hideAds(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -893,7 +901,7 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("showAds", js_pluginx_protocols_ProtocolAds_showAds, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("showAds", js_pluginx_protocols_ProtocolAds_showAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("hideAds", js_pluginx_protocols_ProtocolAds_hideAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("queryPoints", js_pluginx_protocols_ProtocolAds_queryPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("spendPoints", js_pluginx_protocols_ProtocolAds_spendPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1143,7 +1151,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, ui
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		TSocialDeveloperInfo arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR TSocialDeveloperInfo;
+		ok &= jsval_to_TSocialDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1163,7 +1171,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		TAchievementInfo arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR TAchievementInfo;
+		ok &= jsval_to_TAchievementInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->unlockAchievement(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1295,7 +1303,7 @@ JSBool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
 	if (argc == 1) {
 		TUserDeveloperInfo arg0;
-		#pragma warning NO CONVERSION TO NATIVE FOR TUserDeveloperInfo;
+		ok &= jsval_to_TUserDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
