@@ -98,14 +98,21 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 }
 
 TMXLayer::TMXLayer()
-:_layerSize(Size::ZERO)
+:_layerName("")
+,_opacity(0)
+,_minGID(0)
+,_maxGID(0)
+,_vertexZvalue(0)
+,_useAutomaticVertexZ(false)
+,_reusedTile(NULL)
+,_atlasIndexArray(NULL)
+,_contentScaleFactor(1.0f)
+,_layerSize(Size::ZERO)
 ,_mapTileSize(Size::ZERO)
 ,_tiles(NULL)
 ,_tileSet(NULL)
+,_layerOrientation(TMXOrientationOrtho)
 ,_properties(NULL)
-,_layerName("")
-,_reusedTile(NULL)
-,_atlasIndexArray(NULL)    
 {}
 
 TMXLayer::~TMXLayer()

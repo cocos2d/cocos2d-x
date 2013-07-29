@@ -268,9 +268,6 @@ public:
     
 private:
     bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
-    
-    // By default PVR images are treated as if they don't have the alpha channel premultiplied
-    bool _PVRHaveAlphaPremultiplied;
 
 protected:
     /** pixel format of the texture */

@@ -41,7 +41,7 @@ public:
 class ContactListener : public b2ContactListener
 {
 	//! Callbacks for derived classes.
-	virtual void BeginContact(b2Contact *contact)
+	virtual void BeginContact(b2Contact *contact) override
 	{
 		if (contact)
 		{
@@ -53,17 +53,17 @@ class ContactListener : public b2ContactListener
 		}
 		B2_NOT_USED(contact);
 	}
-	virtual void EndContact(b2Contact *contact)
+	virtual void EndContact(b2Contact *contact) override
 	{
 		contact_list.clear();
 		B2_NOT_USED(contact);
 	}
-	virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+	virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold) override
 	{
 		B2_NOT_USED(contact);
 		B2_NOT_USED(oldManifold);
 	}
-	virtual void PostSolve(const b2Contact *contact, const b2ContactImpulse *impulse)
+	virtual void PostSolve(b2Contact *contact, const b2ContactImpulse *impulse) override
 	{
 		B2_NOT_USED(contact);
 		B2_NOT_USED(impulse);
