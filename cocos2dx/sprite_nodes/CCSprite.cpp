@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
+
 // external
 #include "kazmath/GL/matrix.h"
 #include <string.h>
@@ -182,6 +184,9 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         m_sQuad.tl.colors = tmpColor;
         m_sQuad.tr.colors = tmpColor;
         
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
         setTextureRect(rect, rotated, rect.size);
@@ -1075,21 +1080,47 @@ void CCSprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   auto sp = new Sprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 void CCSprite::setTexture(CCTexture2D *texture)
 {
     // If batchnode, then texture id should be the same
-    CCAssert(! m_pobBatchNode || texture->getName() == m_pobBatchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
+	CCAssert(! m_pobBatchNode || texture->getName() == m_pobBatchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
-    CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
+	CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
 
-    // shader program
-    if (texture)
+    if (NULL == texture)
     {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-    }
-    else
-    {
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
+        // Gets the texture by key firstly.
+        texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            CCImage* image = new CCImage();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
     }
     
     if (!m_pobBatchNode && m_pobTexture != texture)
