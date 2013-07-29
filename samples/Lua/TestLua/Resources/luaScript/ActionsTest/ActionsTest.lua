@@ -284,18 +284,6 @@ end
 --------------------------------------
 -- ActionCardinalSpline
 --------------------------------------
-local function drawCardinalSpline(array)
-	kmGLPushMatrix()
-	kmGLTranslatef(50, 50, 0)
-	CCDrawPrimitives.ccDrawCardinalSpline(array, 0, 100)
-	kmGLPopMatrix()
-
-	kmGLPushMatrix()
-	kmGLTranslatef(size.width / 2, 50, 0)
-	CCDrawPrimitives.ccDrawCardinalSpline(array, 1, 100)
-	kmGLPopMatrix()
-end
-
 local function ActionCardinalSpline()
 	local layer = CCLayer:create()
 	initWithLayer(layer)
@@ -323,7 +311,25 @@ local function ActionCardinalSpline()
 	kathia:setPosition(CCPoint(size.width / 2, 50))
 	kathia:runAction(seq2)
 
-	drawCardinalSpline(array)
+    local function drawCardinalSpline()
+        kmGLPushMatrix()
+        kmGLTranslatef(50, 50, 0)
+        CCDrawPrimitives.ccDrawCardinalSpline(array, 0, 100)
+        kmGLPopMatrix()
+
+        kmGLPushMatrix()
+        kmGLTranslatef(size.width / 2, 50, 0)
+        CCDrawPrimitives.ccDrawCardinalSpline(array, 1, 100)
+        kmGLPopMatrix()
+    end
+
+    array:retain()
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(CCSize(size.width, size.height))
+    glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+    glNode:registerScriptDrawHandler(drawCardinalSpline)
+    layer:addChild(glNode,-10)
+    glNode:setPosition( size.width / 2, size.height / 2)
 
 	Helper.titleLabel:setString("CardinalSplineBy / CardinalSplineAt")
 	Helper.subtitleLabel:setString("Cardinal Spline paths.\nTesting different tensions for one array")
@@ -333,15 +339,6 @@ end
 --------------------------------------
 -- ActionCatmullRom
 --------------------------------------
-local function drawCatmullRom(array1, array2)
-	kmGLPushMatrix()
-	kmGLTranslatef(50, 50, 0)
-	CCDrawPrimitives.ccDrawCatmullRom(array1, 50)
-	kmGLPopMatrix()
-
-	CCDrawPrimitives.ccDrawCatmullRom(array2,50)
-end
-
 local function ActionCatmullRom()
 	local layer = CCLayer:create()
 	initWithLayer(layer)
@@ -376,10 +373,26 @@ local function ActionCatmullRom()
     local seq2 = CCSequence:createWithTwoActions(action2, reverse2)
     kathia:runAction(seq2)
 
-	drawCatmullRom(array, array2)
+    local function drawCatmullRom()
+        kmGLPushMatrix()
+        kmGLTranslatef(50, 50, 0)
+        CCDrawPrimitives.ccDrawCatmullRom(array, 50)
+        kmGLPopMatrix()
 
-	Helper.titleLabel:setString("CatmullRomBy / CatmullRomTo")
-	Helper.subtitleLabel:setString("Catmull Rom spline paths. Testing reverse too")
+        CCDrawPrimitives.ccDrawCatmullRom(array2,50)
+    end
+
+    array:retain()
+    array2:retain()
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(CCSize(size.width, size.height))
+    glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+    glNode:registerScriptDrawHandler(drawCatmullRom)
+    layer:addChild(glNode,-10)
+    glNode:setPosition( size.width / 2, size.height / 2)
+
+    Helper.titleLabel:setString("CatmullRomBy / CatmullRomTo")
+    Helper.subtitleLabel:setString("Catmull Rom spline paths. Testing reverse too")
 	return layer
 end
 
@@ -956,6 +969,21 @@ local function ActionFollow()
     grossini:runAction(rep)
 
     layer:runAction(CCFollow:create(grossini, CCRect(0, 0, size.width * 2 - 100, size.height)))
+
+    local function draw()
+        local winSize = CCDirector:getInstance():getWinSize()
+        local x = winSize.width * 2 - 100
+        local y = winSize.height
+        local vertices = { CCPoint(5, 5), CCPoint(x - 5, 5), CCPoint(x - 5,y - 5), CCPoint(5,y - 5) }
+        CCDrawPrimitives.ccDrawPoly(vertices, 4, true)
+    end
+
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(CCSize(size.width, size.height))
+    glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+    glNode:registerScriptDrawHandler(draw)
+    layer:addChild(glNode,-10)
+    glNode:setPosition( size.width / 2, size.height / 2)
 
 	Helper.subtitleLabel:setString("Follow action")
 	return layer
