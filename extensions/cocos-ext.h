@@ -53,6 +53,10 @@
 #include "Components/CCComAttribute.h"
 #include "Components/CCComAudio.h"
 #include "Components/CCComController.h"
+#include "Components/CCComRender.h"
+
+#include "CocostudioReader/CCJsonReader.h"
+#include "CocoGUILIB/System/CocosGUI.h"
 
 #include "CCDeprecated-ext.h"
 
