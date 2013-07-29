@@ -3,10 +3,6 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
-#include "Lua_extensions_CCB.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "Lua_web_socket.h"
-#endif
 
 using namespace CocosDenshion;
 
@@ -24,30 +20,21 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    Director *director = Director::getInstance();
+    director->setOpenGLView(EGLView::getInstance());
 
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    LuaEngine* pEngine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
-    LuaStack *pStack = pEngine->getLuaStack();
-    lua_State *tolua_s = pStack->getLuaState();
-    tolua_extensions_ccb_open(tolua_s);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    pStack = pEngine->getLuaStack();
-    tolua_s = pStack->getLuaState();
-    tolua_web_socket_open(tolua_s);
-#endif
+    LuaEngine* engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
     
     std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
-    pEngine->executeScriptFile(path.c_str());
+    engine->executeScriptFile(path.c_str());
 
     return true;
 }

@@ -90,9 +90,9 @@ void Application::setAnimationInterval(double interval)
     _animationInterval = interval * 1000.0f;
 }
 
-TargetPlatform Application::getTargetPlatform()
+Application::Platform Application::getTargetPlatform()
 {
-    return kTargetNaCl;
+    return Platform::OS_NACL;
 }
 
 Application* Application::getInstance()
@@ -107,9 +107,9 @@ Application* Application::sharedApplication()
     return Application::getInstance();
 }
 
-ccLanguageType Application::getCurrentLanguage()
+LanguageType Application::getCurrentLanguage()
 {
-    ccLanguageType ret = kLanguageEnglish;
+    LanguageType ret = LanguageType::ENGLISH;
     return ret;
 }
 

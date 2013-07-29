@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
     auto scene = Scene::create();
     auto layer = new TestController();

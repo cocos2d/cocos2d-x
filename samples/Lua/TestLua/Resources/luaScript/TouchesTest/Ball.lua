@@ -9,7 +9,7 @@ end)
 
 Ball.__index = Ball
 
-Ball.m_velocity = ccp(0,0)
+Ball.m_velocity = CCPoint(0,0)
 
 local M_PI = 3.1415926
 
@@ -19,23 +19,23 @@ function Ball:radius()
 end
 
 function Ball:move(delta)
-    local getPosition = ccp(self:getPosition())
-    local position = ccpMult(self.m_velocity, delta)
-    self:setPosition( ccpAdd(getPosition, position) );
+    local getPosition = CCPoint(self:getPosition())
+    local position = CCPoint.__mul(self.m_velocity, delta)
+    self:setPosition( CCPoint.__add(getPosition, position) );
     
     if (getPosition.x > VisibleRect:right().x - self:radius()) then
-        self:setPosition( ccp( VisibleRect:right().x - self:radius(), getPosition.y) );
+        self:setPosition( CCPoint( VisibleRect:right().x - self:radius(), getPosition.y) );
         self.m_velocity.x = self.m_velocity.x * -1;
     elseif (getPosition.x < VisibleRect:left().x + self:radius()) then
-        self:setPosition( ccp(VisibleRect:left().x + self:radius(), getPosition.y) );
+        self:setPosition( CCPoint(VisibleRect:left().x + self:radius(), getPosition.y) );
         self.m_velocity.x = self.m_velocity.x * -1;
     end
 end
 
 function Ball:collideWithPaddle(paddle)
     local paddleRect = paddle:rect()
-    local paddleGetPosition = ccp(paddle:getPosition())
-    local selfGetPosition = ccp(self:getPosition())
+    local paddleGetPosition = CCPoint(paddle:getPosition())
+    local selfGetPosition = CCPoint(self:getPosition())
 
     paddleRect.origin.x = paddleRect.origin.x + paddleGetPosition.x;
     paddleRect.origin.y = paddleRect.origin.y + paddleGetPosition.y;
@@ -53,22 +53,22 @@ function Ball:collideWithPaddle(paddle)
         local angleOffset = 0.0; 
 
         if (selfGetPosition.y > midY and selfGetPosition.y <= highY + self:radius()) then
-            self:setPosition( ccp(selfGetPosition.x, highY + self:radius()) );
+            self:setPosition( CCPoint(selfGetPosition.x, highY + self:radius()) );
             hit = true;
             angleOffset = M_PI / 2;
         elseif (selfGetPosition.y < midY and selfGetPosition.y >= lowY - self:radius()) then
-            self:setPosition( ccp(selfGetPosition.x, lowY - self:radius()) );
+            self:setPosition( CCPoint(selfGetPosition.x, lowY - self:radius()) );
             hit = true;
             angleOffset = -M_PI / 2;
         end
 
         if (hit) then
-            local hitAngle = ccpToAngle(ccpSub(paddleGetPosition, paddleGetPosition)) + angleOffset;
+            local hitAngle = (CCPoint.__sub(paddleGetPosition, paddleGetPosition)):getAngle() + angleOffset;
 
-            local scalarVelocity = ccpLength(self.m_velocity) * 1.05;
-            local velocityAngle = -ccpToAngle(self.m_velocity) + 0.5 * hitAngle;
+            local scalarVelocity = (self.m_velocity):getLength() * 1.05;
+            local velocityAngle = -(self.m_velocity):getAngle() + 0.5 * hitAngle;
 
-            self.m_velocity = ccpMult(ccpForAngle(velocityAngle), scalarVelocity);
+            self.m_velocity = CCPoint.__mul(CCPoint:forAngle(velocityAngle), scalarVelocity);
         end
     end   
 

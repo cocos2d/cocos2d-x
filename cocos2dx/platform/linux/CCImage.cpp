@@ -242,9 +242,9 @@ public:
 	 */
 	int computeLineStart(FT_Face face, Image::TextAlign eAlignMask, int line) {
 				int lineWidth = textLines.at(line).lineWidth;
-		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignTop || eAlignMask == Image::kAlignBottom) {
+		if (eAlignMask == Image::TextAlign::CENTER || eAlignMask == Image::TextAlign::TOP || eAlignMask == Image::TextAlign::BOTTOM) {
 			return (iMaxLineWidth - lineWidth) / 2;
-		} else if (eAlignMask == Image::kAlignRight || eAlignMask == Image::kAlignTopRight || eAlignMask == Image::kAlignBottomRight) {
+		} else if (eAlignMask == Image::TextAlign::RIGHT || eAlignMask == Image::TextAlign::TOP_RIGHT || eAlignMask == Image::TextAlign::BOTTOM_RIGHT) {
 			return (iMaxLineWidth - lineWidth);
 		}
 
@@ -254,10 +254,10 @@ public:
 
 	int computeLineStartY( FT_Face face, Image::TextAlign eAlignMask, int txtHeight, int borderHeight ){
 		int baseLinePos = ceilf(FT_MulFix( face->bbox.yMax, face->size->metrics.y_scale )/64.0f);
-		if (eAlignMask == Image::kAlignCenter || eAlignMask == Image::kAlignLeft || eAlignMask == Image::kAlignRight) {
+		if (eAlignMask == Image::TextAlign::CENTER || eAlignMask == Image::TextAlign::LEFT || eAlignMask == Image::TextAlign::RIGHT) {
 			//vertical center
 			return (borderHeight - txtHeight) / 2 + baseLinePos;
-		} else if (eAlignMask == Image::kAlignBottomRight || eAlignMask == Image::kAlignBottom || eAlignMask == Image::kAlignBottomLeft) {
+		} else if (eAlignMask == Image::TextAlign::BOTTOM_RIGHT || eAlignMask == Image::TextAlign::BOTTOM || eAlignMask == Image::TextAlign::BOTTOM_LEFT) {
 			//vertical bottom
 			return borderHeight - txtHeight + baseLinePos;
 		}

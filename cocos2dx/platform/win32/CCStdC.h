@@ -99,12 +99,24 @@ NS_CC_END
 
 #endif // __MINGW32__
 
+// Conflicted with cocos2d::MessageBox, so we need to undef it.
 #ifdef MessageBox
 #undef MessageBox
 #endif
 
+// Conflicted with ParticleSystem::PositionType::RELATIVE, so we need to undef it.
 #ifdef RELATIVE
 #undef RELATIVE
+#endif
+
+// Conflicted with CCBReader::SizeType::RELATIVE and CCBReader::ScaleType::RELATIVE, so we need to undef it.
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+
+// Conflicted with HttpRequest::Type::DELETE, so we need to undef it.
+#ifdef DELETE
+#undef DELETE
 #endif
 
 #endif  // __CC_STD_C_H__

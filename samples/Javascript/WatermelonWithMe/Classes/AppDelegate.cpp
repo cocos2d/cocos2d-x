@@ -21,7 +21,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    ScriptEngineManager::purgeSharedManager();
+    ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-    EGLView::getInstance()->setDesignResolutionSize(480, 320, kResolutionFixedHeight);
+    EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::FIXED_HEIGHT);
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);

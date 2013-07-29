@@ -47,21 +47,6 @@ const Color3B ccGRAY = Color3B::GRAY;
 
 const BlendFunc kCCBlendFuncDisable = BlendFunc::DISABLE;
 
-const int kCCVertexAttrib_Position = GLProgram::VERTEX_ATTRIB_POSITION;
-const int kCCVertexAttrib_Color = GLProgram::VERTEX_ATTRIB_COLOR;
-const int kCCVertexAttrib_TexCoords = GLProgram::VERTEX_ATTRIB_TEX_COORDS;
-const int kCCVertexAttrib_MAX = GLProgram::VERTEX_ATTRIB_MAX;
-
-const int kCCUniformPMatrix = GLProgram::UNIFORM_P_MATRIX;
-const int kCCUniformMVMatrix = GLProgram::UNIFORM_MV_MATRIX;
-const int kCCUniformMVPMatrix = GLProgram::UNIFORM_MVP_MATRIX;
-const int kCCUniformTime = GLProgram::UNIFORM_TIME;
-const int kCCUniformSinTime = GLProgram::UNIFORM_SIN_TIME;
-const int kCCUniformCosTime = GLProgram::UNIFORM_COS_TIME;
-const int kCCUniformRandom01 = GLProgram::UNIFORM_RANDOM01;
-const int kCCUniformSampler = GLProgram::UNIFORM_SAMPLER;
-const int kCCUniform_MAX = GLProgram::UNIFORM_MAX;
-
 const char* kCCShader_PositionTextureColor = GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR;
 const char* kCCShader_PositionTextureColorAlphaTest = GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
 const char* kCCShader_PositionColor = GLProgram::SHADER_NAME_POSITION_COLOR;
@@ -86,81 +71,6 @@ const char* kCCUniformAlphaTestValue = GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE;
 const char* kCCAttributeNameColor = GLProgram::ATTRIBUTE_NAME_COLOR;
 const char* kCCAttributeNamePosition = GLProgram::ATTRIBUTE_NAME_POSITION;
 const char* kCCAttributeNameTexCoord = GLProgram::ATTRIBUTE_NAME_TEX_COORD;
-
-const int kCCVertexAttribFlag_None = GL::VERTEX_ATTRIB_FLAT_NONE;
-const int kCCVertexAttribFlag_Position = GL::VERTEX_ATTRIB_FLAG_POSITION;
-const int kCCVertexAttribFlag_Color = GL::VERTEX_ATTRIB_FLAG_COLOR;
-const int kCCVertexAttribFlag_TexCoords = GL::VERTEX_ATTRIB_FLAG_TEX_COORDS;
-const int kCCVertexAttribFlag_PosColorTex = GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX;
-
-const int kCCProgressTimerTypeRadial = ProgressTimer::RADIAL;
-const int kCCProgressTimerTypeBar = ProgressTimer::BAR;
-
-const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
-const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
-const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
-const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
-
-const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;
-const int kCCParticleStartSizeEqualToEndSize = ParticleSystem::START_SIZE_EQUAL_TO_END_SIZE;
-const int kCCParticleStartRadiusEqualToEndRadius = ParticleSystem::START_RADIUS_EQUAL_TO_END_RADIUS;
-
-const ParticleSystem::Mode kCCParticleModeGravity = ParticleSystem::Mode::GRAVITY;
-const ParticleSystem::Mode kCCParticleModeRadius = ParticleSystem::Mode::RADIUS;
-const int kCCParticleDefaultCapacity = kParticleDefaultCapacity;
-
-const ParticleSystem::PositionType kCCPositionTypeFree =  ParticleSystem::PositionType::FREE;
-const ParticleSystem::PositionType kCCPositionTypeRelative =  ParticleSystem::PositionType::RELATIVE;
-const ParticleSystem::PositionType kCCPositionTypeGrouped =  ParticleSystem::PositionType::GROUPED;
-
-const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
-const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
-const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
-
-const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
-const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
-const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
-
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PVRTC4;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PVRTC2;
-const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
-
-const int kCCMenuHandlerPriority = Menu::HANDLER_PRIORITY;
-const Menu::State kCCMenuStateWaiting = Menu::State::WAITING;
-const Menu::State kCCMenuStateTrackingTouch = Menu::State::TRACKING_TOUCH;
-
-const Touch::DispatchMode kCCTouchesOneByOne = Touch::DispatchMode::ONE_BY_ONE;
-const Touch::DispatchMode kCCTouchesAllAtOnce = Touch::DispatchMode::ALL_AT_ONCE;
-
-const Image::Format kCCImageFormatPNG = Image::Format::PNG;
-const Image::Format kCCImageFormatJPEG = Image::Format::JPG;
-
-const TransitionScene::Orientation kCCTransitionOrientationLeftOver = TransitionScene::Orientation::LEFT_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationRightOver = TransitionScene::Orientation::RIGHT_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationUpOver = TransitionScene::Orientation::UP_OVER;
-const TransitionScene::Orientation kCCTransitionOrientationDownOver = TransitionScene::Orientation::DOWN_OVER;
-
-const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
-const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
-
-const int kCCActionTagInvalid = kActionTagInvalid;
-
-const int kCCNodeTagInvalid = kNodeTagInvalid;
-
-const int kCCNodeOnEnter = kNodeOnEnter;
-const int kCCNodeOnExit = kNodeOnExit;
-const int kCCNodeOnEnterTransitionDidFinish = kNodeOnEnterTransitionDidFinish;
-const int kCCNodeOnExitTransitionDidStart = kNodeOnExitTransitionDidStart;
-const int kCCNodeOnCleanup = kNodeOnCleanup;
-
 
 void ccDrawInit()
 {

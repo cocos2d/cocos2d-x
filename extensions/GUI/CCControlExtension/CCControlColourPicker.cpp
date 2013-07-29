@@ -92,8 +92,8 @@ bool ControlColourPicker::init()
         _colourPicker->initWithTargetAndPos(spriteSheet, Point(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), ControlEventValueChanged);
-        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::colourSliderValueChanged), ControlEventValueChanged);
+        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), Control::EventType::VALUE_CHANGED);
+        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::colourSliderValueChanged), Control::EventType::VALUE_CHANGED);
        
         // Set defaults
         updateHueAndControlPicker();
@@ -146,7 +146,7 @@ void ControlColourPicker::setEnabled(bool enabled)
 }
 
 
-//need two events to prevent an infinite loop! (can't update huePicker when the huePicker triggers the callback due to ControlEventValueChanged)
+//need two events to prevent an infinite loop! (can't update huePicker when the huePicker triggers the callback due to Control::EventType::VALUE_CHANGED)
 void ControlColourPicker::updateControlPicker()
 {
     _huePicker->setHue(_hsv.h);
@@ -161,7 +161,7 @@ void ControlColourPicker::updateHueAndControlPicker()
 }
 
 
-void ControlColourPicker::hueSliderValueChanged(Object * sender, ControlEvent controlEvent)
+void ControlColourPicker::hueSliderValueChanged(Object * sender, Control::EventType controlEvent)
 {
     _hsv.h      = ((ControlHuePicker*)sender)->getHue();
 
@@ -171,11 +171,11 @@ void ControlColourPicker::hueSliderValueChanged(Object * sender, ControlEvent co
     Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
-    sendActionsForControlEvents(ControlEventValueChanged);
+    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
     updateControlPicker();
 }
 
-void ControlColourPicker::colourSliderValueChanged(Object * sender, ControlEvent controlEvent)
+void ControlColourPicker::colourSliderValueChanged(Object * sender, Control::EventType controlEvent)
 {
     _hsv.s=((ControlSaturationBrightnessPicker*)sender)->getSaturation();
     _hsv.v=((ControlSaturationBrightnessPicker*)sender)->getBrightness();
@@ -187,7 +187,7 @@ void ControlColourPicker::colourSliderValueChanged(Object * sender, ControlEvent
     Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
-    sendActionsForControlEvents(ControlEventValueChanged);
+    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
 }
 
 //ignore all touches, handled by children

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Cocos2D-X
+Icon=/opt/cocos2dx_TestCpp/icon.png
+Exec=/opt/cocos2dx_TestCpp/cocos2dx_TestCpp

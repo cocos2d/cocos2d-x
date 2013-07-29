@@ -27,9 +27,9 @@ local function MenuLayerMainMenu()
     ret:setTouchMode(kCCTouchesOneByOne)
 
     -- Font Item
-    local  spriteNormal = CCSprite:create(s_MenuItem, CCRectMake(0,23*2,115,23))
-    local  spriteSelected = CCSprite:create(s_MenuItem, CCRectMake(0,23*1,115,23))
-    local  spriteDisabled = CCSprite:create(s_MenuItem, CCRectMake(0,23*0,115,23))
+    local  spriteNormal = CCSprite:create(s_MenuItem, CCRect(0,23*2,115,23))
+    local  spriteSelected = CCSprite:create(s_MenuItem, CCRect(0,23*1,115,23))
+    local  spriteDisabled = CCSprite:create(s_MenuItem, CCRect(0,23*0,115,23))
 
     local  item1 = CCMenuItemSprite:create(spriteNormal, spriteSelected, spriteDisabled)
 
@@ -49,9 +49,9 @@ local function MenuLayerMainMenu()
 
 
     local schedulerEntry = nil
-	local scheduler = CCDirector:sharedDirector():getScheduler()
+	local scheduler = CCDirector:getInstance():getScheduler()
     local function allowTouches(dt)
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority+1, ret)
         if nil ~=  schedulerEntry then 
             scheduler:unscheduleScriptEntry(schedulerEntry)
@@ -63,7 +63,7 @@ local function MenuLayerMainMenu()
 
     local function menuCallbackDisabled(sender)
         -- hijack all touch events for 5 seconds
-        local  pDirector = CCDirector:sharedDirector()
+        local  pDirector = CCDirector:getInstance()
         --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority-1, ret)
         schedulerEntry = scheduler:scheduleScriptFunc(allowTouches, 5, false)
         cclog("TOUCHES DISABLED FOR 5 SECONDS")
@@ -154,7 +154,7 @@ local function MenuLayerMainMenu()
     menu:alignItemsVertically()
 
     -- elastic effect
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local i        = 0
     local child    = nil
@@ -173,8 +173,8 @@ local function MenuLayerMainMenu()
         if  i % 2 == 0 then
             offset = 0-offset
         end
-        child:setPosition( ccp( dstPointX + offset, dstPointY) )
-        child:runAction( CCEaseElasticOut:create(CCMoveBy:create(2, ccp(dstPointX - offset,0)), 0.35) )
+        child:setPosition( CCPoint( dstPointX + offset, dstPointY) )
+        child:runAction( CCEaseElasticOut:create(CCMoveBy:create(2, CCPoint(dstPointX - offset,0)), 0.35) )
     end
 
     m_disabledItem = item3
@@ -183,7 +183,7 @@ local function MenuLayerMainMenu()
     m_disabledItem:setEnabled( false )
 
     ret:addChild(menu)
-    menu:setPosition(ccp(s.width/2, s.height/2))
+    menu:setPosition(CCPoint(s.width/2, s.height/2))
 
 --  local schedulerEntry = nil
     local function onNodeEvent(event)
@@ -221,12 +221,12 @@ local function MenuLayer2()
                 -- TIP: if no padding, padding = 5
                 menu:alignItemsHorizontally()
                 local x, y = menu:getPosition()
-                menu:setPosition( ccpAdd(ccp(x, y), ccp(0,30)) )
+                menu:setPosition( CCPoint.__add(CCPoint(x, y), CCPoint(0,30)) )
             else
                 -- TIP: but padding is configurable
                 menu:alignItemsHorizontallyWithPadding(40)
                 local x, y = menu:getPosition()
-                menu:setPosition( ccpSub(ccp(x, y), ccp(0,30)) )
+                menu:setPosition( CCPoint.__sub(CCPoint(x, y), CCPoint(0,30)) )
             end
         end
     end
@@ -240,12 +240,12 @@ local function MenuLayer2()
                 -- TIP: if no padding, padding = 5
                 menu:alignItemsVertically()
                 local x, y = menu:getPosition()
-                menu:setPosition( ccpAdd(ccp(x, y), ccp(100,0)) )
+                menu:setPosition( CCPoint.__add(CCPoint(x, y), CCPoint(100,0)) )
             else
                 -- TIP: but padding is configurable
                 menu:alignItemsVerticallyWithPadding(40)
                 local x, y = menu:getPosition()
-                menu:setPosition( ccpSub(ccp(x, y), ccp(100,0)) )
+                menu:setPosition( CCPoint.__sub(CCPoint(x, y), CCPoint(100,0)) )
             end
         end
     end
@@ -295,15 +295,15 @@ local function MenuLayer2()
         menu:addChild(item2)
         menu:addChild(item3)
 
-        local s = CCDirector:sharedDirector():getWinSize()
-        menu:setPosition(ccp(s.width/2, s.height/2))
+        local s = CCDirector:getInstance():getWinSize()
+        menu:setPosition(CCPoint(s.width/2, s.height/2))
 
         menu:setTag( kTagMenu )
 
         ret:addChild(menu, 0, 100+i)
 
         local x, y = menu:getPosition()
-        m_centeredMenu = ccp(x, y)
+        m_centeredMenu = CCPoint(x, y)
     end
 
     m_alignedH = true
@@ -344,9 +344,9 @@ local function MenuLayer3()
     local  item2 = CCMenuItemFont:create("--- Go Back ---")
     item2:registerScriptTapHandler(menuCallback)
 
-    local spriteNormal   = CCSprite:create(s_MenuItem,  CCRectMake(0,23*2,115,23))
-    local spriteSelected = CCSprite:create(s_MenuItem,  CCRectMake(0,23*1,115,23))
-    local spriteDisabled = CCSprite:create(s_MenuItem,  CCRectMake(0,23*0,115,23))
+    local spriteNormal   = CCSprite:create(s_MenuItem,  CCRect(0,23*2,115,23))
+    local spriteSelected = CCSprite:create(s_MenuItem,  CCRect(0,23*1,115,23))
+    local spriteDisabled = CCSprite:create(s_MenuItem,  CCRect(0,23*0,115,23))
 
 
     local  item3 = CCMenuItemSprite:create(spriteNormal, spriteSelected, spriteDisabled)
@@ -361,15 +361,15 @@ local function MenuLayer3()
     menu:addChild(item2)
     menu:addChild(item3)
 
-    menu:setPosition( ccp(0,0) )
+    menu:setPosition( CCPoint(0,0) )
 
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
-    item1:setPosition( ccp(s.width/2 - 150, s.height/2) )
-    item2:setPosition( ccp(s.width/2 - 200, s.height/2) )
-    item3:setPosition( ccp(s.width/2, s.height/2 - 100) )
+    item1:setPosition( CCPoint(s.width/2 - 150, s.height/2) )
+    item2:setPosition( CCPoint(s.width/2 - 200, s.height/2) )
+    item3:setPosition( CCPoint(s.width/2, s.height/2 - 100) )
 
-    local  jump = CCJumpBy:create(3, ccp(400,0), 50, 4)
+    local  jump = CCJumpBy:create(3, CCPoint(400,0), 50, 4)
     local arr = CCArray:create()
     arr:addObject(jump)
     arr:addObject(jump:reverse())
@@ -385,7 +385,7 @@ local function MenuLayer3()
 
     ret:addChild( menu )
 
-    menu:setPosition(ccp(0,0))
+    menu:setPosition(CCPoint(0,0))
 
     local function onNodeEvent(event)
         if event == "exit" then
@@ -492,8 +492,8 @@ local function MenuLayer4()
 
     ret:addChild(menu)
 
-    local s = CCDirector:sharedDirector():getWinSize()
-    menu:setPosition(ccp(s.width/2, s.height/2))
+    local s = CCDirector:getInstance():getWinSize()
+    menu:setPosition(CCPoint(s.width/2, s.height/2))
     return ret
 end
 
@@ -596,18 +596,18 @@ local function BugsTest()
     ret:addChild(menu)
     menu:alignItemsVertically()
 
-    local s = CCDirector:sharedDirector():getWinSize()
-    menu:setPosition(ccp(s.width/2, s.height/2))
+    local s = CCDirector:getInstance():getWinSize()
+    menu:setPosition(CCPoint(s.width/2, s.height/2))
     return ret
 end
 
 
 local function RemoveMenuItemWhenMove()
     local ret = CCLayer:create()
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = CCDirector:getInstance():getWinSize()
 
     local  label = CCLabelTTF:create("click item and move, should not crash", "Arial", 20)
-    label:setPosition(ccp(s.width/2, s.height - 30))
+    label:setPosition(CCPoint(s.width/2, s.height - 30))
     ret:addChild(label)
 
     local item = CCMenuItemFont:create("item 1")
@@ -627,13 +627,13 @@ local function RemoveMenuItemWhenMove()
     ret:addChild(menu)
     menu:alignItemsVertically()
 
-    menu:setPosition(ccp(s.width/2, s.height/2))
+    menu:setPosition(CCPoint(s.width/2, s.height/2))
 
     ret:setTouchEnabled(true)
 --[[
     local function onNodeEvent(event)
         if event == "enter" then
-            CCDirector:sharedDirector():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
+            CCDirector:getInstance():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
         elseif event == "exit" then
            -- item:release()
         end

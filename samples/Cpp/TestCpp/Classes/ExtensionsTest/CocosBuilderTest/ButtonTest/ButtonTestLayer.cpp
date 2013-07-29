@@ -16,45 +16,45 @@ SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget
     return NULL;    
 }
 
-SEL_CCControlHandler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
+Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;
 }
 
 bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMemberVariableName, Node * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mControlEventLabel", LabelBMFont *, this->mControlEventLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", LabelBMFont *, this->mControlEventLabel);
 
     return false;
 }
 
-void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, cocos2d::extension::ControlEvent pControlEvent) {
+void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, cocos2d::extension::Control::EventType pControlEvent) {
     switch(pControlEvent) {
-        case ControlEventTouchDown:
+        case Control::EventType::TOUCH_DOWN:
             this->mControlEventLabel->setString("Touch Down.");
             break;
-        case ControlEventTouchDragInside:
+        case Control::EventType::DRAG_INSIDE:
             this->mControlEventLabel->setString("Touch Drag Inside.");
             break;
-        case ControlEventTouchDragOutside:
+        case Control::EventType::DRAG_OUTSIDE:
             this->mControlEventLabel->setString("Touch Drag Outside.");
             break;
-        case ControlEventTouchDragEnter:
+        case Control::EventType::DRAG_ENTER:
             this->mControlEventLabel->setString("Touch Drag Enter.");
             break;
-        case ControlEventTouchDragExit:
+        case Control::EventType::DRAG_EXIT:
             this->mControlEventLabel->setString("Touch Drag Exit.");
             break;
-        case ControlEventTouchUpInside:
+        case Control::EventType::TOUCH_UP_INSIDE:
             this->mControlEventLabel->setString("Touch Up Inside.");
             break;
-        case ControlEventTouchUpOutside:
+        case Control::EventType::TOUCH_UP_OUTSIDE:
             this->mControlEventLabel->setString("Touch Up Outside.");
             break;
-        case ControlEventTouchCancel:
+        case Control::EventType::TOUCH_CANCEL:
             this->mControlEventLabel->setString("Touch Cancel.");
             break;
-        case ControlEventValueChanged:
+        case Control::EventType::VALUE_CHANGED:
             this->mControlEventLabel->setString("Value Changed.");
             break;
         default:

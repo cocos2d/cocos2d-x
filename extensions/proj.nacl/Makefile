@@ -90,7 +90,8 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../Components/CCComAttribute.cpp \
 ../Components/CCComAudio.cpp \
 ../Components/CCComController.cpp \
-../Components/CCInputDelegate.cpp
+../Components/CCInputDelegate.cpp \
+../CCDprecated-ext.cpp
 
 all:
 

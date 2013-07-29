@@ -1,12 +1,12 @@
 #include "MutiTouchTest.h"
 
 
-static Color3B s_TouchColors[CC_MAX_TOUCHES] = {
-    Color3B::YELLOW,
-    Color3B::BLUE,
-    Color3B::GREEN,
-    Color3B::RED,
-    Color3B::MAGENTA
+static const Color3B* s_TouchColors[CC_MAX_TOUCHES] = {
+    &Color3B::YELLOW,
+    &Color3B::BLUE,
+    &Color3B::GREEN,
+    &Color3B::RED,
+    &Color3B::MAGENTA
 };
 
 class TouchPoint : public Node
@@ -79,7 +79,7 @@ void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event  *event)
         Point location = touch->getLocation();
 
         touchPoint->setTouchPos(location);
-        touchPoint->setTouchColor(s_TouchColors[touch->getID()]);
+        touchPoint->setTouchColor(*s_TouchColors[touch->getID()]);
 
         addChild(touchPoint);
         s_dic.setObject(touchPoint, touch->getID());

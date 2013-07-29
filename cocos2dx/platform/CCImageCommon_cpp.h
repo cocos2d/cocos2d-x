@@ -247,13 +247,14 @@ Image::~Image()
 bool Image::initWithImageFile(const char * strPath)
 {
     bool bRet = false;
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
     // operations underneath. Consequently, loading images via IMG_Load (an SDL
     // API) will be a lot faster than running libpng et al as compiled with
     // Emscripten.
-    SDL_Surface *iSurf = IMG_Load(strPath);
+    SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
     bRet = initWithRawData((void*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
@@ -269,7 +270,6 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_FreeSurface(iSurf);
 #else
     unsigned long bufferLen = 0;
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(strPath);
     unsigned char* buffer = nullptr;
     
     //detecgt and unzip the compress file
@@ -541,7 +541,9 @@ bool Image::_initWithJpgData(void * data, int dataLen)
         /* setup decompression process and source, then read JPEG header */
         jpeg_create_decompress( &cinfo );
 
+#ifndef CC_TARGET_QT5
         jpeg_mem_src( &cinfo, (unsigned char *) data, dataLen );
+#endif /* CC_TARGET_QT5 */
 
         /* reading the image header which contains image information */
 #if (JPEG_LIB_VERSION >= 90)
@@ -923,9 +925,9 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
 {
     ccPVRv2TexHeader *header = NULL;
     unsigned int flags, pvrTag;
-    unsigned int dataLength = 0, dataOffset = 0, dataSize = 0;
-    unsigned int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
-    unsigned int width = 0, height = 0;
+    int dataLength = 0, dataOffset = 0, dataSize = 0;
+    int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+    int width = 0, height = 0;
     int formatFlags;
     
     //Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
@@ -1034,7 +1036,7 @@ bool Image::_initWithPVRv2Data(void *data, int dataLen)
         }
 
         dataSize = widthBlocks * heightBlocks * ((blockSize  * it->second.bpp) / 8);
-        unsigned int packetLength = (dataLength - dataOffset);
+        int packetLength = (dataLength - dataOffset);
         packetLength = packetLength > dataSize ? dataSize : packetLength;
 
         //Make record to the mipmaps array and increment counter
@@ -1095,7 +1097,7 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
     _renderFormat = it->first;
     
     // flags
-	uint32_t flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
+	int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
 
     // PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
     if (flags & kPVR3TextureFlagPremultipliedAlpha)
@@ -1104,12 +1106,12 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
     }
     
 	// sizing
-	uint32_t width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
-	uint32_t height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
+	int width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
+	int height = CC_SWAP_INT32_LITTLE_TO_HOST(header->height);
 	_width = width;
 	_height = height;
-	uint32_t dataOffset = 0, dataSize = 0;
-	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+	int dataOffset = 0, dataSize = 0;
+	int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	
     _dataLen = dataLen - (sizeof(ccPVRv3TexHeader) + header->metadataLength);
     _data = new unsigned char[_dataLen];
@@ -1118,7 +1120,7 @@ bool Image::_initWithPVRv3Data(void *data, int dataLen)
 	_numberOfMipmaps = header->numberOfMipmaps;
 	CCAssert(_numberOfMipmaps < CC_MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increate the CC_MIPMAP_MAX value");
     
-	for (unsigned int i = 0; i < _numberOfMipmaps; i++)
+	for (int i = 0; i < _numberOfMipmaps; i++)
     {
 		switch (pixelFormat)
         {

@@ -141,7 +141,7 @@ void Box2DTestLayer::draw()
     Layer::draw();
 
 #if CC_ENABLE_BOX2D_INTEGRATION
-    ccGLEnableVertexAttribs( VERTEX_ATTRIB_FLAG_POSITION );
+    GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
 

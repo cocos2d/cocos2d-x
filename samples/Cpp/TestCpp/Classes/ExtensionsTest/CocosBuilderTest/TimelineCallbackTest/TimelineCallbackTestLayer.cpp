@@ -18,11 +18,11 @@ SEL_MenuHandler TimelineCallbackTestLayer::onResolveCCBCCMenuItemSelector(Object
     return NULL;
 }
 
-SEL_CCControlHandler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
+Control::Handler TimelineCallbackTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
     return NULL;
 }
 
-SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCallFuncSelector(Object * pTarget, const char* pSelectorName)
+SEL_CallFuncN TimelineCallbackTestLayer::onResolveCCBCCCallFuncSelector(Object * pTarget, const char* pSelectorName)
 {
     CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback1", TimelineCallbackTestLayer::onCallback1);
     CCB_SELECTORRESOLVER_CALLFUNC_GLUE(this, "onCallback2", TimelineCallbackTestLayer::onCallback2);

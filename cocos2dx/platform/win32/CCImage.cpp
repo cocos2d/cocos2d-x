@@ -249,8 +249,8 @@ public:
             CC_BREAK_IF(! pszText);
 
             DWORD dwFmt = DT_WORDBREAK;
-            DWORD dwHoriFlag = eAlign & 0x0f;
-            DWORD dwVertFlag = (eAlign & 0xf0) >> 4;
+            DWORD dwHoriFlag = (int)eAlign & 0x0f;
+            DWORD dwVertFlag = ((int)eAlign & 0xf0) >> 4;
 
             switch (dwHoriFlag)
             {
@@ -370,7 +370,7 @@ bool Image::initWithString(
                                const char *    pText, 
                                int             nWidth/* = 0*/, 
                                int             nHeight/* = 0*/,
-                               TextAlign      eAlignMask/* = kAlignCenter*/,
+                               TextAlign       eAlignMask/* = kAlignCenter*/,
                                const char *    pFontName/* = nil*/,
                                int             nSize/* = 0*/)
 {

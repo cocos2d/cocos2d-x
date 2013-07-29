@@ -18,12 +18,12 @@ local layer = nil
 local function backCallback(sender)
 	local scene = CCScene:create()
 	scene:addChild(CreateBackMenuItem())
-	CCDirector:sharedDirector():replaceScene(scene)
+	CCDirector:getInstance():replaceScene(scene)
 end
 
 
 local function resetAndScoreBallForPlayer(player)
-    m_ballStartingVelocity = ccpMult(m_ballStartingVelocity, -1.1);
+    m_ballStartingVelocity = CCPoint.__mul(m_ballStartingVelocity, -1.1);
     m_ball:setVelocity( m_ballStartingVelocity );
     m_ball:setPosition( VisibleRect:center() );
 end
@@ -39,7 +39,7 @@ local function doStep(delta)
         m_ball:collideWithPaddle( paddle );
     end
 
-    local ballPosition = ccp(m_ball:getPosition())
+    local ballPosition = CCPoint(m_ball:getPosition())
     if (ballPosition.y > VisibleRect:top().y - kStatusBarHeight + m_ball:radius()) then
         resetAndScoreBallForPlayer( kLowPlayer );
     elseif (ballPosition.y < VisibleRect:bottom().y-m_ball:radius()) then
@@ -62,8 +62,8 @@ end
 local function CreateTouchesLayer()
     layer = CCLayer:create()
 
-    m_ballStartingVelocity = ccp(20.0, -100.0);
-    local mgr = CCTextureCache:sharedTextureCache()
+    m_ballStartingVelocity = CCPoint(20.0, -100.0);
+    local mgr = CCTextureCache:getInstance()
     local texture = mgr:addImage(s_Ball)
     m_ball = Ball.ballWithTexture(texture);
 
@@ -72,24 +72,24 @@ local function CreateTouchesLayer()
     layer:addChild( m_ball );
     m_ball:retain();
     
-    local paddleTexture = CCTextureCache:sharedTextureCache():addImage(s_Paddle);
+    local paddleTexture = CCTextureCache:getInstance():addImage(s_Paddle);
     
     local paddlesM = {}
     
     local paddle = Paddle:paddleWithTexture(paddleTexture);
-    paddle:setPosition( ccp(VisibleRect:center().x, VisibleRect:bottom().y + 15) );
+    paddle:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:bottom().y + 15) );
     paddlesM[#paddlesM+1] = paddle
     
     paddle = Paddle:paddleWithTexture( paddleTexture );
-    paddle:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - kStatusBarHeight - 15) );
+    paddle:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:top().y - kStatusBarHeight - 15) );
     paddlesM[#paddlesM+1] = paddle
     
     paddle = Paddle:paddleWithTexture( paddleTexture );
-    paddle:setPosition( ccp(VisibleRect:center().x, VisibleRect:bottom().y + 100) );
+    paddle:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:bottom().y + 100) );
     paddlesM[#paddlesM+1] = paddle
     
     paddle = Paddle:paddleWithTexture( paddleTexture );
-    paddle:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y - kStatusBarHeight - 100) );
+    paddle:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:top().y - kStatusBarHeight - 100) );
     paddlesM[#paddlesM+1] = paddle
 
     m_paddles = paddlesM
