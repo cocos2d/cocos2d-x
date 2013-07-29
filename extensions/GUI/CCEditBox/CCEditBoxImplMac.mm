@@ -234,8 +234,10 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 }
 
 EditBoxImplMac::EditBoxImplMac(EditBox* pEditText)
-: EditBoxImpl(pEditText), _sysEdit(NULL), _maxTextLength(-1)
+: EditBoxImpl(pEditText)
 , _anchorPoint(Point(0.5f, 0.5f))
+, _maxTextLength(-1)
+, _sysEdit(NULL)
 {
     //! TODO: Retina on Mac
     //! _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;

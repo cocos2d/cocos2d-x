@@ -37,13 +37,13 @@
 NS_CC_EXT_BEGIN
 
 Control::Control()
-: _isOpacityModifyRGB(false)
-, _state(State::NORMAL)
-, _hasVisibleParents(false)
-, _enabled(false)
+: _enabled(false)
 , _selected(false)
 , _highlighted(false)
+, _hasVisibleParents(false)
 , _dispatchTable(NULL)
+, _isOpacityModifyRGB(false)
+, _state(State::NORMAL)
 {
 
 }

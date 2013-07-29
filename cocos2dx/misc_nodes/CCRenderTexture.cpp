@@ -44,8 +44,7 @@ NS_CC_BEGIN
 
 // implementation RenderTexture
 RenderTexture::RenderTexture()
-: _sprite(NULL)
-, _FBO(0)
+: _FBO(0)
 , _depthRenderBufffer(0)
 , _oldFBO(0)
 , _texture(0)
@@ -57,6 +56,7 @@ RenderTexture::RenderTexture()
 , _clearDepth(0.0f)
 , _clearStencil(0)
 , _autoDraw(false)
+, _sprite(NULL)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
