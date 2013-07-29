@@ -45,6 +45,7 @@ struct LetterDefinition
     float           offsetY;
     int             textureID;
     float           commonLineHeight;
+    bool            validDefinition;
 };
 
 /**

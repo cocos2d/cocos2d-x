@@ -40,7 +40,7 @@ class CC_DLL GlyphDef
 {
 public:
     
-    GlyphDef()                                                          {   /*do nothing*/                              }
+    GlyphDef() : _validGlyph(false)                                     {   /*do nothing*/                              }
     GlyphDef(unsigned short int letterUTF8, Rect &rect)                 { _gliphRect = rect; _uTF16Letter = letterUTF8; }
     
     void setUTF16Letter(unsigned short int letterUTF8)                  { _uTF16Letter  = letterUTF8;   }
@@ -51,6 +51,8 @@ public:
     float   getPadding()                                                { return _padding;              }
     void    setCommonHeight(float commonHeight)                         { _commonHeight = commonHeight; }
     float   getCommonHeight()                                           { return _commonHeight;         }
+    void    setValid(bool isValid)                                      { _validGlyph = isValid;        }
+    bool    isValid()                                                   { return _validGlyph;           }
     
 private:
     
@@ -58,6 +60,7 @@ private:
     unsigned short int  _uTF16Letter;
     float               _padding;
     float               _commonHeight;
+    bool                _validGlyph;
     
 };
 
