@@ -443,9 +443,6 @@
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCDevice.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -951,5 +948,6 @@
     <ClInclude Include="..\platform\third_party\common\etc\etc1.h">
       <Filter>platform\etc</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\platform.h" />
   </ItemGroup>
 </Project>

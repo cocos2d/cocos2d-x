@@ -37,7 +37,15 @@ THE SOFTWARE.
 #include "jpeglib.h"
 #include "tiffio.h"
 #include "etc1.h"
+#if defined(__native_client__) || defined(EMSCRIPTEN)
+// TODO(sbc): I'm pretty sure all platforms should be including
+// webph headers in this way.
+#include "webp/decode.h"
+#else
+#include "decode.h"
+#endif
 
+#include "ccMacros.h"
 #include "CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
@@ -1231,6 +1239,41 @@ bool Image::initWithETCData(void *data, int dataLen)
 bool Image::initWithPVRData(void *data, int dataLen)
 {
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
+}
+
+bool Image::initWithWebpData(void *data, int dataLen)
+{
+	bool bRet = false;
+	do
+	{
+        WebPDecoderConfig config;
+        if (WebPInitDecoderConfig(&config) == 0) break;
+        if (WebPGetFeatures((uint8_t*)data, dataLen, &config.input) != VP8_STATUS_OK) break;
+        if (config.input.width == 0 || config.input.height == 0) break;
+        
+        config.output.colorspace = MODE_RGBA;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        _width    = config.input.width;
+        _height   = config.input.height;
+        
+        int bufferSize = _width * _height * 4;
+        _data = new unsigned char[bufferSize];
+        
+        config.output.u.RGBA.rgba = (uint8_t*)_data;
+        config.output.u.RGBA.stride = _width * 4;
+        config.output.u.RGBA.size = bufferSize;
+        config.output.is_external_memory = 1;
+        
+        if (WebPDecode((uint8_t*)data, dataLen, &config) != VP8_STATUS_OK)
+        {
+            delete []_data;
+            _data = NULL;
+            break;
+        }
+        
+        bRet = true;
+	} while (0);
+	return bRet;
 }
 
 bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
