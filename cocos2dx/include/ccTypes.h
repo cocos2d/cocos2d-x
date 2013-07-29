@@ -412,8 +412,8 @@ public:
         : _fontSize(0)
         , _alignment(Label::HAlignment::CENTER)
         , _vertAlignment(Label::VAlignment::TOP)
+    	, _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
-        , _dimensions(Size::ZERO)
     {}
     
     // font name

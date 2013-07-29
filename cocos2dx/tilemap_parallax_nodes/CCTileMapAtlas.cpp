@@ -65,9 +65,9 @@ bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int t
 }
 
 TileMapAtlas::TileMapAtlas()
-    :_TGAInfo(NULL)
-    ,_posToAtlasIndex(NULL)
-    ,_itemsToRender(0)
+ : _posToAtlasIndex(NULL)
+ , _itemsToRender(0)
+ , _TGAInfo(NULL)
 {
 }
 

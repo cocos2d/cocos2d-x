@@ -57,14 +57,12 @@ NS_CC_BEGIN
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static bool PVRHaveAlphaPremultiplied_ = false;
+static bool _PVRHaveAlphaPremultiplied = false;
 
 Texture2D::Texture2D()
-: _PVRHaveAlphaPremultiplied(true)
+: _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
@@ -664,7 +662,7 @@ bool Texture2D::initWithPVRFile(const char* file)
         _contentSize = Size((float)_pixelsWide, (float)_pixelsHigh);
         // FIX ME, if premultiply should be false, or the test case in RenderTextureTest(RenderTextureTargetNode) works in wrong effect
         //_hasPremultipliedAlpha = (pvr->isForcePremultipliedAlpha()) ? pvr->hasPremultipliedAlpha() : _PVRHaveAlphaPremultiplied;
-        _hasPremultipliedAlpha =PVRHaveAlphaPremultiplied_;
+        _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
         _pixelFormat = pvr->getFormat();
         _hasMipmaps = pvr->getNumberOfMipmaps() > 1;       
 
@@ -708,7 +706,7 @@ bool Texture2D::initWithETCFile(const char* file)
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
     

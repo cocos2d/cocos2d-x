@@ -43,11 +43,7 @@ enum positions
 };
 
 Scale9Sprite::Scale9Sprite()
-: _insetLeft(0)
-, _insetTop(0)
-, _insetRight(0)
-, _insetBottom(0)
-, _spritesGenerated(false)
+: _spritesGenerated(false)
 , _spriteFrameRotated(false)
 , _positionsAreDirty(false)
 , _scale9Image(NULL)
@@ -61,6 +57,10 @@ Scale9Sprite::Scale9Sprite()
 , _bottom(NULL)
 , _bottomRight(NULL)
 , _opacityModifyRGB(false)
+, _insetLeft(0)
+, _insetTop(0)
+, _insetRight(0)
+, _insetBottom(0)
 {
 
 }

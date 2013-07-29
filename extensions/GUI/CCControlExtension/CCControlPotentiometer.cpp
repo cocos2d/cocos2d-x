@@ -31,11 +31,11 @@
 NS_CC_EXT_BEGIN
 
 ControlPotentiometer::ControlPotentiometer()
-: _thumbSprite(NULL)
-, _progressTimer(NULL)
-, _value(0.0f)
+: _value(0.0f)
 , _minimumValue(0.0f)
 , _maximumValue(0.0f)
+, _thumbSprite(NULL)
+, _progressTimer(NULL)
 {
 
 }

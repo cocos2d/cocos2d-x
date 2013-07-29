@@ -46,7 +46,7 @@ EditBoxImplTizen::EditBoxImplTizen(EditBox* pEditText)
 , _labelPlaceHolder(NULL)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
-, _keyboardReturnType(kKeyboardReturnTypeDefault)
+, _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
@@ -65,7 +65,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 bool EditBoxImplTizen::initWithSize(const Size& size)
 {
-    int fontSize = (int)size.height-12;
+//    int fontSize = (int)size.height-12;
     _label = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
     _label->setAnchorPoint(Point(0, 0.5f));
@@ -160,7 +160,7 @@ void EditBoxImplTizen::setText(const char* pText)
 
             std::string strToShow;
 
-            if (kEditBoxInputFlagPassword == _editBoxInputFlag)
+            if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
                 long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
@@ -284,21 +284,21 @@ void EditBoxImplTizen::openKeyboard()
     bool bSingleLineEnabled = false;
     switch (_editBoxInputMode)
     {
-    case kEditBoxInputModeAny:
+    case EditBox::InputMode::ANY:
         keypadStyle = KEYPAD_STYLE_NORMAL;
         break;
-    case kEditBoxInputModeEmailAddr:
+    case EditBox::InputMode::EMAIL_ADDRESS:
         keypadStyle = KEYPAD_STYLE_EMAIL;
         break;
-    case kEditBoxInputModeNumeric:
-    case kEditBoxInputModeDecimal:
+    case EditBox::InputMode::NUMERIC:
+    case EditBox::InputMode::DECIMAL:
         keypadStyle = KEYPAD_STYLE_NUMBER;
         keypadCategory = KEYPAD_MODE_NUMERIC;
         break;
-    case kEditBoxInputModePhoneNumber:
+    case EditBox::InputMode::PHONE_NUMBER:
         keypadStyle = KEYPAD_STYLE_PHONE_NUMBER;
         break;
-    case kEditBoxInputModeUrl:
+    case EditBox::InputMode::URL:
         keypadStyle = KEYPAD_STYLE_URL;
         break;
     case EditBox::InputMode::SINGLE_LINE:
@@ -312,10 +312,10 @@ void EditBoxImplTizen::openKeyboard()
     bool bTextPrediction = true;
     switch (_editBoxInputFlag)
     {
-    case kEditBoxInputFlagPassword:
+    case EditBox::InputFlag::PASSWORD:
         keypadStyle = KEYPAD_STYLE_PASSWORD;
         break;
-    case kEditBoxInputFlagSensitive:
+    case EditBox::InputFlag::SENSITIVE:
         bTextPrediction = false;
         break;
     default:
