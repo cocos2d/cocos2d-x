@@ -3,20 +3,6 @@
 
 NS_CC_BEGIN
 
-enum TargetPlatform
-{
-    kTargetWindows,
-    kTargetLinux,
-    kTargetMacOS,
-    kTargetAndroid,
-    kTargetIphone,
-    kTargetIpad,
-    kTargetBlackBerry,
-    kTargetNaCl,
-    kTargetEmscripten,
-    kTargetTizen
-};
-
 /**
  * @addtogroup platform
  * @{
@@ -25,6 +11,23 @@ enum TargetPlatform
 class CC_DLL ApplicationProtocol
 {
 public:
+
+    // Since WINDOWS and ANDROID are defined as macros, we could not just use these keywords in enumeration(Platform).
+    // Therefore, 'OS_' prefix is added to avoid conflicts with the definitions of system macros.
+    enum class Platform
+    {
+        OS_WINDOWS,
+        OS_LINUX,
+        OS_MAC,
+        OS_ANDROID,
+        OS_IPHONE,
+        OS_IPAD,
+        OS_BLACKBERRY,
+        OS_NACL,
+        OS_EMSCRIPTEN,
+        OS_TIZEN
+    };
+
 
     virtual ~ApplicationProtocol() {}
 
@@ -57,12 +60,12 @@ public:
     @brief Get current language config
     @return Current language config
     */
-    virtual ccLanguageType getCurrentLanguage() = 0;
+    virtual LanguageType getCurrentLanguage() = 0;
     
     /**
      @brief Get target platform
      */
-    virtual TargetPlatform getTargetPlatform() = 0;
+    virtual Platform getTargetPlatform() = 0;
 };
 
 // end of platform group

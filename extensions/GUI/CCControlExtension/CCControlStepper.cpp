@@ -51,7 +51,7 @@ ControlStepper::ControlStepper()
 , _maximumValue(0.0)
 , _stepValue(0.0)
 , _touchInsideFlag(false)
-, _touchedPart(kControlStepperPartNone)
+, _touchedPart(Part::NONE)
 , _autorepeatCount(0)
 {
 
@@ -213,7 +213,7 @@ void ControlStepper::setValueWithSendingEvent(double value, bool send)
     
     if (send)
     {
-        this->sendActionsForControlEvents(ControlEventValueChanged);
+        this->sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
     }
 }
 
@@ -237,10 +237,10 @@ void ControlStepper::update(float dt)
     if ((_autorepeatCount < kAutorepeatIncreaseTimeIncrement) && (_autorepeatCount % 3) != 0)
         return;
     
-    if (_touchedPart == kControlStepperPartMinus)
+    if (_touchedPart == Part::MINUS)
     {
         this->setValueWithSendingEvent(_value - _stepValue, _continuous);
-    } else if (_touchedPart == kControlStepperPartPlus)
+    } else if (_touchedPart == Part::PLUS)
     {
         this->setValueWithSendingEvent(_value + _stepValue, _continuous);
     }
@@ -253,20 +253,20 @@ void ControlStepper::updateLayoutUsingTouchLocation(Point location)
     if (location.x < _minusSprite->getContentSize().width
         && _value > _minimumValue)
     {
-        _touchedPart        = kControlStepperPartMinus;
+        _touchedPart        = Part::MINUS;
         
         _minusSprite->setColor(Color3B::GRAY);
         _plusSprite->setColor(Color3B::WHITE);
     } else if (location.x >= _minusSprite->getContentSize().width
                && _value < _maximumValue)
     {
-        _touchedPart        = kControlStepperPartPlus;
+        _touchedPart        = Part::PLUS;
         
         _minusSprite->setColor(Color3B::WHITE);
         _plusSprite->setColor(Color3B::GRAY);
     } else
     {
-        _touchedPart        = kControlStepperPartNone;
+        _touchedPart        = Part::NONE;
         
         _minusSprite->setColor(Color3B::WHITE);
         _plusSprite->setColor(Color3B::WHITE);
@@ -310,11 +310,12 @@ void ControlStepper::ccTouchMoved(Touch *pTouch, Event *pEvent)
                 this->startAutorepeat();
             }
         }
-    } else
+    }
+    else
     {
         _touchInsideFlag    = false;
         
-        _touchedPart        = kControlStepperPartNone;
+        _touchedPart        = Part::NONE;
         
         _minusSprite->setColor(Color3B::WHITE);
         _plusSprite->setColor(Color3B::WHITE);

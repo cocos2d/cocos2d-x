@@ -39,16 +39,16 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef enum
-{
-    kControlStepperPartMinus,
-    kControlStepperPartPlus,
-    kControlStepperPartNone,
-} ControlStepperPart;
-
 class ControlStepper : public Control
 {
 public:
+    enum class Part
+    {
+        MINUS,
+        PLUS,
+        NONE
+    };
+    
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
 
     ControlStepper();
@@ -75,7 +75,7 @@ public:
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(Point location);
 
-    /** Set the numeric value of the stepper. If send is true, the ControlEventValueChanged is sent. */
+    /** Set the numeric value of the stepper. If send is true, the Control::EventType::VALUE_CHANGED is sent. */
     void setValue(double value, bool send);
 
     /** Start the autorepeat increment/decrement. */
@@ -100,7 +100,7 @@ protected:
     /** The step, or increment, value for the stepper. */
     double                  _stepValue;
     bool                    _touchInsideFlag;
-    ControlStepperPart    _touchedPart;
+    Part                    _touchedPart;
     int                     _autorepeatCount;
 
     // Weak links to children

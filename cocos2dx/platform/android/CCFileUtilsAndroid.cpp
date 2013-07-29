@@ -59,7 +59,12 @@ FileUtils* FileUtils::getInstance()
     if (s_sharedFileUtils == NULL)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
-        s_sharedFileUtils->init();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsAndroid");
+        }
     }
     return s_sharedFileUtils;
 }
@@ -223,7 +228,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
-        CCLOG(msg.c_str());
+        CCLOG("%s", msg.c_str());
     }
     
     return pData;

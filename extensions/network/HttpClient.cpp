@@ -143,7 +143,7 @@ static void networkThread(void)
         // Process the request -> get response packet
         switch (request->getRequestType())
         {
-            case HttpRequest::kHttpGet: // HTTP GET
+            case HttpRequest::Type::GET: // HTTP GET
                 retValue = processGetTask(request,
                                           writeData, 
                                           response->getResponseData(), 
@@ -152,7 +152,7 @@ static void networkThread(void)
                                           response->getResponseHeader());
                 break;
             
-            case HttpRequest::kHttpPost: // HTTP POST
+            case HttpRequest::Type::POST: // HTTP POST
                 retValue = processPostTask(request,
                                            writeData, 
                                            response->getResponseData(), 
@@ -161,7 +161,7 @@ static void networkThread(void)
                                            response->getResponseHeader());
                 break;
 
-            case HttpRequest::kHttpPut:
+            case HttpRequest::Type::PUT:
                 retValue = processPutTask(request,
                                           writeData,
                                           response->getResponseData(),
@@ -170,7 +170,7 @@ static void networkThread(void)
                                           response->getResponseHeader());
                 break;
 
-            case HttpRequest::kHttpDelete:
+            case HttpRequest::Type::DELETE:
                 retValue = processDeleteTask(request,
                                              writeData,
                                              response->getResponseData(),

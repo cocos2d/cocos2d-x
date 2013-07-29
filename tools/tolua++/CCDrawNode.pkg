@@ -1,0 +1,22 @@
+class CCDrawNode : public CCNode
+{
+    static CCDrawNode* create();
+
+    CCDrawNode();
+
+    virtual ~CCDrawNode();
+    
+    virtual bool init();
+
+    void drawDot(const CCPoint &pos, float radius, const Color4F &color);
+    
+    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const Color4F &color);
+        
+    void clear();
+    
+    const BlendFunc& getBlendFunc() const;
+    
+    void setBlendFunc(const BlendFunc &blendFunc);
+    
+    virtual void draw();
+};

@@ -10,46 +10,46 @@
 
 NS_CC_EXT_BEGIN
 
-void ScrollViewLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * pCCBReader) {
+void ScrollViewLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * ccbReader) {
 	if(strcmp(pPropertyName, PROPERTY_CONTENTSIZE) == 0) {
 		((ScrollView *)pNode)->setViewSize(pSize);
 	} else {
-		NodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, pCCBReader);
+		NodeLoader::onHandlePropTypeSize(pNode, pParent, pPropertyName, pSize, ccbReader);
 	}
 }
 
-void ScrollViewLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader) {
+void ScrollViewLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_CLIPSTOBOUNDS) == 0) {
         ((ScrollView *)pNode)->setClippingToBounds(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_BOUNCES) == 0) {
         ((ScrollView *)pNode)->setBounceable(pCheck);
     } else {
-        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, pCCBReader);
+        NodeLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, ccbReader);
     }
 }
 
-void ScrollViewLoader::onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const char * pPropertyName, Node * pCCBFileNode, CCBReader * pCCBReader) {
+void ScrollViewLoader::onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const char * pPropertyName, Node * pCCBFileNode, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_CONTAINER) == 0) {
         ((ScrollView *)pNode)->setContainer(pCCBFileNode);
 		((ScrollView *)pNode)->updateInset();
     } else {
-        NodeLoader::onHandlePropTypeCCBFile(pNode, pParent, pPropertyName, pCCBFileNode, pCCBReader);
+        NodeLoader::onHandlePropTypeCCBFile(pNode, pParent, pPropertyName, pCCBFileNode, ccbReader);
     }
 }
 
-void ScrollViewLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * pCCBReader) {
+void ScrollViewLoader::onHandlePropTypeFloat(Node * pNode, Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_SCALE) == 0) {
         ((ScrollView *)pNode)->setScale(pFloat);
     } else {
-        NodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, pCCBReader);
+        NodeLoader::onHandlePropTypeFloat(pNode, pParent, pPropertyName, pFloat, ccbReader);
     }
 }
 
-void ScrollViewLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * pCCBReader) {
+void ScrollViewLoader::onHandlePropTypeIntegerLabeled(Node * pNode, Node * pParent, const char * pPropertyName, int pIntegerLabeled, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_DIRECTION) == 0) {
-        ((ScrollView *)pNode)->setDirection(ScrollViewDirection(pIntegerLabeled));
+        ((ScrollView *)pNode)->setDirection(ScrollView::Direction(pIntegerLabeled));
     } else {
-        NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, pCCBReader);
+        NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pIntegerLabeled, ccbReader);
     }
 }
 

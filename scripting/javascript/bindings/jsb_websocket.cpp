@@ -365,13 +365,13 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     
     JSObject* jsclassObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return WebSocket; })()"));
 
-    JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::kStateConnecting)
+    JS_DefineProperty(cx, jsclassObj, "CONNECTING", INT_TO_JSVAL((int)WebSocket::State::CONNECTING)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::kStateOpen)
+	JS_DefineProperty(cx, jsclassObj, "OPEN", INT_TO_JSVAL((int)WebSocket::State::OPEN)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::kStateClosing)
+	JS_DefineProperty(cx, jsclassObj, "CLOSING", INT_TO_JSVAL((int)WebSocket::State::CLOSING)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-	JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::kStateClosed)
+	JS_DefineProperty(cx, jsclassObj, "CLOSED", INT_TO_JSVAL((int)WebSocket::State::CLOSED)
                       , NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     
     // make the class enumerable in the registered namespace

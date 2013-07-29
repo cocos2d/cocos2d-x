@@ -45,7 +45,7 @@ ScrollView::ScrollView()
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
 , _delegate(NULL)
-, _direction(kScrollViewDirectionBoth)
+, _direction(Direction::BOTH)
 , _dragging(false)
 , _container(NULL)
 , _touchMoved(false)
@@ -114,7 +114,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         _bounceable = true;
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
-        _direction  = kScrollViewDirectionBoth;
+        _direction  = Direction::BOTH;
         _container->setPosition(Point(0.0f, 0.0f));
         _touchLength = 0.0f;
         
@@ -333,13 +333,13 @@ void ScrollView::relocateContainer(bool animated)
 
     newX     = oldPoint.x;
     newY     = oldPoint.y;
-    if (_direction == kScrollViewDirectionBoth || _direction == kScrollViewDirectionHorizontal)
+    if (_direction == Direction::BOTH || _direction == Direction::HORIZONTAL)
     {
         newX     = MAX(newX, min.x);
         newX     = MIN(newX, max.x);
     }
 
-    if (_direction == kScrollViewDirectionBoth || _direction == kScrollViewDirectionVertical)
+    if (_direction == Direction::BOTH || _direction == Direction::VERTICAL)
     {
         newY     = MIN(newY, max.y);
         newY     = MAX(newY, min.y);
@@ -659,11 +659,11 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             moveDistance = newPoint - _touchPoint;
             
             float dis = 0.0f;
-            if (_direction == kScrollViewDirectionVertical)
+            if (_direction == Direction::VERTICAL)
             {
                 dis = moveDistance.y;
             }
-            else if (_direction == kScrollViewDirectionHorizontal)
+            else if (_direction == Direction::HORIZONTAL)
             {
                 dis = moveDistance.x;
             }
@@ -690,10 +690,10 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             {
                 switch (_direction)
                 {
-                    case kScrollViewDirectionVertical:
+                    case Direction::VERTICAL:
                         moveDistance = Point(0.0f, moveDistance.y);
                         break;
-                    case kScrollViewDirectionHorizontal:
+                    case Direction::HORIZONTAL:
                         moveDistance = Point(moveDistance.x, 0.0f);
                         break;
                     default:

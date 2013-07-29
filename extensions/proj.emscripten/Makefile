@@ -87,7 +87,8 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 ../CCArmature/utils/CCTransformHelp.cpp \
 ../CCArmature/utils/CCTweenFunction.cpp \
-../CCArmature/utils/CCUtilMath.cpp
+../CCArmature/utils/CCUtilMath.cpp \
+../CCDprecated-ext.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 

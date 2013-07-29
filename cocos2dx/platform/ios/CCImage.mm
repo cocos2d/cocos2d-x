@@ -136,7 +136,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -212,7 +212,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uHoriFlag = (int)eAlign & 0x0f;
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
@@ -314,36 +314,36 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 NS_CC_BEGIN
 
 bool Image::initWithString(
-                           const char * pText,
-                           int         nWidth /* = 0 */,
-                           int         nHeight /* = 0 */,
-                           TextAlign eAlignMask /* = kAlignCenter */,
-                           const char * pFontName /* = nil */,
-                           int         nSize /* = 0 */)
+                            const char * pText,
+                            int         nWidth /* = 0 */,
+                            int         nHeight /* = 0 */,
+                            TextAlign   eAlignMask /* = kAlignCenter */,
+                            const char * pFontName /* = nil */,
+                            int         nSize /* = 0 */)
 {
     return initWithStringShadowStroke(pText, nWidth, nHeight, eAlignMask , pFontName, nSize);
 }
 
 bool Image::initWithStringShadowStroke(
-                                       const char * pText,
-                                       int         nWidth ,
-                                       int         nHeight ,
-                                       TextAlign eAlignMask ,
-                                       const char * pFontName ,
-                                       int         nSize ,
-                                       float       textTintR,
-                                       float       textTintG,
-                                       float       textTintB,
-                                       bool shadow,
-                                       float shadowOffsetX,
-                                       float shadowOffsetY,
-                                       float shadowOpacity,
-                                       float shadowBlur,
-                                       bool  stroke,
-                                       float strokeR,
-                                       float strokeG,
-                                       float strokeB,
-                                       float strokeSize)
+                                         const char * pText,
+                                         int         nWidth ,
+                                         int         nHeight ,
+                                         TextAlign   eAlignMask ,
+                                         const char * pFontName ,
+                                         int         nSize ,
+                                         float       textTintR,
+                                         float       textTintG,
+                                         float       textTintB,
+                                         bool shadow,
+                                         float shadowOffsetX,
+                                         float shadowOffsetY,
+                                         float shadowOpacity,
+                                         float shadowBlur,
+                                         bool  stroke,
+                                         float strokeR,
+                                         float strokeG,
+                                         float strokeB,
+                                         float strokeSize)
 {
     
     

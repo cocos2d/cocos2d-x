@@ -48,11 +48,11 @@ public:
     virtual void setFontColor(const Color3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
     virtual void setPlaceholderFontColor(const Color3B& color);
-    virtual void setInputMode(EditBoxInputMode inputMode);
-    virtual void setInputFlag(EditBoxInputFlag inputFlag);
+    virtual void setInputMode(EditBox::InputMode inputMode);
+    virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
     virtual int  getMaxLength();
-    virtual void setReturnType(KeyboardReturnType returnType);
+    virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
     
     virtual void setText(const char* pText);
@@ -71,9 +71,9 @@ private:
 
     LabelTTF* _label;
     LabelTTF* _labelPlaceHolder;
-    EditBoxInputMode    _editBoxInputMode;
-    EditBoxInputFlag    _editBoxInputFlag;
-    KeyboardReturnType  _keyboardReturnType;
+    EditBox::InputMode    _editBoxInputMode;
+    EditBox::InputFlag    _editBoxInputFlag;
+    EditBox::KeyboardReturnType  _keyboardReturnType;
     
     std::string _text;
     std::string _placeHolder;

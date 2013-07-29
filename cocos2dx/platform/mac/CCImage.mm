@@ -82,8 +82,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 		
 		
 		// alignment, linebreak
-		unsigned uHoriFlag = eAlign & 0x0f;
-		unsigned uVertFlag = (eAlign >> 4) & 0x0f;
+		unsigned uHoriFlag = (int)eAlign & 0x0f;
+		unsigned uVertFlag = ((int)eAlign >> 4) & 0x0f;
 		NSTextAlignment align = (2 == uHoriFlag) ? NSRightTextAlignment
 			: (3 == uHoriFlag) ? NSCenterTextAlignment
 			: NSLeftTextAlignment;

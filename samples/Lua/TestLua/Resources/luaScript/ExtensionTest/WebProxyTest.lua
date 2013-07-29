@@ -1,7 +1,7 @@
  
  local function WebSocketTestLayer()
     local layer   = CCLayer:create()
-    local winSize = CCDirector:sharedDirector():getWinSize()
+    local winSize = CCDirector:getInstance():getWinSize()
         
     local MARGIN = 40
     local SPACE  = 35
@@ -16,11 +16,11 @@
     local receiveBinaryTimes = 0
     
     local label = CCLabelTTF:create("WebSocket Test", "Arial", 28)
-    label:setPosition(ccp( winSize.width / 2, winSize.height - MARGIN))
+    label:setPosition(CCPoint( winSize.width / 2, winSize.height - MARGIN))
     layer:addChild(label, 0)
 
     local menuRequest = CCMenu:create()
-    menuRequest:setPosition(ccp(0, 0))
+    menuRequest:setPosition(CCPoint(0, 0))
     layer:addChild(menuRequest)
 
     --Send Text
@@ -28,7 +28,7 @@
         if nil ~= wsSendText then
             if kStateOpen == wsSendText:getReadyState() then
                sendTextStatus:setString("Send Text WS is waiting...")
-               wsSendText:sendTextMsg("Hello WebSocket中文, I'm a text message.")
+               wsSendText:sendString("Hello WebSocket中文, I'm a text message.")
             else
                 local warningStr = "send text websocket instance wasn't ready..."
                 print(warningStr)
@@ -39,7 +39,7 @@
     local labelSendText = CCLabelTTF:create("Send Text", "Arial", 22)
     local itemSendText  = CCMenuItemLabel:create(labelSendText)
     itemSendText:registerScriptTapHandler(onMenuSendTextClicked)
-    itemSendText:setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - SPACE))
+    itemSendText:setPosition(CCPoint(winSize.width / 2, winSize.height - MARGIN - SPACE))
     menuRequest:addChild(itemSendText)
 
     --Send Binary
@@ -47,13 +47,7 @@
         if nil ~= wsSendBinary then
             if kStateOpen == wsSendBinary:getReadyState() then
                sendBinaryStatus:setString("Send Binary WS is waiting...")
-               local buf = "Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0."
-               local nLength = string.len(buf)
-               t = {string.byte(buf,1,-1)}
-               --[[print(t)
-               print(table.getn(t))
-               print(string.char(unpack(t)))]]--
-               wsSendBinary:sendBinaryMsg(t,table.getn(t))
+               wsSendBinary:sendString("Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0.")
             else
                 local warningStr = "send binary websocket instance wasn't ready..."
                 sendBinaryStatus:setString(warningStr)
@@ -63,30 +57,30 @@
     local labelSendBinary = CCLabelTTF:create("Send Binary", "Arial", 22)
     local itemSendBinary = CCMenuItemLabel:create(labelSendBinary)
     itemSendBinary:registerScriptTapHandler(onMenuSendBinaryClicked)
-    itemSendBinary:setPosition(ccp(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE))
+    itemSendBinary:setPosition(CCPoint(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE))
     menuRequest:addChild(itemSendBinary)
 
     --Send Text Status Label
-    sendTextStatus = CCLabelTTF:create("Send Text WS is waiting...", "Arial", 14,CCSizeMake(160, 100),kCCVerticalTextAlignmentCenter,kCCVerticalTextAlignmentTop)
-    sendTextStatus:setAnchorPoint(ccp(0, 0))
-    sendTextStatus:setPosition(ccp(0, 25))
+    sendTextStatus = CCLabelTTF:create("Send Text WS is waiting...", "Arial", 14,CCSize(160, 100),kCCVerticalTextAlignmentCenter,kCCVerticalTextAlignmentTop)
+    sendTextStatus:setAnchorPoint(CCPoint(0, 0))
+    sendTextStatus:setPosition(CCPoint(0, 25))
     layer:addChild(sendTextStatus)
 
     --Send Binary Status Label
-    sendBinaryStatus = CCLabelTTF:create("Send Binary WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
-    sendBinaryStatus:setAnchorPoint(ccp(0, 0))
-    sendBinaryStatus:setPosition(ccp(160, 25))
+    sendBinaryStatus = CCLabelTTF:create("Send Binary WS is waiting...", "Arial", 14, CCSize(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
+    sendBinaryStatus:setAnchorPoint(CCPoint(0, 0))
+    sendBinaryStatus:setPosition(CCPoint(160, 25))
     layer:addChild(sendBinaryStatus)
 
     --Error Label
-    errorStatus = CCLabelTTF:create("Error WS is waiting...", "Arial", 14, CCSizeMake(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
-    errorStatus:setAnchorPoint(ccp(0, 0))
-    errorStatus:setPosition(ccp(320, 25))
+    errorStatus = CCLabelTTF:create("Error WS is waiting...", "Arial", 14, CCSize(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
+    errorStatus:setAnchorPoint(CCPoint(0, 0))
+    errorStatus:setPosition(CCPoint(320, 25))
     layer:addChild(errorStatus)
 
     local toMainMenu = CCMenu:create()
     CreateExtensionsBasicLayerMenu(toMainMenu)
-    toMainMenu:setPosition(ccp(0, 0))
+    toMainMenu:setPosition(CCPoint(0, 0))
     layer:addChild(toMainMenu,10)
 
     wsSendText   = WebSocket:create("ws://echo.websocket.org")
