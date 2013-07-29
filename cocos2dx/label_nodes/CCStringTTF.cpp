@@ -304,10 +304,17 @@ Sprite * StringTTF::getSpriteForLetter(unsigned short int newLetter)
     if (!_fontAtlas)
         return 0;
     
-    FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
-    Sprite *newSprite = createNewSpriteFromLetterDefinition(tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
-    this->addChild(newSprite);
-    return    newSprite;
+    FontLetterDefinition *tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+    if (tempDefinition)
+    {
+        Sprite *newSprite = createNewSpriteFromLetterDefinition(*tempDefinition, _fontAtlas->getTexture(tempDefinition->textureID) );
+        this->addChild(newSprite);
+        return    newSprite;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter)
@@ -316,9 +323,16 @@ Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short
         return 0;
     else
     {
-        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
-        Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, tempDefinition, _fontAtlas->getTexture(tempDefinition.textureID) );
-        return    pNewSprite;
+        FontLetterDefinition *tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
+        if (tempDefinition)
+        {
+            Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, *tempDefinition, _fontAtlas->getTexture(tempDefinition->textureID) );
+            return  pNewSprite;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
 
@@ -424,14 +438,20 @@ int StringTTF::getKerningForCharsPair(unsigned short first, unsigned short secon
 
 int StringTTF::getXOffsetForChar(unsigned short c)
 {
-    FontLetterDefinition tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
-    return (tempDefinition.offsetX);
+    FontLetterDefinition *tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
+    if (!tempDefinition)
+        return -1;
+    
+    return (tempDefinition->offsetX);
 }
 
 int StringTTF::getYOffsetForChar(unsigned short c)
 {
-    FontLetterDefinition tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
-    return (tempDefinition.offsetY);
+    FontLetterDefinition *tempDefinition   = _fontAtlas->getLetterDefinitionForChar(c);
+    if (!tempDefinition)
+        return -1;
+    
+    return (tempDefinition->offsetY);
 }
 
 
@@ -440,8 +460,11 @@ int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
     if (_advances)
     {
         // not that advance contains the X offset already
-        FontLetterDefinition tempDefinition = _fontAtlas->getLetterDefinitionForChar(c);
-        return (_advances[hintPositionInString].width - tempDefinition.offsetX);
+        FontLetterDefinition *tempDefinition = _fontAtlas->getLetterDefinitionForChar(c);
+        if (!tempDefinition)
+            return -1;
+        
+        return (_advances[hintPositionInString].width - tempDefinition->offsetX);
     }
     else
     {

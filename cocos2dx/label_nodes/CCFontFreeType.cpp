@@ -98,6 +98,9 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     // store the face globally
     _fontRef = face;
     
+    // save font name locally
+    _fontName = fontName;
+    
     // done and good
     return true;
 }
@@ -163,15 +166,31 @@ GlyphDef * FontFreeType::getGlyphDefintionsForText(const char *pText, int &outNu
     for (int c=0; c<numChar; ++c)
     {
         Rect tempRect;
+        
         if( !getBBOXFotChar(utf16String[c], tempRect) )
         {
-            delete [] pGlyphs;
-            return 0;
+            log("ERROR: Cannot find definition for glyph: %c in font:%s", utf16String[c], _fontName.c_str());
+            
+            tempRect.origin.x       = 0;
+            tempRect.origin.y       = 0;
+            tempRect.size.width     = 0;
+            tempRect.size.height    = 0;
+            
+            pGlyphs[c].setRect(tempRect);
+            pGlyphs[c].setUTF16Letter(utf16String[c]);
+            pGlyphs[c].setValid(false);
+            pGlyphs[c].setPadding(_letterPadding);
+            
         }
-        
-        pGlyphs[c].setRect(tempRect);
-        pGlyphs[c].setUTF16Letter(utf16String[c]);
-        pGlyphs[c].setPadding(_letterPadding);
+        else
+        {
+            
+            pGlyphs[c].setRect(tempRect);
+            pGlyphs[c].setUTF16Letter(utf16String[c]);
+            pGlyphs[c].setPadding(_letterPadding);
+            pGlyphs[c].setValid(true);
+            
+        }
     }
     
     outNumGlyphs = numChar;

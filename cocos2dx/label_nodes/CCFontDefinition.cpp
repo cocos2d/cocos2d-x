@@ -100,27 +100,44 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 if (posXUV == 0.0)
                     posXUV = currentGlyph.getPadding();
                 
-                tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
-                tempDef.width            =    letterWidth  + currentGlyph.getPadding();
-                tempDef.height           =    (letterHeight - 1);
-                tempDef.U                =    (posXUV       - 1);
-                tempDef.V                =    posYUV;
+                tempDef.validDefinition  =    currentGlyph.isValid();
                 
-                tempDef.offsetX          =    currentGlyph.getRect().origin.x;
-                tempDef.offsetY          =    currentGlyph.getRect().origin.y;
+                if (tempDef.validDefinition)
+                {
+                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
+                    tempDef.width            =    letterWidth  + currentGlyph.getPadding();
+                    tempDef.height           =    (letterHeight - 1);
+                    tempDef.U                =    (posXUV       - 1);
+                    tempDef.V                =    posYUV;
+                    
+                    tempDef.offsetX          =    currentGlyph.getRect().origin.x;
+                    tempDef.offsetY          =    currentGlyph.getRect().origin.y;
+                    
+                    tempDef.textureID        =    cPages;
+                    tempDef.commonLineHeight =    currentGlyph.getCommonHeight();
+                    
+                    // take from pixels to points
+                    tempDef.width  =    tempDef.width  / CC_CONTENT_SCALE_FACTOR();
+                    tempDef.height =    tempDef.height / CC_CONTENT_SCALE_FACTOR();
+                    tempDef.U      =    tempDef.U      / CC_CONTENT_SCALE_FACTOR();
+                    tempDef.V      =    tempDef.V      / CC_CONTENT_SCALE_FACTOR();
+                    
+                    if (tempDef.commonLineHeight>maxLineHeight)
+                        maxLineHeight = tempDef.commonLineHeight;
+                }
+                else
+                {
+                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
+                    tempDef.commonLineHeight =    0;
+                    tempDef.width            =    0;
+                    tempDef.height           =    0;
+                    tempDef.U                =    0;
+                    tempDef.V                =    0;
+                    tempDef.offsetX          =    0;
+                    tempDef.offsetY          =    0;
+                    tempDef.textureID        =    0;
+                }
                 
-                tempDef.textureID        =    cPages;
-                tempDef.commonLineHeight =    currentGlyph.getCommonHeight();
-                
-                
-                // take from pixels to points
-                tempDef.width  =    tempDef.width  / CC_CONTENT_SCALE_FACTOR();
-                tempDef.height =    tempDef.height / CC_CONTENT_SCALE_FACTOR();
-                tempDef.U      =    tempDef.U      / CC_CONTENT_SCALE_FACTOR();
-                tempDef.V      =    tempDef.V      / CC_CONTENT_SCALE_FACTOR();
-                
-                if (tempDef.commonLineHeight>maxLineHeight)
-                    maxLineHeight = tempDef.commonLineHeight;
                 
                 // add this definition
                 addLetterDefinition(tempDef);
@@ -217,18 +234,24 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
     {
         FontLetterDefinition tempDefinition;
         tempDefinition.letteCharUTF16   = (*ITER).second.letteCharUTF16;
-        tempDefinition.U                = (*ITER).second.U;
-        tempDefinition.V                = (*ITER).second.V;
-        tempDefinition.width            = (*ITER).second.width;
-        tempDefinition.height           = (*ITER).second.height;
-        // carloX not useed here tempDefinition.offsetX          = (*ITER).second.offsetX;
-        tempDefinition.offsetX          = 0;
-        tempDefinition.offsetY          = (*ITER).second.offsetY;
-        tempDefinition.textureID        = (*ITER).second.textureID;
-        tempDefinition.commonLineHeight = (*ITER).second.commonLineHeight;
-        tempDefinition.anchorX = 0.0f;
-        tempDefinition.anchorY = 1.0f;
-        retAtlas->addLetterDefinition(tempDefinition);
+        tempDefinition.validDefinition  = (*ITER).second.validDefinition;
+        
+        if (tempDefinition.validDefinition)
+        {
+            tempDefinition.U                = (*ITER).second.U;
+            tempDefinition.V                = (*ITER).second.V;
+            tempDefinition.width            = (*ITER).second.width;
+            tempDefinition.height           = (*ITER).second.height;
+            // carloX not useed here tempDefinition.offsetX          = (*ITER).second.offsetX;
+            tempDefinition.offsetX          = 0;
+            tempDefinition.offsetY          = (*ITER).second.offsetY;
+            tempDefinition.textureID        = (*ITER).second.textureID;
+            tempDefinition.commonLineHeight = (*ITER).second.commonLineHeight;
+            tempDefinition.anchorX = 0.0f;
+            tempDefinition.anchorY = 1.0f;
+            retAtlas->addLetterDefinition(tempDefinition);
+        }
+        
     }
     
     // done here

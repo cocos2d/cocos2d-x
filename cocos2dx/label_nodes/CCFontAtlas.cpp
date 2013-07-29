@@ -44,9 +44,17 @@ void FontAtlas::addLetterDefinition(FontLetterDefinition &letterDefinition)
     _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
 }
 
-FontLetterDefinition & FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16)
+FontLetterDefinition * FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16)
 {
-    return _fontLetterDefinitions[letteCharUTF16];
+    auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
+    if (outIterator != _fontLetterDefinitions.end())
+    {
+        return & (*outIterator).second;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void FontAtlas::addTexture(Texture2D *pTexture, int slot)

@@ -42,6 +42,7 @@ struct FontLetterDefinition
     float           commonLineHeight;
     float           anchorX;
     float           anchorY;
+    bool            validDefinition;
 };
 
 class CC_DLL FontAtlas : public Object
@@ -53,7 +54,7 @@ public:
     virtual ~FontAtlas();
     
     void addLetterDefinition(FontLetterDefinition &letterDefinition);
-    FontLetterDefinition & getLetterDefinitionForChar(unsigned short  letteCharUTF16);
+    FontLetterDefinition * getLetterDefinitionForChar(unsigned short  letteCharUTF16);
     
     void addTexture(Texture2D *pTexture, int slot);
     Texture2D * getTexture(int slot);
