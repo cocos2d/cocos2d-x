@@ -51,7 +51,7 @@ void log(const char * pszFormat, ...)
     vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
 }
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
