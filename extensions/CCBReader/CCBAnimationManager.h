@@ -17,40 +17,13 @@ public:
 
 class CCBAnimationManager : public Object
 {
-private:
-    Array *mSequences;
-    Dictionary *mNodeSequences;
-    Dictionary *mBaseValues;
-    int mAutoPlaySequenceId;
-    
-    Node *mRootNode;
-    
-    Size mRootContainerSize;
-    
-    CCBAnimationManagerDelegate *mDelegate;
-    CCBSequence *mRunningSequence;
-    
-    Array *mDocumentOutletNames;
-    Array *mDocumentOutletNodes;
-    Array *mDocumentCallbackNames;
-    Array *mDocumentCallbackNodes;
-    Array *mKeyframeCallbacks;
-    Dictionary *mKeyframeCallFuncs;
-
-    std::string mDocumentControllerName;
-    std::string lastCompletedSequenceName;
-
-    SEL_CallFunc mAnimationCompleteCallbackFunc;
-    Object *mTarget;
-    
-    
 public:
-    bool jsControlled;
+    bool _jsControlled;
     CCBAnimationManager();
     ~CCBAnimationManager();
 
 
-    Object *mOwner;
+    Object *_owner;
     
     virtual bool init();
     
@@ -92,7 +65,7 @@ public:
     const Size& getContainerSize(Node* pNode);
     
     void addNode(Node *pNode, Dictionary *pSeq);
-    void setBaseValue(Object *pValue, Node *pNode, const char *pPropName);
+    void setBaseValue(Object *pValue, Node *pNode, const char *propName);
     void moveAnimationsFromNode(Node* fromNode, Node* toNode);
 
     /** @deprecated This interface will be deprecated sooner or later.*/
@@ -116,15 +89,41 @@ public:
     Object* actionForSoundChannel(CCBSequenceProperty* channel);
     
 private:
-    Object* getBaseValue(Node *pNode, const char* pPropName);
+    Object* getBaseValue(Node *pNode, const char* propName);
     int getSequenceId(const char* pSequenceName);
     CCBSequence* getSequence(int nSequenceId);
-    ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *pPropName, Node *pNode);
-    void setAnimatedProperty(const char *pPropName, Node *pNode, Object *pValue, float fTweenDuraion);
+    ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *propName, Node *pNode);
+    void setAnimatedProperty(const char *propName, Node *pNode, Object *pValue, float fTweenDuraion);
     void setFirstFrame(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
-    ActionInterval* getEaseAction(ActionInterval *pAction, int nEasingType, float fEasingOpt);
+    ActionInterval* getEaseAction(ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
+    
+private:
+    Array *_sequences;
+    Dictionary *_nodeSequences;
+    Dictionary *_baseValues;
+    int _autoPlaySequenceId;
+    
+    Node *_rootNode;
+    
+    Size _rootContainerSize;
+    
+    CCBAnimationManagerDelegate *_delegate;
+    CCBSequence *_runningSequence;
+    
+    Array *_documentOutletNames;
+    Array *_documentOutletNodes;
+    Array *_documentCallbackNames;
+    Array *_documentCallbackNodes;
+    Array *_keyframeCallbacks;
+    Dictionary *_keyframeCallFuncs;
+    
+    std::string _documentControllerName;
+    std::string _lastCompletedSequenceName;
+    
+    SEL_CallFunc _animationCompleteCallbackFunc;
+    Object *_target;
 };
 
 class CCBSetSpriteFrame : public ActionInstant
@@ -143,7 +142,7 @@ public:
 	virtual CCBSetSpriteFrame* reverse() const override;
 
 private:
-    SpriteFrame *mSpriteFrame;
+    SpriteFrame *_spriteFrame;
 };
 
 
@@ -160,8 +159,8 @@ public:
 	virtual CCBSoundEffect* reverse() const override;
 
 private:
-    std::string mSoundFile;
-    float mPitch, mPan, mGain;
+    std::string _soundFile;
+    float _pitch, _pan, _gain;
 };
 
 
@@ -178,9 +177,9 @@ public:
     virtual void startWithTarget(Node *pNode) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 
@@ -197,9 +196,9 @@ public:
     virtual void update(float time) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 
@@ -216,9 +215,9 @@ public:
     virtual void update(float time) override;
 
 private:
-    float mStartAngle;
-    float mDstAngle;
-    float mDiffAngle;
+    float _startAngle;
+    float _dstAngle;
+    float _diffAngle;
 };
 
 

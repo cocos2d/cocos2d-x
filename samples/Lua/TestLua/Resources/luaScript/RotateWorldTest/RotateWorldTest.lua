@@ -1,5 +1,5 @@
 
-local size = CCDirector:sharedDirector():getWinSize()
+local size = CCDirector:getInstance():getWinSize()
 
 local function CreateSpriteLayer()
 	local layer = CCLayer:create()
@@ -16,9 +16,9 @@ local function CreateSpriteLayer()
     spriteSister1:setScale(1.5)
     spriteSister2:setScale(1.5)
 
-    sprite:setPosition(CCPointMake(x / 2, y / 2))
-    spriteSister1:setPosition(CCPointMake(40, y / 2))
-    spriteSister2:setPosition(CCPointMake(x - 40, y / 2))
+    sprite:setPosition(CCPoint(x / 2, y / 2))
+    spriteSister1:setPosition(CCPoint(40, y / 2))
+    spriteSister2:setPosition(CCPoint(x - 40, y / 2))
 
     layer:addChild(sprite)
     layer:addChild(spriteSister1)
@@ -27,13 +27,13 @@ local function CreateSpriteLayer()
 	local rot = CCRotateBy:create(16, -3600)
     sprite:runAction(rot)
 
-    local jump1 = CCJumpBy:create(4, CCPointMake(-400, 0), 100, 4)
+    local jump1 = CCJumpBy:create(4, CCPoint(-400, 0), 100, 4)
     local jump2 = jump1:reverse()
 
     local rot1 = CCRotateBy:create(4, 360 * 2)
     local rot2 = rot1:reverse()
 
-    local jump3 = CCJumpBy:create(4, CCPointMake(-400, 0), 100, 4)
+    local jump3 = CCJumpBy:create(4, CCPoint(-400, 0), 100, 4)
     local jump4 = jump3:reverse()
     local rot3 = CCRotateBy:create(4, 360 * 2)
     local rot4 = rot3:reverse()
@@ -74,20 +74,20 @@ local function CreateRotateWorldLayer()
     local white = CCLayerColor:create(Color4B(255,255,255,255))
 
     blue:setScale(0.5)
-    blue:setPosition(CCPointMake(- x / 4, - y / 4))
+    blue:setPosition(CCPoint(- x / 4, - y / 4))
     blue:addChild(CreateSpriteLayer())
 
     red:setScale(0.5)
-    red:setPosition(CCPointMake(x / 4, - y / 4))
+    red:setPosition(CCPoint(x / 4, - y / 4))
 
     green:setScale(0.5)
-    green:setPosition(CCPointMake(- x / 4, y / 4))
+    green:setPosition(CCPoint(- x / 4, y / 4))
     green:addChild(CreateTestLayer())
 
     white:setScale(0.5)
-    white:setPosition(CCPointMake(x / 4, y / 4))
+    white:setPosition(CCPoint(x / 4, y / 4))
     white:ignoreAnchorPointForPosition(false)
-    white:setPosition(CCPointMake(x / 4 * 3, y / 4 * 3))
+    white:setPosition(CCPoint(x / 4 * 3, y / 4 * 3))
 
     layer:addChild(blue, -1)
     layer:addChild(white)

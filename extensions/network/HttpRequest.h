@@ -45,16 +45,16 @@ class HttpRequest : public Object
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
-    typedef enum
+    enum class Type
     {
-        kHttpGet,
-        kHttpPost,
-        kHttpPut,
-        kHttpDelete,
-        kHttpUnkown,
-    } HttpRequestType;
+        GET,
+        POST,
+        PUT,
+        DELETE,
+        UNKNOWN,
+    };
     
-    /** Constructor 
+    /** Constructor
         Because HttpRequest object will be used between UI thead and network thread,
         requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
         new/retain/release still works, which means you need to release it manually
@@ -62,7 +62,7 @@ public:
      */
     HttpRequest()
     {
-        _requestType = kHttpUnkown;
+        _requestType = Type::UNKNOWN;
         _url.clear();
         _requestData.clear();
         _tag.clear();
@@ -93,12 +93,12 @@ public:
     /** Required field for HttpRequest object before being sent.
         kHttpGet & kHttpPost is currently supported
      */
-    inline void setRequestType(HttpRequestType type)
+    inline void setRequestType(Type type)
     {
         _requestType = type;
     };
     /** Get back the kHttpGet/Post/... enum value */
-    inline HttpRequestType getRequestType()
+    inline Type getRequestType()
     {
         return _requestType;
     };
@@ -214,11 +214,10 @@ public:
    	{
    		return _headers;
    	}
-
-
+    
 protected:
     // properties
-    HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
+    Type             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback

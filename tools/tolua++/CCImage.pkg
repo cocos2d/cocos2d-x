@@ -3,6 +3,7 @@ class CCImage : public CCObject
     CCImage();
     ~CCImage();
 
+/*
     typedef enum
     {
         kFmtJpg = 0,
@@ -42,6 +43,7 @@ class CCImage : public CCObject
         const char *    pFontName = 0,
         int             nSize = 0);
 
+*/
     unsigned char *   getData();
     int         getDataLen();
 

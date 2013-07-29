@@ -32,6 +32,7 @@
 
 #include "cocoa/CCObject.h"
 #include "../../ExtensionMacros.h"
+#include "CCControl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -42,24 +43,20 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef unsigned int ControlEvent;
-
-typedef void (Object::*SEL_CCControlHandler)(Object*, ControlEvent);
-
-#define cccontrol_selector(_SELECTOR) (SEL_CCControlHandler)(&_SELECTOR)
+#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
 
 class Invocation : public Object
 {
 public:
-    static Invocation* create(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
-    Invocation(Object* target, SEL_CCControlHandler action, ControlEvent controlEvent);
+    static Invocation* create(Object* target, Control::Handler action, Control::EventType controlEvent);
+    Invocation(Object* target, Control::Handler action, Control::EventType controlEvent);
 
     void invoke(Object* sender);
 
 protected:
-    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, _action, Action);
+    CC_SYNTHESIZE_READONLY(Control::Handler, _action, Action);
     CC_SYNTHESIZE_READONLY(Object*, _target, Target);
-    CC_SYNTHESIZE_READONLY(ControlEvent, _controlEvent, ControlEvent);
+    CC_SYNTHESIZE_READONLY(Control::EventType, _controlEvent, ControlEvent);
 };
 
 // end of GUI group

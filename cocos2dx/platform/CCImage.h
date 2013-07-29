@@ -50,28 +50,35 @@ public:
     Image();
     virtual ~Image();
 
-    typedef enum
+    /** Supported formats for Image */
+    enum class Format
     {
-        kFmtJpg = 0,
-        kFmtPng,
-        kFmtTiff,
-        kFmtWebp,
-        kFmtRawData,
-        kFmtUnKnown
-    }EImageFormat;
+        //! JPEG
+        JPG,
+        //! PNG
+        PNG,
+        //! TIFF
+        TIFF,
+        //! WebP
+        WEBP,
+        //! Raw Data
+        RAW_DATA,
+        //! Unknown format
+        UNKOWN
+    };
 
-    typedef enum
+    enum class TextAlign
     {
-        kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
-        kAlignTop           = 0x13, ///< Horizontal center and vertical top.
-        kAlignTopRight      = 0x12, ///< Horizontal right and vertical top.
-        kAlignRight         = 0x32, ///< Horizontal right and vertical center.
-        kAlignBottomRight   = 0x22, ///< Horizontal right and vertical bottom.
-        kAlignBottom        = 0x23, ///< Horizontal center and vertical bottom.
-        kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bottom.
-        kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
-        kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
-    }ETextAlign;
+        CENTER        = 0x33, ///< Horizontal center and vertical center.
+        TOP           = 0x13, ///< Horizontal center and vertical top.
+        TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
+        RIGHT         = 0x32, ///< Horizontal right and vertical center.
+        BOTTOM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
+        BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
+        BOTTOM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
+        LEFT          = 0x31, ///< Horizontal left and vertical center.
+        TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
+    };
     
     /**
     @brief  Load the image from the specified path. 
@@ -79,7 +86,7 @@ public:
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath, Format imageType = Format::PNG);
 
     /**
     @brief  Load image from stream buffer.
@@ -92,7 +99,7 @@ public:
     */
     bool initWithImageData(void * pData, 
                            int nDataLen, 
-                           EImageFormat eFmt = kFmtUnKnown,
+                           Format eFmt = Format::UNKOWN,
                            int nWidth = 0,
                            int nHeight = 0,
                            int nBitsPerComponent = 8);
@@ -113,7 +120,7 @@ public:
         const char *    pText, 
         int             nWidth = 0, 
         int             nHeight = 0,
-        ETextAlign      eAlignMask = kAlignCenter,
+        TextAlign       eAlignMask = TextAlign::CENTER,
         const char *    pFontName = 0,
         int             nSize = 0);
     
@@ -123,7 +130,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
+                                        TextAlign       eAlignMask  = TextAlign::CENTER,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
@@ -165,13 +172,13 @@ public:
     //
     
 protected:
-    bool _initWithJpgData(void *pData, int nDatalen);
-    bool _initWithPngData(void *pData, int nDatalen);
-    bool _initWithTiffData(void *pData, int nDataLen);
-    bool _initWithWebpData(void *pData, int nDataLen);
+    bool initWithJpgData(void *pData, int nDatalen);
+    bool initWithPngData(void *pData, int nDatalen);
+    bool initWithTiffData(void *pData, int nDataLen);
+    bool initWithWebpData(void *pData, int nDataLen);
 
-    bool _saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool _saveImageToJPG(const char *pszFilePath);
+    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveImageToJPG(const char *pszFilePath);
 
     unsigned short   _width;
     unsigned short   _height;
@@ -194,7 +201,7 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = Format::PNG);
 };
 
 // end of platform group

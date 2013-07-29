@@ -23,20 +23,20 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    ScriptEngineManager::purgeSharedManager();
+    ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    Director *director = Director::getInstance();
+    director->setOpenGLView(EGLView::getInstance());
     
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    director->setDisplayStats(true);
     
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -52,8 +52,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     sc->start();
     
-    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript("main.js");
        
     return true;
@@ -83,14 +83,14 @@ void handle_signal(int signal) {
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

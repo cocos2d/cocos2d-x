@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
 #include "kazmath/mat4.h"
+#include "platform/CCImage.h"
 
 NS_CC_BEGIN
 
@@ -36,11 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef enum eImageFormat
-{
-    kImageFormatJPEG      = 0,
-    kImageFormatPNG       = 1,
-} tImageFormat;
 /**
 @brief RenderTexture is a generic rendering target. To render things into it,
 simply construct a render target, call begin on it, call visit on any cocos
@@ -55,10 +51,10 @@ class CC_DLL RenderTexture : public Node
 {
 public:
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static RenderTexture * create(int w ,int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static RenderTexture * create(int w, int h, Texture2DPixelFormat eFormat);
+    static RenderTexture * create(int w, int h, Texture2D::PixelFormat eFormat);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
@@ -67,10 +63,10 @@ public:
     virtual ~RenderTexture();
     
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
 
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, Texture2DPixelFormat eFormat, GLuint uDepthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();
@@ -117,7 +113,7 @@ public:
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns YES if the operation is successful.
      */
-    bool saveToFile(const char *name, tImageFormat format);
+    bool saveToFile(const char *name, Image::Format format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -143,7 +139,7 @@ public:
     
     /** Value for clear Stencil. Valid only when autoDraw is true */
     inline int getClearStencil() const { return _clearStencil; };
-    inline void setClearStencil(float clearStencil) { _clearStencil = clearStencil; };
+    inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
     
     /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
      Will be enabled in the future.
@@ -175,7 +171,7 @@ protected:
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture
     Image*     _UITextureImage;
-    GLenum       _pixelFormat;
+    Texture2D::PixelFormat _pixelFormat;
     
     // code for "auto" update
     GLbitfield   _clearFlags;

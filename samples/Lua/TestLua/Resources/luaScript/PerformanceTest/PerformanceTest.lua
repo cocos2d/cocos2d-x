@@ -13,7 +13,7 @@ local testsName =
     "PerformanceTouchesTest"
 }
 
-local s = CCDirector:sharedDirector():getWinSize()
+local s = CCDirector:getInstance():getWinSize()
 
 --Create toMainLayr MenuItem
 function CreatePerfomBasicLayerMenu(pMenu)
@@ -23,14 +23,14 @@ function CreatePerfomBasicLayerMenu(pMenu)
 	local function toMainLayer()
        local pScene = PerformanceTestMain()
        if pScene ~= nil then
-           CCDirector:sharedDirector():replaceScene(pScene)
+           CCDirector:getInstance():replaceScene(pScene)
        end
     end	
     --Create BackMneu
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
    	local pMenuItemFont = CCMenuItemFont:create("Back")
-    pMenuItemFont:setPosition(ccp(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
+    pMenuItemFont:setPosition(CCPoint(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
     pMenuItemFont:registerScriptTapHandler(toMainLayer)
     pMenu:addChild(pMenuItemFont)
 end
@@ -125,7 +125,7 @@ local function runNodeChildrenTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:sharedDirector():getWinSize()
+    			local size = CCDirector:getInstance():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -136,10 +136,10 @@ local function runNodeChildrenTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:sharedDirector():getWinSize()
-    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = CCDirector:getInstance():getWinSize()
+    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -183,7 +183,7 @@ local function runNodeChildrenTest()
     		local pSprites = CCArray:createWithCapacity(nTotalToAdd)
     		local i = 0
     		for i = 0 , nTotalToAdd - 1 do
-    			local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+    			local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
             	pSprites:addObject(pSprite)
             	zs[i]    = math.random(-1,1) * 50
     		end
@@ -212,7 +212,7 @@ local function runNodeChildrenTest()
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0, nTotalToAdd - 1 do
-        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
             	 pSprites:addObject(pSprite)
         	end
        		-- add them with random Z (very important!)
@@ -240,7 +240,7 @@ local function runNodeChildrenTest()
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0,nTotalToAdd - 1 do       
-            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0,0,32,32))
+            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
             	pSprites:addObject(pSprite)
         	end
 
@@ -278,14 +278,14 @@ local function runNodeChildrenTest()
     end
     
     local function updateQuantityOfNodes()
-    	local s = CCDirector:sharedDirector():getWinSize()  	
+    	local s = CCDirector:getInstance():getWinSize()  	
    		--increase nodes
     	if( nCurrentQuantityOfNodes < nQuantityOfNodes ) then
     		local i = 0
     		for i = 0,nQuantityOfNodes - nCurrentQuantityOfNodes - 1 do 
-            	local sprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0, 0, 32, 32))
+            	local sprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0, 0, 32, 32))
             	pBatchNode:addChild(sprite)
-            	sprite:setPosition(ccp( math.random() * s.width, math.random() * s.height))
+            	sprite:setPosition(CCPoint( math.random() * s.width, math.random() * s.height))
             	if 0 ~= nCurCase then
             		sprite:setVisible(false)
             	end
@@ -336,18 +336,18 @@ local function runNodeChildrenTest()
     end
     
     local function MainSceneInitWithQuantityOfNodes(nNodes)
-    	local s = CCDirector:sharedDirector():getWinSize()
+    	local s = CCDirector:getInstance():getWinSize()
     		
         --Title
    		local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewscene:addChild(pLabel, 1)
-    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
     	pLabel:setColor(Color3B(255,255,40))  	
     	
    		if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
         	local pSubLabel = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
         	pNewscene:addChild(pSubLabel, 1)
-        	pSubLabel:setPosition(ccp(s.width/2, s.height-80))
+        	pSubLabel:setPosition(CCPoint(s.width/2, s.height-80))
         end
         
         nLastRenderedCount = 0 	
@@ -367,13 +367,13 @@ local function runNodeChildrenTest()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
    		pNewscene:addChild(pMenuAddOrSub,1)
    		
    		--InfoLayer
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
     	pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(ccp(s.width/2, s.height/2-15))
+    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height/2-15))
     	pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
     	
     	--NodeChildrenMenuLayer
@@ -381,7 +381,7 @@ local function runNodeChildrenTest()
     	local pNodeChildrenMenuMenu     = CCMenu:create()
     	CreatePerfomBasicLayerMenu(pNodeChildrenMenuMenu)
 		CreateBasicLayerMenuItem(pNodeChildrenMenuMenu,true,NodeChildrenTestParam.TEST_COUNT,nCurCase)
-		pNodeChildrenMenuMenu:setPosition(ccp(0, 0))
+		pNodeChildrenMenuMenu:setPosition(CCPoint(0, 0))
 		pNodeChildrenMenuLayer:addChild(pNodeChildrenMenuMenu)
 		pNewscene:addChild(pNodeChildrenMenuLayer) 
 		
@@ -401,7 +401,7 @@ local function runNodeChildrenTest()
 			MainSceneInitWithQuantityOfNodes(nQuantityOfNodes)
 --			pNewscene:registerScriptHandler(onNodeEvent)
 			NodeChildrenScheduleUpdate()
-			CCDirector:sharedDirector():replaceScene(pNewscene)
+			CCDirector:getInstance():replaceScene(pNewscene)
     	end	
     end
     
@@ -483,7 +483,7 @@ local function runParticleTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:sharedDirector():getWinSize()
+    			local size = CCDirector:getInstance():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -494,10 +494,10 @@ local function runParticleTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:sharedDirector():getWinSize()
-    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = CCDirector:getInstance():getWinSize()
+    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -519,7 +519,7 @@ local function runParticleTest()
     end
     
     local function doTest()
-   		local s = CCDirector:sharedDirector():getWinSize()
+   		local s = CCDirector:getInstance():getWinSize()
    		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
    		if nil == pParticleSystem then
    			return
@@ -529,7 +529,7 @@ local function runParticleTest()
     		   pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(ccp(0,-90))
+    		  pParticleSystem:setGravity(CCPoint(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -544,8 +544,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
-   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
+   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -577,7 +577,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(ccp(0,-90))
+    		  pParticleSystem:setGravity(CCPoint(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -592,8 +592,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
-   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
+   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -624,7 +624,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(ccp(0,-90))
+    		  pParticleSystem:setGravity(CCPoint(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -639,8 +639,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
-   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
+   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -671,7 +671,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(ccp(0,-90))
+    		  pParticleSystem:setGravity(CCPoint(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -686,8 +686,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(ccp(s.width/2, 100))
-   			  pParticleSystem:setPosVar(ccp(s.width/2,0))
+    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
+   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -733,8 +733,8 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = CCTextureCache:sharedTextureCache():addImage("Images/fire.png")
-    		CCTextureCache:sharedTextureCache():removeTexture(pTexture)
+    		local pTexture = CCTextureCache:getInstance():addImage("Images/fire.png")
+    		CCTextureCache:getInstance():removeTexture(pTexture)
     		local pParticleSystem = CCParticleSystemQuad:new()
     		if 1 == nSubtestNumber then
     		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
@@ -755,7 +755,7 @@ local function runParticleTest()
     		
     		if nil ~= pParticleSystem then
     			pParticleSystem:initWithTotalParticles(nQuantityParticles)
-        		pParticleSystem:setTexture(CCTextureCache:sharedTextureCache():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
@@ -774,7 +774,7 @@ local function runParticleTest()
 	
 	local function ScheduleFuncion()
 		 local function OnEnterOrExit(tag)
-    		  local scheduler = CCDirector:sharedDirector():getScheduler()
+    		  local scheduler = CCDirector:getInstance():getScheduler()
 			    if tag == "enter" then
 					ScheduleSelector = scheduler:scheduleScriptFunc(step,0,false)
 				elseif tag == "exit" then
@@ -806,7 +806,7 @@ local function runParticleTest()
     
     local function InitWithSubTest(nSubtest,nParticles)
     	nSubtestNumber = nSubtest
-    	local s = CCDirector:sharedDirector():getWinSize()
+    	local s = CCDirector:getInstance():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityParticles = nParticles
@@ -824,25 +824,25 @@ local function runParticleTest()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
         pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(ccp(s.width/2, s.height - 90))
+    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, ParticleTestParam.kTagInfoLayer)
     	
     	--particles on stage
     	local pLabelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
     	pNewScene:addChild(pLabelAtlas, 0, ParticleTestParam.kTagLabelAtlas)
-    	pLabelAtlas:setPosition(ccp(s.width-66,50))
+    	pLabelAtlas:setPosition(CCPoint(s.width-66,50))
     	
     	--ParticleTestMenuLayer
     	local pParticleMenuLayer 	= CCLayer:create()
     	local pParticleMenu         = CCMenu:create()
     	CreatePerfomBasicLayerMenu(pParticleMenu)
 		CreateBasicLayerMenuItem(pParticleMenu,true,ParticleTestParam.TEST_COUNT,nCurCase)
-		pParticleMenu:setPosition(ccp(0, 0))
+		pParticleMenu:setPosition(CCPoint(0, 0))
 		pParticleMenuLayer:addChild(pParticleMenu)
 		pNewScene:addChild(pParticleMenuLayer) 
 		
@@ -862,12 +862,12 @@ local function runParticleTest()
         	end
    		end
     	pSubMenu:alignItemsHorizontally()
-    	pSubMenu:setPosition(ccp(s.width/2, 80))
+    	pSubMenu:setPosition(CCPoint(s.width/2, 80))
     	pNewScene:addChild(pSubMenu, 2)
     	
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
-    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
     	pLabel:setColor(Color3B(255,255,40))
     	
     	UpdateQuantityLabel()  	
@@ -877,11 +877,11 @@ local function runParticleTest()
     
     function ShowCurrentTest()
     	if nil ~= pNewScene then
-    		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(ScheduleSelector)
+    		CCDirector:getInstance():getScheduler():unscheduleScriptEntry(ScheduleSelector)
     	end  	
 		pNewScene = CCScene:create()
 		InitWithSubTest(nSubtestNumber,nQuantityParticles)
-		CCDirector:sharedDirector():replaceScene(pNewScene)	   	
+		CCDirector:getInstance():replaceScene(pNewScene)	   	
     end
     
 	
@@ -971,7 +971,7 @@ local function runSpriteTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:sharedDirector():getWinSize()
+    			local size = CCDirector:getInstance():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -982,10 +982,10 @@ local function runSpriteTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:sharedDirector():getWinSize()
-    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = CCDirector:getInstance():getWinSize()
+    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -1000,40 +1000,40 @@ local function runSpriteTest()
     end
     
     local function PerformancePosition(pSprite)
-    	local size = CCDirector:sharedDirector():getWinSize()
-    	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+    	local size = CCDirector:getInstance():getWinSize()
+    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     end
     
     local function PerformanceScale(pSprite)
-    	local size = CCDirector:sharedDirector():getWinSize()
-    	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+    	local size = CCDirector:getInstance():getWinSize()
+    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setScale(math.random() * 100 / 50)
 	end
 	
 	local function PerformanceRotationScale(pSprite)
-	    local size = CCDirector:sharedDirector():getWinSize()
-    	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+	    local size = CCDirector:getInstance():getWinSize()
+    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setRotation(math.random() * 360)
     	pSprite:setScale(math.random() * 2)
 	end
 	
 	local function PerformanceOut100(pSprite)
-    	pSprite:setPosition(ccp( -1000, -1000))
+    	pSprite:setPosition(CCPoint( -1000, -1000))
 	end
 	
 	local function Performanceout20(pSprite)
-		  local size = CCDirector:sharedDirector():getWinSize()
+		  local size = CCDirector:getInstance():getWinSize()
 
     	  if math.random() < 0.2 then
-        	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+        	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	  else
-        	pSprite:setPosition(ccp( -1000, -1000))
+        	pSprite:setPosition(CCPoint( -1000, -1000))
 		  end
 	end
 	
 	local function PerformanceActions(pSprite)
-	    local size = CCDirector:sharedDirector():getWinSize()
-    	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+	    local size = CCDirector:getInstance():getWinSize()
+    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
 
     	local fPeriod = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
     	local pRot    = CCRotateBy:create(fPeriod, 360.0 * math.random() )
@@ -1054,12 +1054,12 @@ local function runSpriteTest()
 	end
 	
 	local function PerformanceActions20(pSprite)
-		  local size = CCDirector:sharedDirector():getWinSize()
+		  local size = CCDirector:getInstance():getWinSize()
 		  
     	  if math.random() < 0.2  then
-        	pSprite:setPosition(ccp((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+        	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	  else
-        	pSprite:setPosition(ccp( -1000, -1000))
+        	pSprite:setPosition(CCPoint( -1000, -1000))
           end
          
     	  local pPeriod = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
@@ -1087,7 +1087,7 @@ local function runSpriteTest()
     		pSprite = CCSprite:create("Images/grossinis_sister1.png")
             pNewScene:addChild(pSprite, 0, nTag+100)
     	elseif 2 == nSubtestNumber or 3 == nSubtestNumber then
-    		pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(0, 0, 52, 139))
+    		pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0, 0, 52, 139))
             pBatchNode:addChild(pSprite, 0, nTag+100)
     	elseif 4 == nSubtestNumber then
     	    local nIndex = math.floor((math.random() * 1400 / 100)) + 1
@@ -1104,7 +1104,7 @@ local function runSpriteTest()
 
              nX = nX * 85
              nY = nY * 121
-             pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(nX,nY,85,121))
+             pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(nX,nY,85,121))
              pBatchNode:addChild(pSprite, 0, nTag+100)
     	elseif 7 == nSubtestNumber then
     	  	local nX = 0
@@ -1127,7 +1127,7 @@ local function runSpriteTest()
 
             nX = nX * 32
             nY = nY * 32
-            pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRectMake(nX,nY,32,32))
+            pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(nX,nY,32,32))
             pBatchNode:addChild(pSprite, 0, nTag+100)
     	end
 		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
@@ -1215,7 +1215,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = CCTextureCache:sharedTextureCache()
+    	local pMgr = CCTextureCache:getInstance()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1259,7 +1259,7 @@ local function runSpriteTest()
     	nSubtestNumber = nSubtest
     	--about create subset
     	InitWithSubTest(nSubtest)
-    	local s = CCDirector:sharedDirector():getWinSize()
+    	local s = CCDirector:getInstance():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityNodes    = 0
@@ -1277,12 +1277,12 @@ local function runSpriteTest()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(ccp(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
    		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
         pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(ccp(s.width/2, s.height - 90))
+    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, SpriteTestParam.kTagInfoLayer)
     	
     	--SpriteTestMenuLayer
@@ -1290,7 +1290,7 @@ local function runSpriteTest()
     	local pSpriteMenu       = CCMenu:create()
     	CreatePerfomBasicLayerMenu(pSpriteMenu)
 		CreateBasicLayerMenuItem(pSpriteMenu,true,SpriteTestParam.TEST_COUNT,nCurCase)
-		pSpriteMenu:setPosition(ccp(0, 0))
+		pSpriteMenu:setPosition(CCPoint(0, 0))
 		pSpriteMenuLayer:addChild(pSpriteMenu)
 		pNewScene:addChild(pSpriteMenuLayer,1,SpriteTestParam.kTagMenuLayer) 
 		
@@ -1315,12 +1315,12 @@ local function runSpriteTest()
    		
    		
     	pSubMenu:alignItemsHorizontally()
-    	pSubMenu:setPosition(ccp(s.width/2, 80))
+    	pSubMenu:setPosition(CCPoint(s.width/2, 80))
     	pNewScene:addChild(pSubMenu, 2)
     	
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
-    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
     	pLabel:setColor(Color3B(255,255,40))
     	while nQuantityNodes < nNodes do
     		onIncrease()
@@ -1330,7 +1330,7 @@ local function runSpriteTest()
     function ShowCurrentTest() 	
 		pNewScene = CCScene:create()
 		InitWithSpriteTest(nSubtestNumber,nQuantityNodes)
-		CCDirector:sharedDirector():replaceScene(pNewScene)	 
+		CCDirector:getInstance():replaceScene(pNewScene)	 
     end
     
     InitWithSpriteTest(1,SpriteTestParam.kInitNodes)
@@ -1359,12 +1359,12 @@ local function runTextureTest()
 	local nTexCurCase = 0	
 	local pNewscene = CCScene:create()
 	local pLayer    = CCLayer:create()
-	local s 		= CCDirector:sharedDirector():getWinSize()
+	local s 		= CCDirector:getInstance():getWinSize()
 	
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = CCTextureCache:sharedTextureCache()
+    	  local pCache = CCTextureCache:getInstance()
     	  print("RGBA 8888")
     	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
     	  pTexture = pCache:addImage(strFileName) 		  
@@ -1439,18 +1439,18 @@ local function runTextureTest()
 		--Title
     	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
-    	pLabel:setPosition(ccp(s.width/2, s.height-32))
+    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
     	pLabel:setColor(Color3B(255,255,40))
 
     	--Subtitle
         local pSubLabel = CCLabelTTF:create(GetSubtitle(), "Thonburi", 16)
         pLayer:addChild(pSubLabel, 1)
-        pSubLabel:setPosition(ccp(s.width/2, s.height-80))
+        pSubLabel:setPosition(CCPoint(s.width/2, s.height-80))
         
         --menu
         local pMenu = CCMenu:create()
         CreatePerfomBasicLayerMenu(pMenu)
-        pMenu:setPosition(ccp(0, 0))
+        pMenu:setPosition(CCPoint(0, 0))
         pLayer:addChild(pMenu)
         
         PerformTests()
@@ -1481,7 +1481,7 @@ local function runTouchesTest()
     local  nNumberOfTouchesC  = 0
     local  fElapsedTime       = 0.0
     
-    local  s = CCDirector:sharedDirector():getWinSize()
+    local  s = CCDirector:getInstance():getWinSize()
    	local  pNewscene = CCScene:create()
 	local  pLayer    = CCLayer:create()
 	
@@ -1518,7 +1518,7 @@ local function runTouchesTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:sharedDirector():getWinSize()
+    			local size = CCDirector:getInstance():getWinSize()
     			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
@@ -1529,10 +1529,10 @@ local function runTouchesTest()
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:sharedDirector():getWinSize()
-    			item1:setPosition(CCPointMake(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPointMake(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPointMake(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = CCDirector:getInstance():getWinSize()
+    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -1609,19 +1609,19 @@ local function runTouchesTest()
      	local pTouchesTestMenu     = CCMenu:create()
     	CreatePerfomBasicLayerMenu(pTouchesTestMenu)
 		CreateBasicLayerMenuItem(pTouchesTestMenu,true,TouchesTestParam.TEST_COUNT,nCurCase)
-		pTouchesTestMenu:setPosition(ccp(0, 0))
+		pTouchesTestMenu:setPosition(CCPoint(0, 0))
 		pLayer:addChild(pTouchesTestMenu)
 		
      	--Title
    	    local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
-   		pLabel:setPosition(ccp(s.width/2, s.height-32))
+   		pLabel:setPosition(CCPoint(s.width/2, s.height-32))
 	   	pLabel:setColor(Color3B(255,255,40)) 
     	
     	pLayer:scheduleUpdateWithPriorityLua(update,0)	
     
     	pClassLabel = CCLabelBMFont:create("00.0", "fonts/arial16.fnt")
-    	pClassLabel:setPosition(ccp(s.width/2, s.height/2))
+    	pClassLabel:setPosition(CCPoint(s.width/2, s.height/2))
     	pLayer:addChild(pClassLabel) 
     
     	fElapsedTime = 0.0
@@ -1645,7 +1645,7 @@ local function runTouchesTest()
     		pLayer = CCLayer:create()
     		InitLayer()
 			pNewscene:addChild(pLayer)
-			CCDirector:sharedDirector():replaceScene(pNewscene)
+			CCDirector:getInstance():replaceScene(pNewscene)
     	end	
     end
 
@@ -1676,7 +1676,7 @@ local function menuCallback(tag, pMenuItem)
     local nIdx = pMenuItem:getZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
-         CCDirector:sharedDirector():replaceScene(PerformanceTestScene)
+         CCDirector:getInstance():replaceScene(PerformanceTestScene)
     end
 end
 
@@ -1684,7 +1684,7 @@ local function PerformanceMainLayer()
 	local layer = CCLayer:create()
 
 	local menu = CCMenu:create()
-    menu:setPosition(CCPointMake(0, 0))
+    menu:setPosition(CCPoint(0, 0))
     CCMenuItemFont:setFontName("Arial")
     CCMenuItemFont:setFontSize(24)
     for i = 1, MAX_COUNT do

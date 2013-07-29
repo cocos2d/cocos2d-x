@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
     
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);

@@ -49,19 +49,19 @@ WebSocketTestLayer::WebSocketTestLayer()
     
 
     // Send Text Status Label
-    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendTextStatus = LabelTTF::create("Send Text WS is waiting...", "Arial", 14, Size(160, 100), Label::HAlignment::CENTER, Label::VAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Point(0, 0));
     _sendTextStatus->setPosition(Point(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _sendBinaryStatus = LabelTTF::create("Send Binary WS is waiting...", "Arial", 14, Size(160, 100), Label::HAlignment::CENTER, Label::VAlignment::TOP);
     _sendBinaryStatus->setAnchorPoint(Point(0, 0));
     _sendBinaryStatus->setPosition(Point(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), kTextAlignmentCenter, kVerticalTextAlignmentTop);
+    _errorStatus = LabelTTF::create("Error WS is waiting...", "Arial", 14, Size(160, 100), Label::HAlignment::CENTER, Label::VAlignment::TOP);
     _errorStatus->setAnchorPoint(Point(0, 0));
     _errorStatus->setPosition(Point(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
@@ -201,7 +201,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 // Menu Callbacks
 void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendText->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendText->getReadyState() == WebSocket::State::OPEN)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
@@ -216,7 +216,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 
 void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendBinary->getReadyState() == WebSocket::kStateOpen)
+    if (_wsiSendBinary->getReadyState() == WebSocket::State::OPEN)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
         char buf[] = "Hello WebSocket,\0 I'm\0 a\0 binary\0 message\0.";

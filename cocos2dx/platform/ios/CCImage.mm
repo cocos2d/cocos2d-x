@@ -172,7 +172,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
 {
     bool bRet = false;
     do 
@@ -221,7 +221,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -297,7 +297,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::ETextAlign eAlig
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
+        unsigned uHoriFlag = (int)eAlign & 0x0f;
         UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
@@ -416,7 +416,7 @@ Image::~Image()
     CC_SAFE_DELETE_ARRAY(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
 {
 	bool bRet = false;
     unsigned long nSize = 0;
@@ -433,7 +433,7 @@ bool Image::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFm
     return bRet;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
 {
     /*
      * FileUtils::fullPathFromRelativePath() is not thread-safe.
@@ -451,7 +451,7 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath, EImageFormat image
 
 bool Image::initWithImageData(void * pData, 
                                 int nDataLen, 
-                                EImageFormat eFmt,
+                                Format eFmt,
                                 int nWidth,
                                 int nHeight,
                                 int nBitsPerComponent)
@@ -465,13 +465,13 @@ bool Image::initWithImageData(void * pData,
     do 
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == kFmtRawData)
+        if (eFmt == Format::RAW_DATA)
         {
             bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
         }
-        else if (eFmt == kFmtWebp)
+        else if (eFmt == Format::WEBP)
         {
-            bRet = _initWithWebpData(pData, nDataLen);
+            bRet = initWithWebpData(pData, nDataLen);
         }
         else // init with png or jpg file data
         {
@@ -515,25 +515,25 @@ bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, 
     return bRet;
 }
 
-bool Image::_initWithJpgData(void *pData, int nDatalen)
+bool Image::initWithJpgData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_initWithPngData(void *pData, int nDatalen)
+bool Image::initWithPngData(void *pData, int nDatalen)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
 {
     assert(0);
 	return false;
 }
 
-bool Image::_saveImageToJPG(const char *pszFilePath)
+bool Image::saveImageToJPG(const char *pszFilePath)
 {
     assert(0);
 	return false;
@@ -543,7 +543,7 @@ bool Image::initWithString(
                             const char * pText,
                             int         nWidth /* = 0 */,
                             int         nHeight /* = 0 */,
-                            ETextAlign eAlignMask /* = kAlignCenter */,
+                            TextAlign   eAlignMask /* = kAlignCenter */,
                             const char * pFontName /* = nil */,
                             int         nSize /* = 0 */)
 {
@@ -554,7 +554,7 @@ bool Image::initWithStringShadowStroke(
                                          const char * pText,
                                          int         nWidth ,
                                          int         nHeight ,
-                                         ETextAlign eAlignMask ,
+                                         TextAlign   eAlignMask ,
                                          const char * pFontName ,
                                          int         nSize ,
                                          float       textTintR,

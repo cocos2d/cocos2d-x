@@ -36,6 +36,7 @@ class CCAnimation : public CCObject
     float getDuration();
 
 	CCAnimation* clone();
+    CCObject*    copy();
 
     CCArray* getFrames();
     void setFrames(CCArray* pFrames);

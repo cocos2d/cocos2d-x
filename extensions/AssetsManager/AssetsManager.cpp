@@ -134,7 +134,7 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        sendErrorMessage(kNetwork);
+        sendErrorMessage(ErrorCode::NETWORK);
         CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
@@ -143,7 +143,7 @@ bool AssetsManager::checkUpdate()
     string recordedVersion = UserDefault::getInstance()->getStringForKey(KEY_OF_VERSION);
     if (recordedVersion == _version)
     {
-        sendErrorMessage(kNoNewVersion);
+        sendErrorMessage(ErrorCode::NO_NEW_VERSION);
         CCLOG("there is not new version");
         // Set resource search path.
         setSearchPath();
@@ -173,7 +173,7 @@ void AssetsManager::downloadAndUncompress()
         // Uncompress zip file.
         if (! uncompress())
         {
-            sendErrorMessage(AssetsManager::kUncompress);
+            sendErrorMessage(ErrorCode::UNCOMPRESS);
             break;
         }
         
@@ -205,7 +205,11 @@ void AssetsManager::update()
     }
     
     // Check if there is a new version.
-    if (! checkUpdate()) return;
+    if (! checkUpdate())
+    {
+        _isDownloading = false;
+        return;
+    }
     
     // Is package already downloaded?
     _downloadedVersion = UserDefault::getInstance()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
@@ -403,7 +407,7 @@ bool AssetsManager::downLoad()
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
-        sendErrorMessage(kCreateFile);
+        sendErrorMessage(ErrorCode::CREATE_FILE);
         CCLOG("can not create file %s", outFileName.c_str());
         return false;
     }
@@ -420,7 +424,7 @@ bool AssetsManager::downLoad()
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        sendErrorMessage(kNetwork);
+        sendErrorMessage(ErrorCode::NETWORK);
         CCLOG("error when download package");
         fclose(fp);
         return false;

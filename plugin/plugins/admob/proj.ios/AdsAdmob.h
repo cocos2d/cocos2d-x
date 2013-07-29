@@ -28,12 +28,17 @@
 #import "GADBannerViewDelegate.h"
 
 typedef enum {
-    kSizeBanner = 0,
+    kSizeBanner = 1,
     kSizeIABMRect,
     kSizeIABBanner,
     kSizeIABLeaderboard,
     kSizeSkyscraper,
 } AdmobSizeEnum;
+
+typedef enum {
+    kTypeBanner = 1,
+    kTypeFullScreen,
+} AdmobType;
 
 @interface AdsAdmob : NSObject <InterfaceAds, GADBannerViewDelegate>
 {
@@ -48,8 +53,8 @@ typedef enum {
  interfaces from InterfaceAds
  */
 - (void) configDeveloperInfo: (NSMutableDictionary*) devInfo;
-- (void) showAds: (int) type size:(int) sizeEnum position:(int) pos;
-- (void) hideAds: (int) type;
+- (void) showAds: (NSMutableDictionary*) info position:(int) pos;
+- (void) hideAds: (NSMutableDictionary*) info;
 - (void) queryPoints;
 - (void) spendPoints: (int) points;
 - (void) setDebugMode: (BOOL) isDebugMode;

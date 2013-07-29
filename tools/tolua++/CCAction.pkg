@@ -13,6 +13,7 @@ class CCAction : public CCObject
     int getTag(void);
     void setTag(int nTag);
     CCAction* clone();
+    CCObject* copy();
 };
 
 class CCFiniteTimeAction : public CCAction

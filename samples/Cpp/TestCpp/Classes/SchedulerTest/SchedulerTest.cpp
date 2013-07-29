@@ -94,7 +94,7 @@ void SchedulerTestLayer::onEnter()
     BaseTest::onEnter();
 }
 
-void SchedulerTestLayer::backCallback(Object* pSender)
+void SchedulerTestLayer::backCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = backSchedulerTest();
@@ -104,7 +104,7 @@ void SchedulerTestLayer::backCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::nextCallback(Object* pSender)
+void SchedulerTestLayer::nextCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = nextSchedulerTest();
@@ -114,7 +114,7 @@ void SchedulerTestLayer::nextCallback(Object* pSender)
     scene->release();
 }
 
-void SchedulerTestLayer::restartCallback(Object* pSender)
+void SchedulerTestLayer::restartCallback(Object* sender)
 {
     Scene* scene = new SchedulerTestScene();
     Layer* layer = restartSchedulerTest();
@@ -359,7 +359,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 {
     log("Pausing");
     Director* director = Director::getInstance();
-    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(kPriorityNonSystemMin);
+    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
     CC_SAFE_RETAIN(_pausedTargets);
 }
 
@@ -463,7 +463,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         Director* director = Director::getInstance();
-        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), kPrioritySystem, false);
+        director->getScheduler()->scheduleUpdateForTarget(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
 }
 
@@ -548,7 +548,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(kPriorityNonSystemMin);
+    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title()
@@ -865,7 +865,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
 {
     ControlSlider * slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
 
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), ControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), Control::EventType::VALUE_CHANGED);
 
     slider->setMinimumValue(-3.0f);
     slider->setMaximumValue(3.0f);
@@ -874,9 +874,9 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Object* pSender, ControlEvent controlEvent)
+void SchedulerTimeScale::sliderAction(Object* sender, Control::EventType controlEvent)
 {
-    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(pSender);
+    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
     scale = pSliderCtl->getValue();
 
@@ -953,7 +953,7 @@ ControlSlider *TwoSchedulers::sliderCtl()
    // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
     ControlSlider *slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
         //[[UISlider alloc] initWithFrame:frame];
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), ControlEventValueChanged);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), Control::EventType::VALUE_CHANGED);
 
     // in case the parent view draws with a custom color or gradient, use a transparent color
     //slider.backgroundColor = [UIColor clearColor];
@@ -966,7 +966,7 @@ ControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(Object* sender, ControlEvent controlEvent)
+void TwoSchedulers::sliderAction(Object* sender, Control::EventType controlEvent)
 {
     float scale;
 

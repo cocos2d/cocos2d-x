@@ -39,12 +39,6 @@ typedef enum {
 } AdsResult;
 
 typedef enum {
-    kTypeBanner = 0,
-    kTypeFullScreen,
-    kTypeMoreApp,
-} AdsTypeEnum;
-
-typedef enum {
     kPosCenter = 0,
 	kPosTop,
 	kPosTopLeft,
@@ -60,6 +54,7 @@ typedef enum {
 }
 
 + (void) onAdsResult:(id) obj withRet:(AdsResult) ret withMsg:(NSString*) msg;
++ (void) onPlayerGetPoints:(id) obj withPoints: (int) points;
 + (void) addAdView:(UIView*) view atPos:(AdsPosEnum) pos;
 + (UIViewController *) getCurrentRootViewController;
 

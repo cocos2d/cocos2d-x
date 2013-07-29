@@ -366,6 +366,12 @@ TextLayer::TextLayer(void)
     ActionInterval* sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );
     
+    LabelTTF* label = LabelTTF::create((effectsList[actionIdx]).c_str(), "Marker Felt", 32);
+    
+    label->setPosition( Point(VisibleRect::center().x,VisibleRect::top().y-80) );
+    addChild(label);
+    label->setTag( kTagLabel );
+    
     schedule( schedule_selector(TextLayer::checkAnim) );
 }
 
@@ -408,12 +414,12 @@ void TextLayer::newScene()
     s->release();
 }
 
-void TextLayer::restartCallback(Object* pSender)
+void TextLayer::restartCallback(Object* sender)
 {
     newScene();
 }
 
-void TextLayer::nextCallback(Object* pSender)
+void TextLayer::nextCallback(Object* sender)
 {
     // update the action index
     actionIdx++;
@@ -422,7 +428,7 @@ void TextLayer::nextCallback(Object* pSender)
     newScene();
 }
 
-void TextLayer::backCallback(Object* pSender)
+void TextLayer::backCallback(Object* sender)
 {
     // update the action index
     actionIdx--;

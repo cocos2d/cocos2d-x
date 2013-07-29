@@ -273,6 +273,10 @@
 		3C6AE99C179D5E3F00B4FC38 /* CCComRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AE999179D5E3F00B4FC38 /* CCComRender.cpp */; };
 		3C6AE99D179D5E3F00B4FC38 /* CCComRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6AE99A179D5E3F00B4FC38 /* CCComRender.h */; };
 		3C6AE99E179D5E3F00B4FC38 /* CCComRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6AE99A179D5E3F00B4FC38 /* CCComRender.h */; };
+		466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
+		466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
+		466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
+		466AF6A817A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
 		466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 466BE8EC1793DBE400424245 /* CCDeprecated.h */; };
 		466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 466BE8EC1793DBE400424245 /* CCDeprecated.h */; };
 		46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9C9611786763E00F808DD /* ccTypes.cpp */; };
@@ -2145,6 +2149,9 @@
 		3C6AE914179D571E00B4FC38 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		3C6AE999179D5E3F00B4FC38 /* CCComRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComRender.cpp; sourceTree = "<group>"; };
 		3C6AE99A179D5E3F00B4FC38 /* CCComRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComRender.h; sourceTree = "<group>"; };
+		466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
+		466AF69E17A12297002EE9BB /* CCDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeprecated.cpp; sourceTree = "<group>"; };
+		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
 		466BE8EC1793DBE400424245 /* CCDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeprecated.h; sourceTree = "<group>"; };
 		46B9C9611786763E00F808DD /* ccTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccTypes.cpp; sourceTree = "<group>"; };
 		A035A5421782286100987F6C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = external/libwebsockets/mac/lib/libwebsockets.a; sourceTree = "<group>"; };
@@ -3378,6 +3385,7 @@
 		1A11968D1785201F00D62A44 /* script */ = {
 			isa = PBXGroup;
 			children = (
+				466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */,
 				15A055B81797EBAC0040AC39 /* Deprecated.lua */,
 				1A11968E1785201F00D62A44 /* AudioEngine.lua */,
 				1A11968F1785201F00D62A44 /* CCBReaderLoad.lua */,
@@ -3573,6 +3581,7 @@
 				A03F25461780BAE8006731B9 /* textures */,
 				A03F25511780BAE8006731B9 /* tilemap_parallax_nodes */,
 				A03F255E1780BAE8006731B9 /* touch_dispatcher */,
+				466AF69E17A12297002EE9BB /* CCDeprecated.cpp */,
 			);
 			path = cocos2dx;
 			sourceTree = "<group>";
@@ -4455,6 +4464,7 @@
 				A03F309C178145F3006731B9 /* network */,
 				A03F30A3178145F3006731B9 /* physics_nodes */,
 				A03F30CC178145F3006731B9 /* spine */,
+				466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -6825,6 +6835,7 @@
 				A07A4E0A1783815B0073F6A7 /* EAGLView.mm in Sources */,
 				A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */,
 				46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */,
+				466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7126,6 +7137,7 @@
 				3C6AE991179D571E00B4FC38 /* UITextButton.cpp in Sources */,
 				3C6AE995179D571E00B4FC38 /* UITextField.cpp in Sources */,
 				3C6AE99B179D5E3F00B4FC38 /* CCComRender.cpp in Sources */,
+				466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7298,6 +7310,7 @@
 				A07A4D9C17837B690073F6A7 /* AccelerometerSimulation.m in Sources */,
 				A07A52CC1784AC360073F6A7 /* etc1.cpp in Sources */,
 				46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */,
+				466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7445,6 +7458,7 @@
 				3C6AE992179D571E00B4FC38 /* UITextButton.cpp in Sources */,
 				3C6AE996179D571E00B4FC38 /* UITextField.cpp in Sources */,
 				3C6AE99C179D5E3F00B4FC38 /* CCComRender.cpp in Sources */,
+				466AF6A817A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

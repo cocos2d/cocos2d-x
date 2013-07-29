@@ -59,7 +59,7 @@ ControlPotentiometer* ControlPotentiometer::create(const char* backgroundFile, c
 
         // Prepare progress for potentiometer
         ProgressTimer *progressTimer  = ProgressTimer::create(Sprite::create(progressFile));
-        //progressTimer.type              = kProgressTimerTypeRadialCW;
+        //progressTimer.type              = ProgressTimer::RADIALCW;
         if (pRet->initWithTrackSprite_ProgressTimer_ThumbSprite(backgroundSprite, progressTimer, thumbSprite))
         {
             pRet->autorelease();
@@ -126,7 +126,7 @@ void ControlPotentiometer::setValue(float value)
     _progressTimer->setPercentage(percent * 100.0f);
     _thumbSprite->setRotation(percent * 360.0f);
     
-    sendActionsForControlEvents(ControlEventValueChanged);    
+    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);    
 }
 
 float ControlPotentiometer::getValue()

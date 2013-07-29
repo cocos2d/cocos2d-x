@@ -74,8 +74,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
-    _blendFunc.src = CC_BLEND_SRC;
-    _blendFunc.dst = CC_BLEND_DST;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     _textureAtlas = new TextureAtlas();
 
     if (0 == capacity)
@@ -94,7 +93,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _descendants = new Array();
     _descendants->initWithCapacity(capacity);
 
-    setShaderProgram(ShaderCache::getInstance()->programForKey(kShader_PositionTextureColor));
+    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -110,8 +109,8 @@ bool SpriteBatchNode::init()
 */
 bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 {
-    Texture2D *pTexture2D = TextureCache::getInstance()->addImage(fileImage);
-    return initWithTexture(pTexture2D, capacity);
+    Texture2D *texture2D = TextureCache::getInstance()->addImage(fileImage);
+    return initWithTexture(texture2D, capacity);
 }
 
 SpriteBatchNode::SpriteBatchNode()
@@ -166,7 +165,6 @@ void SpriteBatchNode::visit(void)
     setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
-
 }
 
 void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
@@ -281,8 +279,8 @@ void SpriteBatchNode::sortAllChildren()
             // and at the same time reorder descendants and the quads to the right index
             CCARRAY_FOREACH(_children, pObj)
             {
-                Sprite* pChild = static_cast<Sprite*>(pObj);
-                updateAtlasIndex(pChild, &index);
+                Sprite* child = static_cast<Sprite*>(pObj);
+                updateAtlasIndex(child, &index);
             }
         }
 
@@ -293,10 +291,10 @@ void SpriteBatchNode::sortAllChildren()
 void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 {
     unsigned int count = 0;
-    Array* pArray = sprite->getChildren();
-    if (pArray != NULL)
+    Array* array = sprite->getChildren();
+    if (array != NULL)
     {
-        count = pArray->count();
+        count = array->count();
     }
     
     int oldIndex = 0;
@@ -315,7 +313,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     {
         bool needNewIndex=true;
 
-        if (static_cast<Sprite*>(pArray->data->arr[0])->getZOrder() >= 0)
+        if (static_cast<Sprite*>(array->data->arr[0])->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -331,7 +329,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
         }
 
         Object* pObj = NULL;
-        CCARRAY_FOREACH(pArray,pObj)
+        CCARRAY_FOREACH(array,pObj)
         {
             Sprite* child = static_cast<Sprite*>(pObj);
             if (needNewIndex && child->getZOrder() >= 0)
@@ -400,7 +398,7 @@ void SpriteBatchNode::draw(void)
 
     arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
 
-    ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     _textureAtlas->drawQuads();
 
@@ -428,17 +426,17 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
 
 unsigned int SpriteBatchNode::rebuildIndexInOrder(Sprite *pobParent, unsigned int uIndex)
 {
-    Array *pChildren = pobParent->getChildren();
+    Array *children = pobParent->getChildren();
 
-    if (pChildren && pChildren->count() > 0)
+    if (children && children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(children, pObject)
         {
-            Sprite* pChild = static_cast<Sprite*>(pObject);
-            if (pChild && (pChild->getZOrder() < 0))
+            Sprite* child = static_cast<Sprite*>(pObject);
+            if (child && (child->getZOrder() < 0))
             {
-                uIndex = rebuildIndexInOrder(pChild, uIndex);
+                uIndex = rebuildIndexInOrder(child, uIndex);
             }
         }
     }    
@@ -450,15 +448,15 @@ unsigned int SpriteBatchNode::rebuildIndexInOrder(Sprite *pobParent, unsigned in
         uIndex++;
     }
 
-    if (pChildren && pChildren->count() > 0)
+    if (children && children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(children, pObject)
         {
-            Sprite* pChild = static_cast<Sprite*>(pObject);
-            if (pChild && (pChild->getZOrder() >= 0))
+            Sprite* child = static_cast<Sprite*>(pObject);
+            if (child && (child->getZOrder() >= 0))
             {
-                uIndex = rebuildIndexInOrder(pChild, uIndex);
+                uIndex = rebuildIndexInOrder(child, uIndex);
             }
         }
     }
@@ -468,39 +466,39 @@ unsigned int SpriteBatchNode::rebuildIndexInOrder(Sprite *pobParent, unsigned in
 
 unsigned int SpriteBatchNode::highestAtlasIndexInChild(Sprite *pSprite)
 {
-    Array *pChildren = pSprite->getChildren();
+    Array *children = pSprite->getChildren();
 
-    if (! pChildren || pChildren->count() == 0)
+    if (! children || children->count() == 0)
     {
         return pSprite->getAtlasIndex();
     }
     else
     {
-        return highestAtlasIndexInChild((Sprite*)(pChildren->lastObject()));
+        return highestAtlasIndexInChild((Sprite*)(children->lastObject()));
     }
 }
 
 unsigned int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *pSprite)
 {
-    Array *pChildren = pSprite->getChildren();
+    Array *children = pSprite->getChildren();
 
-    if (! pChildren || pChildren->count() == 0)
+    if (! children || children->count() == 0)
     {
         return pSprite->getAtlasIndex();
     }
     else
     {
-        return lowestAtlasIndexInChild((Sprite*)(pChildren->objectAtIndex(0)));
+        return lowestAtlasIndexInChild((Sprite*)(children->objectAtIndex(0)));
     }
 }
 
-unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
+unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
-    Array *pBrothers = pobSprite->getParent()->getChildren();
-    unsigned int uChildIndex = pBrothers->indexOfObject(pobSprite);
+    Array *pBrothers = sprite->getParent()->getChildren();
+    unsigned int uChildIndex = pBrothers->indexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
-    bool bIgnoreParent = (SpriteBatchNode*)(pobSprite->getParent()) == this;
+    bool bIgnoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
     Sprite *pPrevious = NULL;
     if (uChildIndex > 0 &&
         uChildIndex < UINT_MAX)
@@ -524,7 +522,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
     // first child of an Sprite ?
     if (uChildIndex == 0)
     {
-        Sprite *p = (Sprite*)(pobSprite->getParent());
+        Sprite *p = (Sprite*)(sprite->getParent());
 
         // less than parent and brothers
         if (nZ < 0)
@@ -545,7 +543,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *pobSprite, int nZ)
         }
 
         // else (previous < 0 and sprite >= 0 )
-        Sprite *p = (Sprite*)(pobSprite->getParent());
+        Sprite *p = (Sprite*)(sprite->getParent());
         return p->getAtlasIndex() + 1;
     }
 
@@ -577,19 +575,19 @@ void SpriteBatchNode::insertChild(Sprite *pSprite, unsigned int uIndex)
     // update indices
     unsigned int i = uIndex+1;
     
-    Sprite* pChild = nullptr;
+    Sprite* child = nullptr;
     for(; i<descendantsData->num; i++){
-        pChild = static_cast<Sprite*>(descendantsData->arr[i]);
-        pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
+        child = static_cast<Sprite*>(descendantsData->arr[i]);
+        child->setAtlasIndex(child->getAtlasIndex() + 1);
     }
 
     // add children recursively
     Object* pObj = nullptr;
     CCARRAY_FOREACH(pSprite->getChildren(), pObj)
     {
-        pChild = static_cast<Sprite*>(pObj);
-        unsigned int idx = atlasIndexForChild(pChild, pChild->getZOrder());
-        insertChild(pChild, idx);
+        child = static_cast<Sprite*>(pObj);
+        unsigned int idx = atlasIndexForChild(child, child->getZOrder());
+        insertChild(child, idx);
     }
 }
 
@@ -625,15 +623,15 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     }
 }
 
-void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
+void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
 {
     // remove from TextureAtlas
-    _textureAtlas->removeQuadAtIndex(pobSprite->getAtlasIndex());
+    _textureAtlas->removeQuadAtIndex(sprite->getAtlasIndex());
 
     // Cleanup sprite. It might be reused (issue #569)
-    pobSprite->setBatchNode(NULL);
+    sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->indexOfObject(pobSprite);
+    unsigned int uIndex = _descendants->indexOfObject(sprite);
     if (uIndex != UINT_MAX)
     {
         _descendants->removeObjectAtIndex(uIndex);
@@ -649,16 +647,16 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
     }
 
     // remove children recursively
-    Array *pChildren = pobSprite->getChildren();
-    if (pChildren && pChildren->count() > 0)
+    Array *children = sprite->getChildren();
+    if (children && children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(pChildren, pObject)
+        CCARRAY_FOREACH(children, pObject)
         {
-            Sprite* pChild = static_cast<Sprite*>(pObject);
-            if (pChild)
+            Sprite* child = static_cast<Sprite*>(pObject);
+            if (child)
             {
-                removeSpriteFromAtlas(pChild);
+                removeSpriteFromAtlas(child);
             }
         }
     }
@@ -667,10 +665,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *pobSprite)
 void SpriteBatchNode::updateBlendFunc(void)
 {
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
-    {
-        _blendFunc.src = GL_SRC_ALPHA;
-        _blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 }
 
 // CocosNodeTexture protocol
@@ -761,8 +756,8 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     Object* pObject = NULL;
     CCARRAY_FOREACH(_descendants, pObject)
     {
-        Sprite* pChild = static_cast<Sprite*>(pObject);
-        if (pChild && (pChild->getAtlasIndex() >= z))
+        Sprite* child = static_cast<Sprite*>(pObject);
+        if (child && (child->getAtlasIndex() >= z))
         {
             ++i;
         }

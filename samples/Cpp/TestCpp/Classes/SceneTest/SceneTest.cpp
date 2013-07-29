@@ -60,7 +60,7 @@ SceneTestLayer1::~SceneTestLayer1()
     //NSLog(@"SceneTestLayer1 - dealloc");
 }
 
-void SceneTestLayer1::onPushScene(Object* pSender)
+void SceneTestLayer1::onPushScene(Object* sender)
 {
     Scene* scene = new SceneTestScene();
     Layer* layer = new SceneTestLayer2();
@@ -70,7 +70,7 @@ void SceneTestLayer1::onPushScene(Object* pSender)
     layer->release();
 }
 
-void SceneTestLayer1::onPushSceneTran(Object* pSender)
+void SceneTestLayer1::onPushSceneTran(Object* sender)
 {
     Scene* scene = new SceneTestScene();
     Layer* layer = new SceneTestLayer2();
@@ -82,7 +82,7 @@ void SceneTestLayer1::onPushSceneTran(Object* pSender)
 }
 
 
-void SceneTestLayer1::onQuit(Object* pSender)
+void SceneTestLayer1::onQuit(Object* sender)
 {
     //getCocosApp()->exit();
     //CCDirector::getInstance()->poscene();
@@ -130,12 +130,12 @@ void SceneTestLayer2::testDealloc(float dt)
     //    onReplaceScene(this);
 }
 
-void SceneTestLayer2::onGoBack(Object* pSender)
+void SceneTestLayer2::onGoBack(Object* sender)
 {
     Director::getInstance()->popScene();
 }
 
-void SceneTestLayer2::onReplaceScene(Object* pSender)
+void SceneTestLayer2::onReplaceScene(Object* sender)
 {
     Scene* scene = new SceneTestScene();
     Layer* layer = SceneTestLayer3::create();
@@ -145,7 +145,7 @@ void SceneTestLayer2::onReplaceScene(Object* pSender)
 }
 
 
-void SceneTestLayer2::onReplaceSceneTran(Object* pSender)
+void SceneTestLayer2::onReplaceSceneTran(Object* sender)
 {
     Scene* scene = new SceneTestScene();
     Layer* layer = SceneTestLayer3::create();
@@ -198,24 +198,24 @@ void SceneTestLayer3::testDealloc(float dt)
     log("Layer3:testDealloc");
 }
 
-void SceneTestLayer3::item0Clicked(Object* pSender)
+void SceneTestLayer3::item0Clicked(Object* sender)
 {
     Scene *newScene = Scene::create();
     newScene->addChild(SceneTestLayer3::create());
     Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }
 
-void SceneTestLayer3::item1Clicked(Object* pSender)
+void SceneTestLayer3::item1Clicked(Object* sender)
 {
     Director::getInstance()->popScene();
 }
 
-void SceneTestLayer3::item2Clicked(Object* pSender)
+void SceneTestLayer3::item2Clicked(Object* sender)
 {
     Director::getInstance()->popToRootScene();
 }
 
-void SceneTestLayer3::item3Clicked(Object* pSender)
+void SceneTestLayer3::item3Clicked(Object* sender)
 {
     Director::getInstance()->popToSceneStackLevel(2);
 }

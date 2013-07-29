@@ -68,7 +68,7 @@ void FileUtilsDemo::onEnter()
     BaseTest::onEnter();    
 }
 
-void FileUtilsDemo::backCallback(Object* pSender)
+void FileUtilsDemo::backCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = backAction();
@@ -78,7 +78,7 @@ void FileUtilsDemo::backCallback(Object* pSender)
     scene->release();
 }
 
-void FileUtilsDemo::nextCallback(Object* pSender)
+void FileUtilsDemo::nextCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = nextAction();
@@ -88,7 +88,7 @@ void FileUtilsDemo::nextCallback(Object* pSender)
     scene->release();
 }
 
-void FileUtilsDemo::restartCallback(Object* pSender)
+void FileUtilsDemo::restartCallback(Object* sender)
 {
     Scene* scene = new FileUtilsTestScene();
     Layer* layer = restartAction();
@@ -181,9 +181,9 @@ void TestSearchPath::onEnter()
     if (fp)
     {
         size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
-        CCASSERT(ret == 0, "fwrite function returned nonzero value");
+        CCASSERT(ret != 0, "fwrite function returned zero value");
         fclose(fp);
-        if (ret == 0)
+        if (ret != 0)
             log("Writing file to writable path succeed.");
     }
     
