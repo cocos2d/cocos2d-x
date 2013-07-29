@@ -42,14 +42,14 @@ enum
 };
 
 ControlButton::ControlButton()
-: _currentTitle(NULL)
-, _currentTitleColor(Color3B::WHITE)
+: _isPushed(false)
+, _parentInited(false)
 , _doesAdjustBackgroundImage(false)
+, _currentTitle(NULL)
+, _currentTitleColor(Color3B::WHITE)
 , _titleLabel(NULL)
 , _backgroundSprite(NULL)
 , _zoomOnTouchDown(false)
-, _isPushed(false)
-, _parentInited(false)
 , _titleDispatchTable(NULL)
 , _titleColorDispatchTable(NULL)
 , _titleLabelDispatchTable(NULL)

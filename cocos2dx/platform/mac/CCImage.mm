@@ -303,8 +303,8 @@ static bool _isValidFontName(const char *fontName)
             }
         }
     }
-#endif
     out:
+#endif
     return ret;
 }
 

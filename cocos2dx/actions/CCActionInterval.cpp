@@ -1273,7 +1273,7 @@ void JumpTo::startWithTarget(Node *target)
 
 // Bezier cubic formula:
 //    ((1 - t) + t)3 = 1 
-// Expands to¡­ 
+// Expands to ...
 //   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1 
 static inline float bezierat( float a, float b, float c, float d, float t )
 {
@@ -1987,11 +1987,11 @@ Animate* Animate::create(Animation *pAnimation)
 }
 
 Animate::Animate()
-: _animation(NULL)
-, _splitTimes(new std::vector<float>)
+: _splitTimes(new std::vector<float>)
 , _nextFrame(0)
 , _origFrame(NULL)
 , _executedLoops(0)
+, _animation(NULL)
 {
 
 }
@@ -2155,8 +2155,8 @@ Animate* Animate::reverse() const
 // TargetedAction
 
 TargetedAction::TargetedAction()
-: _forcedTarget(NULL)
-, _action(NULL)
+: _action(NULL)
+, _forcedTarget(NULL)
 {
 
 }

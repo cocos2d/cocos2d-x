@@ -46,12 +46,12 @@ const char kProgressTextureCoords = 0x4b;
 
 ProgressTimer::ProgressTimer()
 :_type(Type::RADIAL)
+,_midpoint(0,0)
+,_barChangeRate(0,0)
 ,_percentage(0.0f)
 ,_sprite(NULL)
 ,_vertexDataCount(0)
 ,_vertexData(NULL)
-,_midpoint(0,0)
-,_barChangeRate(0,0)
 ,_reverseDirection(false)
 {}
 
