@@ -454,7 +454,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     sprite->visit();
 
     //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale(), sprite->getContentSize().height * sprite->getScale() * 0.5));
+    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
     glColorMask(1, 1, 1, 1);
     sprite->visit();
