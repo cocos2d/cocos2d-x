@@ -244,7 +244,7 @@ public:
 				int lineWidth = textLines.at(line).lineWidth;
 		if (eAlignMask == Image::TextAlign::CENTER || eAlignMask == Image::TextAlign::TOP || eAlignMask == Image::TextAlign::BOTTOM) {
 			return (iMaxLineWidth - lineWidth) / 2;
-		} else if (eAlignMask == Image::TextAlign::RIGHT || eAlignMask == Image::TextAlign::TO_RIGHT || eAlignMask == Image::TextAlign::BOTTOM_RIGHT) {
+		} else if (eAlignMask == Image::TextAlign::RIGHT || eAlignMask == Image::TextAlign::TOP_RIGHT || eAlignMask == Image::TextAlign::BOTTOM_RIGHT) {
 			return (iMaxLineWidth - lineWidth);
 		}
 
@@ -428,7 +428,7 @@ bool Image::initWithString(
 		const char * pText,
 		int nWidth/* = 0*/,
 		int nHeight/* = 0*/,
-		ETextAlign eAlignMask/* = kAlignCenter*/,
+		TextAlign eAlignMask/* = kAlignCenter*/,
 		const char * pFontName/* = nil*/,
 		int nSize/* = 0*/)
 {
