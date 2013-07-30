@@ -50,9 +50,8 @@ include ../../../cocos2dx/proj.linux/cocos2dx.mk
 
 INCLUDES = -I../..
 
-# Unfortunetly Box2D doesn't compiler cleanly without these
-CXXFLAGS += -Wno-unused-but-set-variable
-CXXFLAGS += -Wno-uninitialized
+# Cocos2d is not responsible for warnings in external projects
+CXXFLAGS += -w
 
 ifeq ($(DEBUG), 1)
 DEFINES = -D_DEBUG
