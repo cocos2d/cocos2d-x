@@ -71,7 +71,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.dynamicanalysis_flags.cpp.606625939" name="Tizen-DynamicAnalysis-Compiler-Flags" superClass="sbi.gnu.cpp.compiler.option.dynamicanalysis_flags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.513113729" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.513113729" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.157225708" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="i386-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.1384776001" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -157,6 +157,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/scripting/lua/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/Box2D/proj.tizen/Debug-Tizen-Emulator&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/lib/x86&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/usr/lib&quot;"/>
@@ -185,6 +186,7 @@
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="curl"/>
 									<listOptionValue builtIn="false" value="websockets"/>
+									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1406428633" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -608,7 +610,7 @@
 								<option id="sbi.gnu.cpp.compiler.option.dynamicanalysis_flags.cpp.1547950503" name="Tizen-DynamicAnalysis-Compiler-Flags" superClass="sbi.gnu.cpp.compiler.option.dynamicanalysis_flags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.2087528377" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.2087528377" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1867983187" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.626630163" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
