@@ -911,7 +911,7 @@ bool Image::initWithTiffData(void* data, int dataLen)
     return bRet;
 }
 
-bool Image::testFormatForPvrTCSupport(int format)
+bool Image::testFormatForPvrTCSupport(uint64_t format)
 {
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
     if (!Configuration::getInstance()->supportsPVRTC())
@@ -973,13 +973,13 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
     
     if (!testFormatForPvrTCSupport(formatFlags))
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llX. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
     }
 
     if (v2_pixel_formathash.find(formatFlags) == v2_pixel_formathash.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llX. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
     }
     
@@ -987,7 +987,7 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
 
     if (it == g_texturePixelFormatInfoTables.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llX. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
     }
 
@@ -1085,14 +1085,14 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
     
     if (!testFormatForPvrTCSupport(pixelFormat))
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", pixelFormat);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2ullx. Re-encode it with a OpenGL pixel format variant", pixelFormat);
         return false;
     }
 
 
     if (v3_pixel_formathash.find(pixelFormat) == v3_pixel_formathash.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", pixelFormat);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2ullx. Re-encode it with a OpenGL pixel format variant", pixelFormat);
         return false;
     }
 
@@ -1100,7 +1100,7 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
 
     if (it == g_texturePixelFormatInfoTables.end())
     {
-        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", pixelFormat);
+        CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llx. Re-encode it with a OpenGL pixel format variant", pixelFormat);
         return false;
     }
 

@@ -241,7 +241,7 @@ private:
     bool isPvr(void *data, int dataLen);
     bool isEtc(void *data, int dataLen);
 
-    bool testFormatForPvrTCSupport(int format);
+    bool testFormatForPvrTCSupport(uint64_t format);
 };
 
 // end of platform group
