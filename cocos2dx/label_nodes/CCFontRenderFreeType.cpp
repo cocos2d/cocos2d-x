@@ -29,6 +29,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+//#define _DEBUG_FONTS_
 #ifdef _DEBUG_FONTS_
 #include "CCImage.h"
 #endif
@@ -125,7 +126,7 @@ unsigned char * FontRenderFreeType::preparePageGlyphData(TextPageDef *thePage)
     sprintf(outFilename,"carlottone%d", counter);
     ++counter;
     Image *pImage = new Image;
-    pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 512, 512, 8, false);
+    pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 1024, 1024, 8, false);
     pImage->saveToFile(outFilename);
 #endif
     

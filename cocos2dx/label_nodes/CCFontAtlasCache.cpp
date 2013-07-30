@@ -31,14 +31,14 @@ NS_CC_BEGIN
 std::map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
 
-FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs)
+FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
 {
     std::string atlasName = generateFontName(fontFileName, size);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
-        tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs);
+        tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs, customGlyphs);
         
         if (tempAtlas)
         {
@@ -48,6 +48,10 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, 
         {
             return nullptr;
         }
+    }
+    else
+    {
+        tempAtlas->retain();
     }
     
     return tempAtlas;
@@ -70,6 +74,10 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
         {
             return nullptr;
         }
+    }
+    else
+    {
+        tempAtlas->retain();
     }
     
     return tempAtlas;

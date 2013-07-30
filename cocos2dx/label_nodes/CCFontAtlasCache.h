@@ -38,7 +38,7 @@ class CC_DLL FontAtlasCache
     
 public:
     
-    static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs);
+    static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0);
     static FontAtlas * getFontAtlasFNT(const char *fontFileName);
     static bool releaseFontAtlas(FontAtlas *atlas);
     

@@ -489,7 +489,6 @@ int StringTTF::getYOffsetForChar(unsigned short c)
     return (tempDefinition->offsetY);
 }
 
-
 int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
 {
     if (_advances)
