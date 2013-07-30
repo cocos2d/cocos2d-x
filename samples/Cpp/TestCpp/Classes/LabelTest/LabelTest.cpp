@@ -74,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewLabelTTFColorTest),
     CL(NewLabelTTFFontsTest),
     CL(NewLabelTTFAlignment),
+    CL(NewLabelTTFUnicode),
     //    CL(NewLabelBMFontTest),
 //    CL(NewLabelFontDefTest),
 
@@ -1674,34 +1675,6 @@ std::string NewLabelTTFTestLongLine::subtitle()
 }
 
 //
-// NewLabelTTFTestUnicode
-//
-NewLabelTTFTestUnicode::NewLabelTTFTestUnicode()
-{
-    Size size = Director::getInstance()->getWinSize();
-
-    // Spanish
-    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 28, GlyphCollection::DYNAMIC, size.width);
-    label1->setPosition( Point(size.width/2, size.height/5) );
-    addChild(label1);
-
-    // German
-    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 28, GlyphCollection::DYNAMIC, size.width);
-    label2->setPosition( Point(size.width/2, size.height/5 * 2) );
-    addChild(label2);
-}
-
-std::string NewLabelTTFTestUnicode::title()
-{
-    return "Label() using TTF with unicode chars";
-}
-
-std::string NewLabelTTFTestUnicode::subtitle()
-{
-    return "Uses the new Label() with TTF. Testing Unicode";
-}
-
-//
 // NewLabelTTFColorTest
 //
 NewLabelTTFColorTest::NewLabelTTFColorTest()
@@ -1792,7 +1765,6 @@ void NewLabelTTFAlignment::setAlignmentRight(Object* sender)
     this->updateAlignment();
 }
 
-
 std::string NewLabelTTFAlignment::title()
 {
     return "Label() using TTF alignment";
@@ -1802,6 +1774,54 @@ std::string NewLabelTTFAlignment::subtitle()
 {
     return "Uses the new Label() with TTF. Testing alignment";
 }
+
+//
+// NewLabelTTF unicode test
+//
+NewLabelTTFUnicode::NewLabelTTFUnicode()
+{
+    Dictionary *strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
+    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
+    
+    //const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
+    //const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    //const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
+    
+    Size size = Director::getInstance()->getWinSize();
+    
+    float vStep = size.height/9;
+    float vSize = size.height;
+     
+    
+    // Spanish
+    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    label1->setPosition( Point(size.width/2, vSize - (vStep * 4.5)) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+    
+    // German
+    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    label2->setPosition( Point(size.width/2, vSize - (vStep * 5.5)) );
+    label2->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label2);
+    
+    // chinese
+    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, GlyphCollection::CUSTOM, size.width, chinese);
+    label3->setPosition( Point(size.width/2, vSize - (vStep * 6.5)) );
+    label3->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label3);
+}
+
+std::string NewLabelTTFUnicode::title()
+{
+    return "Label() using TTF with unicode";
+}
+
+std::string NewLabelTTFUnicode::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing unicode";
+}
+
 
 //
 // NewLabelTTFFontsTest

@@ -32,8 +32,6 @@ FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
 }
 
-
-
 FontDefinitionTTF* FontDefinitionTTF::create(const char *fontName, int fontSize, const char *letters, int textureSize )
 {
     FontDefinitionTTF *ret = new FontDefinitionTTF;

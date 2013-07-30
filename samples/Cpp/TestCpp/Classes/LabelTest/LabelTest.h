@@ -338,16 +338,6 @@ public:
     virtual std::string subtitle();
 };
 
-class NewLabelTTFTestUnicode : public AtlasDemo
-{
-public:
-
-    NewLabelTTFTestUnicode();
-
-    virtual std::string title();
-    virtual std::string subtitle();
-};
-
 class NewLabelTTFColorTest : public AtlasDemo
 {
 public:
@@ -358,6 +348,15 @@ public:
     virtual std::string subtitle();
 };
 
+class NewLabelTTFUnicode : public AtlasDemo
+{
+public:
+    
+    NewLabelTTFUnicode();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
 
 class NewLabelTTFAlignment : public AtlasDemo
 {
