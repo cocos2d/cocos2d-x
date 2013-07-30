@@ -39,11 +39,7 @@ NS_CC_EXT_BEGIN
 #define kAutorepeatIncreaseTimeIncrement    12
 
 ControlStepper::ControlStepper()
-: _minusSprite(NULL)
-, _plusSprite(NULL)
-, _minusLabel(NULL)
-, _plusLabel(NULL)
-, _value(0.0)
+: _value(0.0)
 , _continuous(false)
 , _autorepeat(false)
 , _wraps(false)
@@ -53,6 +49,10 @@ ControlStepper::ControlStepper()
 , _touchInsideFlag(false)
 , _touchedPart(Part::NONE)
 , _autorepeatCount(0)
+, _minusSprite(NULL)
+, _plusSprite(NULL)
+, _minusLabel(NULL)
+, _plusLabel(NULL)
 {
 
 }

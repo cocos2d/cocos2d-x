@@ -37,6 +37,7 @@ MotionStreak::MotionStreak()
 : _fastMode(false)
 , _startingPositionInitialized(false)
 , _texture(NULL)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _positionR(Point::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
@@ -49,7 +50,6 @@ MotionStreak::MotionStreak()
 , _vertices(NULL)
 , _colorPointer(NULL)
 , _texCoords(NULL)
-, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
 

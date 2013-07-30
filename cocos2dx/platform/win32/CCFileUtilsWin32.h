@@ -49,6 +49,39 @@ public:
     virtual std::string getWritablePath();
     virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
+protected:
+    /**
+     *  Gets resource file data
+     *
+     *  @param[in]  filename The resource file name which contains the path.
+     *  @param[in]  pszMode The read mode of the file.
+     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
+     */
+    virtual unsigned char* getFileData(const char* filename, const char* mode, unsigned long * size) override;
+
+    /**
+     *  Gets full path for filename, resolution directory and search path.
+     *
+     *  @param filename The file name.
+     *  @param resolutionDirectory The resolution directory.
+     *  @param searchPath The search path.
+     *  @return The full path of the file. It will return an empty string if the full path of the file doesn't exist.
+     */
+    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) override;
+
+    /**
+     *  Gets full path for the directory and the filename.
+     *
+     *  @note Only iOS and Mac need to override this method since they are using
+     *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
+     *        Other platforms will use the default implementation of this method.
+     *  @param strDirectory The directory contains the file we are looking for.
+     *  @param strFilename  The name of the file.
+     *  @return The full path of the file, if the file can't be found, it will return an empty string.
+     */
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
 };
 
 // end of platform group
