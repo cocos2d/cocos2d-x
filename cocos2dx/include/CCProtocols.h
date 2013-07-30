@@ -186,7 +186,7 @@ public:
     /**
      * Sets a new label using an string
      *
-     * @param A null terminated string 
+     * @param label A null terminated string
      */
     virtual void setString(const char *label) = 0;
 
