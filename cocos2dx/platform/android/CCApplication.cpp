@@ -131,4 +131,35 @@ TargetPlatform Application::getTargetPlatform()
     return kTargetAndroid;
 }
 
+const char* CCApplication::getDeviceModel()
+{
+	JniMethodInfo methodInfo;
+	jstring jstr;
+	if (JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxHelper", "getDeviceModel", "()Ljava/lang/String;"))
+	{
+		jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
+	}
+	methodInfo.env->DeleteLocalRef(methodInfo.classID);
+	
+	const char* deviceModel = methodInfo.env->GetStringUTFChars(jstr, NULL);
+	
+	return deviceModel;
+}
+
+const char* CCApplication::getDeviceSystemVersion()
+{
+	JniMethodInfo methodInfo;
+	jstring jstr;
+	if (JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxHelper", "getDeviceSystemVersion", "()Ljava/lang/String;"))
+	{
+		jstr = (jstring)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
+	}
+	methodInfo.env->DeleteLocalRef(methodInfo.classID);
+	
+	const char* deviceSysVers = methodInfo.env->GetStringUTFChars(jstr, NULL);
+	
+	return deviceSysVers;
+}
+
+
 NS_CC_END

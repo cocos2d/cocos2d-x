@@ -42,6 +42,9 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 
+	virtual const char* getDeviceModel();
+	virtual const char* getDeviceSystemVersion();
+
 protected:
     static Application * sm_pSharedApplication;
 };

@@ -114,6 +114,10 @@ public class Cocos2dxHelper {
 		return Build.MODEL;
     }
 
+	public static String getDeviceSystemVersion(){
+		return Build.VERSION.RELEASE;
+    }
+
 	public static AssetManager getAssetManager() {
 		return Cocos2dxHelper.sAssetManager;
 	}

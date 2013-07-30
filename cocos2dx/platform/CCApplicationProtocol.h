@@ -63,6 +63,9 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform() = 0;
+
+	virtual const char* getDeviceModel() {return "";};
+	virtual const char* getDeviceSystemVersion() {return "";};
 };
 
 // end of platform group

@@ -140,4 +140,14 @@ TargetPlatform Application::getTargetPlatform()
     }
 }
 
+const char* CCApplication::getDeviceModel()
+{
+	return [[[UIDevice currentDevice] model] cStringUsingEncoding:NSUTF8StringEncoding];
+}
+
+const char* CCApplication::getDeviceSystemVersion()
+{
+	return [[[UIDevice currentDevice] systemVersion] cStringUsingEncoding:NSUTF8StringEncoding];
+}
+
 NS_CC_END
