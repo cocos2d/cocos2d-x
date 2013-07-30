@@ -2,7 +2,7 @@ TARGET = libcocos2d.so
 
 INCLUDES += \
 			-I../platform/third_party/linux/libfreetype2 \
-                        -I../platform/third_party/common \
+                        -I../platform/third_party/common/etc \
 			-I../../extensions \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
