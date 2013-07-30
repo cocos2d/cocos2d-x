@@ -358,6 +358,28 @@ public:
     virtual std::string subtitle();
 };
 
+
+class NewLabelTTFAlignment : public AtlasDemo
+{
+public:
+    
+    NewLabelTTFAlignment();
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+private:
+    
+    void setAlignmentLeft(Object* sender);
+    void setAlignmentCenter(Object* sender);
+    void setAlignmentRight(Object* sender);
+    void updateAlignment();
+    
+    Label          * _label;
+    TextHAlignment   _horizAlign;
+    
+};
+
+
 class NewLabelTTFFontsTest : public AtlasDemo
 {
 public:

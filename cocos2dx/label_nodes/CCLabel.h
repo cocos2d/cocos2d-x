@@ -49,7 +49,7 @@ public:
     virtual ~Label();
              Label();
     
-    virtual void setAlignment(TextHAlignment alignment)          = 0;
+    virtual void setAlignment(TextHAlignment alignment)             = 0;
     virtual void setWidth(float width)                              = 0;
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace)   = 0;
     virtual void setScale(float scale)                              = 0;
