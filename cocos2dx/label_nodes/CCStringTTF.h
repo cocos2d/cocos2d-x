@@ -114,6 +114,8 @@ private:
     
     bool computeAdvancesForString(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
+    bool setOriginalString(unsigned short *stringToSet);
+    void resetCurrentString();
     
     Sprite * getSprite();
     Sprite * createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture);
@@ -128,6 +130,7 @@ private:
     float                       _width;
     TextHAlignment              _alignment;
     unsigned short int *        _currentUTF8String;
+    unsigned short int *        _originalUTF8String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;
     Color3B                     _displayedColor;

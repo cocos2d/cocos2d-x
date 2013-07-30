@@ -73,6 +73,7 @@ static std::function<Layer*()> createFunctions[] =
     //    CL(NewLabelTTFTestUnicode),
     CL(NewLabelTTFColorTest),
     CL(NewLabelTTFFontsTest),
+    CL(NewLabelTTFAlignment),
     //    CL(NewLabelBMFontTest),
 //    CL(NewLabelFontDefTest),
 
@@ -1737,6 +1738,69 @@ std::string NewLabelTTFColorTest::title()
 std::string NewLabelTTFColorTest::subtitle()
 {
     return "Uses the new Label() with TTF. Testing Color";
+}
+
+//
+// NewLabelTTFColorTest
+//
+NewLabelTTFAlignment::NewLabelTTFAlignment()
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    _label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 45, GlyphCollection::NEHE, size.width);
+    _label->setPosition( Point(size.width/2, size.height/2) );
+    _label->setAnchorPoint(Point(0.5, 0.5));
+    
+    
+    
+    Menu *menu = Menu::create(
+                              MenuItemFont::create("Left", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentLeft, this)),
+                              MenuItemFont::create("Center", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentCenter, this)),
+                              MenuItemFont::create("Right", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentRight, this)),
+                              NULL);
+    
+    menu->alignItemsVerticallyWithPadding(4);
+    menu->setPosition(Point(50, size.height / 4 ));
+    
+    addChild(_label);
+    this->addChild(menu);
+}
+
+void  NewLabelTTFAlignment::updateAlignment()
+{
+    if (_label)
+    {
+        _label->setAlignment(_horizAlign);
+    }
+}
+
+void NewLabelTTFAlignment::setAlignmentLeft(Object* sender)
+{
+    _horizAlign = TextHAlignment::LEFT;
+    this->updateAlignment();
+}
+
+void NewLabelTTFAlignment::setAlignmentCenter(Object* sender)
+{
+    _horizAlign = TextHAlignment::CENTER;
+    this->updateAlignment();
+}
+
+void NewLabelTTFAlignment::setAlignmentRight(Object* sender)
+{
+    _horizAlign = TextHAlignment::RIGHT;
+    this->updateAlignment();
+}
+
+
+std::string NewLabelTTFAlignment::title()
+{
+    return "Label() using TTF alignment";
+}
+
+std::string NewLabelTTFAlignment::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing alignment";
 }
 
 //

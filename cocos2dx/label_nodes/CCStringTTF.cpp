@@ -31,6 +31,7 @@
 NS_CC_BEGIN
 
 StringTTF::StringTTF(FontAtlas *pAtlas, TextHAlignment alignment):      _currentUTF8String(0),
+                                                                        _originalUTF8String(0),
                                                                         _fontAtlas(pAtlas),
                                                                         _alignment(alignment),
                                                                         _lineBreakWithoutSpaces(false),
@@ -120,6 +121,7 @@ bool StringTTF::setText(const char *stringToRender, float lineWidth, TextHAlignm
     
     // 
     setCurrentString(utf16String);
+    setOriginalString(utf16String);
     
     // align text
     alignText();
@@ -135,6 +137,9 @@ void StringTTF::setAlignment(TextHAlignment alignment)
     {
         // store
         _alignment = alignment;
+        
+        // reset the string
+        resetCurrentString();
     
         // need to align text again
         alignText();
@@ -219,7 +224,6 @@ bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
         _advances = 0;
     }
     
-    // carloX
     Font *theFont = 0;
     theFont = _fontAtlas->getFont();
     
@@ -235,6 +239,23 @@ bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
         return true;
 }
 
+bool StringTTF::setOriginalString(unsigned short *stringToSet)
+{
+    if (_originalUTF8String)
+    {
+        delete [] _originalUTF8String;
+        _originalUTF8String = 0;
+    }
+    
+    int newStringLenght = cc_wcslen(stringToSet);
+    _originalUTF8String = new unsigned short int [newStringLenght + 1];
+    memset(_originalUTF8String, 0, (newStringLenght + 1) * 2);
+    memcpy(_originalUTF8String, stringToSet, (newStringLenght * 2));
+    _originalUTF8String[newStringLenght] = 0;
+    
+    return true;
+}
+
 bool StringTTF::setCurrentString(unsigned short *stringToSet)
 {
     // set the new string
@@ -243,12 +264,26 @@ bool StringTTF::setCurrentString(unsigned short *stringToSet)
         delete [] _currentUTF8String;
         _currentUTF8String = 0;
     }
-    
     //
-    _currentUTF8String = stringToSet;
-    
+    _currentUTF8String  = stringToSet;
     // compute the advances
     return computeAdvancesForString(stringToSet);
+}
+
+void StringTTF::resetCurrentString()
+{
+    // set the new string
+    if (_currentUTF8String)
+    {
+        delete [] _currentUTF8String;
+        _currentUTF8String = 0;
+    }
+    
+    int stringLenght = cc_wcslen(_originalUTF8String);
+    _currentUTF8String = new unsigned short int [stringLenght + 1];
+    memcpy(_currentUTF8String, _originalUTF8String, stringLenght * 2);
+    _currentUTF8String[stringLenght] = 0;
+    
 }
 
 Sprite * StringTTF::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture)
