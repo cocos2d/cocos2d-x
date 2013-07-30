@@ -242,6 +242,7 @@ Image::Image()
 , _fileType(Format::UNKOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _preMulti(false)
+, _hasPremultipliedAlpha(true)
 , _numberOfMipmaps(0)
 {
 
@@ -954,6 +955,7 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
     
     Configuration *configuration = Configuration::getInstance();
     
+    _hasPremultipliedAlpha = false;
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
     bool flipped = (flags & kPVR2TextureFlagVerticalFlip) ? true : false;

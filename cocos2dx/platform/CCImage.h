@@ -174,11 +174,12 @@ public:
     inline int               getHeight()             { return _height; }
     inline bool              isPremultipliedAlpha()  { return _preMulti;   }
     inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
-    inline MipmapInfo*           getMipmaps()        { return _mipmaps; }
+    inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
+    inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
 
-    int               getBitPerPixel();
-    bool              hasAlpha();
-    bool              isCompressed();
+    int                      getBitPerPixel();
+    bool                     hasAlpha();
+    bool                     isCompressed();
 
 
     /**
@@ -214,6 +215,8 @@ protected:
     bool _preMulti;
     MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
+    // false if we cann't auto detect the image is premultiplied or not.
+    bool _hasPremultipliedAlpha;
 
 
 private:

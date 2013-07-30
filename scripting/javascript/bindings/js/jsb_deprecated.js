@@ -55,5 +55,9 @@ var cc = cc || {};
         return cc.Node.prototype.getNumberOfRunningActionsInTarget.apply(this, arguments);
     };
 
+    cc.TMXTiledMap.prototype.propertiesForGID = function() {
+        logW("cc.TMXTiledMap.propertiesForGID", "cc.TMXTiledMap.getPropertiesForGID");
+        return cc.TMXTiledMap.prototype.getPropertiesForGID.apply(this, arguments);
+    };
 
 })();

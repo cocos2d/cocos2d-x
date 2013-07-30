@@ -128,8 +128,8 @@ public:
     static MenuItemLabel* create(Node *label);
 
     MenuItemLabel()
-    : _label(NULL)
-    , _originalScale(0.0)
+    : _originalScale(0.0)
+    , _label(NULL)
     {}
     virtual ~MenuItemLabel();
 
