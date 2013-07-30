@@ -448,15 +448,13 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 
     //! mark sprite quad into stencil buffer
     glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_ALWAYS, 1, 0xFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    glColorMask(0, 0, 0, 1);
+    glStencilFunc(GL_NEVER, 1, 0xFF);
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
     sprite->visit();
 
     //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale(), sprite->getContentSize().height * sprite->getScale() * 0.5));
+    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glColorMask(1, 1, 1, 1);
     sprite->visit();
 
     rend->end();

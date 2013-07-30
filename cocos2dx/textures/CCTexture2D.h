@@ -336,7 +336,7 @@ private:
     static void convertRGBA8888ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
 
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
-    bool _PVRHaveAlphaPremultiplied;
+    static bool _PVRHaveAlphaPremultiplied;
 
 protected:
     /** pixel format of the texture */

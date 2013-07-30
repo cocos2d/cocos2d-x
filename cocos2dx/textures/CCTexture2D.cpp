@@ -55,8 +55,7 @@ NS_CC_BEGIN
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static bool PVRHaveAlphaPremultiplied_ = false;
+static bool _PVRHaveAlphaPremultiplied = false;
 
 //////////////////////////////////////////////////////////////////////////
 //conventer function
@@ -349,10 +348,9 @@ void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* in, int len, unsign
 //////////////////////////////////////////////////////////////////////////
 
 Texture2D::Texture2D()
-: _PVRHaveAlphaPremultiplied(true)
+: _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _pixelFormat(Texture2D::PixelFormat::NONE)
 , _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
@@ -679,7 +677,21 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             delete [] outTempData;
         }
 
-        _hasPremultipliedAlpha = image->isPremultipliedAlpha();
+        // set the premultiplied tag
+        if (!image->hasPremultipliedAlpha())
+        {
+            if (image->getFileType() == Image::Format::PVR)
+            {
+                _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
+            }else
+            {
+                CCLOG("wanning: We cann't find the data is premultiplied or not, we will assume it's false.");
+                _hasPremultipliedAlpha = false;
+            }
+        }else
+        {
+            _hasPremultipliedAlpha = image->isPremultipliedAlpha();
+        }
         return true;
     }
 }
@@ -1142,7 +1154,7 @@ void Texture2D::drawInRect(const Rect& rect)
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
+    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
     
