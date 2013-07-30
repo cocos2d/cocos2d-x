@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013 Lee, Jae-Hong
 
 http://www.cocos2d-x.org
 
@@ -22,46 +23,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "platform/CCCommon.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-#include <android/log.h>
-#include <stdio.h>
-#include <jni.h>
+#ifndef _OSP_PLAYER_H_
+#define _OSP_PLAYER_H_
 
-NS_CC_BEGIN
+#include <FMedia.h>
 
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
-// XXX deprecated
-void CCLog(const char * pszFormat, ...)
+class OspPlayer : public Tizen::Media::IPlayerEventListener
 {
-    va_list args;
-    va_start(args, pszFormat);        
-    __android_log_vprint(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat, args);
-    va_end(args);
+public:
+    OspPlayer();
+    ~OspPlayer();
 
-}
+    result Initialize();
+    void Open(const char* pFileName, unsigned int uId);
+    void Play(bool bLoop);
+    void Pause();
+    void Stop();
+    void Resume();
+    void Rewind();
+    bool IsPlaying();
+    void SetVolume(int volume);
+    int GetVolume();
+    void Close();
+    unsigned int GetSoundID();
 
-void log(const char * pszFormat, ...)
-{
-    char buf[MAX_LEN];
+protected:
+    void OnPlayerOpened(result r);
+    void OnPlayerEndOfClip(void);
+    void OnPlayerBuffering(int percent);
+    void OnPlayerErrorOccurred(Tizen::Media::PlayerErrorReason r);
+    void OnPlayerInterrupted(void);
+    void OnPlayerReleased(void);
+    void OnPlayerSeekCompleted(result r);
+    void OnPlayerAudioFocusChanged(void);
 
-    va_list args;
-    va_start(args, pszFormat);        
-    vsnprintf(buf, MAX_LEN, pszFormat, args);
-    va_end(args);
+private:
+    Tizen::Media::Player* __pPlayer;
+    unsigned int m_nSoundID;
+};
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
-}
-
-void MessageBox(const char * pszMsg, const char * pszTitle)
-{
-    showDialogJNI(pszMsg, pszTitle);
-}
-
-void LuaLog(const char * pszFormat)
-{
-    __android_log_write(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat);
-}
-
-NS_CC_END
+#endif // _OSP_PLAYER_H_

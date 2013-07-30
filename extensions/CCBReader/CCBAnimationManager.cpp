@@ -17,7 +17,9 @@ NS_CC_EXT_BEGIN
 // Implementation of CCBAinmationManager
 
 CCBAnimationManager::CCBAnimationManager()
-: _sequences(NULL)
+: _jsControlled(false)
+, _owner(NULL)
+, _sequences(NULL)
 , _nodeSequences(NULL)
 , _baseValues(NULL)
 , _autoPlaySequenceId(0)
@@ -25,8 +27,7 @@ CCBAnimationManager::CCBAnimationManager()
 , _rootContainerSize(Size::ZERO)
 , _delegate(NULL)
 , _runningSequence(NULL)
-, _jsControlled(false)
-, _owner(NULL)
+
 {
     init();
 }
