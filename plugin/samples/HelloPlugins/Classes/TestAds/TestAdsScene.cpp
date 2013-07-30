@@ -31,6 +31,7 @@ using namespace cocos2d::plugin;
 
 const std::string s_aTestCases[] = {
 	"Admob",
+    "Flurry",
 };
 
 const std::string s_aTestPoses[] = {
@@ -67,20 +68,27 @@ bool TestAds::init()
     {
         return false;
     }
-    
+
+    _listener = new MyAdsListener();
     _admob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
+    _flurryAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFlurry"));
     TAdsDeveloperInfo devInfo;
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     devInfo["AdmobID"] = ADMOB_ID_IOS;
+    devInfo["FlurryAppKey"] = FLURRY_KEY_IOS;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     devInfo["AdmobID"] = ADMOB_ID_ANDROID;
+    devInfo["FlurryAppKey"] = FLURRY_KEY_ANDROID;
 #endif
     
     _admob->configDeveloperInfo(devInfo);
-    _listener = new MyAdsListener();
     _admob->setAdsListener(_listener);
     _admob->setDebugMode(true);
+
+    _flurryAds->configDeveloperInfo(devInfo);
+    _flurryAds->setAdsListener(_listener);
+    _flurryAds->setDebugMode(true);
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
@@ -144,6 +152,8 @@ bool TestAds::init()
     // init the AdsInfo
     adInfo["AdmobType"] = "1";
     adInfo["AdmobSizeEnum"] = "1";
+    adInfo["FlurryAdsID"] = "BANNER_MAIN_VC";
+    adInfo["FlurryAdsSize"] = "2";
 
     this->addChild(pMenu, 1);
 
@@ -191,6 +201,10 @@ void TestAds::caseChanged(Object* pSender)
 		_ads = _admob;
 		strLog = "Admob";
 		break;
+    case 1:
+        _ads = _flurryAds;
+        strLog = "Flurry Ads";
+        break;
 	default:
 		break;
 	}
