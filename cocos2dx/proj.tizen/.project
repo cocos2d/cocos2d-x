@@ -111,6 +111,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCConfiguration.h</locationURI>
 		</link>
 		<link>
+			<name>src/CCDeprecated.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCDeprecated.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/CCDirector.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCDirector.cpp</locationURI>
