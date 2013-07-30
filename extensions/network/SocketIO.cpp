@@ -490,11 +490,11 @@ void SIOClientImpl::onError(cocos2d::extension::WebSocket* ws, const cocos2d::ex
 
 //begin SIOClient methods
 SIOClient::SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate) 
-	: _host(host)
-	, _port(port)
+	: _port(port)
+	, _host(host)
 	, _path(path)
+    , _connected(false)
 	, _socket(impl)
-	, _connected(false)
 	, _delegate(&delegate)
 {
 
