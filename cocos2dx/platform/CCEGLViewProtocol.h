@@ -59,6 +59,12 @@ public:
     virtual void    setIMEKeyboardState(bool bOpen) = 0;
 
     /**
+     * Polls input events. Subclass must implement methods if platform
+     * does not provide event callbacks.
+     */
+    virtual void pollInputEvents();
+
+    /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
      */
