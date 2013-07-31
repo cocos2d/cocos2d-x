@@ -224,9 +224,9 @@ public:
      *
      * The deafult value is 1.0 if you haven't changed it before
      *
-     * @param fScaleX   The scale factor on X axis.
+     * @param scaleX   The scale factor on X axis.
      */
-    virtual void setScaleX(float fScaleX);
+    virtual void setScaleX(float scaleX);
     /**
      * Returns the scale factor on X axis of this node
      *
@@ -242,9 +242,9 @@ public:
      *
      * The Default value is 1.0 if you haven't changed it before.
      *
-     * @param fScaleY   The scale factor on Y axis.
+     * @param scaleY   The scale factor on Y axis.
      */
-    virtual void setScaleY(float fScaleY);
+    virtual void setScaleY(float scaleY);
     /**
      * Returns the scale factor on Y axis of this node
      *
@@ -699,7 +699,7 @@ public:
     /**
      * Changes a grid object that is used when applying effects
      *
-     * @param A Grid object that is used when applying effects
+     * @param grid  A Grid object that is used when applying effects
      */
     virtual void setGrid(GridBase *grid);
     
@@ -748,7 +748,7 @@ public:
      *
      * Please refer to getTag for the sample code.
      *
-     * @param A interger that indentifies the node.
+     * @param tag   A interger that indentifies the node.
      */
     virtual void setTag(int tag);
     
@@ -769,7 +769,7 @@ public:
      * @warning Don't forget to release the memroy manually, 
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
-     * @param A custom user data pointer
+     * @param userData  A custom user data pointer
      */
     virtual void setUserData(void *userData);
     
@@ -791,7 +791,7 @@ public:
      * and the previous UserObject (if existed) will be relese.
      * The UserObject will be released in Node's destructure.
      *
-     * @param A user assigned Object
+     * @param userObject    A user assigned Object
      */
     virtual void setUserObject(Object *userObject);
     
@@ -817,7 +817,7 @@ public:
      * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
-     * @param The shader program which fetchs from ShaderCache.
+     * @param shaderProgram The shader program which fetchs from ShaderCache.
      */
     virtual void setShaderProgram(GLProgram *shaderProgram);
     /// @} end of Shader Program
@@ -961,14 +961,14 @@ public:
     /** 
      * Stops and removes an action from the running action list.
      *
-     * @param An action object to be removed.
+     * @param action    The action object to be removed.
      */
     void stopAction(Action* action);
 
     /** 
      * Removes an action from the running action list by its tag.
      *
-     * @param A tag that indicates the action to be removed.
+     * @param tag   A tag that indicates the action to be removed.
      */
     void stopActionByTag(int tag);
 

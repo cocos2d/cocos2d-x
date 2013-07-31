@@ -35,6 +35,20 @@ echo "please define NDK_ROOT"
 exit 1
 fi
 
+# For compatibility of android-ndk-r9, 4.7 was removed from r9
+if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.7" ]; then
+    export NDK_TOOLCHAIN_VERSION=4.7
+    echo "The Selected NDK toolchain version was 4.7 !"
+else
+    if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8" ]; then
+        export NDK_TOOLCHAIN_VERSION=4.8
+        echo "The Selected NDK toolchain version was 4.8 !"
+    else
+        echo "Couldn't find the gcc toolchain."
+        exit 1
+    fi
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
 PLUGIN_ROOT="$DIR/../../.."

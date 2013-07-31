@@ -70,7 +70,8 @@ Developers:
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
         Adding project part for QtCreator.
-        Implemented pitch, pan and gain
+        Implemented pitch, pan and gain.
+        Using SDL backend instead of glfw for Linux.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -417,6 +418,8 @@ Developers:
         Creation of CCDeprecated-ext.h
         Use of a single emscripten HTML template file.
         Added some guards in fileutils. Fixed a bug in emscripten file utils.
+        Added emscripten keyboard support
+        Clang support for Linux
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -543,6 +546,9 @@ Developers:
         
     metalbass
         Fixing an issue that sigslot::_connection_base# (from 0 to 8) don't have virtual destructors.
+        
+     thp
+         Port Cocos2D-X to Qt 5
 
 Retired Core Developers:
     WenSheng Yang
@@ -564,6 +570,10 @@ Retired Core Developers:
         
     metadao
         make create_project.py more pythonic and fix some typoes
+        
+    timothyqiu
+        Project creator: use absolute path for json config files
+        Documentation fixes
 
 
 Cocos2d-x can not grow so fast without the active community.

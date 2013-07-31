@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "CCImageCommon_cpp.h"
+
 #import "CCImage.h"
 #import "CCFileUtils.h"
 #import "CCCommon.h"
@@ -36,8 +38,6 @@ typedef struct
 {
     unsigned int height;
     unsigned int width;
-    int          bitsPerComponent;
-    bool         hasAlpha;
     bool         isPremultipliedAlpha;
     bool         hasShadow;
     CGSize       shadowOffset;
@@ -55,91 +55,6 @@ typedef struct
     unsigned char*  data;
     
 } tImageInfo;
-
-static bool _initWithImage(CGImageRef cgImage, tImageInfo *pImageinfo)
-{
-    if(cgImage == NULL) 
-    {
-        return false;
-    }
-    
-    // get image info
-    
-    pImageinfo->width = CGImageGetWidth(cgImage);
-    pImageinfo->height = CGImageGetHeight(cgImage);
-    
-    CGImageAlphaInfo info = CGImageGetAlphaInfo(cgImage);
-    pImageinfo->hasAlpha = (info == kCGImageAlphaPremultipliedLast) 
-                            || (info == kCGImageAlphaPremultipliedFirst) 
-                            || (info == kCGImageAlphaLast) 
-                            || (info == kCGImageAlphaFirst);
-    
-    // If OS version < 5.x, add condition to support jpg
-    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if(systemVersion < 5.0f)
-    {
-        pImageinfo->hasAlpha = (pImageinfo->hasAlpha || (info == kCGImageAlphaNoneSkipLast));
-    }
-    
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(cgImage);
-    if (colorSpace)
-    {
-        if (pImageinfo->hasAlpha)
-        {
-            info = kCGImageAlphaPremultipliedLast;
-            pImageinfo->isPremultipliedAlpha = true;
-        }
-        else 
-        {
-            info = kCGImageAlphaNoneSkipLast;
-            pImageinfo->isPremultipliedAlpha = false;
-        }
-    }
-    else
-    {
-        return false;
-    }
-    
-    // change to RGBA8888
-    pImageinfo->hasAlpha = true;
-    pImageinfo->bitsPerComponent = 8;
-    pImageinfo->data = new unsigned char[pImageinfo->width * pImageinfo->height * 4];
-    colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(pImageinfo->data, 
-                                                 pImageinfo->width, 
-                                                 pImageinfo->height,
-                                                 8, 
-                                                 4 * pImageinfo->width, 
-                                                 colorSpace, 
-                                                 info | kCGBitmapByteOrder32Big);
-    
-    CGContextClearRect(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height));
-    //CGContextTranslateCTM(context, 0, 0);
-    CGContextDrawImage(context, CGRectMake(0, 0, pImageinfo->width, pImageinfo->height), cgImage);
-    
-    CGContextRelease(context);
-    CFRelease(colorSpace);
-  
-    return true;
-}
-
-static bool _initWithData(void * pBuffer, int length, tImageInfo *pImageinfo)
-{
-    bool ret = false;
-    
-    if (pBuffer) 
-    {
-        CGImageRef CGImage;
-        NSData *data;
-        
-        data = [NSData dataWithBytes:pBuffer length:length];
-        CGImage = [[UIImage imageWithData:data] CGImage];
-        
-        ret = _initWithImage(CGImage, pImageinfo);
-    }
-    
-    return ret;
-}
 
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
@@ -386,9 +301,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
                
         // output params
         pInfo->data                 = data;
-        pInfo->hasAlpha             = true;
         pInfo->isPremultipliedAlpha = true;
-        pInfo->bitsPerComponent     = 8;
         pInfo->width                = dim.width;
         pInfo->height               = dim.height;
         bRet                        = true;
@@ -399,145 +312,6 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 }
 
 NS_CC_BEGIN
-
-Image::Image()
-: _width(0)
-, _height(0)
-, _bitsPerComponent(0)
-, _data(0)
-, _hasAlpha(false)
-, _preMulti(false)
-{
-    
-}
-
-Image::~Image()
-{
-    CC_SAFE_DELETE_ARRAY(_data);
-}
-
-bool Image::initWithImageFile(const char * strPath, Format eImgFmt/* = eFmtPng*/)
-{
-	bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(
-				FileUtils::getInstance()->fullPathForFilename(strPath).c_str(),
-				"rb",
-				&nSize);
-				
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, eImgFmt);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool Image::initWithImageFileThreadSafe(const char *fullpath, Format imageType)
-{
-    /*
-     * FileUtils::fullPathFromRelativePath() is not thread-safe.
-     */
-    bool bRet = false;
-    unsigned long nSize = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &nSize);
-    if (pBuffer != NULL && nSize > 0)
-    {
-        bRet = initWithImageData(pBuffer, nSize, imageType);
-    }
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    return bRet;
-}
-
-bool Image::initWithImageData(void * pData, 
-                                int nDataLen, 
-                                Format eFmt,
-                                int nWidth,
-                                int nHeight,
-                                int nBitsPerComponent)
-{
-    bool bRet = false;
-    tImageInfo info = {0};
-    
-    info.hasShadow = false;
-    info.hasStroke = false;
-    
-    do 
-    {
-        CC_BREAK_IF(! pData || nDataLen <= 0);
-        if (eFmt == Format::RAW_DATA)
-        {
-            bRet = initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
-        }
-        else if (eFmt == Format::WEBP)
-        {
-            bRet = initWithWebpData(pData, nDataLen);
-        }
-        else // init with png or jpg file data
-        {
-            bRet = _initWithData(pData, nDataLen, &info);
-            if (bRet)
-            {
-                _height = (short)info.height;
-                _width = (short)info.width;
-                _bitsPerComponent = info.bitsPerComponent;
-                _hasAlpha = info.hasAlpha;
-                _preMulti = info.isPremultipliedAlpha;
-                _data = info.data;
-            }
-        }
-    } while (0);
-    
-    return bRet;
-}
-
-bool Image::initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
-{
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
-
-        _bitsPerComponent = nBitsPerComponent;
-        _height   = (short)nHeight;
-        _width    = (short)nWidth;
-        _hasAlpha = true;
-
-        // only RGBA8888 supported
-        int nBytesPerComponent = 4;
-        int nSize = nHeight * nWidth * nBytesPerComponent;
-        _data = new unsigned char[nSize];
-        CC_BREAK_IF(! _data);
-        memcpy(_data, pData, nSize);
-
-        bRet = true;
-    } while (0);
-    return bRet;
-}
-
-bool Image::initWithJpgData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::initWithPngData(void *pData, int nDatalen)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::saveImageToPNG(const char *pszFilePath, bool bIsToRGB)
-{
-    assert(0);
-	return false;
-}
-
-bool Image::saveImageToJPG(const char *pszFilePath)
-{
-    assert(0);
-	return false;
-}
 
 bool Image::initWithString(
                             const char * pText,
@@ -572,7 +346,7 @@ bool Image::initWithStringShadowStroke(
                                          float strokeSize)
 {
     
-   
+    
     
     tImageInfo info = {0};
     info.width                  = nWidth;
@@ -598,16 +372,14 @@ bool Image::initWithStringShadowStroke(
     }
     _height = (short)info.height;
     _width = (short)info.width;
-    _bitsPerComponent = info.bitsPerComponent;
-    _hasAlpha = info.hasAlpha;
+    _renderFormat = Texture2D::PixelFormat::RGBA8888;
     _preMulti = info.isPremultipliedAlpha;
     _data = info.data;
     
     return true;
 }
 
-
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::iosSaveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;
@@ -618,7 +390,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     }
         
     int bitsPerComponent = 8;            
-    int bitsPerPixel = _hasAlpha ? 32 : 24;
+    int bitsPerPixel = hasAlpha() ? 32 : 24;
     if ((! saveToPNG) || bIsToRGB)
     {
         bitsPerPixel = 24;
@@ -631,7 +403,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-    if ((saveToPNG && _hasAlpha && bIsToRGB)
+    if ((saveToPNG && hasAlpha() && bIsToRGB)
        || (! saveToPNG))
     {
         pixels = new unsigned char[myDataLength];
@@ -651,7 +423,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
         
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if (saveToPNG && _hasAlpha && (! bIsToRGB))
+    if (saveToPNG && hasAlpha() && (! bIsToRGB))
     {
         bitmapInfo |= kCGImageAlphaPremultipliedLast;
     }

@@ -32,6 +32,11 @@
         <activity android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:name="com.qihoopay.insdk.activity.RemoteContainerActivity" android:process=":remote" android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
+        <activity android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
+             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode"
+             android:hardwareAccelerated="false" >
+        </activity>
+
         <meta-data android:name="QHOPENSDK_APPID" android:value="102094835" />
         <meta-data android:name="QHOPENSDK_APPKEY" android:value="8689e00460eabb1e66277eb4232fde6f" />
         <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="4e04fe9ac8e2a73cbb27ba52ac076eb9" />

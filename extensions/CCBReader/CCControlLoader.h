@@ -16,8 +16,8 @@ class ControlLoader : public NodeLoader {
     protected:
         CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Control);
 
-        virtual void onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char * pPropertyName, BlockControlData * pBlockControlData, CCBReader * pCCBReader);
-        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * pCCBReader);
+        virtual void onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char * pPropertyName, BlockControlData * pBlockControlData, CCBReader * ccbReader);
+        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

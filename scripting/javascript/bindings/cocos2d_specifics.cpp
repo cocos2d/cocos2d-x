@@ -2404,7 +2404,7 @@ JSBool js_cocos2dx_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *
 		ok &= jsval_to_uint32(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         
-		ccGLEnableVertexAttribs(arg0);
+        GL::enableVertexAttribs(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_NULL);
 		return JS_TRUE;
 	}

@@ -2,6 +2,7 @@ TARGET = libcocos2d.so
 
 INCLUDES += \
 			-I../platform/third_party/linux/libfreetype2 \
+                        -I../platform/third_party/common/etc \
 			-I../../extensions \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
@@ -63,7 +64,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \
 ../platform/linux/CCStdC.cpp \
@@ -73,6 +73,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/linux/CCEGLView.cpp \
 ../platform/linux/CCImage.cpp \
 ../platform/linux/CCDevice.cpp \
+../platform/third_party/common/etc/etc1.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \
@@ -101,9 +102,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
-../textures/CCTextureETC.cpp \
-../textures/CCTexturePVR.cpp \
-../textures/etc/etc1.cpp\
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \

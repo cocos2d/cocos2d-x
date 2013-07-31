@@ -217,6 +217,14 @@ THE SOFTWARE.
     #include "platform/tizen/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_QT5)
+    #include "platform/qt5/CCAccelerometer.h"
+    #include "platform/qt5/CCApplication.h"
+    #include "platform/qt5/CCEGLView.h"
+    #include "platform/qt5/CCGL.h"
+    #include "platform/qt5/CCStdC.h"
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_QT5
+
 // script_support
 #include "script_support/CCScriptSupport.h"
 
@@ -251,7 +259,6 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "textures/CCTextureAtlas.h"
 #include "textures/CCTextureCache.h"
-#include "textures/CCTexturePVR.h"
 
 // tilemap_parallax_nodes
 #include "tilemap_parallax_nodes/CCParallaxNode.h"

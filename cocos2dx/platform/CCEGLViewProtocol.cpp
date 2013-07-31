@@ -55,6 +55,10 @@ EGLViewProtocol::~EGLViewProtocol()
 
 }
 
+void EGLViewProtocol::pollInputEvents()
+{
+}
+
 void EGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
     CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");
