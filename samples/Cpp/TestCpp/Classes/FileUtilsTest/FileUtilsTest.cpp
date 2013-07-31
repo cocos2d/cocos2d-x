@@ -181,9 +181,9 @@ void TestSearchPath::onEnter()
     if (fp)
     {
         size_t ret = fwrite(szBuf, 1, strlen(szBuf), fp);
-        CCASSERT(ret == 0, "fwrite function returned nonzero value");
+        CCASSERT(ret != 0, "fwrite function returned zero value");
         fclose(fp);
-        if (ret == 0)
+        if (ret != 0)
             log("Writing file to writable path succeed.");
     }
     

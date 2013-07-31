@@ -456,8 +456,8 @@ public:
 
     /// @{
     /// @name Functions inherited from Node
-    virtual void setScaleX(float fScaleX) override;
-    virtual void setScaleY(float fScaleY) override;
+    virtual void setScaleX(float scaleX) override;
+    virtual void setScaleY(float scaleY) override;
     virtual void setPosition(const Point& pos) override;
     virtual void setRotation(float fRotation) override;
     virtual void setRotationX(float fRotationX) override;

@@ -32,8 +32,8 @@ NS_CC_BEGIN
 //implementation TMXObjectGroup
 
 TMXObjectGroup::TMXObjectGroup()
-    :_positionOffset(Point::ZERO)
-    ,_groupName("")        
+    : _groupName("")
+    , _positionOffset(Point::ZERO)
 {
     _objects = Array::create();
     _objects->retain();

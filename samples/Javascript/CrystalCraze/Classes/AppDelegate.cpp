@@ -40,8 +40,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = Application::getInstance()->getTargetPlatform();
-    if (platform == kTargetIphone || platform == kTargetIpad || platform == kTargetMacOS)
+    Application::Platform platform = Application::getInstance()->getTargetPlatform();
+    if (platform == Application::Platform::OS_IPHONE || platform == Application::Platform::OS_IPAD || platform == Application::Platform::OS_MAC)
     {
         searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
         FileUtils::getInstance()->setSearchPaths(searchPaths);
@@ -58,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         
         FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     }
-    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    else if (platform == Application::Platform::OS_ANDROID || platform == Application::Platform::OS_WINDOWS)
     {
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)

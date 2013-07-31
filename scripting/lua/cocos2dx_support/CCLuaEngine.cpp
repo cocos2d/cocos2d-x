@@ -28,6 +28,7 @@
 #include "CCScheduler.h"
 #include "LuaScriptHandlerMgr.h"
 #include "GUI/CCControlExtension/CCControl.h"
+#include "LuaOpengl.h"
 
 NS_CC_BEGIN
 
@@ -613,6 +614,7 @@ void LuaEngine::extendLuaObject()
     extendWebsocket(lua_S);
     extendGLNode(lua_S);
     extendScrollView(lua_S);
+    extendDrawNode(lua_S);
     
     _stack->clean();
 }
@@ -755,5 +757,21 @@ void LuaEngine::extendScrollView(lua_State* lua_S)
         lua_pushcfunction(lua_S,tolua_Cocos2d_ScrollView_unregisterScriptHandler00);
         lua_rawset(lua_S,-3);
     }
+}
+
+void LuaEngine::extendDrawNode(lua_State* lua_S)
+{
+    if (NULL == lua_S)
+		return;
+	
+    lua_pushstring(lua_S,"CCDrawNode");
+    lua_rawget(lua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(lua_S,-1))
+    {
+		lua_pushstring(lua_S,"drawPolygon");
+        lua_pushcfunction(lua_S,tolua_Cocos2d_CCDrawNode_drawPolygon00);
+        lua_rawset(lua_S,-3);
+    }
+	
 }
 NS_CC_END

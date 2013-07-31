@@ -257,8 +257,8 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _label(NULL)
 , _labelPlaceHolder(NULL)
-, _systemControl(NULL)
 , _anchorPoint(Point(0.5f, 0.5f))
+, _systemControl(NULL)
 , _maxTextLength(-1)
 {
     _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;

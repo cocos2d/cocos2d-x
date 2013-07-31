@@ -17,13 +17,13 @@ SEL_MenuHandler ButtonTestLayer::onResolveCCBCCMenuItemSelector(Object * pTarget
 }
 
 Control::Handler ButtonTestLayer::onResolveCCBCCControlSelector(Object * pTarget, const char * pSelectorName) {
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonClicked", ButtonTestLayer::onControlButtonClicked);
 
     return NULL;
 }
 
 bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * pMemberVariableName, Node * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mControlEventLabel", LabelBMFont *, this->mControlEventLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCCControlEventLabel", LabelBMFont *, this->mControlEventLabel);
 
     return false;
 }

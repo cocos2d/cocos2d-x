@@ -106,7 +106,7 @@ Director::Director(void)
 
 bool Director::init(void)
 {
-	setDefaultValues();
+    setDefaultValues();
 
     // scenes
     _runningScene = NULL;
@@ -252,6 +252,11 @@ void Director::drawScene(void)
 {
     // calculate "global" dt
     calculateDeltaTime();
+
+    if (_openGLView)
+    {
+        _openGLView->pollInputEvents();
+    }
 
     //tick before glClear: issue #533
     if (! _paused)
@@ -645,7 +650,7 @@ void Director::popToSceneStackLevel(int level)
 	// pop stack until reaching desired level
 	while (c > level)
     {
-		Scene *current = (Scene*)_scenesStack->lastObject();
+        Scene *current = (Scene*)_scenesStack->lastObject();
 
 		if (current->isRunning())
         {
@@ -658,7 +663,7 @@ void Director::popToSceneStackLevel(int level)
 		c--;
 	}
 
-	_nextScene = (Scene*)_scenesStack->lastObject();
+    _nextScene = (Scene*)_scenesStack->lastObject();
 	_sendCleanupToScene = false;
 }
 

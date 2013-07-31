@@ -24,15 +24,10 @@ THE SOFTWARE.
 #include "TestAnalyticsScene.h"
 #include "PluginManager.h"
 #include "HelloWorldScene.h"
+#include "Configs.h"
 
 using namespace cocos2d;
 using namespace cocos2d::plugin;
-
-// The app key of flurry
-#define FLURRY_KEY_IOS          "KMGG7CD9WPK2TW4X9VR8"
-#define FLURRY_KEY_ANDROID      "SPKFH8KMPGHMMBWRBT5W"
-#define UMENG_KEY_IOS           "50d2b18c5270152187000097"
-#define UMENG_KEY_ANDROID       ""          // umeng key for android is setted in AndroidManifest.xml
 
 enum {
     TAG_LOG_EVENT_ID = 0,
@@ -118,7 +113,7 @@ bool TestAnalytics::init()
     std::string strVer = _pluginAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Point(visibleSize.width, 0), kTextAlignmentCenter);
+    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Point(visibleSize.width, 0), Label::HAlignment::CENTER);
     pLabel->setPosition(Point(visibleSize.width / 2, yPos - 80));
     addChild(pLabel);
 
