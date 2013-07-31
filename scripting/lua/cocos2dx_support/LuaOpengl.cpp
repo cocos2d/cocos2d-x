@@ -1909,7 +1909,7 @@ static int tolua_Cocos2d_glGetAttachedShaders00(lua_State* tolua_S)
 #endif
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
-     	GLsizei length;
+        GLsizei length;
         glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
         GLuint* buffer = new GLuint[length];
         memset(buffer, 0, length * sizeof(GLuint));
@@ -2221,7 +2221,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         
-       	GLsizei length;
+        GLsizei length;
         glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
         GLchar* namebuffer = new GLchar[length];
         GLint size = -1;
@@ -3079,7 +3079,7 @@ static int tolua_Cocos2d_glTexImage2D00(lua_State* tolua_S)
             unit8Array[i-1] = (unsigned char)tolua_tofieldnumber(tolua_S, 10, i, 0);
         }
         
-       	glTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)unit8Array);
+        glTexImage2D((GLenum)arg0 , (GLint)arg1 , (GLint)arg2 , (GLsizei)arg3 , (GLsizei)arg4 , (GLint)arg5 , (GLenum)arg6 , (GLenum)arg7 , (GLvoid*)unit8Array);
 
 //        lua_newtable(tolua_S);                                         /* L: table */
 //        int index = 1;
@@ -5834,23 +5834,23 @@ tolua_lerror:
 static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
-	tolua_Error tolua_err;
-	if (
-		(tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCPoint",0,&tolua_err)) ||
-		!tolua_isnoobj(tolua_S,2,&tolua_err)
-		)
-		goto tolua_lerror;
-	else
+    tolua_Error tolua_err;
+    if (
+        (tolua_isvaluenil(tolua_S,1,&tolua_err) || !tolua_isusertype(tolua_S,1,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
 #endif
-	{
-		Point point = *((Point*)  tolua_tousertype(tolua_S,1,0));
-		DrawPrimitives::drawPoint(point);
-	}
-	return 0;
+    {
+        Point point = *((Point*)  tolua_tousertype(tolua_S,1,0));
+        DrawPrimitives::drawPoint(point);
+    }
+    return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-	tolua_error(tolua_S,"#ferror in function 'ccDrawPoint'.",&tolua_err);
-	return 0;
+    tolua_error(tolua_S,"#ferror in function 'ccDrawPoint'.",&tolua_err);
+    return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -5860,7 +5860,7 @@ tolua_lerror:
 static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
-	tolua_Error tolua_err;
+    tolua_Error tolua_err;
     if (
         !tolua_istable(tolua_S, 1, 0, &tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
@@ -5869,7 +5869,7 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00(lua_State* tolua_S)
         goto tolua_lerror;
     else
 #endif
-	{
+    {
         unsigned int numberOfPoints = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
         
         if (numberOfPoints > 0)
@@ -5948,7 +5948,7 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00(lua_State* tolua_S)
         Point origin = *((Point*)  tolua_tousertype(tolua_S,1,0));
         Point destination = *((Point*)  tolua_tousertype(tolua_S,2,0));
         {
-        	DrawPrimitives::drawRect(origin,destination);
+            DrawPrimitives::drawRect(origin,destination);
         }
     }
     return 0;
@@ -6023,8 +6023,8 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00(lua_State* tolua_S)
                 point = static_cast<Point*>(tolua_tofieldusertype(tolua_S, 1, i + 1,NULL));
                 if (NULL == point)
                 {
-                	CC_SAFE_DELETE_ARRAY(points);
-                	return 0;
+                    CC_SAFE_DELETE_ARRAY(points);
+                    return 0;
                 }
                 points[i] = Point(*point);
             }
@@ -6583,7 +6583,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S,"ccDrawPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00);
         tolua_function(tolua_S,"ccDrawSolidPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00);
         tolua_function(tolua_S,"ccDrawCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00);
-        tolua_function(tolua_S,"ccDrawSolidCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00);	
+        tolua_function(tolua_S,"ccDrawSolidCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00); 
         tolua_function(tolua_S,"ccDrawQuadBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00);
         tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00);
         tolua_function(tolua_S,"ccDrawCatmullRom",tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00);
