@@ -63,7 +63,7 @@ public:
     Point();
     Point(float x, float y);
     Point(const Point& other);
-    Point(const Size& size);
+    explicit Point(const Size& size);
     Point& operator= (const Point& other);
     Point& operator= (const Size& size);
     Point operator+(const Point& right) const;
@@ -295,7 +295,7 @@ public:
     Size();
     Size(float width, float height);
     Size(const Size& other);
-    Size(const Point& point);
+    explicit Size(const Point& point);
     Size& operator= (const Size& other);
     Size& operator= (const Point& point);
     Size operator+(const Size& right) const;
