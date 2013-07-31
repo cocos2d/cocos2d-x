@@ -1913,7 +1913,7 @@ static int tolua_Cocos2d_glGetAttachedShaders00(lua_State* tolua_S)
         glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
         GLuint* buffer = new GLuint[length];
         memset(buffer, 0, length * sizeof(GLuint));
-            //Fix bug 2448, it seems that glGetAttachedShaders will crash if we send NULL to the third parameter (eg Windows), same as in JS binding
+        //Fix bug 2448, it seems that glGetAttachedShaders will crash if we send NULL to the third parameter (eg Windows), same as in JS binding
         GLsizei realShaderCount = 0;
         glGetAttachedShaders(arg0, length, &realShaderCount, buffer);
        
