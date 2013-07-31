@@ -33,7 +33,7 @@ std::map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
 FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
 {
-    std::string atlasName = generateFontName(fontFileName, size);
+    std::string atlasName = generateFontName(fontFileName, size, glyphs);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
@@ -59,7 +59,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, 
 
 FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
 {
-    std::string atlasName = generateFontName(fontFileName, 0);
+    std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
@@ -83,9 +83,33 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
     return tempAtlas;
 }
 
-std::string FontAtlasCache::generateFontName(const char *fontFileName, int size)
+std::string FontAtlasCache::generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs)
 {
     std::string tempName(fontFileName);
+    
+    switch (theGlyphs)
+    {
+            
+        case GlyphCollection::DYNAMIC:
+            tempName += std::string ("_DYNAMIC_");
+        break;
+            
+        case GlyphCollection::NEHE:
+            tempName += std::string ("_NEHE_");
+            break;
+            
+        case GlyphCollection::ASCII:
+            tempName += std::string ("_ASCII_");
+            break;
+            
+        case GlyphCollection::CUSTOM:
+            tempName += std::string ("_CUSTOM_");
+            break;
+            
+        default:
+            break;
+    }
+    
     return tempName + std::to_string(size);
 }
 
