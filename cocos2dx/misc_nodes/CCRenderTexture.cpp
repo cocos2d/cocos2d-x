@@ -102,11 +102,11 @@ void RenderTexture::listenToBackground(cocos2d::Object *obj)
     if (_UITextureImage)
     {
         const Size& s = _texture->getContentSizeInPixels();
-        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), Texture2D::PixelFormat::RGBA8888, s);
+        VolatileTexture::addDataTexture(_texture, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
         
         if ( _textureCopy )
         {
-            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), Texture2D::PixelFormat::RGBA8888, s);
+            VolatileTexture::addDataTexture(_textureCopy, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
         }
     }
     else
@@ -212,16 +212,17 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             powH = ccNextPOT(h);
         }
 
-        data = malloc((int)(powW * powH * 4));
+        int dataLen = (int)(powW * powH * 4);
+        data = malloc(dataLen);
         CC_BREAK_IF(! data);
 
-        memset(data, 0, (int)(powW * powH * 4));
+        memset(data, 0, dataLen);
         _pixelFormat = eFormat;
 
         _texture = new Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
         }
         else
         {
@@ -235,7 +236,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _textureCopy = new Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
             }
             else
             {
@@ -623,11 +624,11 @@ Image* RenderTexture::newImage(bool fliimage)
                        nSavedBufferWidth * 4);
             }
 
-            image->initWithImageData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, Image::Format::RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithRawData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         else
         {
-            image->initWithImageData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, Image::Format::RAW_DATA, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithRawData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
         }
         
     } while (0);
