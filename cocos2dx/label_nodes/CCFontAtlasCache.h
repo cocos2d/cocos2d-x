@@ -44,7 +44,7 @@ public:
     
 private:
     
-    static std::string generateFontName(const char *fontFileName, int size);
+    static std::string generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs);
     static std::map<std::string, FontAtlas *> _atlasMap;
 };
 

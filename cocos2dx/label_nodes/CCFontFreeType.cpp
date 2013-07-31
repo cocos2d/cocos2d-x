@@ -169,7 +169,7 @@ GlyphDef * FontFreeType::getGlyphDefintionsForText(const char *pText, int &outNu
         
         if( !getBBOXFotChar(utf16String[c], tempRect) )
         {
-            log("ERROR: Cannot find definition for glyph: %c in font:%s", utf16String[c], _fontName.c_str());
+            log("Warning: Cannot find definition for glyph: %c in font:%s", utf16String[c], _fontName.c_str());
             
             tempRect.origin.x       = 0;
             tempRect.origin.y       = 0;
