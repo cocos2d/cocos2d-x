@@ -145,23 +145,10 @@ public:
     * @since v1.0
     */
     void dumpCachedTextureInfo();
-    
-    /** Returns a Texture2D object given an PVR filename
-    * If the file image was not previously loaded, it will create a new Texture2D
-    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-    */
-    Texture2D* addPVRImage(const char* filename);
-    
-    /** Returns a Texture2D object given an ETC filename
-     * If the file image was not previously loaded, it will create a new Texture2D
-     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-     */
-    Texture2D* addETCImage(const char* filename);
 
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-    Image::Format computeImageFormatType(std::string& filename);
 
 public:
     struct AsyncStruct
@@ -179,7 +166,6 @@ protected:
     {
         AsyncStruct *asyncStruct;
         Image        *image;
-        Image::Format imageType;
     } ImageInfo;
     
     std::thread* _loadingThread;
@@ -218,9 +204,9 @@ public:
     VolatileTexture(Texture2D *t);
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::Format format);
+    static void addImageTexture(Texture2D *tt, const char* imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
     static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
@@ -244,11 +230,11 @@ protected:
     ccCachedImageType _cashedImageType;
 
     void *_textureData;
+    int  _dataLen;
     Size _textureSize;
     Texture2D::PixelFormat _pixelFormat;
 
     std::string _fileName;
-    Image::Format _fmtImage;
 
     ccTexParams      _texParams;
     std::string      _text;
