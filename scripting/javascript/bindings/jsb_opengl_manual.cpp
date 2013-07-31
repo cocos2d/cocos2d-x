@@ -349,9 +349,11 @@ JSBool JSB_glGetAttachedShaders(JSContext *cx, uint32_t argc, jsval *vp)
 	glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
 	GLuint* buffer = new GLuint[length];
 	memset(buffer, 0, length * sizeof(GLuint));
-	glGetAttachedShaders(arg0, length, NULL, buffer);
-
-	JSObject *jsobj = JS_NewArrayObject(cx, length, NULL);
+    //Fix bug 2448, it seems that glGetAttachedShaders will crash if we send NULL to the third parameter (eg Windows), same as in lua binding
+    GLsizei realShaderCount = 0;
+	glGetAttachedShaders(arg0, length, &realShaderCount, buffer);
+   
+    JSObject *jsobj = JS_NewArrayObject(cx, length, NULL);
 	JSB_PRECONDITION2(jsobj, cx, JS_FALSE, "Error creating JS Object");
 
 	for( int i=0; i<length; i++) {
