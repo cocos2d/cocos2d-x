@@ -70,7 +70,8 @@ Developers:
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
         Adding project part for QtCreator.
-        Implemented pitch, pan and gain
+        Implemented pitch, pan and gain.
+        Using SDL backend instead of glfw for Linux.
 
     savdalion 
         Added example for russian language in TestCpp
