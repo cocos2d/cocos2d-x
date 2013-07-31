@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "textures/CCTexturePVR.h"
 #include "textures/CCTextureETC.h"
+#include "textures/CCTextureS3TC.h"
 #include "CCDirector.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
@@ -750,6 +751,34 @@ bool Texture2D::initWithETCFile(const char* file)
     }
     
     return bRet;
+}
+
+bool Texture2D::initWithS3TCFile(const char* file)
+{
+    bool bRet =false;
+    // nothing to do with Object::init
+    TextureS3TC *s3tc = new TextureS3TC;
+    bRet = s3tc->initWithFile(file);
+
+    if(bRet)
+    {
+        _name = s3tc->getName();
+        _maxS = 1.0f;
+        _maxT = 1.0f;
+        _pixelsWide = s3tc->getWidth();
+        _pixelsHigh = s3tc->getHeight();
+        _contentSize = Size((float)_pixelsWide,(float)_pixelsHigh);
+        _hasPremultipliedAlpha = true;
+        
+        s3tc->release();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't load S3TC image %s",file);
+    }
+    
+    return bRet;
+    
 }
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)

@@ -45,6 +45,7 @@ Configuration::Configuration(void)
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
 , _supportsETC(false)
+, _supportsS3TC(false)
 , _supportsNPOT(false)
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
@@ -129,6 +130,9 @@ void Configuration::gatherGPUInfo()
     _supportsETC = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
     _valueDict->setObject( Bool::create(_supportsETC), "gl.supports_ETC");
     
+    _supportsS3TC = checkForGLExtension(" GL_EXT_texture_compression_s3tc");  //no sure
+    _valueDict->setObject( Bool::create(_supportsS3TC), "gl.supports_S3TC");
+    
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
 	_valueDict->setObject( Bool::create(_supportsPVRTC), "gl.supports_PVRTC");
 
@@ -143,6 +147,7 @@ void Configuration::gatherGPUInfo()
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
 	_valueDict->setObject( Bool::create(_supportsShareableVAO), "gl.supports_vertex_array_object");
+    
     
     CHECK_GL_ERROR_DEBUG();
 }
@@ -227,6 +232,11 @@ bool Configuration::supportsETC() const
 #else
     return false;
 #endif
+}
+
+bool Configuration::supportsS3TC() const
+{
+    return _supportsS3TC;    
 }
 
 bool Configuration::supportsBGRA8888(void) const

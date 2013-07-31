@@ -453,4 +453,36 @@ public:
     virtual std::string subtitle();
 };
 
+// S3TC dxt1 texture format test
+class TextureS3TCDxt1 : public TextureDemo
+{
+public:
+    TextureS3TCDxt1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+};
+
+//S3TC dxt3 texture format test
+class TextureS3TCDxt3 : public TextureDemo
+{
+public:
+    TextureS3TCDxt3();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+//S3TC dxt5 texture format test
+class TextureS3TCDxt5 : public TextureDemo
+{
+public:
+    TextureS3TCDxt5();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
 #endif // __TEXTURE2D_TEST_H__

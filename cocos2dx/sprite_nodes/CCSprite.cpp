@@ -83,6 +83,7 @@ Sprite* Sprite::createWithTexture(Texture2D *pTexture, const Rect& rect)
 Sprite* Sprite::create(const char *pszFileName)
 {
     Sprite *pobSprite = new Sprite();
+
     if (pobSprite && pobSprite->initWithFile(pszFileName))
     {
         pobSprite->autorelease();
@@ -218,7 +219,7 @@ bool Sprite::initWithTexture(Texture2D *pTexture)
 bool Sprite::initWithFile(const char *pszFilename)
 {
     CCAssert(pszFilename != NULL, "Invalid filename for sprite");
-
+    
     Texture2D *pTexture = TextureCache::getInstance()->addImage(pszFilename);
     if (pTexture)
     {

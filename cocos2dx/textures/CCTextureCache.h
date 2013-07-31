@@ -157,6 +157,13 @@ public:
      *  object and it will return it. Otherwise it will return a reference of a previously loaded image
      */
     Texture2D* addETCImage(const char* filename);
+    
+    /** Returns a Texture2D object given an S3TC filename
+     * If the file image was not previously loaded, it will create a new Texture2D
+     * object and it will return it . Otherwise it will return a reference of a previously loaded image
+     */
+    Texture2D* addS3TCImage(const char* filename);
+    
 
 private:
     void addImageAsyncCallBack(float dt);

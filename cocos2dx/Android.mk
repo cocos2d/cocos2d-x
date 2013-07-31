@@ -133,7 +133,9 @@ textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 textures/CCTextureETC.cpp \
 textures/CCTexturePVR.cpp \
+textures/CCTextureS3TC.cpp\
 textures/etc/etc1.cpp\
+textures/s3tc/s3tc.cpp\
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \

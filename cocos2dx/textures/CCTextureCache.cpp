@@ -376,6 +376,11 @@ Texture2D * TextureCache::addImage(const char * path)
                 // ETC1 file format, only supportted on Android
                 texture = this->addETCImage(fullpath.c_str());
             }
+            else if (std::string::npos != lowerCase.find(".dds"))
+            {
+                // S3TC file format, only supportted on Windows
+                texture =this->addS3TCImage(fullpath.c_str());
+            }
             else
             {
                 Image::EImageFormat eImageFormat = Image::kFmtUnKnown;
@@ -487,6 +492,34 @@ Texture2D* TextureCache::addETCImage(const char* path)
     }
     
     return texture;
+}
+Texture2D* TextureCache::addS3TCImage(const char* path)
+{
+    CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
+    
+    Texture2D* texture = NULL;
+    std::string key(path);
+    
+    if((texture = (Texture2D*)_textures->objectForKey(key.c_str())))
+    {
+        return texture;
+    }
+    
+    //Split up directory and filename
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(key.c_str());
+    texture = new Texture2D();
+    if(texture != NULL && texture->initWithS3TCFile(fullpath.c_str()))
+    {
+        _textures->setObject(texture, key.c_str());
+        texture->autorelease();
+    }
+    else
+    {
+        CCLOG("cocos2d: Couldn't add S3TCImage:%s in TextureCache",key.c_str());
+        CC_SAFE_DELETE(texture);
+    }
+    return texture;
+    
 }
 
 Texture2D* TextureCache::addUIImage(Image *image, const char *key)
