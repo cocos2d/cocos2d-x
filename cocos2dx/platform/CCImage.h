@@ -42,10 +42,10 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
- 
+
 /**
-    @brief Structure which can tell where mipmap begins and how long is it
-*/
+ @brief Structure which can tell where mipmap begins and how long is it
+ */
 typedef struct _MipmapInfo {
     unsigned char* address;
     int len;
@@ -58,14 +58,6 @@ public:
     
     Image();
     virtual ~Image();
-    
-    /**
-     @brief Determine how many mipmaps can we have. 
-     Its same as define but it respects namespaces
-    */
-    enum {
-        CC_MIPMAP_MAX = 16,
-    };
 
     /** Supported formats for Image */
     enum class Format
@@ -201,11 +193,13 @@ protected:
 
     bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool saveImageToJPG(const char *pszFilePath);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    bool iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
-#endif
-
+    
+private:
+    /**
+     @brief Determine how many mipmaps can we have.
+     Its same as define but it respects namespaces
+     */
+    static const int MIPMAP_MAX = 16;
     unsigned char *_data;
     int _dataLen;
     int _width;
@@ -213,7 +207,7 @@ protected:
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
-    MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
+    MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;

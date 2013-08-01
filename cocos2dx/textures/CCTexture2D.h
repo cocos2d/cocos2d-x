@@ -50,21 +50,11 @@ typedef struct _MipmapInfo MipmapInfo;
 
 class GLProgram;
 
-/**
-Extension to set the Min / Mag filter
-*/
-typedef struct _ccTexParams {
-    GLuint    minFilter;
-    GLuint    magFilter;
-    GLuint    wrapS;
-    GLuint    wrapT;
-} ccTexParams;
-
 //CLASS INTERFACES:
 
 /** @brief Texture2D class.
 * This class allows to easily create OpenGL 2D textures from images, text or raw data.
-* The created Texture2D object will always have power-of-two dimensions. 
+* The created Texture2D object will always have power-of-two dimensions.
 * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
@@ -116,6 +106,17 @@ public:
         NONE = -1
     };
     
+    /**
+     Extension to set the Min / Mag filter
+     */
+    typedef struct _TexParams {
+        GLuint    minFilter;
+        GLuint    magFilter;
+        GLuint    wrapS;
+        GLuint    wrapT;
+    }TexParams;
+    
+public:
     /** sets the default pixel format for UIImagescontains alpha channel.
      If the UIImage contains alpha channel, then the options are:
      - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
@@ -205,8 +206,8 @@ public:
 
     @since v0.8
     */
-    void setTexParameters(const ccTexParams& texParams);
-    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const ccTexParams* texParams) { return setTexParameters(*texParams); };
+    void setTexParameters(const TexParams& texParams);
+    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const TexParams* texParams) { return setTexParameters(*texParams); };
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
@@ -302,38 +303,38 @@ private:
     static PixelFormat convertRGBA8888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
 
     //I8 to XXX
-    static void convertI8ToRGB888(const unsigned char* in, int len, unsigned char* out);
-    static void convertI8ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
-    static void convertI8ToRGB565(const unsigned char* in, int len, unsigned char* out);
-    static void convertI8ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
-    static void convertI8ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
-    static void convertI8ToAI88(const unsigned char* in, int len, unsigned char* out);
+    static void convertI8ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
 
     //AI88 to XXX
-    static void convertAI88ToRGB888(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToRGB565(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToA8(const unsigned char* in, int len, unsigned char* out);
-    static void convertAI88ToI8(const unsigned char* in, int len, unsigned char* out);
+    static void convertAI88ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToA8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
 
     //RGB888 to XXX
-    static void convertRGB888ToRGBA8888(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGB888ToRGB565(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGB888ToI8(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGB888ToAI88(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGB888ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGB888ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGB888ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
 
     //RGBA8888 to XXX
-    static void convertRGBA8888ToRGB888(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToRGB565(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToI8(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToA8(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToAI88(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToRGBA4444(const unsigned char* in, int len, unsigned char* out);
-    static void convertRGBA8888ToRGB5A1(const unsigned char* in, int len, unsigned char* out);
+    static void convertRGBA8888ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToA8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
 
 protected:
     /** pixel format of the texture */
