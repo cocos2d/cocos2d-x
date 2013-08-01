@@ -246,7 +246,7 @@ JSBool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc,
         JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         
-        if (argc == 2)
+        if (argc == 2 && !JSVAL_IS_VOID(argv[1]))
         {
             std::vector<std::string> protocols;
             
