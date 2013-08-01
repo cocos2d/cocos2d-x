@@ -14,6 +14,8 @@
 #include "shaders/ccGLStateCache.h"
 #include "support/ccUtils.h"
 
+
+
 NS_CC_BEGIN
 
 typedef struct _DDCOLORKEY
@@ -53,7 +55,7 @@ typedef struct _DDSURFACEDESC2
     
     union
     {
-        LONG lPitch;
+        DWORD lPitch;
         DWORD dwLinearSize;
     } DUMMYUNIONNAMEN1;
     
@@ -72,7 +74,7 @@ typedef struct _DDSURFACEDESC2
     
     DWORD dwAlphaBitDepth;
     DWORD dwReserved;
-    LPVOID lpSurface;
+    DWORD lpSurface;
     
     union
     {
@@ -95,12 +97,17 @@ typedef struct _DDSURFACEDESC2
     
 } DDSURFACEDESC2, *LPDDSURFACEDESC2;
 
-typedef struct
+#pragma pack(push,1)
+
+typedef struct ccS3TCTexHeader
 {
     char fileCode[4];
     DDSURFACEDESC2 ddsd;
     
 }ccS3TCTexHeader;
+
+#pragma pack(pop)
+
 
 TextureS3TC::TextureS3TC()
 : _name(0)
@@ -131,31 +138,31 @@ unsigned int TextureS3TC::getHeight() const
 
 gliGenericImage* TextureS3TC::ReadDDSFile(const char *filename, int * bufsize, int * numMipmaps)
 {
-    gliGenericImage *genericImage;      //图片结构体
+    gliGenericImage *genericImage;     
     
     unsigned char* s3tcFileData = nullptr;
     unsigned long s3tcFileSize = 0;
     ccS3TCTexHeader *header = NULL;
+    
+    s3tcFileData = FileUtils::getInstance()->getFileData(filename, "rb", &s3tcFileSize); 
+    header = (ccS3TCTexHeader *)s3tcFileData;
 
-    s3tcFileData = FileUtils::getInstance()->getFileData(filename, "rb", &s3tcFileSize); //读取数据
-    header = (ccS3TCTexHeader *)s3tcFileData;   //文件头格式化
-
-    if (strncmp(header->fileCode, "DDS", 3)!= 0)    //文件头判断
+    if (strncmp(header->fileCode, "DDS", 3)!= 0)    
     {
         CCLOG("cocos2d: the file is not a dds file!");
         return nullptr;
     }
     
     genericImage = (gliGenericImage*) malloc(sizeof(gliGenericImage));
-    memset(genericImage,0,sizeof(gliGenericImage));   //初始化 文件结构体
+    memset(genericImage,0,sizeof(gliGenericImage));  
     
     //*bufsize = header->ddsd.DUMMYUNIONNAMEN2.dwMipMapCount > 1 ? header->ddsd.DUMMYUNIONNAMEN1.dwLinearSize * 2
     //: header->ddsd.DUMMYUNIONNAMEN1.dwLinearSize;
     
-    genericImage->pixels = (unsigned char*)malloc(s3tcFileSize-sizeof(ccS3TCTexHeader));   //传递压缩纹理数据
+    genericImage->pixels = (unsigned char*)malloc(s3tcFileSize-sizeof(ccS3TCTexHeader));  
     memcpy(genericImage->pixels, (unsigned char*)s3tcFileData+sizeof(ccS3TCTexHeader), s3tcFileSize-sizeof(ccS3TCTexHeader));
 
-    genericImage->width = header->ddsd.dwWidth;   //文件宽高
+    genericImage->width = header->ddsd.dwWidth;
     _width = header->ddsd.dwWidth;
     genericImage->height = header->ddsd.dwHeight;
     _height = header->ddsd.dwHeight;
@@ -166,9 +173,9 @@ gliGenericImage* TextureS3TC::ReadDDSFile(const char *filename, int * bufsize, i
     
     genericImage->components = (header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC == FOURCC_DXT1) ? 3 : 4;
     
-    *numMipmaps = header->ddsd.DUMMYUNIONNAMEN2.dwMipMapCount;  //mipmap 个数
+    *numMipmaps = header->ddsd.DUMMYUNIONNAMEN2.dwMipMapCount;  
     
-    if (FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)  //文件ddpPixelFormat 判断
+    if (FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)  
     {
         genericImage->format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
     }
@@ -251,6 +258,8 @@ bool TextureS3TC::loadTexture(const char*file)
 
         if (Configuration::getInstance()->supportsS3TC())
         {
+            CCLOG("this is s3tc H decode");
+            
             glCompressedTexImage2D(GL_TEXTURE_2D, i, ddsimage->format, width, height, 0, size, ddsimage->pixels + offset);
         }
         else

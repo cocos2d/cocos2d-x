@@ -117,8 +117,10 @@ bool TextureETC::loadTexture(const char* file)
     
     if(Configuration::getInstance()->supportsETC())
     {
-        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
+        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy.
+        
 #ifdef GL_ETC1_RGB8_OES
+        
         glGenTextures(1, &_name);
         glBindTexture(GL_TEXTURE_2D, _name);
         

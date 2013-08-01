@@ -484,6 +484,12 @@
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\ccTypes.cpp" />
+    <ClCompile Include="..\textures\s3tc\s3tc.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\textures\CCTextureS3TC.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -967,6 +973,12 @@
     </ClInclude>
     <ClInclude Include="..\include\CCDeprecated.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\s3tc\s3tc.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\textures\CCTextureS3TC.h">
+      <Filter>textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

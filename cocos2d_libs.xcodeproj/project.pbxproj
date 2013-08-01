@@ -44,22 +44,14 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		019F1B0817AA0A220096C697 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE060C17A0C54B00C93508 /* s3tc.cpp */; };
+		019F1B0917AA0A2C0096C697 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE060D17A0C54B00C93508 /* s3tc.h */; };
 		01BE05E517A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
-		01BE05E617A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
-		01BE05E717A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
-		01BE05E817A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
 		01BE05E917A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
-		01BE05EA17A0B95900C93508 /* CCTextureS3TC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE05E317A0B95900C93508 /* CCTextureS3TC.cpp */; };
 		01BE05EB17A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
-		01BE05EC17A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
-		01BE05ED17A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
-		01BE05EE17A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
 		01BE05EF17A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
-		01BE05F017A0B95900C93508 /* CCTextureS3TC.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE05E417A0B95900C93508 /* CCTextureS3TC.h */; };
 		01BE060E17A0C54B00C93508 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE060C17A0C54B00C93508 /* s3tc.cpp */; };
-		01BE060F17A0C54B00C93508 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01BE060C17A0C54B00C93508 /* s3tc.cpp */; };
 		01BE061017A0C54B00C93508 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE060D17A0C54B00C93508 /* s3tc.h */; };
-		01BE061117A0C54B00C93508 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BE060D17A0C54B00C93508 /* s3tc.h */; };
 		1A11979217852B3B00D62A44 /* CCBProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195931785201F00D62A44 /* CCBProxy.cpp */; };
 		1A11979317852B3B00D62A44 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195951785201F00D62A44 /* CCLuaBridge.cpp */; };
 		1A11979417852B3B00D62A44 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1195971785201F00D62A44 /* CCLuaEngine.cpp */; };
@@ -5179,6 +5171,7 @@
 				A07A52CD1784AC360073F6A7 /* etc1.h in Headers */,
 				466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */,
 				01BE05EB17A0B95900C93508 /* CCTextureS3TC.h in Headers */,
+				019F1B0917AA0A2C0096C697 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5260,7 +5253,6 @@
 				A03F2D321780BDCE006731B9 /* cpSpatialIndex.h in Headers */,
 				A03F2D331780BDCE006731B9 /* cpVect.h in Headers */,
 				A03F2D561780BDCF006731B9 /* prime.h in Headers */,
-				01BE05ED17A0B95900C93508 /* CCTextureS3TC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5314,7 +5306,6 @@
 				A03F2E7D1780BE59006731B9 /* b2WeldJoint.h in Headers */,
 				A03F2E7F1780BE59006731B9 /* b2WheelJoint.h in Headers */,
 				A03F2E871780BE59006731B9 /* b2Rope.h in Headers */,
-				01BE05EE17A0B95900C93508 /* CCTextureS3TC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5461,7 +5452,6 @@
 				A03F31E0178145F3006731B9 /* spine-cocos2dx.h in Headers */,
 				A03F31E1178145F3006731B9 /* spine.h in Headers */,
 				1AE019861790023400D574A8 /* SocketIO.h in Headers */,
-				01BE05EC17A0B95900C93508 /* CCTextureS3TC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5890,8 +5880,6 @@
 				A07A4EF71783867C0073F6A7 /* spine-cocos2dx.h in Headers */,
 				A07A4EF81783867C0073F6A7 /* spine.h in Headers */,
 				1AE019871790023400D574A8 /* SocketIO.h in Headers */,
-				01BE05F017A0B95900C93508 /* CCTextureS3TC.h in Headers */,
-				01BE061117A0C54B00C93508 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6519,6 +6507,7 @@
 				A07A52CB1784AC360073F6A7 /* etc1.cpp in Sources */,
 				46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */,
 				01BE05E517A0B95900C93508 /* CCTextureS3TC.cpp in Sources */,
+				019F1B0817AA0A220096C697 /* s3tc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6606,7 +6595,6 @@
 				A03F2D531780BDCF006731B9 /* cpSpatialIndex.c in Sources */,
 				A03F2D541780BDCF006731B9 /* cpSweep1D.c in Sources */,
 				A03F2D551780BDCF006731B9 /* cpVect.c in Sources */,
-				01BE05E717A0B95900C93508 /* CCTextureS3TC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6659,7 +6647,6 @@
 				A03F2E7C1780BE59006731B9 /* b2WeldJoint.cpp in Sources */,
 				A03F2E7E1780BE59006731B9 /* b2WheelJoint.cpp in Sources */,
 				A03F2E861780BE59006731B9 /* b2Rope.cpp in Sources */,
-				01BE05E817A0B95900C93508 /* CCTextureS3TC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6785,7 +6772,6 @@
 				A03F31DD178145F3006731B9 /* SlotData.cpp in Sources */,
 				A03F31DF178145F3006731B9 /* spine-cocos2dx.cpp in Sources */,
 				1AE019841790023400D574A8 /* SocketIO.cpp in Sources */,
-				01BE05E617A0B95900C93508 /* CCTextureS3TC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7073,8 +7059,6 @@
 				A07A4E791783867C0073F6A7 /* SlotData.cpp in Sources */,
 				A07A4E7A1783867C0073F6A7 /* spine-cocos2dx.cpp in Sources */,
 				1AE019851790023400D574A8 /* SocketIO.cpp in Sources */,
-				01BE05EA17A0B95900C93508 /* CCTextureS3TC.cpp in Sources */,
-				01BE060F17A0C54B00C93508 /* s3tc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

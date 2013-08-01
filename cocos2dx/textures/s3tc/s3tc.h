@@ -9,9 +9,7 @@
 #ifndef __cocos2d_libs__s3tc__
 #define __cocos2d_libs__s3tc__
 
-#include <iostream>
-
-void Rev16InByte( void *val);
+#include "CCStdC.h"
 
 void dxt1_decode_pixels (uint8_t **in_data, uint32_t *d, unsigned int qstride, unsigned int flag, uint64_t alpha);
 

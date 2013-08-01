@@ -10,9 +10,10 @@
 #define __cocos2d_libs__CCTextureS3TC__
 
 #include <iostream>
-#include "cocoa/CCObject.h"
+
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"
+#include "cocoa/CCObject.h"
 
 /* GL_EXT_texture_compression_dxt1 */
 #ifndef GL_EXT_texture_compression_dxt1
@@ -33,7 +34,7 @@
 NS_CC_BEGIN
 
 //GL Image Information
-typedef unsigned long DWORD;
+typedef unsigned int DWORD;
 typedef unsigned short WORD;
 typedef long LONG;
 typedef void* LPVOID;

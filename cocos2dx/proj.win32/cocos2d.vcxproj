@@ -236,7 +236,9 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
     <ClCompile Include="..\textures\CCTextureETC.cpp" />
     <ClCompile Include="..\textures\CCTexturePVR.cpp" />
+    <ClCompile Include="..\textures\CCTextureS3TC.cpp" />
     <ClCompile Include="..\textures\etc\etc1.cpp" />
+    <ClCompile Include="..\textures\s3tc\s3tc.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
@@ -400,7 +402,9 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTextureCache.h" />
     <ClInclude Include="..\textures\CCTextureETC.h" />
     <ClInclude Include="..\textures\CCTexturePVR.h" />
+    <ClInclude Include="..\textures\CCTextureS3TC.h" />
     <ClInclude Include="..\textures\etc\etc1.h" />
+    <ClInclude Include="..\textures\s3tc\s3tc.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />
