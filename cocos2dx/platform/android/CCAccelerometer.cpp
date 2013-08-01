@@ -47,17 +47,17 @@ namespace cocos2d
 
         if (_function)
         {        
-            enableAccelerometerJNI();
+            // enableAccelerometerJNI();
         }
         else
         {
-            disableAccelerometerJNI();
+            // disableAccelerometerJNI();
         }
     }
 
     void Accelerometer::setAccelerometerInterval(float interval) 
     {
-        setAccelerometerIntervalJNI(interval);
+        // setAccelerometerIntervalJNI(interval);
     }
 
 
