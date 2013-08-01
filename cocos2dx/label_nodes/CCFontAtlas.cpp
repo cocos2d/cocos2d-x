@@ -35,19 +35,24 @@ void FontAtlas::relaseTextures()
     _atlasTextures.clear();
 }
 
-void FontAtlas::addLetterDefinition(FontLetterDefinition &letterDefinition)
+void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition)
 {
     _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
 }
 
-FontLetterDefinition * FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16)
+bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition)
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
     
     if (outIterator != _fontLetterDefinitions.end())
-        return & (*outIterator).second;
+    {
+        outDefinition = (*outIterator).second;
+        return true;
+    }
     else
-        return nullptr;
+    {
+        return false;
+    }
 }
 
 void FontAtlas::addTexture(Texture2D *pTexture, int slot)

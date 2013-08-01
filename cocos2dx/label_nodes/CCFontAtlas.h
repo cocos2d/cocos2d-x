@@ -53,8 +53,8 @@ public:
     FontAtlas(Font *theFont);
     virtual ~FontAtlas();
     
-    void addLetterDefinition(FontLetterDefinition &letterDefinition);
-    FontLetterDefinition * getLetterDefinitionForChar(unsigned short  letteCharUTF16);
+    void addLetterDefinition(const FontLetterDefinition &letterDefinition);
+    bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
     
     void addTexture(Texture2D *pTexture, int slot);
     Texture2D * getTexture(int slot);
