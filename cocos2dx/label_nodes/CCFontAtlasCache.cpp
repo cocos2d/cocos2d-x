@@ -91,26 +91,26 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
     {
             
         case GlyphCollection::DYNAMIC:
-            tempName += std::string ("_DYNAMIC_");
+            tempName.append("_DYNAMIC_");
         break;
             
         case GlyphCollection::NEHE:
-            tempName += std::string ("_NEHE_");
+            tempName.append("_NEHE_");
             break;
             
         case GlyphCollection::ASCII:
-            tempName += std::string ("_ASCII_");
+            tempName.append("_ASCII_");
             break;
             
         case GlyphCollection::CUSTOM:
-            tempName += std::string ("_CUSTOM_");
+            tempName.append("_CUSTOM_");
             break;
             
         default:
             break;
     }
     
-    return tempName + std::to_string(size);
+    return  tempName.append(std::to_string(size));
 }
 
 bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
