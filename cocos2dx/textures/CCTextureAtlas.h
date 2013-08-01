@@ -129,8 +129,8 @@ public:
 
     /** resize the capacity of the TextureAtlas.
     * The new capacity can be lower or higher than the current one
-    * It returns YES if the resize was successful.
-    * If it fails to resize the capacity it will return NO with a new capacity of 0.
+    * It returns true if the resize was successful.
+    * If it fails to resize the capacity it will return false with a new capacity of 0.
     */
     bool resizeCapacity(int capacity);
 

@@ -271,7 +271,7 @@ public:
                                  float *S, float *T);
     
     /*
-     returns YES if Segment A-B intersects with segment C-D
+     returns true if Segment A-B intersects with segment C-D
      @since v3.0
      */
     static bool isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D);

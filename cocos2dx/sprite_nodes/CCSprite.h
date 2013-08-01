@@ -294,7 +294,7 @@ public:
     
     /**
      * Updates the texture rect of the Sprite in points.
-     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     * It will call setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) with \p rotated = false, and \p utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const Rect& rect);
     
