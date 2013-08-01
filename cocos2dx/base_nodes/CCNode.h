@@ -174,7 +174,7 @@ public:
      * The larger number it is, the later this node will be drawn in each message loop.
      * Please refer to setVertexZ(float) for the difference.
      *
-     * @param nZOrder   Z order of this node.
+     * @param zOrder   Z order of this node.
      */
     virtual void setZOrder(int zOrder);
     /**
@@ -206,7 +206,7 @@ public:
      *
      * @warning Use it at your own risk since it might break the cocos2d parent-children z order
      *
-     * @param fVertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  OpenGL Z vertex of this node.
      */
     virtual void setVertexZ(float vertexZ);
     /**
@@ -462,9 +462,9 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      * 
-     * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotaionX);
+    virtual void setRotationX(float rotationX);
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
@@ -481,7 +481,7 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
-     * @param fRotationY    The Y rotation in degrees.
+     * @param rotationY    The Y rotation in degrees.
      */
     virtual void setRotationY(float rotationY);
     /**
