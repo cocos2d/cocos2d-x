@@ -74,13 +74,9 @@ CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, in
  *                      invalid input is stored here.
  * @param items_written location to store number of bytes written, or %NULL.
  *                      The value stored here does not include the trailing null.
- * @param error         location to store the error occuring, or %NULL to ignore
- *                      errors. Any of the errors in #GConvertError other than
- *                      %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
  * @returns a pointer to a newly allocated UTF-8 string. This value must be
- *          freed with free(). If an error occurs, %NULL will be returned and
- *          \p error set.
+ *          freed with free(). If an error occurs, %NULL will be returned.
  **/
 CC_DLL char *
 cc_utf16_to_utf8 (const unsigned short  *str,
