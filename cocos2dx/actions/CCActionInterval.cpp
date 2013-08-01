@@ -2201,8 +2201,11 @@ TargetedAction* TargetedAction::clone() const
 
 TargetedAction* TargetedAction::reverse(void) const
 {
-	// no reverse for this action, just clone it
-	return this->clone();
+	// just reverse the internal action
+	auto a = new TargetedAction();
+	a->initWithTarget(_forcedTarget, _action->reverse());
+	a->autorelease();
+	return a;
 }
 
 void TargetedAction::startWithTarget(Node *target)
