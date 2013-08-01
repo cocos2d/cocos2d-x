@@ -46,10 +46,10 @@ public class Cocos2dxLocalStorage {
      * @return 
      */
     public static boolean init(String dbName, String tableName) {
-    	if (Cocos2dxActivity.getContext() != null) {
+    	if (Cocos2dxHelper.getActivity() != null) {
     		DATABASE_NAME = dbName;
     		TABLE_NAME = tableName;
-    		mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxActivity.getContext());
+    		mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxHelper.getActivity());
     		mDatabase = mDatabaseOpenHelper.getWritableDatabase();
     		return true;
     	}
