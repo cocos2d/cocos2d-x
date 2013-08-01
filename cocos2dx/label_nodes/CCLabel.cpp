@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "CCLabel.h"
-#include "CCStringBMFont.h"
 #include "CCStringTTF.h"
 #include "CCFontDefinition.h"
 #include "CCFontCache.h"
@@ -56,11 +55,11 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, i
     if (!tempAtlas)
         return 0;
     
-    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::LEFT, lineSize);
+    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::CENTER, lineSize);
     
     if (templabel)
     {
-        templabel->setText(label, lineSize, TextHAlignment::LEFT, false);
+        templabel->setText(label, lineSize, TextHAlignment::CENTER, false);
         return templabel;
     }
     else
@@ -76,13 +75,5 @@ Label::Label()
 Label::~Label()
 {
 }
-
-
-// TESTING STUFF THAT NEEDS TO GO ////////////////////////////////////////////////////////////////
-Label* Label::createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize)
-{
-   return StringBMFont::create(label, bmfontFilePath, lineSize);
-}
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
 NS_CC_END

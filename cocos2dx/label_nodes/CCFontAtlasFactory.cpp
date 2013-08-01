@@ -60,12 +60,12 @@ FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* tttFilePath, int fo
 
 FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
 {
-    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
+    Font *pFont = Font::createWithFNT(fntFilePath);
     
-    if (newConf)
-        return createFontAtlasFromFNTConfig(newConf);
+    if(pFont)
+        return pFont->createFontAtlas();
     else
-        return 0;
+        return nullptr;
 }
 
 const char * FontAtlasFactory::getGlyphCollection(GlyphCollection glyphs)
@@ -84,82 +84,6 @@ const char * FontAtlasFactory::getGlyphCollection(GlyphCollection glyphs)
             return 0;
             break;
     }
-}
-
-FontAtlas * FontAtlasFactory::createFontAtlasFromFNTConfig(CCBMFontConfiguration *theConfig)
-{
-    if (!theConfig)
-        return 0;
-    
-    FontFNT *tempFont = new FontFNT(theConfig);
-    if (!tempFont)
-        return 0;
-    
-    FontAtlas *tempAtlas = new FontAtlas(tempFont);
-    if (!tempAtlas)
-        return 0;
-    
-    // check that everything is fine with the BMFontCofniguration
-    if (!theConfig->_fontDefDictionary)
-        return 0;
-    
-    
-    int numGlyphs = theConfig->_characterSet->size();
-    if (!numGlyphs)
-        return 0;
-    
-    if (theConfig->_commonHeight == 0)
-        return 0;
-    
-    // commone height
-    tempAtlas->setCommonLineHeight(theConfig->_commonHeight);
-    
-    
-    ccBMFontDef fontDef;
-    tFontDefHashElement *current_element, *tmp;
-    
-    // Purge uniform hash
-    HASH_ITER(hh, theConfig->_fontDefDictionary, current_element, tmp)
-    {
-        
-        FontLetterDefinition tempDefinition;
-        
-        fontDef = current_element->fontDef;
-        Rect tempRect;
-        
-        tempRect = fontDef.rect;
-        tempRect = CC_RECT_PIXELS_TO_POINTS(tempRect);
-        
-        tempDefinition.letteCharUTF16 = fontDef.charID;
-        
-        tempDefinition.offsetX  = fontDef.xOffset;
-        tempDefinition.offsetY  = fontDef.yOffset;
-        
-        tempDefinition.U        = tempRect.origin.x;
-        tempDefinition.V        = tempRect.origin.y;
-        
-        tempDefinition.width    = tempRect.size.width;
-        tempDefinition.height   = tempRect.size.height;
-        
-        //carloX: only one texture supported FOR NOW
-        tempDefinition.textureID = 0;
-        
-        tempDefinition.anchorX = 0.5f;
-        tempDefinition.anchorY = 0.5f;
-        
-        // add the new definition
-        tempAtlas->addLetterDefinition(tempDefinition);
-    }
-    
-    // add the texture (only one texture for now)
-    
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(theConfig->getAtlasName());
-    if (!tempTexture)
-        return 0;
-    
-    // add the texture
-    tempAtlas->addTexture(tempTexture, 0);
-    return tempAtlas;
 }
 
 NS_CC_END

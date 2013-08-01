@@ -58,7 +58,7 @@ public:
     
     
     // needs to go - TEST STUFF /////////////////////////////////////////////////////////////////////////
-    static Label* createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize = 0);
+    //static Label* createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize = 0);
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     
 private:

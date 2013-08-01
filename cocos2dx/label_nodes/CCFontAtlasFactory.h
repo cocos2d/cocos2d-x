@@ -42,8 +42,6 @@ private:
     
     static const char   * getGlyphCollection(GlyphCollection glyphs);
     
-    // carloX: this needs to be moved somewhere else, but it's good enough for now
-    static FontAtlas    * createFontAtlasFromFNTConfig(CCBMFontConfiguration *theConfig);
 
 };
 

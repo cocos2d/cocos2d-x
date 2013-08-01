@@ -25,7 +25,102 @@
 #include "CCFont.h"
 #include "ccUTF8.h"
 
+#include "CCFontFNT.h"
+#include "CCFontFreeType.cpp"
+
 NS_CC_BEGIN
+
+static const char *glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+
+static const char *glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+
+
+const char * getGlyphCollection(GlyphCollection glyphs)
+{
+    switch (glyphs)
+    {
+        case GlyphCollection::NEHE:
+            return glyphNEHE;
+            break;
+            
+        case GlyphCollection::ASCII:
+            return glyphASCII;
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
+}
+
+Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+{
+    // create the font
+    Font *tempFont = new FontFreeType();
+    
+    if (!tempFont)
+        return nullptr;
+    
+    if( !tempFont->createFontObject(fntName, fontSize))
+        return false;
+    
+    FontDefinitionTTF *def = 0;
+    
+    if ( (glyphs == GlyphCollection::NEHE) || (glyphs == GlyphCollection::ASCII) )
+    {
+        def = FontDefinitionTTF::create(fntName, fontSize, getGlyphCollection(glyphs));
+    }
+    else
+    {
+        if( glyphs == GlyphCollection::DYNAMIC )
+        {
+            log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
+            return nullptr;
+        }
+        else
+        {
+            if ( !customGlyphs )
+            {
+                log("ERROR: GlyphCollection::CUSTOM used but no input glyphs provided!");
+                return nullptr;
+            }
+            
+            def = FontDefinitionTTF::create(fntName, fontSize, customGlyphs);
+        }
+    }
+    
+    if(!def)
+        return nullptr;
+    
+    
+
+    return nullptr;
+}
+
+Font* Font::createWithFNT(const char* fntFilePath)
+{
+    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
+    if (!newConf)
+        return nullptr;
+    
+    // add the texture
+    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    if ( !tempTexture )
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    FontFNT *tempFont = new FontFNT(newConf);
+    
+    if (!tempFont)
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    return tempFont;
+}
 
 unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
 {

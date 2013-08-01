@@ -99,7 +99,6 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelAtlas.h"
 #include "label_nodes/CCLabelTTF.h"
 #include "label_nodes/CCLabelBMFont.h"
-#include "label_nodes/CCStringBMFont.h"
 #include "label_nodes/CCStringTTF.h"
 
 // layers_scenes_transitions_nodes
