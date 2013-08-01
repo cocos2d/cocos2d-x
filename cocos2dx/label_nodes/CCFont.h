@@ -26,15 +26,30 @@
 #define _CCFont_h_
 
 #include <string>
+
 #include "cocos2d.h"
+#include "CCLabel.h"
 
 NS_CC_BEGIN
 
+// fwd
 class GlyphDef;
+class FontAtlas;
+
 
 class CC_DLL Font : public Object
 {
 public:
+    
+    // create the font
+    static Font* createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
+    static Font* createWithFNT(const char* fntFilePath);
+
+    // font Atlas stuff
+    virtual FontAtlas *createFontAtlas() = 0;
+    
+    
+    
     
     virtual ~Font() {}
     

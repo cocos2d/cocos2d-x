@@ -47,6 +47,10 @@ public:
     virtual int                     getFontMaxHeight();
     virtual int                     getLetterPadding();
     
+    
+    // texture stuff
+    virtual FontAtlas *createFontAtlas();
+    
 private:
     
     bool initFreeType();
