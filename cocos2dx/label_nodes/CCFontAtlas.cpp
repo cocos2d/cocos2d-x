@@ -12,10 +12,6 @@
 
 NS_CC_BEGIN
 
-std::map<int, FontLetterDefinition>             _atlasTextures;
-std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinition;
-
-
 FontAtlas::FontAtlas(Font *theFont) : _font(theFont)
 {
     if (_font)
@@ -47,14 +43,11 @@ void FontAtlas::addLetterDefinition(FontLetterDefinition &letterDefinition)
 FontLetterDefinition * FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16)
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
+    
     if (outIterator != _fontLetterDefinitions.end())
-    {
         return & (*outIterator).second;
-    }
     else
-    {
-        return 0;
-    }
+        return nullptr;
 }
 
 void FontAtlas::addTexture(Texture2D *pTexture, int slot)
