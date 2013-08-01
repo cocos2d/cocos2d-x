@@ -99,7 +99,7 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  _animationIndex  the animation index you want to play
+     * @param  animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 

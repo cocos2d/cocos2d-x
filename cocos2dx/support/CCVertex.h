@@ -34,7 +34,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @file Vertex.h */
+/** @file CCVertex.h */
 
 /** converts a line to a polygon */
 void CC_DLL ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsigned int offset, unsigned int nuPoints);

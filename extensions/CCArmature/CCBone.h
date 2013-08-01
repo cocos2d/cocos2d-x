@@ -75,7 +75,7 @@ public:
      * @param displayData it include the display information, like DisplayType.
      *          If you want to create a sprite display, then create a SpriteDisplayData param
      *
-     *	@param 	_index the index of the display you want to replace or add to
+     * @param index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
     void addDisplay(DisplayData *displayData, int index);
@@ -84,9 +84,9 @@ public:
 
     /**
      * Add a child to this bone, and it will let this child call setParent(Bone *_parent) function to set self to it's parent
-     *	@param 	_child  the child you want to add
+     * @param child The child you want to add.
      */
-    void addChildBone(Bone *_child);
+    void addChildBone(Bone *child);
 
     /**
      * Set parent bone.
@@ -106,13 +106,13 @@ public:
 
     /**
      * Remove itself from its parent Bone.
-     * @param 	recursion    whether or not remove Child display
+     * @param recursion Whether to remove Child display
      */
     void removeFromParent(bool recursion);
 
     /**
      * Removes a child Bone
-     * @param 	bone   the bone you want to remove
+     * @param bone  The bone you want to remove.
      */
     void removeChildBone(Bone *bone, bool recursion);
 

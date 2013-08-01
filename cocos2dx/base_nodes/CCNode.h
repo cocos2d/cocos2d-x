@@ -1062,6 +1062,7 @@ public:
      * this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      * @endcode
      *
+     * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
@@ -1072,7 +1073,7 @@ public:
      * Schedules a custom selector with an interval time in seconds.
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
      */
     void schedule(SEL_SCHEDULE selector, float interval);
@@ -1081,7 +1082,7 @@ public:
      * Schedules a selector that runs only once, with a delay of 0 or larger
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);

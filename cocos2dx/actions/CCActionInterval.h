@@ -461,7 +461,7 @@ public:
 	virtual JumpTo* reverse(void) const override;
 };
 
-/** @typedef bezier configuration structure
+/** Bezier configuration structure
  */
 typedef struct _ccBezierConfig {
     //! end position of the bezier
