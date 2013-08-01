@@ -111,7 +111,7 @@ protected:
 The Animation object contains AnimationFrame objects, and a possible delay between the frames.
 You can animate a Animation object by using the Animate action. Example:
 
-[sprite runAction:[Animate actionWithAnimation:animation]];
+    sprite->runAction(Animate::create(animation));
 
 */
 class CC_DLL Animation : public Object, public Clonable
