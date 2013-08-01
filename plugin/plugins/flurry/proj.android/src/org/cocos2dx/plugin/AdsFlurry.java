@@ -66,10 +66,16 @@ public class AdsFlurry implements InterfaceAds, FlurryAdListener {
     @Override
     public void setDebugMode(boolean isDebugMode) {
         isDebug = isDebugMode;
-        FlurryAgent.setLogEnabled(isDebug);
-        if (isDebugMode) {
-            FlurryAgent.setLogLevel(Log.DEBUG);
-        }
+        final boolean curDebug = isDebug;
+        PluginWrapper.runOnMainThread(new Runnable(){
+            @Override
+            public void run() {
+                FlurryAgent.setLogEnabled(curDebug);
+                if (curDebug) {
+                    FlurryAgent.setLogLevel(Log.DEBUG);
+                }
+            }
+        });
     }
 
     @Override
@@ -160,7 +166,7 @@ public class AdsFlurry implements InterfaceAds, FlurryAdListener {
     @Override
     public void hideAds(Hashtable<String, String> adsInfo) {
         final Hashtable<String, String> curInfo = adsInfo;
-        PluginWrapper.runOnGLThread(new Runnable(){
+        PluginWrapper.runOnMainThread(new Runnable(){
             @Override
             public void run() {
                 try
