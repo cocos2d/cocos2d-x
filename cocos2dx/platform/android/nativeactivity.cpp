@@ -1,3 +1,5 @@
+#include "nativeactivity.h"
+
 #include <jni.h>
 #include <errno.h>
 
@@ -15,7 +17,13 @@
 #include "CCEventType.h"
 #include "support/CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
+#include "CCAccelerometer.h"
 #include "jni/JniHelper.h"
+
+#include "CCEGLView.h"
+#include "draw_nodes/CCDrawingPrimitives.h"
+#include "shaders/CCShaderCache.h"
+#include "textures/CCTextureCache.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
@@ -25,6 +33,8 @@
 
 #define LOG_EVENTS_DEBUG(...)
 // #define LOG_EVENTS_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+
+void cocos_android_app_init(void);
 
 /**
  * Our saved state data.
@@ -54,12 +64,7 @@ struct engine {
     struct saved_state state;
 };
 
-#include "CCEGLView.h"
-#include "draw_nodes/CCDrawingPrimitives.h"
-#include "shaders/CCShaderCache.h"
-#include "textures/CCTextureCache.h"
-
-void cocos_android_app_init(void);
+static struct engine engine;
 
 typedef struct cocos_dimensions {
     int w;
@@ -368,6 +373,36 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
     return 0;
 }
 
+void enableAccelerometer(void) {
+    LOGI("enableAccelerometer()");
+
+    if (engine.accelerometerSensor != NULL) {
+        ASensorEventQueue_enableSensor(engine.sensorEventQueue,
+                                       engine.accelerometerSensor);
+
+        // Set a default sample rate
+        // We'd like to get 60 events per second (in us).
+        ASensorEventQueue_setEventRate(engine.sensorEventQueue,
+                                       engine.accelerometerSensor, (1000L/60)*1000);
+    }
+}
+
+void disableAccelerometer(void) {
+    LOGI("disableAccelerometer()");
+
+    if (engine.accelerometerSensor != NULL) {
+        ASensorEventQueue_disableSensor(engine.sensorEventQueue,
+                                        engine.accelerometerSensor);
+    }
+}
+
+void setAccelerometerInterval(float interval) {
+    LOGI("setAccelerometerInterval(%f)", interval);
+        // We'd like to get 60 events per second (in us).
+        ASensorEventQueue_setEventRate(engine.sensorEventQueue,
+                                       engine.accelerometerSensor, interval * 1000000L);
+}
+
 /**
  * Process the next main command.
  */
@@ -403,7 +438,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
                     cocos_init(d, app->activity->assetManager);
                 }
-		engine->animating = 1;
+                engine->animating = 1;
                 engine_draw_frame(engine);
             }
             break;
@@ -412,28 +447,12 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
             engine_term_display(engine);
             break;
         case APP_CMD_GAINED_FOCUS:
-            // When our app gains focus, we start monitoring the accelerometer.
-            if (engine->accelerometerSensor != NULL) {
-                ASensorEventQueue_enableSensor(engine->sensorEventQueue,
-                        engine->accelerometerSensor);
-                // We'd like to get 60 events per second (in us).
-                ASensorEventQueue_setEventRate(engine->sensorEventQueue,
-                        engine->accelerometerSensor, (1000L/60)*1000);
-            }
-
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
             }
 
             break;
         case APP_CMD_LOST_FOCUS:
-            // When our app loses focus, we stop monitoring the accelerometer.
-            // This is to avoid consuming battery while not being used.
-            if (engine->accelerometerSensor != NULL) {
-                ASensorEventQueue_disableSensor(engine->sensorEventQueue,
-                        engine->accelerometerSensor);
-            }
-
             cocos2d::Application::getInstance()->applicationDidEnterBackground();
             cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
 
@@ -450,7 +469,6 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
  * event loop for receiving input events and doing other things.
  */
 void android_main(struct android_app* state) {
-    struct engine engine;
 
     // Make sure glue isn't stripped.
     app_dummy();
@@ -498,7 +516,14 @@ void android_main(struct android_app* state) {
                     ASensorEvent event;
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
                             &event, 1) > 0) {
-                        LOG_RENDER_DEBUG("accelerometer: x=%f y=%f z=%f",
+
+                        cocos2d::Director* pDirector = cocos2d::Director::getInstance();
+                        pDirector->getAccelerometer()->update(event.acceleration.x,
+                                                              event.acceleration.y,
+                                                              event.acceleration.z,
+                                                              0);
+
+                        LOG_EVENTS_DEBUG("accelerometer: x=%f y=%f z=%f",
                                 event.acceleration.x, event.acceleration.y,
                                 event.acceleration.z);
                     }
@@ -508,6 +533,9 @@ void android_main(struct android_app* state) {
             // Check if we are exiting.
             if (state->destroyRequested != 0) {
                 engine_term_display(&engine);
+
+                memset(&engine, 0, sizeof(engine));
+
                 return;
             }
         }
