@@ -64,7 +64,7 @@ class Application : public ApplicationProtocol {
         CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
 
         /* override functions */
-        virtual ccLanguageType getCurrentLanguage();
+        virtual LanguageType getCurrentLanguage();
 
         /**
          *  Sets the Resource root path.
@@ -81,7 +81,7 @@ class Application : public ApplicationProtocol {
         /**
           @brief Get target platform
           */
-        virtual TargetPlatform getTargetPlatform();
+        virtual Platform getTargetPlatform();
 
     protected:
         QGuiApplication *m_application;
