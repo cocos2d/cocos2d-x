@@ -91,7 +91,7 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 float letterHeight = pPages->getPageAt(cPages)->getLineAt(cLines)->getHeight();
                 
                 // add this letter definition
-                LetterDefinition tempDef;
+                FontLetterDefinition tempDef;
                 
                 
                 // carloX little hack (this should be done outside the loop)
@@ -174,7 +174,7 @@ bool FontDefinitionTTF::initDefinition(const char *fontName, int fontSize, const
     return prepareLetterDefinitions(_textImages->getPages());
 }
 
-void FontDefinitionTTF::addLetterDefinition(LetterDefinition &defToAdd)
+void FontDefinitionTTF::addLetterDefinition(FontLetterDefinition &defToAdd)
 {
     if (_fontLettersDefinitionUTF16.find(defToAdd.letteCharUTF16) == _fontLettersDefinitionUTF16.end())
     {
@@ -182,7 +182,7 @@ void FontDefinitionTTF::addLetterDefinition(LetterDefinition &defToAdd)
     }
 }
 
-LetterDefinition & FontDefinitionTTF::getLetterDefinition(unsigned short int theLetter)
+FontLetterDefinition & FontDefinitionTTF::getLetterDefinition(unsigned short int theLetter)
 {
     return _fontLettersDefinitionUTF16[theLetter];
 }
@@ -226,30 +226,17 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
     // set the common line height
     retAtlas->setCommonLineHeight(getCommonLineHeight() * 0.8);
     
-    // add all the letter definitions
-    std::map<unsigned short, LetterDefinition>::iterator ITER;
-    for(ITER = _fontLettersDefinitionUTF16.begin(); ITER!=_fontLettersDefinitionUTF16.end(); ++ITER)
+    
+    for( auto &item: _fontLettersDefinitionUTF16 )
     {
-        FontLetterDefinition tempDefinition;
-        tempDefinition.letteCharUTF16   = (*ITER).second.letteCharUTF16;
-        tempDefinition.validDefinition  = (*ITER).second.validDefinition;
-        
-        if (tempDefinition.validDefinition)
+        if ( item.second.validDefinition )
         {
-            tempDefinition.U                = (*ITER).second.U;
-            tempDefinition.V                = (*ITER).second.V;
-            tempDefinition.width            = (*ITER).second.width;
-            tempDefinition.height           = (*ITER).second.height;
-            // carloX not useed here tempDefinition.offsetX          = (*ITER).second.offsetX;
-            tempDefinition.offsetX          = 0;
-            tempDefinition.offsetY          = (*ITER).second.offsetY;
-            tempDefinition.textureID        = (*ITER).second.textureID;
-            tempDefinition.commonLineHeight = (*ITER).second.commonLineHeight;
+            FontLetterDefinition tempDefinition = item.second;
+            tempDefinition.offsetX = 0;
             tempDefinition.anchorX = 0.0f;
             tempDefinition.anchorY = 1.0f;
             retAtlas->addLetterDefinition(tempDefinition);
         }
-        
     }
     
     // done here

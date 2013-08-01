@@ -31,22 +31,7 @@
 
 NS_CC_BEGIN
 
-
 #define DEFAULT_ATLAS_TEXTURE_SIZE 1024
-
-struct LetterDefinition
-{
-    unsigned short  letteCharUTF16;
-    float           U;
-    float           V;
-    float           width;
-    float           height;
-    float           offsetX;
-    float           offsetY;
-    int             textureID;
-    float           commonLineHeight;
-    bool            validDefinition;
-};
 
 /**
  */
@@ -55,7 +40,7 @@ class CC_DLL FontDefinitionTTF : public Object
 public:
 
     static FontDefinitionTTF* create(const char *fontName, int fontSize, const char *letters, int textureSize = DEFAULT_ATLAS_TEXTURE_SIZE);
-    LetterDefinition & getLetterDefinition(unsigned short int theLetter);
+    FontLetterDefinition & getLetterDefinition(unsigned short int theLetter);
     Texture2D * getTexture(int index);
     int         getNumTextures();
     Font *      getFont()                        { return _textImages->getFont(); }
@@ -69,11 +54,11 @@ private:
     
     bool initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize);
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
-    void addLetterDefinition(LetterDefinition &defToAdd);
+    void addLetterDefinition(FontLetterDefinition &defToAdd);
     
-    TextImage *                                 _textImages;
-    std::map<unsigned short, LetterDefinition>  _fontLettersDefinitionUTF16;
-    float                                       _commonLineHeight;
+    TextImage *                                     _textImages;
+    std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinitionUTF16;
+    float                                           _commonLineHeight;
     
 };
 
