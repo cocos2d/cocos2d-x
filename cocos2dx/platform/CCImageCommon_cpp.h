@@ -60,110 +60,115 @@ NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 //struct and data for pvr structure
-#define PVR_TEXTURE_FLAG_TYPE_MASK    0xff
+namespace
+{
+    static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
 
-// Values taken from PVRTexture.h from http://www.imgtec.com
-enum {
-    kPVR2TextureFlagMipmap         = (1<<8),        // has mip map levels
-    kPVR2TextureFlagTwiddle        = (1<<9),        // is twiddled
-    kPVR2TextureFlagBumpmap        = (1<<10),       // has normals encoded for a bump map
-    kPVR2TextureFlagTiling         = (1<<11),       // is bordered for tiled pvr
-    kPVR2TextureFlagCubemap        = (1<<12),       // is a cubemap/skybox
-    kPVR2TextureFlagFalseMipCol    = (1<<13),       // are there false colored MIP levels
-    kPVR2TextureFlagVolume         = (1<<14),       // is this a volume texture
-    kPVR2TextureFlagAlpha          = (1<<15),       // v2.1 is there transparency info in the texture
-    kPVR2TextureFlagVerticalFlip   = (1<<16),       // v2.1 is the texture vertically flipped
+    // Values taken from PVRTexture.h from http://www.imgtec.com
+enum class PVR2TextureFlag{
+    Mipmap         = (1<<8),        // has mip map levels
+    Twiddle        = (1<<9),        // is twiddled
+    Bumpmap        = (1<<10),       // has normals encoded for a bump map
+    Tiling         = (1<<11),       // is bordered for tiled pvr
+    Cubemap        = (1<<12),       // is a cubemap/skybox
+    FalseMipCol    = (1<<13),       // are there false colored MIP levels
+    Volume         = (1<<14),       // is this a volume texture
+    Alpha          = (1<<15),       // v2.1 is there transparency info in the texture
+    VerticalFlip   = (1<<16),       // v2.1 is the texture vertically flipped
 };
 
-enum {
-    kPVR3TextureFlagPremultipliedAlpha	= (1<<1)	// has premultiplied alpha
+enum class PVR3TextureFlag{
+    PremultipliedAlpha	= (1<<1)	// has premultiplied alpha
 };
 
-static char gPVRTexIdentifier[5] = "PVR!";
+static const char gPVRTexIdentifier[5] = "PVR!";
 
 // v2
-typedef enum
+enum class PVR2TexturePixelFormat : unsigned char
 {
-    kPVR2TexturePixelFormat_RGBA_4444= 0x10,
-    kPVR2TexturePixelFormat_RGBA_5551,
-    kPVR2TexturePixelFormat_RGBA_8888,
-    kPVR2TexturePixelFormat_RGB_565,
-    kPVR2TexturePixelFormat_RGB_555,				// unsupported
-    kPVR2TexturePixelFormat_RGB_888,
-    kPVR2TexturePixelFormat_I_8,
-    kPVR2TexturePixelFormat_AI_88,
-    kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,
-    kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,
-    kPVR2TexturePixelFormat_BGRA_8888,
-    kPVR2TexturePixelFormat_A_8,
-} ccPVR2TexturePixelFormat;
+    RGBA4444 = 0x10,
+    RGBA5551,
+    RGBA8888,
+    RGB565,
+    RGB555,          // unsupported
+    RGB888,
+    I8,
+    AI88,
+    PVRTC2BPP_RGBA,
+    PVRTC4BPP_RGBA,
+    BGRA8888,
+    A8,
+};
 
 // v3
-/* supported predefined formats */
-#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGB   0
-#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA  1
-#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGB   2
-#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA  3
-
-/* supported channel type formats */
-#define kPVR3TexturePixelFormat_BGRA_8888  0x0808080861726762ULL
-#define kPVR3TexturePixelFormat_RGBA_8888  0x0808080861626772ULL
-#define kPVR3TexturePixelFormat_RGBA_4444  0x0404040461626772ULL
-#define kPVR3TexturePixelFormat_RGBA_5551  0x0105050561626772ULL
-#define kPVR3TexturePixelFormat_RGB_565    0x0005060500626772ULL
-#define kPVR3TexturePixelFormat_RGB_888    0x0008080800626772ULL
-#define kPVR3TexturePixelFormat_A_8        0x0000000800000061ULL
-#define kPVR3TexturePixelFormat_L_8        0x000000080000006cULL
-#define kPVR3TexturePixelFormat_LA_88      0x000008080000616cULL
+enum class PVR3TexturePixelFormat : uint64_t
+{
+    PVRTC2BPP_RGB  = 0ULL,
+    PVRTC2BPP_RGBA = 1ULL,
+    PVRTC4BPP_RGB  = 2ULL,
+    PVRTC4BPP_RGBA = 3ULL,
+    
+    BGRA8888       = 0x0808080861726762ULL,
+    RGBA8888       = 0x0808080861626772ULL,
+    RGBA4444       = 0x0404040461626772ULL,
+    RGBA5551       = 0x0105050561626772ULL,
+    RGB565         = 0x0005060500626772ULL,
+    RGB888         = 0x0008080800626772ULL,
+    A8             = 0x0000000800000061ULL,
+    L8             = 0x000000080000006cULL,
+    LA88           = 0x000008080000616cULL,
+    };
 
 
 // v2
-typedef const std::map<uint64_t, Texture2D::PixelFormat> _pixel_formathash;
+typedef const std::map<PVR2TexturePixelFormat, Texture2D::PixelFormat> _pixel2_formathash;
 
-static _pixel_formathash::value_type v2_pixel_formathash_value[] =
+static const _pixel2_formathash::value_type v2_pixel_formathash_value[] =
 {
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_BGRA_8888,	Texture2D::PixelFormat::BGRA8888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_8888,	Texture2D::PixelFormat::RGBA8888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_4444,	Texture2D::PixelFormat::RGBA4444),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGBA_5551,	Texture2D::PixelFormat::RGB5A1),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_565,	    Texture2D::PixelFormat::RGB565),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_RGB_888,	    Texture2D::PixelFormat::RGB888),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_A_8,	        Texture2D::PixelFormat::A8),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_I_8,	        Texture2D::PixelFormat::I8),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_AI_88,	    Texture2D::PixelFormat::AI88),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::BGRA8888,	    Texture2D::PixelFormat::BGRA8888),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::RGBA8888,	    Texture2D::PixelFormat::RGBA8888),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::RGBA4444,	    Texture2D::PixelFormat::RGBA4444),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::RGBA5551,	    Texture2D::PixelFormat::RGB5A1),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::RGB565,	    Texture2D::PixelFormat::RGB565),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::RGB888,	    Texture2D::PixelFormat::RGB888),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::A8,	        Texture2D::PixelFormat::A8),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::I8,	        Texture2D::PixelFormat::I8),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::AI88,	        Texture2D::PixelFormat::AI88),
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
-    _pixel_formathash::value_type(kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::PVRTC2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
+    _pixel2_formathash::value_type(PVR2TexturePixelFormat::PVRTC4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
 #endif
 };
 
-#define PVR2_MAX_TABLE_ELEMENTS (sizeof(v2_pixel_formathash_value) / sizeof(v2_pixel_formathash_value[0]))
-static _pixel_formathash v2_pixel_formathash(v2_pixel_formathash_value, v2_pixel_formathash_value + PVR2_MAX_TABLE_ELEMENTS);
+static const int PVR2_MAX_TABLE_ELEMENTS = sizeof(v2_pixel_formathash_value) / sizeof(v2_pixel_formathash_value[0]);
+static const _pixel2_formathash v2_pixel_formathash(v2_pixel_formathash_value, v2_pixel_formathash_value + PVR2_MAX_TABLE_ELEMENTS);
 
 // v3
-static _pixel_formathash::value_type v3_pixel_formathash_value[] =
+typedef const std::map<PVR3TexturePixelFormat, Texture2D::PixelFormat> _pixel3_formathash;
+static _pixel3_formathash::value_type v3_pixel_formathash_value[] =
 {
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_BGRA_8888,	Texture2D::PixelFormat::BGRA8888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_8888,	Texture2D::PixelFormat::RGBA8888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_4444,	Texture2D::PixelFormat::RGBA4444),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGBA_5551,	Texture2D::PixelFormat::RGB5A1),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_565,	    Texture2D::PixelFormat::RGB565),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_RGB_888,	    Texture2D::PixelFormat::RGB888),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_A_8,	        Texture2D::PixelFormat::A8),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_L_8,	        Texture2D::PixelFormat::I8),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_LA_88,	    Texture2D::PixelFormat::AI88),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::BGRA8888,	Texture2D::PixelFormat::BGRA8888),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::RGBA8888,	Texture2D::PixelFormat::RGBA8888),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::RGBA4444,	Texture2D::PixelFormat::RGBA4444),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::RGBA5551,	Texture2D::PixelFormat::RGB5A1),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::RGB565,	    Texture2D::PixelFormat::RGB565),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::RGB888,	    Texture2D::PixelFormat::RGB888),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::A8,	        Texture2D::PixelFormat::A8),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::L8,	        Texture2D::PixelFormat::I8),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::LA88,	    Texture2D::PixelFormat::AI88),
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	    Texture2D::PixelFormat::PVRTC2),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	    Texture2D::PixelFormat::PVRTC4),
-    _pixel_formathash::value_type(kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC2BPP_RGB,	    Texture2D::PixelFormat::PVRTC2),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC2BPP_RGBA,	    Texture2D::PixelFormat::PVRTC2A),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC4BPP_RGB,	    Texture2D::PixelFormat::PVRTC4),
+    _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC4BPP_RGBA,	    Texture2D::PixelFormat::PVRTC4A),
 #endif
 };
 
-#define PVR3_MAX_TABLE_ELEMENTS (sizeof(v3_pixel_formathash_value) / sizeof(v3_pixel_formathash_value[0]))
-static _pixel_formathash v3_pixel_formathash(v3_pixel_formathash_value, v3_pixel_formathash_value + PVR3_MAX_TABLE_ELEMENTS);
+static const int PVR3_MAX_TABLE_ELEMENTS = sizeof(v3_pixel_formathash_value) / sizeof(v3_pixel_formathash_value[0]);
+    
+static const _pixel3_formathash v3_pixel_formathash(v3_pixel_formathash_value, v3_pixel_formathash_value + PVR3_MAX_TABLE_ELEMENTS);
 
 typedef struct _PVRTexHeader
 {
@@ -180,7 +185,7 @@ typedef struct _PVRTexHeader
     unsigned int bitmaskAlpha;
     unsigned int pvrTag;
     unsigned int numSurfs;
-} ccPVRv2TexHeader;
+} PVRv2TexHeader;
 
 #ifdef _MSC_VER
 #pragma pack(push,1)
@@ -199,15 +204,16 @@ typedef struct {
     uint32_t numberOfMipmaps;
     uint32_t metadataLength;
 #ifdef _MSC_VER
-} ccPVRv3TexHeader;
+} PVRv3TexHeader;
 #pragma pack(pop)
 #else
-} __attribute__((packed)) ccPVRv3TexHeader;
+} __attribute__((packed)) PVRv3TexHeader;
 #endif
+}
 //pvr structure end
 //////////////////////////////////////////////////////////////////////////
 
-
+namespace {
 typedef struct 
 {
     unsigned char* data;
@@ -228,6 +234,7 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     {
         png_error(png_ptr, "pngReaderCallback failed");
     }
+}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -414,13 +421,13 @@ bool Image::isWebp(void *data, int dataLen)
 
 bool Image::isPvr(void *data, int dataLen)
 {
-    if (dataLen < sizeof(ccPVRv2TexHeader) || dataLen < sizeof(ccPVRv3TexHeader)) 
+    if (dataLen < sizeof(PVRv2TexHeader) || dataLen < sizeof(PVRv3TexHeader))
     {
         return false;
     }
     
-    ccPVRv2TexHeader* headerv2 = (ccPVRv2TexHeader*)data;
-    ccPVRv3TexHeader* headerv3 = (ccPVRv3TexHeader*)data;
+    PVRv2TexHeader* headerv2 = (PVRv2TexHeader*)data;
+    PVRv3TexHeader* headerv3 = (PVRv3TexHeader*)data;
     
     return memcmp(&headerv2->pvrTag, gPVRTexIdentifier, strlen(gPVRTexIdentifier)) == 0 || CC_SWAP_INT32_BIG_TO_HOST(headerv3->version) == 0x50565203;
 }
@@ -490,14 +497,16 @@ bool Image::isCompressed()
  *
  * Here's the extended error handler struct:
  */
+namespace
+{
+    struct my_error_mgr
+    {
+        struct jpeg_error_mgr pub;	/* "public" fields */
+        jmp_buf setjmp_buffer;	/* for return to caller */
+    };
 
-struct my_error_mgr {
-  struct jpeg_error_mgr pub;	/* "public" fields */
-
-  jmp_buf setjmp_buffer;	/* for return to caller */
-};
-
-typedef struct my_error_mgr * my_error_ptr;
+    typedef struct my_error_mgr * my_error_ptr;
+}
 
 /*
  * Here's the routine that will replace the standard error_exit method:
@@ -743,6 +752,8 @@ bool Image::initWithPngData(void * data, int dataLen)
     return bRet;
 }
 
+namespace
+{
 static tmsize_t _tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
 {
     tImageSource* isource = (tImageSource*)fd;
@@ -849,6 +860,8 @@ static void _tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     CC_UNUSED_PARAM(base);
     CC_UNUSED_PARAM(size);
 }
+    
+}
 
 bool Image::initWithTiffData(void* data, int dataLen)
 {
@@ -916,10 +929,10 @@ bool Image::testFormatForPvrTCSupport(uint64_t format)
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
     if (!Configuration::getInstance()->supportsPVRTC())
     {
-        if (format == kPVR3TexturePixelFormat_PVRTC_2BPP_RGB ||
-            format == kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA ||
-            format == kPVR3TexturePixelFormat_PVRTC_4BPP_RGB ||
-            format == kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA)
+        if (format == (uint64_t)PVR3TexturePixelFormat::PVRTC2BPP_RGB ||
+            format == (uint64_t)PVR3TexturePixelFormat::PVRTC2BPP_RGBA ||
+            format == (uint64_t)PVR3TexturePixelFormat::PVRTC4BPP_RGB ||
+            format == (uint64_t)PVR3TexturePixelFormat::PVRTC4BPP_RGBA)
         {
             return false;
         }
@@ -932,7 +945,7 @@ bool Image::testFormatForPvrTCSupport(uint64_t format)
 
 bool Image::initWithPVRv2Data(void *data, int dataLen)
 {
-    ccPVRv2TexHeader *header = NULL;
+    PVRv2TexHeader *header = NULL;
     unsigned int flags, pvrTag;
     int dataLength = 0, dataOffset = 0, dataSize = 0;
     int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
@@ -940,7 +953,7 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
     unsigned int formatFlags;
     
     //Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
-    header = (ccPVRv2TexHeader *)data;
+    header = (PVRv2TexHeader *)data;
     
     //Make sure that tag is in correct formatting
     pvrTag = CC_SWAP_INT32_LITTLE_TO_HOST(header->pvrTag);
@@ -958,7 +971,7 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
     _hasPremultipliedAlpha = false;
     flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
-    bool flipped = (flags & kPVR2TextureFlagVerticalFlip) ? true : false;
+    bool flipped = (flags & (unsigned int)PVR2TextureFlag::VerticalFlip) ? true : false;
     if (flipped)
     {
         CCLOG("cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
@@ -977,13 +990,13 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
         return false;
     }
 
-    if (v2_pixel_formathash.find(formatFlags) == v2_pixel_formathash.end())
+    if (v2_pixel_formathash.find((PVR2TexturePixelFormat)formatFlags) == v2_pixel_formathash.end())
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
     }
     
-    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v2_pixel_formathash.at(formatFlags));
+    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v2_pixel_formathash.at((PVR2TexturePixelFormat)formatFlags));
 
     if (it == g_texturePixelFormatInfoTables.end())
     {
@@ -1004,25 +1017,25 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
     dataLength = CC_SWAP_INT32_LITTLE_TO_HOST(header->dataLength);
 
     //Move by size of header
-    _dataLen = dataLen - sizeof(ccPVRv2TexHeader);
+    _dataLen = dataLen - sizeof(PVRv2TexHeader);
     _data = new unsigned char[_dataLen];
-    memcpy(_data, (unsigned char*)data + sizeof(ccPVRv2TexHeader), _dataLen);
+    memcpy(_data, (unsigned char*)data + sizeof(PVRv2TexHeader), _dataLen);
 
     // Calculate the data size for each texture level and respect the minimum number of blocks
     while (dataOffset < dataLength)
     {
-        switch (formatFlags) {
-        case kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA:
+        switch ((PVR2TexturePixelFormat)formatFlags) {
+        case PVR2TexturePixelFormat::PVRTC2BPP_RGBA:
             blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
             widthBlocks = width / 8;
             heightBlocks = height / 4;
             break;
-        case kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA:
+        case PVR2TexturePixelFormat::PVRTC4BPP_RGBA:
             blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
             widthBlocks = width / 4;
             heightBlocks = height / 4;
             break;
-        case kPVR2TexturePixelFormat_BGRA_8888:
+        case PVR2TexturePixelFormat::BGRA8888:
             if (Configuration::getInstance()->supportsBGRA8888() == false)
             {
                 CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
@@ -1066,12 +1079,12 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
 
 bool Image::initWithPVRv3Data(void *data, int dataLen)
 {
-    if (dataLen < sizeof(ccPVRv3TexHeader))
+    if (dataLen < sizeof(PVRv3TexHeader))
     {
 		return false;
 	}
 	
-	ccPVRv3TexHeader *header = (ccPVRv3TexHeader *)data;
+	PVRv3TexHeader *header = (PVRv3TexHeader *)data;
 	
 	// validate version
 	if (CC_SWAP_INT32_BIG_TO_HOST(header->version) != 0x50565203)
@@ -1090,13 +1103,13 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
     }
 
 
-    if (v3_pixel_formathash.find(pixelFormat) == v3_pixel_formathash.end())
+    if (v3_pixel_formathash.find((PVR3TexturePixelFormat)pixelFormat) == v3_pixel_formathash.end())
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llX. Re-encode it with a OpenGL pixel format variant", (unsigned long long)pixelFormat);
         return false;
     }
 
-    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v3_pixel_formathash.at(pixelFormat));
+    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v3_pixel_formathash.at((PVR3TexturePixelFormat)pixelFormat));
 
     if (it == g_texturePixelFormatInfoTables.end())
     {
@@ -1110,7 +1123,7 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
 	int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
 
     // PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
-    if (flags & kPVR3TextureFlagPremultipliedAlpha)
+    if (flags & (unsigned int)PVR3TextureFlag::PremultipliedAlpha)
     {
         _preMulti = true;
     }
@@ -1123,30 +1136,30 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
 	int dataOffset = 0, dataSize = 0;
 	int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
 	
-    _dataLen = dataLen - (sizeof(ccPVRv3TexHeader) + header->metadataLength);
+    _dataLen = dataLen - (sizeof(PVRv3TexHeader) + header->metadataLength);
     _data = new unsigned char[_dataLen];
-    memcpy(_data, (unsigned char*)data + sizeof(ccPVRv3TexHeader) + header->metadataLength, _dataLen);
+    memcpy(_data, (unsigned char*)data + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
 	
 	_numberOfMipmaps = header->numberOfMipmaps;
-	CCAssert(_numberOfMipmaps < CC_MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increate the CC_MIPMAP_MAX value");
+	CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increate the CC_MIPMAP_MAX value");
     
 	for (int i = 0; i < _numberOfMipmaps; i++)
     {
-		switch (pixelFormat)
+		switch ((PVR3TexturePixelFormat)pixelFormat)
         {
-			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :
-			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA :
+			case PVR3TexturePixelFormat::PVRTC2BPP_RGB :
+			case PVR3TexturePixelFormat::PVRTC2BPP_RGBA :
 				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
 				widthBlocks = width / 8;
 				heightBlocks = height / 4;
 				break;
-			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGB :
-			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA :
+			case PVR3TexturePixelFormat::PVRTC4BPP_RGB :
+			case PVR3TexturePixelFormat::PVRTC4BPP_RGBA :
 				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
 				widthBlocks = width / 4;
 				heightBlocks = height / 4;
 				break;
-			case kPVR3TexturePixelFormat_BGRA_8888:
+			case PVR3TexturePixelFormat::BGRA8888:
 				if( ! Configuration::getInstance()->supportsBGRA8888())
                 {
 					CCLOG("cocos2d: Image. BGRA8888 not supported on this device");
@@ -1303,6 +1316,7 @@ bool Image::initWithRawData(void * data, int dataLen, int nWidth, int nHeight, i
     return bRet;
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 {
     //only support for Texture2D::PixelFormat::RGB888 or Texture2D::PixelFormat::RGBA8888 uncompressed data
@@ -1315,8 +1329,6 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     assert(false);
     return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    return iosSaveToFile(pszFilePath, bIsToRGB);
 #else
     bool bRet = false;
 
@@ -1352,6 +1364,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     return bRet;
 #endif
 }
+#endif
 
 bool Image::saveImageToPNG(const char * pszFilePath, bool bIsToRGB)
 {
