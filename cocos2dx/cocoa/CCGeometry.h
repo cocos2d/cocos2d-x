@@ -246,24 +246,18 @@ public:
     }
     
     /** A general line-line intersection test
-     @param p1
-     is the startpoint for the first line P1 = (p1 - p2)
-     @param p2
-     is the endpoint for the first line P1 = (p1 - p2)
-     @param p3
-     is the startpoint for the second line P2 = (p3 - p4)
-     @param p4
-     is the endpoint for the second line P2 = (p3 - p4)
-     @param s
-     is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
-     @param t
-     is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
-     @return bool
-     indicating successful intersection of a line
-     note that to truly test intersection for segments we have to make
-     sure that s & t lie within [0..1] and for rays, make sure s & t > 0
-     the hit point is        p3 + t * (p4 - p3);
-     the hit point also is    p1 + s * (p2 - p1);
+     @param A   the startpoint for the first line L1 = (A - B)
+     @param B   the endpoint for the first line L1 = (A - B)
+     @param C   the startpoint for the second line L2 = (C - D)
+     @param D   the endpoint for the second line L2 = (C - D)
+     @param S   the range for a hitpoint in L1 (p = A + S*(B - A))
+     @param T   the range for a hitpoint in L2 (p = C + T*(D - C))
+     @returns   whether these two lines interects.
+
+     Note that to truly test intersection for segments we have to make
+     sure that S & T lie within [0..1] and for rays, make sure S & T > 0
+     the hit point is        C + T * (D - C);
+     the hit point also is   A + S * (B - A);
      @since 3.0
      */
     static bool isLineIntersect(const Point& A, const Point& B,
@@ -271,7 +265,7 @@ public:
                                  float *S, float *T);
     
     /*
-     returns YES if Segment A-B intersects with segment C-D
+     returns true if Segment A-B intersects with segment C-D
      @since v3.0
      */
     static bool isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D);

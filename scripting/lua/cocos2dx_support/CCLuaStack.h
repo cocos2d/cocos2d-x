@@ -62,9 +62,9 @@ public:
     
     /**
      @brief Remove Object from lua state
-     @param object to remove
+     @param object The object to be removed.
      */
-    virtual void removeScriptObjectByObject(Object* pObj);
+    virtual void removeScriptObjectByObject(Object* object);
     
     /**
      @brief Remove Lua function reference

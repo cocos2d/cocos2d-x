@@ -39,20 +39,18 @@ public:
     virtual bool applicationDidFinishLaunching() = 0;
 
     /**
-    @brief  The function be called when the application enter background
-    @param  the pointer of the application
+    @brief  This function will be called when the application enters background.
     */
     virtual void applicationDidEnterBackground() = 0;
 
     /**
-    @brief  The function be called when the application enter foreground
-    @param  the pointer of the application
+    @brief  This function will be called when the application enters foreground.
     */
     virtual void applicationWillEnterForeground() = 0;
 
     /**
     @brief    Callback by Director for limit FPS.
-    @interval       The time, expressed in seconds, between current frame and next. 
+    @param interval The time, expressed in seconds, between current frame and next.
     */
     virtual void setAnimationInterval(double interval) = 0;
 

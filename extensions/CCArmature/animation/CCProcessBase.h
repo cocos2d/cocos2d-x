@@ -103,7 +103,7 @@ public:
      * You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
      *
-     * @param The duration since last update
+     * @param dt    The duration since last update
      */
     virtual void update(float dt);
 
