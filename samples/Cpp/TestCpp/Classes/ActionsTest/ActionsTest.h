@@ -289,6 +289,14 @@ public:
     virtual std::string subtitle();
 };
 
+class ActionTargetedReverse : public ActionsDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 class ActionStacked : public ActionsDemo
 {
 public:
