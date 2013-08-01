@@ -68,7 +68,7 @@ public:
     *
     * @param backgroundSprite  Sprite, that is used as a background.
     * @param progressSprite    Sprite, that is used as a progress bar.
-    * @param thumbItem         Sprite, that is used as a thumb.
+    * @param thumbSprite       Sprite, that is used as a thumb.
     */
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
 
