@@ -463,17 +463,17 @@ Image::Format Image::detectFormat(void* data, int dataLen)
 
 int Image::getBitPerPixel()
 {
-    return g_texturePixelFormatInfoTables.at(_renderFormat).bpp;
+    return Texture2D::getPixelFormatInfoMap()->at(_renderFormat).bpp;
 }
 
 bool Image::hasAlpha()
 {
-    return g_texturePixelFormatInfoTables.at(_renderFormat).alpha;
+    return Texture2D::getPixelFormatInfoMap()->at(_renderFormat).alpha;
 }
 
 bool Image::isCompressed()
 {
-    return g_texturePixelFormatInfoTables.at(_renderFormat).compressed;
+    return Texture2D::getPixelFormatInfoMap()->at(_renderFormat).compressed;
 }
 /*
  * ERROR HANDLING:
@@ -996,9 +996,9 @@ bool Image::initWithPVRv2Data(void *data, int dataLen)
         return false;
     }
     
-    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v2_pixel_formathash.at((PVR2TexturePixelFormat)formatFlags));
+    auto it = Texture2D::getPixelFormatInfoMap()->find(v2_pixel_formathash.at((PVR2TexturePixelFormat)formatFlags));
 
-    if (it == g_texturePixelFormatInfoTables.end())
+    if (it == Texture2D::getPixelFormatInfoMap()->end())
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%02X. Re-encode it with a OpenGL pixel format variant", formatFlags);
         return false;
@@ -1109,9 +1109,9 @@ bool Image::initWithPVRv3Data(void *data, int dataLen)
         return false;
     }
 
-    const ConstTexturePixelFormatInfoMap::const_iterator it = g_texturePixelFormatInfoTables.find(v3_pixel_formathash.at((PVR3TexturePixelFormat)pixelFormat));
+    auto it = Texture2D::getPixelFormatInfoMap()->find(v3_pixel_formathash.at((PVR3TexturePixelFormat)pixelFormat));
 
-    if (it == g_texturePixelFormatInfoTables.end())
+    if (it == Texture2D::getPixelFormatInfoMap()->end())
     {
         CCLOG("cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%016llX. Re-encode it with a OpenGL pixel format variant", (unsigned long long)pixelFormat);
         return false;
