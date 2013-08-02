@@ -75,7 +75,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewLabelTTFFontsTest),
     CL(NewLabelTTFAlignment),
     CL(NewLabelTTFUnicode),
-    //    CL(NewLabelBMFontTest),
+    CL(NewLabelBMFontTest),
 //    CL(NewLabelFontDefTest),
 
     // should be moved to another test
@@ -1875,6 +1875,7 @@ NewLabelBMFontTest::NewLabelBMFontTest()
 
     auto label1 = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
     label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
 }
 
