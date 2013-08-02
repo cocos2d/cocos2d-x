@@ -44,6 +44,9 @@ private:
     
     // carloX: this needs to be moved somewhere else, but it's good enough for now
     static FontAtlas    * createFontAtlasFromFNTConfig(CCBMFontConfiguration *theConfig);
+    
+    static const char *glyphASCII;
+    static const char *glyphNEHE;
 
 };
 
