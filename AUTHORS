@@ -549,6 +549,10 @@ Developers:
         
      thp
          Port Cocos2D-X to Qt 5
+         
+    Nako Sung (nakosung)
+        Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
+        Exposing cc.RemoveSelf to JS.
 
 Retired Core Developers:
     WenSheng Yang
