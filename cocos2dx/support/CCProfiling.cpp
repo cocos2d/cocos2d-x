@@ -29,7 +29,7 @@ using namespace std;
 NS_CC_BEGIN
 
 //#pragma mark - Profiling Categories
-/* set to NO the categories that you don't want to profile */
+/* set to false the categories that you don't want to profile */
 bool kProfilerCategorySprite = false;
 bool kProfilerCategoryBatchSprite = false;
 bool kProfilerCategoryParticles = false;

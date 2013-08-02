@@ -119,7 +119,8 @@ bool GridBase::initWithSize(const Size& gridSize)
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
-    void *data = calloc((int)(POTWide * POTHigh * 4), 1);
+    int dataLen = (int)(POTWide * POTHigh * 4);
+    void *data = calloc(dataLen, 1);
     if (! data)
     {
         CCLOG("cocos2d: Grid: not enough memory.");
@@ -128,7 +129,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     }
 
     Texture2D *texture = new Texture2D();
-    texture->initWithData(data, format, POTWide, POTHigh, s);
+    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
 
     free(data);
 

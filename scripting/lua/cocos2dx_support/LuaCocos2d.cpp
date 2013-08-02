@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Jul 27 22:32:13 2013.
+** Generated automatically by tolua++-1.0.92 on 07/29/13 13:31:49.
 */
 
 /****************************************************************************
@@ -12879,7 +12879,7 @@ static int tolua_Cocos2d_CCImage_getWidth00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWidth'", NULL);
 #endif
   {
-   unsigned short tolua_ret = (unsigned short)  self->getWidth();
+   int tolua_ret = (int)  self->getWidth();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -12911,7 +12911,7 @@ static int tolua_Cocos2d_CCImage_getHeight00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHeight'", NULL);
 #endif
   {
-   unsigned short tolua_ret = (unsigned short)  self->getHeight();
+   int tolua_ret = (int)  self->getHeight();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
@@ -12924,9 +12924,9 @@ static int tolua_Cocos2d_CCImage_getHeight00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getBitsPerComponent of class  Image */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCImage_getBitsPerComponent00
-static int tolua_Cocos2d_CCImage_getBitsPerComponent00(lua_State* tolua_S)
+/* method: getBitPerPixel of class  Image */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCImage_getBitPerPixel00
+static int tolua_Cocos2d_CCImage_getBitPerPixel00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -12940,17 +12940,17 @@ static int tolua_Cocos2d_CCImage_getBitsPerComponent00(lua_State* tolua_S)
  {
   Image* self = (Image*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBitsPerComponent'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBitPerPixel'", NULL);
 #endif
   {
-   int tolua_ret = (int)  self->getBitsPerComponent();
+   int tolua_ret = (int)  self->getBitPerPixel();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getBitsPerComponent'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getBitPerPixel'.",&tolua_err);
  return 0;
 #endif
 }
@@ -18549,42 +18549,6 @@ static int tolua_Cocos2d_CCTextureCache_textureForKey00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'textureForKey'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: addPVRImage of class  TextureCache */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTextureCache_addPVRImage00
-static int tolua_Cocos2d_CCTextureCache_addPVRImage00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCTextureCache",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  TextureCache* self = (TextureCache*)  tolua_tousertype(tolua_S,1,0);
-  const char* filename = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addPVRImage'", NULL);
-#endif
-  {
-   Texture2D* tolua_ret = (Texture2D*)  self->addPVRImage(filename);
-    int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCTexture2D");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'addPVRImage'.",&tolua_err);
  return 0;
 #endif
 }
@@ -64241,7 +64205,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"saveToFile",tolua_Cocos2d_CCImage_saveToFile00);
    tolua_function(tolua_S,"getWidth",tolua_Cocos2d_CCImage_getWidth00);
    tolua_function(tolua_S,"getHeight",tolua_Cocos2d_CCImage_getHeight00);
-   tolua_function(tolua_S,"getBitsPerComponent",tolua_Cocos2d_CCImage_getBitsPerComponent00);
+   tolua_function(tolua_S,"getBitPerPixel",tolua_Cocos2d_CCImage_getBitPerPixel00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kCCNodeTagInvalid",(int)kCCNodeTagInvalid);
   tolua_constant(tolua_S,"kCCNodeOnEnter",(int)kCCNodeOnEnter);
@@ -64736,7 +64700,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"addImage",tolua_Cocos2d_CCTextureCache_addImage00);
    tolua_function(tolua_S,"addUIImage",tolua_Cocos2d_CCTextureCache_addUIImage00);
    tolua_function(tolua_S,"textureForKey",tolua_Cocos2d_CCTextureCache_textureForKey00);
-   tolua_function(tolua_S,"addPVRImage",tolua_Cocos2d_CCTextureCache_addPVRImage00);
    tolua_function(tolua_S,"removeAllTextures",tolua_Cocos2d_CCTextureCache_removeAllTextures00);
    tolua_function(tolua_S,"removeUnusedTextures",tolua_Cocos2d_CCTextureCache_removeUnusedTextures00);
    tolua_function(tolua_S,"removeTexture",tolua_Cocos2d_CCTextureCache_removeTexture00);

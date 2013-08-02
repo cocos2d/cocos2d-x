@@ -67,9 +67,8 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.1562216418" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1562216418" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.2085750802" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="i386-linux-gnueabi-gcc.exe" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.263460224" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -103,7 +102,6 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
 								<inputType id="sbi.gnu.c.compiler.tizen.inputType.94264147" superClass="sbi.gnu.c.compiler.tizen.inputType"/>
 							</tool>
@@ -114,7 +112,6 @@
 								</option>
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.181465864" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/opt/usr/apps/null/lib&quot;"/>
 								</option>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.165476943" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
@@ -209,7 +206,7 @@
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.2066748684" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.2066748684" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1890676098" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.800077346" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -250,7 +247,6 @@
 								</option>
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp.557112687" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.cpp" valueType="stringList">
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/opt/usr/apps/null/lib&quot;"/>
 								</option>
 							</tool>
 							<tool command="arm-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1047247012" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">

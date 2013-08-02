@@ -32,22 +32,22 @@ class CCBMemberVariableAssigner {
         /**
          *  The callback function of assigning member variable.
          *  @note The member variable must be Node or its subclass.
-         *  @param pTarget The custom class.
-         *  @param pMemberVariableName The name of the member variable.
-         *  @param pNode The member variable.
+         *  @param target               The custom class.
+         *  @param memberVariableName   The name of the member variable.
+         *  @param node                 The member variable.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBMemberVariable(Object* pTarget, const char* pMemberVariableName, Node* pNode) = 0;
+        virtual bool onAssignCCBMemberVariable(Object* target, const char* memberVariableName, Node* node) = 0;
 
         /**
          *  The callback function of assigning custom properties.
          *  @note The member variable must be Integer, Float, Boolean or String.
-         *  @param pTarget The custom class.
-         *  @param pMemberVariableName The name of the member variable.
-         *  @param pValue The value of the property.
+         *  @param target               The custom class.
+         *  @param memberVariableName   The name of the member variable.
+         *  @param value                The value of the property.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBCustomProperty(Object* pTarget, const char* pMemberVariableName, CCBValue* pCCBValue) { return false; };
+        virtual bool onAssignCCBCustomProperty(Object* target, const char* memberVariableName, CCBValue* value) { return false; };
 };
 
 NS_CC_EXT_END
