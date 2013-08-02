@@ -158,7 +158,7 @@ FontAtlas * FontAtlasFactory::createFontAtlasFromFNTConfig(CCBMFontConfiguration
         return 0;
     
     // add the texture
-    tempAtlas->addTexture(tempTexture, 0);
+    tempAtlas->addTexture(*tempTexture, 0);
     return tempAtlas;
 }
 
