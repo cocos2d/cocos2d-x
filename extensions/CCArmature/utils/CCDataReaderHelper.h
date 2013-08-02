@@ -64,7 +64,7 @@ public:
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
      *
-     * @param xmlPath Path of pak file
+     * @param xmlPakPath Path of pak file
      */
     static void addDataFromXMLPak(const char *xmlPakPath);
 
@@ -72,9 +72,9 @@ public:
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
      *
-     * @param xmlPath The cache of the xml
+     * @param fileContent The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent);
+    static void addDataFromCache(const char *fileContent);
 
 
 

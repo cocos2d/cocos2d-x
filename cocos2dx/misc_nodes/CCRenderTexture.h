@@ -106,12 +106,12 @@ public:
     CC_DEPRECATED_ATTRIBUTE Image* newCCImage(bool flipImage = true) { return newImage(flipImage); };
 
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
-        Returns YES if the operation is successful.
+        Returns true if the operation is successful.
      */
     bool saveToFile(const char *szFilePath);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
-        Returns YES if the operation is successful.
+        Returns true if the operation is successful.
      */
     bool saveToFile(const char *name, Image::Format format);
     
@@ -125,7 +125,7 @@ public:
      */
     void listenToForeground(Object *obj);
     
-    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
+    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. */
     inline unsigned int getClearFlags() const { return _clearFlags; };
     inline void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; };
     
@@ -133,11 +133,11 @@ public:
     inline const Color4F& getClearColor() const { return _clearColor; };
     inline void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; };
     
-    /** Value for clearDepth. Valid only when autoDraw is true. */
+    /** Value for clearDepth. Valid only when "autoDraw" is true. */
     inline float getClearDepth() const { return _clearDepth; };
     inline void setClearDepth(float clearDepth) { _clearDepth = clearDepth; };
     
-    /** Value for clear Stencil. Valid only when autoDraw is true */
+    /** Value for clear Stencil. Valid only when "autoDraw" is true */
     inline int getClearStencil() const { return _clearStencil; };
     inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
     

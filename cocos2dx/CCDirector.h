@@ -465,7 +465,7 @@ protected:
      nextScene is a weak reference. */
     Scene *_nextScene;
     
-    /* If YES, then "old" scene will receive the cleanup message */
+    /* If true, then "old" scene will receive the cleanup message */
     bool    _sendCleanupToScene;
 
     /* scheduled scenes */
