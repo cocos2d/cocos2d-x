@@ -1,0 +1,8 @@
+jpeg
+version 9.0 for ios mac win32 android
+
+png
+version 1.6.2 for ios mac win32 android
+
+tiff
+version 4.0.3 for ios mac win32 android
