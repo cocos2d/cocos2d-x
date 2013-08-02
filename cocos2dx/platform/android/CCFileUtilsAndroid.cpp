@@ -154,17 +154,25 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
     if (fullPath[0] != '/')
     {
         
-        string fullPath(filename);
         // fullPathForFilename is not thread safe.
-        if (! forAsync)
-        {
-            fullPath = fullPathForFilename(filename);
+        if (forAsync) {
+            LOGD("Async loading not supported. fullPathForFilename is not thread safe.");
+            return NULL;
         }
 
-        const char* relativepath = fullPath.c_str();
+        string fullPath = fullPathForFilename(filename);
+        LOGD("full path = %s", fullPath.c_str());
 
-        // "assets/" is at the beginning of the path and we don't want it
-        relativepath += strlen("assets/");
+        string relativePath = string();
+
+        size_t position = fullPath.find("assets/");
+        if (0 == position) {
+            // "assets/" is at the beginning of the path and we don't want it
+            relativePath += fullPath.substr(strlen("assets/"));
+        } else {
+            relativePath += fullPath;
+        }
+        LOGD("relative path = %s", relativePath.c_str());
 
         if (NULL == FileUtilsAndroid::assetmanager) {
             LOGD("... FileUtilsAndroid::assetmanager is NULL");
@@ -174,10 +182,10 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
         // read asset data
         AAsset* asset =
             AAssetManager_open(FileUtilsAndroid::assetmanager,
-                               relativepath,
+                               relativePath.c_str(),
                                AASSET_MODE_UNKNOWN);
         if (NULL == asset) {
-            LOGD("asset : is NULL");
+            LOGD("asset is NULL");
             return NULL;
         }
 
