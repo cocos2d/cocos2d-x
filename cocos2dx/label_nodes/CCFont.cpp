@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCFont.h"
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 
 NS_CC_BEGIN
 
