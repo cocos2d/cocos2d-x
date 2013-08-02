@@ -95,7 +95,7 @@ FontAtlas * FontAtlasFactory::createFontAtlasFromFNTConfig(CCBMFontConfiguration
     if (!tempFont)
         return 0;
     
-    FontAtlas *tempAtlas = new FontAtlas(tempFont);
+    FontAtlas *tempAtlas = new FontAtlas(*tempFont);
     if (!tempAtlas)
         return 0;
     

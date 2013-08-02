@@ -224,14 +224,10 @@ bool StringTTF::computeAdvancesForString(unsigned short int *stringToRender)
         _advances = 0;
     }
     
-    Font *theFont = 0;
-    theFont = _fontAtlas->getFont();
-    
-    if (!theFont)
-        return false;
+    Font &theFont = _fontAtlas->getFont();
     
     int letterCount = 0;
-    _advances = theFont->getAdvancesForTextUTF16(stringToRender, letterCount);
+    _advances = theFont.getAdvancesForTextUTF16(stringToRender, letterCount);
     
     if(!_advances)
         return false;
@@ -512,7 +508,7 @@ int StringTTF::getAdvanceForChar(unsigned short c, int hintPositionInString)
 
 Rect StringTTF::getRectForChar(unsigned short c)
 {
-    return _fontAtlas->getFont()->getRectForChar(c);
+    return _fontAtlas->getFont().getRectForChar(c);
 }
 
 // string related stuff

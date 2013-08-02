@@ -12,15 +12,14 @@
 
 NS_CC_BEGIN
 
-FontAtlas::FontAtlas(Font *theFont) : _font(theFont)
+FontAtlas::FontAtlas(Font &theFont) : _font(theFont)
 {
-    if (_font)
-        _font->retain();
+    _font.retain();
 }
 
 FontAtlas::~FontAtlas()
 {
-    _font->release();
+    _font.release();
     relaseTextures();
 }
 
@@ -87,7 +86,7 @@ unsigned short int * FontAtlas::getUTF16Text(const char *pText, int &outNumLette
     return utf16String;
 }
 
-Font * FontAtlas::getFont()
+Font & FontAtlas::getFont()
 {
     return _font;
 }

@@ -210,7 +210,7 @@ int FontDefinitionTTF::getNumTextures()
 
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
-    FontAtlas *retAtlas = new FontAtlas(_textImages->getFont());
+    FontAtlas *retAtlas = new FontAtlas( *_textImages->getFont() );
     
     if (!retAtlas)
         return 0;

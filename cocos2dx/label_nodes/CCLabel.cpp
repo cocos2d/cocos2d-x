@@ -56,11 +56,11 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, i
     if (!tempAtlas)
         return 0;
     
-    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::LEFT, lineSize);
+    StringTTF* templabel = StringTTF::create(tempAtlas, TextHAlignment::CENTER, lineSize);
     
     if (templabel)
     {
-        templabel->setText(label, lineSize, TextHAlignment::LEFT, false);
+        templabel->setText(label, lineSize, TextHAlignment::CENTER, false);
         return templabel;
     }
     else
