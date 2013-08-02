@@ -190,7 +190,6 @@ public:
 
     /**
     @brief Pause all playing sound effect
-    @param nSoundId The return value of function playEffect
     */
     void pauseAllEffects();
 
@@ -202,7 +201,6 @@ public:
 
     /**
     @brief Resume all playing sound effect
-    @param nSoundId The return value of function playEffect
     */
     void resumeAllEffects();
 
