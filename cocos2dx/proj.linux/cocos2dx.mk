@@ -1,14 +1,36 @@
+################################################################################
+#
+# LINUX MAKEFILE
+#
+# Available options are:
+# - CLANG=1  : Compiles with clang instead of gcc. Clang must be in your PATH.
+# - V=1      : Enables the verbose mode.
+# - DEBUG=1  : Enables the debug mode, disable compiler optimizations.
+# - OPENAL=1 : Uses OpenAL instead of FMOD as sound engine.
+#
+################################################################################
+
 all:
 
-CC = gcc
-CXX = g++
 # Remove -Wall, because it enables -Wunused-function, and this warning exists in webp.h
 # when enable c++11. I don't know why.
 # GCC 4.6 is primary platform for cocos2d v.3, because it's default compiler for Android, 
 # Blackberry, some Linux distributions.It supports all important features of c++11, but have 
 # no flag "-std=c++11" (which was turned on in version 4.7).
-CCFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC
-CXXFLAGS += -MMD -Werror -Wno-deprecated-declarations -fPIC -std=gnu++0x
+CCFLAGS  += -MMD -Wno-deprecated-declarations -fPIC
+CXXFLAGS += -MMD -Wno-deprecated-declarations -fPIC -std=gnu++0x
+
+ifeq ($(CLANG), 1)
+CC := clang
+CXX := clang++
+DEFINES += -D__STRICT_ANSI__ # Allows clang 3.3 to use __float128
+else
+CC = gcc
+CXX = g++
+CCFLAGS  += -Werror
+CXXFLAGS += -Werror
+endif
+
 ARFLAGS = cr
 
 DEFINES += -DLINUX -DCC_KEYBOARD_SUPPORT
@@ -100,7 +122,7 @@ SHAREDLIBS += -lfmodex
 endif
 endif
 
-SHAREDLIBS += -lglfw -lGLEW -lfontconfig -lpthread -lGL
+SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
 

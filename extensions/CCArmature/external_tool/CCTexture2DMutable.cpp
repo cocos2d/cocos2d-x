@@ -46,7 +46,7 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile, cocos2d::Texture
     image_->initWithImageFile(imageFile);
     
     
-    return initWithData(image_->getData(), pixelFormat, pixelsWide, pixelsHigh, contentSize);
+    return initWithData(image_->getData(), image_->getDataLen(), pixelFormat, pixelsWide, pixelsHigh, contentSize);
 }
 
 bool Texture2DMutable::initWithImageFile(const char *imageFile)
@@ -56,7 +56,7 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
     
     bool                      hasAlpha = image_->hasAlpha();
     Size                    imageSize = Size((float)(image_->getWidth()), (float)(image_->getHeight()));
-    size_t                    bpp = image_->getBitsPerComponent();
+    size_t                    bpp = image_->getBitPerPixel();
     cocos2d::Texture2D::PixelFormat pixelFormat;
     
     // compute pixel format
@@ -77,12 +77,12 @@ bool Texture2DMutable::initWithImageFile(const char *imageFile)
         
     }
     
-    return initWithData(image_->getData(), pixelFormat, imageSize.width, imageSize.height, imageSize);
+    return initWithData(image_->getData(), image_->getDataLen(), pixelFormat, imageSize.width, imageSize.height, imageSize);
 }
 
-bool Texture2DMutable::initWithData(const void* data, Texture2D::PixelFormat pixelFormat, unsigned int width, unsigned int height, const Size& size)
+bool Texture2DMutable::initWithData(const void* data, int dataLen, Texture2D::PixelFormat pixelFormat, unsigned int width, unsigned int height, const Size& size)
 {
-	if(!Texture2D::initWithData(data, pixelFormat, width, height, size)) {
+	if(!Texture2D::initWithData(data, dataLen, pixelFormat, width, height, size)) {
         return false;
     }
         
@@ -215,14 +215,14 @@ Texture2D* Texture2DMutable::copyMutable(bool isMutable )
 		void *newData = malloc(mem);
 		memcpy(newData, data_, mem);
         co = new Texture2DMutable();
-        if (!co->initWithData(newData, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
+        if (!co->initWithData(newData, mem, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
             delete co;
             co = NULL;
         }
 	}else {
         
         co = new Texture2D();
-        if (!co->initWithData(data_, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
+        if (!co->initWithData(data_, _pixelsWide*_pixelsHigh*bytesPerPixel_, _pixelFormat, _pixelsWide, _pixelsHigh, _contentSize)) {
             delete co;
             co = NULL;
         }

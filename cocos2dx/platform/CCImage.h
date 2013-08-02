@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CC_IMAGE_H__
 
 #include "cocoa/CCObject.h"
+#include "textures/CCTexture2D.h"
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
@@ -41,6 +42,14 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+ 
+/**
+    @brief Structure which can tell where mipmap begins and how long is it
+*/
+typedef struct _MipmapInfo {
+    unsigned char* address;
+    int len;
+}MipmapInfo;
 
 class CC_DLL Image : public Object
 {
@@ -49,6 +58,14 @@ public:
     
     Image();
     virtual ~Image();
+    
+    /**
+     @brief Determine how many mipmaps can we have. 
+     Its same as define but it respects namespaces
+    */
+    enum {
+        CC_MIPMAP_MAX = 16,
+    };
 
     /** Supported formats for Image */
     enum class Format
@@ -61,6 +78,10 @@ public:
         TIFF,
         //! WebP
         WEBP,
+        //! PVR
+        PVR,
+        //! ETC
+        ETC,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -81,48 +102,39 @@ public:
     };
     
     /**
-    @brief  Load the image from the specified path. 
-    @param strPath   the absolute file path.
-    @param imageType the type of image, currently only supporting two types.
-    @return  true if loaded correctly.
-    */
-    bool initWithImageFile(const char * strPath, Format imageType = Format::PNG);
-
-    /**
-    @brief  Load image from stream buffer.
-
-    @warning kFmtRawData only supports RGBA8888.
-    @param pBuffer  stream buffer which holds the image data.
-    @param nLength  data length expressed in (number of) bytes.
-    @param nWidth, nHeight, nBitsPerComponent are used for kFmtRawData.
+    @brief Load the image from the specified path.
+    @param path   the absolute file path.
     @return true if loaded correctly.
     */
-    bool initWithImageData(void * pData, 
-                           int nDataLen, 
-                           Format eFmt = Format::UNKOWN,
-                           int nWidth = 0,
-                           int nHeight = 0,
-                           int nBitsPerComponent = 8);
-
-    // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti);
+    bool initWithImageFile(const char *path);
 
     /**
-    @brief    Create image with specified string.
-    @param  pText       the text the image will show (cannot be nil).
-    @param  nWidth      the image width, if 0, the width will match the text's width.
-    @param  nHeight     the image height, if 0, the height will match the text's height.
-    @param  eAlignMask  the test Alignment
-    @param  pFontName   the name of the font used to draw the text. If nil, use the default system font.
-    @param  nSize       the font size, if 0, use the system default size.
+    @brief Load image from stream buffer.
+    @param data  stream buffer which holds the image data.
+    @param dataLen  data length expressed in (number of) bytes.
+    @return true if loaded correctly.
+    */
+    bool initWithImageData(void * data, int dataLen);
+
+    // @warning kFmtRawData only support RGBA8888
+    bool initWithRawData(void *data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent = 8, bool bPreMulti = false);
+
+    /**
+    @brief Create image with specified string.
+    @param text       the text the image will show (cannot be nil).
+    @param width      the image width, if 0, the width will match the text's width.
+    @param height     the image height, if 0, the height will match the text's height.
+    @param alignMask  the test Alignment
+    @param fontName   the name of the font used to draw the text. If nil, use the default system font.
+    @param size       the font size, if 0, use the system default size.
     */
     bool initWithString(
-        const char *    pText, 
-        int             nWidth = 0, 
-        int             nHeight = 0,
-        TextAlign       eAlignMask = TextAlign::CENTER,
-        const char *    pFontName = 0,
-        int             nSize = 0);
+        const char *    text,
+        int             width = 0,
+        int             height = 0,
+        TextAlign       alignMask = TextAlign::CENTER,
+        const char *    fontName = 0,
+        int             size = 0);
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -130,7 +142,7 @@ public:
                                             const char *    pText,
                                             int             nWidth      = 0,
                                             int             nHeight     = 0,
-                                        TextAlign       eAlignMask  = TextAlign::CENTER,
+                                            TextAlign       eAlignMask  = TextAlign::CENTER,
                                             const char *    pFontName   = 0,
                                             int             nSize       = 0,
                                             float           textTintR   = 1,
@@ -151,42 +163,59 @@ public:
     
     #endif
     
-
-    /**
-     @brief    Save Image data to the specified file, with specified format.
-     @param    pszFilePath        the file's absolute path, including file suffix.
-     @param    bIsToRGB        whether the image is saved as RGB format.
-     */
-    bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
     
     // Getters
     inline unsigned char *   getData()               { return _data; }
-    inline int               getDataLen()            { return _width * _height; }
+    inline int               getDataLen()            { return _dataLen; }
+    inline Format            getFileType()           {return _fileType; }
+    inline Texture2D::PixelFormat getRenderFormat()    { return _renderFormat; }
+    inline int               getWidth()              { return _width; }
+    inline int               getHeight()             { return _height; }
+    inline bool              isPremultipliedAlpha()  { return _preMulti;   }
+    inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
+    inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
+    inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
 
-    inline bool hasAlpha()                     { return _hasAlpha;   }
-    inline bool isPremultipliedAlpha()         { return _preMulti;   }
+    int                      getBitPerPixel();
+    bool                     hasAlpha();
+    bool                     isCompressed();
 
-    inline unsigned short getWidth() { return _width; };
-    inline unsigned short getHeight() { return _height; };
-    inline int getBitsPerComponent() { return _bitsPerComponent; };
-    //
-    
+
+    /**
+     @brief    Save Image data to the specified file, with specified format.
+     @param    filePath        the file's absolute path, including file suffix.
+     @param    isToRGB        whether the image is saved as RGB format.
+     */
+    bool saveToFile(const char *filePath, bool isToRGB = true);
+
 protected:
-    bool initWithJpgData(void *pData, int nDatalen);
-    bool initWithPngData(void *pData, int nDatalen);
-    bool initWithTiffData(void *pData, int nDataLen);
-    bool initWithWebpData(void *pData, int nDataLen);
+    bool initWithJpgData(void *data, int dataLen);
+    bool initWithPngData(void *data, int dataLen);
+    bool initWithTiffData(void *data, int dataLen);
+    bool initWithWebpData(void *data, int dataLen);
+    bool initWithPVRData(void *data, int dataLen);
+    bool initWithPVRv2Data(void *data, int dataLen);
+    bool initWithPVRv3Data(void *data, int dataLen);
+    bool initWithETCData(void *data, int dataLen);
 
     bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool saveImageToJPG(const char *pszFilePath);
 
-    unsigned short   _width;
-    unsigned short   _height;
-    int     _bitsPerComponent;
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    bool iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
+#endif
+
     unsigned char *_data;
-    bool _hasAlpha;
+    int _dataLen;
+    int _width;
+    int _height;
+    Format _fileType;
+    Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
+    MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
+    int _numberOfMipmaps;
+    // false if we cann't auto detect the image is premultiplied or not.
+    bool _hasPremultipliedAlpha;
 
 
 private:
@@ -201,7 +230,17 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, Format imageType = Format::PNG);
+    bool initWithImageFileThreadSafe(const char *fullpath);
+
+    Format detectFormat(void* data, int dataLen);
+    bool isPng(void *data, int dataLen);
+    bool isJpg(void *data, int dataLen);
+    bool isTiff(void *data, int dataLen);
+    bool isWebp(void *data, int dataLen);
+    bool isPvr(void *data, int dataLen);
+    bool isEtc(void *data, int dataLen);
+
+    bool testFormatForPvrTCSupport(uint64_t format);
 };
 
 // end of platform group
