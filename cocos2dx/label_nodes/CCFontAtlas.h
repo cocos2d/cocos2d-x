@@ -54,15 +54,13 @@ public:
     virtual ~FontAtlas();
     
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);
-    bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
-    
-    void addTexture(Texture2D *pTexture, int slot);
-    Texture2D * getTexture(int slot);
-    float getCommonLineHeight();
+    bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition) const;
+    void addTexture(Texture2D &texture, int slot);
+    Texture2D & getTexture(int slot);
     void  setCommonLineHeight(float newHeight);
-    
-    unsigned short int * getUTF16Text(const char *pText, int &outNumLetters);
-    Font & getFont();
+    float getCommonLineHeight() const;
+    unsigned short int * getUTF16Text(const char *pText, int &outNumLetters) const;
+    Font & getFont() const;
     
 private:
     

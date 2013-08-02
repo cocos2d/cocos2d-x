@@ -39,7 +39,7 @@ void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition
     _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
 }
 
-bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition)
+bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition) const
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
     
@@ -54,18 +54,18 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
     }
 }
 
-void FontAtlas::addTexture(Texture2D *pTexture, int slot)
+void FontAtlas::addTexture(Texture2D &texture, int slot)
 {
-    pTexture->retain();
-    _atlasTextures[slot] = pTexture;
+    texture.retain();
+    _atlasTextures[slot] = &texture;
 }
 
-Texture2D * FontAtlas::getTexture(int slot)
+Texture2D & FontAtlas::getTexture(int slot) 
 {
-    return _atlasTextures[slot];
+    return *(_atlasTextures[slot]);
 }
 
-float FontAtlas::getCommonLineHeight()
+float FontAtlas::getCommonLineHeight() const
 {
     return _commonLineHeight;
 }
@@ -75,7 +75,7 @@ void  FontAtlas::setCommonLineHeight(float newHeight)
     _commonLineHeight = newHeight;
 }
 
-unsigned short int * FontAtlas::getUTF16Text(const char *pText, int &outNumLetters)
+unsigned short int * FontAtlas::getUTF16Text(const char *pText, int &outNumLetters) const
 {
     unsigned short* utf16String = cc_utf8_to_utf16(pText);
     
@@ -86,7 +86,7 @@ unsigned short int * FontAtlas::getUTF16Text(const char *pText, int &outNumLette
     return utf16String;
 }
 
-Font & FontAtlas::getFont()
+Font & FontAtlas::getFont() const
 {
     return _font;
 }
