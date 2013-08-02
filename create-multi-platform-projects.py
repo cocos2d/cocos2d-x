@@ -5,5 +5,6 @@ import os
 from tools.project_creator import create_project
 
 if __name__ == '__main__':
-    os.chdir(os.getcwd()+'/tools/project_creator/')
+    root = os.path.abspath(os.path.dirname(__file__))
+    os.chdir(os.path.join(root, 'tools/project_creator/'))
     create_project.createPlatformProjects()
