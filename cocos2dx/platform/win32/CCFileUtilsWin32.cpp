@@ -29,34 +29,11 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static char s_pszResourcePath[MAX_PATH] = {0};
+#define CC_MAX_PATH  512
 
-static void _checkPath()
-{
-    if (! s_pszResourcePath[0])
-    {
-        WCHAR  wszPath[MAX_PATH] = {0};
-        int nNum = WideCharToMultiByte(CP_ACP, 0, wszPath,
-            GetCurrentDirectoryW(sizeof(wszPath), wszPath),
-            s_pszResourcePath, MAX_PATH, NULL, NULL);
-        s_pszResourcePath[nNum] = '\\';
-    }
-}
-
-// D:/aaa/bbb/ccc/ddd/abc.txt --> D:\aaa\bbb\ccc\ddd\abc.txt
-static inline std::string convertPathFormatToWindowStyle(const std::string& path)
-{
-    std::string ret = path;
-    int len = ret.length();
-    for (int i = 0; i < len; ++i)
-    {
-        if (ret[i] == '/')
-        {
-            ret[i] = '\\';
-        }
-    }
-    return ret;
-}
+// The root path of resources, the character encoding is UTF-8.
+// UTF-8 is the only encoding supported by cocos2d-x API.
+static std::string s_resourcePath = "";
 
 // D:\aaa\bbb\ccc\ddd\abc.txt --> D:/aaa/bbb/ccc/ddd/abc.txt
 static inline std::string convertPathFormatToUnixStyle(const std::string& path)
@@ -71,6 +48,21 @@ static inline std::string convertPathFormatToUnixStyle(const std::string& path)
         }
     }
     return ret;
+}
+
+static void _checkPath()
+{
+    if (0 == s_resourcePath.length())
+    {
+        WCHAR utf16Path[CC_MAX_PATH] = {0};
+        GetCurrentDirectoryW(sizeof(utf16Path)-1, utf16Path);
+        
+        char utf8Path[CC_MAX_PATH] = {0};
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), NULL, NULL);
+
+        s_resourcePath = convertPathFormatToUnixStyle(utf8Path);
+        s_resourcePath.append("/");
+    }
 }
 
 FileUtils* FileUtils::getInstance()
@@ -95,7 +87,7 @@ FileUtilsWin32::FileUtilsWin32()
 bool FileUtilsWin32::init()
 {
     _checkPath();
-    _defaultResRootPath = s_pszResourcePath;
+    _defaultResRootPath = s_resourcePath;
     return FileUtils::init();
 }
 
@@ -112,11 +104,10 @@ bool FileUtilsWin32::isFileExist(const std::string& strFilePath)
         strPath.insert(0, _defaultResRootPath);
     }
 
-    convertPathFormatToWindowStyle(strPath);
-    WCHAR wszBuf[MAX_PATH] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, wszBuf, sizeof(wszBuf));
+    WCHAR utf16Buf[CC_MAX_PATH] = {0};
+    MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf));
 
-    return GetFileAttributesW(wszBuf) != -1 ? true : false;
+    return GetFileAttributesW(utf16Buf) != -1 ? true : false;
 }
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath)
@@ -140,9 +131,8 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
         // read the file from hardware
         std::string fullPath = fullPathForFilename(filename);
 
-        WCHAR wszBuf[MAX_PATH] = {0};
+        WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf));
-
 
         HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
@@ -178,25 +168,25 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
 std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
 {
     std::string unixFileName = convertPathFormatToUnixStyle(filename);
-    std::string unixResolutionDirector = convertPathFormatToUnixStyle(resolutionDirectory);
+    std::string unixResolutionDirectory = convertPathFormatToUnixStyle(resolutionDirectory);
     std::string unixSearchPath = convertPathFormatToUnixStyle(searchPath);
 
-    return FileUtils::getPathForFilename(unixFileName, unixResolutionDirector, unixSearchPath);
+    return FileUtils::getPathForFilename(unixFileName, unixResolutionDirectory, unixSearchPath);
 }
 
 std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string dosDirectory = convertPathFormatToWindowStyle(strDirectory);
-    std::string dosFilename = convertPathFormatToWindowStyle(strFilename);
+    std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
+    std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
     
-    return FileUtils::getFullPathForDirectoryAndFilename(dosDirectory, dosFilename);
+    return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
 }
 
 string FileUtilsWin32::getWritablePath()
 {
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
-    char full_path[_MAX_PATH + 1];
-    ::GetModuleFileNameA(NULL, full_path, _MAX_PATH + 1);
+    char full_path[CC_MAX_PATH + 1];
+    ::GetModuleFileNameA(NULL, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
 #ifndef _DEBUG
@@ -205,7 +195,7 @@ string FileUtilsWin32::getWritablePath()
 
         if(base_name)
         {
-            char app_data_path[_MAX_PATH + 1];
+            char app_data_path[CC_MAX_PATH + 1];
 
             // Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
             if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, app_data_path)))
@@ -234,6 +224,8 @@ string FileUtilsWin32::getWritablePath()
 
     // remove xxx.exe
     ret =  ret.substr(0, ret.rfind("\\") + 1);
+
+    ret = convertPathFormatToUnixStyle(ret);
 
     return ret;
 }
