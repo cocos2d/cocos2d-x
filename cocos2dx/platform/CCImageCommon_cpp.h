@@ -913,10 +913,11 @@ bool Image::initWithTiffData(void* data, int dataLen)
 
 bool Image::testFormatForPvrTCSupport(uint64_t format)
 {
-#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
     if (!Configuration::getInstance()->supportsPVRTC())
     {
-        if (format == kPVR3TexturePixelFormat_PVRTC_2BPP_RGB ||
+        if (format == kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA ||
+            format == kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA ||
+            format == kPVR3TexturePixelFormat_PVRTC_2BPP_RGB ||
             format == kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA ||
             format == kPVR3TexturePixelFormat_PVRTC_4BPP_RGB ||
             format == kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA)
@@ -924,8 +925,6 @@ bool Image::testFormatForPvrTCSupport(uint64_t format)
             return false;
         }
     }
-    
-#endif // GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
 
     return true;
 }
