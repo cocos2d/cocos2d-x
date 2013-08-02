@@ -61,9 +61,23 @@ kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 keyboard_dispatcher/CCKeyboardDispatcher.cpp \
+label_nodes/CCFont.cpp \
+label_nodes/CCFontAtlas.cpp \
+label_nodes/CCFontAtlasCache.cpp \
+label_nodes/CCFontAtlasFactory.cpp \
+label_nodes/CCFontCache.cpp \
+label_nodes/CCFontDefinition.cpp \
+label_nodes/CCFontFNT.cpp \
+label_nodes/CCFontFreeType.cpp \
+label_nodes/CCFontRenderFreeType.cpp \
+label_nodes/CCLabel.cpp \
 label_nodes/CCLabelAtlas.cpp \
 label_nodes/CCLabelBMFont.cpp \
 label_nodes/CCLabelTTF.cpp \
+label_nodes/CCLabelTextFormatter.cpp \
+label_nodes/CCStringBMFont.cpp \
+label_nodes/CCStringTTF.cpp \
+label_nodes/CCTextImage.cpp \
 layers_scenes_transitions_nodes/CCLayer.cpp \
 layers_scenes_transitions_nodes/CCScene.cpp \
 layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
@@ -169,6 +183,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
@@ -180,3 +195,4 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
+$(call import-module,libfreetype2)

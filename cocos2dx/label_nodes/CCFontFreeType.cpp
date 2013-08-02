@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
 

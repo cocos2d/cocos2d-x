@@ -25,7 +25,7 @@
 #include <vector>
 
 #include "cocos2d.h"
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 #include "CCLabelTextFormatter.h"
 
 using namespace std;
