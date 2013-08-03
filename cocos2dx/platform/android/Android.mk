@@ -28,7 +28,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../include \
-                    $(LOCAL_PATH)/../../kazmath/include
+                    $(LOCAL_PATH)/../../kazmath/include \
+                    $(LOCAL_PATH)/../../platform/third_party/common/etc
 
 LOCAL_LDLIBS := -lGLESv1_CM \
                 -lGLESv2 \
