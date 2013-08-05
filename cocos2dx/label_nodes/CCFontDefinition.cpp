@@ -223,7 +223,7 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         return 0;
     
     for (int c = 0; c<numTextures; ++c)
-        retAtlas->addTexture(getTexture(c), c);
+        retAtlas->addTexture(*getTexture(c), c);
     
     // set the common line height
     retAtlas->setCommonLineHeight(getCommonLineHeight() * 0.8);
