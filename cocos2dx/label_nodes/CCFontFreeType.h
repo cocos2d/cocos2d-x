@@ -36,8 +36,7 @@ class CC_DLL FontFreeType : public Font
 {
 public:
     
-             FontFreeType();
-    virtual ~FontFreeType();
+    static FontFreeType * create();
     
     virtual FontAtlas           * createFontAtlas();
     virtual Size                * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
@@ -47,8 +46,13 @@ public:
     virtual int                   getLetterPadding();
     bool                          createFontObject(const std::string &fontName, int fontSize);
     
-private:
+protected:
     
+    FontFreeType();
+    virtual ~FontFreeType();
+    
+private:
+
     bool initFreeType();
     void shutdownFreeType();
     FT_Library getFTLibrary();
@@ -60,10 +64,8 @@ private:
     
     static FT_Library _FTlibrary;
     static bool       _FTInitialized;
-    
     FT_Face           _fontRef;
     const int         _letterPadding;
-    
     std::string       _fontName;
     
 };

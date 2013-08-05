@@ -66,21 +66,13 @@ StringTTF* StringTTF::create(FontAtlas *pAtlas, TextHAlignment alignment, int li
 StringTTF::~StringTTF()
 {
     if (_currentUTF8String)
-    {
         delete [] _currentUTF8String;
-        _currentUTF8String = 0;
-    }
     
     if (_advances)
-    {
         delete [] _advances;
-        _advances = 0;
-    }
     
     if (_fontAtlas)
-    {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
-    }
 }
 
 bool StringTTF::init()

@@ -161,7 +161,6 @@ public:
     TextImage();
    ~TextImage();
     
-    //bool initWithString(const char *text, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData = true);
     bool initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData = true);
     
     TextFontPagesDef  * getPages()    { return _fontPages; }
@@ -169,18 +168,18 @@ public:
     
 private:
     
-    unsigned char * preparePageGlyphData(TextPageDef *thePage);
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool createFontRender();
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool generateTextGlyphs(const char * pText);
     int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
+    unsigned char * preparePageGlyphData(TextPageDef *thePage);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;
-    Font *                                      _font;
-    FontRender *                                _fontRender;
+    Font             *                          _font;
+    FontRender       *                          _fontRender;
     
     
 };

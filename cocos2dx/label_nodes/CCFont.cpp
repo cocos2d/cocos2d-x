@@ -106,7 +106,7 @@ Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection gly
     }
     
     // create the font
-    FontFreeType *tempFont = new FontFreeType();
+    FontFreeType *tempFont = FontFreeType::create();
     
     if (!tempFont)
         return nullptr;
@@ -133,7 +133,7 @@ Font* Font::createWithFNT(const char* fntFilePath)
         return nullptr;
     }
     
-    FontFNT *tempFont = new FontFNT(newConf);
+    FontFNT *tempFont =  FontFNT::create(newConf);
     
     if (!tempFont)
     {
