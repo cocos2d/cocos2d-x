@@ -301,7 +301,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     unsigned short prev         = -1;
     
     
-    Size tmpSize              = Size::ZERO;
+    Size tmpSize                = Size::ZERO;
     
     int longestLine             = 0;
     unsigned int totalHeight    = 0;
