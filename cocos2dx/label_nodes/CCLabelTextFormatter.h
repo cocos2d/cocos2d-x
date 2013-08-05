@@ -25,7 +25,7 @@
 #ifndef _CCLabelTextFormatter_h_
 #define _CCLabelTextFormatter_h_
 
-#include "CClabelTextFormatProtocol.h"
+#include "CCLabelTextFormatProtocol.h"
 
 NS_CC_BEGIN
 
