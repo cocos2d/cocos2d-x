@@ -187,9 +187,10 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         CCARRAY_FOREACH(layers, pObj)
         {
             layerInfo = static_cast<TMXLayerInfo*>(pObj);
-            if (layerInfo && layerInfo->_visible)
+            if (layerInfo)
             {
                 TMXLayer *child = parseLayer(layerInfo, mapInfo);
+                child->setVisible(layerInfo->_visible);
                 addChild((Node*)child, idx, idx);
 
                 // update content size with the max size
