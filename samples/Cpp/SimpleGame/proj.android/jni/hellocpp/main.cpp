@@ -12,5 +12,5 @@ using namespace cocos2d;
 
 void cocos_android_app_init (void) {
     LOGD("cocos_android_app_init");
-    simplegame::AppDelegate *pAppDelegate = new simplegame::AppDelegate();
+    AppDelegate *pAppDelegate = new AppDelegate();
 }
