@@ -50,7 +50,6 @@ public:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
     
-    
     // RGBAProtocol
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
@@ -67,10 +66,7 @@ public:
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    
     // CCLabelTextFormat protocol implementation
-    
-    // sprite related stuff
     virtual Sprite *                    getSpriteChild(int ID);
     virtual Array  *                    getChildrenLetters();
     virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint);

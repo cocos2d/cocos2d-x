@@ -38,21 +38,22 @@ NS_CC_BEGIN
 class CC_DLL FontDefinitionTTF : public Object
 {
 public:
-
-    static FontDefinitionTTF* create(const char *fontName, int fontSize, const char *letters, int textureSize = DEFAULT_ATLAS_TEXTURE_SIZE);
+    
+    static FontDefinitionTTF* create(Font *font, int textureSize = DEFAULT_ATLAS_TEXTURE_SIZE);
+    
     FontLetterDefinition & getLetterDefinition(unsigned short int theLetter);
     Texture2D * getTexture(int index);
-    int         getNumTextures();
-    Font *      getFont()                        { return _textImages->getFont(); }
-    float       getCommonLineHeight()            { return _commonLineHeight;      }
     FontAtlas * createFontAtlas();
+    Font      * getFont()              { return _textImages->getFont(); }
+    float       getCommonLineHeight()  { return _commonLineHeight;      }
+    int         getNumTextures();
     
 private:
     
      FontDefinitionTTF();
     ~FontDefinitionTTF();
     
-    bool initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize);
+    bool initDefinition(Font *font, const char *letters, int textureSize);
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
     void addLetterDefinition(FontLetterDefinition &defToAdd);
     

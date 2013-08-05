@@ -30,21 +30,25 @@
 
 NS_CC_BEGIN
 
-static const char *glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+const char * Font::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
 
-static const char *glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+const char * Font::_glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
 
-const char * getGlyphCollection(GlyphCollection glyphs)
+Font::Font() : _usedGlyphs(GlyphCollection::ASCII), _customGlyphs(nullptr)
+{
+}
+
+const char * Font::getGlyphCollection(GlyphCollection glyphs)
 {
     switch (glyphs)
     {
         case GlyphCollection::NEHE:
-            return glyphNEHE;
+            return _glyphNEHE;
             break;
             
         case GlyphCollection::ASCII:
-            return glyphASCII;
+            return _glyphASCII;
             break;
             
         default:
@@ -53,48 +57,66 @@ const char * getGlyphCollection(GlyphCollection glyphs)
     }
 }
 
+void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs)
+{
+    if (_customGlyphs)
+        delete [] _customGlyphs;
+    
+    switch (glyphs)
+    {
+        case GlyphCollection::NEHE:
+            _customGlyphs = 0;
+            break;
+            
+        case GlyphCollection::ASCII:
+            _customGlyphs = 0;
+            break;
+            
+        default:
+            
+            int lenght = strlen(customGlyphs);
+            _customGlyphs = new char [lenght + 2];
+            memcpy(_customGlyphs, customGlyphs, lenght);
+            
+            _customGlyphs[lenght]   = 0;
+            _customGlyphs[lenght+1] = 0;
+            
+            break;
+    }
+}
+
+const char * Font::getCurrentGlyphCollection()
+{
+    if (_customGlyphs)
+        return _customGlyphs;
+    else
+    {
+        return getGlyphCollection(_usedGlyphs);
+    }
+}
+
+
 Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
+    
+    if( glyphs == GlyphCollection::DYNAMIC )
+    {
+        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
+        return nullptr;
+    }
+    
     // create the font
-    Font *tempFont = new FontFreeType();
+    FontFreeType *tempFont = new FontFreeType();
     
     if (!tempFont)
         return nullptr;
     
+    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    
     if( !tempFont->createFontObject(fntName, fontSize))
-        return false;
-    
-    FontDefinitionTTF *def = 0;
-    
-    if ( (glyphs == GlyphCollection::NEHE) || (glyphs == GlyphCollection::ASCII) )
-    {
-        def = FontDefinitionTTF::create(fntName, fontSize, getGlyphCollection(glyphs));
-    }
-    else
-    {
-        if( glyphs == GlyphCollection::DYNAMIC )
-        {
-            log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
-            return nullptr;
-        }
-        else
-        {
-            if ( !customGlyphs )
-            {
-                log("ERROR: GlyphCollection::CUSTOM used but no input glyphs provided!");
-                return nullptr;
-            }
-            
-            def = FontDefinitionTTF::create(fntName, fontSize, customGlyphs);
-        }
-    }
-    
-    if(!def)
         return nullptr;
     
-    
-
-    return nullptr;
+    return tempFont;
 }
 
 Font* Font::createWithFNT(const char* fntFilePath)
