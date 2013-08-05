@@ -94,6 +94,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetsManagerTest", "sample
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGame", "samples\Cpp\SimpleGame\proj.win32\SimpleGame.vcxproj", "{D2A373F5-AAC4-48FF-9C0E-AC93D2AC9532}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -168,6 +170,10 @@ Global
 		{6D37505F-A890-441D-BD3F-A61E2C0469CE}.Debug|Win32.Build.0 = Debug|Win32
 		{6D37505F-A890-441D-BD3F-A61E2C0469CE}.Release|Win32.ActiveCfg = Release|Win32
 		{6D37505F-A890-441D-BD3F-A61E2C0469CE}.Release|Win32.Build.0 = Release|Win32
+		{D2A373F5-AAC4-48FF-9C0E-AC93D2AC9532}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2A373F5-AAC4-48FF-9C0E-AC93D2AC9532}.Debug|Win32.Build.0 = Debug|Win32
+		{D2A373F5-AAC4-48FF-9C0E-AC93D2AC9532}.Release|Win32.ActiveCfg = Release|Win32
+		{D2A373F5-AAC4-48FF-9C0E-AC93D2AC9532}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
