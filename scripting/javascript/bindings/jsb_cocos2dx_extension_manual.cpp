@@ -574,7 +574,7 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
 
 class JSB_ControlButtonTarget : public Object {
 public:
-    virtual void onEvent(Object *controlButton, ControlEvent event) {
+    virtual void onEvent(Object *controlButton, Control::EventType event) {
         js_proxy_t * p;
         JS_GET_PROXY(p, controlButton);
         if (!p) {
@@ -584,7 +584,7 @@ public:
         
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        int arg1 = event;
+        int arg1 = (int)event;
         dataVal[1] = INT_TO_JSVAL(arg1);
         
         ScriptingCore::getInstance()->executeJSFunctionWithThisObj(OBJECT_TO_JSVAL(_jsTarget), OBJECT_TO_JSVAL(_jsFunc));//, 2, dataVal);
@@ -605,6 +605,7 @@ public:
 private:
     JSObject* _jsTarget;
     JSObject* _jsFunc;
+    bool _needUnroot;
 };
 
 static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext *cx, uint32_t argc, jsval *vp)
@@ -622,7 +623,7 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         cocos2d::Object *arg0 = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
         TEST_NATIVE_OBJECT(cx, arg0);
         
-        int arg2;
+        Control::EventType arg2;
         ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
         
@@ -657,7 +658,7 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
         
         obj = JSVAL_TO_OBJECT(argv[2]);
         JS_GET_NATIVE_PROXY(proxy, obj);
-        cocos2d::extension::ControlEvent *arg2 = (cocos2d::extension::ControlEvent *)(proxy ? proxy->ptr : NULL);
+        cocos2d::extension::Control::EventType *arg2 = (cocos2d::extension::Control::EventType *)(proxy ? proxy->ptr : NULL);
         TEST_NATIVE_OBJECT(cx, arg2);
         
         return JS_TRUE;
