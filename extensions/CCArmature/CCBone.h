@@ -80,6 +80,8 @@ public:
      */
     void addDisplay(CCDisplayData *displayData, int index);
 
+	void addDisplay(CCNode *display, int index);
+
     void changeDisplayByIndex(int index, bool force);
 
     /**
@@ -124,10 +126,13 @@ public:
     //! Update color to render display
     void updateColor();
 
-    CCArray *getChildren();
-    CCTween *getTween();
+	//! Update zorder
+	void updateZOrder();
 
     virtual void setZOrder(int zOrder);
+
+	CCTween *getTween();
+
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
@@ -136,7 +141,9 @@ public:
     virtual bool isTransformDirty();
 
     virtual CCAffineTransform nodeToArmatureTransform();
+	virtual CCAffineTransform nodeToWorldTransform();
 
+	CCNode *getDisplayRenderNode();
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
@@ -166,12 +173,8 @@ protected:
 
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
 
-    //! Lazy allocs
-    void childrenAlloc(void);
-    CCArray *m_pChildren;
-
-    CCBone *m_pParent;				//! A weak reference to it's parent
-    bool m_bTransformDirty;			//! Whether or not transform dirty
+    CCBone *m_pParentBone;			//! A weak reference to it's parent
+    bool m_bBoneTransformDirty;			//! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
     CCAffineTransform m_tWorldTransform;

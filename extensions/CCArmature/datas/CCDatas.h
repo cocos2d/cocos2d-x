@@ -81,6 +81,9 @@ public:
     * @param  to     to CCBaseData
     */
     virtual void subtract(CCBaseData *_from, CCBaseData *_to);
+
+	virtual void setColor(ccColor4B &color);
+	virtual ccColor4B getColor();
 public:
 	float x;					//! position x attribute
 	float y;					//! position y attribute
@@ -155,6 +158,7 @@ public:
     */
     std::string displayName;
 
+	CCBaseData skinData;
 };
 
 
@@ -245,6 +249,7 @@ public:
     std::string name;			//! the bone's name
     std::string parentName;		//! the bone parent's name
     CCArray displayDataList;	//! save CCDisplayData informations for the CCBone
+	CCAffineTransform boneDataTransform;
 };
 
 
@@ -267,7 +272,7 @@ public:
 public:
     std::string name;
     CCDictionary boneDataDic;
-    CCArray boneList;
+	float dataVersion;
 };
 
 
@@ -281,6 +286,7 @@ public:
 
     virtual void copy(CCFrameData *frameData);
 public:
+	int frameID;
     int duration;                //! The frame will last m_iDuration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
@@ -293,10 +299,10 @@ public:
     /**
     * m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
     */
-    std::string m_strMovement;
-    std::string m_strEvent;
-    std::string m_strSound;
-    std::string m_strSoundEffect;
+    std::string strMovement;
+    std::string strEvent;
+    std::string strSound;
+    std::string strSoundEffect;
 };
 
 
@@ -314,7 +320,7 @@ public:
     CCFrameData *getFrameData(int index);
 public:
     float delay;		//! movement delay percent, this value can produce a delay effect
-    float scale;		//! scale this movement
+	float scale;		//! scale this movement
     float duration;		//! this CCBone in this movement will last m_iDuration frames
     std::string name;	//! bone name
 
@@ -335,6 +341,7 @@ public:
 public:
     std::string name;
     int duration;        //! the frames this movement will last
+	float scale;		  //! scale this movement
 
     /**
     * Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
@@ -418,6 +425,7 @@ public:
     ~CCContourData(void);
 
     virtual bool init();
+	virtual void addVertex(CCPoint *vertex);
 public:
     CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };

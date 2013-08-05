@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCDataReaderHelper.h"
 #include "CCSpriteFrameCacheHelper.h"
-#include "../physics/CCPhysicsWorld.h"
 
 
 NS_CC_EXT_BEGIN
@@ -67,8 +66,6 @@ CCArmatureDataManager::~CCArmatureDataManager(void)
 void CCArmatureDataManager::purgeArmatureSystem()
 {
     CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-    CCPhysicsWorld::purgePhysicsWorld();
-
     CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
@@ -159,7 +156,6 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *armatureName, const 
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
-
     CCDataReaderHelper::addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }

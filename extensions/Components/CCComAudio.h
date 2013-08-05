@@ -71,6 +71,13 @@ public:
    void stopAllEffects();
    void preloadEffect(const char* pszFilePath);
    void unloadEffect(const char* pszFilePath);
+   void setFile(const char* pszFilePath);
+   const char* getFile();
+   void setIsLoop(bool bLoop);
+   bool getIsLoop();
+private:
+   std::string m_strFilePath;
+   bool m_bLoop;
 };
 
 NS_CC_EXT_END

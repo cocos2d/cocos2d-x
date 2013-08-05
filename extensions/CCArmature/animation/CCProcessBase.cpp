@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 CCProcessBase::CCProcessBase(void)
-    : m_fAnimationScale(1)
+    : m_fProcessScale(1)
     , m_bIsPause(true)
     , m_bIsComplete(true)
 	, m_bIsPlaying(false)
@@ -57,17 +57,20 @@ CCProcessBase::~CCProcessBase(void)
 void CCProcessBase::pause()
 {
     m_bIsPause = true;
+	m_bIsPlaying = false;
 }
 
 
 void CCProcessBase::resume()
 {
     m_bIsPause = false;
+	m_bIsPlaying = true;
 }
 
 void CCProcessBase::stop()
 {
     m_bIsComplete = true;
+	m_bIsPlaying = false;
     m_fCurrentFrame = 0;
     m_fCurrentPercent = 0;
 }
@@ -115,7 +118,7 @@ void CCProcessBase::update(float dt)
      *  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
      *  animation speed slower or quicker.
      */
-    m_fCurrentFrame += m_fAnimationScale * (dt / m_fAnimationInternal);
+    m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
 
 
     m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
@@ -134,7 +137,7 @@ void CCProcessBase::update(float dt)
 void CCProcessBase::gotoFrame(int frameIndex)
 {
     m_iCurFrameIndex = frameIndex;
-    stop();
+    pause();
 }
 
 int CCProcessBase::getCurrentFrameIndex()

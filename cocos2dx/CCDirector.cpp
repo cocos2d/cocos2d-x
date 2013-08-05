@@ -202,7 +202,7 @@ void CCDirector::setDefaultValues(void)
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / fps;
 
 	// Display FPS
-	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", false);
+	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", kDefaultFPS);
 
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
@@ -471,6 +471,21 @@ void CCDirector::setAlphaBlending(bool bOn)
     }
 
     CHECK_GL_ERROR_DEBUG();
+}
+
+void CCDirector::reshapeProjection(const CCSize& newWindowSize)
+{
+	CC_UNUSED_PARAM(newWindowSize);
+	if (m_pobOpenGLView)
+	{
+		//m_obWinSizeInPoints = m_pobOpenGLView->getSize();
+		//m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
+		//	m_obWinSizeInPoints.height * m_fContentScaleFactor);
+		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
+			newWindowSize.height * m_fContentScaleFactor);
+		setProjection(m_eProjection);       
+	}
+
 }
 
 void CCDirector::setDepthTest(bool bOn)

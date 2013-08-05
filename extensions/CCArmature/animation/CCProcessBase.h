@@ -118,8 +118,8 @@ protected:
     virtual void updateHandler() {};
 
 protected:
-	//! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationScale, AnimationScale);
+	//! Scale the process speed
+	CC_SYNTHESIZE_PASS_BY_REF(float, m_fProcessScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
     CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPause, IsPause);

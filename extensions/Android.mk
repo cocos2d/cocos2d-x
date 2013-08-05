@@ -63,21 +63,53 @@ CCArmature/display/CCBatchNode.cpp \
 CCArmature/display/CCDecorativeDisplay.cpp \
 CCArmature/display/CCDisplayFactory.cpp \
 CCArmature/display/CCDisplayManager.cpp \
-CCArmature/display/CCShaderNode.cpp \
 CCArmature/display/CCSkin.cpp \
-CCArmature/external_tool/GLES-Render.cpp \
 CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
 CCArmature/external_tool/Json/lib_json/json_value.cpp \
 CCArmature/external_tool/Json/lib_json/json_reader.cpp \
 CCArmature/external_tool/Json/lib_json/json_writer.cpp \
 CCArmature/physics/CCColliderDetector.cpp \
-CCArmature/physics/CCPhysicsWorld.cpp \
 CCArmature/utils/CCArmatureDataManager.cpp \
 CCArmature/utils/CCDataReaderHelper.cpp \
 CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 CCArmature/utils/CCTransformHelp.cpp \
 CCArmature/utils/CCTweenFunction.cpp \
 CCArmature/utils/CCUtilMath.cpp \
+CocoGUILIB/Action/UIAction.cpp \
+CocoGUILIB/Action/UIActionFrame.cpp \
+CocoGUILIB/Action/UIActionManager.cpp \
+CocoGUILIB/Action/UIActionNode.cpp \
+CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
+CocoGUILIB/BaseClasses/UIRootWidget.cpp \
+CocoGUILIB/BaseClasses/UIWidget.cpp \
+CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
+CocoGUILIB/Drawable/UIClippingLayer.cpp \
+CocoGUILIB/Drawable/UICCTextField.cpp \
+CocoGUILIB/System/CCSReader.cpp \
+CocoGUILIB/System/CocosGUI.cpp \
+CocoGUILIB/System/UIHelper.cpp \
+CocoGUILIB/System/UIInputManager.cpp \
+CocoGUILIB/System/UILayer.cpp \
+CocoGUILIB/UIWidgets/UIButton.cpp \
+CocoGUILIB/UIWidgets/UICheckBox.cpp \
+CocoGUILIB/UIWidgets/UIControlButton.cpp \
+CocoGUILIB/UIWidgets/UIImageView.cpp \
+CocoGUILIB/UIWidgets/UILabel.cpp \
+CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
+CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
+CocoGUILIB/UIWidgets/UIListView.cpp \
+CocoGUILIB/UIWidgets/UILoadingBar.cpp \
+CocoGUILIB/UIWidgets/UINodeContainer.cpp \
+CocoGUILIB/UIWidgets/UIPageView.cpp \
+CocoGUILIB/UIWidgets/UIPanel.cpp \
+CocoGUILIB/UIWidgets/UIScrollView.cpp \
+CocoGUILIB/UIWidgets/UISlider.cpp \
+CocoGUILIB/UIWidgets/UITextArea.cpp \
+CocoGUILIB/UIWidgets/UITextButton.cpp \
+CocoGUILIB/UIWidgets/UITextField.cpp \
+CocoGUILIB/UIWidgets/UIDragPanel.cpp \
+CocoGUILIB/Layouts/UILayoutDefine.cpp \
+CocoGUILIB/Layouts/UILayoutUnit.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -102,7 +134,10 @@ spine/spine-cocos2dx.cpp \
 Components/CCComAttribute.cpp \
 Components/CCComAudio.cpp \
 Components/CCComController.cpp \
-Components/CCInputDelegate.cpp
+Components/CCComRender.cpp \
+Components/CCInputDelegate.cpp \
+CocostudioReader/CCJsonReader.cpp \
+CocostudioReader/DictionaryHelper.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
@@ -113,8 +148,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 LOCAL_EXPORT_CFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-LOCAL_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-LOCAL_EXPORT_CPPFLAGS += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/CCBReader \
@@ -122,7 +155,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-						   $(LOCAL_PATH)/CCArmature
+			   $(LOCAL_PATH)/CCArmature \
+			   $(LOCAL_PATH)/CocoGUILIB
 
 LOCAL_CFLAGS := -fexceptions
                     

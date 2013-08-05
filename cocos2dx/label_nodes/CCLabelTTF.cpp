@@ -170,11 +170,9 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefin
     }
 }
 
-
 void CCLabelTTF::setString(const char *string)
 {
-    CCAssert(string != NULL, "Invalid string");
-    
+     CCAssert(string != NULL, "Invalid string");
     if (m_string.compare(string))
     {
         m_string = string;

@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
 
+class b2Body;
+struct cpBody;
+
 NS_CC_EXT_BEGIN
     
 class  CCArmature : public CCNodeRGBA, public CCBlendProtocol 
@@ -123,6 +126,8 @@ public:
 	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
 
+	virtual void setAnimation(CCArmatureAnimation *animation);
+	virtual CCArmatureAnimation *getAnimation();
 protected:
     
     /*
@@ -130,10 +135,8 @@ protected:
      */
 	CCBone *createBone(const char *boneName );
     
-
-	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
     
-    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
+    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 
 	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
 
@@ -142,6 +145,8 @@ protected:
 	CC_SYNTHESIZE(CCTextureAtlas*, m_pAtlas, TextureAtlas);
 
 	CC_SYNTHESIZE(CCBone*, m_pParentBone, ParentBone);
+
+	CC_SYNTHESIZE(float, m_fVersion, Version);
 protected:
     CCDictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
@@ -152,6 +157,14 @@ protected:
 	ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
 
 	CCPoint m_pOffsetPoint;
+
+	CCArmatureAnimation *m_pAnimation;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_PROPERTY(b2Body*, m_pB2Body, B2Body);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
+#endif
 };
 
 NS_CC_EXT_END

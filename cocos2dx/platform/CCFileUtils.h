@@ -251,7 +251,11 @@ public:
       *
       * @since v2.1
       */
-     void addSearchPath(const char* path);
+     virtual void addSearchPath(const char* path);
+
+	 virtual void removeSearchPath(const char *path);
+
+	 void removeAllPath();
     
     /**
      *  Gets the array of search paths.

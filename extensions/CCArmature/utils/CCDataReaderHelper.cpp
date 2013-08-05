@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCDataReaderHelper.h"
 #include "CCArmatureDataManager.h"
 #include "CCTransformHelp.h"
+#include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-
 
 
 static const char *VERSION = "version";
@@ -49,6 +49,7 @@ static const char *SUB_TEXTURE = "SubTexture";
 
 static const char *A_NAME = "name";
 static const char *A_DURATION = "dr";
+static const char *A_FRAME_INDEX = "fi";
 static const char *A_DURATION_TO = "to";
 static const char *A_DURATION_TWEEN = "drTW";
 static const char *A_LOOP = "lp";
@@ -118,6 +119,7 @@ static const char *MOVEMENT_BONE_DATA = "mov_bone_data";
 static const char *MOVEMENT_DATA = "mov_data";
 static const char *ANIMATION_DATA = "animation_data";
 static const char *DISPLAY_DATA = "display_data";
+static const char *SKIN_DATA = "skin_data";
 static const char *BONE_DATA = "bone_data";
 static const char *ARMATURE_DATA = "armature_data";
 static const char *CONTOUR_DATA = "contour_data";
@@ -131,6 +133,7 @@ NS_CC_EXT_BEGIN
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
+static float s_CocoStudioVersion = VERSION_COMBINED;
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -492,10 +495,10 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
     if( movBoneXml )
     {
-        if( movBoneXml->QueryFloatAttribute(A_MOVEMENT_SCALE, &scale) == tinyxml2::XML_SUCCESS )
-        {
-            movBoneData->scale = scale;
-        }
+		if( movBoneXml->QueryFloatAttribute(A_MOVEMENT_SCALE, &scale) == tinyxml2::XML_SUCCESS )
+		{
+			movBoneData->scale = scale;
+		}
         if( movBoneXml->QueryFloatAttribute(A_MOVEMENT_DELAY, &delay) == tinyxml2::XML_SUCCESS )
         {
             if(delay > 0)
@@ -561,10 +564,19 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
         CCFrameData *frameData = decodeFrame( frameXML, parentFrameXML, boneData);
         movBoneData->addFrameData(frameData);
 
+		frameData->frameID = totalDuration;
         totalDuration += frameData->duration;
+		movBoneData->duration = totalDuration;
 
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
+
+	
+	//
+	CCFrameData *frameData = CCFrameData::create();
+	frameData->copy((CCFrameData*)movBoneData->frameList.lastObject());
+	frameData->frameID = movBoneData->duration;
+	movBoneData->addFrameData(frameData);
 
 
     return movBoneData;
@@ -580,19 +592,19 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
 
     if(frameXML->Attribute(A_MOVEMENT) != NULL)
     {
-        frameData->m_strMovement = frameXML->Attribute(A_MOVEMENT);
+        frameData->strMovement = frameXML->Attribute(A_MOVEMENT);
     }
     if(frameXML->Attribute(A_EVENT) != NULL)
     {
-        frameData->m_strEvent = frameXML->Attribute(A_EVENT);
+        frameData->strEvent = frameXML->Attribute(A_EVENT);
     }
     if(frameXML->Attribute(A_SOUND) != NULL)
     {
-        frameData->m_strSound = frameXML->Attribute(A_SOUND);
+        frameData->strSound = frameXML->Attribute(A_SOUND);
     }
     if(frameXML->Attribute(A_SOUND_EFFECT) != NULL)
     {
-        frameData->m_strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
+        frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
 
@@ -854,6 +866,8 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
         armatureData->name = name;
     }
 
+	s_CocoStudioVersion = armatureData->dataVersion = json.getItemFloatValue(VERSION, 0.1f);
+
     int length = json.getArrayItemCount(BONE_DATA);
     for (int i = 0; i < length; i++)
     {
@@ -913,6 +927,20 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
         {
             ((CCSpriteDisplayData *)displayData)->displayName = name;
         }
+
+		cs::CSJsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
+		if (dic != NULL)
+		{
+			CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
+			sdd->skinData.x = dic->getItemFloatValue(A_X, 0);
+			sdd->skinData.y = dic->getItemFloatValue(A_Y, 0);
+			sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
+			sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
+			sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
+			sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
+			delete dic;
+		}
+		
     }
 
     break;
@@ -994,6 +1022,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     movementData->durationTween = json.getItemIntValue(A_DURATION_TWEEN, 0);
     movementData->durationTo = json.getItemIntValue(A_DURATION_TO, 0);
     movementData->duration = json.getItemIntValue(A_DURATION, 0);
+	movementData->scale = json.getItemIntValue(A_MOVEMENT_SCALE, 1);
     movementData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
 
     const char *name = json.getItemStringValue(A_NAME);
@@ -1019,7 +1048,6 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     CCMovementBoneData *movementBoneData = CCMovementBoneData::create();
 
     movementBoneData->delay = json.getItemFloatValue(A_MOVEMENT_DELAY, 0);
-    movementBoneData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
 
     const char *name = json.getItemStringValue(A_NAME);
     if(name != NULL)
@@ -1032,11 +1060,29 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
         CCFrameData *frameData = decodeFrame(*dic);
-        movementBoneData->addFrameData(frameData);
-        //movementBoneData->duration += frameData->duration;
+
+		movementBoneData->addFrameData(frameData);
+
+		if (s_CocoStudioVersion < VERSION_COMBINED)
+		{
+			frameData->frameID = movementBoneData->duration;
+			movementBoneData->duration += frameData->duration;
+		}
 
         delete dic;
     }
+
+	if (s_CocoStudioVersion < VERSION_COMBINED)
+	{
+		if (movementBoneData->frameList.count() > 0)
+		{
+			CCFrameData *frameData = CCFrameData::create();
+			frameData->copy((CCFrameData*)movementBoneData->frameList.lastObject());
+			movementBoneData->addFrameData(frameData);
+
+			frameData->frameID = movementBoneData->duration;
+		}
+	}
 
     return movementBoneData;
 }
@@ -1047,15 +1093,23 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
 
     decodeNode(frameData, json);
 
-    frameData->duration = json.getItemIntValue(A_DURATION, 1);
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
     {
-        frameData->m_strEvent = event;
+        frameData->strEvent = event;
     }
+
+	if (s_CocoStudioVersion < VERSION_COMBINED)
+	{
+		frameData->duration = json.getItemIntValue(A_DURATION, 1);
+	}
+	else
+	{
+		frameData->frameID = json.getItemIntValue(A_FRAME_INDEX, 0);
+	}
 
     return frameData;
 }

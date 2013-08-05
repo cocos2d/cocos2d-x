@@ -51,7 +51,9 @@ public:
      * Get this display in which image
      */
     const char *getDisplayImagePath(const char *displayName);
-    CCTextureAtlas *getTextureAtlas(const char *displayName);
+
+	cocos2d::CCTextureAtlas *getTextureAtlasWithImageName(const char *imageName);
+	cocos2d::CCTextureAtlas *getTextureAtlasWithDisplayName(const char *displayName);
 
 private:
     CCSpriteFrameCacheHelper();
