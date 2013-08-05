@@ -34,7 +34,10 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 
-
+FontFreeType * FontFreeType::create()
+{
+    return new FontFreeType();
+}
 
 bool FontFreeType::initFreeType()
 {

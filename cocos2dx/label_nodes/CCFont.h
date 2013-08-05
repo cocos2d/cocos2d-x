@@ -40,30 +40,30 @@ class FontAtlas;
 class CC_DLL Font : public Object
 {
 public:
-    
+
     // create the font
     static   Font* createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
     static   Font* createWithFNT(const char* fntFilePath);
     
-    
     virtual  FontAtlas *createFontAtlas() = 0;
-    
-             Font();
-    virtual ~Font() {}
-    
+
     virtual Size                * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)                         = 0;
     virtual const char          * getCurrentGlyphCollection();
     
     virtual int                   getLetterPadding()                                                                         { return 0;     }
     virtual unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight)                      { return 0;     }
-    virtual int                   getFontMaxHeight()                                                                         { return 0;     }
     virtual GlyphDef            * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs, bool    UTF16text = false) { return 0;     }
+    virtual int                   getFontMaxHeight()                                                                         { return 0;     }
     virtual Rect                  getRectForChar(unsigned short theChar);
     
     virtual int                   getUTF16TextLenght(unsigned short int *pText);
     virtual unsigned short int  * getUTF16Text(const char *pText, int &outNumLetters);
     virtual unsigned short int  * trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd);
     
+protected:
+    
+    Font();
+    virtual ~Font() {}
     
 private:
     

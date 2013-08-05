@@ -91,8 +91,6 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     int  dataLenght     = (_width * _height * 4);
     bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::RGBA8888, _width, _height, imageSize);
     
-//    _pageTexture->setPremultipliedAlpha(true);
-
     // release the page data if requested
     if ( releasePageData && textureCreated )
     {
@@ -196,51 +194,6 @@ bool TextImage::initWithString(const char *text, int nWidth, int nHeight, Font* 
     
     return true;
 }
-
-/*
-bool TextImage::initWithString(const char * text, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
-{
-    // carloX
-    bool textIsUTF16 = false;
-    
-    // create the reference to the font we want to use
-    if ( !createFontRef(pFontName, nSize) )
-        return false;
-    
-    // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
-    if ( !generateTextGlyphs(text) )
-        return false;
-
-    Size constrainSize;
-    unsigned short int *strUTF16 = 0;
-    int stringNumChars;
-    
-    if ( textIsUTF16 )
-    {
-        strUTF16       = (unsigned short int *)text;
-        stringNumChars = cc_wcslen(strUTF16);
-    }
-    else
-    {
-        // string needs to go to unicode
-        strUTF16 = _font->getUTF16Text(text, stringNumChars);
-    }
-    
-    if (!strUTF16 || !stringNumChars)
-        return false;
-    
-    // create all the needed pages
-    if (!createPageDefinitions(strUTF16, nWidth, nHeight, _font->getFontMaxHeight()))
-        return false;
-    
-    // release the original string if needed
-    if ( !textIsUTF16 )
-        delete [] strUTF16;
-    
-    // actually create the needed images
-    return createImageDataFromPages(_fontPages, releaseRAWData);
-}
- */
 
 bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight)
 {
@@ -371,30 +324,6 @@ int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> 
     outNewSize = constrainSize->width;
     return numChar;
 }
-
-/*
-bool TextImage::createFontRef(const char *fontName, int fontSize)
-{
-    if (_font)
-    {
-        _font->release();
-        _font = 0;
-    }
-    
-    // carloX 
-    _font = new FontFreeType();
-    
-    if (!_font)
-        return false;
-    
-    _font->retain();
-    
-    if( !_font->createFontObject(fontName, fontSize))
-        return false;
-    
-    return true;
-}
- */
 
 bool TextImage::createFontRender()
 {

@@ -53,18 +53,18 @@ public:
     // RGBAProtocol
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual unsigned char getOpacity() const;
-    virtual unsigned char getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const Color3B& getColor(void) const;
-    virtual const Color3B& getDisplayedColor() const;
     virtual void setColor(const Color3B& color);
     virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual unsigned char getOpacity() const;
+    virtual unsigned char getDisplayedOpacity() const;
     
     // CCLabelTextFormat protocol implementation
     virtual Sprite *                    getSpriteChild(int ID);
@@ -95,11 +95,10 @@ public:
     virtual Size                        getLabelContentSize();
     virtual void                        setLabelContentSize(const Size &newSize);
     
-    
 private:
     
      //
-    StringTTF(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT);
+     StringTTF(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT);
     ~StringTTF();
     
     bool init();

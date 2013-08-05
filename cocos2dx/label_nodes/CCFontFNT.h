@@ -35,14 +35,18 @@ class FontFNT : public Font
     
 public:
     
-    FontFNT(CCBMFontConfiguration *theContfig) :  _configuration(theContfig) {}
-    virtual ~FontFNT();
+    static FontFNT * create(CCBMFontConfiguration *theContfig);
     virtual Size* getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
     virtual Rect  getRectForChar(unsigned short theChar);
     
     
     // texture stuff
     virtual FontAtlas *createFontAtlas();
+    
+protected:
+    
+    FontFNT(CCBMFontConfiguration *theContfig) :  _configuration(theContfig) {}
+    virtual ~FontFNT();
     
 private:
     

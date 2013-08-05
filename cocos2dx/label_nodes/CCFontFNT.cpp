@@ -12,6 +12,11 @@
 NS_CC_BEGIN
 
 
+FontFNT * FontFNT::create(CCBMFontConfiguration *theContfig)
+{
+    return new FontFNT(theContfig);
+}
+
 FontFNT::~FontFNT()
 {
     if (_configuration)
