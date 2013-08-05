@@ -56,11 +56,6 @@ public:
     virtual void setScaleX(float scaleX)                            = 0;
     virtual void setScaleY(float scaleY)                            = 0;
     
-    
-    // needs to go - TEST STUFF /////////////////////////////////////////////////////////////////////////
-    //static Label* createWithBMFontOLD( const char* label, const char* bmfontFilePath, int lineSize = 0);
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    
 private:
     
     

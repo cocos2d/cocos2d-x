@@ -30,24 +30,16 @@ NS_CC_BEGIN
 
 std::map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
-
 FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
 {
     std::string atlasName = generateFontName(fontFileName, size, glyphs);
-    FontAtlas *tempAtlas = _atlasMap[atlasName];
+    FontAtlas  *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
         tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs, customGlyphs);
-        
         if (tempAtlas)
-        {
             _atlasMap[atlasName] = tempAtlas;
-        }
-        else
-        {
-            return nullptr;
-        }
     }
     else
     {
@@ -65,15 +57,8 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
     if ( !tempAtlas )
     {
         tempAtlas = FontAtlasFactory::createAtlasFromFNT(fontFileName);
-        
         if (tempAtlas)
-        {
             _atlasMap[atlasName] = tempAtlas;
-        }
-        else
-        {
-            return nullptr;
-        }
     }
     else
     {
@@ -89,35 +74,34 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
     
     switch (theGlyphs)
     {
-            
         case GlyphCollection::DYNAMIC:
-            tempName += std::string ("_DYNAMIC_");
+            tempName.append("_DYNAMIC_");
         break;
             
         case GlyphCollection::NEHE:
-            tempName += std::string ("_NEHE_");
+            tempName.append("_NEHE_");
             break;
             
         case GlyphCollection::ASCII:
-            tempName += std::string ("_ASCII_");
+            tempName.append("_ASCII_");
             break;
             
         case GlyphCollection::CUSTOM:
-            tempName += std::string ("_CUSTOM_");
+            tempName.append("_CUSTOM_");
             break;
             
         default:
             break;
     }
     
-    return tempName + std::to_string(size);
+    return tempName.append(std::to_string(size));
 }
 
 bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
 {
     if (atlas)
     {
-        for( auto &item: _atlasMap)
+        for( auto &item: _atlasMap )
         {
             if ( item.second == atlas )
             {

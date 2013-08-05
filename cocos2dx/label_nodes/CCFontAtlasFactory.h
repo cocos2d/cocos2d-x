@@ -40,9 +40,6 @@ public:
     
 private:
     
-    static const char   * getGlyphCollection(GlyphCollection glyphs);
-    
-
 };
 
 NS_CC_END

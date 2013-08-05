@@ -148,7 +148,57 @@ TextImage::~TextImage()
         delete _fontRender;
 }
 
-bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
+bool TextImage::initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData)
+{
+    bool textIsUTF16 = false;
+    
+    if (_font)
+    {
+        _font->release();
+        _font = 0;
+    }
+    
+    // carloX
+    _font = font;
+    
+    // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
+    if ( !generateTextGlyphs(text) )
+        return false;
+    
+    Size constrainSize;
+    unsigned short int *strUTF16 = 0;
+    
+    int stringNumChars;
+    if ( textIsUTF16 )
+    {
+        strUTF16       = (unsigned short int *)text;
+        stringNumChars = cc_wcslen(strUTF16);
+    }
+    else
+    {
+        // string needs to go to unicode
+        strUTF16 = _font->getUTF16Text(text, stringNumChars);
+    }
+    
+    if (!strUTF16 || !stringNumChars)
+        return false;
+    
+    // create all the needed pages
+    if (!createPageDefinitions(strUTF16, nWidth, nHeight, _font->getFontMaxHeight()))
+        return false;
+    
+    // release the original string if needed
+    if ( !textIsUTF16 )
+        delete [] strUTF16;
+    
+    // actually create the needed images
+    return createImageDataFromPages(_fontPages, releaseRAWData);
+    
+    return true;
+}
+
+/*
+bool TextImage::initWithString(const char * text, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
 {
     // carloX
     bool textIsUTF16 = false;
@@ -158,7 +208,7 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
         return false;
     
     // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
-    if ( !generateTextGlyphs(pText) )
+    if ( !generateTextGlyphs(text) )
         return false;
 
     Size constrainSize;
@@ -167,13 +217,13 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     
     if ( textIsUTF16 )
     {
-        strUTF16       = (unsigned short int *)pText;
+        strUTF16       = (unsigned short int *)text;
         stringNumChars = cc_wcslen(strUTF16);
     }
     else
     {
         // string needs to go to unicode
-        strUTF16 = _font->getUTF16Text(pText, stringNumChars);
+        strUTF16 = _font->getUTF16Text(text, stringNumChars);
     }
     
     if (!strUTF16 || !stringNumChars)
@@ -190,6 +240,7 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     // actually create the needed images
     return createImageDataFromPages(_fontPages, releaseRAWData);
 }
+ */
 
 bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight)
 {
@@ -321,6 +372,7 @@ int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> 
     return numChar;
 }
 
+/*
 bool TextImage::createFontRef(const char *fontName, int fontSize)
 {
     if (_font)
@@ -342,6 +394,7 @@ bool TextImage::createFontRef(const char *fontName, int fontSize)
     
     return true;
 }
+ */
 
 bool TextImage::createFontRender()
 {

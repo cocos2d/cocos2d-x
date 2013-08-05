@@ -56,13 +56,12 @@ public:
     void addLetterDefinition(FontLetterDefinition &letterDefinition);
     FontLetterDefinition * getLetterDefinitionForChar(unsigned short  letteCharUTF16);
     
-    void addTexture(Texture2D *pTexture, int slot);
-    Texture2D * getTexture(int slot);
+    void  addTexture(Texture2D *pTexture, int slot);
     float getCommonLineHeight();
     void  setCommonLineHeight(float newHeight);
-    
+    Texture2D * getTexture(int slot);
+    Font      * getFont();
     unsigned short int * getUTF16Text(const char *pText, int &outNumLetters);
-    Font * getFont();
     
 private:
     

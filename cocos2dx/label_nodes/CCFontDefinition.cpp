@@ -32,14 +32,18 @@ FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
 }
 
-FontDefinitionTTF* FontDefinitionTTF::create(const char *fontName, int fontSize, const char *letters, int textureSize )
+FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
 {
     FontDefinitionTTF *ret = new FontDefinitionTTF;
     
     if(!ret)
         return 0;
     
-    if ( ret->initDefinition( fontName, fontSize, letters, textureSize ) )
+    const char *pGlyph = font->getCurrentGlyphCollection();
+    if (!pGlyph)
+        return nullptr;
+    
+    if ( ret->initDefinition( font, pGlyph, textureSize ) )
     {
         return ret;
     }
@@ -102,17 +106,15 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 
                 if (tempDef.validDefinition)
                 {
-                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
-                    tempDef.width            =    letterWidth  + currentGlyph.getPadding();
-                    tempDef.height           =    (letterHeight - 1);
-                    tempDef.U                =    (posXUV       - 1);
-                    tempDef.V                =    posYUV;
-                    
-                    tempDef.offsetX          =    currentGlyph.getRect().origin.x;
-                    tempDef.offsetY          =    currentGlyph.getRect().origin.y;
-                    
-                    tempDef.textureID        =    cPages;
-                    tempDef.commonLineHeight =    currentGlyph.getCommonHeight();
+                    tempDef.letteCharUTF16   = currentGlyph.getUTF8Letter();
+                    tempDef.width            = letterWidth  + currentGlyph.getPadding();
+                    tempDef.height           = (letterHeight - 1);
+                    tempDef.U                = (posXUV       - 1);
+                    tempDef.V                = posYUV;
+                    tempDef.offsetX          = currentGlyph.getRect().origin.x;
+                    tempDef.offsetY          = currentGlyph.getRect().origin.y;
+                    tempDef.textureID        = cPages;
+                    tempDef.commonLineHeight = currentGlyph.getCommonHeight();
                     
                     // take from pixels to points
                     tempDef.width  =    tempDef.width  / CC_CONTENT_SCALE_FACTOR();
@@ -125,15 +127,15 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 }
                 else
                 {
-                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
-                    tempDef.commonLineHeight =    0;
-                    tempDef.width            =    0;
-                    tempDef.height           =    0;
-                    tempDef.U                =    0;
-                    tempDef.V                =    0;
-                    tempDef.offsetX          =    0;
-                    tempDef.offsetY          =    0;
-                    tempDef.textureID        =    0;
+                    tempDef.letteCharUTF16   = currentGlyph.getUTF8Letter();
+                    tempDef.commonLineHeight = 0;
+                    tempDef.width            = 0;
+                    tempDef.height           = 0;
+                    tempDef.U                = 0;
+                    tempDef.V                = 0;
+                    tempDef.offsetX          = 0;
+                    tempDef.offsetY          = 0;
+                    tempDef.textureID        = 0;
                 }
                 
                 
@@ -156,14 +158,14 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
     return true;
 }
 
-bool FontDefinitionTTF::initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize)
+bool FontDefinitionTTF::initDefinition(Font *font, const char *letters, int textureSize)
 {
     // preare texture/image stuff
     _textImages = new TextImage();
     if (!_textImages)
         return false;
     
-    if (!_textImages->initWithString(letters, textureSize, textureSize, fontName, fontSize, true))
+    if (!_textImages->initWithString(letters, textureSize, textureSize, font, true))
     {
         delete _textImages;
         _textImages = 0;

@@ -111,6 +111,21 @@ FontFreeType::~FontFreeType()
     // TO DO 
 }
 
+FontAtlas * FontFreeType::createFontAtlas()
+{
+    FontDefinitionTTF *def = 0;
+    def = FontDefinitionTTF::create(this);
+    
+    if(!def)
+        return nullptr;
+    
+    FontAtlas *atlas = def->createFontAtlas();
+    
+    // release the font definition, we don't need it anymore
+    def->release();
+    return atlas;
+}
+
 bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
 {
     if (!_fontRef)
@@ -335,11 +350,5 @@ int FontFreeType::getLetterPadding()
 {
     return _letterPadding;
 }
-
-FontAtlas * FontFreeType::createFontAtlas()
-{
-    return nullptr;
-}
-
 
 NS_CC_END
