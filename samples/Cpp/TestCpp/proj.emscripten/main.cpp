@@ -13,6 +13,6 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::getInstance();
+    EGLView::getInstance();
     return Application::getInstance()->run();
 }
