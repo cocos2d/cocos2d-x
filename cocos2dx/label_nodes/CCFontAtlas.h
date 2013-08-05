@@ -55,17 +55,17 @@ public:
     void addLetterDefinition(FontLetterDefinition &letterDefinition);
     FontLetterDefinition * getLetterDefinitionForChar(unsigned short  letteCharUTF16);
     
-    void  addTexture(Texture2D &texture, int slot);
+    void  addTexture(Texture2D *texture, int slot);
     float getCommonLineHeight();
     void  setCommonLineHeight(float newHeight);
-    Texture2D           & getTexture(int slot);
+    Texture2D           * getTexture(int slot);
     Font                * getFont();
     
     
 private:
     
     void relaseTextures();
-    std::map<int, Texture2D &>                      _atlasTextures;
+    std::map<int, Texture2D *>                      _atlasTextures;
     std::map<unsigned short, FontLetterDefinition>  _fontLetterDefinitions;
     float                                           _commonLineHeight;
     Font *                                          _font;
