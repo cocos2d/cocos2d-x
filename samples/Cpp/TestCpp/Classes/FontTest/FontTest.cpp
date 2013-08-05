@@ -39,11 +39,11 @@ static std::string fontList[] =
 static int fontCount = sizeof(fontList) / sizeof(*fontList);
 
 static int vAlignIdx = 0;
-static Label::VAlignment verticalAlignment[] =
+static TextVAlignment verticalAlignment[] =
 {
-    Label::VAlignment::TOP,
-    Label::VAlignment::CENTER,
-    Label::VAlignment::BOTTOM,
+    TextVAlignment::TOP,
+    TextVAlignment::CENTER,
+    TextVAlignment::BOTTOM,
 };
 static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 
@@ -99,11 +99,11 @@ void FontTest::showFont(const char *pFont)
 
     LabelTTF *top = LabelTTF::create(pFont, pFont, 24);
     LabelTTF *left = LabelTTF::create("alignment left", pFont, fontSize,
-                                          blockSize, Label::HAlignment::LEFT, verticalAlignment[vAlignIdx]);
+                                          blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
     LabelTTF *center = LabelTTF::create("alignment center", pFont, fontSize,
-                                            blockSize, Label::HAlignment::CENTER, verticalAlignment[vAlignIdx]);
+                                            blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
     LabelTTF *right = LabelTTF::create("alignment right", pFont, fontSize,
-                                           blockSize, Label::HAlignment::RIGHT, verticalAlignment[vAlignIdx]);
+                                           blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
     LayerColor *leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
     LayerColor *centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
