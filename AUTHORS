@@ -556,6 +556,9 @@ Developers:
     Nako Sung (nakosung)
         Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
         Exposing cc.RemoveSelf to JS.
+        
+    dotsquid
+        Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.
 
 Retired Core Developers:
     WenSheng Yang
