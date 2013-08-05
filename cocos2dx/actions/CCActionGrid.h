@@ -95,13 +95,13 @@ public:
     /** returns the tile that belongs to a certain position of the grid */
     Quad3 getTile(const Point& position) const;
 
-    /** @deprecatd Use getTile() instead */
+    /** @deprecated Use getTile() instead */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& position) { return getTile(position); }
 
     /** returns the non-transformed tile that belongs to a certain position of the grid */
     Quad3 getOriginalTile(const Point& position) const;
 
-    /** @deprecatd Use getOriginalTile() instead */
+    /** @deprecated Use getOriginalTile() instead */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& position) { return getOriginalTile(position); }
 
     /** sets a new tile to a certain position of the grid */

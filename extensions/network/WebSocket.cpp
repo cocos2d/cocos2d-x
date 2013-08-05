@@ -291,7 +291,7 @@ bool WebSocket::init(const Delegate& delegate,
 	_wsProtocols = new libwebsocket_protocols[protocolCount+1];
 	memset(_wsProtocols, 0, sizeof(libwebsocket_protocols)*(protocolCount+1));
 
-    if (protocols)
+    if (protocols && protocols->size() > 0)
     {
         int i = 0;
         for (std::vector<std::string>::const_iterator iter = protocols->begin(); iter != protocols->end(); ++iter, ++i)

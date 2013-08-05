@@ -52,7 +52,7 @@ public:
      * If the compare message does not result NSComparisonResult, sorting behavior
      * is not defined. It ignores duplicate entries and inserts next to it.
      *
-     * @param object to insert
+     * @param object    The object to be inserted.
      */
     void insertSortedObject(SortableObject* object);
 
@@ -62,7 +62,7 @@ public:
      * Removes an object with given key and value. If no object is found in array
      * with the key and value, no action is taken.
      *
-     * @param value to remove
+     * @param object    The object to be removed.
      */
     void removeSortedObject(SortableObject* object);
     /*!
@@ -72,8 +72,8 @@ public:
      * keep consistency of being sorted. If it is changed externally, it must be
      * sorted completely again.
      *
-     * @param value to set
-     * @param object the object which has the value
+     * @param tag       The value to be set to.
+     * @param object    The object which has the value.
      */
     void setObjectID_ofSortedObject(unsigned int tag, SortableObject* object);
 
@@ -84,7 +84,7 @@ public:
      * Returns an object with given key and value. If no object is found,
      * it returns nil.
      *
-     * @param value to locate object
+     * @param tag   The value to locate object
      * @return object found or nil.
      */
     SortableObject* getObjectWithObjectID(unsigned int tag);
@@ -97,8 +97,8 @@ public:
      * would have been located. If object must be located at the end of array,
      * it returns the length of the array, which is out of bound.
      * 
-     * @param value to locate object
-     * @return index of an object found
+     * @param obj   The object
+     * @return index of the object
      */
     unsigned int indexOfSortedObject(SortableObject* obj);
 

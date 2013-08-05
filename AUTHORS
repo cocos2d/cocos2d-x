@@ -3,13 +3,16 @@ cocos2d-x authors & contributors
 (ordered by the join in time)
 
 Core Developers:
-    Zhe Wang (Walzer)
+    Ricardo Quesada
     XiaoMing Zhang (Minggo)
     JianHua Chen (Dumganhar)
+    Zhe Wang (Walzer)
+    Qingkui Hu (samuele3hu)
+    Huabing Xu (dabingnn)
+    Bo Yu (boyu0)
 
 
 Developers:
-    Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
         
@@ -549,6 +552,10 @@ Developers:
         
      thp
          Port Cocos2D-X to Qt 5
+         
+    Nako Sung (nakosung)
+        Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
+        Exposing cc.RemoveSelf to JS.
 
 Retired Core Developers:
     WenSheng Yang
@@ -574,6 +581,7 @@ Retired Core Developers:
     timothyqiu
         Project creator: use absolute path for json config files
         Documentation fixes
+        A better way to locate project creator
 
 
 Cocos2d-x can not grow so fast without the active community.
