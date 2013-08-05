@@ -66,7 +66,7 @@
 								<option id="gnu.cpp.compiler.option.preprocessor.def.67860287" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1562216418" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.2085750802" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
@@ -203,8 +203,7 @@
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1398462050" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.2066748684" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1890676098" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
