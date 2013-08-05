@@ -169,7 +169,7 @@ FontAtlas * FontFNT::createFontAtlas()
         return 0;
     
     // add the texture
-    tempAtlas->addTexture(*tempTexture, 0);
+    tempAtlas->addTexture(tempTexture, 0);
     
     // done
     return tempAtlas;

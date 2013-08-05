@@ -108,7 +108,7 @@ bool StringTTF::setText(const char *stringToRender, float lineWidth, TextHAlignm
         return false;
     
     numLetter = cc_wcslen(utf16String);
-    SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), numLetter);
+    SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), numLetter);
     _cascadeColorEnabled = true;
     
     // 
@@ -334,7 +334,7 @@ Sprite * StringTTF::getSpriteForLetter(unsigned short int newLetter)
     FontLetterDefinition *tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
     if (tempDefinition)
     {
-        Sprite *newSprite = createNewSpriteFromLetterDefinition(*tempDefinition, &_fontAtlas->getTexture(tempDefinition->textureID) );
+        Sprite *newSprite = createNewSpriteFromLetterDefinition(*tempDefinition, _fontAtlas->getTexture(tempDefinition->textureID) );
         this->addChild(newSprite);
         return    newSprite;
     }
@@ -353,7 +353,7 @@ Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short
         FontLetterDefinition *tempDefinition = _fontAtlas->getLetterDefinitionForChar(newLetter);
         if (tempDefinition)
         {
-            Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, *tempDefinition, &_fontAtlas->getTexture(tempDefinition->textureID) );
+            Sprite *pNewSprite = updateSpriteWithLetterDefinition(spriteToUpdate, *tempDefinition, _fontAtlas->getTexture(tempDefinition->textureID) );
             return  pNewSprite;
         }
         else
