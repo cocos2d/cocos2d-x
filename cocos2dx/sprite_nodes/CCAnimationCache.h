@@ -62,7 +62,7 @@ public:
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static AnimationCache* sharedAnimationCache() { return AnimationCache::getInstance(); }
 
-    /** @deprecatd Use destroyInstance() instead */
+    /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
 
     bool init(void);

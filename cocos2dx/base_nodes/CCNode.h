@@ -174,7 +174,7 @@ public:
      * The larger number it is, the later this node will be drawn in each message loop.
      * Please refer to setVertexZ(float) for the difference.
      *
-     * @param nZOrder   Z order of this node.
+     * @param zOrder   Z order of this node.
      */
     virtual void setZOrder(int zOrder);
     /**
@@ -206,7 +206,7 @@ public:
      *
      * @warning Use it at your own risk since it might break the cocos2d parent-children z order
      *
-     * @param fVertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  OpenGL Z vertex of this node.
      */
     virtual void setVertexZ(float vertexZ);
     /**
@@ -462,9 +462,9 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      * 
-     * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotaionX);
+    virtual void setRotationX(float rotationX);
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
@@ -481,7 +481,7 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
-     * @param fRotationY    The Y rotation in degrees.
+     * @param rotationY    The Y rotation in degrees.
      */
     virtual void setRotationY(float rotationY);
     /**
@@ -1062,6 +1062,7 @@ public:
      * this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      * @endcode
      *
+     * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
@@ -1072,7 +1073,7 @@ public:
      * Schedules a custom selector with an interval time in seconds.
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
      */
     void schedule(SEL_SCHEDULE selector, float interval);
@@ -1081,7 +1082,7 @@ public:
      * Schedules a selector that runs only once, with a delay of 0 or larger
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);

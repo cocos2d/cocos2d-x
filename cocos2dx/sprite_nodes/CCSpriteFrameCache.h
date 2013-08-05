@@ -81,9 +81,9 @@ public:
 public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
-     * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
+     * If you want to use another texture, you should use the addSpriteFramesWithFile(const char *plist, const char *textureFileName) method.
      */
-    void addSpriteFramesWithFile(const char *pszPlist);
+    void addSpriteFramesWithFile(const char *plist);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
     @since v0.99.5
@@ -91,12 +91,12 @@ public:
     void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
-    void addSpriteFramesWithFile(const char *pszPlist, Texture2D *pobTexture);
+    void addSpriteFramesWithFile(const char *plist, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
      */
-    void addSpriteFrame(SpriteFrame *pobFrame, const char *pszFrameName);
+    void addSpriteFrame(SpriteFrame *frame, const char *frameName);
 
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".
@@ -113,7 +113,7 @@ public:
     void removeUnusedSpriteFrames(void);
 
     /** Deletes an sprite frame from the sprite frame cache. */
-    void removeSpriteFrameByName(const char *pszName);
+    void removeSpriteFrameByName(const char *name);
 
     /** Removes multiple Sprite Frames from a plist file.
     * Sprite Frames stored in this file will be removed.
@@ -140,7 +140,7 @@ public:
 private:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(Dictionary* pobDictionary, Texture2D *pobTexture);
+    void addSpriteFramesWithDictionary(Dictionary* dictionary, Texture2D *texture);
 
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5

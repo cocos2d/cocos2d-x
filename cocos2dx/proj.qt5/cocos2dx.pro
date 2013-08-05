@@ -63,7 +63,6 @@ SOURCES += ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \
 ../platform/qt5/CCCommon.cpp \
@@ -102,9 +101,7 @@ SOURCES += ../actions/CCAction.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
-../textures/CCTextureETC.cpp \
-../textures/CCTexturePVR.cpp \
-../textures/etc/etc1.cpp \
+../platform/third_party/common/etc/etc1.cpp \
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -158,6 +155,7 @@ INCLUDEPATH += ../../extensions/GUI/CCControlExtension
 INCLUDEPATH += ../../external/chipmunk/include/chipmunk
 INCLUDEPATH += ../../extensions/network
 INCLUDEPATH += ../../extensions/Components
+INCLUDEPATH += ../platform/third_party/common/etc
 
 TARGET = $${LIB_OUTPUT_DIR}/cocos2d
 

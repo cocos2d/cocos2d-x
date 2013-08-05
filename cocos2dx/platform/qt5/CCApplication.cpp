@@ -158,47 +158,47 @@ Application::getResourceRootPath()
     return m_resourceRootPath;
 }
 
-TargetPlatform
+Application::Platform
 Application::getTargetPlatform()
 {
-    return kTargetLinux;
+    return Platform::OS_LINUX;
 }
 
-ccLanguageType
+LanguageType
 Application::getCurrentLanguage()
 {
     QLocale locale;
 
     switch (locale.language()) {
         case QLocale::English:
-            return kLanguageEnglish;
+            return LanguageType::ENGLISH;
         case QLocale::Chinese:
-            return kLanguageChinese;
+            return LanguageType::CHINESE;
         case QLocale::French:
-            return kLanguageFrench;
+            return LanguageType::FRENCH;
         case QLocale::Italian:
-            return kLanguageItalian;
+            return LanguageType::ITALIAN;
         case QLocale::German:
-            return kLanguageGerman;
+            return LanguageType::GERMAN;
         case QLocale::Spanish:
-            return kLanguageSpanish;
+            return LanguageType::SPANISH;
         case QLocale::Russian:
-            return kLanguageRussian;
+            return LanguageType::RUSSIAN;
         case QLocale::Korean:
-            return kLanguageKorean;
+            return LanguageType::KOREAN;
         case QLocale::Japanese:
-            return kLanguageJapanese;
+            return LanguageType::JAPANESE;
         case QLocale::Hungarian:
-            return kLanguageHungarian;
+            return LanguageType::HUNGARIAN;
         case QLocale::Portuguese:
-            return kLanguagePortuguese;
+            return LanguageType::PORTUGUESE;
         case QLocale::Arabic:
-            return kLanguageArabic;
+            return LanguageType::ARABIC;
         default:
             break;
     }
 
-    return kLanguageEnglish;
+    return LanguageType::ENGLISH;
 }
 
 NS_CC_END

@@ -70,7 +70,7 @@ public:
  Using this type of delegate results in two benefits:
  - 1. You don't need to deal with Sets, the dispatcher does the job of splitting
  them. You get exactly one UITouch per call.
- - 2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
+ - 2. You can *claim* a UITouch by returning true in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
  ended/canceled update you're sure it's your touch. This frees you from doing a
  lot of checks when doing multi-touch. 
@@ -82,7 +82,7 @@ public:
  class CC_DLL TargetedTouchDelegate : public TouchDelegate
  {
  public:
-     /** Return YES to claim the touch.
+     /** Return true to claim the touch.
       @since v0
      */
      virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) { CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);return false;};
