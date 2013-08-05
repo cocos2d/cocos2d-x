@@ -600,6 +600,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &_VAOname);
             GL::bindVAO(0);
+            _VAOname = 0;
 #endif
         }
     }
