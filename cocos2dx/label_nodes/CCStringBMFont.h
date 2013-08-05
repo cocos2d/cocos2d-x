@@ -36,7 +36,7 @@ Use any of these editors to generate BMFonts:
 #include "sprite_nodes/CCSpriteBatchNode.h"
 #include "support/data_support/uthash.h"
 #include "CCLabelBMFont.h"
-#include "CClabelTextFormatProtocol.h"
+#include "CCLabelTextFormatProtocol.h"
 #include <map>
 #include <sstream>
 #include <iostream>

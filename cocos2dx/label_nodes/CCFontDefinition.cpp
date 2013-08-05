@@ -192,7 +192,7 @@ Texture2D * FontDefinitionTTF::getTexture(int index)
     TextFontPagesDef *pPages = _textImages->getPages();
     
     if (!pPages)
-        return (false);
+        return nullptr;
     
     return pPages->getPageAt(index)->getPageTexture();
 }
