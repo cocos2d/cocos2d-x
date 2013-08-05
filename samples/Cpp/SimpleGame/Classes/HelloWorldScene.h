@@ -5,8 +5,6 @@
 
 //#include "SimpleAudioEngine.h"
 
-namespace simplegame {
-
 class HelloWorld : public cocos2d::LayerColor
 {
 public:
@@ -45,7 +43,5 @@ protected:
 
 
 };
-
-}
 
 #endif  // __HELLOWORLD_SCENE_H__

@@ -3,8 +3,6 @@
 
 #include "cocos2d.h"
 
-namespace simplegame {
-
 /**
 @brief    The cocos2d Application.
 
@@ -36,6 +34,5 @@ public:
     virtual void applicationWillEnterForeground();
 };
 
-}
-
 #endif // _APP_DELEGATE_H_
+
