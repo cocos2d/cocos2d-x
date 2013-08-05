@@ -21,12 +21,12 @@ const char *FontAtlasFactory::glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABC
 
 
 
-FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* tttFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
     FontDefinitionTTF *def = 0;
     if ( (glyphs == GlyphCollection::NEHE) || (glyphs == GlyphCollection::ASCII) )
     {
-        def = FontDefinitionTTF::create(tttFilePath, fontSize, getGlyphCollection(glyphs));
+        def = FontDefinitionTTF::create(fntFilePath, fontSize, getGlyphCollection(glyphs));
     }
     else
     {
@@ -43,7 +43,7 @@ FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* tttFilePath, int fo
                 return nullptr;
             }
             
-            def = FontDefinitionTTF::create(tttFilePath, fontSize, customGlyphs);
+            def = FontDefinitionTTF::create(fntFilePath, fontSize, customGlyphs);
         }
     }
     
