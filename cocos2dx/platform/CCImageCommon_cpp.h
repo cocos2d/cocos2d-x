@@ -33,10 +33,13 @@ THE SOFTWARE.
 #include <SDL/SDL_image.h>
 #endif // EMSCRIPTEN
 
+extern "C"
+{
 #include "png.h"
-#include "jpeglib.h"
 #include "tiffio.h"
 #include "etc1.h"
+#include "jpeglib.h"
+}
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
@@ -497,16 +500,13 @@ bool Image::isCompressed()
  *
  * Here's the extended error handler struct:
  */
-namespace
+struct my_error_mgr
 {
-    struct my_error_mgr
-    {
-        struct jpeg_error_mgr pub;	/* "public" fields */
-        jmp_buf setjmp_buffer;	/* for return to caller */
-    };
+    struct jpeg_error_mgr pub;	/* "public" fields */
+    jmp_buf setjmp_buffer;	/* for return to caller */
+};
 
-    typedef struct my_error_mgr * my_error_ptr;
-}
+typedef struct my_error_mgr * my_error_ptr;
 
 /*
  * Here's the routine that will replace the standard error_exit method:
@@ -515,15 +515,21 @@ namespace
 METHODDEF(void)
 my_error_exit (j_common_ptr cinfo)
 {
-  /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
-  my_error_ptr myerr = (my_error_ptr) cinfo->err;
+    /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
+    my_error_ptr myerr = (my_error_ptr) cinfo->err;
+    
+    /* Always display the message. */
+    /* We could postpone this until after returning, if we chose. */
+    /* internal message function cann't show error message in some platforms, so we rewrite it here.
+     * edit it if has version confilict.
+     */
+    //(*cinfo->err->output_message) (cinfo);
+    char buffer[JMSG_LENGTH_MAX];
+    (*cinfo->err->format_message) (cinfo, buffer);
+    CCLOG("jpeg error: %s", buffer);
 
-  /* Always display the message. */
-  /* We could postpone this until after returning, if we chose. */
-  (*cinfo->err->output_message) (cinfo);
-
-  /* Return control to the setjmp point */
-  longjmp(myerr->setjmp_buffer, 1);
+    /* Return control to the setjmp point */
+    longjmp(myerr->setjmp_buffer, 1);
 }
 
 bool Image::initWithJpgData(void * data, int dataLen)
@@ -551,7 +557,6 @@ bool Image::initWithJpgData(void * data, int dataLen)
 			/* If we get here, the JPEG code has signaled an error.
 			 * We need to clean up the JPEG object, close the input file, and return.
 			 */
-			log("%d", bRet);
 			jpeg_destroy_decompress(&cinfo);
 			break;
 		}
