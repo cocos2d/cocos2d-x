@@ -1,6 +1,6 @@
 
 DEFINES += CC_TARGET_QT5
-
+DEFINES += CC_KEYBOARD_SUPPORT
 CONFIG += silent
 
 # Disable some warnings to make compiler output easier to read during development
