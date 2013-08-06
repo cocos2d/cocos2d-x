@@ -107,7 +107,7 @@ Rect FontFNT::getRectForChar(unsigned short theChar)
 
 FontAtlas * FontFNT::createFontAtlas()
 {
-    FontAtlas *tempAtlas = new FontAtlas(this);
+    FontAtlas *tempAtlas = new FontAtlas(*this);
     if (!tempAtlas)
         return nullptr;
     
@@ -169,7 +169,7 @@ FontAtlas * FontFNT::createFontAtlas()
         return 0;
     
     // add the texture
-    tempAtlas->addTexture(tempTexture, 0);
+    tempAtlas->addTexture(*tempTexture, 0);
     
     // done
     return tempAtlas;
