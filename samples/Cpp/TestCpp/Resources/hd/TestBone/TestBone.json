@@ -1,0 +1,724 @@
+{
+  "armature_data": [
+    {
+      "name": "TestBone",
+      "bone_data": [
+        {
+          "name": "B45242013147",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 9,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a7.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013129",
+          "parent": "",
+          "x": -5.53121376,
+          "y": 3.224768,
+          "z": 8,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 86.075286865234375,
+          "arrow_y": -240.14337158203125,
+          "effectbyskeleton": true,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a1.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013132",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 7,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a2.png"
+            }
+          ]
+        },
+        {
+          "name": "B58542013156",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 6,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\ahat.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013138",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 5,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a4.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013144",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 4,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a6.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013141",
+          "parent": "",
+          "x": 3.66667652,
+          "y": -28.6667156,
+          "z": 3,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": -78.333335876464844,
+          "arrow_y": -156.66668701171875,
+          "effectbyskeleton": true,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a5.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013135",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 2,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a3.png"
+            }
+          ]
+        },
+        {
+          "name": "B45242013150",
+          "parent": "",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1,
+          "cX": 1.0,
+          "cY": 1.0,
+          "kX": 0.0,
+          "kY": 0.0,
+          "arrow_x": 0.0,
+          "arrow_y": 0.0,
+          "effectbyskeleton": false,
+          "display_data": [
+            {
+              "displayType": 0,
+              "name": "testAnimationResource\\a8.png"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "animation_data": [
+    {
+      "name": "TestBone",
+      "mov_data": [
+        {
+          "name": "Action22018391",
+          "dr": 36,
+          "lp": true,
+          "to": 0,
+          "drTW": 0,
+          "twE": 0,
+          "mov_bone_data": [
+            {
+              "name": "B45242013129",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": 103.5143,
+                  "y": 373.13504,
+                  "z": 8,
+                  "cX": 0.9999995,
+                  "cY": 0.9999995,
+                  "kX": 0.0139468908,
+                  "kY": -0.0139470119
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": 104.60656,
+                  "y": 369.944061,
+                  "z": 8,
+                  "cX": 1.0,
+                  "cY": 0.9999995,
+                  "kX": 0.2503004,
+                  "kY": -0.250285625
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": 103.63546,
+                  "y": 372.674561,
+                  "z": 8,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013132",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": 19.49998,
+                  "y": 265.499969,
+                  "z": 7,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": 19.49998,
+                  "y": 261.499969,
+                  "z": 7,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": 19.49998,
+                  "y": 265.499969,
+                  "z": 7,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013135",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": -127.1666,
+                  "y": 223.833282,
+                  "z": 2,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": -127.1666,
+                  "y": 219.833282,
+                  "z": 2,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": -0.17453292,
+                  "kY": 0.17453292
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": -127.1666,
+                  "y": 223.833282,
+                  "z": 2,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013138",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": -90.50006,
+                  "y": 85.49992,
+                  "z": 5,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": -90.50006,
+                  "y": 85.49992,
+                  "z": 5,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": -90.50006,
+                  "y": 85.49992,
+                  "z": 5,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013141",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": -30.5,
+                  "y": 248.833313,
+                  "z": 3,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": -30.5,
+                  "y": 244.833313,
+                  "z": 3,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": -30.5,
+                  "y": 248.833313,
+                  "z": 3,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013144",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": 87.0,
+                  "y": 403.0,
+                  "z": 4,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": 87.83331,
+                  "y": 399.8333,
+                  "z": 4,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": 87.83331,
+                  "y": 403.8333,
+                  "z": 4,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013147",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": 119.0,
+                  "y": 72.0,
+                  "z": 9,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": 119.499985,
+                  "y": 72.16658,
+                  "z": 9,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": 119.499985,
+                  "y": 72.16658,
+                  "z": 9,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B45242013150",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": -102.1667,
+                  "y": 305.5,
+                  "z": 1,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": -102.1667,
+                  "y": 301.5,
+                  "z": 1,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": -102.1667,
+                  "y": 305.5,
+                  "z": 1,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            },
+            {
+              "name": "B58542013156",
+              "dl": 0.0,
+              "sc": 1.0,
+              "frame_data": [
+                {
+                  "twE": 0,
+                  "dr": 15,
+                  "dI": 0,
+                  "x": -26.0000076,
+                  "y": 466.000061,
+                  "z": 6,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                },
+                {
+                  "twE": 0,
+                  "dr": 20,
+                  "dI": 0,
+                  "x": -21.8333473,
+                  "y": 457.499939,
+                  "z": 6,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": -0.08726646,
+                  "kY": 0.08726646
+                },
+                {
+                  "twE": 0,
+                  "dr": 1,
+                  "dI": 0,
+                  "x": -26.0000076,
+                  "y": 466.000061,
+                  "z": 6,
+                  "cX": 1.0,
+                  "cY": 1.0,
+                  "kX": 0.0,
+                  "kY": 0.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "texture_data": [
+    {
+      "name": "DefaultBone",
+      "width": 0.0,
+      "height": 0.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_405_654_10",
+      "width": 112.0,
+      "height": 216.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_447_420_0",
+      "width": 372.0,
+      "height": 360.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_517.5_571.5_7",
+      "width": 355.0,
+      "height": 253.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_542_659.5_5",
+      "width": 136.0,
+      "height": 221.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_559.5_641.5_8",
+      "width": 101.0,
+      "height": 207.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_661_650_6",
+      "width": 104.0,
+      "height": 202.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_692.5_483_9",
+      "width": 163.0,
+      "height": 228.0,
+      "pX": 0.383435577,
+      "pY": 0.0789473653
+    },
+    {
+      "name": "char_animal_monkeyallLayers_PNG_N\\char_animal_monkey_378.5_437_1",
+      "width": 207.0,
+      "height": 72.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "testAnimationResource\\a1",
+      "width": 201.0,
+      "height": 320.0,
+      "pX": 0.12686567,
+      "pY": 0.921875
+    },
+    {
+      "name": "testAnimationResource\\a2",
+      "width": 186.0,
+      "height": 252.0,
+      "pX": 0.252688169,
+      "pY": 0.8333333
+    },
+    {
+      "name": "testAnimationResource\\a3",
+      "width": 247.0,
+      "height": 479.0,
+      "pX": 0.6376518,
+      "pY": 0.04697286
+    },
+    {
+      "name": "testAnimationResource\\a4",
+      "width": 141.0,
+      "height": 110.0,
+      "pX": 0.6347518,
+      "pY": 0.936363637
+    },
+    {
+      "name": "testAnimationResource\\a5",
+      "width": 190.0,
+      "height": 236.0,
+      "pX": 0.657894731,
+      "pY": 0.7372881
+    },
+    {
+      "name": "testAnimationResource\\a6",
+      "width": 474.0,
+      "height": 402.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "testAnimationResource\\a7",
+      "width": 146.0,
+      "height": 112.0,
+      "pX": 0.315068483,
+      "pY": 0.901785731
+    },
+    {
+      "name": "testAnimationResource\\a8",
+      "width": 135.0,
+      "height": 180.0,
+      "pX": 0.5,
+      "pY": 0.5
+    },
+    {
+      "name": "testAnimationResource\\ahat",
+      "width": 452.0,
+      "height": 458.0,
+      "pX": 0.741150439,
+      "pY": 0.159388646
+    }
+  ],
+  "config_file_path": [
+    "TestBone0.plist"
+  ]
+}

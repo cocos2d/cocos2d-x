@@ -207,7 +207,7 @@ void CCComAudio::setFile(const char* pszFilePath)
 	m_strFilePath.assign(pszFilePath);
 }
 
-void CCComAudio::setIsLoop(bool bLoop)
+void CCComAudio::setLoop(bool bLoop)
 {
 	m_bLoop = bLoop;
 }
@@ -217,7 +217,7 @@ const char* CCComAudio::getFile()
 	return m_strFilePath.c_str();
 }
 
-bool CCComAudio::getIsLoop()
+bool CCComAudio::isLoop()
 {
 	return m_bLoop;
 }

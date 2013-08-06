@@ -20,7 +20,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/6.png",
+              "name": "testAnimationResource\\6.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -50,7 +50,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/1.png",
+              "name": "testAnimationResource\\1.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -80,7 +80,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/hat.png",
+              "name": "testAnimationResource\\hat.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -110,7 +110,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/2.png",
+              "name": "testAnimationResource\\2.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -140,7 +140,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/7.png",
+              "name": "testAnimationResource\\7.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -170,7 +170,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/5.png",
+              "name": "testAnimationResource\\5.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -200,7 +200,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/4.png",
+              "name": "testAnimationResource\\4.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -230,7 +230,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/8.png",
+              "name": "testAnimationResource\\8.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -260,7 +260,7 @@
           "effectbyskeleton": true,
           "display_data": [
             {
-              "name": "testAnimationResource/3.png",
+              "name": "testAnimationResource\\3.png",
               "displayType": 0,
               "skin_data": [
                 {
@@ -3796,42 +3796,42 @@
   ],
   "texture_data": [
     {
-      "name": "testAnimationResource/1",
+      "name": "testAnimationResource\\1",
       "width": 201.0,
       "height": 320.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/2",
+      "name": "testAnimationResource\\2",
       "width": 186.0,
       "height": 252.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/3",
+      "name": "testAnimationResource\\3",
       "width": 247.0,
       "height": 479.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/4",
+      "name": "testAnimationResource\\4",
       "width": 141.0,
       "height": 110.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/5",
+      "name": "testAnimationResource\\5",
       "width": 190.0,
       "height": 236.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/6",
+      "name": "testAnimationResource\\6",
       "width": 474.0,
       "height": 402.0,
       "pX": 0.5,
@@ -3860,21 +3860,21 @@
       ]
     },
     {
-      "name": "testAnimationResource/7",
+      "name": "testAnimationResource\\7",
       "width": 146.0,
       "height": 112.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/8",
+      "name": "testAnimationResource\\8",
       "width": 135.0,
       "height": 180.0,
       "pX": 0.5,
       "pY": 0.5
     },
     {
-      "name": "testAnimationResource/hat",
+      "name": "testAnimationResource\\hat",
       "width": 452.0,
       "height": 458.0,
       "pX": 0.5,

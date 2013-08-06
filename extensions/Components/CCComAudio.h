@@ -73,8 +73,8 @@ public:
    void unloadEffect(const char* pszFilePath);
    void setFile(const char* pszFilePath);
    const char* getFile();
-   void setIsLoop(bool bLoop);
-   bool getIsLoop();
+   void setLoop(bool bLoop);
+   bool isLoop();
 private:
    std::string m_strFilePath;
    bool m_bLoop;
