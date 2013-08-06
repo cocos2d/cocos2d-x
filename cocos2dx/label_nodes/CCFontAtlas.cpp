@@ -16,15 +16,14 @@ std::map<int, FontLetterDefinition>             _atlasTextures;
 std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinition;
 
 
-FontAtlas::FontAtlas(Font *theFont) : _font(theFont)
+FontAtlas::FontAtlas(Font &theFont) : _font(theFont)
 {
-    if (_font)
-        _font->retain();
+    _font.retain();
 }
 
 FontAtlas::~FontAtlas()
 {
-    _font->release();
+    _font.release();
     relaseTextures();
 }
 
@@ -36,33 +35,35 @@ void FontAtlas::relaseTextures()
     }
 }
 
-void FontAtlas::addLetterDefinition(FontLetterDefinition &letterDefinition)
+void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition)
 {
     _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
 }
 
-FontLetterDefinition * FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16)
+bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition)
 {
     auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
+    
     if (outIterator != _fontLetterDefinitions.end())
     {
-        return & (*outIterator).second;
+        outDefinition = (*outIterator).second;
+        return true;
     }
     else
     {
-        return 0;
+        return false;
     }
 }
 
-void FontAtlas::addTexture(Texture2D *texture, int slot)
+void FontAtlas::addTexture(Texture2D &texture, int slot)
 {
-    texture->retain();
-    _atlasTextures[slot] = texture;
+    texture.retain();
+    _atlasTextures[slot] = &texture;
 }
 
-Texture2D * FontAtlas::getTexture(int slot)
+Texture2D & FontAtlas::getTexture(int slot)
 {
-    return _atlasTextures[slot];
+    return *(_atlasTextures[slot]);
 }
 
 float FontAtlas::getCommonLineHeight()
@@ -75,7 +76,7 @@ void  FontAtlas::setCommonLineHeight(float newHeight)
     _commonLineHeight = newHeight;
 }
 
-Font * FontAtlas::getFont()
+Font & FontAtlas::getFont()
 {
     return _font;
 }

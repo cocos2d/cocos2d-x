@@ -40,13 +40,7 @@ class CC_DLL FontDefinitionTTF : public Object
 public:
     
     static FontDefinitionTTF* create(Font *font, int textureSize = DEFAULT_ATLAS_TEXTURE_SIZE);
-    
-    FontLetterDefinition & getLetterDefinition(unsigned short int theLetter);
-    Texture2D * getTexture(int index);
     FontAtlas * createFontAtlas();
-    Font      * getFont()              { return _textImages->getFont(); }
-    float       getCommonLineHeight()  { return _commonLineHeight;      }
-    int         getNumTextures();
     
 private:
     

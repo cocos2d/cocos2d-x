@@ -43,7 +43,7 @@ FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
     if (!pGlyph)
         return nullptr;
     
-    if ( ret->initDefinition( font, pGlyph, textureSize ) )
+    if ( ret->initDefinition(font, pGlyph, textureSize ) )
     {
         return ret;
     }
@@ -184,49 +184,32 @@ void FontDefinitionTTF::addLetterDefinition(FontLetterDefinition &defToAdd)
     }
 }
 
-FontLetterDefinition & FontDefinitionTTF::getLetterDefinition(unsigned short int theLetter)
-{
-    return _fontLettersDefinitionUTF16[theLetter];
-}
-
-Texture2D * FontDefinitionTTF::getTexture(int index)
-{
-    TextFontPagesDef *pPages = _textImages->getPages();
-    
-    if (!pPages)
-        return (false);
-    
-    return pPages->getPageAt(index)->getPageTexture();
-}
-
-int FontDefinitionTTF::getNumTextures()
-{
-    TextFontPagesDef *pPages = _textImages->getPages();
-    if (pPages)
-    {
-        return pPages->getNumPages();
-    }
-    
-    return 0;
-}
-
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
-    FontAtlas *retAtlas = new FontAtlas(_textImages->getFont());
+    int numTextures          = 0;
+    TextFontPagesDef *pPages = _textImages->getPages();
+    
+    if (pPages)
+        numTextures = pPages->getNumPages();
+    else
+        return nullptr;
+    
+    if (!numTextures)
+        return nullptr;
+    
+    FontAtlas *retAtlas = new FontAtlas(*_textImages->getFont());
     
     if (!retAtlas)
         return 0;
     
-    // add all the textures
-    int numTextures = getNumTextures();
-    if (!numTextures)
-        return 0;
-    
-    for (int c = 0; c<numTextures; ++c)
-        retAtlas->addTexture(getTexture(c), c);
+    for (int c = 0; c < numTextures; ++c)
+    {
+        TextFontPagesDef *pPages = _textImages->getPages();
+        retAtlas->addTexture(*(pPages->getPageAt(c)->getPageTexture()), c);
+    }
     
     // set the common line height
-    retAtlas->setCommonLineHeight(getCommonLineHeight() * 0.8);
+    retAtlas->setCommonLineHeight(_commonLineHeight * 0.8);
     
     
     for( auto &item: _fontLettersDefinitionUTF16 )
