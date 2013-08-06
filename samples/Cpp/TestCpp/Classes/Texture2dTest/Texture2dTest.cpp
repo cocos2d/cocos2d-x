@@ -2012,7 +2012,6 @@ std::string TextureETC1::subtitle()
 TextureS3TCDxt1::TextureS3TCDxt1()
 {
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt1_mipmaps.dds");
-    
     //Sprite *sprite = Sprite::create("Images/water_2_dxt1.dds");
     Size size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(size.width/2,size.height/2));
@@ -2025,13 +2024,13 @@ std::string TextureS3TCDxt1::title()
 }
 std::string TextureS3TCDxt1::subtitle()
 {
-    return "S3TC dxt1 decode";
+    return "S3TC dxt1 decode,one bit for Alpha";
 }
 //Implement of S3TC Dxt3
 TextureS3TCDxt3::TextureS3TCDxt3()
 {
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt3_mipmaps.dds");
-//    Sprite *sprite = Sprite::create("Images/water_2_dxt3.dds");
+  //  Sprite *sprite = Sprite::create("Images/water_2_dxt3.dds");
     Size size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(size.width/2,size.height/2));
     

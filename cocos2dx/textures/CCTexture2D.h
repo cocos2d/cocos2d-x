@@ -414,7 +414,13 @@ static ConstTexturePixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
 
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt1, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+    
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
      ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt3, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
      ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt5, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
     

@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "jpeglib.h"
 #include "tiffio.h"
 #include "etc1.h"
-#include "s3tc.h"
+#include "third_party/common/s3tc/s3tc.h"
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
