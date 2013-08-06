@@ -23,10 +23,11 @@
  ****************************************************************************/
 
 #include <stdio.h>
-#include "cocos2d.h"
+
 #include "ccUTF8.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
+#include "CCFont.h"
 
 NS_CC_BEGIN
 

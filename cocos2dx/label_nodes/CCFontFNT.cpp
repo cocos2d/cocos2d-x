@@ -8,9 +8,7 @@
 
 #include "CCFontFNT.h"
 
-
 NS_CC_BEGIN
-
 
 FontFNT * FontFNT::create(const char* fntFilePath)
 {

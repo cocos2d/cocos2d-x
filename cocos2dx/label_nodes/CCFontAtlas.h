@@ -24,10 +24,12 @@
 #ifndef _CCFontAtlas_h_
 #define _CCFontAtlas_h_
 
-
 #include <map>
 
 NS_CC_BEGIN
+
+//fwd
+class Font;
 
 struct FontLetterDefinition
 {

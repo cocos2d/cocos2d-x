@@ -30,7 +30,7 @@
 #include "cocos2d.h"
 #include "CCTextImage.h"
 #include "CCFontFreeType.h"
-#include "CCFontRenderFreeType.h"
+#include "CCFont.h"
 
 NS_CC_BEGIN
 
@@ -143,7 +143,7 @@ TextImage::~TextImage()
         _font->release();
 }
 
-bool TextImage::initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData)
+bool TextImage::initWithString(const char *text, int nWidth, int nHeight, cocos2d::Font* font, bool releaseRAWData)
 {
     bool textIsUTF16 = false;
     

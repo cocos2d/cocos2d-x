@@ -23,10 +23,8 @@
  ****************************************************************************/
 
 #include "cocos2d.h"
-#include "CCFontDefinition.h"
 
 NS_CC_BEGIN
-
 
 const int FontDefinitionTTF::_DEFAUL_ATALS_TEXTURE_SIZE = 1024;
 
@@ -163,7 +161,7 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
     return true;
 }
 
-bool FontDefinitionTTF::initDefinition(Font *font, const char *letters, int textureSize)
+bool FontDefinitionTTF::initDefinition(cocos2d::Font *font, const char *letters, int textureSize)
 {
     // preare texture/image stuff
     _textImages = new TextImage();

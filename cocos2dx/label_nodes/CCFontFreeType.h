@@ -25,9 +25,11 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
-#include "CCFont.h"
 #include <string>
 #include <ft2build.h>
+
+#include "CCFont.h"
+
 #include FT_FREETYPE_H
 
 NS_CC_BEGIN
