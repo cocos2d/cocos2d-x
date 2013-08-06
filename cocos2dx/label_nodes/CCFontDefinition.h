@@ -39,7 +39,7 @@ class CC_DLL FontDefinitionTTF : public Object
 {
 public:
     
-    static FontDefinitionTTF* create(Font *font, int textureSize = DEFAULT_ATLAS_TEXTURE_SIZE);
+    static FontDefinitionTTF* create(Font *font, int textureSize = 0);
     FontAtlas * createFontAtlas();
     
 private:
@@ -54,6 +54,7 @@ private:
     TextImage *                                     _textImages;
     std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinitionUTF16;
     float                                           _commonLineHeight;
+    static const int                                _DEFAUL_ATALS_TEXTURE_SIZE;
     
 };
 
