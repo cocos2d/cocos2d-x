@@ -69,6 +69,14 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFAlignment),
     CL(LabelBMFontBounds),
     CL(TTFFontShadowAndStroke),
+    CL(NewLabelTTFTestLongLine),
+    //    CL(NewLabelTTFTestUnicode),
+    CL(NewLabelTTFColorTest),
+    CL(NewLabelTTFFontsTest),
+    CL(NewLabelTTFAlignment),
+    CL(NewLabelTTFUnicode),
+    CL(NewLabelBMFontTest),
+//    CL(NewLabelFontDefTest),
 
     // should be moved to another test
     CL(Atlas1),
@@ -348,19 +356,19 @@ LabelTTFAlignment::LabelTTFAlignment()
     Size s = Director::getInstance()->getWinSize();
 
     LabelTTF* ttf0 = LabelTTF::create("Alignment 0\nnew line", "Helvetica", 12,
-                                          Size(256, 32), Label::HAlignment::LEFT);
+                                          Size(256, 32), TextHAlignment::LEFT);
     ttf0->setPosition(Point(s.width/2,(s.height/6)*2));
     ttf0->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf0);
 
     LabelTTF* ttf1 = LabelTTF::create("Alignment 1\nnew line", "Helvetica", 12,
-                                          Size(245, 32), Label::HAlignment::CENTER);
+                                          Size(245, 32), TextHAlignment::CENTER);
     ttf1->setPosition(Point(s.width/2,(s.height/6)*3));
     ttf1->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf1);
 
     LabelTTF* ttf2 = LabelTTF::create("Alignment 2\nnew line", "Helvetica", 12,
-                                          Size(245, 32), Label::HAlignment::RIGHT);
+                                          Size(245, 32), TextHAlignment::RIGHT);
     ttf2->setPosition(Point(s.width/2,(s.height/6)*4));
     ttf2->setAnchorPoint(Point(0.5f,0.5f));
     this->addChild(ttf2);
@@ -953,8 +961,8 @@ LabelTTFTest::LabelTTFTest()
     this->addChild(menu);
 
     _plabel = NULL;
-    _horizAlign = Label::HAlignment::LEFT;
-    _vertAlign = Label::VAlignment::TOP;
+    _horizAlign = TextHAlignment::LEFT;
+    _vertAlign = TextVAlignment::TOP;
 
     this->updateAlignment();
 }
@@ -988,37 +996,37 @@ void  LabelTTFTest::updateAlignment()
 
 void LabelTTFTest::setAlignmentLeft(Object* sender)
 {
-    _horizAlign = Label::HAlignment::LEFT;
+    _horizAlign = TextHAlignment::LEFT;
     this->updateAlignment();
 }
 
 void LabelTTFTest::setAlignmentCenter(Object* sender)
 {
-    _horizAlign = Label::HAlignment::CENTER;
+    _horizAlign = TextHAlignment::CENTER;
     this->updateAlignment();
 }
 
 void LabelTTFTest::setAlignmentRight(Object* sender)
 {
-    _horizAlign = Label::HAlignment::RIGHT;
+    _horizAlign = TextHAlignment::RIGHT;
     this->updateAlignment();
 }
 
 void LabelTTFTest::setAlignmentTop(Object* sender)
 {
-    _vertAlign = Label::VAlignment::TOP;
+    _vertAlign = TextVAlignment::TOP;
     this->updateAlignment();
 }
 
 void LabelTTFTest::setAlignmentMiddle(Object* sender)
 {
-    _vertAlign = Label::VAlignment::CENTER;
+    _vertAlign = TextVAlignment::CENTER;
     this->updateAlignment();
 }
 
 void LabelTTFTest::setAlignmentBottom(Object* sender)
 {
-    _vertAlign = Label::VAlignment::BOTTOM;
+    _vertAlign = TextVAlignment::BOTTOM;
     this->updateAlignment();
 }
 
@@ -1027,24 +1035,24 @@ const char* LabelTTFTest::getCurrentAlignment()
     const char* vertical = NULL;
     const char* horizontal = NULL;
     switch (_vertAlign) {
-        case Label::VAlignment::TOP:
+        case TextVAlignment::TOP:
             vertical = "Top";
             break;
-        case Label::VAlignment::CENTER:
+        case TextVAlignment::CENTER:
             vertical = "Middle";
             break;
-        case Label::VAlignment::BOTTOM:
+        case TextVAlignment::BOTTOM:
             vertical = "Bottom";
             break;
     }
     switch (_horizAlign) {
-        case Label::HAlignment::LEFT:
+        case TextHAlignment::LEFT:
             horizontal = "Left";
             break;
-        case Label::HAlignment::CENTER:
+        case TextHAlignment::CENTER:
             horizontal = "Center";
             break;
-        case Label::HAlignment::RIGHT:
+        case TextHAlignment::RIGHT:
             horizontal = "Right";
             break;
     }
@@ -1070,8 +1078,8 @@ LabelTTFMultiline::LabelTTFMultiline()
                                             "Paint Boy",
                                             32,
                                             Size(s.width/2,200),
-                                            Label::HAlignment::CENTER,
-                                            Label::VAlignment::TOP);
+                                            TextHAlignment::CENTER,
+                                            TextVAlignment::TOP);
 
     center->setPosition(Point(s.width / 2, 150));
 
@@ -1141,7 +1149,7 @@ BitmapFontMultiLineAlignment::BitmapFontMultiLineAlignment()
     Size size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, Label::HAlignment::CENTER);
+    this->_labelShouldRetain = LabelBMFont::create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, TextHAlignment::CENTER);
     this->_labelShouldRetain->retain();
 
     this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
@@ -1250,13 +1258,13 @@ void BitmapFontMultiLineAlignment::alignmentChanged(cocos2d::Object *sender)
     switch(item->getTag())
     {
     case LeftAlign:
-        this->_labelShouldRetain->setAlignment(Label::HAlignment::LEFT);
+        this->_labelShouldRetain->setAlignment(TextHAlignment::LEFT);
         break;
     case CenterAlign:
-        this->_labelShouldRetain->setAlignment(Label::HAlignment::CENTER);
+        this->_labelShouldRetain->setAlignment(TextHAlignment::CENTER);
         break;
     case RightAlign:
-        this->_labelShouldRetain->setAlignment(Label::HAlignment::RIGHT);
+        this->_labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
         break;
 
     default:
@@ -1348,11 +1356,11 @@ BMFontOneAtlas::BMFontOneAtlas()
 {
     Size s = Director::getInstance()->getWinSize();
 
-    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, Label::HAlignment::LEFT, Point::ZERO);
+    auto label1 = LabelBMFont::create("This is Helvetica", "fonts/helvetica-32.fnt", kLabelAutomaticWidth, TextHAlignment::LEFT, Point::ZERO);
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/3*2));
 
-    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, Label::HAlignment::LEFT, Point(0, 128));
+    auto label2 = LabelBMFont::create("And this is Geneva", "fonts/geneva-32.fnt", kLabelAutomaticWidth, TextHAlignment::LEFT, Point(0, 128));
     addChild(label2);
     label2->setPosition(Point(s.width/2, s.height/3*1));
 }
@@ -1379,7 +1387,7 @@ BMFontUnicode::BMFontUnicode()
 
     Size s = Director::getInstance()->getWinSize();
 
-    auto label1 = LabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, Label::HAlignment::LEFT);
+    auto label1 = LabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, TextHAlignment::LEFT);
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/5*4));
 
@@ -1581,7 +1589,6 @@ LabelBMFontBounds::LabelBMFontBounds()
     // LabelBMFont
     label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
-    
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
 }
@@ -1614,3 +1621,320 @@ void LabelBMFontBounds::draw()
     DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
+LabelBMFontNewTest::LabelBMFontNewTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    LayerColor *layer = LayerColor::create(Color4B(128,128,128,255));
+    addChild(layer, -10);
+    
+    // LabelBMFont
+    label1 = StringBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    
+    addChild(label1);
+    label1->setPosition(Point(s.width/2, s.height/2));
+}
+
+void LabelBMFontNewTest::draw()
+{
+}
+std::string LabelBMFontNewTest::title()
+{
+    return "New LabelBMFont";
+}
+
+std::string LabelBMFontNewTest::subtitle()
+{
+    return "Testing the new LabelBMFont";
+}
+
+///
+
+//
+// NewLabelTTFTestLongLine
+//
+NewLabelTTFTestLongLine::NewLabelTTFTestLongLine()
+{
+    Size size = Director::getInstance()->getWinSize();
+
+    // Long sentence
+    auto label1 = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
+    label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setAnchorPoint(Point(0.5, 1.0));
+    addChild(label1);
+}
+
+std::string NewLabelTTFTestLongLine::title()
+{
+    return "Label() using TTF";
+}
+
+std::string NewLabelTTFTestLongLine::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing auto-wrapping";
+}
+
+//
+// NewLabelTTFColorTest
+//
+NewLabelTTFColorTest::NewLabelTTFColorTest()
+{
+    Size size = Director::getInstance()->getWinSize();
+
+    // Green
+    auto label1 = Label::createWithTTF("Green", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label1->setPosition( Point(size.width/2, size.height/5 * 1.5) );
+    label1->setColor( Color3B::GREEN );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+
+    // Red
+    auto label2 = Label::createWithTTF("Red", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label2->setPosition( Point(size.width/2, size.height/5 * 2.0) );
+    label2->setColor( Color3B::RED );
+    label2->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label2);
+
+    // Blue
+    auto label3 = Label::createWithTTF("Blue", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    label3->setPosition( Point(size.width/2, size.height/5 * 2.5) );
+    label3->setColor( Color3B::BLUE );
+    label3->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label3);
+}
+
+std::string NewLabelTTFColorTest::title()
+{
+    return "Label() using TTF with color";
+}
+
+std::string NewLabelTTFColorTest::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing Color";
+}
+
+//
+// NewLabelTTFColorTest
+//
+NewLabelTTFAlignment::NewLabelTTFAlignment()
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    _label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 45, GlyphCollection::NEHE, size.width);
+    _label->setPosition( Point(size.width/2, size.height/2) );
+    _label->setAnchorPoint(Point(0.5, 0.5));
+    
+    
+    
+    Menu *menu = Menu::create(
+                              MenuItemFont::create("Left", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentLeft, this)),
+                              MenuItemFont::create("Center", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentCenter, this)),
+                              MenuItemFont::create("Right", CC_CALLBACK_1(NewLabelTTFAlignment::setAlignmentRight, this)),
+                              NULL);
+    
+    menu->alignItemsVerticallyWithPadding(4);
+    menu->setPosition(Point(50, size.height / 4 ));
+    
+    addChild(_label);
+    this->addChild(menu);
+}
+
+void  NewLabelTTFAlignment::updateAlignment()
+{
+    if (_label)
+    {
+        _label->setAlignment(_horizAlign);
+    }
+}
+
+void NewLabelTTFAlignment::setAlignmentLeft(Object* sender)
+{
+    _horizAlign = TextHAlignment::LEFT;
+    this->updateAlignment();
+}
+
+void NewLabelTTFAlignment::setAlignmentCenter(Object* sender)
+{
+    _horizAlign = TextHAlignment::CENTER;
+    this->updateAlignment();
+}
+
+void NewLabelTTFAlignment::setAlignmentRight(Object* sender)
+{
+    _horizAlign = TextHAlignment::RIGHT;
+    this->updateAlignment();
+}
+
+std::string NewLabelTTFAlignment::title()
+{
+    return "Label() using TTF alignment";
+}
+
+std::string NewLabelTTFAlignment::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing alignment";
+}
+
+//
+// NewLabelTTF unicode test
+//
+NewLabelTTFUnicode::NewLabelTTFUnicode()
+{
+    Dictionary *strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
+    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
+    
+    //const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
+    //const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    //const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
+    
+    Size size = Director::getInstance()->getWinSize();
+    
+    float vStep = size.height/9;
+    float vSize = size.height;
+     
+    
+    // Spanish
+    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    label1->setPosition( Point(size.width/2, vSize - (vStep * 4.5)) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+    
+    // German
+    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    label2->setPosition( Point(size.width/2, vSize - (vStep * 5.5)) );
+    label2->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label2);
+    
+    // chinese
+    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, GlyphCollection::CUSTOM, size.width, chinese);
+    label3->setPosition( Point(size.width/2, vSize - (vStep * 6.5)) );
+    label3->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label3);
+}
+
+std::string NewLabelTTFUnicode::title()
+{
+    return "Label() using TTF with unicode";
+}
+
+std::string NewLabelTTFUnicode::subtitle()
+{
+    return "Uses the new Label() with TTF. Testing unicode";
+}
+
+
+//
+// NewLabelTTFFontsTest
+//
+NewLabelTTFFontsTest::NewLabelTTFFontsTest()
+{
+    const char *ttfpaths[] = {
+        "fonts/A Damn Mess.ttf",
+        "fonts/Abberancy.ttf",
+        "fonts/Abduction.ttf",
+        "fonts/American Typewriter.ttf",
+        "fonts/Paint Boy.ttf",
+        "fonts/Schwarzwald Regular.ttf",
+        "fonts/Scissor Cuts.ttf",
+    };
+#define arraysize(ar)  (sizeof(ar) / sizeof(ar[0]))
+
+    Size size = Director::getInstance()->getWinSize();
+
+    for(int i=0;i < arraysize(ttfpaths); ++i) {
+        auto label = Label::createWithTTF( ttfpaths[i], ttfpaths[i], 40, GlyphCollection::NEHE);
+        if( label ) {
+            
+            label->setPosition( Point(size.width/2, ((size.height * 0.6)/arraysize(ttfpaths) * i) + (size.height/5)));
+            addChild(label);
+            
+            label->setAnchorPoint(Point(0.5, 0.5));
+        } else {
+            log("ERROR: Cannot load: %s", ttfpaths[i]);
+        }
+    }
+}
+
+std::string NewLabelTTFFontsTest::title()
+{
+    return "Label() using different TTF files";
+}
+
+std::string NewLabelTTFFontsTest::subtitle()
+{
+    //return "Uses the new Label() with non standard TTF files";
+    return "";
+}
+
+//
+// NEW LABEL with BMFont
+//
+NewLabelBMFontTest::NewLabelBMFontTest()
+{
+    Size size = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
+    label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+}
+
+std::string NewLabelBMFontTest::title()
+{
+    return "Label() using BMFont";
+}
+
+std::string NewLabelBMFontTest::subtitle()
+{
+    return "Uses the new Label() with BMFont";
+}
+
+
+
+//
+/// NEW LABEL with BMFont
+//
+NewLabelBMFontTestOld::NewLabelBMFontTestOld()
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    label = Label::createWithBMFontOLD("Hello world, this uses new label with FTN file", "fonts/bitmapFontTest2.fnt", size.width);
+    label->setPosition( Point(size.width/2, size.height/2) );
+    label->setAnchorPoint(Point(0.5, 0.5));
+    label->retain();
+    addChild(label);
+}
+
+NewLabelBMFontTestOld::~NewLabelBMFontTestOld()
+{
+    CC_SAFE_RELEASE(label);
+}
+
+std::string NewLabelBMFontTestOld::title()
+{
+    return "Label() using BMFont OLD";
+}
+
+std::string NewLabelBMFontTestOld::subtitle()
+{
+    return "Uses the new Label() with BMFont OLD";
+}
+
+
+
+//
+// NEW LABEL with FontDefinition
+//
+NewLabelFontDefTest::NewLabelFontDefTest()
+{
+}
+
+std::string NewLabelFontDefTest::title()
+{
+    return "NOT IMPLEMENTED YET";
+}
+
+std::string NewLabelFontDefTest::subtitle()
+{
+    return "NOT IMPLEMENTED YET";
+}

@@ -28,12 +28,12 @@ NS_CC_BEGIN
 
 Thread::~Thread()
 {
-    [(id)_autoreasePool release];
+    [(id)_autoReleasePool release];
 }
 
 void Thread::createAutoreleasePool()
 {
-    _autoreasePool = [[NSAutoreleasePool alloc] init];
+    _autoReleasePool = [[NSAutoreleasePool alloc] init];
 }
 
 NS_CC_END

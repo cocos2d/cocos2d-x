@@ -40,16 +40,7 @@ int Application::run()
 
 void Application::setAnimationInterval(double interval)
 {
-    JniMethodInfo methodInfo;
-    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval", 
-        "(D)V"))
-    {
-        CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
-    }
-    else
-    {
-        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, interval);
-    }
+    // NYI
 }
 
 //////////////////////////////////////////////////////////////////////////

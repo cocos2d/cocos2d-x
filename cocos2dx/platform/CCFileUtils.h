@@ -102,11 +102,11 @@ public:
      *  Gets resource file data from a zip file.
      *
      *  @param[in]  filename The resource file name which contains the relative path of the zip file.
-     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * pSize);
+    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long *size);
 
     
     /** Returns the fullpath for a given filename.

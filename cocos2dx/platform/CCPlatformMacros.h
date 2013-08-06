@@ -33,7 +33,7 @@
 
 /**
  * define a create function for a specific type, such as Layer
- * @__TYPE__ class type to add create(), such as Layer
+ * @param \__TYPE__  class type to add create(), such as Layer
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -54,8 +54,8 @@ static __TYPE__* create() \
 
 /**
  * define a node function for a specific type, such as Layer
- * @__TYPE__ class type to add node(), such as Layer
- * @deprecated: This interface will be deprecated sooner or later.
+ * @param \__TYPE__  class type to add node(), such as Layer
+ * @deprecated  This interface will be deprecated sooner or later.
  */
 #define NODE_FUNC(__TYPE__) \
 CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
@@ -111,12 +111,12 @@ It's new in cocos2d-x since v0.99.5
 
 /** CC_PROPERTY_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
- @param varType : the type of variable.
- @param varName : variable name.
- @param funName : "get + funName" is the name of the getter.
- @warning : The getter is a public virtual function, you should rewrite it first.
- The variables and methods declared after CC_PROPERTY_READONLY are all public.
- If you need protected or private, please declare.
+ @param varType     the type of variable.
+ @param varName     variable name.
+ @param funName     "get + funName" will be the name of the getter.
+ @warning   The getter is a public virtual function, you should rewrite it first.
+            The variables and methods declared after CC_PROPERTY_READONLY are all public.
+            If you need protected or private, please declare.
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -128,13 +128,13 @@ public: virtual const varType& get##funName(void) const;
 
 /** CC_PROPERTY is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
- @param varType : the type of variable.
- @param varName : variable name.
- @param funName : "get + funName" is the name of the getter.
- "set + funName" is the name of the setter.
- @warning : The getter and setter are public virtual functions, you should rewrite them first.
- The variables and methods declared after CC_PROPERTY are all public.
- If you need protected or private, please declare.
+ @param varType     the type of variable.
+ @param varName     variable name.
+ @param funName     "get + funName" will be the name of the getter.
+                    "set + funName" will be the name of the setter.
+ @warning   The getter and setter are public virtual functions, you should rewrite them first.
+            The variables and methods declared after CC_PROPERTY are all public.
+            If you need protected or private, please declare.
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
@@ -148,12 +148,12 @@ public: virtual void set##funName(const varType& var);
 
 /** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
  We can use getter to read the variable.
- @param varType : the type of variable.
- @param varName : variable name.
- @param funName : "get + funName" is the name of the getter.
- @warning : The getter is a public inline function.
- The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
- If you need protected or private, please declare.
+ @param varType     the type of variable.
+ @param varName     variable name.
+ @param funName     "get + funName" will be the name of the getter.
+ @warning   The getter is a public inline function.
+            The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
+            If you need protected or private, please declare.
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -165,13 +165,13 @@ public: virtual const varType& get##funName(void) const { return varName; }
 
 /** CC_SYNTHESIZE is used to declare a protected variable.
  We can use getter to read the variable, and use the setter to change the variable.
- @param varType : the type of variable.
- @param varName : variable name.
- @param funName : "get + funName" is the name of the getter.
- "set + funName" is the name of the setter.
- @warning : The getter and setter are public  inline functions.
- The variables and methods declared after CC_SYNTHESIZE are all public.
- If you need protected or private, please declare.
+ @param varType     the type of variable.
+ @param varName     variable name.
+ @param funName     "get + funName" will be the name of the getter.
+                    "set + funName" will be the name of the setter.
+ @warning   The getter and setter are public inline functions.
+            The variables and methods declared after CC_SYNTHESIZE are all public.
+            If you need protected or private, please declare.
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\

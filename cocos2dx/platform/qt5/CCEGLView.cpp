@@ -68,7 +68,8 @@ Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(EGLView *view, int widt
 {
     setSurfaceType(QSurface::OpenGLSurface);
     resize(width, height);
-    showFullScreen();
+    //showFullScreen();
+    show();
 
     m_context = new QOpenGLContext(this);
     m_context->create();

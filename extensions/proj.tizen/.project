@@ -106,6 +106,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
+			<name>src/CCDeprecated-ext.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCDeprecated-ext.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/CCDeprecated-ext.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCDeprecated-ext.h</locationURI>
+		</link>
+		<link>
 			<name>src/Components</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
@@ -134,6 +144,11 @@
 			<name>src/network</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/network</locationURI>
+		</link>
+		<link>
+			<name>src/physics_nodes</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
 		</link>
 		<link>
 			<name>src/spine</name>

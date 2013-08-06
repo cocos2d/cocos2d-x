@@ -41,8 +41,7 @@ bool HelloWorld::init()
                                         "CloseSelected.png",
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
-	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
+    closeItem->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2));
 
     // create menu, it's an autorelease object
     Menu* menu = Menu::create(closeItem, NULL);
@@ -68,7 +67,7 @@ bool HelloWorld::init()
     Sprite* sprite = Sprite::create("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    sprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    sprite->setPosition(Point(visibleSize / 2) + origin);
 
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);

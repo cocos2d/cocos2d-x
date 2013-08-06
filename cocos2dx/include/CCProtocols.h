@@ -78,7 +78,7 @@ public:
     /**
      * Changes the opacity.
      *
-     * @param   value   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
+     * @param opacity   Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
      */
     virtual void setOpacity(GLubyte opacity) = 0;
 
@@ -89,10 +89,10 @@ public:
      * If thie property is set to true, then the rendered color will be affected by opacity.
      * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
-     * @param   bValue  true then the opacity will be applied as: glColor(R,G,B,opacity);
-     *                  false then the opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
+     * @param value If true, then the opacity will be applied as: glColor(R,G,B,opacity);
+     *              If false, then the opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
      */
-    virtual void setOpacityModifyRGB(bool bValue) = 0;
+    virtual void setOpacityModifyRGB(bool value) = 0;
 
     /**
      * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) 
@@ -186,7 +186,7 @@ public:
     /**
      * Sets a new label using an string
      *
-     * @param A null terminated string 
+     * @param label A null terminated string
      */
     virtual void setString(const char *label) = 0;
 
