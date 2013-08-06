@@ -174,7 +174,12 @@ public:
 	 * run a script from script :)
 	 */
 	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
-
+    
+    /**
+	 * run a script from string :)
+	 */
+    static JSBool executeScriptString(JSContext *cx, uint32_t argc, jsval *vp);
+    
 	/**
 	 * Force a cycle of GC
 	 * @param cx
