@@ -130,7 +130,7 @@ TextFontPagesDef::~TextFontPagesDef()
     }
 }
 
-TextImage::TextImage(): _font(0), _fontRender(0), _fontPages(0)
+TextImage::TextImage(): _font(0), _fontPages(0)
 {
 }
 
@@ -141,9 +141,6 @@ TextImage::~TextImage()
     
     if (_font)
         _font->release();
-    
-    if (_fontRender)
-        delete _fontRender;
 }
 
 bool TextImage::initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData)
@@ -325,26 +322,6 @@ int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> 
     return numChar;
 }
 
-bool TextImage::createFontRender()
-{
-    if (!_font)
-        return false;
-    
-    if (_fontRender)
-    {
-        delete _fontRender;
-        _fontRender = 0;
-    }
-    
-    // carloX 
-    _fontRender = new FontRenderFreeType(_font);
-    
-    if (!_fontRender)
-        return false;
-    
-    return true;
-}
-
 bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16)
 {
     if (!_font)
@@ -427,19 +404,104 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
 
 unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage)
 {
-    if ( !_fontRender )
+    return renderGlyphData(thePage);
+}
+
+unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
+{
+    if (!thePage)
+        return 0;
+    
+    if (!_font)
+        return 0;
+    
+    if (thePage->getNumLines() == 0)
+        return NULL;
+    
+    int pageWidth  = thePage->getWidth();
+    int pageHeight = thePage->getHeight();
+    
+    // prepare memory and clean to 0
+    int sizeInBytes     = (pageWidth * pageHeight * 4);
+    unsigned char* data = new unsigned char[sizeInBytes];
+    
+    if (!data)
+        return 0;
+    
+    memset(data, 0, sizeInBytes);
+    
+    int numLines = thePage->getNumLines();
+    
+    for (int c = 0; c<numLines; ++c)
     {
-        createFontRender();
+        TextLineDef *pCurrentLine   = thePage->getLineAt(c);
+        
+        float origX         = _font->getLetterPadding();
+        float origY         = pCurrentLine->getY();
+        
+        int numGlyphToRender = pCurrentLine->getNumGlyph();
+        
+        for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
+        {
+            GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
+            renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
+            origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
+        }
     }
     
-    if (_fontRender)
+#ifdef _DEBUG_FONTS_
+    static int counter = 0;
+    char outFilename[512];
+    sprintf(outFilename,"testIMG%d", counter);
+    ++counter;
+    Image *pImage = new Image;
+    pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 1024, 1024, 8, false);
+    pImage->saveToFile(outFilename);
+#endif
+    
+    // we are done here
+    return data;
+}
+
+bool TextImage::renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize)
+{
+    if (!_font)
+        return false;
+    
+    unsigned char *sourceBitmap = 0;
+    int sourceWidth  = 0;
+    int sourceHeight = 0;
+    
+    // get the glyph's bitmap
+    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
+    
+    if(!sourceBitmap)
+        return false;
+    
+    int iX = posX;
+    int iY = posY;
+    
+    for (int y = 0; y < sourceHeight; ++y)
     {
-        return _fontRender->preparePageGlyphData(thePage);
+        int bitmap_y = y * sourceWidth;
+        
+        for (int x = 0; x < sourceWidth; ++x)
+        {
+            unsigned char cTemp = sourceBitmap[bitmap_y + x];
+            
+            // the final pixel
+            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+            *(int*) &destMemory[(iX + ( iY * destSize ) ) * 4] = iTemp;
+            
+            iX += 1;
+        }
+        
+        iX  = posX;
+        iY += 1;
     }
-    else
-    {
-        return 0;
-    }
+    
+    //everything good
+    return true;
 }
 
 NS_CC_END

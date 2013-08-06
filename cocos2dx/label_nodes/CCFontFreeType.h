@@ -36,20 +36,21 @@ class CC_DLL FontFreeType : public Font
 {
 public:
     
-    static FontFreeType * create();
+    static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
     
-    virtual FontAtlas           * createFontAtlas();
-    virtual Size                * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
-    virtual GlyphDef            * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
-    unsigned char               * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);
-    virtual int                   getFontMaxHeight();
-    virtual int                   getLetterPadding();
-    bool                          createFontObject(const std::string &fontName, int fontSize);
+    virtual FontAtlas   * createFontAtlas();
+    virtual Size        * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
+    virtual GlyphDef    * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
+    unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);
+    virtual int           getFontMaxHeight();
+    virtual int           getLetterPadding();
+    
     
 protected:
     
     FontFreeType();
     virtual ~FontFreeType();
+    bool   createFontObject(const std::string &fontName, int fontSize);
     
 private:
 

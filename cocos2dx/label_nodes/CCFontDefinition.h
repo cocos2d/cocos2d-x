@@ -31,8 +31,6 @@
 
 NS_CC_BEGIN
 
-#define DEFAULT_ATLAS_TEXTURE_SIZE 1024
-
 /**
  */
 class CC_DLL FontDefinitionTTF : public Object
