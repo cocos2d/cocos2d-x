@@ -478,9 +478,6 @@ void CCDirector::reshapeProjection(const CCSize& newWindowSize)
 	CC_UNUSED_PARAM(newWindowSize);
 	if (m_pobOpenGLView)
 	{
-		//m_obWinSizeInPoints = m_pobOpenGLView->getSize();
-		//m_obWinSizeInPixels = CCSizeMake(m_obWinSizeInPoints.width * m_fContentScaleFactor,
-		//	m_obWinSizeInPoints.height * m_fContentScaleFactor);
 		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
 			newWindowSize.height * m_fContentScaleFactor);
 		setProjection(m_eProjection);       

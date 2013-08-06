@@ -758,7 +758,7 @@ void CCFileUtils::removeSearchPath(const char *path_)
 	m_searchPathArray.erase(iter);
 }
 
-void CCFileUtils::removeAllPath()
+void CCFileUtils::removeAllPaths()
 {
 	m_searchPathArray.clear();
 }

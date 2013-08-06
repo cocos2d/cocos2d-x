@@ -673,7 +673,7 @@ void CCEGLView::setFrameSize(float width, float height)
     centerWindow();
 }
 
-void CCEGLView::setFrameSizeEditor(float width, float height,HWND hWnd)
+void CCEGLView::setEditorFrameSize(float width, float height,HWND hWnd)
 {
 	m_hWnd=hWnd;
 

@@ -47,7 +47,7 @@ public:
     virtual void end();
     virtual void swapBuffers();
     virtual void setFrameSize(float width, float height);
-	virtual void setFrameSizeEditor(float width, float height,HWND hWnd); 
+	virtual void setEditorFrameSize(float width, float height,HWND hWnd); 
     virtual void setIMEKeyboardState(bool bOpen);
 
     void setMenuResource(LPCWSTR menu);
