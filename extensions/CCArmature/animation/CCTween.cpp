@@ -384,7 +384,6 @@ float CCTween::updateFrameData(float currentPrecent)
 
 		CCFrameData *from = NULL;
 		CCFrameData *to = NULL;
-		bool isListEnd;
 
 		do
 		{

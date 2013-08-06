@@ -66,14 +66,14 @@ public:
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
-	virtual float getAnimationScale();
+	virtual float getAnimationScale() const;
 
 	/**
      * Scale animation play speed.
      * @param animationScale Scale value
      */
 	virtual void setSpeedScale(float speedScale);
-	virtual float getSpeedScale();
+	virtual float getSpeedScale() const;
 
 	//! The animation update speed
 	virtual void setAnimationInternal(float animationInternal);

@@ -26,7 +26,6 @@ public:
 
 enum {
 	TEST_COCOSTUDIO_WITH_SKELETON = 0,
-	TEST_COCOSTUDIO_WITHOUT_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
 	TEST_CHANGE_ZORDER,
@@ -58,24 +57,16 @@ public:
 };
 
 
-
-class TestDragonBones20 : public ArmatureTestLayer
-{
-public:
-	virtual void onEnter();
-	virtual std::string title();
-};
-
-
-
 class TestCSWithSkeleton : public ArmatureTestLayer
 {
 	virtual void onEnter();
 	virtual std::string title();
 };
 
-class TestCSWithoutSkeleton : public ArmatureTestLayer
+
+class TestDragonBones20 : public ArmatureTestLayer
 {
+public:
 	virtual void onEnter();
 	virtual std::string title();
 };

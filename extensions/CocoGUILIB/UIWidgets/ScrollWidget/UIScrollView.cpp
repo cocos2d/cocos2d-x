@@ -140,6 +140,11 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
     m_pInnerContainer->setPosition(ccp(0, m_fHeight - m_pInnerContainer->getHeight()));
 }
 
+const CCSize& UIScrollView::getInerContainerSize() const
+{
+	return m_pInnerContainer->getContentSize();
+}
+
 bool UIScrollView::addChild(UIWidget* widget)
 {
     return m_pInnerContainer->addChild(widget);
@@ -149,6 +154,11 @@ bool UIScrollView::addChild(UIWidget* widget)
 void UIScrollView::removeAllChildrenAndCleanUp(bool cleanup)
 {
     m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
+}
+
+bool UIScrollView::removeChild(UIWidget* child,bool cleanup)
+{
+	return m_pInnerContainer->removeChild(child, cleanup);
 }
 
 void UIScrollView::moveChildren(float offset)
@@ -681,4 +691,8 @@ void UIScrollView::setLayoutType(LayoutType type)
     }
 }
 
+CCNode* UIScrollView::getInnerContainerNode()
+{
+	return m_pInnerContainer->getContainerNode();
+}
 NS_CC_EXT_END

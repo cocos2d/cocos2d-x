@@ -123,7 +123,7 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 	}
 }
 
-void CCBaseData::setColor(ccColor4B &color)
+void CCBaseData::setColor(const ccColor4B &color)
 {
 	r = color.r;
 	g = color.g;

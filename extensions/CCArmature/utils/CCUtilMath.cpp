@@ -27,20 +27,20 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-bool isSpriteContainPoint(CCSprite *sprite, CCPoint _point, CCPoint &outPoint)
+bool isSpriteContainPoint(CCSprite *sprite, CCPoint point, CCPoint &outPoint)
 {
-    outPoint = sprite->convertToNodeSpace(_point);
+    outPoint = sprite->convertToNodeSpace(point);
 
-    CCSize _s  = sprite->getContentSize();
-    CCRect _r(0, 0, _s.width, _s.height);
+    CCSize s  = sprite->getContentSize();
+    CCRect r(0, 0, s.width, s.height);
 
-    return _r.containsPoint(outPoint);
+    return r.containsPoint(outPoint);
 }
 
-bool isSpriteContainPoint(CCSprite *_sprite, CCPoint _point)
+bool isSpriteContainPoint(CCSprite *sprite, CCPoint point)
 {
-    CCPoint _p = ccp(0, 0);
-    return isSpriteContainPoint(_sprite, _point, _p);
+    CCPoint p = ccp(0, 0);
+    return isSpriteContainPoint(sprite, point, p);
 }
 
 

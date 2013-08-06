@@ -82,7 +82,7 @@ public:
     */
     virtual void subtract(CCBaseData *_from, CCBaseData *_to);
 
-	virtual void setColor(ccColor4B &color);
+	virtual void setColor(const ccColor4B &color);
 	virtual ccColor4B getColor();
 public:
 	float x;					//! position x attribute

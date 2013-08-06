@@ -65,11 +65,14 @@ public:
     static UIScrollView* create();
     virtual bool addChild(UIWidget* widget);
     virtual void removeAllChildrenAndCleanUp(bool cleanup);
+	virtual bool removeChild(UIWidget* child,bool cleanup);
     void scrollToBottom();
     void scrollToTop();
     virtual void setSize(const CCSize &size);
     void setInnerContainerSize(const CCSize &size);
+	const CCSize& getInerContainerSize() const;
     
+	CCNode* getInnerContainerNode();
     
     void addScrollToTopEvent(CCObject* target, SEL_ScrollToTopEvent selector);
     void addScrollToBottomEvent(CCObject* target, SEL_ScrollToBottomEvent selector);

@@ -60,6 +60,18 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, con
 
 }
 
+void string_replace(std::string& str, const std::string & strsrc, const std::string &strdst)
+{
+	std::string::size_type pos = 0;
+
+	while( (pos = str.find(strsrc, pos)) != string::npos)
+	{
+		str.replace(pos, strsrc.length(), strdst);
+		pos += strdst.length();
+
+	}
+}
+
 void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath)
 {
     /*
@@ -90,9 +102,11 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, 
         CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
 
-        m_Display2ImageMap[spriteFrameName] = imagePath;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		string_replace(spriteFrameName, "\\", "/");
+#endif
 
-        //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
+        m_Display2ImageMap[spriteFrameName] = imagePath;
 
         CCSpriteFrame *spriteFrame = (CCSpriteFrame *)CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
         if (spriteFrame)

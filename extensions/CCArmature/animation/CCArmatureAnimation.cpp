@@ -49,6 +49,7 @@ CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
 CCArmatureAnimation::CCArmatureAnimation()
 	: m_pAnimationData(NULL)
 	, m_fSpeedScale(1)
+	, m_pMovementData(NULL)
 	, m_pArmature(NULL)
     , m_strMovementID("")
     , m_iToIndex(0)
@@ -116,7 +117,7 @@ void CCArmatureAnimation::setAnimationScale(float animationScale )
     setSpeedScale(animationScale);
 }
 
-float CCArmatureAnimation::getAnimationScale()
+float CCArmatureAnimation::getAnimationScale() const
 {
 	return getSpeedScale();
 }
@@ -131,7 +132,7 @@ void CCArmatureAnimation::setSpeedScale(float speedScale)
 
 	m_fSpeedScale = speedScale;
 
-	m_fProcessScale = m_pMovementData ? m_fSpeedScale : m_fSpeedScale * m_pMovementData->scale;
+	m_fProcessScale = !m_pMovementData ? m_fSpeedScale : m_fSpeedScale * m_pMovementData->scale;
 
 	CCDictElement *element = NULL;
 	CCDictionary *dict = m_pArmature->getBoneDic();
@@ -147,7 +148,7 @@ void CCArmatureAnimation::setSpeedScale(float speedScale)
 	}
 }
 
-float CCArmatureAnimation::getSpeedScale()
+float CCArmatureAnimation::getSpeedScale() const
 {
 	return m_fSpeedScale;
 }

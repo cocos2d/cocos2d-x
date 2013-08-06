@@ -7,7 +7,7 @@ using namespace cocos2d::extension;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-	CCArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();  
+	CCArmatureDataManager::purgeArmatureSystem();
 	CCJsonReader::sharedJsonReader()->purgeJsonReader();
 	cocos2d::extension::UIActionManager::shareManager()->purgeUIActionManager();
 	cocos2d::extension::UIHelper::instance()->purgeUIHelper();

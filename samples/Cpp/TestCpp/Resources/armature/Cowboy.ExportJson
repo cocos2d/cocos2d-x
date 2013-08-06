@@ -1,8 +1,8 @@
 {
   "armature_data": [
     {
-      "strVersion": "0.2.5.0",
-      "version": 0.25,
+      "strVersion": "0.3.0.0",
+      "version": 0.30,
       "name": "Cowboy",
       "bone_data": [
         {

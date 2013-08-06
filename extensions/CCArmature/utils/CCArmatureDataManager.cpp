@@ -46,6 +46,12 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
     return s_sharedArmatureDataManager;
 }
 
+void CCArmatureDataManager::purgeArmatureSystem()
+{
+	CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
+	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
+}
+
 CCArmatureDataManager::CCArmatureDataManager(void)
 {
 	m_pArmarureDatas = NULL;
@@ -63,11 +69,6 @@ CCArmatureDataManager::~CCArmatureDataManager(void)
     CC_SAFE_DELETE(m_pTextureDatas);
 }
 
-void CCArmatureDataManager::purgeArmatureSystem()
-{
-    CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
-}
 
 bool CCArmatureDataManager::init()
 {

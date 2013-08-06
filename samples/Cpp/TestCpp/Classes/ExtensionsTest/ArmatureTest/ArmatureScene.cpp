@@ -21,8 +21,6 @@ CCLayer *CreateLayer(int index)
 		pLayer = new TestDragonBones20(); break;
 	case TEST_COCOSTUDIO_WITH_SKELETON:
 		pLayer = new TestCSWithSkeleton(); break;
-	case TEST_COCOSTUDIO_WITHOUT_SKELETON:
-		pLayer = new TestCSWithoutSkeleton(); break;
 	case TEST_PERFORMANCE:
 		pLayer = new TestPerformance(); break;
 	case TEST_CHANGE_ZORDER:
@@ -98,7 +96,7 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 }
 void ArmatureTestScene::runThisTest()
 {
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json");
+
  	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
@@ -116,7 +114,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 	TestScene::MainMenuCallback(pSender);
 
 	removeAllChildren();
-	CCArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();
+	CCArmatureDataManager::purgeArmatureSystem();
 }
 
 
@@ -202,25 +200,6 @@ void ArmatureTestLayer::draw()
 
 
 
-void TestDragonBones20::onEnter()
-{
-	ArmatureTestLayer::onEnter();
-
-	cocos2d::extension::CCArmature *armature = NULL;
-	armature = cocos2d::extension::CCArmature::create("Dragon");
-	armature->getAnimation()->playByIndex(1);
-	armature->getAnimation()->setSpeedScale(0.4f);
-	armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
-	armature->setScale(0.6f);
-    addChild(armature);
-}
-
-std::string TestDragonBones20::title()
-{
-	return "Test Export From DragonBones version 2.0";
-}
-
-
 void TestCSWithSkeleton::onEnter()
 {
 	ArmatureTestLayer::onEnter();
@@ -239,23 +218,24 @@ std::string TestCSWithSkeleton::title()
 
 
 
-void TestCSWithoutSkeleton::onEnter()
+
+void TestDragonBones20::onEnter()
 {
 	ArmatureTestLayer::onEnter();
+
 	cocos2d::extension::CCArmature *armature = NULL;
-	armature = cocos2d::extension::CCArmature::create("TestBone");
-	armature->getAnimation()->playByIndex(0);
-    armature->setAnchorPoint(ccp(0.5, -0.1));
-	armature->setScale(0.2f);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
-	addChild(armature);
+	armature = cocos2d::extension::CCArmature::create("Dragon");
+	armature->getAnimation()->playByIndex(1);
+	armature->getAnimation()->setSpeedScale(0.4f);
+	armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
+	armature->setScale(0.6f);
+    addChild(armature);
 }
 
-std::string TestCSWithoutSkeleton::title()
+std::string TestDragonBones20::title()
 {
-	return "Test Export From CocoStudio Without Skeleton Effect";
+	return "Test Export From DragonBones version 2.0";
 }
-
 
 
 
@@ -327,7 +307,7 @@ void TestChangeZorder::onEnter()
 	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
 
-	armature = cocos2d::extension::CCArmature::create("TestBone");
+	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.24f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));

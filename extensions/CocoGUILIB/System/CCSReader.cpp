@@ -1378,7 +1378,7 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
     float dh = DICTOOL->getFloatValue_json(options, "height");
     if (dw > 0.0f || dh > 0.0f)
     {
-        textField->setSize(CCSizeMake(dw, dh));
+        //textField->setSize(CCSizeMake(dw, dh));
     }
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnable(passwordEnable);
