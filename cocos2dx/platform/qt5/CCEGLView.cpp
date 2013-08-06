@@ -35,6 +35,7 @@
 #include "touch_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
 #include <QGuiApplication>
 #include <QWindow>
@@ -54,6 +55,11 @@ class Cocos2DQt5OpenGLIntegration : public QWindow {
 
         virtual void touchEvent(QTouchEvent *event);
         virtual bool event(QEvent *event);
+        virtual void mousePressEvent(QMouseEvent *event);
+        virtual void mouseMoveEvent(QMouseEvent *event);
+        virtual void mouseReleaseEvent(QMouseEvent *event);
+        virtual void keyPressEvent(QKeyEvent *event);
+        virtual void keyReleaseEvent(QKeyEvent *event);
 
         void swapBuffers();
 
@@ -119,6 +125,48 @@ Cocos2DQt5OpenGLIntegration::event(QEvent *event)
     }
 
     return QWindow::event(event);
+}
+
+void
+Cocos2DQt5OpenGLIntegration::mousePressEvent(QMouseEvent *event)
+{
+    QPoint point = event->pos();
+    float x = point.x();
+    float y = point.y();
+    int id = 0;
+    m_egl_view->handleTouchesBegin(1, &id, &x, &y);
+}
+
+void
+Cocos2DQt5OpenGLIntegration::mouseMoveEvent(QMouseEvent *event)
+{
+    QPoint point = event->pos();
+    float x = point.x();
+    float y = point.y();
+    int id = 0;
+    m_egl_view->handleTouchesMove(1, &id, &x, &y);
+}
+
+void
+Cocos2DQt5OpenGLIntegration::mouseReleaseEvent(QMouseEvent *event)
+{
+    QPoint point = event->pos();
+    float x = point.x();
+    float y = point.y();
+    int id = 0;
+    m_egl_view->handleTouchesEnd(1, &id, &x, &y);
+}
+
+void
+Cocos2DQt5OpenGLIntegration::keyPressEvent(QKeyEvent *event)
+{
+    Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event->key(), true);
+}
+
+void
+Cocos2DQt5OpenGLIntegration::keyReleaseEvent(QKeyEvent *event)
+{
+    Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(event->key(), false);
 }
 
 void
