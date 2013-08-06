@@ -38,6 +38,7 @@ Developers:
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
         Adding CCLabelTTF::createWithFontDefinition.
+        New label support.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
@@ -423,6 +424,7 @@ Developers:
         Added some guards in fileutils. Fixed a bug in emscripten file utils.
         Added emscripten keyboard support
         Clang support for Linux
+        Multiple emscripten template support. Emscripten multiple resolutions support.
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -556,6 +558,9 @@ Developers:
     Nako Sung (nakosung)
         Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
         Exposing cc.RemoveSelf to JS.
+        
+    dotsquid
+        Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.
 
 Retired Core Developers:
     WenSheng Yang

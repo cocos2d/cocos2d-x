@@ -38,16 +38,17 @@ NS_CC_BEGIN
 /* On iOS, should create autorelease pool when create a new thread
  * and release it when the thread end.
  */
+
 class CC_DLL Thread
 {
 public:
-    Thread() : _autoreasePool(0) {}
+    Thread() : _autoReleasePool(nullptr) {}
     ~Thread();
 
     void createAutoreleasePool();
 
 private:
-    void *_autoreasePool;
+    void *_autoReleasePool;
 };
 
 // end of platform group

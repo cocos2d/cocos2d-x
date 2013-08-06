@@ -487,7 +487,7 @@ bool Image::isPng(void *data, int dataLen)
 
 bool Image::isEtc(void *data, int dataLen)
 {
-    return (bool)etc1_pkm_is_valid((etc1_byte*)data);
+    return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 bool Image::isS3TC(void *data, int dataLen)

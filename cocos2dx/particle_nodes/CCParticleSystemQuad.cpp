@@ -596,9 +596,11 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             CC_SAFE_FREE(_indices);
 
             glDeleteBuffers(2, &_buffersVBO[0]);
+            memset(_buffersVBO, 0, sizeof(_buffersVBO));
 #if CC_TEXTURE_ATLAS_USE_VAO
             glDeleteVertexArrays(1, &_VAOname);
             GL::bindVAO(0);
+            _VAOname = 0;
 #endif
         }
     }
