@@ -137,7 +137,7 @@ bool TextureAtlas::initWithFile(const char * file, int capacity)
     Texture2D *texture = TextureCache::getInstance()->addImage(file);
 
     if (texture)
-    {
+    {   
         return initWithTexture(texture, capacity);
     }
     else

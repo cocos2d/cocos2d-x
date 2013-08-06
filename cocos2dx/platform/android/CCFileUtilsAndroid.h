@@ -33,10 +33,6 @@
 #include "jni.h"
 #include "android/asset_manager.h"
 
-extern "C" {
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAssetManager(JNIEnv*  env, jobject thiz, jobject java_assetmanager);
-}
-
 NS_CC_BEGIN
 
 /**
@@ -52,6 +48,8 @@ class CC_DLL FileUtilsAndroid : public FileUtils
 public:
     virtual ~FileUtilsAndroid();
 
+    static void setassetmanager(AAssetManager* a);
+
     /* override funtions */
     bool init();
     virtual unsigned char* getFileData(const char* filename, const char* pszMode, unsigned long * pSize);
@@ -66,6 +64,7 @@ public:
     
 private:
     unsigned char* doGetFileData(const char* filename, const char* pszMode, unsigned long * pSize, bool forAsync);
+    static AAssetManager* assetmanager;
 };
 
 // end of platform group
