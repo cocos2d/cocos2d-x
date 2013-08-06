@@ -784,13 +784,14 @@ void RawStencilBufferTest6::setup()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     Point winPoint = Point(Director::getInstance()->getWinSize());
-    unsigned char bits = 0;
+    //by default, glReadPixels will pack data with 4 bytes allignment
+    unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
     glClearStencil(0);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    LabelTTF *clearToZeroLabel = LabelTTF::create(String::createWithFormat("00=%02x", bits)->getCString(), "Arial", 20);
+    LabelTTF *clearToZeroLabel = LabelTTF::create(String::createWithFormat("00=%02x", bits[0])->getCString(), "Arial", 20);
     clearToZeroLabel->setPosition( Point((winPoint.x / 3) * 1, winPoint.y - 10) );
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -798,7 +799,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    LabelTTF *clearToMaskLabel = LabelTTF::create(String::createWithFormat("0a=%02x", bits)->getCString(), "Arial", 20);
+    LabelTTF *clearToMaskLabel = LabelTTF::create(String::createWithFormat("0a=%02x", bits[0])->getCString(), "Arial", 20);
     clearToMaskLabel->setPosition( Point((winPoint.x / 3) * 2, winPoint.y - 10) );
     this->addChild(clearToMaskLabel);
 #endif

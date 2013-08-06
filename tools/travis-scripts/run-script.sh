@@ -70,11 +70,11 @@ elif [ "$PLATFORM"x = "android"x ]; then
     build_android TestLua
 
     # Build template
-    echo "Building template ..."
-    cd $COCOS2DX_ROOT/template
-    build_android multi-platform-cpp
-    build_android multi-platform-js
-    build_android multi-platform-lua
+    # echo "Building template ..."
+    # cd $COCOS2DX_ROOT/template
+    # build_android multi-platform-cpp
+    # build_android multi-platform-js
+    # build_android multi-platform-lua
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary

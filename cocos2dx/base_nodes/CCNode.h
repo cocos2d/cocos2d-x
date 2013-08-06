@@ -174,7 +174,7 @@ public:
      * The larger number it is, the later this node will be drawn in each message loop.
      * Please refer to setVertexZ(float) for the difference.
      *
-     * @param nZOrder   Z order of this node.
+     * @param zOrder   Z order of this node.
      */
     virtual void setZOrder(int zOrder);
     /**
@@ -206,7 +206,7 @@ public:
      *
      * @warning Use it at your own risk since it might break the cocos2d parent-children z order
      *
-     * @param fVertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  OpenGL Z vertex of this node.
      */
     virtual void setVertexZ(float vertexZ);
     /**
@@ -462,9 +462,9 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      * 
-     * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotaionX);
+    virtual void setRotationX(float rotationX);
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
@@ -481,7 +481,7 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
-     * @param fRotationY    The Y rotation in degrees.
+     * @param rotationY    The Y rotation in degrees.
      */
     virtual void setRotationY(float rotationY);
     /**
@@ -699,7 +699,7 @@ public:
     /**
      * Changes a grid object that is used when applying effects
      *
-     * @param A Grid object that is used when applying effects
+     * @param grid  A Grid object that is used when applying effects
      */
     virtual void setGrid(GridBase *grid);
     
@@ -748,7 +748,7 @@ public:
      *
      * Please refer to getTag for the sample code.
      *
-     * @param A interger that indentifies the node.
+     * @param tag   A interger that indentifies the node.
      */
     virtual void setTag(int tag);
     
@@ -769,7 +769,7 @@ public:
      * @warning Don't forget to release the memroy manually, 
      *          especially before you change this data pointer, and before this node is autoreleased.
      *
-     * @param A custom user data pointer
+     * @param userData  A custom user data pointer
      */
     virtual void setUserData(void *userData);
     
@@ -791,7 +791,7 @@ public:
      * and the previous UserObject (if existed) will be relese.
      * The UserObject will be released in Node's destructure.
      *
-     * @param A user assigned Object
+     * @param userObject    A user assigned Object
      */
     virtual void setUserObject(Object *userObject);
     
@@ -817,7 +817,7 @@ public:
      * node->setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      * @endcode
      * 
-     * @param The shader program which fetchs from ShaderCache.
+     * @param shaderProgram The shader program which fetchs from ShaderCache.
      */
     virtual void setShaderProgram(GLProgram *shaderProgram);
     /// @} end of Shader Program
@@ -961,14 +961,14 @@ public:
     /** 
      * Stops and removes an action from the running action list.
      *
-     * @param An action object to be removed.
+     * @param action    The action object to be removed.
      */
     void stopAction(Action* action);
 
     /** 
      * Removes an action from the running action list by its tag.
      *
-     * @param A tag that indicates the action to be removed.
+     * @param tag   A tag that indicates the action to be removed.
      */
     void stopActionByTag(int tag);
 
@@ -1062,6 +1062,7 @@ public:
      * this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      * @endcode
      *
+     * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
@@ -1072,7 +1073,7 @@ public:
      * Schedules a custom selector with an interval time in seconds.
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
      */
     void schedule(SEL_SCHEDULE selector, float interval);
@@ -1081,7 +1082,7 @@ public:
      * Schedules a selector that runs only once, with a delay of 0 or larger
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);

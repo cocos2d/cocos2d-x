@@ -94,15 +94,14 @@ public:
     };
     
     /**
-    @brief  Load the image from the specified path. 
-    @param strPath   the absolute file path.
-    @param imageType the type of image, currently only supporting two types.
-    @return  true if loaded correctly.
+    @brief Load the image from the specified path.
+    @param path   the absolute file path.
+    @return true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath);
+    bool initWithImageFile(const char *path);
 
     /**
-    @brief  Load image from stream buffer.
+    @brief Load image from stream buffer.
     @param data  stream buffer which holds the image data.
     @param dataLen  data length expressed in (number of) bytes.
     @return true if loaded correctly.
@@ -113,21 +112,21 @@ public:
     bool initWithRawData(void *data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent = 8, bool bPreMulti = false);
 
     /**
-    @brief    Create image with specified string.
-    @param  pText       the text the image will show (cannot be nil).
-    @param  nWidth      the image width, if 0, the width will match the text's width.
-    @param  nHeight     the image height, if 0, the height will match the text's height.
-    @param  eAlignMask  the test Alignment
-    @param  pFontName   the name of the font used to draw the text. If nil, use the default system font.
-    @param  nSize       the font size, if 0, use the system default size.
+    @brief Create image with specified string.
+    @param text       the text the image will show (cannot be nil).
+    @param width      the image width, if 0, the width will match the text's width.
+    @param height     the image height, if 0, the height will match the text's height.
+    @param alignMask  the test Alignment
+    @param fontName   the name of the font used to draw the text. If nil, use the default system font.
+    @param size       the font size, if 0, use the system default size.
     */
     bool initWithString(
-        const char *    pText, 
-        int             nWidth = 0, 
-        int             nHeight = 0,
-        TextAlign       eAlignMask = TextAlign::CENTER,
-        const char *    pFontName = 0,
-        int             nSize = 0);
+        const char *    text,
+        int             width = 0,
+        int             height = 0,
+        TextAlign       alignMask = TextAlign::CENTER,
+        const char *    fontName = 0,
+        int             size = 0);
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
@@ -176,10 +175,10 @@ public:
 
     /**
      @brief    Save Image data to the specified file, with specified format.
-     @param    pszFilePath        the file's absolute path, including file suffix.
-     @param    bIsToRGB        whether the image is saved as RGB format.
+     @param    filePath        the file's absolute path, including file suffix.
+     @param    isToRGB        whether the image is saved as RGB format.
      */
-    bool saveToFile(const char *pszFilePath, bool bIsToRGB = true);
+    bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
     bool initWithJpgData(void *data, int dataLen);

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FA09A376168AFD41008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A375168AFD41008C1C7B /* Foundation.framework */; };
+		FA73FC9117A11B84007E23C2 /* AdsFlurry.m in Sources */ = {isa = PBXBuildFile; fileRef = FA73FC8F17A11B84007E23C2 /* AdsFlurry.m */; };
+		FA73FC9617A11E24007E23C2 /* libFlurryAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA73FC9517A11E24007E23C2 /* libFlurryAds.a */; };
 		FAB6DFDD1756F22200C90D89 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6DFDB1756F22200C90D89 /* libFlurry.a */; };
 		FAB6DFE01756F29800C90D89 /* AnalyticsFlurry.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB6DFDF1756F29800C90D89 /* AnalyticsFlurry.m */; };
 /* End PBXBuildFile section */
@@ -27,6 +29,12 @@
 /* Begin PBXFileReference section */
 		FA09A372168AFD41008C1C7B /* libPluginFlurry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginFlurry.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA09A375168AFD41008C1C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA73FC8E17A11B84007E23C2 /* AdsFlurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsFlurry.h; sourceTree = "<group>"; };
+		FA73FC8F17A11B84007E23C2 /* AdsFlurry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdsFlurry.m; sourceTree = "<group>"; };
+		FA73FC9017A11B84007E23C2 /* PluginFlurry-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PluginFlurry-Prefix.pch"; sourceTree = "<group>"; };
+		FA73FC9317A11E24007E23C2 /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
+		FA73FC9417A11E24007E23C2 /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
+		FA73FC9517A11E24007E23C2 /* libFlurryAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds.a; sourceTree = "<group>"; };
 		FA86650E168BE22D0073E055 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FAB6DFD81756F22200C90D89 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		FAB6DFDB1756F22200C90D89 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
@@ -41,6 +49,7 @@
 			files = (
 				FA09A376168AFD41008C1C7B /* Foundation.framework in Frameworks */,
 				FAB6DFDD1756F22200C90D89 /* libFlurry.a in Frameworks */,
+				FA73FC9617A11E24007E23C2 /* libFlurryAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,10 +59,14 @@
 		FA09A367168AFD41008C1C7B = {
 			isa = PBXGroup;
 			children = (
+				FA73FC8E17A11B84007E23C2 /* AdsFlurry.h */,
+				FA73FC8F17A11B84007E23C2 /* AdsFlurry.m */,
+				FA73FC9017A11B84007E23C2 /* PluginFlurry-Prefix.pch */,
 				FAB6DFDE1756F29800C90D89 /* AnalyticsFlurry.h */,
 				FAB6DFDF1756F29800C90D89 /* AnalyticsFlurry.m */,
 				FAB6DFD81756F22200C90D89 /* Flurry.h */,
 				FAB6DFDB1756F22200C90D89 /* libFlurry.a */,
+				FA73FC9217A11E24007E23C2 /* FlurryAds */,
 				FA09A374168AFD41008C1C7B /* Frameworks */,
 				FA09A373168AFD41008C1C7B /* Products */,
 			);
@@ -74,6 +87,16 @@
 				FA09A375168AFD41008C1C7B /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA73FC9217A11E24007E23C2 /* FlurryAds */ = {
+			isa = PBXGroup;
+			children = (
+				FA73FC9317A11E24007E23C2 /* FlurryAdDelegate.h */,
+				FA73FC9417A11E24007E23C2 /* FlurryAds.h */,
+				FA73FC9517A11E24007E23C2 /* libFlurryAds.a */,
+			);
+			path = FlurryAds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB6DFE01756F29800C90D89 /* AnalyticsFlurry.m in Sources */,
+				FA73FC9117A11B84007E23C2 /* AdsFlurry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +224,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/FlurryAds\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginFlurry;
@@ -221,6 +246,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../platform/ios\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/FlurryAds\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginFlurry;

@@ -1,6 +1,6 @@
 all:
 
-DEFINES += -DEMSCRIPTEN
+DEFINES += -DEMSCRIPTEN -DCC_KEYBOARD_SUPPORT
 
 THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ifndef COCOS_ROOT
@@ -11,16 +11,13 @@ endif
 COCOS_SRC = $(COCOS_ROOT)/cocos2dx
 OBJ_DIR ?= obj
 
-EMSCRIPTEN_ROOT := $(realpath $(COCOS_ROOT)/external/emscripten)
+EMSCRIPTEN_ROOT ?= $(realpath $(COCOS_ROOT)/external/emscripten)
 PACKAGER := $(EMSCRIPTEN_ROOT)/tools/file_packager.py
 
-AR := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emar
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -std=c++11 -Wno-deprecated-declarations
+AR  := $(EMSCRIPTEN_ROOT)/emar
+CC  := $(EMSCRIPTEN_ROOT)/emcc
+CXX := $(EMSCRIPTEN_ROOT)/em++
 ARFLAGS = cr
-
-CC := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/emcc
-CXX := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/em++
 
 # XXX: Not entirely sure why main, malloc and free need to be explicitly listed
 # here, but after adding a --js-library library, these symbols seem to get
@@ -28,15 +25,13 @@ CXX := EMSCRIPTEN=$(EMSCRIPTEN_ROOT) $(COCOS_ROOT)/external/emscripten/em++
 EXPORTED_FLAGS := -s EXPORTED_FUNCTIONS="['_CCTextureCacheEmscripten_addImageAsyncCallBack','_CCTextureCacheEmscripten_preMultiplyImageRegion','_malloc','_free','_main']"
 JSLIBS := --js-library $(COCOS_SRC)/platform/emscripten/CCTextureCacheEmscripten.js
 
-CCFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
-CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ $(EXPORTED_FLAGS) $(JSLIBS)
+CCFLAGS  += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS)
+CXXFLAGS += -MMD -Wall -fPIC -Qunused-arguments -Wno-overloaded-virtual -Qunused-variable -s TOTAL_MEMORY=268435456 -s VERBOSE=1 -U__native_client__ -Wno-deprecated-declarations $(EXPORTED_FLAGS) $(JSLIBS) -std=c++11
 
 LIB_DIR = $(COCOS_ROOT)/lib/emscripten
 BIN_DIR = bin
 
 INCLUDES +=  \
-    -I$(EMSCRIPTEN_ROOT)/system/include \
-    -I$(COCOS_ROOT)/external/emscripten/system/include \
     -I$(COCOS_SRC) \
     -I$(COCOS_SRC)/cocoa \
     -I$(COCOS_SRC)/include \
@@ -52,8 +47,8 @@ LBITS := $(shell getconf LONG_BIT)
 INCLUDES += -I$(COCOS_SRC)/platform/third_party/linux
 
 ifeq ($(DEBUG), 1)
-CCFLAGS += -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache -s GL_UNSAFE_OPTS=0
-CXXFLAGS += -O0 -s ASSERTIONS=1 -s SAFE_HEAP=1 --jcache -s GL_UNSAFE_OPTS=0
+CCFLAGS  += -O0 -s ASSERTIONS=1 --jcache -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=1
+CXXFLAGS += -O0 -s ASSERTIONS=1 --jcache -s GL_UNSAFE_OPTS=0 -s INVOKE_RUN=0 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s SAFE_HEAP=1
 DEFINES += -D_DEBUG -DCOCOS2D_DEBUG=1 -DCP_USE_DOUBLES=0
 OBJ_DIR := $(OBJ_DIR)/debug
 LIB_DIR := $(LIB_DIR)/debug
@@ -97,7 +92,7 @@ STATICLIBS = \
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(RPATH_REL)/$(LIB_DIR)
 LIBS = -lrt -lz
 
-HTMLTPL_DIR = $(COCOS_ROOT)/tools/emscripten-template
+HTMLTPL_DIR = $(COCOS_ROOT)/tools/emscripten-templates/basic
 HTMLTPL_FILE = index.html
 
 clean:

@@ -357,7 +357,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccpLineIntersect(const Point& p1, con
 }
 
 /*
- ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
+ ccpSegmentIntersect returns true if Segment A-B intersects with segment C-D
  @since v1.0.0
  */
 CC_DEPRECATED_ATTRIBUTE static inline bool ccpSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)
@@ -804,8 +804,8 @@ CC_DEPRECATED_ATTRIBUTE typedef FontShadow ccFontShadow;
 CC_DEPRECATED_ATTRIBUTE typedef FontStroke ccFontStroke;
 CC_DEPRECATED_ATTRIBUTE typedef FontDefinition ccFontDefinition;
 
-CC_DEPRECATED_ATTRIBUTE typedef Label::VAlignment CCVerticalTextAlignment;
-CC_DEPRECATED_ATTRIBUTE typedef Label::HAlignment CCTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef TextVAlignment CCVerticalTextAlignment;
+CC_DEPRECATED_ATTRIBUTE typedef TextHAlignment CCTextAlignment;
 CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type CCProgressTimerType;
 
 CC_DEPRECATED_ATTRIBUTE typedef void* CCZone;
@@ -866,13 +866,13 @@ CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionCustom =
 CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
 CC_DEPRECATED_ATTRIBUTE typedef Director::Projection ccDirectorProjection;
 
-CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentTop = Label::VAlignment::TOP;
-CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentCenter = Label::VAlignment::CENTER;
-CC_DEPRECATED_ATTRIBUTE const Label::VAlignment kCCVerticalTextAlignmentBottom = Label::VAlignment::BOTTOM;
+CC_DEPRECATED_ATTRIBUTE const TextVAlignment kCCVerticalTextAlignmentTop = TextVAlignment::TOP;
+CC_DEPRECATED_ATTRIBUTE const TextVAlignment kCCVerticalTextAlignmentCenter = TextVAlignment::CENTER;
+CC_DEPRECATED_ATTRIBUTE const TextVAlignment kCCVerticalTextAlignmentBottom = TextVAlignment::BOTTOM;
 
-CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentLeft = Label::HAlignment::LEFT;
-CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentCenter = Label::HAlignment::CENTER;
-CC_DEPRECATED_ATTRIBUTE const Label::HAlignment kCCTextAlignmentRight = Label::HAlignment::RIGHT;
+CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentLeft = TextHAlignment::LEFT;
+CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentCenter = TextHAlignment::CENTER;
+CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentRight = TextHAlignment::RIGHT;
 
 CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
 CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;

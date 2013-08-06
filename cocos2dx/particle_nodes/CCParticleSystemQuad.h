@@ -73,7 +73,7 @@ public:
     void initTexCoordsWithRect(const Rect& rect);
 
     /** Sets a new SpriteFrame as particle.
-    WARNING: this method is experimental. Use setTexture:withRect instead.
+    WARNING: this method is experimental. Use setTextureWithRect instead.
     @since v0.99.4
     */
     void setDisplayFrame(SpriteFrame *spriteFrame);
