@@ -82,6 +82,8 @@ public:
         PVR,
         //! ETC
         ETC,
+        //! S3TC
+        S3TC,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -197,6 +199,10 @@ protected:
     bool initWithPVRv2Data(void *data, int dataLen);
     bool initWithPVRv3Data(void *data, int dataLen);
     bool initWithETCData(void *data, int dataLen);
+    
+    bool initWithS3TCData(void *data, int dataLen);
+   // const uint32_t MakeFourCC(char ch0,char ch1,char ch2,char ch3);
+    
 
     bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
     bool saveImageToJPG(const char *pszFilePath);
@@ -239,6 +245,7 @@ private:
     bool isWebp(void *data, int dataLen);
     bool isPvr(void *data, int dataLen);
     bool isEtc(void *data, int dataLen);
+    bool isS3TC(void *data,int dataLen);
 
     bool testFormatForPvrTCSupport(uint64_t format);
 };

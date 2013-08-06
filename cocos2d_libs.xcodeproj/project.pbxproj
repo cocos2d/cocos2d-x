@@ -44,6 +44,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0194D74417AF49C500729295 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0194D74217AF49C500729295 /* s3tc.h */; };
+		0194D74517AF49C500729295 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0194D74217AF49C500729295 /* s3tc.h */; };
+		0194D74617AF49C500729295 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0194D74317AF49C500729295 /* s3tc.cpp */; };
+		0194D74717AF49C500729295 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0194D74317AF49C500729295 /* s3tc.cpp */; };
 		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
@@ -1874,6 +1878,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0194D74217AF49C500729295 /* s3tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = s3tc.h; path = common/s3tc/s3tc.h; sourceTree = "<group>"; };
+		0194D74317AF49C500729295 /* s3tc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = s3tc.cpp; path = common/s3tc/s3tc.cpp; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A055B81797EBAC0040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Deprecated.lua; sourceTree = "<group>"; };
@@ -3028,6 +3034,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0194D74117AF48FD00729295 /* s3tc */ = {
+			isa = PBXGroup;
+			children = (
+				0194D74217AF49C500729295 /* s3tc.h */,
+				0194D74317AF49C500729295 /* s3tc.cpp */,
+			);
+			name = s3tc;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -3562,6 +3577,7 @@
 		A03F1F611780BAE5006731B9 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				0194D74117AF48FD00729295 /* s3tc */,
 				B33AFB6417A20B150022B711 /* etc */,
 				A07A4D9D17837B910073F6A7 /* ios */,
 				A03F20D21780BAE5006731B9 /* mac */,
@@ -5173,6 +5189,7 @@
 				A07A4E071783815B0073F6A7 /* CCWindow.h in Headers */,
 				A07A4E091783815B0073F6A7 /* EAGLView.h in Headers */,
 				466BE8ED1793DBE400424245 /* CCDeprecated.h in Headers */,
+				0194D74417AF49C500729295 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5748,6 +5765,7 @@
 				A07A4DBB17837B910073F6A7 /* encode.h in Headers */,
 				A07A4DBC17837B910073F6A7 /* types.h in Headers */,
 				466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */,
+				0194D74517AF49C500729295 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6503,6 +6521,7 @@
 				A07A4E0A1783815B0073F6A7 /* EAGLView.mm in Sources */,
 				46B9C9631786763E00F808DD /* ccTypes.cpp in Sources */,
 				466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */,
+				0194D74617AF49C500729295 /* s3tc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6940,6 +6959,7 @@
 				A07A4D9C17837B690073F6A7 /* AccelerometerSimulation.m in Sources */,
 				46B9C9641786763E00F808DD /* ccTypes.cpp in Sources */,
 				466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */,
+				0194D74717AF49C500729295 /* s3tc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
