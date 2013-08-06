@@ -25,10 +25,12 @@
 #ifndef _TextImage_h_
 #define _TextImage_h_
 
-#include "CCFontRender.h"
-#include "CCFont.h"
+//#include "CCFont.h"
+#include <vector>
 
 NS_CC_BEGIN
+
+class Font;
 
 /** @brief GlyphDef defines one single glyph (character) in a text image
  *
@@ -169,7 +171,6 @@ public:
 private:
     
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
-    //bool createFontRender();
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool generateTextGlyphs(const char * pText);
     int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
