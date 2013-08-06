@@ -12,9 +12,29 @@
 NS_CC_BEGIN
 
 
-FontFNT * FontFNT::create(CCBMFontConfiguration *theContfig)
+FontFNT * FontFNT::create(const char* fntFilePath)
 {
-    return new FontFNT(theContfig);
+    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
+    if (!newConf)
+        return nullptr;
+    
+    // add the texture
+    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    if ( !tempTexture )
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    FontFNT *tempFont =  new FontFNT(newConf);
+    
+    if (!tempFont)
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    return tempFont;
 }
 
 FontFNT::~FontFNT()

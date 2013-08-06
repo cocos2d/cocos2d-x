@@ -64,11 +64,10 @@ protected:
     
     Font();
     virtual ~Font() {}
-    
-private:
-    
     void setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs = 0);
     const char * getGlyphCollection(GlyphCollection glyphs);
+    
+private:
     
     GlyphCollection     _usedGlyphs;
     char              * _customGlyphs;

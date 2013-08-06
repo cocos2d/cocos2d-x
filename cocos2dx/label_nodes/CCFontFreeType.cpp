@@ -34,9 +34,28 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 
-FontFreeType * FontFreeType::create()
+FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    return new FontFreeType();
+    if( glyphs == GlyphCollection::DYNAMIC )
+    {
+        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
+        return nullptr;
+    }
+    
+    FontFreeType *tempFont =  new FontFreeType();
+    
+    if (!tempFont)
+        return nullptr;
+    
+    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    
+    if( !tempFont->createFontObject(fontName, fontSize))
+    {
+        delete tempFont;
+        return nullptr;
+    }
+    
+    return tempFont;
 }
 
 bool FontFreeType::initFreeType()

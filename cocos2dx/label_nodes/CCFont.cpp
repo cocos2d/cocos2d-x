@@ -95,53 +95,14 @@ const char * Font::getCurrentGlyphCollection()
     }
 }
 
-
 Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    
-    if( glyphs == GlyphCollection::DYNAMIC )
-    {
-        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
-        return nullptr;
-    }
-    
-    // create the font
-    FontFreeType *tempFont = FontFreeType::create();
-    
-    if (!tempFont)
-        return nullptr;
-    
-    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
-    
-    if( !tempFont->createFontObject(fntName, fontSize))
-        return nullptr;
-    
-    return tempFont;
+    return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
 }
 
 Font* Font::createWithFNT(const char* fntFilePath)
 {
-    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
-    if (!newConf)
-        return nullptr;
-    
-    // add the texture
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
-    if ( !tempTexture )
-    {
-        delete newConf;
-        return nullptr;
-    }
-    
-    FontFNT *tempFont =  FontFNT::create(newConf);
-    
-    if (!tempFont)
-    {
-        delete newConf;
-        return nullptr;
-    }
-    
-    return tempFont;
+   return FontFNT::create(fntFilePath);
 }
 
 unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
