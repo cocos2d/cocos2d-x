@@ -153,33 +153,6 @@ std::string getCurrentLanguageJNI() {
     return ret;
 }
 
-void enableAccelerometerJNI() {
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "enableAccelerometer", "()V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void setAccelerometerIntervalJNI(float interval) {
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setAccelerometerInterval", "(F)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, interval);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void disableAccelerometerJNI() {
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "disableAccelerometer", "()V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
 // functions for UserDefault
 bool getBoolForKeyJNI(const char* pKey, bool defaultValue)
 {
