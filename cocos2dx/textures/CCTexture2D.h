@@ -109,6 +109,12 @@ public:
         PVRTC2A,
         //! ETC-compressed texture: ETC
         ETC,
+        //! S3TC-compressed texture: S3TC_Dxt1
+        S3TC_Dxt1,
+        //! S3TC-compressed texture: S3TC_Dxt3
+        S3TC_Dxt3,
+        //! S3TC-compressed texture: S3TC_Dxt5
+        S3TC_Dxt5,
 
         //! Default texture format: AUTO
         DEFAULT = AUTO,
@@ -382,6 +388,7 @@ public:
 typedef const std::map<Texture2D::PixelFormat, const TexturePixelFormatInfo> ConstTexturePixelFormatInfoMap;
 typedef const ConstTexturePixelFormatInfoMap::value_type ConstTexturePixelFormatInfoMapValue;
 
+
 static ConstTexturePixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
 {
     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, TexturePixelFormatInfo(GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
@@ -404,6 +411,13 @@ static ConstTexturePixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
 #ifdef GL_ETC1_RGB8_OES
     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, TexturePixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
 #endif
+
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt1, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt3, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt5, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+    
 };
 
 static ConstTexturePixelFormatInfoMap g_texturePixelFormatInfoTables(TexturePixelFormatInfoTablesValue,

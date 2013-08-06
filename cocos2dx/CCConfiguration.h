@@ -87,6 +87,9 @@ public:
      /** Whether or not ETC Texture Compressed is supported */
     bool supportsETC(void) const;
     
+    /** Whether or  not S3TC Texture Compressed is supported */
+    bool supportsS3TC(void ) const;
+    
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
@@ -144,6 +147,7 @@ protected:
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;
     bool            _supportsETC;
+    bool            _supportsS3TC;
     bool            _supportsNPOT;
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;

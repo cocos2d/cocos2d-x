@@ -493,7 +493,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     const TexturePixelFormatInfo& info = g_texturePixelFormatInfoTables.at(pixelFormat);
 
-    if (info.compressed && !Configuration::getInstance()->supportsPVRTC() && !Configuration::getInstance()->supportsETC())
+    if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
+                        && !Configuration::getInstance()->supportsETC()
+                        && !Configuration::getInstance()->supportsS3TC())
     {
         CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
         return false;
@@ -536,6 +538,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     }else
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     }
     
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -640,6 +643,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
+        
         return true;
     }
     else if (image->isCompressed())
