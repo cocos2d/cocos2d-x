@@ -301,22 +301,6 @@ typedef struct
 
 #pragma pack(pop)
 
-typedef struct
-{
-    GLsizei width;
-    GLsizei height;
-    GLint components;
-    GLenum type;
-    GLenum format;
-    GLenum internalFormat;
-    
-    GLsizei cmapEntries;
-    GLenum cmapFormat;
-    GLubyte *cmap;
-    GLubyte *pixels;
-    
-} gliGenericImage;
-
 //s3tc struct end
 
 /////////////////////////////////////////////////////////////////////
@@ -1371,7 +1355,7 @@ bool Image::initWithETCData(void *data, int dataLen)
     return false;
 }
 
-const uint32_t MakeFourCC(char ch0, char ch1, char ch2, char ch3)
+const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
 {
     const uint32_t fourCC=((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) |((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
     return fourCC;
@@ -1380,36 +1364,36 @@ const uint32_t MakeFourCC(char ch0, char ch1, char ch2, char ch3)
 bool Image::initWithS3TCData(void *data, int dataLen)
 {
     
-    const uint32_t FOURCC_DXT1 = MakeFourCC('D', 'X', 'T', '1');
-    const uint32_t FOURCC_DXT3 = MakeFourCC('D', 'X', 'T', '3');
-    const uint32_t FOURCC_DXT5 = MakeFourCC('D', 'X', 'T', '5');
+    const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
+    const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
+    const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');
     
     /* load the .dds file */
-    ccS3TCTexHeader *header = NULL;
-    unsigned char *pixel_data = NULL;
-
-    header = (ccS3TCTexHeader *)data;
     
-    pixel_data = (unsigned char*)malloc(dataLen-sizeof(ccS3TCTexHeader));
+    ccS3TCTexHeader *header = (ccS3TCTexHeader *)data;;
+    unsigned char *pixel_data = (unsigned char*)malloc(dataLen-sizeof(ccS3TCTexHeader));
     memcpy((void *)pixel_data, (unsigned char*)data+sizeof(ccS3TCTexHeader), dataLen-sizeof(ccS3TCTexHeader));
     
     _width = header->ddsd.dwWidth;
     _height = header->ddsd.dwHeight;
     _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.dwMipMapCount;
+    _dataLen = 0;  
     int blockSize = (FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC) ? 8 : 16;
-    _dataLen = 0;  //数据长度
+
+  
+    
+    /* caculate the dataLen */
     
     int width = _width;
     int height = _height;
     
-    /* caculate the dataLen */
-    if(Configuration::getInstance()->supportsS3TC())  //压缩数据长度
+    if(Configuration::getInstance()->supportsS3TC())  //compressed data length
     {
         _dataLen = dataLen -sizeof(ccS3TCTexHeader);
         _data = new unsigned char [_dataLen];
         memcpy((void *)_data,(void *)pixel_data , _dataLen);
 
-    }else                                             //解压后数据长度
+    }else                                             //decompressed data length
     {
         for(unsigned int i = 0; i< _numberOfMipmaps && (width || height); ++i)
         {
@@ -1426,6 +1410,7 @@ bool Image::initWithS3TCData(void *data, int dataLen)
     
     
     /* load the mipmaps */
+    
     int encode_offset = 0;
     int decode_offset = 0;
     width = _width;  height =_height;
@@ -1438,8 +1423,10 @@ bool Image::initWithS3TCData(void *data, int dataLen)
         int size = ((width+3)/4)*((height+3)/4)*blockSize;
                 
         if (Configuration::getInstance()->supportsS3TC())
-        {
+        {   //decode texture throught hardware
+            
             CCLOG("this is s3tc H decode");
+            
             if(FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
                 _renderFormat = Texture2D::PixelFormat::S3TC_Dxt1;
@@ -1457,8 +1444,7 @@ bool Image::initWithS3TCData(void *data, int dataLen)
             _mipmaps[i].len = size;
         }
         else
-        {
-            //if it is not gles or device do not support S3TC, decode texture by software
+        {   //if it is not gles or device do not support S3TC, decode texture by software
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
@@ -1467,15 +1453,15 @@ bool Image::initWithS3TCData(void *data, int dataLen)
             std::vector<unsigned char> decodeImageData(stride * height);
             if(FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                ff_decode_dxt1(pixel_data + encode_offset, &decodeImageData[0], width, height, stride);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt1);
             }
             else if(FOURCC_DXT3==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                ff_decode_dxt3(pixel_data + encode_offset, &decodeImageData[0], width, height, stride);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt3);
             }
             else if(FOURCC_DXT5==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                ff_decode_dxt5(pixel_data + encode_offset, &decodeImageData[0], width, height, stride);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt5);
             }
             
             _mipmaps[i].address = (unsigned char *)_data + decode_offset;
@@ -1489,6 +1475,8 @@ bool Image::initWithS3TCData(void *data, int dataLen)
         width >>= 1;
         height >>= 1;
     }
+    
+    /* end load the mipmaps */
     
     CC_SAFE_DELETE(pixel_data);
     
