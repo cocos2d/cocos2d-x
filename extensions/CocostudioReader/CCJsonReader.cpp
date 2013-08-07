@@ -32,47 +32,6 @@
 
 NS_CC_EXT_BEGIN
 
-	Version::Version()
-	{
-		m_strV == "";
-	}
-
-	Version::~Version()
-	{
-	}
-
-	int Version::toInt()
-	{
-		if (m_strV == "")
-		{
-			return 0;
-		}
-		int nRes = 0;
-		int nPoint = 1000;
-		std::string num;
-		for(int i = 0; i < m_strV.length(); ++i)
-		{
-			if (i == m_strV.length() - 1)
-			{
-				nRes += nPoint * atoi(num.c_str());
-				break;
-			}
-			if (m_strV[i] != '.')
-			{
-				num += m_strV[i];
-			}
-			else
-			{
-				nRes += nPoint * atoi(num.c_str());
-				nPoint /= 10;
-				num = "";
-			}
-		}
-		return nRes;
-
-	}
-
-
     CCJsonReader* CCJsonReader::s_sharedJsonReader = NULL;
 
 	CCJsonReader::CCJsonReader()

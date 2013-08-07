@@ -31,16 +31,6 @@
 
 NS_CC_EXT_BEGIN
 
-	struct Version
-	{
-	public:
-		Version();
-		~Version();
-	public:
-		int toInt();
-		std::string m_strV;
-	};
-
 	class CCJsonReader
 	{
 		public:
