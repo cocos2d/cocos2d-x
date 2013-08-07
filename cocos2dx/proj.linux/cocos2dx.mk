@@ -57,7 +57,6 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/include \
     -I$(COCOS_SRC)/kazmath/include \
     -I$(COCOS_SRC)/platform/linux \
-    -I$(COCOS_SRC)/platform/third_party/linux/libpng \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
     -I$(COCOS_SRC)/platform/third_party/linux/libtiff \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
@@ -107,7 +106,6 @@ else
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries
 endif
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-    $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
