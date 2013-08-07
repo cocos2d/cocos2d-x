@@ -30,7 +30,7 @@ Example:
 
 	$ cd cocos2d-x
 	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-        $ cd projects/mygame
+    $ cd projects/mygame
 
 
 Main features
