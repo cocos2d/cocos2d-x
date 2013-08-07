@@ -42,11 +42,12 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
- 
+
 /**
-    @brief Structure which can tell where mipmap begins and how long is it
-*/
-typedef struct _MipmapInfo {
+ @brief Structure which can tell where mipmap begins and how long is it
+ */
+typedef struct _MipmapInfo
+{
     unsigned char* address;
     int len;
 }MipmapInfo;
@@ -58,14 +59,6 @@ public:
     
     Image();
     virtual ~Image();
-    
-    /**
-     @brief Determine how many mipmaps can we have. 
-     Its same as define but it respects namespaces
-    */
-    enum {
-        CC_MIPMAP_MAX = 16,
-    };
 
     /** Supported formats for Image */
     enum class Format
@@ -114,10 +107,10 @@ public:
     @param dataLen  data length expressed in (number of) bytes.
     @return true if loaded correctly.
     */
-    bool initWithImageData(void * data, int dataLen);
+    bool initWithImageData(const void * data, int dataLen);
 
     // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(void *data, int dataLen, int nWidth, int nHeight, int nBitsPerComponent = 8, bool bPreMulti = false);
+    bool initWithRawData(const void * data, int dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     /**
     @brief Create image with specified string.
@@ -189,22 +182,24 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
-    bool initWithJpgData(void *data, int dataLen);
-    bool initWithPngData(void *data, int dataLen);
-    bool initWithTiffData(void *data, int dataLen);
-    bool initWithWebpData(void *data, int dataLen);
-    bool initWithPVRData(void *data, int dataLen);
-    bool initWithPVRv2Data(void *data, int dataLen);
-    bool initWithPVRv3Data(void *data, int dataLen);
-    bool initWithETCData(void *data, int dataLen);
+    bool initWithJpgData(const void *data, int dataLen);
+    bool initWithPngData(const void *data, int dataLen);
+    bool initWithTiffData(const void *data, int dataLen);
+    bool initWithWebpData(const void *data, int dataLen);
+    bool initWithPVRData(const void *data, int dataLen);
+    bool initWithPVRv2Data(const void *data, int dataLen);
+    bool initWithPVRv3Data(const void *data, int dataLen);
+    bool initWithETCData(const void *data, int dataLen);
 
-    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool saveImageToJPG(const char *pszFilePath);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    bool iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
-#endif
-
+    bool saveImageToPNG(const char *filePath, bool isToRGB = true);
+    bool saveImageToJPG(const char *filePath);
+    
+private:
+    /**
+     @brief Determine how many mipmaps can we have.
+     Its same as define but it respects namespaces
+     */
+    static const int MIPMAP_MAX = 16;
     unsigned char *_data;
     int _dataLen;
     int _width;
@@ -212,7 +207,7 @@ protected:
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
     bool _preMulti;
-    MipmapInfo _mipmaps[CC_MIPMAP_MAX];   // pointer to mipmap images
+    MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
@@ -232,15 +227,13 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
 
-    Format detectFormat(void* data, int dataLen);
-    bool isPng(void *data, int dataLen);
-    bool isJpg(void *data, int dataLen);
-    bool isTiff(void *data, int dataLen);
-    bool isWebp(void *data, int dataLen);
-    bool isPvr(void *data, int dataLen);
-    bool isEtc(void *data, int dataLen);
-
-    bool testFormatForPvrTCSupport(uint64_t format);
+    Format detectFormat(const void* data, int dataLen);
+    bool isPng(const void *data, int dataLen);
+    bool isJpg(const void *data, int dataLen);
+    bool isTiff(const void *data, int dataLen);
+    bool isWebp(const void *data, int dataLen);
+    bool isPvr(const void *data, int dataLen);
+    bool isEtc(const void *data, int dataLen);
 };
 
 // end of platform group

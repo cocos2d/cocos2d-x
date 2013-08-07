@@ -1,4 +1,4 @@
-/* $Id: tiff.h,v 1.43 2006-10-05 15:20:40 dron Exp $ */
+/* $Id: tiff.h,v 1.68 2012-08-19 16:56:35 bfriesen Exp $ */
 
 /*
  * Copyright (c) 1988-1997 Sam Leffler
@@ -39,86 +39,74 @@
  *    Suite 200
  *    Seattle, WA  98104
  *    206-622-5500
- *    
+ *
  *    (http://partners.adobe.com/asn/developer/PDFS/TN/TIFF6.pdf)
  *
- * For Big TIFF design notes see the following link
+ * For BigTIFF design notes see the following links
  *    http://www.remotesensing.org/libtiff/bigtiffdesign.html
+ *    http://www.awaresystems.be/imaging/tiff/bigtiff.html
  */
-#define	TIFF_VERSION	        42
-#define TIFF_BIGTIFF_VERSION    43
 
-#define	TIFF_BIGENDIAN		0x4d4d
-#define	TIFF_LITTLEENDIAN	0x4949
-#define	MDI_LITTLEENDIAN        0x5045
-#define	MDI_BIGENDIAN           0x4550
+#define TIFF_VERSION_CLASSIC 42
+#define TIFF_VERSION_BIG 43
+
+#define TIFF_BIGENDIAN      0x4d4d
+#define TIFF_LITTLEENDIAN   0x4949
+#define MDI_LITTLEENDIAN    0x5045
+#define MDI_BIGENDIAN       0x4550
+
 /*
  * Intrinsic data types required by the file format:
  *
- * 8-bit quantities	int8/uint8
- * 16-bit quantities	int16/uint16
- * 32-bit quantities	int32/uint32
- * strings		unsigned char*
+ * 8-bit quantities     int8/uint8
+ * 16-bit quantities    int16/uint16
+ * 32-bit quantities    int32/uint32
+ * 64-bit quantities    int64/uint64
+ * strings              unsigned char*
  */
 
-#ifndef HAVE_INT8
-typedef	signed char int8;	/* NB: non-ANSI compilers may not grok */
-#endif
-typedef	unsigned char uint8;
-#ifndef HAVE_INT16
-typedef	short int16;
-#endif
-typedef	unsigned short uint16;	/* sizeof (uint16) must == 2 */
-#if SIZEOF_INT == 4
-#ifndef HAVE_INT32
-typedef	int int32;
-#endif
-typedef	unsigned int uint32;	/* sizeof (uint32) must == 4 */
-#elif SIZEOF_LONG == 4
-#ifndef HAVE_INT32
-typedef	long int32;
-#endif
-typedef	unsigned long uint32;	/* sizeof (uint32) must == 4 */
-#endif
+typedef TIFF_INT8_T   int8;
+typedef TIFF_UINT8_T  uint8;
 
-/* For TIFFReassignTagToIgnore */
-enum TIFFIgnoreSense /* IGNORE tag table */
-{
-	TIS_STORE,
-	TIS_EXTRACT,
-	TIS_EMPTY
-};
+typedef TIFF_INT16_T  int16;
+typedef TIFF_UINT16_T uint16;
+
+typedef TIFF_INT32_T  int32;
+typedef TIFF_UINT32_T uint32;
+
+typedef TIFF_INT64_T  int64;
+typedef TIFF_UINT64_T uint64;
+
+/*
+ * Some types as promoted in a variable argument list
+ * We use uint16_vap rather then directly using int, because this way
+ * we document the type we actually want to pass through, conceptually,
+ * rather then confusing the issue by merely stating the type it gets
+ * promoted to
+ */
+
+typedef int uint16_vap;
 
 /*
  * TIFF header.
  */
-typedef	struct {
-	uint16	tiff_magic;	/* magic number (defines byte order) */
-#define TIFF_MAGIC_SIZE		2
-	uint16	tiff_version;	/* TIFF version number */
-#define TIFF_VERSION_SIZE	2
-	uint32	tiff_diroff;	/* byte offset to first directory */
-#define TIFF_DIROFFSET_SIZE	4
-} TIFFHeader;
+typedef struct {
+	uint16 tiff_magic;      /* magic number (defines byte order) */
+	uint16 tiff_version;    /* TIFF version number */
+} TIFFHeaderCommon;
+typedef struct {
+	uint16 tiff_magic;      /* magic number (defines byte order) */
+	uint16 tiff_version;    /* TIFF version number */
+	uint32 tiff_diroff;     /* byte offset to first directory */
+} TIFFHeaderClassic;
+typedef struct {
+	uint16 tiff_magic;      /* magic number (defines byte order) */
+	uint16 tiff_version;    /* TIFF version number */
+	uint16 tiff_offsetsize; /* size of offsets, should be 8 */
+	uint16 tiff_unused;     /* unused word, should be 0 */
+	uint64 tiff_diroff;     /* byte offset to first directory */
+} TIFFHeaderBig;
 
-
-/*
- * TIFF Image File Directories are comprised of a table of field
- * descriptors of the form shown below.  The table is sorted in
- * ascending order by tag.  The values associated with each entry are
- * disjoint and may appear anywhere in the file (so long as they are
- * placed on a word boundary).
- *
- * If the value is 4 bytes or less, then it is placed in the offset
- * field to save space.  If the value is less than 4 bytes, it is
- * left-justified in the offset field.
- */
-typedef	struct {
-	uint16		tdir_tag;	/* see below */
-	uint16		tdir_type;	/* data type; see below */
-	uint32		tdir_count;	/* number of items; length in spec */
-	uint32		tdir_offset;	/* byte offset to field data */
-} TIFFDirEntry;
 
 /*
  * NB: In the comments below,
@@ -134,21 +122,24 @@ typedef	struct {
  *
  * Note: RATIONALs are the ratio of two 32-bit integer values.
  */
-typedef	enum {
-	TIFF_NOTYPE	= 0,	/* placeholder */
-	TIFF_BYTE	= 1,	/* 8-bit unsigned integer */
-	TIFF_ASCII	= 2,	/* 8-bit bytes w/ last byte null */
-	TIFF_SHORT	= 3,	/* 16-bit unsigned integer */
-	TIFF_LONG	= 4,	/* 32-bit unsigned integer */
-	TIFF_RATIONAL	= 5,	/* 64-bit unsigned fraction */
-	TIFF_SBYTE	= 6,	/* !8-bit signed integer */
-	TIFF_UNDEFINED	= 7,	/* !8-bit untyped data */
-	TIFF_SSHORT	= 8,	/* !16-bit signed integer */
-	TIFF_SLONG	= 9,	/* !32-bit signed integer */
-	TIFF_SRATIONAL	= 10,	/* !64-bit signed fraction */
-	TIFF_FLOAT	= 11,	/* !32-bit IEEE floating point */
-	TIFF_DOUBLE	= 12,	/* !64-bit IEEE floating point */
-	TIFF_IFD	= 13	/* %32-bit unsigned integer (offset) */
+typedef enum {
+	TIFF_NOTYPE = 0,      /* placeholder */
+	TIFF_BYTE = 1,        /* 8-bit unsigned integer */
+	TIFF_ASCII = 2,       /* 8-bit bytes w/ last byte null */
+	TIFF_SHORT = 3,       /* 16-bit unsigned integer */
+	TIFF_LONG = 4,        /* 32-bit unsigned integer */
+	TIFF_RATIONAL = 5,    /* 64-bit unsigned fraction */
+	TIFF_SBYTE = 6,       /* !8-bit signed integer */
+	TIFF_UNDEFINED = 7,   /* !8-bit untyped data */
+	TIFF_SSHORT = 8,      /* !16-bit signed integer */
+	TIFF_SLONG = 9,       /* !32-bit signed integer */
+	TIFF_SRATIONAL = 10,  /* !64-bit signed fraction */
+	TIFF_FLOAT = 11,      /* !32-bit IEEE floating point */
+	TIFF_DOUBLE = 12,     /* !64-bit IEEE floating point */
+	TIFF_IFD = 13,        /* %32-bit unsigned integer (offset) */
+	TIFF_LONG8 = 16,      /* BigTIFF 64-bit unsigned integer */
+	TIFF_SLONG8 = 17,     /* BigTIFF 64-bit signed integer */
+	TIFF_IFD8 = 18        /* BigTIFF 64-bit unsigned integer (offset) */
 } TIFFDataType;
 
 /*
@@ -175,6 +166,8 @@ typedef	enum {
 #define	    COMPRESSION_LZW		5       /* Lempel-Ziv  & Welch */
 #define	    COMPRESSION_OJPEG		6	/* !6.0 JPEG */
 #define	    COMPRESSION_JPEG		7	/* %JPEG DCT compression */
+#define     COMPRESSION_T85			9	/* !TIFF/FX T.85 JBIG compression */
+#define     COMPRESSION_T43			10	/* !TIFF/FX T.43 colour by layered JBIG compression */
 #define	    COMPRESSION_NEXT		32766	/* NeXT 2-bit RLE */
 #define	    COMPRESSION_CCITTRLEW	32771	/* #1 w/ word alignment */
 #define	    COMPRESSION_PACKBITS	32773	/* Macintosh RLE */
@@ -196,6 +189,7 @@ typedef	enum {
 #define     COMPRESSION_SGILOG		34676	/* SGI Log Luminance RLE */
 #define     COMPRESSION_SGILOG24	34677	/* SGI Log 24-bit packed */
 #define     COMPRESSION_JP2000          34712   /* Leadtools JPEG2000 */
+#define	    COMPRESSION_LZMA		34925	/* LZMA2 */
 #define	TIFFTAG_PHOTOMETRIC		262	/* photometric interpretation */
 #define	    PHOTOMETRIC_MINISWHITE	0	/* min value is white */
 #define	    PHOTOMETRIC_MINISBLACK	1	/* min value is black */
@@ -327,6 +321,30 @@ typedef	enum {
 						   [Adobe TIFF Technote 3] */
 #define	TIFFTAG_JPEGTABLES		347	/* %JPEG table stream */
 #define	TIFFTAG_OPIPROXY		351	/* %OPI Proxy [Adobe TIFF technote] */
+/* Tags 400-435 are from the TIFF/FX spec */
+#define TIFFTAG_GLOBALPARAMETERSIFD	400	/* ! */
+#define TIFFTAG_PROFILETYPE			401	/* ! */
+#define     PROFILETYPE_UNSPECIFIED	0	/* ! */
+#define     PROFILETYPE_G3_FAX		1	/* ! */
+#define TIFFTAG_FAXPROFILE			402	/* ! */
+#define     FAXPROFILE_S			1	/* !TIFF/FX FAX profile S */
+#define     FAXPROFILE_F			2	/* !TIFF/FX FAX profile F */
+#define     FAXPROFILE_J			3	/* !TIFF/FX FAX profile J */
+#define     FAXPROFILE_C			4	/* !TIFF/FX FAX profile C */
+#define     FAXPROFILE_L			5	/* !TIFF/FX FAX profile L */
+#define     FAXPROFILE_M			6	/* !TIFF/FX FAX profile LM */
+#define TIFFTAG_CODINGMETHODS		403	/* !TIFF/FX coding methods */
+#define     CODINGMETHODS_T4_1D		(1 << 1)	/* !T.4 1D */
+#define     CODINGMETHODS_T4_2D		(1 << 2)	/* !T.4 2D */
+#define     CODINGMETHODS_T6		(1 << 3)	/* !T.6 */
+#define     CODINGMETHODS_T85 		(1 << 4)	/* !T.85 JBIG */
+#define     CODINGMETHODS_T42 		(1 << 5)	/* !T.42 JPEG */
+#define     CODINGMETHODS_T43		(1 << 6)	/* !T.43 colour by layered JBIG */
+#define TIFFTAG_VERSIONYEAR			404	/* !TIFF/FX version year */
+#define TIFFTAG_MODENUMBER			405	/* !TIFF/FX mode number */
+#define TIFFTAG_DECODE				433	/* !TIFF/FX decode */
+#define TIFFTAG_IMAGEBASECOLOR		434	/* !TIFF/FX image base colour */
+#define TIFFTAG_T82OPTIONS			435	/* !TIFF/FX T.82 options */
 /*
  * Tags 512-521 are obsoleted by Technical Note #2 which specifies a
  * revised JPEG-in-TIFF scheme.
@@ -348,6 +366,7 @@ typedef	enum {
 #define	    YCBCRPOSITION_CENTERED	1	/* !as in PostScript Level 2 */
 #define	    YCBCRPOSITION_COSITED	2	/* !as in CCIR 601-1 */
 #define	TIFFTAG_REFERENCEBLACKWHITE	532	/* !colorimetry info */
+#define TIFFTAG_STRIPROWCOUNTS		559 /* !TIFF/FX strip row counts */
 #define	TIFFTAG_XMLPACKET		700	/* %XML packet
 						   [Adobe XMP Specification,
 						   January 2004 */
@@ -414,6 +433,7 @@ typedef	enum {
 #define TIFFTAG_EXIFIFD			34665	/* Pointer to EXIF private directory */
 /* tag 34750 is a private tag registered to Adobe? */
 #define TIFFTAG_ICCPROFILE		34675	/* ICC profile data */
+#define TIFFTAG_IMAGELAYER		34732	/* !TIFF/FX image layer information */
 /* tag 34750 is a private tag registered to Pixel Magic */
 #define	TIFFTAG_JBIGOPTIONS		34750	/* JBIG options */
 #define TIFFTAG_GPSIFD			34853	/* Pointer to GPS private directory */
@@ -576,6 +596,10 @@ typedef	enum {
 #define TIFFTAG_SGILOGENCODE		65561 /* SGILog data encoding control*/
 #define     SGILOGENCODE_NODITHER	0     /* do not dither encoded values*/
 #define     SGILOGENCODE_RANDITHER	1     /* randomly dither encd values */
+#define	TIFFTAG_LZMAPRESET		65562	/* LZMA2 preset (compression level) */
+#define TIFFTAG_PERSAMPLE       65563	/* interface for per sample tags */
+#define     PERSAMPLE_MERGED        0	/* present as a single value */
+#define     PERSAMPLE_MULTI         1	/* present as multiple values */
 
 /*
  * EXIF tags
@@ -645,3 +669,10 @@ typedef	enum {
 #endif /* _TIFF_ */
 
 /* vim: set ts=8 sts=8 sw=8 noet: */
+/*
+ * Local Variables:
+ * mode: c
+ * c-basic-offset: 8
+ * fill-column: 78
+ * End:
+ */

@@ -103,8 +103,8 @@ void Accelerometer::OnDataReceived(SensorType sensorType, SensorData& sensorData
         AccelerationSensorData& data = static_cast<AccelerationSensorData&>(sensorData);
         AppLog("AccelerationSensorData    x = %5.4f , y = %5.4f,  z = %5.4f ", data.x,data.y,data.z);
 
-        _accelerationValue.x = -data.x;
-        _accelerationValue.y = -data.y;
+        _accelerationValue.x = data.y;
+        _accelerationValue.y = -data.x;
         _accelerationValue.z = -data.z;
         _accelerationValue.timestamp = data.timestamp;
 
