@@ -8302,7 +8302,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/mac\"/**";
 			};
 			name = Debug;
 		};
@@ -8325,7 +8325,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/cocos2dx/platform/third_party/mac/libraries\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/mac\" \"$(SRCROOT)/cocos2dx/platform/third_party/mac\"/**";
 			};
 			name = Release;
 		};
@@ -8594,7 +8594,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/ios\"/**";
 			};
 			name = Debug;
 		};
@@ -8617,7 +8617,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/cocos2dx/platform/third_party/ios/libraries";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/common\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/cocos2dx\" \"$(SRCROOT)/cocos2dx/include\" \"$(SRCROOT)/cocos2dx/kazmath/include\" \"$(SRCROOT)/cocos2dx/platform/ios\" \"$(SRCROOT)/cocos2dx/platform/third_party/ios\"/**";
 			};
 			name = Release;
 		};
