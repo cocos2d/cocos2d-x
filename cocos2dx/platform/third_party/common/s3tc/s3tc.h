@@ -1,26 +1,54 @@
-//
-//  s3tc.h
-//  cocos2d_libs
-//
-//  Created by zhangrongjian on 13-7-25.
-//
-//
+/****************************************************************************
+ Copyright (c) 2010 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
-#ifndef __cocos2d_libs__s3tc__
-#define __cocos2d_libs__s3tc__
+
+#ifndef COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
+#define COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
 
 #include "CCStdC.h"
 
-void dxt1_decode_pixels (uint8_t **in_data, uint32_t *d, unsigned int qstride, unsigned int flag, uint64_t alpha);
+typedef enum
+{
+    dxt1 = 1,
+    dxt3 = 3,
+    dxt5 = 5,
+}ccS3TCDecodeFlag;
 
-//Decode DXT1 encoded data to RGB32.
-void ff_decode_dxt1 (uint8_t *in_data,uint8_t *dst, const unsigned int w, const unsigned int h, const unsigned int stride);
+//Decode S3TC encode block to 4x4 RGB32 pixels
+void s3tc_decode_block(uint8_t **block_data,
+                       uint32_t *decode_block_data,
+                       unsigned int stride,
+                       bool oneBitAlphaFlag,
+                       uint64_t alpha,
+                       ccS3TCDecodeFlag decodeFlag);
 
-//Decode DXT3 encoded data to RGB32.
-void ff_decode_dxt3 (uint8_t *in_data,uint8_t *dst, const unsigned int w, const unsigned int h, const unsigned int stride);
+//Decode S3TC encode data to RGB32
+void s3tc_decode(uint8_t *encode_data,
+                 uint8_t *decode_data,
+                 const unsigned int pixelsWidth,
+                 const unsigned int pixelsHeight,
+                 ccS3TCDecodeFlag decodeFlag
+                 );
 
-void ff_decode_dxt5(uint8_t *in_data,uint8_t *dst, const unsigned int w, const unsigned int h, const unsigned int stride);
-
-
-
-#endif /* defined(__cocos2d_libs__s3tc__) */
+#endif /* defined(COCOS2DX_PLATFORM_THIRDPARTY_S3TC_) */

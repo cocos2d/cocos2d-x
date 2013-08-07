@@ -1,83 +1,67 @@
-//
-//  s3tc.cpp
-//  cocos2d_libs
-//
-//  Created by zhangrongjian on 13-7-25.
-//
-//
+/****************************************************************************
+ Copyright (c) 2010 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
-
- /*
-  * S3 Texture Compression (S3TC) decoding functions
-  * Copyright (c) 2007 by Ivo van Poorten
-  *
-  * see also: http://wiki.multimedia.cx/index.php?title=S3TC
-  *
-  * This file is part of FFmpeg.
-  *
-  * FFmpeg is free software; you can redistribute it and/or
-  * modify it under the terms of the GNU Lesser General Public
-  * License as published by the Free Software Foundation; either
-  * version 2.1 of the License, or (at your option) any later version.
-  *
-  * FFmpeg is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  * Lesser General Public License for more details.
-  *
-  * You should have received a copy of the GNU Lesser General Public
-  * License along with FFmpeg; if not, write to the Free Software
-  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-  */
-
-// #include "libavcodec/bytestream.h"
-// #include "avcodec.h"
 #include "s3tc.h"
-typedef enum
-{
-    dxt1 = 1,
-    dxt3 = 3,
-    dxt5 = 5,
-}ccS3TCCompressionFlag;
 
-void dxt1_decode_pixels(uint8_t **block_data,
-                          uint32_t *d,
-                          unsigned int qstride,
-                          unsigned int flag,
-                          uint64_t alpha,
-                          ccS3TCCompressionFlag comFlag)
+void s3tc_decode_block(uint8_t **block_data,
+                       uint32_t *decode_block_data,
+                       unsigned int stride,
+                       bool oneBitAlphaFlag,
+                       uint64_t alpha,
+                       ccS3TCDecodeFlag decodeFlag)
 {
-    unsigned int x = 0, y = 0, c0 = 0 , c1 = 0, a = (!flag * 255u) << 24;
+    unsigned int colorValue0 = 0 , colorValue1 = 0, initAlpha = (!oneBitAlphaFlag * 255u) << 24;
     unsigned int rb0 = 0, rb1 = 0, rb2 = 0, rb3 = 0, g0 = 0, g1 = 0, g2 = 0, g3 = 0;
 
-    uint32_t colors[4], pixels = 0;
+    uint32_t colors[4], pixelsIndex = 0;
     
-    memcpy((void *)&c0, *block_data, 2);
+    /* load the two color values*/
+    memcpy((void *)&colorValue0, *block_data, 2);
     (*block_data) += 2;
     
-    memcpy((void *)&c1, *block_data, 2);
+    memcpy((void *)&colorValue1, *block_data, 2);
     (*block_data) += 2;
     
-    // the channel is r5g6b5
+    /* the channel is r5g6b5 , 16 bits */
+    rb0  = (colorValue0<<19 | colorValue0>>8) & 0xf800f8;
+    rb1  = (colorValue1<<19 | colorValue1>>8) & 0xf800f8;
+    g0   =         (colorValue0 <<5) & 0x00fc00;
+    g1   =         (colorValue1 <<5) & 0x00fc00;
+    g0  +=         (g0 >>6) & 0x000300;
+    g1  +=         (g1 >>6) & 0x000300;
     
-    rb0  = (c0<<19 | c0>>8) & 0xf800f8;
-    rb1  = (c1<<19 | c1>>8) & 0xf800f8;
+    colors[0] = rb0 + g0 + initAlpha;
+    colors[1] = rb1 + g1 + initAlpha;
     
-    g0   =        (c0 <<5) & 0x00fc00;
-    g1   =        (c1 <<5) & 0x00fc00;
-    g0  +=        (g0 >>6) & 0x000300;
-    g1  +=        (g1 >>6) & 0x000300;
-    
-    colors[0] = rb0 + g0 + a;
-    colors[1] = rb1 + g1 + a;
-    
-    if (c0 > c1 || flag)
+    /* interpolate the other two color values */
+    if (colorValue0 > colorValue1 || oneBitAlphaFlag)
     {
         rb2 = (((2*rb0+rb1) * 21) >> 6) & 0xff00ff;
         rb3 = (((2*rb1+rb0) * 21) >> 6) & 0xff00ff;
         g2  = (((2*g0 +g1 ) * 21) >> 6) & 0x00ff00;
         g3  = (((2*g1 +g0 ) * 21) >> 6) & 0x00ff00;
-        colors[3] = rb3 + g3 + a;
+        colors[3] = rb3 + g3 + initAlpha;
      }
     else
     {
@@ -85,23 +69,23 @@ void dxt1_decode_pixels(uint8_t **block_data,
         g2  = ((g0 +g1 ) >> 1) & 0x00ff00;
         colors[3] = 0;
     }
+   colors[2] = rb2 + g2 + initAlpha;
    
-   colors[2] = rb2 + g2 + a;
-   
-   memcpy((void*)&pixels, *block_data, 4);  //read 4 bytes
-    (*block_data) += 4;
+   /*read the pixelsIndex , 2bits per pixel, 4 bytes */
+   memcpy((void*)&pixelsIndex, *block_data, 4);
+   (*block_data) += 4;
   
-   if(dxt5 == comFlag) //dxt5 use interpolate alpha
+   if(dxt5 == decodeFlag)
    {
-       unsigned int alphaArray[8];
+       //dxt5 use interpolate alpha
+       // 8-Alpha block: derive the other six alphas.
+       // Bit code 000 = alpha0, 001 = alpha1, other are interpolated.
        
-        // 8-Alpha block: derive the other six alphas.
-        // Bit code 000 = alpha0, 001 = alpha1, other are interpolated.
+       unsigned int alphaArray[8];
        
        alphaArray[0] = (alpha )& 0xff ;
        alphaArray[1] = (alpha >> 8)& 0xff ;
        
-       //
        if(alphaArray[0] >= alphaArray[1])  
        {
            alphaArray[2] = (alphaArray[0]*6 + alphaArray[1]*1)/7;
@@ -124,90 +108,72 @@ void dxt1_decode_pixels(uint8_t **block_data,
        // read the flowing 48bit indices (16*3)
        alpha >>= 16;
        
-       for (y=0; y<4; y++)
+       for (int y=0; y<4; y++)
        {
-           for (x=0; x<4; x++)
+           for (int x=0; x<4; x++)
            {
-               d[x] = (alphaArray[alpha & 5] <<24) + colors[pixels & 3];
-               pixels >>= 2;
+               decode_block_data[x] = (alphaArray[alpha & 5] <<24) + colors[pixelsIndex & 3];
+               pixelsIndex >>= 2;
                alpha >>= 3;
            }
-           d += qstride;
+           decode_block_data += stride;
        }
    } //if (dxt5 == comFlag)
-   else   //dxt1 dxt3 use explicit alpha
-   {
-       for (y=0; y<4; y++)
+   else   
+   { //dxt1 dxt3 use explicit alpha
+       for (int y=0; y<4; y++)
        {
-           for (x=0; x<4; x++)
+           for (int x=0; x<4; x++)
            {
-               a        = (alpha & 0x0f) << 28;
-               a       += a >> 4;
-               d[x]     = a + colors[pixels & 3];
-               pixels >>= 2;
-               alpha  >>= 4;
+               initAlpha   = (alpha & 0x0f) << 28;
+               initAlpha   += initAlpha >> 4;
+               decode_block_data[x] = initAlpha + colors[pixelsIndex& 3];
+               pixelsIndex >>= 2;
+               alpha       >>= 4;
            }
-           d += qstride;
+           decode_block_data += stride;
        }
    }
-   
 }
 
- void ff_decode_dxt1(uint8_t *in_data,
-                     uint8_t *dst,
-                     const unsigned int w,
-                     const unsigned int h,
-                     const unsigned int stride)
+void s3tc_decode(uint8_t *encode_data,             //in_data
+                 uint8_t *decode_data,             //out_data
+                 const unsigned int pixelsWidth,
+                 const unsigned int pixelsHeight,
+                 ccS3TCDecodeFlag decodeFlag)
 {
-   unsigned int bx, by, qstride = stride/4;
-   uint32_t *d = (uint32_t *) dst;
-   
-   for (by=0; by < h/4; by++, d += stride-w)         //stride = 4*width
-       for (bx = 0; bx < w / 4; bx++, d += 4)        //skip 4 pixels
-                dxt1_decode_pixels(&in_data, d, qstride, 0, 0LL, dxt1);
-}
-
- void ff_decode_dxt3(uint8_t *in_data,
-                     uint8_t *dst,
-                     const unsigned int w,
-                     const unsigned int h,
-                     const unsigned int stride)
-{
-    unsigned int bx, by, qstride = stride/4;
-    uint32_t *d = (uint32_t *) dst;
- 
-    for (by=0; by < h/4; by++, d += stride-w)
-                for (bx = 0; bx < w / 4; bx++, d += 4)
-                {
-                    uint64_t tempAlpha=0;
-                    
-                    memcpy((void *)&tempAlpha, in_data, 8);
-                    in_data += 8;
-                    
-                    dxt1_decode_pixels(&in_data, d, qstride, 1, tempAlpha, dxt3);
-                }
-}
-
-void ff_decode_dxt5(uint8_t *in_data,
-                    uint8_t *dst,
-                    const unsigned int w,
-                    const unsigned int h,
-                    const unsigned int stride)
-{
-    unsigned int bx, by, qstride = stride/4;
-    uint32_t *d = (uint32_t *) dst;
+    uint32_t *decode_block_data = (uint32_t *)decode_data;
     
-    for (by=0; by < h/4; by++,d += stride-w)
+    for( int block_y =0 ; block_y < pixelsHeight/4; block_y++,decode_block_data += 3*pixelsWidth)   //stride = 3*width
     {
-        for(bx = 0; bx < w / 4; bx++, d += 4)
+        for( int block_x =0 ; block_x < pixelsWidth/4; block_x++,decode_block_data += 4)            //skip 4 pixels
         {
-            uint64_t tempAlpha = 0;
+            uint64_t blockAlpha = 0;
             
-            memcpy((void *)&tempAlpha, in_data, 8);
-            in_data += 8;
-            
-            dxt1_decode_pixels(&in_data, d, qstride, 1, tempAlpha, dxt5);
-            
-        }
-    }
+            switch (decodeFlag) {
+                case dxt1:
+                {
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 0, 0LL, dxt1);
+                }
+                    break;
+                case dxt3:
+                {
+                    memcpy((void *)&blockAlpha, encode_data, 8);
+                    encode_data +=8;
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha,dxt3);
+                }
+                    break;
+                case dxt5:
+                {
+                    memcpy((void *)&blockAlpha, encode_data , 8);
+                    encode_data += 8;
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha, dxt5);
+                }
+                    break;
+                default:
+                    break;
+            }//switch
+        }//for block_x
+    }//for block_y
 }
+
