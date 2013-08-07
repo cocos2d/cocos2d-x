@@ -79,7 +79,6 @@ Runtime Requirements
   * Android 2.3+ for Android games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
-  * BlackBerry 10+
   * Tizen 2.2+
   * Emscripten
   * Google Native Client
@@ -108,11 +107,16 @@ or open the `cocos2d-x/cocos2dx-qt5.pro` file using QT Creator 5.
 
 * For Windows
 
-TODO
+Open the `cocos2d-x/cocos2d-win32.vc2012.sln`
 
 * For Android
 
-TODO
+```
+$ cd cocos2d-x/samples/Cpp/HelloCpp/proj.android
+$ ./build_native.sh
+```
+
+Import HelloCpp Android project using Eclipse(released with Android SDK). The path to be imported is `cocos2d-x/samples/Cpp/HelloCpp/proj.android`.
 
 
 Contributing to the Project
