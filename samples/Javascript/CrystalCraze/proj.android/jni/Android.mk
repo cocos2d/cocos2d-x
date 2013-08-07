@@ -16,6 +16,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += scriptingcore-spidermonkey
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2 -DCOCOS2D_JAVASCRIPT
 
@@ -26,3 +27,4 @@ $(call import-module,CocosDenshion/android)
 $(call import-module,external/chipmunk)
 $(call import-module,scripting/javascript/spidermonkey-android)
 $(call import-module,scripting/javascript/bindings)
+$(call import-module,cocos2dx/platform/android)

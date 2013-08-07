@@ -99,7 +99,7 @@ To enabled set it to 1. Disabled by default.
  Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
-#define CC_DIRECTOR_STATS_INTERVAL (0.5f)
+#define CC_DIRECTOR_STATS_INTERVAL (2.0f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION

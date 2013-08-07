@@ -267,7 +267,7 @@ void TextureMipMap::onEnter()
 
     Texture2D *texture0 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas.png");
     texture0->generateMipmap();
-    ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     texture0->setTexParameters(texParams);
 
     Texture2D *texture1 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas_nomipmap.png");
@@ -323,7 +323,7 @@ void TexturePVRMipMap::onEnter()
         addChild(imgMipMap);
 
         // support mipmap filtering
-        ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
         imgMipMap->getTexture()->setTexParameters(texParams);
     }
 
@@ -369,7 +369,7 @@ void TexturePVRMipMap2::onEnter()
     addChild(imgMipMap);
     
     // support mipmap filtering
-    ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     imgMipMap->getTexture()->setTexParameters(texParams);
 
     Sprite *img = Sprite::create("Images/test_image.png");
@@ -1550,7 +1550,7 @@ void TextureGlClamp::onEnter()
     Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
-    ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
+    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     sprite->getTexture()->setTexParameters(params);
 
     auto rotate = RotateBy::create(4, 360);
@@ -1587,7 +1587,7 @@ void TextureGlRepeat::onEnter()
     Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
-    ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
+    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
     sprite->getTexture()->setTexParameters(params);
     
     auto rotate = RotateBy::create(4, 360);

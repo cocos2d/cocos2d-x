@@ -2245,8 +2245,8 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
     // defaul values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
-    Label::HAlignment         defaultTextAlignment    = Label::HAlignment::LEFT;
-    Label::VAlignment defaultTextVAlignment   = Label::VAlignment::TOP;
+    TextHAlignment         defaultTextAlignment    = TextHAlignment::LEFT;
+    TextVAlignment defaultTextVAlignment   = TextVAlignment::TOP;
     
     // by default shadow and stroke are off
     out->_shadow._shadowEnabled = false;
@@ -2291,7 +2291,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentH", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_alignment = (Label::HAlignment)(int)fontAlign;
+        out->_alignment = (TextHAlignment)(int)fontAlign;
     }
     else
     {
@@ -2305,7 +2305,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontAlignmentV", &jsr);
         double fontAlign = 0.0;
         JS_ValueToNumber(cx, jsr, &fontAlign);
-        out->_vertAlignment = (Label::VAlignment)(int)fontAlign;
+        out->_vertAlignment = (TextVAlignment)(int)fontAlign;
     }
     else
     {
