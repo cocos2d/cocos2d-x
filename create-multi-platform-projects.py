@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # filename = create-multi-platform-projects.py
 
 import os
