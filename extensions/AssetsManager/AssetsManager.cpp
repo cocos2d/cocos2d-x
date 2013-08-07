@@ -88,6 +88,10 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 
 AssetsManager::~AssetsManager()
 {
+    if (_delegate)
+    {
+        _delegate->release();
+    }
     if (_schedule)
     {
         _schedule->release();
@@ -479,7 +483,17 @@ void AssetsManager::deleteVersion()
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
 {
+    if (_delegate)
+    {
+        _delegate->release();
+    }
+    
     _delegate = delegate;
+    
+    if (_delegate)
+    {
+        _delegate->retain();
+    }
 }
 
 void AssetsManager::setConnectionTimeout(unsigned int timeout)
@@ -602,6 +616,32 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     }
     
     if (manager) manager->_delegate->onSuccess();
+}
+
+AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )
+{
+    class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
+    {
+    public :
+        DelegateProtocolImpl(ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback)
+        : errorCallback(errorCallback), progressCallback(progressCallback), successCallback(successCallback)
+        {}
+
+        virtual void onError(AssetsManager::ErrorCode errorCode) { errorCallback(int(errorCode)); }
+        virtual void onProgress(int percent) { progressCallback(percent); }
+        virtual void onSuccess() { successCallback(); }
+
+    private :
+        ErrorCallback errorCallback;
+        ProgressCallback progressCallback;
+        SuccessCallback successCallback;
+    };
+
+    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
+    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
+    delegate->autorelease();
+    manager->setDelegate(delegate);
+    return manager;
 }
 
 NS_CC_EXT_END;
