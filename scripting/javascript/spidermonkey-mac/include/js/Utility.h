@@ -1,6 +1,5 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=8 sw=4 et tw=99 ft=cpp:
- *
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -10,6 +9,7 @@
 
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
+#include "mozilla/Compiler.h"
 #include "mozilla/Scoped.h"
 
 #include <stdlib.h>
@@ -230,8 +230,21 @@ __BitScanReverse64(unsigned __int64 val)
 # define js_bitscan_clz64(val)  __BitScanReverse64(val)
 # define JS_HAS_BUILTIN_BITSCAN64
 #endif
-#elif (__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#elif MOZ_IS_GCC
 
+#if MOZ_GCC_VERSION_AT_LEAST(3, 4, 0)
+# define USE_BUILTIN_CTZ
+#endif
+
+#elif defined(__clang__)
+
+#if __has_builtin(__builtin_ctz)
+# define USE_BUILTIN_CTZ
+#endif
+
+#endif
+
+#if defined(USE_BUILTIN_CTZ)
 # define js_bitscan_ctz32(val)  __builtin_ctz(val)
 # define js_bitscan_clz32(val)  __builtin_clz(val)
 # define JS_HAS_BUILTIN_BITSCAN32
@@ -240,6 +253,8 @@ __BitScanReverse64(unsigned __int64 val)
 #  define js_bitscan_clz64(val)  __builtin_clzll(val)
 #  define JS_HAS_BUILTIN_BITSCAN64
 # endif
+
+# undef USE_BUILTIN_CTZ
 
 #endif
 
@@ -504,6 +519,17 @@ js_delete(T *p)
 {
     if (p) {
         p->~T();
+        js_free(p);
+    }
+}
+
+template<class T>
+static JS_ALWAYS_INLINE void
+js_delete_poison(T *p)
+{
+    if (p) {
+        p->~T();
+        memset(p, 0x3B, sizeof(T));
         js_free(p);
     }
 }
