@@ -28,6 +28,7 @@
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
 #include "CCFont.h"
+#include "CCFontDefinition.h"
 
 NS_CC_BEGIN
 

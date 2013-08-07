@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "CCFontAtlas.h"
 
+
 NS_CC_BEGIN
 
 class CC_DLL FontAtlasFactory
