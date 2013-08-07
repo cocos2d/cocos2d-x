@@ -34,7 +34,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <dirent.h>
 #endif
+
 
 #include "support/zip_support/unzip.h"
 
@@ -642,6 +644,37 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     delegate->autorelease();
     manager->setDelegate(delegate);
     return manager;
+}
+
+void AssetsManager::purgeStoragePath()
+{
+    // Delete recorded version codes.
+    deleteVersion();
+    
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    string command = "rm -r ";
+    // Path may include space.
+    command += "\"" + _storagePath + "\"";
+    system(command.c_str());
+    DIR *pDir = NULL;
+    
+    pDir = opendir (_storagePath.c_str());
+    if (! pDir)
+    {
+        mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+#else
+    string command = "rd /s /q ";
+    // Path may include space.
+    command += "\"" + _storagePath + "\"";
+    system(command.c_str());
+
+    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        CreateDirectoryA(_storagePath.c_str(), 0);
+    }
+#endif
 }
 
 NS_CC_EXT_END;
