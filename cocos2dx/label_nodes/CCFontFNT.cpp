@@ -7,6 +7,7 @@
 //
 
 #include "CCFontFNT.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 

@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "cocos2d.h"
+#include "CCFontDefinition.h"
 
 NS_CC_BEGIN
 
