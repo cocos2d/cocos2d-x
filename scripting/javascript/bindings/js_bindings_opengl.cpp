@@ -92,7 +92,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
   js_cocos2dx_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
   js_cocos2dx_GLNode_class->name = "GLNode";
   js_cocos2dx_GLNode_class->addProperty = JS_PropertyStub;
-  js_cocos2dx_GLNode_class->delProperty = JS_PropertyStub;
+  js_cocos2dx_GLNode_class->delProperty = JS_DeletePropertyStub;
   js_cocos2dx_GLNode_class->getProperty = JS_PropertyStub;
   js_cocos2dx_GLNode_class->setProperty = JS_StrictPropertyStub;
   js_cocos2dx_GLNode_class->enumerate = JS_EnumerateStub;
