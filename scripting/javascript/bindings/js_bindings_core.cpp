@@ -54,15 +54,6 @@ static void its_finalize(JSFreeOp *fop, JSObject *obj)
 	CCLOGINFO("Finalizing global class");
 }
 
-static JSClass global_class = {
-	"__global", JSCLASS_GLOBAL_FLAGS,
-	JS_PropertyStub, JS_PropertyStub,
-	JS_PropertyStub, JS_StrictPropertyStub,
-	JS_EnumerateStub, JS_ResolveStub,
-	JS_ConvertStub, its_finalize,
-	JSCLASS_NO_OPTIONAL_MEMBERS
-};
-
 //#pragma mark JSBCore - Helper free functions
 static void reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {

@@ -253,7 +253,7 @@ void JSB_cpConstraint_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSB_cpConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpConstraint_class->name = name;
 	JSB_cpConstraint_class->addProperty = JS_PropertyStub;
-	JSB_cpConstraint_class->delProperty = JS_PropertyStub;
+	JSB_cpConstraint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpConstraint_class->getProperty = JS_PropertyStub;
 	JSB_cpConstraint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpConstraint_class->enumerate = JS_EnumerateStub;
@@ -456,7 +456,7 @@ void JSB_cpGrooveJoint_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSB_cpGrooveJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpGrooveJoint_class->name = name;
 	JSB_cpGrooveJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpGrooveJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpGrooveJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpGrooveJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpGrooveJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpGrooveJoint_class->enumerate = JS_EnumerateStub;
@@ -572,7 +572,7 @@ void JSB_cpSimpleMotor_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSB_cpSimpleMotor_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpSimpleMotor_class->name = name;
 	JSB_cpSimpleMotor_class->addProperty = JS_PropertyStub;
-	JSB_cpSimpleMotor_class->delProperty = JS_PropertyStub;
+	JSB_cpSimpleMotor_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpSimpleMotor_class->getProperty = JS_PropertyStub;
 	JSB_cpSimpleMotor_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpSimpleMotor_class->enumerate = JS_EnumerateStub;
@@ -730,7 +730,7 @@ void JSB_cpPivotJoint_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSB_cpPivotJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpPivotJoint_class->name = name;
 	JSB_cpPivotJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpPivotJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpPivotJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpPivotJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpPivotJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpPivotJoint_class->enumerate = JS_EnumerateStub;
@@ -921,7 +921,7 @@ void JSB_cpPinJoint_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSB_cpPinJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpPinJoint_class->name = name;
 	JSB_cpPinJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpPinJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpPinJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpPinJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpPinJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpPinJoint_class->enumerate = JS_EnumerateStub;
@@ -1151,7 +1151,7 @@ void JSB_cpSlideJoint_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSB_cpSlideJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpSlideJoint_class->name = name;
 	JSB_cpSlideJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpSlideJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpSlideJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpSlideJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpSlideJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpSlideJoint_class->enumerate = JS_EnumerateStub;
@@ -1305,7 +1305,7 @@ void JSB_cpGearJoint_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSB_cpGearJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpGearJoint_class->name = name;
 	JSB_cpGearJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpGearJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpGearJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpGearJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpGearJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpGearJoint_class->enumerate = JS_EnumerateStub;
@@ -1491,7 +1491,7 @@ void JSB_cpDampedRotarySpring_createClass(JSContext *cx, JSObject* globalObj, co
 	JSB_cpDampedRotarySpring_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpDampedRotarySpring_class->name = name;
 	JSB_cpDampedRotarySpring_class->addProperty = JS_PropertyStub;
-	JSB_cpDampedRotarySpring_class->delProperty = JS_PropertyStub;
+	JSB_cpDampedRotarySpring_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpDampedRotarySpring_class->getProperty = JS_PropertyStub;
 	JSB_cpDampedRotarySpring_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpDampedRotarySpring_class->enumerate = JS_EnumerateStub;
@@ -1757,7 +1757,7 @@ void JSB_cpDampedSpring_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSB_cpDampedSpring_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpDampedSpring_class->name = name;
 	JSB_cpDampedSpring_class->addProperty = JS_PropertyStub;
-	JSB_cpDampedSpring_class->delProperty = JS_PropertyStub;
+	JSB_cpDampedSpring_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpDampedSpring_class->getProperty = JS_PropertyStub;
 	JSB_cpDampedSpring_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpDampedSpring_class->enumerate = JS_EnumerateStub;
@@ -1948,7 +1948,7 @@ void JSB_cpRatchetJoint_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSB_cpRatchetJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpRatchetJoint_class->name = name;
 	JSB_cpRatchetJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpRatchetJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpRatchetJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpRatchetJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpRatchetJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpRatchetJoint_class->enumerate = JS_EnumerateStub;
@@ -2100,7 +2100,7 @@ void JSB_cpRotaryLimitJoint_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSB_cpRotaryLimitJoint_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpRotaryLimitJoint_class->name = name;
 	JSB_cpRotaryLimitJoint_class->addProperty = JS_PropertyStub;
-	JSB_cpRotaryLimitJoint_class->delProperty = JS_PropertyStub;
+	JSB_cpRotaryLimitJoint_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpRotaryLimitJoint_class->getProperty = JS_PropertyStub;
 	JSB_cpRotaryLimitJoint_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpRotaryLimitJoint_class->enumerate = JS_EnumerateStub;
@@ -2438,7 +2438,7 @@ void JSB_cpArbiter_createClass(JSContext *cx, JSObject* globalObj, const char* n
 	JSB_cpArbiter_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpArbiter_class->name = name;
 	JSB_cpArbiter_class->addProperty = JS_PropertyStub;
-	JSB_cpArbiter_class->delProperty = JS_PropertyStub;
+	JSB_cpArbiter_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpArbiter_class->getProperty = JS_PropertyStub;
 	JSB_cpArbiter_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpArbiter_class->enumerate = JS_EnumerateStub;
@@ -3110,7 +3110,7 @@ void JSB_cpSpace_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 	JSB_cpSpace_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpSpace_class->name = name;
 	JSB_cpSpace_class->addProperty = JS_PropertyStub;
-	JSB_cpSpace_class->delProperty = JS_PropertyStub;
+	JSB_cpSpace_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpSpace_class->getProperty = JS_PropertyStub;
 	JSB_cpSpace_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpSpace_class->enumerate = JS_EnumerateStub;
@@ -3980,7 +3980,7 @@ void JSB_cpBody_createClass(JSContext *cx, JSObject* globalObj, const char* name
 	JSB_cpBody_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpBody_class->name = name;
 	JSB_cpBody_class->addProperty = JS_PropertyStub;
-	JSB_cpBody_class->delProperty = JS_PropertyStub;
+	JSB_cpBody_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpBody_class->getProperty = JS_PropertyStub;
 	JSB_cpBody_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpBody_class->enumerate = JS_EnumerateStub;
@@ -4492,7 +4492,7 @@ void JSB_cpShape_createClass(JSContext *cx, JSObject* globalObj, const char* nam
 	JSB_cpShape_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpShape_class->name = name;
 	JSB_cpShape_class->addProperty = JS_PropertyStub;
-	JSB_cpShape_class->delProperty = JS_PropertyStub;
+	JSB_cpShape_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpShape_class->getProperty = JS_PropertyStub;
 	JSB_cpShape_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpShape_class->enumerate = JS_EnumerateStub;
@@ -4622,7 +4622,7 @@ void JSB_cpCircleShape_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSB_cpCircleShape_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpCircleShape_class->name = name;
 	JSB_cpCircleShape_class->addProperty = JS_PropertyStub;
-	JSB_cpCircleShape_class->delProperty = JS_PropertyStub;
+	JSB_cpCircleShape_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpCircleShape_class->getProperty = JS_PropertyStub;
 	JSB_cpCircleShape_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpCircleShape_class->enumerate = JS_EnumerateStub;
@@ -4790,7 +4790,7 @@ void JSB_cpSegmentShape_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSB_cpSegmentShape_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpSegmentShape_class->name = name;
 	JSB_cpSegmentShape_class->addProperty = JS_PropertyStub;
-	JSB_cpSegmentShape_class->delProperty = JS_PropertyStub;
+	JSB_cpSegmentShape_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpSegmentShape_class->getProperty = JS_PropertyStub;
 	JSB_cpSegmentShape_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpSegmentShape_class->enumerate = JS_EnumerateStub;
@@ -4887,7 +4887,7 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSB_cpPolyShape_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSB_cpPolyShape_class->name = name;
 	JSB_cpPolyShape_class->addProperty = JS_PropertyStub;
-	JSB_cpPolyShape_class->delProperty = JS_PropertyStub;
+	JSB_cpPolyShape_class->delProperty = JS_DeletePropertyStub;
 	JSB_cpPolyShape_class->getProperty = JS_PropertyStub;
 	JSB_cpPolyShape_class->setProperty = JS_StrictPropertyStub;
 	JSB_cpPolyShape_class->enumerate = JS_EnumerateStub;
