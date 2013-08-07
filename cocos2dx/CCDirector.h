@@ -142,7 +142,7 @@ public:
     inline ccDirectorProjection getProjection(void) { return m_eProjection; }
     void setProjection(ccDirectorProjection kProjection);
 
-     /** reshape projection matrix when this function will be used"*/
+     /** reshape projection matrix when canvas has been change"*/
     void reshapeProjection(const CCSize& newWindowSize);
     
     /** Sets the glViewport*/
