@@ -146,6 +146,11 @@ public:
     /* downloadAndUncompress is the entry of a new thread 
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
+
+    /** @brief Initialize storage path. 
+     */
+    void purgeStoragePath();
+
     
 protected:
     bool downLoad();
