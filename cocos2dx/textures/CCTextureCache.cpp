@@ -606,7 +606,7 @@ void VolatileTexture::addStringTexture(Texture2D *tt, const char* text, const Fo
     vt->_fontDefinition = fontDefinition;
 }
 
-void VolatileTexture::setTexParameters(Texture2D *t, const ccTexParams &texParams)
+void VolatileTexture::setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams)
 {
     VolatileTexture *vt = findVolotileTexture(t);
 
