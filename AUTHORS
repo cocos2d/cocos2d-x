@@ -425,6 +425,7 @@ Developers:
         Added emscripten keyboard support
         Clang support for Linux
         Multiple emscripten template support. Emscripten multiple resolutions support.
+        Toplevel Makefile refactoring
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
