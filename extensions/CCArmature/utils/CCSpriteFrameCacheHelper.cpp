@@ -101,10 +101,8 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, 
     {
         CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-		string_replace(spriteFrameName, "\\", "/");
-#endif
+        
+        string_replace(spriteFrameName, "\\", "/");
 
         m_Display2ImageMap[spriteFrameName] = imagePath;
 

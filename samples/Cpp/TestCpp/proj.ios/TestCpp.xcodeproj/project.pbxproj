@@ -329,7 +329,6 @@
 		37D21B8417B1B3C6008ECB1A /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B5F17B1B3C6008ECB1A /* background.mp3 */; };
 		37D21B8517B1B3C6008ECB1A /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B6017B1B3C6008ECB1A /* background.ogg */; };
 		37D21B8617B1B3C6008ECB1A /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B6117B1B3C6008ECB1A /* ccb */; };
-		37D21B8717B1B3C6008ECB1A /* class.js in Sources */ = {isa = PBXBuildFile; fileRef = 37D21B6217B1B3C6008ECB1A /* class.js */; };
 		37D21B8817B1B3C6008ECB1A /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B6317B1B3C6008ECB1A /* CocosBuilderExample.ccbproj */; };
 		37D21B8917B1B3C6008ECB1A /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B6417B1B3C6008ECB1A /* CocosBuilderExample.ccbresourcelog */; };
 		37D21B8A17B1B3C6008ECB1A /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37D21B6517B1B3C6008ECB1A /* cocosgui */; };
@@ -1111,7 +1110,6 @@
 		37D21B5F17B1B3C6008ECB1A /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		37D21B6017B1B3C6008ECB1A /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
 		37D21B6117B1B3C6008ECB1A /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccb; sourceTree = "<group>"; };
-		37D21B6217B1B3C6008ECB1A /* class.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = class.js; sourceTree = "<group>"; };
 		37D21B6317B1B3C6008ECB1A /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
 		37D21B6417B1B3C6008ECB1A /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
 		37D21B6517B1B3C6008ECB1A /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosgui; sourceTree = "<group>"; };
@@ -3015,7 +3013,6 @@
 				37D21B5F17B1B3C6008ECB1A /* background.mp3 */,
 				37D21B6017B1B3C6008ECB1A /* background.ogg */,
 				37D21B6117B1B3C6008ECB1A /* ccb */,
-				37D21B6217B1B3C6008ECB1A /* class.js */,
 				37D21B6317B1B3C6008ECB1A /* CocosBuilderExample.ccbproj */,
 				37D21B6417B1B3C6008ECB1A /* CocosBuilderExample.ccbresourcelog */,
 				37D21B6517B1B3C6008ECB1A /* cocosgui */,
@@ -3511,7 +3508,6 @@
 				37D21B5817B1B26B008ECB1A /* CCTransformHelp.cpp in Sources */,
 				37D21B5917B1B26B008ECB1A /* CCTweenFunction.cpp in Sources */,
 				37D21B5A17B1B26B008ECB1A /* CCUtilMath.cpp in Sources */,
-				37D21B8717B1B3C6008ECB1A /* class.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -118,7 +118,7 @@ files
     "*.h"
     "*.cpp"
 
-       ["CocostudioReader"]
+    ["CocostudioReader"]
     ("../CocostudioReader")
     "*.h"
     "*.cpp"
@@ -145,6 +145,11 @@ files
 
        ["CocoGUILIB/System"]
     ("../CocoGUILIB/System")
+    "*.h"
+    "*.cpp"
+    
+       ["CocoGUILIB/Layouts"]
+    ("../CocoGUILIB/Layouts")
     "*.h"
     "*.cpp"
 }
