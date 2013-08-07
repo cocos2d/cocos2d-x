@@ -1350,9 +1350,9 @@ unsigned int Texture2D::getBitsPerPixelForFormat() const
 	return this->getBitsPerPixelForFormat(_pixelFormat);
 }
 
-const Texture2D::PixelFormatInfoMap* Texture2D::getPixelFormatInfoMap()
+const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()
 {
-    return &_pixelFormatInfoTables;
+    return _pixelFormatInfoTables;
 }
 
 

@@ -310,7 +310,7 @@ public:
     GLProgram* getShaderProgram() const;
     
 public:
-    static const PixelFormatInfoMap* getPixelFormatInfoMap();
+    static const PixelFormatInfoMap& getPixelFormatInfoMap();
     
 private:
 
