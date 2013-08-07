@@ -10,6 +10,7 @@
 
 #include "mozilla/Attributes.h"
 #include "mozilla/Compiler.h"
+#include "mozilla/Likely.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -248,7 +249,7 @@ MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
    /* First the single-argument form. */
 #  define MOZ_ASSERT_HELPER1(expr) \
      do { \
-       if (!(expr)) { \
+       if (MOZ_UNLIKELY(!(expr))) { \
          MOZ_ReportAssertionFailure(#expr, __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \
@@ -256,7 +257,7 @@ MOZ_ReportAssertionFailure(const char* s, const char* file, int ln)
    /* Now the two-argument form. */
 #  define MOZ_ASSERT_HELPER2(expr, explain) \
      do { \
-       if (!(expr)) { \
+       if (MOZ_UNLIKELY(!(expr))) { \
          MOZ_ReportAssertionFailure(#expr " (" explain ")", __FILE__, __LINE__); \
          MOZ_CRASH(); \
        } \

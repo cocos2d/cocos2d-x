@@ -34,28 +34,8 @@
    useable.  See jscpucfg.h.  */
 /* #undef JS_HAVE_SYS_ISA_DEFS_H */
 
-/* Define to 1 if the <sys/types.h> defines int8_t, etc. */
-/* #undef JS_SYS_TYPES_H_DEFINES_EXACT_SIZE_TYPES */
-
-/* Define to 1 if the N-byte __intN types are defined by the
-   compiler.  */
-/* #undef JS_HAVE___INTN */
-
-/* Define to 1 if #including <stddef.h> provides definitions for
-   intptr_t and uintptr_t.  */
-/* #undef JS_STDDEF_H_HAS_INTPTR_T */
-
-/* Define to 1 if #including <crtdefs.h> provides definitions for
-   intptr_t and uintptr_t.  */
-/* #undef JS_CRTDEFS_H_HAS_INTPTR_T */
-
 /* The configure script defines these if it doesn't #define
    JS_HAVE_STDINT_H.  */
-/* #undef JS_INT8_TYPE */
-/* #undef JS_INT16_TYPE */
-/* #undef JS_INT32_TYPE */
-/* #undef JS_INT64_TYPE */
-/* #undef JS_INTPTR_TYPE */
 #define JS_BYTES_PER_WORD 4
 
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
