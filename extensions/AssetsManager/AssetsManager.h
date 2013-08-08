@@ -211,12 +211,13 @@ private:
     AssetsManagerDelegateProtocol *_delegate; 
     
     bool _isDownloading;
+    bool _shouldDeleteDelegateWhenExit;
     
     std::string key_of_version() const;
     std::string key_of_downloaded_version() const;
 };
 
-class AssetsManagerDelegateProtocol : public Object
+class AssetsManagerDelegateProtocol
 {
 public:
     /* @brief Call back function for error

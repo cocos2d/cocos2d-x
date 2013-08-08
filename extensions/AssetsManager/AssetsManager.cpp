@@ -83,6 +83,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _connectionTimeout(0)
 , _delegate(NULL)
 , _isDownloading(false)
+, _shouldDeleteDelegateWhenExit(false)
 {
     checkStoragePath();
     _schedule = new Helper();
@@ -90,13 +91,13 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 
 AssetsManager::~AssetsManager()
 {
-    if (_delegate)
-    {
-        _delegate->release();
-    }
     if (_schedule)
     {
         _schedule->release();
+    }
+    if (_shouldDeleteDelegateWhenExit)
+    {
+        delete _delegate;
     }
 }
 
@@ -505,17 +506,7 @@ void AssetsManager::deleteVersion()
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
 {
-    if (_delegate)
-    {
-        _delegate->release();
-    }
-    
     _delegate = delegate;
-    
-    if (_delegate)
-    {
-        _delegate->retain();
-    }
 }
 
 void AssetsManager::setConnectionTimeout(unsigned int timeout)
@@ -661,8 +652,8 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
 
     auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
     auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
-    delegate->autorelease();
     manager->setDelegate(delegate);
+    manager->_shouldDeleteDelegateWhenExit = true;
     return manager;
 }
 
