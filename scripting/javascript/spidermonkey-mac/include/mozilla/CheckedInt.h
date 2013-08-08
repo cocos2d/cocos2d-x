@@ -125,6 +125,13 @@ template<>
 struct IsSupportedPass2<unsigned long>
 { static const bool value = true; };
 
+template<>
+struct IsSupportedPass2<long long>
+{ static const bool value = true; };
+
+template<>
+struct IsSupportedPass2<unsigned long long>
+{ static const bool value = true; };
 
 /*
  * Step 2: some integer-traits kind of stuff.
@@ -554,7 +561,8 @@ class CheckedInt
     template<typename U>
     CheckedInt(U value, bool isValid) : mValue(value), mIsValid(isValid)
     {
-      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value,
+      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
+                        detail::IsSupported<U>::value,
                         "This type is not supported by CheckedInt");
     }
 
@@ -577,7 +585,8 @@ class CheckedInt
       : mValue(T(value)),
         mIsValid(detail::IsInRange<T>(value))
     {
-      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value,
+      MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
+                        detail::IsSupported<U>::value,
                         "This type is not supported by CheckedInt");
     }
 
@@ -748,6 +757,9 @@ template<typename T, typename U>
 inline typename detail::CastToCheckedIntImpl<T, U>::ReturnType
 castToCheckedInt(U u)
 {
+  MOZ_STATIC_ASSERT(detail::IsSupported<T>::value &&
+                    detail::IsSupported<U>::value,
+                    "This type is not supported by CheckedInt");
   return detail::CastToCheckedIntImpl<T, U>::run(u);
 }
 
