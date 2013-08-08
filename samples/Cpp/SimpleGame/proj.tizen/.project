@@ -34,7 +34,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/proj.tizen/Debug-Tizen-Emulator}</value>
+					<value>${workspace_loc:/${ProjName}/Debug-Tizen-Emulator}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
