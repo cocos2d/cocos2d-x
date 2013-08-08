@@ -124,10 +124,9 @@ public:
 
 
 /**
- * UITableView counterpart for cocos2d for iphone.
+ * UITableView support for cocos2d-x.
  *
- * this is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
- *
+ * This is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
  */
 class TableView : public ScrollView, public ScrollViewDelegate
 {
