@@ -107,8 +107,8 @@ public:
     CCBone *getParentBone();
 
     /**
-     * Remove itself from its parent CCBone.
-     * @param 	recursion    whether or not remove Child display
+     * Remove itself from its parent.
+     * @param 	recursion    whether or not to remove childBone's display
      */
     void removeFromParent(bool recursion);
 
@@ -160,21 +160,21 @@ public:
     CC_SYNTHESIZE(CCDisplayManager *, m_pDisplayManager, DisplayManager)
 
     /*
-     *	When CCArmature play a animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will hide.
-     *	Set IgnoreMovementBoneData to true, then this bone will also show.
+     *	When CCArmature play an animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will be hidden.
+     *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
     CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
 protected:
     CCTween *m_pTween;				//! Calculate tween effect
 
-    //! Used for make tween effect between every frame
+    //! Used for making tween effect in every frame
     CC_SYNTHESIZE_READONLY(CCFrameData *, m_pTweenData, TweenData);
 
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
 
-    CCBone *m_pParentBone;			//! A weak reference to it's parent
-    bool m_bBoneTransformDirty;			//! Whether or not transform dirty
+    CCBone *m_pParentBone;	                //! A weak reference to its parent
+    bool m_bBoneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
     CCAffineTransform m_tWorldTransform;

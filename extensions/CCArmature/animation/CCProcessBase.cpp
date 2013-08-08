@@ -108,26 +108,29 @@ void CCProcessBase::update(float dt)
         return;
     }
 
-    if (m_iNextFrameIndex <= 0)
-    {
-        m_fCurrentFrame = m_iNextFrameIndex = 1;
-    }
+	if (m_iNextFrameIndex <= 0)
+	{
+		m_fCurrentPercent = 1;
+		m_fCurrentFrame = 0;
+	}
+	else
+	{
+		/*
+		*  update m_fCurrentFrame, every update add the frame passed.
+		*  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
+		*  animation speed slower or quicker.
+		*/
+		m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
 
-    /*
-     *  update m_fCurrentFrame, every update add the frame passed.
-     *  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
-     *  animation speed slower or quicker.
-     */
-    m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
 
+		m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
 
-    m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
-
-    /*
-     *	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
-     *  smaller than m_iTotalFrames
-     */
-    m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+		/*
+		*	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
+		*  smaller than m_iTotalFrames
+		*/
+		m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+	}
 
     updateHandler();
 }
@@ -142,6 +145,7 @@ void CCProcessBase::gotoFrame(int frameIndex)
 
 int CCProcessBase::getCurrentFrameIndex()
 {
+	m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
     return m_iCurFrameIndex;
 }
 

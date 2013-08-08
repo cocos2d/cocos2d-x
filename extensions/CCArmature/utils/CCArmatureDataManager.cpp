@@ -57,6 +57,7 @@ CCArmatureDataManager::CCArmatureDataManager(void)
 	m_pArmarureDatas = NULL;
     m_pAnimationDatas = NULL;
     m_pTextureDatas = NULL;
+	m_bAutoLoadSpriteFile = false;
 }
 
 
@@ -149,28 +150,21 @@ CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 }
 
 
-
-void CCArmatureDataManager::addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath)
+void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
-    addArmatureFileInfo(imagePath, plistPath, configFilePath);
+	m_bAutoLoadSpriteFile = true;
+	CCDataReaderHelper::addDataFromFile(configFilePath);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
+	m_bAutoLoadSpriteFile = false;
     CCDataReaderHelper::addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-    //	if(Game::sharedGame()->isUsePackage())
-    //	{
-    //		CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromPak(plistPath, imagePath);
-    //	}
-    //    else
-    //	{
-    //		CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
-    //	}
     CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
 }
 
@@ -192,6 +186,11 @@ void CCArmatureDataManager::removeAll()
     }
 
     CCDataReaderHelper::clear();
+}
+
+bool CCArmatureDataManager::isAutoLoadSpriteFile()
+{
+	return m_bAutoLoadSpriteFile;
 }
 
 NS_CC_EXT_END

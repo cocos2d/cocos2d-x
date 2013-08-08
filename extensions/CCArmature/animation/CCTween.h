@@ -55,25 +55,19 @@ public:
     /**
      * Start the Process
      *
-     * @param  movementBoneData  the CCMovementBoneData include all frame datas
-     * @param  durationTo the frames between two animation changing-over.
-     *         It's meaning is changing to this animation need how many frames
-     *
-     *         -1 : use the value from CCMovementData get from flash design panel
-     * @param  durationTween  the frame count you want to play in the game.
-     *         if  _durationTween is 80, then the animation will played 80 frames in a loop
-     *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     * @param  movementBoneData  the CCMovementBoneData include all CCFrameData
+     * @param  durationTo the number of frames changing to this animation needs.
+     * @param  durationTween  the number of frames this animation actual last.
      *
      * @param  loop   whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from Action Editor
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
      * @param  tweenEasing    tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from Action Editor
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -138,7 +132,6 @@ protected:
 
     CCArmatureAnimation *m_pAnimation;
 
-	bool m_bNeedTweenTo;
 };
 
 NS_CC_EXT_END

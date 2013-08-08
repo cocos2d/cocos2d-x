@@ -134,6 +134,12 @@ public:
     int getMovementCount();
 
     void update(float dt);
+
+	/**
+     * Get current movementID;
+	 * @return The name of current movement
+     */
+	std::string getCurrentMovementID();
 protected:
 
     /**
@@ -159,7 +165,6 @@ protected:
 
     std::string m_strMovementID;				//! Current movment's name
 
-    int m_iPrevFrameIndex;						//! Prev key frame index
     int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     CCArray *m_pTweenList;
