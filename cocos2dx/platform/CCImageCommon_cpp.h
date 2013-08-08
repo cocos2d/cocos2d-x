@@ -221,101 +221,105 @@ namespace
 //////////////////////////////////////////////////////////////////////////
 
 //struct and data for s3tc(dds) struct
-typedef struct
+namespace
 {
-    uint32_t dwColorSpaceLowValue;
-    uint32_t dwColorSpaceHighValue;
-    
-} DDCOLORKEY;
-
-typedef struct
-{
-    uint32_t dwCaps;
-    uint32_t dwCaps2;
-    uint32_t dwCaps3;
-    uint32_t dwCaps4;
-} DDSCAPS2;
-
-typedef struct 
-{
-    uint32_t dwSize;
-    uint32_t dwFlags;
-    uint32_t dwFourCC;
-    uint32_t dwRGBBitCount;
-    uint32_t dwRBitMask;
-    uint32_t dwGBitMask;
-    uint32_t dwBBitMask;
-    uint32_t dwABitMask;
-}DDPIXELFORMAT;
-
-
-typedef struct 
-{
-    uint32_t dwSize;
-    uint32_t dwFlags;
-    uint32_t dwHeight;
-    uint32_t dwWidth;
-    
-    union
+    typedef struct
     {
-        uint32_t lPitch;
-        uint32_t dwLinearSize;
-    } DUMMYUNIONNAMEN1;
+        uint32_t dwColorSpaceLowValue;
+        uint32_t dwColorSpaceHighValue;
+        
+    } DDCOLORKEY;
     
-    union
+    typedef struct
     {
-        uint32_t dwBackBufferCount;
-        uint32_t dwDepth;
-    } DUMMYUNIONNAMEN5;
+        uint32_t dwCaps;
+        uint32_t dwCaps2;
+        uint32_t dwCaps3;
+        uint32_t dwCaps4;
+    } DDSCAPS2;
     
-    union
+    typedef struct
     {
-        uint32_t dwMipMapCount;
-        uint32_t dwRefreshRate;
-        uint32_t dwSrcVBHandle;
-    } DUMMYUNIONNAMEN2;
+        uint32_t dwSize;
+        uint32_t dwFlags;
+        uint32_t dwFourCC;
+        uint32_t dwRGBBitCount;
+        uint32_t dwRBitMask;
+        uint32_t dwGBitMask;
+        uint32_t dwBBitMask;
+        uint32_t dwABitMask;
+    }DDPIXELFORMAT;
     
-    uint32_t dwAlphaBitDepth;
-    uint32_t dwReserved;
-    uint32_t lpSurface;
     
-    union
+    typedef struct
     {
-        DDCOLORKEY ddckCKDestOverlay;
-        uint32_t dwEmptyFaceColor;
-    } DUMMYUNIONNAMEN3;
+        uint32_t dwSize;
+        uint32_t dwFlags;
+        uint32_t dwHeight;
+        uint32_t dwWidth;
+        
+        union
+        {
+            uint32_t lPitch;
+            uint32_t dwLinearSize;
+        } DUMMYUNIONNAMEN1;
+        
+        union
+        {
+            uint32_t dwBackBufferCount;
+            uint32_t dwDepth;
+        } DUMMYUNIONNAMEN5;
+        
+        union
+        {
+            uint32_t dwMipMapCount;
+            uint32_t dwRefreshRate;
+            uint32_t dwSrcVBHandle;
+        } DUMMYUNIONNAMEN2;
+        
+        uint32_t dwAlphaBitDepth;
+        uint32_t dwReserved;
+        uint32_t lpSurface;
+        
+        union
+        {
+            DDCOLORKEY ddckCKDestOverlay;
+            uint32_t dwEmptyFaceColor;
+        } DUMMYUNIONNAMEN3;
+        
+        DDCOLORKEY ddckCKDestBlt;
+        DDCOLORKEY ddckCKSrcOverlay;
+        DDCOLORKEY ddckCKSrcBlt;
+        
+        union
+        {
+            DDPIXELFORMAT ddpfPixelFormat;
+            uint32_t dwFVF;
+        } DUMMYUNIONNAMEN4;
+        
+        DDSCAPS2 ddsCaps;
+        uint32_t dwTextureStage;
+        
+    } DDSURFACEDESC2, *LPDDSURFACEDESC2;
     
-    DDCOLORKEY ddckCKDestBlt;
-    DDCOLORKEY ddckCKSrcOverlay;
-    DDCOLORKEY ddckCKSrcBlt;
-    
-    union
-    {
-        DDPIXELFORMAT ddpfPixelFormat;
-        uint32_t dwFVF;
-    } DUMMYUNIONNAMEN4;
-    
-    DDSCAPS2 ddsCaps;
-    uint32_t dwTextureStage;
-    
-} DDSURFACEDESC2, *LPDDSURFACEDESC2;
-
 #pragma pack(push,1)
-
-typedef struct 
-{
-    char fileCode[4];
-    DDSURFACEDESC2 ddsd;
     
-}ccS3TCTexHeader;
-
+    typedef struct 
+    {
+        char fileCode[4];
+        DDSURFACEDESC2 ddsd;
+        
+    }ccS3TCTexHeader;
+    
 #pragma pack(pop)
 
+}
 //s3tc struct end
 
 /////////////////////////////////////////////////////////////////////
 
-namespace {
+namespace
+{
     typedef struct 
     {
         unsigned char* data;
@@ -1485,15 +1489,15 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
             std::vector<unsigned char> decodeImageData(stride * height);
             if(FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt1);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt1);
             }
             else if(FOURCC_DXT3==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt3);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt3);
             }
             else if(FOURCC_DXT5==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, dxt5);
+                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt5);
             }
             
             _mipmaps[i].address = (unsigned char *)_data + decode_offset;
