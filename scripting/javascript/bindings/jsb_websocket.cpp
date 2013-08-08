@@ -329,7 +329,7 @@ void register_jsb_websocket(JSContext *cx, JSObject *global) {
     js_cocos2dx_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
     js_cocos2dx_websocket_class->name = "WebSocket";
     js_cocos2dx_websocket_class->addProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->delProperty = JS_PropertyStub;
+    js_cocos2dx_websocket_class->delProperty = JS_DeletePropertyStub;
     js_cocos2dx_websocket_class->getProperty = JS_PropertyStub;
     js_cocos2dx_websocket_class->setProperty = JS_StrictPropertyStub;
     js_cocos2dx_websocket_class->enumerate = JS_EnumerateStub;
