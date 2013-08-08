@@ -9,6 +9,7 @@
 #include <android/sensor.h>
 #include <android/log.h>
 #include <android_native_app_glue.h>
+#include <android/configuration.h>
 
 #include <pthread.h>
 
@@ -517,15 +518,33 @@ void android_main(struct android_app* state) {
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
                             &event, 1) > 0) {
 
-                        cocos2d::Director* pDirector = cocos2d::Director::getInstance();
-                        pDirector->getAccelerometer()->update(event.acceleration.x,
-                                                              event.acceleration.y,
-                                                              event.acceleration.z,
-                                                              0);
-
                         LOG_EVENTS_DEBUG("accelerometer: x=%f y=%f z=%f",
                                 event.acceleration.x, event.acceleration.y,
                                 event.acceleration.z);
+
+                        AConfiguration* _currentconf = AConfiguration_new();
+                        AConfiguration_fromAssetManager(_currentconf,
+                                                        state->activity->assetManager);
+                        static int32_t _orientation;
+                        _orientation = AConfiguration_getOrientation(_currentconf);
+
+                        cocos2d::Director* pDirector = cocos2d::Director::getInstance();
+                        if (ACONFIGURATION_ORIENTATION_LAND != _orientation) {
+                            // ACONFIGURATION_ORIENTATION_ANY
+                            // ACONFIGURATION_ORIENTATION_PORT
+                            // ACONFIGURATION_ORIENTATION_SQUARE
+                            pDirector->getAccelerometer()->update(event.acceleration.x,
+                                                                  -event.acceleration.y,
+                                                                  event.acceleration.z,
+                                                                  0);
+                        } else {
+                            // ACONFIGURATION_ORIENTATION_LAND
+                            // swap x and y parameters
+                            pDirector->getAccelerometer()->update(-event.acceleration.y,
+                                                                  event.acceleration.x,
+                                                                  event.acceleration.z,
+                                                                  0);
+                        }
                     }
                 }
             }
