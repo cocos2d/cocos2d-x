@@ -1023,7 +1023,6 @@
 		37551BE917B26D5E0044749D /* CCArmatureDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureDataManager.cpp; sourceTree = "<group>"; };
 		37551BEA17B26D5E0044749D /* CCArmatureDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDataManager.h; sourceTree = "<group>"; };
 		37551BEB17B26D5E0044749D /* CCArmatureDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDefine.h; sourceTree = "<group>"; };
-		37551BEC17B26D5E0044749D /* CCConstValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConstValue.h; sourceTree = "<group>"; };
 		37551BED17B26D5E0044749D /* CCDataReaderHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDataReaderHelper.cpp; sourceTree = "<group>"; };
 		37551BEE17B26D5E0044749D /* CCDataReaderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDataReaderHelper.h; sourceTree = "<group>"; };
 		37551BEF17B26D5E0044749D /* CCSpriteFrameCacheHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrameCacheHelper.cpp; sourceTree = "<group>"; };
@@ -2748,7 +2747,6 @@
 				37551BE917B26D5E0044749D /* CCArmatureDataManager.cpp */,
 				37551BEA17B26D5E0044749D /* CCArmatureDataManager.h */,
 				37551BEB17B26D5E0044749D /* CCArmatureDefine.h */,
-				37551BEC17B26D5E0044749D /* CCConstValue.h */,
 				37551BED17B26D5E0044749D /* CCDataReaderHelper.cpp */,
 				37551BEE17B26D5E0044749D /* CCDataReaderHelper.h */,
 				37551BEF17B26D5E0044749D /* CCSpriteFrameCacheHelper.cpp */,
