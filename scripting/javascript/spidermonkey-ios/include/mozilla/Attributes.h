@@ -32,13 +32,22 @@
  * otherwise.  This is only a (much) stronger version of the MOZ_INLINE hint:
  * compilers are not guaranteed to respect it (although they're much more likely
  * to do so).
+ *
+ * The MOZ_ALWAYS_INLINE_EVEN_DEBUG macro is yet stronger. It tells the
+ * compiler to inline even in DEBUG builds. It should be used very rarely.
  */
 #if defined(_MSC_VER)
-#  define MOZ_ALWAYS_INLINE     __forceinline
+#  define MOZ_ALWAYS_INLINE_EVEN_DEBUG     __forceinline
 #elif defined(__GNUC__)
-#  define MOZ_ALWAYS_INLINE     __attribute__((always_inline)) MOZ_INLINE
+#  define MOZ_ALWAYS_INLINE_EVEN_DEBUG     __attribute__((always_inline)) MOZ_INLINE
 #else
+#  define MOZ_ALWAYS_INLINE_EVEN_DEBUG     MOZ_INLINE
+#endif
+
+#if defined(DEBUG)
 #  define MOZ_ALWAYS_INLINE     MOZ_INLINE
+#else
+#  define MOZ_ALWAYS_INLINE     MOZ_ALWAYS_INLINE_EVEN_DEBUG
 #endif
 
 /*
@@ -370,11 +379,19 @@
  *   attribute is not limited to virtual methods, so if it is applied to a
  *   nonvirtual method and the subclass does not provide an equivalent
  *   definition, the compiler will emit an error.
+ * MOZ_STACK_CLASS: Applies to all classes. Any class with this annotation is
+ *   expected to live on the stack, so it is a compile-time error to use it, or
+ *   an array of such objects, as a global or static variable, or as the type of
+ *   a new expression (unless placement new is being used). It may be a base or
+ *   a member of another class only if both classes are marked with this
+ *   annotation.
  */
 #ifdef MOZ_CLANG_PLUGIN
 # define MOZ_MUST_OVERRIDE __attribute__((annotate("moz_must_override")))
+# define MOZ_STACK_CLASS __attribute__((annotate("moz_stack_class")))
 #else
 # define MOZ_MUST_OVERRIDE /* nothing */
+# define MOZ_STACK_CLASS /* nothing */
 #endif /* MOZ_CLANG_PLUGIN */
 
 #endif /* __cplusplus */
