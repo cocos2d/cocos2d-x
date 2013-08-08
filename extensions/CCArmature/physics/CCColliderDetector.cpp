@@ -23,9 +23,15 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCColliderDetector.h"
-#include "CCPhysicsWorld.h"
 #include "../CCBone.h"
+#include "../utils/CCTransformHelp.h"
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
+
 
 NS_CC_EXT_BEGIN
 
@@ -56,20 +62,15 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
 CCColliderDetector::CCColliderDetector()
     : m_pColliderBodyList(NULL)
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	m_pB2Body = NULL;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	m_pCPBody = NULL;
+#endif
 }
 
 CCColliderDetector::~CCColliderDetector()
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
-    {
-        ColliderBody *colliderBody = (ColliderBody *)object;
-
-        b2Body *body = colliderBody->getB2Body();
-        CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->DestroyBody(body);
-    }
-
-
     m_pColliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(m_pColliderBodyList);
 }
@@ -93,38 +94,7 @@ bool CCColliderDetector::init(CCBone *bone)
 
 void CCColliderDetector::addContourData(CCContourData *contourData)
 {
-    const CCArray *array = &contourData->vertexList;
-    CCObject *object = NULL;
-
-    b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
-
-    int i = 0;
-    CCARRAY_FOREACH(array, object)
-    {
-        CCContourVertex2 *v = (CCContourVertex2 *)object;
-        b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
-        i++;
-    }
-
-    b2PolygonShape polygon;
-    polygon.Set(b2bv, contourData->vertexList.count());
-
-    CC_SAFE_DELETE(b2bv);
-
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &polygon;
-    fixtureDef.density = 10.0f;
-    fixtureDef.isSensor = true;
-
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2(0.0f, 0.0f);
-    bodyDef.userData = m_pBone;
-
-    b2Body *body = CCPhysicsWorld::sharedPhysicsWorld()->getNoGravityWorld()->CreateBody(&bodyDef);
-    body->CreateFixture(&fixtureDef);
-
-    ColliderBody *colliderBody = new ColliderBody(body, contourData);
+    ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
     colliderBody->release();
 }
@@ -148,25 +118,34 @@ void CCColliderDetector::removeAll()
     m_pColliderBodyList->removeAllObjects();
 }
 
-void CCColliderDetector::setColliderFilter(b2Filter &filter)
-{
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
-    {
-        ColliderBody *colliderBody = (ColliderBody *)object;
-        colliderBody->getB2Body()->GetFixtureList()->SetFilterData(filter);
-    }
-}
 
 void CCColliderDetector::setActive(bool active)
 {
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(m_pColliderBodyList, object)
-    {
-        ColliderBody *colliderBody = (ColliderBody *)object;
-        colliderBody->getB2Body()->SetActive(active);
-    }
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	if (m_pB2Body)
+	{
+		m_pB2Body->SetActive(active);
+	}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	if (m_pCPBody)
+	{
+		if (active)
+		{
+			cpBodyActivate(m_pCPBody);
+		}
+		else
+		{
+			cpBodySleep(m_pCPBody);
+		}
+	}
+#endif
 }
+
+CCArray *CCColliderDetector::getColliderBodyList()
+{
+	return m_pColliderBodyList;
+}
+
 
 CCPoint helpPoint;
 
@@ -176,31 +155,144 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
     CCARRAY_FOREACH(m_pColliderBodyList, object)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
-
         CCContourData *contourData = colliderBody->getContourData();
-        b2Body *body = colliderBody->getB2Body();
 
-        b2PolygonShape *shape = (b2PolygonShape *)body->GetFixtureList()->GetShape();
+#if ENABLE_PHYSICS_BOX2D_DETECT
+		b2PolygonShape *shape = NULL;
+		if (m_pB2Body != NULL)
+		{
+			shape = (b2PolygonShape *)colliderBody->getB2Fixture()->GetShape();
+		}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+		cpPolyShape *shape = NULL;
+		if (m_pCPBody != NULL)
+		{
+			shape = (cpPolyShape *)colliderBody->getShape();
+		}
+#endif
 
-        //! update every vertex
-        const CCArray *array = &contourData->vertexList;
-        CCObject *object = NULL;
-        int i = 0;
-        CCARRAY_FOREACH(array, object)
-        {
-            CCContourVertex2 *cv = (CCContourVertex2 *)object;
-            b2Vec2 &bv = shape->m_vertices[i];
+		//! update every vertex
+		const CCArray *array = &contourData->vertexList;
+		CCObject *object = NULL;
+		int i = 0;
+		CCARRAY_FOREACH(array, object)
+		{
+			CCContourVertex2 *cv = (CCContourVertex2 *)object;
 
-            helpPoint.setPoint(cv->x, cv->y);
-            helpPoint = CCPointApplyAffineTransform(helpPoint, t);
+			helpPoint.setPoint(cv->x, cv->y);
+			helpPoint = CCPointApplyAffineTransform(helpPoint, t);
 
-            bv.Set(helpPoint.x / PT_RATIO, helpPoint.y / PT_RATIO);
+#if ENABLE_PHYSICS_BOX2D_DETECT
+			if (shape != NULL)
+			{
+				b2Vec2 &bv = shape->m_vertices[i];
+				bv.Set(helpPoint.x / PT_RATIO, helpPoint.y / PT_RATIO);
+			}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+			if (shape != NULL)
+			{
+				cpVect v ;
+				v.x = helpPoint.x;
+				v.y = helpPoint.y;
+				shape->tVerts[i] = shape->verts[i] = v;
 
-            i++;
-        }
+				cpVect b = shape->verts[(i+1)%shape->numVerts];
+				cpVect n = cpvnormalize(cpvperp(cpvsub(b, shape->verts[i])));
+
+				shape->planes[i].n = n;
+				shape->planes[i].d = cpvdot(n, shape->verts[i]);
+			}
+#endif
+			i++;
+		}
     }
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+
+void CCColliderDetector::setB2Body(b2Body *pBody)
+{
+	m_pB2Body = pBody;
+	m_pB2Body->SetUserData(m_pBone);
+
+	CCObject *object = NULL;
+	CCARRAY_FOREACH(m_pColliderBodyList, object)
+	{
+		ColliderBody *colliderBody = (ColliderBody *)object;
+
+		CCContourData *contourData = colliderBody->getContourData();
+		const CCArray *array = &contourData->vertexList;
+		CCObject *object = NULL;
+
+		b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
+
+		int i = 0;
+		CCARRAY_FOREACH(array, object)
+		{
+			CCContourVertex2 *v = (CCContourVertex2 *)object;
+			b2bv[i].Set(v->x / PT_RATIO, v->y / PT_RATIO);
+			i++;
+		}
+
+		b2PolygonShape polygon;
+		polygon.Set(b2bv, contourData->vertexList.count());
+
+		CC_SAFE_DELETE(b2bv);
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &polygon;
+		fixtureDef.isSensor = true;
+
+		b2Fixture *fixture = m_pB2Body->CreateFixture(&fixtureDef);
+		colliderBody->setB2Fixture(fixture);
+	}
+}
+
+b2Body *CCColliderDetector::getB2Body()
+{
+	return m_pB2Body;
+}
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+void CCColliderDetector::setCPBody(cpBody *pBody)
+{
+	m_pCPBody = pBody;
+
+	CCObject *object = NULL;
+	CCARRAY_FOREACH(m_pColliderBodyList, object)
+	{
+		ColliderBody *colliderBody = (ColliderBody *)object;
+
+		CCContourData *contourData = colliderBody->getContourData();
+		const CCArray *array = &contourData->vertexList;
+		CCObject *object = NULL;
+
+		int num = contourData->vertexList.count();
+		CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;
+		cpVect *verts = new cpVect[num];
+		for (int i=0; i<num; i++)
+		{
+			verts[num-1-i].x = vs[i]->x;
+			verts[num-1-i].y = vs[i]->y;
+		}
+
+		cpShape* shape = cpPolyShapeNew(m_pCPBody, num, verts, cpvzero);
+		shape->sensor = true;
+		shape->data = m_pBone;
+		cpSpaceAddShape(m_pCPBody->space_private, shape);
+		
+		colliderBody->setShape(shape);
+
+		delete []verts;
+	}
+}
+
+cpBody *CCColliderDetector::getCPBody()
+{
+	return m_pCPBody;
+}
+
+#endif
 
 
 NS_CC_EXT_END

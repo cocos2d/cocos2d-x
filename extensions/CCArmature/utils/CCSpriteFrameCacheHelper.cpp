@@ -60,6 +60,18 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, con
 
 }
 
+void string_replace(std::string& str, const std::string & strsrc, const std::string &strdst)
+{
+	std::string::size_type pos = 0;
+
+	while( (pos = str.find(strsrc, pos)) != string::npos)
+	{
+		str.replace(pos, strsrc.length(), strdst);
+		pos += strdst.length();
+
+	}
+}
+
 void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath)
 {
     /*
@@ -89,10 +101,10 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, 
     {
         CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
         std::string spriteFrameName = pElement->getStrKey();
+        
+        string_replace(spriteFrameName, "\\", "/");
 
         m_Display2ImageMap[spriteFrameName] = imagePath;
-
-        //CCLog("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
 
         CCSpriteFrame *spriteFrame = (CCSpriteFrame *)CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
         if (spriteFrame)
@@ -157,17 +169,22 @@ const char *CCSpriteFrameCacheHelper::getDisplayImagePath(const char *displayNam
 }
 
 
-CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
+CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlasWithImageName(const char *imageName)
 {
-    const char *textureName = getDisplayImagePath(displayName);
-    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pDisplay2TextureAtlas->objectForKey(textureName);
-    if (atlas == NULL)
-    {
-        atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(textureName), 4);
-        m_pDisplay2TextureAtlas->setObject(atlas, textureName);
-    }
+	CCTextureAtlas *atlas = (CCTextureAtlas*)m_pDisplay2TextureAtlas->objectForKey(imageName);
+	if (atlas == NULL)
+	{
+		atlas = CCTextureAtlas::createWithTexture(CCTextureCache::sharedTextureCache()->addImage(imageName), 4);
+		m_pDisplay2TextureAtlas->setObject(atlas, imageName);
+	}
 
-    return atlas;
+	return atlas;
+}
+
+CCTextureAtlas *CCSpriteFrameCacheHelper::getTextureAtlasWithDisplayName(const char *displayName)
+{
+	const char *textureName = getDisplayImagePath(displayName);
+	return getTextureAtlasWithImageName(textureName);
 }
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()

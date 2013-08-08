@@ -39,12 +39,14 @@ class  CCArmatureDataManager : public CCObject
 {
 public:
     static CCArmatureDataManager *sharedArmatureDataManager();
-    static void purgeArmatureSystem();
+
+	static void purgeArmatureSystem();
 private:
     CCArmatureDataManager(void);
     ~CCArmatureDataManager(void);
 
 public:
+
 	/**
      * Init CCArmatureDataManager
      */

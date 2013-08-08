@@ -110,6 +110,31 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
+void CCDisplayManager::addDisplay(CCNode *display, int index)
+{
+	CCDecorativeDisplay *decoDisplay = NULL;
+
+	if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
+	{
+		decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->objectAtIndex(index);
+	}
+	else
+	{
+		decoDisplay = CCDecorativeDisplay::create();
+		m_pDecoDisplayList->addObject(decoDisplay);
+	}
+
+	/*CCDisplayFactory::addDisplay(m_pBone, decoDisplay, displayData);*/
+	decoDisplay->setDisplay(display);
+
+	//! if changed display index is current display index, then change current display to the new display
+	if(index == m_iDisplayIndex)
+	{
+		m_iDisplayIndex = -1;
+		changeDisplayByIndex(index, false);
+	}
+}
+
 void CCDisplayManager::removeDisplay(int index)
 {
     m_pDecoDisplayList->removeObjectAtIndex(index);
@@ -118,6 +143,11 @@ void CCDisplayManager::removeDisplay(int index)
     {
         setCurrentDecorativeDisplay(NULL);
     }
+}
+
+CCArray *CCDisplayManager::getDecorativeDisplayList()
+{
+	return m_pDecoDisplayList;
 }
 
 void CCDisplayManager::changeDisplayByIndex(int index, bool force)
@@ -152,7 +182,7 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
 
 void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(false);
@@ -161,7 +191,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     m_pCurrentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(true);

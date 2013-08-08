@@ -77,6 +77,11 @@ const char* CCComponent::getName() const
     return m_strName.c_str();
 }
 
+void  CCComponent::setName(const char *pName)
+{
+	m_strName.assign(pName);
+}
+
 CCNode* CCComponent::getOwner() const
 {
     return m_pOwner;
@@ -95,6 +100,16 @@ bool CCComponent::isEnabled() const
 void CCComponent::setEnabled(bool b)
 {
     m_bEnabled = b;
+}
+
+void CCComponent::setNode(CCNode *pNode)
+{
+
+}
+
+CCNode* CCComponent::getNode()
+{
+	return NULL;
 }
 
 NS_CC_END

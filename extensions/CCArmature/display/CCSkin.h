@@ -35,11 +35,15 @@ class CCSkin : public CCSprite
 public:
     static CCSkin *create();
     static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+	static CCSkin *create(const char *pszFileName);
 public:
     CCSkin();
 
+	void updateArmatureTransform();
     void updateTransform();
-    void draw();
+
+	CCAffineTransform nodeToWorldTransform();
+	CCAffineTransform nodeToWorldTransformAR();
 
     CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
     CC_SYNTHESIZE(CCBone *, m_pBone, Bone);

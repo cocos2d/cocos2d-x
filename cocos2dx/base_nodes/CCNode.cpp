@@ -1321,6 +1321,21 @@ bool CCNodeRGBA::init()
     return false;
 }
 
+CCNodeRGBA * CCNodeRGBA::create(void)
+{
+	CCNodeRGBA * pRet = new CCNodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
+
 GLubyte CCNodeRGBA::getOpacity(void)
 {
 	return _realOpacity;

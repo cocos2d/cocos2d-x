@@ -23,12 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "CCArmature/utils/CCUtilMath.h"
+#include "../utils/CCUtilMath.h"
+#include "../utils/CCTransformHelp.h"
 
 NS_CC_EXT_BEGIN
 
 
-	CCBaseData::CCBaseData()
+CCBaseData::CCBaseData()
 	: x(0.0f)
 	, y(0.0f)
 	, zOrder(0)
@@ -82,7 +83,7 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 	skewX = to->skewX - from->skewX;
 	skewY = to->skewY - from->skewY;
 
-	if(from->isUseColorInfo || to->isUseColorInfo)
+	if(isUseColorInfo || from->isUseColorInfo || to->isUseColorInfo)
 	{
 		a = to->a - from->a;
 		r = to->r - from->r;
@@ -91,7 +92,11 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 
 		isUseColorInfo = true;
 	}
-
+	else
+	{
+		a = r = g = b = 0;
+		isUseColorInfo = false;
+	}
 
 	if (skewX > M_PI)
 	{
@@ -118,6 +123,18 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 	}
 }
 
+void CCBaseData::setColor(const ccColor4B &color)
+{
+	r = color.r;
+	g = color.g;
+	b = color.b;
+	a = color.a;
+}
+
+ccColor4B CCBaseData::getColor()
+{
+	return ccc4(r, g, b, a);
+}
 
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
@@ -156,6 +173,8 @@ void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
+
+	skinData = displayData->skinData;
 }
 
 CCArmatureDisplayData::CCArmatureDisplayData(void)
@@ -227,7 +246,9 @@ CCDisplayData *CCBoneData::getDisplayData(int index)
     return (CCDisplayData *)displayDataList.objectAtIndex(index);
 }
 
+
 CCArmatureData::CCArmatureData()
+	:dataVersion(0.1f)
 {
 }
 
@@ -237,13 +258,12 @@ CCArmatureData::~CCArmatureData()
 
 bool CCArmatureData::init()
 {
-    return boneList.init();
+    return true;
 }
 
 void CCArmatureData::addBoneData(CCBoneData *boneData)
 {
     boneDataDic.setObject(boneData, boneData->name);
-    boneList.addObject(boneData);
 }
 
 CCBoneData *CCArmatureData::getBoneData(const char *boneName)
@@ -252,14 +272,15 @@ CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 }
 
 CCFrameData::CCFrameData(void)
-    : duration(1)
+    : frameID(0)
+	, duration(1)
     , tweenEasing(Linear)
     , displayIndex(0)
 
-    , m_strMovement("")
-    , m_strEvent("")
-    , m_strSound("")
-    , m_strSoundEffect("")
+    , strMovement("")
+    , strEvent("")
+    , strSound("")
+    , strSoundEffect("")
 {
 }
 
@@ -278,7 +299,7 @@ void CCFrameData::copy(CCFrameData *frameData)
 
 CCMovementBoneData::CCMovementBoneData()
     : delay(0.0f)
-    , scale(1.0f)
+	, scale(1.0f)
     , duration(0)
     , name("")
 {
@@ -296,7 +317,6 @@ bool CCMovementBoneData::init()
 void CCMovementBoneData::addFrameData(CCFrameData *frameData)
 {
     frameList.addObject(frameData);
-    duration += frameData->duration;
 }
 
 CCFrameData *CCMovementBoneData::getFrameData(int index)
@@ -309,6 +329,7 @@ CCFrameData *CCMovementBoneData::getFrameData(int index)
 CCMovementData::CCMovementData(void)
     : name("")
     , duration(0)
+	, scale(1.0f)
     , durationTo(0)
     , durationTween(0)
     , loop(true)
@@ -379,6 +400,14 @@ CCContourData::~CCContourData()
 bool CCContourData::init()
 {
     return vertexList.init();
+}
+
+void CCContourData::addVertex(CCPoint *vertex)
+{
+	CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
+	vertex2->autorelease();
+
+	vertexList.addObject(vertex2);
 }
 
 CCTextureData::CCTextureData()

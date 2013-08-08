@@ -1,6 +1,7 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 
+
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -20,8 +21,6 @@ CCLayer *CreateLayer(int index)
 		pLayer = new TestDragonBones20(); break;
 	case TEST_COCOSTUDIO_WITH_SKELETON:
 		pLayer = new TestCSWithSkeleton(); break;
-	case TEST_COCOSTUDIO_WITHOUT_SKELETON:
-		pLayer = new TestCSWithoutSkeleton(); break;
 	case TEST_PERFORMANCE:
 		pLayer = new TestPerformance(); break;
 	case TEST_CHANGE_ZORDER:
@@ -32,8 +31,8 @@ CCLayer *CreateLayer(int index)
 		pLayer = new TestParticleDisplay(); break;
 	case TEST_USE_DIFFERENT_PICTURE:
 		pLayer = new TestUseMutiplePicture(); break;
-	case TEST_BOX2D_DETECTOR:
-		pLayer = new TestBox2DDetector(); break;
+	case TEST_BCOLLIDER_DETECTOR:
+		pLayer = new TestColliderDetector(); break;
 	case TEST_BOUDINGBOX:
 		pLayer = new TestBoundingBox(); break;
 	case TEST_ANCHORPOINT:
@@ -97,14 +96,14 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 }
 void ArmatureTestScene::runThisTest()
 {
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/TestBone0.png", "armature/TestBone0.plist", "armature/TestBone.json");
- 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.json");
+
+ 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml");
-
+	
 	s_nActionIdx = -1;
 	addChild(NextTest());
 
@@ -115,7 +114,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 	TestScene::MainMenuCallback(pSender);
 
 	removeAllChildren();
-	CCArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();
+	CCArmatureDataManager::purgeArmatureSystem();
 }
 
 
@@ -161,6 +160,7 @@ void ArmatureTestLayer::onEnter()
 }
 void ArmatureTestLayer::onExit()
 {
+	removeAllChildren();
 }
 
 std::string ArmatureTestLayer::title()
@@ -200,25 +200,6 @@ void ArmatureTestLayer::draw()
 
 
 
-void TestDragonBones20::onEnter()
-{
-	ArmatureTestLayer::onEnter();
-
-	cocos2d::extension::CCArmature *armature = NULL;
-	armature = cocos2d::extension::CCArmature::create("Dragon");
-	armature->getAnimation()->playByIndex(1);
-	armature->getAnimation()->setAnimationScale(0.4f);
-	armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
-	armature->setScale(0.6f);
-    addChild(armature);
-}
-
-std::string TestDragonBones20::title()
-{
-	return "Test Export From DragonBones version 2.0";
-}
-
-
 void TestCSWithSkeleton::onEnter()
 {
 	ArmatureTestLayer::onEnter();
@@ -237,23 +218,24 @@ std::string TestCSWithSkeleton::title()
 
 
 
-void TestCSWithoutSkeleton::onEnter()
+
+void TestDragonBones20::onEnter()
 {
 	ArmatureTestLayer::onEnter();
+
 	cocos2d::extension::CCArmature *armature = NULL;
-	armature = cocos2d::extension::CCArmature::create("TestBone");
-	armature->getAnimation()->playByIndex(0);
-    armature->setAnchorPoint(ccp(0.5, -0.1));
-	armature->setScale(0.2f);
-	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
-	addChild(armature);
+	armature = cocos2d::extension::CCArmature::create("Dragon");
+	armature->getAnimation()->playByIndex(1);
+	armature->getAnimation()->setSpeedScale(0.4f);
+	armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
+	armature->setScale(0.6f);
+    addChild(armature);
 }
 
-std::string TestCSWithoutSkeleton::title()
+std::string TestDragonBones20::title()
 {
-	return "Test Export From CocoStudio Without Skeleton Effect";
+	return "Test Export From DragonBones version 2.0";
 }
-
 
 
 
@@ -325,7 +307,7 @@ void TestChangeZorder::onEnter()
 	armature->setScale(0.6f);
 	addChild(armature, currentTag, currentTag);
 
-	armature = cocos2d::extension::CCArmature::create("TestBone");
+	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.24f);
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y-100));
@@ -423,13 +405,15 @@ void TestParticleDisplay::onEnter()
 	armature->getAnimation()->playByIndex(0);
 	armature->setPosition(VisibleRect::center());
 	armature->setScale(0.48f);
+	armature->getAnimation()->setSpeedScale(0.5f);
 	addChild(armature);
 
-	CCParticleDisplayData displayData;
-	displayData.setParam("Particles/SmallSun.plist");
+
+	CCParticleSystem *p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+	CCParticleSystem *p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
 
 	cocos2d::extension::CCBone *bone  = cocos2d::extension::CCBone::create("p1");
-	bone->addDisplay(&displayData, 0);
+	bone->addDisplay(p1, 0);
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
@@ -437,12 +421,17 @@ void TestParticleDisplay::onEnter()
 	armature->addBone(bone, "bady-a3");
 	
 	bone  = cocos2d::extension::CCBone::create("p2");
-	bone->addDisplay(&displayData, 0);
+	bone->addDisplay(p2, 0);
 	bone->changeDisplayByIndex(0, true);
 	bone->setIgnoreMovementBoneData(true);
 	bone->setZOrder(100);
 	bone->setScale(1.2f);
 	armature->addBone(bone, "bady-a30");
+}
+void TestParticleDisplay::onExit()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+	ArmatureTestLayer::onExit();
 }
 std::string TestParticleDisplay::title()
 {
@@ -490,6 +479,11 @@ void TestUseMutiplePicture::onEnter()
 		armature->getBone("weapon")->addDisplay(&displayData, i);
 	}
 }
+void TestUseMutiplePicture::onExit()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+	ArmatureTestLayer::onExit();
+}
 std::string TestUseMutiplePicture::title()
 {
 	return "Test One CCArmature Use Different Picture";
@@ -512,18 +506,117 @@ void TestUseMutiplePicture::registerWithTouchDispatcher()
 
 
 
-void TestBox2DDetector::onEnter()
+
+
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+
+class Contact
+{
+public:
+	b2Fixture *fixtureA;
+	b2Fixture *fixtureB;
+};
+
+class ContactListener : public b2ContactListener
+{
+	//! Callbacks for derived classes.
+	virtual void BeginContact(b2Contact *contact)
+	{
+		if (contact)
+		{
+			Contact c;
+			c.fixtureA = contact->GetFixtureA();
+			c.fixtureB = contact->GetFixtureB();
+
+			contact_list.push_back(c);
+		}
+		B2_NOT_USED(contact);
+	}
+	virtual void EndContact(b2Contact *contact)
+	{
+		contact_list.clear();
+		B2_NOT_USED(contact);
+	}
+	virtual void PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(oldManifold);
+	}
+	virtual void PostSolve(const b2Contact *contact, const b2ContactImpulse *impulse)
+	{
+		B2_NOT_USED(contact);
+		B2_NOT_USED(impulse);
+	}
+
+public:
+	std::list<Contact> contact_list;
+};
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+
+enum ColliderType
+{
+	eBulletTag,
+	eEnemyTag
+};
+
+
+int TestColliderDetector::beginHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(false);
+
+	return 0;
+}
+
+void TestColliderDetector::endHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(true);
+}
+
+void TestColliderDetector::destroyCPBody(cpBody *body)
+{
+	cpShape *shape = body->shapeList_private;
+	while(shape)
+	{
+		cpShape *temp = shape->next_private;
+
+		cpSpaceRemoveShape(space, shape);
+		cpShapeFree(shape);
+
+		shape = temp;
+	}
+	
+	cpSpaceRemoveBody(space, body);
+	cpBodyFree(body);
+}
+#endif
+
+TestColliderDetector::~TestColliderDetector()
+{
+}
+
+void TestColliderDetector::onEnter()
 {
 	ArmatureTestLayer::onEnter();
 
 	scheduleUpdate();
 
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
-	armature->getAnimation()->play("Fire");
-	armature->getAnimation()->setAnimationScale(0.1f);
+	armature->getAnimation()->play("FireWithoutBullet");
+	armature->getAnimation()->setSpeedScale(0.2f);
 	armature->setScaleX(-0.2f);
 	armature->setScaleY(0.2f);
 	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
+
+	armature->getAnimation()->FrameEventSignal.connect(this, &TestColliderDetector::onFrameEvent);
+
 	addChild(armature);
 
 	armature2 = cocos2d::extension::CCArmature::create("Cowboy");
@@ -533,32 +626,167 @@ void TestBox2DDetector::onEnter()
 	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
 	addChild(armature2);
 
-	CCPhysicsWorld::sharedPhysicsWorld()->BoneColliderSignal.connect(this, &TestBox2DDetector::onHit);
+	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
+	addChild(bullet);
+
+	initWorld();
 }
-std::string TestBox2DDetector::title()
+void TestColliderDetector::onExit()
 {
-	return "Test Box2D Detector";
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_SAFE_DELETE(world);
+	CC_SAFE_DELETE(listener);
+	CC_SAFE_DELETE(debugDraw);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	destroyCPBody(armature2->getCPBody());
+	destroyCPBody(bullet->getCPBody());
+
+	cpSpaceFree(space);
+#endif
+
+	ArmatureTestLayer::onExit();
 }
-void TestBox2DDetector::draw()
+std::string TestColliderDetector::title()
 {
+	return "Test Collider Detector";
+}
+void TestColliderDetector::draw()
+{
+#if ENABLE_PHYSICS_BOX2D_DETECT
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-
 	kmGLPushMatrix();
-
-	CCPhysicsWorld::sharedPhysicsWorld()->drawDebug();
-
+	world->DrawDebugData();
 	kmGLPopMatrix();
-	
+#endif
 }
-void TestBox2DDetector::update(float delta)
+void TestColliderDetector::update(float delta)
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT
 	armature2->setVisible(true);
-	CCPhysicsWorld::sharedPhysicsWorld()->update(delta);
+#endif
+
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	world->Step(delta, 0, 0);
+
+	for (std::list<Contact>::iterator it = listener->contact_list.begin(); it != listener->contact_list.end(); ++it)
+	{
+		Contact &contact = *it;
+
+		b2Body *b2a = contact.fixtureA->GetBody();
+		b2Body *b2b = contact.fixtureB->GetBody();
+
+		CCBone *ba = (CCBone *)b2a->GetUserData();
+		CCBone *bb = (CCBone *)b2b->GetUserData();
+
+		bb->getArmature()->setVisible(false);
+
+	}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	cpSpaceStep(space, delta);
+#endif
 }
-void TestBox2DDetector::onHit(cocos2d::extension::CCBone *bone, cocos2d::extension::CCBone *bone2)
+
+void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt)
 {
-	armature2->setVisible(false);
+	CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
+	bullet->setPosition(ccp(p.x + 60, p.y));
+
+	bullet->stopAllActions();
+	bullet->runAction(CCMoveBy::create(1.5f, ccp(350, 0)));
 }
+
+
+void TestColliderDetector::initWorld()
+{
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	b2Vec2 noGravity(0, 0);
+
+	world = new b2World(noGravity);
+	world->SetAllowSleeping(true);
+
+	listener = new ContactListener();
+	world->SetContactListener(listener);
+
+	debugDraw = new GLESDebugDraw( PT_RATIO );
+	world->SetDebugDraw(debugDraw);
+
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//        flags += b2Draw::e_jointBit;
+	//        flags += b2Draw::e_aabbBit;
+	//        flags += b2Draw::e_pairBit;
+	//        flags += b2Draw::e_centerOfMassBit;
+	debugDraw->SetFlags(flags);
+
+
+	// Define the dynamic body.
+	//Set up a 1m squared box in the physics world
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+
+	b2Body *body = world->CreateBody(&bodyDef);
+
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+
+	// Define the dynamic body fixture.
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;   
+	fixtureDef.isSensor = true;
+	body->CreateFixture(&fixtureDef);    
+
+
+	bullet->setB2Body(body);
+	bullet->setPTMRatio(PT_RATIO);
+	bullet->setPosition( ccp( -100, -100) );
+
+	body = world->CreateBody(&bodyDef);
+	armature2->setB2Body(body);
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	space = cpSpaceNew();
+	space->gravity = cpv(0, 0);
+
+	// Physics debug layer
+	CCPhysicsDebugNode *debugLayer = CCPhysicsDebugNode::create(space);
+	this->addChild(debugLayer, INT_MAX);
+
+	CCSize size = bullet->getContentSize();
+
+	int num = 4;
+	cpVect verts[] = {
+		cpv(-size.width/2,-size.height/2),
+		cpv(-size.width/2,size.height/2),
+		cpv(size.width/2,size.height/2),
+		cpv(size.width/2,-size.height/2),
+	};
+
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+	cpSpaceAddBody(space, body);
+
+	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
+	shape->collision_type = eBulletTag;
+	cpSpaceAddShape(space, shape);
+
+	bullet->setCPBody(body);
+
+	body = cpBodyNew(INFINITY, INFINITY);
+	cpSpaceAddBody(space, body);
+	armature2->setCPBody(body);
+
+	shape = body->shapeList_private;
+	while(shape){
+		cpShape *next = shape->next_private;
+		shape->collision_type = eEnemyTag;
+		shape = next;
+	}
+
+	cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
+#endif
+}
+
 
 
 
@@ -572,6 +800,9 @@ void TestBoundingBox::onEnter()
 	armature->setPosition(VisibleRect::center());
    	armature->setScale(0.2f); 
 	addChild(armature);
+
+	CCSprite *sprite = CCSprite::create("Images/background3.png");
+	armature->addChild(sprite);
 }
 std::string TestBoundingBox::title()
 {
@@ -624,10 +855,15 @@ void TestArmatureNesting::onEnter()
 	armature->getAnimation()->playByIndex(1);
 	armature->setPosition(VisibleRect::center());
 	armature->setScale(1.2f);
-	armature->getAnimation()->setAnimationScale(0.4f);
+	armature->getAnimation()->setSpeedScale(0.4f);
 	addChild(armature);
 
 	weaponIndex = 0;
+}
+void TestArmatureNesting::onExit()
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+	ArmatureTestLayer::onExit();
 }
 std::string TestArmatureNesting::title()
 {
@@ -638,8 +874,12 @@ bool TestArmatureNesting::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	++weaponIndex;
 	weaponIndex = weaponIndex % 4;
 
-	armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
-	armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
+	if(armature != NULL)
+	{
+		armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
+		armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
+	}
+
 	return false;
 }
 void TestArmatureNesting::registerWithTouchDispatcher()

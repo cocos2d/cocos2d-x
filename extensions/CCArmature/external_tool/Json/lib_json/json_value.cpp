@@ -480,7 +480,12 @@ Value::~Value()
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    case arrayValue:
    case objectValue:
-      delete value_.map_;
+	   if (value_.map_ != NULL)
+	   {
+		   value_.map_->clear();
+		   delete value_.map_;
+		   value_.map_ = NULL;
+	   }
       break;
 #else
    case arrayValue:
@@ -1028,12 +1033,17 @@ Value::clear()
    case arrayValue:
    case objectValue:
     //  value_.map_->clear();
-       if (!value_.map_)
+       if (value_.map_ != NULL)
        {
            value_.map_->clear();
            delete value_.map_;
            value_.map_ = NULL;
        }
+	   if (value_.string_ != NULL)
+	   {
+		   delete value_.string_;
+		   value_.string_ = NULL;
+	   }
       break;
 #else
    case arrayValue:

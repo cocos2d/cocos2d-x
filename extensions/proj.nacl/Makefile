@@ -63,6 +63,7 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/CCSkeleton.cpp \
 ../spine/CCSkeletonAnimation.cpp \
 ../spine/spine-cocos2dx.cpp \
+../Components/CCComRender.cpp \
 ../Components/CCComAttribute.cpp \
 ../Components/CCComAudio.cpp \
 ../Components/CCComController.cpp \
@@ -77,21 +78,55 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCArmature/display/CCDecorativeDisplay.cpp \
 ../CCArmature/display/CCDisplayFactory.cpp \
 ../CCArmature/display/CCDisplayManager.cpp \
-../CCArmature/display/CCShaderNode.cpp \
 ../CCArmature/display/CCSkin.cpp \
-../CCArmature/external_tool/GLES-Render.cpp \
+../CCArmature/external_tool/CCTexture2DMutable.cpp \
 ../CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
 ../CCArmature/external_tool/Json/lib_json/json_value.cpp \
 ../CCArmature/external_tool/Json/lib_json/json_reader.cpp \
 ../CCArmature/external_tool/Json/lib_json/json_writer.cpp \
 ../CCArmature/physics/CCColliderDetector.cpp \
-../CCArmature/physics/CCPhysicsWorld.cpp \
 ../CCArmature/utils/CCArmatureDataManager.cpp \
 ../CCArmature/utils/CCDataReaderHelper.cpp \
 ../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
 ../CCArmature/utils/CCTransformHelp.cpp \
 ../CCArmature/utils/CCTweenFunction.cpp \
 ../CCArmature/utils/CCUtilMath.cpp \
+../CocoGUILIB/Action/UIAction.cpp \
+../CocoGUILIB/Action/UIActionFrame.cpp \
+../CocoGUILIB/Action/UIActionManager.cpp \
+../CocoGUILIB/Action/UIActionNode.cpp \
+../CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
+../CocoGUILIB/BaseClasses/UIRootWidget.cpp \
+../CocoGUILIB/BaseClasses/UIWidget.cpp \
+../CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
+../CocoGUILIB/Drawable/UICCTextField.cpp \
+../CocoGUILIB/Drawable/UIClippingLayer.cpp \
+../CocoGUILIB/Layouts/UILayoutDefine.cpp \
+../CocoGUILIB/Layouts/UILayoutUnit.cpp \
+../CocoGUILIB/System/CCSReader.cpp \
+../CocoGUILIB/System/CocosGUI.cpp \
+../CocoGUILIB/System/UIHelper.cpp \
+../CocoGUILIB/System/UIInputManager.cpp \
+../CocoGUILIB/System/UILayer.cpp \
+../CocoGUILIB/UIWidgets/UIButton.cpp \
+../CocoGUILIB/UIWidgets/UICheckBox.cpp \
+../CocoGUILIB/UIWidgets/UIImageView.cpp \
+../CocoGUILIB/UIWidgets/UILabel.cpp \
+../CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
+../CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
+../CocoGUILIB/UIWidgets/UILoadingBar.cpp \
+../CocoGUILIB/UIWidgets/UINodeContainer.cpp \
+../CocoGUILIB/UIWidgets/UIPanel.cpp \
+../CocoGUILIB/UIWidgets/UISlider.cpp \
+../CocoGUILIB/UIWidgets/UISwitch.cpp \
+../CocoGUILIB/UIWidgets/UITextArea.cpp \
+../CocoGUILIB/UIWidgets/UITextButton.cpp \
+../CocoGUILIB/UIWidgets/UITextField.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIDragPanel.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIScrollView.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIPageView.cpp \
+../CocostudioReader/CCJsonReader.cpp \
+../CocostudioReader/DictionaryHelper.cpp 
 
 all:
 
