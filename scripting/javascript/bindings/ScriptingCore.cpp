@@ -168,11 +168,14 @@ static void removeJSTouchObject(JSContext *cx, Touch *x, jsval &jsret) {
     }
 }
 
-void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,
-                                                 jsval *data) {
-    jsval retval;
+void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
+                                                 jsval callback,
+                                                 uint32_t argc/* = 0*/,
+                                                 jsval* vp/* = NULL*/,
+                                                 jsval* retVal/* = NULL*/)
+{
     if(callback != JSVAL_VOID || thisObj != JSVAL_VOID) {
-        JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, 1, data, &retval);
+        JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
     }
 }
 
@@ -1099,9 +1102,9 @@ JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
     JSBool ok = JS_TRUE;
     double dp;
     ok &= JS_ValueToNumber(cx, vp, &dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     *outval = (int32_t)dp;
 
@@ -1113,9 +1116,9 @@ JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
     JSBool ok = JS_TRUE;
     double dp;
     ok &= JS_ValueToNumber(cx, vp, &dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     *outval = (uint32_t)dp;
 
@@ -1127,9 +1130,9 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     JSBool ok = JS_TRUE;
     double dp;
     ok &= JS_ValueToNumber(cx, vp, &dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     *outval = (uint16_t)dp;
 
@@ -1139,9 +1142,9 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
 JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 	JSObject *tmp_arg;
 	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
-	JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
-	JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
-	JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, JS_FALSE, "Invalid Typed Array length");
+	JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+	JSB_PRECONDITION3( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
+	JSB_PRECONDITION3( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, JS_FALSE, "Invalid Typed Array length");
 	
 	uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
 	long long ret =  arg_array[0];
@@ -1153,8 +1156,8 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 }
 
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = JS_ValueToString(cx, v);
-    JSB_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
+    JSString *tmp = v.isString() ? JS_ValueToString(cx, v) : NULL;
+    JSB_PRECONDITION3(tmp, cx, JS_FALSE, "Error processing arguments");
 
     JSStringWrapper str(tmp);
     *ret = str.get();
@@ -1165,13 +1168,14 @@ JSBool jsval_to_ccpoint(JSContext *cx, jsval v, Point* ret) {
     JSObject *tmp;
     jsval jsx, jsy;
     double x, y;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "x", &jsx) &&
         JS_GetProperty(cx, tmp, "y", &jsy) &&
         JS_ValueToNumber(cx, jsx, &x) &&
         JS_ValueToNumber(cx, jsy, &y);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->x = (float)x;
     ret->y = (float)y;
@@ -1182,17 +1186,18 @@ JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, Acceleration* ret) {
     JSObject *tmp;
     jsval jsx, jsy, jsz, jstimestamp;
     double x, y, timestamp, z;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
-    JS_GetProperty(cx, tmp, "x", &jsx) &&
-    JS_GetProperty(cx, tmp, "y", &jsy) &&
-    JS_GetProperty(cx, tmp, "z", &jsz) &&
-    JS_GetProperty(cx, tmp, "timestamp", &jstimestamp) &&
-    JS_ValueToNumber(cx, jsx, &x) &&
-    JS_ValueToNumber(cx, jsy, &y) &&
-    JS_ValueToNumber(cx, jsz, &z) &&
-    JS_ValueToNumber(cx, jstimestamp, &timestamp);
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "x", &jsx) &&
+        JS_GetProperty(cx, tmp, "y", &jsy) &&
+        JS_GetProperty(cx, tmp, "z", &jsz) &&
+        JS_GetProperty(cx, tmp, "timestamp", &jstimestamp) &&
+        JS_ValueToNumber(cx, jsx, &x) &&
+        JS_ValueToNumber(cx, jsy, &y) &&
+        JS_ValueToNumber(cx, jsz, &z) &&
+        JS_ValueToNumber(cx, jstimestamp, &timestamp);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->x = x;
     ret->y = y;
@@ -1234,7 +1239,7 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** r
         vp++;
     }
     *ret = pArray;
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     return ok;
 }
 
@@ -1242,7 +1247,8 @@ JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret) {
     JSObject *tmp;
     jsval jsx, jsy, jswidth, jsheight;
     double x, y, width, height;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "x", &jsx) &&
         JS_GetProperty(cx, tmp, "y", &jsy) &&
         JS_GetProperty(cx, tmp, "width", &jswidth) &&
@@ -1252,7 +1258,7 @@ JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret) {
         JS_ValueToNumber(cx, jswidth, &width) &&
         JS_ValueToNumber(cx, jsheight, &height);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->origin.x = x;
     ret->origin.y = y;
@@ -1265,13 +1271,14 @@ JSBool jsval_to_ccsize(JSContext *cx, jsval v, Size* ret) {
     JSObject *tmp;
     jsval jsw, jsh;
     double w, h;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "width", &jsw) &&
         JS_GetProperty(cx, tmp, "height", &jsh) &&
         JS_ValueToNumber(cx, jsw, &w) &&
         JS_ValueToNumber(cx, jsh, &h);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     ret->width = w;
     ret->height = h;
     return JS_TRUE;
@@ -1281,7 +1288,8 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "r", &jsr) &&
         JS_GetProperty(cx, tmp, "g", &jsg) &&
         JS_GetProperty(cx, tmp, "b", &jsb) &&
@@ -1291,7 +1299,7 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, Color4B* ret) {
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->r = r;
     ret->g = g;
@@ -1304,7 +1312,8 @@ JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb, jsa;
     double r, g, b, a;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "r", &jsr) &&
         JS_GetProperty(cx, tmp, "g", &jsg) &&
         JS_GetProperty(cx, tmp, "b", &jsb) &&
@@ -1314,7 +1323,7 @@ JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, Color4F* ret) {
         JS_ValueToNumber(cx, jsb, &b) &&
         JS_ValueToNumber(cx, jsa, &a);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     ret->r = r;
     ret->g = g;
     ret->b = b;
@@ -1326,7 +1335,8 @@ JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
     JSObject *tmp;
     jsval jsr, jsg, jsb;
     double r, g, b;
-    JSBool ok = JS_ValueToObject(cx, v, &tmp) &&
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "r", &jsr) &&
         JS_GetProperty(cx, tmp, "g", &jsg) &&
         JS_GetProperty(cx, tmp, "b", &jsb) &&
@@ -1334,7 +1344,7 @@ JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
         JS_ValueToNumber(cx, jsg, &g) &&
         JS_ValueToNumber(cx, jsb, &b);
 
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
 
     ret->r = r;
     ret->g = g;
@@ -1345,9 +1355,9 @@ JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, Color3B* ret) {
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *numPoints) {
     // Parsing sequence
     JSObject *jsobj;
-    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
-    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
-    JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj), cx, JS_FALSE, "Object must be an array");
+    JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj), cx, JS_FALSE, "Object must be an array");
 
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
@@ -1359,7 +1369,7 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
         JS_GetElement(cx, jsobj, i, &valarg);
 
         ok = jsval_to_ccpoint(cx, valarg, &array[i]);
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     }
 
     *numPoints = len;
@@ -1371,9 +1381,9 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
 
 JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
     JSObject *jsobj;
-    JSBool ok = JS_ValueToObject( cx, v, &jsobj );
-    JSB_PRECONDITION2( ok, cx, JS_FALSE, "Error converting value to object");
-    JSB_PRECONDITION2( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
 
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
@@ -1658,7 +1668,7 @@ JSBool jsval_to_ccaffinetransform(JSContext* cx, jsval v, AffineTransform* ret)
     JS_ValueToNumber(cx, jstx, &tx) &&
     JS_ValueToNumber(cx, jsty, &ty);
     
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     
     *ret = AffineTransformMake(a, b, c, d, tx, ty);
     return JS_TRUE;
