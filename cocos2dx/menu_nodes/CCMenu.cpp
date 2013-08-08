@@ -607,7 +607,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
     if (_children && _children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+        CCARRAY_FOREACH_REVERSE(_children, pObject)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(pObject);
             if (child && child->isVisible() && child->isEnabled())
