@@ -396,61 +396,8 @@ protected:
 
     /** shader program used by drawAtPoint and drawInRect */
     GLProgram* _shaderProgram;
-<<<<<<< HEAD
-};
 
-class TexturePixelFormatInfo {
-public:
-    GLenum internalFormat;
-    GLenum format;
-    GLenum type;
-    int bpp;
-    bool compressed;
-    bool alpha;
-    
-    TexturePixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
-    :internalFormat(internalFormat), format(format), type(type), bpp(bpp), compressed(compressed), alpha(alpha){}
-};
-
-typedef const std::map<Texture2D::PixelFormat, const TexturePixelFormatInfo> ConstTexturePixelFormatInfoMap;
-typedef const ConstTexturePixelFormatInfoMap::value_type ConstTexturePixelFormatInfoMapValue;
-
-
-static ConstTexturePixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
-{
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, TexturePixelFormatInfo(GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA8888, TexturePixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA4444, TexturePixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::RGB5A1, TexturePixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::RGB565, TexturePixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::RGB888, TexturePixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::A8, TexturePixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::I8, TexturePixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::AI88, TexturePixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
-=======
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
-    
-    
-<<<<<<< HEAD
-#ifdef GL_ETC1_RGB8_OES
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, TexturePixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
-#endif
-
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
-    ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt1, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
-#endif
-    
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
-     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt3, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
-#endif
-
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
-     ConstTexturePixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_Dxt5, TexturePixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
-#endif
-    
-=======
     static const PixelFormatInfoMap _pixelFormatInfoTables;
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
 };
 
 

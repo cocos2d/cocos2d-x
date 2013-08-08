@@ -184,28 +184,7 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
-<<<<<<< HEAD
-    bool initWithJpgData(void *data, int dataLen);
-    bool initWithPngData(void *data, int dataLen);
-    bool initWithTiffData(void *data, int dataLen);
-    bool initWithWebpData(void *data, int dataLen);
-    bool initWithPVRData(void *data, int dataLen);
-    bool initWithPVRv2Data(void *data, int dataLen);
-    bool initWithPVRv3Data(void *data, int dataLen);
-    bool initWithETCData(void *data, int dataLen);
     
-    bool initWithS3TCData(void *data, int dataLen);
-   // const uint32_t MakeFourCC(char ch0,char ch1,char ch2,char ch3);
-    
-
-    bool saveImageToPNG(const char *pszFilePath, bool bIsToRGB = true);
-    bool saveImageToJPG(const char *pszFilePath);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    bool iosSaveToFile(const char *pszFilePath, bool bIsToRGB = true);
-#endif
-
-=======
     bool initWithJpgData(const void *data, int dataLen);
     bool initWithPngData(const void *data, int dataLen);
     bool initWithTiffData(const void *data, int dataLen);
@@ -214,6 +193,7 @@ protected:
     bool initWithPVRv2Data(const void *data, int dataLen);
     bool initWithPVRv3Data(const void *data, int dataLen);
     bool initWithETCData(const void *data, int dataLen);
+    bool initWithS3TCData(const void *data, int dataLen);
 
     bool saveImageToPNG(const char *filePath, bool isToRGB = true);
     bool saveImageToJPG(const char *filePath);
@@ -224,7 +204,6 @@ private:
      Its same as define but it respects namespaces
      */
     static const int MIPMAP_MAX = 16;
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
     unsigned char *_data;
     int _dataLen;
     int _width;
@@ -251,19 +230,7 @@ private:
      @return  true if loaded correctly.
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
-
-<<<<<<< HEAD
-    Format detectFormat(void* data, int dataLen);
-    bool isPng(void *data, int dataLen);
-    bool isJpg(void *data, int dataLen);
-    bool isTiff(void *data, int dataLen);
-    bool isWebp(void *data, int dataLen);
-    bool isPvr(void *data, int dataLen);
-    bool isEtc(void *data, int dataLen);
-    bool isS3TC(void *data,int dataLen);
-
-    bool testFormatForPvrTCSupport(uint64_t format);
-=======
+    
     Format detectFormat(const void* data, int dataLen);
     bool isPng(const void *data, int dataLen);
     bool isJpg(const void *data, int dataLen);
@@ -271,7 +238,8 @@ private:
     bool isWebp(const void *data, int dataLen);
     bool isPvr(const void *data, int dataLen);
     bool isEtc(const void *data, int dataLen);
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
+    bool isS3TC(const void *data,int dataLen);
+
 };
 
 // end of platform group

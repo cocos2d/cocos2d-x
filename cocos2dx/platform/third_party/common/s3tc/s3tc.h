@@ -36,7 +36,7 @@ typedef enum
 }ccS3TCDecodeFlag;
 
 //Decode S3TC encode block to 4x4 RGB32 pixels
-void s3tc_decode_block(uint8_t **block_data,
+extern void s3tc_decode_block(uint8_t **block_data,
                        uint32_t *decode_block_data,
                        unsigned int stride,
                        bool oneBitAlphaFlag,
@@ -44,11 +44,13 @@ void s3tc_decode_block(uint8_t **block_data,
                        ccS3TCDecodeFlag decodeFlag);
 
 //Decode S3TC encode data to RGB32
-void s3tc_decode(uint8_t *encode_data,
+ void s3tc_decode(uint8_t *encode_data,
                  uint8_t *decode_data,
                  const unsigned int pixelsWidth,
                  const unsigned int pixelsHeight,
                  ccS3TCDecodeFlag decodeFlag
                  );
 
+
 #endif /* defined(COCOS2DX_PLATFORM_THIRDPARTY_S3TC_) */
+

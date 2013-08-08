@@ -38,12 +38,9 @@ extern "C"
 #include "png.h"
 #include "tiffio.h"
 #include "etc1.h"
-<<<<<<< HEAD
-#include "third_party/common/s3tc/s3tc.h"
-=======
 #include "jpeglib.h"
 }
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
+#include "third_party/common/s3tc/s3tc.h"
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
@@ -67,72 +64,8 @@ NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 //struct and data for pvr structure
-<<<<<<< HEAD
-#define PVR_TEXTURE_FLAG_TYPE_MASK    0xff
 
-
-// Values taken from PVRTexture.h from http://www.imgtec.com
-enum {
-    kPVR2TextureFlagMipmap         = (1<<8),        // has mip map levels
-    kPVR2TextureFlagTwiddle        = (1<<9),        // is twiddled
-    kPVR2TextureFlagBumpmap        = (1<<10),       // has normals encoded for a bump map
-    kPVR2TextureFlagTiling         = (1<<11),       // is bordered for tiled pvr
-    kPVR2TextureFlagCubemap        = (1<<12),       // is a cubemap/skybox
-    kPVR2TextureFlagFalseMipCol    = (1<<13),       // are there false colored MIP levels
-    kPVR2TextureFlagVolume         = (1<<14),       // is this a volume texture
-    kPVR2TextureFlagAlpha          = (1<<15),       // v2.1 is there transparency info in the texture
-    kPVR2TextureFlagVerticalFlip   = (1<<16),       // v2.1 is the texture vertically flipped
-};
-
-enum {
-    kPVR3TextureFlagPremultipliedAlpha	= (1<<1)	// has premultiplied alpha
-};
-
-static char gPVRTexIdentifier[5] = "PVR!";
-
-// v2
-typedef enum
-{
-    kPVR2TexturePixelFormat_RGBA_4444= 0x10,
-    kPVR2TexturePixelFormat_RGBA_5551,
-    kPVR2TexturePixelFormat_RGBA_8888,
-    kPVR2TexturePixelFormat_RGB_565,
-    kPVR2TexturePixelFormat_RGB_555,				// unsupported
-    kPVR2TexturePixelFormat_RGB_888,
-    kPVR2TexturePixelFormat_I_8,
-    kPVR2TexturePixelFormat_AI_88,
-    kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,
-    kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,
-    kPVR2TexturePixelFormat_BGRA_8888,
-    kPVR2TexturePixelFormat_A_8,
-} ccPVR2TexturePixelFormat;
-
-// v3
-/* supported predefined formats */
-#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGB   0
-#define kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA  1
-#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGB   2
-#define kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA  3
-
-/* supported channel type formats */
-#define kPVR3TexturePixelFormat_BGRA_8888  0x0808080861726762ULL
-#define kPVR3TexturePixelFormat_RGBA_8888  0x0808080861626772ULL
-#define kPVR3TexturePixelFormat_RGBA_4444  0x0404040461626772ULL
-#define kPVR3TexturePixelFormat_RGBA_5551  0x0105050561626772ULL
-#define kPVR3TexturePixelFormat_RGB_565    0x0005060500626772ULL
-#define kPVR3TexturePixelFormat_RGB_888    0x0008080800626772ULL
-#define kPVR3TexturePixelFormat_A_8        0x0000000800000061ULL
-#define kPVR3TexturePixelFormat_L_8        0x000000080000006cULL
-#define kPVR3TexturePixelFormat_LA_88      0x000008080000616cULL
-
-
-// v2
-typedef const std::map<uint64_t, Texture2D::PixelFormat> _pixel_formathash;
-
-static _pixel_formathash::value_type v2_pixel_formathash_value[] =
-=======
 namespace
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
 {
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
     
@@ -287,7 +220,6 @@ namespace
 
 //////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 //struct and data for s3tc(dds) struct
 typedef struct
 {
@@ -383,24 +315,8 @@ typedef struct
 
 /////////////////////////////////////////////////////////////////////
 
-
-
-typedef struct 
-{
-    unsigned char* data;
-    int size;
-    int offset;
-}tImageSource;
-
-static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
-{
-    tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
-
-    if((int)(isource->offset + length) <= isource->size)
-=======
 namespace {
     typedef struct 
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
     {
         unsigned char* data;
         int size;
@@ -568,8 +484,8 @@ bool Image::isEtc(const void *data, int dataLen)
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
-<<<<<<< HEAD
-bool Image::isS3TC(void *data, int dataLen)
+
+bool Image::isS3TC(const void *data, int dataLen)
 {
 
     ccS3TCTexHeader *header = (ccS3TCTexHeader *)data;
@@ -582,10 +498,7 @@ bool Image::isS3TC(void *data, int dataLen)
     return true;
 }
 
-bool Image::isJpg(void *data, int dataLen)
-=======
 bool Image::isJpg(const void *data, int dataLen)
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
 {
     if (dataLen <= 4)
     {
@@ -1473,14 +1386,14 @@ bool Image::initWithETCData(const void *data, int dataLen)
     return false;
 }
 
-<<<<<<< HEAD
+
 const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
 {
     const uint32_t fourCC=((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) |((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
     return fourCC;
 }
 
-bool Image::initWithS3TCData(void *data, int dataLen)
+bool Image::initWithS3TCData(const void *data, int dataLen)
 {
     
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
@@ -1602,10 +1515,7 @@ bool Image::initWithS3TCData(void *data, int dataLen)
     return true;
 }
 
-bool Image::initWithPVRData(void *data, int dataLen)
-=======
 bool Image::initWithPVRData(const void *data, int dataLen)
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
 {
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
 }
@@ -1669,6 +1579,7 @@ bool Image::initWithRawData(const void * data, int dataLen, int width, int heigh
 
     return bRet;
 }
+
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
