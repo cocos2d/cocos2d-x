@@ -85,41 +85,41 @@ enum DRAGPANEL_BOUNCE_DIR
     DRAGPANEL_BOUNCE_DIR_BOTTOM,
 };
 
-typedef void (CCObject::*SEL_DragPanelBerthToLeftEvent)(CCObject*);
-#define coco_DragPanelBerthToLeft_selector(_SELECTOR) (SEL_DragPanelBerthToLeftEvent)(&_SELECTOR)
-typedef void (CCObject::*SEL_DragPanelBerthToRightEvent)(CCObject*);
-#define coco_DragPanelBerthToRight_selector(_SELECTOR) (SEL_DragPanelBerthToRightEvent)(&_SELECTOR)
-typedef void (CCObject::*SEL_DragPanelBerthToTopEvent)(CCObject*);
-#define coco_DragPanelBerthToTop_selector(_SELECTOR) (SEL_DragPanelBerthToTopEvent)(&_SELECTOR)
-typedef void (CCObject::*SEL_DragPanelBerthToBottomEvent)(CCObject*);
-#define coco_DragPanelBerthToBottom_selector(_SELECTOR) (SEL_DragPanelBerthToBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBerthToLeftBottomEvent)(CCObject*);
-#define coco_DragPanelBerthToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBerthToLeftBottomEvent)(&_SELECTOR)
+#define coco_DragPane_BerthToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBerthToLeftBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBerthToLeftTopEvent)(CCObject*);
-#define coco_DragPanelBerthToLeftTop_selector(_SELECTOR) (SEL_DragPanelBerthToLeftTopEvent)(&_SELECTOR)
+#define coco_DragPanel_BerthToLeftTop_selector(_SELECTOR) (SEL_DragPanelBerthToLeftTopEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBerthToRightBottomEvent)(CCObject*);
-#define coco_DragPanelBerthToRightBottom_selector(_SELECTOR) (SEL_DragPanelBerthToRightBottomEvent)(&_SELECTOR)
+#define coco_DragPanel_BerthToRightBottom_selector(_SELECTOR) (SEL_DragPanelBerthToRightBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBerthToRightTopEvent)(CCObject*);
-#define coco_DragPanelBerthToRightTop_selector(_SELECTOR) (SEL_DragPanelBerthToRightTopEvent)(&_SELECTOR)
+#define coco_DragPanel_BerthToRightTop_selector(_SELECTOR) (SEL_DragPanelBerthToRightTopEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_DragPanelBerthToLeftEvent)(CCObject*);
+#define coco_DragPanel_BerthToLeft_selector(_SELECTOR) (SEL_DragPanelBerthToLeftEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_DragPanelBerthToRightEvent)(CCObject*);
+#define coco_DragPanel_BerthToRight_selector(_SELECTOR) (SEL_DragPanelBerthToRightEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_DragPanelBerthToTopEvent)(CCObject*);
+#define coco_DragPanel_BerthToTop_selector(_SELECTOR) (SEL_DragPanelBerthToTopEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_DragPanelBerthToBottomEvent)(CCObject*);
+#define coco_DragPanel_BerthToBottom_selector(_SELECTOR) (SEL_DragPanelBerthToBottomEvent)(&_SELECTOR)
 
 typedef void (CCObject::*SEL_DragPanelBounceOverEvent)(CCObject*);
-#define coco_DragPanelBounceOver_selector(_SELECTOR) (SEL_DragPanelBounceOverEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceOver_selector(_SELECTOR) (SEL_DragPanelBounceOverEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToLeftBottomEvent)(CCObject*);
-#define coco_DragPanelBounceToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBounceToLeftBottomEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBounceToLeftBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToLeftTopEvent)(CCObject*);
-#define coco_DragPanelBounceToLeftTop_selector(_SELECTOR) (SEL_DragPanelBounceToLeftTopEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToLeftTop_selector(_SELECTOR) (SEL_DragPanelBounceToLeftTopEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToRightBottomEvent)(CCObject*);
-#define coco_DragPanelBounceToRightBottom_selector(_SELECTOR) (SEL_DragPanelBounceToRightBottomEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToRightBottom_selector(_SELECTOR) (SEL_DragPanelBounceToRightBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToRightTopEvent)(CCObject*);
-#define coco_DragPanelBounceToRightTop_selector(_SELECTOR) (SEL_DragPanelBounceToRightTopEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToRightTop_selector(_SELECTOR) (SEL_DragPanelBounceToRightTopEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToLeftEvent)(CCObject*);
-#define coco_DragPanelBounceToLeft_selector(_SELECTOR) (SEL_DragPanelBounceToLeftEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToLeft_selector(_SELECTOR) (SEL_DragPanelBounceToLeftEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToTopEvent)(CCObject*);
-#define coco_DragPanelBounceToTop_selector(_SELECTOR) (SEL_DragPanelBounceToTopEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToTop_selector(_SELECTOR) (SEL_DragPanelBounceToTopEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToRightEvent)(CCObject*);
-#define coco_DragPanelBounceToRight_selector(_SELECTOR) (SEL_DragPanelBounceToRightEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToRight_selector(_SELECTOR) (SEL_DragPanelBounceToRightEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToBottomEvent)(CCObject*);
-#define coco_DragPanelBounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
+#define coco_DragPanel_BounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
 
 class UIDragPanel : public UIPanel// , public UIScrollDelegate
 {

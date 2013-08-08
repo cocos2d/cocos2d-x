@@ -123,6 +123,10 @@ void UIZoomButton::onPressStateChangedToNormal()
     m_pNormalBackGround->setVisible(true);
     m_pPressedBackGround->setVisible(false);
     m_pDisabledBackGround->setVisible(false);
+    
+    m_pNormalTitle->setVisible(true);
+    m_pPressedTitle->setVisible(false);
+    m_pDisabledTitle->setVisible(false);
 }
 
 void UIZoomButton::onPressStateChangedToPressed()
@@ -137,6 +141,10 @@ void UIZoomButton::onPressStateChangedToPressed()
     m_pNormalBackGround->setVisible(false);
     m_pPressedBackGround->setVisible(true);
     m_pDisabledBackGround->setVisible(false);
+    
+    m_pNormalTitle->setVisible(false);
+    m_pPressedTitle->setVisible(true);
+    m_pDisabledTitle->setVisible(false);
 }
 
 void UIZoomButton::onPressStateChangedToDisabled()
@@ -144,6 +152,10 @@ void UIZoomButton::onPressStateChangedToDisabled()
     m_pNormalBackGround->setVisible(false);
     m_pPressedBackGround->setVisible(false);
     m_pDisabledBackGround->setVisible(true);
+    
+    m_pNormalTitle->setVisible(false);
+    m_pPressedTitle->setVisible(false);
+    m_pDisabledTitle->setVisible(true);
 }
 
 CCNode* UIZoomButton::getValidNode()

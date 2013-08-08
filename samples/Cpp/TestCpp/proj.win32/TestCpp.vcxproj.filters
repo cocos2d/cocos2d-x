@@ -238,6 +238,60 @@
     <Filter Include="Classes\ExtensionsTest\SceneEditorTest">
       <UniqueIdentifier>{9c7cc3f8-d58e-4fce-8e5a-3f32e405596f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest">
+      <UniqueIdentifier>{78602eb1-3f80-4c94-a0d1-941700ac5547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UITextFieldTest">
+      <UniqueIdentifier>{d95c5873-555b-4b16-a98d-e5576704fcd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UITextButtonTest">
+      <UniqueIdentifier>{bf13b112-2ccf-4cab-8d65-524d17a7e838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UITextAreaTest">
+      <UniqueIdentifier>{4bfc8141-39ed-4ef1-9a30-9e0754910e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UISliderTest">
+      <UniqueIdentifier>{7e93d8d1-5a99-48ed-b37f-b562ecbf1354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIPanelTest">
+      <UniqueIdentifier>{f8e6c07a-a140-442b-94b9-64678d98d25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIPageViewTest">
+      <UniqueIdentifier>{1355a8ed-2006-4008-bc3d-90ed81d2db03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UINodeContainerTest">
+      <UniqueIdentifier>{d59516a3-2570-42f4-b37d-3289e46ac624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UILoadingBarTest">
+      <UniqueIdentifier>{ffa5e07c-2ff9-45a3-a151-53dc907f8115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIListViewTest">
+      <UniqueIdentifier>{9f7a5e61-68db-4591-a86a-608d02a8e38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UILabelTest">
+      <UniqueIdentifier>{e4bfd4d4-ca1a-42a5-a7b7-7f74c5e0fb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UILabelBMFontTest">
+      <UniqueIdentifier>{2c6144fe-064b-465b-8225-d5464bec3094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UILabelAtlasTest">
+      <UniqueIdentifier>{b0c56738-2cca-43e8-967e-26c0cc4ffb84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIImageViewTest">
+      <UniqueIdentifier>{f12c5431-60be-4f0b-a613-6cb66db7c28e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIDragPanelTest">
+      <UniqueIdentifier>{d0b5186e-3cc1-4867-928c-3a6b43846e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest">
+      <UniqueIdentifier>{e48c48ea-fb1b-41a3-9063-12131910b345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIButtonTest">
+      <UniqueIdentifier>{c445f9cf-e6a7-4fec-a828-edaf3fff1497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIScrollViewTest">
+      <UniqueIdentifier>{50d989f5-8237-4c8d-80d4-a266bdba526f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -546,14 +600,74 @@
     <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp">
       <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.cpp">
       <Filter>Classes\ExtensionsTest\SceneEditorTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesScene.cpp">
       <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UISceneManager.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIButtonTest\UIButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest\UICheckBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIDragPanelTest\UIDragPanelTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIDragPanelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIImageViewTest\UIImageViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIImageViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelAtlasTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelBMFontTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelTest\UILabelTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIListViewTest\UIListViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIListViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UILoadingBarTest\UILoadingBarTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILoadingBarTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UINodeContainerTest\UINodeContainerTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UINodeContainerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIPageViewTest\UIPageViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIPageViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIPanelTest\UIPanelTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIPanelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UISliderTest\UISliderTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UISliderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIScrollViewTest\UIScrollViewTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIScrollViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextAreaTest\UITextAreaTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextAreaTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextButtonTest\UITextButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextFieldTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1043,14 +1157,74 @@
     <ClInclude Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.h">
       <Filter>Classes\ExtensionsTest\ArmatureTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.h">
-      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\SceneEditorTest\SceneEditorTestScene.h">
       <Filter>Classes\ExtensionsTest\SceneEditorTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesScene.h">
       <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UISceneManager.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIButtonTest\UIButtonTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest\UICheckBoxTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIDragPanelTest\UIDragPanelTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIDragPanelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIImageViewTest\UIImageViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIImageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelAtlasTest\UILabelAtlasTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelAtlasTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelBMFontTest\UILabelBMFontTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelBMFontTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UILabelTest\UILabelTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILabelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIListViewTest\UIListViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIListViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UILoadingBarTest\UILoadingBarTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UILoadingBarTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UINodeContainerTest\UINodeContainerTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UINodeContainerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIPageViewTest\UIPageViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIPageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIPanelTest\UIPanelTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIPanelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UISliderTest\UISliderTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UISliderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIScrollViewTest\UIScrollViewTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIScrollViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextAreaTest\UITextAreaTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextAreaTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextButtonTest\UITextButtonTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UITextFieldTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -38,8 +38,9 @@ public:
     virtual ~UISlider();
     static UISlider* create();
     void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setBarTextureScale9(const char* fileName,float x,float y,float width,float height,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setBarTextureScale9Enable(bool able);
+    void setScale9Enable(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    void setScale9Size(const CCSize &size);
     void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
@@ -47,8 +48,7 @@ public:
     void setBarLength(float length);
     void setProgressBarVisible(bool show);
     void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setProgressBarTextureScale9(const char* fileName,float x,float y,float width,float height, TextureResType texTypebool = UI_TEX_TYPE_LOCAL);
-    void setProgressBarScale(int percent);
+    void setProgressBarScale();
     void setSlidBallPercent(int percent);
     virtual bool pointAtSelfBody(const CCPoint &pt);
     virtual CCNode* getValidNode();
@@ -58,6 +58,7 @@ public:
     virtual void onTouchMoved(const CCPoint &touchPoint);
     virtual void onTouchEnded(const CCPoint &touchPoint);
     virtual void onTouchCancelled(const CCPoint &touchPoint);
+    
 protected:
     virtual bool init();
     int getClickPercent(float location);
@@ -74,6 +75,9 @@ protected:
     float m_fBarNodeScaleValue;
     float m_fTouchMoveStartLocation;
     bool m_bBarScale9Enable;
+    std::string m_strTextureFile;
+    CCRect m_capInsets;
+    CCSize m_scale9Size;
     bool m_bProgressBarVisible;
     CCNode* m_pProgressBarNode;
     CCObject*       m_pPercentListener;
