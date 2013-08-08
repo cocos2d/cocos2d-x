@@ -29,7 +29,7 @@ void s3tc_decode_block(uint8_t **block_data,
                        unsigned int stride,
                        bool oneBitAlphaFlag,
                        uint64_t alpha,
-                       ccS3TCDecodeFlag decodeFlag)
+                       S3TCDecodeFlag decodeFlag)
 {
     unsigned int colorValue0 = 0 , colorValue1 = 0, initAlpha = (!oneBitAlphaFlag * 255u) << 24;
     unsigned int rb0 = 0, rb1 = 0, rb2 = 0, rb3 = 0, g0 = 0, g1 = 0, g2 = 0, g3 = 0;
@@ -75,7 +75,7 @@ void s3tc_decode_block(uint8_t **block_data,
     memcpy((void*)&pixelsIndex, *block_data, 4);
     (*block_data) += 4;
     
-    if(dxt5 == decodeFlag)
+    if( S3TCDecodeFlag::dxt5 == decodeFlag)
     {
         //dxt5 use interpolate alpha
         // 8-Alpha block: derive the other six alphas.
@@ -140,7 +140,7 @@ void s3tc_decode(uint8_t *encode_data,             //in_data
                  uint8_t *decode_data,             //out_data
                  const unsigned int pixelsWidth,
                  const unsigned int pixelsHeight,
-                 ccS3TCDecodeFlag decodeFlag)
+                 S3TCDecodeFlag decodeFlag)
 {
     uint32_t *decode_block_data = (uint32_t *)decode_data;
     for( int block_y =0 ; block_y < pixelsHeight/4; block_y++,decode_block_data += 3*pixelsWidth)   //stride = 3*width
@@ -150,23 +150,23 @@ void s3tc_decode(uint8_t *encode_data,             //in_data
             uint64_t blockAlpha = 0;
             
             switch (decodeFlag) {
-                case dxt1:
+                case S3TCDecodeFlag::dxt1:
                 {
-                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 0, 0LL, dxt1);
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 0, 0LL, S3TCDecodeFlag::dxt1);
                 }
                     break;
-                case dxt3:
+                case S3TCDecodeFlag::dxt3:
                 {
                     memcpy((void *)&blockAlpha, encode_data, 8);
                     encode_data +=8;
-                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha,dxt3);
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha,S3TCDecodeFlag::dxt3);
                 }
                     break;
-                case dxt5:
+                case S3TCDecodeFlag::dxt5:
                 {
                     memcpy((void *)&blockAlpha, encode_data , 8);
                     encode_data += 8;
-                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha, dxt5);
+                    s3tc_decode_block(&encode_data, decode_block_data, pixelsWidth, 1, blockAlpha, S3TCDecodeFlag::dxt5);
                 }
                     break;
                 default:

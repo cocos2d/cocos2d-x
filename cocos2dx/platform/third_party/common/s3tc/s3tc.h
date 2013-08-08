@@ -28,12 +28,12 @@
 
 #include "CCStdC.h"
 
-typedef enum
+enum class S3TCDecodeFlag
 {
     dxt1 = 1,
     dxt3 = 3,
     dxt5 = 5,
-}ccS3TCDecodeFlag;
+};
 
 //Decode S3TC encode block to 4x4 RGB32 pixels
 extern void s3tc_decode_block(uint8_t **block_data,
@@ -41,14 +41,14 @@ extern void s3tc_decode_block(uint8_t **block_data,
                        unsigned int stride,
                        bool oneBitAlphaFlag,
                        uint64_t alpha,
-                       ccS3TCDecodeFlag decodeFlag);
+                       S3TCDecodeFlag decodeFlag);
 
 //Decode S3TC encode data to RGB32
  void s3tc_decode(uint8_t *encode_data,
                  uint8_t *decode_data,
                  const unsigned int pixelsWidth,
                  const unsigned int pixelsHeight,
-                 ccS3TCDecodeFlag decodeFlag
+                 S3TCDecodeFlag decodeFlag
                  );
 
 
