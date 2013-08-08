@@ -147,9 +147,13 @@ public:
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
 
-    /** @brief Initialize storage path. 
+    /** @brief Initializes storage path. 
      */
-    void purgeStoragePath();
+    void createStoragePath();
+
+    /** @brief Destroys storage path. 
+     */
+    void destroyStoragePath();
 
     
 protected:
@@ -207,6 +211,9 @@ private:
     AssetsManagerDelegateProtocol *_delegate; 
     
     bool _isDownloading;
+    
+    std::string key_of_version() const;
+    std::string key_of_downloaded_version() const;
 };
 
 class AssetsManagerDelegateProtocol : public Object
