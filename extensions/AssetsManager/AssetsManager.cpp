@@ -108,6 +108,26 @@ void AssetsManager::checkStoragePath()
     }
 }
 
+// Multiple key names
+static std::string key_with_hash( const char* prefix, const std::string& url )
+{
+    char buf[256];
+    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
+    return buf;
+}
+
+// hashed version
+std::string AssetsManager::key_of_version() const
+{
+    return key_with_hash(KEY_OF_VERSION,_packageUrl);
+}
+
+// hashed version
+std::string AssetsManager::key_of_downloaded_version() const
+{
+    return key_with_hash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
+}
+
 static size_t getVersionCode(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
     string *version = (string*)userdata;
@@ -146,7 +166,7 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    string recordedVersion = UserDefault::getInstance()->getStringForKey(KEY_OF_VERSION);
+    string recordedVersion = UserDefault::getInstance()->getStringForKey(key_of_version().c_str());
     if (recordedVersion == _version)
     {
         sendErrorMessage(ErrorCode::NO_NEW_VERSION);
@@ -218,7 +238,7 @@ void AssetsManager::update()
     }
     
     // Is package already downloaded?
-    _downloadedVersion = UserDefault::getInstance()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
+    _downloadedVersion = UserDefault::getInstance()->getStringForKey(key_of_downloaded_version().c_str());
     
     auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
     t.detach();
@@ -475,12 +495,12 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 
 string AssetsManager::getVersion()
 {
-    return UserDefault::getInstance()->getStringForKey(KEY_OF_VERSION);
+    return UserDefault::getInstance()->getStringForKey(key_of_version().c_str());
 }
 
 void AssetsManager::deleteVersion()
 {
-    UserDefault::getInstance()->setStringForKey(KEY_OF_VERSION, "");
+    UserDefault::getInstance()->setStringForKey(key_of_version().c_str(), "");
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
@@ -565,7 +585,7 @@ void AssetsManager::Helper::update(float dt)
             
             break;
         case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            UserDefault::getInstance()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
+            UserDefault::getInstance()->setStringForKey(((AssetsManager*)msg->obj)->key_of_downloaded_version().c_str(),
                                                                 ((AssetsManager*)msg->obj)->_version.c_str());
             UserDefault::getInstance()->flush();
             
@@ -601,10 +621,10 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     AssetsManager* manager = (AssetsManager*)msg->obj;
     
     // Record new version code.
-    UserDefault::getInstance()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
+    UserDefault::getInstance()->setStringForKey(manager->key_of_version().c_str(), manager->_version.c_str());
     
     // Unrecord downloaded version code.
-    UserDefault::getInstance()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
+    UserDefault::getInstance()->setStringForKey(manager->key_of_downloaded_version().c_str(), "");
     UserDefault::getInstance()->flush();
     
     // Set resource search path.
@@ -646,7 +666,26 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     return manager;
 }
 
-void AssetsManager::purgeStoragePath()
+void AssetsManager::createStoragePath()
+{
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *pDir = NULL;
+    
+    pDir = opendir (_storagePath.c_str());
+    if (! pDir)
+    {
+        mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+#else    
+    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        CreateDirectoryA(_storagePath.c_str(), 0);
+    }
+#endif
+}
+
+void AssetsManager::destroyStoragePath()
 {
     // Delete recorded version codes.
     deleteVersion();
@@ -656,24 +695,12 @@ void AssetsManager::purgeStoragePath()
     string command = "rm -r ";
     // Path may include space.
     command += "\"" + _storagePath + "\"";
-    system(command.c_str());
-    DIR *pDir = NULL;
-    
-    pDir = opendir (_storagePath.c_str());
-    if (! pDir)
-    {
-        mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-    }
+    system(command.c_str());    
 #else
     string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + _storagePath + "\"";
     system(command.c_str());
-
-    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
-    {
-        CreateDirectoryA(_storagePath.c_str(), 0);
-    }
 #endif
 }
 
