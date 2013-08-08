@@ -93,6 +93,7 @@ CocoGUILIB/System/UIHelper.cpp \
 CocoGUILIB/System/UIInputManager.cpp \
 CocoGUILIB/System/UILayer.cpp \
 CocoGUILIB/UIWidgets/ScrollWidget/UIDragPanel.cpp \
+CocoGUILIB/UIWidgets/ScrollWidget/UIListView.cpp \
 CocoGUILIB/UIWidgets/ScrollWidget/UIPageView.cpp \
 CocoGUILIB/UIWidgets/ScrollWidget/UIScrollView.cpp \
 CocoGUILIB/UIWidgets/UIButton.cpp \

@@ -60,6 +60,26 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
     ../Classes/ExtensionsTest/SceneEditorTest/SceneEditorTestScene.cpp \
 	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesScene.cpp \
 	../Classes/ExtensionsTest/CocosGUITest/CocosGUIScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UISceneManager.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIButtonTest/UIButtonTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIImageViewTest/UIImageViewTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UILabelTest/UILabelTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIListViewTest/UIListViewTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIPageViewTest/UIPageViewTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIPanelTest/UIPanelTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UISliderTest/UISliderTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UITextAreaTest/UITextAreaTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UITextButtonTest/UITextButtonTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UITextFieldTest/UITextFieldTest.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/UIZoomButtonTest/UIZoomButtonTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
