@@ -333,6 +333,7 @@ Developers:
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
         Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
+        Adding a method to get duration of timeline for CCBAnimationManager class, it's easy for getting duration of animation in JSB.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
