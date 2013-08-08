@@ -701,8 +701,8 @@ void CocosGUIExamplesScene::EquipSwitchBtnCallBack(CCObject *pSender)
     
     clothes_btn->active();
     weapons_btn->active();
-    pets_btn->active();
-
+    pets_btn->active();    
+    
     switch (button->getWidgetTag())
     {
         case EQUIP_SWITCH_PANEL_BUTTON_TAG_CLOTHES:
@@ -723,9 +723,8 @@ void CocosGUIExamplesScene::EquipSwitchBtnCallBack(CCObject *pSender)
             clothes_panel->setTouchEnable(true, true);
             weapons_panel->setTouchEnable(false, true);
             pets_panel->setTouchEnable(false, true);
-        
         }
-        break;
+            break;
             
         case EQUIP_SWITCH_PANEL_BUTTON_TAG_WEAPONS:
         {
@@ -745,7 +744,6 @@ void CocosGUIExamplesScene::EquipSwitchBtnCallBack(CCObject *pSender)
             weapons_panel->setTouchEnable(true, true);
             clothes_panel->setTouchEnable(false, true);
             pets_panel->setTouchEnable(false, true);
-            
         }
             break;
             
@@ -767,7 +765,6 @@ void CocosGUIExamplesScene::EquipSwitchBtnCallBack(CCObject *pSender)
             pets_panel->setTouchEnable(true, true);
             clothes_panel->setTouchEnable(false, true);
             weapons_panel->setTouchEnable(false, true);
-            
         }
             break;
             

@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDecorativeDisplay.h"
-#include "../utils/CCConstValue.h"
 
 NS_CC_EXT_BEGIN
 

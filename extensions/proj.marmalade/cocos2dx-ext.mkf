@@ -133,6 +133,11 @@ files
     "*.h"
     "*.cpp"
 
+       ["CocoGUILIB/UIWidgets/ScrollWidget"]
+    ("../CocoGUILIB/UIWidgets/ScrollWidget")
+    "*.h"
+    "*.cpp"
+
        ["CocoGUILIB/Drawable"]
     ("../CocoGUILIB/Drawable")
     "*.h"

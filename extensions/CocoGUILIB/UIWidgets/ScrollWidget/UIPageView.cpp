@@ -250,6 +250,11 @@ void UIPageView::setSize(const CCSize &size)
 
 void UIPageView::updateChildrenSize()
 {
+    if (!m_pages)
+    {
+        return;
+    }
+    
     CCSize selfSize = getContentSize();
     for (int i=0; i<m_pages->count(); i++)
     {
@@ -260,6 +265,11 @@ void UIPageView::updateChildrenSize()
 
 void UIPageView::updateChildrenPosition()
 {
+    if (!m_pages)
+    {
+        return;
+    }
+    
     int pageCount = m_pages->data->num;
     if (pageCount <= 0)
     {

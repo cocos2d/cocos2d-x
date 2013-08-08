@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../utils/CCTweenFunction.h"
 
 
-#define CS_CREATE_NO_PARAM_NO_INIT(varType)\
+#define CC_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
 	static inline varType *create(void){ \
 	varType *var = new varType();\
@@ -42,7 +42,7 @@ public: \
 	return NULL;\
 }
 
-#define CS_CREATE_NO_PARAM(varType)\
+#define CC_CREATE_NO_PARAM(varType)\
 public: \
 	static inline varType *create(void){ \
 	varType *var = new varType();\
@@ -58,36 +58,36 @@ public: \
 NS_CC_EXT_BEGIN
 
 /**
-* the base node include a lot of attribute.
+* The base node include a lot of attributes.
 */
 class  CCBaseData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCBaseData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCBaseData)
 public:
     CCBaseData();
     ~CCBaseData(void);
 
     /*
-    * Copy datas from node
-    * @param  node A CCBaseData to copy datas
+    * Copy data from node
+    * @param  node A CCBaseData to copy data
     */
-    virtual void copy(const CCBaseData *_node);
+    virtual void copy(const CCBaseData *node);
 
     /*
-    * Calculate two CCBaseData's between value(_to - _from) and set to self
+    * Calculate two CCBaseData's between value(to - from) and set to self
     *
     * @param  from   from CCBaseData
     * @param  to     to CCBaseData
     */
-    virtual void subtract(CCBaseData *_from, CCBaseData *_to);
+    virtual void subtract(CCBaseData *from, CCBaseData *to);
 
 	virtual void setColor(const ccColor4B &color);
 	virtual ccColor4B getColor();
 public:
 	float x;					//! position x attribute
 	float y;					//! position y attribute
-	int zOrder;					//! zorder attribute, used to order the CCBone's depth order
+	int zOrder;			//! zorder attribute, used to order the CCBone's depth order
 
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -99,23 +99,23 @@ public:
     float scaleX;
     float scaleY;
 
-    float tweenRotate;			//! SkewX, SkewY, and TweenRotate effect the rotation
+    float tweenRotate;       //! SkewX, SkewY, and TweenRotate effect the rotation
 
-    bool isUseColorInfo;		//! Whether or not this frame have the color changed Info
+    bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
 };
 
 
 /**
-* DisplayType distinguish which type you display is.
+* DisplayType distinguish which type your display is.
 */
 enum DisplayType
 {
-    CS_DISPLAY_SPRITE,          //! display is a single CCSprite
-    CS_DISPLAY_ARMATURE,        //! display is a CCArmature
-    CS_DISPLAY_PARTICLE,        //! display is a CCParticle.
-    CS_DISPLAY_SHADER,          //! display is a shader
+    CS_DISPLAY_SPRITE,                //! display is a single CCSprite
+    CS_DISPLAY_ARMATURE,         //! display is a CCArmature
+    CS_DISPLAY_PARTICLE,            //! display is a CCParticle.
+    CS_DISPLAY_SHADER,              //! display is a shader
 
     CS_DISPLAY_MAX
 };
@@ -123,9 +123,9 @@ enum DisplayType
 class  CCDisplayData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
 
-    static const char *changeDisplayToTexture(const char *);
+    static const char *changeDisplayToTexture(const char *displayName);
 public:
     CCDisplayData();
     virtual ~CCDisplayData(void);
@@ -138,7 +138,7 @@ public:
 class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
 public:
     CCSpriteDisplayData();
     virtual ~CCSpriteDisplayData();
@@ -165,7 +165,7 @@ public:
 class  CCArmatureDisplayData  : public CCDisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
 public:
     CCArmatureDisplayData();
     virtual ~CCArmatureDisplayData();
@@ -191,7 +191,7 @@ public:
 class  CCParticleDisplayData : public CCDisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
 public:
     CCParticleDisplayData();
     virtual ~CCParticleDisplayData() {};
@@ -210,7 +210,7 @@ public:
 class  CCShaderDisplayData : public CCDisplayData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
 public:
     CCShaderDisplayData();
     virtual ~CCShaderDisplayData() {};
@@ -236,7 +236,7 @@ public:
 class  CCBoneData : public CCBaseData
 {
 public:
-    CS_CREATE_NO_PARAM(CCBoneData)
+    CC_CREATE_NO_PARAM(CCBoneData)
 public:
     CCBoneData(void);
     ~CCBoneData(void);
@@ -246,22 +246,22 @@ public:
     void addDisplayData(CCDisplayData *displayData);
     CCDisplayData *getDisplayData(int index);
 public:
-    std::string name;			//! the bone's name
-    std::string parentName;		//! the bone parent's name
-    CCArray displayDataList;	//! save CCDisplayData informations for the CCBone
+    std::string name;                //! the bone's name
+    std::string parentName;     //! the bone parent's name
+    CCArray displayDataList;    //! save CCDisplayData informations for the CCBone
 	CCAffineTransform boneDataTransform;
 };
 
 
 /**
-* CCArmatureData saved the CCArmature name and Bonedatas needed for the Bones in this CCArmature
+* CCArmatureData saved the CCArmature name and Bonedata needed for the CCBones in this CCArmature
 * When we create a CCArmature, we need to get each CCBone's CCBoneData as it's init information.
 * So we can get a CCBoneData from the CCDictionary saved in the CCArmatureData.
 */
 class  CCArmatureData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM(CCArmatureData)
+    CC_CREATE_NO_PARAM(CCArmatureData)
 public:
     CCArmatureData();
     ~CCArmatureData();
@@ -279,7 +279,7 @@ public:
 class  CCFrameData : public CCBaseData
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCFrameData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCFrameData)
 public:
     CCFrameData();
     ~CCFrameData();
@@ -287,20 +287,20 @@ public:
     virtual void copy(CCFrameData *frameData);
 public:
 	int frameID;
-    int duration;                //! The frame will last m_iDuration frames
+    int duration;                //! The frame will last duration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
     /**
     * The current display index when change to this frame.
-    * If value is -1, then display will not show.
+    * If value is -1, then display will not be shown.
     */
     int displayIndex;
 
+	std::string strEvent;
     /**
-    * m_strMovement, m_strEvent, m_strSound, m_strSoundEffect do not support yet
+    * strMovement, strEvent, strSound, strSoundEffect do not support yet
     */
     std::string strMovement;
-    std::string strEvent;
     std::string strSound;
     std::string strSoundEffect;
 };
@@ -309,7 +309,7 @@ public:
 class  CCMovementBoneData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM(CCMovementBoneData)
+    CC_CREATE_NO_PARAM(CCMovementBoneData)
 public:
     CCMovementBoneData();
     ~CCMovementBoneData(void);
@@ -319,10 +319,10 @@ public:
     void addFrameData(CCFrameData *frameData);
     CCFrameData *getFrameData(int index);
 public:
-    float delay;		//! movement delay percent, this value can produce a delay effect
-	float scale;		//! scale this movement
-    float duration;		//! this CCBone in this movement will last m_iDuration frames
-    std::string name;	//! bone name
+    float delay;             //! movement delay percent, this value can produce a delay effect
+	float scale;             //! scale this movement
+    float duration;        //! this CCBone in this movement will last m_iDuration frames
+    std::string name;    //! bone name
 
     CCArray frameList;
 };
@@ -331,7 +331,7 @@ public:
 class  CCMovementData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCMovementData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCMovementData)
 public:
     CCMovementData(void);
     ~CCMovementData(void);
@@ -344,21 +344,22 @@ public:
 	float scale;		  //! scale this movement
 
     /**
-    * Change to this movement will last m_iDurationTo frames. Use this effect can avoid too suddenly changing.
+    * Change to this movement will last durationTo frames. Use this effect can avoid too suddenly changing.
     *
-    * Example : current movement is "stand", we want to change to "run", then we fill m_iDurationTo frames before
+    * Example : current movement is "stand", we want to change to "run", then we fill durationTo frames before
     * change to "run" instead of changing to "run" directly.
     */
     int durationTo;
 
     /*
-    * This is different from m_iDuration, m_iDurationTween contain tween effect.
-    *
-    * Example : If we edit 10 frames in the flash, then m_iDuration is 10. When we set m_iDurationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
+    * This is different from duration, durationTween contain tween effect.
+	* duration is the raw time that the animation will last, it's the same with the time you edit in the Action Editor.
+	* durationTween is the actual time you want this animation last.
+    * Example : If we edit 10 frames in the flash, then duration is 10. When we set durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
     */
     int durationTween;
 
-	bool loop;           //! whether the movement is looped
+	bool loop;           //! whether the movement was looped
 
     /**
     * Which tween easing effect the movement use
@@ -367,8 +368,8 @@ public:
     CCTweenType tweenEasing;
 
     /**
-    * @brief	save movment bone datas
-    * @key	std::string
+    * @brief	save movment bone data
+    * @key	const char *
     * @value	CCMovementBoneData *
     */
     CCDictionary movBoneDataDic;
@@ -383,13 +384,10 @@ public:
 class  CCAnimationData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
+    CC_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
 public:
     CCAnimationData(void);
     ~CCAnimationData(void);
-
-    void release();
-    void retain();
 
     void addMovement(CCMovementData *movData);
     CCMovementData *getMovement(const char *movementName);
@@ -419,7 +417,7 @@ struct CCContourVertex2 : public CCObject
 class  CCContourData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM(CCContourData)
+    CC_CREATE_NO_PARAM(CCContourData)
 public:
     CCContourData();
     ~CCContourData(void);
@@ -439,7 +437,7 @@ public:
 class  CCTextureData : public CCObject
 {
 public:
-    CS_CREATE_NO_PARAM(CCTextureData)
+    CC_CREATE_NO_PARAM(CCTextureData)
 public:
     CCTextureData();
     ~CCTextureData(void);

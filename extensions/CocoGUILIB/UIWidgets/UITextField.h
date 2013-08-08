@@ -32,13 +32,13 @@
 NS_CC_EXT_BEGIN
 
 typedef void (CCObject::*SEL_TextFieldAttachWithIMEEvent)(CCObject*);
+#define coco_TextField_AttachWithIME_selector(_SELECTOR) (SEL_TextFieldAttachWithIMEEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_TextFieldDetachWithIMEEvent)(CCObject*);
+#define coco_TextField_DetachWithIME_selector(_SELECTOR) (SEL_TextFieldDetachWithIMEEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_TextFieldInsertTextEvent)(CCObject*);
+#define coco_TextField_InsertText_selector(_SELECTOR) (SEL_TextFieldInsertTextEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_TextFieldDeleteBackwardEvent)(CCObject*);
-#define coco_TextFieldAttachWithIMESelector(_SELECTOR) (SEL_TextFieldAttachWithIMEEvent)(&_SELECTOR)
-#define coco_TextFieldDetachWithIMESelector(_SELECTOR) (SEL_TextFieldDetachWithIMEEvent)(&_SELECTOR)
-#define coco_TextFieldInsertTextSelector(_SELECTOR) (SEL_TextFieldInsertTextEvent)(&_SELECTOR)
-#define coco_TextFieldDeleteBackwardSelector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
+#define coco_TextField_DeleteBackward_selector(_SELECTOR) (SEL_TextFieldDeleteBackwardEvent)(&_SELECTOR)
 
 //class UITextField : public UIWidget
 class UITextField : public UIWidget
