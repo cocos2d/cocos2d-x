@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCARMATUREDATAMANAGER_H__
 
 #include "CCArmatureDefine.h"
-#include "CCConstValue.h"
 #include "../datas/CCDatas.h"
 
 
@@ -107,7 +106,7 @@ public:
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
-	void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
+	void addArmatureFileInfo(const char *configFilePath);
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
@@ -124,7 +123,10 @@ public:
      */
     void removeAll();
 
-   
+	/**
+	 *	@brief	Juge whether or not need auto load sprite file
+     */
+	bool isAutoLoadSpriteFile();
 private:
     /**
 	 *	@brief	save amature datas
@@ -147,6 +149,7 @@ private:
      */
 	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pTextureDatas, TextureDatas);
 
+	bool m_bAutoLoadSpriteFile;
 };
 
 

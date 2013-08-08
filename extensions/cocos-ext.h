@@ -51,7 +51,6 @@
 #include "CCArmature/display/CCSkin.h"
 #include "CCArmature/physics/CCColliderDetector.h"
 #include "CCArmature/utils/CCArmatureDataManager.h"
-#include "CCArmature/utils/CCConstValue.h"
 #include "CCArmature/utils/CCDataReaderHelper.h"
 #include "CCArmature/utils/CCTweenFunction.h"
 #include "CCArmature/external_tool/sigslot.h"

@@ -264,8 +264,6 @@ void CCColliderDetector::setCPBody(cpBody *pBody)
 		ColliderBody *colliderBody = (ColliderBody *)object;
 
 		CCContourData *contourData = colliderBody->getContourData();
-		const CCArray *array = &contourData->vertexList;
-		CCObject *object = NULL;
 
 		int num = contourData->vertexList.count();
 		CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;

@@ -489,6 +489,9 @@
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.cpp">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIListView.cpp">
+      <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIPageView.cpp">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -703,9 +706,6 @@
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h">
       <Filter>CCArmature\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h">
-      <Filter>CCArmature\utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h">
       <Filter>CCArmature\utils</Filter>
     </ClInclude>
@@ -872,6 +872,9 @@
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.h">
+      <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIListView.h">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIPageView.h">

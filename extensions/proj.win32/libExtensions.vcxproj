@@ -157,6 +157,7 @@
     <ClCompile Include="..\CocoGUILIB\System\UIInputManager.cpp" />
     <ClCompile Include="..\CocoGUILIB\System\UILayer.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.cpp" />
+    <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIListView.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIPageView.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollView.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UIButton.cpp" />
@@ -256,7 +257,6 @@
     <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h" />
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h" />
     <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h" />
     <ClInclude Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.h" />
     <ClInclude Include="..\CCArmature\utils\CCTransformHelp.h" />
@@ -308,6 +308,7 @@
     <ClInclude Include="..\CocoGUILIB\System\UIInputManager.h" />
     <ClInclude Include="..\CocoGUILIB\System\UILayer.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.h" />
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIListView.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIPageView.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollDelegate.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollView.h" />

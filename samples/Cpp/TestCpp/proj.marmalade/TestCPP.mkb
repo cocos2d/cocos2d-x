@@ -351,6 +351,106 @@ files
 	(../Classes/ExtensionsTest/CocosGUITest)
 	CocosGUIScene.cpp
 	CocosGUIScene.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest)
+	UIScene.cpp
+	UIScene.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest)
+	UISceneManager.cpp
+	UISceneManager.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIButtonTest)
+	UIButtonTest.cpp
+	UIButtonTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UICheckBoxTest)
+	UICheckBoxTest.cpp
+	UICheckBoxTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIDragPanelTest)
+	UIDragPanelTest.cpp
+	UIDragPanelTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIDragPanelTest)
+	UIImageViewTest.cpp
+	UIImageViewTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UILabelAtlasTest)
+	UILabelAtlasTest.cpp
+	UILabelAtlasTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UILabelBMFontTest)
+	UILabelBMFontTest.cpp
+	UILabelBMFontTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UILabelTest)
+	UILabelTest.cpp
+	UILabelTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIListViewTest)
+	UIListViewTest.cpp
+	UIListViewTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UILoadingBarTest)
+	UILoadingBarTest.cpp
+	UILoadingBarTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UINodeContainerTest)
+	UINodeContainerTest.cpp
+	UINodeContainerTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIPageViewTest)
+	UIPageViewTest.cpp
+	UIPageViewTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIPanelTest)
+	UIPanelTest.cpp
+	UIPanelTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIScrollViewTest)
+	UIScrollViewTest.cpp
+	UIScrollViewTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UISliderTest)
+	UISliderTest.cpp
+	UISliderTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UITextAreaTest)
+	UITextAreaTest.cpp
+	UITextAreaTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UITextButtonTest)
+	UITextButtonTest.cpp
+	UITextButtonTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UITextFieldTest)
+	UITextFieldTest.cpp
+	UITextFieldTest.h
+    
+    [Test/ExtensionsTest/CocosGUITest]
+	(../Classes/ExtensionsTest/CocosGUITest/UIZoomButtonTest)
+	UIZoomButtonTest.cpp
+	UIZoomButtonTest.h
 
 	[Test/FontTest]
 	(../Classes/FontTest)

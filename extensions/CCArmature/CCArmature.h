@@ -40,15 +40,15 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
 public:
    /**
-	* Allocates and initializes a armature.
-	* @return A initialized armature which is marked as "autorelease".
+	* Allocates and initializes an armature.
+	* @return An initialized armature which is marked as "autorelease".
 	*/
 	static CCArmature *create();
     
    /**
-	* Allocates a armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
+	* Allocates an armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
 	*
-	* @param  name CCArmature will use the name to find to the CCArmatureData to initializes it.
+	* @param  name CCArmature will use the name to find the CCArmatureData to initializes it.
 	* @return A initialized armature which is marked as "autorelease".
 	*/
 	static CCArmature *create(const char *name);
@@ -65,7 +65,7 @@ public:
     virtual bool init();
     
     /**
-     * Init a armature with specified name
+     * Init an armature with specified name
      * @param name CCArmature name
      */
     virtual bool init(const char *name);
@@ -75,7 +75,7 @@ public:
      * Add a CCBone to this CCArmature, 
      *
      * @param bone  The CCBone you want to add to CCArmature
-     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to it's parent
+     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to its parent
      */
     virtual void addBone(CCBone *bone, const char* parentName);
     /**

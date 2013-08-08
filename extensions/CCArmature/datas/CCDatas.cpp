@@ -361,16 +361,6 @@ CCAnimationData::~CCAnimationData(void)
 {
 }
 
-void CCAnimationData::release()
-{
-    CCObject::release();
-}
-
-void CCAnimationData::retain()
-{
-    CCObject::retain();
-}
-
 void CCAnimationData::addMovement(CCMovementData *movData)
 {
     movementDataDic.setObject(movData, movData->name);

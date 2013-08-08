@@ -103,7 +103,6 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
     m_iTotalDuration = 0;
     m_iBetweenDuration = 0;
 	m_iFromIndex = m_iToIndex = 0;
-	m_bNeedTweenTo = true;
 
 	bool difMovement = movementBoneData != m_pMovementBoneData;
 
@@ -232,7 +231,6 @@ void CCTween::updateHandler()
         break;
         default:
         {
-            m_fCurrentPercent = fmodf(m_fCurrentPercent, 1);
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
 
             m_iTotalDuration = 0;
@@ -353,7 +351,7 @@ void CCTween::tweenColorTo(float percent, CCFrameData *node, bool dirty)
 
 float CCTween::updateFrameData(float currentPrecent)
 {
-	if (currentPrecent > 1)
+	if (currentPrecent > 1 && m_pMovementBoneData->delay != 0)
 	{
 		currentPrecent = fmodf(currentPrecent,1);
 	}
@@ -371,19 +369,21 @@ float CCTween::updateFrameData(float currentPrecent)
         int length = m_pMovementBoneData->frameList.count();
 		CCFrameData **frames = (CCFrameData**)m_pMovementBoneData->frameList.data->arr;
 
-		if (playedTime < frames[0]->frameID || playedTime > frames[length-1]->frameID)
-		{
-			m_pBone->changeDisplayByIndex(-1, false);
-			m_bNeedTweenTo = false;
-			return currentPrecent;
-		}
-		else
-		{
-			m_bNeedTweenTo = true;
-		}
-
 		CCFrameData *from = NULL;
 		CCFrameData *to = NULL;
+
+		if (playedTime < frames[0]->frameID)
+		{
+			from = to = frames[0];
+			setBetween(from, to);
+			return currentPrecent;
+		}
+		else if(playedTime >= frames[length-1]->frameID)
+		{
+			from = to = frames[length-1];
+			setBetween(from, to);
+			return currentPrecent;
+		}
 
 		do
 		{

@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "../utils/CCConstValue.h"
 #include "../CCArmature.h"
 #include "../external_tool/Json/CSContentJsonDictionary.h"
 

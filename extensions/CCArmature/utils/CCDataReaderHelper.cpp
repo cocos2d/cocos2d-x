@@ -127,6 +127,7 @@ static const char *TEXTURE_DATA = "texture_data";
 static const char *VERTEX_POINT = "vertex";
 static const char *COLOR_INFO = "color";
 
+static const char *CONFIG_FILE_PATH= "config_file_path";
 
 NS_CC_EXT_BEGIN
 
@@ -134,6 +135,8 @@ std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
+
+static std::string s_filePath = "";
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -165,7 +168,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     s_arrConfigFileList.push_back(filePath);
 
 
-    std::string filePathStr = filePath;
+    std::string filePathStr = s_filePath = filePath;
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
@@ -854,6 +857,35 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
 
         delete textureDic;
     }
+
+	// Auto load sprite file
+	if (CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile())
+	{
+		length = json.getArrayItemCount(CONFIG_FILE_PATH);
+		for (int i = 0; i < length; i++)
+		{
+			const char *path = json.getStringValueFromArray(CONFIG_FILE_PATH, i);
+			if (path == NULL)
+			{
+				CCLOG("load CONFIG_FILE_PATH error.");
+				return;
+			}
+
+			std::string filePath = path;
+
+			std::string plistPath = filePath;
+			std::string pngPath = filePath.erase(filePath.find_last_of(".")) + ".png";
+
+			
+			size_t pos = s_filePath.find_last_of("/");
+			if (pos != std::string::npos)
+			{
+				filePath = s_filePath.substr(0, pos+1);
+			}
+
+			CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((filePath + plistPath).c_str(), (filePath + pngPath).c_str());
+		}
+	}
 }
 
 CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
