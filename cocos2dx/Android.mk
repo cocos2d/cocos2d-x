@@ -145,12 +145,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
-<<<<<<< HEAD
                     $(LOCAL_PATH)/platform/third_party/common/etc\
                     $(LOCAL_PATH)/platform/third_party/common/s3tc
-
-=======
->>>>>>> 5f31c49bb2bf212b3b6339c171a37f6f27c97b27
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \

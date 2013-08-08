@@ -33,7 +33,7 @@ void s3tc_decode_block(uint8_t **block_data,
 {
     unsigned int colorValue0 = 0 , colorValue1 = 0, initAlpha = (!oneBitAlphaFlag * 255u) << 24;
     unsigned int rb0 = 0, rb1 = 0, rb2 = 0, rb3 = 0, g0 = 0, g1 = 0, g2 = 0, g3 = 0;
-
+    
     uint32_t colors[4], pixelsIndex = 0;
     
     /* load the two color values*/
@@ -62,78 +62,78 @@ void s3tc_decode_block(uint8_t **block_data,
         g2  = (((2*g0 +g1 ) * 21) >> 6) & 0x00ff00;
         g3  = (((2*g1 +g0 ) * 21) >> 6) & 0x00ff00;
         colors[3] = rb3 + g3 + initAlpha;
-     }
+    }
     else
     {
         rb2 = ((rb0+rb1) >> 1) & 0xff00ff;
         g2  = ((g0 +g1 ) >> 1) & 0x00ff00;
         colors[3] = 0;
     }
-   colors[2] = rb2 + g2 + initAlpha;
-   
-   /*read the pixelsIndex , 2bits per pixel, 4 bytes */
-   memcpy((void*)&pixelsIndex, *block_data, 4);
-   (*block_data) += 4;
-  
-   if(dxt5 == decodeFlag)
-   {
-       //dxt5 use interpolate alpha
-       // 8-Alpha block: derive the other six alphas.
-       // Bit code 000 = alpha0, 001 = alpha1, other are interpolated.
-       
-       unsigned int alphaArray[8];
-       
-       alphaArray[0] = (alpha )& 0xff ;
-       alphaArray[1] = (alpha >> 8)& 0xff ;
-       
-       if(alphaArray[0] >= alphaArray[1])  
-       {
-           alphaArray[2] = (alphaArray[0]*6 + alphaArray[1]*1)/7;
-           alphaArray[3] = (alphaArray[0]*5 + alphaArray[1]*2)/7;
-           alphaArray[4] = (alphaArray[0]*4 + alphaArray[1]*3)/7;
-           alphaArray[5] = (alphaArray[0]*3 + alphaArray[1]*4)/7;
-           alphaArray[6] = (alphaArray[0]*2 + alphaArray[1]*5)/7;
-           alphaArray[7] = (alphaArray[0]*1 + alphaArray[1]*6)/7;
-       }
-       else if(alphaArray[0] < alphaArray[1])
-       {
-           alphaArray[2] = (alphaArray[0]*4 + alphaArray[1]*1)/5;
-           alphaArray[3] = (alphaArray[0]*3 + alphaArray[1]*2)/5;
-           alphaArray[4] = (alphaArray[0]*2 + alphaArray[1]*3)/5;
-           alphaArray[5] = (alphaArray[0]*1 + alphaArray[1]*4)/5;
-           alphaArray[6] = 0;
-           alphaArray[7] = 255;
-       }
-       
-       // read the flowing 48bit indices (16*3)
-       alpha >>= 16;
-       
-       for (int y=0; y<4; y++)
-       {
-           for (int x=0; x<4; x++)
-           {
-               decode_block_data[x] = (alphaArray[alpha & 5] <<24) + colors[pixelsIndex & 3];
-               pixelsIndex >>= 2;
-               alpha >>= 3;
-           }
-           decode_block_data += stride;
-       }
-   } //if (dxt5 == comFlag)
-   else   
-   { //dxt1 dxt3 use explicit alpha
-       for (int y=0; y<4; y++)
-       {
-           for (int x=0; x<4; x++)
-           {
-               initAlpha   = (alpha & 0x0f) << 28;
-               initAlpha   += initAlpha >> 4;
-               decode_block_data[x] = initAlpha + colors[pixelsIndex& 3];
-               pixelsIndex >>= 2;
-               alpha       >>= 4;
-           }
-           decode_block_data += stride;
-       }
-   }
+    colors[2] = rb2 + g2 + initAlpha;
+    
+    /*read the pixelsIndex , 2bits per pixel, 4 bytes */
+    memcpy((void*)&pixelsIndex, *block_data, 4);
+    (*block_data) += 4;
+    
+    if(dxt5 == decodeFlag)
+    {
+        //dxt5 use interpolate alpha
+        // 8-Alpha block: derive the other six alphas.
+        // Bit code 000 = alpha0, 001 = alpha1, other are interpolated.
+        
+        unsigned int alphaArray[8];
+        
+        alphaArray[0] = (alpha )& 0xff ;
+        alphaArray[1] = (alpha >> 8)& 0xff ;
+        
+        if(alphaArray[0] >= alphaArray[1])
+        {
+            alphaArray[2] = (alphaArray[0]*6 + alphaArray[1]*1)/7;
+            alphaArray[3] = (alphaArray[0]*5 + alphaArray[1]*2)/7;
+            alphaArray[4] = (alphaArray[0]*4 + alphaArray[1]*3)/7;
+            alphaArray[5] = (alphaArray[0]*3 + alphaArray[1]*4)/7;
+            alphaArray[6] = (alphaArray[0]*2 + alphaArray[1]*5)/7;
+            alphaArray[7] = (alphaArray[0]*1 + alphaArray[1]*6)/7;
+        }
+        else if(alphaArray[0] < alphaArray[1])
+        {
+            alphaArray[2] = (alphaArray[0]*4 + alphaArray[1]*1)/5;
+            alphaArray[3] = (alphaArray[0]*3 + alphaArray[1]*2)/5;
+            alphaArray[4] = (alphaArray[0]*2 + alphaArray[1]*3)/5;
+            alphaArray[5] = (alphaArray[0]*1 + alphaArray[1]*4)/5;
+            alphaArray[6] = 0;
+            alphaArray[7] = 255;
+        }
+        
+        // read the flowing 48bit indices (16*3)
+        alpha >>= 16;
+        
+        for (int y=0; y<4; y++)
+        {
+            for (int x=0; x<4; x++)
+            {
+                decode_block_data[x] = (alphaArray[alpha & 5] <<24) + colors[pixelsIndex & 3];
+                pixelsIndex >>= 2;
+                alpha >>= 3;
+            }
+            decode_block_data += stride;
+        }
+    } //if (dxt5 == comFlag)
+    else
+    { //dxt1 dxt3 use explicit alpha
+        for (int y=0; y<4; y++)
+        {
+            for (int x=0; x<4; x++)
+            {
+                initAlpha   = (alpha & 0x0f) << 28;
+                initAlpha   += initAlpha >> 4;
+                decode_block_data[x] = initAlpha + colors[pixelsIndex& 3];
+                pixelsIndex >>= 2;
+                alpha       >>= 4;
+            }
+            decode_block_data += stride;
+        }
+    }
 }
 
 void s3tc_decode(uint8_t *encode_data,             //in_data
@@ -143,7 +143,6 @@ void s3tc_decode(uint8_t *encode_data,             //in_data
                  ccS3TCDecodeFlag decodeFlag)
 {
     uint32_t *decode_block_data = (uint32_t *)decode_data;
-    
     for( int block_y =0 ; block_y < pixelsHeight/4; block_y++,decode_block_data += 3*pixelsWidth)   //stride = 3*width
     {
         for( int block_x =0 ; block_x < pixelsWidth/4; block_x++,decode_block_data += 4)            //skip 4 pixels
@@ -176,4 +175,5 @@ void s3tc_decode(uint8_t *encode_data,             //in_data
         }//for block_x
     }//for block_y
 }
+
 
