@@ -438,4 +438,20 @@ void UIButton::setDisabledSpriteFrame(CCSpriteFrame *frame)
     }
 }
 
+void UIButton::setColor(const ccColor3B &color)
+{
+    if (m_bScale9Enable)
+    {
+        dynamic_cast<CCScale9Sprite*>(m_pButtonNormal)->setColor(color);
+        dynamic_cast<CCScale9Sprite*>(m_pButtonClicked)->setColor(color);
+        dynamic_cast<CCScale9Sprite*>(m_pButtonDisable)->setColor(color);
+    }
+    else
+    {
+        dynamic_cast<CCSprite*>(m_pButtonNormal)->setColor(color);
+        dynamic_cast<CCSprite*>(m_pButtonClicked)->setColor(color);
+        dynamic_cast<CCSprite*>(m_pButtonDisable)->setColor(color);
+    }
+}
+
 NS_CC_EXT_END

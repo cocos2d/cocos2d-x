@@ -60,4 +60,37 @@ protected:
     UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage_Scale9)
 };
 
+class UIPanelTest_Layout_Linear_Vertical : public UIScene
+{
+public:
+    UIPanelTest_Layout_Linear_Vertical();
+    ~UIPanelTest_Layout_Linear_Vertical();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Vertical)
+};
+
+class UIPanelTest_Layout_Linear_Horizontal : public UIScene
+{
+public:
+    UIPanelTest_Layout_Linear_Horizontal();
+    ~UIPanelTest_Layout_Linear_Horizontal();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Horizontal)
+};
+
+class UIPanelTest_Layout_Relative : public UIScene
+{
+public:
+    UIPanelTest_Layout_Relative();
+    ~UIPanelTest_Layout_Relative();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Relative)
+};
+
 #endif /* defined(__TestCpp__UIPanelTest__) */

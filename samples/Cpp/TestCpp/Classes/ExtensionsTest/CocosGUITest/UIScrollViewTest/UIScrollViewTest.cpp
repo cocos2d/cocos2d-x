@@ -18,7 +18,7 @@ bool UIScrollViewTest_Vertical::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add a label in which the scrollview alert will be displayed
         m_pDisplayValueLabel = UILabel::create();
@@ -26,7 +26,7 @@ bool UIScrollViewTest_Vertical::init()
         m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the alert
@@ -35,7 +35,7 @@ bool UIScrollViewTest_Vertical::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -46,9 +46,9 @@ bool UIScrollViewTest_Vertical::init()
         scrollView->setTouchEnable(true);
         scrollView->setSize(CCSizeMake(280, 150));        
         CCSize backgroundSize = background->getContentSize();
-        scrollView->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        scrollView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - scrollView->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - scrollView->getRect().size.height) / 2));
         m_pUiLayer->addWidget(scrollView);
         
@@ -111,7 +111,7 @@ bool UIScrollViewTest_Horizontal::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add a label in which the scrollview alert will be displayed
         m_pDisplayValueLabel = UILabel::create();
@@ -119,7 +119,7 @@ bool UIScrollViewTest_Horizontal::init()
         m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);            
         
         UILabel *alert = UILabel::create();
@@ -127,7 +127,7 @@ bool UIScrollViewTest_Horizontal::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -140,9 +140,9 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setSize(CCSizeMake(280, 150));
         scrollView->setInnerContainerSize(scrollView->getRect().size);
         CCSize backgroundSize = background->getContentSize();
-        scrollView->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        scrollView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                     (backgroundSize.width - scrollView->getRect().size.width) / 2,
-                                    (screenSize.height - backgroundSize.height) / 2 +
+                                    (widgetSize.height - backgroundSize.height) / 2 +
                                     (backgroundSize.height - scrollView->getRect().size.height) / 2));
         m_pUiLayer->addWidget(scrollView);
         
