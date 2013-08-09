@@ -1501,7 +1501,7 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
             decodeOffset += stride * height;
         }
         
-		encodeOffset += size;
+        encodeOffset += size;
         width >>= 1;
         height >>= 1;
     }
