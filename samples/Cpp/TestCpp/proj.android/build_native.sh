@@ -28,8 +28,8 @@ then
     [ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
 
     # strip out entries with a "." because Bash cannot process variables with a "."
-    _PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
-    for line in "$_PROPERTIES"; do
+    _PROPERTIES=$(sed '/\./d' "$_LOCALPROPERTIES_FILE")
+    for line in $_PROPERTIES; do
         declare "$line";
     done
 fi
