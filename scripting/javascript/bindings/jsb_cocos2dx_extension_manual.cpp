@@ -572,9 +572,37 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
     return JS_FALSE;
 }
 
-class JSB_ControlButtonTarget : public Object {
+
+
+class JSB_ControlButtonTarget : public Object
+{
 public:
-    virtual void onEvent(Object *controlButton, Control::EventType event) {
+    JSB_ControlButtonTarget()
+    {}
+    
+    virtual ~JSB_ControlButtonTarget()
+    {
+        CCLOGINFO("In the destruction of JSB_ControlButtonTarget ...");
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        if (_needUnroot)
+        {
+            JS_RemoveObjectRoot(cx, &_jsTarget);
+        }
+        
+        JS_RemoveObjectRoot(cx, &_jsFunc);
+
+        for (auto iter = _jsNativeTargetMap.begin(); iter != _jsNativeTargetMap.end(); ++iter)
+        {
+            if (this == iter->second)
+            {
+                _jsNativeTargetMap.erase(iter);
+                break;
+            }
+        }
+    }
+    
+    virtual void onEvent(Object *controlButton, Control::EventType event)
+    {
         js_proxy_t * p;
         JS_GET_PROXY(p, controlButton);
         if (!p) {
@@ -586,53 +614,99 @@ public:
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
         int arg1 = (int)event;
         dataVal[1] = INT_TO_JSVAL(arg1);
-        
-        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(OBJECT_TO_JSVAL(_jsTarget), OBJECT_TO_JSVAL(_jsFunc));//, 2, dataVal);
+        jsval jsRet;
+
+        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(OBJECT_TO_JSVAL(_jsTarget), OBJECT_TO_JSVAL(_jsFunc), 2, dataVal, &jsRet);
     }
     
     void setJSTarget(JSObject* pJSTarget)
     {
         _jsTarget = pJSTarget;
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddNamedObjectRoot(cx, &_jsTarget, "JSB_ControlButtonTarget");
+        
+        js_proxy_t* p = jsb_get_js_proxy(_jsTarget);
+        if (!p)
+        {
+            JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+            JS_AddNamedObjectRoot(cx, &_jsTarget, "JSB_ControlButtonTarget, target");
+            _needUnroot = true;
+        }
     }
     
-    void setJSAction(JSObject* jsFunc) {
+    void setJSAction(JSObject* jsFunc)
+    {
         _jsFunc = jsFunc;
+
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddNamedObjectRoot(cx, &_jsFunc, "JSB_ControlButtonTarget");
+        JS_AddNamedObjectRoot(cx, &_jsFunc, "JSB_ControlButtonTarget, func");
     }
+    
+    void setEventType(Control::EventType type)
+    {
+        _type = type;
+    }
+public:
+    
+    static std::multimap<JSObject*, JSB_ControlButtonTarget*> _jsNativeTargetMap;
+    JSObject* _jsFunc;
+    Control::EventType _type;
 private:
     JSObject* _jsTarget;
-    JSObject* _jsFunc;
     bool _needUnroot;
 };
+
+std::multimap<JSObject*, JSB_ControlButtonTarget*> JSB_ControlButtonTarget::_jsNativeTargetMap;
 
 static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::Control* cobj = (cocos2d::extension::Control *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     JSBool ok = JS_TRUE;
     if (argc == 3) {
-        JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-        JS_GET_NATIVE_PROXY(proxy, tmpObj);
-        cocos2d::Object *arg0 = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg0);
         
+        JSObject* jsDelegate = JSVAL_TO_OBJECT(argv[0]);
+        JSObject* jsFunc = JSVAL_TO_OBJECT(argv[1]);
         Control::EventType arg2;
         ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
         
+        // Check whether the target already exists.
+        auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(jsDelegate);
+        for (auto it=range.first; it!=range.second; ++it)
+        {
+            if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
+            {
+                // Return true directly.
+                JS_SET_RVAL(cx, vp, JSVAL_VOID);
+                return JS_TRUE;
+            }
+        }
+        
         // save the delegate
-        JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
         JSB_ControlButtonTarget* nativeDelegate = new JSB_ControlButtonTarget();
+        
         nativeDelegate->setJSTarget(jsDelegate);
-        nativeDelegate->setJSAction(JSVAL_TO_OBJECT(argv[1]));
+        nativeDelegate->setJSAction(jsFunc);
+        nativeDelegate->setEventType(arg2);
+
+        
+        Array* nativeDelegateArray = static_cast<Array*>(cobj->getUserObject());
+        if (nullptr == nativeDelegateArray)
+        {
+            nativeDelegateArray = new Array();
+            cobj->setUserObject(nativeDelegateArray);  // The reference of nativeDelegateArray is added to 2
+            nativeDelegateArray->release(); // Release nativeDelegateArray to make the reference to 1
+        }
+        
+        nativeDelegateArray->addObject(nativeDelegate); // The reference of nativeDelegate is added to 2
+        nativeDelegate->release(); // Release nativeDelegate to make the reference to 1
+        
         cobj->addTargetWithActionForControlEvents(nativeDelegate, cccontrol_selector(JSB_ControlButtonTarget::onEvent), arg2);
+        
+        JSB_ControlButtonTarget::_jsNativeTargetMap.insert(std::make_pair(jsDelegate, nativeDelegate));
         
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         
@@ -646,21 +720,34 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy; JS_GET_NATIVE_PROXY(proxy, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::Control* cobj = (cocos2d::extension::Control *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
+    JSBool ok = JS_TRUE;
     if (argc == 3) {
+        Control::EventType arg2;
+        ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
+        
         obj = JSVAL_TO_OBJECT(argv[0]);
-        JS_GET_NATIVE_PROXY(proxy, obj);
-        cocos2d::Object *arg0 = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg0);
+        JSObject* jsFunc = JSVAL_TO_OBJECT(argv[1]);
         
-        obj = JSVAL_TO_OBJECT(argv[2]);
-        JS_GET_NATIVE_PROXY(proxy, obj);
-        cocos2d::extension::Control::EventType *arg2 = (cocos2d::extension::Control::EventType *)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg2);
+        JSB_ControlButtonTarget* nativeTargetToRemoved = nullptr;
         
+        auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(obj);
+        for (auto it=range.first; it!=range.second; ++it)
+        {
+            if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
+            {
+                nativeTargetToRemoved = it->second;
+                JSB_ControlButtonTarget::_jsNativeTargetMap.erase(it);
+                break;
+            }
+        }
+        
+        cobj->removeTargetWithActionForControlEvents(nativeTargetToRemoved, cccontrol_selector(JSB_ControlButtonTarget::onEvent), arg2);
+
         return JS_TRUE;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
