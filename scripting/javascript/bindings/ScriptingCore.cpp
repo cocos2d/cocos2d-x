@@ -174,8 +174,20 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
                                                  jsval* vp/* = NULL*/,
                                                  jsval* retVal/* = NULL*/)
 {
-    if(callback != JSVAL_VOID || thisObj != JSVAL_VOID) {
-        JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
+    if(callback != JSVAL_VOID || thisObj != JSVAL_VOID)
+    {
+        // Very important: The last parameter 'retVal' passed to 'JS_CallFunctionValue' should not be a NULL pointer.
+        // If it's a NULL pointer, crash will be triggered in 'JS_CallFunctionValue'. To find out the reason of this crash is very difficult.
+        // So we have to check the availability of 'retVal'.
+        if (retVal)
+        {
+            JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, retVal);
+        }
+        else
+        {
+            jsval jsRet;
+            JS_CallFunctionValue(cx_, JSVAL_TO_OBJECT(thisObj), callback, argc, vp, &jsRet);
+        }
     }
 }
 
