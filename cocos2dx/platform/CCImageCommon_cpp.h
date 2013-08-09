@@ -1443,11 +1443,11 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
     
     /* load the mipmaps */
     
-    int encode_offset = 0;
-    int decode_offset = 0;
+    int encodeOffset = 0;
+    int decodeOffset = 0;
     width = _width;  height = _height;
     
-    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)  //
+    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)  
     {
         if (width == 0) width = 1;
         if (height == 0) height = 1;
@@ -1472,7 +1472,7 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
                 _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
             }
 
-            _mipmaps[i].address = (unsigned char *)_data + encode_offset;
+            _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
             _mipmaps[i].len = size;
         }
         else
@@ -1481,29 +1481,27 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
             unsigned int stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
-            //
             std::vector<unsigned char> decodeImageData(stride * height);
             if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
             }
             else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
             }
             else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
             }
             
-            _mipmaps[i].address = (unsigned char *)_data + decode_offset;
+            _mipmaps[i].address = (unsigned char *)_data + decodeOffset;
             _mipmaps[i].len = (stride * height);
             memcpy((void *)_mipmaps[i].address, (void *)&decodeImageData[0], _mipmaps[i].len);
-            decode_offset += stride * height;
-
+            decodeOffset += stride * height;
         }
         
-		encode_offset += size;
+		encodeOffset += size;
         width >>= 1;
         height >>= 1;
     }
