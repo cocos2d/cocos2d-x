@@ -225,6 +225,7 @@ NS_CC_EXT_BEGIN
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
 					cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
+                    pLayer->scheduleUpdate();
 					UIWidget* widget=cocos2d::extension::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
@@ -498,6 +499,7 @@ NS_CC_EXT_BEGIN
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
 					cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
+                    pLayer->scheduleUpdate();
 					UIWidget* widget=cocos2d::extension::UIHelper::instance()->createWidgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
