@@ -213,8 +213,8 @@ private:
     bool _isDownloading;
     bool _shouldDeleteDelegateWhenExit;
     
-    std::string key_of_version() const;
-    std::string key_of_downloaded_version() const;
+    std::string keyOfVersion() const;
+    std::string keyOfDownloadedVersion() const;
 };
 
 class AssetsManagerDelegateProtocol
