@@ -118,13 +118,13 @@ static std::string key_with_hash( const char* prefix, const std::string& url )
 }
 
 // hashed version
-std::string AssetsManager::key_of_version() const
+std::string AssetsManager::keyOfVersion() const
 {
     return key_with_hash(KEY_OF_VERSION,_packageUrl);
 }
 
 // hashed version
-std::string AssetsManager::key_of_downloaded_version() const
+std::string AssetsManager::keyOfDownloadedVersion() const
 {
     return key_with_hash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
 }
@@ -167,7 +167,7 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    string recordedVersion = UserDefault::getInstance()->getStringForKey(key_of_version().c_str());
+    string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
     if (recordedVersion == _version)
     {
         sendErrorMessage(ErrorCode::NO_NEW_VERSION);
@@ -239,7 +239,7 @@ void AssetsManager::update()
     }
     
     // Is package already downloaded?
-    _downloadedVersion = UserDefault::getInstance()->getStringForKey(key_of_downloaded_version().c_str());
+    _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
     
     auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
     t.detach();
@@ -496,12 +496,12 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 
 string AssetsManager::getVersion()
 {
-    return UserDefault::getInstance()->getStringForKey(key_of_version().c_str());
+    return UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
 }
 
 void AssetsManager::deleteVersion()
 {
-    UserDefault::getInstance()->setStringForKey(key_of_version().c_str(), "");
+    UserDefault::getInstance()->setStringForKey(keyOfVersion().c_str(), "");
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
@@ -576,7 +576,7 @@ void AssetsManager::Helper::update(float dt)
             
             break;
         case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            UserDefault::getInstance()->setStringForKey(((AssetsManager*)msg->obj)->key_of_downloaded_version().c_str(),
+            UserDefault::getInstance()->setStringForKey(((AssetsManager*)msg->obj)->keyOfDownloadedVersion().c_str(),
                                                                 ((AssetsManager*)msg->obj)->_version.c_str());
             UserDefault::getInstance()->flush();
             
@@ -612,10 +612,10 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     AssetsManager* manager = (AssetsManager*)msg->obj;
     
     // Record new version code.
-    UserDefault::getInstance()->setStringForKey(manager->key_of_version().c_str(), manager->_version.c_str());
+    UserDefault::getInstance()->setStringForKey(manager->keyOfVersion().c_str(), manager->_version.c_str());
     
     // Unrecord downloaded version code.
-    UserDefault::getInstance()->setStringForKey(manager->key_of_downloaded_version().c_str(), "");
+    UserDefault::getInstance()->setStringForKey(manager->keyOfDownloadedVersion().c_str(), "");
     UserDefault::getInstance()->flush();
     
     // Set resource search path.
@@ -661,10 +661,10 @@ void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *pDir = NULL;
+    DIR *dir = NULL;
     
-    pDir = opendir (_storagePath.c_str());
-    if (! pDir)
+    dir = opendir (_storagePath.c_str());
+    if (!dir)
     {
         mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
     }
