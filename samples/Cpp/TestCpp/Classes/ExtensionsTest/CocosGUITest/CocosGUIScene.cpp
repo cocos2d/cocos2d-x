@@ -23,9 +23,7 @@ void CocosGUITestScene::runThisTest()
     ul->scheduleUpdate();
     this->addChild(ul);
     
-//    ul->addWidget(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UI_Register/UI_Register.json"));
-    
-    
+//    /*
     UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/CocoGUISample.json");
 //        UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/test/5_3/5_3.ExportJson");
     ((UIScrollView*)p->getChildByName("scrollview"))->setInnerContainerSize(CCSizeMake(300, 275));
@@ -40,6 +38,7 @@ void CocosGUITestScene::runThisTest()
     ul->addWidget(p);
 //    UIButton* exitBtn = dynamic_cast<UIButton*>(ul->getWidgetByName("exitbutton"));
 //    exitBtn->addReleaseEvent(this, coco_releaseselector(CocosGUITestScene::toCocosGUIExampleScene));
+//     */
 }
 void CocosGUITestScene::MainMenuCallback(CCObject* pSender)
 {

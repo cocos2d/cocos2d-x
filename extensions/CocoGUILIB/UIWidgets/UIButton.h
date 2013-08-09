@@ -52,6 +52,7 @@ public:
     virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
     virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
     virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
+    virtual void setColor(const ccColor3B &color);
 protected:
     virtual bool init();
     virtual void initNodes();

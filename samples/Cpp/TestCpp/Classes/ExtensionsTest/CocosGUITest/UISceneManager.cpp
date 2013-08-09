@@ -48,6 +48,9 @@ enum
     kUIPanelTest_Gradient,
     kUIPanelTest_BackGroundImage,
     kUIPanelTest_BackGroundImage_Scale9,
+    kUIPanelTest_Layout_Linear_Vertical,
+    kUIPanelTest_Layout_Linear_Horizontal,
+    kUIPanelTest_Layout_Relative,
     kUIScrollViewTest_Vertical,
     kUIScrollViewTest_Horizontal,
     kUIPageViewTest,
@@ -83,6 +86,9 @@ static const char* s_testArray[] =
     "UIPanelTest_Gradient",
     "UIPanelTest_BackGroundImage",
     "UIPanelTest_BackGroundImage_Scale9",
+    "UIPanelTest_Layout_Linear_Vertical",
+    "UIPanelTest_Layout_Linear_Horizontal",
+    "UIPanelTest_Layout_Relative",
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
     "UIPageViewTest,",
@@ -136,36 +142,104 @@ CCScene *UISceneManager::currentUIScene()
 {
     switch (m_nCurrentUISceneId)
     {
-        case kUIButtonTest: return UIButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIButtonTest_Scale9: return UIButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextButtonTest: return UITextButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextButtonTest_Scale9: return UITextButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIZoomButtonTest: return UIZoomButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUICheckBoxTest: return UICheckBoxTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUISliderTest: return UISliderTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUISliderTest_Scale9: return UISliderTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIImageViewTest: return UIImageViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIImageViewTest_Scale9: return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUILoadingBarTest: return UILoadingBarTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUILabelAtlasTest: return UILabelAtlasTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUILabelBMFontTest: return UILabelBMFontTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUILabelTest: return UILabelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextAreaTest: return UITextAreaTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextFieldTest: return UITextFieldTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextFieldTest_MaxLength: return UITextFieldTest_MaxLength::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUITextFieldTest_Password: return UITextFieldTest_Password::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPanelTest: return UIPanelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPanelTest_Color: return UIPanelTest_Color::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPanelTest_Gradient: return UIPanelTest_Gradient::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPanelTest_BackGroundImage: return UIPanelTest_BackGroundImage::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPanelTest_BackGroundImage_Scale9: return UIPanelTest_BackGroundImage_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIScrollViewTest_Vertical: return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIScrollViewTest_Horizontal: return UIScrollViewTest_Horizontal::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIPageViewTest: return UIPageViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIListViewTest: return UIListViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);    
-        case kUIDragPanelTest: return UIDragPanelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUIDragPanelTest_Bounce: return UIDragPanelTest_Bounce::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-        case kUINodeContainerTest: return UINodeContainerTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+        case kUIButtonTest:
+            return UIButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIButtonTest_Scale9:
+            return UIButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextButtonTest:
+            return UITextButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextButtonTest_Scale9:
+            return UITextButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIZoomButtonTest:
+            return UIZoomButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUICheckBoxTest:
+            return UICheckBoxTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUISliderTest:
+            return UISliderTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUISliderTest_Scale9:
+            return UISliderTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIImageViewTest:
+            return UIImageViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIImageViewTest_Scale9:
+            return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILoadingBarTest:
+            return UILoadingBarTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILabelAtlasTest:
+            return UILabelAtlasTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILabelBMFontTest:
+            return UILabelBMFontTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILabelTest:
+            return UILabelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextAreaTest:
+            return UITextAreaTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextFieldTest:
+            return UITextFieldTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextFieldTest_MaxLength:
+            return UITextFieldTest_MaxLength::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUITextFieldTest_Password:
+            return UITextFieldTest_Password::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest:
+            return UIPanelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_Color:
+            return UIPanelTest_Color::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_Gradient:
+            return UIPanelTest_Gradient::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_BackGroundImage:
+            return UIPanelTest_BackGroundImage::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_BackGroundImage_Scale9:
+            return UIPanelTest_BackGroundImage_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_Layout_Linear_Vertical:
+            return UIPanelTest_Layout_Linear_Vertical::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_Layout_Linear_Horizontal:
+            return UIPanelTest_Layout_Linear_Horizontal::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPanelTest_Layout_Relative:
+            return UIPanelTest_Layout_Relative::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIScrollViewTest_Vertical:
+            return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIScrollViewTest_Horizontal:
+            return UIScrollViewTest_Horizontal::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIPageViewTest:
+            return UIPageViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIListViewTest:
+            return UIListViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIDragPanelTest:
+            return UIDragPanelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUIDragPanelTest_Bounce:
+            return UIDragPanelTest_Bounce::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUINodeContainerTest:
+            return UINodeContainerTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
     }
     return NULL;
 }

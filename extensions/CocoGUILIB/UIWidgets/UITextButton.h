@@ -42,7 +42,7 @@ public:
     void setFontName(const char* fontName);
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
-    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void setAnchorPoint(const CCPoint &pt);    
 protected:
     CCLabelTTF* m_pTextLable;
     

@@ -70,4 +70,9 @@ void UICCLabelAtlas::draw()
     CCAtlasNode::draw();
 }
 
+void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
+{
+    CCAtlasNode::setOpacity(opacity);
+}
+
 NS_CC_EXT_END

@@ -17,7 +17,7 @@ bool UITextFieldTest::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add a label in which the textfield events will be displayed
         m_pDisplayValueLabel = UILabel::create();
@@ -25,7 +25,7 @@ bool UITextFieldTest::init()
         m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getRect().size.height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getRect().size.height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);        
         
         // Add the alert
@@ -34,7 +34,7 @@ bool UITextFieldTest::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         // Create the textfield
@@ -43,7 +43,7 @@ bool UITextFieldTest::init()
         textField->setFontName("Marker Felt");
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
-        textField->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        textField->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addAttachWithIMEEvent(this, coco_TextField_AttachWithIME_selector(UITextFieldTest::attachWithIMEEvent));
         textField->addDetachWithIMEEvent(this, coco_TextField_DetachWithIME_selector(UITextFieldTest::detachWithIMEEvent));
         textField->addInsertTextEvent(this, coco_TextField_InsertText_selector(UITextFieldTest::insertTextEvent));

@@ -81,4 +81,10 @@ CCNode* UILabelAtlas::getValidNode()
     return m_pRenderLaberAtlas;
 }
 
+// pipu cheat
+//void UILabelAtlas::setOpacity(int opacity)
+//{
+//    m_pRenderLaberAtlas->setOpacity(opacity);
+//}
+
 NS_CC_EXT_END
