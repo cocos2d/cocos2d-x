@@ -2014,7 +2014,7 @@ TextureS3TCDxt1::TextureS3TCDxt1()
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt1_mipmaps.dds");
     //Sprite *sprite = Sprite::create("Images/water_2_dxt1.dds");
     Size size = Director::getInstance()->getWinSize();
-    sprite->setPosition(Point(size.width/2,size.height/2));
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
     
     addChild(sprite);
 }
@@ -2030,9 +2030,9 @@ std::string TextureS3TCDxt1::subtitle()
 TextureS3TCDxt3::TextureS3TCDxt3()
 {
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt3_mipmaps.dds");
-  //  Sprite *sprite = Sprite::create("Images/water_2_dxt3.dds");
+    //Sprite *sprite = Sprite::create("Images/water_2_dxt3.dds");
     Size size = Director::getInstance()->getWinSize();
-    sprite->setPosition(Point(size.width/2,size.height/2));
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
     
     addChild(sprite);
 }
@@ -2047,11 +2047,10 @@ std::string TextureS3TCDxt3::subtitle()
 //Implement fo S3TC Dxt5
 TextureS3TCDxt5::TextureS3TCDxt5()
 {
-    //Sprite *sprite = Sprite::create("Images/water_2_dxt5.dds");
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt5_mipmaps.dds");
-    
+    //Sprite *sprite = Sprite::create("Images/water_2_dxt5.dds");
     Size size = Director::getInstance()->getWinSize();
-    sprite->setPosition(Point(size.width/2,size.height/2));
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
     
     addChild(sprite);
 }

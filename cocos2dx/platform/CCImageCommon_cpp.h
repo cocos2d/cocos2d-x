@@ -223,93 +223,90 @@ namespace
 //struct and data for s3tc(dds) struct
 namespace
 {
-    typedef struct
+    struct DDColorKey
     {
-        uint32_t dwColorSpaceLowValue;
-        uint32_t dwColorSpaceHighValue;
-        
-    } DDCOLORKEY;
+        uint32_t colorSpaceLowValue;
+        uint32_t colorSpaceHighValue;
+    };
     
-    typedef struct
+    struct DDSCaps
     {
-        uint32_t dwCaps;
-        uint32_t dwCaps2;
-        uint32_t dwCaps3;
-        uint32_t dwCaps4;
-    } DDSCAPS2;
+        uint32_t caps;
+        uint32_t caps2;
+        uint32_t caps3;
+        uint32_t caps4;
+    };
     
-    typedef struct
+    struct DDPixelFormat
     {
-        uint32_t dwSize;
-        uint32_t dwFlags;
-        uint32_t dwFourCC;
-        uint32_t dwRGBBitCount;
-        uint32_t dwRBitMask;
-        uint32_t dwGBitMask;
-        uint32_t dwBBitMask;
-        uint32_t dwABitMask;
-    }DDPIXELFORMAT;
+        uint32_t size;
+        uint32_t flags;
+        uint32_t fourCC;
+        uint32_t RGBBitCount;
+        uint32_t RBitMask;
+        uint32_t GBitMask;
+        uint32_t BBitMask;
+        uint32_t ABitMask;
+    };
     
     
-    typedef struct
+    struct DDSURFACEDESC2
     {
-        uint32_t dwSize;
-        uint32_t dwFlags;
-        uint32_t dwHeight;
-        uint32_t dwWidth;
+        uint32_t size;
+        uint32_t flags;
+        uint32_t height;
+        uint32_t width;
         
         union
         {
-            uint32_t lPitch;
-            uint32_t dwLinearSize;
+            uint32_t pitch;
+            uint32_t linearSize;
         } DUMMYUNIONNAMEN1;
         
         union
         {
-            uint32_t dwBackBufferCount;
-            uint32_t dwDepth;
+            uint32_t backBufferCount;
+            uint32_t depth;
         } DUMMYUNIONNAMEN5;
         
         union
         {
-            uint32_t dwMipMapCount;
-            uint32_t dwRefreshRate;
-            uint32_t dwSrcVBHandle;
+            uint32_t mipMapCount;
+            uint32_t refreshRate;
+            uint32_t srcVBHandle;
         } DUMMYUNIONNAMEN2;
         
-        uint32_t dwAlphaBitDepth;
-        uint32_t dwReserved;
-        uint32_t lpSurface;
+        uint32_t alphaBitDepth;
+        uint32_t reserved;
+        uint32_t surface;
         
         union
         {
-            DDCOLORKEY ddckCKDestOverlay;
-            uint32_t dwEmptyFaceColor;
+            DDColorKey ddckCKDestOverlay;
+            uint32_t emptyFaceColor;
         } DUMMYUNIONNAMEN3;
         
-        DDCOLORKEY ddckCKDestBlt;
-        DDCOLORKEY ddckCKSrcOverlay;
-        DDCOLORKEY ddckCKSrcBlt;
+        DDColorKey ddckCKDestBlt;
+        DDColorKey ddckCKSrcOverlay;
+        DDColorKey ddckCKSrcBlt;
         
         union
         {
-            DDPIXELFORMAT ddpfPixelFormat;
-            uint32_t dwFVF;
+            DDPixelFormat ddpfPixelFormat;
+            uint32_t FVF;
         } DUMMYUNIONNAMEN4;
         
-        DDSCAPS2 ddsCaps;
-        uint32_t dwTextureStage;
-        
-    } DDSURFACEDESC2, *LPDDSURFACEDESC2;
+        DDSCaps ddsCaps;
+        uint32_t textureStage;
+    } ;
     
 #pragma pack(push,1)
     
-    typedef struct 
+    struct S3TCTexHeader
     {
         char fileCode[4];
         DDSURFACEDESC2 ddsd;
-        
-    }ccS3TCTexHeader;
+    };
     
 #pragma pack(pop)
 
@@ -492,7 +489,7 @@ bool Image::isEtc(const void *data, int dataLen)
 bool Image::isS3TC(const void *data, int dataLen)
 {
 
-    ccS3TCTexHeader *header = (ccS3TCTexHeader *)data;
+    S3TCTexHeader *header = (S3TCTexHeader *)data;
     
     if (strncmp(header->fileCode, "DDS", 3)!= 0)
     {
@@ -1390,11 +1387,13 @@ bool Image::initWithETCData(const void *data, int dataLen)
     return false;
 }
 
-
-const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
+namespace
 {
-    const uint32_t fourCC=((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) |((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
-    return fourCC;
+    static const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
+    {
+        const uint32_t fourCC = ((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) | ((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
+        return fourCC;
+    }
 }
 
 bool Image::initWithS3TCData(const void *data, int dataLen)
@@ -1406,32 +1405,30 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
     
     /* load the .dds file */
     
-    ccS3TCTexHeader *header = (ccS3TCTexHeader *)data;;
-    unsigned char *pixel_data = (unsigned char*)malloc(dataLen-sizeof(ccS3TCTexHeader));
-    memcpy((void *)pixel_data, (unsigned char*)data+sizeof(ccS3TCTexHeader), dataLen-sizeof(ccS3TCTexHeader));
+    S3TCTexHeader *header = (S3TCTexHeader *)data;
+    unsigned char *pixelData = new unsigned char [dataLen - sizeof(S3TCTexHeader)];
+    memcpy((void *)pixelData, (unsigned char*)data + sizeof(S3TCTexHeader), dataLen - sizeof(S3TCTexHeader));
     
-    _width = header->ddsd.dwWidth;
-    _height = header->ddsd.dwHeight;
-    _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.dwMipMapCount;
+    _width = header->ddsd.width;
+    _height = header->ddsd.height;
+    _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.mipMapCount;
     _dataLen = 0;  
-    int blockSize = (FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC) ? 8 : 16;
-
-  
+    int blockSize = (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC) ? 8 : 16;
     
     /* caculate the dataLen */
     
     int width = _width;
     int height = _height;
     
-    if(Configuration::getInstance()->supportsS3TC())  //compressed data length
+    if (Configuration::getInstance()->supportsS3TC())  //compressed data length
     {
-        _dataLen = dataLen -sizeof(ccS3TCTexHeader);
+        _dataLen = dataLen - sizeof(S3TCTexHeader);
         _data = new unsigned char [_dataLen];
-        memcpy((void *)_data,(void *)pixel_data , _dataLen);
-
-    }else                                             //decompressed data length
+        memcpy((void *)_data,(void *)pixelData , _dataLen);
+    }
+    else                                               //decompressed data length
     {
-        for(unsigned int i = 0; i< _numberOfMipmaps && (width || height); ++i)
+        for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
         {
             if (width == 0) width = 1;
             if (height == 0) height = 1;
@@ -1444,12 +1441,11 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
         _data = new unsigned char [_dataLen];
     }
     
-    
     /* load the mipmaps */
     
     int encode_offset = 0;
     int decode_offset = 0;
-    width = _width;  height =_height;
+    width = _width;  height = _height;
     
     for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)  //
     {
@@ -1463,17 +1459,17 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
             
             CCLOG("this is s3tc H decode");
             
-            if(FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                _renderFormat = Texture2D::PixelFormat::S3TC_Dxt1;
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
             }
-            else if(FOURCC_DXT3==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                _renderFormat = Texture2D::PixelFormat::S3TC_Dxt3;
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
             }
-            else if(FOURCC_DXT5==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                _renderFormat = Texture2D::PixelFormat::S3TC_Dxt5;
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
             }
 
             _mipmaps[i].address = (unsigned char *)_data + encode_offset;
@@ -1487,17 +1483,17 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
 
             //
             std::vector<unsigned char> decodeImageData(stride * height);
-            if(FOURCC_DXT1==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt1);
+                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
             }
-            else if(FOURCC_DXT3==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt3);
+                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
             }
-            else if(FOURCC_DXT5==header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.dwFourCC)
+            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
-                s3tc_decode(pixel_data+encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::dxt5);
+                s3tc_decode(pixelData + encode_offset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
             }
             
             _mipmaps[i].address = (unsigned char *)_data + decode_offset;
@@ -1514,7 +1510,7 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
     
     /* end load the mipmaps */
     
-    CC_SAFE_DELETE(pixel_data);
+    CC_SAFE_DELETE_ARRAY(pixelData);
     
     return true;
 }

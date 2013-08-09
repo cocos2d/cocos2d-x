@@ -30,18 +30,10 @@
 
 enum class S3TCDecodeFlag
 {
-    dxt1 = 1,
-    dxt3 = 3,
-    dxt5 = 5,
+    DXT1 = 1,
+    DXT3 = 3,
+    DXT5 = 5,
 };
-
-//Decode S3TC encode block to 4x4 RGB32 pixels
-extern void s3tc_decode_block(uint8_t **block_data,
-                       uint32_t *decode_block_data,
-                       unsigned int stride,
-                       bool oneBitAlphaFlag,
-                       uint64_t alpha,
-                       S3TCDecodeFlag decodeFlag);
 
 //Decode S3TC encode data to RGB32
  void s3tc_decode(uint8_t *encode_data,
