@@ -76,7 +76,8 @@ static JSBool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc,
     cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
-    if (argc == 1) {
+    if (argc == 1)
+    {
         // save the delegate
         JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
         JSB_ScrollViewDelegate* nativeDelegate = new JSB_ScrollViewDelegate();
@@ -199,7 +200,8 @@ static JSBool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, 
     cocos2d::extension::TableView* cobj = (cocos2d::extension::TableView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
-    if (argc == 1) {
+    if (argc == 1)
+    {
         // save the delegate
         JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
         JSB_TableViewDelegate* nativeDelegate = new JSB_TableViewDelegate();
@@ -249,10 +251,12 @@ public:
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
-        if (!ok) {
+        if (!ok) 
+        {
             ok = callJSDelegate(table, "cellSizeForTable", ret);
         }
-        if (ok) {
+        if (ok) 
+        {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
             Size size;
             JSBool isSucceed = jsval_to_ccsize(cx, ret, &size);
@@ -324,13 +328,17 @@ private:
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* obj = _JSTableViewDataSource;
         
-        if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction) {
-            if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval)) {
+        if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
+        {
+            if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval))
+            {
                 return false;
             }
-            if(temp_retval == JSVAL_VOID) {
+            if(temp_retval == JSVAL_VOID)
+            {
                 return false;
             }
+
             JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 1, &dataVal, &retVal);
@@ -354,13 +362,18 @@ private:
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JSObject* obj = _JSTableViewDataSource;
         
-        if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction) {
-            if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval)) {
+        if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
+        {
+            if(!JS_GetProperty(cx, obj, jsFunctionName.c_str(), &temp_retval))
+            {
                 return false;
             }
-            if(temp_retval == JSVAL_VOID) {
+            
+            if(temp_retval == JSVAL_VOID)
+            {
                 return false;
             }
+
             JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 2, dataVal, &retVal);
@@ -412,7 +425,8 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
 {
     jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
-    if (argc == 3 || argc == 2) {
+    if (argc == 3 || argc == 2)
+    {
         
         JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
         pNativeSource->setTableViewDataSource(JSVAL_TO_OBJECT(argv[0]));
@@ -427,10 +441,13 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         
         jsval jsret;
         do {
-            if (ret) {
+            if (ret)
+            {
                 js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::extension::TableView>(cx, ret);
                 jsret = OBJECT_TO_JSVAL(proxy->obj);
-            } else {
+            } 
+            else
+            {
                 jsret = JSVAL_NULL;
             }
         } while (0);
@@ -442,7 +459,8 @@ static JSBool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval
         else
         {
             cocos2d::Node* arg2;
-            do {
+            do 
+            {
                 js_proxy_t *proxy;
                 JSObject *tmpObj = JSVAL_TO_OBJECT(argv[2]);
                 proxy = jsb_get_js_proxy(tmpObj);
@@ -554,7 +572,8 @@ static JSBool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, js
     cocos2d::extension::EditBox* cobj = (cocos2d::extension::EditBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
-    if (argc == 1) {
+    if (argc == 1)
+    {
         // save the delegate
         JSObject *jsDelegate = JSVAL_TO_OBJECT(argv[0]);
         JSB_EditBoxDelegate* nativeDelegate = new JSB_EditBoxDelegate();
@@ -605,7 +624,8 @@ public:
     {
         js_proxy_t * p;
         JS_GET_PROXY(p, controlButton);
-        if (!p) {
+        if (!p)
+        {
             log("Failed to get proxy for control button");
             return;
         }
@@ -665,8 +685,8 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     JSBool ok = JS_TRUE;
-    if (argc == 3) {
-        
+    if (argc == 3)
+    {
         JSObject* jsDelegate = JSVAL_TO_OBJECT(argv[0]);
         JSObject* jsFunc = JSVAL_TO_OBJECT(argv[1]);
         Control::EventType arg2;
@@ -692,7 +712,6 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         nativeDelegate->setJSAction(jsFunc);
         nativeDelegate->setEventType(arg2);
 
-        
         Array* nativeDelegateArray = static_cast<Array*>(cobj->getUserObject());
         if (nullptr == nativeDelegateArray)
         {
@@ -725,7 +744,8 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     JSBool ok = JS_TRUE;
-    if (argc == 3) {
+    if (argc == 3)
+    {
         Control::EventType arg2;
         ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing control event");
