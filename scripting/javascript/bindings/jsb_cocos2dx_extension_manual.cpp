@@ -699,7 +699,7 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         
         // Check whether the target already exists.
         auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(jsDelegate);
-        for (auto it=range.first; it!=range.second; ++it)
+        for (auto it = range.first; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
             {
@@ -760,7 +760,7 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
         JSB_ControlButtonTarget* nativeTargetToRemoved = nullptr;
         
         auto range = JSB_ControlButtonTarget::_jsNativeTargetMap.equal_range(obj);
-        for (auto it=range.first; it!=range.second; ++it)
+        for (auto it = range.first; it != range.second; ++it)
         {
             if (it->second->_jsFunc == jsFunc && arg2 == it->second->_type)
             {
