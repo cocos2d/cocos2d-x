@@ -243,6 +243,11 @@ void UISlider::checkSlidBoundary()
     }
 }
 
+bool UISlider::isProgressBarVisible()
+{
+    return m_bProgressBarVisible;
+}
+
 void UISlider::setProgressBarVisible(bool show)
 {
     if (m_bProgressBarVisible == show)
@@ -308,6 +313,7 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
     {
         dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setColor(getColor());
         dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setOpacity(getOpacity());
+        m_pProgressBarNode->setContentSize(CCSizeMake(m_pBarNode->getContentSize().width, m_pBarNode->getContentSize().height));
     }
     else
     {
@@ -316,7 +322,6 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
     }
     m_pProgressBarNode->setAnchorPoint(ccp(0.0, 0.5));
     m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - m_pBarNode->getContentSize().width / 2, m_pBarNode->getPosition().y - 1));
-    m_pProgressBarNode->setContentSize(CCSizeMake(m_pBarNode->getContentSize().width, m_pBarNode->getContentSize().height));
     setProgressBarScale();
 }
 

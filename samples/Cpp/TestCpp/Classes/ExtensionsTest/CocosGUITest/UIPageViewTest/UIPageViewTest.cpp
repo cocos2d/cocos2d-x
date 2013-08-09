@@ -17,7 +17,7 @@ bool UIPageViewTest::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add a label in which the dragpanel events will be displayed
         m_pDisplayValueLabel = UILabel::create();
@@ -25,7 +25,7 @@ bool UIPageViewTest::init()
         m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
+        m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
         // Add the black background
@@ -34,7 +34,7 @@ bool UIPageViewTest::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));        
@@ -44,9 +44,9 @@ bool UIPageViewTest::init()
         pageView->setTouchEnable(true);
         pageView->setSize(CCSizeMake(240, 130));
         CCSize backgroundSize = background->getContentSize();
-        pageView->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        pageView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                   (backgroundSize.width - pageView->getRect().size.width) / 2,
-                                  (screenSize.height - backgroundSize.height) / 2 +
+                                  (widgetSize.height - backgroundSize.height) / 2 +
                                   (backgroundSize.height - pageView->getRect().size.height) / 2));
         
         for (int i = 0; i < 3; ++i)

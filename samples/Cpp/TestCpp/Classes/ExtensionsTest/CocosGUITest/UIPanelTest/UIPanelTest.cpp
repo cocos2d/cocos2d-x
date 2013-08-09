@@ -16,7 +16,7 @@ bool UIPanelTest::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -24,7 +24,7 @@ bool UIPanelTest::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -34,9 +34,9 @@ bool UIPanelTest::init()
         panel->setClippingEnable(true);
         panel->setSize(CCSizeMake(280, 150));
         CCSize backgroundSize = background->getRect().size;
-        panel->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - panel->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - panel->getRect().size.height) / 2));
         m_pUiLayer->addWidget(panel);
         
@@ -88,7 +88,7 @@ bool UIPanelTest_Color::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();        
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -96,7 +96,7 @@ bool UIPanelTest_Color::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -108,9 +108,9 @@ bool UIPanelTest_Color::init()
         panel->setClippingEnable(true);
         panel->setSize(CCSizeMake(280, 150));
         CCSize backgroundSize = background->getContentSize();
-        panel->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - panel->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - panel->getRect().size.height) / 2));
         m_pUiLayer->addWidget(panel);
         
@@ -161,7 +161,7 @@ bool UIPanelTest_Gradient::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -169,7 +169,7 @@ bool UIPanelTest_Gradient::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -181,9 +181,9 @@ bool UIPanelTest_Gradient::init()
         panel->setClippingEnable(true);
         panel->setSize(CCSizeMake(280, 150));
         CCSize backgroundSize = background->getContentSize();
-        panel->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - panel->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - panel->getRect().size.height) / 2));
         m_pUiLayer->addWidget(panel);
         
@@ -234,7 +234,7 @@ bool UIPanelTest_BackGroundImage::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();                
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -242,7 +242,7 @@ bool UIPanelTest_BackGroundImage::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -253,9 +253,9 @@ bool UIPanelTest_BackGroundImage::init()
         panel->setClippingEnable(true);
         panel->setSize(CCSizeMake(280, 150));
         CCSize backgroundSize = background->getContentSize();
-        panel->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - panel->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - panel->getRect().size.height) / 2));
         m_pUiLayer->addWidget(panel);
         
@@ -306,7 +306,7 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
 {
     if (UIScene::init())
     {
-        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize widgetSize = m_pWidget->getRect().size;
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -314,7 +314,7 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
         UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
@@ -326,9 +326,9 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
         panel->setClippingEnable(true);
         panel->setSize(CCSizeMake(280, 150));
         CCSize backgroundSize = background->getContentSize();
-        panel->setPosition(ccp((screenSize.width - backgroundSize.width) / 2 +
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                (backgroundSize.width - panel->getRect().size.width) / 2,
-                               (screenSize.height - backgroundSize.height) / 2 +
+                               (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - panel->getRect().size.height) / 2));
         m_pUiLayer->addWidget(panel);
         
@@ -362,5 +362,218 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
         
         return true;
     }
+    return false;
+}
+
+// UIPanelTest_Layout_Linear_Vertical
+
+UIPanelTest_Layout_Linear_Vertical::UIPanelTest_Layout_Linear_Vertical()
+{
+}
+
+UIPanelTest_Layout_Linear_Vertical::~UIPanelTest_Layout_Linear_Vertical()
+{
+}
+
+bool UIPanelTest_Layout_Linear_Vertical::init()
+{
+    if (UIScene::init())
+    {
+        CCSize widgetSize = m_pWidget->getRect().size;
+        
+        // Add the alert
+        UILabel *alert = UILabel::create();
+        alert->setText("Panel Layout Linear Vertical");
+        alert->setFontName("Marker Felt");
+        alert->setFontSize(30);
+        alert->setColor(ccc3(159, 168, 176));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        m_pUiLayer->addWidget(alert);
+        
+        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        
+        // Create the panel
+        UIPanel* panel = UIPanel::create();
+        panel->setClippingEnable(true);
+        panel->setSize(CCSizeMake(100, 150));
+        CCSize backgroundSize = background->getRect().size;
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                               (backgroundSize.width - panel->getRect().size.width) / 2,
+                               (widgetSize.height - backgroundSize.height) / 2 +
+                               (backgroundSize.height - panel->getRect().size.height) / 2));
+        m_pUiLayer->addWidget(panel);
+        
+        UIButton* button = UIButton::create();
+        button->setTouchEnable(true);
+        button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        panel->addChild(button);
+        
+        UITextButton* textButton = UITextButton::create();
+        textButton->setTouchEnable(true);
+        textButton->setTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        textButton->setText("Text Button");
+        panel->addChild(textButton);
+        
+        UIZoomButton* zoomButton = UIZoomButton::create();
+        zoomButton->setTouchEnable(true);
+        zoomButton->setTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "cocosgui/button.png");
+        zoomButton->setTitle("ControlButton", "ControlButton", "ControlButton");
+        zoomButton->setNormalFontSize(16);
+        zoomButton->setNormalFontName("Marker Felt");
+        zoomButton->setPressedFontSize(16);
+        zoomButton->setPressedFontName("Marker Felt");
+        zoomButton->setDisabledFontSize(16);
+        zoomButton->setDisabledFontName("Marker Felt");
+        zoomButton->setPreferredSize(CCSizeMake(100, zoomButton->getContentSize().height * 2.0f));
+        panel->addChild(zoomButton);
+        
+        panel->setLayoutType(UI_LAYOUT_LINEAR_VERTICAL);
+        panel->doLayout();
+        
+        return true;
+    }
+    
+    return false;
+}
+
+// UIPanelTest_Layout_Linear_Horizontal
+
+UIPanelTest_Layout_Linear_Horizontal::UIPanelTest_Layout_Linear_Horizontal()
+{
+}
+
+UIPanelTest_Layout_Linear_Horizontal::~UIPanelTest_Layout_Linear_Horizontal()
+{
+}
+
+bool UIPanelTest_Layout_Linear_Horizontal::init()
+{
+    if (UIScene::init())
+    {
+        CCSize widgetSize = m_pWidget->getRect().size;
+        
+        // Add the alert
+        UILabel *alert = UILabel::create();
+        alert->setText("Panel Layout Linear Vertical");
+        alert->setFontName("Marker Felt");
+        alert->setFontSize(30);
+        alert->setColor(ccc3(159, 168, 176));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        m_pUiLayer->addWidget(alert);
+        
+        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        
+        // Create the panel
+        UIPanel* panel = UIPanel::create();
+        panel->setClippingEnable(true);
+        panel->setSize(CCSizeMake(280, 150));
+        CCSize backgroundSize = background->getRect().size;
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                               (backgroundSize.width - panel->getRect().size.width) / 2,
+                               (widgetSize.height - backgroundSize.height) / 2 +
+                               (backgroundSize.height - panel->getRect().size.height) / 2));
+        m_pUiLayer->addWidget(panel);
+        
+        UIButton* button = UIButton::create();
+        button->setTouchEnable(true);
+        button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        panel->addChild(button);
+        
+        UITextButton* textButton = UITextButton::create();
+        textButton->setTouchEnable(true);
+        textButton->setTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        textButton->setText("Text Button");
+        panel->addChild(textButton);
+        
+        UIZoomButton* zoomButton = UIZoomButton::create();
+        zoomButton->setTouchEnable(true);
+        zoomButton->setTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "cocosgui/button.png");
+        zoomButton->setTitle("ControlButton", "ControlButton", "ControlButton");
+        zoomButton->setNormalFontSize(16);
+        zoomButton->setNormalFontName("Marker Felt");
+        zoomButton->setPressedFontSize(16);
+        zoomButton->setPressedFontName("Marker Felt");
+        zoomButton->setDisabledFontSize(16);
+        zoomButton->setDisabledFontName("Marker Felt");
+        zoomButton->setPreferredSize(CCSizeMake(100, zoomButton->getContentSize().height * 2.0f));
+        panel->addChild(zoomButton);
+        
+        panel->setLayoutType(UI_LAYOUT_LINEAR_HORIZONTAL);
+        panel->doLayout();
+        
+        return true;
+    }
+    
+    return false;
+}
+
+// UIPanelTest_Layout_Relative
+
+UIPanelTest_Layout_Relative::UIPanelTest_Layout_Relative()
+{
+}
+
+UIPanelTest_Layout_Relative::~UIPanelTest_Layout_Relative()
+{
+}
+
+bool UIPanelTest_Layout_Relative::init()
+{
+    if (UIScene::init())
+    {
+        CCSize widgetSize = m_pWidget->getRect().size;
+        
+        // Add the alert
+        UILabel *alert = UILabel::create();
+        alert->setText("Panel Layout Linear Vertical");
+        alert->setFontName("Marker Felt");
+        alert->setFontSize(30);
+        alert->setColor(ccc3(159, 168, 176));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        m_pUiLayer->addWidget(alert);
+        
+        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        
+        // Create the panel
+        UIPanel* panel = UIPanel::create();
+        panel->setClippingEnable(true);
+        panel->setSize(CCSizeMake(280, 150));
+        CCSize backgroundSize = background->getRect().size;
+        panel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                               (backgroundSize.width - panel->getRect().size.width) / 2,
+                               (widgetSize.height - backgroundSize.height) / 2 +
+                               (backgroundSize.height - panel->getRect().size.height) / 2));
+        m_pUiLayer->addWidget(panel);
+        
+        UIButton* button = UIButton::create();
+        button->setTouchEnable(true);
+        button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        panel->addChild(button);
+        
+        UITextButton* textButton = UITextButton::create();
+        textButton->setTouchEnable(true);
+        textButton->setTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        textButton->setText("Text Button");
+        panel->addChild(textButton);
+        
+        UIZoomButton* zoomButton = UIZoomButton::create();
+        zoomButton->setTouchEnable(true);
+        zoomButton->setTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "cocosgui/button.png");
+        zoomButton->setTitle("ControlButton", "ControlButton", "ControlButton");
+        zoomButton->setNormalFontSize(16);
+        zoomButton->setNormalFontName("Marker Felt");
+        zoomButton->setPressedFontSize(16);
+        zoomButton->setPressedFontName("Marker Felt");
+        zoomButton->setDisabledFontSize(16);
+        zoomButton->setDisabledFontName("Marker Felt");
+        zoomButton->setPreferredSize(CCSizeMake(100, zoomButton->getContentSize().height * 2.0f));
+        panel->addChild(zoomButton);
+        
+        panel->setLayoutType(UI_LAYOUT_RELATIVE);
+        panel->doLayout();
+        
+        return true;
+    }
+    
     return false;
 }

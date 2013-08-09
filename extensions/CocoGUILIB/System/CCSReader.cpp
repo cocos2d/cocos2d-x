@@ -1135,7 +1135,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
         {
             if (barTextureScale9Enable)
             {
-                slider->setBarLength(barLength);
+//                slider->setBarLength(barLength);
                 
                 cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
                 int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
@@ -1194,7 +1194,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
                     case 1:
                     {
                         const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                        slider->setBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
+                        slider->setBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
                         break;
                     }
                     default:
@@ -1293,14 +1293,40 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
 		CC_SAFE_DELETE(disabledDic);
         
         slider->setSlidBallPercent(DICTOOL->getIntValue_json(options, "percent"));
-        bool progressBarVisibleExist = DICTOOL->checkObjectExist_json(options, "progressBarVisible");
+//        bool progressBarVisibleExist = DICTOOL->checkObjectExist_json(options, "progressBarVisible");
         bool progressBarVisible = false;
-        if (progressBarVisibleExist)
-        {
+//        if (progressBarVisibleExist)
+//        {
             progressBarVisible = DICTOOL->getBooleanValue_json(options, "progressBarVisible");
-        }
+            slider->setProgressBarVisible(progressBarVisible);
+//        }
         if (progressBarVisible)
         {
+            cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "progressBarData");
+            int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+            switch (imageFileType)
+            {
+                case 0:
+                {
+                    std::string tp_b = m_strFilePath;
+                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                    slider->setProgressBarTexture(imageFileName_tp);
+                    break;
+                }
+                case 1:
+                {
+                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                    slider->setProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
+                    break;
+                }
+                default:
+                    break;
+            }
+            CC_SAFE_DELETE(imageFileNameDic);
+            
+            
+            /*
             slider->setProgressBarVisible(progressBarVisible);
             std::string tp_b = m_strFilePath;
             const char*imageFileName =  DICTOOL->getStringValue_json(options, "progressBarFileName");
@@ -1314,6 +1340,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
                 slider->setProgressBarTexture(imageFileName_tp);
             }
             slider->setProgressBarScale();
+             */
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
