@@ -597,6 +597,10 @@ class JSB_ControlButtonTarget : public Object
 {
 public:
     JSB_ControlButtonTarget()
+    : _jsFunc(nullptr),
+      _type(Control::EventType::TOUCH_DOWN),
+      _jsTarget(nullptr),
+      _needUnroot(false)
     {}
     
     virtual ~JSB_ControlButtonTarget()
