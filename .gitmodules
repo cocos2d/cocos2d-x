@@ -1,0 +1,15 @@
+[submodule "tools/bindings-generator"]
+	path = tools/bindings-generator
+	url = https://github.com/cocos2d/bindings-generator.git
+[submodule "scripting/javascript/bindings/generated"]
+	path = scripting/javascript/bindings/generated
+	url = git://github.com/folecr/cocos2dx-autogen-bindings.git
+[submodule "samples/Javascript/Shared"]
+	path = samples/Javascript/Shared
+	url = https://github.com/minggo/cocos2d-js-tests.git
+[submodule "external/emscripten"]
+	path = external/emscripten
+	url = https://github.com/kripken/emscripten.git
+[submodule "tools/cocos2d-console"]
+	path = tools/cocos2d-console
+	url = https://github.com/cocos2d/cocos2d-console.git
