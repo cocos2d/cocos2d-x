@@ -4,7 +4,7 @@
 #define __TestCpp__UIScene__
 
 #include "cocos2d.h"
-#include "CocosGUI.h"
+#include "CocoGUILIB/System/CocosGUI.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
