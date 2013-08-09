@@ -1629,6 +1629,14 @@ getDuration : function () {},
 addSpriteFrameWithTexture : function () {},
 
 /**
+ * @method createWithSpriteFrames
+ * @return A value converted from C/C++ "cocos2d::Animation*"
+ * @param {cocos2d::Array*}
+ * @param {float}
+ */
+createWithSpriteFrames : function () {},
+
+/**
  * @method Animation
  * @constructor
  */

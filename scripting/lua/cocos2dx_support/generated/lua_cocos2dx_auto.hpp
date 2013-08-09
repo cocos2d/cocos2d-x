@@ -1787,4 +1787,7 @@ int register_all_cocos2dx(lua_State* tolua_S);
 
 
 
+
+
+
 #endif // #ifndef __cocos2dx_lua_cocos2dx_support_auto_h__

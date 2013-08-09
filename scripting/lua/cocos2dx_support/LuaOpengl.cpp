@@ -37,6 +37,8 @@ static void tolua_reg_gl_type(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S, "GLNode");
     tolua_usertype(tolua_S, "CCShaderCache");
+    tolua_usertype(tolua_S,"CCGLProgram");
+    tolua_usertype(tolua_S, "CCShaderCache");
 }
 
 static int tolua_collect_GLNode (lua_State* tolua_S)
@@ -6386,7 +6388,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
     tolua_reg_gl_type(tolua_S);
     tolua_module(tolua_S,NULL,0);
     tolua_beginmodule(tolua_S,NULL);
-      tolua_cclass(tolua_S,"GLNode","GLNode","CCNode",tolua_collect_GLNode);
+      tolua_cclass(tolua_S,"GLNode","GLNode","Node",tolua_collect_GLNode);
         tolua_beginmodule(tolua_S,"GLNode");
             tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
             tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);
@@ -6522,7 +6524,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S, "viewport", tolua_Cocos2d_glViewport00);
         tolua_function(tolua_S, "glEnableVertexAttribs", tolua_Cocos2d_glEnableVertexAttribs00);
       tolua_endmodule(tolua_S);
-      tolua_cclass(tolua_S,"CCGLProgram","CCGLProgram","CCObject",tolua_collect_CCGLProgram);
+      tolua_cclass(tolua_S,"CCGLProgram","CCGLProgram","",tolua_collect_CCGLProgram);
       tolua_beginmodule(tolua_S,"CCGLProgram");
         tolua_function(tolua_S,"new",tolua_Cocos2d_CCGLProgram_new00);
         tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCGLProgram_new00_local);
@@ -6558,7 +6560,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCGLProgram_getProgram00);
         tolua_function(tolua_S, "create", tolua_Cocos2d_CCGLProgram_create00);
      tolua_endmodule(tolua_S);
-     tolua_cclass(tolua_S,"CCShaderCache","CCShaderCache","CCObject",tolua_collect_CCShaderCache);
+     tolua_cclass(tolua_S,"CCShaderCache","CCShaderCache","",tolua_collect_CCShaderCache);
      tolua_beginmodule(tolua_S,"CCShaderCache");
         tolua_function(tolua_S,"new",tolua_Cocos2d_CCShaderCache_new00);
         tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCShaderCache_new00_local);
