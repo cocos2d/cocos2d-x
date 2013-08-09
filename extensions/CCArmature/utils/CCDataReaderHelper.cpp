@@ -325,6 +325,8 @@ CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxm
         boneData->parentName = boneXML->Attribute(A_PARENT);
     }
 
+	boneXML->QueryIntAttribute(A_Z, &boneData->zOrder);
+
     tinyxml2::XMLElement *displayXML = boneXML->FirstChildElement(DISPLAY);
     while(displayXML)
     {
