@@ -51,7 +51,7 @@ bool UIListViewTest::init()
         }
         
         UIListView *list = UIListView::create();
-        list->setClippingEnable(true);
+//        list->setClippingEnable(true); // pipu cheat
         list->setTouchEnable(true);
         list->setBackGroundImageScale9Enable(true);
         list->setBackGroundImage("cocosgui/green_edit.png");
@@ -73,10 +73,11 @@ bool UIListViewTest::init()
             textButton->setTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
             
             UIPanel *panel = UIPanel::create();
+            panel->setName(CCString::createWithFormat("panel_%i", i)->getCString());
             panel->setSize(CCSizeMake(textButton->getRect().size.width, textButton->getRect().size.height));
             textButton->setPosition(ccp(panel->getRect().size.width / 2, panel->getRect().size.height / 2));
-            panel->setBackGroundColorType(PANEL_COLOR_SOLID);
-            panel->setBackGroundColor(ccc3(255, 0, 0));
+//            panel->setBackGroundColorType(PANEL_COLOR_SOLID);
+//            panel->setBackGroundColor(ccc3(255, 0, 0));
             panel->addChild(textButton);
             
             CCSize panel_size = panel->getRect().size;

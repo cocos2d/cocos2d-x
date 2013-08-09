@@ -61,6 +61,8 @@ protected:
     virtual bool init();
     virtual void initNodes();
     
+    virtual void resetProperty();
+    
     virtual void endRecordSlidAction();
     virtual bool scrollChildren(float touchOffset);
     void moveChildren(float offset);
@@ -101,6 +103,9 @@ protected:
     cocos2d::CCArray* m_overBottomArray;
     cocos2d::CCArray* m_overLeftArray;
     cocos2d::CCArray* m_overRightArray;
+    
+    float m_fDisBoundaryToChild_0;
+    float m_fDisBetweenChild;
 };
 
 NS_CC_EXT_END
