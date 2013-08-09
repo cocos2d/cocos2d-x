@@ -26,7 +26,7 @@
 #define __AssetsManager__
 
 #include <string>
-#include <curl/curl.h>
+
 #include <mutex>
 
 #include "cocos2d.h"
@@ -41,7 +41,7 @@ class AssetsManagerDelegateProtocol;
  *  The updated package should be a zip file. And there should be a file named
  *  version in the server, which contains version code.
  */
-class AssetsManager
+class AssetsManager : public Node
 {
 public:
     enum class ErrorCode
@@ -77,6 +77,14 @@ public:
     
     virtual ~AssetsManager();
     
+    typedef std::function<void(int)> ErrorCallback;
+    typedef std::function<void(int)> ProgressCallback;
+    typedef std::function<void(void)> SuccessCallback;
+
+    /* @brief To access within scripting environment
+     */
+    static AssetsManager* create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback );
+
     /* @brief Check out if there is a new version resource.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
@@ -138,6 +146,15 @@ public:
     /* downloadAndUncompress is the entry of a new thread 
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
+
+    /** @brief Initializes storage path. 
+     */
+    void createStoragePath();
+
+    /** @brief Destroys storage path. 
+     */
+    void destroyStoragePath();
+
     
 protected:
     bool downLoad();
@@ -172,6 +189,7 @@ private:
         std::list<Message*> *_messageQueue;
         std::mutex _messageQueueMutex;
     };
+
     
 private:
     //! The path to store downloaded resources.
@@ -185,13 +203,18 @@ private:
     
     std::string _downloadedVersion;
     
-    CURL *_curl;
+    void *_curl;
+
     Helper *_schedule;
     unsigned int _connectionTimeout;
     
-    AssetsManagerDelegateProtocol *_delegate; // weak reference
+    AssetsManagerDelegateProtocol *_delegate; 
     
     bool _isDownloading;
+    bool _shouldDeleteDelegateWhenExit;
+    
+    std::string keyOfVersion() const;
+    std::string keyOfDownloadedVersion() const;
 };
 
 class AssetsManagerDelegateProtocol
