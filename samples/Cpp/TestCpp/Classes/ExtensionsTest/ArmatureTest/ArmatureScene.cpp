@@ -97,7 +97,7 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 void ArmatureTestScene::runThisTest()
 {
 
- 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy0.png", "armature/Cowboy0.plist", "armature/Cowboy.ExportJson");
+ 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy.ExportJson");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
@@ -508,6 +508,52 @@ void TestUseMutiplePicture::registerWithTouchDispatcher()
 
 
 
+TestColliderDetector::~TestColliderDetector()
+{
+}
+void TestColliderDetector::onEnter()
+{
+	ArmatureTestLayer::onEnter();
+
+	scheduleUpdate();
+
+	armature = cocos2d::extension::CCArmature::create("Cowboy");
+	armature->getAnimation()->play("FireWithoutBullet");
+	armature->getAnimation()->setSpeedScale(0.2f);
+	armature->setScaleX(-0.2f);
+	armature->setScaleY(0.2f);
+	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
+
+	armature->getAnimation()->FrameEventSignal.connect(this, &TestColliderDetector::onFrameEvent);
+
+	addChild(armature);
+
+	armature2 = cocos2d::extension::CCArmature::create("Cowboy");
+	armature2->getAnimation()->play("Walk");
+	armature2->setScaleX(-0.2f);
+	armature2->setScaleY(0.2f);
+	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
+	addChild(armature2);
+
+	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
+	addChild(bullet);
+
+	initWorld();
+}
+std::string TestColliderDetector::title()
+{
+	return "Test Collider Detector";
+}
+void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt)
+{
+	CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
+	bullet->setPosition(ccp(p.x + 60, p.y));
+
+	bullet->stopAllActions();
+	bullet->runAction(CCMoveBy::create(1.5f, ccp(350, 0)));
+}
+
+
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 
@@ -553,120 +599,26 @@ public:
 	std::list<Contact> contact_list;
 };
 
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
-enum ColliderType
-{
-	eBulletTag,
-	eEnemyTag
-};
-
-
-int TestColliderDetector::beginHit(cpArbiter *arb, cpSpace *space, void *unused)
-{
-	CP_ARBITER_GET_SHAPES(arb, a, b);
-
-	CCBone *bone = (CCBone*)a->data;
-	bone->getArmature()->setVisible(false);
-
-	return 0;
-}
-
-void TestColliderDetector::endHit(cpArbiter *arb, cpSpace *space, void *unused)
-{
-	CP_ARBITER_GET_SHAPES(arb, a, b);
-
-	CCBone *bone = (CCBone*)a->data;
-	bone->getArmature()->setVisible(true);
-}
-
-void TestColliderDetector::destroyCPBody(cpBody *body)
-{
-	cpShape *shape = body->shapeList_private;
-	while(shape)
-	{
-		cpShape *temp = shape->next_private;
-
-		cpSpaceRemoveShape(space, shape);
-		cpShapeFree(shape);
-
-		shape = temp;
-	}
-	
-	cpSpaceRemoveBody(space, body);
-	cpBodyFree(body);
-}
-#endif
-
-TestColliderDetector::~TestColliderDetector()
-{
-}
-
-void TestColliderDetector::onEnter()
-{
-	ArmatureTestLayer::onEnter();
-
-	scheduleUpdate();
-
-	armature = cocos2d::extension::CCArmature::create("Cowboy");
-	armature->getAnimation()->play("FireWithoutBullet");
-	armature->getAnimation()->setSpeedScale(0.2f);
-	armature->setScaleX(-0.2f);
-	armature->setScaleY(0.2f);
-	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
-
-	armature->getAnimation()->FrameEventSignal.connect(this, &TestColliderDetector::onFrameEvent);
-
-	addChild(armature);
-
-	armature2 = cocos2d::extension::CCArmature::create("Cowboy");
-	armature2->getAnimation()->play("Walk");
-	armature2->setScaleX(-0.2f);
-	armature2->setScaleY(0.2f);
-	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
-	addChild(armature2);
-
-	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
-	addChild(bullet);
-
-	initWorld();
-}
 void TestColliderDetector::onExit()
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT
 	CC_SAFE_DELETE(world);
 	CC_SAFE_DELETE(listener);
 	CC_SAFE_DELETE(debugDraw);
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-	destroyCPBody(armature2->getCPBody());
-	destroyCPBody(bullet->getCPBody());
-
-	cpSpaceFree(space);
-#endif
 
 	ArmatureTestLayer::onExit();
 }
-std::string TestColliderDetector::title()
-{
-	return "Test Collider Detector";
-}
 void TestColliderDetector::draw()
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	kmGLPushMatrix();
 	world->DrawDebugData();
 	kmGLPopMatrix();
-#endif
 }
 void TestColliderDetector::update(float delta)
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT
 	armature2->setVisible(true);
-#endif
 
-
-#if ENABLE_PHYSICS_BOX2D_DETECT
 	world->Step(delta, 0, 0);
 
 	for (std::list<Contact>::iterator it = listener->contact_list.begin(); it != listener->contact_list.end(); ++it)
@@ -680,26 +632,10 @@ void TestColliderDetector::update(float delta)
 		CCBone *bb = (CCBone *)b2b->GetUserData();
 
 		bb->getArmature()->setVisible(false);
-
 	}
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-	cpSpaceStep(space, delta);
-#endif
 }
-
-void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt)
-{
-	CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
-	bullet->setPosition(ccp(p.x + 60, p.y));
-
-	bullet->stopAllActions();
-	bullet->runAction(CCMoveBy::create(1.5f, ccp(350, 0)));
-}
-
-
 void TestColliderDetector::initWorld()
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT
 	b2Vec2 noGravity(0, 0);
 
 	world = new b2World(noGravity);
@@ -744,8 +680,68 @@ void TestColliderDetector::initWorld()
 
 	body = world->CreateBody(&bodyDef);
 	armature2->setB2Body(body);
+}
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+
+enum ColliderType
+{
+	eBulletTag,
+	eEnemyTag
+};
+
+
+int TestColliderDetector::beginHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(false);
+
+	return 0;
+}
+
+void TestColliderDetector::endHit(cpArbiter *arb, cpSpace *space, void *unused)
+{
+	CP_ARBITER_GET_SHAPES(arb, a, b);
+
+	CCBone *bone = (CCBone*)a->data;
+	bone->getArmature()->setVisible(true);
+}
+
+void TestColliderDetector::destroyCPBody(cpBody *body)
+{
+	cpShape *shape = body->shapeList_private;
+	while(shape)
+	{
+		cpShape *temp = shape->next_private;
+
+		cpSpaceRemoveShape(space, shape);
+		cpShapeFree(shape);
+
+		shape = temp;
+	}
+
+	cpSpaceRemoveBody(space, body);
+	cpBodyFree(body);
+}
+
+void TestColliderDetector::onExit()
+{
+	destroyCPBody(armature2->getCPBody());
+	destroyCPBody(bullet->getCPBody());
+
+	cpSpaceFree(space);
+
+	ArmatureTestLayer::onExit();
+}
+
+void TestColliderDetector::update(float delta)
+{
+	cpSpaceStep(space, delta);
+}
+void TestColliderDetector::initWorld()
+{
 	space = cpSpaceNew();
 	space->gravity = cpv(0, 0);
 
@@ -784,8 +780,8 @@ void TestColliderDetector::initWorld()
 	}
 
 	cpSpaceAddCollisionHandler(space, eEnemyTag, eBulletTag, beginHit, NULL, NULL, endHit, NULL);
-#endif
 }
+#endif
 
 
 
