@@ -105,15 +105,9 @@ bool UISliderTest_Scale9::init()
         slider->setCapInsets(CCRectMake(0, 0, 0, 0));
         slider->setScale9Size(CCSizeMake(250, slider->getRect().size.height));
         
-        /*
-        slider->setBarTextureScale9Enable(true);
-        slider->setBarLength(250);
-        slider->setBarTextureScale9("cocosgui/sliderTrack2.png");
-         */
         slider->setSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
         slider->setProgressBarVisible(true);
         slider->setProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
-//        slider->setProgressBarTextureScale9("cocosgui/slider_bar_active_9patch.png");
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         slider->addPercentChangedEvent(this, coco_percentchangedselector(UISliderTest_Scale9::percentChangedEvent));
         m_pUiLayer->addWidget(slider);

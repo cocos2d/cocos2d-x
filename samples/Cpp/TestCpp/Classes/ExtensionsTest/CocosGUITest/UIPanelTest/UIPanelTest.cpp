@@ -454,7 +454,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         
         // Add the alert
         UILabel *alert = UILabel::create();
-        alert->setText("Panel Layout Linear Vertical");
+        alert->setText("Panel Layout Linear Horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
@@ -525,7 +525,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         // Add the alert
         UILabel *alert = UILabel::create();
-        alert->setText("Panel Layout Linear Vertical");
+        alert->setText("Panel Layout Relative");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));

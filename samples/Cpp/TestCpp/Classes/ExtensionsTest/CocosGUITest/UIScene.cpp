@@ -26,7 +26,7 @@ bool UIScene::init()
         m_pUiLayer->scheduleUpdate();
         addChild(m_pUiLayer);
         
-        m_pWidget = CCUIHELPER->createWidgetFromJsonFile("cocosgui/UIButton_test_1/UIButton_test_1.json");
+        m_pWidget = CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json");
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));

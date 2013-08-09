@@ -81,6 +81,7 @@ protected:
     CCSize m_scale9Size;
     bool m_bProgressBarVisible;
     CCNode* m_pProgressBarNode;
+    std::string m_strProgressTextureFile;
     CCObject*       m_pPercentListener;
     SEL_PushEvent    m_pfnPercentSelector;
     TextureResType m_eBarTexType;
