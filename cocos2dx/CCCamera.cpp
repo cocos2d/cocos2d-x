@@ -65,7 +65,7 @@ void Camera::restore(void)
     _upY = 1.0f;
     _upZ = 0.0f;
 
-    kmMat4Identity( &_lookupMatrix );
+    kmMat4Identity(&_lookupMatrix);
 
     _dirty = false;
 }
@@ -76,15 +76,15 @@ void Camera::locate(void)
     {
         kmVec3 eye, center, up;
 
-        kmVec3Fill( &eye, _eyeX, _eyeY , _eyeZ );
-        kmVec3Fill( &center, _centerX, _centerY, _centerZ );
+        kmVec3Fill(&eye, _eyeX, _eyeY , _eyeZ);
+        kmVec3Fill(&center, _centerX, _centerY, _centerZ);
 
-        kmVec3Fill( &up, _upX, _upY, _upZ);
-        kmMat4LookAt( &_lookupMatrix, &eye, &center, &up);
+        kmVec3Fill(&up, _upX, _upY, _upZ);
+        kmMat4LookAt(&_lookupMatrix, &eye, &center, &up);
 
         _dirty = false;
     }
-    kmGLMultMatrix( &_lookupMatrix );
+    kmGLMultMatrix(&_lookupMatrix);
 }
 
 float Camera::getZEye(void)
