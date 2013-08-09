@@ -58,6 +58,10 @@
 		0186A90017A0674500D88A79 /* CCFontFNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0186A8FC17A065DC00D88A79 /* CCFontFNT.h */; };
 		0186A90217A068E800D88A79 /* CCFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0186A90117A068C300D88A79 /* CCFont.cpp */; };
 		0186A90317A068E900D88A79 /* CCFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0186A90117A068C300D88A79 /* CCFont.cpp */; };
+		01881BCA17B33CB80019A3C3 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01881BC817B33B400019A3C3 /* s3tc.cpp */; };
+		01881BCB17B33D850019A3C3 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01881BC817B33B400019A3C3 /* s3tc.cpp */; };
+		01881BCC17B35D800019A3C3 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01881BC917B33B400019A3C3 /* s3tc.h */; };
+		01881BCD17B35D840019A3C3 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01881BC917B33B400019A3C3 /* s3tc.h */; };
 		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
@@ -2115,6 +2119,8 @@
 		0186A8FB17A065DB00D88A79 /* CCFontFNT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontFNT.cpp; sourceTree = "<group>"; };
 		0186A8FC17A065DC00D88A79 /* CCFontFNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontFNT.h; sourceTree = "<group>"; };
 		0186A90117A068C300D88A79 /* CCFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFont.cpp; sourceTree = "<group>"; };
+		01881BC817B33B400019A3C3 /* s3tc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = s3tc.cpp; path = common/s3tc/s3tc.cpp; sourceTree = "<group>"; };
+		01881BC917B33B400019A3C3 /* s3tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = s3tc.h; path = common/s3tc/s3tc.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A055B81797EBAC0040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Deprecated.lua; sourceTree = "<group>"; };
@@ -2340,8 +2346,8 @@
 		A03F1EDE1780BAE5006731B9 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		A03F1EDF1780BAE5006731B9 /* CCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		A03F1EE01780BAE5006731B9 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
-		A03F1EE11780BAE5006731B9 /* CCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImage.h; sourceTree = "<group>"; };
-		A03F1EE21780BAE5006731B9 /* CCImageCommon_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImageCommon_cpp.h; sourceTree = "<group>"; };
+		A03F1EE11780BAE5006731B9 /* CCImage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = CCImage.h; sourceTree = "<group>"; };
+		A03F1EE21780BAE5006731B9 /* CCImageCommon_cpp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = CCImageCommon_cpp.h; sourceTree = "<group>"; };
 		A03F1EE41780BAE5006731B9 /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		A03F1EE51780BAE5006731B9 /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		A03F1EE61780BAE5006731B9 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
@@ -3470,6 +3476,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0194D74117AF48FD00729295 /* s3tc */ = {
+			isa = PBXGroup;
+			children = (
+				01881BC817B33B400019A3C3 /* s3tc.cpp */,
+				01881BC917B33B400019A3C3 /* s3tc.h */,
+			);
+			name = s3tc;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -4005,6 +4020,7 @@
 		A03F1F611780BAE5006731B9 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				0194D74117AF48FD00729295 /* s3tc */,
 				B33AFB6417A20B150022B711 /* etc */,
 				A07A4D9D17837B910073F6A7 /* ios */,
 				A03F20D21780BAE5006731B9 /* mac */,
@@ -5408,38 +5424,6 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		B33AFB6417A20B150022B711 /* etc */ = {
-			isa = PBXGroup;
-			children = (
-				B33AFB6717A20BE40022B711 /* etc1.cpp */,
-				B33AFB6817A20BE40022B711 /* etc1.h */,
-			);
-			name = etc;
-			sourceTree = "<group>";
-		};
-		B3D8D4471799219B0039C204 /* mac */ = {
-			isa = PBXGroup;
-			children = (
-				B3D8DD5D179922F30039C204 /* libjpeg.a */,
-				B3D8DD5E179922F30039C204 /* libpng.a */,
-				B3D8DD5F179922F30039C204 /* libtiff.a */,
-				B3D8DD60179922F30039C204 /* libwebp.a */,
-			);
-			name = mac;
-			sourceTree = "<group>";
-		};
-		B3D8D44B179921D50039C204 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				B3D8DD53179922A10039C204 /* libcurl.a */,
-				B3D8DD54179922A10039C204 /* libjpeg.a */,
-				B3D8DD55179922A10039C204 /* libpng.a */,
-				B3D8DD56179922A10039C204 /* libtiff.a */,
-				B3D8DD57179922A10039C204 /* libwebp.a */,
-			);
-			name = ios;
-			sourceTree = "<group>";
-		};
 		A0C80A791799DBA4002532D9 /* NewLabel_Experimental */ = {
 			isa = PBXGroup;
 			children = (
@@ -5729,6 +5713,38 @@
 			path = services;
 			sourceTree = "<group>";
 		};
+		B33AFB6417A20B150022B711 /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				B33AFB6717A20BE40022B711 /* etc1.cpp */,
+				B33AFB6817A20BE40022B711 /* etc1.h */,
+			);
+			name = etc;
+			sourceTree = "<group>";
+		};
+		B3D8D4471799219B0039C204 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				B3D8DD5D179922F30039C204 /* libjpeg.a */,
+				B3D8DD5E179922F30039C204 /* libpng.a */,
+				B3D8DD5F179922F30039C204 /* libtiff.a */,
+				B3D8DD60179922F30039C204 /* libwebp.a */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+		B3D8D44B179921D50039C204 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B3D8DD53179922A10039C204 /* libcurl.a */,
+				B3D8DD54179922A10039C204 /* libjpeg.a */,
+				B3D8DD55179922A10039C204 /* libpng.a */,
+				B3D8DD56179922A10039C204 /* libtiff.a */,
+				B3D8DD57179922A10039C204 /* libwebp.a */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6011,6 +6027,7 @@
 				0186A8F2179F2CD900D88A79 /* CCFontAtlasFactory.h in Headers */,
 				0186A8F8179F328D00D88A79 /* CCFontAtlasCache.h in Headers */,
 				0186A8FE17A0674300D88A79 /* CCFontFNT.h in Headers */,
+				01881BCD17B35D840019A3C3 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6689,6 +6706,7 @@
 				0186A8F4179F2CDB00D88A79 /* CCFontAtlasFactory.h in Headers */,
 				0186A8FA179F328F00D88A79 /* CCFontAtlasCache.h in Headers */,
 				0186A90017A0674500D88A79 /* CCFontFNT.h in Headers */,
+				01881BCC17B35D800019A3C3 /* s3tc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7312,6 +7330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01881BCB17B33D850019A3C3 /* s3tc.cpp in Sources */,
 				A03F25661780BAE8006731B9 /* CCAction.cpp in Sources */,
 				A03F25681780BAE8006731B9 /* CCActionCamera.cpp in Sources */,
 				A03F256A1780BAE8006731B9 /* CCActionCatmullRom.cpp in Sources */,
@@ -7760,6 +7779,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01881BCA17B33CB80019A3C3 /* s3tc.cpp in Sources */,
 				A07A4C261783777C0073F6A7 /* CCAction.cpp in Sources */,
 				A07A4C271783777C0073F6A7 /* CCActionCamera.cpp in Sources */,
 				A07A4C281783777C0073F6A7 /* CCActionCatmullRom.cpp in Sources */,
