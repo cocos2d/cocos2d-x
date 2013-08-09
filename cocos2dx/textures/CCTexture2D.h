@@ -99,6 +99,12 @@ public:
         PVRTC2A,
         //! ETC-compressed texture: ETC
         ETC,
+        //! S3TC-compressed texture: S3TC_Dxt1
+        S3TC_DXT1,
+        //! S3TC-compressed texture: S3TC_Dxt3
+        S3TC_DXT3,
+        //! S3TC-compressed texture: S3TC_Dxt5
+        S3TC_DXT5,
 
         //! Default texture format: AUTO
         DEFAULT = AUTO,
@@ -390,8 +396,7 @@ protected:
 
     /** shader program used by drawAtPoint and drawInRect */
     GLProgram* _shaderProgram;
-    
-    
+
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 };
 

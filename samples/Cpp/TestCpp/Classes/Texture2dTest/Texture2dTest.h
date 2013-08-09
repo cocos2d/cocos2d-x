@@ -453,6 +453,34 @@ public:
     virtual std::string subtitle();
 };
 
+// S3TC Dxt1 texture format test
+class TextureS3TCDxt1 : public TextureDemo
+{
+public:
+    TextureS3TCDxt1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+// S3TC Dxt3 texture format test
+class TextureS3TCDxt3 : public TextureDemo
+{
+public:
+    TextureS3TCDxt3();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+// S3TC Dxt5 texture format test
+class TextureS3TCDxt5 : public TextureDemo
+{
+public:
+    TextureS3TCDxt5();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 // RGB888 texture convert test
 class TextureConvertRGB888 : public TextureDemo
 {
