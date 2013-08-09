@@ -54,6 +54,14 @@ bool UITextButton::init()
     {
         m_pTextLable = CCLabelTTF::create();
         m_pRender->addChild(m_pTextLable);
+        
+        CCRGBAProtocol* renderRGBA = dynamic_cast<CCRGBAProtocol*>(m_pRender);
+        if (renderRGBA)
+        {
+            renderRGBA->setCascadeColorEnabled(false);
+            renderRGBA->setCascadeOpacityEnabled(false);
+        }
+        
         return true;
     }
     return false;
@@ -101,5 +109,6 @@ void UITextButton::setAnchorPoint(const CCPoint &pt)
     UIButton::setAnchorPoint(pt);
     m_pTextLable->setPosition(ccp(m_pButtonNormal->getContentSize().width*(0.5f-m_pButtonNormal->getAnchorPoint().x), m_pButtonNormal->getContentSize().height*(0.5f-m_pButtonNormal->getAnchorPoint().y)));
 }
+
 
 NS_CC_EXT_END

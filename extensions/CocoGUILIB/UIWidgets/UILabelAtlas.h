@@ -41,6 +41,7 @@ public:
     const char* getStringValue();
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual CCNode* getValidNode();
+//    virtual void setOpacity(int opacity); // pipu cheat
 protected:
     virtual void initNodes();
 protected:

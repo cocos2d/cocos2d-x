@@ -46,6 +46,7 @@ public:
     void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setBarLength(float length);
+    bool isProgressBarVisible();
     void setProgressBarVisible(bool show);
     void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setProgressBarScale();

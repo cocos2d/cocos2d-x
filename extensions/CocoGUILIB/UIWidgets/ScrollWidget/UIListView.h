@@ -40,11 +40,16 @@ public:
     UIListView();
     virtual ~UIListView();
     static UIListView* create();
+    virtual void releaseResoures();
     virtual bool addChild(UIWidget* widget);
     virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual bool removeChild(UIWidget* child, bool cleanup);
+    virtual void setSize(const CCSize &size);
     
     void initChildWithDataLength(int length);
+    int getDataLength();
     
+    UIWidget* getUpdateChild();
     int getUpdateDataIndex();
     bool getUpdateSuccess();
     void setUpdateSuccess(bool sucess);
@@ -54,17 +59,17 @@ public:
     
 protected:
     virtual bool init();
+    virtual void initNodes();
     
-    void endRecordSlidAction();
-    bool scrollChildren(float touchOffset);
-    void drag(float offset);
+    virtual void endRecordSlidAction();
+    virtual bool scrollChildren(float touchOffset);
+    void moveChildren(float offset);
     
     UIWidget* getCheckPositionChild();
     UIWidget* getChildFromUpdatePool();
     void pushChildToPool();
     void getAndCallback();
-    int getDataLength();
-    UIWidget* getUpdateChild();
+    
     void setUpdateChild(UIWidget* child);
     void setUpdateDataIndex(int index);
     void collectOverTopChild();
