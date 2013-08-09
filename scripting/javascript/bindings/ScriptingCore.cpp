@@ -95,10 +95,10 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JSObject *obj,
 
     jsval func = JS_GetReservedSlot(obj, 0);
 
-    if(func == JSVAL_VOID) { return; }
+    if (func == JSVAL_VOID) { return; }
     jsval thisObj = JS_GetReservedSlot(obj, 1);
     JSAutoCompartment ac(cx, obj);
-    if(thisObj == JSVAL_VOID) {
+    if (thisObj == JSVAL_VOID) {
         JS_CallFunctionValue(cx, obj, func, 1, &dataVal, &retval);
     } else {
         assert(!JSVAL_IS_PRIMITIVE(thisObj));
@@ -174,7 +174,7 @@ void ScriptingCore::executeJSFunctionWithThisObj(jsval thisObj,
                                                  jsval* vp/* = NULL*/,
                                                  jsval* retVal/* = NULL*/)
 {
-    if(callback != JSVAL_VOID || thisObj != JSVAL_VOID)
+    if (callback != JSVAL_VOID || thisObj != JSVAL_VOID)
     {
         // Very important: The last parameter 'retVal' passed to 'JS_CallFunctionValue' should not be a NULL pointer.
         // If it's a NULL pointer, crash will be triggered in 'JS_CallFunctionValue'. To find out the reason of this crash is very difficult.
@@ -718,11 +718,11 @@ JSBool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 {
     Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
-    if(! arr) return;
+    if (! arr) return;
     
     Node* node = (Node*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
-        if(arr->objectAtIndex(i)) {
+        if (arr->objectAtIndex(i)) {
             node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
         }
     }
@@ -732,11 +732,11 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 {
     Array * arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
-    if(!arr) return;
+    if (!arr) return;
     
     Node* node = (Node*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
-        if(!arr->objectAtIndex(i)) continue;
+        if (!arr->objectAtIndex(i)) continue;
         node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
     }
 }
@@ -744,12 +744,12 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
     Array * arr = JSCallFuncWrapper::getTargetForNativeNode((Node*)p->ptr);
-    if(arr) {
+    if (arr) {
         arr->removeAllObjects();
     }
     
     arr = JSScheduleWrapper::getTargetForJSObject(p->obj);
-    if(arr) {
+    if (arr) {
         Scheduler* pScheduler = Director::getInstance()->getScheduler();
         Object* pObj = NULL;
         CCARRAY_FOREACH(arr, pObj)
@@ -779,25 +779,25 @@ int ScriptingCore::handleNodeEvent(void* data)
     jsval retval;
     jsval dataVal = INT_TO_JSVAL(1);
 
-    if(action == kNodeOnEnter)
+    if (action == kNodeOnEnter)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         resumeSchedulesAndActions(p);
     }
-    else if(action == kNodeOnExit)
+    else if (action == kNodeOnExit)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         pauseSchedulesAndActions(p);
     }
-    else if(action == kNodeOnEnterTransitionDidFinish)
+    else if (action == kNodeOnEnterTransitionDidFinish)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
     }
-    else if(action == kNodeOnExitTransitionDidStart)
+    else if (action == kNodeOnExitTransitionDidStart)
     {
         executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
     }
-    else if(action == kNodeOnCleanup) {
+    else if (action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
     }
 
@@ -851,7 +851,7 @@ int ScriptingCore::handleTouchesEvent(void* data)
     for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
         jsval jsret;
         getJSTouchObject(this->cx_, (Touch *) *it, jsret);
-        if(!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
+        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
             break;
         }
     }
@@ -904,10 +904,10 @@ bool ScriptingCore::executeFunctionWithObjectData(Node *self, const char *name, 
     jsval dataVal = OBJECT_TO_JSVAL(obj);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), name, 1, &dataVal, &retval);
-    if(JSVAL_IS_NULL(retval)) {
+    if (JSVAL_IS_NULL(retval)) {
         return false;
     }
-    else if(JSVAL_IS_BOOLEAN(retval)) {
+    else if (JSVAL_IS_BOOLEAN(retval)) {
         return JSVAL_TO_BOOLEAN(retval);
     }
     return false;
@@ -924,10 +924,10 @@ JSBool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, ui
     do
     {
         if (JS_HasProperty(cx, obj, name, &hasAction) && hasAction) {
-            if(!JS_GetProperty(cx, obj, name, &temp_retval)) {
+            if (!JS_GetProperty(cx, obj, name, &temp_retval)) {
                 break;
             }
-            if(temp_retval == JSVAL_VOID) {
+            if (temp_retval == JSVAL_VOID) {
                 break;
             }
             
@@ -978,7 +978,7 @@ int ScriptingCore::handleKeypadEvent(void* data)
     
 	js_proxy_t * p = jsb_get_native_proxy(keypadScriptData->nativeObject);
 
-	if(p){
+	if (p){
 		switch(action){
 		case kTypeBackClicked:
 			executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "backClicked");
@@ -1009,7 +1009,7 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,
     for(SetIterator it = pTouches->begin(); it != pTouches->end(); ++it, ++count) {
         jsval jsret;
         getJSTouchObject(this->cx_, (Touch *) *it, jsret);
-        if(!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
+        if (!JS_SetElement(this->cx_, jsretArr, count, &jsret)) {
             break;
         }
     }
@@ -1226,7 +1226,7 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** r
     {
         double num = 0.0;
         // optimization: JS_ValueToNumber is expensive. And can convert an string like "12" to a number
-        if( JSVAL_IS_NUMBER(*vp)) {
+        if ( JSVAL_IS_NUMBER(*vp)) {
             ok &= JS_ValueToNumber(cx, *vp, &num );
             if (!ok) {
                 break;
@@ -1487,7 +1487,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
             Float* floatVal = NULL;
             Integer* intVal = NULL;
             
-            if((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
                 arrElement = c_string_to_jsval(cx, strVal->getCString());
             } else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj))) {
                 arrElement = ccdictionary_to_jsval(cx, dictVal);
@@ -1505,7 +1505,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
                 CCASSERT(false, "the type isn't suppored.");
             }
         }
-        if(!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+        if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
             break;
         }
         ++i;
@@ -1535,7 +1535,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
             Float* floatVal = NULL;
             Integer* intVal = NULL;
             
-            if((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
                 dictElement = c_string_to_jsval(cx, strVal->getCString());
             } else if ((dictVal = dynamic_cast<Dictionary*>(obj))) {
                 dictElement = ccdictionary_to_jsval(cx, dictVal);
@@ -1564,7 +1564,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
 
 JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
 
-    if(JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
     {
         *ret = NULL;
         return JS_TRUE;
@@ -1596,7 +1596,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret) {
         }
         
         JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
-        if(!dict) {
+        if (!dict) {
             dict = Dictionary::create();
         }
         
@@ -1980,7 +1980,7 @@ JSBool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 {
     JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
-    if( idx >= slots )
+    if ( idx >= slots )
         return JS_FALSE;
 
     JS_SetReservedSlot(obj, idx, value);
@@ -1992,7 +1992,7 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 {
     JSClass *klass = JS_GetClass(obj);
     unsigned int slots = JSCLASS_RESERVED_SLOTS(klass);
-    if( idx >= slots )
+    if ( idx >= slots )
         return JS_FALSE;
 
     ret = JS_GetReservedSlot(obj, idx);
@@ -2259,7 +2259,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
 {
     JSObject *jsobj;
     
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+	if (!JS_ValueToObject( cx, vp, &jsobj ) )
 		return JS_FALSE;
 	
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
@@ -2341,7 +2341,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontFillColor", &jsr);
         
         JSObject *jsobjColor;
-        if( ! JS_ValueToObject( cx, jsr, &jsobjColor ) )
+        if (!JS_ValueToObject( cx, jsr, &jsobjColor ) )
             return JS_FALSE;
         
         out->_fontFillColor = getColorFromJSObject(cx, jsobjColor);
@@ -2354,7 +2354,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "fontDimensions", &jsr);
         
         JSObject *jsobjSize;
-        if( ! JS_ValueToObject( cx, jsr, &jsobjSize ) )
+        if (!JS_ValueToObject( cx, jsr, &jsobjSize ) )
             return JS_FALSE;
         
         out->_dimensions = getSizeFromJSObject(cx, jsobjSize);
@@ -2367,7 +2367,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "shadowEnabled", &jsr);
         out->_shadow._shadowEnabled  = ToBoolean(jsr);
         
-        if( out->_shadow._shadowEnabled )
+        if ( out->_shadow._shadowEnabled )
         {
             // default shadow values
             out->_shadow._shadowOffset  = Size(5, 5);
@@ -2381,7 +2381,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
                 JS_GetProperty(cx, jsobj, "shadowOffset", &jsr);
                 
                 JSObject *jsobjShadowOffset;
-                if( ! JS_ValueToObject( cx, jsr, &jsobjShadowOffset ) )
+                if (!JS_ValueToObject( cx, jsr, &jsobjShadowOffset ) )
                     return JS_FALSE;
                 out->_shadow._shadowOffset = getSizeFromJSObject(cx, jsobjShadowOffset);
             }
@@ -2415,7 +2415,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
         JS_GetProperty(cx, jsobj, "strokeEnabled", &jsr);
         out->_stroke._strokeEnabled  = ToBoolean(jsr);
         
-        if( out->_stroke._strokeEnabled )
+        if ( out->_stroke._strokeEnabled )
         {
             // default stroke values
             out->_stroke._strokeSize  = 1;
@@ -2428,7 +2428,7 @@ JSBool jsval_to_FontDefinition( JSContext *cx, jsval vp, FontDefinition *out )
                 JS_GetProperty(cx, jsobj, "strokeColor", &jsr);
                 
                 JSObject *jsobjStrokeColor;
-                if( ! JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
+                if (!JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
                     return JS_FALSE;
                 out->_stroke._strokeColor = getColorFromJSObject(cx, jsobjStrokeColor);
             }
