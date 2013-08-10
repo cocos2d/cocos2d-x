@@ -944,7 +944,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         reader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(reader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
-    if (reader->isJSControlled() && pCCBReader->isJSControlled() && NULL != reader->_owner)
+    if (reader->isJSControlled() && pCCBReader->isJSControlled() && NULL == reader->_owner)
     {
         //set variables and callback to owner
         //set callback
