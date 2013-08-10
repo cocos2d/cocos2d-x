@@ -140,11 +140,11 @@ public:
     std::set<unsigned int>* getCharacterSet() const;
 private:
     std::set<unsigned int>* parseConfigFile(const char *controlFile);
-    void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
-    void parseInfoArguments(std::string line);
-    void parseCommonArguments(std::string line);
-    void parseImageFileName(std::string line, const char *fntFile);
-    void parseKerningEntry(std::string line);
+    void parseCharacterDefinition(char *line, ccBMFontDef *characterDefinition);
+    void parseInfoArguments(char *line);
+    void parseCommonArguments(char *line);
+    void parseImageFileName(char *line, const char *fntFile);
+    void parseKerningEntry(char *line);
     void purgeKerningDictionary();
     void purgeFontDefDictionary();
 };
