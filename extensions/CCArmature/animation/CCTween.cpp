@@ -154,7 +154,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
         }
     }
 
-	tweenColorTo(0, m_pTweenData, true);
+	tweenColorTo(0, m_pTweenData);
 }
 
 void CCTween::updateHandler()
@@ -195,7 +195,7 @@ void CCTween::updateHandler()
                 m_fCurrentFrame = m_fCurrentPercent * m_iNextFrameIndex;
                 m_iTotalDuration = 0;
                 m_iBetweenDuration = 0;
-                m_iToIndex = 0;
+                m_iFromIndex = m_iToIndex = 0;
                 break;
             }
         }
@@ -220,7 +220,7 @@ void CCTween::updateHandler()
 
             m_iTotalDuration = 0;
             m_iBetweenDuration = 0;
-            m_iToIndex = 0;
+            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         case ANIMATION_MAX:
@@ -235,7 +235,7 @@ void CCTween::updateHandler()
 
             m_iTotalDuration = 0;
             m_iBetweenDuration = 0;
-            m_iToIndex = 0;
+            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
@@ -310,11 +310,6 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
                 childAramture->getAnimation()->play(keyFrameData->strMovement.c_str());
             }
         }
-
-        if(keyFrameData->strEvent.length() != 0)
-        {
-            m_pAnimation->FrameEventSignal.emit(m_pBone, keyFrameData->strEvent.c_str());
-        }
     }
 }
 
@@ -332,21 +327,21 @@ CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 
     m_pBone->setTransformDirty(true);
 
-    tweenColorTo(percent, node, m_pBetween->isUseColorInfo);
+	if (node && m_pBetween->isUseColorInfo)
+	{
+		tweenColorTo(percent, node);
+	}
 
     return node;
 }
 
-void CCTween::tweenColorTo(float percent, CCFrameData *node, bool dirty)
+void CCTween::tweenColorTo(float percent, CCFrameData *node)
 {
-	if(node && dirty)
-	{
-		node->a = m_pFrom->a + percent * m_pBetween->a;
-		node->r = m_pFrom->r + percent * m_pBetween->r;
-		node->g = m_pFrom->g + percent * m_pBetween->g;
-		node->b = m_pFrom->b + percent * m_pBetween->b;
-		m_pBone->updateColor();
-	}
+	node->a = m_pFrom->a + percent * m_pBetween->a;
+	node->r = m_pFrom->r + percent * m_pBetween->r;
+	node->g = m_pFrom->g + percent * m_pBetween->g;
+	node->b = m_pFrom->b + percent * m_pBetween->b;
+	m_pBone->updateColor();
 }
 
 float CCTween::updateFrameData(float currentPrecent)
@@ -385,6 +380,7 @@ float CCTween::updateFrameData(float currentPrecent)
 			return currentPrecent;
 		}
 
+
 		do
 		{
 			from = frames[m_iFromIndex];
@@ -397,6 +393,12 @@ float CCTween::updateFrameData(float currentPrecent)
 
 			m_iFromIndex = m_iToIndex;
 			to = frames[m_iToIndex];
+
+			//! Guaranteed to trigger frame event
+			if(from->strEvent.length() != 0)
+			{
+				m_pAnimation->FrameEventSignal.emit(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
+			}
 
 			if (playedTime == from->frameID)
 			{
@@ -424,7 +426,7 @@ float CCTween::updateFrameData(float currentPrecent)
     if ( m_eFrameTweenEasing != TWEEN_EASING_MAX)
     {
         tweenType = (m_eTweenEasing == TWEEN_EASING_MAX) ? m_eFrameTweenEasing : m_eTweenEasing;
-        if (tweenType != TWEEN_EASING_MAX)
+        if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
         {
             currentPrecent = CCTweenFunction::tweenTo(0, 1, currentPrecent, 1, tweenType);
         }

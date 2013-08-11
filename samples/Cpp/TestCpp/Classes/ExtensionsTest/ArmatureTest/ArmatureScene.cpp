@@ -544,7 +544,7 @@ std::string TestColliderDetector::title()
 {
 	return "Test Collider Detector";
 }
-void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt)
+void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
 {
 	CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
 	bullet->setPosition(ccp(p.x + 60, p.y));

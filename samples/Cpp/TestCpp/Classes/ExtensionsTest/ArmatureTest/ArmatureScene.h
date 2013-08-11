@@ -188,7 +188,7 @@ public:
 	virtual std::string title();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt);
+	void onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 

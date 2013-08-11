@@ -147,7 +147,10 @@ CCBoneData *CCBone::getBoneData()
 void CCBone::setArmature(CCArmature *armature)
 {
 	m_pArmature = armature;
-	m_pTween->setAnimation(m_pArmature->getAnimation());
+	if (m_pArmature)
+	{
+		m_pTween->setAnimation(m_pArmature->getAnimation());
+	}
 }
 
 
