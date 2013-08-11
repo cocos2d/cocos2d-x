@@ -1,6 +1,5 @@
 
-DEFINES += CC_TARGET_QT5
-DEFINES += CC_KEYBOARD_SUPPORT
+DEFINES += CC_TARGET_QT5 CC_KEYBOARD_SUPPORT
 CONFIG += silent
 
 # Disable some warnings to make compiler output easier to read during development
@@ -15,8 +14,10 @@ CONFIG += c++11
 OS_TYPE = linux
 
 CONFIG(debug, debug|release) {
+    DEFINES += COCOS2D_DEBUG=1
     BUILD_TYPE = debug
 } else {
+    DEFINES += COCOS2D_DEBUG=0
     BUILD_TYPE = release
 }
 

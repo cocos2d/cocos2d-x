@@ -1337,8 +1337,8 @@ LabelTTFA8Test::LabelTTFA8Test()
     auto fadeOut = FadeOut::create(2);
     auto fadeIn = FadeIn::create(2);
     auto seq = Sequence::create(fadeOut, fadeIn, NULL);
-    auto forever = RepeatForever::create(seq);
-    label1->runAction(forever);
+    auto repeat = RepeatForever::create(seq);
+    label1->runAction(repeat);
 }
 
 std::string LabelTTFA8Test::title()

@@ -57,6 +57,7 @@ class Cocos2DQt5MainloopIntegration : public QObject {
     protected:
         virtual void timerEvent(QTimerEvent *event)
         {
+            CC_UNUSED_PARAM(event);
             cocos2d::Director::getInstance()->mainLoop();
         }
 

@@ -46,13 +46,13 @@ NS_CC_BEGIN
 
 class CC_DLL FileUtilsQt5 : public FileUtils
 {
-    public:
-        FileUtilsQt5();
+public:
+    FileUtilsQt5();
 
-        /* override funtions */
-        virtual bool init();
-        virtual std::string getWritablePath();
-        virtual bool isFileExist(const std::string& strFilePath);
+    /* override funtions */
+    bool init() override;
+    std::string getWritablePath() override;
+    bool isFileExist(const std::string& filePath) override;
 };
 
 FileUtils *
