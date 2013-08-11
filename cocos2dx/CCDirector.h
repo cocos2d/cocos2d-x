@@ -235,6 +235,14 @@ public:
      */
     void popScene();
 
+    /**Pops out a scene from the queue and returns the actual scene.
+     * This scene will replace the running one.
+     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+     * The returning scene can be used on a transition animation.
+     * ONLY call it if there is a running scene.
+     */
+    Scene* popSceneBack(void);
+
     /** Pops out all scenes from the queue until the root scene in the queue.
      * This scene will replace the running one.
      * Internally it will call `popToSceneStackLevel(1)`
