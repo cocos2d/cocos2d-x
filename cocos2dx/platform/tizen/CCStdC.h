@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include <sys/time.h>
 #include <stdarg.h>
 #include <float.h>
+#include <stdint.h>
 
 #ifndef MIN
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))

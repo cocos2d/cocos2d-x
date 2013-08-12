@@ -1,6 +1,5 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=8 sw=4 et tw=99 ft=cpp:
- *
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -11,6 +10,7 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
 #include "mozilla/DebugOnly.h"
+#include "mozilla/PodOperations.h"
 #include "mozilla/TypeTraits.h"
 #include "mozilla/Util.h"
 
@@ -580,6 +580,9 @@ class HashMapEntry
     HashMapEntry(MoveRef<HashMapEntry> rhs)
       : key(Move(rhs->key)), value(Move(rhs->value)) { }
 
+    typedef Key KeyType;
+    typedef Value ValueType;
+
     const Key key;
     Value value;
 };
@@ -609,7 +612,7 @@ template <class T>
 class HashTableEntry
 {
     template <class, class, class> friend class HashTable;
-    typedef typename tl::StripConst<T>::result NonConstT;
+    typedef typename mozilla::RemoveConst<T>::Type NonConstT;
 
     HashNumber keyHash;
     mozilla::AlignedStorage2<NonConstT> mem;
@@ -653,7 +656,6 @@ class HashTableEntry
     bool isFree() const    { return keyHash == sFreeKey; }
     void clearLive()       { JS_ASSERT(isLive()); keyHash = sFreeKey; mem.addr()->~T(); }
     void clear()           { if (isLive()) mem.addr()->~T(); keyHash = sFreeKey; }
-    void clearNoDtor()     { keyHash = sFreeKey; }
     bool isRemoved() const { return keyHash == sRemovedKey; }
     void removeLive()      { JS_ASSERT(isLive()); keyHash = sRemovedKey; mem.addr()->~T(); }
     bool isLive() const    { return isLiveHash(keyHash); }
@@ -677,7 +679,7 @@ class HashTableEntry
 template <class T, class HashPolicy, class AllocPolicy>
 class HashTable : private AllocPolicy
 {
-    typedef typename tl::StripConst<T>::result NonConstT;
+    typedef typename mozilla::RemoveConst<T>::Type NonConstT;
     typedef typename HashPolicy::KeyType Key;
     typedef typename HashPolicy::Lookup Lookup;
 
@@ -833,13 +835,13 @@ class HashTable : private AllocPolicy
     HashTable(MoveRef<HashTable> rhs)
       : AllocPolicy(*rhs)
     {
-        PodAssign(this, &*rhs);
+        mozilla::PodAssign(this, &*rhs);
         rhs->table = NULL;
     }
     void operator=(MoveRef<HashTable> rhs) {
         if (table)
             destroyTable(*this, table, capacity());
-        PodAssign(this, &*rhs);
+        mozilla::PodAssign(this, &*rhs);
         rhs->table = NULL;
     }
 
@@ -1293,20 +1295,6 @@ class HashTable : private AllocPolicy
             uint32_t tableCapacity = capacity();
             for (Entry *e = table, *end = table + tableCapacity; e < end; ++e)
                 e->clear();
-        }
-        removedCount = 0;
-        entryCount = 0;
-        mutationCount++;
-    }
-
-    void clearWithoutCallingDestructors()
-    {
-        if (mozilla::IsPod<Entry>::value) {
-            memset(table, 0, sizeof(*table) * capacity());
-        } else {
-            uint32_t tableCapacity = capacity();
-            for (Entry *e = table, *end = table + tableCapacity; e < end; ++e)
-                e->clearNoDtor();
         }
         removedCount = 0;
         entryCount = 0;

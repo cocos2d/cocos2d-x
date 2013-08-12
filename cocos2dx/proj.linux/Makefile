@@ -3,6 +3,7 @@ TARGET = libcocos2d.so
 INCLUDES += \
 			-I../platform/third_party/linux/libfreetype2 \
 			-I../platform/third_party/common/etc \
+		       -I../platform/third_party/common/s3tc \
 			-I../../extensions \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
@@ -88,6 +89,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/linux/CCImage.cpp \
 ../platform/linux/CCDevice.cpp \
 ../platform/third_party/common/etc/etc1.cpp \
+../platform/third_party/common/s3tc/s3tc.cpp\
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \

@@ -8,59 +8,35 @@
 #ifndef _TIFFCONF_
 #define _TIFFCONF_
 
-/* Signed 8-bit type */
-#define TIFF_INT8_T signed char
-
-/* Unsigned 8-bit type */
-#define TIFF_UINT8_T unsigned char
-
 /* Signed 16-bit type */
 #define TIFF_INT16_T signed short
-
-/* Unsigned 16-bit type */
-#define TIFF_UINT16_T unsigned short
-
-/* Signed 32-bit type formatter */
-#define TIFF_INT32_FORMAT "%d"
 
 /* Signed 32-bit type */
 #define TIFF_INT32_T signed int
 
-/* Unsigned 32-bit type formatter */
-#define TIFF_UINT32_FORMAT "%u"
+/* Signed 64-bit type */
+#define TIFF_INT64_T signed long long
+
+/* Signed 8-bit type */
+#define TIFF_INT8_T signed char
+
+/* Unsigned 16-bit type */
+#define TIFF_UINT16_T unsigned short
 
 /* Unsigned 32-bit type */
 #define TIFF_UINT32_T unsigned int
 
-/* Signed 64-bit type formatter */
-#define TIFF_INT64_FORMAT "%I64d"
-
-/* Signed 64-bit type */
-#define TIFF_INT64_T signed __int64
-
-/* Unsigned 64-bit type formatter */
-#define TIFF_UINT64_FORMAT "%I64u"
-
 /* Unsigned 64-bit type */
-#define TIFF_UINT64_T unsigned __int64
+#define TIFF_UINT64_T unsigned long long
+
+/* Unsigned 8-bit type */
+#define TIFF_UINT8_T unsigned char
 
 /* Signed size type */
-#if defined(_WIN64)
-#define TIFF_SSIZE_T signed __int64
-#else
-#define TIFF_SSIZE_T signed int
-#endif
-
-/* Signed size type formatter */
-#if defined(_WIN64)
-#define TIFF_SSIZE_FORMAT "%I64d"
-#else
-#define TIFF_SSIZE_FORMAT "%ld"
-#endif
+#define TIFF_SSIZE_T signed long
 
 /* Pointer difference type */
-#define TIFF_PTRDIFF_T long
-
+#define TIFF_PTRDIFF_T ptrdiff_t
 
 /* Define to 1 if the system has the type `int16'. */
 /* #undef HAVE_INT16 */
@@ -71,12 +47,6 @@
 /* Define to 1 if the system has the type `int8'. */
 /* #undef HAVE_INT8 */
 
-/* The size of a `int', as computed by sizeof. */
-#define SIZEOF_INT 4
-
-/* The size of a `long', as computed by sizeof. */
-#define SIZEOF_LONG 4
-
 /* Compatibility stuff. */
 
 /* Define as 0 or 1 according to the floating point format suported by the
@@ -84,7 +54,7 @@
 #define HAVE_IEEEFP 1
 
 /* Set the native cpu bit order (FILLORDER_LSB2MSB or FILLORDER_MSB2LSB) */
-#define HOST_FILLORDER FILLORDER_LSB2MSB
+#define HOST_FILLORDER FILLORDER_MSB2LSB
 
 /* Native cpu byte order: 1 if big-endian (Motorola) or 0 if little-endian
    (Intel) */
@@ -94,7 +64,7 @@
 #define CCITT_SUPPORT 1
 
 /* Support JPEG compression (requires IJG JPEG library) */
-#define JPEG_SUPPORT 1
+/* #undef JPEG_SUPPORT */
 
 /* Support JBIG compression (requires JBIG-KIT library) */
 /* #undef JBIG_SUPPORT */
@@ -110,7 +80,7 @@
 
 /* Support Old JPEG compresson (read contrib/ojpeg/README first! Compilation
    fails with unpatched IJG JPEG library) */
-#define OJPEG_SUPPORT 1
+/* #undef OJPEG_SUPPORT */
 
 /* Support Macintosh PackBits algorithm */
 #define PACKBITS_SUPPORT 1
