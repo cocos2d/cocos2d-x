@@ -63,6 +63,7 @@ protected:
     
     virtual void resetProperty();
     
+    virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void endRecordSlidAction();
     virtual bool scrollChildren(float touchOffset);
     void moveChildren(float offset);
@@ -74,6 +75,7 @@ protected:
     
     void setUpdateChild(UIWidget* child);
     void setUpdateDataIndex(int index);
+    void clearCollectOverArray();
     void collectOverTopChild();
     void collectOverBottomChild();
     void collectOverLeftChild();

@@ -218,6 +218,12 @@ void UIListView::setSize(const CCSize &size)
     m_fRightBoundary = size.width;
 }
 
+void UIListView::handlePressLogic(const CCPoint &touchPoint)
+{
+    UIScrollView::handlePressLogic(touchPoint);
+    clearCollectOverArray();
+}
+
 void UIListView::endRecordSlidAction()
 {
     if (m_children->count() <= 0)
@@ -231,7 +237,7 @@ void UIListView::endRecordSlidAction()
     float totalDis = 0;
     totalDis = m_fTouchEndLocation-m_fTouchStartLocation;
     float orSpeed = fabs(totalDis)/(m_fSlidTime);
-    startAutoScrollChildren(orSpeed / 6);
+    startAutoScrollChildren(orSpeed / 4);
     
     m_bBePressed = false;
     m_fSlidTime = 0.0;
@@ -246,7 +252,7 @@ bool UIListView::scrollChildren(float touchOffset)
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case SCROLLVIEW_DIR_VERTICAL: // vertical            
             switch (m_eMoveDirection)
             {
                 case SCROLLVIEW_MOVE_DIR_UP: // up
@@ -769,6 +775,25 @@ void UIListView::setUpdateSuccess(bool sucess)
     m_bUpdateSuccess = sucess;
 }
 
+void UIListView::clearCollectOverArray()
+{
+    switch (m_eDirection)
+    {
+        case SCROLLVIEW_DIR_VERTICAL:
+            m_overTopArray->removeAllObjects();
+            m_overBottomArray->removeAllObjects();
+            break;
+            
+        case SCROLLVIEW_DIR_HORIZONTAL:
+            m_overLeftArray->removeAllObjects();
+            m_overRightArray->removeAllObjects();
+            break;
+            
+        default:
+            break;
+    }
+}
+
 void UIListView::collectOverTopChild()
 {
     float scroll_top = m_fTopBoundary;
@@ -809,12 +834,7 @@ void UIListView::collectOverBottomChild()
 
 void UIListView::collectOverLeftChild()
 {
-    float scroll_left = m_fLeftBoundary;
-    
-    if (m_overLeftArray->count() > 0)
-    {
-        m_overLeftArray->removeAllObjects();
-    }
+    float scroll_left = m_fLeftBoundary;        
     
 //    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
@@ -834,11 +854,6 @@ void UIListView::collectOverLeftChild()
 void UIListView::collectOverRightChild()
 {
     float scroll_right = m_fRightBoundary;
-    
-    if (m_overRightArray->count() > 0)
-    {
-        m_overRightArray->removeAllObjects();
-    }
     
 //    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
