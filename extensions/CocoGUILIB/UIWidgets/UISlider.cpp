@@ -49,7 +49,8 @@ m_eBallDTexType(UI_TEX_TYPE_LOCAL),
 m_strTextureFile(""),
 m_capInsets(CCRectZero),
 m_scale9Size(CCSizeZero),
-m_strProgressTextureFile("")
+m_strProgressTextureFile(""),
+m_eProgressBarTexType(UI_TEX_TYPE_LOCAL)
 {
     m_WidgetName = WIDGET_SLIDER;
 }
@@ -169,7 +170,7 @@ void UISlider::setScale9Enable(bool able)
     }
     
     setBarTexture(m_strTextureFile.c_str(), m_eBarTexType);
-    setProgressBarTexture(m_strProgressTextureFile.c_str(), m_eBallDTexType);
+    setProgressBarTexture(m_strProgressTextureFile.c_str(), m_eProgressBarTexType);
     setCapInsets(m_capInsets);
     setScale9Size(m_scale9Size);
     m_pRender->addChild(m_pBarNode, -1);        
@@ -296,7 +297,8 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
     }
     m_strProgressTextureFile = fileName;
     
-    switch (m_eBarTexType)
+	m_eProgressBarTexType = texType;
+    switch (m_eProgressBarTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             if (m_bBarScale9Enable)
