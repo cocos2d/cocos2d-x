@@ -51,25 +51,21 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 {
 public:
     
+    // static create
     static Label* createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0 );
+    
     static Label* createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0 );
     
-    Label(FontAtlas *pAtlas, TextHAlignment alignment);
-    ~Label();
-          
     bool setText(const char *stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
-    void setString(const char *stringToRender);
     
+    virtual void setString(const char *stringToRender);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale);
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
-    
-    // carloX
-    const char * getString() const { return "not implemented"; }
-    
+
     // RGBAProtocol
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
@@ -115,10 +111,15 @@ public:
     virtual Size                        getLabelContentSize();
     virtual void                        setLabelContentSize(const Size &newSize);
     
+    // carloX
+    const char * getString() const { return "not implemented"; }
     
 private:
     
-    static Label* create(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
+    Label(FontAtlas *pAtlas, TextHAlignment alignment);
+   ~Label();
+    
+    static Label* createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
     
     bool init();
     
