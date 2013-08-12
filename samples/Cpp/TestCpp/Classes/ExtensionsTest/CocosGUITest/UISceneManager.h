@@ -14,6 +14,7 @@ public:
     ~UISceneManager();
     /** Returns the singleton of the ui scene manager. */
     static UISceneManager * sharedUISceneManager();
+	static void purgeUISceneManager();
     
     /** Returns the next ui scene. */
     cocos2d::CCScene *nextUIScene();
