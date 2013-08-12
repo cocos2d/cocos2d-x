@@ -499,13 +499,13 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     float delta = s.height/4;
 
     // LabelBMFont
-    Label *label1 = Label::createWithBMFont("", "fonts/bitmapFontTest3.fnt", s.width);
+    Label *label1 = Label::createWithBMFont("", "fonts/bitmapFontTest3.fnt", TextHAlignment::CENTER, s.width);
     addChild(label1, 0, kTagBitmapAtlas1);
     label1->setAnchorPoint(Point(0.5f, 0.5f));
     label1->setPosition(Point(s.width/2, delta));
 
     // LabelTTF
-    Label* label2 = Label::createWithTTF("", "fonts/arial.ttf", 48, GlyphCollection::NEHE, s.width);
+    Label* label2 = Label::createWithTTF("", "fonts/arial.ttf", 48, s.width, GlyphCollection::NEHE);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(Point(0.5f, 0.5f));
     label2->setPosition(Point(s.width/2, delta * 2));
@@ -596,7 +596,7 @@ std::string LabelFNTGlyphDesigner::subtitle()
 LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
 {
     auto size = Director::getInstance()->getWinSize();
-    auto label = Label::createWithTTF("美好的-天", "fonts/wt021.ttf", 55, GlyphCollection::CUSTOM, size.width, "美好的-天");
+    auto label = Label::createWithTTF("美好的-天", "fonts/wt021.ttf", 55, size.width, GlyphCollection::CUSTOM, "美好的-天");
     label->setAnchorPoint(Point(0.5f, 0.5f));
     label->setPosition(Point(size.width / 2, size.height /2));
     this->addChild(label);
@@ -661,7 +661,7 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
 
     // create and initialize a Label
     //this->_labelShouldRetain = Label::createWithBMFont(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5);
-    this->_labelShouldRetain = Label::createWithBMFont(LongSentencesExample, "fonts/bitmapFontTest.fnt", size.width/1.5);
+    this->_labelShouldRetain = Label::createWithBMFont(LongSentencesExample, "fonts/bitmapFontTest.fnt", TextHAlignment::CENTER, size.width/1.5);
     this->_labelShouldRetain->setAnchorPoint(Point(0.5f, 0.5f));
     this->_labelShouldRetain->retain();
 
@@ -845,7 +845,7 @@ LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
 
     Size s = Director::getInstance()->getWinSize();
 
-    auto label1 = Label::createWithBMFont(spanish, "fonts/arial-unicode-26.fnt", 200);
+    auto label1 = Label::createWithBMFont(spanish, "fonts/arial-unicode-26.fnt", TextHAlignment::CENTER, 200);
     addChild(label1);
     label1->setAnchorPoint(Point(0.5f, 0.5f));
     label1->setPosition(Point(s.width/2, s.height/5*3));
@@ -884,7 +884,7 @@ LabelFNTBounds::LabelFNTBounds()
     addChild(layer, -10);
     
     // LabelBMFont
-    label1 = Label::createWithBMFont("Testing Glyph Designer", "fonts/boundsTestFont.fnt", s.width);
+    label1 = Label::createWithBMFont("Testing Glyph Designer", "fonts/boundsTestFont.fnt", TextHAlignment::CENTER, s.width);
     label1->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(label1);
     label1->setPosition(Point(s.width/2, s.height/2));
@@ -923,7 +923,7 @@ LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
     Size size = Director::getInstance()->getWinSize();
 
     // Long sentence
-    auto label1 = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 28, GlyphCollection::NEHE, size.width);
+    auto label1 = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 28, size.width, GlyphCollection::NEHE);
     label1->setPosition( Point(size.width/2, size.height/2) );
     label1->setAnchorPoint(Point(0.5, 1.0));
     addChild(label1);
@@ -944,21 +944,21 @@ LabelTTFColor::LabelTTFColor()
     Size size = Director::getInstance()->getWinSize();
 
     // Green
-    auto label1 = Label::createWithTTF("Green", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    auto label1 = Label::createWithTTF("Green", "fonts/arial.ttf", 35, size.width, GlyphCollection::NEHE);
     label1->setPosition( Point(size.width/2, size.height/5 * 1.5) );
     label1->setColor( Color3B::GREEN );
     label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
 
     // Red
-    auto label2 = Label::createWithTTF("Red", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    auto label2 = Label::createWithTTF("Red", "fonts/arial.ttf", 35, size.width, GlyphCollection::NEHE);
     label2->setPosition( Point(size.width/2, size.height/5 * 2.0) );
     label2->setColor( Color3B::RED );
     label2->setAnchorPoint(Point(0.5, 0.5));
     addChild(label2);
 
     // Blue
-    auto label3 = Label::createWithTTF("Blue", "fonts/arial.ttf", 35, GlyphCollection::NEHE, size.width);
+    auto label3 = Label::createWithTTF("Blue", "fonts/arial.ttf", 35, size.width, GlyphCollection::NEHE);
     label3->setPosition( Point(size.width/2, size.height/5 * 2.5) );
     label3->setColor( Color3B::BLUE );
     label3->setAnchorPoint(Point(0.5, 0.5));
@@ -979,7 +979,7 @@ LabelTTFDynamicAlignment::LabelTTFDynamicAlignment()
 {
     Size size = Director::getInstance()->getWinSize();
     
-    _label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 45, GlyphCollection::NEHE, size.width);
+    _label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 45, size.width, GlyphCollection::NEHE);
     _label->setPosition( Point(size.width/2, size.height/2) );
     _label->setAnchorPoint(Point(0.5, 0.5));
     
@@ -1053,19 +1053,19 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
      
     
     // Spanish
-    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 45, size.width, GlyphCollection::ASCII);
     label1->setPosition( Point(size.width/2, vSize - (vStep * 4.5)) );
     label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
     
     // German
-    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 45, GlyphCollection::ASCII, size.width);
+    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 45, size.width, GlyphCollection::ASCII);
     label2->setPosition( Point(size.width/2, vSize - (vStep * 5.5)) );
     label2->setAnchorPoint(Point(0.5, 0.5));
     addChild(label2);
     
     // chinese
-    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, GlyphCollection::CUSTOM, size.width, chinese);
+    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, size.width, GlyphCollection::CUSTOM, chinese);
     label3->setPosition( Point(size.width/2, vSize - (vStep * 6.5)) );
     label3->setAnchorPoint(Point(0.5, 0.5));
     addChild(label3);
@@ -1097,7 +1097,7 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
     Size size = Director::getInstance()->getWinSize();
 
     for(int i=0;i < arraysize(ttfpaths); ++i) {
-        auto label = Label::createWithTTF( ttfpaths[i], ttfpaths[i], 40, GlyphCollection::NEHE);
+        auto label = Label::createWithTTF( ttfpaths[i], ttfpaths[i], 40, 0, GlyphCollection::NEHE);
         if( label ) {
             
             label->setPosition( Point(size.width/2, ((size.height * 0.6)/arraysize(ttfpaths) * i) + (size.height/5)));
@@ -1124,7 +1124,7 @@ LabelBMFontTestNew::LabelBMFontTestNew()
 {
     Size size = Director::getInstance()->getWinSize();
 
-    auto label1 = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", size.width);
+    auto label1 = Label::createWithBMFont("Hello World, this is testing the new Label using fnt file", "fonts/bitmapFontTest2.fnt", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height/2) );
     label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
