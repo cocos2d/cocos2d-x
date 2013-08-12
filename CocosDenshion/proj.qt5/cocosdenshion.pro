@@ -13,3 +13,6 @@ TARGET = $${LIB_OUTPUT_DIR}/cocosdenshion
 INSTALLS += target
 target.path = $${LIB_INSTALL_DIR}
 
+HEADERS += $$files(../include/*.h) \
+    $$files(../qt5/*.h)
+
