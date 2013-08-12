@@ -515,6 +515,9 @@
     <ClCompile Include="..\label_nodes\CCTextImage.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -1038,6 +1041,9 @@
     </ClInclude>
     <ClInclude Include="..\label_nodes\CCTextImage.h">
       <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
