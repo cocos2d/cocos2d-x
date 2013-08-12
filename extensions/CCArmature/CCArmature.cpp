@@ -317,7 +317,15 @@ void CCArmature::changeBoneParent(CCBone *bone, const char *parentName)
         if (boneParent)
         {
             boneParent->addChildBone(bone);
+			if (m_pTopBoneList->containsObject(bone))
+			{
+				m_pTopBoneList->removeObject(bone);
+			}
         }
+		else
+		{
+			m_pTopBoneList->addObject(bone);
+		}
     }
 }
 

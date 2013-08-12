@@ -136,7 +136,7 @@ float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
-static std::string s_filePath = "";
+static std::string s_BasefilePath = "";
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -168,9 +168,19 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     s_arrConfigFileList.push_back(filePath);
 
 
-    std::string filePathStr = s_filePath = filePath;
+	//! find the base file path
+	s_BasefilePath = filePath;
+	size_t pos = s_BasefilePath.find_last_of("/");
+	if (pos != std::string::npos)
+	{
+		s_BasefilePath = s_BasefilePath.substr(0, pos+1);
+	}
+
+
+    std::string filePathStr =  filePath;
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
+
 
     if (str.compare(".xml") == 0)
     {
@@ -324,6 +334,8 @@ CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxm
     {
         boneData->parentName = boneXML->Attribute(A_PARENT);
     }
+
+	boneXML->QueryIntAttribute(A_Z, &boneData->zOrder);
 
     tinyxml2::XMLElement *displayXML = boneXML->FirstChildElement(DISPLAY);
     while(displayXML)
@@ -877,13 +889,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
 			std::string pngPath = filePath.erase(filePath.find_last_of(".")) + ".png";
 
 			
-			size_t pos = s_filePath.find_last_of("/");
-			if (pos != std::string::npos)
-			{
-				filePath = s_filePath.substr(0, pos+1);
-			}
-
-			CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((filePath + plistPath).c_str(), (filePath + pngPath).c_str());
+			CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((s_BasefilePath + plistPath).c_str(), (s_BasefilePath + pngPath).c_str());
 		}
 	}
 }
@@ -992,7 +998,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            ((CCParticleDisplayData *)displayData)->plist = plist;
+            ((CCParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
         }
     }
     break;
