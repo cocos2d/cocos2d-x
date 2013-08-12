@@ -1437,6 +1437,14 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
         textField->setTouchSize(CCSizeMake(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
     }
     
+    bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
+    textField->setMaxLengthEnable(maxLengthEnable);
+    if (maxLengthEnable)
+    {
+        int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+        textField->setMaxLength(maxLength);
+    }
+    
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnable(passwordEnable);
     if (passwordEnable)
