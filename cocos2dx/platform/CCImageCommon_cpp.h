@@ -389,22 +389,9 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_FreeSurface(iSurf);
 #else
     unsigned long bufferLen = 0;
-    unsigned char* buffer = nullptr;
-    
-    //detecgt and unzip the compress file
-    if (ZipUtils::ccIsCCZFile(fullPath.c_str()))
-    {
-        bufferLen = ZipUtils::ccInflateCCZFile(fullPath.c_str(), &buffer);
-    }else if (ZipUtils::ccIsGZipFile(fullPath.c_str()))
-    {
-        bufferLen = ZipUtils::ccInflateGZipFile(fullPath.c_str(), &buffer);
-    }
-    else
-    {
-        buffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &bufferLen);
-    }
+    unsigned char* buffer = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &bufferLen);
 
-    if (buffer != NULL && bufferLen > 0)
+    if (buffer != nullptr && bufferLen > 0)
     {
         bRet = initWithImageData(buffer, bufferLen);
     }
@@ -435,36 +422,65 @@ bool Image::initWithImageFileThreadSafe(const char *fullpath)
 
 bool Image::initWithImageData(const void * data, int dataLen)
 {
-    do 
+    bool bRet = false;
+    
+    do
     {
         CC_BREAK_IF(! data || dataLen <= 0);
+        
+        unsigned char* unpackedData = nullptr;
+        int unpackedLen = 0;
+        
+        //detecgt and unzip the compress file
+        if (ZipUtils::ccIsCCZBuffer(static_cast<const unsigned char*>(data), dataLen))
+        {
+            unpackedLen = ZipUtils::ccInflateCCZBuffer(static_cast<const unsigned char*>(data), dataLen, &unpackedData);
+        }else if (ZipUtils::ccIsGZipBuffer(static_cast<const unsigned char*>(data), dataLen))
+        {
+            unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(static_cast<const unsigned char*>(data)), dataLen, &unpackedData);
+        }else
+        {
+            unpackedData = const_cast<unsigned char*>(static_cast<const unsigned char*>(data));
+            unpackedLen = dataLen;
+        }
 
-        _fileType = detectFormat(data, dataLen);
+        _fileType = detectFormat(unpackedData, unpackedLen);
 
         switch (_fileType)
         {
         case Format::PNG:
-            return initWithPngData(data, dataLen);
+            bRet = initWithPngData(unpackedData, unpackedLen);
+            break;
         case Format::JPG:
-            return initWithJpgData(data, dataLen);
+            bRet = initWithJpgData(unpackedData, unpackedLen);
+            break;
         case Format::TIFF:
-            return initWithTiffData(data, dataLen);
+            bRet = initWithTiffData(unpackedData, unpackedLen);
+            break;
         case Format::WEBP:
-            return initWithWebpData(data, dataLen);
+            bRet = initWithWebpData(unpackedData, unpackedLen);
+            break;
         case Format::PVR:
-            return initWithPVRData(data, dataLen);
+            bRet = initWithPVRData(unpackedData, unpackedLen);
+            break;
         case Format::ETC:
-            return initWithETCData(data, dataLen);
+            bRet = initWithETCData(unpackedData, unpackedLen);
+            break;
         case Format::S3TC:
-            return initWithS3TCData(data, dataLen);
-            
+            bRet = initWithS3TCData(unpackedData, unpackedLen);
+            break;
         default:
             CCAssert(false, "unsupport image format!");
-            return false;
+            break;
+        }
+        
+        if(unpackedData != data)
+        {
+            free(unpackedData);
         }
     } while (0);
     
-    return false;
+    return bRet;
 }
 
 bool Image::isPng(const void *data, int dataLen)
