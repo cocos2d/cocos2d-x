@@ -203,9 +203,10 @@ void UISlider::setScale9Size(const CCSize &size)
         return;
     }
     dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setContentSize(size);
-    dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setContentSize(size);
     m_fBarLength = m_pBarNode->getContentSize().width;
     setSlidBallPercent(m_nBarPercent);
+	dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setContentSize(size);
+	setProgressBarScale();
 }
 
 void UISlider::setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
