@@ -1,11 +1,10 @@
 
-
+#include "cocos-ext.h"
 #include "UIScene.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
 
 UIScene::UIScene()
-//: m_pSceneTitleLabel(NULL)
 : m_pSceneTitle(NULL)
 , m_pUiLayer(NULL)
 {
@@ -15,7 +14,9 @@ UIScene::UIScene()
 UIScene::~UIScene()
 {
     m_pUiLayer->removeFromParent();
-//    CC_SAFE_RELEASE_NULL(m_pSceneTitleLabel);
+	cocos2d::extension::CCJsonReader::purgeJsonReader();
+	cocos2d::extension::UIActionManager::purgeUIActionManager();
+	cocos2d::extension::UIHelper::purgeUIHelper();
 }
 
 bool UIScene::init()
@@ -53,6 +54,8 @@ void UIScene::toExtensionsMainLayer(CCObject* sender)
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
     pScene->runThisTest();
     pScene->release();
+
+	UISceneManager::purgeUISceneManager();
 }
 
 void UIScene::previousCallback(CCObject* sender)

@@ -171,11 +171,20 @@ protected:
 public:
     /**
      * MovementEvent signal. This will emit a signal when trigger a event.
-     * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
+	 * @param CCArmature* a CCArmature
+	 * @param MovementEventType, Event Type, like START, COMPLETE.
+	 * @param const char*, Movement ID, also called Movement Name
      */
     sigslot::signal3<CCArmature *, MovementEventType, const char *> MovementEventSignal;
 
-    sigslot::signal2<CCBone *, const char *> FrameEventSignal;
+	/**
+     * FrameEvent signal. This will emit a signal when trigger a event.
+	 * @param CCBone*, a CCBone
+	 * @param const char*, the name of this frame event
+	 * @param int, origin frame index
+	 * @param int, current frame index, animation may be delayed
+     */
+    sigslot::signal4<CCBone *, const char *, int, int> FrameEventSignal;
 };
 
 NS_CC_EXT_END

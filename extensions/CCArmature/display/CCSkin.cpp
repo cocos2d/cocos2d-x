@@ -110,7 +110,7 @@ void CCSkin::updateTransform()
         // calculate the Quad based on the Affine Matrix
         //
 
-        CCSize size = m_obRect.size;
+        CCSize &size = m_obRect.size;
 
         float x1 = m_obOffsetPosition.x;
         float y1 = m_obOffsetPosition.y;
