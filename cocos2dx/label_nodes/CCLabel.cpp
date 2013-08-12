@@ -30,10 +30,10 @@
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF( const char* label, const char* tttFilePath, int fontSize, GlyphCollection glyphs, int lineSize, const char *customGlyphs )
+Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, GlyphCollection glyphs, int lineSize, const char *customGlyphs )
 {
 
-    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(tttFilePath, fontSize, glyphs, customGlyphs);
+    FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
     if (!tempAtlas)
         return nullptr;
     
@@ -103,7 +103,11 @@ _lineBreakWithoutSpaces(false),
 _advances(0),
 _displayedColor(Color3B::WHITE),
 _realColor(Color3B::WHITE),
-_cascadeColorEnabled(true)
+_cascadeColorEnabled(true),
+_cascadeOpacityEnabled(true),
+_displayedOpacity(255),
+_realOpacity(255),
+_isOpacityModifyRGB(false)
 {
 }
 
@@ -126,13 +130,18 @@ bool Label::init()
 
 void Label::setString(const char *stringToRender)
 {
-    setText(stringToRender, 0, TextHAlignment::CENTER, false);
+    setText(stringToRender, _width, TextHAlignment::CENTER, false);
 }
 
 bool Label::setText(const char *stringToRender, float lineWidth, TextHAlignment alignment, bool lineBreakWithoutSpaces)
 {
     if (!_fontAtlas)
         return false;
+    
+    // carloX
+    // reset the string
+    resetCurrentString();
+    
     
     _width                  = lineWidth;
     _alignment              = alignment;
@@ -188,6 +197,10 @@ void Label::setWidth(float width)
     {
         // store
         _width = width;
+        
+        
+        // reset the string
+        resetCurrentString();
         
         // need to align text again
         alignText();
@@ -304,6 +317,9 @@ bool Label::setCurrentString(unsigned short *stringToSet)
 
 void Label::resetCurrentString()
 {
+    if ((!_currentUTF8String) && (!_originalUTF8String))
+        return;
+    
     // set the new string
     if (_currentUTF8String)
     {
@@ -335,6 +351,14 @@ Sprite * Label::createNewSpriteFromLetterDefinition(FontLetterDefinition &theDef
     tempSprite->initWithSpriteFrame(pFrame);
     tempSprite->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));
     tempSprite->setBatchNode(this);
+    
+    // Apply label properties
+    tempSprite->setOpacityModifyRGB(_isOpacityModifyRGB);
+    
+    // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+    tempSprite->updateDisplayedColor(_displayedColor);
+    tempSprite->updateDisplayedOpacity(_displayedOpacity);
+    
     
     return tempSprite;
 }
@@ -535,7 +559,7 @@ int Label::getAdvanceForChar(unsigned short c, int hintPositionInString)
         if (!validDefinition)
             return -1;
         
-        return (_advances[hintPositionInString].width - tempDefinition.offsetX);
+        return (_advances[hintPositionInString].width);
     }
     else
     {
@@ -622,28 +646,64 @@ void Label::setLabelContentSize(const Size &newSize)
 
 bool Label::isOpacityModifyRGB() const
 {
-    return false;
+    return _isOpacityModifyRGB;
 }
 
 void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
+    _isOpacityModifyRGB = isOpacityModifyRGB;
+    if (_children && _children->count() != 0)
+    {
+        Object* child;
+        CCARRAY_FOREACH(_children, child)
+        {
+            Node* pNode = static_cast<Node*>( child );
+            if (pNode)
+            {
+                RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pNode);
+                if (pRGBAProtocol)
+                {
+                    pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
+                }
+            }
+        }
+    }
 }
 
 unsigned char Label::getOpacity() const
 {
-    return 0;
+     return _realOpacity;
 }
 
 unsigned char Label::getDisplayedOpacity() const
 {
-    return 0;
+    return _displayedOpacity;
 }
 
 void Label::setOpacity(GLubyte opacity)
 {
+    _displayedOpacity = _realOpacity = opacity;
+    
+	if( _cascadeOpacityEnabled ) {
+		GLubyte parentOpacity = 255;
+        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
+        if (pParent && pParent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = pParent->getDisplayedOpacity();
+        }
+        this->updateDisplayedOpacity(parentOpacity);
+	}
 }
 void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+    _displayedOpacity = _realOpacity * parentOpacity/255.0;
+    
+	Object* pObj;
+	CCARRAY_FOREACH(_children, pObj)
+    {
+        Sprite *item = static_cast<Sprite*>( pObj );
+		item->updateDisplayedOpacity(_displayedOpacity);
+	}
 }
 
 bool Label::isCascadeOpacityEnabled() const
@@ -653,6 +713,7 @@ bool Label::isCascadeOpacityEnabled() const
 
 void Label::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
 }
 
 const Color3B& Label::getColor(void) const

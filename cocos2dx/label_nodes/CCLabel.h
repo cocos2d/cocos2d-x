@@ -51,7 +51,7 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 {
 public:
     
-    static Label* createWithTTF( const char* label, const char* tttFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 );
+    static Label* createWithTTF( const char* label, const char* fontFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 );
     static Label* createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize = 0 );
     
     Label(FontAtlas *pAtlas, TextHAlignment alignment);
@@ -150,6 +150,10 @@ private:
     Color3B                     _displayedColor;
     Color3B                     _realColor;
     bool                        _cascadeColorEnabled;
+    bool                        _cascadeOpacityEnabled;
+    unsigned char               _displayedOpacity;
+    unsigned char               _realOpacity;
+    bool                        _isOpacityModifyRGB;
     
     
 };
