@@ -1015,6 +1015,10 @@ void CCSReader::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,cs::CSJs
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+    
+    int direction = DICTOOL->getIntValue_json(options, "direction");
+    scrollView->setDirection((SCROLLVIEW_DIR)direction);
+    
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 

@@ -54,7 +54,7 @@ enum
     kUIScrollViewTest_Vertical,
     kUIScrollViewTest_Horizontal,
     kUIPageViewTest,
-    kUIListViewTest,
+    kUIListViewTest_Vertical,
     kUIDragPanelTest,
     kUIDragPanelTest_Bounce,
     kUINodeContainerTest,    
@@ -92,7 +92,7 @@ static const char* s_testArray[] =
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
     "UIPageViewTest,",
-    "UIListViewTest",
+    "UIListViewTest_Vertical",
     "UIDragPanelTest",
     "UIDragPanelTest_Bounce",
     "UINodeContainerTest",
@@ -229,8 +229,8 @@ CCScene *UISceneManager::currentUIScene()
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
-        case kUIListViewTest:
-            return UIListViewTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+        case kUIListViewTest_Vertical:
+            return UIListViewTest_Vertical::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
         case kUIDragPanelTest:
             return UIDragPanelTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
