@@ -1081,7 +1081,7 @@ void CCBReader::addOwnerOutletName(std::string name)
 
 void CCBReader::addOwnerOutletNode(Node *node)
 {
-    if (NULL != node)
+    if (NULL == node)
         return;
     
     _ownerOutletNodes->addObject(node);
