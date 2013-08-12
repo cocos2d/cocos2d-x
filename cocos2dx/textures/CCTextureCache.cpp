@@ -142,7 +142,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
     if (_asyncStructQueue == NULL)
     {             
         _asyncStructQueue = new queue<AsyncStruct*>();
-        _imageInfoQueue = new queue<ImageInfo*>();        
+        _imageInfoQueue   = new queue<ImageInfo*>();        
 
         // create a new thread to load images
         _loadingThread = new std::thread(&TextureCache::loadImage, this);

@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, GlyphCollection glyphs, int lineSize, const char *customGlyphs )
+Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize, GlyphCollection glyphs, const char *customGlyphs )
 {
 
     FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
@@ -51,7 +51,7 @@ Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fo
     return 0;
 }
 
-Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize)
+Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment, int lineSize)
 {
     
     FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
@@ -59,11 +59,11 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, i
     if (!tempAtlas)
         return 0;
     
-    Label* templabel = Label::create(tempAtlas, TextHAlignment::CENTER, lineSize);
+    Label* templabel = Label::create(tempAtlas, alignment, lineSize);
     
     if (templabel)
     {
-        templabel->setText(label, lineSize, TextHAlignment::CENTER, false);
+        templabel->setText(label, lineSize, alignment, false);
         return templabel;
     }
     else

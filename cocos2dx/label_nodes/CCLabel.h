@@ -51,8 +51,8 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 {
 public:
     
-    static Label* createWithTTF( const char* label, const char* fontFilePath, int fontSize, GlyphCollection glyphs = GlyphCollection::NEHE, int lineSize = 0, const char *customGlyphs = 0 );
-    static Label* createWithBMFont( const char* label, const char* bmfontFilePath, int lineSize = 0 );
+    static Label* createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize = 0, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0 );
+    static Label* createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0 );
     
     Label(FontAtlas *pAtlas, TextHAlignment alignment);
     ~Label();
