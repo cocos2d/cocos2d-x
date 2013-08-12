@@ -21,10 +21,10 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
-
-"[WebSocket module] is based in part on the work of the libwebsockets  project
-(http://libwebsockets.org)"
-
+ 
+ "[WebSocket module] is based in part on the work of the libwebsockets  project
+ (http://libwebsockets.org)"
+ 
  ****************************************************************************/
 
 #ifndef __CC_WEBSOCKET_H__
@@ -80,7 +80,7 @@ public:
         CLOSING,
         CLOSED,
     };
-
+    
     /**
      *  @brief The delegate class to process websocket events.
      */
@@ -132,7 +132,7 @@ private:
     virtual void onSubThreadEnded();
     virtual void onUIThreadReceiveMessage(WsMessage* msg);
     
-
+    
     friend class WebSocketCallbackWrapper;
     int onSocketCallback(struct libwebsocket_context *ctx,
                          struct libwebsocket *wsi,
@@ -144,6 +144,10 @@ private:
     std::string  _host;
     unsigned int _port;
     std::string  _path;
+    
+    size_t _pending_frame_data_len;
+    unsigned int _current_data_len;
+    char *_current_data;
     
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
