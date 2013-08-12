@@ -29,8 +29,6 @@ public:
     
     Array* getSequences();
     void setSequences(Array* seq);
-    
-    float getSequenceDuration(const std::string &name);
 
     
     int getAutoPlaySequenceId();
