@@ -38,7 +38,7 @@ Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fo
         return nullptr;
     
     // create the actual label
-    Label* templabel = Label::create(tempAtlas, alignment, lineSize);
+    Label* templabel = Label::createWithAtlas(tempAtlas, alignment, lineSize);
     
     if (templabel)
     {
@@ -59,7 +59,7 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, T
     if (!tempAtlas)
         return 0;
     
-    Label* templabel = Label::create(tempAtlas, alignment, lineSize);
+    Label* templabel = Label::createWithAtlas(tempAtlas, alignment, lineSize);
     
     if (templabel)
     {
@@ -74,7 +74,7 @@ Label* Label::createWithBMFont( const char* label, const char* bmfontFilePath, T
     return 0;
 }
 
-Label* Label::create(FontAtlas *pAtlas, TextHAlignment alignment, int lineSize)
+Label* Label::createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment, int lineSize)
 {
     Label *ret = new Label(pAtlas, alignment);
     
