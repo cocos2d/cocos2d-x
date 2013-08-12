@@ -65,6 +65,8 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
+#include "include/CCDeprecated.h"
+
 
 /**
  Position of the FPS
@@ -916,6 +918,11 @@ void Director::createStatsLabel()
     _drawsLabel->setPosition(Point(0, 34*factor) + CC_DIRECTOR_STATS_POSITION);
     _SPFLabel->setPosition(Point(0, 17*factor) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
+}
+
+void Director::setDesignResolutionSize(float width, float height, int resolutionPolicy)
+{
+    CCEGLView::getInstance()->setDesignResolutionSize(width, height, resolutionPolicy);
 }
 
 float Director::getContentScaleFactor() const
