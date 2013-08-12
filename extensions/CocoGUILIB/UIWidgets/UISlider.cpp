@@ -317,7 +317,7 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
                 dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
             }
             else
-            {
+            {                
                 dynamic_cast<CCSprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
             }
             break;
@@ -349,8 +349,12 @@ void UISlider::setProgressBarScale()
         m_pProgressBarNode->setContentSize(CCSize(width, m_pProgressBarNode->getContentSize().height));
     }
     else
-    {
-        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setTextureRect(CCRectMake(0, 0, width, m_pProgressBarNode->getContentSize().height));
+    {        
+        CCPoint textureOrigin = dynamic_cast<CCSprite*>(m_pProgressBarNode)->getTextureRect().origin;
+        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setTextureRect(CCRectMake(textureOrigin.x,
+                                                                               textureOrigin.y,
+                                                                               width,
+                                                                               m_pProgressBarNode->getContentSize().height));
     }
 }
 
