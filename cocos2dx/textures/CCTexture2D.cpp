@@ -73,6 +73,19 @@ namespace {
 #ifdef GL_ETC1_RGB8_OES
         PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
 #endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+
     };
 }
 
@@ -537,7 +550,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
 
-    if (info.compressed && !Configuration::getInstance()->supportsPVRTC() && !Configuration::getInstance()->supportsETC())
+    if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
+                        && !Configuration::getInstance()->supportsETC()
+                        && !Configuration::getInstance()->supportsS3TC())
     {
         CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
         return false;
@@ -684,6 +699,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
+        
         return true;
     }
     else if (image->isCompressed())
