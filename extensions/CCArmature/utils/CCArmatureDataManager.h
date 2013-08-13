@@ -33,7 +33,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace extension { namespace armature {
 
 /**
- *	@brief	format and manage armature configuration and armature animation
+ *  @brief  format and manage armature configuration and armature animation
  */
 class  ArmatureDataManager : public Object 
 {
@@ -45,105 +45,101 @@ private:
     ~ArmatureDataManager(void);
 
 public:
-	/**
+    /**
      * Init ArmatureDataManager
      */
     virtual bool init();
     
     /**
-     * Add armature data
-     * @param id The id of the armature data
-	 * @param armatureData ArmatureData *
+     * @brief Add armature data.
+     *
+     * @param id            The id of the armature data.
+     * @param armatureData  The armature data to be added.
      */
     void addArmatureData(const char *id, ArmatureData *armatureData);
     
-	/**
-     *	@brief	get armature data
+    /**
+     * @brief Get armature data.
      *
-     *	@param	id the id of the armature data you want to get
-	 *  
-	 *  @return	ArmatureData *
+     * @param id   The id of the armature data you want to get.
+     *
+     * @return The ArmatureData whose id is @p id.
      */
     ArmatureData *getArmatureData(const char *id);
 
     /**
-     *	@brief	add animation data 
+     *  @brief Add animation data.
      *
-     *	@param 	id the id of the animation data 
-	 *
-	 *  @return AnimationData *
+     *  @param id               The id of the animation data.
+     *  @param animationData    The animation data to be added.
      */
     void addAnimationData(const char *id, AnimationData *animationData);
     
-	/**
-     *	@brief	get animation data from _animationDatas(Dictionary)
+    /**
+     * @brief Get animation data.
      *
-     *	@param 	id the id of the animation data you want to get
-	 *  
-	 *  @return AnimationData *
+     * @param id    The id of the animation data you want to get.
+     *
+     * @return The AnimationData whose id is @p id.
      */
     AnimationData *getAnimationData(const char *id);
 
     /**
-     *	@brief	add texture data 
+     *  @brief Add texture data.
      *
-     *	@param 	id the id of the texture data
-	 *
-	 *  @return TextureData *
+     *  @param id           The id of the texture data.
+     *  @param textureData  The texture data to be added.
      */
     void addTextureData(const char *id, TextureData *textureData);
     
-	/**
-     *	@brief	get texture data
+    /**
+     * @brief Get texture data.
      *
-     *	@param 	_id the id of the texture data you want to get
-	 *  
-	 *  @return TextureData *
+     * @param id   The id of the texture data you want to get.
+     *
+     * @return The TextureData whose id is @p id.
      */
     TextureData *getTextureData(const char *id);
     
     /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     * @brief  Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      */
-	void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
-    /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     */
-	void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+    void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
 
     /**
-     *	@brief	Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
+     * @brief  Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     */
+    void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+
+    /**
+     * @brief  Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
-    
-	
-	/**
-	 *	@brief	Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
+
+    /**
+     * @brief  Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
      */
     void removeAll();
 
    
 private:
     /**
-	 *	@brief	save amature datas
-	 *  @key	std::string
-	 *  @value	ArmatureData *
+     * Dictionary to save amature data.
+     * Key type is std::string, value type is ArmatureData *.
      */
-	CC_SYNTHESIZE_READONLY(Dictionary *, _armarureDatas, ArmarureDatas);
+    CC_SYNTHESIZE_READONLY(Dictionary *, _armarureDatas, ArmarureDatas);
 
     /**
-	 *	@brief	save animation datas
-	 *  @key	std::string
-	 *  @value	AnimationData *
+     * Dictionary to save animation data.
+     * Key type is std::string, value type is AnimationData *.
      */
-	CC_SYNTHESIZE_READONLY(Dictionary *, _animationDatas, AnimationDatas);
+    CC_SYNTHESIZE_READONLY(Dictionary *, _animationDatas, AnimationDatas);
 
-	/**
-	 *	@brief	save texture datas
-	 *  @key	std::string
-	 *  @value	TextureData *
+    /**
+     * Dictionary to save texture data.
+     * Key type is std::string, value type is TextureData *.
      */
-	CC_SYNTHESIZE_READONLY(Dictionary *, _textureDatas, TextureDatas);
+    CC_SYNTHESIZE_READONLY(Dictionary *, _textureDatas, TextureDatas);
 
 };
 

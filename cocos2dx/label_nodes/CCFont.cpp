@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCFont.h"
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 
 #include "CCFontFNT.h"
 #include "CCFontFreeType.cpp"

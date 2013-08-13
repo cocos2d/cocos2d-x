@@ -7,11 +7,8 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
 			<arguments>
-				<dictionary>
-					<key>?children?</key>
-					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|\||</value>
-				</dictionary>
 				<dictionary>
 					<key>?name?</key>
 					<value></value>
@@ -46,7 +43,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
-					<value>true</value>
+					<value>false</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>
@@ -316,11 +313,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImage.h</locationURI>
 		</link>
 		<link>
-			<name>src/platform/CCImageCommonWebp.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImageCommonWebp.cpp</locationURI>
-		</link>
-		<link>
 			<name>src/platform/CCImageCommon_cpp.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImageCommon_cpp.h</locationURI>
@@ -354,6 +346,16 @@
 			<name>src/platform/CCThread.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCThread.h</locationURI>
+		</link>
+		<link>
+			<name>src/platform/etc</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/platform/third_party/common/etc</locationURI>
+		</link>
+		<link>
+			<name>src/platform/s3tc</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/platform/third_party/common/s3tc</locationURI>
 		</link>
 		<link>
 			<name>src/platform/tizen</name>

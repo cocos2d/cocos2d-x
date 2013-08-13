@@ -204,7 +204,6 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="CC_ENABLE_CHIPMUNK_INTEGRATION=1"/>
-									<listOptionValue builtIn="false" value="CC_ENABLE_BOX2D_INTEGRATION=0"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.2066748684" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1890676098" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>

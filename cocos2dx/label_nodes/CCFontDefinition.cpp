@@ -215,7 +215,6 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
     // set the common line height
     retAtlas->setCommonLineHeight(_commonLineHeight * 0.8);
     
-    
     for( auto &item: _fontLettersDefinitionUTF16 )
     {
         if ( item.second.validDefinition )

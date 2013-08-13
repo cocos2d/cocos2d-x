@@ -56,7 +56,10 @@ FontDefinitionTTF * CCFontCache::getFontDefinition(const char *fontFileName, int
 std::string CCFontCache::generateFontName(const char *fontFileName, int size)
 {
     std::string tempName(fontFileName);
-    return tempName + std::to_string(size);
+    // std::to_string is not supported on android, using std::stringstream instead.
+    std::stringstream ss;
+    ss << size;
+    return tempName + ss.str();
 }
 
 bool CCFontCache::releaseFontDefinition(FontDefinitionTTF *def)

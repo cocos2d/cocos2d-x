@@ -61,9 +61,23 @@ kazmath/src/GL/matrix.c \
 keypad_dispatcher/CCKeypadDelegate.cpp \
 keypad_dispatcher/CCKeypadDispatcher.cpp \
 keyboard_dispatcher/CCKeyboardDispatcher.cpp \
+label_nodes/CCFont.cpp \
+label_nodes/CCFontAtlas.cpp \
+label_nodes/CCFontAtlasCache.cpp \
+label_nodes/CCFontAtlasFactory.cpp \
+label_nodes/CCFontCache.cpp \
+label_nodes/CCFontDefinition.cpp \
+label_nodes/CCFontFNT.cpp \
+label_nodes/CCFontFreeType.cpp \
+label_nodes/CCFontRenderFreeType.cpp \
+label_nodes/CCLabel.cpp \
 label_nodes/CCLabelAtlas.cpp \
 label_nodes/CCLabelBMFont.cpp \
 label_nodes/CCLabelTTF.cpp \
+label_nodes/CCLabelTextFormatter.cpp \
+label_nodes/CCStringBMFont.cpp \
+label_nodes/CCStringTTF.cpp \
+label_nodes/CCTextImage.cpp \
 layers_scenes_transitions_nodes/CCLayer.cpp \
 layers_scenes_transitions_nodes/CCScene.cpp \
 layers_scenes_transitions_nodes/CCTransitionPageTurn.cpp \
@@ -83,21 +97,6 @@ platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 platform/CCFileUtils.cpp \
 platform/CCEGLViewProtocol.cpp \
-platform/android/CCDevice.cpp \
-platform/android/CCEGLView.cpp \
-platform/android/CCAccelerometer.cpp \
-platform/android/CCApplication.cpp \
-platform/android/CCCommon.cpp \
-platform/android/CCFileUtilsAndroid.cpp \
-platform/android/CCImage.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
-platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
-platform/android/jni/JniHelper.cpp \
-platform/android/jni/IMEJni.cpp \
-platform/android/jni/TouchesJni.cpp \
-platform/android/jni/DPIJni.cpp \
 script_support/CCScriptSupport.cpp \
 shaders/ccShaders.cpp \
 shaders/CCGLProgram.cpp \
@@ -131,6 +130,7 @@ textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 platform/third_party/common/etc/etc1.cpp\
+platform/third_party/common/s3tc/s3tc.cpp\
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -145,13 +145,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/platform/third_party/common/etc
+                    $(LOCAL_PATH)/platform/third_party/common/etc\
+                    $(LOCAL_PATH)/platform/third_party/common/s3tc
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/platform/third_party/common/etc
+                    $(LOCAL_PATH)/platform/third_party/common/etc\
+                    $(LOCAL_PATH)/platform/third_party/common/s3tc
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -169,6 +171,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libxml2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libtiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_libwebp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_freetype2_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi -DUSE_FILE32API
@@ -180,3 +183,4 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
+$(call import-module,libfreetype2)

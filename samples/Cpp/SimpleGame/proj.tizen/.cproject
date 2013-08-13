@@ -2,7 +2,7 @@
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149" moduleId="org.eclipse.cdt.core.settings" name="Debug-Tizen-Emulator">
 				<macros>
 					<stringMacro name="COCOS_ROOT" type="VALUE_PATH_ANY" value="../../../../.."/>
 					<stringMacro name="COCOS_SRC" type="VALUE_PATH_ANY" value="${COCOS_ROOT}/cocos2dx"/>
@@ -19,11 +19,11 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="SimpleGame" buildArtefactType="org.tizen.nativecpp.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.app" description="Emulator" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149" name="Debug" parent="org.tizen.nativecpp.config.sbi.gcc45.app.debug">
+				<configuration artifactExtension="exe" artifactName="${ProjName}" buildArtefactType="org.tizen.nativecpp.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.app" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149" name="Debug-Tizen-Emulator" parent="org.tizen.nativecpp.config.sbi.gcc45.app.debug">
 					<folderInfo id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug.191834326" name="Tizen Native Toolchain" superClass="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.1941992892" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
-							<builder autoBuildTarget="all" buildPath="${workspace_loc:/SimpleGame/Debug}" enableAutoBuild="true" id="org.tizen.nativecpp.target.sbi.gnu.builder.455916327" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder">
+							<builder autoBuildTarget="all" buildPath="${workspace_loc:/${ProjName}/Debug-Tizen-Emulator}" enableAutoBuild="true" id="org.tizen.nativecpp.target.sbi.gnu.builder.455916327" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
@@ -166,22 +166,7 @@
 								</inputType>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.155065772" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.1450832748" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../SimpleGame/inc"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/platform/tizen"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/extensions"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/external"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include/libxml2"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/library"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include/osp"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.1450832748" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1958270434" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.1918264112" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
@@ -218,7 +203,7 @@
 					<folderInfo id="org.tizen.nativecpp.config.sbi.gcc45.app.release.370892602." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecpp.toolchain.sbi.gcc45.app.release.367013199" name="Tizen Native Toolchain" superClass="org.tizen.nativecpp.toolchain.sbi.gcc45.app.release">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.151935853" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/SimpleGame/Release}" id="org.tizen.nativecpp.target.sbi.gnu.builder.1451814822" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder"/>
+							<builder buildPath="${workspace_loc:/${ProjName}/Release}" id="org.tizen.nativecpp.target.sbi.gnu.builder.1451814822" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder"/>
 							<tool id="org.tizen.nativecpp.tool.sbi.gnu.archiver.184096123" name="Archiver" superClass="org.tizen.nativecpp.tool.sbi.gnu.archiver"/>
 							<tool command="clang++.exe" id="org.tizen.nativecpp.tool.sbi.gnu.cpp.compiler.83660603" name="C++ Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.cpp.compiler">
 								<option id="gnu.cpp.compiler.option.optimization.level.1679280371" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
@@ -355,7 +340,7 @@
 					<folderInfo id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.da.1366818587." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug.da.469477464" name="Tizen Native Toolchain" superClass="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug.da">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.864847456" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
-							<builder buildPath="${workspace_loc:/SimpleGame/Dynamic Analyzer}" id="org.tizen.nativecpp.target.sbi.gnu.builder.751520615" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder"/>
+							<builder buildPath="${workspace_loc:/${ProjName}/Dynamic Analyzer}" id="org.tizen.nativecpp.target.sbi.gnu.builder.751520615" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder"/>
 							<tool id="org.tizen.nativecpp.tool.sbi.gnu.archiver.422424324" name="Archiver" superClass="org.tizen.nativecpp.tool.sbi.gnu.archiver"/>
 							<tool command="clang++.exe" id="org.tizen.nativecpp.tool.sbi.gnu.cpp.compiler.da.1358299057" name="C++ Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.cpp.compiler.da">
 								<option id="gnu.cpp.compiler.option.optimization.level.1039488576" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
@@ -485,7 +470,7 @@
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 		<cconfiguration id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298" moduleId="org.eclipse.cdt.core.settings" name="Debug-">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298" moduleId="org.eclipse.cdt.core.settings" name="Debug-Tizen-Device">
 				<macros>
 					<stringMacro name="COCOS_ROOT" type="VALUE_PATH_ANY" value="../../../../.."/>
 					<stringMacro name="COCOS_SRC" type="VALUE_PATH_ANY" value="${COCOS_ROOT}/cocos2dx"/>
@@ -502,11 +487,11 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="exe" artifactName="SimpleGame" buildArtefactType="org.tizen.nativecpp.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.app" description="Device (remove - at this name if you want to debug)" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298" name="Debug-" parent="org.tizen.nativecpp.config.sbi.gcc45.app.debug">
+				<configuration artifactExtension="exe" artifactName="${ProjName}" buildArtefactType="org.tizen.nativecpp.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecpp.buildArtefactType.app" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298" name="Debug-Tizen-Device" parent="org.tizen.nativecpp.config.sbi.gcc45.app.debug">
 					<folderInfo id="org.tizen.nativecpp.config.sbi.gcc45.app.debug.1363935149.217263298." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug.449265641" name="Tizen Native Toolchain" superClass="org.tizen.nativecpp.toolchain.sbi.gcc45.app.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.1766813437" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
-							<builder autoBuildTarget="all" buildPath="${workspace_loc:/SimpleGame/Debug}" enableAutoBuild="true" id="org.tizen.nativecpp.target.sbi.gnu.builder.634795237" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder">
+							<builder autoBuildTarget="all" buildPath="${workspace_loc:/${ProjName}/Debug-Tizen-Device}" enableAutoBuild="true" id="org.tizen.nativecpp.target.sbi.gnu.builder.634795237" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Tizen Application Builder" superClass="org.tizen.nativecpp.target.sbi.gnu.builder">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
@@ -550,7 +535,7 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.1369297357" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1369297357" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1098093186" superClass="sbi.gnu.cpp.compiler.tizen.inputType"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc.exe" id="org.tizen.nativecpp.tool.sbi.gnu.c.compiler.80973163" name="C Compiler" superClass="org.tizen.nativecpp.tool.sbi.gnu.c.compiler">
@@ -649,22 +634,7 @@
 								</inputType>
 							</tool>
 							<tool command="arm-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.418385229" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.555816763" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../SimpleGame/inc"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/kazmath/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/platform/tizen"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/extensions"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/CocosDenshion/include"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/external/chipmunk/include/chipmunk"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/external"/>
-									<listOptionValue builtIn="false" value="C:/Users/pyrasis/Desktop/cocos2d-x_fork/cocos2dx/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include/libxml2"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/library"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include"/>
-									<listOptionValue builtIn="false" value="C:/tizen-sdk/platforms/tizen2.2/rootstraps/tizen-emulator-2.2.native/usr/include/osp"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.555816763" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.406422429" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.980881082" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
@@ -681,7 +651,7 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="SimpleGame.org.tizen.nativecpp.target.sbi.gcc45.app.1064259478" name="Tizen Application" projectType="org.tizen.nativecpp.target.sbi.gcc45.app"/>
+		<project id="proj.tizen.org.tizen.nativecpp.target.sbi.gcc45.app.1064259478" name="Tizen Application" projectType="org.tizen.nativecpp.target.sbi.gcc45.app"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -695,6 +665,9 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.tizen.nativecommon.TizenGCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/proj.tizen"/>
+	</storageModule>
 	<storageModule moduleId="com.samsung.tizen.nativeapp.projectInfo" version="1.0.0"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

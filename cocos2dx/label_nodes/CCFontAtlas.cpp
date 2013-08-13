@@ -12,10 +12,6 @@
 
 NS_CC_BEGIN
 
-std::map<int, FontLetterDefinition>             _atlasTextures;
-std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinition;
-
-
 FontAtlas::FontAtlas(Font &theFont) : _font(theFont)
 {
     _font.retain();
@@ -80,6 +76,5 @@ Font & FontAtlas::getFont()
 {
     return _font;
 }
-
 
 NS_CC_END

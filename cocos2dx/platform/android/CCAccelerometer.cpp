@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCAccelerometer.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "nativeactivity.h"
 #include <stdio.h>
 #include <android/log.h>
 
@@ -45,19 +45,17 @@ namespace cocos2d
     {
         _function = function;
 
-        if (_function)
-        {        
-            enableAccelerometerJNI();
+        if (_function) {
+            enableAccelerometer();
         }
-        else
-        {
-            disableAccelerometerJNI();
+        else {
+            disableAccelerometer();
         }
     }
 
     void Accelerometer::setAccelerometerInterval(float interval) 
     {
-        setAccelerometerIntervalJNI(interval);
+        setAccelerometerInterval(interval);
     }
 
 

@@ -297,7 +297,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
 int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
 {
     if (!strUTF8)
-        return NULL;
+        return 0;
     
     float widthWithBBX  =  0.0f;
     float lastWidth     =  0.0f;

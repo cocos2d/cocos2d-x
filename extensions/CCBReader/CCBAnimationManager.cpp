@@ -262,6 +262,14 @@ CCBSequence* CCBAnimationManager::getSequence(int nSequenceId)
     return NULL;
 }
 
+float CCBAnimationManager::getSequenceDuration(const char *pSequenceName)
+{
+    int id = getSequenceId(pSequenceName);
+    if (id != -1)
+        return getSequence(id)->getDuration();
+    return 0;
+}
+
 
 void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode) {
 

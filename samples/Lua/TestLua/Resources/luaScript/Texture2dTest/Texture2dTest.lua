@@ -92,7 +92,7 @@ local function TextureMipMap()
     local texture0 = CCTextureCache:getInstance():addImage(
         "Images/grossini_dance_atlas.png")
     texture0:generateMipmap()
-    local texParams     = ccTexParams()
+    local texParams     = CCTexture:TexParams()
     texParams.minFilter = GL_LINEAR_MIPMAP_LINEAR
     texParams.magFilter = GL_LINEAR
     texParams.wrapS     = GL_CLAMP_TO_EDGE
@@ -148,7 +148,7 @@ local function TexturePVRMipMap()
         ret:addChild(imgMipMap)
 
         -- support mipmap filtering
-        local texParams     = ccTexParams()
+        local texParams     = CCTexture:TexParams()
         texParams.minFilter = GL_LINEAR_MIPMAP_LINEAR
         texParams.magFilter = GL_LINEAR
         texParams.wrapS     = GL_CLAMP_TO_EDGE
@@ -199,7 +199,7 @@ local function TexturePVRMipMap2()
     ret:addChild(imgMipMap)
 
     -- support mipmap filtering
-    local texParams =  ccTexParams()
+    local texParams =  CCTexture:TexParams()
     texParams.minFilter = GL_LINEAR_MIPMAP_LINEAR
     texParams.magFilter = GL_LINEAR
     texParams.wrapS     = GL_CLAMP_TO_EDGE
@@ -1096,7 +1096,7 @@ local function TextureGlClamp()
     local sprite = CCSprite:create("Images/pattern1.png", CCRect(0,0,512,256))
     ret:addChild(sprite, -1, kTagSprite1)
     sprite:setPosition(CCPoint(size.width/2,size.height/2))
-    local  texParams = ccTexParams()
+    local  texParams = CCTexture:TexParams()
     texParams.minFilter = GL_LINEAR
     texParams.magFilter = GL_LINEAR
     texParams.wrapS     = GL_CLAMP_TO_EDGE
@@ -1139,7 +1139,7 @@ local function TextureGlRepeat()
     local sprite = CCSprite:create("Images/pattern1.png", CCRect(0, 0, 4096, 4096))
     ret:addChild(sprite, -1, kTagSprite1)
     sprite:setPosition(CCPoint(size.width/2,size.height/2))
-    local  texParams = ccTexParams()
+    local  texParams = CCTexture:TexParams()
 
     texParams.minFilter = GL_LINEAR
     texParams.magFilter = GL_LINEAR

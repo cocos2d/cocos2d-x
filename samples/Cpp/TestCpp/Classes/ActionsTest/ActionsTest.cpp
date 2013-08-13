@@ -39,6 +39,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(ActionOrbit),
     CL(ActionFollow),
     CL(ActionTargeted),
+    CL(ActionTargetedReverse),
     CL(ActionMoveStacked),
     CL(ActionMoveJumpStacked),
     CL(ActionMoveBezierStacked),
@@ -1333,6 +1334,37 @@ std::string ActionTargeted::title()
 std::string ActionTargeted::subtitle()
 {
     return "Action that runs on another target. Useful for sequences";
+}
+
+
+void ActionTargetedReverse::onEnter()
+{
+    ActionsDemo::onEnter();
+    centerSprites(2);
+    
+    
+    auto jump1 = JumpBy::create(2,Point::ZERO,100,3);
+    auto jump2 = jump1->clone();
+    auto rot1 = RotateBy::create(1, 360);
+    auto rot2 = rot1->clone();
+    
+    auto t1 = TargetedAction::create(_kathia, jump2);
+    auto t2 = TargetedAction::create(_kathia, rot2);
+    
+    auto seq = Sequence::create(jump1, t1->reverse(), rot1, t2->reverse(), NULL);
+    auto always = RepeatForever::create(seq);
+    
+    _tamara->runAction(always);
+}
+
+std::string ActionTargetedReverse::title()
+{
+    return "ActionTargetedReverse";
+}
+
+std::string ActionTargetedReverse::subtitle()
+{
+    return "Action that runs reversely on another target. Useful for sequences";
 }
 
 //#pragma mark - ActionStacked

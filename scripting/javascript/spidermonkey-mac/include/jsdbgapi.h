@@ -1,6 +1,5 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=8 sw=4 et tw=99:
- *
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -141,9 +140,9 @@ JS_ClearAllWatchPoints(JSContext *cx);
 
 /************************************************************************/
 
-// RawScript because this needs to be callable from a signal handler
+// Raw JSScript* because this needs to be callable from a signal handler.
 extern JS_PUBLIC_API(unsigned)
-JS_PCToLineNumber(JSContext *cx, js::RawScript script, jsbytecode *pc);
+JS_PCToLineNumber(JSContext *cx, JSScript *script, jsbytecode *pc);
 
 extern JS_PUBLIC_API(jsbytecode *)
 JS_LineNumberToPC(JSContext *cx, JSScript *script, unsigned lineno);
@@ -461,12 +460,6 @@ JS_DumpPCCounts(JSContext *cx, JSScript *script);
 
 extern JS_PUBLIC_API(void)
 JS_DumpCompartmentPCCounts(JSContext *cx);
-
-extern JS_PUBLIC_API(JSObject *)
-JS_UnwrapObject(JSObject *obj);
-
-extern JS_PUBLIC_API(JSObject *)
-JS_UnwrapObjectAndInnerize(JSObject *obj);
 
 /* Call the context debug handler on the topmost scripted frame. */
 extern JS_FRIEND_API(JSBool)
