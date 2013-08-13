@@ -171,6 +171,7 @@
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
 									<listOptionValue builtIn="false" value="websockets"/>
+									<listOptionValue builtIn="false" value="sqlite3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1693148295" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -653,6 +654,7 @@
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
 									<listOptionValue builtIn="false" value="websockets"/>
+									<listOptionValue builtIn="false" value="sqlite3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1522207769" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -695,4 +697,5 @@
 	<storageModule moduleId="refreshScope" versionNumber="1">
 		<resource resourceType="PROJECT" workspacePath="/proj.tizen"/>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

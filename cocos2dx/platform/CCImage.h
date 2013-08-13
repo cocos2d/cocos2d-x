@@ -75,6 +75,8 @@ public:
         PVR,
         //! ETC
         ETC,
+        //! S3TC
+        S3TC,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -182,6 +184,7 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
+    
     bool initWithJpgData(const void *data, int dataLen);
     bool initWithPngData(const void *data, int dataLen);
     bool initWithTiffData(const void *data, int dataLen);
@@ -190,6 +193,7 @@ protected:
     bool initWithPVRv2Data(const void *data, int dataLen);
     bool initWithPVRv3Data(const void *data, int dataLen);
     bool initWithETCData(const void *data, int dataLen);
+    bool initWithS3TCData(const void *data, int dataLen);
 
     bool saveImageToPNG(const char *filePath, bool isToRGB = true);
     bool saveImageToJPG(const char *filePath);
@@ -226,7 +230,7 @@ private:
      @return  true if loaded correctly.
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
-
+    
     Format detectFormat(const void* data, int dataLen);
     bool isPng(const void *data, int dataLen);
     bool isJpg(const void *data, int dataLen);
@@ -234,6 +238,8 @@ private:
     bool isWebp(const void *data, int dataLen);
     bool isPvr(const void *data, int dataLen);
     bool isEtc(const void *data, int dataLen);
+    bool isS3TC(const void *data,int dataLen);
+
 };
 
 // end of platform group

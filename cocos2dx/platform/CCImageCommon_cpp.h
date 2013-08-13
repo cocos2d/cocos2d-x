@@ -40,6 +40,7 @@ extern "C"
 #include "etc1.h"
 #include "jpeglib.h"
 }
+#include "third_party/common/s3tc/s3tc.h"
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
@@ -63,6 +64,7 @@ NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
 //struct and data for pvr structure
+
 namespace
 {
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
@@ -215,9 +217,106 @@ namespace
 #endif
 }
 //pvr structure end
+
 //////////////////////////////////////////////////////////////////////////
 
-namespace {
+//struct and data for s3tc(dds) struct
+namespace
+{
+    struct DDColorKey
+    {
+        uint32_t colorSpaceLowValue;
+        uint32_t colorSpaceHighValue;
+    };
+    
+    struct DDSCaps
+    {
+        uint32_t caps;
+        uint32_t caps2;
+        uint32_t caps3;
+        uint32_t caps4;
+    };
+    
+    struct DDPixelFormat
+    {
+        uint32_t size;
+        uint32_t flags;
+        uint32_t fourCC;
+        uint32_t RGBBitCount;
+        uint32_t RBitMask;
+        uint32_t GBitMask;
+        uint32_t BBitMask;
+        uint32_t ABitMask;
+    };
+    
+    
+    struct DDSURFACEDESC2
+    {
+        uint32_t size;
+        uint32_t flags;
+        uint32_t height;
+        uint32_t width;
+        
+        union
+        {
+            uint32_t pitch;
+            uint32_t linearSize;
+        } DUMMYUNIONNAMEN1;
+        
+        union
+        {
+            uint32_t backBufferCount;
+            uint32_t depth;
+        } DUMMYUNIONNAMEN5;
+        
+        union
+        {
+            uint32_t mipMapCount;
+            uint32_t refreshRate;
+            uint32_t srcVBHandle;
+        } DUMMYUNIONNAMEN2;
+        
+        uint32_t alphaBitDepth;
+        uint32_t reserved;
+        uint32_t surface;
+        
+        union
+        {
+            DDColorKey ddckCKDestOverlay;
+            uint32_t emptyFaceColor;
+        } DUMMYUNIONNAMEN3;
+        
+        DDColorKey ddckCKDestBlt;
+        DDColorKey ddckCKSrcOverlay;
+        DDColorKey ddckCKSrcBlt;
+        
+        union
+        {
+            DDPixelFormat ddpfPixelFormat;
+            uint32_t FVF;
+        } DUMMYUNIONNAMEN4;
+        
+        DDSCaps ddsCaps;
+        uint32_t textureStage;
+    } ;
+    
+#pragma pack(push,1)
+    
+    struct S3TCTexHeader
+    {
+        char fileCode[4];
+        DDSURFACEDESC2 ddsd;
+    };
+    
+#pragma pack(pop)
+
+}
+//s3tc struct end
+
+/////////////////////////////////////////////////////////////////////
+
+namespace
+{
     typedef struct 
     {
         unsigned char* data;
@@ -356,6 +455,9 @@ bool Image::initWithImageData(const void * data, int dataLen)
             return initWithPVRData(data, dataLen);
         case Format::ETC:
             return initWithETCData(data, dataLen);
+        case Format::S3TC:
+            return initWithS3TCData(data, dataLen);
+            
         default:
             CCAssert(false, "unsupport image format!");
             return false;
@@ -381,6 +483,20 @@ bool Image::isPng(const void *data, int dataLen)
 bool Image::isEtc(const void *data, int dataLen)
 {
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
+}
+
+
+bool Image::isS3TC(const void *data, int dataLen)
+{
+
+    S3TCTexHeader *header = (S3TCTexHeader *)data;
+    
+    if (strncmp(header->fileCode, "DDS", 3)!= 0)
+    {
+        CCLOG("cocos2d: the file is not a dds file!");
+        return false;
+    }
+    return true;
 }
 
 bool Image::isJpg(const void *data, int dataLen)
@@ -457,8 +573,10 @@ Image::Format Image::detectFormat(const void* data, int dataLen)
     }else if (isEtc(data, dataLen))
     {
         return Format::ETC;
+    }else if (isS3TC(data, dataLen))
+    {
+        return Format::S3TC;
     }
-    
     else
     {
         return Format::UNKOWN;
@@ -1269,6 +1387,132 @@ bool Image::initWithETCData(const void *data, int dataLen)
     return false;
 }
 
+namespace
+{
+    static const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
+    {
+        const uint32_t fourCC = ((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) | ((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
+        return fourCC;
+    }
+}
+
+bool Image::initWithS3TCData(const void *data, int dataLen)
+{
+    
+    const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
+    const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
+    const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');
+    
+    /* load the .dds file */
+    
+    S3TCTexHeader *header = (S3TCTexHeader *)data;
+    unsigned char *pixelData = new unsigned char [dataLen - sizeof(S3TCTexHeader)];
+    memcpy((void *)pixelData, (unsigned char*)data + sizeof(S3TCTexHeader), dataLen - sizeof(S3TCTexHeader));
+    
+    _width = header->ddsd.width;
+    _height = header->ddsd.height;
+    _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.mipMapCount;
+    _dataLen = 0;  
+    int blockSize = (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC) ? 8 : 16;
+    
+    /* caculate the dataLen */
+    
+    int width = _width;
+    int height = _height;
+    
+    if (Configuration::getInstance()->supportsS3TC())  //compressed data length
+    {
+        _dataLen = dataLen - sizeof(S3TCTexHeader);
+        _data = new unsigned char [_dataLen];
+        memcpy((void *)_data,(void *)pixelData , _dataLen);
+    }
+    else                                               //decompressed data length
+    {
+        for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+        {
+            if (width == 0) width = 1;
+            if (height == 0) height = 1;
+            
+            _dataLen += (height * width *4);
+
+            width >>= 1;
+            height >>= 1;
+        }
+        _data = new unsigned char [_dataLen];
+    }
+    
+    /* load the mipmaps */
+    
+    int encodeOffset = 0;
+    int decodeOffset = 0;
+    width = _width;  height = _height;
+    
+    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)  
+    {
+        if (width == 0) width = 1;
+        if (height == 0) height = 1;
+        
+        int size = ((width+3)/4)*((height+3)/4)*blockSize;
+                
+        if (Configuration::getInstance()->supportsS3TC())
+        {   //decode texture throught hardware
+            
+            CCLOG("this is s3tc H decode");
+            
+            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
+            }
+            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
+            }
+            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
+            }
+
+            _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
+            _mipmaps[i].len = size;
+        }
+        else
+        {   //if it is not gles or device do not support S3TC, decode texture by software
+            int bytePerPixel = 4;
+            unsigned int stride = width * bytePerPixel;
+            _renderFormat = Texture2D::PixelFormat::RGBA8888;
+
+            std::vector<unsigned char> decodeImageData(stride * height);
+            if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
+            }
+            else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
+            }
+            else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
+            }
+            
+            _mipmaps[i].address = (unsigned char *)_data + decodeOffset;
+            _mipmaps[i].len = (stride * height);
+            memcpy((void *)_mipmaps[i].address, (void *)&decodeImageData[0], _mipmaps[i].len);
+            decodeOffset += stride * height;
+        }
+        
+        encodeOffset += size;
+        width >>= 1;
+        height >>= 1;
+    }
+    
+    /* end load the mipmaps */
+    
+    CC_SAFE_DELETE_ARRAY(pixelData);
+    
+    return true;
+}
+
 bool Image::initWithPVRData(const void *data, int dataLen)
 {
     return initWithPVRv2Data(data, dataLen) || initWithPVRv3Data(data, dataLen);
@@ -1333,6 +1577,7 @@ bool Image::initWithRawData(const void * data, int dataLen, int width, int heigh
 
     return bRet;
 }
+
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
