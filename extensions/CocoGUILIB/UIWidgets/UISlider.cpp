@@ -336,7 +336,15 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
         dynamic_cast<CCSprite*>(m_pProgressBarNode)->setOpacity(getOpacity());
     }
     m_pProgressBarNode->setAnchorPoint(ccp(0.0, 0.5));
-    m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - m_pBarNode->getContentSize().width / 2, m_pBarNode->getPosition().y - 1));
+    
+    if (m_bBarScale9Enable)
+    {
+        m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - m_scale9Size.width / 2, m_pBarNode->getPosition().y - 1));
+    }
+    else
+    {
+        m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - m_pBarNode->getContentSize().width / 2, m_pBarNode->getPosition().y - 1));
+    }
     setProgressBarScale();
 }
 
