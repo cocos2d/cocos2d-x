@@ -507,7 +507,8 @@ void CCParticleSystemQuad::setupVBOandVAO()
 
 void CCParticleSystemQuad::setupVBO()
 {
-    glDeleteBuffers(2, &m_pBuffersVBO[0]);
+    if(m_pBuffersVBO[0] != 0)
+        glDeleteBuffers(2, &m_pBuffersVBO[0]);
     
     glGenBuffers(2, &m_pBuffersVBO[0]);
 
