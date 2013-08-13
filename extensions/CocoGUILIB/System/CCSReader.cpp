@@ -1393,9 +1393,9 @@ void CCSReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJs
     bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
     bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
     bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
-    int cri = cr?DICTOOL->checkObjectExist_json(options, "textColorR"):255;
-    int cgi = cg?DICTOOL->checkObjectExist_json(options, "textColorG"):255;
-    int cbi = cb?DICTOOL->checkObjectExist_json(options, "textColorB"):255;
+    int cri = cr ? DICTOOL->getIntValue_json(options, "textColorR") : 255;
+    int cgi = cg ? DICTOOL->getIntValue_json(options, "textColorG") : 255;
+    int cbi = cb ? DICTOOL->getIntValue_json(options, "textColorB") : 255;
     textButton->setTextColor(cri,cgi,cbi);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
@@ -1435,6 +1435,14 @@ void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJso
     if (tsw && tsh)
     {
         textField->setTouchSize(CCSizeMake(DICTOOL->getFloatValue_json(options, "touchSizeWidth"), DICTOOL->getFloatValue_json(options,"touchSizeHeight")));
+    }
+    
+    bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
+    textField->setMaxLengthEnable(maxLengthEnable);
+    if (maxLengthEnable)
+    {
+        int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+        textField->setMaxLength(maxLength);
     }
     
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");

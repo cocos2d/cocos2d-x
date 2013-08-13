@@ -89,6 +89,7 @@ protected:
     TextureResType m_eBallNTexType;
     TextureResType m_eBallPTexType;
     TextureResType m_eBallDTexType;
+	TextureResType m_eProgressBarTexType;
 };
 
 NS_CC_EXT_END

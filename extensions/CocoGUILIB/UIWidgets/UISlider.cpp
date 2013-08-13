@@ -49,7 +49,8 @@ m_eBallDTexType(UI_TEX_TYPE_LOCAL),
 m_strTextureFile(""),
 m_capInsets(CCRectZero),
 m_scale9Size(CCSizeZero),
-m_strProgressTextureFile("")
+m_strProgressTextureFile(""),
+m_eProgressBarTexType(UI_TEX_TYPE_LOCAL)
 {
     m_WidgetName = WIDGET_SLIDER;
 }
@@ -169,7 +170,7 @@ void UISlider::setScale9Enable(bool able)
     }
     
     setBarTexture(m_strTextureFile.c_str(), m_eBarTexType);
-    setProgressBarTexture(m_strProgressTextureFile.c_str(), m_eBallDTexType);
+    setProgressBarTexture(m_strProgressTextureFile.c_str(), m_eProgressBarTexType);
     setCapInsets(m_capInsets);
     setScale9Size(m_scale9Size);
     m_pRender->addChild(m_pBarNode, -1);        
@@ -202,9 +203,10 @@ void UISlider::setScale9Size(const CCSize &size)
         return;
     }
     dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setContentSize(size);
-    dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setContentSize(size);
     m_fBarLength = m_pBarNode->getContentSize().width;
     setSlidBallPercent(m_nBarPercent);
+	dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setContentSize(size);
+	setProgressBarScale();
 }
 
 void UISlider::setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
@@ -296,7 +298,8 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
     }
     m_strProgressTextureFile = fileName;
     
-    switch (m_eBarTexType)
+	m_eProgressBarTexType = texType;
+    switch (m_eProgressBarTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             if (m_bBarScale9Enable)
@@ -314,7 +317,7 @@ void UISlider::setProgressBarTexture(const char *fileName, TextureResType texTyp
                 dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
             }
             else
-            {
+            {                
                 dynamic_cast<CCSprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
             }
             break;
@@ -346,8 +349,12 @@ void UISlider::setProgressBarScale()
         m_pProgressBarNode->setContentSize(CCSize(width, m_pProgressBarNode->getContentSize().height));
     }
     else
-    {
-        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setTextureRect(CCRectMake(0, 0, width, m_pProgressBarNode->getContentSize().height));
+    {        
+        CCPoint textureOrigin = dynamic_cast<CCSprite*>(m_pProgressBarNode)->getTextureRect().origin;
+        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setTextureRect(CCRectMake(textureOrigin.x,
+                                                                               textureOrigin.y,
+                                                                               width,
+                                                                               m_pProgressBarNode->getContentSize().height));
     }
 }
 
