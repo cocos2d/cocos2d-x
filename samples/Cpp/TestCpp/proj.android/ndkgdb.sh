@@ -55,9 +55,10 @@ set -x
 "${SDK_ROOT}"/platform-tools/adb shell am force-stop "${APP_ANDROID_NAME}"
 
 NDK_MODULE_PATH="${COCOS2DX_ROOT}":"${COCOS2DX_ROOT}"/cocos2dx/platform/third_party/android/prebuilt \
-    "${NDK_ROOT}"/ndk-gdb \
+    "${NDK_ROOT}"/ndk-gdb-py \
     --adb="${SDK_ROOT}"/platform-tools/adb \
+    --tui \
     --verbose \
-    --start \
+    --launch=android.app.NativeActivity \
     --force \
     --nowait
