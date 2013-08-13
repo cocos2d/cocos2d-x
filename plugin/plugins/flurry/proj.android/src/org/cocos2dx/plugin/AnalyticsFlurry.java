@@ -62,6 +62,11 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
         PluginWrapper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Class.forName("android.os.AsyncTask");
+                } catch (ClassNotFoundException e) {
+                   e.printStackTrace();
+                }
                 FlurryAgent.onStartSession(mContext, curKey);
             }
             
