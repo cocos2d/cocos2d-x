@@ -74,8 +74,17 @@ Cocos2DQt5OpenGLIntegration::Cocos2DQt5OpenGLIntegration(EGLView *view, int widt
 {
     setSurfaceType(QSurface::OpenGLSurface);
     resize(width, height);
-    //showFullScreen();
+
+    /// Set fixed window size.
+    setMinimumSize(QSize(width, height));
+    setMaximumSize(QSize(width, height));
+
     show();
+
+    /// With fixed window size Qt can hide close/minimize button, prevent this.
+    Qt::WindowFlags windowFlags = flags();
+    windowFlags |= Qt::WindowSystemMenuHint;
+    setFlags(windowFlags);
 
     m_context = new QOpenGLContext(this);
     m_context->create();
