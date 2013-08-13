@@ -88,6 +88,7 @@ public:
     virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint);
     virtual float                       getLetterPosXLeft( Sprite* sp );
     virtual float                       getLetterPosXRight( Sprite* sp );
+
     
     // font related stuff
     virtual int                         getCommonLineHeight();

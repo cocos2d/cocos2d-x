@@ -94,7 +94,10 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
             break;
     }
     
-    return tempName.append(std::to_string(size));
+    // std::to_string is not supported on android, using std::stringstream instead.
+    std::stringstream ss;
+    ss << size;
+    return  tempName.append(ss.str());
 }
 
 bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)

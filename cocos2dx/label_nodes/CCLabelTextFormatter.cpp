@@ -25,7 +25,7 @@
 #include <vector>
 
 #include "cocos2d.h"
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 #include "CCLabelTextFormatter.h"
 
 using namespace std;
@@ -38,8 +38,8 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
     if (theLabel->getMaxLineWidth())
     {
         // Step 1: Make multiline
-        vector<unsigned short> str_whole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
-        unsigned int stringLength        = str_whole.size();
+        vector<unsigned short> strWhole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
+        unsigned int stringLength        = strWhole.size();
         
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
@@ -74,7 +74,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             if (i >= stringLength)
                 break;
             
-            unsigned short character = str_whole[i];
+            unsigned short character = strWhole[i];
             
             if (!start_word)
             {
@@ -106,7 +106,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 if (i >= stringLength)
                     break;
                 
-                character = str_whole[i];
+                character = strWhole[i];
                 
                 if (!startOfWord)
                 {

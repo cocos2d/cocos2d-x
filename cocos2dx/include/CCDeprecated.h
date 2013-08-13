@@ -357,7 +357,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool ccpLineIntersect(const Point& p1, con
 }
 
 /*
- ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
+ ccpSegmentIntersect returns true if Segment A-B intersects with segment C-D
  @since v1.0.0
  */
 CC_DEPRECATED_ATTRIBUTE static inline bool ccpSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D)

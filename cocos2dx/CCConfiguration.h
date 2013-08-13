@@ -54,96 +54,100 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration(void);
+    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration(void);
+    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
 
 public:
 
-	virtual ~Configuration(void);
+	virtual ~Configuration();
 
     /** OpenGL Max texture size. */
-	int getMaxTextureSize(void) const;
+	int getMaxTextureSize() const;
 
     /** OpenGL Max Modelview Stack Depth. */
-	int getMaxModelviewStackDepth(void) const;
+	int getMaxModelviewStackDepth() const;
 
     /** returns the maximum texture units
      @since v2.0.0
      */
-	int getMaxTextureUnits(void) const;
+	int getMaxTextureUnits() const;
 
     /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
      OpenGL ES 2.0 already supports NPOT (iOS).
      
      @since v0.99.2
      */
-	bool supportsNPOT(void) const;
+	bool supportsNPOT() const;
 
     /** Whether or not PVR Texture Compressed is supported */
-	bool supportsPVRTC(void) const;
+	bool supportsPVRTC() const;
     
      /** Whether or not ETC Texture Compressed is supported */
-    bool supportsETC(void) const;
+    bool supportsETC() const;
+    
+    /** Whether or  not S3TC Texture Compressed is supported */
+    bool supportsS3TC(void ) const;
     
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
-	bool supportsBGRA8888(void) const;
+	bool supportsBGRA8888() const;
 
     /** Whether or not glDiscardFramebufferEXT is supported
      @since v0.99.2
      */
-	bool supportsDiscardFramebuffer(void) const;
+	bool supportsDiscardFramebuffer() const;
 
     /** Whether or not shareable VAOs are supported.
      @since v2.0.0
      */
-	bool supportsShareableVAO(void) const;
+	bool supportsShareableVAO() const;
 
     /** returns whether or not an OpenGL is supported */
     bool checkForGLExtension(const std::string &searchName) const;
 
-    bool init(void);
+    bool init();
 
 	/** returns the value of a given key as a string.
 	 If the key is not found, it will return the default value */
-	const char* getCString( const char *key, const char *default_value=NULL ) const;
+	const char* getCString(const char *key, const char *defaultValue = nullptr) const;
 
 	/** returns the value of a given key as a boolean.
 	 If the key is not found, it will return the default value */
-	bool getBool( const char *key, bool default_value=false ) const;
+	bool getBool(const char *key, bool defaultValue = false) const;
 
 	/** returns the value of a given key as a double.
 	 If the key is not found, it will return the default value */
-	double getNumber( const char *key, double default_value=0.0 ) const;
+	double getNumber(const char *key, double defaultValue = 0.0) const;
 
 	/** returns the value of a given key as a double */
-	Object * getObject( const char *key ) const;
+	Object * getObject(const char *key) const;
 
 	/** sets a new key/value pair  in the configuration dictionary */
-	void setObject( const char *key, Object *value );
+	void setObject(const char *key, Object *value);
 
 	/** dumps the current configuration on the console */
-	void dumpInfo(void) const;
+	void dumpInfo() const;
 
 	/** gathers OpenGL / GPU information */
-	void gatherGPUInfo( void );
+	void gatherGPUInfo();
 
 	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
-	void loadConfigFile( const char *filename );
+	void loadConfigFile(const char *filename);
 
 private:
     Configuration(void);
-    static Configuration *s_gSharedConfiguration;
-	static std::string		s_sConfigfile;
+    static Configuration    *s_sharedConfiguration;
+	static std::string		s_configfile;
     
 protected:
     GLint           _maxTextureSize;
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;
     bool            _supportsETC;
+    bool            _supportsS3TC;
     bool            _supportsNPOT;
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;

@@ -76,9 +76,9 @@ public:
     GLfloat getAlphaThreshold() const;
     void setAlphaThreshold(GLfloat fAlphaThreshold);
     
-    /** Inverted. If this is set to YES,
+    /** Inverted. If this is set to true,
      the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
-     This default to NO.
+     This default to false.
      */
     bool isInverted() const;
     void setInverted(bool bInverted);

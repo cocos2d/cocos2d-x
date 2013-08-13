@@ -54,7 +54,7 @@ public:
     
     /**
      @brief    Callback by Director for limit FPS.
-     @interval       The time, expressed in seconds, between current frame and next. 
+     @param interval    The time, expressed in seconds, between current frame and next.
      */
     virtual void setAnimationInterval(double interval);
 

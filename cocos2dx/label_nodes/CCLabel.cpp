@@ -32,8 +32,8 @@ NS_CC_BEGIN
 
 Label* Label::createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs )
 {
-
     FontAtlas *tempAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath, fontSize, glyphs, customGlyphs);
+
     if (!tempAtlas)
         return nullptr;
     
