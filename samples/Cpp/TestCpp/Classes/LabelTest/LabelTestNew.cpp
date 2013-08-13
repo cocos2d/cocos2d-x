@@ -207,26 +207,20 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     Action* repeat = RepeatForever::create(seq);
     label1->runAction(repeat);
     
-    
     Label *label2 = Label::createWithBMFont("Test", "fonts/bitmapFontTest2.fnt");
-    
     label2->setAnchorPoint( Point(0.5f, 0.5f) );
     label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->runAction( repeat->clone() );
     
-   
-    
     Label* label3 = Label::createWithBMFont("Test", "fonts/bitmapFontTest2.fnt");
-    
     label3->setAnchorPoint( Point(1,1) );
     addChild(label3, 0, kTagBitmapAtlas3);
-    
     
     label1->setPosition( VisibleRect::leftBottom() );
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );
-
+    
     schedule( schedule_selector(LabelFNTColorAndOpacity::step) );//:@selector(step:)];
 }
 
