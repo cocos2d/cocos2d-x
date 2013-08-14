@@ -35,20 +35,27 @@ namespace tinyxml2 { class XMLElement; }
 NS_CC_EXT_BEGIN
 
 
-class  CCDataReaderHelper
+class  CCDataReaderHelper : CCObject
 {
-
 public:
-    /**
+	static CCDataReaderHelper *sharedDataReaderHelper();
+
+	/**
      * Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
      */
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-    static void addDataFromFile(const char *filePath);
+public:
 
-    static void clear();
+    void addDataFromFile(const char *filePath);
+	void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_CallFuncND selector);
+
+	void addDataAsyncCallBack(float dt);
+
+    void clear();
+
 public:
 
     /**
@@ -58,14 +65,6 @@ public:
      * @param xmlPath Path of xml file
      */
     static void addDataFromXML(const char *xmlPath);
-
-    /**
-     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPath Path of pak file
-     */
-    static void addDataFromXMLPak(const char *xmlPakPath);
 
     /**
      * Translate XML export from Dragon CCBone flash tool to datas, and save them.
@@ -123,6 +122,9 @@ public:
     static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
+
+private:
+	static CCDataReaderHelper *s_DataReaderHelper;
 };
 
 NS_CC_EXT_END

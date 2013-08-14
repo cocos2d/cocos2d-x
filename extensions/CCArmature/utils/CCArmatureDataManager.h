@@ -107,6 +107,13 @@ public:
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
 	void addArmatureFileInfo(const char *configFilePath);
+
+	/**
+	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+	 *			It will load data in a new thread
+     */
+	void addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_CallFuncO selector);
+
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */

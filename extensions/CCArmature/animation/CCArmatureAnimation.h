@@ -62,7 +62,7 @@ public:
     virtual bool init(CCArmature *armature);
 
     /**
-     * Scale animation play speed.
+     * Scale animation play speed. It is the same with setSpeedScale. The name of setSpeedScale is easier to understand.
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
