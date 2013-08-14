@@ -694,7 +694,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i = 0, j = 0, length = _children->data->num;
+        int i = 0, j = 0, length = _children->count();
         Node** x = (Node**)_children->data->arr;
         Node *tempItem = NULL;
 

@@ -81,10 +81,19 @@ StringTTF::~StringTTF()
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
+
+    _spriteArrayCache->release();
+    _spriteArray->release();
 }
 
 bool StringTTF::init()
 {
+    _spriteArray = Array::createWithCapacity(20);
+    _spriteArrayCache = Array::createWithCapacity(20);
+
+    _spriteArray->retain();
+    _spriteArrayCache->retain();
+
     return true;
 }
 
@@ -205,12 +214,12 @@ void StringTTF::alignText()
 void StringTTF::hideAllLetters()
 {
     Object* Obj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, Obj)
+    CCARRAY_FOREACH(_spriteArray, Obj)
     {
         ((Sprite *)Obj)->setVisible(false);
     }
     
-    CCARRAY_FOREACH(&_spriteArrayCache, Obj)
+    CCARRAY_FOREACH(_spriteArrayCache, Obj)
     {
         ((Sprite *)Obj)->setVisible(false);
     }
@@ -371,21 +380,21 @@ Sprite * StringTTF::updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short
 void StringTTF::moveAllSpritesToCache()
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, pObj)
+    CCARRAY_FOREACH(_spriteArray, pObj)
     {
         ((Sprite *)pObj)->removeFromParent();
-        _spriteArrayCache.addObject(pObj);
+        _spriteArrayCache->addObject(pObj);
     }
     
-    _spriteArray.removeAllObjects();
+    _spriteArray->removeAllObjects();
 }
 
 Sprite * StringTTF::getSprite()
 {
-    if (_spriteArrayCache.count())
+    if (_spriteArrayCache->count())
     {
-        Sprite *retSprite = (Sprite *) _spriteArrayCache.lastObject();
-        _spriteArrayCache.removeLastObject();
+        Sprite *retSprite = (Sprite *) _spriteArrayCache->lastObject();
+        _spriteArrayCache->removeLastObject();
         return retSprite;
     }
     else
@@ -400,7 +409,7 @@ Sprite * StringTTF::getSprite()
 Sprite * StringTTF::getSpriteChild(int ID)
 {
     Object* pObj = NULL;
-    CCARRAY_FOREACH(&_spriteArray, pObj)
+    CCARRAY_FOREACH(_spriteArray, pObj)
     {
         Sprite *pSprite = (Sprite *)pObj;
         if ( pSprite->getTag() == ID)
@@ -413,7 +422,7 @@ Sprite * StringTTF::getSpriteChild(int ID)
 
 Array  * StringTTF::getChildrenLetters()
 {
-    return &_spriteArray;
+    return _spriteArray;
 }
 
 Sprite * StringTTF::getSpriteForChar(unsigned short int theChar, int spriteIndexHint)
@@ -433,7 +442,7 @@ Sprite * StringTTF::getSpriteForChar(unsigned short int theChar, int spriteIndex
         if (retSprite)
             retSprite->setTag(spriteIndexHint);
         
-        _spriteArray.addObject(retSprite);
+        _spriteArray->addObject(retSprite);
     }
         
     // the sprite is now visible

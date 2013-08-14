@@ -697,7 +697,7 @@ void Node::detachChild(Node *child, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    ccArrayAppendObjectWithResize(_children->data, child);
+    _children->addObject(child);
     child->_setZOrder(z);
 }
 
@@ -713,7 +713,7 @@ void Node::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i,j,length = _children->data->num;
+        int i,j,length = _children->count();
         Node ** x = (Node**)_children->data->arr;
         Node *tempItem;
 

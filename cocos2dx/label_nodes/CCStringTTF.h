@@ -123,8 +123,8 @@ private:
     Sprite * getSpriteForLetter(unsigned short int newLetter);
     Sprite * updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter);
     
-    Array                       _spriteArray;
-    Array                       _spriteArrayCache;
+    Array               *       _spriteArray;
+    Array               *       _spriteArrayCache;
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;

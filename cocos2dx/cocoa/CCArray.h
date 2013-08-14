@@ -136,6 +136,57 @@ __arr__++)
 
 I found that it's not work in C++. So it keep what it's look like in version 1.0.0-rc3. ---By Bin
 */
+
+#if CC_USE_ARRAY_VECTOR
+#define CCARRAY_FOREACH(__array__, __object__)                  \
+    for( auto __it__ = std::begin(__array__->data);              \
+        __it__ != std::end(__array__->data);                     \
+        (__object__= (*(__it__++)).get() ) )
+
+
+#define CCARRAY_FOREACH_REVERSE(__array__, __object__)          \
+    for( auto __it__ = std::begin(__array__->data);             \
+    __it__ != std::end(__array__->data);                        \
+    (__object__= (*(__it__++)).get() ) )
+
+
+#define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
+
+#define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
+    do {                                                                  \
+        if(pArray && pArray->count() > 0)                                 \
+        {                                                                 \
+            Object* child;                                                \
+            CCARRAY_FOREACH(pArray, child)                                \
+            {                                                             \
+                elementType pNode = static_cast<elementType>(child);      \
+                if(pNode)                                                 \
+                {                                                         \
+                    pNode->func();                                        \
+                }                                                         \
+            }                                                             \
+        }                                                                 \
+    }                                                                     \
+    while(false)
+
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+    do {                                                                  \
+        if(pArray && pArray->count() > 0)                                 \
+        {                                                                 \
+            for(auto it = std::begin(pArray->data); it != std::end(pArray->data); ++it) \
+            {                                                                           \
+                elementType pNode = static_cast<elementType>((*it).get());\
+                if(pNode)                                                 \
+                {                                                         \
+                    pNode->func(pObject);                                 \
+                }                                                         \
+            }                                                             \
+        }                                                                 \
+    }                                                                     \
+
+
+#else // ! CC_USE_ARRAY_VECTOR --------------------------
+
 #define CCARRAY_FOREACH(__array__, __object__)                                                                         \
     if ((__array__) && (__array__)->data->num > 0)                                                                     \
     for(Object** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
@@ -193,6 +244,8 @@ do {                                                                  \
     }                                                                 \
 }                                                                     \
 while(false)
+
+#endif // ! CC_USE_ARRAY_VECTOR
 
 
 NS_CC_BEGIN
