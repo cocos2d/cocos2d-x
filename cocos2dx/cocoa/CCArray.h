@@ -25,7 +25,15 @@ THE SOFTWARE.
 #ifndef __CCARRAY_H__
 #define __CCARRAY_H__
 
+#define CC_USE_ARRAY_VECTOR 1
+
+#if CC_USE_ARRAY_VECTOR
+#include <vector>
+#include "cocoa/CCObject.h"
+#else
 #include "support/data_support/ccCArray.h"
+#endif
+
 
 /**
  * @addtogroup data_structures
@@ -155,7 +163,7 @@ public:
     /** Returns capacity of the array */
     unsigned int capacity() const;
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    unsigned int indexOfObject(Object* object) const;
+    int indexOfObject(Object* object) const;
     /** Returns an element with a certain index */
     Object* objectAtIndex(unsigned int index);
     /** Returns last element */
@@ -212,7 +220,12 @@ public:
     virtual Array* clone() const;
     
 public:
+#if CC_USE_ARRAY_VECTOR
+    std::vector<Object*> data;
+#else
     ccArray* data;
+#endif
+
     Array();
     Array(unsigned int capacity);
 };
