@@ -1,7 +1,4 @@
-cc = cc or {}
-function cc.rect(_x,_y,_width,_height)
-    return { x = _x, y = _y, width = _width, height = _height }
-end
+require "Cocos2d"
 -- cclog
 cclog = function(...)
     print(string.format(...))
