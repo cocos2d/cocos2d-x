@@ -322,6 +322,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
 
     // register some global functions
     JS_DefineFunction(cx, global, "require", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "requireString", ScriptingCore::executeScriptString, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -493,6 +494,35 @@ static std::string RemoveFileExt(const std::string& filePath) {
         return filePath;
     }
 }
+
+JSBool ScriptingCore::executeScriptString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 1) {
+        jsval* argv = JS_ARGV(cx, vp);
+        JSString* str = JS_ValueToString(cx, argv[0]);
+        JSStringWrapper path(str);
+        JSObject* global = JS_GetGlobalForScopeChain(cx);
+        js::RootedObject obj(cx, global);
+        JS::CompileOptions options(cx);
+        options.setUTF8(true);
+        const char* string = (const char*)path;
+        JSScript *script = JS::Compile(cx, obj, options, string, strlen(string) );
+        JSBool evaluatedOK = false;
+        if (script) {
+            jsval rval;
+            filename_script[path] = script;
+            JSAutoCompartment ac(cx, global);
+            evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+            if (JS_FALSE == evaluatedOK) {
+                cocos2d::log("(evaluatedOK == JS_FALSE)");
+                JS_ReportPendingException(cx);
+            }
+        }
+        return evaluatedOK;
+    }
+    return JS_FALSE;
+}
+
 
 JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
 {
