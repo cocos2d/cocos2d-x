@@ -88,7 +88,9 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
 const char * Font::getCurrentGlyphCollection()
 {
     if (_customGlyphs)
+    {
         return _customGlyphs;
+    }
     else
     {
         return getGlyphCollection(_usedGlyphs);
