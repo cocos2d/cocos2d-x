@@ -220,12 +220,12 @@ Object* Array::objectAtIndex(unsigned int index)
 {
     CCASSERT(index < data.size(), "index out of range in objectAtIndex()");
 
-    return data[index];
+    return data[index].get();
 }
 
 Object* Array::lastObject()
 {
-    return data.back();
+    return data.back().get();
 }
 
 Object* Array::randomObject()
@@ -244,7 +244,7 @@ Object* Array::randomObject()
 
     r *= data.size();
     
-    return data[r];
+    return data[r].get();
 }
 
 bool Array::containsObject(Object* object) const
@@ -267,8 +267,7 @@ bool Array::isEqualToArray(Array* otherArray)
 
 void Array::addObject(Object* object)
 {
-    object->retain();
-    data.push_back(object);
+    data.push_back( RCPtr<Object>(object) );
 }
 
 void Array::addObjectsFromArray(Array* otherArray)
@@ -278,8 +277,7 @@ void Array::addObjectsFromArray(Array* otherArray)
 
 void Array::insertObject(Object* object, unsigned int index)
 {
-    object->retain();
-    data.insert( begin(data) + index, object);
+    data.insert( begin(data) + index, RCPtr<Object>(object) );
 }
 
 void Array::removeLastObject(bool bReleaseObj)
@@ -288,7 +286,7 @@ void Array::removeLastObject(bool bReleaseObj)
     data.erase( std::end(data) );
 }
 
-void Array::removeObject(Object* object, bool bReleaseObj/* = true*/)
+void Array::removeObject(Object* object, bool bReleaseObj /* ignored */)
 {
     auto begin = std::begin(data);
     auto end = std::end(data);
@@ -296,16 +294,12 @@ void Array::removeObject(Object* object, bool bReleaseObj/* = true*/)
     auto it = std::find( begin, end, object);
     if( it != end ) {
         data.erase(it);
-        if( bReleaseObj )
-            object->release();
     }
 }
 
-void Array::removeObjectAtIndex(unsigned int index, bool bReleaseObj)
+void Array::removeObjectAtIndex(unsigned int index, bool bReleaseObj /* ignored */)
 {
     auto obj = data[index];
-    if( bReleaseObj )
-        obj->release();
     data.erase( data.begin() + index );
 }
 
@@ -344,13 +338,10 @@ void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
     std::swap( data[index1], data[index2] );
 }
 
-void Array::replaceObjectAtIndex(unsigned int index, Object* pObject, bool bReleaseObject/* = true*/)
+void Array::replaceObjectAtIndex(unsigned int index, Object* pObject, bool bReleaseObject /* ignored */)
 {
     auto obj = data[index];
-    obj->release();
-
     data[index] = pObject;
-    pObject->retain();
 }
 
 void Array::reverseObjects()

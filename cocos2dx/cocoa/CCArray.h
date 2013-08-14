@@ -35,6 +35,86 @@ THE SOFTWARE.
 #endif
 
 
+#if CC_USE_ARRAY_VECTOR
+/**
+ * A reference counting-managed pointer for classes derived from RCBase which can
+ * be used as C pointer
+ * Original code: http://www.codeproject.com/Articles/64111/Building-a-Quick-and-Handy-Reference-Counting-Clas
+ * License: http://www.codeproject.com/info/cpol10.aspx
+ */
+template < class T >
+class RCPtr
+{
+public:
+	//Construct using a C pointer
+	//e.g. RCPtr< T > x = new T();
+	RCPtr(T* ptr = NULL)
+    : _ptr(ptr)
+	{
+		if(ptr != NULL) {ptr->retain();}
+	}
+
+	//Copy constructor
+	RCPtr(const RCPtr &ptr)
+    : _ptr(ptr._ptr)
+	{
+		if(_ptr != NULL) {_ptr->retain();}
+	}
+
+    //Move constructor
+	RCPtr(RCPtr &&ptr)
+    : _ptr(ptr._ptr)
+	{
+        ptr._ptr = NULL;
+	}
+
+	~RCPtr()
+	{
+		if(_ptr != NULL) {_ptr->release();}
+	}
+
+	//Assign a pointer
+	//e.g. x = new T();
+	RCPtr &operator=(T* ptr)
+	{
+		//The following grab and release operations have to be performed
+		//in that order to handle the case where ptr == _ptr
+		//(See comment below by David Garlisch)
+		if(ptr != NULL) {ptr->retain();}
+		if(_ptr != NULL) {_ptr->release();}
+		_ptr = ptr;
+		return (*this);
+	}
+
+	//Assign another RCPtr
+	RCPtr &operator=(const RCPtr &ptr)
+	{
+		return (*this) = ptr._ptr;
+	}
+
+	//Retrieve actual pointer
+	T* get() const
+	{
+		return _ptr;
+	}
+
+	//Some overloaded operators to facilitate dealing with an RCPtr
+    //as a conventional C pointer.
+	//Without these operators, one can still use the less transparent
+    //get() method to access the pointer.
+	T* operator->() const {return _ptr;}		//x->member
+	T &operator*() const {return *_ptr;}		//*x, (*x).member
+	explicit operator T*() const {return _ptr;}		//T* y = x;
+	explicit operator bool() const {return _ptr != NULL;}	//if(x) {/*x is not NULL*/}
+	bool operator==(const RCPtr &ptr) {return _ptr == ptr._ptr;}
+	bool operator==(const T *ptr) {return _ptr == ptr;}
+
+private:
+	T *_ptr;	//Actual pointer
+};
+#endif // CC_USE_ARRAY_VECTOR
+
+
 /**
  * @addtogroup data_structures
  * @{
@@ -221,7 +301,7 @@ public:
     
 public:
 #if CC_USE_ARRAY_VECTOR
-    std::vector<Object*> data;
+    std::vector<RCPtr<Object>> data;
 #else
     ccArray* data;
 #endif
