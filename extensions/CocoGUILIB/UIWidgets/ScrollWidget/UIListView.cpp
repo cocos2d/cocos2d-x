@@ -50,9 +50,11 @@ UIListView::UIListView()
 }
 
 UIListView::~UIListView()
-{    
+{
+    /*
     CC_SAFE_RELEASE_NULL(m_pChildPool);
     CC_SAFE_RELEASE_NULL(m_pUpdatePool);
+     */
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
@@ -114,8 +116,10 @@ void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
 {
     UIPanel::removeAllChildrenAndCleanUp(cleanup);
     
+    /*
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
+     */
     /*
     m_pUpdatePool->clear();
     m_pChildPool->clear();
