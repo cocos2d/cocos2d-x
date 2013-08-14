@@ -126,6 +126,7 @@ bool LuaStack::init(void)
     };
     luaL_register(_state, "_G", global_functions);
     register_all_cocos2dx(_state);
+    tolua_opengl_open(_state);
     register_all_cocos2dx_extension(_state);
     register_all_cocos2dx_manual(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -135,7 +136,6 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     tolua_web_socket_open(_state);
 #endif
-    tolua_opengl_open(_state);
     tolua_scroll_view_open(_state);
     tolua_script_handler_mgr_open(_state);
     

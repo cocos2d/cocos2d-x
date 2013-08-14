@@ -15,6 +15,7 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 #include "LuaScriptHandlerMgr.h"
+#include "LuaBasicConversions.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -6019,16 +6020,31 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00(lua_State* tolua_S)
             if (NULL == points)
                 return 0;
 
-            Point* point = NULL;
             for (int i = 0; i < numOfVertices; i++)
             {
-                point = static_cast<Point*>(tolua_tofieldusertype(tolua_S, 1, i + 1,NULL));
-                if (NULL == point)
+                lua_pushnumber(tolua_S,i + 1);
+                lua_gettable(tolua_S,1);
+                if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
+                    CC_SAFE_DELETE_ARRAY(points);
+                    goto tolua_lerror;
+                }
+                
+                if(!luaval_to_point(tolua_S, lua_gettop(tolua_S), &points[i]))
+                {
+                    lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
                     return 0;
                 }
-                points[i] = Point(*point);
+                lua_pop(tolua_S, 1);
+//                
+//                point = static_cast<Point*>(tolua_tofieldusertype(tolua_S, 1, i + 1,NULL));
+//                if (NULL == point)
+//                {
+//                    CC_SAFE_DELETE_ARRAY(points);
+//                    return 0;
+//                }
+//                points[i] = Point(*point);
             }
             DrawPrimitives::drawPoly(points,numOfVertices,closePolygon);
             CC_SAFE_DELETE_ARRAY(points);
@@ -6386,13 +6402,65 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
 {
     tolua_open(tolua_S);
     tolua_reg_gl_type(tolua_S);
-    tolua_module(tolua_S,NULL,0);
-    tolua_beginmodule(tolua_S,NULL);
+    tolua_module(tolua_S,"cc",0);
+    tolua_beginmodule(tolua_S,"cc");
       tolua_cclass(tolua_S,"GLNode","GLNode","Node",tolua_collect_GLNode);
         tolua_beginmodule(tolua_S,"GLNode");
             tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
             tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);
         tolua_endmodule(tolua_S);
+     tolua_cclass(tolua_S,"CCGLProgram","CCGLProgram","",tolua_collect_CCGLProgram);
+       tolua_beginmodule(tolua_S,"CCGLProgram");
+        tolua_function(tolua_S,"new",tolua_Cocos2d_CCGLProgram_new00);
+        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCGLProgram_new00_local);
+        tolua_function(tolua_S,".call",tolua_Cocos2d_CCGLProgram_new00_local);
+        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCGLProgram_delete00);
+        tolua_function(tolua_S,"initWithVertexShaderByteArray",tolua_Cocos2d_CCGLProgram_initWithVertexShaderByteArray00);
+        tolua_function(tolua_S,"initWithVertexShaderFilename",tolua_Cocos2d_CCGLProgram_initWithVertexShaderFilename00);
+        tolua_function(tolua_S,"addAttribute",tolua_Cocos2d_CCGLProgram_addAttribute00);
+        tolua_function(tolua_S,"link",tolua_Cocos2d_CCGLProgram_link00);
+        tolua_function(tolua_S,"use",tolua_Cocos2d_CCGLProgram_use00);
+        tolua_function(tolua_S,"updateUniforms",tolua_Cocos2d_CCGLProgram_updateUniforms00);
+        tolua_function(tolua_S,"getUniformLocationForName",tolua_Cocos2d_CCGLProgram_getUniformLocationForName00);
+        tolua_function(tolua_S,"setUniformLocationWith1i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1i00);
+        tolua_function(tolua_S,"setUniformLocationWith2i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2i00);
+        tolua_function(tolua_S,"setUniformLocationWith3i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3i00);
+        tolua_function(tolua_S,"setUniformLocationWith4i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4i00);
+        tolua_function(tolua_S,"setUniformLocationWith2iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2iv00);
+        tolua_function(tolua_S,"setUniformLocationWith3iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3iv00);
+        tolua_function(tolua_S,"setUniformLocationWith4iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4iv00);
+        tolua_function(tolua_S,"setUniformLocationWith1f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1f00);
+        tolua_function(tolua_S,"setUniformLocationWith2f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2f00);
+        tolua_function(tolua_S,"setUniformLocationWith3f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3f00);
+        tolua_function(tolua_S,"setUniformLocationWith4f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4f00);
+        tolua_function(tolua_S,"setUniformLocationWith2fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2fv00);
+        tolua_function(tolua_S,"setUniformLocationWith3fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3fv00);
+        tolua_function(tolua_S,"setUniformLocationWith4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00);
+        tolua_function(tolua_S,"setUniformLocationWithMatrix4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWithMatrix4fv00);
+        tolua_function(tolua_S,"setUniformsForBuiltins",tolua_Cocos2d_CCGLProgram_setUniformsForBuiltins00);
+        tolua_function(tolua_S,"vertexShaderLog",tolua_Cocos2d_CCGLProgram_vertexShaderLog00);
+        tolua_function(tolua_S,"fragmentShaderLog",tolua_Cocos2d_CCGLProgram_fragmentShaderLog00);
+        tolua_function(tolua_S,"programLog",tolua_Cocos2d_CCGLProgram_programLog00);
+        tolua_function(tolua_S,"reset",tolua_Cocos2d_CCGLProgram_reset00);
+        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCGLProgram_getProgram00);
+        tolua_function(tolua_S, "create", tolua_Cocos2d_CCGLProgram_create00);
+     tolua_endmodule(tolua_S);
+    tolua_cclass(tolua_S,"CCShaderCache","CCShaderCache","",tolua_collect_CCShaderCache);
+      tolua_beginmodule(tolua_S,"CCShaderCache");
+        tolua_function(tolua_S,"new",tolua_Cocos2d_CCShaderCache_new00);
+        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCShaderCache_new00_local);
+        tolua_function(tolua_S,".call",tolua_Cocos2d_CCShaderCache_new00_local);
+        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCShaderCache_delete00);
+        tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCShaderCache_getInstance00);
+        tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCShaderCache_destroyInstance00);
+        tolua_function(tolua_S,"sharedSharedShaderCache",tolua_Cocos2d_CCShaderCache_getInstance00);
+        tolua_function(tolua_S,"purgeSharedShaderCache",tolua_Cocos2d_CCShaderCache_destroyInstance00);
+        tolua_function(tolua_S,"loadDefaultShaders",tolua_Cocos2d_CCShaderCache_loadDefaultShaders00);
+        tolua_function(tolua_S,"reloadDefaultShaders",tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00);
+        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCShaderCache_programForKey00);
+        tolua_function(tolua_S,"addProgram",tolua_Cocos2d_CCShaderCache_addProgram00);
+      tolua_endmodule(tolua_S);
+    tolua_endmodule(tolua_S);
     tolua_module(tolua_S, "gl", 0);
     tolua_beginmodule(tolua_S,"gl");
         tolua_function(tolua_S, "getSupportedExtensions", tolua_Cocos2d_glGetSupportedExtensions00);
@@ -6523,78 +6591,26 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S, "vertexAttribPointer", tolua_Cocos2d_glVertexAttribPointer00);
         tolua_function(tolua_S, "viewport", tolua_Cocos2d_glViewport00);
         tolua_function(tolua_S, "glEnableVertexAttribs", tolua_Cocos2d_glEnableVertexAttribs00);
+        tolua_module(tolua_S, "DrawPrimitives", 0);
+         tolua_beginmodule(tolua_S,"DrawPrimitives");
+            tolua_function(tolua_S,"ccDrawPoint",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00);
+            tolua_function(tolua_S,"ccDrawPoints",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00);
+            tolua_function(tolua_S,"ccDrawLine",tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00);
+            tolua_function(tolua_S,"ccDrawRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00);
+            tolua_function(tolua_S,"ccDrawSolidRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00);
+            tolua_function(tolua_S,"ccDrawPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00);
+            tolua_function(tolua_S,"ccDrawSolidPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00);
+            tolua_function(tolua_S,"ccDrawCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00);
+            tolua_function(tolua_S,"ccDrawSolidCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00);
+            tolua_function(tolua_S,"ccDrawQuadBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00);
+            tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00);
+            tolua_function(tolua_S,"ccDrawCatmullRom",tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00);
+            tolua_function(tolua_S,"ccDrawCardinalSpline",tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00);
+            tolua_function(tolua_S,"ccDrawColor4B",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00);
+            tolua_function(tolua_S,"ccDrawColor4F",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00);
+            tolua_function(tolua_S,"ccPointSize",tolua_Cocos2d_CCDrawPrimitives_ccPointSize00);
+        tolua_endmodule(tolua_S);
       tolua_endmodule(tolua_S);
-      tolua_cclass(tolua_S,"CCGLProgram","CCGLProgram","",tolua_collect_CCGLProgram);
-      tolua_beginmodule(tolua_S,"CCGLProgram");
-        tolua_function(tolua_S,"new",tolua_Cocos2d_CCGLProgram_new00);
-        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCGLProgram_new00_local);
-        tolua_function(tolua_S,".call",tolua_Cocos2d_CCGLProgram_new00_local);
-        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCGLProgram_delete00);
-        tolua_function(tolua_S,"initWithVertexShaderByteArray",tolua_Cocos2d_CCGLProgram_initWithVertexShaderByteArray00);
-        tolua_function(tolua_S,"initWithVertexShaderFilename",tolua_Cocos2d_CCGLProgram_initWithVertexShaderFilename00);
-        tolua_function(tolua_S,"addAttribute",tolua_Cocos2d_CCGLProgram_addAttribute00);
-        tolua_function(tolua_S,"link",tolua_Cocos2d_CCGLProgram_link00);
-        tolua_function(tolua_S,"use",tolua_Cocos2d_CCGLProgram_use00);
-        tolua_function(tolua_S,"updateUniforms",tolua_Cocos2d_CCGLProgram_updateUniforms00);
-        tolua_function(tolua_S,"getUniformLocationForName",tolua_Cocos2d_CCGLProgram_getUniformLocationForName00);
-        tolua_function(tolua_S,"setUniformLocationWith1i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1i00);
-        tolua_function(tolua_S,"setUniformLocationWith2i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2i00);
-        tolua_function(tolua_S,"setUniformLocationWith3i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3i00);
-        tolua_function(tolua_S,"setUniformLocationWith4i",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4i00);
-        tolua_function(tolua_S,"setUniformLocationWith2iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2iv00);
-        tolua_function(tolua_S,"setUniformLocationWith3iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3iv00);
-        tolua_function(tolua_S,"setUniformLocationWith4iv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4iv00);
-        tolua_function(tolua_S,"setUniformLocationWith1f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith1f00);
-        tolua_function(tolua_S,"setUniformLocationWith2f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2f00);
-        tolua_function(tolua_S,"setUniformLocationWith3f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3f00);
-        tolua_function(tolua_S,"setUniformLocationWith4f",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4f00);
-        tolua_function(tolua_S,"setUniformLocationWith2fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith2fv00);
-        tolua_function(tolua_S,"setUniformLocationWith3fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith3fv00);
-        tolua_function(tolua_S,"setUniformLocationWith4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWith4fv00);
-        tolua_function(tolua_S,"setUniformLocationWithMatrix4fv",tolua_Cocos2d_CCGLProgram_setUniformLocationWithMatrix4fv00);
-        tolua_function(tolua_S,"setUniformsForBuiltins",tolua_Cocos2d_CCGLProgram_setUniformsForBuiltins00);
-        tolua_function(tolua_S,"vertexShaderLog",tolua_Cocos2d_CCGLProgram_vertexShaderLog00);
-        tolua_function(tolua_S,"fragmentShaderLog",tolua_Cocos2d_CCGLProgram_fragmentShaderLog00);
-        tolua_function(tolua_S,"programLog",tolua_Cocos2d_CCGLProgram_programLog00);
-        tolua_function(tolua_S,"reset",tolua_Cocos2d_CCGLProgram_reset00);
-        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCGLProgram_getProgram00);
-        tolua_function(tolua_S, "create", tolua_Cocos2d_CCGLProgram_create00);
-     tolua_endmodule(tolua_S);
-     tolua_cclass(tolua_S,"CCShaderCache","CCShaderCache","",tolua_collect_CCShaderCache);
-     tolua_beginmodule(tolua_S,"CCShaderCache");
-        tolua_function(tolua_S,"new",tolua_Cocos2d_CCShaderCache_new00);
-        tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCShaderCache_new00_local);
-        tolua_function(tolua_S,".call",tolua_Cocos2d_CCShaderCache_new00_local);
-        tolua_function(tolua_S,"delete",tolua_Cocos2d_CCShaderCache_delete00);
-        tolua_function(tolua_S,"getInstance",tolua_Cocos2d_CCShaderCache_getInstance00);
-        tolua_function(tolua_S,"destroyInstance",tolua_Cocos2d_CCShaderCache_destroyInstance00);
-        tolua_function(tolua_S,"sharedSharedShaderCache",tolua_Cocos2d_CCShaderCache_getInstance00);
-        tolua_function(tolua_S,"purgeSharedShaderCache",tolua_Cocos2d_CCShaderCache_destroyInstance00);
-        tolua_function(tolua_S,"loadDefaultShaders",tolua_Cocos2d_CCShaderCache_loadDefaultShaders00);
-        tolua_function(tolua_S,"reloadDefaultShaders",tolua_Cocos2d_CCShaderCache_reloadDefaultShaders00);
-        tolua_function(tolua_S,"getProgram",tolua_Cocos2d_CCShaderCache_programForKey00);
-        tolua_function(tolua_S,"addProgram",tolua_Cocos2d_CCShaderCache_addProgram00);
-     tolua_endmodule(tolua_S);
-     tolua_module(tolua_S, "CCDrawPrimitives", 0);
-     tolua_beginmodule(tolua_S,"CCDrawPrimitives");
-        tolua_function(tolua_S,"ccDrawPoint",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00);
-        tolua_function(tolua_S,"ccDrawPoints",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00);
-        tolua_function(tolua_S,"ccDrawLine",tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00);
-        tolua_function(tolua_S,"ccDrawRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00);
-        tolua_function(tolua_S,"ccDrawSolidRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00);
-        tolua_function(tolua_S,"ccDrawPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00);
-        tolua_function(tolua_S,"ccDrawSolidPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00);
-        tolua_function(tolua_S,"ccDrawCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00);
-        tolua_function(tolua_S,"ccDrawSolidCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00); 
-        tolua_function(tolua_S,"ccDrawQuadBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00);
-        tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00);
-        tolua_function(tolua_S,"ccDrawCatmullRom",tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00);
-        tolua_function(tolua_S,"ccDrawCardinalSpline",tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00);
-        tolua_function(tolua_S,"ccDrawColor4B",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00);
-        tolua_function(tolua_S,"ccDrawColor4F",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00);
-        tolua_function(tolua_S,"ccPointSize",tolua_Cocos2d_CCDrawPrimitives_ccPointSize00);
-     tolua_endmodule(tolua_S);
-    tolua_endmodule(tolua_S);
     return 1;
 }
 

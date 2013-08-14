@@ -67,6 +67,10 @@
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		15E31DA717B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DA817B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DA917B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DAA17B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
 		1A1197CA1785363400D62A44 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		1A1197CC1785363400D62A44 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
@@ -2278,6 +2282,7 @@
 		15C6482C165F3988007D4F18 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		15E31DA617B9D18E00BC8230 /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
 		1A1197D71785363400D62A44 /* Hello lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1197E71785376400D62A44 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1A1197E81785376400D62A44 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3637,6 +3642,7 @@
 		1A119C8D17853D6300D62A44 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				15E31DA617B9D18E00BC8230 /* Cocos2d.lua */,
 				15A055C1179E25050040AC39 /* DrawPrimitives.lua */,
 				15A055AC17966C350040AC39 /* Deprecated.lua */,
 				1A119C8E17853D8D00D62A44 /* AudioEngine.lua */,
@@ -5995,6 +6001,7 @@
 				1A119C9B17853D8D00D62A44 /* OpenglConstants.lua in Resources */,
 				15A055AF17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C4179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA917B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6044,6 +6051,7 @@
 				1A6FB4FD17854A8500CDF010 /* luaScript in Resources */,
 				15A055B017966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C5179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DAA17B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6071,6 +6079,7 @@
 				1A6FB55417854FE400CDF010 /* OpenglConstants.lua in Resources */,
 				15A055AD17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C2179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA717B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6116,6 +6125,7 @@
 				1A6FB7D91785620900CDF010 /* zwoptex in Resources */,
 				15A055AE17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C3179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA817B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

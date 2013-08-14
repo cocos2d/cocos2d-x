@@ -829,6 +829,58 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
     return ok;
 }
 
+bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints)
+{
+    if (NULL == L)
+        return false;
+    
+    bool ok = true;
+    
+#if COCOS2D_DEBUG >=1
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+        ok = false;
+    }
+#endif
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        if (len > 0)
+        {
+            Point* array = (Point*)malloc(sizeof(Point) * len);
+            if (NULL == array)
+                return false;
+            for (uint32_t i = 0; i < len; ++i)
+            {
+                lua_pushnumber(L,i + 1);
+                lua_gettable(L,lo);
+                if (!tolua_istable(L,-1, 0, &tolua_err))
+                {
+                    luaval_to_native_err(L,"#ferror:",&tolua_err);
+                    lua_pop(L, 1);
+                    free(array);
+                    return false;
+                }
+                ok &= luaval_to_point(L, lua_gettop(L), &array[i]);
+                if (!ok)
+                {
+                    lua_pop(L, 1);
+                    free(array);
+                    return false;
+                }
+                lua_pop(L, 1);
+            }
+            
+            *numPoints = len;
+            *points    = array;
+        }
+    }
+    return ok;
+}
+
 void point_to_luaval(lua_State* L,const Point& pt)
 {
     if (NULL  == L)

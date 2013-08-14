@@ -28,6 +28,7 @@ extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outV
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue );
 extern bool luaval_to_array(lua_State* L,int lo, Array** outValue);
 extern bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue);
+extern bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints);
 
 // from native
 extern void point_to_luaval(lua_State* L,const Point& pt);
