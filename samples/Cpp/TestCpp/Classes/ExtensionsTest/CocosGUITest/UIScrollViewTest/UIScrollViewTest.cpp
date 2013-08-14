@@ -63,7 +63,7 @@ bool UIScrollViewTest_Vertical::init()
         UIButton* button = UIButton::create();
         button->setTouchEnable(true);
         button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
-        button->setPosition(ccp(innerWidth / 2, innerHeight - button->getRect().size.height / 2));
+        button->setPosition(ccp(innerWidth / 2, scrollView->getInerContainerSize().height - button->getRect().size.height / 2));
         scrollView->addChild(button);
         
         UITextButton* textButton = UITextButton::create();
@@ -158,7 +158,7 @@ bool UIScrollViewTest_Horizontal::init()
         button->setTouchEnable(true);
         button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(ccp(button->getRect().size.width / 2,
-                                innerHeight - button->getRect().size.height / 2));
+                                scrollView->getInerContainerSize().height - button->getRect().size.height / 2));
         scrollView->addChild(button);
         
         UITextButton* textButton = UITextButton::create();
