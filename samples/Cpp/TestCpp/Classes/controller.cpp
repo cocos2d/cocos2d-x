@@ -56,6 +56,7 @@ struct {
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
 	{ "LabelTest", [](){return new AtlasTestScene(); } },
+    { "LabelTestNew", [](){return new AtlasTestSceneNew(); } },
 	{ "LayerTest", [](){return new LayerTestScene();} },
 	{ "MenuTest", [](){return new MenuTestScene();} },
 	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },

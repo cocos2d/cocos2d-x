@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "CCFontAtlas.h"
 
+
 NS_CC_BEGIN
 
 class CC_DLL FontAtlasFactory
@@ -39,15 +40,6 @@ public:
     static FontAtlas * createAtlasFromFNT(const char* fntFilePath);
     
 private:
-    
-    static const char   * getGlyphCollection(GlyphCollection glyphs);
-    
-    // carloX: this needs to be moved somewhere else, but it's good enough for now
-    static FontAtlas    * createFontAtlasFromFNTConfig(CCBMFontConfiguration *theConfig);
-    
-    static const char *glyphASCII;
-    static const char *glyphNEHE;
-
 };
 
 NS_CC_END
