@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:layout_marginBottom="35dip" android:layout_marginLeft="15dip"
+	android:layout_marginRight="15dip" android:layout_marginTop="35dip"
+	android:background="@drawable/upomp_bypay_bg">
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" android:layout_width="0dip"
+		android:layout_height="0dip" />
+	<RelativeLayout android:id="@+id/rl_header_about"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_title_bg">
+		<Button android:id="@+id/btn_return_about"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/upomp_bypay_btn_title_esc"
+			android:layout_alignParentRight="true" android:layout_marginRight="5dip"
+			android:layout_marginTop="5dip" android:textColor="#ffffffff"
+			android:text="@string/upomp_bypay_return" />
+	</RelativeLayout>
+
+
+	<RelativeLayout android:id="@+id/sv_credit"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/rl_header_about" android:layout_above="@+id/rl_bottom_about"
+		android:gravity="center_vertical" >
+		<ImageView android:id="@+id/about_0" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_loading_logo"
+			android:layout_centerHorizontal="true"  android:layout_marginTop="-40dip"/>
+		<TextView android:id="@+id/about_1" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_0"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about1"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_2" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_1"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about2"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_3" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_2"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about3"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_4" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_3"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about4"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_5" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_4"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about5"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_6" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_5"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about6"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_7" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_6"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about7"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+		<TextView android:id="@+id/about_8" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@id/about_7"
+			android:layout_marginTop="5dip" android:text="@string/upomp_bypay_about8"
+			android:textColor="#123860" android:textSize="15sp"
+			android:layout_centerHorizontal="true" />
+
+
+
+	</RelativeLayout>
+
+	<RelativeLayout android:id="@+id/rl_bottom_about"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_bottom"
+		android:layout_alignParentBottom="true">
+	</RelativeLayout>
+</RelativeLayout>
