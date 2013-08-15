@@ -57,9 +57,8 @@ INCLUDES +=  \
     -I$(COCOS_SRC)/include \
     -I$(COCOS_SRC)/kazmath/include \
     -I$(COCOS_SRC)/platform/linux \
-    -I$(COCOS_SRC)/platform/third_party/linux/libpng \
     -I$(COCOS_SRC)/platform/third_party/linux/libjpeg \
-    -I$(COCOS_SRC)/platform/third_party/linux/libtiff/include \
+    -I$(COCOS_SRC)/platform/third_party/linux/libtiff \
     -I$(COCOS_SRC)/platform/third_party/linux/libwebp
 
 LBITS := $(shell getconf LONG_BIT)
@@ -107,7 +106,6 @@ else
 STATICLIBS_DIR = $(COCOS_SRC)/platform/third_party/linux/libraries
 endif
 STATICLIBS = $(STATICLIBS_DIR)/libfreetype.a \
-    $(STATICLIBS_DIR)/libpng.a \
     $(STATICLIBS_DIR)/libjpeg.a \
     $(STATICLIBS_DIR)/libtiff.a \
     $(STATICLIBS_DIR)/libwebp.a
@@ -122,7 +120,7 @@ SHAREDLIBS += -lfmodex
 endif
 endif
 
-SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL
+SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL -lpng
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
 

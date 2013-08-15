@@ -187,6 +187,7 @@
 									<listOptionValue builtIn="false" value="curl"/>
 									<listOptionValue builtIn="false" value="websockets"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
+									<listOptionValue builtIn="false" value="sqlite3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1406428633" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -194,7 +195,7 @@
 								</inputType>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1853332970" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.1205632231" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.1205632231" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1409803232" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.529331995" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
@@ -713,6 +714,7 @@
 									<listOptionValue builtIn="false" value="curl"/>
 									<listOptionValue builtIn="false" value="websockets"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
+									<listOptionValue builtIn="false" value="sqlite3"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1630451820" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -720,7 +722,7 @@
 								</inputType>
 							</tool>
 							<tool command="arm-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1834101561" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.654060403" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.654060403" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2118687343" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.1027113708" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>

@@ -333,6 +333,7 @@ Developers:
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
         Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
+        Adding a method to get duration of timeline for CCBAnimationManager class, it's easy for getting duration of animation in JSB.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -425,6 +426,7 @@ Developers:
         Added emscripten keyboard support
         Clang support for Linux
         Multiple emscripten template support. Emscripten multiple resolutions support.
+        Toplevel Makefile refactoring
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.

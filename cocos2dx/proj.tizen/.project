@@ -313,11 +313,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImage.h</locationURI>
 		</link>
 		<link>
-			<name>src/platform/CCImageCommonWebp.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImageCommonWebp.cpp</locationURI>
-		</link>
-		<link>
 			<name>src/platform/CCImageCommon_cpp.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCImageCommon_cpp.h</locationURI>
@@ -351,6 +346,16 @@
 			<name>src/platform/CCThread.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/platform/CCThread.h</locationURI>
+		</link>
+		<link>
+			<name>src/platform/etc</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/platform/third_party/common/etc</locationURI>
+		</link>
+		<link>
+			<name>src/platform/s3tc</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/platform/third_party/common/s3tc</locationURI>
 		</link>
 		<link>
 			<name>src/platform/tizen</name>

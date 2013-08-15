@@ -2,7 +2,7 @@
  * jmorecfg.h
  *
  * Copyright (C) 1991-1997, Thomas G. Lane.
- * Modified 1997-2011 by Guido Vollbeding.
+ * Modified 1997-2012 by Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
@@ -210,6 +210,26 @@ typedef unsigned int JDIMENSION;
 #endif
 
 
+/* The noreturn type identifier is used to declare functions
+ * which cannot return.
+ * Compilers can thus create more optimized code and perform
+ * better checks for warnings and errors.
+ * Static analyzer tools can make improved inferences about
+ * execution paths and are prevented from giving false alerts.
+ *
+ * Unfortunately, the proposed specifications of corresponding
+ * extensions in the Dec 2011 ISO C standard revision (C11),
+ * GCC, MSVC, etc. are not viable.
+ * Thus we introduce a user defined type to declare noreturn
+ * functions at least for clarity.  A proper compiler would
+ * have a suitable noreturn type to match in place of void.
+ */
+
+#ifndef HAVE_NORETURN_T
+typedef void noreturn_t;
+#endif
+
+
 /* Here is the pseudo-keyword for declaring pointers that must be "far"
  * on 80x86 machines.  Most of the specialized coding for 80x86 is handled
  * by just saying "FAR *" where such a pointer is needed.  In a few places
@@ -232,14 +252,15 @@ typedef unsigned int JDIMENSION;
  * Defining HAVE_BOOLEAN before including jpeglib.h should make it work.
  */
 
-#ifndef HAVE_BOOLEAN
-typedef int boolean;
-#endif
+#ifdef HAVE_BOOLEAN
 #ifndef FALSE			/* in case these macros already exist */
 #define FALSE	0		/* values of boolean */
 #endif
 #ifndef TRUE
 #define TRUE	1
+#endif
+#else
+typedef enum { FALSE = 0, TRUE = 1 } boolean;
 #endif
 
 
