@@ -590,7 +590,9 @@ std::string LabelFNTGlyphDesigner::subtitle()
 LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
 {
     auto size = Director::getInstance()->getWinSize();
-    auto label = Label::createWithTTF("美好的-天", "fonts/wt021.ttf", 55, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, "美好的-天");
+    // Adding "啊" letter at the end of string to make VS2012 happy, otherwise VS will generate errors  
+    // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
+    auto label = Label::createWithTTF("美好的一天啊", "fonts/wt021.ttf", 55, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, "美好的一天啊");
     label->setAnchorPoint(Point(0.5f, 0.5f));
     label->setPosition(Point(size.width / 2, size.height /2));
     this->addChild(label);
