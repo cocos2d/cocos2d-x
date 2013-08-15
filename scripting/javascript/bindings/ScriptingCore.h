@@ -94,7 +94,7 @@ public:
     bool executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
-    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, jsval *data);
+    void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
 	/**
 	 * will eval the specified string

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 07/29/13 13:31:49.
+** Generated automatically by tolua++-1.0.92 on 08/06/13 09:51:50.
 */
 
 /****************************************************************************
@@ -73,6 +73,13 @@ static int tolua_collect_AnimationFrameData (lua_State* tolua_S)
 static int tolua_collect_CCParticleSystemQuad (lua_State* tolua_S)
 {
  ParticleSystemQuad* self = (ParticleSystemQuad*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_CCTexture2D__TexParams (lua_State* tolua_S)
+{
+ Texture2D::TexParams* self = (Texture2D::TexParams*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -203,13 +210,6 @@ static int tolua_collect_CCControlPotentiometer (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCDrawNode (lua_State* tolua_S)
-{
- DrawNode* self = (DrawNode*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
-
 static int tolua_collect_CCSize (lua_State* tolua_S)
 {
  Size* self = (Size*) tolua_tousertype(tolua_S,1,0);
@@ -217,16 +217,16 @@ static int tolua_collect_CCSize (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_ccTexParams (lua_State* tolua_S)
+static int tolua_collect_CCInteger (lua_State* tolua_S)
 {
- ccTexParams* self = (ccTexParams*) tolua_tousertype(tolua_S,1,0);
+ Integer* self = (Integer*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
 
-static int tolua_collect_CCInteger (lua_State* tolua_S)
+static int tolua_collect_CCDrawNode (lua_State* tolua_S)
 {
- Integer* self = (Integer*) tolua_tousertype(tolua_S,1,0);
+ DrawNode* self = (DrawNode*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -336,16 +336,16 @@ static int tolua_collect_CCAnimationFrame (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCLayerRGBA (lua_State* tolua_S)
+static int tolua_collect_Vertex3F (lua_State* tolua_S)
 {
- LayerRGBA* self = (LayerRGBA*) tolua_tousertype(tolua_S,1,0);
+ Vertex3F* self = (Vertex3F*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
 
-static int tolua_collect_Vertex3F (lua_State* tolua_S)
+static int tolua_collect_CCLayerRGBA (lua_State* tolua_S)
 {
- Vertex3F* self = (Vertex3F*) tolua_tousertype(tolua_S,1,0);
+ LayerRGBA* self = (LayerRGBA*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -502,7 +502,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionMoveInT");
  tolua_usertype(tolua_S,"Color4F");
  tolua_usertype(tolua_S,"CCLayerGradient");
- tolua_usertype(tolua_S,"CCTimer");
+ tolua_usertype(tolua_S,"CCStopGrid");
+ tolua_usertype(tolua_S,"CCTexture2D::TexParams");
  tolua_usertype(tolua_S,"CCTMXMapInfo");
  tolua_usertype(tolua_S,"CCLayerColor");
  tolua_usertype(tolua_S,"CCMenuItemFont");
@@ -514,7 +515,6 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCParticleSnow");
  tolua_usertype(tolua_S,"CCMenuItemImage");
  tolua_usertype(tolua_S,"EGLTouchDelegate");
- tolua_usertype(tolua_S,"ccTexParams");
  tolua_usertype(tolua_S,"CCEaseSineOut");
  tolua_usertype(tolua_S,"CCTransitionPageTurn");
  tolua_usertype(tolua_S,"CCSpawn");
@@ -533,7 +533,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"Quad3");
  tolua_usertype(tolua_S,"CCMoveBy");
  tolua_usertype(tolua_S,"CCCamera");
- tolua_usertype(tolua_S,"CCSequence");
+ tolua_usertype(tolua_S,"CCFlipX3D");
  tolua_usertype(tolua_S,"V3F_C4B_T2F");
  tolua_usertype(tolua_S,"CCDrawNode");
  tolua_usertype(tolua_S,"SEL_CCControlHandler");
@@ -546,26 +546,26 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionProgressOutIn");
  tolua_usertype(tolua_S,"AnimationFrameData");
  tolua_usertype(tolua_S,"CCDirector");
- tolua_usertype(tolua_S,"CCFadeOutTRTiles");
+ tolua_usertype(tolua_S,"CCShatteredTiles3D");
  tolua_usertype(tolua_S,"CCEGLView");
  tolua_usertype(tolua_S,"CCRenderTexture");
  tolua_usertype(tolua_S,"CCParticleSmoke");
  tolua_usertype(tolua_S,"CCControlSlider");
- tolua_usertype(tolua_S,"CCFlipX3D");
+ tolua_usertype(tolua_S,"CCSplitCols");
  tolua_usertype(tolua_S,"CCAffineTransform");
+ tolua_usertype(tolua_S,"CCWaves3D");
  tolua_usertype(tolua_S,"CCControl");
- tolua_usertype(tolua_S,"CCSet");
  tolua_usertype(tolua_S,"CCJumpTo");
+ tolua_usertype(tolua_S,"CCSet");
  tolua_usertype(tolua_S,"CCEvent");
  tolua_usertype(tolua_S,"CCScaleTo");
- tolua_usertype(tolua_S,"CCParticleSun");
  tolua_usertype(tolua_S,"CCReverseTime");
  tolua_usertype(tolua_S,"CCParticleExplosion");
+ tolua_usertype(tolua_S,"CCParticleSun");
  tolua_usertype(tolua_S,"CCTransitionZoomFlipY");
- tolua_usertype(tolua_S,"CCParticleMeteor");
+ tolua_usertype(tolua_S,"CCParticleSpiral");
  tolua_usertype(tolua_S,"CCTransitionMoveInR");
  tolua_usertype(tolua_S,"CCTMXObjectGroup");
- tolua_usertype(tolua_S,"CCStopGrid");
  tolua_usertype(tolua_S,"CCFileUtils");
  tolua_usertype(tolua_S,"CCLayer");
  tolua_usertype(tolua_S,"CCTileMapAtlas");
@@ -574,56 +574,56 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCPlace");
  tolua_usertype(tolua_S,"CCEaseElastic");
  tolua_usertype(tolua_S,"CCParticleBatchNode");
- tolua_usertype(tolua_S,"CCEaseOut");
+ tolua_usertype(tolua_S,"CCLayerRGBA");
  tolua_usertype(tolua_S,"V2F_C4B_T2F");
  tolua_usertype(tolua_S,"CCTransitionSplitCols");
  tolua_usertype(tolua_S,"CCUserDefault");
  tolua_usertype(tolua_S,"CCProgressTimer");
  tolua_usertype(tolua_S,"CCDictionary");
  tolua_usertype(tolua_S,"CCTransitionMoveInB");
- tolua_usertype(tolua_S,"CCParticleSpiral");
+ tolua_usertype(tolua_S,"CCTimer");
  tolua_usertype(tolua_S,"CCTMXLayerInfo");
+ tolua_usertype(tolua_S,"CCParticleMeteor");
  tolua_usertype(tolua_S,"CCTransitionFlipY");
- tolua_usertype(tolua_S,"CCScene");
  tolua_usertype(tolua_S,"CCTransitionSlideInL");
  tolua_usertype(tolua_S,"CCTransitionFlipX");
  tolua_usertype(tolua_S,"CCRepeat");
- tolua_usertype(tolua_S,"tParticle");
+ tolua_usertype(tolua_S,"CCScene");
  tolua_usertype(tolua_S,"CCTransitionProgressInOut");
- tolua_usertype(tolua_S,"CCLayerRGBA");
+ tolua_usertype(tolua_S,"tParticle");
  tolua_usertype(tolua_S,"CCMenu");
  tolua_usertype(tolua_S,"CCEaseBounceInOut");
  
  tolua_usertype(tolua_S,"CCLabelAtlas");
  tolua_usertype(tolua_S,"CCAnimation");
- tolua_usertype(tolua_S,"CCTransitionProgressRadialCW");
- tolua_usertype(tolua_S,"CCFadeOutBLTiles");
- tolua_usertype(tolua_S,"CCSplitCols");
+ tolua_usertype(tolua_S,"CCRotateBy");
+ tolua_usertype(tolua_S,"CCFadeOutTRTiles");
  tolua_usertype(tolua_S,"CCSplitRows");
+ tolua_usertype(tolua_S,"CCTransitionProgressRadialCW");
  tolua_usertype(tolua_S,"CCAccelAmplitude");
- tolua_usertype(tolua_S,"CCWaves3D");
- tolua_usertype(tolua_S,"CCFadeIn");
+ tolua_usertype(tolua_S,"CCFadeOutBLTiles");
+ tolua_usertype(tolua_S,"CCSprite");
  tolua_usertype(tolua_S,"CCFadeOut");
  tolua_usertype(tolua_S,"CCLayerMultiplex");
  tolua_usertype(tolua_S,"CCControlPotentiometer");
- tolua_usertype(tolua_S,"CCSprite");
- tolua_usertype(tolua_S,"CCShatteredTiles3D");
+ tolua_usertype(tolua_S,"CCEaseOut");
+ tolua_usertype(tolua_S,"CCSpeed");
  tolua_usertype(tolua_S,"CCMenuItem");
  tolua_usertype(tolua_S,"CCTransitionRotoZoom");
- tolua_usertype(tolua_S,"CCEaseInOut");
+ tolua_usertype(tolua_S,"CCRipple3D");
  tolua_usertype(tolua_S,"Tex2F");
  tolua_usertype(tolua_S,"CCArray");
- tolua_usertype(tolua_S,"CCSpeed");
+ tolua_usertype(tolua_S,"CCCardinalSplineTo");
  tolua_usertype(tolua_S,"CCSkewTo");
- tolua_usertype(tolua_S,"CCRipple3D");
- tolua_usertype(tolua_S,"CCRotateBy");
+ tolua_usertype(tolua_S,"CCSequence");
+ tolua_usertype(tolua_S,"CCFadeIn");
  tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"CCRepeatForever");
- tolua_usertype(tolua_S,"CCCardinalSplineTo");
- tolua_usertype(tolua_S,"CCPoint");
- tolua_usertype(tolua_S,"Vertex2F");
- tolua_usertype(tolua_S,"CCEaseExponentialOut");
  tolua_usertype(tolua_S,"CCEaseIn");
+ tolua_usertype(tolua_S,"CCEaseExponentialOut");
+ tolua_usertype(tolua_S,"Vertex2F");
+ tolua_usertype(tolua_S,"CCPoint");
+ tolua_usertype(tolua_S,"CCEaseInOut");
  tolua_usertype(tolua_S,"CCTransitionFadeBL");
  tolua_usertype(tolua_S,"CCDelayTime");
  tolua_usertype(tolua_S,"CCEaseBounceOut");
@@ -16754,14 +16754,14 @@ static int tolua_get_CCNodeRGBA___CCRGBAProtocol__(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccTexParams_new00
-static int tolua_Cocos2d_ccTexParams_new00(lua_State* tolua_S)
+/* method: new of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_TexParams_new00
+static int tolua_Cocos2d_CCTexture2D_TexParams_new00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"ccTexParams",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"CCTexture2D::TexParams",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -16769,8 +16769,8 @@ static int tolua_Cocos2d_ccTexParams_new00(lua_State* tolua_S)
 #endif
  {
   {
-   ccTexParams* tolua_ret = (ccTexParams*)  Mtolua_new((ccTexParams)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccTexParams");
+   Texture2D::TexParams* tolua_ret = (Texture2D::TexParams*)  Mtolua_new((Texture2D::TexParams)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTexture2D::TexParams");
   }
  }
  return 1;
@@ -16782,14 +16782,14 @@ static int tolua_Cocos2d_ccTexParams_new00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: new_local of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_ccTexParams_new00_local
-static int tolua_Cocos2d_ccTexParams_new00_local(lua_State* tolua_S)
+/* method: new_local of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCTexture2D_TexParams_new00_local
+static int tolua_Cocos2d_CCTexture2D_TexParams_new00_local(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"ccTexParams",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"CCTexture2D::TexParams",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -16797,8 +16797,8 @@ static int tolua_Cocos2d_ccTexParams_new00_local(lua_State* tolua_S)
 #endif
  {
   {
-   ccTexParams* tolua_ret = (ccTexParams*)  Mtolua_new((ccTexParams)());
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccTexParams");
+   Texture2D::TexParams* tolua_ret = (Texture2D::TexParams*)  Mtolua_new((Texture2D::TexParams)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTexture2D::TexParams");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
  }
@@ -16811,11 +16811,11 @@ static int tolua_Cocos2d_ccTexParams_new00_local(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: minFilter of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_minFilter
-static int tolua_get_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
+/* get function: minFilter of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_get_CCTexture2D__TexParams_unsigned_minFilter
+static int tolua_get_CCTexture2D__TexParams_unsigned_minFilter(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'minFilter'",NULL);
 #endif
@@ -16824,11 +16824,11 @@ static int tolua_get_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: minFilter of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_minFilter
-static int tolua_set_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
+/* set function: minFilter of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_set_CCTexture2D__TexParams_unsigned_minFilter
+static int tolua_set_CCTexture2D__TexParams_unsigned_minFilter(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'minFilter'",NULL);
@@ -16841,11 +16841,11 @@ static int tolua_set_ccTexParams_unsigned_minFilter(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: magFilter of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_magFilter
-static int tolua_get_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
+/* get function: magFilter of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_get_CCTexture2D__TexParams_unsigned_magFilter
+static int tolua_get_CCTexture2D__TexParams_unsigned_magFilter(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'magFilter'",NULL);
 #endif
@@ -16854,11 +16854,11 @@ static int tolua_get_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: magFilter of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_magFilter
-static int tolua_set_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
+/* set function: magFilter of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_set_CCTexture2D__TexParams_unsigned_magFilter
+static int tolua_set_CCTexture2D__TexParams_unsigned_magFilter(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'magFilter'",NULL);
@@ -16871,11 +16871,11 @@ static int tolua_set_ccTexParams_unsigned_magFilter(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: wrapS of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_wrapS
-static int tolua_get_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
+/* get function: wrapS of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_get_CCTexture2D__TexParams_unsigned_wrapS
+static int tolua_get_CCTexture2D__TexParams_unsigned_wrapS(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapS'",NULL);
 #endif
@@ -16884,11 +16884,11 @@ static int tolua_get_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: wrapS of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_wrapS
-static int tolua_set_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
+/* set function: wrapS of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_set_CCTexture2D__TexParams_unsigned_wrapS
+static int tolua_set_CCTexture2D__TexParams_unsigned_wrapS(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapS'",NULL);
@@ -16901,11 +16901,11 @@ static int tolua_set_ccTexParams_unsigned_wrapS(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: wrapT of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_get_ccTexParams_unsigned_wrapT
-static int tolua_get_ccTexParams_unsigned_wrapT(lua_State* tolua_S)
+/* get function: wrapT of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_get_CCTexture2D__TexParams_unsigned_wrapT
+static int tolua_get_CCTexture2D__TexParams_unsigned_wrapT(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapT'",NULL);
 #endif
@@ -16914,11 +16914,11 @@ static int tolua_get_ccTexParams_unsigned_wrapT(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: wrapT of class  ccTexParams */
-#ifndef TOLUA_DISABLE_tolua_set_ccTexParams_unsigned_wrapT
-static int tolua_set_ccTexParams_unsigned_wrapT(lua_State* tolua_S)
+/* set function: wrapT of class  TexParams */
+#ifndef TOLUA_DISABLE_tolua_set_CCTexture2D__TexParams_unsigned_wrapT
+static int tolua_set_CCTexture2D__TexParams_unsigned_wrapT(lua_State* tolua_S)
 {
-  ccTexParams* self = (ccTexParams*)  tolua_tousertype(tolua_S,1,0);
+  Texture2D::TexParams* self = (Texture2D::TexParams*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'wrapT'",NULL);
@@ -17480,7 +17480,7 @@ static int tolua_Cocos2d_CCTexture2D_setTexParameters00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCTexture2D",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccTexParams",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCTexture2D::TexParams",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -17488,7 +17488,7 @@ static int tolua_Cocos2d_CCTexture2D_setTexParameters00(lua_State* tolua_S)
 #endif
  {
   Texture2D* self = (Texture2D*)  tolua_tousertype(tolua_S,1,0);
-  const ccTexParams* texParams = ((const ccTexParams*)  tolua_tousertype(tolua_S,2,0));
+  const Texture2D::TexParams* texParams = ((const Texture2D::TexParams*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTexParameters'", NULL);
 #endif
@@ -64629,22 +64629,22 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC4",(int)kCCTexture2DPixelFormat_PVRTC4);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_PVRTC2",(int)kCCTexture2DPixelFormat_PVRTC2);
   tolua_constant(tolua_S,"kCCTexture2DPixelFormat_Default",(int)kCCTexture2DPixelFormat_Default);
-  #ifdef __cplusplus
-  tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",tolua_collect_ccTexParams);
-  #else
-  tolua_cclass(tolua_S,"ccTexParams","ccTexParams","",NULL);
-  #endif
-  tolua_beginmodule(tolua_S,"ccTexParams");
-   tolua_function(tolua_S,"new",tolua_Cocos2d_ccTexParams_new00);
-   tolua_function(tolua_S,"new_local",tolua_Cocos2d_ccTexParams_new00_local);
-   tolua_function(tolua_S,".call",tolua_Cocos2d_ccTexParams_new00_local);
-   tolua_variable(tolua_S,"minFilter",tolua_get_ccTexParams_unsigned_minFilter,tolua_set_ccTexParams_unsigned_minFilter);
-   tolua_variable(tolua_S,"magFilter",tolua_get_ccTexParams_unsigned_magFilter,tolua_set_ccTexParams_unsigned_magFilter);
-   tolua_variable(tolua_S,"wrapS",tolua_get_ccTexParams_unsigned_wrapS,tolua_set_ccTexParams_unsigned_wrapS);
-   tolua_variable(tolua_S,"wrapT",tolua_get_ccTexParams_unsigned_wrapT,tolua_set_ccTexParams_unsigned_wrapT);
-  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCTexture2D","CCTexture2D","CCObject",NULL);
   tolua_beginmodule(tolua_S,"CCTexture2D");
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"TexParams","CCTexture2D::TexParams","",tolua_collect_CCTexture2D__TexParams);
+   #else
+   tolua_cclass(tolua_S,"TexParams","CCTexture2D::TexParams","",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"TexParams");
+    tolua_function(tolua_S,"new",tolua_Cocos2d_CCTexture2D_TexParams_new00);
+    tolua_function(tolua_S,"new_local",tolua_Cocos2d_CCTexture2D_TexParams_new00_local);
+    tolua_function(tolua_S,".call",tolua_Cocos2d_CCTexture2D_TexParams_new00_local);
+    tolua_variable(tolua_S,"minFilter",tolua_get_CCTexture2D__TexParams_unsigned_minFilter,tolua_set_CCTexture2D__TexParams_unsigned_minFilter);
+    tolua_variable(tolua_S,"magFilter",tolua_get_CCTexture2D__TexParams_unsigned_magFilter,tolua_set_CCTexture2D__TexParams_unsigned_magFilter);
+    tolua_variable(tolua_S,"wrapS",tolua_get_CCTexture2D__TexParams_unsigned_wrapS,tolua_set_CCTexture2D__TexParams_unsigned_wrapS);
+    tolua_variable(tolua_S,"wrapT",tolua_get_CCTexture2D__TexParams_unsigned_wrapT,tolua_set_CCTexture2D__TexParams_unsigned_wrapT);
+   tolua_endmodule(tolua_S);
    tolua_function(tolua_S,"releaseData",tolua_Cocos2d_CCTexture2D_releaseData00);
    tolua_function(tolua_S,"keepData",tolua_Cocos2d_CCTexture2D_keepData00);
    tolua_function(tolua_S,"getPixelFormat",tolua_Cocos2d_CCTexture2D_getPixelFormat00);

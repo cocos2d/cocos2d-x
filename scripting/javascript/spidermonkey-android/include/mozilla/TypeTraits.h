@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -16,6 +17,10 @@
 #include <wchar.h>
 
 namespace mozilla {
+
+/* Forward declarations. */
+
+template<typename> struct RemoveCV;
 
 /* 20.9.3 Helper classes [meta.help] */
 
@@ -39,6 +44,72 @@ typedef IntegralConstant<bool, false> FalseType;
 
 /* 20.9.4.1 Primary type categories [meta.unary.cat] */
 
+namespace detail {
+
+template <typename T>
+struct IsIntegralHelper : FalseType {};
+
+template<> struct IsIntegralHelper<char>               : TrueType {};
+template<> struct IsIntegralHelper<signed char>        : TrueType {};
+template<> struct IsIntegralHelper<unsigned char>      : TrueType {};
+template<> struct IsIntegralHelper<short>              : TrueType {};
+template<> struct IsIntegralHelper<unsigned short>     : TrueType {};
+template<> struct IsIntegralHelper<int>                : TrueType {};
+template<> struct IsIntegralHelper<unsigned int>       : TrueType {};
+template<> struct IsIntegralHelper<long>               : TrueType {};
+template<> struct IsIntegralHelper<unsigned long>      : TrueType {};
+template<> struct IsIntegralHelper<long long>          : TrueType {};
+template<> struct IsIntegralHelper<unsigned long long> : TrueType {};
+template<> struct IsIntegralHelper<bool>               : TrueType {};
+template<> struct IsIntegralHelper<wchar_t>            : TrueType {};
+
+} /* namespace detail */
+
+/**
+ * IsIntegral determines whether a type is an integral type.
+ *
+ * mozilla::IsIntegral<int>::value is true;
+ * mozilla::IsIntegral<unsigned short>::value is true;
+ * mozilla::IsIntegral<const long>::value is true;
+ * mozilla::IsIntegral<int*>::value is false;
+ * mozilla::IsIntegral<double>::value is false;
+ *
+ * Note that the behavior of IsIntegral on char16_t and char32_t is
+ * unspecified.
+ */
+template<typename T>
+struct IsIntegral : detail::IsIntegralHelper<typename RemoveCV<T>::Type>
+{};
+
+template<typename T, typename U>
+struct IsSame;
+
+namespace detail {
+
+template<typename T>
+struct IsFloatingPointHelper
+  : IntegralConstant<bool,
+                     IsSame<T, float>::value ||
+                     IsSame<T, double>::value ||
+                     IsSame<T, long double>::value>
+{};
+
+} // namespace detail
+
+/**
+ * IsFloatingPoint determines whether a type is a floating point type (float,
+ * double, long double).
+ *
+ * mozilla::IsFloatingPoint<int>::value is false;
+ * mozilla::IsFloatingPoint<const float>::value is true;
+ * mozilla::IsFloatingPoint<long double>::value is true;
+ * mozilla::IsFloatingPoint<double*>::value is false.
+ */
+template<typename T>
+struct IsFloatingPoint
+  : detail::IsFloatingPointHelper<typename RemoveCV<T>::Type>
+{};
+
 /**
  * IsPointer determines whether a type is a pointer type (but not a pointer-to-
  * member type).
@@ -57,7 +128,46 @@ struct IsPointer<T*> : TrueType {};
 
 /* 20.9.4.2 Composite type traits [meta.unary.comp] */
 
+/**
+ * IsArithmetic determines whether a type is arithmetic.  A type is arithmetic
+ * iff it is an integral type or a floating point type.
+ *
+ * mozilla::IsArithmetic<int>::value is true;
+ * mozilla::IsArithmetic<double>::value is true;
+ * mozilla::IsArithmetic<long double*>::value is false.
+ */
+template<typename T>
+struct IsArithmetic
+  : IntegralConstant<bool, IsIntegral<T>::value || IsFloatingPoint<T>::value>
+{};
+
 /* 20.9.4.3 Type properties [meta.unary.prop] */
+
+/**
+ * IsConst determines whether a type is const or not.
+ *
+ * mozilla::IsConst<int>::value is false;
+ * mozilla::IsConst<void* const>::value is true;
+ * mozilla::IsConst<const char*>::value is false.
+ */
+template<typename T>
+struct IsConst : FalseType {};
+
+template<typename T>
+struct IsConst<const T> : TrueType {};
+
+/**
+ * IsVolatile determines whether a type is volatile or not.
+ *
+ * mozilla::IsVolatile<int>::value is false;
+ * mozilla::IsVolatile<void* volatile>::value is true;
+ * mozilla::IsVolatile<volatile char*>::value is false.
+ */
+template<typename T>
+struct IsVolatile : FalseType {};
+
+template<typename T>
+struct IsVolatile<volatile T> : TrueType {};
 
 /**
  * Traits class for identifying POD types.  Until C++11 there's no automatic
@@ -86,6 +196,38 @@ template<> struct IsPod<float>              : TrueType {};
 template<> struct IsPod<double>             : TrueType {};
 template<> struct IsPod<wchar_t>            : TrueType {};
 template<typename T> struct IsPod<T*>       : TrueType {};
+
+/**
+ * IsSigned determines whether a type is a signed arithmetic type.
+ *
+ * Don't use this if the type might be user-defined!  You might or might not get
+ * a compile error, depending.
+ *
+ * mozilla::IsSigned<int>::value is true;
+ * mozilla::IsSigned<const unsigned int>::value is false;
+ * mozilla::IsSigned<unsigned char>::value is false;
+ * mozilla::IsSigned<float>::value is true.
+ */
+template<typename T>
+struct IsSigned
+  : IntegralConstant<bool, IsArithmetic<T>::value && T(-1) < T(0)>
+{};
+
+/**
+ * IsUnsigned determines whether a type is an unsigned arithmetic type.
+ *
+ * Don't use this if the type might be user-defined!  You might or might not get
+ * a compile error, depending.
+ *
+ * mozilla::IsUnsigned<int>::value is false;
+ * mozilla::IsUnsigned<const unsigned int>::value is true;
+ * mozilla::IsUnsigned<unsigned char>::value is true;
+ * mozilla::IsUnsigned<float>::value is false.
+ */
+template<typename T>
+struct IsUnsigned
+  : IntegralConstant<bool, IsArithmetic<T>::value && T(0) < T(-1)>
+{};
 
 /* 20.9.5 Type property queries [meta.unary.prop.query] */
 
@@ -226,6 +368,60 @@ struct IsConvertible
 /* 20.9.7 Transformations between types [meta.trans] */
 
 /* 20.9.7.1 Const-volatile modifications [meta.trans.cv] */
+
+/**
+ * RemoveConst removes top-level const qualifications on a type.
+ *
+ * mozilla::RemoveConst<int>::Type is int;
+ * mozilla::RemoveConst<const int>::Type is int;
+ * mozilla::RemoveConst<const int*>::Type is const int*;
+ * mozilla::RemoveConst<int* const>::Type is int*.
+ */
+template<typename T>
+struct RemoveConst
+{
+    typedef T Type;
+};
+
+template<typename T>
+struct RemoveConst<const T>
+{
+    typedef T Type;
+};
+
+/**
+ * RemoveVolatile removes top-level volatile qualifications on a type.
+ *
+ * mozilla::RemoveVolatile<int>::Type is int;
+ * mozilla::RemoveVolatile<volatile int>::Type is int;
+ * mozilla::RemoveVolatile<volatile int*>::Type is volatile int*;
+ * mozilla::RemoveVolatile<int* volatile>::Type is int*.
+ */
+template<typename T>
+struct RemoveVolatile
+{
+    typedef T Type;
+};
+
+template<typename T>
+struct RemoveVolatile<volatile T>
+{
+    typedef T Type;
+};
+
+/**
+ * RemoveCV removes top-level const and volatile qualifications on a type.
+ *
+ * mozilla::RemoveCV<int>::Type is int;
+ * mozilla::RemoveCV<const int>::Type is int;
+ * mozilla::RemoveCV<volatile int>::Type is int;
+ * mozilla::RemoveCV<int* const volatile>::Type is int*.
+ */
+template<typename T>
+struct RemoveCV
+{
+    typedef typename RemoveConst<typename RemoveVolatile<T>::Type>::Type Type;
+};
 
 /* 20.9.7.2 Reference modifications [meta.trans.ref] */
 

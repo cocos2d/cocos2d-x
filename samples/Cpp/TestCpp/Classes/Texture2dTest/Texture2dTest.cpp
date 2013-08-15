@@ -65,6 +65,10 @@ static std::function<Layer*()> createFunctions[] =
     
     CL(TextureETC1),
     
+    CL(TextureS3TCDxt1),
+    CL(TextureS3TCDxt3),
+    CL(TextureS3TCDxt5),
+    
     CL(TextureConvertRGB888),
     CL(TextureConvertRGBA8888),
     CL(TextureConvertI8),
@@ -267,7 +271,7 @@ void TextureMipMap::onEnter()
 
     Texture2D *texture0 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas.png");
     texture0->generateMipmap();
-    ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     texture0->setTexParameters(texParams);
 
     Texture2D *texture1 = TextureCache::getInstance()->addImage("Images/grossini_dance_atlas_nomipmap.png");
@@ -323,7 +327,7 @@ void TexturePVRMipMap::onEnter()
         addChild(imgMipMap);
 
         // support mipmap filtering
-        ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
         imgMipMap->getTexture()->setTexParameters(texParams);
     }
 
@@ -369,7 +373,7 @@ void TexturePVRMipMap2::onEnter()
     addChild(imgMipMap);
     
     // support mipmap filtering
-    ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };    
+    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
     imgMipMap->getTexture()->setTexParameters(texParams);
 
     Sprite *img = Sprite::create("Images/test_image.png");
@@ -1550,7 +1554,7 @@ void TextureGlClamp::onEnter()
     Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
-    ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
+    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     sprite->getTexture()->setTexParameters(params);
 
     auto rotate = RotateBy::create(4, 360);
@@ -1587,7 +1591,7 @@ void TextureGlRepeat::onEnter()
     Sprite *sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Point(size.width/2,size.height/2));
-    ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
+    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
     sprite->getTexture()->setTexParameters(params);
     
     auto rotate = RotateBy::create(4, 360);
@@ -2004,6 +2008,61 @@ std::string TextureETC1::subtitle()
     return "only supported on android";
 }
 
+//Implement of S3TC Dxt1
+TextureS3TCDxt1::TextureS3TCDxt1()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt1_mipmaps.dds");
+    //Sprite *sprite = Sprite::create("Images/water_2_dxt1.dds");
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureS3TCDxt1::title()
+{
+    return "S3TC texture test#1";
+}
+std::string TextureS3TCDxt1::subtitle()
+{
+    return "S3TC dxt1 decode,one bit for Alpha";
+}
+//Implement of S3TC Dxt3
+TextureS3TCDxt3::TextureS3TCDxt3()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt3_mipmaps.dds");
+    //Sprite *sprite = Sprite::create("Images/water_2_dxt3.dds");
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureS3TCDxt3::title()
+{
+    return "S3TC texture test#2";
+}
+std::string TextureS3TCDxt3::subtitle()
+{
+    return "S3TC dxt3 decode";
+}
+//Implement fo S3TC Dxt5
+TextureS3TCDxt5::TextureS3TCDxt5()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt5_mipmaps.dds");
+    //Sprite *sprite = Sprite::create("Images/water_2_dxt5.dds");
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureS3TCDxt5::title()
+{
+    return "S3TC texture test#3";
+}
+std::string TextureS3TCDxt5::subtitle()
+{
+    return "S3TC dxt5 decode";
+    
+}
 
 static void addImageToDemo(TextureDemo& demo, float x, float y, const char* path, Texture2D::PixelFormat format)
 {

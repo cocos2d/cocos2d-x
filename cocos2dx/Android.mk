@@ -130,6 +130,7 @@ textures/CCTexture2D.cpp \
 textures/CCTextureAtlas.cpp \
 textures/CCTextureCache.cpp \
 platform/third_party/common/etc/etc1.cpp\
+platform/third_party/common/s3tc/s3tc.cpp\
 tilemap_parallax_nodes/CCParallaxNode.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -144,13 +145,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/platform/third_party/common/etc
+                    $(LOCAL_PATH)/platform/third_party/common/etc\
+                    $(LOCAL_PATH)/platform/third_party/common/s3tc
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \
                     $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
-                    $(LOCAL_PATH)/platform/third_party/common/etc
+                    $(LOCAL_PATH)/platform/third_party/common/etc\
+                    $(LOCAL_PATH)/platform/third_party/common/s3tc
 
 
 LOCAL_LDLIBS := -lGLESv2 \

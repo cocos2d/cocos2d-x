@@ -1,0 +1,9 @@
+jpeg
+version 9.0 for ios mac win32 android linux
+
+png
+version 1.6.2 for ios mac win32 android
+linux use libpng12-dev which downloaded use the shell command
+
+tiff
+version 4.0.3 for ios mac win32 android linux

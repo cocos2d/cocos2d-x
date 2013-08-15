@@ -2884,7 +2884,7 @@ JSBool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, js
 
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-        ccTexParams param = { arg0, arg1, arg2, arg3 };
+        Texture2D::TexParams param = { arg0, arg1, arg2, arg3 };
 
         cobj->setTexParameters(param);
 

@@ -209,7 +209,7 @@ public:
     static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
-    static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
+    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 
@@ -236,9 +236,9 @@ protected:
 
     std::string _fileName;
 
-    ccTexParams      _texParams;
-    std::string      _text;
-    FontDefinition   _fontDefinition;
+    Texture2D::TexParams      _texParams;
+    std::string               _text;
+    FontDefinition            _fontDefinition;
 };
 
 #endif

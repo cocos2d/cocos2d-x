@@ -24,13 +24,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCCAMERA_H__
-#define __CCCAMERA_H__
+#ifndef __COCOS2DX_CAMERA_H__
+#define __COCOS2DX_CAMERA_H__
+
+#include <string>
 
 #include "cocoa/CCObject.h"
 #include "ccMacros.h"
 #include "kazmath/mat4.h"
-#include <string>
+
 
 NS_CC_BEGIN
 
@@ -122,4 +124,4 @@ private:
 
 NS_CC_END
 
-#endif // __CCCAMERA_H__
+#endif // __COCOS2DX_CAMERA_H__
