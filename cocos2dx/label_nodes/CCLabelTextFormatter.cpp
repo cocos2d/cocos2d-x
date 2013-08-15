@@ -224,7 +224,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
     vector<unsigned short> last_line;
     for (int ctr = 0; ctr <= str_len; ++ctr)
     {
-        unsigned char currentChar = theLabel->getCharAtStringPosition(ctr);
+        unsigned short int currentChar = theLabel->getCharAtStringPosition(ctr);
         
         if (currentChar == '\n' || currentChar == 0)
         {
@@ -301,7 +301,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     unsigned short prev         = -1;
     
     
-    Size tmpSize              = Size::ZERO;
+    Size tmpSize                = Size::ZERO;
     
     int longestLine             = 0;
     unsigned int totalHeight    = 0;
