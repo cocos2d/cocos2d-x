@@ -153,19 +153,13 @@ CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
 	m_bAutoLoadSpriteFile = true;
-	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
-}
-
-void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_CallFuncO selector)
-{
-	m_bAutoLoadSpriteFile = true;
-	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+	CCDataReaderHelper::addDataFromFile(configFilePath);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
 	m_bAutoLoadSpriteFile = false;
-    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+    CCDataReaderHelper::addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
@@ -191,7 +185,7 @@ void CCArmatureDataManager::removeAll()
         m_pTextureDatas->removeAllObjects();
     }
 
-    CCDataReaderHelper::sharedDataReaderHelper()->clear();
+    CCDataReaderHelper::clear();
 }
 
 bool CCArmatureDataManager::isAutoLoadSpriteFile()

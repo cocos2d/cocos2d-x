@@ -29,13 +29,7 @@ THE SOFTWARE.
 #include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include <errno.h>
-#include <stack>
-#include <string>
-#include <cctype>
-#include <queue>
-#include <list>
-#include <pthread.h>
+
 
 static const char *VERSION = "version";
 static const float VERSION_2_0 = 2.0f;
@@ -135,9 +129,7 @@ static const char *COLOR_INFO = "color";
 
 static const char *CONFIG_FILE_PATH= "config_file_path";
 
-
 NS_CC_EXT_BEGIN
-
 
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
@@ -145,118 +137,6 @@ static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
 
 static std::string s_BasefilePath = "";
-
-CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
-
-
-//! Async load
-
-typedef struct _AsyncStruct
-{
-	std::string            filename;
-	CCObject    *target;
-	SEL_CallFuncND        selector;
-} AsyncStruct;
-
-typedef struct _DataInfo
-{
-	AsyncStruct        *asyncStruct;
-	CCArmatureData     *armatureData;
-	CCAnimationData    *animationData;
-	CCTextureData      *textureData;
-} DataInfo;
-
-static pthread_t s_loadingThread;
-
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
-
-static pthread_mutex_t      s_asyncStructQueueMutex;
-static pthread_mutex_t      s_DataInfoMutex;
-
-#ifdef EMSCRIPTEN
-// Hack to get ASM.JS validation (no undefined symbols allowed).
-#define pthread_cond_signal(_)
-#endif // EMSCRIPTEN
-
-static unsigned long s_nAsyncRefCount = 0;
-
-static bool need_quit = false;
-
-static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
-static std::queue<DataInfo*>*   s_pDataQueue = NULL;
-
-
-static void *loadData(void *)
-{
-	AsyncStruct *pAsyncStruct = NULL;
-
-	while (true)
-	{
-		// create autorelease pool for iOS
-		CCThread thread;
-		thread.createAutoreleasePool();
-
-		std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
-		pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
-		if (pQueue->empty())
-		{
-			pthread_mutex_unlock(&s_asyncStructQueueMutex);
-			if (need_quit) {
-				break;
-			}
-			else {
-				pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
-				continue;
-			}
-		}
-		else
-		{
-			pAsyncStruct = pQueue->front();
-			pQueue->pop();
-			pthread_mutex_unlock(&s_asyncStructQueueMutex);
-		}        
-
-		const char *filename = pAsyncStruct->filename.c_str();
-
-		CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(filename);
-
-		// generate image info
-		DataInfo *pDataInfo = new DataInfo();
-		pDataInfo->asyncStruct = pAsyncStruct;
-
-		// put the image info into the queue
-		pthread_mutex_lock(&s_DataInfoMutex);
-		s_pDataQueue->push(pDataInfo);
-		pthread_mutex_unlock(&s_DataInfoMutex);    
-	}
-
-	if( s_pAsyncStructQueue != NULL )
-	{
-		delete s_pAsyncStructQueue;
-		s_pAsyncStructQueue = NULL;
-		delete s_pDataQueue;
-		s_pDataQueue = NULL;
-
-		pthread_mutex_destroy(&s_asyncStructQueueMutex);
-		pthread_mutex_destroy(&s_DataInfoMutex);
-		pthread_mutex_destroy(&s_SleepMutex);
-		pthread_cond_destroy(&s_SleepCondition);
-	}
-
-	return NULL;
-}
-
-
-CCDataReaderHelper *CCDataReaderHelper::sharedDataReaderHelper()
-{
-	if(!s_DataReaderHelper)
-	{
-		s_DataReaderHelper = new CCDataReaderHelper();
-	}
-
-	return s_DataReaderHelper;
-}
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -295,10 +175,6 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 	{
 		s_BasefilePath = s_BasefilePath.substr(0, pos+1);
 	}
-	else
-	{
-		s_BasefilePath = "";
-	}
 
 
     std::string filePathStr =  filePath;
@@ -315,84 +191,6 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
         CCDataReaderHelper::addDataFromJson(filePathStr.c_str());
     }
 }
-
-void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *target, SEL_CallFuncND selector)
-{
-#ifdef EMSCRIPTEN
-	CCLOGWARN("Cannot load data %s asynchronously in Emscripten builds.", path);
-	return;
-#endif // EMSCRIPTEN
-
-
-	/*
-    * Check if file is already added to CCArmatureDataManager, if then return.
-    */
-    for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
-    {
-        if (s_arrConfigFileList[i].compare(filePath) == 0)
-        {
-            return;
-        }
-    }
-    s_arrConfigFileList.push_back(filePath);
-
-
-	//! find the base file path
-	s_BasefilePath = filePath;
-	size_t pos = s_BasefilePath.find_last_of("/");
-	if (pos != std::string::npos)
-	{
-		s_BasefilePath = s_BasefilePath.substr(0, pos+1);
-	}
-
-
-	// lazy init
-	if (s_pAsyncStructQueue == NULL)
-	{             
-		s_pAsyncStructQueue = new std::queue<AsyncStruct*>();
-		s_pDataQueue = new std::queue<DataInfo*>();        
-
-		pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-		pthread_mutex_init(&s_DataInfoMutex, NULL);
-		pthread_mutex_init(&s_SleepMutex, NULL);
-		pthread_cond_init(&s_SleepCondition, NULL);
-		pthread_create(&s_loadingThread, NULL, loadData, NULL);
-
-		need_quit = false;
-	}
-
-	if (0 == s_nAsyncRefCount)
-	{
-		CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCDataReaderHelper::addDataAsyncCallBack), this, 0, false);
-	}
-
-	++s_nAsyncRefCount;
-
-	if (target)
-	{
-		target->retain();
-	}
-
-	// generate async struct
-	AsyncStruct *data = new AsyncStruct();
-	data->filename = filePath;
-	data->target = target;
-	data->selector = selector;
-
-	// add async struct into queue
-	pthread_mutex_lock(&s_asyncStructQueueMutex);
-	s_pAsyncStructQueue->push(data);
-	pthread_mutex_unlock(&s_asyncStructQueueMutex);
-
-	pthread_cond_signal(&s_SleepCondition);
-}
-
-
-void CCDataReaderHelper::addDataAsyncCallBack(float dt)
-{
-
-}
-
 
 
 
@@ -415,6 +213,19 @@ void CCDataReaderHelper::addDataFromXML(const char *xmlPath)
     }
 }
 
+void CCDataReaderHelper::addDataFromXMLPak(const char *xmlPakPath)
+{
+    // #if CS_TOOL_PLATFORM
+    //
+    // 	char *_pFileContent = NULL;
+    // 	JsonReader::getFileBuffer(xmlPakPath, &_pFileContent);
+    //
+    // 	if (_pFileContent)
+    // 	{
+    // 		addDataFromCache(_pFileContent);
+    // 	}
+    // #endif
+}
 
 void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
 {
@@ -1159,8 +970,8 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
 		if (dic != NULL)
 		{
 			CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
-			sdd->skinData.x = dic->getItemFloatValue(A_X, 0) * s_PositionReadScale;
-			sdd->skinData.y = dic->getItemFloatValue(A_Y, 0) * s_PositionReadScale;
+			sdd->skinData.x = dic->getItemFloatValue(A_X, 0);
+			sdd->skinData.y = dic->getItemFloatValue(A_Y, 0);
 			sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
 			sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
 			sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);

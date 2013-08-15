@@ -214,14 +214,6 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     if(m_pDisplayRenderNode)
     {
-
-		CCRGBAProtocol *protocol = dynamic_cast<CCRGBAProtocol *>(m_pDisplayRenderNode);
-		if(protocol != NULL)
-		{
-			protocol->setColor(m_pBone->getColor());
-			protocol->setOpacity(m_pBone->getOpacity());
-		}
-
         if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != NULL)
         {
             m_pBone->setChildArmature((CCArmature *)m_pDisplayRenderNode);

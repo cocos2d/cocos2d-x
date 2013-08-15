@@ -198,29 +198,24 @@ void CCBone::update(float delta)
 
 void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
 {
-	_realColor = ccc3(255, 255, 255);
     CCNodeRGBA::updateDisplayedColor(parentColor);
     updateColor();
 }
 
 void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-	_realOpacity = 255;
     CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
     updateColor();
 }
 
 void CCBone::updateColor()
 {
-	setColor(ccc3(_displayedColor.r * m_pTweenData->r / 255, _displayedColor.g * m_pTweenData->g / 255, _displayedColor.b * m_pTweenData->b / 255));
-	setOpacity(_displayedOpacity * m_pTweenData->a / 255);
-
     CCNode *display = m_pDisplayManager->getDisplayRenderNode();
     CCRGBAProtocol *protocol = dynamic_cast<CCRGBAProtocol *>(display);
     if(protocol != NULL)
     {
-        protocol->setColor(_realColor);
-        protocol->setOpacity(_realOpacity);
+        protocol->setColor(ccc3(_displayedColor.r * m_pTweenData->r / 255, _displayedColor.g * m_pTweenData->g / 255, _displayedColor.b * m_pTweenData->b / 255));
+        protocol->setOpacity(_displayedOpacity * m_pTweenData->a / 255);
     }
 }
 
