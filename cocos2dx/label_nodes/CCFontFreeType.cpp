@@ -315,7 +315,7 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     if (!_fontRef)
         return 0;
 
-    bool hasKerning = FT_HAS_KERNING( _fontRef );
+    bool hasKerning = FT_HAS_KERNING( _fontRef ) != 0;
     
     if (!hasKerning)
         return 0;
