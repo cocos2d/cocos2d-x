@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 
-#include "ccUTF8.h"
+#include "support/ccUTF8.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
 #include "CCFont.h"

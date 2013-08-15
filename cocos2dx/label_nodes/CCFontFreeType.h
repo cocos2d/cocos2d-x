@@ -40,12 +40,12 @@ public:
     
     static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
     
-    virtual FontAtlas   * createFontAtlas();
-    virtual Size        * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters);
-    virtual GlyphDef    * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false);
-    unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight);
-    virtual int           getFontMaxHeight();
-    virtual int           getLetterPadding();
+    virtual FontAtlas   * createFontAtlas() override;
+    virtual Size        * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters) override;
+    virtual GlyphDef    * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs,    bool UTF16text = false) override;
+    unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) override;
+    virtual int           getFontMaxHeight() override;
+    virtual int           getLetterPadding() override;
     
     
 protected:
