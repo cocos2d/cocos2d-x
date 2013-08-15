@@ -1,17 +1,17 @@
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
 local M = {}
-local audioEngineInstance = SimpleAudioEngine:getInstance()
+local audioEngineInstance = cc.SimpleAudioEngine:getInstance()
 
 function M.stopAllEffects()
     audioEngineInstance:stopAllEffects()
 end
 
 function M.getMusicVolume()
-    return audioEngineInstance:getBackgroundMusicVolume()
+    return audioEngineInstance:getMusicVolume()
 end
 
 function M.isMusicPlaying()
-    return audioEngineInstance:isBackgroundMusicPlaying()
+    return audioEngineInstance:isMusicPlaying()
 end
 
 function M.getEffectsVolume()
@@ -19,7 +19,7 @@ function M.getEffectsVolume()
 end
 
 function M.setMusicVolume(volume)
-    audioEngineInstance:setBackgroundMusicVolume(volume)
+    audioEngineInstance:setMusicVolume(volume)
 end
 
 function M.stopEffect(handle)
@@ -31,7 +31,7 @@ function M.stopMusic(isReleaseData)
     if nil ~= isReleaseData then
         releaseDataValue = isReleaseData
     end
-    audioEngineInstance:stopBackgroundMusic(releaseDataValue)
+    audioEngineInstance:stopMusic(releaseDataValue)
 end
 
 function M.playMusic(filename, isLoop)
@@ -39,7 +39,7 @@ function M.playMusic(filename, isLoop)
     if nil ~= isLoop then
         loopValue = isLoop
     end
-    audioEngineInstance:playBackgroundMusic(filename, loopValue)
+    audioEngineInstance:playMusic(filename, loopValue)
 end
 
 function M.pauseAllEffects()
@@ -47,11 +47,11 @@ function M.pauseAllEffects()
 end
 
 function M.preloadMusic(filename)
-    audioEngineInstance:preloadBackgroundMusic(filename)
+    audioEngineInstance:preloadMusic(filename)
 end
 
 function M.resumeMusic()
-    audioEngineInstance:resumeBackgroundMusic()
+    audioEngineInstance:resumeMusic()
 end
 
 function M.playEffect(filename, isLoop)
@@ -63,11 +63,11 @@ function M.playEffect(filename, isLoop)
 end
 
 function M.rewindMusic()
-    audioEngineInstance:rewindBackgroundMusic()
+    audioEngineInstance:rewindMusic()
 end
 
 function M.willPlayMusic()
-    return audioEngineInstance:willPlayBackgroundMusic()
+    return audioEngineInstance:willPlayMusic()
 end
 
 function M.unloadEffect(filename)
@@ -91,7 +91,7 @@ function M.resumeAllEffects(handle)
 end
 
 function M.pauseMusic()
-    audioEngineInstance:pauseBackgroundMusic()
+    audioEngineInstance:pauseMusic()
 end
 
 function M.resumeEffect(handle)

@@ -1,27 +1,28 @@
-local size = CCDirector:getInstance():getWinSize()
+local size = cc.Director:getInstance():getWinSize()
 local layer = nil
 local kTagSprite = 1
 
 local function initWithLayer()
-    local sprite = CCSprite:create(s_pPathGrossini)
+    local sprite = cc.Sprite:create(s_pPathGrossini)
 
-    local bgLayer = CCLayerColor:create(Color4B(255,255,0,255))
+    local bgLayer = cc.LayerColor:create(cc.c4b(255,255,0,255))
     layer:addChild(bgLayer, -1)
 
     layer:addChild(sprite, 0, kTagSprite)
-    sprite:setPosition(CCPoint(20,150))
+    sprite:setPosition(cc.p(20,150))
 
-    sprite:runAction(CCJumpTo:create(4, CCPoint(300,48), 100, 4))
+    sprite:runAction(cc.JumpTo:create(4, cc.p(300,48), 100, 4))
 
-    bgLayer:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(
-                                                 CCFadeIn:create(1),
-                                                 CCFadeOut:create(1))))
+    bgLayer:runAction(cc.RepeatForever:create(cc.Sequence:create(
+                                                 cc.FadeIn:create(1),
+                                                 cc.FadeOut:create(1))))
 
     local function onTouchEnded(x, y)
         local s = layer:getChildByTag(kTagSprite)
         s:stopAllActions()
-        s:runAction(CCMoveTo:create(1, CCPoint(x, y)))
-        local posX, posY = s:getPosition()
+        s:runAction(cc.MoveTo:create(1, cc.p(x, y)))
+        local pos = s:getPosition()
+        local posX, posY = pos.x,pos.y
         local o = x - posX
         local a = y - posY
         local at = math.atan(o / a) / math.pi * 180.0
@@ -33,7 +34,7 @@ local function initWithLayer()
                 at = 180 - math.abs(at)
             end
         end
-        s:runAction(CCRotateTo:create(1, at))
+        s:runAction(cc.RotateTo:create(1, at))
     end
 
     local function onTouch(eventType, x, y)
@@ -55,8 +56,8 @@ end
 --------------------------------
 function ClickAndMoveTest()
     cclog("ClickAndMoveTest")
-    local scene = CCScene:create()
-    layer = CCLayer:create()
+    local scene = cc.Scene:create()
+    layer = cc.Layer:create()
 
     initWithLayer()
 
