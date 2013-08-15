@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "CCBSequence.h"
-
+#include "GUI/CCControlExtension/CCControl.h"
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
     T * ptr = new T(); \
@@ -187,28 +187,29 @@ public:
     float readFloat();
     std::string readCachedString();
     bool isJSControlled();
-            
     
     bool readCallbackKeyframesForSeq(CCBSequence* seq);
     bool readSoundKeyframesForSeq(CCBSequence* seq);
-
-
     
     Array* getOwnerCallbackNames();
     Array* getOwnerCallbackNodes();
+    Array* getOwnerCallbackControlEvents();
+    
     Array* getOwnerOutletNames();
     Array* getOwnerOutletNodes();
     Array* getNodesWithAnimationManagers();
     Array* getAnimationManagersForNodes();
-
+    
     Dictionary* getAnimationManagers();
     void setAnimationManagers(Dictionary* x);  // weak reference
     
-    void addOwnerCallbackName(std::string name);
+    void addOwnerCallbackName(const std::string& name);
     void addOwnerCallbackNode(Node *node);
+    void addOwnerCallbackControlEvents(Control::EventType type);
     
-    void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackName(const std::string& name);
     void addDocumentCallbackNode(Node *node);
+    void addDocumentCallbackControlEvents(Control::EventType eventType);
     
     static float getResolutionScale();
     static void setResolutionScale(float scale);
@@ -232,6 +233,8 @@ private:
     bool getBit();
     void alignBits();
 
+    bool init();
+    
     friend class NodeLoader;
 
 private:
@@ -262,12 +265,10 @@ private:
     
     std::vector<std::string> _ownerCallbackNames;
     Array* _ownerCallbackNodes;
+    Array* _ownerOwnerCallbackControlEvents;
     std::string _CCBRootPath;
     
     bool _jsControlled;
-    
-    bool _hasScriptingOwner;
-    bool init();
 };
 
 // end of effects group
