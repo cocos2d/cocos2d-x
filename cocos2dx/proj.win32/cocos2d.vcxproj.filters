@@ -485,9 +485,6 @@
     <ClCompile Include="..\label_nodes\CCFontAtlasFactory.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCFontCache.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCFontDefinition.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -497,19 +494,10 @@
     <ClCompile Include="..\label_nodes\CCFontFreeType.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCFontRenderFreeType.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabel.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabelTextFormatter.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\label_nodes\CCStringBMFont.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\label_nodes\CCStringTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\label_nodes\CCTextImage.cpp">
