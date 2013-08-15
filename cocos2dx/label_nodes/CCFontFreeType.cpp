@@ -23,10 +23,12 @@
  ****************************************************************************/
 
 #include <stdio.h>
-#include "cocos2d.h"
-#include "support/ccUTF8.h"
+
+#include "ccUTF8.h"
 #include "CCFontFreeType.h"
 #include "CCTextImage.h"
+#include "CCFont.h"
+#include "CCFontDefinition.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +36,29 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 
-
+FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+{
+    if( glyphs == GlyphCollection::DYNAMIC )
+    {
+        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
+        return nullptr;
+    }
+    
+    FontFreeType *tempFont =  new FontFreeType();
+    
+    if (!tempFont)
+        return nullptr;
+    
+    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    
+    if( !tempFont->createFontObject(fontName, fontSize))
+    {
+        delete tempFont;
+        return nullptr;
+    }
+    
+    return tempFont;
+}
 
 bool FontFreeType::initFreeType()
 {
@@ -109,6 +133,21 @@ FontFreeType::~FontFreeType()
 {
     // release the font
     // TO DO 
+}
+
+FontAtlas * FontFreeType::createFontAtlas()
+{
+    FontDefinitionTTF *def = 0;
+    def = FontDefinitionTTF::create(this);
+    
+    if(!def)
+        return nullptr;
+    
+    FontAtlas *atlas = def->createFontAtlas();
+    
+    // release the font definition, we don't need it anymore
+    def->release();
+    return atlas;
 }
 
 bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect)
