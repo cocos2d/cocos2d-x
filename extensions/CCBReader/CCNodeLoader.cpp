@@ -956,8 +956,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             assert(ownerCallbackNames->count() == ownerCallbackNodes->count());
             int nCount = ownerCallbackNames->count();
             for (int i = 0 ; i < nCount; i++) {
-                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNames->objectAtIndex(i)) );
+                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNames->getObjectAtIndex(i)) );
             }
         }
         //set variables
@@ -969,8 +969,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             assert(ownerOutletNames->count() == ownerOutletNodes->count());
             int nCount = ownerOutletNames->count();
             for (int i = 0 ; i < nCount; i++) {
-                pCCBReader->addOwnerOutletName((dynamic_cast<String*>(ownerOutletNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerOutletNode(dynamic_cast<Node*>(ownerOutletNodes->objectAtIndex(i)) );
+                pCCBReader->addOwnerOutletName((dynamic_cast<String*>(ownerOutletNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(dynamic_cast<Node*>(ownerOutletNodes->getObjectAtIndex(i)) );
             }
         }
     }

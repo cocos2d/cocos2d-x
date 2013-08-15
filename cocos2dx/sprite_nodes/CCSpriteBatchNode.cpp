@@ -226,7 +226,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
 
 void SpriteBatchNode::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 {
-    removeChild((Sprite*)(_children->objectAtIndex(uIndex)), bDoCleanup);
+    removeChild((Sprite*)(_children->getObjectAtIndex(uIndex)), bDoCleanup);
 }
 
 void SpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
@@ -266,31 +266,33 @@ void SpriteBatchNode::sortAllChildren()
 //            x[j+1] = tempItem;
 //        }
         
-        int i = 1;
-        int j = 0;
+        int i, j;
         int length = _children->count();
-        
+
         Node *next = nullptr;
         Node *prev = nullptr;
-        
-        for (; i < length; ++i)
+
+        for (i=1; i < length; ++i)
         {
-            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
-            j = i -1;
-            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
-            
+            j = i-1;
+
+            next = static_cast<Node*>(_children->getObjectAtIndex(i));
+            next->retain();
+            prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+
             while (j >= 0 &&
                    (next->getZOrder() < prev ->getZOrder() || (next->getZOrder() == prev->getZOrder() && next->getOrderOfArrival() < prev->getOrderOfArrival())))
             {
-                _children->replaceObjectAtIndex(j+1 , _children->objectAtIndex(j));
+                _children->setObject( prev, j+1 );
                 j = j - 1;
                 if (j >= 0)
-                {
-                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
-                }
+                    prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+                else
+                    prev = nullptr;
             }
-            
-            _children->data[j+1] = RCPtr<Object>(next);
+
+            _children->setObject(next, j+1);
+            next->release();
         }
 
         //sorted now check all children
@@ -341,7 +343,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
         bool needNewIndex=true;
 
 //        if (static_cast<Sprite*>(array->data->arr[0])->getZOrder() >= 0)
-        if (static_cast<Sprite*>(array->data[0].get())->getZOrder() >= 0)
+        if (static_cast<Sprite*>(array->getObjectAtIndex(0))->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -405,9 +407,11 @@ void SpriteBatchNode::swap(int oldIndex, int newIndex)
 //    x[newIndex]=tempItem;
     quads[newIndex]=tempItemQuad;
     
-    RCPtr<Object> &tempObj = _descendants->data[oldIndex];
-    _descendants->data[oldIndex] = _descendants->data[newIndex];
-    _descendants->data[newIndex] = tempObj;
+    auto tempObj = _descendants->getObjectAtIndex(oldIndex);
+//    _descendants->data[oldIndex] = _descendants->data[newIndex];
+    _descendants->setObject( _descendants->getObjectAtIndex(newIndex), oldIndex);
+//    _descendants->data[newIndex] = tempObj;
+    _descendants->setObject(tempObj, newIndex);
 }
 
 void SpriteBatchNode::reorderBatch(bool reorder)
@@ -506,7 +510,7 @@ unsigned int SpriteBatchNode::highestAtlasIndexInChild(Sprite *pSprite)
     }
     else
     {
-        return highestAtlasIndexInChild((Sprite*)(children->lastObject()));
+        return highestAtlasIndexInChild((Sprite*)(children->getLastObject()));
     }
 }
 
@@ -520,14 +524,14 @@ unsigned int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *pSprite)
     }
     else
     {
-        return lowestAtlasIndexInChild((Sprite*)(children->objectAtIndex(0)));
+        return lowestAtlasIndexInChild((Sprite*)(children->getObjectAtIndex(0)));
     }
 }
 
 unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
     Array *pBrothers = sprite->getParent()->getChildren();
-    unsigned int uChildIndex = pBrothers->indexOfObject(sprite);
+    unsigned int uChildIndex = pBrothers->getIndexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
     bool bIgnoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
@@ -535,7 +539,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     if (uChildIndex > 0 &&
         uChildIndex < UINT_MAX)
     {
-        pPrevious = (Sprite*)(pBrothers->objectAtIndex(uChildIndex - 1));
+        pPrevious = (Sprite*)(pBrothers->getObjectAtIndex(uChildIndex - 1));
     }
 
     // first child of the sprite sheet
@@ -615,7 +619,7 @@ void SpriteBatchNode::insertChild(Sprite *pSprite, unsigned int uIndex)
 //    }
     for (; i < _descendants->count(); ++i)
     {
-        child = static_cast<Sprite*>(_descendants->objectAtIndex(i));
+        child = static_cast<Sprite*>(_descendants->getObjectAtIndex(i));
         child->setAtlasIndex(child->getAtlasIndex() + 1);
     }
 
@@ -671,7 +675,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     // Cleanup sprite. It might be reused (issue #569)
     sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->indexOfObject(sprite);
+    unsigned int uIndex = _descendants->getIndexOfObject(sprite);
     if (uIndex != UINT_MAX)
     {
         _descendants->removeObjectAtIndex(uIndex);
@@ -681,7 +685,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
         
         for(; uIndex < count; ++uIndex)
         {
-            Sprite* s = (Sprite*)(_descendants->objectAtIndex(uIndex));
+            Sprite* s = (Sprite*)(_descendants->getObjectAtIndex(uIndex));
             s->setAtlasIndex( s->getAtlasIndex() - 1 );
         }
     }

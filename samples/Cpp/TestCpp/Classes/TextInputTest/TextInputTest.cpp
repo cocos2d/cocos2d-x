@@ -166,7 +166,7 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     Point pos;
     for (int i = 0; i < count; ++i)
     {
-        node = (Node*)children->objectAtIndex(i);
+        node = (Node*)children->getObjectAtIndex(i);
         pos = node->getPosition();
         pos.y += adjustVert;
         node->setPosition(pos);

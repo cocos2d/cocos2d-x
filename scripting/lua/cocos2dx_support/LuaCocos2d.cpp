@@ -6806,7 +6806,7 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'objectAtIndex'", NULL);
 #endif
   {
-   Object* tolua_ret = (Object*)  self->objectAtIndex(index);
+   Object* tolua_ret = (Object*)  self->getObjectAtIndex(index);
     int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");

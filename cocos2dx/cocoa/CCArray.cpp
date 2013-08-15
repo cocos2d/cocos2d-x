@@ -208,7 +208,7 @@ unsigned int Array::capacity() const
     return data.capacity();
 }
 
-int Array::indexOfObject(Object* object) const
+int Array::getIndexOfObject(Object* object) const
 {
 //    auto it = std::find(data.begin(), data.end(), object );
 //    if( it == data.end() )
@@ -227,19 +227,19 @@ int Array::indexOfObject(Object* object) const
     return -1;
 }
 
-Object* Array::objectAtIndex(unsigned int index)
+Object* Array::getObjectAtIndex(int index)
 {
     CCASSERT(index < data.size(), "index out of range in objectAtIndex()");
 
     return data[index].get();
 }
 
-Object* Array::lastObject()
+Object* Array::getLastObject()
 {
     return data.back().get();
 }
 
-Object* Array::randomObject()
+Object* Array::getRandomObject()
 {
     if (data.size()==0)
     {
@@ -260,7 +260,7 @@ Object* Array::randomObject()
 
 bool Array::containsObject(Object* object) const
 {
-    int i = this->indexOfObject(object);
+    int i = this->getIndexOfObject(object);
     return (i >=0 );
 }
 
@@ -268,7 +268,7 @@ bool Array::isEqualToArray(Array* otherArray)
 {
     for (unsigned int i = 0; i< this->count(); i++)
     {
-        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
             return false;
         }
@@ -286,9 +286,14 @@ void Array::addObjectsFromArray(Array* otherArray)
     data.insert(data.end(), otherArray->data.begin(), otherArray->data.end());
 }
 
-void Array::insertObject(Object* object, unsigned int index)
+void Array::insertObject(Object* object, int index)
 {
     data.insert( begin(data) + index, RCPtr<Object>(object) );
+}
+
+void Array::setObject(Object* object, int index)
+{
+    data[index] = RCPtr<Object>(object);
 }
 
 void Array::removeLastObject(bool bReleaseObj)
@@ -346,8 +351,8 @@ void Array::fastRemoveObject(Object* object)
 
 void Array::exchangeObject(Object* object1, Object* object2)
 {
-    int idx1 = indexOfObject(object1);
-    int idx2 = indexOfObject(object2);
+    int idx1 = getIndexOfObject(object1);
+    int idx2 = getIndexOfObject(object2);
 
     CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
 
@@ -602,19 +607,19 @@ unsigned int Array::capacity() const
     return data->max;
 }
 
-unsigned int Array::indexOfObject(Object* object) const
+int Array::getIndexOfObject(Object* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
 }
 
-Object* Array::objectAtIndex(unsigned int index)
+Object* Array::getObjectAtIndex(int index)
 {
-    CCASSERT(index < data->num, "index out of range in objectAtIndex()");
+    CCASSERT(index>=0 && index < data->num, "index out of range in objectAtIndex()");
 
     return data->arr[index];
 }
 
-Object* Array::lastObject()
+Object* Array::getLastObject()
 {
     if( data->num > 0 )
         return data->arr[data->num-1];
@@ -622,7 +627,7 @@ Object* Array::lastObject()
     return NULL;
 }
 
-Object* Array::randomObject()
+Object* Array::getRandomObject()
 {
     if (data->num==0)
     {
@@ -648,7 +653,7 @@ bool Array::isEqualToArray(Array* otherArray)
 {
     for (unsigned int i = 0; i< this->count(); i++)
     {
-        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
             return false;
         }
@@ -666,9 +671,15 @@ void Array::addObjectsFromArray(Array* otherArray)
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
-void Array::insertObject(Object* object, unsigned int index)
+void Array::insertObject(Object* object, int index)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
+}
+
+void Array::setObject(Object* object, int index)
+{
+    object->retain();
+    data->arr[index] = object;
 }
 
 void Array::removeLastObject(bool bReleaseObj)

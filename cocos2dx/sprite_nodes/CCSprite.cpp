@@ -713,31 +713,33 @@ void Sprite::sortAllChildren()
 //            x[j+1] = tempItem;
 //        }
         
-        int i = 1;
-        int j = 0;
+        int i, j;
         int length = _children->count();
-        
+
         Node *next = nullptr;
         Node *prev = nullptr;
-        
-        for (; i < length; ++i)
+
+        for (i=1; i < length; ++i)
         {
-            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
-            j = i -1;
-            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
-            
+            j = i-1;
+
+            next = static_cast<Node*>(_children->getObjectAtIndex(i));
+            next->retain();
+            prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+
             while (j >= 0 &&
                    (next->getZOrder() < prev ->getZOrder() || (next->getZOrder() == prev->getZOrder() && next->getOrderOfArrival() < prev->getOrderOfArrival())))
             {
-                _children->data[j+1] = _children->data[j];
+                _children->setObject( prev, j+1 );
                 j = j - 1;
                 if (j >= 0)
-                {
-                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
-                }
+                    prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+                else
+                    prev = nullptr;
             }
-            
-            _children->data[j+1] = next;
+
+            _children->setObject(next, j+1);
+            next->release();
         }
 
         if ( _batchNode)
@@ -1013,7 +1015,7 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->objectAtIndex(frameIndex) );
+    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->getObjectAtIndex(frameIndex) );
 
     CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 

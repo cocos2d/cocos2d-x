@@ -732,31 +732,33 @@ void Node::sortAllChildren()
 //            x[j+1] = tempItem;
 //        }
         
-        int i = 1;
-        int j = 0;
+        int i, j;
         int length = _children->count();
         
         Node *next = nullptr;
         Node *prev = nullptr;
-        
-        for (; i < length; ++i)
+
+        for (i=1; i < length; ++i)
         {
-            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
-            j = i -1;
-            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+            j = i-1;
+
+            next = static_cast<Node*>(_children->getObjectAtIndex(i));
+            next->retain();
+            prev = static_cast<Node*>(_children->getObjectAtIndex(j));
             
             while (j >= 0 &&
                    (next->_ZOrder < prev ->_ZOrder || (next->_ZOrder == prev->_ZOrder && next->_orderOfArrival < prev->_orderOfArrival)))
             {
-                _children->data[j+1] = _children->data[j];
+                _children->setObject( prev, j+1 );
                 j = j - 1;
                 if (j >= 0)
-                {
-                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
-                } 
+                    prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+                else
+                    prev = nullptr;
             }
             
-            _children->data[j+1] = next;
+            _children->setObject(next, j+1);
+            next->release();
         }
 
         //don't need to check children recursively, that's done in visit of each child
@@ -765,14 +767,13 @@ void Node::sortAllChildren()
     }
 }
 
-
- void Node::draw()
- {
-     //CCASSERT(0);
-     // override me
-     // Only use- this function to draw your stuff.
-     // DON'T draw your stuff outside this method
- }
+void Node::draw()
+{
+    //CCASSERT(0);
+    // override me
+    // Only use- this function to draw your stuff.
+    // DON'T draw your stuff outside this method
+}
 
 void Node::visit()
 {

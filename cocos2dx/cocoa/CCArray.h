@@ -147,46 +147,12 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)          \
     if (__array__) \
-    for( auto __it__ = (__array__)->data.begin();             \
-    __it__ != (__array__)->data.end() && ((__object__) = __it__->get()) != nullptr;                        \
+    for( auto __it__ = (__array__)->data.rbegin();             \
+    __it__ != (__array__)->data.rend() && ((__object__) = __it__->get()) != nullptr;                        \
     ++__it__ )
 
 
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
-
-#define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
-    do {                                                                  \
-        if(pArray && pArray->count() > 0)                                 \
-        {                                                                 \
-            Object* child;                                                \
-            CCARRAY_FOREACH(pArray, child)                                \
-            {                                                             \
-                elementType pNode = static_cast<elementType>(child);      \
-                if(pNode)                                                 \
-                {                                                         \
-                    pNode->func();                                        \
-                }                                                         \
-            }                                                             \
-        }                                                                 \
-    }                                                                     \
-    while(false)
-
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
-    do {                                                                  \
-        if(pArray && pArray->count() > 0)                                 \
-        {                                                                 \
-            for(auto it = std::begin(pArray->data); it != std::end(pArray->data); ++it) \
-            {                                                                           \
-                elementType pNode = static_cast<elementType>((*it).get());\
-                if(pNode)                                                 \
-                {                                                         \
-                    pNode->func(pObject);                                 \
-                }                                                         \
-            }                                                             \
-        }                                                                 \
-    }                                                                     \
-    while (false)
-
 
 #else // ! CC_USE_ARRAY_VECTOR --------------------------
 
@@ -213,6 +179,11 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #else
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
 #endif
+
+#endif // ! CC_USE_ARRAY_VECTOR
+
+
+// Common defines -----------------------------------------------------------------------------------------------
 
 #define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
 do {                                                                  \
@@ -247,8 +218,6 @@ do {                                                                  \
     }                                                                 \
 }                                                                     \
 while(false)
-
-#endif // ! CC_USE_ARRAY_VECTOR
 
 
 NS_CC_BEGIN
@@ -299,13 +268,13 @@ public:
     /** Returns capacity of the array */
     unsigned int capacity() const;
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    int indexOfObject(Object* object) const;
+    int getIndexOfObject(Object* object) const;
     /** Returns an element with a certain index */
-    Object* objectAtIndex(unsigned int index);
+    Object* getObjectAtIndex(int index);
     /** Returns last element */
-    Object* lastObject();
+    Object* getLastObject();
     /** Returns a random element */
-    Object* randomObject();
+    Object* getRandomObject();
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(Object* object) const;
     /** @since 1.1 */
@@ -317,7 +286,9 @@ public:
     /** Add all elements of an existing array */
     void addObjectsFromArray(Array* otherArray);
     /** Insert a certain object at a certain index */
-    void insertObject(Object* object, unsigned int index);
+    void insertObject(Object* object, int index);
+    /** Insert a certain object at a certain index */
+    void setObject(Object* object, int index);
 
     // Removing Objects
 

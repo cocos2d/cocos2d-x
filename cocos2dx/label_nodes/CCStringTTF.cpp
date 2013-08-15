@@ -393,7 +393,7 @@ Sprite * StringTTF::getSprite()
 {
     if (_spriteArrayCache->count())
     {
-        Sprite *retSprite = (Sprite *) _spriteArrayCache->lastObject();
+        Sprite *retSprite = (Sprite *) _spriteArrayCache->getLastObject();
         _spriteArrayCache->removeLastObject();
         return retSprite;
     }
