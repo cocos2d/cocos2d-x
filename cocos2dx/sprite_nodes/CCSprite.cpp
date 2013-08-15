@@ -694,23 +694,50 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i = 0, j = 0, length = _children->count();
-        Node** x = (Node**)_children->data->arr;
-        Node *tempItem = NULL;
-
-        // insertion sort
-        for(i=1; i<length; i++)
+//        int i = 0, j = 0, length = _children->count();
+//        Node** x = (Node**)_children->data->arr;
+//        Node *tempItem = NULL;
+//
+//        // insertion sort
+//        for(i=1; i<length; i++)
+//        {
+//            tempItem = x[i];
+//            j = i-1;
+//
+//            //continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+//            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+//            {
+//                x[j+1] = x[j];
+//                j = j-1;
+//            }
+//            x[j+1] = tempItem;
+//        }
+        
+        int i = 1;
+        int j = 0;
+        int length = _children->count();
+        
+        Node *next = nullptr;
+        Node *prev = nullptr;
+        
+        for (; i < length; ++i)
         {
-            tempItem = x[i];
-            j = i-1;
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
-            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
+            j = i -1;
+            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+            
+            while (j >= 0 &&
+                   (next->getZOrder() < prev ->getZOrder() || (next->getZOrder() == prev->getZOrder() && next->getOrderOfArrival() < prev->getOrderOfArrival())))
             {
-                x[j+1] = x[j];
-                j = j-1;
+                _children->data[j+1] = _children->data[j];
+                j = j - 1;
+                if (j >= 0)
+                {
+                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+                }
             }
-            x[j+1] = tempItem;
+            
+            _children->data[j+1] = next;
         }
 
         if ( _batchNode)

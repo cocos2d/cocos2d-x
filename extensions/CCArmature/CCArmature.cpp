@@ -559,8 +559,11 @@ Rect Armature::getBoundingBox() const
 
 Bone *Armature::getBoneAtPoint(float x, float y)
 {
-    int length = _children->data->num;
-    Bone **bs = (Bone **)_children->data->arr;
+//    int length = _children->data->num;
+//    Bone **bs = (Bone **)_children->data->arr;
+    
+    int length = 0;
+    Bone **bs = nullptr;
 
     for(int i = length - 1; i >= 0; i--)
     {

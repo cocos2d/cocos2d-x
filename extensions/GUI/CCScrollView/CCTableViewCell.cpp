@@ -29,7 +29,7 @@ NS_CC_EXT_BEGIN
 
 void TableViewCell::reset()
 {
-    _idx = CC_INVALID_INDEX;
+//    _idx = CC_INVALID_INDEX;
 }
 
 void TableViewCell::setObjectID(unsigned int uIdx)

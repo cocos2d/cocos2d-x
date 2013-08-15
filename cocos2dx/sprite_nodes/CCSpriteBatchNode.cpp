@@ -246,24 +246,51 @@ void SpriteBatchNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i = 0,j = 0,length = _children->data->num;
-        Node ** x = (Node**)_children->data->arr;
-        Node *tempItem = NULL;
-
-        //insertion sort
-        for(i=1; i<length; i++)
+//        int i = 0,j = 0,length = _children->data->num;
+//        Node ** x = (Node**)_children->data->arr;
+//        Node *tempItem = NULL;
+//
+//        //insertion sort
+//        for(i=1; i<length; i++)
+//        {
+//            tempItem = x[i];
+//            j = i-1;
+//
+//            //continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+//            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+//            {
+//                x[j+1] = x[j];
+//                j--;
+//            }
+//
+//            x[j+1] = tempItem;
+//        }
+        
+        int i = 1;
+        int j = 0;
+        int length = _children->count();
+        
+        Node *next = nullptr;
+        Node *prev = nullptr;
+        
+        for (; i < length; ++i)
         {
-            tempItem = x[i];
-            j = i-1;
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
-            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
+            j = i -1;
+            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+            
+            while (j >= 0 &&
+                   (next->getZOrder() < prev ->getZOrder() || (next->getZOrder() == prev->getZOrder() && next->getOrderOfArrival() < prev->getOrderOfArrival())))
             {
-                x[j+1] = x[j];
-                j--;
+                _children->replaceObjectAtIndex(j+1 , _children->objectAtIndex(j));
+                j = j - 1;
+                if (j >= 0)
+                {
+                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+                }
             }
-
-            x[j+1] = tempItem;
+            
+            _children->data[j+1] = RCPtr<Object>(next);
         }
 
         //sorted now check all children
@@ -313,7 +340,8 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     {
         bool needNewIndex=true;
 
-        if (static_cast<Sprite*>(array->data->arr[0])->getZOrder() >= 0)
+//        if (static_cast<Sprite*>(array->data->arr[0])->getZOrder() >= 0)
+        if (static_cast<Sprite*>(array->data[0].get())->getZOrder() >= 0)
         {
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
@@ -363,19 +391,23 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 
 void SpriteBatchNode::swap(int oldIndex, int newIndex)
 {
-    Object** x = _descendants->data->arr;
+//    Object** x = _descendants->data->arr;
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
 
-    Object* tempItem = x[oldIndex];
+//    Object* tempItem = x[oldIndex];
     V3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
 
     //update the index of other swapped item
-    ((Sprite*) x[newIndex])->setAtlasIndex(oldIndex);
+//    ((Sprite*) x[newIndex])->setAtlasIndex(oldIndex);
 
-    x[oldIndex]=x[newIndex];
+//    x[oldIndex]=x[newIndex];
     quads[oldIndex]=quads[newIndex];
-    x[newIndex]=tempItem;
+//    x[newIndex]=tempItem;
     quads[newIndex]=tempItemQuad;
+    
+    RCPtr<Object> &tempObj = _descendants->data[oldIndex];
+    _descendants->data[oldIndex] = _descendants->data[newIndex];
+    _descendants->data[newIndex] = tempObj;
 }
 
 void SpriteBatchNode::reorderBatch(bool reorder)
@@ -568,16 +600,22 @@ void SpriteBatchNode::insertChild(Sprite *pSprite, unsigned int uIndex)
     V3F_C4B_T2F_Quad quad = pSprite->getQuad();
     _textureAtlas->insertQuad(&quad, uIndex);
 
-    ccArray *descendantsData = _descendants->data;
+//    ccArray *descendantsData = _descendants->data;
 
-    ccArrayInsertObjectAtIndex(descendantsData, pSprite, uIndex);
+//    ccArrayInsertObjectAtIndex(descendantsData, pSprite, uIndex);
+    _descendants->insertObject(pSprite, uIndex);
 
     // update indices
     unsigned int i = uIndex+1;
     
     Sprite* child = nullptr;
-    for(; i<descendantsData->num; i++){
-        child = static_cast<Sprite*>(descendantsData->arr[i]);
+//    for(; i<descendantsData->num; i++){
+//        child = static_cast<Sprite*>(descendantsData->arr[i]);
+//        child->setAtlasIndex(child->getAtlasIndex() + 1);
+//    }
+    for (; i < _descendants->count(); ++i)
+    {
+        child = static_cast<Sprite*>(_descendants->objectAtIndex(i));
         child->setAtlasIndex(child->getAtlasIndex() + 1);
     }
 
@@ -602,11 +640,13 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
         increaseAtlasCapacity();
     }
 
-    ccArray *descendantsData = _descendants->data;
+//    ccArray *descendantsData = _descendants->data;
 
-    ccArrayAppendObjectWithResize(descendantsData, sprite);
+//    ccArrayAppendObjectWithResize(descendantsData, sprite);
+    _descendants->addObject(sprite);
 
-    unsigned int index=descendantsData->num-1;
+//    unsigned int index=descendantsData->num-1;
+    unsigned int index = _descendants->count() - 1;
 
     sprite->setAtlasIndex(index);
 

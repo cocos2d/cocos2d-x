@@ -210,10 +210,21 @@ unsigned int Array::capacity() const
 
 int Array::indexOfObject(Object* object) const
 {
-    auto it = std::find( std::begin(data), std::end(data), object );
-    if( it == std::end(data) )
-        return -1;
-    return it - std::begin(data);
+//    auto it = std::find(data.begin(), data.end(), object );
+//    if( it == data.end() )
+//        return -1;
+//    return it - std::begin(data);
+    auto it = data.begin();
+
+    for (int i = 0; it != data.end(); ++it, ++i)
+    {
+        if (it->get() == object)
+        {
+            return i;
+        }
+    }
+    
+    return -1;
 }
 
 Object* Array::objectAtIndex(unsigned int index)
@@ -288,12 +299,22 @@ void Array::removeLastObject(bool bReleaseObj)
 
 void Array::removeObject(Object* object, bool bReleaseObj /* ignored */)
 {
-    auto begin = std::begin(data);
-    auto end = std::end(data);
-
-    auto it = std::find( begin, end, object);
-    if( it != end ) {
-        data.erase(it);
+//    auto begin = data.begin();
+//    auto end = data.end();
+//
+//    auto it = std::find( begin, end, object);
+//    if( it != end ) {
+//        data.erase(it);
+//    }
+    
+    auto it = data.begin();
+    for (; it != data.end(); ++it)
+    {
+        if (it->get() == object)
+        {
+            data.erase(it);
+            break;
+        }
     }
 }
 
@@ -340,7 +361,7 @@ void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
 
 void Array::replaceObjectAtIndex(unsigned int index, Object* pObject, bool bReleaseObject /* ignored */)
 {
-    auto obj = data[index];
+//    auto obj = data[index];
     data[index] = pObject;
 }
 

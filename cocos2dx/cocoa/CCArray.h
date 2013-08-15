@@ -139,15 +139,17 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 
 #if CC_USE_ARRAY_VECTOR
 #define CCARRAY_FOREACH(__array__, __object__)                  \
-    for( auto __it__ = std::begin(__array__->data);              \
-        __it__ != std::end(__array__->data);                     \
-        (__object__= (*(__it__++)).get() ) )
+    if (__array__) \
+    for( auto __it__ = (__array__)->data.begin();              \
+        __it__ != (__array__)->data.end() && ((__object__) = __it__->get()) != nullptr;                     \
+        ++__it__)
 
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)          \
-    for( auto __it__ = std::begin(__array__->data);             \
-    __it__ != std::end(__array__->data);                        \
-    (__object__= (*(__it__++)).get() ) )
+    if (__array__) \
+    for( auto __it__ = (__array__)->data.begin();             \
+    __it__ != (__array__)->data.end() && ((__object__) = __it__->get()) != nullptr;                        \
+    ++__it__ )
 
 
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
@@ -183,6 +185,7 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
             }                                                             \
         }                                                                 \
     }                                                                     \
+    while (false)
 
 
 #else // ! CC_USE_ARRAY_VECTOR --------------------------

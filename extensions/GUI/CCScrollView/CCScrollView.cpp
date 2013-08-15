@@ -553,7 +553,8 @@ void ScrollView::visit()
 
 	if(_children)
     {
-		ccArray *arrayData = _children->data;
+//		ccArray *arrayData = _children->data;
+        ccArray *arrayData = NULL;
 		unsigned int i=0;
 		
 		// draw children zOrder < 0

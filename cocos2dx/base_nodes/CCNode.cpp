@@ -713,23 +713,50 @@ void Node::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i,j,length = _children->count();
-        Node ** x = (Node**)_children->data->arr;
-        Node *tempItem;
-
-        // insertion sort
-        for(i=1; i<length; i++)
+//        int i,j,length = _children->count();
+//        Node ** x = (Node**)_children->data->arr;
+//        Node *tempItem;
+//
+//        // insertion sort
+//        for(i=1; i<length; i++)
+//        {
+//            tempItem = x[i];
+//            j = i-1;
+//
+//            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+//            while(j>=0 && ( tempItem->_ZOrder < x[j]->_ZOrder || ( tempItem->_ZOrder== x[j]->_ZOrder && tempItem->_orderOfArrival < x[j]->_orderOfArrival ) ) )
+//            {
+//                x[j+1] = x[j];
+//                j = j-1;
+//            }
+//            x[j+1] = tempItem;
+//        }
+        
+        int i = 1;
+        int j = 0;
+        int length = _children->count();
+        
+        Node *next = nullptr;
+        Node *prev = nullptr;
+        
+        for (; i < length; ++i)
         {
-            tempItem = x[i];
-            j = i-1;
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempItem->_ZOrder < x[j]->_ZOrder || ( tempItem->_ZOrder== x[j]->_ZOrder && tempItem->_orderOfArrival < x[j]->_orderOfArrival ) ) )
+            next = dynamic_cast<Node*>(_children->objectAtIndex(i));
+            j = i -1;
+            prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+            
+            while (j >= 0 &&
+                   (next->_ZOrder < prev ->_ZOrder || (next->_ZOrder == prev->_ZOrder && next->_orderOfArrival < prev->_orderOfArrival)))
             {
-                x[j+1] = x[j];
-                j = j-1;
+                _children->data[j+1] = _children->data[j];
+                j = j - 1;
+                if (j >= 0)
+                {
+                    prev = dynamic_cast<Node*>(_children->objectAtIndex(j));
+                } 
             }
-            x[j+1] = tempItem;
+            
+            _children->data[j+1] = next;
         }
 
         //don't need to check children recursively, that's done in visit of each child
@@ -763,38 +790,69 @@ void Node::visit()
 
     this->transform();
 
-    Node* pNode = NULL;
-    unsigned int i = 0;
+//    Node* pNode = NULL;
+//    unsigned int i = 0;
 
     if(_children && _children->count() > 0)
     {
         sortAllChildren();
         // draw children zOrder < 0
-        ccArray *arrayData = _children->data;
-        for( ; i < arrayData->num; i++ )
+//        ccArray *arrayData = _children->data;
+//        for( ; i < arrayData->num; i++ )
+//        {
+//            pNode = (Node*) arrayData->arr[i];
+//
+//            if ( pNode && pNode->_ZOrder < 0 ) 
+//            {
+//                pNode->visit();
+//            }
+//            else
+//            {
+//                break;
+//            }
+//        }
+//        // self draw
+//        this->draw();
+//
+//        for( ; i < arrayData->num; i++ )
+//        {
+//            pNode = (Node*) arrayData->arr[i];
+//            if (pNode)
+//            {
+//                pNode->visit();
+//            }
+//        }
+        
+        auto iter = _children->data.begin();
+        Node *node = nullptr;
+        
+        for (; iter != _children->data.end(); ++iter)
         {
-            pNode = (Node*) arrayData->arr[i];
-
-            if ( pNode && pNode->_ZOrder < 0 ) 
+            node = dynamic_cast<Node*>(iter->get());
+            if (node && node->_ZOrder < 0)
             {
-                pNode->visit();
+                node->visit();
             }
             else
             {
                 break;
             }
         }
-        // self draw
+        
         this->draw();
-
-        for( ; i < arrayData->num; i++ )
+        
+        for (; iter != _children->data.end(); ++iter)
         {
-            pNode = (Node*) arrayData->arr[i];
-            if (pNode)
+            node = dynamic_cast<Node*>(iter->get());
+            if (node)
             {
-                pNode->visit();
+                node->visit();
             }
-        }        
+            else
+            {
+                break;
+            }
+        }
     }
     else
     {
