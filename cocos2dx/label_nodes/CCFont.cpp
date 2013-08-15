@@ -26,7 +26,7 @@
 #include "support/ccUTF8.h"
 
 #include "CCFontFNT.h"
-#include "CCFontFreeType.cpp"
+#include "CCFontFreeType.h"
 
 NS_CC_BEGIN
 
