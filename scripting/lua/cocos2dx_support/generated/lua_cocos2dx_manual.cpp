@@ -1314,9 +1314,9 @@ tolua_lerror:
 
 // setBlendFunc
 template<class T>
-static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S)
+static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
 {
-    if (NULL == tolua_S)
+    if (NULL == tolua_S || NULL == className || strlen(className) == 0)
         return 0;
     
     int argc = 0;
@@ -1324,7 +1324,7 @@ static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-//  if (!tolua_isusertype(tolua_S,1,typeid(T).name(),0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(tolua_S,1,className,0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<T*>(tolua_tousertype(tolua_S,1,0));
@@ -1357,7 +1357,7 @@ tolua_lerror:
 
 static int tolua_cocos2dx_Sprite_setBlendFunc(lua_State* tolua_S)
 {
-    return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S);
+    return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S,"Sprite");
 }
 
 
