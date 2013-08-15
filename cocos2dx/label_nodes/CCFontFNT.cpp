@@ -7,10 +7,34 @@
 //
 
 #include "CCFontFNT.h"
-
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
+FontFNT * FontFNT::create(const char* fntFilePath)
+{
+    CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
+    if (!newConf)
+        return nullptr;
+    
+    // add the texture
+    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    if ( !tempTexture )
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    FontFNT *tempFont =  new FontFNT(newConf);
+    
+    if (!tempFont)
+    {
+        delete newConf;
+        return nullptr;
+    }
+    
+    return tempFont;
+}
 
 FontFNT::~FontFNT()
 {
@@ -99,5 +123,76 @@ Rect FontFNT::getRectForChar(unsigned short theChar)
 {
     return getRectForCharInternal(theChar);
 }
+
+FontAtlas * FontFNT::createFontAtlas()
+{
+    FontAtlas *tempAtlas = new FontAtlas(*this);
+    if (!tempAtlas)
+        return nullptr;
+    
+    // check that everything is fine with the BMFontCofniguration
+    if (!_configuration->_fontDefDictionary)
+        return nullptr;
+    
+    int numGlyphs = _configuration->_characterSet->size();
+    if (!numGlyphs)
+        return nullptr;
+    
+    if (_configuration->_commonHeight == 0)
+        return nullptr;
+    
+    // commone height
+    tempAtlas->setCommonLineHeight(_configuration->_commonHeight);
+    
+    
+    ccBMFontDef fontDef;
+    tFontDefHashElement *current_element, *tmp;
+    
+    // Purge uniform hash
+    HASH_ITER(hh, _configuration->_fontDefDictionary, current_element, tmp)
+    {
+        
+        FontLetterDefinition tempDefinition;
+        
+        fontDef = current_element->fontDef;
+        Rect tempRect;
+        
+        tempRect = fontDef.rect;
+        tempRect = CC_RECT_PIXELS_TO_POINTS(tempRect);
+        
+        tempDefinition.letteCharUTF16 = fontDef.charID;
+        
+        tempDefinition.offsetX  = fontDef.xOffset;
+        tempDefinition.offsetY  = fontDef.yOffset;
+        
+        tempDefinition.U        = tempRect.origin.x;
+        tempDefinition.V        = tempRect.origin.y;
+        
+        tempDefinition.width    = tempRect.size.width;
+        tempDefinition.height   = tempRect.size.height;
+        
+        //carloX: only one texture supported FOR NOW
+        tempDefinition.textureID = 0;
+        
+        tempDefinition.anchorX = 0.5f;
+        tempDefinition.anchorY = 0.5f;
+        
+        // add the new definition
+        tempAtlas->addLetterDefinition(tempDefinition);
+    }
+    
+    // add the texture (only one texture for now)
+    
+    Texture2D *tempTexture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+    if (!tempTexture)
+        return 0;
+    
+    // add the texture
+    tempAtlas->addTexture(*tempTexture, 0);
+    
+    // done
+    return tempAtlas;
+}
+
 
 NS_CC_END
