@@ -42,7 +42,7 @@ enum class GlyphCollection {
 };
 
 //fwd
-class FontLetterDefinition;
+struct FontLetterDefinition;
 class FontAtlas;
 
 
