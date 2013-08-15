@@ -13,10 +13,7 @@ UIScene::UIScene()
 
 UIScene::~UIScene()
 {
-    m_pUiLayer->removeFromParent();
-	cocos2d::extension::CCJsonReader::purgeJsonReader();
-	cocos2d::extension::UIActionManager::purgeUIActionManager();
-	cocos2d::extension::UIHelper::purgeUIHelper();
+    m_pUiLayer->removeFromParent();	
 }
 
 bool UIScene::init()
@@ -51,11 +48,14 @@ bool UIScene::init()
 
 void UIScene::toExtensionsMainLayer(CCObject* sender)
 {
+    UISceneManager::purgeUISceneManager();
+    cocos2d::extension::UIActionManager::purgeUIActionManager();
+    cocos2d::extension::UIHelper::purgeUIHelper();
+    cocos2d::extension::CCJsonReader::purgeJsonReader();
+    
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
     pScene->runThisTest();
     pScene->release();
-
-	UISceneManager::purgeUISceneManager();
 }
 
 void UIScene::previousCallback(CCObject* sender)

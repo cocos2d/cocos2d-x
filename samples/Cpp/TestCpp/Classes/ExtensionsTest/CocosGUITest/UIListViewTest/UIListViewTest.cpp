@@ -50,20 +50,20 @@ bool UIListViewTest_Vertical::init()
             m_array->addObject(ccstr);
         }
         
-        UIListView *list = UIListView::create();
-        list->setClippingEnable(true);
-        list->setTouchEnable(true);
-        list->setBackGroundImageScale9Enable(true);
-        list->setBackGroundImage("cocosgui/green_edit.png");
-        list->setSize(CCSizeMake(240, 130));
+        UIListView *listView = UIListView::create();
+        listView->setClippingEnable(true);
+        listView->setTouchEnable(true);
+        listView->setBackGroundImageScale9Enable(true);
+        listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setSize(CCSizeMake(240, 130));
         CCSize backgroundSize = background->getContentSize();
-        list->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
-                              (backgroundSize.width - list->getRect().size.width) / 2,
+        listView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                              (backgroundSize.width - listView->getRect().size.width) / 2,
                               (widgetSize.height - backgroundSize.height) / 2 +
-                              (backgroundSize.height - list->getRect().size.height) / 2));                
+                              (backgroundSize.height - listView->getRect().size.height) / 2));                
         
-        float listWidth = list->getRect().size.width;
-        float listHeight = list->getRect().size.height;                
+        float listWidth = listView->getRect().size.width;
+        float listHeight = listView->getRect().size.height;                
          
         for (int i = 0; i < 5; ++i)
         {
@@ -82,12 +82,12 @@ bool UIListViewTest_Vertical::init()
             panel->setPosition(ccp((listWidth - panel_size.width) / 2,
                                    (listHeight - (panel_size.height + panel_size.height * 0.25)) - i * (panel_size.height + panel_size.height * 0.25)));
             
-            list->addChild(panel);
+            listView->addChild(panel);
         }
-        list->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Vertical::initChildEvent));
-        list->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Vertical::updateChildEvent));
-        list->initChildWithDataLength(m_array->count());
-        m_pUiLayer->addWidget(list);     
+        listView->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Vertical::initChildEvent));
+        listView->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Vertical::updateChildEvent));
+        listView->initChildWithDataLength(m_array->count());
+        m_pUiLayer->addWidget(listView);
         
         return true;
     }
@@ -172,22 +172,22 @@ bool UIListViewTest_Horizontal::init()
             m_array->addObject(ccstr);
         }
         
-        UIListView *list = UIListView::create();
-        list->setClippingEnable(true);
-        list->setTouchEnable(true);
-        list->setBackGroundImageScale9Enable(true);
-        list->setBackGroundImage("cocosgui/green_edit.png");
-        list->setSize(CCSizeMake(240, 130));
+        UIListView *listView = UIListView::create();
+        listView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+        listView->setClippingEnable(true);
+        listView->setTouchEnable(true);
+        listView->setBackGroundImageScale9Enable(true);
+        listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setSize(CCSizeMake(240, 130));
         CCSize backgroundSize = background->getContentSize();
-        list->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
-                              (backgroundSize.width - list->getRect().size.width) / 2,
+        listView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                              (backgroundSize.width - listView->getRect().size.width) / 2,
                               (widgetSize.height - backgroundSize.height) / 2 +
-                              (backgroundSize.height - list->getRect().size.height) / 2));
+                              (backgroundSize.height - listView->getRect().size.height) / 2));
         
-        float listWidth = list->getRect().size.width;
-        float listHeight = list->getRect().size.height;
+        float listHeight = listView->getRect().size.height;
         
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             UITextButton* textButton = UITextButton::create();
             textButton->setName("TextButton");
@@ -201,15 +201,15 @@ bool UIListViewTest_Horizontal::init()
             panel->addChild(textButton);
             
             CCSize panel_size = panel->getRect().size;
-            panel->setPosition(ccp((listWidth - panel_size.width) / 2,
-                                   (listHeight - (panel_size.height + panel_size.height * 0.25)) - i * (panel_size.height + panel_size.height * 0.25)));
+            panel->setPosition(ccp(0 + (panel_size.width * 0.2) + i * (panel_size.width + panel_size.width * 0.2),
+                                   (listHeight - panel_size.height) / 2));
             
-            list->addChild(panel);
+            listView->addChild(panel);
         }
-        list->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Horizontal::initChildEvent));
-        list->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Horizontal::updateChildEvent));
-        list->initChildWithDataLength(m_array->count());
-        m_pUiLayer->addWidget(list);
+        listView->addInitChildEvent(this, coco_ListView_InitChild_selector(UIListViewTest_Horizontal::initChildEvent));
+        listView->addUpdateChildEvent(this, coco_ListView_UpdateChild_selector(UIListViewTest_Horizontal::updateChildEvent));
+        listView->initChildWithDataLength(m_array->count());
+        m_pUiLayer->addWidget(listView);
         
         return true;
     }
