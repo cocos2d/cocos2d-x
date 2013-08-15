@@ -101,7 +101,7 @@ static int lua_cocos2dx_extension_Control_isTouchInside(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -521,7 +521,7 @@ static int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -592,7 +592,7 @@ static int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::extension::Control* ret = cocos2d::extension::Control::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -600,7 +600,7 @@ static int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Control");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Control");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -816,7 +816,7 @@ static int lua_cocos2dx_extension_CCBReader_addOwnerOutletNode(lua_State* tolua_
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -893,7 +893,7 @@ static int lua_cocos2dx_extension_CCBReader_readSoundKeyframesForSeq(lua_State* 
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBSequence*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -1073,7 +1073,7 @@ static int lua_cocos2dx_extension_CCBReader_setAnimationManager(lua_State* tolua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBAnimationManager*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -1116,7 +1116,7 @@ static int lua_cocos2dx_extension_CCBReader_readCallbackKeyframesForSeq(lua_Stat
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBSequence*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -1225,7 +1225,7 @@ static int lua_cocos2dx_extension_CCBReader_getAnimationManager(lua_State* tolua
 			return 0;
 		cocos2d::extension::CCBAnimationManager* ret = cobj->getAnimationManager();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1233,7 +1233,7 @@ static int lua_cocos2dx_extension_CCBReader_getAnimationManager(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CCBAnimationManager");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CCBAnimationManager");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1297,7 +1297,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBReader*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -1326,7 +1326,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::NodeLoaderLibrary*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -1355,7 +1355,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::NodeLoaderLibrary*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -1367,7 +1367,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::CCBMemberVariableAssigner*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -1396,7 +1396,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::NodeLoaderLibrary*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -1408,7 +1408,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::CCBMemberVariableAssigner*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -1420,7 +1420,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::extension::CCBSelectorResolver*)tolua_tousertype(tolua_S,4,0);
 		};
 
@@ -1449,7 +1449,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::NodeLoaderLibrary*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -1461,7 +1461,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::CCBMemberVariableAssigner*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -1473,7 +1473,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::extension::CCBSelectorResolver*)tolua_tousertype(tolua_S,4,0);
 		};
 
@@ -1485,7 +1485,7 @@ static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg3 = (cocos2d::extension::NodeLoaderListener*)tolua_tousertype(tolua_S,5,0);
 		};
 
@@ -1591,7 +1591,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(lua_
 			return 0;
 		cocos2d::extension::Scale9Sprite* ret = cobj->resizableSpriteWithCapInsets(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1599,7 +1599,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(lua_
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2040,7 +2040,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setSpriteFrame(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -2118,7 +2118,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithBatchNode(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -2145,7 +2145,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithBatchNode(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -2273,7 +2273,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(lua_State* to
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -2580,7 +2580,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(lua_State* to
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -2599,7 +2599,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(lua_State* to
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -2821,7 +2821,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2829,7 +2829,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2840,7 +2840,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2848,7 +2848,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2865,7 +2865,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2873,7 +2873,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2890,7 +2890,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2898,7 +2898,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2912,7 +2912,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2920,7 +2920,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2959,7 +2959,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_Sta
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::createWithSpriteFrameName(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2967,7 +2967,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_Sta
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -2981,7 +2981,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_Sta
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::createWithSpriteFrameName(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -2989,7 +2989,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_Sta
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3027,7 +3027,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -3036,7 +3036,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::createWithSpriteFrame(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3044,7 +3044,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3060,13 +3060,13 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::createWithSpriteFrame(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3074,7 +3074,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3307,7 +3307,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State*
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -3352,7 +3352,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -3361,7 +3361,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -3441,7 +3441,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -3450,7 +3450,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -3599,7 +3599,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::String*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -3780,7 +3780,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithBackgroundSprite(lua_Sta
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -4038,7 +4038,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -4082,7 +4082,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -4091,7 +4091,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -4271,7 +4271,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* t
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -4313,7 +4313,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_
 			return 0;
 		cocos2d::extension::Scale9Sprite* ret = cobj->getBackgroundSpriteForState(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -4321,7 +4321,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -4503,7 +4503,7 @@ static int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua
 			return 0;
 		cocos2d::String* ret = cobj->getCurrentTitle();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -4511,7 +4511,7 @@ static int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"String");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"String");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -4619,7 +4619,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* t
 			return 0;
 		cocos2d::extension::Scale9Sprite* ret = cobj->getBackgroundSprite();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -4627,7 +4627,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* t
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scale9Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scale9Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -4776,7 +4776,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -4821,7 +4821,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -4935,7 +4935,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -4944,7 +4944,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -5055,7 +5055,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S
 			return 0;
 		cocos2d::Node* ret = cobj->getTitleLabel();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5063,7 +5063,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5105,7 +5105,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchCancelled(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -5114,7 +5114,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchCancelled(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -5224,7 +5224,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State*
 			return 0;
 		cocos2d::Node* ret = cobj->getTitleLabelForState(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5232,7 +5232,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State*
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5379,7 +5379,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolu
 			return 0;
 		cocos2d::String* ret = cobj->getTitleForState(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5387,7 +5387,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolu
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"String");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"String");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5424,13 +5424,13 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5438,7 +5438,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ControlButton");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ControlButton");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5449,7 +5449,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5457,7 +5457,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ControlButton");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ControlButton");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5473,7 +5473,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -5484,13 +5484,13 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5498,7 +5498,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ControlButton");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ControlButton");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5518,7 +5518,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5526,7 +5526,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ControlButton");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ControlButton");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5713,7 +5713,7 @@ static int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -5831,7 +5831,7 @@ static int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -5853,7 +5853,7 @@ static int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -5879,7 +5879,7 @@ static int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -5924,7 +5924,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -5933,7 +5933,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -5974,7 +5974,7 @@ static int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getContainer();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5982,7 +5982,7 @@ static int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -6024,7 +6024,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -6033,7 +6033,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -6188,7 +6188,7 @@ static int lua_cocos2dx_extension_ScrollView_initWithViewSize(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -6232,7 +6232,7 @@ static int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6527,7 +6527,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -6536,7 +6536,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -6648,7 +6648,7 @@ static int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6898,7 +6898,7 @@ static int lua_cocos2dx_extension_ScrollView_isNodeVisible(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6943,7 +6943,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchCancelled(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -6952,7 +6952,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchCancelled(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -7104,7 +7104,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::extension::ScrollView* ret = cocos2d::extension::ScrollView::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7112,7 +7112,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScrollView");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScrollView");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7126,7 +7126,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::ScrollView* ret = cocos2d::extension::ScrollView::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7134,7 +7134,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScrollView");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScrollView");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7153,13 +7153,13 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::extension::ScrollView* ret = cocos2d::extension::ScrollView::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7167,7 +7167,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScrollView");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScrollView");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7299,7 +7299,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode(lua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -7308,7 +7308,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode(lua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -7420,14 +7420,14 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForSoundChannel(lua_
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBSequenceProperty*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Object* ret = cobj->actionForSoundChannel(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7435,7 +7435,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForSoundChannel(lua_
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Object");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Object");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7478,7 +7478,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setBaseValue(lua_State* to
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -7487,7 +7487,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setBaseValue(lua_State* to
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		std::string arg2_tmp; ok &= luaval_to_std_string(tolua_S, 4, &arg2_tmp); arg2 = arg2_tmp.c_str();
@@ -7566,7 +7566,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addNode(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_dictionary(tolua_S, 3, &arg1);
@@ -7644,7 +7644,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setRootNode(lua_State* tol
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -7825,7 +7825,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getContainerSize(lua_State
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -7869,14 +7869,14 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForCallbackChannel(l
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::CCBSequenceProperty*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Object* ret = cobj->actionForCallbackChannel(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7884,7 +7884,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForCallbackChannel(l
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Object");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Object");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8236,7 +8236,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getRootNode(lua_State* tol
 			return 0;
 		cocos2d::Node* ret = cobj->getRootNode();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -8244,7 +8244,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getRootNode(lua_State* tol
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8285,7 +8285,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode(lua_
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -8328,7 +8328,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode(lu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -8372,7 +8372,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setCallFunc(lua_State* tol
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::CallFunc*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_std_string(tolua_S, 3,&arg1);
@@ -8972,7 +8972,7 @@ static int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -9016,7 +9016,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -9025,7 +9025,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -9149,7 +9149,7 @@ static int lua_cocos2dx_extension_TableView_initWithViewSize(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -9193,7 +9193,7 @@ static int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -9270,7 +9270,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -9279,7 +9279,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -9323,7 +9323,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -9332,7 +9332,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -9376,7 +9376,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -9385,7 +9385,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -9495,7 +9495,7 @@ static int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
 			return 0;
 		cocos2d::extension::TableViewCell* ret = cobj->cellAtIndex(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -9503,7 +9503,7 @@ static int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TableViewCell");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TableViewCell");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -9541,7 +9541,7 @@ static int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
 			return 0;
 		cocos2d::extension::TableViewCell* ret = cobj->dequeueCell();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -9549,7 +9549,7 @@ static int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TableViewCell");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TableViewCell");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10046,7 +10046,7 @@ static int lua_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(lua_St
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -10439,14 +10439,14 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::extension::EditBox* ret = cocos2d::extension::EditBox::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10454,7 +10454,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EditBox");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EditBox");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10471,7 +10471,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -10480,14 +10480,14 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,4,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::extension::EditBox* ret = cocos2d::extension::EditBox::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10495,7 +10495,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EditBox");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EditBox");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10513,7 +10513,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,3,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -10522,7 +10522,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,4,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -10531,14 +10531,14 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg3 = (cocos2d::extension::Scale9Sprite*)tolua_tousertype(tolua_S,5,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::extension::EditBox* ret = cocos2d::extension::EditBox::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10546,7 +10546,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EditBox");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EditBox");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);

@@ -224,7 +224,7 @@ static int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -267,7 +267,7 @@ static int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -307,7 +307,7 @@ static int lua_cocos2dx_Action_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Action* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -315,7 +315,7 @@ static int lua_cocos2dx_Action_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Action");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Action");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -353,7 +353,7 @@ static int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getOriginalTarget();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -361,7 +361,7 @@ static int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -467,7 +467,7 @@ static int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getTarget();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -475,7 +475,7 @@ static int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -620,7 +620,7 @@ static int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -694,7 +694,7 @@ static int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Action* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -702,7 +702,7 @@ static int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Action");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Action");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -770,7 +770,7 @@ static int lua_cocos2dx_FiniteTimeAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FiniteTimeAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -778,7 +778,7 @@ static int lua_cocos2dx_FiniteTimeAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FiniteTimeAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FiniteTimeAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -851,7 +851,7 @@ static int lua_cocos2dx_FiniteTimeAction_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::FiniteTimeAction* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -859,7 +859,7 @@ static int lua_cocos2dx_FiniteTimeAction_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FiniteTimeAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FiniteTimeAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -955,7 +955,7 @@ static int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -998,7 +998,7 @@ static int lua_cocos2dx_Speed_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -1072,7 +1072,7 @@ static int lua_cocos2dx_Speed_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Speed* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1080,7 +1080,7 @@ static int lua_cocos2dx_Speed_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Speed");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Speed");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1225,7 +1225,7 @@ static int lua_cocos2dx_Speed_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -1267,7 +1267,7 @@ static int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->getInnerAction();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1275,7 +1275,7 @@ static int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1347,7 +1347,7 @@ static int lua_cocos2dx_Speed_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Speed* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1355,7 +1355,7 @@ static int lua_cocos2dx_Speed_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Speed");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Speed");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1393,7 +1393,7 @@ static int lua_cocos2dx_Speed_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -1401,7 +1401,7 @@ static int lua_cocos2dx_Speed_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Speed* ret = cocos2d::Speed::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1409,7 +1409,7 @@ static int lua_cocos2dx_Speed_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Speed");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Speed");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1513,7 +1513,7 @@ static int lua_cocos2dx_Follow_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Follow* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1521,7 +1521,7 @@ static int lua_cocos2dx_Follow_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Follow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Follow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1559,7 +1559,7 @@ static int lua_cocos2dx_Follow_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Follow* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1567,7 +1567,7 @@ static int lua_cocos2dx_Follow_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Follow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Follow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1608,7 +1608,7 @@ static int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -1626,7 +1626,7 @@ static int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -1838,14 +1838,14 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Follow* ret = cocos2d::Follow::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1853,7 +1853,7 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Follow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Follow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -1868,7 +1868,7 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -1876,7 +1876,7 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Follow* ret = cocos2d::Follow::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -1884,7 +1884,7 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Follow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Follow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3166,7 +3166,7 @@ static int lua_cocos2dx_Set_addObject(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -3206,7 +3206,7 @@ static int lua_cocos2dx_Set_mutableCopy(lua_State* tolua_S)
 			return 0;
 		cocos2d::Set* ret = cobj->mutableCopy();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3214,7 +3214,7 @@ static int lua_cocos2dx_Set_mutableCopy(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Set");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Set");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3252,7 +3252,7 @@ static int lua_cocos2dx_Set_anyObject(lua_State* tolua_S)
 			return 0;
 		cocos2d::Object* ret = cobj->anyObject();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3260,7 +3260,7 @@ static int lua_cocos2dx_Set_anyObject(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Object");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Object");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3334,7 +3334,7 @@ static int lua_cocos2dx_Set_removeObject(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -3374,7 +3374,7 @@ static int lua_cocos2dx_Set_copy(lua_State* tolua_S)
 			return 0;
 		cocos2d::Set* ret = cobj->copy();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3382,7 +3382,7 @@ static int lua_cocos2dx_Set_copy(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Set");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Set");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3423,7 +3423,7 @@ static int lua_cocos2dx_Set_containsObject(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -3460,7 +3460,7 @@ static int lua_cocos2dx_Set_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Set* ret = cocos2d::Set::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3468,7 +3468,7 @@ static int lua_cocos2dx_Set_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Set");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Set");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3533,7 +3533,7 @@ static int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
 			return 0;
 		cocos2d::GLProgram* ret = cobj->getShaderProgram();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -3541,7 +3541,7 @@ static int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GLProgram");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GLProgram");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -3651,7 +3651,7 @@ static int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Image*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -3674,7 +3674,7 @@ static int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Image*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -3719,7 +3719,7 @@ static int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::GLProgram*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -4714,7 +4714,7 @@ static int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -4736,7 +4736,7 @@ static int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -4754,7 +4754,7 @@ static int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -4838,7 +4838,7 @@ static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::GLProgram* ret = cobj->getShaderProgram();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -4846,7 +4846,7 @@ static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GLProgram");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GLProgram");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -4857,7 +4857,7 @@ static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::GLProgram* ret = cobj->getShaderProgram();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -4865,7 +4865,7 @@ static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GLProgram");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GLProgram");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5293,7 +5293,7 @@ static int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -5310,7 +5310,7 @@ static int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -5460,7 +5460,7 @@ static int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -5615,7 +5615,7 @@ static int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -5724,7 +5724,7 @@ static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::GridBase* ret = cobj->getGrid();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5732,7 +5732,7 @@ static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5743,7 +5743,7 @@ static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::GridBase* ret = cobj->getGrid();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -5751,7 +5751,7 @@ static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -5880,7 +5880,7 @@ static int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -6269,7 +6269,7 @@ static int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Component*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6346,7 +6346,7 @@ static int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::GLProgram*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6524,14 +6524,14 @@ static int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Action*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Action* ret = cobj->runAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -6539,7 +6539,7 @@ static int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Action");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Action");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -6648,7 +6648,7 @@ static int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Scheduler*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -6791,7 +6791,7 @@ static int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 			return 0;
 		cocos2d::Action* ret = cobj->getActionByTag(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -6799,7 +6799,7 @@ static int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Action");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Action");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -6941,7 +6941,7 @@ static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Scheduler* ret = cobj->getScheduler();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -6949,7 +6949,7 @@ static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scheduler");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scheduler");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -6960,7 +6960,7 @@ static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Scheduler* ret = cobj->getScheduler();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -6968,7 +6968,7 @@ static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scheduler");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scheduler");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7079,7 +7079,7 @@ static int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionManager*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -7200,7 +7200,7 @@ static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Node* ret = cobj->getParent();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7208,7 +7208,7 @@ static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7219,7 +7219,7 @@ static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Node* ret = cobj->getParent();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7227,7 +7227,7 @@ static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7587,7 +7587,7 @@ static int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getChildByTag(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7595,7 +7595,7 @@ static int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7771,7 +7771,7 @@ static int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
 			return 0;
 		cocos2d::Component* ret = cobj->getComponent(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -7779,7 +7779,7 @@ static int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Component");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Component");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -7854,7 +7854,7 @@ static int lua_cocos2dx_Node_setGrid(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::GridBase*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -7997,7 +7997,7 @@ static int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -8083,7 +8083,7 @@ static int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -8260,7 +8260,7 @@ static int lua_cocos2dx_Node_getCamera(lua_State* tolua_S)
 			return 0;
 		cocos2d::Camera* ret = cobj->getCamera();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -8268,7 +8268,7 @@ static int lua_cocos2dx_Node_getCamera(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Camera");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Camera");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8344,7 +8344,7 @@ static int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Action*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -8383,7 +8383,7 @@ static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::ActionManager* ret = cobj->getActionManager();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -8391,7 +8391,7 @@ static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionManager");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionManager");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8402,7 +8402,7 @@ static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::ActionManager* ret = cobj->getActionManager();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -8410,7 +8410,7 @@ static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionManager");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionManager");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8445,7 +8445,7 @@ static int lua_cocos2dx_Node_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cocos2d::Node::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -8453,7 +8453,7 @@ static int lua_cocos2dx_Node_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -8512,7 +8512,7 @@ static int lua_cocos2dx_Node_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_Node(lua_State* tolua_S)
 {
 	tolua_usertype(tolua_S,"Node");
-	tolua_cclass(tolua_S,"Node","Node","",NULL);
+	tolua_cclass(tolua_S,"Node","Node","Object",NULL);
 
 	tolua_beginmodule(tolua_S,"Node");
 		tolua_function(tolua_S,"addChild",lua_cocos2dx_Node_addChild);
@@ -9226,7 +9226,7 @@ static int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteFrame* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -9234,7 +9234,7 @@ static int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -9310,7 +9310,7 @@ static int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -9354,7 +9354,7 @@ static int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -9389,7 +9389,7 @@ static int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -9470,7 +9470,7 @@ static int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -9478,7 +9478,7 @@ static int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10007,7 +10007,7 @@ static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::SpriteFrame* ret = cocos2d::SpriteFrame::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10015,7 +10015,7 @@ static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10032,7 +10032,7 @@ static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::SpriteFrame* ret = cocos2d::SpriteFrame::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10040,7 +10040,7 @@ static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10078,7 +10078,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -10096,7 +10096,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::SpriteFrame* ret = cocos2d::SpriteFrame::createWithTexture(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10104,7 +10104,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10120,7 +10120,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -10129,7 +10129,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::SpriteFrame* ret = cocos2d::SpriteFrame::createWithTexture(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10137,7 +10137,7 @@ static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10217,7 +10217,7 @@ static int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -10326,7 +10326,7 @@ static int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::AnimationFrame* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10334,7 +10334,7 @@ static int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"AnimationFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"AnimationFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10372,7 +10372,7 @@ static int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteFrame* ret = cobj->getSpriteFrame();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10380,7 +10380,7 @@ static int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -10492,7 +10492,7 @@ static int lua_cocos2dx_AnimationFrame_initWithSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -10702,7 +10702,7 @@ static int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -10777,7 +10777,7 @@ static int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animation* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -10785,7 +10785,7 @@ static int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11189,7 +11189,7 @@ static int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -11230,7 +11230,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Animation* ret = cocos2d::Animation::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11238,7 +11238,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11258,7 +11258,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Animation* ret = cocos2d::Animation::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11266,7 +11266,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11277,7 +11277,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::Animation* ret = cocos2d::Animation::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11285,7 +11285,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11322,7 +11322,7 @@ static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animation* ret = cocos2d::Animation::createWithSpriteFrames(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11330,7 +11330,7 @@ static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11345,7 +11345,7 @@ static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animation* ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11353,7 +11353,7 @@ static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11467,7 +11467,7 @@ static int lua_cocos2dx_ActionInterval_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -11578,7 +11578,7 @@ static int lua_cocos2dx_ActionInterval_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11586,7 +11586,7 @@ static int lua_cocos2dx_ActionInterval_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11761,7 +11761,7 @@ static int lua_cocos2dx_ActionInterval_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11769,7 +11769,7 @@ static int lua_cocos2dx_ActionInterval_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11836,7 +11836,7 @@ static int lua_cocos2dx_Sequence_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -11876,7 +11876,7 @@ static int lua_cocos2dx_Sequence_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sequence* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11884,7 +11884,7 @@ static int lua_cocos2dx_Sequence_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sequence");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sequence");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -11922,7 +11922,7 @@ static int lua_cocos2dx_Sequence_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sequence* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -11930,7 +11930,7 @@ static int lua_cocos2dx_Sequence_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sequence");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sequence");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12040,7 +12040,7 @@ static int lua_cocos2dx_Sequence_initWithTwoActions(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -12049,7 +12049,7 @@ static int lua_cocos2dx_Sequence_initWithTwoActions(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -12116,7 +12116,7 @@ static int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -12159,7 +12159,7 @@ static int lua_cocos2dx_Repeat_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -12199,7 +12199,7 @@ static int lua_cocos2dx_Repeat_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Repeat* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12207,7 +12207,7 @@ static int lua_cocos2dx_Repeat_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Repeat");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Repeat");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12245,7 +12245,7 @@ static int lua_cocos2dx_Repeat_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Repeat* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12253,7 +12253,7 @@ static int lua_cocos2dx_Repeat_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Repeat");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Repeat");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12363,7 +12363,7 @@ static int lua_cocos2dx_Repeat_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -12405,7 +12405,7 @@ static int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
 			return 0;
 		cocos2d::FiniteTimeAction* ret = cobj->getInnerAction();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12413,7 +12413,7 @@ static int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FiniteTimeAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FiniteTimeAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12485,7 +12485,7 @@ static int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -12493,7 +12493,7 @@ static int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Repeat* ret = cocos2d::Repeat::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12501,7 +12501,7 @@ static int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Repeat");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Repeat");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12570,7 +12570,7 @@ static int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -12613,7 +12613,7 @@ static int lua_cocos2dx_RepeatForever_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -12653,7 +12653,7 @@ static int lua_cocos2dx_RepeatForever_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::RepeatForever* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12661,7 +12661,7 @@ static int lua_cocos2dx_RepeatForever_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RepeatForever");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RepeatForever");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12699,7 +12699,7 @@ static int lua_cocos2dx_RepeatForever_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::RepeatForever* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12707,7 +12707,7 @@ static int lua_cocos2dx_RepeatForever_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RepeatForever");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RepeatForever");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12783,7 +12783,7 @@ static int lua_cocos2dx_RepeatForever_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -12824,7 +12824,7 @@ static int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->getInnerAction();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12832,7 +12832,7 @@ static int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -12903,14 +12903,14 @@ static int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::RepeatForever* ret = cocos2d::RepeatForever::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -12918,7 +12918,7 @@ static int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RepeatForever");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RepeatForever");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13022,7 +13022,7 @@ static int lua_cocos2dx_Spawn_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -13062,7 +13062,7 @@ static int lua_cocos2dx_Spawn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Spawn* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13070,7 +13070,7 @@ static int lua_cocos2dx_Spawn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Spawn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Spawn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13108,7 +13108,7 @@ static int lua_cocos2dx_Spawn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Spawn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13116,7 +13116,7 @@ static int lua_cocos2dx_Spawn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Spawn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Spawn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13226,7 +13226,7 @@ static int lua_cocos2dx_Spawn_initWithTwoActions(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -13235,7 +13235,7 @@ static int lua_cocos2dx_Spawn_initWithTwoActions(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -13302,7 +13302,7 @@ static int lua_cocos2dx_RotateTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -13342,7 +13342,7 @@ static int lua_cocos2dx_RotateTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::RotateTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13350,7 +13350,7 @@ static int lua_cocos2dx_RotateTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13388,7 +13388,7 @@ static int lua_cocos2dx_RotateTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::RotateTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13396,7 +13396,7 @@ static int lua_cocos2dx_RotateTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13530,7 +13530,7 @@ static int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RotateTo* ret = cocos2d::RotateTo::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13538,7 +13538,7 @@ static int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13558,7 +13558,7 @@ static int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RotateTo* ret = cocos2d::RotateTo::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13566,7 +13566,7 @@ static int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13631,7 +13631,7 @@ static int lua_cocos2dx_RotateBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -13671,7 +13671,7 @@ static int lua_cocos2dx_RotateBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::RotateBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13679,7 +13679,7 @@ static int lua_cocos2dx_RotateBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13717,7 +13717,7 @@ static int lua_cocos2dx_RotateBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::RotateBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13725,7 +13725,7 @@ static int lua_cocos2dx_RotateBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13862,7 +13862,7 @@ static int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RotateBy* ret = cocos2d::RotateBy::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13870,7 +13870,7 @@ static int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13887,7 +13887,7 @@ static int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RotateBy* ret = cocos2d::RotateBy::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -13895,7 +13895,7 @@ static int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RotateBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RotateBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -13960,7 +13960,7 @@ static int lua_cocos2dx_MoveBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -14000,7 +14000,7 @@ static int lua_cocos2dx_MoveBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::MoveBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14008,7 +14008,7 @@ static int lua_cocos2dx_MoveBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MoveBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MoveBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14046,7 +14046,7 @@ static int lua_cocos2dx_MoveBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::MoveBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14054,7 +14054,7 @@ static int lua_cocos2dx_MoveBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MoveBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MoveBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14165,7 +14165,7 @@ static int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::MoveBy* ret = cocos2d::MoveBy::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14173,7 +14173,7 @@ static int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MoveBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MoveBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14238,7 +14238,7 @@ static int lua_cocos2dx_MoveTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -14278,7 +14278,7 @@ static int lua_cocos2dx_MoveTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::MoveTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14286,7 +14286,7 @@ static int lua_cocos2dx_MoveTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MoveTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MoveTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14362,7 +14362,7 @@ static int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::MoveTo* ret = cocos2d::MoveTo::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14370,7 +14370,7 @@ static int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MoveTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MoveTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14433,7 +14433,7 @@ static int lua_cocos2dx_SkewTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -14473,7 +14473,7 @@ static int lua_cocos2dx_SkewTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14481,7 +14481,7 @@ static int lua_cocos2dx_SkewTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14559,7 +14559,7 @@ static int lua_cocos2dx_SkewTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14567,7 +14567,7 @@ static int lua_cocos2dx_SkewTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14642,7 +14642,7 @@ static int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewTo* ret = cocos2d::SkewTo::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14650,7 +14650,7 @@ static int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14751,7 +14751,7 @@ static int lua_cocos2dx_SkewBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -14791,7 +14791,7 @@ static int lua_cocos2dx_SkewBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14799,7 +14799,7 @@ static int lua_cocos2dx_SkewBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14837,7 +14837,7 @@ static int lua_cocos2dx_SkewBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14845,7 +14845,7 @@ static int lua_cocos2dx_SkewBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14925,7 +14925,7 @@ static int lua_cocos2dx_SkewBy_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SkewBy* ret = cocos2d::SkewBy::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -14933,7 +14933,7 @@ static int lua_cocos2dx_SkewBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SkewBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SkewBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -14997,7 +14997,7 @@ static int lua_cocos2dx_JumpBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -15037,7 +15037,7 @@ static int lua_cocos2dx_JumpBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15045,7 +15045,7 @@ static int lua_cocos2dx_JumpBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15083,7 +15083,7 @@ static int lua_cocos2dx_JumpBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15091,7 +15091,7 @@ static int lua_cocos2dx_JumpBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15210,7 +15210,7 @@ static int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpBy* ret = cocos2d::JumpBy::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15218,7 +15218,7 @@ static int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15283,7 +15283,7 @@ static int lua_cocos2dx_JumpTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -15323,7 +15323,7 @@ static int lua_cocos2dx_JumpTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15331,7 +15331,7 @@ static int lua_cocos2dx_JumpTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15369,7 +15369,7 @@ static int lua_cocos2dx_JumpTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15377,7 +15377,7 @@ static int lua_cocos2dx_JumpTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15419,7 +15419,7 @@ static int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpTo* ret = cocos2d::JumpTo::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15427,7 +15427,7 @@ static int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15490,7 +15490,7 @@ static int lua_cocos2dx_BezierBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -15530,7 +15530,7 @@ static int lua_cocos2dx_BezierBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::BezierBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15538,7 +15538,7 @@ static int lua_cocos2dx_BezierBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"BezierBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"BezierBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15576,7 +15576,7 @@ static int lua_cocos2dx_BezierBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::BezierBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15584,7 +15584,7 @@ static int lua_cocos2dx_BezierBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"BezierBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"BezierBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15720,7 +15720,7 @@ static int lua_cocos2dx_BezierTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -15760,7 +15760,7 @@ static int lua_cocos2dx_BezierTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::BezierTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15768,7 +15768,7 @@ static int lua_cocos2dx_BezierTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"BezierTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"BezierTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15806,7 +15806,7 @@ static int lua_cocos2dx_BezierTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::BezierTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15814,7 +15814,7 @@ static int lua_cocos2dx_BezierTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"BezierTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"BezierTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -15914,7 +15914,7 @@ static int lua_cocos2dx_ScaleTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -15954,7 +15954,7 @@ static int lua_cocos2dx_ScaleTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ScaleTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -15962,7 +15962,7 @@ static int lua_cocos2dx_ScaleTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16000,7 +16000,7 @@ static int lua_cocos2dx_ScaleTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ScaleTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16008,7 +16008,7 @@ static int lua_cocos2dx_ScaleTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16145,7 +16145,7 @@ static int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::ScaleTo* ret = cocos2d::ScaleTo::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16153,7 +16153,7 @@ static int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16170,7 +16170,7 @@ static int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::ScaleTo* ret = cocos2d::ScaleTo::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16178,7 +16178,7 @@ static int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16243,7 +16243,7 @@ static int lua_cocos2dx_ScaleBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -16283,7 +16283,7 @@ static int lua_cocos2dx_ScaleBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ScaleBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16291,7 +16291,7 @@ static int lua_cocos2dx_ScaleBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16329,7 +16329,7 @@ static int lua_cocos2dx_ScaleBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ScaleBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16337,7 +16337,7 @@ static int lua_cocos2dx_ScaleBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16378,7 +16378,7 @@ static int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::ScaleBy* ret = cocos2d::ScaleBy::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16386,7 +16386,7 @@ static int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16403,7 +16403,7 @@ static int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::ScaleBy* ret = cocos2d::ScaleBy::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16411,7 +16411,7 @@ static int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ScaleBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ScaleBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16474,7 +16474,7 @@ static int lua_cocos2dx_Blink_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -16514,7 +16514,7 @@ static int lua_cocos2dx_Blink_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Blink* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16522,7 +16522,7 @@ static int lua_cocos2dx_Blink_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Blink");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Blink");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16598,7 +16598,7 @@ static int lua_cocos2dx_Blink_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Blink* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16606,7 +16606,7 @@ static int lua_cocos2dx_Blink_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Blink");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Blink");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16712,7 +16712,7 @@ static int lua_cocos2dx_Blink_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Blink* ret = cocos2d::Blink::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16720,7 +16720,7 @@ static int lua_cocos2dx_Blink_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Blink");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Blink");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16783,7 +16783,7 @@ static int lua_cocos2dx_FadeIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16791,7 +16791,7 @@ static int lua_cocos2dx_FadeIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16864,7 +16864,7 @@ static int lua_cocos2dx_FadeIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16872,7 +16872,7 @@ static int lua_cocos2dx_FadeIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16908,7 +16908,7 @@ static int lua_cocos2dx_FadeIn_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeIn* ret = cocos2d::FadeIn::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16916,7 +16916,7 @@ static int lua_cocos2dx_FadeIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -16976,7 +16976,7 @@ static int lua_cocos2dx_FadeOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -16984,7 +16984,7 @@ static int lua_cocos2dx_FadeOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17057,7 +17057,7 @@ static int lua_cocos2dx_FadeOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17065,7 +17065,7 @@ static int lua_cocos2dx_FadeOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17101,7 +17101,7 @@ static int lua_cocos2dx_FadeOut_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOut* ret = cocos2d::FadeOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17109,7 +17109,7 @@ static int lua_cocos2dx_FadeOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17172,7 +17172,7 @@ static int lua_cocos2dx_FadeTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -17212,7 +17212,7 @@ static int lua_cocos2dx_FadeTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17220,7 +17220,7 @@ static int lua_cocos2dx_FadeTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17258,7 +17258,7 @@ static int lua_cocos2dx_FadeTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17266,7 +17266,7 @@ static int lua_cocos2dx_FadeTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17377,7 +17377,7 @@ static int lua_cocos2dx_FadeTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeTo* ret = cocos2d::FadeTo::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17385,7 +17385,7 @@ static int lua_cocos2dx_FadeTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17450,7 +17450,7 @@ static int lua_cocos2dx_TintTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -17490,7 +17490,7 @@ static int lua_cocos2dx_TintTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17498,7 +17498,7 @@ static int lua_cocos2dx_TintTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17536,7 +17536,7 @@ static int lua_cocos2dx_TintTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17544,7 +17544,7 @@ static int lua_cocos2dx_TintTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17663,7 +17663,7 @@ static int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17671,7 +17671,7 @@ static int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17736,7 +17736,7 @@ static int lua_cocos2dx_TintBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -17776,7 +17776,7 @@ static int lua_cocos2dx_TintBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17784,7 +17784,7 @@ static int lua_cocos2dx_TintBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17822,7 +17822,7 @@ static int lua_cocos2dx_TintBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17830,7 +17830,7 @@ static int lua_cocos2dx_TintBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -17949,7 +17949,7 @@ static int lua_cocos2dx_TintBy_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TintBy* ret = cocos2d::TintBy::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -17957,7 +17957,7 @@ static int lua_cocos2dx_TintBy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TintBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TintBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18019,7 +18019,7 @@ static int lua_cocos2dx_DelayTime_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::DelayTime* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18027,7 +18027,7 @@ static int lua_cocos2dx_DelayTime_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"DelayTime");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"DelayTime");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18100,7 +18100,7 @@ static int lua_cocos2dx_DelayTime_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::DelayTime* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18108,7 +18108,7 @@ static int lua_cocos2dx_DelayTime_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"DelayTime");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"DelayTime");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18144,7 +18144,7 @@ static int lua_cocos2dx_DelayTime_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::DelayTime* ret = cocos2d::DelayTime::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18152,7 +18152,7 @@ static int lua_cocos2dx_DelayTime_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"DelayTime");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"DelayTime");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18215,7 +18215,7 @@ static int lua_cocos2dx_Animate_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -18254,7 +18254,7 @@ static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Animation* ret = cobj->getAnimation();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18262,7 +18262,7 @@ static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18273,7 +18273,7 @@ static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Animation* ret = cobj->getAnimation();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18281,7 +18281,7 @@ static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18320,7 +18320,7 @@ static int lua_cocos2dx_Animate_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animate* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18328,7 +18328,7 @@ static int lua_cocos2dx_Animate_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animate");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animate");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18366,7 +18366,7 @@ static int lua_cocos2dx_Animate_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animate* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18374,7 +18374,7 @@ static int lua_cocos2dx_Animate_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animate");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animate");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18483,7 +18483,7 @@ static int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Animation*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -18527,7 +18527,7 @@ static int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Animation*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -18566,14 +18566,14 @@ static int lua_cocos2dx_Animate_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Animation*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Animate* ret = cocos2d::Animate::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18581,7 +18581,7 @@ static int lua_cocos2dx_Animate_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animate");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animate");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18685,7 +18685,7 @@ static int lua_cocos2dx_TargetedAction_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -18725,7 +18725,7 @@ static int lua_cocos2dx_TargetedAction_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::TargetedAction* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18733,7 +18733,7 @@ static int lua_cocos2dx_TargetedAction_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TargetedAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TargetedAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18774,7 +18774,7 @@ static int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -18814,7 +18814,7 @@ static int lua_cocos2dx_TargetedAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::TargetedAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18822,7 +18822,7 @@ static int lua_cocos2dx_TargetedAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TargetedAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TargetedAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -18864,7 +18864,7 @@ static int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -18873,7 +18873,7 @@ static int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -18981,7 +18981,7 @@ static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Node* ret = cobj->getForcedTarget();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -18989,7 +18989,7 @@ static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19000,7 +19000,7 @@ static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 		if (argc == 0) {
 		cocos2d::Node* ret = cobj->getForcedTarget();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19008,7 +19008,7 @@ static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19047,7 +19047,7 @@ static int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -19056,14 +19056,14 @@ static int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::FiniteTimeAction*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TargetedAction* ret = cocos2d::TargetedAction::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19071,7 +19071,7 @@ static int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TargetedAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TargetedAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19175,7 +19175,7 @@ static int lua_cocos2dx_ActionCamera_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -19215,7 +19215,7 @@ static int lua_cocos2dx_ActionCamera_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionCamera* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19223,7 +19223,7 @@ static int lua_cocos2dx_ActionCamera_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionCamera");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionCamera");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19261,7 +19261,7 @@ static int lua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionCamera* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19269,7 +19269,7 @@ static int lua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionCamera");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionCamera");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19366,7 +19366,7 @@ static int lua_cocos2dx_OrbitCamera_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -19454,7 +19454,7 @@ static int lua_cocos2dx_OrbitCamera_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::OrbitCamera* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19462,7 +19462,7 @@ static int lua_cocos2dx_OrbitCamera_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"OrbitCamera");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"OrbitCamera");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19584,7 +19584,7 @@ static int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::OrbitCamera* ret = cocos2d::OrbitCamera::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19592,7 +19592,7 @@ static int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"OrbitCamera");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"OrbitCamera");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19695,14 +19695,14 @@ static int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Object*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Action* ret = cobj->getActionByTag(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -19710,7 +19710,7 @@ static int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Action");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Action");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -19753,7 +19753,7 @@ static int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Object*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -19831,7 +19831,7 @@ static int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Action*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -19840,7 +19840,7 @@ static int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 4,&arg2);
@@ -19884,7 +19884,7 @@ static int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -19927,7 +19927,7 @@ static int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_Stat
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -19971,7 +19971,7 @@ static int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20014,7 +20014,7 @@ static int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Set*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20057,7 +20057,7 @@ static int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Action*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20100,7 +20100,7 @@ static int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20140,7 +20140,7 @@ static int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 			return 0;
 		cocos2d::Set* ret = cobj->pauseAllRunningActions();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20148,7 +20148,7 @@ static int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Set");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Set");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20253,7 +20253,7 @@ static int lua_cocos2dx_ActionEase_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20293,7 +20293,7 @@ static int lua_cocos2dx_ActionEase_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20301,7 +20301,7 @@ static int lua_cocos2dx_ActionEase_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20339,7 +20339,7 @@ static int lua_cocos2dx_ActionEase_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20347,7 +20347,7 @@ static int lua_cocos2dx_ActionEase_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20456,7 +20456,7 @@ static int lua_cocos2dx_ActionEase_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -20497,7 +20497,7 @@ static int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->getInnerAction();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20505,7 +20505,7 @@ static int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20567,7 +20567,7 @@ static int lua_cocos2dx_EaseRateAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseRateAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20575,7 +20575,7 @@ static int lua_cocos2dx_EaseRateAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseRateAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseRateAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20652,7 +20652,7 @@ static int lua_cocos2dx_EaseRateAction_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -20728,7 +20728,7 @@ static int lua_cocos2dx_EaseRateAction_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseRateAction* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20736,7 +20736,7 @@ static int lua_cocos2dx_EaseRateAction_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseRateAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseRateAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20796,7 +20796,7 @@ static int lua_cocos2dx_EaseIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20804,7 +20804,7 @@ static int lua_cocos2dx_EaseIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20877,7 +20877,7 @@ static int lua_cocos2dx_EaseIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseIn* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20885,7 +20885,7 @@ static int lua_cocos2dx_EaseIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20923,7 +20923,7 @@ static int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -20931,7 +20931,7 @@ static int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseIn* ret = cocos2d::EaseIn::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -20939,7 +20939,7 @@ static int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -20999,7 +20999,7 @@ static int lua_cocos2dx_EaseOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21007,7 +21007,7 @@ static int lua_cocos2dx_EaseOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21080,7 +21080,7 @@ static int lua_cocos2dx_EaseOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21088,7 +21088,7 @@ static int lua_cocos2dx_EaseOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21126,7 +21126,7 @@ static int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -21134,7 +21134,7 @@ static int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseOut* ret = cocos2d::EaseOut::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21142,7 +21142,7 @@ static int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21202,7 +21202,7 @@ static int lua_cocos2dx_EaseInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21210,7 +21210,7 @@ static int lua_cocos2dx_EaseInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21283,7 +21283,7 @@ static int lua_cocos2dx_EaseInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21291,7 +21291,7 @@ static int lua_cocos2dx_EaseInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21329,7 +21329,7 @@ static int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -21337,7 +21337,7 @@ static int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseInOut* ret = cocos2d::EaseInOut::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21345,7 +21345,7 @@ static int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21405,7 +21405,7 @@ static int lua_cocos2dx_EaseExponentialIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseExponentialIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21413,7 +21413,7 @@ static int lua_cocos2dx_EaseExponentialIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21486,7 +21486,7 @@ static int lua_cocos2dx_EaseExponentialIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21494,7 +21494,7 @@ static int lua_cocos2dx_EaseExponentialIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21531,14 +21531,14 @@ static int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseExponentialIn* ret = cocos2d::EaseExponentialIn::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21546,7 +21546,7 @@ static int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21606,7 +21606,7 @@ static int lua_cocos2dx_EaseExponentialOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseExponentialOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21614,7 +21614,7 @@ static int lua_cocos2dx_EaseExponentialOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21687,7 +21687,7 @@ static int lua_cocos2dx_EaseExponentialOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21695,7 +21695,7 @@ static int lua_cocos2dx_EaseExponentialOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21732,14 +21732,14 @@ static int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseExponentialOut* ret = cocos2d::EaseExponentialOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21747,7 +21747,7 @@ static int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21807,7 +21807,7 @@ static int lua_cocos2dx_EaseExponentialInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseExponentialInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21815,7 +21815,7 @@ static int lua_cocos2dx_EaseExponentialInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21888,7 +21888,7 @@ static int lua_cocos2dx_EaseExponentialInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseExponentialInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21896,7 +21896,7 @@ static int lua_cocos2dx_EaseExponentialInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -21933,14 +21933,14 @@ static int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseExponentialInOut* ret = cocos2d::EaseExponentialInOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -21948,7 +21948,7 @@ static int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseExponentialInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseExponentialInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22008,7 +22008,7 @@ static int lua_cocos2dx_EaseSineIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseSineIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22016,7 +22016,7 @@ static int lua_cocos2dx_EaseSineIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22089,7 +22089,7 @@ static int lua_cocos2dx_EaseSineIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22097,7 +22097,7 @@ static int lua_cocos2dx_EaseSineIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22134,14 +22134,14 @@ static int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseSineIn* ret = cocos2d::EaseSineIn::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22149,7 +22149,7 @@ static int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22209,7 +22209,7 @@ static int lua_cocos2dx_EaseSineOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseSineOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22217,7 +22217,7 @@ static int lua_cocos2dx_EaseSineOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22290,7 +22290,7 @@ static int lua_cocos2dx_EaseSineOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22298,7 +22298,7 @@ static int lua_cocos2dx_EaseSineOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22335,14 +22335,14 @@ static int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseSineOut* ret = cocos2d::EaseSineOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22350,7 +22350,7 @@ static int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22410,7 +22410,7 @@ static int lua_cocos2dx_EaseSineInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseSineInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22418,7 +22418,7 @@ static int lua_cocos2dx_EaseSineInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22491,7 +22491,7 @@ static int lua_cocos2dx_EaseSineInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseSineInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22499,7 +22499,7 @@ static int lua_cocos2dx_EaseSineInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22536,14 +22536,14 @@ static int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseSineInOut* ret = cocos2d::EaseSineInOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22551,7 +22551,7 @@ static int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseSineInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseSineInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22611,7 +22611,7 @@ static int lua_cocos2dx_EaseElastic_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElastic* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22619,7 +22619,7 @@ static int lua_cocos2dx_EaseElastic_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElastic");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElastic");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22660,7 +22660,7 @@ static int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -22678,7 +22678,7 @@ static int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_number(tolua_S, 3,&arg1);
@@ -22789,7 +22789,7 @@ static int lua_cocos2dx_EaseElastic_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElastic* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22797,7 +22797,7 @@ static int lua_cocos2dx_EaseElastic_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElastic");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElastic");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22857,7 +22857,7 @@ static int lua_cocos2dx_EaseElasticIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElasticIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22865,7 +22865,7 @@ static int lua_cocos2dx_EaseElasticIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22938,7 +22938,7 @@ static int lua_cocos2dx_EaseElasticIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElastic* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22946,7 +22946,7 @@ static int lua_cocos2dx_EaseElasticIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElastic");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElastic");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -22983,13 +22983,13 @@ static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -22997,7 +22997,7 @@ static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23013,7 +23013,7 @@ static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -23022,7 +23022,7 @@ static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23030,7 +23030,7 @@ static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23090,7 +23090,7 @@ static int lua_cocos2dx_EaseElasticOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElasticOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23098,7 +23098,7 @@ static int lua_cocos2dx_EaseElasticOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23171,7 +23171,7 @@ static int lua_cocos2dx_EaseElasticOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElastic* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23179,7 +23179,7 @@ static int lua_cocos2dx_EaseElasticOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElastic");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElastic");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23216,13 +23216,13 @@ static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23230,7 +23230,7 @@ static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23246,7 +23246,7 @@ static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -23255,7 +23255,7 @@ static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23263,7 +23263,7 @@ static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23323,7 +23323,7 @@ static int lua_cocos2dx_EaseElasticInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElasticInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23331,7 +23331,7 @@ static int lua_cocos2dx_EaseElasticInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23404,7 +23404,7 @@ static int lua_cocos2dx_EaseElasticInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseElasticInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23412,7 +23412,7 @@ static int lua_cocos2dx_EaseElasticInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23449,13 +23449,13 @@ static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23463,7 +23463,7 @@ static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23479,7 +23479,7 @@ static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -23488,7 +23488,7 @@ static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23496,7 +23496,7 @@ static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseElasticInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseElasticInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23592,7 +23592,7 @@ static int lua_cocos2dx_EaseBounce_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounce* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23600,7 +23600,7 @@ static int lua_cocos2dx_EaseBounce_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounce");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounce");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23638,7 +23638,7 @@ static int lua_cocos2dx_EaseBounce_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounce* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23646,7 +23646,7 @@ static int lua_cocos2dx_EaseBounce_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounce");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounce");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23704,7 +23704,7 @@ static int lua_cocos2dx_EaseBounceIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounceIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23712,7 +23712,7 @@ static int lua_cocos2dx_EaseBounceIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23785,7 +23785,7 @@ static int lua_cocos2dx_EaseBounceIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounce* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23793,7 +23793,7 @@ static int lua_cocos2dx_EaseBounceIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounce");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounce");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23830,14 +23830,14 @@ static int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBounceIn* ret = cocos2d::EaseBounceIn::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23845,7 +23845,7 @@ static int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23905,7 +23905,7 @@ static int lua_cocos2dx_EaseBounceOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounceOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23913,7 +23913,7 @@ static int lua_cocos2dx_EaseBounceOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -23986,7 +23986,7 @@ static int lua_cocos2dx_EaseBounceOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounce* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -23994,7 +23994,7 @@ static int lua_cocos2dx_EaseBounceOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounce");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounce");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24031,14 +24031,14 @@ static int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBounceOut* ret = cocos2d::EaseBounceOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24046,7 +24046,7 @@ static int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24106,7 +24106,7 @@ static int lua_cocos2dx_EaseBounceInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounceInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24114,7 +24114,7 @@ static int lua_cocos2dx_EaseBounceInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24187,7 +24187,7 @@ static int lua_cocos2dx_EaseBounceInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBounceInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24195,7 +24195,7 @@ static int lua_cocos2dx_EaseBounceInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24232,14 +24232,14 @@ static int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBounceInOut* ret = cocos2d::EaseBounceInOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24247,7 +24247,7 @@ static int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBounceInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBounceInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24307,7 +24307,7 @@ static int lua_cocos2dx_EaseBackIn_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBackIn* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24315,7 +24315,7 @@ static int lua_cocos2dx_EaseBackIn_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24388,7 +24388,7 @@ static int lua_cocos2dx_EaseBackIn_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24396,7 +24396,7 @@ static int lua_cocos2dx_EaseBackIn_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24433,14 +24433,14 @@ static int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBackIn* ret = cocos2d::EaseBackIn::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24448,7 +24448,7 @@ static int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24508,7 +24508,7 @@ static int lua_cocos2dx_EaseBackOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBackOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24516,7 +24516,7 @@ static int lua_cocos2dx_EaseBackOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24589,7 +24589,7 @@ static int lua_cocos2dx_EaseBackOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionEase* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24597,7 +24597,7 @@ static int lua_cocos2dx_EaseBackOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionEase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionEase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24634,14 +24634,14 @@ static int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBackOut* ret = cocos2d::EaseBackOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24649,7 +24649,7 @@ static int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24709,7 +24709,7 @@ static int lua_cocos2dx_EaseBackInOut_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBackInOut* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24717,7 +24717,7 @@ static int lua_cocos2dx_EaseBackInOut_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24790,7 +24790,7 @@ static int lua_cocos2dx_EaseBackInOut_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::EaseBackInOut* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24798,7 +24798,7 @@ static int lua_cocos2dx_EaseBackInOut_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24835,14 +24835,14 @@ static int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::EaseBackInOut* ret = cocos2d::EaseBackInOut::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24850,7 +24850,7 @@ static int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"EaseBackInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"EaseBackInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24945,7 +24945,7 @@ static int lua_cocos2dx_ActionInstant_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInstant* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24953,7 +24953,7 @@ static int lua_cocos2dx_ActionInstant_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInstant");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInstant");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -24991,7 +24991,7 @@ static int lua_cocos2dx_ActionInstant_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInstant* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -24999,7 +24999,7 @@ static int lua_cocos2dx_ActionInstant_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInstant");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInstant");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25128,7 +25128,7 @@ static int lua_cocos2dx_Show_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Show* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25136,7 +25136,7 @@ static int lua_cocos2dx_Show_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Show");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Show");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25174,7 +25174,7 @@ static int lua_cocos2dx_Show_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInstant* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25182,7 +25182,7 @@ static int lua_cocos2dx_Show_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInstant");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInstant");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25251,7 +25251,7 @@ static int lua_cocos2dx_Show_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Show* ret = cocos2d::Show::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25259,7 +25259,7 @@ static int lua_cocos2dx_Show_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Show");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Show");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25355,7 +25355,7 @@ static int lua_cocos2dx_Hide_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Hide* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25363,7 +25363,7 @@ static int lua_cocos2dx_Hide_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Hide");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Hide");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25401,7 +25401,7 @@ static int lua_cocos2dx_Hide_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInstant* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25409,7 +25409,7 @@ static int lua_cocos2dx_Hide_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInstant");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInstant");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25478,7 +25478,7 @@ static int lua_cocos2dx_Hide_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Hide* ret = cocos2d::Hide::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25486,7 +25486,7 @@ static int lua_cocos2dx_Hide_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Hide");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Hide");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25582,7 +25582,7 @@ static int lua_cocos2dx_ToggleVisibility_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ToggleVisibility* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25590,7 +25590,7 @@ static int lua_cocos2dx_ToggleVisibility_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ToggleVisibility");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ToggleVisibility");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25628,7 +25628,7 @@ static int lua_cocos2dx_ToggleVisibility_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ToggleVisibility* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25636,7 +25636,7 @@ static int lua_cocos2dx_ToggleVisibility_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ToggleVisibility");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ToggleVisibility");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25705,7 +25705,7 @@ static int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ToggleVisibility* ret = cocos2d::ToggleVisibility::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25713,7 +25713,7 @@ static int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ToggleVisibility");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ToggleVisibility");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25809,7 +25809,7 @@ static int lua_cocos2dx_RemoveSelf_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::RemoveSelf* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25817,7 +25817,7 @@ static int lua_cocos2dx_RemoveSelf_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RemoveSelf");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RemoveSelf");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25891,7 +25891,7 @@ static int lua_cocos2dx_RemoveSelf_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::RemoveSelf* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25899,7 +25899,7 @@ static int lua_cocos2dx_RemoveSelf_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RemoveSelf");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RemoveSelf");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25968,7 +25968,7 @@ static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::RemoveSelf* ret = cocos2d::RemoveSelf::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25976,7 +25976,7 @@ static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RemoveSelf");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RemoveSelf");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -25989,7 +25989,7 @@ static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::RemoveSelf* ret = cocos2d::RemoveSelf::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -25997,7 +25997,7 @@ static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RemoveSelf");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RemoveSelf");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26130,7 +26130,7 @@ static int lua_cocos2dx_FlipX_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipX* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26138,7 +26138,7 @@ static int lua_cocos2dx_FlipX_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26176,7 +26176,7 @@ static int lua_cocos2dx_FlipX_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipX* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26184,7 +26184,7 @@ static int lua_cocos2dx_FlipX_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26255,7 +26255,7 @@ static int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipX* ret = cocos2d::FlipX::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26263,7 +26263,7 @@ static int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26396,7 +26396,7 @@ static int lua_cocos2dx_FlipY_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipY* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26404,7 +26404,7 @@ static int lua_cocos2dx_FlipY_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26442,7 +26442,7 @@ static int lua_cocos2dx_FlipY_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipY* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26450,7 +26450,7 @@ static int lua_cocos2dx_FlipY_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26521,7 +26521,7 @@ static int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipY* ret = cocos2d::FlipY::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26529,7 +26529,7 @@ static int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26626,7 +26626,7 @@ static int lua_cocos2dx_Place_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::Place* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26634,7 +26634,7 @@ static int lua_cocos2dx_Place_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Place");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Place");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26672,7 +26672,7 @@ static int lua_cocos2dx_Place_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Place* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26680,7 +26680,7 @@ static int lua_cocos2dx_Place_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Place");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Place");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26787,7 +26787,7 @@ static int lua_cocos2dx_Place_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Place* ret = cocos2d::Place::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26795,7 +26795,7 @@ static int lua_cocos2dx_Place_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Place");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Place");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26925,7 +26925,7 @@ static int lua_cocos2dx_CallFunc_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::CallFunc* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26933,7 +26933,7 @@ static int lua_cocos2dx_CallFunc_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CallFunc");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CallFunc");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -26971,7 +26971,7 @@ static int lua_cocos2dx_CallFunc_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::CallFunc* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -26979,7 +26979,7 @@ static int lua_cocos2dx_CallFunc_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CallFunc");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CallFunc");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27052,7 +27052,7 @@ static int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
 			return 0;
 		cocos2d::Object* ret = cobj->getTargetCallback();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27060,7 +27060,7 @@ static int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Object");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Object");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27101,7 +27101,7 @@ static int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -27203,7 +27203,7 @@ static int lua_cocos2dx_GridAction_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -27243,7 +27243,7 @@ static int lua_cocos2dx_GridAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::GridAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27251,7 +27251,7 @@ static int lua_cocos2dx_GridAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27289,7 +27289,7 @@ static int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
 			return 0;
 		cocos2d::GridBase* ret = cobj->getGrid();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27297,7 +27297,7 @@ static int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27335,7 +27335,7 @@ static int lua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::GridAction* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27343,7 +27343,7 @@ static int lua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27441,7 +27441,7 @@ static int lua_cocos2dx_Grid3DAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Grid3DAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27449,7 +27449,7 @@ static int lua_cocos2dx_Grid3DAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Grid3DAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Grid3DAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27487,7 +27487,7 @@ static int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
 			return 0;
 		cocos2d::GridBase* ret = cobj->getGrid();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27495,7 +27495,7 @@ static int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27552,7 +27552,7 @@ static int lua_cocos2dx_TiledGrid3DAction_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::TiledGrid3DAction* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27560,7 +27560,7 @@ static int lua_cocos2dx_TiledGrid3DAction_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TiledGrid3DAction");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TiledGrid3DAction");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27598,7 +27598,7 @@ static int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
 			return 0;
 		cocos2d::GridBase* ret = cobj->getGrid();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27606,7 +27606,7 @@ static int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27666,7 +27666,7 @@ static int lua_cocos2dx_StopGrid_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -27706,7 +27706,7 @@ static int lua_cocos2dx_StopGrid_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::StopGrid* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27714,7 +27714,7 @@ static int lua_cocos2dx_StopGrid_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"StopGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"StopGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27752,7 +27752,7 @@ static int lua_cocos2dx_StopGrid_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::StopGrid* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27760,7 +27760,7 @@ static int lua_cocos2dx_StopGrid_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"StopGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"StopGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27794,7 +27794,7 @@ static int lua_cocos2dx_StopGrid_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::StopGrid* ret = cocos2d::StopGrid::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27802,7 +27802,7 @@ static int lua_cocos2dx_StopGrid_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"StopGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"StopGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27865,7 +27865,7 @@ static int lua_cocos2dx_ReuseGrid_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -27941,7 +27941,7 @@ static int lua_cocos2dx_ReuseGrid_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ReuseGrid* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27949,7 +27949,7 @@ static int lua_cocos2dx_ReuseGrid_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ReuseGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ReuseGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -27987,7 +27987,7 @@ static int lua_cocos2dx_ReuseGrid_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ReuseGrid* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -27995,7 +27995,7 @@ static int lua_cocos2dx_ReuseGrid_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ReuseGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ReuseGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28031,7 +28031,7 @@ static int lua_cocos2dx_ReuseGrid_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ReuseGrid* ret = cocos2d::ReuseGrid::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28039,7 +28039,7 @@ static int lua_cocos2dx_ReuseGrid_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ReuseGrid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ReuseGrid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28177,7 +28177,7 @@ static int lua_cocos2dx_Waves3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Waves3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28185,7 +28185,7 @@ static int lua_cocos2dx_Waves3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Waves3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Waves3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28365,7 +28365,7 @@ static int lua_cocos2dx_Waves3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Waves3D* ret = cocos2d::Waves3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28373,7 +28373,7 @@ static int lua_cocos2dx_Waves3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Waves3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Waves3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28475,7 +28475,7 @@ static int lua_cocos2dx_FlipX3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipX3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28483,7 +28483,7 @@ static int lua_cocos2dx_FlipX3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipX3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipX3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28590,7 +28590,7 @@ static int lua_cocos2dx_FlipX3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipX3D* ret = cocos2d::FlipX3D::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28598,7 +28598,7 @@ static int lua_cocos2dx_FlipX3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipX3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipX3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28659,7 +28659,7 @@ static int lua_cocos2dx_FlipY3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipY3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28667,7 +28667,7 @@ static int lua_cocos2dx_FlipY3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipY3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipY3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -28738,7 +28738,7 @@ static int lua_cocos2dx_FlipY3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FlipY3D* ret = cocos2d::FlipY3D::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -28746,7 +28746,7 @@ static int lua_cocos2dx_FlipY3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FlipY3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FlipY3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29021,7 +29021,7 @@ static int lua_cocos2dx_Lens3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Lens3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29029,7 +29029,7 @@ static int lua_cocos2dx_Lens3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Lens3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Lens3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29105,7 +29105,7 @@ static int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Lens3D* ret = cocos2d::Lens3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29113,7 +29113,7 @@ static int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Lens3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Lens3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29259,7 +29259,7 @@ static int lua_cocos2dx_Ripple3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Ripple3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29267,7 +29267,7 @@ static int lua_cocos2dx_Ripple3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Ripple3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Ripple3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29520,7 +29520,7 @@ static int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Ripple3D* ret = cocos2d::Ripple3D::create(arg0, arg1, arg2, arg3, arg4, arg5);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29528,7 +29528,7 @@ static int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Ripple3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Ripple3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29594,7 +29594,7 @@ static int lua_cocos2dx_Shaky3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Shaky3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29602,7 +29602,7 @@ static int lua_cocos2dx_Shaky3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Shaky3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Shaky3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29721,7 +29721,7 @@ static int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Shaky3D* ret = cocos2d::Shaky3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29729,7 +29729,7 @@ static int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Shaky3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Shaky3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -29866,7 +29866,7 @@ static int lua_cocos2dx_Liquid_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Liquid* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -29874,7 +29874,7 @@ static int lua_cocos2dx_Liquid_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Liquid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Liquid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30054,7 +30054,7 @@ static int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Liquid* ret = cocos2d::Liquid::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30062,7 +30062,7 @@ static int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Liquid");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Liquid");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30207,7 +30207,7 @@ static int lua_cocos2dx_Waves_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Waves* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30215,7 +30215,7 @@ static int lua_cocos2dx_Waves_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Waves");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Waves");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30399,7 +30399,7 @@ static int lua_cocos2dx_Waves_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Waves* ret = cocos2d::Waves::create(arg0, arg1, arg2, arg3, arg4, arg5);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30407,7 +30407,7 @@ static int lua_cocos2dx_Waves_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Waves");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Waves");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30550,7 +30550,7 @@ static int lua_cocos2dx_Twirl_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::Twirl* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30558,7 +30558,7 @@ static int lua_cocos2dx_Twirl_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Twirl");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Twirl");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30809,7 +30809,7 @@ static int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Twirl* ret = cocos2d::Twirl::create(arg0, arg1, arg2, arg3, arg4);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30817,7 +30817,7 @@ static int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Twirl");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Twirl");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30883,7 +30883,7 @@ static int lua_cocos2dx_PageTurn3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::PageTurn3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30891,7 +30891,7 @@ static int lua_cocos2dx_PageTurn3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"PageTurn3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"PageTurn3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -30964,7 +30964,7 @@ static int lua_cocos2dx_PageTurn3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::PageTurn3D* ret = cocos2d::PageTurn3D::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -30972,7 +30972,7 @@ static int lua_cocos2dx_PageTurn3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"PageTurn3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"PageTurn3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31034,7 +31034,7 @@ static int lua_cocos2dx_ProgressTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -31074,7 +31074,7 @@ static int lua_cocos2dx_ProgressTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31082,7 +31082,7 @@ static int lua_cocos2dx_ProgressTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31120,7 +31120,7 @@ static int lua_cocos2dx_ProgressTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31128,7 +31128,7 @@ static int lua_cocos2dx_ProgressTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31239,7 +31239,7 @@ static int lua_cocos2dx_ProgressTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressTo* ret = cocos2d::ProgressTo::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31247,7 +31247,7 @@ static int lua_cocos2dx_ProgressTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31312,7 +31312,7 @@ static int lua_cocos2dx_ProgressFromTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -31352,7 +31352,7 @@ static int lua_cocos2dx_ProgressFromTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressFromTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31360,7 +31360,7 @@ static int lua_cocos2dx_ProgressFromTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressFromTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressFromTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31398,7 +31398,7 @@ static int lua_cocos2dx_ProgressFromTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressFromTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31406,7 +31406,7 @@ static int lua_cocos2dx_ProgressFromTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressFromTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressFromTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31521,7 +31521,7 @@ static int lua_cocos2dx_ProgressFromTo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ProgressFromTo* ret = cocos2d::ProgressFromTo::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31529,7 +31529,7 @@ static int lua_cocos2dx_ProgressFromTo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressFromTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressFromTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31591,7 +31591,7 @@ static int lua_cocos2dx_ShakyTiles3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShakyTiles3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31599,7 +31599,7 @@ static int lua_cocos2dx_ShakyTiles3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShakyTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShakyTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31718,7 +31718,7 @@ static int lua_cocos2dx_ShakyTiles3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShakyTiles3D* ret = cocos2d::ShakyTiles3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31726,7 +31726,7 @@ static int lua_cocos2dx_ShakyTiles3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShakyTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShakyTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31786,7 +31786,7 @@ static int lua_cocos2dx_ShatteredTiles3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShatteredTiles3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31794,7 +31794,7 @@ static int lua_cocos2dx_ShatteredTiles3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShatteredTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShatteredTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31913,7 +31913,7 @@ static int lua_cocos2dx_ShatteredTiles3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShatteredTiles3D* ret = cocos2d::ShatteredTiles3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -31921,7 +31921,7 @@ static int lua_cocos2dx_ShatteredTiles3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShatteredTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShatteredTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -31984,7 +31984,7 @@ static int lua_cocos2dx_ShuffleTiles_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -32029,7 +32029,7 @@ static int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Tile*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -32145,7 +32145,7 @@ static int lua_cocos2dx_ShuffleTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShuffleTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32153,7 +32153,7 @@ static int lua_cocos2dx_ShuffleTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShuffleTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShuffleTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32265,7 +32265,7 @@ static int lua_cocos2dx_ShuffleTiles_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShuffleTiles* ret = cocos2d::ShuffleTiles::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32273,7 +32273,7 @@ static int lua_cocos2dx_ShuffleTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShuffleTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShuffleTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32444,7 +32444,7 @@ static int lua_cocos2dx_FadeOutTRTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutTRTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32452,7 +32452,7 @@ static int lua_cocos2dx_FadeOutTRTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutTRTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutTRTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32563,7 +32563,7 @@ static int lua_cocos2dx_FadeOutTRTiles_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutTRTiles* ret = cocos2d::FadeOutTRTiles::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32571,7 +32571,7 @@ static int lua_cocos2dx_FadeOutTRTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutTRTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutTRTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32634,7 +32634,7 @@ static int lua_cocos2dx_FadeOutBLTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutBLTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32642,7 +32642,7 @@ static int lua_cocos2dx_FadeOutBLTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutBLTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutBLTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32718,7 +32718,7 @@ static int lua_cocos2dx_FadeOutBLTiles_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutBLTiles* ret = cocos2d::FadeOutBLTiles::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32726,7 +32726,7 @@ static int lua_cocos2dx_FadeOutBLTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutBLTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutBLTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32785,7 +32785,7 @@ static int lua_cocos2dx_FadeOutUpTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutUpTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32793,7 +32793,7 @@ static int lua_cocos2dx_FadeOutUpTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutUpTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutUpTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32906,7 +32906,7 @@ static int lua_cocos2dx_FadeOutUpTiles_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutUpTiles* ret = cocos2d::FadeOutUpTiles::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32914,7 +32914,7 @@ static int lua_cocos2dx_FadeOutUpTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutUpTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutUpTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -32974,7 +32974,7 @@ static int lua_cocos2dx_FadeOutDownTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutDownTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -32982,7 +32982,7 @@ static int lua_cocos2dx_FadeOutDownTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutDownTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutDownTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33058,7 +33058,7 @@ static int lua_cocos2dx_FadeOutDownTiles_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::FadeOutDownTiles* ret = cocos2d::FadeOutDownTiles::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33066,7 +33066,7 @@ static int lua_cocos2dx_FadeOutDownTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FadeOutDownTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FadeOutDownTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33163,7 +33163,7 @@ static int lua_cocos2dx_TurnOffTiles_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -33315,7 +33315,7 @@ static int lua_cocos2dx_TurnOffTiles_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::TurnOffTiles* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33323,7 +33323,7 @@ static int lua_cocos2dx_TurnOffTiles_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TurnOffTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TurnOffTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33399,7 +33399,7 @@ static int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TurnOffTiles* ret = cocos2d::TurnOffTiles::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33407,7 +33407,7 @@ static int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TurnOffTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TurnOffTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33424,7 +33424,7 @@ static int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TurnOffTiles* ret = cocos2d::TurnOffTiles::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33432,7 +33432,7 @@ static int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TurnOffTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TurnOffTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33573,7 +33573,7 @@ static int lua_cocos2dx_WavesTiles3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::WavesTiles3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33581,7 +33581,7 @@ static int lua_cocos2dx_WavesTiles3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"WavesTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"WavesTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33761,7 +33761,7 @@ static int lua_cocos2dx_WavesTiles3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::WavesTiles3D* ret = cocos2d::WavesTiles3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33769,7 +33769,7 @@ static int lua_cocos2dx_WavesTiles3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"WavesTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"WavesTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -33910,7 +33910,7 @@ static int lua_cocos2dx_JumpTiles3D_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpTiles3D* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -33918,7 +33918,7 @@ static int lua_cocos2dx_JumpTiles3D_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34098,7 +34098,7 @@ static int lua_cocos2dx_JumpTiles3D_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::JumpTiles3D* ret = cocos2d::JumpTiles3D::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34106,7 +34106,7 @@ static int lua_cocos2dx_JumpTiles3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"JumpTiles3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"JumpTiles3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34173,7 +34173,7 @@ static int lua_cocos2dx_SplitRows_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -34213,7 +34213,7 @@ static int lua_cocos2dx_SplitRows_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::SplitRows* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34221,7 +34221,7 @@ static int lua_cocos2dx_SplitRows_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SplitRows");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SplitRows");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34332,7 +34332,7 @@ static int lua_cocos2dx_SplitRows_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SplitRows* ret = cocos2d::SplitRows::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34340,7 +34340,7 @@ static int lua_cocos2dx_SplitRows_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SplitRows");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SplitRows");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34404,7 +34404,7 @@ static int lua_cocos2dx_SplitCols_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -34444,7 +34444,7 @@ static int lua_cocos2dx_SplitCols_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::SplitCols* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34452,7 +34452,7 @@ static int lua_cocos2dx_SplitCols_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SplitCols");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SplitCols");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34563,7 +34563,7 @@ static int lua_cocos2dx_SplitCols_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SplitCols* ret = cocos2d::SplitCols::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34571,7 +34571,7 @@ static int lua_cocos2dx_SplitCols_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SplitCols");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SplitCols");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34635,7 +34635,7 @@ static int lua_cocos2dx_ActionTween_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -34675,7 +34675,7 @@ static int lua_cocos2dx_ActionTween_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionTween* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34683,7 +34683,7 @@ static int lua_cocos2dx_ActionTween_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionTween");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionTween");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34798,7 +34798,7 @@ static int lua_cocos2dx_ActionTween_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionTween* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34806,7 +34806,7 @@ static int lua_cocos2dx_ActionTween_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionTween");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionTween");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34848,7 +34848,7 @@ static int lua_cocos2dx_ActionTween_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionTween* ret = cocos2d::ActionTween::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34856,7 +34856,7 @@ static int lua_cocos2dx_ActionTween_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionTween");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionTween");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -34921,7 +34921,7 @@ static int lua_cocos2dx_CardinalSplineTo_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -34961,7 +34961,7 @@ static int lua_cocos2dx_CardinalSplineTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::CardinalSplineTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -34969,7 +34969,7 @@ static int lua_cocos2dx_CardinalSplineTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CardinalSplineTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CardinalSplineTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35013,7 +35013,7 @@ static int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::PointArray*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_number(tolua_S, 4,&arg2);
@@ -35055,7 +35055,7 @@ static int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
 			return 0;
 		cocos2d::PointArray* ret = cobj->getPoints();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35063,7 +35063,7 @@ static int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"PointArray");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"PointArray");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35136,7 +35136,7 @@ static int lua_cocos2dx_CardinalSplineTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::CardinalSplineTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35144,7 +35144,7 @@ static int lua_cocos2dx_CardinalSplineTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CardinalSplineTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CardinalSplineTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35280,7 +35280,7 @@ static int lua_cocos2dx_CardinalSplineBy_startWithTarget(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -35320,7 +35320,7 @@ static int lua_cocos2dx_CardinalSplineBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::CardinalSplineBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35328,7 +35328,7 @@ static int lua_cocos2dx_CardinalSplineBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CardinalSplineBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CardinalSplineBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35401,7 +35401,7 @@ static int lua_cocos2dx_CardinalSplineBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::CardinalSplineBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35409,7 +35409,7 @@ static int lua_cocos2dx_CardinalSplineBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CardinalSplineBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CardinalSplineBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35504,7 +35504,7 @@ static int lua_cocos2dx_CatmullRomTo_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::CatmullRomTo* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35512,7 +35512,7 @@ static int lua_cocos2dx_CatmullRomTo_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CatmullRomTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CatmullRomTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35550,7 +35550,7 @@ static int lua_cocos2dx_CatmullRomTo_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::CatmullRomTo* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35558,7 +35558,7 @@ static int lua_cocos2dx_CatmullRomTo_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CatmullRomTo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CatmullRomTo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35601,7 +35601,7 @@ static int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::PointArray*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -35662,7 +35662,7 @@ static int lua_cocos2dx_CatmullRomBy_clone(lua_State* tolua_S)
 			return 0;
 		cocos2d::CatmullRomBy* ret = cobj->clone();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35670,7 +35670,7 @@ static int lua_cocos2dx_CatmullRomBy_clone(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CatmullRomBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CatmullRomBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35708,7 +35708,7 @@ static int lua_cocos2dx_CatmullRomBy_reverse(lua_State* tolua_S)
 			return 0;
 		cocos2d::CatmullRomBy* ret = cobj->reverse();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -35716,7 +35716,7 @@ static int lua_cocos2dx_CatmullRomBy_reverse(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"CatmullRomBy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"CatmullRomBy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -35759,7 +35759,7 @@ static int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::PointArray*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -35892,7 +35892,7 @@ static int lua_cocos2dx_AtlasNode_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -36006,7 +36006,7 @@ static int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -36014,7 +36014,7 @@ static int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -36055,7 +36055,7 @@ static int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TextureAtlas*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -36095,7 +36095,7 @@ static int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
 			return 0;
 		cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -36103,7 +36103,7 @@ static int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TextureAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TextureAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -36213,7 +36213,7 @@ static int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -36402,7 +36402,7 @@ static int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::AtlasNode* ret = cocos2d::AtlasNode::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -36410,7 +36410,7 @@ static int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"AtlasNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"AtlasNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -36694,7 +36694,7 @@ static int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::DrawNode* ret = cocos2d::DrawNode::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -36702,7 +36702,7 @@ static int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"DrawNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"DrawNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -37263,7 +37263,7 @@ static int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -37384,7 +37384,7 @@ static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelAtlas* ret = cocos2d::LabelAtlas::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -37392,7 +37392,7 @@ static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -37418,7 +37418,7 @@ static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelAtlas* ret = cocos2d::LabelAtlas::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -37426,7 +37426,7 @@ static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -37729,7 +37729,7 @@ static int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionManager*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -37837,7 +37837,7 @@ static int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getNotificationNode();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -37845,7 +37845,7 @@ static int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -38159,7 +38159,7 @@ static int lua_cocos2dx_Director_setAccelerometer(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Accelerometer*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -38269,7 +38269,7 @@ static int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Scheduler*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -38342,7 +38342,7 @@ static int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 			return 0;
 		cocos2d::Scene* ret = cobj->getRunningScene();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -38350,7 +38350,7 @@ static int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scene");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scene");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -38559,7 +38559,7 @@ static int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::EGLView*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -38705,7 +38705,7 @@ static int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Scene*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -38748,7 +38748,7 @@ static int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -39026,7 +39026,7 @@ static int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 			return 0;
 		cocos2d::Scheduler* ret = cobj->getScheduler();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -39034,7 +39034,7 @@ static int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scheduler");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scheduler");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -39075,7 +39075,7 @@ static int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Scene*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -39221,7 +39221,7 @@ static int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Scene*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -39296,7 +39296,7 @@ static int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionManager* ret = cobj->getActionManager();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -39304,7 +39304,7 @@ static int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionManager");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionManager");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -39338,7 +39338,7 @@ static int lua_cocos2dx_Director_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::Director* ret = cocos2d::Director::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -39346,7 +39346,7 @@ static int lua_cocos2dx_Director_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Director");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Director");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -39524,7 +39524,7 @@ static int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -39923,7 +39923,7 @@ static int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -40068,7 +40068,7 @@ static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::GridBase* ret = cocos2d::GridBase::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40076,7 +40076,7 @@ static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40095,7 +40095,7 @@ static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -40104,7 +40104,7 @@ static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::GridBase* ret = cocos2d::GridBase::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40112,7 +40112,7 @@ static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GridBase");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GridBase");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40282,7 +40282,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Grid3D* ret = cocos2d::Grid3D::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40290,7 +40290,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Grid3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Grid3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40309,7 +40309,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -40318,7 +40318,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Grid3D* ret = cocos2d::Grid3D::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40326,7 +40326,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Grid3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Grid3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40518,7 +40518,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TiledGrid3D* ret = cocos2d::TiledGrid3D::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40526,7 +40526,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TiledGrid3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TiledGrid3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40545,7 +40545,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -40554,7 +40554,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TiledGrid3D* ret = cocos2d::TiledGrid3D::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40562,7 +40562,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TiledGrid3D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TiledGrid3D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -40695,7 +40695,7 @@ static int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -40717,7 +40717,7 @@ static int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -40735,7 +40735,7 @@ static int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -40787,7 +40787,7 @@ static int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -40861,7 +40861,7 @@ static int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -40869,7 +40869,7 @@ static int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -41154,7 +41154,7 @@ static int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteBatchNode* ret = cobj->getBatchNode();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -41162,7 +41162,7 @@ static int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -41378,7 +41378,7 @@ static int lua_cocos2dx_Sprite_reorderChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -41537,7 +41537,7 @@ static int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -41650,7 +41650,7 @@ static int lua_cocos2dx_Sprite_setDisplayFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -41693,7 +41693,7 @@ static int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteBatchNode*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -41772,7 +41772,7 @@ static int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -41795,7 +41795,7 @@ static int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -41814,7 +41814,7 @@ static int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -41867,7 +41867,7 @@ static int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TextureAtlas*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -42322,7 +42322,7 @@ static int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
 			return 0;
 		cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42330,7 +42330,7 @@ static int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TextureAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TextureAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42371,7 +42371,7 @@ static int lua_cocos2dx_Sprite_initWithSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -42416,7 +42416,7 @@ static int lua_cocos2dx_Sprite_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -42696,7 +42696,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42704,7 +42704,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42715,7 +42715,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::Sprite* ret = cocos2d::Sprite::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42723,7 +42723,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42740,7 +42740,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42748,7 +42748,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42786,7 +42786,7 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -42795,7 +42795,7 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::Sprite* ret = cocos2d::Sprite::createWithTexture(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42803,7 +42803,7 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42819,13 +42819,13 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::Sprite* ret = cocos2d::Sprite::createWithTexture(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42833,7 +42833,7 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42870,7 +42870,7 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sprite* ret = cocos2d::Sprite::createWithSpriteFrameName(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42878,7 +42878,7 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -42916,14 +42916,14 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::Sprite* ret = cocos2d::Sprite::createWithSpriteFrame(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -42931,7 +42931,7 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -43975,7 +43975,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelTTF* ret = cocos2d::LabelTTF::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -43983,7 +43983,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelTTF");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelTTF");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44003,7 +44003,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelTTF* ret = cocos2d::LabelTTF::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -44011,7 +44011,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelTTF");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelTTF");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44040,7 +44040,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelTTF* ret = cocos2d::LabelTTF::create(arg0, arg1, arg2, arg3, arg4, arg5);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -44048,7 +44048,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelTTF");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelTTF");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44059,7 +44059,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::LabelTTF* ret = cocos2d::LabelTTF::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -44067,7 +44067,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelTTF");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelTTF");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44106,7 +44106,7 @@ static int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
 			return 0;
 		cocos2d::LabelTTF* ret = cocos2d::LabelTTF::createWithFontDefinition(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -44114,7 +44114,7 @@ static int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelTTF");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelTTF");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44233,7 +44233,7 @@ static int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -44312,7 +44312,7 @@ static int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -44334,7 +44334,7 @@ static int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -44352,7 +44352,7 @@ static int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -44437,7 +44437,7 @@ static int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -44517,7 +44517,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -44561,7 +44561,7 @@ static int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -44603,7 +44603,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -44611,7 +44611,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -44735,7 +44735,7 @@ static int lua_cocos2dx_SpriteBatchNode_insertChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -44779,7 +44779,7 @@ static int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -44857,7 +44857,7 @@ static int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -44902,7 +44902,7 @@ static int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TextureAtlas*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -45014,7 +45014,7 @@ static int lua_cocos2dx_SpriteBatchNode_reorderChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -45059,7 +45059,7 @@ static int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -45101,7 +45101,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
 			return 0;
 		cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -45109,7 +45109,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TextureAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TextureAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -45185,7 +45185,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -45229,7 +45229,7 @@ static int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -45268,7 +45268,7 @@ static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -45276,7 +45276,7 @@ static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -45291,7 +45291,7 @@ static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -45299,7 +45299,7 @@ static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -45337,14 +45337,14 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -45352,7 +45352,7 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -45367,7 +45367,7 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -45375,7 +45375,7 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -45383,7 +45383,7 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -46637,7 +46637,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -46645,7 +46645,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelBMFont");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelBMFont");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -46671,7 +46671,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -46679,7 +46679,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelBMFont");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelBMFont");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -46699,7 +46699,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -46707,7 +46707,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelBMFont");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelBMFont");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -46724,7 +46724,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -46732,7 +46732,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelBMFont");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelBMFont");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -46743,7 +46743,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::LabelBMFont* ret = cocos2d::LabelBMFont::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -46751,7 +46751,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LabelBMFont");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LabelBMFont");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47085,7 +47085,7 @@ static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47093,7 +47093,7 @@ static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47110,7 +47110,7 @@ static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithBMFont(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47118,7 +47118,7 @@ static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47157,7 +47157,7 @@ static int lua_cocos2dx_Label_createWithBMFontOLD(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithBMFontOLD(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47165,7 +47165,7 @@ static int lua_cocos2dx_Label_createWithBMFontOLD(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47182,7 +47182,7 @@ static int lua_cocos2dx_Label_createWithBMFontOLD(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithBMFontOLD(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47190,7 +47190,7 @@ static int lua_cocos2dx_Label_createWithBMFontOLD(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47231,7 +47231,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithTTF(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47239,7 +47239,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47258,7 +47258,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithTTF(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47266,7 +47266,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47287,7 +47287,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithTTF(arg0, arg1, arg2, arg3, arg4);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47295,7 +47295,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47318,7 +47318,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 			return 0;
 		cocos2d::Label* ret = cocos2d::Label::createWithTTF(arg0, arg1, arg2, arg3, arg4, arg5);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -47326,7 +47326,7 @@ static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Label");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Label");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -47428,7 +47428,7 @@ static int lua_cocos2dx_Layer_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -47437,7 +47437,7 @@ static int lua_cocos2dx_Layer_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -47551,7 +47551,7 @@ static int lua_cocos2dx_Layer_ccTouchesCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Set*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -47560,7 +47560,7 @@ static int lua_cocos2dx_Layer_ccTouchesCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -47604,7 +47604,7 @@ static int lua_cocos2dx_Layer_ccTouchesMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Set*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -47613,7 +47613,7 @@ static int lua_cocos2dx_Layer_ccTouchesMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -47828,7 +47828,7 @@ static int lua_cocos2dx_Layer_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -47837,7 +47837,7 @@ static int lua_cocos2dx_Layer_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -47985,7 +47985,7 @@ static int lua_cocos2dx_Layer_ccTouchesEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Set*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -47994,7 +47994,7 @@ static int lua_cocos2dx_Layer_ccTouchesEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -48107,7 +48107,7 @@ static int lua_cocos2dx_Layer_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -48116,7 +48116,7 @@ static int lua_cocos2dx_Layer_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -48160,7 +48160,7 @@ static int lua_cocos2dx_Layer_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -48169,7 +48169,7 @@ static int lua_cocos2dx_Layer_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -48248,7 +48248,7 @@ static int lua_cocos2dx_Layer_ccTouchesBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Set*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -48257,7 +48257,7 @@ static int lua_cocos2dx_Layer_ccTouchesBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -48463,7 +48463,7 @@ static int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Layer* ret = cocos2d::Layer::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -48471,7 +48471,7 @@ static int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Layer");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Layer");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -49104,7 +49104,7 @@ static int lua_cocos2dx_LayerRGBA_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::LayerRGBA* ret = cocos2d::LayerRGBA::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -49112,7 +49112,7 @@ static int lua_cocos2dx_LayerRGBA_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerRGBA");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerRGBA");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -49532,7 +49532,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LayerColor* ret = cocos2d::LayerColor::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -49540,7 +49540,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerColor");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerColor");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -49551,7 +49551,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::LayerColor* ret = cocos2d::LayerColor::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -49559,7 +49559,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerColor");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerColor");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -49573,7 +49573,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LayerColor* ret = cocos2d::LayerColor::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -49581,7 +49581,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerColor");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerColor");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50164,7 +50164,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LayerGradient* ret = cocos2d::LayerGradient::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50172,7 +50172,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerGradient");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerGradient");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50183,7 +50183,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::LayerGradient* ret = cocos2d::LayerGradient::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50191,7 +50191,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerGradient");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerGradient");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50211,7 +50211,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::LayerGradient* ret = cocos2d::LayerGradient::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50219,7 +50219,7 @@ static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"LayerGradient");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"LayerGradient");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50363,7 +50363,7 @@ static int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Layer*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -50525,7 +50525,7 @@ static int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::Scene* ret = cocos2d::Scene::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50533,7 +50533,7 @@ static int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Scene");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Scene");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50630,14 +50630,14 @@ static int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50645,7 +50645,7 @@ static int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolu
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50772,7 +50772,7 @@ static int lua_cocos2dx_TransitionScene_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -50880,14 +50880,14 @@ static int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionScene* ret = cocos2d::TransitionScene::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -50895,7 +50895,7 @@ static int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionScene");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionScene");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -50999,7 +50999,7 @@ static int lua_cocos2dx_TransitionSceneOriented_initWithDuration(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
@@ -51043,7 +51043,7 @@ static int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
@@ -51051,7 +51051,7 @@ static int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TransitionSceneOriented* ret = cocos2d::TransitionSceneOriented::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51059,7 +51059,7 @@ static int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSceneOriented");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSceneOriented");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51154,14 +51154,14 @@ static int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionRotoZoom* ret = cocos2d::TransitionRotoZoom::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51169,7 +51169,7 @@ static int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionRotoZoom");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionRotoZoom");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51262,14 +51262,14 @@ static int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionJumpZoom* ret = cocos2d::TransitionJumpZoom::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51277,7 +51277,7 @@ static int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionJumpZoom");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionJumpZoom");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51369,7 +51369,7 @@ static int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51377,7 +51377,7 @@ static int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51418,14 +51418,14 @@ static int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51433,7 +51433,7 @@ static int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51505,14 +51505,14 @@ static int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionMoveInL* ret = cocos2d::TransitionMoveInL::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51520,7 +51520,7 @@ static int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionMoveInL");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionMoveInL");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51650,14 +51650,14 @@ static int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionMoveInR* ret = cocos2d::TransitionMoveInR::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51665,7 +51665,7 @@ static int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionMoveInR");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionMoveInR");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51793,14 +51793,14 @@ static int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionMoveInT* ret = cocos2d::TransitionMoveInT::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51808,7 +51808,7 @@ static int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionMoveInT");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionMoveInT");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -51936,14 +51936,14 @@ static int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionMoveInB* ret = cocos2d::TransitionMoveInB::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -51951,7 +51951,7 @@ static int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionMoveInB");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionMoveInB");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52045,7 +52045,7 @@ static int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52053,7 +52053,7 @@ static int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52094,14 +52094,14 @@ static int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52109,7 +52109,7 @@ static int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52181,14 +52181,14 @@ static int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSlideInL* ret = cocos2d::TransitionSlideInL::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52196,7 +52196,7 @@ static int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSlideInL");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSlideInL");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52292,7 +52292,7 @@ static int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52300,7 +52300,7 @@ static int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52372,14 +52372,14 @@ static int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSlideInR* ret = cocos2d::TransitionSlideInR::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52387,7 +52387,7 @@ static int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSlideInR");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSlideInR");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52482,7 +52482,7 @@ static int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52490,7 +52490,7 @@ static int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52562,14 +52562,14 @@ static int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSlideInB* ret = cocos2d::TransitionSlideInB::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52577,7 +52577,7 @@ static int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSlideInB");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSlideInB");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52672,7 +52672,7 @@ static int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52680,7 +52680,7 @@ static int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52752,14 +52752,14 @@ static int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSlideInT* ret = cocos2d::TransitionSlideInT::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52767,7 +52767,7 @@ static int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSlideInT");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSlideInT");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52865,14 +52865,14 @@ static int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tol
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52880,7 +52880,7 @@ static int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tol
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -52919,14 +52919,14 @@ static int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionShrinkGrow* ret = cocos2d::TransitionShrinkGrow::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -52934,7 +52934,7 @@ static int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionShrinkGrow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionShrinkGrow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53030,13 +53030,13 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipX* ret = cocos2d::TransitionFlipX::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53044,7 +53044,7 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53063,7 +53063,7 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53072,7 +53072,7 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipX* ret = cocos2d::TransitionFlipX::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53080,7 +53080,7 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53174,13 +53174,13 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipY* ret = cocos2d::TransitionFlipY::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53188,7 +53188,7 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53207,7 +53207,7 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53216,7 +53216,7 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipY* ret = cocos2d::TransitionFlipY::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53224,7 +53224,7 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53318,13 +53318,13 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipAngular* ret = cocos2d::TransitionFlipAngular::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53332,7 +53332,7 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipAngular");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipAngular");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53351,7 +53351,7 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53360,7 +53360,7 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFlipAngular* ret = cocos2d::TransitionFlipAngular::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53368,7 +53368,7 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFlipAngular");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFlipAngular");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53462,13 +53462,13 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipX* ret = cocos2d::TransitionZoomFlipX::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53476,7 +53476,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53495,7 +53495,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53504,7 +53504,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipX* ret = cocos2d::TransitionZoomFlipX::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53512,7 +53512,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipX");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipX");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53606,13 +53606,13 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipY* ret = cocos2d::TransitionZoomFlipY::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53620,7 +53620,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53639,7 +53639,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53648,7 +53648,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipY* ret = cocos2d::TransitionZoomFlipY::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53656,7 +53656,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipY");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipY");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53750,13 +53750,13 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipAngular* ret = cocos2d::TransitionZoomFlipAngular::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53764,7 +53764,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipAngular");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipAngular");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53783,7 +53783,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -53792,7 +53792,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionZoomFlipAngular* ret = cocos2d::TransitionZoomFlipAngular::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53800,7 +53800,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionZoomFlipAngular");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionZoomFlipAngular");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -53900,7 +53900,7 @@ static int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -53923,7 +53923,7 @@ static int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -53971,13 +53971,13 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFade* ret = cocos2d::TransitionFade::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -53985,7 +53985,7 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFade");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFade");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54004,7 +54004,7 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 			if (!ok) { ok = true; break; }
@@ -54013,7 +54013,7 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::TransitionFade* ret = cocos2d::TransitionFade::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54021,7 +54021,7 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFade");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFade");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54149,14 +54149,14 @@ static int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionCrossFade* ret = cocos2d::TransitionCrossFade::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54164,7 +54164,7 @@ static int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionCrossFade");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionCrossFade");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54261,14 +54261,14 @@ static int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* t
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54276,7 +54276,7 @@ static int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* t
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54315,14 +54315,14 @@ static int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionTurnOffTiles* ret = cocos2d::TransitionTurnOffTiles::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54330,7 +54330,7 @@ static int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionTurnOffTiles");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionTurnOffTiles");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54424,7 +54424,7 @@ static int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54432,7 +54432,7 @@ static int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54473,14 +54473,14 @@ static int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54488,7 +54488,7 @@ static int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolu
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54527,14 +54527,14 @@ static int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSplitCols* ret = cocos2d::TransitionSplitCols::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54542,7 +54542,7 @@ static int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSplitCols");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSplitCols");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54637,7 +54637,7 @@ static int lua_cocos2dx_TransitionSplitRows_action(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->action();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54645,7 +54645,7 @@ static int lua_cocos2dx_TransitionSplitRows_action(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54684,14 +54684,14 @@ static int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionSplitRows* ret = cocos2d::TransitionSplitRows::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54699,7 +54699,7 @@ static int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionSplitRows");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionSplitRows");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54796,14 +54796,14 @@ static int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ActionInterval*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->easeActionWithAction(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54811,7 +54811,7 @@ static int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54851,7 +54851,7 @@ static int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->actionWithSize(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54859,7 +54859,7 @@ static int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -54898,14 +54898,14 @@ static int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionFadeTR* ret = cocos2d::TransitionFadeTR::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -54913,7 +54913,7 @@ static int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFadeTR");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFadeTR");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55010,7 +55010,7 @@ static int lua_cocos2dx_TransitionFadeBL_actionWithSize(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->actionWithSize(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55018,7 +55018,7 @@ static int lua_cocos2dx_TransitionFadeBL_actionWithSize(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55057,14 +55057,14 @@ static int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionFadeBL* ret = cocos2d::TransitionFadeBL::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55072,7 +55072,7 @@ static int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFadeBL");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFadeBL");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55168,7 +55168,7 @@ static int lua_cocos2dx_TransitionFadeUp_actionWithSize(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->actionWithSize(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55176,7 +55176,7 @@ static int lua_cocos2dx_TransitionFadeUp_actionWithSize(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55215,14 +55215,14 @@ static int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionFadeUp* ret = cocos2d::TransitionFadeUp::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55230,7 +55230,7 @@ static int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFadeUp");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFadeUp");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55326,7 +55326,7 @@ static int lua_cocos2dx_TransitionFadeDown_actionWithSize(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->actionWithSize(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55334,7 +55334,7 @@ static int lua_cocos2dx_TransitionFadeDown_actionWithSize(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55373,14 +55373,14 @@ static int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionFadeDown* ret = cocos2d::TransitionFadeDown::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55388,7 +55388,7 @@ static int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionFadeDown");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionFadeDown");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55484,7 +55484,7 @@ static int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
 			return 0;
 		cocos2d::ActionInterval* ret = cobj->actionWithSize(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55492,7 +55492,7 @@ static int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ActionInterval");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ActionInterval");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55536,7 +55536,7 @@ static int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 4,&arg2);
@@ -55580,7 +55580,7 @@ static int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 4,&arg2);
@@ -55588,7 +55588,7 @@ static int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TransitionPageTurn* ret = cocos2d::TransitionPageTurn::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55596,7 +55596,7 @@ static int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionPageTurn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionPageTurn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55692,14 +55692,14 @@ static int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgress* ret = cocos2d::TransitionProgress::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55707,7 +55707,7 @@ static int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgress");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgress");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55800,14 +55800,14 @@ static int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressRadialCCW* ret = cocos2d::TransitionProgressRadialCCW::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55815,7 +55815,7 @@ static int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressRadialCCW");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressRadialCCW");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55873,14 +55873,14 @@ static int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressRadialCW* ret = cocos2d::TransitionProgressRadialCW::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55888,7 +55888,7 @@ static int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressRadialCW");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressRadialCW");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -55946,14 +55946,14 @@ static int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressHorizontal* ret = cocos2d::TransitionProgressHorizontal::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -55961,7 +55961,7 @@ static int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressHorizontal");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressHorizontal");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -56019,14 +56019,14 @@ static int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressVertical* ret = cocos2d::TransitionProgressVertical::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -56034,7 +56034,7 @@ static int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressVertical");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressVertical");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -56092,14 +56092,14 @@ static int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressInOut* ret = cocos2d::TransitionProgressInOut::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -56107,7 +56107,7 @@ static int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressInOut");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressInOut");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -56165,14 +56165,14 @@ static int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Scene*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TransitionProgressOutIn* ret = cocos2d::TransitionProgressOutIn::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -56180,7 +56180,7 @@ static int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TransitionProgressOutIn");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TransitionProgressOutIn");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -56571,7 +56571,7 @@ static int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -56750,7 +56750,7 @@ static int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		do {
@@ -56759,7 +56759,7 @@ static int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
 			auto lambda = [=](Object* larg0) -> void {
 				jsval largv[1];
 				do {
-					if(NULL != larg0){
+					if (NULL != larg0){
 						cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(larg0);
 						if (NULL != cobj) {
 							int ID = larg0 ? (int)(cobj->_ID) : -1;
@@ -56767,7 +56767,7 @@ static int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
 							toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)larg0,"Object*");
 						} else {
 							 tolua_pushusertype(tolua_S,(void*)larg0,"Object*");
-					}}else {
+					}} else {
 						lua_pushnil(tolua_S);
 					}
 				} while (0);
@@ -56854,7 +56854,7 @@ static int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getLabel();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -56862,7 +56862,7 @@ static int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -57009,7 +57009,7 @@ static int lua_cocos2dx_MenuItemAtlasFont_initWithString(lua_State* tolua_S)
 			auto lambda = [=](Object* larg0) -> void {
 				jsval largv[1];
 				do {
-					if(NULL != larg0){
+					if (NULL != larg0){
 						cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(larg0);
 						if (NULL != cobj) {
 							int ID = larg0 ? (int)(cobj->_ID) : -1;
@@ -57017,7 +57017,7 @@ static int lua_cocos2dx_MenuItemAtlasFont_initWithString(lua_State* tolua_S)
 							toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)larg0,"Object*");
 						} else {
 							 tolua_pushusertype(tolua_S,(void*)larg0,"Object*");
-					}}else {
+					}} else {
 						lua_pushnil(tolua_S);
 					}
 				} while (0);
@@ -57197,7 +57197,7 @@ static int lua_cocos2dx_MenuItemFont_initWithString(lua_State* tolua_S)
 			auto lambda = [=](Object* larg0) -> void {
 				jsval largv[1];
 				do {
-					if(NULL != larg0){
+					if (NULL != larg0){
 						cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(larg0);
 						if (NULL != cobj) {
 							int ID = larg0 ? (int)(cobj->_ID) : -1;
@@ -57205,7 +57205,7 @@ static int lua_cocos2dx_MenuItemFont_initWithString(lua_State* tolua_S)
 							toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)larg0,"Object*");
 						} else {
 							 tolua_pushusertype(tolua_S,(void*)larg0,"Object*");
-					}}else {
+					}} else {
 						lua_pushnil(tolua_S);
 					}
 				} while (0);
@@ -57585,7 +57585,7 @@ static int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -57628,7 +57628,7 @@ static int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -57674,7 +57674,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -57683,7 +57683,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Node*)tolua_tousertype(tolua_S,3,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -57692,7 +57692,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::Node*)tolua_tousertype(tolua_S,4,0);
 		};
 		do {
@@ -57701,7 +57701,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 			auto lambda = [=](Object* larg0) -> void {
 				jsval largv[1];
 				do {
-					if(NULL != larg0){
+					if (NULL != larg0){
 						cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(larg0);
 						if (NULL != cobj) {
 							int ID = larg0 ? (int)(cobj->_ID) : -1;
@@ -57709,7 +57709,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 							toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)larg0,"Object*");
 						} else {
 							 tolua_pushusertype(tolua_S,(void*)larg0,"Object*");
-					}}else {
+					}} else {
 						lua_pushnil(tolua_S);
 					}
 				} while (0);
@@ -57764,7 +57764,7 @@ static int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -57804,7 +57804,7 @@ static int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getDisabledImage();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -57812,7 +57812,7 @@ static int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -57850,7 +57850,7 @@ static int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getSelectedImage();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -57858,7 +57858,7 @@ static int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -57896,7 +57896,7 @@ static int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getNormalImage();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -57904,7 +57904,7 @@ static int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -58041,7 +58041,7 @@ static int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -58084,7 +58084,7 @@ static int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -58127,7 +58127,7 @@ static int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -58210,7 +58210,7 @@ static int lua_cocos2dx_MenuItemImage_initWithNormalImage(lua_State* tolua_S)
 			auto lambda = [=](Object* larg0) -> void {
 				jsval largv[1];
 				do {
-					if(NULL != larg0){
+					if (NULL != larg0){
 						cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(larg0);
 						if (NULL != cobj) {
 							int ID = larg0 ? (int)(cobj->_ID) : -1;
@@ -58218,7 +58218,7 @@ static int lua_cocos2dx_MenuItemImage_initWithNormalImage(lua_State* tolua_S)
 							toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)larg0,"Object*");
 						} else {
 							 tolua_pushusertype(tolua_S,(void*)larg0,"Object*");
-					}}else {
+					}} else {
 						lua_pushnil(tolua_S);
 					}
 				} while (0);
@@ -58366,7 +58366,7 @@ static int lua_cocos2dx_MenuItemToggle_initWithItem(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::MenuItem*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -58514,7 +58514,7 @@ static int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::MenuItem*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -58653,7 +58653,7 @@ static int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
 			return 0;
 		cocos2d::MenuItem* ret = cobj->getSelectedItem();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -58661,7 +58661,7 @@ static int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MenuItem");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MenuItem");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -58802,7 +58802,7 @@ static int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -58824,7 +58824,7 @@ static int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -58842,7 +58842,7 @@ static int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -58928,7 +58928,7 @@ static int lua_cocos2dx_Menu_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -58937,7 +58937,7 @@ static int lua_cocos2dx_Menu_ccTouchBegan(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -58982,7 +58982,7 @@ static int lua_cocos2dx_Menu_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -58991,7 +58991,7 @@ static int lua_cocos2dx_Menu_ccTouchEnded(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -59310,7 +59310,7 @@ static int lua_cocos2dx_Menu_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -59319,7 +59319,7 @@ static int lua_cocos2dx_Menu_ccTouchMoved(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -59363,7 +59363,7 @@ static int lua_cocos2dx_Menu_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Touch*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -59372,7 +59372,7 @@ static int lua_cocos2dx_Menu_ccTouchCancelled(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Event*)tolua_tousertype(tolua_S,3,0);
 		};
 		if(!ok)
@@ -59416,7 +59416,7 @@ static int lua_cocos2dx_Menu_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -59701,7 +59701,7 @@ static int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -59779,7 +59779,7 @@ static int lua_cocos2dx_ClippingNode_init(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -59828,7 +59828,7 @@ static int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
 			return 0;
 		cocos2d::Node* ret = cobj->getStencil();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -59836,7 +59836,7 @@ static int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Node");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Node");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -59908,13 +59908,13 @@ static int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::ClippingNode* ret = cocos2d::ClippingNode::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -59922,7 +59922,7 @@ static int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ClippingNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ClippingNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -59933,7 +59933,7 @@ static int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::ClippingNode* ret = cocos2d::ClippingNode::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -59941,7 +59941,7 @@ static int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ClippingNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ClippingNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -60076,7 +60076,7 @@ static int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -60185,7 +60185,7 @@ static int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -60193,7 +60193,7 @@ static int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -60321,7 +60321,7 @@ static int lua_cocos2dx_MotionStreak_initWithFade(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg4 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,6,0);
 		};
 
@@ -60574,13 +60574,13 @@ static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg4 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,6,0);
 		};
 			if (!ok) { ok = true; break; }
 			cocos2d::MotionStreak* ret = cocos2d::MotionStreak::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -60588,7 +60588,7 @@ static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MotionStreak");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MotionStreak");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -60614,7 +60614,7 @@ static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::MotionStreak* ret = cocos2d::MotionStreak::create(arg0, arg1, arg2, arg3, arg4);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -60622,7 +60622,7 @@ static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"MotionStreak");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"MotionStreak");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -60903,7 +60903,7 @@ static int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -61046,7 +61046,7 @@ static int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sprite* ret = cobj->getSprite();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -61054,7 +61054,7 @@ static int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -61279,7 +61279,7 @@ static int lua_cocos2dx_ProgressTimer_initWithSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -61424,14 +61424,14 @@ static int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ProgressTimer* ret = cocos2d::ProgressTimer::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -61439,7 +61439,7 @@ static int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ProgressTimer");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ProgressTimer");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -61622,7 +61622,7 @@ static int lua_cocos2dx_RenderTexture_listenToForeground(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -61900,7 +61900,7 @@ static int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sprite* ret = cobj->getSprite();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -61908,7 +61908,7 @@ static int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62381,7 +62381,7 @@ static int lua_cocos2dx_RenderTexture_listenToBackground(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Object*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -62496,7 +62496,7 @@ static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Image* ret = cobj->newImage();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -62504,7 +62504,7 @@ static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Image");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Image");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62517,7 +62517,7 @@ static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Image* ret = cobj->newImage(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -62525,7 +62525,7 @@ static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Image");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Image");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62601,7 +62601,7 @@ static int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Sprite*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -62644,7 +62644,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RenderTexture* ret = cocos2d::RenderTexture::create(arg0, arg1, arg2);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -62652,7 +62652,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RenderTexture");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RenderTexture");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62675,7 +62675,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RenderTexture* ret = cocos2d::RenderTexture::create(arg0, arg1, arg2, arg3);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -62683,7 +62683,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RenderTexture");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RenderTexture");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62700,7 +62700,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::RenderTexture* ret = cocos2d::RenderTexture::create(arg0, arg1);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -62708,7 +62708,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"RenderTexture");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"RenderTexture");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -62831,7 +62831,7 @@ static int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -62853,7 +62853,7 @@ static int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -62871,7 +62871,7 @@ static int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -62956,7 +62956,7 @@ static int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -63102,7 +63102,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63110,7 +63110,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63151,7 +63151,7 @@ static int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TextureAtlas*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -63226,7 +63226,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
 			return 0;
 		cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63234,7 +63234,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TextureAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TextureAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63276,7 +63276,7 @@ static int lua_cocos2dx_ParticleBatchNode_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -63321,7 +63321,7 @@ static int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ParticleSystem*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -63366,7 +63366,7 @@ static int lua_cocos2dx_ParticleBatchNode_initWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -63449,7 +63449,7 @@ static int lua_cocos2dx_ParticleBatchNode_reorderChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -63488,7 +63488,7 @@ static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleBatchNode* ret = cocos2d::ParticleBatchNode::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63496,7 +63496,7 @@ static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63511,7 +63511,7 @@ static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleBatchNode* ret = cocos2d::ParticleBatchNode::create(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63519,7 +63519,7 @@ static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63557,14 +63557,14 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::ParticleBatchNode* ret = cocos2d::ParticleBatchNode::createWithTexture(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63572,7 +63572,7 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63587,7 +63587,7 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_uint32(tolua_S, 3,&arg1);
@@ -63595,7 +63595,7 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleBatchNode* ret = cocos2d::ParticleBatchNode::createWithTexture(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63603,7 +63603,7 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63746,7 +63746,7 @@ static int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->getTexture();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63754,7 +63754,7 @@ static int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -63826,7 +63826,7 @@ static int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleBatchNode* ret = cobj->getBatchNode();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -63834,7 +63834,7 @@ static int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleBatchNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleBatchNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -64774,7 +64774,7 @@ static int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -66095,7 +66095,7 @@ static int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::ParticleBatchNode*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -67391,7 +67391,7 @@ static int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSystem* ret = cocos2d::ParticleSystem::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -67399,7 +67399,7 @@ static int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSystem");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSystem");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -67436,7 +67436,7 @@ static int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua
 			return 0;
 		cocos2d::ParticleSystem* ret = cocos2d::ParticleSystem::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -67444,7 +67444,7 @@ static int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSystem");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSystem");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -67682,7 +67682,7 @@ static int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -67759,7 +67759,7 @@ static int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -67796,7 +67796,7 @@ static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 			if (!ok) { ok = true; break; }
 			cocos2d::ParticleSystemQuad* ret = cocos2d::ParticleSystemQuad::create(arg0);
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -67804,7 +67804,7 @@ static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSystemQuad");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSystemQuad");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -67815,7 +67815,7 @@ static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 		if (argc == 0) {
 			cocos2d::ParticleSystemQuad* ret = cocos2d::ParticleSystemQuad::create();
 			do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -67823,7 +67823,7 @@ static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSystemQuad");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSystemQuad");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -67860,7 +67860,7 @@ static int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* t
 			return 0;
 		cocos2d::ParticleSystemQuad* ret = cocos2d::ParticleSystemQuad::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -67868,7 +67868,7 @@ static int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* t
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSystemQuad");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSystemQuad");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68032,7 +68032,7 @@ static int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleFire* ret = cocos2d::ParticleFire::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68040,7 +68040,7 @@ static int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFire");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFire");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68077,7 +68077,7 @@ static int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S
 			return 0;
 		cocos2d::ParticleFire* ret = cocos2d::ParticleFire::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68085,7 +68085,7 @@ static int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFire");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFire");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68247,7 +68247,7 @@ static int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleFireworks* ret = cocos2d::ParticleFireworks::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68255,7 +68255,7 @@ static int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFireworks");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFireworks");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68292,7 +68292,7 @@ static int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* to
 			return 0;
 		cocos2d::ParticleFireworks* ret = cocos2d::ParticleFireworks::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68300,7 +68300,7 @@ static int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* to
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFireworks");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFireworks");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68462,7 +68462,7 @@ static int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSun* ret = cocos2d::ParticleSun::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68470,7 +68470,7 @@ static int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSun");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSun");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68507,7 +68507,7 @@ static int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSun* ret = cocos2d::ParticleSun::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68515,7 +68515,7 @@ static int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSun");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSun");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68677,7 +68677,7 @@ static int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleGalaxy* ret = cocos2d::ParticleGalaxy::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68685,7 +68685,7 @@ static int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleGalaxy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleGalaxy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68722,7 +68722,7 @@ static int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua
 			return 0;
 		cocos2d::ParticleGalaxy* ret = cocos2d::ParticleGalaxy::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68730,7 +68730,7 @@ static int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleGalaxy");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleGalaxy");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68892,7 +68892,7 @@ static int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleFlower* ret = cocos2d::ParticleFlower::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68900,7 +68900,7 @@ static int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFlower");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFlower");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -68937,7 +68937,7 @@ static int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua
 			return 0;
 		cocos2d::ParticleFlower* ret = cocos2d::ParticleFlower::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -68945,7 +68945,7 @@ static int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleFlower");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleFlower");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69107,7 +69107,7 @@ static int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleMeteor* ret = cocos2d::ParticleMeteor::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69115,7 +69115,7 @@ static int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleMeteor");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleMeteor");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69152,7 +69152,7 @@ static int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua
 			return 0;
 		cocos2d::ParticleMeteor* ret = cocos2d::ParticleMeteor::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69160,7 +69160,7 @@ static int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleMeteor");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleMeteor");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69322,7 +69322,7 @@ static int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSpiral* ret = cocos2d::ParticleSpiral::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69330,7 +69330,7 @@ static int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSpiral");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSpiral");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69367,7 +69367,7 @@ static int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua
 			return 0;
 		cocos2d::ParticleSpiral* ret = cocos2d::ParticleSpiral::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69375,7 +69375,7 @@ static int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSpiral");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSpiral");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69537,7 +69537,7 @@ static int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleExplosion* ret = cocos2d::ParticleExplosion::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69545,7 +69545,7 @@ static int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleExplosion");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleExplosion");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69582,7 +69582,7 @@ static int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* to
 			return 0;
 		cocos2d::ParticleExplosion* ret = cocos2d::ParticleExplosion::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69590,7 +69590,7 @@ static int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* to
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleExplosion");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleExplosion");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69752,7 +69752,7 @@ static int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSmoke* ret = cocos2d::ParticleSmoke::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69760,7 +69760,7 @@ static int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSmoke");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSmoke");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69797,7 +69797,7 @@ static int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_
 			return 0;
 		cocos2d::ParticleSmoke* ret = cocos2d::ParticleSmoke::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69805,7 +69805,7 @@ static int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSmoke");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSmoke");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -69967,7 +69967,7 @@ static int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleSnow* ret = cocos2d::ParticleSnow::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -69975,7 +69975,7 @@ static int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSnow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSnow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -70012,7 +70012,7 @@ static int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S
 			return 0;
 		cocos2d::ParticleSnow* ret = cocos2d::ParticleSnow::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -70020,7 +70020,7 @@ static int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleSnow");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleSnow");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -70182,7 +70182,7 @@ static int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParticleRain* ret = cocos2d::ParticleRain::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -70190,7 +70190,7 @@ static int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleRain");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleRain");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -70227,7 +70227,7 @@ static int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S
 			return 0;
 		cocos2d::ParticleRain* ret = cocos2d::ParticleRain::createWithTotalParticles(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -70235,7 +70235,7 @@ static int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParticleRain");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParticleRain");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -70859,7 +70859,7 @@ static int lua_cocos2dx_FileUtils_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::FileUtils* ret = cocos2d::FileUtils::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -70867,7 +70867,7 @@ static int lua_cocos2dx_FileUtils_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"FileUtils");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"FileUtils");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71038,7 +71038,7 @@ static int lua_cocos2dx_Application_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::Application* ret = cocos2d::Application::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71046,7 +71046,7 @@ static int lua_cocos2dx_Application_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Application");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Application");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71143,7 +71143,7 @@ static int lua_cocos2dx_ShaderCache_addProgram(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::GLProgram*)tolua_tousertype(tolua_S,2,0);
 		};
 		std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
@@ -71186,7 +71186,7 @@ static int lua_cocos2dx_ShaderCache_programForKey(lua_State* tolua_S)
 			return 0;
 		cocos2d::GLProgram* ret = cobj->programForKey(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71194,7 +71194,7 @@ static int lua_cocos2dx_ShaderCache_programForKey(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"GLProgram");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"GLProgram");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71291,7 +71291,7 @@ static int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::ShaderCache* ret = cocos2d::ShaderCache::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71299,7 +71299,7 @@ static int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ShaderCache");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ShaderCache");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71399,7 +71399,7 @@ static int lua_cocos2dx_AnimationCache_animationByName(lua_State* tolua_S)
 			return 0;
 		cocos2d::Animation* ret = cobj->animationByName(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71407,7 +71407,7 @@ static int lua_cocos2dx_AnimationCache_animationByName(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Animation");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Animation");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71449,7 +71449,7 @@ static int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Animation*)tolua_tousertype(tolua_S,2,0);
 		};
 		std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
@@ -71655,7 +71655,7 @@ static int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::AnimationCache* ret = cocos2d::AnimationCache::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71663,7 +71663,7 @@ static int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"AnimationCache");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"AnimationCache");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -71795,7 +71795,7 @@ static int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolu
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,3,0);
 		};
 
@@ -71840,7 +71840,7 @@ static int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,2,0);
 		};
 		std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
@@ -71916,7 +71916,7 @@ static int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S
 			return 0;
 		cocos2d::SpriteFrame* ret = cobj->getSpriteFrameByName(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -71924,7 +71924,7 @@ static int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrame");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrame");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72067,7 +72067,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -72168,7 +72168,7 @@ static int lua_cocos2dx_SpriteFrameCache_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::SpriteFrameCache* ret = cocos2d::SpriteFrameCache::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -72176,7 +72176,7 @@ static int lua_cocos2dx_SpriteFrameCache_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SpriteFrameCache");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SpriteFrameCache");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72280,7 +72280,7 @@ static int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Image*)tolua_tousertype(tolua_S,2,0);
 		};
 		std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
@@ -72288,7 +72288,7 @@ static int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->addUIImage(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -72296,7 +72296,7 @@ static int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72371,7 +72371,7 @@ static int lua_cocos2dx_TextureCache_textureForKey(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->textureForKey(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -72379,7 +72379,7 @@ static int lua_cocos2dx_TextureCache_textureForKey(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72453,7 +72453,7 @@ static int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 			return 0;
 		cocos2d::Texture2D* ret = cobj->addImage(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -72461,7 +72461,7 @@ static int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Texture2D");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Texture2D");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72568,7 +72568,7 @@ static int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Texture2D*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -72664,7 +72664,7 @@ static int lua_cocos2dx_TextureCache_getInstance(lua_State* tolua_S)
 			return 0;
 		cocos2d::TextureCache* ret = cocos2d::TextureCache::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -72672,7 +72672,7 @@ static int lua_cocos2dx_TextureCache_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TextureCache");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TextureCache");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -72780,7 +72780,7 @@ static int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -72806,7 +72806,7 @@ static int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 
@@ -72931,7 +72931,7 @@ static int lua_cocos2dx_ParallaxNode_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -73044,7 +73044,7 @@ static int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::ParallaxNode* ret = cocos2d::ParallaxNode::create();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -73052,7 +73052,7 @@ static int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"ParallaxNode");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"ParallaxNode");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -73188,7 +73188,7 @@ static int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
 			return 0;
 		cocos2d::String* ret = cobj->getProperty(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -73196,7 +73196,7 @@ static int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"String");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"String");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -74898,7 +74898,7 @@ static int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXMapInfo* ret = cocos2d::TMXMapInfo::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -74906,7 +74906,7 @@ static int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXMapInfo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXMapInfo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -74945,7 +74945,7 @@ static int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXMapInfo* ret = cocos2d::TMXMapInfo::createWithXML(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -74953,7 +74953,7 @@ static int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXMapInfo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXMapInfo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -75084,7 +75084,7 @@ static int lua_cocos2dx_TMXLayer_addChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
@@ -75525,7 +75525,7 @@ static int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TMXTilesetInfo*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -75534,7 +75534,7 @@ static int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::TMXLayerInfo*)tolua_tousertype(tolua_S,3,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -75543,7 +75543,7 @@ static int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::TMXMapInfo*)tolua_tousertype(tolua_S,4,0);
 		};
 		if(!ok)
@@ -75712,7 +75712,7 @@ static int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
 			return 0;
 		cocos2d::String* ret = cobj->getProperty(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -75720,7 +75720,7 @@ static int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"String");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"String");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -75830,7 +75830,7 @@ static int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TMXTilesetInfo*)tolua_tousertype(tolua_S,2,0);
 		};
 		if(!ok)
@@ -75874,7 +75874,7 @@ static int lua_cocos2dx_TMXLayer_removeChild(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
 		};
 		ok &= luaval_to_boolean(tolua_S, 3,&arg1);
@@ -75915,7 +75915,7 @@ static int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXTilesetInfo* ret = cobj->getTileSet();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -75923,7 +75923,7 @@ static int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXTilesetInfo");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXTilesetInfo");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -75997,7 +75997,7 @@ static int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
 			return 0;
 		cocos2d::Sprite* ret = cobj->getTileAt(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76005,7 +76005,7 @@ static int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"Sprite");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"Sprite");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76044,7 +76044,7 @@ static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg0 = (cocos2d::TMXTilesetInfo*)tolua_tousertype(tolua_S,2,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -76053,7 +76053,7 @@ static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg1 = (cocos2d::TMXLayerInfo*)tolua_tousertype(tolua_S,3,0);
 		};
 		#if COCOS2D_DEBUG >= 1
@@ -76062,14 +76062,14 @@ static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 			ok = false;
 		}
 		#endif
-		if(ok){
+		if (ok){
 			arg2 = (cocos2d::TMXMapInfo*)tolua_tousertype(tolua_S,4,0);
 		};
 		if(!ok)
 			return 0;
 		cocos2d::TMXLayer* ret = cocos2d::TMXLayer::create(arg0, arg1, arg2);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76077,7 +76077,7 @@ static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXLayer");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXLayer");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76231,7 +76231,7 @@ static int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
 			return 0;
 		cocos2d::String* ret = cobj->getProperty(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76239,7 +76239,7 @@ static int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"String");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"String");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76314,7 +76314,7 @@ static int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXObjectGroup* ret = cobj->getObjectGroup(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76322,7 +76322,7 @@ static int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXObjectGroup");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXObjectGroup");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76643,7 +76643,7 @@ static int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXLayer* ret = cobj->getLayer(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76651,7 +76651,7 @@ static int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXLayer");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXLayer");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76791,7 +76791,7 @@ static int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXTiledMap* ret = cocos2d::TMXTiledMap::create(arg0);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76799,7 +76799,7 @@ static int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXTiledMap");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXTiledMap");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -76838,7 +76838,7 @@ static int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
 			return 0;
 		cocos2d::TMXTiledMap* ret = cocos2d::TMXTiledMap::createWithXML(arg0, arg1);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -76846,7 +76846,7 @@ static int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TMXTiledMap");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TMXTiledMap");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -77177,7 +77177,7 @@ static int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
 			return 0;
 		cocos2d::TileMapAtlas* ret = cocos2d::TileMapAtlas::create(arg0, arg1, arg2, arg3);
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -77185,7 +77185,7 @@ static int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"TileMapAtlas");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"TileMapAtlas");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
@@ -78460,7 +78460,7 @@ static int lua_cocos2dx_SimpleAudioEngine_getInstance(lua_State* tolua_S)
 			return 0;
 		CocosDenshion::SimpleAudioEngine* ret = CocosDenshion::SimpleAudioEngine::getInstance();
 		do {
-			if(NULL != ret){
+			if (NULL != ret){
 				cocos2d::Object *cobj = dynamic_cast<cocos2d::Object *>(ret);
 				if (NULL != cobj) {
 					int ID = ret ? (int)(cobj->_ID) : -1;
@@ -78468,7 +78468,7 @@ static int lua_cocos2dx_SimpleAudioEngine_getInstance(lua_State* tolua_S)
 					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,"SimpleAudioEngine");
 				} else {
 					 tolua_pushusertype(tolua_S,(void*)ret,"SimpleAudioEngine");
-			}}else {
+			}} else {
 				lua_pushnil(tolua_S);
 			}
 		} while (0);
