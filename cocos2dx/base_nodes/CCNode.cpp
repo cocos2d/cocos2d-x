@@ -518,7 +518,7 @@ const char* Node::description() const
 // lazy allocs
 void Node::childrenAlloc(void)
 {
-    _children = Array::createWithCapacity(4);
+    _children = Array::createWithCapacity(10);
     _children->retain();
 }
 

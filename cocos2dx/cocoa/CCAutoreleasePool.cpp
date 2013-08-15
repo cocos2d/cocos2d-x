@@ -31,7 +31,7 @@ static PoolManager* s_pPoolManager = NULL;
 AutoreleasePool::AutoreleasePool(void)
 {
     _managedObjectArray = new Array();
-    _managedObjectArray->init();
+    _managedObjectArray->initWithCapacity(150);
 }
 
 AutoreleasePool::~AutoreleasePool(void)
@@ -107,7 +107,7 @@ void PoolManager::purgePoolManager()
 PoolManager::PoolManager()
 {
     _releasePoolStack = new Array();    
-    _releasePoolStack->init();
+    _releasePoolStack->initWithCapacity(150);
     _curReleasePool = 0;
 }
 
