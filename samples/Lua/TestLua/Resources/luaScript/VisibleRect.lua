@@ -23,7 +23,7 @@ end
 
 function VisibleRect:getVisibleRect()
     self:lazyInit()
-    return cc.Rect(self.s_visibleRect.x, self.s_visibleRect.y, self.s_visibleRect.width, self.s_visibleRect.height)
+    return cc.rect(self.s_visibleRect.x, self.s_visibleRect.y, self.s_visibleRect.width, self.s_visibleRect.height)
 end
 
 function VisibleRect:left()

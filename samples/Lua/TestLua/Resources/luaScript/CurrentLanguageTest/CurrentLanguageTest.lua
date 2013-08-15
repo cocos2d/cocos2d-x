@@ -1,13 +1,13 @@
 local function CurrentLanguageTest()
-    local ret = CCLayer:create()
-    local  label = CCLabelTTF:create("Current language Test", "Arial", 28)
+    local ret = cc.Layer:create()
+    local  label = cc.LabelTTF:create("Current language Test", "Arial", 28)
     ret:addChild(label, 0)
-    label:setPosition( CCPoint(VisibleRect:center().x, VisibleRect:top().y-50) )
+    label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y-50) )
 
-    local labelLanguage = CCLabelTTF:create("", "Arial", 20)
+    local labelLanguage = cc.LabelTTF:create("", "Arial", 20)
     labelLanguage:setPosition(VisibleRect:center())
 
-    local currentLanguageType = CCApplication:getInstance():getCurrentLanguage()
+    local currentLanguageType = cc.Application:getInstance():getCurrentLanguage()
 
     if currentLanguageType == kLanguageEnglish then
         labelLanguage:setString("current language is English")
@@ -39,7 +39,7 @@ local function CurrentLanguageTest()
 end
 
 function CurrentLanguageTestMain()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     local pLayer = CurrentLanguageTest()
     scene:addChild(pLayer)
     scene:addChild(CreateBackMenuItem())

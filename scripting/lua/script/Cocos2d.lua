@@ -1,5 +1,8 @@
 cc = cc or {}
 
+cc.DIRECTOR_PROJECTION_2D = 0
+cc.DIRECTOR_PROJECTION_3D = 1
+
 --Point
 function cc.p(_x,_y)
     return { x = _x, y = _y }
@@ -22,6 +25,11 @@ end
 
 --Color4B
 function cc.c4b( _r,_g,_b,_a )
+    return { r = _r, g = _g, b = _b, a = _a }
+end
+
+--Color4F
+function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
 end
 

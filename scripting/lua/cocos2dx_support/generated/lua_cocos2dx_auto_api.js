@@ -4,6 +4,41 @@
 var cc = cc || {};
 
 /**
+ * @class Object
+ */
+cc.Object = {
+
+/**
+ * @method isSingleReference
+ * @return A value converted from C/C++ "bool"
+ */
+isSingleReference : function () {},
+
+/**
+ * @method release
+ */
+release : function () {},
+
+/**
+ * @method retain
+ */
+retain : function () {},
+
+/**
+ * @method retainCount
+ * @return A value converted from C/C++ "unsigned int"
+ */
+retainCount : function () {},
+
+/**
+ * @method Object
+ * @constructor
+ */
+Object : function () {},
+
+};
+
+/**
  * @class Action
  */
 cc.Action = {
@@ -5905,12 +5940,6 @@ cc.Director = {
 pause : function () {},
 
 /**
- * @method setDelegate
- * @param {cocos2d::DirectorDelegate*}
- */
-setDelegate : function () {},
-
-/**
  * @method setContentScaleFactor
  * @param {float}
  */
@@ -6069,12 +6098,6 @@ resume : function () {},
  * @return A value converted from C/C++ "bool"
  */
 isNextDeltaTimeZero : function () {},
-
-/**
- * @method getDelegate
- * @return A value converted from C/C++ "cocos2d::DirectorDelegate*"
- */
-getDelegate : function () {},
 
 /**
  * @method setOpenGLView

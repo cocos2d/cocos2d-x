@@ -1,5 +1,5 @@
-#ifndef __cocos2dx_extension_lua_cocos2dx_support_auto_h__
-#define __cocos2dx_extension_lua_cocos2dx_support_auto_h__
+#ifndef __cocos2dx_extension_h__
+#define __cocos2dx_extension_h__
 
 #ifdef __cplusplus
 extern "C" {
@@ -257,4 +257,12 @@ int register_all_cocos2dx_extension(lua_State* tolua_S);
 
 
 
-#endif // #ifndef __cocos2dx_extension_lua_cocos2dx_support_auto_h__
+
+
+
+
+
+
+
+
+#endif // __cocos2dx_extension_h__

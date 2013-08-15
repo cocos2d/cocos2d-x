@@ -431,7 +431,7 @@ setTitleLabelForState : function () {},
  * @method ccTouchBegan
  * @return A value converted from C/C++ "bool"
  * @param {cocos2d::Touch*}
- * @param {Event*}
+ * @param {cocos2d::Event*}
  */
 ccTouchBegan : function () {},
 
@@ -444,7 +444,7 @@ setAdjustBackgroundImage : function () {},
 /**
  * @method ccTouchEnded
  * @param {cocos2d::Touch*}
- * @param {Event*}
+ * @param {cocos2d::Event*}
  */
 ccTouchEnded : function () {},
 
@@ -552,7 +552,7 @@ setTitleLabel : function () {},
 /**
  * @method ccTouchMoved
  * @param {cocos2d::Touch*}
- * @param {Event*}
+ * @param {cocos2d::Event*}
  */
 ccTouchMoved : function () {},
 
@@ -720,7 +720,7 @@ getTitleLabel : function () {},
 /**
  * @method ccTouchCancelled
  * @param {cocos2d::Touch*}
- * @param {Event*}
+ * @param {cocos2d::Event*}
  */
 ccTouchCancelled : function () {},
 
@@ -1169,12 +1169,6 @@ getRootNode : function () {},
 addDocumentOutletNode : function () {},
 
 /**
- * @method setDelegate
- * @param {cocos2d::extension::CCBAnimationManagerDelegate*}
- */
-setDelegate : function () {},
-
-/**
  * @method addDocumentCallbackNode
  * @param {cocos2d::Node*}
  */
@@ -1186,12 +1180,6 @@ addDocumentCallbackNode : function () {},
  * @param {std::string}
  */
 setCallFunc : function () {},
-
-/**
- * @method getDelegate
- * @return A value converted from C/C++ "cocos2d::extension::CCBAnimationManagerDelegate*"
- */
-getDelegate : function () {},
 
 /**
  * @method runAnimationsForSequenceNamed
