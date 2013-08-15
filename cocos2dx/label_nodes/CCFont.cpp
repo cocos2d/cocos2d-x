@@ -25,7 +25,87 @@
 #include "CCFont.h"
 #include "support/ccUTF8.h"
 
+#include "CCFontFNT.h"
+#include "CCFontFreeType.cpp"
+
 NS_CC_BEGIN
+
+const char * Font::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+
+const char * Font::_glyphNEHE =  "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+
+
+Font::Font() : _usedGlyphs(GlyphCollection::ASCII), _customGlyphs(nullptr)
+{
+}
+
+const char * Font::getGlyphCollection(GlyphCollection glyphs)
+{
+    switch (glyphs)
+    {
+        case GlyphCollection::NEHE:
+            return _glyphNEHE;
+            break;
+            
+        case GlyphCollection::ASCII:
+            return _glyphASCII;
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
+}
+
+void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs)
+{
+    if (_customGlyphs)
+        delete [] _customGlyphs;
+    
+    switch (glyphs)
+    {
+        case GlyphCollection::NEHE:
+            _customGlyphs = 0;
+            break;
+            
+        case GlyphCollection::ASCII:
+            _customGlyphs = 0;
+            break;
+            
+        default:
+            
+            int lenght = strlen(customGlyphs);
+            _customGlyphs = new char [lenght + 2];
+            memcpy(_customGlyphs, customGlyphs, lenght);
+            
+            _customGlyphs[lenght]   = 0;
+            _customGlyphs[lenght+1] = 0;
+            
+            break;
+    }
+}
+
+const char * Font::getCurrentGlyphCollection()
+{
+    if (_customGlyphs)
+    {
+        return _customGlyphs;
+    }
+    else
+    {
+        return getGlyphCollection(_usedGlyphs);
+    }
+}
+
+Font* Font::createWithTTF(const char* fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+{
+    return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
+}
+
+Font* Font::createWithFNT(const char* fntFilePath)
+{
+   return FontFNT::create(fntFilePath);
+}
 
 unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
 {
