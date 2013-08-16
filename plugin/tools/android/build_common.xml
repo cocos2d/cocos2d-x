@@ -4,20 +4,19 @@
     <!-- link jar files -->
     <property name="myjar.libs.dir" value="./sdk" />
     <target name="-pre-compile" depends="check-dependens">
+        
+        <path id="depend.projects.jar">
+            <fileset file="${project.jar.1}" />
+            <fileset file="${project.jar.2}" />
+        </path>
+        
         <if condition="${jarExisted}">
             <then>
                 <path id="project.all.jars.path">
+                    <path refid="depend.projects.jar" />
                     <fileset dir="${myjar.libs.dir}" includes="*.jar" />
-                    <fileset file="${project.jar.1}" />
-                    <fileset file="${project.jar.2}" />
                 </path>
             </then>
-            <else>
-                <path id="project.all.jars.path">
-                    <fileset file="${project.jar.1}" />
-                    <fileset file="${project.jar.2}" />
-                </path>
-            </else>
         </if>
     </target>
 
