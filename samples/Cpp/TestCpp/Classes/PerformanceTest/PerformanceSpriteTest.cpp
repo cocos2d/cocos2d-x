@@ -53,7 +53,7 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
     */
 
     // purge textures
-    TextureCache *mgr = TextureCache::getInstance();
+    auto mgr = TextureCache::getInstance();
     //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));
@@ -230,7 +230,7 @@ void SubTest::removeByTag(int tag)
 void SpriteMenuLayer::showCurrentTest()
 {
     SpriteMainScene* scene = NULL;
-    SpriteMainScene* pPreScene = (SpriteMainScene*) getParent();
+    auto pPreScene = (SpriteMainScene*) getParent();
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
 
@@ -281,40 +281,40 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     _subTest = new SubTest;
     _subTest->initWithSubTest(asubtest, this);
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
     quantityNodes = 0;
 
     MenuItemFont::setFontSize(65);
-    MenuItemFont *decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
     decrease->setColor(Color3B(0,200,20));
-    MenuItemFont *increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
 
-    Menu *menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(s.width/2, s.height-65));
     addChild(menu, 1);
 
-    LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    SpriteMenuLayer* menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
+    auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(32);
-    Menu* subMenu = Menu::create();
+    auto subMenu = Menu::create();
     for (int i = 1; i <= 9; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        MenuItemFont* itemFont = MenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
+        auto itemFont = MenuItemFont::create(str, CC_CALLBACK_1(SpriteMainScene::testNCallback, this));
         itemFont->setTag(i);
         subMenu->addChild(itemFont, 10);
 
@@ -331,7 +331,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(subMenu, 2);
 
     // add title label
-    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
@@ -365,7 +365,7 @@ void SpriteMainScene::updateNodes()
 {
     if( quantityNodes != lastRenderedCount )
     {
-        LabelTTF *infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
         char str[16] = {0};
         sprintf(str, "%u nodes", quantityNodes);
         infoLabel->setString(str);
@@ -381,7 +381,7 @@ void SpriteMainScene::onIncrease(Object* sender)
 
     for( int i=0;i< kNodesIncrease;i++)
     {
-        Sprite *sprite = _subTest->createSpriteWithTag(quantityNodes);
+        auto sprite = _subTest->createSpriteWithTag(quantityNodes);
         doTest(sprite);
         quantityNodes++;
     }
@@ -410,44 +410,44 @@ void SpriteMainScene::onDecrease(Object* sender)
 ////////////////////////////////////////////////////////
 void performanceActions(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
-    ActionInterval* rot_back = rot->reverse();
-    Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
+    auto rot_back = rot->reverse();
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
     sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
-    Action *permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
+    auto grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
+    auto permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
     sprite->runAction(permanentScaleLoop);
 }
 
 void performanceActions20(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     if( CCRANDOM_0_1() < 0.2f )
         sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     else
         sprite->setPosition(Point( -1000, -1000));
 
     float period = 0.5f + (rand() % 1000) / 500.0f;
-    RotateBy* rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
-    ActionInterval* rot_back = rot->reverse();
-    Action *permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
+    auto rot_back = rot->reverse();
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
     sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
-    ActionInterval *grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
-    Action *permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
+    auto grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
+    auto permanentScaleLoop = RepeatForever::create(Sequence::createWithTwoActions(grow, grow->reverse()));
     sprite->runAction(permanentScaleLoop);
 }
 
 void performanceRotationScale(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     sprite->setRotation(CCRANDOM_0_1() * 360);
     sprite->setScale(CCRANDOM_0_1() * 2);
@@ -455,13 +455,13 @@ void performanceRotationScale(Sprite* sprite)
 
 void performancePosition(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
 }
 
 void performanceout20(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
 
     if( CCRANDOM_0_1() < 0.2f )
         sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
@@ -476,7 +476,7 @@ void performanceOut100(Sprite* sprite)
 
 void performanceScale(Sprite* sprite)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height)));
     sprite->setScale(CCRANDOM_0_1() * 100 / 50);
 }
@@ -609,7 +609,7 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 
 void runSpriteTest()
 {
-    SpriteMainScene* scene = new SpritePerformTest1;
+    auto scene = new SpritePerformTest1;
     scene->initWithSubTest(1, 50);
     Director::getInstance()->replaceScene(scene);
     scene->release();

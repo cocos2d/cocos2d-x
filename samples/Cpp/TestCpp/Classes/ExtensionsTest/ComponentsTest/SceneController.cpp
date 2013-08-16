@@ -96,7 +96,7 @@ void SceneController::spriteMoveFinished(Node* sender)
 	if (sprite->getTag() == 2)  // target
 	{
         _targets->removeObject(sprite);
-		GameOverScene *gameOverScene = GameOverScene::create();
+		auto gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
 		Director::getInstance()->replaceScene(gameOverScene);
 	}
@@ -116,7 +116,7 @@ void SceneController::increaseKillCount()
 
     if (nProjectilesDestroyed >= 5)
     {
-            GameOverScene *gameOverScene = GameOverScene::create();
+            auto gameOverScene = GameOverScene::create();
             gameOverScene->getLayer()->getLabel()->setString("You Win!");
             Director::getInstance()->replaceScene(gameOverScene);
     }

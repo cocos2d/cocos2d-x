@@ -23,7 +23,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -37,7 +37,7 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -46,7 +46,7 @@ static Layer* backAction()
 
 static Layer* restartAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -55,7 +55,7 @@ static Layer* restartAction()
 
 void FileUtilsTestScene::runThisTest()
 {
-    Layer* layer = nextAction();
+    auto layer = nextAction();
     addChild(layer);
     
     Director::getInstance()->replaceScene(this);
@@ -70,8 +70,8 @@ void FileUtilsDemo::onEnter()
 
 void FileUtilsDemo::backCallback(Object* sender)
 {
-    Scene* scene = new FileUtilsTestScene();
-    Layer* layer = backAction();
+    auto scene = new FileUtilsTestScene();
+    auto layer = backAction();
     
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);
@@ -80,8 +80,8 @@ void FileUtilsDemo::backCallback(Object* sender)
 
 void FileUtilsDemo::nextCallback(Object* sender)
 {
-    Scene* scene = new FileUtilsTestScene();
-    Layer* layer = nextAction();
+    auto scene = new FileUtilsTestScene();
+    auto layer = nextAction();
     
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);
@@ -90,8 +90,8 @@ void FileUtilsDemo::nextCallback(Object* sender)
 
 void FileUtilsDemo::restartCallback(Object* sender)
 {
-    Scene* scene = new FileUtilsTestScene();
-    Layer* layer = restartAction();
+    auto scene = new FileUtilsTestScene();
+    auto layer = restartAction();
     
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);
@@ -113,7 +113,7 @@ string FileUtilsDemo::subtitle()
 void TestResolutionDirectories::onEnter()
 {
     FileUtilsDemo::onEnter();
-    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    auto sharedFileUtils = FileUtils::getInstance();
 
     string ret;
     
@@ -136,7 +136,7 @@ void TestResolutionDirectories::onEnter()
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
     
     for( int i=1; i<7; i++) {
-        String *filename = String::createWithFormat("test%d.txt", i);
+        auto filename = String::createWithFormat("test%d.txt", i);
         ret = sharedFileUtils->fullPathForFilename(filename->getCString());
         log("%s -> %s", filename->getCString(), ret.c_str());
     }
@@ -144,7 +144,7 @@ void TestResolutionDirectories::onEnter()
 
 void TestResolutionDirectories::onExit()
 {
-    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    auto sharedFileUtils = FileUtils::getInstance();
     
 	// reset search path
 	sharedFileUtils->setSearchPaths(_defaultSearchPathArray);
@@ -167,7 +167,7 @@ string TestResolutionDirectories::subtitle()
 void TestSearchPath::onEnter()
 {
     FileUtilsDemo::onEnter();
-    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    auto sharedFileUtils = FileUtils::getInstance();
     
     string ret;
     
@@ -199,7 +199,7 @@ void TestSearchPath::onEnter()
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
     
     for( int i=1; i<3; i++) {
-        String *filename = String::createWithFormat("file%d.txt", i);
+        auto filename = String::createWithFormat("file%d.txt", i);
         ret = sharedFileUtils->fullPathForFilename(filename->getCString());
         log("%s -> %s", filename->getCString(), ret.c_str());
     }
@@ -247,9 +247,9 @@ void TestFilenameLookup::onEnter()
 {
     FileUtilsDemo::onEnter();
 		
-    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    auto sharedFileUtils = FileUtils::getInstance();
 
-    Dictionary *dict = Dictionary::create();
+    auto dict = Dictionary::create();
     dict->setObject(String::create("Images/grossini.png"), "grossini.bmp");
     dict->setObject(String::create("Images/grossini.png"), "grossini.xcf");
     
@@ -257,10 +257,10 @@ void TestFilenameLookup::onEnter()
     
     
     // Instead of loading carlitos.xcf, it will load grossini.png
-    Sprite *sprite = Sprite::create("grossini.xcf");
+    auto sprite = Sprite::create("grossini.xcf");
     this->addChild(sprite);
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(s.width/2, s.height/2));
 }
 
@@ -290,8 +290,8 @@ string TestFilenameLookup::subtitle()
 void TestIsFileExist::onEnter()
 {
     FileUtilsDemo::onEnter();
-    Size s = Director::getInstance()->getWinSize();
-    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
     
     LabelTTF* pTTF = NULL;
     bool isExist = false;
@@ -334,27 +334,27 @@ string TestIsFileExist::subtitle()
 void TextWritePlist::onEnter()
 {
     FileUtilsDemo::onEnter();
-    Dictionary *root = Dictionary::create();
-    String *string = String::create("string element value");
+    auto root = Dictionary::create();
+    auto string = String::create("string element value");
     root->setObject(string, "string element key");
     
-    Array *array = Array::create();
+    auto array = Array::create();
     
-    Dictionary *dictInArray = Dictionary::create();
+    auto dictInArray = Dictionary::create();
     dictInArray->setObject(String::create("string in dictInArray value 0"), "string in dictInArray key 0");
     dictInArray->setObject(String::create("string in dictInArray value 1"), "string in dictInArray key 1");
     array->addObject(dictInArray);
     
     array->addObject(String::create("string in array"));
     
-    Array *arrayInArray = Array::create();
+    auto arrayInArray = Array::create();
     arrayInArray->addObject(String::create("string 0 in arrayInArray"));
     arrayInArray->addObject(String::create("string 1 in arrayInArray"));
     array->addObject(arrayInArray);
     
     root->setObject(array, "array");
     
-    Dictionary *dictInDict = Dictionary::create();
+    auto dictInDict = Dictionary::create();
     dictInDict->setObject(String::create("string in dictInDict value"), "string in dictInDict key");
     
     root->setObject(dictInDict, "dictInDict");
@@ -367,9 +367,9 @@ void TextWritePlist::onEnter()
     else
         log("write plist file failed");
     
-    LabelTTF *label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
+    auto label = LabelTTF::create(fullPath.c_str(), "Thonburi", 6);
     this->addChild(label);
-    Size winSize = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(Point(winSize.width/2, winSize.height/3));
 }
 

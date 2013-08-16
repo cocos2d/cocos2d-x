@@ -42,11 +42,11 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * no
     // the owner will cause lblTestTitle to be set by the CCBReader.
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
-    Node * node = ccbReader->readNodeGraphFromFile(pCCBFileName, this);
+    auto node = ccbReader->readNodeGraphFromFile(pCCBFileName, this);
 
     this->mTestTitleLabelTTF->setString(pCCBFileName);
 
-    Scene * scene = Scene::create();
+    auto scene = Scene::create();
     if(node != NULL) {
         scene->addChild(node);
     }
@@ -62,8 +62,8 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * no
 
 
 void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * node,  cocos2d::extension::NodeLoader * nodeLoader) {
-    RotateBy * ccRotateBy = RotateBy::create(20.0f, 360);
-    RepeatForever * ccRepeatForever = RepeatForever::create(ccRotateBy);
+    auto ccRotateBy = RotateBy::create(20.0f, 360);
+    auto ccRepeatForever = RepeatForever::create(ccRotateBy);
     this->mBurstSprite->runAction(ccRepeatForever);
 }
 
@@ -156,13 +156,13 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(Object * sender, cocos2d::e
     // the owner will cause lblTestTitle to be set by the CCBReader.
     // lblTestTitle is in the TestHeader.ccbi, which is referenced
     // from each of the test scenes.
-    Node *animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this);
+    auto animationsTest = ccbReader->readNodeGraphFromFile("ccb/ccb/TestAnimations.ccbi", this);
     // Load node graph (TestAnimations is a sub class of Layer) and retrieve the ccb action manager
     ((AnimationsTestLayer*)animationsTest)->setAnimationManager(ccbReader->getAnimationManager());
     
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
     
-    Scene * scene = Scene::create();
+    auto scene = Scene::create();
     if(animationsTest != NULL) {
         scene->addChild(animationsTest);
     }
