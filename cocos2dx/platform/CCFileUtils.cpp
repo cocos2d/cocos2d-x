@@ -636,7 +636,7 @@ std::string FileUtils::fullPathForFilename(const char* filename)
         for (auto resOrderIter = _searchResolutionsOrderArray.begin();
              resOrderIter != _searchResolutionsOrderArray.end(); ++resOrderIter) {
             
-//            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+//            CCLOG("SEARCHING: %s\n", std::string(*searchPathsIter + *resOrderIter + newFilename).c_str() );
             
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
@@ -644,7 +644,7 @@ std::string FileUtils::fullPathForFilename(const char* filename)
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
-//                CCLOG("Returning path: %s", fullpath.c_str());
+//                CCLOG("Returning path: %s\n", fullpath.c_str());
                 return fullpath;
             }
         }
