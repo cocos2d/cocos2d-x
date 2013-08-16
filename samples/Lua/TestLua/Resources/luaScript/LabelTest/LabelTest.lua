@@ -1,5 +1,5 @@
-local size = CCDirector:getInstance():getWinSize()
-local scheduler = CCDirector:getInstance():getScheduler()
+local size = cc.Director:getInstance():getWinSize()
+local scheduler = cc.Director:getInstance():getScheduler()
 
 local kTagTileMap = 1
 local kTagSpriteManager = 1
@@ -32,11 +32,11 @@ function LabelAtlasTest.step(dt)
     local string = string.format("%2.2f Test", m_time)
 
     local label1_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "CCLabelAtlas")
+    local label1 = tolua.cast(label1_origin, "LabelAtlas")
     label1:setString(string)	--
 
     local label2_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "CCLabelAtlas")
+    local label2 = tolua.cast(label2_origin, "LabelAtlas")
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -50,18 +50,18 @@ end
 
 function LabelAtlasTest.create()
     m_time = 0
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     LabelAtlasTest.layer = layer
 
-    local label1 = CCLabelAtlas:create("123 Test", "fonts/tuffy_bold_italic-charmap.plist")
+    local label1 = cc.LabelAtlas:_create("123 Test", "fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label1, 0, kTagSprite1)
-    label1:setPosition( CCPoint(10,100) )
+    label1:setPosition( cc.p(10,100) )
     label1:setOpacity( 200 )
 
-    local label2 = CCLabelAtlas:create("0123456789", "fonts/tuffy_bold_italic-charmap.plist")
+    local label2 = cc.LabelAtlas:_create("0123456789", "fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label2, 0, kTagSprite2)
-    label2:setPosition( CCPoint(10,200) )
+    label2:setPosition( cc.p(10,200) )
     label2:setOpacity( 32 )
 
     layer:scheduleUpdateWithPriorityLua(LabelAtlasTest.step, 0)
@@ -88,11 +88,11 @@ function LabelAtlasColorTest.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test", m_time)
     local label1_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "CCLabelAtlas")
+    local label1 = tolua.cast(label1_origin, "LabelAtlas")
     label1:setString(string)
 
     local label2_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "CCLabelAtlas")
+    local label2 = tolua.cast(label2_origin, "LabelAtlas")
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -111,31 +111,27 @@ end
 function LabelAtlasColorTest.create()
     m_time = 0
 
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     LabelAtlasColorTest.layer = layer
 
-    local label1 = CCLabelAtlas:create("123 Test", "fonts/tuffy_bold_italic-charmap.plist")
+    local label1 = cc.LabelAtlas:_create("123 Test", "fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label1, 0, kTagSprite1)
-    label1:setPosition( CCPoint(10,100) )
+    label1:setPosition( cc.p(10,100) )
     label1:setOpacity( 200 )
 
-    local label2 = CCLabelAtlas:create("0123456789", "fonts/tuffy_bold_italic-charmap.plist")
+    local label2 = cc.LabelAtlas:_create("0123456789", "fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label2, 0, kTagSprite2)
-    label2:setPosition( CCPoint(10,200) )
-    label2:setColor(Color3B(255, 0, 0))
+    label2:setPosition( cc.p(10,200) )
+    label2:setColor(cc.c3b(255, 0, 0))
 
-    local fade = CCFadeOut:create(1.0)
+    local fade = cc.FadeOut:create(1.0)
     local fade_in = fade:reverse()
 
-    local cb = CCCallFunc:create(LabelAtlasColorTest.actionFinishCallback)
-    local actionArr = CCArray:create()
-    actionArr:addObject(fade)
-    actionArr:addObject(fade_in)
-    actionArr:addObject(cb)
+    local cb = cc.CallFunc:create(LabelAtlasColorTest.actionFinishCallback)
 
-    local seq = CCSequence:create(actionArr)
-    local repeatAction = CCRepeatForever:create( seq )
+    local seq = cc.Sequence:create(fade, fade_in, cb)
+    local repeatAction = cc.RepeatForever:create( seq )
     label2:runAction( repeatAction )
 
     layer:registerScriptHandler(LabelAtlasColorTest.onNodeEvent)
@@ -170,47 +166,44 @@ end
 
 function Atlas3.create()
     cclog("Atlas3.create")
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Atlas3.layer = layer
 
     m_time = 0
 
-    local col = CCLayerColor:create( Color4B(128,128,128,255) )
+    local col = cc.LayerColor:create( cc.c4b(128,128,128,255) )
     layer:addChild(col, -10)
 
-    local label1 = CCLabelBMFont:create("Test",  "fonts/bitmapFontTest2.fnt")
+    local label1 = cc.LabelBMFont:create("Test",  "fonts/bitmapFontTest2.fnt")
 
     -- testing anchors
-    label1:setAnchorPoint( CCPoint(0,0) )
+    label1:setAnchorPoint( cc.p(0,0) )
     layer:addChild(label1, 0, kTagBitmapAtlas1)
 
-    local fade = CCFadeOut:create(1.0)
+    local fade = cc.FadeOut:create(1.0)
     local fade_in = fade:reverse()
 
-    local actionArr = CCArray:create()
-    actionArr:addObject(fade)
-    actionArr:addObject(fade_in)
-    local seq = CCSequence:create(actionArr)
-    local repeatAction = CCRepeatForever:create(seq)
+    local seq = cc.Sequence:create(fade,fade_in)
+    local repeatAction = cc.RepeatForever:create(seq)
     label1:runAction(repeatAction)
 
     --VERY IMPORTANT
     --color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
     --If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
     --Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
-    local label2 = CCLabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
+    local label2 = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
 
     -- testing anchors
-    label2:setAnchorPoint( CCPoint(0.5, 0.5) )
-    label2:setColor(Color3B(255, 0, 0 ))
+    label2:setAnchorPoint( cc.p(0.5, 0.5) )
+    label2:setColor(cc.c3b(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
-    label2:runAction( tolua.cast(repeatAction:clone(), "CCAction") )
+    label2:runAction( tolua.cast(repeatAction:clone(), "Action") )
 
-    local label3 = CCLabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
+    local label3 = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
     -- testing anchors
-    label3:setAnchorPoint( CCPoint(1,1) )
+    label3:setAnchorPoint( cc.p(1,1) )
     layer:addChild(label3, 0, kTagBitmapAtlas3)
 
     label1:setPosition( VisibleRect:leftBottom() )
@@ -220,7 +213,7 @@ function Atlas3.create()
     layer:registerScriptHandler(Atlas3.onNodeEvent)
     layer:scheduleUpdateWithPriorityLua(Atlas3.step, 0)
 
-    Helper.titleLabel:setString( "CCLabelBMFont" )
+    Helper.titleLabel:setString( "LabelBMFont" )
     Helper.subtitleLabel:setString( "Testing alignment. Testing opacity + tint" )
 
     return layer
@@ -230,13 +223,13 @@ function Atlas3.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test j", m_time)
 
-    local label1 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas1), "CCLabelBMFont")
+    local label1 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas1), "LabelBMFont")
     label1:setString(string)
 
-    local label2 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas2), "CCLabelBMFont")
+    local label2 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas2), "LabelBMFont")
     label2:setString(string)
 
-    local label3 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas3), "CCLabelBMFont")
+    local label3 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas3), "LabelBMFont")
     label3:setString(string)
 end
 
@@ -267,18 +260,18 @@ end
 function Atlas4.create()
     cclog("Atlas4.create")
     m_time = 0
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Atlas4.layer = layer
 
     -- Upper Label
-    local label = CCLabelBMFont:create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt")
+    local label = cc.LabelBMFont:create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt")
     layer:addChild(label)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    label:setPosition( CCPoint(s.width/2, s.height/2) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/2) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
 
     local BChar = label:getChildByTag(0)
@@ -286,29 +279,23 @@ function Atlas4.create()
     local AChar = label:getChildByTag(12)
 
 
-    local rotate = CCRotateBy:create(2, 360)
-    local rot_4ever = CCRepeatForever:create(rotate)
+    local rotate = cc.RotateBy:create(2, 360)
+    local rot_4ever = cc.RepeatForever:create(rotate)
 
-    local scale = CCScaleBy:create(2, 1.5)
+    local scale = cc.ScaleBy:create(2, 1.5)
     local scale_back = scale:reverse()
-    local action_arr = CCArray:create()
-    action_arr:addObject(scale)
-    action_arr:addObject(scale_back)
 
-    local scale_seq = CCSequence:create(action_arr)
-    local scale_4ever = CCRepeatForever:create(scale_seq)
+    local scale_seq = cc.Sequence:create(scale, scale_back)
+    local scale_4ever = cc.RepeatForever:create(scale_seq)
 
-    local jump = CCJumpBy:create(0.5, CCPoint(0, 0), 60, 1)
-    local jump_4ever = CCRepeatForever:create(jump)
+    local jump = cc.JumpBy:create(0.5, cc.p(0, 0), 60, 1)
+    local jump_4ever = cc.RepeatForever:create(jump)
 
-    local fade_out = CCFadeOut:create(1)
-    local fade_in = CCFadeIn:create(1)
+    local fade_out = cc.FadeOut:create(1)
+    local fade_in = cc.FadeIn:create(1)
 
-    local action_arr2 = CCArray:create()
-    action_arr2:addObject(fade_out)
-    action_arr2:addObject(fade_in)
-    local seq = CCSequence:create(action_arr2)
-    local fade_4ever = CCRepeatForever:create(seq)
+    local seq = cc.Sequence:create(fade_out, fade_in)
+    local fade_4ever = cc.RepeatForever:create(seq)
 
     BChar:runAction(rot_4ever)
     BChar:runAction(scale_4ever)
@@ -317,24 +304,24 @@ function Atlas4.create()
 
 
     -- Bottom Label
-    local label2 = CCLabelBMFont:create("00.0", "fonts/bitmapFontTest.fnt")
+    local label2 = cc.LabelBMFont:create("00.0", "fonts/bitmapFontTest.fnt")
     layer:addChild(label2, 0, kTagBitmapAtlas2)
-    label2:setPosition( CCPoint(s.width/2.0, 80) )
+    label2:setPosition( cc.p(s.width/2.0, 80) )
 
     local lastChar = label2:getChildByTag(3)
-    lastChar:runAction(tolua.cast( rot_4ever:clone(), "CCAction" ))
+    lastChar:runAction(tolua.cast( rot_4ever:clone(), "Action" ))
 
     layer:registerScriptHandler(Atlas4.onNodeEvent)
 
-    Helper.titleLabel:setString("CCLabelBMFont")
-    Helper.subtitleLabel:setString( "Using fonts as CCSprite objects. Some characters should rotate.")
+    Helper.titleLabel:setString("LabelBMFont")
+    Helper.subtitleLabel:setString( "Using fonts as cc.Sprite objects. Some characters should rotate.")
     return layer
 end
 
 function Atlas4.draw()
-    local s = CCDirector:getInstance():getWinSize()
-    CCDrawPrimitives.ccDrawLine( CCPoint(0, s.height/2), CCPoint(s.width, s.height/2) )
-    CCDrawPrimitives.ccDrawLine( CCPoint(s.width/2, 0), CCPoint(s.width/2, s.height) )
+    local s = cc.Director:getInstance():getWinSize()
+    cc.DrawPrimitives.ccDrawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2) )
+    cc.DrawPrimitives.ccDrawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height) )
 end
 
 function Atlas4.step(dt)
@@ -342,7 +329,7 @@ function Atlas4.step(dt)
 
     local string = string.format("%04.1f", m_time)
 
-    local label1 = tolua.cast(Atlas4.layer:getChildByTag(kTagBitmapAtlas2), "CCLabelBMFont")
+    local label1 = tolua.cast(Atlas4.layer:getChildByTag(kTagBitmapAtlas2), "LabelBMFont")
     label1:setString(string)
 end
 
@@ -362,19 +349,19 @@ end
 local Atlas5 = {}
 Atlas5.layer = nil
 function Atlas5:create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Atlas5.layer = layer
 
-    local label = CCLabelBMFont:create("abcdefg", "fonts/bitmapFontTest4.fnt")
+    local label = cc.LabelBMFont:create("abcdefg", "fonts/bitmapFontTest4.fnt")
     layer:addChild(label)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    label:setPosition( CCPoint(s.width/2, s.height/2) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/2) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    Helper.titleLabel:setString("CCLabelBMFont")
+    Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString("Testing padding")
     return layer
 end
@@ -395,27 +382,27 @@ Atlas6.layer = nil
 
 function Atlas6:create()
     cclog("Atlas6:create")
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Atlas6.layer = layer
 
-    local s = CCDirector:getInstance():getWinSize()
-    local label = CCLabelBMFont:create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt")
+    local s = cc.Director:getInstance():getWinSize()
+    local label = cc.LabelBMFont:create("FaFeFiFoFu", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, s.height/2+50) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/2+50) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    label = CCLabelBMFont:create("fafefifofu", "fonts/bitmapFontTest5.fnt")
+    label = cc.LabelBMFont:create("fafefifofu", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, s.height/2) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/2) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    label = CCLabelBMFont:create("aeiou", "fonts/bitmapFontTest5.fnt")
+    label = cc.LabelBMFont:create("aeiou", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, s.height/2-50) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/2-50) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    Helper.titleLabel:setString("CCLabelBMFont")
+    Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString("Rendering should be OK. Testing offset")
     return layer
 end
@@ -433,32 +420,32 @@ end
 --------------------------------------------------------------------
 local AtlasBitmapColor = { layer= nil }
 function AtlasBitmapColor:create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     AtlasBitmapColor.layer = layer
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local label = CCLabelBMFont:create("Blue", "fonts/bitmapFontTest5.fnt")
-    label:setColor( Color3B(0, 0, 255 ))
+    local label = cc.LabelBMFont:create("Blue", "fonts/bitmapFontTest5.fnt")
+    label:setColor( cc.c3b(0, 0, 255 ))
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, s.height/4) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
+    label:setPosition( cc.p(s.width/2, s.height/4) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    label = CCLabelBMFont:create("Red", "fonts/bitmapFontTest5.fnt")
+    label = cc.LabelBMFont:create("Red", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, 2*s.height/4) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
-    label:setColor( Color3B(255, 0, 0) )
+    label:setPosition( cc.p(s.width/2, 2*s.height/4) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
+    label:setColor( cc.c3b(255, 0, 0) )
 
-    label = CCLabelBMFont:create("G", "fonts/bitmapFontTest5.fnt")
+    label = cc.LabelBMFont:create("G", "fonts/bitmapFontTest5.fnt")
     layer:addChild(label)
-    label:setPosition( CCPoint(s.width/2, 3*s.height/4) )
-    label:setAnchorPoint( CCPoint(0.5, 0.5) )
-    label:setColor( Color3B(0, 255, 0 ))
+    label:setPosition( cc.p(s.width/2, 3*s.height/4) )
+    label:setAnchorPoint( cc.p(0.5, 0.5) )
+    label:setColor( cc.c3b(0, 255, 0 ))
     label:setString("Green")
 
-    Helper.titleLabel:setString("CCLabelBMFont")
+    Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString("Testing color")
     return layer
 end
@@ -477,7 +464,7 @@ end
 
 local AtlasFastBitmap = { layer = nil }
 function AtlasFastBitmap:create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     AtlasFastBitmap.layer = layer
 
@@ -486,18 +473,18 @@ function AtlasFastBitmap:create()
     local i = 0
     for i = 0, 100, 1 do
         local str = string.format("-%d-", i)
-        local label = CCLabelBMFont:create(str, "fonts/bitmapFontTest.fnt")
+        local label = cc.LabelBMFont:create(str, "fonts/bitmapFontTest.fnt")
         layer:addChild(label)
 
-        local s = CCDirector:getInstance():getWinSize()
+        local s = cc.Director:getInstance():getWinSize()
 
-        local p = CCPoint( math.random() * s.width, math.random() * s.height)
+        local p = cc.p( math.random() * s.width, math.random() * s.height)
         label:setPosition( p )
-        label:setAnchorPoint(CCPoint(0.5, 0.5))
+        label:setAnchorPoint(cc.p(0.5, 0.5))
     end
 
-    Helper.titleLabel:setString("CCLabelBMFont")
-    Helper.subtitleLabel:setString("Creating several CCLabelBMFont with the same .fnt file should be fast")
+    Helper.titleLabel:setString("LabelBMFont")
+    Helper.subtitleLabel:setString("Creating several cc.LabelBMFont with the same .fnt file should be fast")
     return layer
 end
 
@@ -515,13 +502,13 @@ end
 local BitmapFontMultiLine = {}
 
 function BitmapFontMultiLine:create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     local s = nil
 
     -- Left
-    local label1 = CCLabelBMFont:create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt")
-    label1:setAnchorPoint(CCPoint(0,0))
+    local label1 = cc.LabelBMFont:create(" Multi line\nLeft", "fonts/bitmapFontTest3.fnt")
+    label1:setAnchorPoint(cc.p(0,0))
     layer:addChild(label1, 0, kTagBitmapAtlas1)
 
     s = label1:getContentSize()
@@ -529,16 +516,16 @@ function BitmapFontMultiLine:create()
 
 
     -- Center
-    local label2 = CCLabelBMFont:create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt")
-    label2:setAnchorPoint(CCPoint(0.5, 0.5))
+    local label2 = cc.LabelBMFont:create("Multi line\nCenter", "fonts/bitmapFontTest3.fnt")
+    label2:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
     s= label2:getContentSize()
     cclog("content size: %.2fx%.2f", s.width, s.height)
 
     -- right
-    local label3 = CCLabelBMFont:create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt")
-    label3:setAnchorPoint(CCPoint(1, 1))
+    local label3 = cc.LabelBMFont:create("Multi line\nRight\nThree lines Three", "fonts/bitmapFontTest3.fnt")
+    label3:setAnchorPoint(cc.p(1, 1))
     layer:addChild(label3, 0, kTagBitmapAtlas3)
 
     s = label3:getContentSize()
@@ -547,7 +534,7 @@ function BitmapFontMultiLine:create()
     label1:setPosition(VisibleRect:leftBottom())
     label2:setPosition(VisibleRect:center())
     label3:setPosition(VisibleRect:rightTop())
-    Helper.titleLabel:setString("CCLabelBMFont")
+    Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString("Multiline + anchor point")
     return layer
 end
@@ -575,26 +562,26 @@ end
 function LabelsEmpty.create()
     cclog("LabelsEmpty.create")
 
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     LabelsEmpty.layer = layer
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    -- CCLabelBMFont
-    local label1 = CCLabelBMFont:create("", "fonts/bitmapFontTest3.fnt")
+    -- cc.LabelBMFont
+    local label1 = cc.LabelBMFont:create("", "fonts/bitmapFontTest3.fnt")
     layer:addChild(label1, 0, kTagBitmapAtlas1)
-    label1:setPosition(CCPoint(s.width/2, s.height-100))
+    label1:setPosition(cc.p(s.width/2, s.height-100))
 
-    -- CCLabelTTF
-    local label2 = CCLabelTTF:create("", "Arial", 24)
+    -- cc.LabelTTF
+    local label2 = cc.LabelTTF:create("", "Arial", 24)
     layer:addChild(label2, 0, kTagBitmapAtlas2)
-    label2:setPosition(CCPoint(s.width/2, s.height/2))
+    label2:setPosition(cc.p(s.width/2, s.height/2))
 
-    -- CCLabelAtlas
-    local label3 = CCLabelAtlas:create("", "fonts/tuffy_bold_italic-charmap.png", 48, 64,  string.byte(" "))
+    -- cc.LabelAtlas
+    local label3 = cc.LabelAtlas:_create("", "fonts/tuffy_bold_italic-charmap.png", 48, 64,  string.byte(" "))
     layer:addChild(label3, 0, kTagBitmapAtlas3)
-    label3:setPosition(CCPoint(s.width/2, 0+100))
+    label3:setPosition(cc.p(s.width/2, 0+100))
 
     layer:registerScriptHandler(LabelsEmpty.onNodeEvent)
 
@@ -605,9 +592,9 @@ function LabelsEmpty.create()
 end
 
 function LabelsEmpty.updateStrings(dt)
-    local label1 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1), "CCLabelBMFont")
-    local label2 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2), "CCLabelTTF")
-    local label3 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3), "CCLabelAtlas")
+    local label1 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1), "LabelBMFont")
+    local label2 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2), "LabelTTF")
+    local label3 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3), "LabelAtlas")
 
     if( LabelsEmpty.setEmpty == false) then
         label1:setString("not empty")
@@ -632,15 +619,15 @@ local LabelBMFontHD = {
 }
 
 function LabelBMFontHD.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    -- CCLabelBMFont
-    local label1 = CCLabelBMFont:create("TESTING RETINA DISPLAY", "fonts/konqa32.fnt")
+    -- cc.LabelBMFont
+    local label1 = cc.LabelBMFont:create("TESTING RETINA DISPLAY", "fonts/konqa32.fnt")
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/2))
+    label1:setPosition(cc.p(s.width/2, s.height/2))
 
     Helper.titleLabel:setString("Testing Retina Display BMFont")
     Helper.subtitleLabel:setString("loading arista16 or arista16-hd")
@@ -654,17 +641,17 @@ end
 --------------------------------------------------------------------
 local LabelAtlasHD = {}
 function LabelAtlasHD.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    -- CCLabelBMFont
-    local label1 = CCLabelAtlas:create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist")
-    label1:setAnchorPoint(CCPoint(0.5, 0.5))
+    -- cc.LabelBMFont
+    local label1 = cc.LabelAtlas:_create("TESTING RETINA DISPLAY", "fonts/larabie-16.plist")
+    label1:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/2))
+    label1:setPosition(cc.p(s.width/2, s.height/2))
 
     Helper.titleLabel:setString("LabelAtlas with Retina Display")
     Helper.subtitleLabel:setString("loading larabie-16 / larabie-16-hd")
@@ -679,18 +666,18 @@ end
 
 local LabelGlyphDesigner = {}
 function LabelGlyphDesigner.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
+    local colorlayer = cc.LayerColor:create(cc.c4b(128,128,128,255))
     layer:addChild(colorlayer, -10)
 
-    -- CCLabelBMFont
-    local label1 = CCLabelBMFont:create("Testing Glyph Designer", "fonts/futura-48.fnt")
+    -- cc.LabelBMFont
+    local label1 = cc.LabelBMFont:create("Testing Glyph Designer", "fonts/futura-48.fnt")
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/2))
+    label1:setPosition(cc.p(s.width/2, s.height/2))
     Helper.titleLabel:setString("Testing Glyph Designer")
     Helper.subtitleLabel:setString("You should see a font with shawdows and outline")
 
@@ -706,50 +693,50 @@ end
 local LabelTTFTest = {
     _layer       = nil,
     _plabel      = nil,
-    _eHorizAlign = kCCTextAlignmentLeft,
-    _eVertAlign  = kCCVerticalTextAlignmentTop
+    _eHorizAlign = cc.TEXT_ALIGNMENT_LEFT,
+    _eVertAlign  = cc.VERTICAL_TEXT_ALIGNMENT_TOP
 }
 
 function LabelTTFTest.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     LabelTTFTest._layer       = layer
     LabelTTFTest._plabel      = nil
-    LabelTTFTest._eHorizAlign = kCCTextAlignmentLeft
-    LabelTTFTest._eVertAlign  = kCCVerticalTextAlignmentTop
+    LabelTTFTest._eHorizAlign = cc.TEXT_ALIGNMENT_LEFT
+    LabelTTFTest._eVertAlign  = cc.VERTICAL_TEXT_ALIGNMENT_TOP
 
-    local blockSize = CCSize(200, 160)
-    local s = CCDirector:getInstance():getWinSize()
+    local blockSize = cc.size(200, 160)
+    local s = cc.Director:getInstance():getWinSize()
 
-    local colorLayer = CCLayerColor:create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height)
-    colorLayer:setAnchorPoint(CCPoint(0,0))
-    colorLayer:setPosition(CCPoint((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2))
+    local colorLayer = cc.LayerColor:create(cc.c4b(100, 100, 100, 255), blockSize.width, blockSize.height)
+    colorLayer:setAnchorPoint(cc.p(0,0))
+    colorLayer:setPosition(cc.p((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2))
 
     layer:addChild(colorLayer)
 
-    CCMenuItemFont:setFontSize(30)
-    local item1 = CCMenuItemFont:create("Left")
+    cc.MenuItemFont:setFontSize(30)
+    local item1 = cc.MenuItemFont:create("Left")
     item1:registerScriptTapHandler(LabelTTFTest.setAlignmentLeft)
-    local item2 = CCMenuItemFont:create("Center")
+    local item2 = cc.MenuItemFont:create("Center")
     item2:registerScriptTapHandler(LabelTTFTest.setAlignmentCenter)
-    local item3 = CCMenuItemFont:create("Right")
+    local item3 = cc.MenuItemFont:create("Right")
     item3:registerScriptTapHandler(LabelTTFTest.setAlignmentRight)
 
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
     menu:alignItemsVerticallyWithPadding(4)
-    menu:setPosition(CCPoint(50, s.height / 2 - 20))
+    menu:setPosition(cc.p(50, s.height / 2 - 20))
     layer:addChild(menu)
 
-    menu = CCMenu:create()
+    menu = cc.Menu:create()
 
-    item1 = CCMenuItemFont:create("Top")
+    item1 = cc.MenuItemFont:create("Top")
     item1:registerScriptTapHandler(LabelTTFTest.setAlignmentTop)
-    item2 = CCMenuItemFont:create("Middle")
+    item2 = cc.MenuItemFont:create("Middle")
     item2:registerScriptTapHandler(LabelTTFTest.setAlignmentMiddle)
-    item3 = CCMenuItemFont:create("Bottom")
+    item3 = cc.MenuItemFont:create("Bottom")
     item3:registerScriptTapHandler(LabelTTFTest.setAlignmentBottom)
 
     menu:addChild(item1)
@@ -757,14 +744,14 @@ function LabelTTFTest.create()
     menu:addChild(item3)
 
     menu:alignItemsVerticallyWithPadding(4)
-    menu:setPosition(CCPoint(s.width - 50, s.height / 2 - 20))
+    menu:setPosition(cc.p(s.width - 50, s.height / 2 - 20))
     layer:addChild(menu)
 
     LabelTTFTest.updateAlignment()
     
     layer:registerScriptHandler(LabelTTFTest.onNodeEvent)
 
-    Helper.titleLabel:setString("Testing CCLabelTTF")
+    Helper.titleLabel:setString("Testing cc.LabelTTF")
     Helper.subtitleLabel:setString("Select the buttons on the sides to change alignment")
 
     return layer
@@ -779,70 +766,70 @@ function LabelTTFTest.onNodeEvent(tag)
 end
 
 function LabelTTFTest.updateAlignment()
-    local blockSize = CCSize(200, 160)
-    local s = CCDirector:getInstance():getWinSize()
+    local blockSize = cc.size(200, 160)
+    local s = cc.Director:getInstance():getWinSize()
 
     if LabelTTFTest._plabel ~= nil then
-        LabelTTFTest._plabel:removeFromParentAndCleanup(true)
+        LabelTTFTest._plabel:removeFromParent(true)
         LabelTTFTest._plabel:release()
     end
 
-    LabelTTFTest._plabel = CCLabelTTF:create(LabelTTFTest.getCurrentAlignment(), "Marker Felt", 32,
+    LabelTTFTest._plabel = cc.LabelTTF:create(LabelTTFTest.getCurrentAlignment(), "Marker Felt", 32,
                                              blockSize, LabelTTFTest._eHorizAlign, LabelTTFTest._eVertAlign)
     LabelTTFTest._plabel:retain()
 
-    LabelTTFTest._plabel:setAnchorPoint(CCPoint(0,0))
-    LabelTTFTest._plabel:setPosition(CCPoint((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ))
+    LabelTTFTest._plabel:setAnchorPoint(cc.p(0,0))
+    LabelTTFTest._plabel:setPosition(cc.p((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 ))
 
     LabelTTFTest._layer:addChild(LabelTTFTest._plabel)
 end
 
 function LabelTTFTest.setAlignmentLeft(pSender)
-    LabelTTFTest._eHorizAlign = kCCTextAlignmentLeft
+    LabelTTFTest._eHorizAlign = cc.TEXT_ALIGNMENT_LEFT
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.setAlignmentCenter(pSender)
-    LabelTTFTest._eHorizAlign = kCCTextAlignmentCenter
+    LabelTTFTest._eHorizAlign = cc.TEXT_ALIGNMENT_CENTER
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.setAlignmentRight(pSender)
-    LabelTTFTest._eHorizAlign = kCCTextAlignmentRight
+    LabelTTFTest._eHorizAlign = cc.TEXT_ALIGNMENT_RIGHT
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.setAlignmentTop(pSender)
-    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentTop
+    LabelTTFTest._eVertAlign = cc.VERTICAL_TEXT_ALIGNMENT_TOP
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.setAlignmentMiddle(pSender)
-    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentCenter
+    LabelTTFTest._eVertAlign = cc.VERTICAL_TEXT_ALIGNMENT_CENTER
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.setAlignmentBottom(pSender)
-    LabelTTFTest._eVertAlign = kCCVerticalTextAlignmentBottom
+    LabelTTFTest._eVertAlign = cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM
     LabelTTFTest.updateAlignment()
 end
 
 function LabelTTFTest.getCurrentAlignment()
     local vertical = nil
     local horizontal = nil
-    if LabelTTFTest._eVertAlign == kCCVerticalTextAlignmentTop then
+    if LabelTTFTest._eVertAlign == cc.VERTICAL_TEXT_ALIGNMENT_TOP then
         vertical = "Top"
-    elseif LabelTTFTest._eVertAlign ==  kCCVerticalTextAlignmentCenter then
+    elseif LabelTTFTest._eVertAlign ==  cc.VERTICAL_TEXT_ALIGNMENT_CENTER then
         vertical = "Middle"
-    elseif LabelTTFTest._eVertAlign ==  kCCVerticalTextAlignmentBottom then
+    elseif LabelTTFTest._eVertAlign ==  cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM then
         vertical = "Bottom"
     end
 
-    if LabelTTFTest._eHorizAlign == kCCTextAlignmentLeft then
+    if LabelTTFTest._eHorizAlign == cc.TEXT_ALIGNMENT_LEFT then
         horizontal = "Left"
-    elseif LabelTTFTest._eHorizAlign == kCCTextAlignmentCenter then
+    elseif LabelTTFTest._eHorizAlign == cc.TEXT_ALIGNMENT_CENTER then
         horizontal = "Center"
-    elseif LabelTTFTest._eHorizAlign == kCCTextAlignmentRight then
+    elseif LabelTTFTest._eHorizAlign == cc.TEXT_ALIGNMENT_RIGHT then
         horizontal = "Right"
     end
 
@@ -856,9 +843,9 @@ end
 --------------------------------------------------------------------
 --Atlas1:Atlas1()
 --{ 
---    m_textureAtlas = CCTextureAtlas:create(s_AtlasTest, 3); m_textureAtlas:retain();
+--    m_textureAtlas = cc.TextureAtlas:create(s_AtlasTest, 3); m_textureAtlas:retain();
 --    
---    CCSize s = CCDirector:getInstance():getWinSize();
+--    cc.size s = cc.Director:getInstance():getWinSize();
 --  
 --    --
 --    -- Notice: u,v tex coordinates are inverted
@@ -866,23 +853,23 @@ end
 --    V3F_C4B_T2F_Quad quads[] = 
 --    {
 --        {
---            {{0,0,0},Color4B(0,0,255,255),{0.0f,1.0f},},                -- bottom left
---            {{s.width,0,0},Color4B(0,0,255,0),{1.0f,1.0f},},            -- bottom right
---            {{0,s.height,0},Color4B(0,0,255,0),{0.0f,0.0f},},            -- top left
+--            {{0,0,0},cc.c4b(0,0,255,255),{0.0f,1.0f},},                -- bottom left
+--            {{s.width,0,0},cc.c4b(0,0,255,0),{1.0f,1.0f},},            -- bottom right
+--            {{0,s.height,0},cc.c4b(0,0,255,0),{0.0f,0.0f},},            -- top left
 --            {{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},    -- top right
 --        },        
 --        {
---            {{40,40,0},Color4B(255,255,255,255),{0.0f,0.2f},},            -- bottom left
---            {{120,80,0},Color4B(255,0,0,255),{0.5f,0.2f},},            -- bottom right
---            {{40,160,0},Color4B(255,255,255,255),{0.0f,0.0f},},        -- top left
---            {{160,160,0},Color4B(0,255,0,255),{0.5f,0.0f},},            -- top right
+--            {{40,40,0},cc.c4b(255,255,255,255),{0.0f,0.2f},},            -- bottom left
+--            {{120,80,0},cc.c4b(255,0,0,255),{0.5f,0.2f},},            -- bottom right
+--            {{40,160,0},cc.c4b(255,255,255,255),{0.0f,0.0f},},        -- top left
+--            {{160,160,0},cc.c4b(0,255,0,255),{0.5f,0.0f},},            -- top right
 --        },
 --  
 --        {
---            {{s.width/2,40,0},Color4B(255,0,0,255),{0.0f,1.0f},},        -- bottom left
---            {{s.width,40,0},Color4B(0,255,0,255),{1.0f,1.0f},},        -- bottom right
---            {{s.width/2-50,200,0},Color4B(0,0,255,255),{0.0f,0.0f},},        -- top left
---            {{s.width,100,0},Color4B(255,255,0,255),{1.0f,0.0f},},        -- top right
+--            {{s.width/2,40,0},cc.c4b(255,0,0,255),{0.0f,1.0f},},        -- bottom left
+--            {{s.width,40,0},cc.c4b(0,255,0,255),{1.0f,1.0f},},        -- bottom right
+--            {{s.width/2-50,200,0},cc.c4b(0,0,255,255),{0.0f,0.0f},},        -- top left
+--            {{s.width,100,0},cc.c4b(255,255,0,255),{1.0f,0.0f},},        -- top right
 --        },
 --        
 --    };
@@ -912,12 +899,12 @@ end
 --  
 --std:string Atlas1:title()
 --{ 
---    return "CCTextureAtlas";
+--    return "TextureAtlas";
 --} 
 --  
 --std:string Atlas1:subtitle()
 --{ 
---    return "Manual creation of CCTextureAtlas";
+--    return "Manual creation of cc.TextureAtlas";
 --} 
 
 local LabelTTFMultiline = {
@@ -925,23 +912,23 @@ local LabelTTFMultiline = {
 }
 
 function LabelTTFMultiline.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local center = CCLabelTTF:create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
+    local center = cc.LabelTTF:create("word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"",
                                      "Paint Boy",
                                      32,
-                                     CCSize(s.width/2,200),
-                                     kCCTextAlignmentCenter,
-                                     kCCVerticalTextAlignmentTop)
+                                     cc.size(s.width/2,200),
+                                     cc.TEXT_ALIGNMENT_CENTER,
+                                     cc.VERTICAL_TEXT_ALIGNMENT_TOP)
 
-    center:setPosition(CCPoint(s.width / 2, 150))
+    center:setPosition(cc.p(s.width / 2, 150))
 
     layer:addChild(center)
-    Helper.titleLabel:setString("Testing CCLabelTTF Word Wrap")
-    Helper.subtitleLabel:setString("Word wrap using CCLabelTTF and a custom TTF font")
+    Helper.titleLabel:setString("Testing cc.LabelTTF Word Wrap")
+    Helper.subtitleLabel:setString("Word wrap using cc.LabelTTF and a custom TTF font")
 
     return layer
 end
@@ -949,27 +936,27 @@ end
 local LabelTTFChinese = {}
 
 function LabelTTFChinese.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    local size = CCDirector:getInstance():getWinSize()
-    local pLable = CCLabelTTF:create("中国", "Marker Felt", 30)
-    pLable:setPosition(CCPoint(size.width / 2, size.height /2))
+    local size = cc.Director:getInstance():getWinSize()
+    local pLable = cc.LabelTTF:create("中国", "Marker Felt", 30)
+    pLable:setPosition(cc.p(size.width / 2, size.height /2))
     layer:addChild(pLable)
-    Helper.titleLabel:setString("Testing CCLabelTTF with Chinese character")
+    Helper.titleLabel:setString("Testing cc.LabelTTF with Chinese character")
     return layer
 end
 
 local LabelBMFontChinese = {}
 function LabelBMFontChinese.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local size = CCDirector:getInstance():getWinSize()
-    local pLable = CCLabelBMFont:create("中国", "fonts/bitmapFontChinese.fnt")
-    pLable:setPosition(CCPoint(size.width / 2, size.height /2))
+    local size = cc.Director:getInstance():getWinSize()
+    local pLable = cc.LabelBMFont:create("中国", "fonts/bitmapFontChinese.fnt")
+    pLable:setPosition(cc.p(size.width / 2, size.height /2))
     layer:addChild(pLable)
 
-    Helper.titleLabel:setString("Testing CCLabelBMFont with Chinese character")
+    Helper.titleLabel:setString("Testing cc.LabelBMFont with Chinese character")
     return layer
 end
 
@@ -1002,67 +989,67 @@ local BitmapFontMultiLineAlignment = {
 }
 
 function BitmapFontMultiLineAlignment.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
     layer:setTouchEnabled(true)
 
     -- ask director the the window size
-    local size = CCDirector:getInstance():getWinSize()
+    local size = cc.Director:getInstance():getWinSize()
 
     -- create and initialize a Label
-    BitmapFontMultiLineAlignment._pLabelShouldRetain = CCLabelBMFont:create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, kCCTextAlignmentCenter)
+    BitmapFontMultiLineAlignment._pLabelShouldRetain = cc.LabelBMFont:create(LongSentencesExample, "fonts/markerFelt.fnt", size.width/1.5, cc.TEXT_ALIGNMENT_CENTER)
     BitmapFontMultiLineAlignment._pLabelShouldRetain:retain()
 
-    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain = CCSprite:create("Images/arrowsBar.png")
+    BitmapFontMultiLineAlignment._pArrowsBarShouldRetain = cc.Sprite:create("Images/arrowsBar.png")
     BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:retain()
-    BitmapFontMultiLineAlignment._pArrowsShouldRetain = CCSprite:create("Images/arrows.png")
+    BitmapFontMultiLineAlignment._pArrowsShouldRetain = cc.Sprite:create("Images/arrows.png")
     BitmapFontMultiLineAlignment._pArrowsShouldRetain:retain()
 
-    CCMenuItemFont:setFontSize(20)
-    local longSentences = CCMenuItemFont:create("Long Flowing Sentences")
+    cc.MenuItemFont:setFontSize(20)
+    local longSentences = cc.MenuItemFont:create("Long Flowing Sentences")
     longSentences:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
-    local lineBreaks    = CCMenuItemFont:create("Short Sentences With Intentional Line Breaks")
+    local lineBreaks    = cc.MenuItemFont:create("Short Sentences With Intentional Line Breaks")
     lineBreaks:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
-    local mixed         = CCMenuItemFont:create("Long Sentences Mixed With Intentional Line Breaks")
+    local mixed         = cc.MenuItemFont:create("Long Sentences Mixed With Intentional Line Breaks")
     mixed:registerScriptTapHandler(BitmapFontMultiLineAlignment.stringChanged)
-    local stringMenu    = CCMenu:create()
+    local stringMenu    = cc.Menu:create()
     stringMenu:addChild(longSentences)
     stringMenu:addChild(lineBreaks)
     stringMenu:addChild(mixed)
     stringMenu:alignItemsVertically()
 
-    longSentences:setColor(Color3B(255, 0, 0))
+    longSentences:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastSentenceItem = longSentences
 
     longSentences:setTag(LongSentences)
     lineBreaks:setTag(LineBreaks)
     mixed:setTag(Mixed)
 
-    CCMenuItemFont:setFontSize(30)
+    cc.MenuItemFont:setFontSize(30)
 
-    local left          = CCMenuItemFont:create("Left")
+    local left          = cc.MenuItemFont:create("Left")
     left:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
-    local center        = CCMenuItemFont:create("Center")
+    local center        = cc.MenuItemFont:create("Center")
     center:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
-    local right         = CCMenuItemFont:create("Right")
+    local right         = cc.MenuItemFont:create("Right")
     right:registerScriptTapHandler(BitmapFontMultiLineAlignment.alignmentChanged)
 
-    local alignmentMenu = CCMenu:create()
+    local alignmentMenu = cc.Menu:create()
     alignmentMenu:addChild(left)
     alignmentMenu:addChild(center)
     alignmentMenu:addChild(right)
 
     alignmentMenu:alignItemsHorizontallyWithPadding(alignmentItemPadding)
 
-    center:setColor(Color3B(255, 0, 0))
+    center:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = center
     left:setTag(LeftAlign)
     center:setTag(CenterAlign)
     right:setTag(RightAlign)
 
     -- position the label on the center of the screen
-    BitmapFontMultiLineAlignment._pLabelShouldRetain:setPosition(CCPoint(size.width/2, size.height/2))
+    BitmapFontMultiLineAlignment._pLabelShouldRetain:setPosition(cc.p(size.width/2, size.height/2))
 
     BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
 
@@ -1072,8 +1059,8 @@ function BitmapFontMultiLineAlignment.create()
 
     BitmapFontMultiLineAlignment.snapArrowsToEdge()
 
-    stringMenu:setPosition(CCPoint(size.width/2, size.height - menuItemPaddingCenter))
-    alignmentMenu:setPosition(CCPoint(size.width/2, menuItemPaddingCenter+15))
+    stringMenu:setPosition(cc.p(size.width/2, size.height - menuItemPaddingCenter))
+    alignmentMenu:setPosition(cc.p(size.width/2, menuItemPaddingCenter+15))
 
     layer:addChild(BitmapFontMultiLineAlignment._pLabelShouldRetain)
     layer:addChild(BitmapFontMultiLineAlignment._pArrowsBarShouldRetain)
@@ -1096,9 +1083,9 @@ end
 
 
 function BitmapFontMultiLineAlignment.stringChanged(tag, sender)
-    local item = tolua.cast(sender, "CCMenuItemFont")
-    item:setColor(Color3B(255, 0, 0))
-    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(Color3B(255, 255, 255))
+    local item = tolua.cast(sender, "MenuItemFont")
+    item:setColor(cc.c3b(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
 
     if item:getTag() == LongSentences then
@@ -1114,18 +1101,18 @@ end
 
 function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     -- cclog("BitmapFontMultiLineAlignment.alignmentChanged, tag:"..tag)
-    local item = tolua.cast(sender, "CCMenuItemFont")
-    item:setColor(Color3B(255, 0, 0))
-    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(Color3B(255, 255, 255))
+    local item = tolua.cast(sender, "MenuItemFont")
+    item:setColor(cc.c3b(255, 0, 0))
+    BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
 
     if tag == LeftAlign then
         cclog("LeftAlign")
-        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentLeft)
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(cc.TEXT_ALIGNMENT_LEFT)
     elseif tag == CenterAlign then
-        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentCenter)
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(cc.TEXT_ALIGNMENT_CENTER)
     elseif tag == RightAlign then
-        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(kCCTextAlignmentRight)
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setAlignment(cc.TEXT_ALIGNMENT_RIGHT)
     end
 
     BitmapFontMultiLineAlignment.snapArrowsToEdge()
@@ -1134,7 +1121,7 @@ end
 function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
     -- cclog("type:"..eventType.."["..x..","..y.."]")
     if eventType == "began" then
-        if BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox():containsPoint(CCPoint(x, y)) then
+        if cc.rectContainsPoint(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), cc.p(x, y)) then
             BitmapFontMultiLineAlignment._drag = true
             BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
             return true
@@ -1148,7 +1135,7 @@ function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
             return
         end
 
-        local winSize = CCDirector:getInstance():getWinSize()
+        local winSize = cc.Director:getInstance():getWinSize()
         BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
             math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
             BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
@@ -1171,28 +1158,25 @@ end
 local LabelTTFA8Test = {}
 
 function LabelTTFA8Test.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local colorlayer = CCLayerColor:create(Color4B(128, 128, 128, 255))
+    local colorlayer = cc.LayerColor:create(cc.c4b(128, 128, 128, 255))
     layer:addChild(colorlayer, -10)
 
-    -- CCLabelBMFont
-    local label1 = CCLabelTTF:create("Testing A8 Format", "Marker Felt", 48)
+    -- cc.LabelBMFont
+    local label1 = cc.LabelTTF:create("Testing A8 Format", "Marker Felt", 48)
     layer:addChild(label1)
-    label1:setColor(Color3B(255, 0, 0))
-    label1:setPosition(CCPoint(s.width/2, s.height/2))
+    label1:setColor(cc.c3b(255, 0, 0))
+    label1:setPosition(cc.p(s.width/2, s.height/2))
 
-    local fadeOut = CCFadeOut:create(2)
-    local fadeIn = CCFadeIn:create(2)
-    local arr = CCArray:create()
-    arr:addObject(fadeOut)
-    arr:addObject(fadeIn)
+    local fadeOut = cc.FadeOut:create(2)
+    local fadeIn = cc.FadeIn:create(2)
 
-    local seq = CCSequence:create(arr)
-    local forever = CCRepeatForever:create(seq)
+    local seq = cc.Sequence:create(fadeOut, fadeIn)
+    local forever = cc.RepeatForever:create(seq)
     label1:runAction(forever)
 
     Helper.titleLabel:setString("Testing A8 Format")
@@ -1203,19 +1187,19 @@ end
 --/ BMFontOneAtlas
 local BMFontOneAtlas = {}
 function BMFontOneAtlas.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     
-    local label1 = CCLabelBMFont:create("This is Helvetica", "fonts/helvetica-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPoint(0, 0))
+    local label1 = cc.LabelBMFont:create("This is Helvetica", "fonts/helvetica-32.fnt", cc.LABEL_AUTOMATIC_WIDTH, cc.TEXT_ALIGNMENT_LEFT, cc.p(0, 0))
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/3*2))
+    label1:setPosition(cc.p(s.width/2, s.height/3*2))
     
-    local label2 = CCLabelBMFont:create("And this is Geneva", "fonts/geneva-32.fnt", kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPoint(0, 128))
+    local label2 = cc.LabelBMFont:create("And this is Geneva", "fonts/geneva-32.fnt", cc.LABEL_AUTOMATIC_WIDTH, cc.TEXT_ALIGNMENT_LEFT, cc.p(0, 128))
     layer:addChild(label2)
-    label2:setPosition(CCPoint(s.width/2, s.height/3*1))
-    Helper.titleLabel:setString("CCLabelBMFont with one texture")
+    label2:setPosition(cc.p(s.width/2, s.height/3*1))
+    Helper.titleLabel:setString("LabelBMFont with one texture")
     Helper.subtitleLabel:setString("Using 2 .fnt definitions that share the same texture atlas.")
     return layer
 end
@@ -1223,24 +1207,24 @@ end
 --/ BMFontUnicode
 local BMFontUnicode = {}
 function BMFontUnicode.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("CCLabelBMFont with Unicode support")
+    Helper.titleLabel:setString("LabelBMFont with Unicode support")
     Helper.subtitleLabel:setString("You should see 3 differnt labels: In Spanish, Chinese and Korean")
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     
-    local label1 = CCLabelBMFont:create("Buen día", "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft)
+    local label1 = cc.LabelBMFont:create("Buen día", "fonts/arial-unicode-26.fnt", 200, cc.TEXT_ALIGNMENT_LEFT)
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/4*3))
+    label1:setPosition(cc.p(s.width/2, s.height/4*3))
     
-    local label2 = CCLabelBMFont:create("美好的一天", "fonts/arial-unicode-26.fnt")
+    local label2 = cc.LabelBMFont:create("美好的一天", "fonts/arial-unicode-26.fnt")
     layer:addChild(label2)
-    label2:setPosition(CCPoint(s.width/2, s.height/4*2))
+    label2:setPosition(cc.p(s.width/2, s.height/4*2))
     
-    local label3 = CCLabelBMFont:create("良い一日を", "fonts/arial-unicode-26.fnt")
+    local label3 = cc.LabelBMFont:create("良い一日を", "fonts/arial-unicode-26.fnt")
     layer:addChild(label3)
-    label3:setPosition(CCPoint(s.width/2, s.height/4*1))
+    label3:setPosition(cc.p(s.width/2, s.height/4*1))
 
     return layer
 end
@@ -1249,21 +1233,18 @@ end
 
 local BMFontInit = {}
 function BMFontInit.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("CCLabelBMFont init")
+    Helper.titleLabel:setString("LabelBMFont init")
     Helper.subtitleLabel:setString("Test for support of init method without parameters.")
     
-    local s = CCDirector:getInstance():getWinSize()
-    
-    local bmFont = CCLabelBMFont:new()
-    bmFont:init()
-    bmFont:autorelease()
-    --CCLabelBMFont* bmFont = [CCLabelBMFont create:@"Foo" fntFile:@"arial-unicode-26.fnt"]
+    local s = cc.Director:getInstance():getWinSize()
+    local bmFont = cc.LabelBMFont:create()
+    --cc.LabelBMFont* bmFont = [cc.LabelBMFont create:@"Foo" fntFile:@"arial-unicode-26.fnt"]
     bmFont:setFntFile("fonts/helvetica-32.fnt")
     bmFont:setString("It is working!")
     layer:addChild(bmFont)
-    bmFont:setPosition(CCPoint(s.width/2,s.height/4*2))
+    bmFont:setPosition(cc.p(s.width/2,s.height/4*2))
     return layer
 end
 
@@ -1272,21 +1253,19 @@ end
 
 local TTFFontInit = {}
 function TTFFontInit.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("CCLabelTTF init")
+    Helper.titleLabel:setString("LabelTTF init")
     Helper.subtitleLabel:setString("Test for support of init method without parameters.")
     
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     
-    local font = CCLabelTTF:new()
-    font:init()
-    font:autorelease()
+    local font = cc.LabelTTF:create()
     font:setFontName("Marker Felt")
     font:setFontSize(48)
     font:setString("It is working!")
     layer:addChild(font)
-    font:setPosition(CCPoint(s.width/2,s.height/4*2))
+    font:setPosition(cc.p(s.width/2,s.height/4*2))
     return layer
 end
 
@@ -1294,60 +1273,58 @@ end
 
 local Issue1343 = {}
 function Issue1343.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Issue 1343")
     Helper.subtitleLabel:setString("You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'")
     
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     
-    local bmFont = CCLabelBMFont:new()
-    bmFont:init()
+    local bmFont = cc.LabelBMFont:create()
     bmFont:setFntFile("fonts/font-issue1343.fnt")
     bmFont:setString("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'")
     layer:addChild(bmFont)
-    bmFont:release()
     bmFont:setScale(0.3)
     
-    bmFont:setPosition(CCPoint(s.width/2,s.height/4*2))
+    bmFont:setPosition(cc.p(s.width/2,s.height/4*2))
     return layer
 end
 
 local LabelBMFontBounds = {}
 function LabelBMFontBounds.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Testing LabelBMFont Bounds")
     Helper.subtitleLabel:setString("You should see string enclosed by a box")
     
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     
-    local colorlayer = CCLayerColor:create(Color4B(128,128,128,255))
+    local colorlayer = cc.LayerColor:create(cc.c4b(128,128,128,255))
     layer:addChild(colorlayer, -10)
     
-    -- CCLabelBMFont
-    local label1 = CCLabelBMFont:create("Testing Glyph Designer", "fonts/boundsTestFont.fnt")
+    -- cc.LabelBMFont
+    local label1 = cc.LabelBMFont:create("Testing Glyph Designer", "fonts/boundsTestFont.fnt")
     
     
     layer:addChild(label1)
-    label1:setPosition(CCPoint(s.width/2, s.height/2))
+    label1:setPosition(cc.p(s.width/2, s.height/2))
     return layer
 end
 
 
 function LabelBMFontBounds.draw()
-    -- CCSize labelSize = label1:getContentSize()
-    -- CCSize origin = CCDirector:getInstance():getWinSize()
+    -- cc.size labelSize = label1:getContentSize()
+    -- cc.size origin = cc.Director:getInstance():getWinSize()
     
     -- origin.width = origin.width / 2 - (labelSize.width / 2)
     -- origin.height = origin.height / 2 - (labelSize.height / 2)
     
-    -- CCPoint vertices[4]=
+    -- cc.p vertices[4]=
     
-    --     CCPoint(origin.width, origin.height),
-    --     CCPoint(labelSize.width + origin.width, origin.height),
-    --     CCPoint(labelSize.width + origin.width, labelSize.height + origin.height),
-    --     CCPoint(origin.width, labelSize.height + origin.height)
+    --     cc.p(origin.width, origin.height),
+    --     cc.p(labelSize.width + origin.width, origin.height),
+    --     cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+    --     cc.p(origin.width, labelSize.height + origin.height)
     -- end
     -- ccDrawPoly(vertices, 4, true)
 end
@@ -1359,29 +1336,29 @@ end
 --------------------------------------------------------------------
 local LabelTTFAlignment = {}
 function LabelTTFAlignment.create()
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("CCLabelTTF alignment")
+    Helper.titleLabel:setString("LabelTTF alignment")
     Helper.subtitleLabel:setString("Tests alignment values")
     
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local ttf0 = CCLabelTTF:create("Alignment 0\nnew line", "Helvetica", 12,
-                                   CCSize(256, 32), kCCTextAlignmentLeft)
-    ttf0:setPosition(CCPoint(s.width/2,(s.height/6)*2))
-    ttf0:setAnchorPoint(CCPoint(0.5,0.5))
+    local ttf0 = cc.LabelTTF:create("Alignment 0\nnew line", "Helvetica", 12,
+                                   cc.size(256, 32), cc.TEXT_ALIGNMENT_LEFT)
+    ttf0:setPosition(cc.p(s.width/2,(s.height/6)*2))
+    ttf0:setAnchorPoint(cc.p(0.5,0.5))
     layer:addChild(ttf0)
 
-    local ttf1 = CCLabelTTF:create("Alignment 1\nnew line", "Helvetica", 12,
-                                   CCSize(245, 32), kCCTextAlignmentCenter)
-    ttf1:setPosition(CCPoint(s.width/2,(s.height/6)*3))
-    ttf1:setAnchorPoint(CCPoint(0.5,0.5))
+    local ttf1 = cc.LabelTTF:create("Alignment 1\nnew line", "Helvetica", 12,
+                                   cc.size(245, 32), cc.TEXT_ALIGNMENT_CENTER)
+    ttf1:setPosition(cc.p(s.width/2,(s.height/6)*3))
+    ttf1:setAnchorPoint(cc.p(0.5,0.5))
     layer:addChild(ttf1)
 
-    local ttf2 = CCLabelTTF:create("Alignment 2\nnew line", "Helvetica", 12,
-                                   CCSize(245, 32), kCCTextAlignmentRight)
-    ttf2:setPosition(CCPoint(s.width/2,(s.height/6)*4))
-    ttf2:setAnchorPoint(CCPoint(0.5,0.5))
+    local ttf2 = cc.LabelTTF:create("Alignment 2\nnew line", "Helvetica", 12,
+                                   cc.size(245, 32), cc.TEXT_ALIGNMENT_RIGHT)
+    ttf2:setPosition(cc.p(s.width/2,(s.height/6)*4))
+    ttf2:setAnchorPoint(cc.p(0.5,0.5))
     layer:addChild(ttf2)
     return layer
 end
@@ -1389,7 +1366,7 @@ end
 function LabelTest()
     cclog("LabelTest")
     m_time = 0
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {
         LabelAtlasTest.create,

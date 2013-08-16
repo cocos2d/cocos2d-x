@@ -1169,6 +1169,13 @@ getRootNode : function () {},
 addDocumentOutletNode : function () {},
 
 /**
+ * @method getSequenceDuration
+ * @return A value converted from C/C++ "float"
+ * @param {const char*}
+ */
+getSequenceDuration : function () {},
+
+/**
  * @method addDocumentCallbackNode
  * @param {cocos2d::Node*}
  */
@@ -1186,6 +1193,13 @@ setCallFunc : function () {},
  * @param {const char*}
  */
 runAnimationsForSequenceNamed : function () {},
+
+/**
+ * @method getSequenceId
+ * @return A value converted from C/C++ "int"
+ * @param {const char*}
+ */
+getSequenceId : function () {},
 
 /**
  * @method getDocumentCallbackNodes

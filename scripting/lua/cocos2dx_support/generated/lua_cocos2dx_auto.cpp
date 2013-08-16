@@ -4543,6 +4543,37 @@ static int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
 	return 0;
 }
 
+static int lua_cocos2dx_Texture2D_getPixelFormatInfoMap(lua_State* tolua_S)
+{
+	int argc = 0;
+	bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertable(tolua_S,1,"Texture2D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+	argc = lua_gettop(tolua_S) - 1;
+
+	if (argc == 0) {
+		if(!ok)
+			return 0;
+		cocos2d::Texture2D::PixelFormatInfoMap ret = cocos2d::Texture2D::getPixelFormatInfoMap();
+		#pragma warning NO CONVERSION FROM NATIVE FOR const PixelFormatInfoMap;
+	    return 1;
+	}
+	printf("wrong number of arguments: %d, was expecting %d", argc, 0);
+	return 0;
+#if COCOS2D_DEBUG >= 1
+	tolua_lerror:
+	tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Texture2D_getPixelFormatInfoMap'.",&tolua_err);
+#endif
+	return 0;
+}
+
 static int lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(lua_State* tolua_S)
 {
 	int argc = 0;
@@ -4679,6 +4710,7 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
 		tolua_function(tolua_S,"setMaxS",lua_cocos2dx_Texture2D_setMaxS);
 		tolua_function(tolua_S,"new",lua_cocos2dx_Texture2D_constructor);
 		tolua_function(tolua_S,"setDefaultAlphaPixelFormat", lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat);
+		tolua_function(tolua_S,"getPixelFormatInfoMap", lua_cocos2dx_Texture2D_getPixelFormatInfoMap);
 		tolua_function(tolua_S,"getDefaultAlphaPixelFormat", lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat);
 		tolua_function(tolua_S,"PVRImagesHavePremultipliedAlpha", lua_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha);
 	tolua_endmodule(tolua_S);

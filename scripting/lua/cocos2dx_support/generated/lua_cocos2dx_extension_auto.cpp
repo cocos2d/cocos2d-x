@@ -8301,6 +8301,42 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode(lua_
 #endif
 	return 0;
 }
+static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration(lua_State* tolua_S)
+{
+	int argc = 0;
+	cocos2d::extension::CCBAnimationManager* cobj = nullptr;
+	bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+	cobj = (cocos2d::extension::CCBAnimationManager*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+	if (!cobj) {
+		tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration'", NULL);
+		return 0;
+	}
+#endif
+	argc = lua_gettop(tolua_S)-1;
+	if (argc == 1) {
+		const char* arg0;
+		std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+		if(!ok)
+			return 0;
+		float ret = cobj->getSequenceDuration(arg0);
+		tolua_pushnumber(tolua_S,(lua_Number)ret);
+	    return 1;
+	}
+	printf("wrong number of arguments: %d, was expecting %d", argc, 1);
+	return 0;
+#if COCOS2D_DEBUG >= 1
+	tolua_lerror:
+	tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration'.",&tolua_err);
+#endif
+	return 0;
+}
 static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode(lua_State* tolua_S)
 {
 	int argc = 0;
@@ -8421,6 +8457,42 @@ static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNa
 #if COCOS2D_DEBUG >= 1
 	tolua_lerror:
 	tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamed'.",&tolua_err);
+#endif
+	return 0;
+}
+static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceId(lua_State* tolua_S)
+{
+	int argc = 0;
+	cocos2d::extension::CCBAnimationManager* cobj = nullptr;
+	bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+	cobj = (cocos2d::extension::CCBAnimationManager*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+	if (!cobj) {
+		tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CCBAnimationManager_getSequenceId'", NULL);
+		return 0;
+	}
+#endif
+	argc = lua_gettop(tolua_S)-1;
+	if (argc == 1) {
+		const char* arg0;
+		std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+		if(!ok)
+			return 0;
+		int ret = cobj->getSequenceId(arg0);
+		tolua_pushnumber(tolua_S,(lua_Number)ret);
+	    return 1;
+	}
+	printf("wrong number of arguments: %d, was expecting %d", argc, 1);
+	return 0;
+#if COCOS2D_DEBUG >= 1
+	tolua_lerror:
+	tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CCBAnimationManager_getSequenceId'.",&tolua_err);
 #endif
 	return 0;
 }
@@ -8633,9 +8705,11 @@ int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
 		tolua_function(tolua_S,"addDocumentCallbackName",lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackName);
 		tolua_function(tolua_S,"getRootNode",lua_cocos2dx_extension_CCBAnimationManager_getRootNode);
 		tolua_function(tolua_S,"addDocumentOutletNode",lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode);
+		tolua_function(tolua_S,"getSequenceDuration",lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration);
 		tolua_function(tolua_S,"addDocumentCallbackNode",lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode);
 		tolua_function(tolua_S,"setCallFuncForJSCallbackNamed",lua_cocos2dx_extension_CCBAnimationManager_setCallFunc);
 		tolua_function(tolua_S,"runAnimationsForSequenceNamed",lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamed);
+		tolua_function(tolua_S,"getSequenceId",lua_cocos2dx_extension_CCBAnimationManager_getSequenceId);
 		tolua_function(tolua_S,"getDocumentCallbackNodes",lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNodes);
 		tolua_function(tolua_S,"setSequences",lua_cocos2dx_extension_CCBAnimationManager_setSequences);
 		tolua_function(tolua_S,"debug",lua_cocos2dx_extension_CCBAnimationManager_debug);

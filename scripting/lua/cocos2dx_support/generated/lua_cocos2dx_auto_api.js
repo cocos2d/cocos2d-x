@@ -728,6 +728,12 @@ setMaxS : function () {},
 setDefaultAlphaPixelFormat : function () {},
 
 /**
+ * @method getPixelFormatInfoMap
+ * @return A value converted from C/C++ "cocos2d::Texture2D::PixelFormatInfoMap"
+ */
+getPixelFormatInfoMap : function () {},
+
+/**
  * @method getDefaultAlphaPixelFormat
  * @return A value converted from C/C++ "cocos2d::Texture2D::PixelFormat"
  */

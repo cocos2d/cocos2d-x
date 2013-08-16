@@ -1,33 +1,33 @@
-local scheduler = CCDirector:getInstance():getScheduler()
+local scheduler = cc.Director:getInstance():getScheduler()
 local SID_STEP1    = 100
 local SID_STEP2    = 101
 local SID_STEP3    = 102
 local IDC_PAUSE    = 200
 
 local function IntervalLayer()
-    local ret = CCLayer:create()
+    local ret = cc.Layer:create()
     local m_time0 = 0
     local m_time1 = 0
     local m_time2 = 0
     local m_time3 = 0
     local m_time4 = 0
 
-    local s = CCDirector:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
     -- sun
-    local  sun = CCParticleSun:create()
-    sun:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
-    sun:setPosition( CCPoint(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
+    local  sun = cc.ParticleSun:create()
+    sun:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    sun:setPosition( cc.p(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
 
     sun:setTotalParticles(130)
     sun:setLife(0.6)
     ret:addChild(sun)
 
     -- timers
-    m_label0 = CCLabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label1 = CCLabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label2 = CCLabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label3 = CCLabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
-    m_label4 = CCLabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label0 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label1 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label2 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label3 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
+    m_label4 = cc.LabelBMFont:create("0", "fonts/bitmapFontTest4.fnt")
 
     local function update(dt)
         m_time0 = m_time0 + dt
@@ -77,8 +77,8 @@ local function IntervalLayer()
             scheduler:unscheduleScriptEntry(schedulerEntry2)
             scheduler:unscheduleScriptEntry(schedulerEntry3)
             scheduler:unscheduleScriptEntry(schedulerEntry4)
-            if CCDirector:getInstance():isPaused() then
-                CCDirector:getInstance():resume()
+            if cc.Director:getInstance():isPaused() then
+                cc.Director:getInstance():resume()
             end
         end
     end
@@ -86,11 +86,11 @@ local function IntervalLayer()
     ret:registerScriptHandler(onNodeEvent)
 
 
-    m_label0:setPosition(CCPoint(s.width*1/6, s.height/2))
-    m_label1:setPosition(CCPoint(s.width*2/6, s.height/2))
-    m_label2:setPosition(CCPoint(s.width*3/6, s.height/2))
-    m_label3:setPosition(CCPoint(s.width*4/6, s.height/2))
-    m_label4:setPosition(CCPoint(s.width*5/6, s.height/2))
+    m_label0:setPosition(cc.p(s.width*1/6, s.height/2))
+    m_label1:setPosition(cc.p(s.width*2/6, s.height/2))
+    m_label2:setPosition(cc.p(s.width*3/6, s.height/2))
+    m_label3:setPosition(cc.p(s.width*4/6, s.height/2))
+    m_label4:setPosition(cc.p(s.width*5/6, s.height/2))
 
     ret:addChild(m_label0)
     ret:addChild(m_label1)
@@ -99,29 +99,26 @@ local function IntervalLayer()
     ret:addChild(m_label4)
 
     -- Sprite
-    local  sprite = CCSprite:create(s_pPathGrossini)
-    sprite:setPosition( CCPoint(VisibleRect:left().x + 40, VisibleRect:bottom().y + 50) )
+    local  sprite = cc.Sprite:create(s_pPathGrossini)
+    sprite:setPosition( cc.p(VisibleRect:left().x + 40, VisibleRect:bottom().y + 50) )
 
-    local  jump = CCJumpBy:create(3, CCPoint(s.width-80,0), 50, 4)
+    local  jump = cc.JumpBy:create(3, cc.p(s.width-80,0), 50, 4)
 
     ret:addChild(sprite)
-    local arr = CCArray:create()
-    arr:addObject(jump)
-    arr:addObject(jump:reverse())
-    sprite:runAction( CCRepeatForever:create(CCSequence:create(arr)))
+    sprite:runAction( cc.RepeatForever:create(cc.Sequence:create(jump, jump:reverse())))
     -- pause button
-    local  item1 = CCMenuItemFont:create("Pause")
+    local  item1 = cc.MenuItemFont:create("Pause")
     local function onPause(tag, pSender)
-        if CCDirector:getInstance():isPaused() then
-            CCDirector:getInstance():resume()
+        if cc.Director:getInstance():isPaused() then
+            cc.Director:getInstance():resume()
         else
-            CCDirector:getInstance():pause()
+            cc.Director:getInstance():pause()
         end
     end
 
     item1:registerScriptTapHandler(onPause)
-    local  menu = CCMenu:createWithItem(item1)
-    menu:setPosition( CCPoint(s.width/2, s.height-50) )
+    local  menu = cc.Menu:create(item1)
+    menu:setPosition( cc.p(s.width/2, s.height-50) )
 
     ret:addChild( menu )
 
@@ -131,7 +128,7 @@ end
 
 function IntervalTestMain()
     cclog("IntervalTestMain")
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     local  layer = IntervalLayer()
     scene:addChild(layer, 0)
     scene:addChild(CreateBackMenuItem())
