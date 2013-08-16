@@ -29,6 +29,13 @@ THE SOFTWARE.
 #include "datas/CCDatas.h"
 #include "display/CCSkin.h"
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
+
+
 NS_CC_EXT_BEGIN
 
 std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
@@ -621,7 +628,13 @@ b2Body *CCArmature::getB2Body()
 
 void CCArmature::setB2Body(b2Body *body)
 {
+	if (m_pB2Body == body)
+	{
+		return; 
+	}
+
 	m_pB2Body = body;
+	m_pB2Body->SetUserData(this);
 	
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(m_pChildren, object)
@@ -650,7 +663,13 @@ cpBody *CCArmature::getCPBody()
 
 void CCArmature::setCPBody(cpBody *body)
 {
+	if (m_pCPBody == body)
+	{
+		return;
+	}
+
 	m_pCPBody = body;
+	m_pCPBody->data = this;
 
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(m_pChildren, object)

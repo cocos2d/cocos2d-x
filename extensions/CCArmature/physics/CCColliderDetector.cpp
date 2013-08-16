@@ -61,6 +61,7 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
 
 CCColliderDetector::CCColliderDetector()
     : m_pColliderBodyList(NULL)
+	, m_bActive(false)
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT
 	m_pB2Body = NULL;
@@ -121,24 +122,61 @@ void CCColliderDetector::removeAll()
 
 void CCColliderDetector::setActive(bool active)
 {
+	if (m_bActive == active)
+	{
+		return;
+	}
+
+	m_bActive = active;
+
 #if ENABLE_PHYSICS_BOX2D_DETECT
 	if (m_pB2Body)
 	{
-		m_pB2Body->SetActive(active);
+		if (active)
+		{
+			setB2Body(m_pB2Body);
+		}
+		else
+		{
+			CCObject *object = NULL;
+			CCARRAY_FOREACH(m_pColliderBodyList, object)
+			{
+				ColliderBody *colliderBody = (ColliderBody *)object;
+				b2Fixture *fixture = colliderBody->getB2Fixture();
+				m_pB2Body->DestroyFixture(fixture);
+				colliderBody->setB2Fixture(NULL);
+			}
+		}
 	}
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 	if (m_pCPBody)
 	{
-		if (active)
+		CCObject *object = NULL;
+		if (m_bActive)
 		{
-			cpBodyActivate(m_pCPBody);
+			CCARRAY_FOREACH(m_pColliderBodyList, object)
+			{
+				ColliderBody *colliderBody = (ColliderBody *)object;
+				cpShape *shape = colliderBody->getShape();
+				cpSpaceAddShape(m_pCPBody->space_private, shape);
+			}
 		}
 		else
 		{
-			cpBodySleep(m_pCPBody);
+			CCARRAY_FOREACH(m_pColliderBodyList, object)
+			{
+				ColliderBody *colliderBody = (ColliderBody *)object;
+				cpShape *shape = colliderBody->getShape();
+				cpSpaceRemoveShape(m_pCPBody->space_private, shape);
+			}
 		}
 	}
 #endif
+}
+
+bool CCColliderDetector::getActive()
+{
+	return m_bActive;
 }
 
 CCArray *CCColliderDetector::getColliderBodyList()
@@ -151,6 +189,11 @@ CCPoint helpPoint;
 
 void CCColliderDetector::updateTransform(CCAffineTransform &t)
 {
+	if (!m_bActive)
+	{
+		return;
+	}
+
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pColliderBodyList, object)
     {
@@ -213,7 +256,6 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
 void CCColliderDetector::setB2Body(b2Body *pBody)
 {
 	m_pB2Body = pBody;
-	m_pB2Body->SetUserData(m_pBone);
 
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(m_pColliderBodyList, object)
@@ -244,6 +286,12 @@ void CCColliderDetector::setB2Body(b2Body *pBody)
 		fixtureDef.isSensor = true;
 
 		b2Fixture *fixture = m_pB2Body->CreateFixture(&fixtureDef);
+		fixture->SetUserData(m_pBone);
+
+		if (colliderBody->getB2Fixture() != NULL)
+		{
+			m_pB2Body->DestroyFixture(colliderBody->getB2Fixture());
+		}
 		colliderBody->setB2Fixture(fixture);
 	}
 }
