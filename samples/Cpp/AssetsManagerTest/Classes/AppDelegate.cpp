@@ -85,8 +85,6 @@ UpdateLayer::UpdateLayer()
 
 UpdateLayer::~UpdateLayer()
 {
-    AssetsManager *pAssetsManager = getAssetsManager();
-    CC_SAFE_DELETE(pAssetsManager);
 }
 
 void UpdateLayer::update(cocos2d::Object *pSender)
@@ -141,6 +139,14 @@ bool UpdateLayer::init()
 {
     Layer::init();
     
+    /** Creates assets manager */
+    pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
+                                       "https://raw.github.com/minggo/AssetsManagerTest/master/version",
+                                       pathToSave.c_str());
+    pAssetsManager->setDelegate(this);
+    pAssetsManager->setConnectionTimeout(3);
+    addChild(pAssetsManager);
+    
     createDownloadedDir();
     
     Size size = Director::getInstance()->getWinSize();
@@ -162,22 +168,6 @@ bool UpdateLayer::init()
     addChild(pProgressLabel);
     
     return true;
-}
-
-AssetsManager* UpdateLayer::getAssetsManager()
-{
-    static AssetsManager *pAssetsManager = NULL;
-    
-    if (! pAssetsManager)
-    {
-        pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
-                                           "https://raw.github.com/minggo/AssetsManagerTest/master/version",
-                                           pathToSave.c_str());
-        pAssetsManager->setDelegate(this);
-        pAssetsManager->setConnectionTimeout(3);
-    }
-    
-    return pAssetsManager;
 }
 
 void UpdateLayer::createDownloadedDir()
