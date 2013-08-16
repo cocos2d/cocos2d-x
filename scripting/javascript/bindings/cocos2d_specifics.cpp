@@ -522,14 +522,23 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
 // "setCallback" in JS
 // item.setCallback( callback_fn, [this]);
 template<class T>
-JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
-
-    if(argc == 1 || argc == 2) {
+JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if(argc == 1 || argc == 2)
+    {
         jsval *argv = JS_ARGV(cx, vp);
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
         jsval jsThis = JSVAL_VOID;
         jsval jsFunc = argv[0];
-        if (argc == 2) {
+        
+        if (jsFunc.isUndefined())
+        {
+            JS_ReportError(cx, "The callback function is undefined.");
+            return JS_FALSE;
+        }
+        
+        if (argc == 2)
+        {
             jsThis = argv[1];
         }
         

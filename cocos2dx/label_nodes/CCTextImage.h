@@ -25,10 +25,12 @@
 #ifndef _TextImage_h_
 #define _TextImage_h_
 
-#include "CCFontRender.h"
-#include "CCFont.h"
+//#include "CCFont.h"
+#include <vector>
 
 NS_CC_BEGIN
+
+class Font;
 
 /** @brief GlyphDef defines one single glyph (character) in a text image
  *
@@ -161,27 +163,27 @@ public:
     TextImage();
    ~TextImage();
     
-    bool initWithString(const char *pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData = true);
+    bool initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData = true);
+    
     TextFontPagesDef  * getPages()    { return _fontPages; }
     Font              * getFont()     { return _font;      }
     
 private:
     
-    unsigned char * preparePageGlyphData(TextPageDef *thePage);
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
-    bool createFontRender();
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
-    bool createFontRef(const char *fontName, int size);
     bool generateTextGlyphs(const char * pText);
     int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
+    unsigned char * preparePageGlyphData(TextPageDef *thePage);
+    
+    // glyph rendering
+    unsigned char * renderGlyphData(TextPageDef *thePage);
+    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;
-    Font *                                      _font;
-    FontRender *                                _fontRender;
-    
-    
+    Font             *                          _font;
 };
 
 

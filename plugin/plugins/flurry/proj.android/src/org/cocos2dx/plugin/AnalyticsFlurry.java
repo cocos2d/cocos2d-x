@@ -58,64 +58,131 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
     @Override
     public void startSession(String appKey) {
         LogD("startSession invoked!");
-        FlurryAgent.onStartSession(mContext, appKey);
+        final String curKey = appKey;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Class.forName("android.os.AsyncTask");
+                } catch (ClassNotFoundException e) {
+                   e.printStackTrace();
+                }
+                FlurryAgent.onStartSession(mContext, curKey);
+            }
+            
+        });
     }
 
     @Override
     public void stopSession() {
         LogD("stopSession invoked!");
-        FlurryAgent.onEndSession(mContext);
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.onEndSession(mContext);
+            }
+        });
     }
 
     @Override
     public void setSessionContinueMillis(int millis) {
         LogD("setSessionContinueMillis invoked!");
-        FlurryAgent.setContinueSessionMillis(millis);
+        final int curMillis = millis;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.setContinueSessionMillis(curMillis);
+            }
+        });
     }
 
     @Override
     public void setCaptureUncaughtException(boolean isEnabled) {
         LogD("setCaptureUncaughtException invoked!");
-        FlurryAgent.setCaptureUncaughtExceptions(isEnabled);
+        final boolean curEnable = isEnabled;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.setCaptureUncaughtExceptions(curEnable);
+            }
+        });
     }
 
     @Override
     public void setDebugMode(boolean isDebugMode) {
         isDebug = isDebugMode;
-        FlurryAgent.setLogEnabled(isDebug);
-        if (isDebugMode) {
-            FlurryAgent.setLogLevel(Log.DEBUG);
-        }
+        final boolean curDebugMode = isDebug;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.setLogEnabled(curDebugMode);
+                if (curDebugMode) {
+                    FlurryAgent.setLogLevel(Log.DEBUG);
+                }
+            }
+        });
     }
 
     @Override
     public void logError(String errorId, String message) {
         LogD("logError invoked!");
-        FlurryAgent.onError(errorId, message, "");
+        final String curID = errorId;
+        final String curMsg = message;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.onError(curID, curMsg, "");
+            }
+        });
     }
 
     @Override
     public void logEvent(String eventId) {
         LogD("logEvent(eventId) invoked!");
-        FlurryAgent.logEvent(eventId);
+        final String curId = eventId;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.logEvent(curId);
+            }
+        });
     }
 
     @Override
     public void logEvent(String eventId, Hashtable<String, String> paramMap) {
         LogD("logEvent(eventId, paramMap) invoked!");
-        FlurryAgent.logEvent(eventId, paramMap);
+        final String curId = eventId;
+        final Hashtable<String, String> curParam = paramMap;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.logEvent(curId, curParam);
+            }
+        });
     }
 
     @Override
     public void logTimedEventBegin(String eventId) {
         LogD("logTimedEventBegin invoked!");
-        FlurryAgent.logEvent(eventId, true);
+        final String curId = eventId;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.logEvent(curId, true);
+            }
+        });
     }
 
     @Override
     public void logTimedEventEnd(String eventId) {
         LogD("logTimedEventEnd invoked!");
-        FlurryAgent.endTimedEvent(eventId);
+        final String curId = eventId;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                FlurryAgent.endTimedEvent(curId);
+            }
+        });
     }
 
     @Override
@@ -125,96 +192,144 @@ public class AnalyticsFlurry implements InterfaceAnalytics {
 
     protected void logTimedEventBeginWithParams(JSONObject eventInfo) {
         LogD("logTimedEventBegin invoked!");
-        try{
-            String eventId = eventInfo.getString("Param1");
-            
-            if (eventInfo.has("Param2"))
-            {
-                JSONObject params = eventInfo.getJSONObject("Param2");
-                @SuppressWarnings("rawtypes")
-                Iterator it = params.keys();
-                Hashtable<String, String> paramMap = new Hashtable<String, String>();
-                while (it.hasNext()) {
-                    String key = (String) it.next();
-                    String value = params.getString(key);
-                    paramMap.put(key, value);
+        final JSONObject curInfo = eventInfo;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    String eventId = curInfo.getString("Param1");
+                    
+                    if (curInfo.has("Param2"))
+                    {
+                        JSONObject params = curInfo.getJSONObject("Param2");
+                        @SuppressWarnings("rawtypes")
+                        Iterator it = params.keys();
+                        Hashtable<String, String> paramMap = new Hashtable<String, String>();
+                        while (it.hasNext()) {
+                            String key = (String) it.next();
+                            String value = params.getString(key);
+                            paramMap.put(key, value);
+                        }
+                        FlurryAgent.logEvent(eventId, paramMap, true);
+                    } else {
+                        FlurryAgent.logEvent(eventId, true);
+                    }
+                } catch(Exception e){
+                    LogE("Exception in logTimedEventBegin", e);
                 }
-                FlurryAgent.logEvent(eventId, paramMap, true);
-            } else {
-                FlurryAgent.logEvent(eventId, true);
             }
-        } catch(Exception e){
-            LogE("Exception in logTimedEventBegin", e);
-        }
+        });
     }
     
     protected void setReportLocation(boolean enabled) {
         LogD("setReportLocation invoked!");
-        try{
-            FlurryAgent.setReportLocation(enabled);
-        } catch(Exception e){
-            LogE("Exception in setReportLocation", e);
-        }
+        final boolean curEnable = enabled;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    FlurryAgent.setReportLocation(curEnable);
+                } catch(Exception e){
+                    LogE("Exception in setReportLocation", e);
+                }
+            }
+        });
     }
     
     protected void  logPageView() {
         LogD("logPageView invoked!");
-        try{
-            FlurryAgent.onPageView();
-        } catch(Exception e){
-            LogE("Exception in logPageView", e);
-        }
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    FlurryAgent.onPageView();
+                } catch(Exception e){
+                    LogE("Exception in logPageView", e);
+                }
+            }
+        });
     }
 
     protected void setVersionName(String versionName) {
         LogD("setVersionName invoked!");
-        try {
-            FlurryAgent.setVersionName(versionName);
-        } catch(Exception e){
-            LogE("Exception in setVersionName", e);
-        }
+        final String curVer = versionName;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FlurryAgent.setVersionName(curVer);
+                } catch(Exception e){
+                    LogE("Exception in setVersionName", e);
+                }
+            }
+        });
     }
     
     protected void setAge(int age) {
         LogD("setAge invoked!");
-        try {
-            FlurryAgent.setAge(age);
-        } catch(Exception e){
-            LogE("Exception in setAge", e);
-        }
+        final int curAge = age;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FlurryAgent.setAge(curAge);
+                } catch(Exception e){
+                    LogE("Exception in setAge", e);
+                }
+            }
+        });
     }
     
     protected void setGender(int gender) {
         LogD("setGender invoked!");
-        try {
-            byte bGender;
-            if (1 == gender) {
-                bGender = Constants.MALE;
-            } else {
-                bGender = Constants.FEMALE;
+        final int curGender = gender;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    byte bGender;
+                    if (1 == curGender) {
+                        bGender = Constants.MALE;
+                    } else {
+                        bGender = Constants.FEMALE;
+                    }
+                    FlurryAgent.setGender(bGender);
+                } catch(Exception e){
+                    LogE("Exception in setGender", e);
+                }
             }
-            FlurryAgent.setGender(bGender);
-        } catch(Exception e){
-            LogE("Exception in setGender", e);
-        }
+        });
     }
     
     protected void setUserId(String userId) {
         LogD("setUserId invoked!");
-        try {
-            FlurryAgent.setUserId(userId);
-        } catch(Exception e){
-            LogE("Exception in setUserId", e);
-        }
+        final String curUser = userId;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FlurryAgent.setUserId(curUser);
+                } catch(Exception e){
+                    LogE("Exception in setUserId", e);
+                }
+            }
+        });
     }
     
     protected void setUseHttps(boolean useHttps) {
         LogD("setUseHttps invoked!");
-        try {
-            FlurryAgent.setUseHttps(useHttps);
-        } catch(Exception e){
-            LogE("Exception in setUseHttps", e);
-        }
+        
+        final boolean curCfg = useHttps;
+        PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FlurryAgent.setUseHttps(curCfg);
+                } catch(Exception e){
+                    LogE("Exception in setUseHttps", e);
+                }
+            }
+        });
     }
 
     @Override
