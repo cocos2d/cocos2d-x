@@ -1789,26 +1789,12 @@
 		A0C80A5E1799DB97002532D9 /* CCFontFreeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A451799DB97002532D9 /* CCFontFreeType.cpp */; };
 		A0C80A5F1799DB97002532D9 /* CCFontFreeType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A461799DB97002532D9 /* CCFontFreeType.h */; };
 		A0C80A601799DB97002532D9 /* CCFontFreeType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A461799DB97002532D9 /* CCFontFreeType.h */; };
-		A0C80A611799DB97002532D9 /* CCFontRender.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A471799DB97002532D9 /* CCFontRender.h */; };
-		A0C80A621799DB97002532D9 /* CCFontRender.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A471799DB97002532D9 /* CCFontRender.h */; };
-		A0C80A631799DB97002532D9 /* CCFontRenderFreeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A481799DB97002532D9 /* CCFontRenderFreeType.cpp */; };
-		A0C80A641799DB97002532D9 /* CCFontRenderFreeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A481799DB97002532D9 /* CCFontRenderFreeType.cpp */; };
-		A0C80A651799DB97002532D9 /* CCFontRenderFreeType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A491799DB97002532D9 /* CCFontRenderFreeType.h */; };
-		A0C80A661799DB97002532D9 /* CCFontRenderFreeType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A491799DB97002532D9 /* CCFontRenderFreeType.h */; };
-		A0C80A671799DB97002532D9 /* CCStringBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4A1799DB97002532D9 /* CCStringBMFont.cpp */; };
-		A0C80A681799DB97002532D9 /* CCStringBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4A1799DB97002532D9 /* CCStringBMFont.cpp */; };
-		A0C80A691799DB97002532D9 /* CCStringBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4B1799DB97002532D9 /* CCStringBMFont.h */; };
-		A0C80A6A1799DB97002532D9 /* CCStringBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4B1799DB97002532D9 /* CCStringBMFont.h */; };
 		A0C80A6B1799DB97002532D9 /* CCLabelTextFormatProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4C1799DB97002532D9 /* CCLabelTextFormatProtocol.h */; };
 		A0C80A6C1799DB97002532D9 /* CCLabelTextFormatProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4C1799DB97002532D9 /* CCLabelTextFormatProtocol.h */; };
 		A0C80A6D1799DB97002532D9 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4D1799DB97002532D9 /* CCLabelTextFormatter.cpp */; };
 		A0C80A6E1799DB97002532D9 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4D1799DB97002532D9 /* CCLabelTextFormatter.cpp */; };
 		A0C80A6F1799DB97002532D9 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4E1799DB97002532D9 /* CCLabelTextFormatter.h */; };
 		A0C80A701799DB97002532D9 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A4E1799DB97002532D9 /* CCLabelTextFormatter.h */; };
-		A0C80A711799DB97002532D9 /* CCStringTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4F1799DB97002532D9 /* CCStringTTF.cpp */; };
-		A0C80A721799DB97002532D9 /* CCStringTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A4F1799DB97002532D9 /* CCStringTTF.cpp */; };
-		A0C80A731799DB97002532D9 /* CCStringTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A501799DB97002532D9 /* CCStringTTF.h */; };
-		A0C80A741799DB97002532D9 /* CCStringTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A501799DB97002532D9 /* CCStringTTF.h */; };
 		A0C80A751799DB97002532D9 /* CCTextImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A511799DB97002532D9 /* CCTextImage.cpp */; };
 		A0C80A761799DB97002532D9 /* CCTextImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C80A511799DB97002532D9 /* CCTextImage.cpp */; };
 		A0C80A771799DB97002532D9 /* CCTextImage.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C80A521799DB97002532D9 /* CCTextImage.h */; };
@@ -3150,16 +3136,9 @@
 		A0C80A441799DB97002532D9 /* CCFontDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontDefinition.h; sourceTree = "<group>"; };
 		A0C80A451799DB97002532D9 /* CCFontFreeType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontFreeType.cpp; sourceTree = "<group>"; };
 		A0C80A461799DB97002532D9 /* CCFontFreeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontFreeType.h; sourceTree = "<group>"; };
-		A0C80A471799DB97002532D9 /* CCFontRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontRender.h; sourceTree = "<group>"; };
-		A0C80A481799DB97002532D9 /* CCFontRenderFreeType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontRenderFreeType.cpp; sourceTree = "<group>"; };
-		A0C80A491799DB97002532D9 /* CCFontRenderFreeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontRenderFreeType.h; sourceTree = "<group>"; };
-		A0C80A4A1799DB97002532D9 /* CCStringBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStringBMFont.cpp; sourceTree = "<group>"; };
-		A0C80A4B1799DB97002532D9 /* CCStringBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStringBMFont.h; sourceTree = "<group>"; };
 		A0C80A4C1799DB97002532D9 /* CCLabelTextFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatProtocol.h; sourceTree = "<group>"; };
 		A0C80A4D1799DB97002532D9 /* CCLabelTextFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTextFormatter.cpp; sourceTree = "<group>"; };
 		A0C80A4E1799DB97002532D9 /* CCLabelTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatter.h; sourceTree = "<group>"; };
-		A0C80A4F1799DB97002532D9 /* CCStringTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStringTTF.cpp; sourceTree = "<group>"; };
-		A0C80A501799DB97002532D9 /* CCStringTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStringTTF.h; sourceTree = "<group>"; };
 		A0C80A511799DB97002532D9 /* CCTextImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextImage.cpp; sourceTree = "<group>"; };
 		A0C80A521799DB97002532D9 /* CCTextImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextImage.h; sourceTree = "<group>"; };
 		A0C80A7A1799DF39002532D9 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
@@ -5427,8 +5406,6 @@
 		A0C80A791799DBA4002532D9 /* NewLabel_Experimental */ = {
 			isa = PBXGroup;
 			children = (
-				0186A90117A068C300D88A79 /* CCFont.cpp */,
-				A0C80A401799DB97002532D9 /* CCFont.h */,
 				A0C80A411799DB97002532D9 /* CCFontAtlas.cpp */,
 				A0C80A421799DB97002532D9 /* CCFontAtlas.h */,
 				A0C80A431799DB97002532D9 /* CCFontDefinition.cpp */,
@@ -5437,16 +5414,11 @@
 				A0C80A461799DB97002532D9 /* CCFontFreeType.h */,
 				0186A8FB17A065DB00D88A79 /* CCFontFNT.cpp */,
 				0186A8FC17A065DC00D88A79 /* CCFontFNT.h */,
-				A0C80A471799DB97002532D9 /* CCFontRender.h */,
-				A0C80A481799DB97002532D9 /* CCFontRenderFreeType.cpp */,
-				A0C80A491799DB97002532D9 /* CCFontRenderFreeType.h */,
-				A0C80A4A1799DB97002532D9 /* CCStringBMFont.cpp */,
-				A0C80A4B1799DB97002532D9 /* CCStringBMFont.h */,
+				0186A90117A068C300D88A79 /* CCFont.cpp */,
+				A0C80A401799DB97002532D9 /* CCFont.h */,
 				A0C80A4C1799DB97002532D9 /* CCLabelTextFormatProtocol.h */,
 				A0C80A4D1799DB97002532D9 /* CCLabelTextFormatter.cpp */,
 				A0C80A4E1799DB97002532D9 /* CCLabelTextFormatter.h */,
-				A0C80A4F1799DB97002532D9 /* CCStringTTF.cpp */,
-				A0C80A501799DB97002532D9 /* CCStringTTF.h */,
 				A0C80A511799DB97002532D9 /* CCTextImage.cpp */,
 				A0C80A521799DB97002532D9 /* CCTextImage.h */,
 				A0C80BE81799E866002532D9 /* CCLabel.cpp */,
@@ -5928,12 +5900,8 @@
 				A0C80A571799DB97002532D9 /* CCFontAtlas.h in Headers */,
 				A0C80A5B1799DB97002532D9 /* CCFontDefinition.h in Headers */,
 				A0C80A5F1799DB97002532D9 /* CCFontFreeType.h in Headers */,
-				A0C80A611799DB97002532D9 /* CCFontRender.h in Headers */,
-				A0C80A651799DB97002532D9 /* CCFontRenderFreeType.h in Headers */,
-				A0C80A691799DB97002532D9 /* CCStringBMFont.h in Headers */,
 				A0C80A6B1799DB97002532D9 /* CCLabelTextFormatProtocol.h in Headers */,
 				A0C80A6F1799DB97002532D9 /* CCLabelTextFormatter.h in Headers */,
-				A0C80A731799DB97002532D9 /* CCStringTTF.h in Headers */,
 				A0C80A771799DB97002532D9 /* CCTextImage.h in Headers */,
 				A0C80B901799DF75002532D9 /* ftconfig.h in Headers */,
 				A0C80B911799DF75002532D9 /* ftheader.h in Headers */,
@@ -6607,12 +6575,8 @@
 				A0C80A581799DB97002532D9 /* CCFontAtlas.h in Headers */,
 				A0C80A5C1799DB97002532D9 /* CCFontDefinition.h in Headers */,
 				A0C80A601799DB97002532D9 /* CCFontFreeType.h in Headers */,
-				A0C80A621799DB97002532D9 /* CCFontRender.h in Headers */,
-				A0C80A661799DB97002532D9 /* CCFontRenderFreeType.h in Headers */,
-				A0C80A6A1799DB97002532D9 /* CCStringBMFont.h in Headers */,
 				A0C80A6C1799DB97002532D9 /* CCLabelTextFormatProtocol.h in Headers */,
 				A0C80A701799DB97002532D9 /* CCLabelTextFormatter.h in Headers */,
-				A0C80A741799DB97002532D9 /* CCStringTTF.h in Headers */,
 				A0C80A781799DB97002532D9 /* CCTextImage.h in Headers */,
 				A0C80ADB1799DF5D002532D9 /* ftconfig.h in Headers */,
 				A0C80ADC1799DF5D002532D9 /* ftheader.h in Headers */,
@@ -7466,10 +7430,7 @@
 				A0C80A551799DB97002532D9 /* CCFontAtlas.cpp in Sources */,
 				A0C80A591799DB97002532D9 /* CCFontDefinition.cpp in Sources */,
 				A0C80A5D1799DB97002532D9 /* CCFontFreeType.cpp in Sources */,
-				A0C80A631799DB97002532D9 /* CCFontRenderFreeType.cpp in Sources */,
-				A0C80A671799DB97002532D9 /* CCStringBMFont.cpp in Sources */,
 				A0C80A6D1799DB97002532D9 /* CCLabelTextFormatter.cpp in Sources */,
-				A0C80A711799DB97002532D9 /* CCStringTTF.cpp in Sources */,
 				A0C80A751799DB97002532D9 /* CCTextImage.cpp in Sources */,
 				A0C80BEA1799E867002532D9 /* CCLabel.cpp in Sources */,
 				0186A8F1179F2CD900D88A79 /* CCFontAtlasFactory.cpp in Sources */,
@@ -7917,10 +7878,7 @@
 				A0C80A561799DB97002532D9 /* CCFontAtlas.cpp in Sources */,
 				A0C80A5A1799DB97002532D9 /* CCFontDefinition.cpp in Sources */,
 				A0C80A5E1799DB97002532D9 /* CCFontFreeType.cpp in Sources */,
-				A0C80A641799DB97002532D9 /* CCFontRenderFreeType.cpp in Sources */,
-				A0C80A681799DB97002532D9 /* CCStringBMFont.cpp in Sources */,
 				A0C80A6E1799DB97002532D9 /* CCLabelTextFormatter.cpp in Sources */,
-				A0C80A721799DB97002532D9 /* CCStringTTF.cpp in Sources */,
 				A0C80A761799DB97002532D9 /* CCTextImage.cpp in Sources */,
 				A0C80BEB1799E867002532D9 /* CCLabel.cpp in Sources */,
 				0186A8F3179F2CDB00D88A79 /* CCFontAtlasFactory.cpp in Sources */,
