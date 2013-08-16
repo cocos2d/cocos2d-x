@@ -111,10 +111,10 @@ public:
     @param dataLen  data length expressed in (number of) bytes.
     @return true if loaded correctly.
     */
-    bool initWithImageData(const void * data, int dataLen);
+    bool initWithImageData(const unsigned char * data, int dataLen);
 
     // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(const void * data, int dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
+    bool initWithRawData(const unsigned char * data, int dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     /**
     @brief Create image with specified string.
@@ -186,17 +186,16 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
-    
-    bool initWithJpgData(const void *data, int dataLen);
-    bool initWithPngData(const void *data, int dataLen);
-    bool initWithTiffData(const void *data, int dataLen);
-    bool initWithWebpData(const void *data, int dataLen);
-    bool initWithPVRData(const void *data, int dataLen);
-    bool initWithPVRv2Data(const void *data, int dataLen);
-    bool initWithPVRv3Data(const void *data, int dataLen);
-    bool initWithETCData(const void *data, int dataLen);
-    bool initWithS3TCData(const void *data, int dataLen);
-    bool initWithATITCData(const void *data, int dataLen);
+    bool initWithJpgData(const unsigned char *  data, int dataLen);
+    bool initWithPngData(const unsigned char * data, int dataLen);
+    bool initWithTiffData(const unsigned char * data, int dataLen);
+    bool initWithWebpData(const unsigned char * data, int dataLen);
+    bool initWithPVRData(const unsigned char * data, int dataLen);
+    bool initWithPVRv2Data(const unsigned char * data, int dataLen);
+    bool initWithPVRv3Data(const unsigned char * data, int dataLen);
+    bool initWithETCData(const unsigned char * data, int dataLen);
+    bool initWithS3TCData(const unsigned char * data, int dataLen);
+    bool initWithATITCData(const unsigned char *data, int dataLen);
 
     bool saveImageToPNG(const char *filePath, bool isToRGB = true);
     bool saveImageToJPG(const char *filePath);
@@ -234,16 +233,15 @@ private:
      */
     bool initWithImageFileThreadSafe(const char *fullpath);
     
-    Format detectFormat(const void* data, int dataLen);
-    bool isPng(const void *data, int dataLen);
-    bool isJpg(const void *data, int dataLen);
-    bool isTiff(const void *data, int dataLen);
-    bool isWebp(const void *data, int dataLen);
-    bool isPvr(const void *data, int dataLen);
-    bool isEtc(const void *data, int dataLen);
-    bool isS3TC(const void *data, int dataLen);
-    bool isATITC(const void *data, int dataLen);
-
+    Format detectFormat(const unsigned char * data, int dataLen);
+    bool isPng(const unsigned char * data, int dataLen);
+    bool isJpg(const unsigned char * data, int dataLen);
+    bool isTiff(const unsigned char * data, int dataLen);
+    bool isWebp(const unsigned char * data, int dataLen);
+    bool isPvr(const unsigned char * data, int dataLen);
+    bool isEtc(const unsigned char * data, int dataLen);
+    bool isS3TC(const unsigned char * data,int dataLen);
+    bool isATITC(const unsigned char *data, int dataLen);
 };
 
 // end of platform group
