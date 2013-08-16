@@ -70,17 +70,17 @@ Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, unsigned int id
 
 TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned int idx)
 {
-    String *string = String::createWithFormat("%d", idx);
+    auto string = String::createWithFormat("%d", idx);
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new CustomTableViewCell();
         cell->autorelease();
-        Sprite *sprite = Sprite::create("Images/Icon.png");
+        auto sprite = Sprite::create("Images/Icon.png");
         sprite->setAnchorPoint(Point::ZERO);
         sprite->setPosition(Point(0, 0));
         cell->addChild(sprite);
 
-        LabelTTF *label = LabelTTF::create(string->getCString(), "Helvetica", 20.0);
+        auto label = LabelTTF::create(string->getCString(), "Helvetica", 20.0);
         label->setPosition(Point::ZERO);
 		label->setAnchorPoint(Point::ZERO);
         label->setTag(123);
@@ -88,7 +88,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, unsigned i
     }
     else
     {
-        LabelTTF *label = (LabelTTF*)cell->getChildByTag(123);
+        auto label = (LabelTTF*)cell->getChildByTag(123);
         label->setString(string->getCString());
     }
 

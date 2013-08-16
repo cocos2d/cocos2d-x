@@ -4,8 +4,8 @@
 
 KeyboardTest::KeyboardTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    LabelTTF* label = LabelTTF::create("Keyboard Test", "Arial", 28);
+    auto s = Director::getInstance()->getWinSize();
+    auto label = LabelTTF::create("Keyboard Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
@@ -36,7 +36,7 @@ void KeyboardTest::keyReleased(int keyCode)
 
 void KeyboardTestScene::runThisTest()
 {
-    Layer* layer = new KeyboardTest();
+    auto layer = new KeyboardTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

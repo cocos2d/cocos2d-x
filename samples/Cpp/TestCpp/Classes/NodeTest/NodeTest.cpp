@@ -52,7 +52,7 @@ Layer* nextCocosNodeAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createCocosNodeLayer(sceneIdx);
+    auto layer = createCocosNodeLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -65,7 +65,7 @@ Layer* backCocosNodeAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* layer = createCocosNodeLayer(sceneIdx);
+    auto layer = createCocosNodeLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -73,7 +73,7 @@ Layer* backCocosNodeAction()
 
 Layer* restartCocosNodeAction()
 {
-    Layer* layer = createCocosNodeLayer(sceneIdx);
+    auto layer = createCocosNodeLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -105,7 +105,7 @@ void TestCocosNodeDemo::onEnter()
 
 void TestCocosNodeDemo::restartCallback(Object* sender)
 {
-    Scene* s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -114,7 +114,7 @@ void TestCocosNodeDemo::restartCallback(Object* sender)
 
 void TestCocosNodeDemo::nextCallback(Object* sender)
 {
-    Scene* s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -122,7 +122,7 @@ void TestCocosNodeDemo::nextCallback(Object* sender)
 
 void TestCocosNodeDemo::backCallback(Object* sender)
 {
-    Scene* s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -138,12 +138,12 @@ void Test2::onEnter()
 {
     TestCocosNodeDemo::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    Sprite *sp1 = Sprite::create(s_pathSister1);
-    Sprite *sp2 = Sprite::create(s_pathSister2);
-    Sprite *sp3 = Sprite::create(s_pathSister1);
-    Sprite *sp4 = Sprite::create(s_pathSister2);
+    auto sp1 = Sprite::create(s_pathSister1);
+    auto sp2 = Sprite::create(s_pathSister2);
+    auto sp3 = Sprite::create(s_pathSister1);
+    auto sp4 = Sprite::create(s_pathSister2);
     
     sp1->setPosition(Point(100, s.height /2 ));
     sp2->setPosition(Point(380, s.height /2 ));
@@ -156,11 +156,11 @@ void Test2::onEnter()
     sp1->addChild(sp3);
     sp2->addChild(sp4);
     
-    ActionInterval* a1 = RotateBy::create(2, 360);
-    ActionInterval* a2 = ScaleBy::create(2, 2);
+    auto a1 = RotateBy::create(2, 360);
+    auto a2 = ScaleBy::create(2, 2);
     
-    Action* action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), NULL) );
-    Action* action2 = RepeatForever::create( Sequence::create(
+    auto action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), NULL) );
+    auto action2 = RepeatForever::create( Sequence::create(
 																	a1->clone(),
 																	a2->clone(),
 																	a2->reverse(),
@@ -189,8 +189,8 @@ std::string Test2::title()
 
 Test4::Test4()
 {
-    Sprite *sp1 = Sprite::create(s_pathSister1);
-    Sprite *sp2 = Sprite::create(s_pathSister2);
+    auto sp1 = Sprite::create(s_pathSister1);
+    auto sp2 = Sprite::create(s_pathSister2);
     
     sp1->setPosition( Point(100,160) );
     sp2->setPosition( Point(380,160) );
@@ -204,8 +204,8 @@ Test4::Test4()
 
 void Test4::delay2(float dt)
 {
-    Sprite* node = static_cast<Sprite*>(getChildByTag(2));
-    Action* action1 = RotateBy::create(1, 360);
+    auto node = static_cast<Sprite*>(getChildByTag(2));
+    auto action1 = RotateBy::create(1, 360);
     node->runAction(action1);
 }
 
@@ -228,16 +228,16 @@ std::string Test4::title()
 //------------------------------------------------------------------
 Test5::Test5()
 {
-    Sprite* sp1 = Sprite::create(s_pathSister1);
-    Sprite* sp2 = Sprite::create(s_pathSister2);
+    auto sp1 = Sprite::create(s_pathSister1);
+    auto sp2 = Sprite::create(s_pathSister2);
     
     sp1->setPosition(Point(100,160));
     sp2->setPosition(Point(380,160));
 
-    RotateBy* rot = RotateBy::create(2, 360);
-    ActionInterval* rot_back = rot->reverse();
-    Action* forever = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    Action* forever2 = forever->clone();
+    auto rot = RotateBy::create(2, 360);
+    auto rot_back = rot->reverse();
+    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever2 = forever->clone();
     forever->setTag(101);
     forever2->setTag(102);
                                                   
@@ -252,8 +252,8 @@ Test5::Test5()
 
 void Test5::addAndRemove(float dt)
 {
-    Node* sp1 = getChildByTag(kTagSprite1);
-    Node* sp2 = getChildByTag(kTagSprite2);
+    auto sp1 = getChildByTag(kTagSprite1);
+    auto sp2 = getChildByTag(kTagSprite2);
 
     sp1->retain();
     sp2->retain();
@@ -280,22 +280,22 @@ std::string Test5::title()
 //------------------------------------------------------------------
 Test6::Test6()
 {
-    Sprite* sp1 = Sprite::create(s_pathSister1);
-    Sprite* sp11 = Sprite::create(s_pathSister1);
+    auto sp1 = Sprite::create(s_pathSister1);
+    auto sp11 = Sprite::create(s_pathSister1);
 
-    Sprite* sp2 = Sprite::create(s_pathSister2);
-    Sprite* sp21 = Sprite::create(s_pathSister2);
+    auto sp2 = Sprite::create(s_pathSister2);
+    auto sp21 = Sprite::create(s_pathSister2);
         
     sp1->setPosition(Point(100,160));
     sp2->setPosition(Point(380,160));
         
-    ActionInterval* rot = RotateBy::create(2, 360);
-    ActionInterval* rot_back = rot->reverse();
-    Action* forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
-    Action* forever11 = forever1->clone();
+    auto rot = RotateBy::create(2, 360);
+    auto rot_back = rot->reverse();
+    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever11 = forever1->clone();
 
-    Action* forever2 = forever1->clone();
-    Action* forever21 = forever1->clone();
+    auto forever2 = forever1->clone();
+    auto forever21 = forever1->clone();
     
     addChild(sp1, 0, kTagSprite1);
     sp1->addChild(sp11);
@@ -312,8 +312,8 @@ Test6::Test6()
 
 void Test6::addAndRemove(float dt)
 {
-    Node* sp1 = getChildByTag(kTagSprite1);
-    Node* sp2 = getChildByTag(kTagSprite2);
+    auto sp1 = getChildByTag(kTagSprite1);
+    auto sp2 = getChildByTag(kTagSprite2);
 
     sp1->retain();
     sp2->retain();
@@ -341,9 +341,9 @@ std::string Test6::title()
 //------------------------------------------------------------------
 StressTest1::StressTest1()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    Sprite *sp1 = Sprite::create(s_pathSister1);
+    auto sp1 = Sprite::create(s_pathSister1);
     addChild(sp1, 0, kTagSprite1);
     
     sp1->setPosition( Point(s.width/2, s.height/2) );        
@@ -355,14 +355,14 @@ void StressTest1::shouldNotCrash(float dt)
 {
     unschedule(schedule_selector(StressTest1::shouldNotCrash));
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // if the node has timers, it crashes
-    ParticleSun* explosion = ParticleSun::create();
+    auto explosion = ParticleSun::create();
     explosion->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
     
     // if it doesn't, it works Ok.
-//    CocosNode *explosion = [Sprite create:@"grossinis_sister2.png");
+//    auto explosion = [Sprite create:@"grossinis_sister2.png");
 
     explosion->setPosition( Point(s.width/2, s.height/2) );
     
@@ -394,25 +394,25 @@ std::string StressTest1::title()
 //------------------------------------------------------------------
 StressTest2::StressTest2()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    Layer* sublayer = Layer::create();
+    auto sublayer = Layer::create();
     
-    Sprite *sp1 = Sprite::create(s_pathSister1);
+    auto sp1 = Sprite::create(s_pathSister1);
     sp1->setPosition( Point(80, s.height/2) );
     
-    ActionInterval* move = MoveBy::create(3, Point(350,0));
-    ActionInterval* move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
-    ActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
-    Sequence* seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
+    auto move = MoveBy::create(3, Point(350,0));
+    auto move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
+    auto move_ease_inout_back3 = move_ease_inout3->reverse();
+    auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
     sp1->runAction( RepeatForever::create(seq3) );
     sublayer->addChild(sp1, 1);
 
-    ParticleFire* fire = ParticleFire::create();
+    auto fire = ParticleFire::create();
     fire->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
     fire->setPosition( Point(80, s.height/2-50) );
     
-    ActionInterval* copy_seq3 = seq3->clone();
+    auto copy_seq3 = seq3->clone();
     
     fire->runAction( RepeatForever::create(copy_seq3) );
     sublayer->addChild(fire, 2);
@@ -425,7 +425,7 @@ StressTest2::StressTest2()
 void StressTest2::shouldNotLeak(float dt)
 {
     unschedule( schedule_selector(StressTest2::shouldNotLeak) );
-    Layer* sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
+    auto sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
@@ -442,7 +442,7 @@ std::string StressTest2::title()
 //------------------------------------------------------------------
 SchedulerTest1::SchedulerTest1()
 {
-    Layer*layer = Layer::create();
+    auto layer = Layer::create();
     //CCLOG("retain count after init is %d", layer->retainCount());                // 1
     
     addChild(layer, 0);
@@ -477,25 +477,25 @@ NodeToWorld::NodeToWorld()
     //  - It tests different anchor Points
     //  - It tests different children anchor points
 
-    Sprite *back = Sprite::create(s_back3);
+    auto back = Sprite::create(s_back3);
     addChild( back, -10);
     back->setAnchorPoint( Point(0,0) );
-    Size backSize = back->getContentSize();
+    auto backSize = back->getContentSize();
     
-    MenuItem *item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
-    Menu *menu = Menu::create(item, NULL);
+    auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
+    auto menu = Menu::create(item, NULL);
     menu->alignItemsVertically();
     menu->setPosition( Point(backSize.width/2, backSize.height/2));
     back->addChild(menu);
     
-    ActionInterval* rot = RotateBy::create(5, 360);
-    Action* fe = RepeatForever::create( rot);
+    auto rot = RotateBy::create(5, 360);
+    auto fe = RepeatForever::create( rot);
     item->runAction( fe );
     
-    ActionInterval* move = MoveBy::create(3, Point(200,0));
-    ActionInterval* move_back = move->reverse();
-    Sequence* seq = Sequence::create( move, move_back, NULL);
-    Action* fe2 = RepeatForever::create(seq);
+    auto move = MoveBy::create(3, Point(200,0));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create( move, move_back, NULL);
+    auto fe2 = RepeatForever::create(seq);
     back->runAction(fe2);
 }
 
@@ -523,9 +523,9 @@ void CameraOrbitTest::onExit()
 
 CameraOrbitTest::CameraOrbitTest()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    Sprite *p = Sprite::create(s_back3);
+    auto p = Sprite::create(s_back3);
     addChild( p, 0);
     p->setPosition( Point(s.width/2, s.height/2) );
     p->setOpacity( 128 );
@@ -595,7 +595,7 @@ void CameraZoomTest::onExit()
 
 CameraZoomTest::CameraZoomTest()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     Sprite *sprite;
     Camera *cam;
@@ -650,7 +650,7 @@ std::string CameraZoomTest::title()
 //------------------------------------------------------------------
 CameraCenterTest::CameraCenterTest()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
             
     Sprite *sprite;
     OrbitCamera *orbit;
@@ -724,16 +724,16 @@ std::string CameraCenterTest::subtitle()
 ConvertToNode::ConvertToNode()
 {
     setTouchEnabled(true);
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    RotateBy* rotate = RotateBy::create(10, 360);
-    RepeatForever* action = RepeatForever::create(rotate);
+    auto rotate = RotateBy::create(10, 360);
+    auto action = RepeatForever::create(rotate);
     for(int i = 0; i < 3; i++)
     {
-        Sprite *sprite = Sprite::create("Images/grossini.png");
+        auto sprite = Sprite::create("Images/grossini.png");
         sprite->setPosition(Point( s.width/4*(i+1), s.height/2));
 
-        Sprite *point = Sprite::create("Images/r1.png");
+        auto point = Sprite::create("Images/r1.png");
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
         addChild(point, 10, 100 + i);
@@ -762,12 +762,12 @@ void ConvertToNode::ccTouchesEnded(Set* touches, Event *event)
 {
     for( SetIterator it = touches->begin(); it != touches->end(); ++it)
     {
-        Touch* touch = static_cast<Touch*>(*it);
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(*it);
+        auto location = touch->getLocation();
 
         for( int i = 0; i < 3; i++)
         {
-            Node *node = getChildByTag(100+i);
+            auto node = getChildByTag(100+i);
             Point p1, p2;
 
             p1 = node->convertToNodeSpaceAR(location);
@@ -840,7 +840,7 @@ std::string NodeNonOpaqueTest::subtitle()
 
 void CocosNodeTestScene::runThisTest()
 {
-    Layer* layer = nextCocosNodeAction();
+    auto layer = nextCocosNodeAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

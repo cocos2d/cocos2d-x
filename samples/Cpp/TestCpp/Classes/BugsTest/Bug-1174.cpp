@@ -12,13 +12,13 @@ int check_for_error( Point p1, Point p2, Point p3, Point p4, float s, float t )
     //    the hit point is        p3 + t * (p4 - p3);
     //    the hit point also is    p1 + s * (p2 - p1);
     
-    Point p4_p3 = p4 - p3;
-    Point p4_p3_t = p4_p3 * t;
-    Point hitPoint1 = p3 + p4_p3_t;
+    auto p4_p3 = p4 - p3;
+    auto p4_p3_t = p4_p3 * t;
+    auto hitPoint1 = p3 + p4_p3_t;
     
-    Point p2_p1 = p2 - p1;
-    Point p2_p1_s = p2_p1 * s;
-    Point hitPoint2 = p1 + p2_p1_s;
+    auto p2_p1 = p2 - p1;
+    auto p2_p1_s = p2_p1 * s;
+    auto hitPoint2 = p1 + p2_p1_s;
     
     // Since float has rounding errors, only check if diff is < 0.05
     if( (fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( fabs(hitPoint1.y - hitPoint2.y) > 0.1f) )

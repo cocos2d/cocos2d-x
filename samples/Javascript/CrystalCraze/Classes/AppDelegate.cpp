@@ -27,15 +27,15 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    auto pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(Director::Projection::_2D);
 
 
-    Size screenSize = EGLView::getInstance()->getFrameSize();
+    auto screenSize = EGLView::getInstance()->getFrameSize();
 
-    Size designSize = Size(320, 480);
-    Size resourceSize = Size(320, 480);
+    auto designSize = Size(320, 480);
+    auto resourceSize = Size(320, 480);
     
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;
@@ -112,7 +112,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->start();
 
     js_log("RUNNING Main");
-    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        
@@ -123,7 +123,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {

@@ -8,7 +8,7 @@ enum
 
 void ClickAndMoveTestScene::runThisTest()
 {
-    Layer* layer = new MainLayer();
+    auto layer = new MainLayer();
     layer->autorelease();
 
     addChild(layer);
@@ -19,9 +19,9 @@ MainLayer::MainLayer()
 {
     setTouchEnabled(true);
     
-    Sprite* sprite = Sprite::create(s_pathGrossini);
+    auto sprite = Sprite::create(s_pathGrossini);
     
-    Layer* layer = LayerColor::create(Color4B(255,255,0,255));
+    auto layer = LayerColor::create(Color4B(255,255,0,255));
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
@@ -39,11 +39,11 @@ MainLayer::MainLayer()
 
 void MainLayer::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = static_cast<Touch*>( touches->anyObject() );
     
-    Point location = touch->getLocation();
+    auto location = touch->getLocation();
 
-    Node* s = getChildByTag(kTagSprite);
+    auto s = getChildByTag(kTagSprite);
     s->stopAllActions();
     s->runAction( MoveTo::create(1, Point(location.x, location.y) ) );
     float o = location.x - s->getPosition().x;

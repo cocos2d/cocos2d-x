@@ -19,12 +19,12 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    Director* director = Director::getInstance();
-    EGLView* glView = EGLView::getInstance();
+    auto director = Director::getInstance();
+    auto glView = EGLView::getInstance();
 
     director->setOpenGLView(glView);
     
-    Size size = director->getWinSize();
+    auto size = director->getWinSize();
 
     // Set the design resolution
     glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
@@ -70,7 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    Scene *scene = HelloWorld::scene();
+    auto scene = HelloWorld::scene();
 
     // run
     director->runWithScene(scene);

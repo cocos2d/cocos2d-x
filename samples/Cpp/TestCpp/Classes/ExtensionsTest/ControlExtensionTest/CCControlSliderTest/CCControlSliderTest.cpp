@@ -40,7 +40,7 @@ bool ControlSliderTest::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::getInstance()->getWinSize();
+        auto screenSize = Director::getInstance()->getWinSize();
 
         // Add a label in which the slider value will be displayed
         _displayValueLabel = LabelTTF::create("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32);
