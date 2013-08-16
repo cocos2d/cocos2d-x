@@ -4,6 +4,7 @@ INCLUDES += \
 			-I../platform/third_party/linux/libfreetype2 \
 			-I../platform/third_party/common/etc \
 		       -I../platform/third_party/common/s3tc \
+		      -I../platform/third_party/common/atitc \
 			-I../../extensions \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
@@ -90,6 +91,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/linux/CCDevice.cpp \
 ../platform/third_party/common/etc/etc1.cpp \
 ../platform/third_party/common/s3tc/s3tc.cpp\
+../platform/third_party/common/atitc/atitc.cpp\
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \
