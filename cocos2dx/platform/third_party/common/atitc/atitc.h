@@ -23,26 +23,26 @@
  ****************************************************************************/
 
 
-#ifndef COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
-#define COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
+#ifndef COCOS2DX_PLATFORM_THIRDPARTY_ATITC_
+#define COCOS2DX_PLATFORM_THIRDPARTY_ATITC_
 
 #include "CCStdC.h"
 
-enum class S3TCDecodeFlag
+enum class ATITCDecodeFlag
 {
-    DXT1 = 1,
-    DXT3 = 3,
-    DXT5 = 5,
+    ATC_RGB = 1,
+    ATC_EXPLICIT_ALPHA = 3,
+    ATC_INTERPOLATED_ALPHA = 5,
 };
 
-//Decode S3TC encode data to RGB32
- void s3tc_decode(uint8_t *encode_data,
-                 uint8_t *decode_data,
-                 const unsigned int pixelsWidth,
-                 const unsigned int pixelsHeight,
-                 S3TCDecodeFlag decodeFlag
-                 );
+//Decode ATITC encode data to RGB32
+void atitc_decode(uint8_t *encode_data,
+                  uint8_t *decode_data,
+                  const unsigned int pixelsWidth,
+                  const unsigned int pixelsHeight,
+                  ATITCDecodeFlag decodeFlag
+                  );
 
 
-#endif /* defined(COCOS2DX_PLATFORM_THIRDPARTY_S3TC_) */
+#endif /* defined(COCOS2DX_PLATFORM_THIRDPARTY_ATITC_) */
 

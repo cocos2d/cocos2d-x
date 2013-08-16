@@ -462,6 +462,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
+
 // S3TC Dxt3 texture format test
 class TextureS3TCDxt3 : public TextureDemo
 {
@@ -471,6 +472,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
+
 // S3TC Dxt5 texture format test
 class TextureS3TCDxt5 : public TextureDemo
 {
@@ -480,6 +482,37 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
+
+// ATITC RGB texture format test
+class TextureATITCRGB : public TextureDemo
+{
+public:
+    TextureATITCRGB();
+    
+    virtual std::string title();
+    virtual std::string subtitle();    
+};
+
+//ATITC RGBA Explicit texture format test
+class TextureATITCExplicit : public TextureDemo
+{
+public:
+    TextureATITCExplicit();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+//ATITC RGBA Interpolated texture format test
+class TextureATITCInterpolated : public TextureDemo
+{
+public:
+    TextureATITCInterpolated();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 
 // RGB888 texture convert test
 class TextureConvertRGB888 : public TextureDemo
