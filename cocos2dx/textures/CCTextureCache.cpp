@@ -387,7 +387,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
         }
 
     } while (0);
-
+    
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::addImage(texture, image);
 #endif

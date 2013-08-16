@@ -69,6 +69,10 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureS3TCDxt3),
     CL(TextureS3TCDxt5),
     
+    CL(TextureATITCRGB),
+    CL(TextureATITCExplicit),
+    CL(TextureATITCInterpolated),
+    
     CL(TextureConvertRGB888),
     CL(TextureConvertRGBA8888),
     CL(TextureConvertI8),
@@ -2026,6 +2030,7 @@ std::string TextureS3TCDxt1::subtitle()
 {
     return "S3TC dxt1 decode,one bit for Alpha";
 }
+
 //Implement of S3TC Dxt3
 TextureS3TCDxt3::TextureS3TCDxt3()
 {
@@ -2044,7 +2049,8 @@ std::string TextureS3TCDxt3::subtitle()
 {
     return "S3TC dxt3 decode";
 }
-//Implement fo S3TC Dxt5
+
+//Implement of S3TC Dxt5
 TextureS3TCDxt5::TextureS3TCDxt5()
 {
     Sprite *sprite = Sprite::create("Images/test_256x256_s3tc_dxt5_mipmaps.dds");
@@ -2060,8 +2066,62 @@ std::string TextureS3TCDxt5::title()
 }
 std::string TextureS3TCDxt5::subtitle()
 {
-    return "S3TC dxt5 decode";
+    return "S3TC dxt5 decode";    
+}
+
+//Implement of ATITC
+TextureATITCRGB::TextureATITCRGB()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGB_mipmaps.ktx");
     
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+
+    addChild(sprite);
+}
+std::string TextureATITCRGB::title()
+{
+    return "ATITC texture (*.ktx file) test#1";
+}
+std::string TextureATITCRGB::subtitle()
+{
+    return "ATITC RGB (no Alpha channel) compressed texture test";
+}
+
+TextureATITCExplicit::TextureATITCExplicit()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Explicit_mipmaps.ktx");
+    
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height / 2));
+    
+    addChild(sprite);
+}
+std::string TextureATITCExplicit::title()
+{
+    return "ATITC texture (*.ktx file) test#2";
+}
+std::string TextureATITCExplicit::subtitle()
+{
+    return "ATITC RGBA explicit Alpha compressed texture test";
+}
+
+TextureATITCInterpolated::TextureATITCInterpolated()
+{
+    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Interpolated_mipmaps.ktx");
+    
+    Size size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Point(size.width / 2, size.height /2));
+
+    addChild(sprite);
+}
+std::string TextureATITCInterpolated::title()
+{
+    return "ATITC texture (*.ktx file) test#3";
+}
+std::string TextureATITCInterpolated::subtitle()
+{
+    return "ATITC RGBA Interpolated Alpha comrpessed texture test";
 }
 
 static void addImageToDemo(TextureDemo& demo, float x, float y, const char* path, Texture2D::PixelFormat format)
@@ -2071,7 +2131,7 @@ static void addImageToDemo(TextureDemo& demo, float x, float y, const char* path
     sprite->setPosition(Point(x, y));
     demo.addChild(sprite, 0);
     
-    // remove texture from texture manager
+    //remove texture from texture manager
     TextureCache::getInstance()->removeTexture(sprite->getTexture());
 }
 

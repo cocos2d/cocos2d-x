@@ -85,7 +85,21 @@ namespace {
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
         PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
-
+        
+#ifdef GL_ATC_RGB_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
+        
+#ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,
+            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+#endif
     };
 }
 
@@ -552,7 +566,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
                         && !Configuration::getInstance()->supportsETC()
-                        && !Configuration::getInstance()->supportsS3TC())
+                        && !Configuration::getInstance()->supportsS3TC()
+                        && !Configuration::getInstance()->supportsATITC())
     {
         CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
         return false;
@@ -606,6 +621,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     // Specify OpenGL texture image
     int width = pixelsWide;
     int height = pixelsHigh;
+    
     for (int i = 0; i < mipmapsNum; ++i)
     {
         unsigned char *data = mipmaps[i].address;
@@ -634,7 +650,6 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
         width = MAX(width >> 1, 1);
         height = MAX(height >> 1, 1);
-        
     }
 
     _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
