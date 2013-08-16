@@ -105,7 +105,12 @@ public:
         S3TC_DXT3,
         //! S3TC-compressed texture: S3TC_Dxt5
         S3TC_DXT5,
-
+        //! ATITC-compressed texture: ATC_RGB
+        ATC_RGB,
+        //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
+        ATC_EXPLICIT_ALPHA,
+        //! ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
+        ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
         DEFAULT = AUTO,
         

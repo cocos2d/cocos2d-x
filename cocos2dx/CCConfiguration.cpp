@@ -46,6 +46,7 @@ Configuration::Configuration()
 , _supportsPVRTC(false)
 , _supportsETC(false)
 , _supportsS3TC(false)
+, _supportsATITC(false)
 , _supportsNPOT(false)
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
@@ -131,7 +132,10 @@ void Configuration::gatherGPUInfo()
     _valueDict->setObject(Bool::create(_supportsETC), "gl.supports_ETC");
     
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
-    _valueDict->setObject( Bool::create(_supportsS3TC), "gl.supports_S3TC");
+    _valueDict->setObject(Bool::create(_supportsS3TC), "gl.supports_S3TC");
+    
+    _supportsATITC = checkForGLExtension("GL_AMD_compressed_ATC_texture");
+    _valueDict->setObject(Bool::create(_supportsATITC), "gl.supports_ATITC");
     
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
 	_valueDict->setObject(Bool::create(_supportsPVRTC), "gl.supports_PVRTC");
@@ -236,6 +240,11 @@ bool Configuration::supportsETC() const
 bool Configuration::supportsS3TC() const
 {
     return _supportsS3TC;
+}
+
+bool Configuration::supportsATITC() const
+{
+    return _supportsATITC;
 }
 
 bool Configuration::supportsBGRA8888() const

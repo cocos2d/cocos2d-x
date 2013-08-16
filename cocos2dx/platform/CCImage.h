@@ -77,6 +77,8 @@ public:
         ETC,
         //! S3TC
         S3TC,
+        //! ATITC
+        ATITC,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -184,7 +186,6 @@ public:
     bool saveToFile(const char *filePath, bool isToRGB = true);
 
 protected:
-    
     bool initWithJpgData(const unsigned char *  data, int dataLen);
     bool initWithPngData(const unsigned char * data, int dataLen);
     bool initWithTiffData(const unsigned char * data, int dataLen);
@@ -194,6 +195,7 @@ protected:
     bool initWithPVRv3Data(const unsigned char * data, int dataLen);
     bool initWithETCData(const unsigned char * data, int dataLen);
     bool initWithS3TCData(const unsigned char * data, int dataLen);
+    bool initWithATITCData(const unsigned char *data, int dataLen);
 
     bool saveImageToPNG(const char *filePath, bool isToRGB = true);
     bool saveImageToJPG(const char *filePath);
@@ -239,7 +241,7 @@ private:
     bool isPvr(const unsigned char * data, int dataLen);
     bool isEtc(const unsigned char * data, int dataLen);
     bool isS3TC(const unsigned char * data,int dataLen);
-
+    bool isATITC(const unsigned char *data, int dataLen);
 };
 
 // end of platform group
