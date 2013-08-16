@@ -563,6 +563,9 @@ Developers:
         
     dotsquid
         Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.
+        
+    maciekczwa
+        Fixing a bug that stroke color with channel color values other than 255 doesn't take effect on android.
 
 Retired Core Developers:
     WenSheng Yang
