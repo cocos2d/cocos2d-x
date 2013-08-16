@@ -86,8 +86,8 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/linux/CCImage.cpp \
 ../platform/linux/CCDevice.cpp \
 ../platform/third_party/common/etc/etc1.cpp \
-../platform/third_party/common/s3tc/s3tc.cpp\
-../platform/third_party/common/atitc/atitc.cpp\
+../platform/third_party/common/s3tc/s3tc.cpp \
+../platform/third_party/common/atitc/atitc.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \

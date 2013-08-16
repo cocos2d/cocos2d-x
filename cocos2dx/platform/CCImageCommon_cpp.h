@@ -468,10 +468,12 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
         if (ZipUtils::ccIsCCZBuffer(data, dataLen))
         {
             unpackedLen = ZipUtils::ccInflateCCZBuffer(data, dataLen, &unpackedData);
-        }else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
+        }
+        else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
         {
             unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
-        }else
+        }
+        else
         {
             unpackedData = const_cast<unsigned char*>(data);
             unpackedLen = dataLen;
@@ -622,25 +624,32 @@ Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
     if (isPng(data, dataLen))
     {
         return Format::PNG;
-    }else if (isJpg(data, dataLen))
+    }
+    else if (isJpg(data, dataLen))
     {
         return Format::JPG;
-    }else if (isTiff(data, dataLen))
+    }
+    else if (isTiff(data, dataLen))
     {
         return Format::TIFF;
-    }else if (isWebp(data, dataLen))
+    }
+    else if (isWebp(data, dataLen))
     {
         return Format::WEBP;
-    }else if (isPvr(data, dataLen))
+    }
+    else if (isPvr(data, dataLen))
     {
         return Format::PVR;
-    }else if (isEtc(data, dataLen))
+    }
+    else if (isEtc(data, dataLen))
     {
         return Format::ETC;
-    }else if (isS3TC(data, dataLen))
+    }
+    else if (isS3TC(data, dataLen))
     {
         return Format::S3TC;
-    }else if (isATITC(data, dataLen))
+    }
+    else if (isATITC(data, dataLen))
     {
         return Format::ATITC;
     }
