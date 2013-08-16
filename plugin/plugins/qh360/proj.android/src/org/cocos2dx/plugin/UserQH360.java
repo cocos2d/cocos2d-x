@@ -25,7 +25,8 @@ package org.cocos2dx.plugin;
 
 import java.util.Hashtable;
 
-import com.qihoopay.sdk.protocols.IDispatcherCallback;
+import com.qihoo.gamecenter.sdk.common.IDispatcherCallback;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,24 +73,19 @@ public class UserQH360 implements InterfaceUser {
             return;
         }
 
-        PluginWrapper.runOnMainThread(new Runnable() {
+        QH360Wrapper.userLogin(mContext, new IDispatcherCallback() {
             @Override
-            public void run() {
-                QH360Wrapper.userLogin(mContext, new IDispatcherCallback() {
-                    @Override
-                    public void onFinished(String data) {
-                        LogD("Login callback data is " + data);
+            public void onFinished(String data) {
+                LogD("Login callback data is " + data);
 
-                        if (null == data) {
-                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "User Canceled");
-                        } else 
-                        if (TextUtils.isEmpty(data)) {
-                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "Login Succeed");
-                        } else {
-                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, data);
-                        }
-                    }
-                });
+                if (null == data) {
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "User Canceled");
+                } else 
+                if (TextUtils.isEmpty(data)) {
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "Login Succeed");
+                } else {
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, data);
+                }
             }
         });
     }
@@ -101,18 +97,13 @@ public class UserQH360 implements InterfaceUser {
             return;
         }
 
-        PluginWrapper.runOnMainThread(new Runnable() {
+        QH360Wrapper.userLogout(mContext, new IDispatcherCallback() {
             @Override
-            public void run() {
-                QH360Wrapper.userLogout(mContext, new IDispatcherCallback() {
-                    @Override
-                    public void onFinished(String data) {
-                        LogD("Logout callback data is " + data);
-                        if (null == data) {
-                            UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGOUT_SUCCEED, "User Logout");
-                        }
-                    }
-                });
+            public void onFinished(String data) {
+                LogD("Logout callback data is " + data);
+                if (null == data) {
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGOUT_SUCCEED, "User Logout");
+                }
             }
         });
     }

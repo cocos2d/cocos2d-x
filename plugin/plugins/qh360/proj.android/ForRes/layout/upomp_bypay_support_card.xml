@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:layout_marginBottom="35dip" android:layout_marginLeft="15dip"
+	android:layout_marginRight="15dip" android:layout_marginTop="35dip"
+	android:background="@drawable/upomp_bypay_bg">
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" android:layout_width="0dip"
+		android:layout_height="0dip" />
+
+
+	<RelativeLayout android:id="@+id/rl_header_support_card"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_title_bg">
+		<Button android:id="@+id/btn_return_support_card"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/upomp_bypay_btn_title_esc"
+			android:layout_alignParentRight="true" android:layout_marginRight="5dip"
+			android:layout_marginTop="5dip" android:textColor="#ffffffff"
+			android:text="@string/upomp_bypay_return" />
+	</RelativeLayout>
+<RelativeLayout android:id="@+id/rl_card_support_card"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_bank_list_title2" android:layout_below="@id/rl_header_support_card">
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerVertical="true"
+					android:layout_marginLeft="10dip" android:text="@string/upomp_bypay_supportcard"
+					android:textColor="#ffffff" android:textSize="15sp" />
+				<TextView  android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerVertical="true"
+					android:layout_marginRight="10dip" android:text="@string/upomp_bypay_creditcard"
+					android:textColor="#ffffff" android:textSize="15sp" 
+					android:layout_toLeftOf="@+id/tv_debit_support_card"/>
+				<TextView android:id="@+id/tv_debit_support_card" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerVertical="true"
+					android:layout_marginRight="10dip" android:text="@string/upomp_bypay_debitcard"
+					android:textColor="#ffffff" android:textSize="15sp"  android:layout_alignParentRight="true"
+					/>
+			</RelativeLayout>
+
+	<ScrollView android:id="@+id/sv_pay_info"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/rl_card_support_card"
+		android:layout_above="@+id/rl_bottom_support_card">
+		<RelativeLayout android:id="@+id/rl_support_card"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+
+			
+			<RelativeLayout android:id="@+id/ll_card_support_card" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" >
+			</RelativeLayout>
+
+
+		</RelativeLayout>
+
+	</ScrollView>
+	<com.unionpay.upomp.bypay.view.About
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:paddingBottom="5dip" />
+	<RelativeLayout android:id="@+id/main_dialog_support_card"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/rl_header_support_card"
+		android:layout_above="@+id/rl_bottom_support_card" />
+	<RelativeLayout android:id="@+id/rl_bottom_support_card"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_bottom"
+		android:layout_alignParentBottom="true">
+	</RelativeLayout>
+
+	</RelativeLayout>

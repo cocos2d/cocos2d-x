@@ -27,19 +27,27 @@
 
 NS_CC_BEGIN
 
+const int FontDefinitionTTF::_DEFAUL_ATALS_TEXTURE_SIZE = 1024;
 
 FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
 }
 
-FontDefinitionTTF* FontDefinitionTTF::create(const char *fontName, int fontSize, const char *letters, int textureSize )
+FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
 {
+    if (textureSize == 0)
+        textureSize = _DEFAUL_ATALS_TEXTURE_SIZE;
+    
     FontDefinitionTTF *ret = new FontDefinitionTTF;
     
     if(!ret)
         return 0;
     
-    if ( ret->initDefinition( fontName, fontSize, letters, textureSize ) )
+    const char *pGlyph = font->getCurrentGlyphCollection();
+    if (!pGlyph)
+        return nullptr;
+    
+    if ( ret->initDefinition(font, pGlyph, textureSize ) )
     {
         return ret;
     }
@@ -102,17 +110,15 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 
                 if (tempDef.validDefinition)
                 {
-                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
-                    tempDef.width            =    letterWidth  + currentGlyph.getPadding();
-                    tempDef.height           =    (letterHeight - 1);
-                    tempDef.U                =    (posXUV       - 1);
-                    tempDef.V                =    posYUV;
-                    
-                    tempDef.offsetX          =    currentGlyph.getRect().origin.x;
-                    tempDef.offsetY          =    currentGlyph.getRect().origin.y;
-                    
-                    tempDef.textureID        =    cPages;
-                    tempDef.commonLineHeight =    currentGlyph.getCommonHeight();
+                    tempDef.letteCharUTF16   = currentGlyph.getUTF8Letter();
+                    tempDef.width            = letterWidth  + currentGlyph.getPadding();
+                    tempDef.height           = (letterHeight - 1);
+                    tempDef.U                = (posXUV       - 1);
+                    tempDef.V                = posYUV;
+                    tempDef.offsetX          = currentGlyph.getRect().origin.x;
+                    tempDef.offsetY          = currentGlyph.getRect().origin.y;
+                    tempDef.textureID        = cPages;
+                    tempDef.commonLineHeight = currentGlyph.getCommonHeight();
                     
                     // take from pixels to points
                     tempDef.width  =    tempDef.width  / CC_CONTENT_SCALE_FACTOR();
@@ -125,15 +131,15 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
                 }
                 else
                 {
-                    tempDef.letteCharUTF16   =    currentGlyph.getUTF8Letter();
-                    tempDef.commonLineHeight =    0;
-                    tempDef.width            =    0;
-                    tempDef.height           =    0;
-                    tempDef.U                =    0;
-                    tempDef.V                =    0;
-                    tempDef.offsetX          =    0;
-                    tempDef.offsetY          =    0;
-                    tempDef.textureID        =    0;
+                    tempDef.letteCharUTF16   = currentGlyph.getUTF8Letter();
+                    tempDef.commonLineHeight = 0;
+                    tempDef.width            = 0;
+                    tempDef.height           = 0;
+                    tempDef.U                = 0;
+                    tempDef.V                = 0;
+                    tempDef.offsetX          = 0;
+                    tempDef.offsetY          = 0;
+                    tempDef.textureID        = 0;
                 }
                 
                 
@@ -156,14 +162,14 @@ bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
     return true;
 }
 
-bool FontDefinitionTTF::initDefinition(const char *fontName, int fontSize, const char *letters, int textureSize)
+bool FontDefinitionTTF::initDefinition(cocos2d::Font *font, const char *letters, int textureSize)
 {
     // preare texture/image stuff
     _textImages = new TextImage();
     if (!_textImages)
         return false;
     
-    if (!_textImages->initWithString(letters, textureSize, textureSize, fontName, fontSize, true))
+    if (!_textImages->initWithString(letters, textureSize, textureSize, font, true))
     {
         delete _textImages;
         _textImages = 0;
@@ -182,50 +188,32 @@ void FontDefinitionTTF::addLetterDefinition(FontLetterDefinition &defToAdd)
     }
 }
 
-FontLetterDefinition & FontDefinitionTTF::getLetterDefinition(unsigned short int theLetter)
-{
-    return _fontLettersDefinitionUTF16[theLetter];
-}
-
-Texture2D * FontDefinitionTTF::getTexture(int index)
-{
-    TextFontPagesDef *pPages = _textImages->getPages();
-    
-    if (!pPages)
-        return nullptr;
-    
-    return pPages->getPageAt(index)->getPageTexture();
-}
-
-int FontDefinitionTTF::getNumTextures()
-{
-    TextFontPagesDef *pPages = _textImages->getPages();
-    if (pPages)
-    {
-        return pPages->getNumPages();
-    }
-    
-    return 0;
-}
-
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
-    FontAtlas *retAtlas = new FontAtlas( *_textImages->getFont() );
+    int numTextures          = 0;
+    TextFontPagesDef *pPages = _textImages->getPages();
+    
+    if (pPages)
+        numTextures = pPages->getNumPages();
+    else
+        return nullptr;
+    
+    if (!numTextures)
+        return nullptr;
+    
+    FontAtlas *retAtlas = new FontAtlas(*_textImages->getFont());
     
     if (!retAtlas)
         return 0;
     
-    // add all the textures
-    int numTextures = getNumTextures();
-    if (!numTextures)
-        return 0;
-    
-    for (int c = 0; c<numTextures; ++c)
-        retAtlas->addTexture(*getTexture(c), c);
+    for (int c = 0; c < numTextures; ++c)
+    {
+        TextFontPagesDef *pPages = _textImages->getPages();
+        retAtlas->addTexture(*(pPages->getPageAt(c)->getPageTexture()), c);
+    }
     
     // set the common line height
-    retAtlas->setCommonLineHeight(getCommonLineHeight() * 0.8);
-    
+    retAtlas->setCommonLineHeight(_commonLineHeight * 0.8);
     
     for( auto &item: _fontLettersDefinitionUTF16 )
     {
