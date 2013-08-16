@@ -518,6 +518,9 @@
     <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -1043,6 +1046,9 @@
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\atitc\atitc.h">
       <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
