@@ -147,6 +147,8 @@ protected:
 	CC_SYNTHESIZE(CCBone*, m_pParentBone, ParentBone);
 
 	CC_SYNTHESIZE(float, m_fVersion, Version);
+
+	CC_SYNTHESIZE_READONLY(bool, m_bArmatureTransformDirty, ArmatureTransformDirty);
 protected:
     CCDictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 

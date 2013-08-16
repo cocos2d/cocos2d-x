@@ -85,6 +85,7 @@ CCArmature::CCArmature()
 	, m_pParentBone(NULL)
 	, m_pBoneDic(NULL)
     , m_pTopBoneList(NULL)
+	, m_bArmatureTransformDirty(true)
 {
 }
 
@@ -345,6 +346,8 @@ CCAffineTransform CCArmature::nodeToParentTransform()
 {
     if (m_bTransformDirty)
     {
+		m_bArmatureTransformDirty = true;
+
         // Translate values
         float x = m_obPosition.x;
         float y = m_obPosition.y;
@@ -450,6 +453,8 @@ void CCArmature::update(float dt)
     {
         ((CCBone *)object)->update(dt);
     }
+
+	m_bArmatureTransformDirty = false;
 }
 
 void CCArmature::draw()

@@ -183,7 +183,7 @@ void CCBone::update(float delta)
 		}
 	}
 
-    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty);
+    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
