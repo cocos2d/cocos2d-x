@@ -65,6 +65,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/KeyboardTest/KeyboardTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
 	../Classes/LabelTest/LabelTest.cpp \
+	../Classes/LabelTest/LabelTestNew.cpp \
 	../Classes/LayerTest/LayerTest.cpp \
 	../Classes/MenuTest/MenuTest.cpp \
 	../Classes/MotionStreakTest/MotionStreakTest.cpp \

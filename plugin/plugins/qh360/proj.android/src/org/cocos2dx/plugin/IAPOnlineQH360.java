@@ -27,11 +27,11 @@ import java.util.Hashtable;
 
 import org.json.JSONObject;
 
+import com.qihoo.gamecenter.sdk.common.IDispatcherCallback;
+import com.qihoo.gamecenter.sdk.protocols.pay.ProtocolConfigs;
+import com.qihoo.gamecenter.sdk.protocols.pay.ProtocolKeys;
 import com.qihoopay.insdk.activity.ContainerActivity;
 import com.qihoopay.insdk.matrix.Matrix;
-import com.qihoopay.sdk.protocols.IDispatcherCallback;
-import com.qihoopay.sdk.protocols.ProtocolConfigs;
-import com.qihoopay.sdk.protocols.ProtocolKeys;
 
 import android.app.Activity;
 import android.content.Context;
