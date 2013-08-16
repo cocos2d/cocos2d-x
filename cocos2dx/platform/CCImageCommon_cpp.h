@@ -57,10 +57,14 @@ extern "C"
 #include "CCConfiguration.h"
 #include "support/ccUtils.h"
 #include "support/zip_support/ZipUtils.h"
-#include "CCGL.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
 #endif
+
+#define CC_GL_ATC_RGB_AMD                                          0x8C92
+#define CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD                          0x8C93
+#define CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD                      0x87EE
+
 
 NS_CC_BEGIN
 
@@ -1558,12 +1562,6 @@ bool Image::initWithS3TCData(const void *data, int dataLen)
     return true;
 }
 
-
-//-----------------------------------------------------------------------------------------------
-#define GL_ATC_RGB_AMD                                          0x8C92
-#define GL_ATC_RGBA_EXPLICIT_ALPHA_AMD                          0x8C93
-#define GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD                      0x87EE
-
 bool Image::initWithATITCData(const void *data, int dataLen)
 {
     /* load the .ktx file */
@@ -1575,13 +1573,13 @@ bool Image::initWithATITCData(const void *data, int dataLen)
     int blockSize = 0;
     switch (header->glInternalFormat)
     {
-        case GL_ATC_RGB_AMD:
+        case CC_GL_ATC_RGB_AMD:
             blockSize = 8;
             break;
-        case GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+        case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
             blockSize = 16;
             break;
-        case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+        case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
             blockSize = 16;
             break;
         default:
@@ -1636,13 +1634,13 @@ bool Image::initWithATITCData(const void *data, int dataLen)
             
             switch (header->glInternalFormat)
             {
-                case GL_ATC_RGB_AMD:
+                case CC_GL_ATC_RGB_AMD:
                     _renderFormat = Texture2D::PixelFormat::ATC_RGB;
                     break;
-                case GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
                     _renderFormat = Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA;
                     break;
-                case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
                     _renderFormat = Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA;
                     break;
                 default:
@@ -1663,13 +1661,13 @@ bool Image::initWithATITCData(const void *data, int dataLen)
             std::vector<unsigned char> decodeImageData(stride * height);
             switch (header->glInternalFormat)
             {
-                case GL_ATC_RGB_AMD:
+                case CC_GL_ATC_RGB_AMD:
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_RGB);
                     break;
-                case GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_EXPLICIT_ALPHA);
                     break;
-                case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
                     break;
                 default:
