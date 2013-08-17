@@ -25,7 +25,7 @@ enum
 //------------------------------------------------------------------
 PongScene::PongScene()
 {
-    PongLayer *pongLayer = new PongLayer();//PongLayer::create();
+    auto pongLayer = new PongLayer();//PongLayer::create();
     addChild(pongLayer);
     pongLayer->release();
 }
@@ -45,9 +45,9 @@ PongLayer::PongLayer()
     addChild( _ball );
     _ball->retain();
     
-    Texture2D* paddleTexture = TextureCache::getInstance()->addImage(s_Paddle);
+    auto paddleTexture = TextureCache::getInstance()->addImage(s_Paddle);
     
-    Array *paddlesM = Array::createWithCapacity(4);
+    auto paddlesM = Array::createWithCapacity(4);
     
     Paddle* paddle = Paddle::createWithTexture(paddleTexture);
     paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 15) );

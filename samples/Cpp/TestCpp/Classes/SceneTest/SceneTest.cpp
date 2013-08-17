@@ -18,21 +18,21 @@ enum
 
 SceneTestLayer1::SceneTestLayer1()
 {
-    MenuItemFont* item1 = MenuItemFont::create( "Test pushScene", CC_CALLBACK_1(SceneTestLayer1::onPushScene, this));
-    MenuItemFont* item2 = MenuItemFont::create( "Test pushScene w/transition", CC_CALLBACK_1(SceneTestLayer1::onPushSceneTran, this));
-    MenuItemFont* item3 = MenuItemFont::create( "Quit", CC_CALLBACK_1(SceneTestLayer1::onQuit, this));
+    auto item1 = MenuItemFont::create( "Test pushScene", CC_CALLBACK_1(SceneTestLayer1::onPushScene, this));
+    auto item2 = MenuItemFont::create( "Test pushScene w/transition", CC_CALLBACK_1(SceneTestLayer1::onPushSceneTran, this));
+    auto item3 = MenuItemFont::create( "Quit", CC_CALLBACK_1(SceneTestLayer1::onQuit, this));
     
-    Menu* menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
     
     addChild( menu );
     
-    Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pathGrossini);
+    auto s = Director::getInstance()->getWinSize();
+    auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
-    ActionInterval* rotate = RotateBy::create(2, 360);
-    Action* repeat = RepeatForever::create(rotate);
+    auto rotate = RotateBy::create(2, 360);
+    auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     schedule( schedule_selector(SceneTestLayer1::testDealloc) );
@@ -62,8 +62,8 @@ SceneTestLayer1::~SceneTestLayer1()
 
 void SceneTestLayer1::onPushScene(Object* sender)
 {
-    Scene* scene = new SceneTestScene();
-    Layer* layer = new SceneTestLayer2();
+    auto scene = new SceneTestScene();
+    auto layer = new SceneTestLayer2();
     scene->addChild( layer, 0 );
     Director::getInstance()->pushScene( scene );
     scene->release();
@@ -72,8 +72,8 @@ void SceneTestLayer1::onPushScene(Object* sender)
 
 void SceneTestLayer1::onPushSceneTran(Object* sender)
 {
-    Scene* scene = new SceneTestScene();
-    Layer* layer = new SceneTestLayer2();
+    auto scene = new SceneTestScene();
+    auto layer = new SceneTestLayer2();
     scene->addChild( layer, 0 );
 
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
@@ -103,21 +103,21 @@ SceneTestLayer2::SceneTestLayer2()
 {
     _timeCounter = 0;
 
-    MenuItemFont* item1 = MenuItemFont::create( "replaceScene", CC_CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
-    MenuItemFont* item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
-    MenuItemFont* item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
+    auto item1 = MenuItemFont::create( "replaceScene", CC_CALLBACK_1(SceneTestLayer2::onReplaceScene, this));
+    auto item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
+    auto item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
     
-    Menu* menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, NULL );
     menu->alignItemsVertically();
     
     addChild( menu );
 
-    Size s = Director::getInstance()->getWinSize();
-    Sprite* sprite = Sprite::create(s_pathGrossini);
+    auto s = Director::getInstance()->getWinSize();
+    auto sprite = Sprite::create(s_pathGrossini);
     addChild(sprite);
     sprite->setPosition( Point(s.width-40, s.height/2) );
-    ActionInterval* rotate = RotateBy::create(2, 360);
-    Action* repeat = RepeatForever::create(rotate);
+    auto rotate = RotateBy::create(2, 360);
+    auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     schedule( schedule_selector(SceneTestLayer2::testDealloc) );
@@ -137,8 +137,8 @@ void SceneTestLayer2::onGoBack(Object* sender)
 
 void SceneTestLayer2::onReplaceScene(Object* sender)
 {
-    Scene* scene = new SceneTestScene();
-    Layer* layer = SceneTestLayer3::create();
+    auto scene = new SceneTestScene();
+    auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( scene );
     scene->release();
@@ -147,8 +147,8 @@ void SceneTestLayer2::onReplaceScene(Object* sender)
 
 void SceneTestLayer2::onReplaceSceneTran(Object* sender)
 {
-    Scene* scene = new SceneTestScene();
-    Layer* layer = SceneTestLayer3::create();
+    auto scene = new SceneTestScene();
+    auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
     scene->release();
@@ -169,24 +169,24 @@ bool SceneTestLayer3::init()
 {
     if (LayerColor::initWithColor(Color4B(0,0,255,255)))
     {
-        Size s = Director::getInstance()->getWinSize();
+        auto s = Director::getInstance()->getWinSize();
 
-        MenuItemFont *item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
-        MenuItemFont *item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
-        MenuItemFont *item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
-        MenuItemFont *item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
+        auto item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
+        auto item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
+        auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
-        Menu *menu = Menu::create(item0, item1, item2, item3, NULL);
+        auto menu = Menu::create(item0, item1, item2, item3, NULL);
         this->addChild(menu);
         menu->alignItemsVertically();
 
         this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
 
-        Sprite* sprite = Sprite::create(s_pathGrossini);
+        auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
         sprite->setPosition( Point(s.width/2, 40) );
-        ActionInterval* rotate = RotateBy::create(2, 360);
-        Action* repeat = RepeatForever::create(rotate);
+        auto rotate = RotateBy::create(2, 360);
+        auto repeat = RepeatForever::create(rotate);
         sprite->runAction(repeat);
         return true;
     }
@@ -200,7 +200,7 @@ void SceneTestLayer3::testDealloc(float dt)
 
 void SceneTestLayer3::item0Clicked(Object* sender)
 {
-    Scene *newScene = Scene::create();
+    auto newScene = Scene::create();
     newScene->addChild(SceneTestLayer3::create());
     Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }
@@ -222,7 +222,7 @@ void SceneTestLayer3::item3Clicked(Object* sender)
 
 void SceneTestScene::runThisTest()
 {
-    Layer* layer = new SceneTestLayer1();
+    auto layer = new SceneTestLayer1();
     addChild(layer);
     layer->release();
 

@@ -2,8 +2,8 @@
 
 KeypadTest::KeypadTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    LabelTTF* label = LabelTTF::create("Keypad Test", "Arial", 28);
+    auto s = Director::getInstance()->getWinSize();
+    auto label = LabelTTF::create("Keypad Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
@@ -34,7 +34,7 @@ void KeypadTest::keyMenuClicked()
 
 void KeypadTestScene::runThisTest()
 {
-    Layer* layer = new KeypadTest();
+    auto layer = new KeypadTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

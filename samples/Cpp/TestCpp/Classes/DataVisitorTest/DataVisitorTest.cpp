@@ -15,11 +15,11 @@ void PrettyPrinterDemo::addSprite()
 {
     // create sprites
     
-    Sprite *s1 = Sprite::create("Images/grossini.png");
-    Sprite *s2 = Sprite::create("Images/grossini_dance_01.png");
-    Sprite *s3 = Sprite::create("Images/grossini_dance_02.png");
-    Sprite *s4 = Sprite::create("Images/grossini_dance_03.png");
-    Sprite *s5 = Sprite::create("Images/grossini_dance_04.png");
+    auto s1 = Sprite::create("Images/grossini.png");
+    auto s2 = Sprite::create("Images/grossini_dance_01.png");
+    auto s3 = Sprite::create("Images/grossini_dance_02.png");
+    auto s4 = Sprite::create("Images/grossini_dance_03.png");
+    auto s5 = Sprite::create("Images/grossini_dance_04.png");
     
     s1->setPosition(Point(50, 50));
     s2->setPosition(Point(60, 50));
@@ -37,16 +37,16 @@ void PrettyPrinterDemo::addSprite()
 void PrettyPrinterDemo::onEnter()
 {
     Layer::onEnter();
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    LabelTTF* label = LabelTTF::create(title().c_str(), "Arial", 28);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 28);
     label->setPosition( Point(s.width/2, s.height * 4/5) );
     this->addChild(label, 1);
     
     std::string strSubtitle = subtitle();
     if(strSubtitle.empty() == false)
     {
-        LabelTTF* subLabel = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
+        auto subLabel = LabelTTF::create(strSubtitle.c_str(), "Thonburi", 16);
         subLabel->setPosition( Point(s.width/2, s.height * 3/5) );
         this->addChild(subLabel, 1);
     }
@@ -55,7 +55,7 @@ void PrettyPrinterDemo::onEnter()
     PrettyPrinter vistor;
     
     // print dictionary
-    Dictionary* dict = Dictionary::createWithContentsOfFile("animations/animations.plist");
+    auto dict = Dictionary::createWithContentsOfFile("animations/animations.plist");
     dict->acceptVisitor(vistor);
     log("%s", vistor.getResult().c_str());
     log("-------------------------------");
@@ -78,7 +78,7 @@ void PrettyPrinterDemo::onEnter()
 
 void DataVisitorTestScene::runThisTest()
 {
-    Layer *layer = new PrettyPrinterDemo();
+    auto layer = new PrettyPrinterDemo();
     layer->autorelease();
     addChild(layer);
 

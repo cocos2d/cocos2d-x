@@ -56,7 +56,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
 
@@ -70,7 +70,7 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
 
@@ -79,7 +79,7 @@ static Layer* backAction()
 
 static Layer* restartAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
 
@@ -94,7 +94,7 @@ bool BaseClippingNodeTest::init()
 {
 	if (BaseTest::init()) {
         
-        Sprite *background = Sprite::create(s_back3);
+        auto background = Sprite::create(s_back3);
         background->setAnchorPoint( Point::ZERO );
         background->setPosition( Point::ZERO );
         this->addChild(background, -1);
@@ -164,20 +164,20 @@ std::string BasicTest::subtitle()
 
 void BasicTest::setup()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    Node *stencil = this->stencil();
+    auto stencil = this->stencil();
     stencil->setTag( kTagStencilNode );
     stencil->setPosition( Point(50, 50) );
     
-    ClippingNode *clipper = this->clipper();
+    auto clipper = this->clipper();
     clipper->setTag( kTagClipperNode );
     clipper->setAnchorPoint(Point(0.5, 0.5));
     clipper->setPosition( Point(s.width / 2 - 50, s.height / 2 - 50) );
     clipper->setStencil(stencil);
     this->addChild(clipper);
     
-    Node *content = this->content();
+    auto content = this->content();
     content->setPosition( Point(50, 50) );
     clipper->addChild(content);
 }
@@ -189,13 +189,13 @@ Action* BasicTest::actionRotate()
 
 Action* BasicTest::actionScale()
 {
-    ScaleBy *scale = ScaleBy::create(1.33f, 1.5f);
+    auto scale = ScaleBy::create(1.33f, 1.5f);
     return RepeatForever::create(Sequence::create(scale, scale->reverse(), NULL));
 }
 
 DrawNode* BasicTest::shape()
 {
-    DrawNode *shape = DrawNode::create();
+    auto shape = DrawNode::create();
     static Point triangle[3];
     triangle[0] = Point(-100, -100);
     triangle[1] = Point(100, -100);
@@ -208,7 +208,7 @@ DrawNode* BasicTest::shape()
 
 Sprite* BasicTest::grossini()
 {
-    Sprite *grossini = Sprite::create(s_pathGrossini);
+    auto grossini = Sprite::create(s_pathGrossini);
     grossini->setScale( 1.5 );
     return grossini;
 }
@@ -243,14 +243,14 @@ std::string ShapeTest::subtitle()
 
 Node* ShapeTest::stencil()
 {
-    Node *node = this->shape();
+    auto node = this->shape();
     node->runAction(this->actionRotate());
     return node;
 }
 
 Node* ShapeTest::content()
 {
-    Node *node = this->grossini();
+    auto node = this->grossini();
     node->runAction(this->actionScale());
     return node;
 }
@@ -270,7 +270,7 @@ std::string ShapeInvertedTest::subtitle()
 
 ClippingNode* ShapeInvertedTest::clipper()
 {
-    ClippingNode *clipper = ShapeTest::clipper();
+    auto clipper = ShapeTest::clipper();
     clipper->setInverted(true);
     return clipper;
 }
@@ -289,21 +289,21 @@ std::string SpriteTest::subtitle()
 
 Node* SpriteTest::stencil()
 {
-    Node *node = this->grossini();
+    auto node = this->grossini();
     node->runAction(this->actionRotate());
     return node;
 }
 
 ClippingNode* SpriteTest::clipper()
 {
-    ClippingNode *clipper = BasicTest::clipper();
+    auto clipper = BasicTest::clipper();
     clipper->setAlphaThreshold(0.05f);
     return clipper;
 }
 
 Node* SpriteTest::content()
 {
-    Node *node = this->shape();
+    auto node = this->shape();
     node->runAction(this->actionScale());
     return node;
 }
@@ -322,7 +322,7 @@ std::string SpriteNoAlphaTest::subtitle()
 
 ClippingNode* SpriteNoAlphaTest::clipper()
 {
-    ClippingNode *clipper = SpriteTest::clipper();
+    auto clipper = SpriteTest::clipper();
     clipper->setAlphaThreshold(1);
     return clipper;
 }
@@ -341,7 +341,7 @@ std::string SpriteInvertedTest::subtitle()
 
 ClippingNode* SpriteInvertedTest::clipper()
 {
-    ClippingNode *clipper = SpriteTest::clipper();
+    auto clipper = SpriteTest::clipper();
     clipper->setAlphaThreshold(0.05f);
     clipper->setInverted(true);
     return clipper;
@@ -363,13 +363,13 @@ void NestedTest::setup()
 {
     static int depth = 9;
     
-    Node *parent = this;
+    Node* parent = this;
     
     for (int i = 0; i < depth; i++) {
                 
         int size = 225 - i * (225 / (depth * 2));
 
-        ClippingNode *clipper = ClippingNode::create();
+        auto clipper = ClippingNode::create();
         clipper->setContentSize(Size(size, size));
         clipper->setAnchorPoint(Point(0.5, 0.5));
         clipper->setPosition( Point(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
@@ -377,7 +377,7 @@ void NestedTest::setup()
         clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
         parent->addChild(clipper);
         
-        Node *stencil = Sprite::create(s_pathGrossini);
+        auto stencil = Sprite::create(s_pathGrossini);
         stencil->setScale( 2.5 - (i * (2.5 / depth)) );
         stencil->setAnchorPoint( Point(0.5, 0.5) );
         stencil->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
@@ -413,7 +413,7 @@ std::string HoleDemo::subtitle()
 
 void HoleDemo::setup()
 {
-    Sprite *target = Sprite::create(s_pathBlock);
+    auto target = Sprite::create(s_pathBlock);
     target->setAnchorPoint(Point::ZERO);
     target->setScale(3);
     
@@ -429,7 +429,7 @@ void HoleDemo::setup()
     
     _outerClipper->setStencil( target );
     
-    ClippingNode *holesClipper = ClippingNode::create();
+    auto holesClipper = ClippingNode::create();
     holesClipper->setInverted(true);
     holesClipper->setAlphaThreshold( 0.05f );
     
@@ -457,14 +457,14 @@ void HoleDemo::pokeHoleAtPoint(Point point)
     float scale = CCRANDOM_0_1() * 0.2 + 0.9;
     float rotation = CCRANDOM_0_1() * 360;
     
-    Sprite *hole = Sprite::create("Images/hole_effect.png");
+    auto hole = Sprite::create("Images/hole_effect.png");
     hole->setPosition( point );
     hole->setRotation( rotation );
     hole->setScale( scale );
     
     _holes->addChild(hole);
     
-    Sprite *holeStencil = Sprite::create("Images/hole_stencil.png");
+    auto holeStencil = Sprite::create("Images/hole_stencil.png");
     holeStencil->setPosition( point );
     holeStencil->setRotation( rotation );
     holeStencil->setScale( scale );
@@ -480,7 +480,7 @@ void HoleDemo::ccTouchesBegan(Set* touches, Event* event)
 {
 	Touch *touch = (Touch *)touches->anyObject();
 	Point point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-    Rect rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
+    auto rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
     this->pokeHoleAtPoint(point);
 }
@@ -499,7 +499,7 @@ std::string ScrollViewDemo::subtitle()
 
 void ScrollViewDemo::setup()
 {
-    ClippingNode *clipper = ClippingNode::create();
+    auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
@@ -507,7 +507,7 @@ void ScrollViewDemo::setup()
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
-    DrawNode *stencil = DrawNode::create();
+    auto stencil = DrawNode::create();
     Point rectangle[4];
     rectangle[0] = Point(0, 0);
     rectangle[1] = Point(clipper->getContentSize().width, 0);
@@ -518,7 +518,7 @@ void ScrollViewDemo::setup()
     stencil->drawPolygon(rectangle, 4, white, 1, white);
     clipper->setStencil(stencil);
 
-    Sprite *content = Sprite::create(s_back2);
+    auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
     content->setAnchorPoint(  Point(0.5, 0.5) );
     content->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
@@ -532,9 +532,9 @@ void ScrollViewDemo::setup()
 void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
 {
 	Touch *touch = static_cast<Touch*>(touches->anyObject());
-    Node *clipper = this->getChildByTag(kTagClipperNode);
+    auto clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
-    Rect rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
+    auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
     _scrolling = rect.containsPoint(point);
     _lastPoint = point;
 }
@@ -543,10 +543,10 @@ void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
 {
     if (!_scrolling) return;
 	Touch *touch = static_cast<Touch*>(touches->anyObject());
-    Node *clipper = this->getChildByTag(kTagClipperNode);
-    Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
+    auto clipper = this->getChildByTag(kTagClipperNode);
+    auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = point - _lastPoint;
-    Node *content = clipper->getChildByTag(kTagContentNode);
+    auto content = clipper->getChildByTag(kTagContentNode);
     content->setPosition(content->getPosition() + diff);
     _lastPoint = point;
 }
@@ -607,19 +607,19 @@ void RawStencilBufferTest::setup()
 
 void RawStencilBufferTest::draw()
 {    
-    Point winPoint = Point(Director::getInstance()->getWinSize());
+    auto winPoint = Point(Director::getInstance()->getWinSize());
     
-    Point planeSize = winPoint * (1.0 / _planeCount);
+    auto planeSize = winPoint * (1.0 / _planeCount);
     
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
         
     for (int i = 0; i < _planeCount; i++) {
         
-        Point stencilPoint = planeSize * (_planeCount - i);
+        auto stencilPoint = planeSize * (_planeCount - i);
         stencilPoint.x = winPoint.x;
         
-        Point spritePoint = planeSize * i;
+        auto spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
         _sprite->setPosition( spritePoint );
@@ -723,7 +723,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program );
@@ -756,7 +756,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram( program );
@@ -783,7 +783,7 @@ std::string RawStencilBufferTest6::subtitle()
 void RawStencilBufferTest6::setup()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    Point winPoint = Point(Director::getInstance()->getWinSize());
+    auto winPoint = Point(Director::getInstance()->getWinSize());
     //by default, glReadPixels will pack data with 4 bytes allignment
     unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
@@ -791,7 +791,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    LabelTTF *clearToZeroLabel = LabelTTF::create(String::createWithFormat("00=%02x", bits[0])->getCString(), "Arial", 20);
+    auto clearToZeroLabel = LabelTTF::create(String::createWithFormat("00=%02x", bits[0])->getCString(), "Arial", 20);
     clearToZeroLabel->setPosition( Point((winPoint.x / 3) * 1, winPoint.y - 10) );
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -799,7 +799,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    LabelTTF *clearToMaskLabel = LabelTTF::create(String::createWithFormat("0a=%02x", bits[0])->getCString(), "Arial", 20);
+    auto clearToMaskLabel = LabelTTF::create(String::createWithFormat("0a=%02x", bits[0])->getCString(), "Arial", 20);
     clearToMaskLabel->setPosition( Point((winPoint.x / 3) * 2, winPoint.y - 10) );
     this->addChild(clearToMaskLabel);
 #endif
@@ -822,7 +822,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-    GLProgram *program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+    auto program = ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     _sprite->setShaderProgram(program);
@@ -845,7 +845,7 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
 
 void ClippingNodeTestScene::runThisTest()
 {
-    Layer* layer = nextAction();
+    auto layer = nextAction();
     addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

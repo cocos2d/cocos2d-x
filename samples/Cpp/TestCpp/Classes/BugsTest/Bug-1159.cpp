@@ -11,8 +11,8 @@
 
 Scene* Bug1159Layer::scene()
 {
-    Scene *scene = Scene::create();
-    Bug1159Layer* layer = Bug1159Layer::create();
+    auto scene = Scene::create();
+    auto layer = Bug1159Layer::create();
     scene->addChild(layer);
 
     return scene;
@@ -23,12 +23,12 @@ bool Bug1159Layer::init()
     if (BugsTestBaseLayer::init())
     {
         Director::getInstance()->setDepthTest(true);
-        Size s = Director::getInstance()->getWinSize();
+        auto s = Director::getInstance()->getWinSize();
 
-        LayerColor *background = LayerColor::create(Color4B(255, 0, 255, 255));
+        auto background = LayerColor::create(Color4B(255, 0, 255, 255));
         addChild(background);
 
-        LayerColor *sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
+        auto sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(Point(0.5f, 0.5f));
         sprite_a->ignoreAnchorPointForPosition(false);
         sprite_a->setPosition(Point(0.0f, s.height/2));
@@ -39,14 +39,14 @@ bool Bug1159Layer::init()
                                                         MoveTo::create(1.0f, Point(0.0f, 384.0f)),
                                                         NULL)));
 
-        LayerColor *sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
+        auto sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(Point(0.5f, 0.5f));
         sprite_b->ignoreAnchorPointForPosition(false);
         sprite_b->setPosition(Point(s.width/2, s.height/2));
         addChild(sprite_b);
 
-        MenuItemLabel *label = MenuItemLabel::create(LabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
-        Menu *menu = Menu::create(label, NULL);
+        auto label = MenuItemLabel::create(LabelTTF::create("Flip Me", "Helvetica", 24), CC_CALLBACK_1(Bug1159Layer::callBack, this) );
+        auto menu = Menu::create(label, NULL);
         menu->setPosition(Point(s.width - 200.0f, 50.0f));
         addChild(menu);
 

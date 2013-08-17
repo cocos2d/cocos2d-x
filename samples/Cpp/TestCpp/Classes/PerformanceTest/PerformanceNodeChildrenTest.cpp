@@ -70,10 +70,10 @@ void NodeChildrenMenuLayer::showCurrentTest()
 void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     //srand(time());
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // Title
-    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
@@ -82,7 +82,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        LabelTTF *l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
+        auto l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(Point(s.width/2, s.height-80));
     }
@@ -92,7 +92,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     MenuItemFont::setFontSize(65);
-    MenuItemFont *decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
 		quantityOfNodes -= kNodesIncrease;
 		if( quantityOfNodes < 0 )
 			quantityOfNodes = 0;
@@ -101,7 +101,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
 	});
     decrease->setColor(Color3B(0,200,20));
-    MenuItemFont *increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
 			quantityOfNodes = kMaxNodes;
@@ -111,17 +111,17 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    Menu *menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    NodeChildrenMenuLayer* menuLayer = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
+    auto menuLayer = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
     addChild(menuLayer);
     menuLayer->release();
 
@@ -143,7 +143,7 @@ void NodeChildrenMainScene::updateQuantityLabel()
 {
     if( quantityOfNodes != lastRenderedCount )
     {
-        LabelTTF *infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
         char str[20] = {0};
         sprintf(str, "%u nodes", quantityOfNodes);
         infoLabel->setString(str);
@@ -164,14 +164,14 @@ IterateSpriteSheet::~IterateSpriteSheet()
 
 void IterateSpriteSheet::updateQuantityOfNodes()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // increase nodes
     if( currentQuantityOfNodes < quantityOfNodes )
     {
         for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
         }
@@ -213,14 +213,14 @@ const char*  IterateSpriteSheet::profilerName()
 void IterateSpriteSheetFastEnum::update(float dt)
 {
     // iterate using fast enumeration protocol
-    Array* pChildren = batchNode->getChildren();
+    auto pChildren = batchNode->getChildren();
     Object* pObject = NULL;
 
     CC_PROFILER_START_INSTANCE(this, this->profilerName());
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* sprite = static_cast<Sprite*>(pObject);
+        auto sprite = static_cast<Sprite*>(pObject);
         sprite->setVisible(false);
     }
 
@@ -250,14 +250,14 @@ const char*  IterateSpriteSheetFastEnum::profilerName()
 void IterateSpriteSheetCArray::update(float dt)
 {
     // iterate using fast enumeration protocol
-    Array* pChildren = batchNode->getChildren();
+    auto pChildren = batchNode->getChildren();
     Object* pObject = NULL;
 
     CC_PROFILER_START(this->profilerName());
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
-        Sprite* sprite = static_cast<Sprite*>(pObject);
+        auto sprite = static_cast<Sprite*>(pObject);
         sprite->setVisible(false);
     }
 
@@ -302,14 +302,14 @@ void AddRemoveSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
 
 void AddRemoveSpriteSheet::updateQuantityOfNodes()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // increase nodes
     if( currentQuantityOfNodes < quantityOfNodes )
     {
         for (int i=0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
         {
-            Sprite *sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
             batchNode->addChild(sprite);
             sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
             sprite->setVisible(false);
@@ -348,13 +348,13 @@ void AddSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Array* sprites = Array::createWithCapacity(totalToAdd);
+        auto sprites = Array::createWithCapacity(totalToAdd);
         int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
             sprites->addObject(sprite);
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
@@ -410,12 +410,12 @@ void RemoveSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Array* sprites = Array::createWithCapacity(totalToAdd);
+        auto sprites = Array::createWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
             sprites->addObject(sprite);
         }
 
@@ -466,12 +466,12 @@ void ReorderSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Array* sprites = Array::createWithCapacity(totalToAdd);
+        auto sprites = Array::createWithCapacity(totalToAdd);
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            Sprite* sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
             sprites->addObject(sprite);
         }
 
@@ -488,7 +488,7 @@ void ReorderSpriteSheet::update(float dt)
 
         for( int i=0;i <  totalToAdd;i++)
         {
-            Node* node = (Node*) (batchNode->getChildren()->objectAtIndex(i));
+            auto node = (Node*) (batchNode->getChildren()->objectAtIndex(i));
             batchNode->reorderChild(node, CCRANDOM_MINUS1_1() * 50);
         }
         
