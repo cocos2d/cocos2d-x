@@ -67,7 +67,7 @@ typedef enum {
 	kCCTransitionOrientationUpOver = 0,
 	/// A vertical orientation where the Bottom is nearer
 	kCCTransitionOrientationDownOver = 1,
-    
+
 	// Deprecated
     //	kOrientationLeftOver = kCCTransitionOrientationLeftOver,
     //	kOrientationRightOver = kCCTransitionOrientationRightOver,
@@ -79,15 +79,12 @@ typedef enum {
 */
 class CC_DLL CCTransitionScene : public CCScene
 {
-
-protected:
+public:
     CCScene    * m_pInScene;
     CCScene    * m_pOutScene;
     float    m_fDuration;
     bool    m_bIsInSceneOnTop;
     bool    m_bIsSendCleanupToScene;
-
-public:
 
     CCTransitionScene();
     virtual ~CCTransitionScene();
@@ -112,7 +109,6 @@ protected:
     virtual void sceneOrder();
 private:
     void setNewScene(float dt);
-
 };
 
 /** @brief A CCTransition that supports orientation like.
@@ -135,7 +131,7 @@ public:
 };
 
 /** @brief CCTransitionRotoZoom:
-Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
+Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming
 */
 class CC_DLL CCTransitionRotoZoom : public CCTransitionScene
 {
@@ -148,7 +144,7 @@ public:
 };
 
 /** @brief CCTransitionJumpZoom:
-Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
+Zoom out and jump the outgoing scene, and then jump and zoom in the incoming
 */
 class CC_DLL CCTransitionJumpZoom : public CCTransitionScene
 {
@@ -196,7 +192,7 @@ public:
 /** @brief CCTransitionMoveInT:
 Move in from to the top the incoming scene.
 */
-class CC_DLL CCTransitionMoveInT : public CCTransitionMoveInL 
+class CC_DLL CCTransitionMoveInT : public CCTransitionMoveInL
 {
 public:
     CCTransitionMoveInT();
@@ -234,7 +230,7 @@ public:
     virtual CCActionInterval* action(void);
 
     virtual void onEnter();
-    
+
     virtual CCActionInterval* easeActionWithAction(CCActionInterval * action);
 
     static CCTransitionSlideInL* create(float t, CCScene* scene);
@@ -245,7 +241,7 @@ protected:
 /** @brief CCTransitionSlideInR:
 Slide in the incoming scene from the right border.
 */
-class CC_DLL CCTransitionSlideInR : public CCTransitionSlideInL 
+class CC_DLL CCTransitionSlideInR : public CCTransitionSlideInL
 {
 public:
     CCTransitionSlideInR();
@@ -276,7 +272,7 @@ public:
     virtual CCActionInterval* action(void);
 
     static CCTransitionSlideInB* create(float t, CCScene* scene);
-protected: 
+protected:
     virtual void sceneOrder();
 };
 
@@ -357,7 +353,7 @@ public:
     virtual ~CCTransitionFlipAngular();
 
     virtual void onEnter();
-    
+
     static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
     static CCTransitionFlipAngular* create(float t, CCScene* s);
 };
@@ -422,7 +418,7 @@ public:
 
     CCTransitionFade();
     virtual ~CCTransitionFade();
-    
+
     /** creates the transition with a duration and with an RGB color
     * Example: FadeTransition::create(2, scene, ccc3(255,0,0); // red color
     */
@@ -432,7 +428,7 @@ public:
     /** initializes the transition with a duration and with an RGB color */
     virtual bool initWithDuration(float t, CCScene*scene ,const ccColor3B& color);
 
-    virtual bool initWithDuration(float t,CCScene* scene); 
+    virtual bool initWithDuration(float t,CCScene* scene);
     virtual void onEnter();
     virtual void onExit();
 };
@@ -578,4 +574,3 @@ public:
 NS_CC_END
 
 #endif // __CCTRANSITION_H__
-
