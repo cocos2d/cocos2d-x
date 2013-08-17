@@ -243,7 +243,7 @@ void Sprite1::addNewSpriteWithCoords(Point p)
 
 void Sprite1::ccTouchesEnded(Set* touches, Event* event)
 {
-    for (auto &item: *touches)
+    for (auto item: *touches)
     {
         Touch *touch = static_cast<Touch*>(item);
         Point location = touch->getLocation();

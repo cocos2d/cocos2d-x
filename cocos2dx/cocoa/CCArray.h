@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CCARRAY_H__
 #define __CCARRAY_H__
 
+// #include "support/data_support/ccCArray.h"
 #include "support/data_support/ccCArray.h"
 
 /**
@@ -112,7 +113,36 @@ NS_CC_BEGIN
 class CC_DLL Array : public Object, public Clonable
 {
 public:
-    ~Array();
+    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
+    {
+    public:
+        ArrayIterator(Object *object, Array *array) : _ptr(object), _parent(array) {}
+        ArrayIterator(const ArrayIterator& arrayIterator) : _ptr(arrayIterator._ptr), _parent(arrayIterator._parent) {}
+        
+        ArrayIterator& operator++()
+        {
+            int index = ccArrayGetIndexOfObject(_parent->data, _ptr);
+            _ptr = _parent->data->arr[index+1];
+            return *this;
+        }
+        ArrayIterator operator++(int)
+        {
+            ArrayIterator tmp(*this);
+            (*this)++;
+            return tmp;
+        }
+        bool operator==(const ArrayIterator& rhs) { return _ptr == rhs._ptr; }
+        bool operator!=(const ArrayIterator& rhs) { return _ptr != rhs._ptr; }
+        Object* operator*() { return _ptr; }
+        Object* operator->() { return _ptr; }
+        
+    private:
+        Object *_ptr;
+        Array *_parent;
+    };
+    
+    typedef ArrayIterator iterator;
+    typedef ArrayIterator const_iterator;
 
     /** Create an array */
     static Array* create();
@@ -136,6 +166,8 @@ public:
      invoker should call release().
      */
     static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    
+    ~Array();
 
     /** Initializes an array */
     bool init();
@@ -211,8 +243,14 @@ public:
     virtual void acceptVisitor(DataVisitor &visitor);
     virtual Array* clone() const;
     
+    // functions for range-based loop
+    iterator begin();
+    iterator end();
+    
 public:
+    //ccArray* data;
     ccArray* data;
+    
     Array();
     Array(unsigned int capacity);
 };
