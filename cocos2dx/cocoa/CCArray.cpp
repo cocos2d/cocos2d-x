@@ -406,4 +406,28 @@ void Array::acceptVisitor(DataVisitor &visitor)
     visitor.visit(this);
 }
 
+Array::iterator Array::begin()
+{
+    if (data->num > 0)
+    {
+        return Array::ArrayIterator(data->arr[0], this);
+    }
+    else
+    {
+        return Array::ArrayIterator(nullptr, nullptr);;
+    }
+}
+
+Array::iterator Array::end()
+{
+    if (data->num > 0)
+    {
+        return Array::ArrayIterator(data->arr[data->num], this);
+    }
+    else
+    {
+        return Array::ArrayIterator(nullptr, nullptr);
+    }
+}
+
 NS_CC_END
