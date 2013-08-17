@@ -696,11 +696,11 @@ void SchedulerUpdate::removeUpdates(float dt)
 {
     Array* children = getChildren();
     Node* node;
-    Object* pObject;
-    CCARRAY_FOREACH(children, pObject)
-    {
-        node = static_cast<Node*>(pObject);
 
+    for (auto c : *children)
+    {
+        node = static_cast<Node*>(c);
+        
         if (! node)
         {
             break;
