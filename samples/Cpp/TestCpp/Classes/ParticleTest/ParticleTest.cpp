@@ -47,7 +47,7 @@ void DemoFire::onEnter()
     _background->addChild(_emitter, 10);
     
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );//.pvr");
-    Point p = _emitter->getPosition();
+    auto p = _emitter->getPosition();
     _emitter->setPosition( Point(p.x, 100) );
     
     setEmitterPosition();
@@ -380,7 +380,7 @@ void DemoSmoke::onEnter()
     _background->addChild(_emitter, 10);
     _emitter->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
-    Point p = _emitter->getPosition();
+    auto p = _emitter->getPosition();
     _emitter->setPosition( Point( p.x, 100) );
     
     setEmitterPosition();
@@ -404,7 +404,7 @@ void DemoSnow::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    Point p = _emitter->getPosition();
+    auto p = _emitter->getPosition();
     _emitter->setPosition( Point( p.x, p.y-110) );
     _emitter->setLife(3);
     _emitter->setLifeVar(1);
@@ -452,7 +452,7 @@ void DemoRain::onEnter()
     _emitter->retain();
     _background->addChild(_emitter, 10);
     
-    Point p = _emitter->getPosition();
+    auto p = _emitter->getPosition();
     _emitter->setPosition( Point( p.x, p.y-100) );
     _emitter->setLife(4);
     
@@ -485,7 +485,7 @@ void DemoModernArt::onEnter()
     _background->addChild(_emitter, 10);
     ////_emitter->release();
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     // duration
     _emitter->setDuration(-1);
@@ -594,11 +594,11 @@ void ParallaxParticle::onEnter()
     _background->getParent()->removeChild(_background, true);
     _background = NULL;
 
-    ParallaxNode* p = ParallaxNode::create(); 
+    auto p = ParallaxNode::create(); 
     addChild(p, 5);
 
-    Sprite *p1 = Sprite::create(s_back3);
-    Sprite *p2 = Sprite::create(s_back3);
+    auto p1 = Sprite::create(s_back3);
+    auto p2 = Sprite::create(s_back3);
     
     p->addChild( p1, 1, Point(0.5f,1), Point(0,250) );
     p->addChild(p2, 2, Point(1.5f,1), Point(0,50) );
@@ -610,13 +610,13 @@ void ParallaxParticle::onEnter()
     p1->addChild(_emitter, 10);
     _emitter->setPosition( Point(250,200) );
     
-    ParticleSun* par = ParticleSun::create();
+    auto par = ParticleSun::create();
     p2->addChild(par, 10);
     par->setTexture( TextureCache::getInstance()->addImage(s_fire) );
     
-    ActionInterval* move = MoveBy::create(4, Point(300,0));
-    ActionInterval* move_back = move->reverse();
-    Sequence* seq = Sequence::create( move, move_back, NULL);
+    auto move = MoveBy::create(4, Point(300,0));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create( move, move_back, NULL);
     p->runAction(RepeatForever::create(seq));    
 }
 
@@ -665,7 +665,7 @@ void RadiusMode1::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -749,7 +749,7 @@ void RadiusMode2::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -833,7 +833,7 @@ void Issue704::onEnter()
     _emitter->setAngleVar(0);
 
     // emitter position
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     _emitter->setPosition(Point(size.width/2, size.height/2));
     _emitter->setPosVar(Point::ZERO);
 
@@ -871,7 +871,7 @@ void Issue704::onEnter()
     // additive
     _emitter->setBlendAdditive(false);
 
-    RotateBy* rot = RotateBy::create(16, 360);
+    auto rot = RotateBy::create(16, 360);
     _emitter->runAction(RepeatForever::create(rot));
 }
 
@@ -898,7 +898,7 @@ void Issue870::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    ParticleSystemQuad *system = new ParticleSystemQuad();
+    auto system = new ParticleSystemQuad();
     system->initWithFile("Particles/SpinningPeas.plist");
     system->setTextureWithRect(TextureCache::getInstance()->addImage("Images/particles.png"), Rect(0,0,32,32));
     addChild(system, 10);
@@ -911,8 +911,8 @@ void Issue870::onEnter()
 void Issue870::updateQuads(float dt)
 {
     _index = (_index + 1) % 4;
-    Rect rect = Rect(_index * 32, 0, 32, 32);
-    ParticleSystemQuad* system = (ParticleSystemQuad*)_emitter;
+    auto rect = Rect(_index * 32, 0, 32, 32);
+    auto system = (ParticleSystemQuad*)_emitter;
     system->setTextureWithRect(_emitter->getTexture(), rect);
 }
 
@@ -1027,7 +1027,7 @@ Layer* nextParticleAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createParticleLayer(sceneIdx);
+    auto layer = createParticleLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -1040,7 +1040,7 @@ Layer* backParticleAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* layer = createParticleLayer(sceneIdx);
+    auto layer = createParticleLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -1048,7 +1048,7 @@ Layer* backParticleAction()
 
 Layer* restartParticleAction()
 {
-    Layer* layer = createParticleLayer(sceneIdx);
+    auto layer = createParticleLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -1070,15 +1070,15 @@ void ParticleDemo::onEnter(void)
     
     setTouchEnabled( true );
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    MenuItemToggle* item4 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(ParticleDemo::toggleCallback, this),
+    auto item4 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(ParticleDemo::toggleCallback, this),
                                                                MenuItemFont::create( "Free Movement" ),
                                                                MenuItemFont::create( "Relative Movement" ),
                                                                MenuItemFont::create( "Grouped Movement" ),
                                                                NULL );
     
-    Menu *menu = Menu::create(item4, NULL);
+    auto menu = Menu::create(item4, NULL);
     
     menu->setPosition( Point::ZERO );
     item4->setPosition( Point( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
@@ -1086,7 +1086,7 @@ void ParticleDemo::onEnter(void)
     
     addChild( menu, 100 );
     
-    LabelAtlas* labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
+    auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 100, kTagParticleCount);
     labelAtlas->setPosition(Point(s.width-66,50));
     
@@ -1095,9 +1095,9 @@ void ParticleDemo::onEnter(void)
     addChild(_background, 5);
     _background->setPosition( Point(s.width/2, s.height-180) );
     
-    ActionInterval* move = MoveBy::create(4, Point(300,0) );
-    ActionInterval* move_back = move->reverse();
-    Sequence* seq = Sequence::create( move, move_back, NULL);
+    auto move = MoveBy::create(4, Point(300,0) );
+    auto move_back = move->reverse();
+    auto seq = Sequence::create( move, move_back, NULL);
     _background->runAction( RepeatForever::create(seq) );
     
     
@@ -1126,11 +1126,11 @@ void ParticleDemo::ccTouchesMoved(Set  *touches, Event  *event)
 
 void ParticleDemo::ccTouchesEnded(Set  *touches, Event  *event)
 {
-    Touch *touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches->anyObject());
     
-    Point location = touch->getLocation();
+    auto location = touch->getLocation();
 
-    Point pos = Point::ZERO;
+    auto pos = Point::ZERO;
     if (_background)
     {
         pos = _background->convertToWorldSpace(Point::ZERO);
@@ -1146,7 +1146,7 @@ void ParticleDemo::update(float dt)
 {
     if (_emitter)
     {
-        LabelAtlas* atlas = (LabelAtlas*)getChildByTag(kTagParticleCount);
+        auto atlas = (LabelAtlas*)getChildByTag(kTagParticleCount);
         char str[5] = {0};
         sprintf(str, "%04d", _emitter->getParticleCount());
         atlas->setString(str);
@@ -1176,7 +1176,7 @@ void ParticleDemo::restartCallback(Object* sender)
 
 void ParticleDemo::nextCallback(Object* sender)
 {
-    Scene* s = new ParticleTestScene();
+    auto s = new ParticleTestScene();
     s->addChild( nextParticleAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1184,7 +1184,7 @@ void ParticleDemo::nextCallback(Object* sender)
 
 void ParticleDemo::backCallback(Object* sender)
 {
-    Scene* s = new ParticleTestScene();
+    auto s = new ParticleTestScene();
     s->addChild( backParticleAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1192,7 +1192,7 @@ void ParticleDemo::backCallback(Object* sender)
 
 void ParticleDemo::setEmitterPosition()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     if (_emitter != NULL)
     {
         _emitter->setPosition( Point(s.width / 2, s.height / 2) );
@@ -1211,7 +1211,7 @@ void ParticleBatchHybrid::onEnter()
 
     _emitter = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     _emitter->retain();
-    ParticleBatchNode *batch = ParticleBatchNode::createWithTexture(_emitter->getTexture());
+    auto batch = ParticleBatchNode::createWithTexture(_emitter->getTexture());
 
     batch->addChild(_emitter);
 
@@ -1219,7 +1219,7 @@ void ParticleBatchHybrid::onEnter()
 
      schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
  
-     Node *node = Node::create();
+     auto node = Node::create();
      addChild(node);
  
      _parent1 = batch;
@@ -1231,7 +1231,7 @@ void ParticleBatchHybrid::switchRender(float dt)
      bool usingBatch = ( _emitter->getBatchNode() != NULL );
      _emitter->removeFromParentAndCleanup(false);
  
-     Node *newParent = (usingBatch ? _parent2  : _parent1 );
+     auto newParent = (usingBatch ? _parent2  : _parent1 );
      newParent->addChild(_emitter);
  
      log("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
@@ -1257,20 +1257,20 @@ void ParticleBatchMultipleEmitters::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    ParticleSystemQuad *emitter1 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
+    auto emitter1 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter1->setStartColor(Color4F(1,0,0,1));
-    ParticleSystemQuad *emitter2 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
+    auto emitter2 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter2->setStartColor(Color4F(0,1,0,1));
-    ParticleSystemQuad *emitter3 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
+    auto emitter3 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter3->setStartColor(Color4F(0,0,1,1));
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     emitter1->setPosition(Point( s.width/1.25f, s.height/1.25f));
     emitter2->setPosition(Point( s.width/2, s.height/2));
     emitter3->setPosition(Point( s.width/4, s.height/4));
 
-    ParticleBatchNode *batch = ParticleBatchNode::createWithTexture(emitter1->getTexture());
+    auto batch = ParticleBatchNode::createWithTexture(emitter1->getTexture());
 
     batch->addChild(emitter1, 0);
     batch->addChild(emitter2, 0);
@@ -1300,26 +1300,26 @@ void ParticleReorder::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    ParticleSystem* ignore = ParticleSystemQuad::create("Particles/SmallSun.plist");
-    Node *parent1 = Node::create();
-    Node *parent2 = ParticleBatchNode::createWithTexture(ignore->getTexture());
+    auto ignore = ParticleSystemQuad::create("Particles/SmallSun.plist");
+    auto parent1 = Node::create();
+    auto parent2 = ParticleBatchNode::createWithTexture(ignore->getTexture());
     ignore->unscheduleUpdate();
 
     for( unsigned int i=0; i<2;i++) 
     {
-        Node *parent = ( i==0 ? parent1 : parent2 );
+        auto parent = ( i==0 ? parent1 : parent2 );
 
-        ParticleSystemQuad *emitter1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
+        auto emitter1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter1->setStartColor(Color4F(1,0,0,1));
         emitter1->setBlendAdditive(false);
-        ParticleSystemQuad *emitter2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
+        auto emitter2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter2->setStartColor(Color4F(0,1,0,1));
         emitter2->setBlendAdditive(false);
-        ParticleSystemQuad *emitter3 = ParticleSystemQuad::create("Particles/SmallSun.plist");
+        auto emitter3 = ParticleSystemQuad::create("Particles/SmallSun.plist");
         emitter3->setStartColor(Color4F(0,0,1,1));
         emitter3->setBlendAdditive(false);
 
-        Size s = Director::getInstance()->getWinSize();
+        auto s = Director::getInstance()->getWinSize();
 
         int neg = (i==0 ? 1 : -1 );
 
@@ -1350,11 +1350,11 @@ std::string ParticleReorder::subtitle()
 void ParticleReorder::reorderParticles(float dt)
 {
     for( int i=0; i<2;i++) {
-        Node *parent = getChildByTag(1000+i);
+        auto parent = getChildByTag(1000+i);
 
-        Node *child1 = parent->getChildByTag(1);
-        Node *child2 = parent->getChildByTag(2);
-        Node *child3 = parent->getChildByTag(3);
+        auto child1 = parent->getChildByTag(1);
+        auto child2 = parent->getChildByTag(2);
+        auto child3 = parent->getChildByTag(3);
 
         if( _order % 3 == 0 ) {
             parent->reorderChild(child1, 1);
@@ -1419,7 +1419,7 @@ bool RainbowEffect::initWithTotalParticles(unsigned int numberOfParticles)
         setAngleVar(0);
 
         // emitter position
-        Size winSize = Director::getInstance()->getWinSize();
+        auto winSize = Director::getInstance()->getWinSize();
         setPosition(Point(winSize.width/2, winSize.height/2));
         setPosVar(Point::ZERO);
 
@@ -1475,7 +1475,7 @@ void Issue1201::onEnter()
 
     addChild(particle);
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     particle->setPosition(Point(s.width/2, s.height/2));
 
@@ -1503,7 +1503,7 @@ void MultipleParticleSystems::onEnter()
     TextureCache::getInstance()->addImage("Images/particles.png"); 
 
     for (int i = 0; i<5; i++) {
-        ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
+        auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPosition(Point(i*50 ,i*50));
 
@@ -1527,14 +1527,14 @@ std::string MultipleParticleSystems::subtitle()
 
 void MultipleParticleSystems::update(float dt)
 {
-    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
     unsigned int count = 0; 
     
     Object* pObj = NULL;
     CCARRAY_FOREACH(getChildren(), pObj)
     {
-        ParticleSystem* item = dynamic_cast<ParticleSystem*>(pObj);
+        auto item = dynamic_cast<ParticleSystem*>(pObj);
         if (item != NULL)
         {
             count += item->getParticleCount();    
@@ -1555,14 +1555,14 @@ void MultipleParticleSystemsBatched::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    ParticleBatchNode *batchNode = new ParticleBatchNode();
+    auto batchNode = new ParticleBatchNode();
     batchNode->initWithTexture(NULL, 3000);
 
     addChild(batchNode, 1, 2);
 
     for (int i = 0; i<5; i++) {
 
-        ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
+        auto particleSystem = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
         particleSystem->setPosition(Point(i*50 ,i*50));
@@ -1578,15 +1578,15 @@ void MultipleParticleSystemsBatched::onEnter()
 
 void MultipleParticleSystemsBatched::update(float dt)
 {
-    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
     unsigned count = 0; 
     
-    Node* batchNode = getChildByTag(2);
+    auto batchNode = getChildByTag(2);
     Object* pObj = NULL;
     CCARRAY_FOREACH(batchNode->getChildren(), pObj)
     {
-        ParticleSystem* item = dynamic_cast<ParticleSystem*>(pObj);
+        auto item = dynamic_cast<ParticleSystem*>(pObj);
         if (item != NULL)
         {
             count += item->getParticleCount();    
@@ -1624,7 +1624,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
     for (int i = 0; i<6; i++) {
 
-        ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
+        auto particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         _batchNode->setTexture(particleSystem->getTexture());
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
@@ -1651,7 +1651,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
         unsigned int uRand = rand() % (nChildrenCount - 1);
         _batchNode->removeChild((Node*)_batchNode->getChildren()->objectAtIndex(uRand), true);
 
-        ParticleSystemQuad *particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
+        auto particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
 
         particleSystem->setPositionType(ParticleSystem::PositionType::GROUPED);
@@ -1667,15 +1667,15 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
 
 void AddAndDeleteParticleSystems::update(float dt)
 {
-    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
     unsigned int count = 0; 
     
-    Node* batchNode = getChildByTag(2);
+    auto batchNode = getChildByTag(2);
     Object* pObj = NULL;
     CCARRAY_FOREACH(batchNode->getChildren(), pObj)
     {
-        ParticleSystem* item = dynamic_cast<ParticleSystem*>(pObj);
+        auto item = dynamic_cast<ParticleSystem*>(pObj);
         if (item != NULL)
         {
             count += item->getParticleCount();    
@@ -1713,7 +1713,7 @@ void ReorderParticleSystems::onEnter()
 
     for (int i = 0; i<3; i++) {
 
-        ParticleSystemQuad* particleSystem = new ParticleSystemQuad();
+        auto particleSystem = new ParticleSystemQuad();
         particleSystem->initWithTotalParticles(200);
         particleSystem->setTexture(_batchNode->getTexture());
 
@@ -1796,22 +1796,22 @@ void ReorderParticleSystems::onEnter()
 
 void ReorderParticleSystems::reorderSystem(float time)
 {
-    ParticleSystem* system = (ParticleSystem*)_batchNode->getChildren()->objectAtIndex(1);
+    auto system = (ParticleSystem*)_batchNode->getChildren()->objectAtIndex(1);
     _batchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
 
 void ReorderParticleSystems::update(float dt)
 {
-    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
+    auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
     unsigned int count = 0; 
     
-    Node* batchNode = getChildByTag(2);
+    auto batchNode = getChildByTag(2);
     Object* pObj = NULL;
     CCARRAY_FOREACH(batchNode->getChildren(), pObj)
     {
-        ParticleSystem* item = dynamic_cast<ParticleSystem*>(pObj);
+        auto item = dynamic_cast<ParticleSystem*>(pObj);
         if (item != NULL)
         {
             count += item->getParticleCount();    

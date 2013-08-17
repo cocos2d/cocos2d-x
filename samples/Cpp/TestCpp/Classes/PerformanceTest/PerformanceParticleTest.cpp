@@ -31,7 +31,7 @@ ParticleMenuLayer::ParticleMenuLayer(bool bControlMenuVisible, int nMaxCases, in
 
 void ParticleMenuLayer::showCurrentTest()
 {
-    ParticleMainScene* scene = (ParticleMainScene*)getParent();
+    auto scene = (ParticleMainScene*)getParent();
     int subTest = scene->getSubTestNum();
     int parNum  = scene->getParticlesNum();
 
@@ -73,13 +73,13 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     //srandom(0);
 
     subtestNumber = asubtest;
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
     quantityParticles = particles;
 
     MenuItemFont::setFontSize(65);
-    MenuItemFont *decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
 		quantityParticles -= kNodesIncrease;
 		if( quantityParticles < 0 )
 			quantityParticles = 0;
@@ -88,7 +88,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 		createParticleSystem();
 	});
     decrease->setColor(Color3B(0,200,20));
-    MenuItemFont *increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
 		quantityParticles += kNodesIncrease;
 		if( quantityParticles > kMaxParticles )
 			quantityParticles = kMaxParticles;
@@ -98,34 +98,34 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    Menu *menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, NULL);
     menu->alignItemsHorizontally();
     menu->setPosition(Point(s.width/2, s.height/2+15));
     addChild(menu, 1);
 
-    LabelTTF *infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
+    auto infoLabel = LabelTTF::create("0 nodes", "Marker Felt", 30);
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Point(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
-    LabelAtlas *labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
+    auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
     labelAtlas->setPosition(Point(s.width-66,50));
 
     // Next Prev Test
-    ParticleMenuLayer* menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    auto menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
 
     // Sub Tests
     MenuItemFont::setFontSize(40);
-    Menu* pSubMenu = Menu::create();
+    auto pSubMenu = Menu::create();
     for (int i = 1; i <= 6; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
-        MenuItemFont* itemFont = MenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
+        auto itemFont = MenuItemFont::create(str, CC_CALLBACK_1(ParticleMainScene::testNCallback, this));
         itemFont->setTag(i);
         pSubMenu->addChild(itemFont, 10);
 
@@ -142,7 +142,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
@@ -160,8 +160,8 @@ std::string ParticleMainScene::title()
 
 void ParticleMainScene::step(float dt)
 {
-    LabelAtlas *atlas = (LabelAtlas*) getChildByTag(kTagLabelAtlas);
-    ParticleSystem *emitter = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto atlas = (LabelAtlas*) getChildByTag(kTagLabelAtlas);
+    auto emitter = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     char str[10] = {0};
     sprintf(str, "%4d", emitter->getParticleCount());
@@ -187,7 +187,7 @@ void ParticleMainScene::createParticleSystem()
     removeChildByTag(kTagParticleSystem, true);
 
     // remove the "fire.png" from the TextureCache cache. 
-    Texture2D *texture = TextureCache::getInstance()->addImage("Images/fire.png");
+    auto texture = TextureCache::getInstance()->addImage("Images/fire.png");
     TextureCache::getInstance()->removeTexture(texture);
 
 //TODO:     if (subtestNumber <= 3)
@@ -267,7 +267,7 @@ void ParticleMainScene::updateQuantityLabel()
 {
     if( quantityParticles != lastRenderedCount )
     {
-        LabelTTF *infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
         char str[20] = {0};
         sprintf(str, "%u particles", quantityParticles);
         infoLabel->setString(str);
@@ -291,8 +291,8 @@ std::string ParticlePerformTest1::title()
 
 void ParticlePerformTest1::doTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
+    auto s = Director::getInstance()->getWinSize();
+    auto particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -361,8 +361,8 @@ std::string ParticlePerformTest2::title()
 
 void ParticlePerformTest2::doTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto s = Director::getInstance()->getWinSize();
+    auto particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -431,8 +431,8 @@ std::string ParticlePerformTest3::title()
 
 void ParticlePerformTest3::doTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    ParticleSystem *particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
+    auto s = Director::getInstance()->getWinSize();
+    auto particleSystem = (ParticleSystem*)getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -501,8 +501,8 @@ std::string ParticlePerformTest4::title()
 
 void ParticlePerformTest4::doTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    ParticleSystem *particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
+    auto s = Director::getInstance()->getWinSize();
+    auto particleSystem = (ParticleSystem*) getChildByTag(kTagParticleSystem);
 
     // duration
     particleSystem->setDuration(-1);
@@ -559,7 +559,7 @@ void ParticlePerformTest4::doTest()
 
 void runParticleTest()
 {
-    ParticleMainScene* scene = new ParticlePerformTest1;
+    auto scene = new ParticlePerformTest1;
     scene->initWithSubTest(1, kNodesIncrease);
 
     Director::getInstance()->replaceScene(scene);

@@ -24,7 +24,7 @@ Layer* nextZwoptexTest()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createZwoptexLayer(sceneIdx);
+    auto layer = createZwoptexLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -37,7 +37,7 @@ Layer* backZwoptexTest()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* layer = createZwoptexLayer(sceneIdx);
+    auto layer = createZwoptexLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -45,7 +45,7 @@ Layer* backZwoptexTest()
 
 Layer* restartZwoptexTest()
 {
-    Layer* layer = createZwoptexLayer(sceneIdx);
+    auto layer = createZwoptexLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -63,21 +63,21 @@ void ZwoptexTest::onEnter()
 
 void ZwoptexTest::restartCallback(Object* sender)
 {
-    Scene *s = ZwoptexTestScene::create();
+    auto s = ZwoptexTestScene::create();
     s->addChild(restartZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
 void ZwoptexTest::nextCallback(Object* sender)
 {
-    Scene *s = ZwoptexTestScene::create();
+    auto s = ZwoptexTestScene::create();
     s->addChild(nextZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
 
 void ZwoptexTest::backCallback(Object* sender)
 {
-    Scene *s = ZwoptexTestScene::create();
+    auto s = ZwoptexTestScene::create();
     s->addChild(backZwoptexTest());
     Director::getInstance()->replaceScene(s);
 }
@@ -101,12 +101,12 @@ void ZwoptexGenericTest::onEnter()
 {
     ZwoptexTest::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("zwoptex/grossini-generic.plist");
     
-    LayerColor *layer1 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
+    auto layer1 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
     layer1->setPosition(Point(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer1);
 
@@ -117,7 +117,7 @@ void ZwoptexGenericTest::onEnter()
     sprite1->setFlipX(false);
     sprite1->setFlipY(false);
 
-    LayerColor *layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
+    auto layer2 = LayerColor::create(Color4B(255, 0, 0, 255), 85, 121);
     layer2->setPosition(Point(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f)));
     addChild(layer2);
     
@@ -193,7 +193,7 @@ ZwoptexGenericTest::~ZwoptexGenericTest()
 {
     sprite1->release();
     sprite2->release();
-    SpriteFrameCache *cache = SpriteFrameCache::getInstance();
+    auto cache = SpriteFrameCache::getInstance();
     cache->removeSpriteFramesFromFile("zwoptex/grossini.plist");
     cache->removeSpriteFramesFromFile("zwoptex/grossini-generic.plist");
 }
@@ -210,7 +210,7 @@ std::string ZwoptexGenericTest::subtitle()
 
 void ZwoptexTestScene::runThisTest()
 {
-    Layer* layer = nextZwoptexTest();
+    auto layer = nextZwoptexTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
