@@ -39,7 +39,7 @@ using namespace std;
 //------------------------------------------------------------------
 void SpineTestScene::runThisTest()
 {
-    Layer* layer = SpineTestLayer::create();
+    auto layer = SpineTestLayer::create();
     addChild(layer);
     
     Director::getInstance()->replaceScene(this);

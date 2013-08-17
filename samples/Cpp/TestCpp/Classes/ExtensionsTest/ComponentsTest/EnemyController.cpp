@@ -75,8 +75,8 @@ EnemyController* EnemyController::create(void)
 
 void EnemyController::die()
 {
-    Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
+    auto com = _owner->getParent()->getComponent("SceneController");
+    auto _targets = ((SceneController*)com)->getTargets();
     _targets->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
     ((SceneController*)com)->increaseKillCount();

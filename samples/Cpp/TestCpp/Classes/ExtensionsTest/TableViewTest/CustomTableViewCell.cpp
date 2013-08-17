@@ -6,8 +6,8 @@ void CustomTableViewCell::draw()
 {
 	TableViewCell::draw();
 	// draw bounding box
-// 	Point pos = getPosition();
-// 	Size size = Size(178, 200);
+// 	auto pos = getPosition();
+// 	auto size = Size(178, 200);
 // 	Point vertices[4]={
 // 		Point(pos.x+1, pos.y+1),
 // 		Point(pos.x+size.width-1, pos.y+1),

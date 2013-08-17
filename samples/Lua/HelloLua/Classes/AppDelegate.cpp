@@ -23,7 +23,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    auto pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
     
     EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);

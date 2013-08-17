@@ -30,23 +30,23 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 
     // Font Item    
-    Sprite* spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
-    Sprite* spriteSelected = Sprite::create(s_MenuItem, Rect(0,23*1,115,23));
-    Sprite* spriteDisabled = Sprite::create(s_MenuItem, Rect(0,23*0,115,23));
+    auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
+    auto spriteSelected = Sprite::create(s_MenuItem, Rect(0,23*1,115,23));
+    auto spriteDisabled = Sprite::create(s_MenuItem, Rect(0,23*0,115,23));
 
-    MenuItemSprite* item1 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, CC_CALLBACK_1(MenuLayerMainMenu::menuCallback, this) );
+    auto item1 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, CC_CALLBACK_1(MenuLayerMainMenu::menuCallback, this) );
     
     // Image Item
-    MenuItem* item2 = MenuItemImage::create(s_SendScore, s_PressSendScore, CC_CALLBACK_1(MenuLayerMainMenu::menuCallback2, this) );
+    auto item2 = MenuItemImage::create(s_SendScore, s_PressSendScore, CC_CALLBACK_1(MenuLayerMainMenu::menuCallback2, this) );
 
     // Label Item (LabelAtlas)
-    LabelAtlas* labelAtlas = LabelAtlas::create("0123456789", "fonts/labelatlas.png", 16, 24, '.');
-    MenuItemLabel* item3 = MenuItemLabel::create(labelAtlas, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackDisabled, this) );
+    auto labelAtlas = LabelAtlas::create("0123456789", "fonts/labelatlas.png", 16, 24, '.');
+    auto item3 = MenuItemLabel::create(labelAtlas, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackDisabled, this) );
     item3->setDisabledColor( Color3B(32,32,64) );
     item3->setColor( Color3B(200,200,255) );
     
     // Font Item
-    MenuItemFont *item4 = MenuItemFont::create("I toggle enable items", [&](Object *sender) {
+    auto item4 = MenuItemFont::create("I toggle enable items", [&](Object *sender) {
 		_disabledItem->setEnabled(! _disabledItem->isEnabled() );
 	});
 
@@ -54,39 +54,39 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     item4->setFontName("Marker Felt");
     
     // Label Item (LabelBMFont)
-    LabelBMFont* label = LabelBMFont::create("configuration", "fonts/bitmapFontTest3.fnt");
-    MenuItemLabel* item5 = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackConfig, this));
+    auto label = LabelBMFont::create("configuration", "fonts/bitmapFontTest3.fnt");
+    auto item5 = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackConfig, this));
 
     // Testing issue #500
     item5->setScale( 0.8f );
 
     // Events
     MenuItemFont::setFontName("Marker Felt");
-    MenuItemFont *item6 = MenuItemFont::create("Priority Test", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackPriorityTest, this));
+    auto item6 = MenuItemFont::create("Priority Test", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackPriorityTest, this));
     
     // Bugs Item
-    MenuItemFont *item7 = MenuItemFont::create("Bugs", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackBugsTest, this));
+    auto item7 = MenuItemFont::create("Bugs", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackBugsTest, this));
 
     // Font Item
-    MenuItemFont* item8 = MenuItemFont::create("Quit", CC_CALLBACK_1(MenuLayerMainMenu::onQuit, this));
+    auto item8 = MenuItemFont::create("Quit", CC_CALLBACK_1(MenuLayerMainMenu::onQuit, this));
     
-    MenuItemFont* item9 = MenuItemFont::create("Remove menu item when moving", CC_CALLBACK_1(MenuLayerMainMenu::menuMovingCallback, this));
+    auto item9 = MenuItemFont::create("Remove menu item when moving", CC_CALLBACK_1(MenuLayerMainMenu::menuMovingCallback, this));
     
-    ActionInterval* color_action = TintBy::create(0.5f, 0, -255, -255);
-    ActionInterval* color_back = color_action->reverse();
-    Sequence* seq = Sequence::create(color_action, color_back, NULL);
+    auto color_action = TintBy::create(0.5f, 0, -255, -255);
+    auto color_back = color_action->reverse();
+    auto seq = Sequence::create(color_action, color_back, NULL);
     item8->runAction(RepeatForever::create(seq));
 
-    Menu* menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8, item9, NULL);
+    auto menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8, item9, NULL);
     menu->alignItemsVertically();
     
     
     // elastic effect
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     int i=0;
     Node* child;
-    Array * pArray = menu->getChildren();
+    auto pArray = menu->getChildren();
     Object* pObject = NULL;
     CCARRAY_FOREACH(pArray, pObject)
     {
@@ -95,7 +95,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 
         child = static_cast<Node*>(pObject);
 
-        Point dstPoint = child->getPosition();
+        auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)
             offset = -offset;
@@ -148,7 +148,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
@@ -157,7 +157,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
@@ -198,17 +198,17 @@ MenuLayer2::MenuLayer2()
 {
     for( int i=0;i < 2;i++ ) 
     {
-        MenuItemImage* item1 = MenuItemImage::create(s_PlayNormal, s_PlaySelect, CC_CALLBACK_1(MenuLayer2::menuCallback, this));
-        MenuItemImage* item2 = MenuItemImage::create(s_HighNormal, s_HighSelect, CC_CALLBACK_1(MenuLayer2::menuCallbackOpacity, this));
-        MenuItemImage* item3 = MenuItemImage::create(s_AboutNormal, s_AboutSelect, CC_CALLBACK_1(MenuLayer2::menuCallbackAlign, this));
+        auto item1 = MenuItemImage::create(s_PlayNormal, s_PlaySelect, CC_CALLBACK_1(MenuLayer2::menuCallback, this));
+        auto item2 = MenuItemImage::create(s_HighNormal, s_HighSelect, CC_CALLBACK_1(MenuLayer2::menuCallbackOpacity, this));
+        auto item3 = MenuItemImage::create(s_AboutNormal, s_AboutSelect, CC_CALLBACK_1(MenuLayer2::menuCallbackAlign, this));
         
         item1->setScaleX( 1.5f );
         item2->setScaleX( 0.5f );
         item3->setScaleX( 0.5f );
         
-        Menu* menu = Menu::create(item1, item2, item3, NULL);
+        auto menu = Menu::create(item1, item2, item3, NULL);
         
-        Size s = Director::getInstance()->getWinSize();
+        auto s = Director::getInstance()->getWinSize();
         menu->setPosition(Point(s.width/2, s.height/2));
 
         menu->setTag( kTagMenu );
@@ -230,13 +230,13 @@ void MenuLayer2::alignMenusH()
 {
     for(int i=0;i<2;i++) 
     {
-        Menu *menu = static_cast<Menu*>( getChildByTag(100+i) );
+        auto menu = static_cast<Menu*>( getChildByTag(100+i) );
         menu->setPosition( _centeredMenu );
         if(i==0) 
         {
             // TIP: if no padding, padding = 5
             menu->alignItemsHorizontally();            
-            Point p = menu->getPosition();
+            auto p = menu->getPosition();
             menu->setPosition(p + Point(0,30));
             
         } 
@@ -244,7 +244,7 @@ void MenuLayer2::alignMenusH()
         {
             // TIP: but padding is configurable
             menu->alignItemsHorizontallyWithPadding(40);
-            Point p = menu->getPosition();
+            auto p = menu->getPosition();
             menu->setPosition(p - Point(0,30));
         }        
     }
@@ -254,20 +254,20 @@ void MenuLayer2::alignMenusV()
 {
     for(int i=0;i<2;i++) 
     {
-        Menu *menu = static_cast<Menu*>( getChildByTag(100+i) );
+        auto menu = static_cast<Menu*>( getChildByTag(100+i) );
         menu->setPosition( _centeredMenu );
         if(i==0) 
         {
             // TIP: if no padding, padding = 5
             menu->alignItemsVertically();            
-            Point p = menu->getPosition();
+            auto p = menu->getPosition();
             menu->setPosition(p + Point(100,0));
         } 
         else 
         {
             // TIP: but padding is configurable
             menu->alignItemsVerticallyWithPadding(40);    
-            Point p = menu->getPosition();
+            auto p = menu->getPosition();
             menu->setPosition(p - Point(100,0));
         }        
     }
@@ -280,7 +280,7 @@ void MenuLayer2::menuCallback(Object* sender)
 
 void MenuLayer2::menuCallbackOpacity(Object* sender)
 {
-    Menu* menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
+    auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
     GLubyte opacity = menu->getOpacity();
     if( opacity == 128 )
         menu->setOpacity(255);
@@ -308,42 +308,42 @@ MenuLayer3::MenuLayer3()
     MenuItemFont::setFontName("Marker Felt");
     MenuItemFont::setFontSize(28);
 
-    LabelBMFont* label = LabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
-    MenuItemLabel* item1 = MenuItemLabel::create(label, [&](Object *sender) {
+    auto label = LabelBMFont::create("Enable AtlasItem", "fonts/bitmapFontTest3.fnt");
+    auto item1 = MenuItemLabel::create(label, [&](Object *sender) {
 		//CCLOG("Label clicked. Toogling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
 		_disabledItem->stopAllActions();
 	});
-    MenuItemFont* item2 = MenuItemFont::create("--- Go Back ---", [&](Object *sender) {
+    auto item2 = MenuItemFont::create("--- Go Back ---", [&](Object *sender) {
 		    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 	});
 
-    Sprite *spriteNormal   = Sprite::create(s_MenuItem,  Rect(0,23*2,115,23));
-    Sprite *spriteSelected = Sprite::create(s_MenuItem,  Rect(0,23*1,115,23));
-    Sprite *spriteDisabled = Sprite::create(s_MenuItem,  Rect(0,23*0,115,23));
+    auto spriteNormal   = Sprite::create(s_MenuItem,  Rect(0,23*2,115,23));
+    auto spriteSelected = Sprite::create(s_MenuItem,  Rect(0,23*1,115,23));
+    auto spriteDisabled = Sprite::create(s_MenuItem,  Rect(0,23*0,115,23));
     
     
-    MenuItemSprite* item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {
+    auto item3 = MenuItemSprite::create(spriteNormal, spriteSelected, spriteDisabled, [](Object *sender) {
 		log("sprite clicked!");
 	});
     _disabledItem = item3;  item3->retain();
     _disabledItem->setEnabled( false );
     
-    Menu *menu = Menu::create( item1, item2, item3, NULL);    
+    auto menu = Menu::create( item1, item2, item3, NULL);    
     menu->setPosition( Point(0,0) );
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     item1->setPosition( Point(s.width/2 - 150, s.height/2) );
     item2->setPosition( Point(s.width/2 - 200, s.height/2) );
     item3->setPosition( Point(s.width/2, s.height/2 - 100) );
     
-    JumpBy* jump = JumpBy::create(3, Point(400,0), 50, 4);
+    auto jump = JumpBy::create(3, Point(400,0), 50, 4);
     item2->runAction( RepeatForever::create(Sequence::create( jump, jump->reverse(), NULL)));
 
-    ActionInterval* spin1 = RotateBy::create(3, 360);
-    ActionInterval* spin2 = spin1->clone();
-    ActionInterval* spin3 = spin1->clone();
+    auto spin1 = RotateBy::create(3, 360);
+    auto spin2 = spin1->clone();
+    auto spin3 = spin1->clone();
     
     item1->runAction( RepeatForever::create(spin1) );
     item2->runAction( RepeatForever::create(spin2) );
@@ -368,48 +368,48 @@ MenuLayer4::MenuLayer4()
 {
     MenuItemFont::setFontName("American Typewriter");
     MenuItemFont::setFontSize(18);
-    MenuItemFont*title1 = MenuItemFont::create("Sound");
+    auto title1 = MenuItemFont::create("Sound");
     title1->setEnabled(false);
     MenuItemFont::setFontName( "Marker Felt" );
     MenuItemFont::setFontSize(34);
-    MenuItemToggle* item1 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MenuLayer4::menuCallback, this),
+    auto item1 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "On" ),
                                                                 MenuItemFont::create( "Off"),
                                                                 NULL );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
-    MenuItemFont* title2 = MenuItemFont::create( "Music" );
+    auto title2 = MenuItemFont::create( "Music" );
     title2->setEnabled(false);
     MenuItemFont::setFontName( "Marker Felt" );
     MenuItemFont::setFontSize(34);
-    MenuItemToggle *item2 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
+    auto item2 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "On" ),
                                                                 MenuItemFont::create( "Off"),
                                                                 NULL );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
-    MenuItemFont* title3 = MenuItemFont::create( "Quality" );
+    auto title3 = MenuItemFont::create( "Quality" );
     title3->setEnabled( false );
     MenuItemFont::setFontName( "Marker Felt" );
     MenuItemFont::setFontSize(34);
-    MenuItemToggle *item3 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
+    auto item3 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "High" ),
                                                                 MenuItemFont::create( "Low" ),
                                                                 NULL );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
-    MenuItemFont* title4 = MenuItemFont::create( "Orientation" );
+    auto title4 = MenuItemFont::create( "Orientation" );
     title4->setEnabled(false);
     MenuItemFont::setFontName( "Marker Felt" );
     MenuItemFont::setFontSize(34);
-    MenuItemToggle *item4 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
+    auto item4 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "Off" ), 
                                                                 NULL );
     
-    //UxArray* more_items = UxArray::arrayWithObjects(
+    //auto more_items = UxArray::arrayWithObjects(
     //                                                 MenuItemFont::create( "33%" ),
     //                                                 MenuItemFont::create( "66%" ),
     //                                                 MenuItemFont::create( "100%" ),
@@ -425,10 +425,10 @@ MenuLayer4::MenuLayer4()
     MenuItemFont::setFontName( "Marker Felt" );
     MenuItemFont::setFontSize( 34 );
     
-    LabelBMFont *label = LabelBMFont::create( "go back", "fonts/bitmapFontTest3.fnt" );
-    MenuItemLabel* back = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayer4::backCallback, this) );
+    auto label = LabelBMFont::create( "go back", "fonts/bitmapFontTest3.fnt" );
+    auto back = MenuItemLabel::create(label, CC_CALLBACK_1(MenuLayer4::backCallback, this) );
     
-    Menu *menu = Menu::create(
+    auto menu = Menu::create(
                   title1, title2,
                   item1, item2,
                   title3, title4,
@@ -439,7 +439,7 @@ MenuLayer4::MenuLayer4()
     
     addChild( menu );
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
@@ -467,14 +467,14 @@ MenuLayerPriorityTest::MenuLayerPriorityTest()
     // Menu 1
     MenuItemFont::setFontName("Marker Felt");
     MenuItemFont::setFontSize(18);
-    MenuItemFont *item1 = MenuItemFont::create("Return to Main Menu", CC_CALLBACK_1(MenuLayerPriorityTest::menuCallback, this));
-    MenuItemFont *item2 = MenuItemFont::create("Disable menu for 5 seconds", [&](Object *sender) {
+    auto item1 = MenuItemFont::create("Return to Main Menu", CC_CALLBACK_1(MenuLayerPriorityTest::menuCallback, this));
+    auto item2 = MenuItemFont::create("Disable menu for 5 seconds", [&](Object *sender) {
 		_menu1->setEnabled(false);
-		DelayTime *wait = DelayTime::create(5);
-		CallFunc *enable = CallFunc::create( [&]() {
+		auto wait = DelayTime::create(5);
+		auto enable = CallFunc::create( [&]() {
 			    _menu1->setEnabled(true);
 		});
-		Sequence* seq = Sequence::create(wait, enable, NULL);
+		auto seq = Sequence::create(wait, enable, NULL);
 		_menu1->runAction(seq);
 	});
 
@@ -518,21 +518,21 @@ void MenuLayerPriorityTest::menuCallback(Object* sender)
 // BugsTest
 BugsTest::BugsTest()
 {
-    MenuItemFont *issue1410 = MenuItemFont::create("Issue 1410", CC_CALLBACK_1(BugsTest::issue1410MenuCallback, this));
-    MenuItemFont *issue1410_2 = MenuItemFont::create("Issue 1410 #2", CC_CALLBACK_1(BugsTest::issue1410v2MenuCallback, this));
-    MenuItemFont *back = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTest::backMenuCallback, this));
+    auto issue1410 = MenuItemFont::create("Issue 1410", CC_CALLBACK_1(BugsTest::issue1410MenuCallback, this));
+    auto issue1410_2 = MenuItemFont::create("Issue 1410 #2", CC_CALLBACK_1(BugsTest::issue1410v2MenuCallback, this));
+    auto back = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTest::backMenuCallback, this));
     
-    Menu *menu = Menu::create(issue1410, issue1410_2, back, NULL);
+    auto menu = Menu::create(issue1410, issue1410_2, back, NULL);
     addChild(menu);
     menu->alignItemsVertically();
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     menu->setPosition(Point(s.width/2, s.height/2));
 }
 
 void BugsTest::issue1410MenuCallback(Object *sender)
 {
-    Menu *menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
+    auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
     menu->setTouchEnabled(false);
     menu->setTouchEnabled(true);
     
@@ -541,7 +541,7 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
-    Menu *menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
+    auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
     menu->setTouchEnabled(true);
     menu->setTouchEnabled(false);
     
@@ -555,18 +555,18 @@ void BugsTest::backMenuCallback(cocos2d::Object *pSender)
 
 RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    LabelTTF* label = LabelTTF::create("click item and move, should not crash", "Arial", 20);
+    auto label = LabelTTF::create("click item and move, should not crash", "Arial", 20);
     label->setPosition(Point(s.width/2, s.height - 30));
     addChild(label);
     
     item = MenuItemFont::create("item 1");
     item->retain();
     
-    MenuItemFont *back = MenuItemFont::create("go back", CC_CALLBACK_1(RemoveMenuItemWhenMove::goBack, this));
+    auto back = MenuItemFont::create("go back", CC_CALLBACK_1(RemoveMenuItemWhenMove::goBack, this));
     
-    Menu *menu = Menu::create(item, back, NULL);
+    auto menu = Menu::create(item, back, NULL);
     addChild(menu);
     menu->alignItemsVertically();
     
@@ -607,15 +607,15 @@ void RemoveMenuItemWhenMove::ccTouchMoved(Touch  *touch, Event  *event)
 
 void MenuTestScene::runThisTest()
 {
-    Layer* layer1 = new MenuLayerMainMenu();
-    Layer* layer2 = new MenuLayer2();
-    Layer* layer3 = new MenuLayer3();
-    Layer* layer4 = new MenuLayer4();
-    Layer* layer5 = new MenuLayerPriorityTest();
-    Layer* layer6 = new BugsTest();
-    Layer* layer7 = new RemoveMenuItemWhenMove();
+    auto layer1 = new MenuLayerMainMenu();
+    auto layer2 = new MenuLayer2();
+    auto layer3 = new MenuLayer3();
+    auto layer4 = new MenuLayer4();
+    auto layer5 = new MenuLayerPriorityTest();
+    auto layer6 = new BugsTest();
+    auto layer7 = new RemoveMenuItemWhenMove();
 
-    LayerMultiplex* layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, layer7, NULL);
+    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, layer7, NULL);
     addChild(layer, 0); 
 
     layer1->release();

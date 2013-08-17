@@ -24,7 +24,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::getInstance();
+    auto eglView = EGLView::getInstance();
     eglView->setViewName("WatermelonWithMe");
     eglView->setFrameSize(800, 450);
 
