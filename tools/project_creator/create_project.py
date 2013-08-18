@@ -71,6 +71,10 @@ def checkParams():
         context["src_project_name"] = "HelloJavascript"
         context["src_package_name"] = "org.cocos2dx.hellojavascript"
         context["src_project_path"] = os.path.join(template_dir, "multi-platform-js")
+    else:
+        print "Your language parameter doesn\'t exist." \
+            "Check correct language option\'s parameter"
+        sys.exit()
     platforms_list = PLATFORMS.get(context["language"], [])
     return context, platforms_list
 # end of checkParams(context) function
