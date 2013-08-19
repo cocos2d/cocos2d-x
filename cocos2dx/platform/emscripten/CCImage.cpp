@@ -336,7 +336,7 @@ bool Image::initWithString(
 
         CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, fullFontName.c_str(), nSize));
         
-        // assign the dc.m_pData to m_pData in order to save time
+        // assign the dc._data to _data in order to save time
         _data = dc._data;
         CC_BREAK_IF(! _data);
         
