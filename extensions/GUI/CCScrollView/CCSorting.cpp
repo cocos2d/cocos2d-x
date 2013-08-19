@@ -62,7 +62,7 @@ void ArrayForObjectSorting::insertSortedObject(SortableObject* object)
 {
     unsigned int idx;
     Object* pObj = dynamic_cast<Object*>(object);
-    CCASSERT(pObj, "Invalid parameter.");
+    //CCASSERT(pObj, "Invalid parameter.");
     idx = this->indexOfSortedObject(object);
     
     this->insertObject(pObj, idx);
@@ -77,13 +77,13 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
     SortableObject* foundObj;
     idx = this->indexOfSortedObject(object);
     
-    if (idx < this->count() && idx != CC_INVALID_INDEX) {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
-        
-        if(foundObj->getObjectID() == object->getObjectID()) {
-            this->removeObjectAtIndex(idx);
-        }
-    }
+//    if (idx < this->count() && idx != CC_INVALID_INDEX) {
+//        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
+//        
+//        if(foundObj->getObjectID() == object->getObjectID()) {
+//            this->removeObjectAtIndex(idx);
+//        }
+//    }
 }
 
 void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, SortableObject* object)
@@ -92,21 +92,21 @@ void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, Sortabl
     unsigned int  idx;
     
     idx = this->indexOfSortedObject(object);
-    if (idx < this->count() && idx != CC_INVALID_INDEX)
-    {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
-        Object* pObj = dynamic_cast<Object*>(foundObj);
-        pObj->retain();
-        
-        if(foundObj->getObjectID() == object->getObjectID()) {
-            this->removeObjectAtIndex(idx);
-            foundObj->setObjectID(tag);
-            this->insertSortedObject(foundObj);
-            pObj->release();
-        } else {
-            pObj->release();
-        }
-    }
+//    if (idx < this->count() && idx != CC_INVALID_INDEX)
+//    {
+//        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
+//        Object* pObj = dynamic_cast<Object*>(foundObj);
+//        pObj->retain();
+//        
+//        if(foundObj->getObjectID() == object->getObjectID()) {
+//            this->removeObjectAtIndex(idx);
+//            foundObj->setObjectID(tag);
+//            this->insertSortedObject(foundObj);
+//            pObj->release();
+//        } else {
+//            pObj->release();
+//        }
+//    }
 }
 
 SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
@@ -126,13 +126,13 @@ SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     ((SortedObject*)foundObj)->release();
     foundObj = NULL;
     
-    if (idx < this->count() && idx != CC_INVALID_INDEX)
-    {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
-        if (foundObj->getObjectID() != tag) {
-            foundObj = NULL;
-        }
-    }
+//    if (idx < this->count() && idx != CC_INVALID_INDEX)
+//    {
+//        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
+//        if (foundObj->getObjectID() != tag) {
+//            foundObj = NULL;
+//        }
+//    }
     
     return foundObj;
 }
@@ -164,7 +164,7 @@ unsigned int ArrayForObjectSorting::indexOfSortedObject(SortableObject* object)
     }
     else
     {
-        idx = CC_INVALID_INDEX;
+//        idx = CC_INVALID_INDEX;
     }
     return idx;
 }

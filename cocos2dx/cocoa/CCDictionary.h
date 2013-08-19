@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "CCArray.h"
 #include "CCString.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 

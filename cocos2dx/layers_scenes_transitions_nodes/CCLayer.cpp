@@ -1088,7 +1088,7 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
         }
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->objectAtIndex(_enabledLayer));
+        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
         return true;
     }
 
@@ -1104,7 +1104,7 @@ bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
         _layers->retain();
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->objectAtIndex(_enabledLayer));
+        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
         return true;
     }
     return false;
@@ -1114,25 +1114,25 @@ void LayerMultiplex::switchTo(unsigned int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
+    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->objectAtIndex(n));
+    this->addChild((Node*)_layers->getObjectAtIndex(n));
 }
 
 void LayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
+    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
 
     //[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
     _layers->replaceObjectAtIndex(_enabledLayer, NULL);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->objectAtIndex(n));
+    this->addChild((Node*)_layers->getObjectAtIndex(n));
 }
 
 NS_CC_END

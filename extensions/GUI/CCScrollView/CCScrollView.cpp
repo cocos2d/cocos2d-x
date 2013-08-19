@@ -553,7 +553,8 @@ void ScrollView::visit()
 
 	if(_children)
     {
-		ccArray *arrayData = _children->data;
+//		ccArray *arrayData = _children->data;
+        ccArray *arrayData = NULL;
 		unsigned int i=0;
 		
 		// draw children zOrder < 0
@@ -627,11 +628,11 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
     }
     else if (_touches->count() == 2)
     {
-        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getMidpoint(
-                        this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1))));
+        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getMidpoint(
+                        this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1))));
         
-        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
-                       _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
+                       _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
         
         _dragging  = false;
     } 
@@ -655,7 +656,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             
             frame = getViewRect();
 
-            newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0));
+            newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0));
             moveDistance = newPoint - _touchPoint;
             
             float dis = 0.0f;
@@ -712,8 +713,8 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
         }
         else if (_touches->count() == 2 && !_dragging)
         {
-            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
-                                            _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
+                                            _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/_touchLength);
         }
     }

@@ -695,12 +695,14 @@ void SchedulerUpdate::onEnter()
 void SchedulerUpdate::removeUpdates(float dt)
 {
     auto children = getChildren();
-    Node* node;
 
     for (auto c : *children)
     {
-        node = static_cast<Node*>(c);
-        
+        // explicity casting shared_ptr<Object> to Object
+        auto obj = static_cast<Object*>(c);
+        // and now Object -> Node
+        auto node = static_cast<Node*>(obj);
+
         if (! node)
         {
             break;

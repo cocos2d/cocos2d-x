@@ -258,13 +258,15 @@ const Size Size::ZERO = Size(0, 0);
 // implementation of Rect
 
 Rect::Rect(void)
+: size(0,0)
+, origin(0,0)
 {
-    setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Rect::Rect(float x, float y, float width, float height)
+: size(width, height)
+, origin(x,y)
 {
-    setRect(x, y, width, height);
 }
 
 Rect::Rect(const Rect& other)

@@ -518,7 +518,7 @@ const char* Node::description() const
 // lazy allocs
 void Node::childrenAlloc(void)
 {
-    _children = Array::createWithCapacity(4);
+    _children = Array::createWithCapacity(10);
     _children->retain();
 }
 
@@ -697,7 +697,7 @@ void Node::detachChild(Node *child, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    ccArrayAppendObjectWithResize(_children->data, child);
+    _children->addObject(child);
     child->_setZOrder(z);
 }
 
@@ -713,23 +713,52 @@ void Node::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i,j,length = _children->data->num;
-        Node ** x = (Node**)_children->data->arr;
-        Node *tempItem;
+//        int i,j,length = _children->count();
+//        Node ** x = (Node**)_children->data->arr;
+//        Node *tempItem;
+//
+//        // insertion sort
+//        for(i=1; i<length; i++)
+//        {
+//            tempItem = x[i];
+//            j = i-1;
+//
+//            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+//            while(j>=0 && ( tempItem->_ZOrder < x[j]->_ZOrder || ( tempItem->_ZOrder== x[j]->_ZOrder && tempItem->_orderOfArrival < x[j]->_orderOfArrival ) ) )
+//            {
+//                x[j+1] = x[j];
+//                j = j-1;
+//            }
+//            x[j+1] = tempItem;
+//        }
+        
+        int i, j;
+        int length = _children->count();
+        
+        Node *next = nullptr;
+        Node *prev = nullptr;
 
-        // insertion sort
-        for(i=1; i<length; i++)
+        for (i=1; i < length; ++i)
         {
-            tempItem = x[i];
             j = i-1;
 
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempItem->_ZOrder < x[j]->_ZOrder || ( tempItem->_ZOrder== x[j]->_ZOrder && tempItem->_orderOfArrival < x[j]->_orderOfArrival ) ) )
+            next = static_cast<Node*>(_children->getObjectAtIndex(i));
+            next->retain();
+            prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+            
+            while (j >= 0 &&
+                   (next->_ZOrder < prev ->_ZOrder || (next->_ZOrder == prev->_ZOrder && next->_orderOfArrival < prev->_orderOfArrival)))
             {
-                x[j+1] = x[j];
-                j = j-1;
+                _children->setObject( prev, j+1 );
+                j = j - 1;
+                if (j >= 0)
+                    prev = static_cast<Node*>(_children->getObjectAtIndex(j));
+                else
+                    prev = nullptr;
             }
-            x[j+1] = tempItem;
+            
+            _children->setObject(next, j+1);
+            next->release();
         }
 
         //don't need to check children recursively, that's done in visit of each child
@@ -738,14 +767,13 @@ void Node::sortAllChildren()
     }
 }
 
-
- void Node::draw()
- {
-     //CCASSERT(0);
-     // override me
-     // Only use- this function to draw your stuff.
-     // DON'T draw your stuff outside this method
- }
+void Node::draw()
+{
+    //CCASSERT(0);
+    // override me
+    // Only use- this function to draw your stuff.
+    // DON'T draw your stuff outside this method
+}
 
 void Node::visit()
 {
@@ -763,21 +791,21 @@ void Node::visit()
 
     this->transform();
 
-    Node* pNode = NULL;
-    unsigned int i = 0;
+//    Node* pNode = NULL;
+//    unsigned int i = 0;
 
     if(_children && _children->count() > 0)
     {
         sortAllChildren();
         // draw children zOrder < 0
-        ccArray *arrayData = _children->data;
-        for( ; i < arrayData->num; i++ )
+        int i = 0;
+        for( ; i < _children->count(); i++ )
         {
-            pNode = (Node*) arrayData->arr[i];
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
 
-            if ( pNode && pNode->_ZOrder < 0 ) 
+            if ( node && node->_ZOrder < 0 )
             {
-                pNode->visit();
+                node->visit();
             }
             else
             {
@@ -787,14 +815,12 @@ void Node::visit()
         // self draw
         this->draw();
 
-        for( ; i < arrayData->num; i++ )
+        for( ; i < _children->count(); i++ )
         {
-            pNode = (Node*) arrayData->arr[i];
-            if (pNode)
-            {
-                pNode->visit();
-            }
-        }        
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            if (node)
+                node->visit();
+        }
     }
     else
     {
