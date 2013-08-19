@@ -35,7 +35,10 @@ enum
     kUISliderTest_Scale9,
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
-    kUILoadingBarTest,
+    kUILoadingBarTest_Left,
+    kUILoadingBarTest_Right,
+    kUILoadingBarTest_Left_Scale9,
+    kUILoadingBarTest_Right_Scale9,
     kUILabelAtlasTest,
     kUILabelTest,
     kUITextAreaTest,
@@ -74,7 +77,10 @@ static const char* s_testArray[] =
     "UISliderTest_Scale9",
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
-    "UILoadingBarTest",
+    "UILoadingBarTest_Left",
+    "UILoadingBarTest_Right"
+    "UILoadingBarTest_Left_Scale9",
+    "UILoadingBarTest_Right_Scale9",
     "UILabelAtlasTest",
     "UILabelTest",
     "UITextAreaTest",    
@@ -179,8 +185,17 @@ CCScene *UISceneManager::currentUIScene()
         case kUIImageViewTest_Scale9:
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
-        case kUILoadingBarTest:
-            return UILoadingBarTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+        case kUILoadingBarTest_Left:
+            return UILoadingBarTest_Left::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILoadingBarTest_Right:
+            return UILoadingBarTest_Right::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILoadingBarTest_Left_Scale9:
+            return UILoadingBarTest_Left_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
+        case kUILoadingBarTest_Right_Scale9:
+            return UILoadingBarTest_Right_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
         case kUILabelAtlasTest:
             return UILabelAtlasTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
