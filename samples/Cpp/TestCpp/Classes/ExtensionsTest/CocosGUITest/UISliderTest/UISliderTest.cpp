@@ -45,6 +45,9 @@ bool UISliderTest::init()
         slider->setSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
         slider->setProgressBarVisible(true);
         slider->setProgressBarTexture("cocosgui/sliderProgress.png");
+        slider->setSlidBallAnchorPoint(ccp(0.6, 0.5));
+        slider->setSlidBallPercent(0);
+        slider->setProgressBarScale();
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         slider->addPercentChangedEvent(this, coco_percentchangedselector(UISliderTest::percentChangedEvent));
         m_pUiLayer->addWidget(slider);
@@ -99,15 +102,19 @@ bool UISliderTest_Scale9::init()
         
         // Create the slider
         UISlider* slider = UISlider::create();
-        slider->setTouchEnable(true);
-        slider->setScale9Enable(true);
+        slider->setTouchEnable(true);        
         slider->setBarTexture("cocosgui/sliderTrack2.png");
-        slider->setCapInsets(CCRectMake(0, 0, 0, 0));
-        slider->setScale9Size(CCSizeMake(250, slider->getRect().size.height));
-        
         slider->setSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "");
         slider->setProgressBarVisible(true);
         slider->setProgressBarTexture("cocosgui/slider_bar_active_9patch.png");
+        slider->setScale9Enable(true);
+        slider->setCapInsets(CCRectMake(0, 0, 0, 0));
+        slider->setScale9Size(CCSizeMake(250, slider->getRect().size.height));
+        slider->setProgressBarScale9Enable(true);
+        slider->setProgressBarCapInsets(CCRectMake(0, 0, 0, 0));
+        slider->setProgressBarScale9Size(CCSizeMake(250, slider->getProgressBar()->boundingBox().size.height));
+        slider->setSlidBallPercent(0);
+        slider->setProgressBarScale();
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         slider->addPercentChangedEvent(this, coco_percentchangedselector(UISliderTest_Scale9::percentChangedEvent));
         m_pUiLayer->addWidget(slider);

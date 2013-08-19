@@ -50,9 +50,11 @@ UIListView::UIListView()
 }
 
 UIListView::~UIListView()
-{    
+{
+    /*
     CC_SAFE_RELEASE_NULL(m_pChildPool);
     CC_SAFE_RELEASE_NULL(m_pUpdatePool);
+     */
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
@@ -114,8 +116,10 @@ void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
 {
     UIPanel::removeAllChildrenAndCleanUp(cleanup);
     
+    /*
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
+     */
     /*
     m_pUpdatePool->clear();
     m_pChildPool->clear();
@@ -144,9 +148,25 @@ void UIListView::resetProperty()
         return;
     }
     
-    if (m_fTopBoundary == 0)
+    
+    switch (m_eDirection)
     {
-        return;
+        case SCROLLVIEW_DIR_VERTICAL: // vertical
+            if (m_fTopBoundary == 0)
+            {
+                return;
+            }
+            break;
+            
+        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+            if (m_fRightBoundary == 0)
+            {
+                return;
+            }
+            break;
+            
+        default:
+            break;
     }
     
     float scroll_top = m_fTopBoundary;
@@ -332,7 +352,7 @@ bool UIListView::scrollChildren(float touchOffset)
             {
                 case SCROLLVIEW_MOVE_DIR_LEFT: // left
                     {
-                        realOffset = MAX(realOffset, m_fDisBetweenChild);
+                        realOffset = MAX(realOffset, -m_fDisBetweenChild);
                         
                         UIWidget* child_last = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
                         float child_last_right = child_last->getRelativeRightPos();
@@ -368,8 +388,8 @@ bool UIListView::scrollChildren(float touchOffset)
                         realOffset = MIN(realOffset, m_fDisBetweenChild);
                         
                         UIWidget* child_0 = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
-                        float child_0_left = child_0->getRelativeTopPos();
-                        float scroll_left = m_fTopBoundary;
+                        float child_0_left = child_0->getRelativeLeftPos();
+                        float scroll_left = m_fLeftBoundary;
                         
                         if (m_nBegin == 0)
                         {
@@ -861,8 +881,7 @@ void UIListView::collectOverRightChild()
     for (int i = 0; i < times; ++i)
     {
         UIWidget* child = dynamic_cast<UIWidget*>(arrayChildren->arr[i]);
-        float child_left = child->getRelativeLeftPos();
-        
+        float child_left = child->getRelativeLeftPos();        
         if (child_left >= scroll_right)
         {
             m_overRightArray->addObject(child);                
@@ -991,7 +1010,7 @@ void UIListView::setLoopPosition()
                     
                     if (m_overLeftArray->count() == childrenCount)
                     {
-                        int count = m_overLeftArray->count();
+                        int count = childrenCount;
                         for (int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overLeftArray->objectAtIndex(i));
@@ -1041,15 +1060,14 @@ void UIListView::setLoopPosition()
                     
                     if (m_overRightArray->count() == childrenCount)
                     {
-                        int count = m_overRightArray->count();
+                        int count = childrenCount;
                         for (int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overRightArray->objectAtIndex(i));
                             
                             if (i == 0)
                             {
-                                float y = m_fRightBoundary - m_fDisBoundaryToChild_0 + m_fDisBetweenChild;
-                                float x = (0 - m_fDisBetweenChild) + m_fDisBetweenChild * (count - 1);
+                                float x = m_fRightBoundary - m_fDisBoundaryToChild_0 + m_fDisBetweenChild;
                                 child->setPosition(ccp(x, child->getPosition().y));
                             }
                             else
@@ -1104,11 +1122,8 @@ void UIListView::updateChild()
                         int count = m_overTopArray->count();
                         for (int i = 0; i < count; ++i)
                         {
-//                            if (m_nEnd < m_nDataLength - 1)
-//                            {
-                                pushChildToPool();
-                                getAndCallback();
-//                            }
+                            pushChildToPool();
+                            getAndCallback();
                         }
                     }
                     break;
@@ -1118,11 +1133,8 @@ void UIListView::updateChild()
                         int count = m_overBottomArray->count();
                         for (int i = 0; i < count; ++i)
                         {
-//                            if (m_nBegin > 0)
-//                            {
-                                pushChildToPool();
-                                getAndCallback();                                        
-//                            }
+                            pushChildToPool();
+                            getAndCallback();
                         }
                     }
                     break;
@@ -1140,25 +1152,19 @@ void UIListView::updateChild()
                         int count = m_overLeftArray->count();
                         for (int i = 0; i < count; ++i)
                         {
-                            if (m_nEnd < m_nDataLength - 1)
-                            {
-                                pushChildToPool();
-                                getAndCallback();
-                            }
+                            pushChildToPool();
+                            getAndCallback();
                         }
                     }
                     break;
                     
                 case SCROLLVIEW_MOVE_DIR_RIGHT: // right
                     {
-                        int count = m_overBottomArray->count();
+                        int count = m_overRightArray->count();
                         for (int i = 0; i < count; ++i)
                         {
-                            if (m_nBegin > 0)
-                            {
-                                pushChildToPool();
-                                getAndCallback();
-                            }
+                            pushChildToPool();
+                            getAndCallback();
                         }
                     }
                     break;

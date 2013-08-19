@@ -121,18 +121,13 @@ typedef void (CCObject::*SEL_DragPanelBounceToRightEvent)(CCObject*);
 typedef void (CCObject::*SEL_DragPanelBounceToBottomEvent)(CCObject*);
 #define coco_DragPanel_BounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
 
-class UIDragPanel : public UIPanel// , public UIScrollDelegate
+class UIDragPanel : public UIPanel, public UIScrollDelegate
 {
 public:
     UIDragPanel();
     virtual ~UIDragPanel();
     
-    static UIDragPanel* create();
-    
-    virtual bool init();
-    virtual void initNodes();
-    
-    virtual void releaseResoures();
+    static UIDragPanel* create();        
     
     virtual void onTouchBegan(const CCPoint &touchPoint);
     virtual void onTouchMoved(const CCPoint &touchPoint);
@@ -145,6 +140,14 @@ public:
     virtual bool addChild(UIWidget* widget);
     virtual bool removeChild(UIWidget* child,bool cleanup);
     virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    
+    virtual void setSize(const CCSize &size);
+    
+    CCNode* getInnerContainerNode();    
+    const CCSize& getInnerContainerSize() const;
+    void setInnerContainerSize(const CCSize &size);
+//    const CCPoint& getInnerContainerPosition() const;
+//    void setInnerContainerPosition(const CCPoint& point);
     
     /*
     void setDirection(DRAGPANEL_DIR dir);
@@ -187,12 +190,16 @@ public:
     void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);    
     
 protected:
+    virtual bool init();
+    virtual void initNodes();    
+    virtual void releaseResoures();
+    
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
     virtual void interceptTouchEvent(int handleState,UIWidget* sender, const CCPoint &touchPoint);
     virtual void checkChildInfo(int handleState, UIWidget *sender, const CCPoint &touchPoint);
-    void updateWidthAndHeight();
+//    void updateWidthAndHeight();
     void recordSlidTime(float dt);
     
     // check if dragpanel rect contain inner rect
@@ -260,7 +267,7 @@ protected:
     void moveToUpdate(float t);
     
 protected:
-    UIPanel* m_pInnerPanel;
+    UIContainerWidget* m_pInnerContainer;
     
     /*
     DRAGPANEL_DIR m_eDirection;
