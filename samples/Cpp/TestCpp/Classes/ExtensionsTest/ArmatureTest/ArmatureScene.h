@@ -25,7 +25,8 @@ public:
 };
 
 enum {
-	TEST_COCOSTUDIO_WITH_SKELETON = 0,
+	TEST_ASYNCHRONOUS_LOADING = 0,
+	TEST_COCOSTUDIO_WITH_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
 	TEST_CHANGE_ZORDER,
@@ -49,13 +50,28 @@ public:
 	virtual std::string title();
 	virtual std::string subtitle();
 
-	void restartCallback(CCObject* pSender);
-	void nextCallback(CCObject* pSender);
-	void backCallback(CCObject* pSender);
+	virtual void restartCallback(CCObject* pSender);
+	virtual void nextCallback(CCObject* pSender);
+	virtual void backCallback(CCObject* pSender);
 
 	virtual void draw();
+
+protected:
+	CCMenuItemImage *restartItem;
+	CCMenuItemImage *nextItem;
+	CCMenuItemImage *backItem;
 };
 
+
+class TestAsynchronousLoading : public ArmatureTestLayer
+{
+public:
+	virtual void onEnter();
+	virtual std::string title();
+	virtual std::string subtitle();
+
+	void dataLoaded(float percent);
+};
 
 class TestCSWithSkeleton : public ArmatureTestLayer
 {
@@ -159,7 +175,7 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt);
+	void onFrameEvent(cocos2d::extension::CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 

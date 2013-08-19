@@ -44,6 +44,11 @@ public:
     void setDirection(LoadingBarType dir);
     int getDirection();
     void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    /* gui mark */
+    void setScale9Enable(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    void setScale9Size(const CCSize &size);
+    /**/
     void setPercent(int percent);
     int getPercent();
     float getTotalWidth();
@@ -51,12 +56,23 @@ public:
     virtual CCNode* getValidNode();
 protected:
     virtual void initNodes();
+    void setScale9Scale();
 protected:
     LoadingBarType m_nBarType;
     int m_nPercent;
     float m_fTotalLength;
     float m_fBarHeight;
-    CCSprite* m_pRenderBar;
+    /* gui mark */
+    bool m_bScale9Enable;
+    CCRect m_capInsets;
+    CCSize m_scale9Size;
+    std::string m_strTextureFile;
+    /**/
+    /* gui mark */
+    CCNode* m_pRenderBar;
+    // before
+//    CCSprite* m_pRenderBar;
+    /**/
     TextureResType m_eRenderBarTexType;
 //    bool m_bUseSpriteFrame;
 };

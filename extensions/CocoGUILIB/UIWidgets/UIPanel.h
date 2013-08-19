@@ -42,6 +42,9 @@ public:
     UIPanel();
     virtual ~UIPanel();
     static UIPanel* create();
+    /* gui mark */
+    CCNode* getBackGroundImage() const;
+    /**/
     void setBackGroundImage(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setBackGroundImageCapInsets(const CCRect& capInsets);
     virtual void setBackGroundColorType(PanelColorType type);
@@ -53,7 +56,7 @@ public:
     void setBackGroundColorVector(const CCPoint &vector);
     virtual void setColor(const ccColor3B &color);
     virtual void setOpacity(int opacity);
-    void removeBackGroundImage();
+    void removeBackGroundImage();    
 protected:
     virtual void initNodes();
     void addBackGroundImage();

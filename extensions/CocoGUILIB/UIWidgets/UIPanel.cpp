@@ -126,6 +126,13 @@ void UIPanel::setSize(const CCSize &size)
     }
 }
 
+/* gui mark */
+CCNode* UIPanel::getBackGroundImage() const
+{
+    return m_pBackGroundImage;
+}
+/**/
+
 void UIPanel::setBackGroundImage(const char* fileName,TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)

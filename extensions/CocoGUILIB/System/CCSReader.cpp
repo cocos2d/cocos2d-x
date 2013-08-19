@@ -1121,7 +1121,6 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
             {
                 slider->setProgressBarTexture(imageFileName_tp);
             }
-            slider->setProgressBarScale();
         }
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
@@ -1130,17 +1129,18 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
         setPropsForWidgetFromJsonDictionary(widget, options);
         UISlider* slider = (UISlider*)widget;
         
-        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
+        // bar
+        bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
         slider->setScale9Enable(barTextureScale9Enable);
         bool bt = DICTOOL->checkObjectExist_json(options, "barFileName");
+        /*
         float barLength = DICTOOL->getFloatValue_json(options, "length");
         bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
+         */
         if (bt)
         {
             if (barTextureScale9Enable)
-            {
-//                slider->setBarLength(barLength);
-                
+            {                
                 cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
                 int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
                 switch (imageFileType)
@@ -1162,24 +1162,17 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
                     default:
                         break;
                 }
-                
-                bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-                bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
-                if (sw && sh)
-                {
-                    float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-                    float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-                    slider->setScale9Size(CCSizeMake(swf, shf));
-                }
+				CC_SAFE_DELETE(imageFileNameDic);
                 
                 float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
                 float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
                 float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
                 float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
-                
                 slider->setCapInsets(CCRectMake(cx, cy, cw, ch));
                 
-				CC_SAFE_DELETE(imageFileNameDic);
+                float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
+                float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
+                slider->setScale9Size(CCSizeMake(swf, shf));
             }
             else
             {
@@ -1207,26 +1200,8 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
 				CC_SAFE_DELETE(imageFileNameDic);
             }
         }
-//        std::string tp_n = m_strFilePath;
-//        std::string tp_p = m_strFilePath;
-//        std::string tp_d = m_strFilePath;
-//        
-//        const char* normalFileName = DICTOOL->getStringValue_json(options, "ballNormal");
-//        const char* pressedFileName = DICTOOL->getStringValue_json(options, "ballPressed");
-//        const char* disabledFileName = DICTOOL->getStringValue_json(options, "ballDisabled");
-//        
-//        const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-//        const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-//        const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-//        if (useMergedTexture)
-//        {
-//            slider->setSlidBallTextures(normalFileName,pressedFileName,disabledFileName,UI_TEX_TYPE_PLIST);
-//        }
-//        else
-//        {
-//            slider->setSlidBallTextures(normalFileName_tp,pressedFileName_tp,disabledFileName_tp);
-//        }
         
+        // slide ball
         cs::CSJsonDictionary* normalDic = DICTOOL->getSubDictionary_json(options, "ballNormalData");
         int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");
         switch (normalType)
@@ -1296,15 +1271,14 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
         }
 		CC_SAFE_DELETE(disabledDic);
         
-        slider->setSlidBallPercent(DICTOOL->getIntValue_json(options, "percent"));
-//        bool progressBarVisibleExist = DICTOOL->checkObjectExist_json(options, "progressBarVisible");
-        bool progressBarVisible = false;
-//        if (progressBarVisibleExist)
-//        {
-            progressBarVisible = DICTOOL->getBooleanValue_json(options, "progressBarVisible");
-            slider->setProgressBarVisible(progressBarVisible);
-//        }
-        if (progressBarVisible)
+        // progress bar
+        bool progressBarVisible = DICTOOL->getBooleanValue_json(options, "progressBarVisible");
+        slider->setProgressBarVisible(progressBarVisible);
+        
+        bool progressBarScale9Enable = DICTOOL->getBooleanValue_json(options, "progressBarScale9Enable");
+        slider->setProgressBarScale9Enable(progressBarScale9Enable);
+        
+        if (progressBarScale9Enable)
         {
             cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "progressBarData");
             int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
@@ -1329,23 +1303,46 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
             }
             CC_SAFE_DELETE(imageFileNameDic);
             
+            float cx = DICTOOL->getFloatValue_json(options, "progressBarCapInsetsX");
+            float cy = DICTOOL->getFloatValue_json(options, "progressBarCapInsetsY");
+            float cw = DICTOOL->getFloatValue_json(options, "progressBarCapInsetsWidth");
+            float ch = DICTOOL->getFloatValue_json(options, "progressBarCapInsetsHeight");
+            slider->setProgressBarCapInsets(CCRectMake(cx, cy, cw, ch));
             
-            /*
-            slider->setProgressBarVisible(progressBarVisible);
-            std::string tp_b = m_strFilePath;
-            const char*imageFileName =  DICTOOL->getStringValue_json(options, "progressBarFileName");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-            if (useMergedTexture)
-            {
-                slider->setProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
-            }
-            else
-            {
-                slider->setProgressBarTexture(imageFileName_tp);
-            }
-            slider->setProgressBarScale();
-             */
+            float swf = DICTOOL->getFloatValue_json(options, "progressBarScale9Width");
+            float shf = DICTOOL->getFloatValue_json(options, "progressBarScale9Height");
+            slider->setProgressBarScale9Size(CCSizeMake(swf, shf));            
         }
+        else
+        {
+            cs::CSJsonDictionary* imageFileNameDic = DICTOOL->getSubDictionary_json(options, "progressBarData");
+            int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+            switch (imageFileType)
+            {
+                case 0:
+                {
+                    std::string tp_b = m_strFilePath;
+                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                    slider->setProgressBarTexture(imageFileName_tp);
+                    break;
+                }
+                case 1:
+                {
+                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                    slider->setProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
+                    break;
+                }
+                default:
+                    break;
+            }
+            CC_SAFE_DELETE(imageFileNameDic);
+        }
+        
+        // percent
+        int percent = DICTOOL->getIntValue_json(options, "percent");
+        slider->setSlidBallPercent(percent);
+        
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
 }
@@ -1583,6 +1580,10 @@ void CCSReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJ
     setPropsForPanelFromJsonDictionary(widget, options);
     
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
+    
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    dragPanel->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
     
     bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
     dragPanel->setBounceEnable(bounceEnable);

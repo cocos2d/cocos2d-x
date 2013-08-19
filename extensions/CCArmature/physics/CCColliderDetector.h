@@ -110,6 +110,7 @@ public:
     void updateTransform(CCAffineTransform &t);
 
 	void setActive(bool active);
+	bool getActive();
 
 	CCArray *getColliderBodyList();
 
@@ -122,6 +123,9 @@ protected:
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
 #endif
+
+protected:
+	bool m_bActive;
 };
 		
 NS_CC_EXT_END
