@@ -35,6 +35,11 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
+/* gui mark */
+typedef void (CCObject::*SEL_PageViewPageTurningEvent)(CCObject*);
+#define coco_PageViewPageTurning_selector(_SELECTOR) (SEL_PageViewPageTurningEvent)(&_SELECTOR)
+/**/
+
 class UIPageView : public UIPanel// , public UIScrollDelegate
 {
     
@@ -59,6 +64,10 @@ public:
     virtual void onTouchEnded(const CCPoint &touchPoint);
     virtual void onTouchCancelled(const CCPoint &touchPoint);
     virtual void update(float dt);
+    /* gui mark */
+    void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
+    int getPage();
+    /**/
 protected:
     virtual bool addChild(UIWidget* widget);
     virtual bool init();
@@ -71,6 +80,9 @@ protected:
     virtual void checkChildInfo(int handleState, UIWidget* sender, const CCPoint &touchPoint);
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
+    /* gui mark */
+    void pageTurningEvent();
+    /**/
 protected:
     int m_nCurPageIdx;
     CCArray* m_pages;
@@ -88,6 +100,10 @@ protected:
     float m_fAutoScrollSpeed;
     int m_nAutoScrollDir;
     float m_fChildFocusCancelOffset;
+    /* gui mark */
+    CCObject* m_pPageTurningListener;
+    SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
+    /**/
 };
 
 NS_CC_EXT_END

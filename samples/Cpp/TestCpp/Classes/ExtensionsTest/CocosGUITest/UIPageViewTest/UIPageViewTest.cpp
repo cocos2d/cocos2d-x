@@ -73,9 +73,17 @@ bool UIPageViewTest::init()
             pageView->addPage(panel);
         }
         
+        pageView->addPageTurningEvent(this, coco_PageViewPageTurning_selector(UIPageViewTest::pageTurningEvent));
+        
         m_pUiLayer->addWidget(pageView);
         
         return true;
     }
     return false;
+}
+
+void UIPageViewTest::pageTurningEvent(CCObject *pSender)
+{
+    UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
+    CCLOG("page = %d", pageView->getPage());
 }

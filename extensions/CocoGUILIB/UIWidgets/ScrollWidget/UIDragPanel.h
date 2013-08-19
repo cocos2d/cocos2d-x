@@ -30,8 +30,6 @@
 
 NS_CC_EXT_BEGIN
 
-class UIWrapPanel;
-
 /*
 enum DRAGPANEL_DIR
 {
@@ -141,13 +139,16 @@ public:
     virtual bool removeChild(UIWidget* child,bool cleanup);
     virtual void removeAllChildrenAndCleanUp(bool cleanup);
     
+    /* gui mark */
     virtual void setSize(const CCSize &size);
     
-    CCNode* getInnerContainerNode();    
+    CCNode* getInnerContainerNode();
     const CCSize& getInnerContainerSize() const;
     void setInnerContainerSize(const CCSize &size);
-//    const CCPoint& getInnerContainerPosition() const;
-//    void setInnerContainerPosition(const CCPoint& point);
+    const CCPoint& getInnerContainerPosition() const;    
+    void setInnerContainerPosition(const CCPoint& point, bool animated);    
+    void setInnerContainerOffset(const CCPoint& offset, bool animated);
+    /**/
     
     /*
     void setDirection(DRAGPANEL_DIR dir);
@@ -202,6 +203,10 @@ protected:
 //    void updateWidthAndHeight();
     void recordSlidTime(float dt);
     
+    /* gui mark */
+    void setInnerContainerOffset(const CCPoint& offset);
+    /**/
+    
     // check if dragpanel rect contain inner rect
     bool checkContainInnerRect();
     
@@ -219,7 +224,7 @@ protected:
     bool checkToBoundaryWithDeltaPosition(const CCPoint& delta);
     
     // calculate to boundary delta
-    CCPoint calculateToBoundaryDeltaPosition(CCPoint& delta);
+    CCPoint calculateToBoundaryDeltaPosition(const CCPoint& paramDelta);
     
     // check berth
     bool checkBerth();

@@ -48,8 +48,8 @@ public:
     void setSlidBallAnchorPoint(const CCPoint& anchor);
     void setBarLength(float length);
     bool isProgressBarVisible();
-    void setProgressBarVisible(bool show);
-    CCNode* getProgressBar();
+    void setProgressBarVisible(bool show);    
+	const CCSize& getProgressBarTextureSize() const;
     void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setProgressBarScale9Enable(bool able);
     void setProgressBarCapInsets(const CCRect &capInsets);
@@ -86,6 +86,7 @@ protected:
     CCSize m_scale9Size;
     bool m_bProgressBarVisible;
     CCNode* m_pProgressBarNode;
+	CCSize m_pProgressBarTextureSize;
     std::string m_strProgressTextureFile;
     bool m_bProgressBarScale9Enable;
     CCRect m_progressBarCapInsets;
