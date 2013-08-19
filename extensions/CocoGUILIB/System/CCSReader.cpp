@@ -1342,6 +1342,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
         // percent
         int percent = DICTOOL->getIntValue_json(options, "percent");
         slider->setSlidBallPercent(percent);
+        slider->setProgressBarScale();
         
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
