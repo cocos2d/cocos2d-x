@@ -198,16 +198,6 @@ bool Array::initWithArray(Array* otherArray)
     return true;
 }
 
-unsigned int Array::count() const
-{
-    return data.size();
-}
-
-unsigned int Array::capacity() const
-{
-    return data.capacity();
-}
-
 int Array::getIndexOfObject(Object* object) const
 {
 //    auto it = std::find(data.begin(), data.end(), object );
@@ -225,18 +215,6 @@ int Array::getIndexOfObject(Object* object) const
     }
     
     return -1;
-}
-
-Object* Array::getObjectAtIndex(int index)
-{
-    CCASSERT(index < data.size(), "index out of range in objectAtIndex()");
-
-    return data[index].get();
-}
-
-Object* Array::getLastObject()
-{
-    return data.back().get();
 }
 
 Object* Array::getRandomObject()
@@ -288,7 +266,7 @@ void Array::addObjectsFromArray(Array* otherArray)
 
 void Array::insertObject(Object* object, int index)
 {
-    data.insert( begin(data) + index, RCPtr<Object>(object) );
+    data.insert( std::begin(data) + index, RCPtr<Object>(object) );
 }
 
 void Array::setObject(Object* object, int index)
@@ -299,7 +277,7 @@ void Array::setObject(Object* object, int index)
 void Array::removeLastObject(bool bReleaseObj)
 {
     CCASSERT(data.size(), "no objects added");
-    data.erase( std::end(data) );
+    data.pop_back();
 }
 
 void Array::removeObject(Object* object, bool bReleaseObj /* ignored */)
@@ -417,9 +395,9 @@ void Array::acceptVisitor(DataVisitor &visitor)
     visitor.visit(this);
 }
 
-//  ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 // ccArray implementation
-//  ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 
 #else
 
@@ -597,34 +575,9 @@ bool Array::initWithArray(Array* otherArray)
     return bRet;
 }
 
-unsigned int Array::count() const
-{
-    return data->num;
-}
-
-unsigned int Array::capacity() const
-{
-    return data->max;
-}
-
 int Array::getIndexOfObject(Object* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
-}
-
-Object* Array::getObjectAtIndex(int index)
-{
-    CCASSERT(index>=0 && index < data->num, "index out of range in objectAtIndex()");
-
-    return data->arr[index];
-}
-
-Object* Array::getLastObject()
-{
-    if( data->num > 0 )
-        return data->arr[data->num-1];
-
-    return NULL;
 }
 
 Object* Array::getRandomObject()
@@ -803,6 +756,30 @@ Array* Array::clone() const
 void Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
+}
+
+Array::iterator Array::begin()
+{
+    if (count() > 0)
+    {
+        return Array::ArrayIterator( getObjectAtIndex(0), this);
+    }
+    else
+    {
+        return Array::ArrayIterator(nullptr, nullptr);;
+    }
+}
+
+Array::iterator Array::end()
+{
+    if (count() > 0)
+    {
+        return Array::ArrayIterator(getObjectAtIndex(count()), this);
+    }
+    else
+    {
+        return Array::ArrayIterator(nullptr, nullptr);
+    }
 }
 
 #endif // uses ccArray

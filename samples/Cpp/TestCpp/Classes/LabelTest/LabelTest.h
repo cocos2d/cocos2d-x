@@ -316,38 +316,6 @@ private:
     LabelBMFont *label1;
 };
 
-class LabelBMFontNewTest : public AtlasDemo
-{
-public:
-    LabelBMFontNewTest();
-    
-    virtual void draw();
-    virtual std::string title();
-    virtual std::string subtitle();
-private:
-    StringBMFont *label1;
-};
-
-class NewLabelTTFTestLongLine : public AtlasDemo
-{
-public:
-
-    NewLabelTTFTestLongLine();
-
-    virtual std::string title();
-    virtual std::string subtitle();
-};
-
-class NewLabelTTFColorTest : public AtlasDemo
-{
-public:
-
-    NewLabelTTFColorTest();
-
-    virtual std::string title();
-    virtual std::string subtitle();
-};
-
 class NewLabelTTFUnicode : public AtlasDemo
 {
 public:
@@ -357,38 +325,6 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
 };
-
-class NewLabelTTFAlignment : public AtlasDemo
-{
-public:
-    
-    NewLabelTTFAlignment();
-    virtual std::string title();
-    virtual std::string subtitle();
-    
-private:
-    
-    void setAlignmentLeft(Object* sender);
-    void setAlignmentCenter(Object* sender);
-    void setAlignmentRight(Object* sender);
-    void updateAlignment();
-    
-    Label          * _label;
-    TextHAlignment   _horizAlign;
-    
-};
-
-
-class NewLabelTTFFontsTest : public AtlasDemo
-{
-public:
-
-    NewLabelTTFFontsTest();
-
-    virtual std::string title();
-    virtual std::string subtitle();
-};
-
 
 class NewLabelBMFontTest : public AtlasDemo
 {
@@ -401,22 +337,6 @@ public:
 
 private:
 };
-
-
-class NewLabelBMFontTestOld : public AtlasDemo
-{
-public:
-    
-    NewLabelBMFontTestOld();
-    ~NewLabelBMFontTestOld();
-    
-    virtual std::string title();
-    virtual std::string subtitle();
-    
-private:
-    Label *label;
-};
-
 
 class NewLabelFontDefTest : public AtlasDemo
 {

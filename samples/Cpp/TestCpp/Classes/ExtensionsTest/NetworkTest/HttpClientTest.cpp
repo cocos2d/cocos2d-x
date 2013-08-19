@@ -8,46 +8,46 @@ USING_NS_CC_EXT;
 HttpClientTest::HttpClientTest() 
 : _labelStatusCode(NULL)
 {
-    Size winSize = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
 
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    LabelTTF *label = LabelTTF::create("Http Request Test", "Arial", 28);
+    auto label = LabelTTF::create("Http Request Test", "Arial", 28);
     label->setPosition(Point(winSize.width / 2, winSize.height - MARGIN));
     addChild(label, 0);
     
-    Menu *menuRequest = Menu::create();
+    auto menuRequest = Menu::create();
     menuRequest->setPosition(Point::ZERO);
     addChild(menuRequest);
     
     // Get 
-    LabelTTF *labelGet = LabelTTF::create("Test Get", "Arial", 22);
-    MenuItemLabel *itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this));
+    auto labelGet = LabelTTF::create("Test Get", "Arial", 22);
+    auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this));
     itemGet->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemGet);
     
     // Post
-    LabelTTF *labelPost = LabelTTF::create("Test Post", "Arial", 22);
-    MenuItemLabel *itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this));
+    auto labelPost = LabelTTF::create("Test Post", "Arial", 22);
+    auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this));
     itemPost->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemPost);
     
     // Post Binary
-    LabelTTF *labelPostBinary = LabelTTF::create("Test Post Binary", "Arial", 22);
-    MenuItemLabel *itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this));
+    auto labelPostBinary = LabelTTF::create("Test Post Binary", "Arial", 22);
+    auto itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this));
     itemPostBinary->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemPostBinary);
 
     // Put
-    LabelTTF *labelPut = LabelTTF::create("Test Put", "Arial", 22);
-    MenuItemLabel *itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this));
+    auto labelPut = LabelTTF::create("Test Put", "Arial", 22);
+    auto itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this));
     itemPut->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemPut);
 
     // Delete
-    LabelTTF *labelDelete = LabelTTF::create("Test Delete", "Arial", 22);
-    MenuItemLabel *itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this));
+    auto labelDelete = LabelTTF::create("Test Delete", "Arial", 22);
+    auto itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this));
     itemDelete->setPosition(Point(winSize.width / 2, winSize.height - MARGIN - 5 * SPACE));
     menuRequest->addChild(itemDelete);
     
@@ -57,9 +57,9 @@ HttpClientTest::HttpClientTest()
     addChild(_labelStatusCode);
     
     // Back Menu
-    MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
+    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu *menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, NULL);
     menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
 }
@@ -283,14 +283,14 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
 
 void HttpClientTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    auto scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
 
 void runHttpClientTest()
 {
-    Scene *scene = Scene::create();
+    auto scene = Scene::create();
     HttpClientTest *layer = new HttpClientTest();
     scene->addChild(layer);
     

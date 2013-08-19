@@ -798,39 +798,12 @@ void Node::visit()
     {
         sortAllChildren();
         // draw children zOrder < 0
-//        ccArray *arrayData = _children->data;
-//        for( ; i < arrayData->num; i++ )
-//        {
-//            pNode = (Node*) arrayData->arr[i];
-//
-//            if ( pNode && pNode->_ZOrder < 0 ) 
-//            {
-//                pNode->visit();
-//            }
-//            else
-//            {
-//                break;
-//            }
-//        }
-//        // self draw
-//        this->draw();
-//
-//        for( ; i < arrayData->num; i++ )
-//        {
-//            pNode = (Node*) arrayData->arr[i];
-//            if (pNode)
-//            {
-//                pNode->visit();
-//            }
-//        }
-        
-        auto iter = _children->data.begin();
-        Node *node = nullptr;
-        
-        for (; iter != _children->data.end(); ++iter)
+        int i = 0;
+        for( ; i < _children->count(); i++ )
         {
-            node = dynamic_cast<Node*>(iter->get());
-            if (node && node->_ZOrder < 0)
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
+
+            if ( node && node->_ZOrder < 0 )
             {
                 node->visit();
             }
@@ -839,20 +812,14 @@ void Node::visit()
                 break;
             }
         }
-        
+        // self draw
         this->draw();
-        
-        for (; iter != _children->data.end(); ++iter)
+
+        for( ; i < _children->count(); i++ )
         {
-            node = dynamic_cast<Node*>(iter->get());
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
             if (node)
-            {
                 node->visit();
-            }
-            else
-            {
-                break;
-            }
         }
     }
     else

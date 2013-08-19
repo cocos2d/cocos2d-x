@@ -28,7 +28,7 @@ void TouchesMainScene::showCurrentTest()
 
     if (layer)
     {
-        Scene* scene = Scene::create();
+        auto scene = Scene::create();
         scene->addChild(layer);
         layer->release();
 
@@ -40,10 +40,10 @@ void TouchesMainScene::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // add title
-    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 32);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-50));
 
@@ -99,7 +99,7 @@ std::string TouchesPerformTest1::title()
 
 void TouchesPerformTest1::registerWithTouchDispatcher()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
@@ -142,7 +142,7 @@ std::string TouchesPerformTest2::title()
 
 void TouchesPerformTest2::registerWithTouchDispatcher()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
 
@@ -168,8 +168,8 @@ void TouchesPerformTest2::ccTouchesCancelled(Set* touches, Event* event)
 void runTouchesTest()
 {
     s_nTouchCurCase = 0;
-    Scene* scene = Scene::create();
-    Layer* layer = new TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
+    auto scene = Scene::create();
+    auto layer = new TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
 
     scene->addChild(layer);
     layer->release();

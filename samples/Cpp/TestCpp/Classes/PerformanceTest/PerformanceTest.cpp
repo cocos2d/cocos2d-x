@@ -35,15 +35,15 @@ void PerformanceMainLayer::onEnter()
 {
     Layer::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    Menu* menu = Menu::create();
+    auto menu = Menu::create();
     menu->setPosition( Point::ZERO );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
     {
-        MenuItemFont* pItem = MenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
+        auto pItem = MenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
         pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         menu->addChild(pItem, kItemTagBasic + i);
     }
@@ -70,16 +70,16 @@ void PerformBasicLayer::onEnter()
 
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
-    MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
+    auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu* menu = Menu::create(pMainItem, NULL);
+    auto menu = Menu::create(pMainItem, NULL);
     menu->setPosition( Point::ZERO );
 
     if (_controlMenuVisible)
     {
-        MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
-        MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
-        MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
+        auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(PerformBasicLayer::backCallback, this));
+        auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(PerformBasicLayer::restartCallback, this));
+        auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(PerformBasicLayer::nextCallback, this));
         item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item3->setPosition(Point(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -93,7 +93,7 @@ void PerformBasicLayer::onEnter()
 
 void PerformBasicLayer::toMainLayer(Object* sender)
 {
-    PerformanceTestScene* scene = new PerformanceTestScene();
+    auto scene = new PerformanceTestScene();
     scene->runThisTest();
 
     scene->release();
@@ -129,7 +129,7 @@ void PerformBasicLayer::backCallback(Object* sender)
 
 void PerformanceTestScene::runThisTest()
 {
-    Layer* layer = new PerformanceMainLayer();
+    auto layer = new PerformanceMainLayer();
     addChild(layer);
     layer->release();
 

@@ -52,6 +52,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
+		018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
 		15A055AD17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
 		15A055AE17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
 		15A055AF17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
@@ -2268,6 +2270,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		018DB84C17B419BA006EC77B /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
+		018DB84D17B419BA006EC77B /* LabelTestNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTestNew.h; sourceTree = "<group>"; };
 		15A055AC17966C350040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Deprecated.lua; path = ../scripting/lua/script/Deprecated.lua; sourceTree = "<group>"; };
 		15A055C1179E25050040AC39 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DrawPrimitives.lua; path = ../scripting/lua/script/DrawPrimitives.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -4522,6 +4526,8 @@
 		A0359A4517821D9B00987F6C /* LabelTest */ = {
 			isa = PBXGroup;
 			children = (
+				018DB84C17B419BA006EC77B /* LabelTestNew.cpp */,
+				018DB84D17B419BA006EC77B /* LabelTestNew.h */,
 				A0359A4617821D9B00987F6C /* LabelTest.cpp */,
 				A0359A4717821D9B00987F6C /* LabelTest.h */,
 			);
@@ -6900,6 +6906,7 @@
 				A07A52601783A3D90073F6A7 /* main.m in Sources */,
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
+				018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7179,6 +7186,7 @@
 				A07A524C1783A3A90073F6A7 /* main.m in Sources */,
 				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
+				018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

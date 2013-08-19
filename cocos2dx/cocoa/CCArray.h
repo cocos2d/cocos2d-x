@@ -25,11 +25,12 @@ THE SOFTWARE.
 #ifndef __CCARRAY_H__
 #define __CCARRAY_H__
 
-#define CC_USE_ARRAY_VECTOR 1
+#define CC_USE_ARRAY_VECTOR 0
 
 #if CC_USE_ARRAY_VECTOR
 #include <vector>
 #include "cocoa/CCObject.h"
+#include "ccMacros.h"
 #else
 #include "support/data_support/ccCArray.h"
 #endif
@@ -231,7 +232,6 @@ NS_CC_BEGIN
 class CC_DLL Array : public Object, public Clonable
 {
 public:
-    ~Array();
 
     /** Create an array */
     static Array* create();
@@ -255,6 +255,8 @@ public:
      invoker should call release().
      */
     static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    
+    ~Array();
 
     /** Initializes an array */
     bool init();
@@ -270,17 +272,47 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count() const;
+    unsigned int count() const {
+#if CC_USE_ARRAY_VECTOR
+        return data.size();
+#else
+        return data->num;
+#endif
+    }
     /** Returns capacity of the array */
-    unsigned int capacity() const;
+    unsigned int capacity() const {
+#if CC_USE_ARRAY_VECTOR
+        return data.capacity();
+#else
+        return data->max;
+#endif
+    }
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
     int getIndexOfObject(Object* object) const;
     /** Returns an element with a certain index */
-    Object* getObjectAtIndex(int index);
-    /** Returns last element */
-    Object* getLastObject();
+    Object* getObjectAtIndex(int index) {
+        CCASSERT(index>=0 && index < count(), "index out of range in objectAtIndex()");
+#if CC_USE_ARRAY_VECTOR
+        return data[index].get();
+#else
+        return data->arr[index];
+#endif
+    }
+    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
+    /** Returns the last element of the array */
+    Object* getLastObject() {
+#if CC_USE_ARRAY_VECTOR
+        return data.back().get();
+#else
+        if( data->num > 0 )
+            return data->arr[data->num-1];
+        return nullptr;
+#endif
+    }
+    CC_DEPRECATED_ATTRIBUTE Object* lastObject() { return getLastObject(); }
     /** Returns a random element */
     Object* getRandomObject();
+    CC_DEPRECATED_ATTRIBUTE Object* randomObject() { return getRandomObject(); }
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(Object* object) const;
     /** @since 1.1 */
@@ -331,7 +363,58 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor);
     virtual Array* clone() const;
+
+    // ------------------------------------------
+    // Iterators
+    // ------------------------------------------
+#if CC_USE_ARRAY_VECTOR
+    typedef std::vector<RCPtr<Object>>::iterator iterator;
+    typedef std::vector<RCPtr<Object>>::const_iterator const_iterator;
+
+    iterator begin() { return data.begin(); }
+    iterator end() { return data.end(); }
+    const_iterator cbegin() { return data.cbegin(); }
+    const_iterator cend() { return data.cend(); }
+
+#else
+    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
+    {
+    public:
+        ArrayIterator(Object *object, Array *array) : _ptr(object), _parent(array) {}
+        ArrayIterator(const ArrayIterator& arrayIterator) : _ptr(arrayIterator._ptr), _parent(arrayIterator._parent) {}
+
+        ArrayIterator& operator++()
+        {
+            int index = _parent->getIndexOfObject(_ptr);
+            _ptr = _parent->getObjectAtIndex(index+1);
+            return *this;
+        }
+        ArrayIterator operator++(int)
+        {
+            ArrayIterator tmp(*this);
+            (*this)++;
+            return tmp;
+        }
+        bool operator==(const ArrayIterator& rhs) { return _ptr == rhs._ptr; }
+        bool operator!=(const ArrayIterator& rhs) { return _ptr != rhs._ptr; }
+        Object* operator*() { return _ptr; }
+        Object* operator->() { return _ptr; }
+
+    private:
+        Object *_ptr;
+        Array *_parent;
+    };
+
+    // functions for range-based loop
+    typedef ArrayIterator iterator;
+    typedef ArrayIterator const_iterator;
+    iterator begin();
+    iterator end();
+
+#endif
     
+
+
 public:
 #if CC_USE_ARRAY_VECTOR
     std::vector<RCPtr<Object>> data;

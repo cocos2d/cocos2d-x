@@ -251,7 +251,7 @@ void CocosDenshionTest::onExit()
 
 void CocosDenshionTest::addButtons()
 {
-    LabelTTF *lblMusic = LabelTTF::create("Control Music", "Arial", 24);
+    auto lblMusic = LabelTTF::create("Control Music", "Arial", 24);
     addChildAt(lblMusic, 0.25f, 0.9f);
 
     Button *btnPlay = Button::createWithText("play");
@@ -293,7 +293,7 @@ void CocosDenshionTest::addButtons()
     });
     addChildAt(btnIsPlayingMusic, 0.4f, 0.65f);
 
-    LabelTTF *lblSound = LabelTTF::create("Control Effects", "Arial", 24);
+    auto lblSound = LabelTTF::create("Control Effects", "Arial", 24);
     addChildAt(lblSound, 0.75f, 0.9f);
 
     Button *btnPlayEffect = Button::createWithText("play");
@@ -414,7 +414,7 @@ void CocosDenshionTest::updateVolumes(float)
 
 void CocosDenshionTestScene::runThisTest()
 {
-    Layer* layer = new CocosDenshionTest();
+    auto layer = new CocosDenshionTest();
     addChild(layer);
     layer->autorelease();
 

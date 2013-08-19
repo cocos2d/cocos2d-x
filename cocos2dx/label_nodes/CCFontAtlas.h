@@ -24,10 +24,12 @@
 #ifndef _CCFontAtlas_h_
 #define _CCFontAtlas_h_
 
-
 #include <map>
 
 NS_CC_BEGIN
+
+//fwd
+class Font;
 
 struct FontLetterDefinition
 {
@@ -47,20 +49,20 @@ struct FontLetterDefinition
 
 class CC_DLL FontAtlas : public Object
 {
-    
 public:
     
     FontAtlas(Font &theFont);
     virtual ~FontAtlas();
     
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);
-    bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition) const;
-    void addTexture(Texture2D &texture, int slot);
-    Texture2D & getTexture(int slot);
+    bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
+    
+    void  addTexture(Texture2D &texture, int slot);
+    float getCommonLineHeight();
     void  setCommonLineHeight(float newHeight);
-    float getCommonLineHeight() const;
-    unsigned short int * getUTF16Text(const char *pText, int &outNumLetters) const;
-    Font & getFont() const;
+    
+    Texture2D           & getTexture(int slot);
+    Font                & getFont();
     
 private:
     

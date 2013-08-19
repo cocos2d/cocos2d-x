@@ -33,7 +33,7 @@ Layer* restartTextInputTest()
     TextInputTest* pContainerLayer = new TextInputTest;
     pContainerLayer->autorelease();
 
-    KeyboardNotificationLayer* pTestLayer = createTextInputTest(testIdx);
+    auto pTestLayer = createTextInputTest(testIdx);
     pTestLayer->autorelease();
     pContainerLayer->addKeyboardNotificationLayer(pTestLayer);
 
@@ -80,7 +80,7 @@ TextInputTest::TextInputTest()
 
 void TextInputTest::restartCallback(Object* sender)
 {
-    Scene* s = new TextInputTestScene();
+    auto s = new TextInputTestScene();
     s->addChild(restartTextInputTest()); 
 
     Director::getInstance()->replaceScene(s);
@@ -89,7 +89,7 @@ void TextInputTest::restartCallback(Object* sender)
 
 void TextInputTest::nextCallback(Object* sender)
 {
-    Scene* s = new TextInputTestScene();
+    auto s = new TextInputTestScene();
     s->addChild( nextTextInputTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -97,7 +97,7 @@ void TextInputTest::nextCallback(Object* sender)
 
 void TextInputTest::backCallback(Object* sender)
 {
-    Scene* s = new TextInputTestScene();
+    auto s = new TextInputTestScene();
     s->addChild( backTextInputTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -131,7 +131,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
 
 void KeyboardNotificationLayer::registerWithTouchDispatcher()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
@@ -145,7 +145,7 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
         return;
     }
 
-    Rect rectTracked = getRect(_trackNode);
+    auto rectTracked = getRect(_trackNode);
     CCLOG("TextInputTest:trackingNodeAt(origin:%f,%f, size:%f,%f)",
         rectTracked.origin.x, rectTracked.origin.y, rectTracked.size.width, rectTracked.size.height);
 
@@ -160,7 +160,7 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
     // move all the children node of KeyboardNotificationLayer
-    Array * children = getChildren();
+    auto children = getChildren();
     Node * node = 0;
     int count = children->count();
     Point pos;
@@ -189,7 +189,7 @@ void KeyboardNotificationLayer::ccTouchEnded(Touch  *touch, Event  *event)
         return;
     }
     
-    Point endPos = touch->getLocation();    
+    auto endPos = touch->getLocation();    
 
     float delta = 5.0f;
     if (::abs(endPos.x - _beginPos.x) > delta
@@ -202,7 +202,7 @@ void KeyboardNotificationLayer::ccTouchEnded(Touch  *touch, Event  *event)
 
     // decide the trackNode is clicked.
     Rect rect;
-    Point point = convertTouchToNodeSpaceAR(touch);
+    auto point = convertTouchToNodeSpaceAR(touch);
     CCLOG("KeyboardNotificationLayer:clickedAt(%f,%f)", point.x, point.y);
 
     rect = getRect(_trackNode);
@@ -224,7 +224,7 @@ std::string TextFieldTTFDefaultTest::subtitle()
 
 void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked)
 {
-    TextFieldTTF * pTextField = (TextFieldTTF*)_trackNode;
+    auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
     {
         // TextFieldTTFTest be clicked
@@ -244,9 +244,9 @@ void TextFieldTTFDefaultTest::onEnter()
     KeyboardNotificationLayer::onEnter();
 
     // add TextFieldTTF
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    TextFieldTTF * pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
         FONT_SIZE);
     addChild(pTextField);
@@ -273,7 +273,7 @@ std::string TextFieldTTFActionTest::subtitle()
 
 void TextFieldTTFActionTest::onClickTrackNode(bool bClicked)
 {
-    TextFieldTTF * pTextField = (TextFieldTTF*)_trackNode;
+    auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
     {
         // TextFieldTTFTest be clicked
@@ -304,7 +304,7 @@ void TextFieldTTFActionTest::onEnter()
     _action = false;
 
     // add TextFieldTTF
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     _textField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
@@ -367,25 +367,25 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
     }
 
     // create a insert text sprite and do some action
-    LabelTTF * label = LabelTTF::create(text, FONT_NAME, FONT_SIZE);
+    auto label = LabelTTF::create(text, FONT_NAME, FONT_SIZE);
     this->addChild(label);
     Color3B color(226, 121, 7);
     label->setColor(color);
 
     // move the sprite from top to position
-    Point endPos = sender->getPosition();
+    auto endPos = sender->getPosition();
     if (sender->getCharCount())
     {
         endPos.x += sender->getContentSize().width / 2;
     }
-    Size  inputTextSize = label->getContentSize();
+    auto inputTextSize = label->getContentSize();
     Point beginPos(endPos.x, Director::getInstance()->getWinSize().height - inputTextSize.height * 2); 
 
     float duration = 0.5;
     label->setPosition(beginPos);
     label->setScale(8);
 
-    Action * seq = Sequence::create(
+    auto seq = Sequence::create(
         Spawn::create(
             MoveTo::create(duration, endPos),
             ScaleTo::create(duration, 1),
@@ -400,16 +400,16 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
 bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, int nLen)
 {
     // create a delete text sprite and do some action
-    LabelTTF * label = LabelTTF::create(delText, FONT_NAME, FONT_SIZE);
+    auto label = LabelTTF::create(delText, FONT_NAME, FONT_SIZE);
     this->addChild(label);
 
     // move the sprite to fly out
-    Point beginPos = sender->getPosition();
-    Size textfieldSize = sender->getContentSize();
-    Size labelSize = label->getContentSize();
+    auto beginPos = sender->getPosition();
+    auto textfieldSize = sender->getContentSize();
+    auto labelSize = label->getContentSize();
     beginPos.x += (textfieldSize.width - labelSize.width) / 2.0f;
     
-    Size winSize = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     Point endPos(- winSize.width / 4.0f, winSize.height * (0.5 + (float)rand() / (2.0f * RAND_MAX)));
 
     float duration = 1;
@@ -417,7 +417,7 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, co
     int repeatTime = 5; 
     label->setPosition(beginPos);
 
-    Action * seq = Sequence::create(
+    auto seq = Sequence::create(
         Spawn::create(
             MoveTo::create(duration, endPos),
             Repeat::create(
@@ -447,7 +447,7 @@ void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 
 void TextInputTestScene::runThisTest()
 {
-    Layer* layer = nextTextInputTest();
+    auto layer = nextTextInputTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
