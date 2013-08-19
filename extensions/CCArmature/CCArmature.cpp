@@ -29,6 +29,13 @@ THE SOFTWARE.
 #include "datas/CCDatas.h"
 #include "display/CCSkin.h"
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
+
+
 NS_CC_EXT_BEGIN
 
 std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
@@ -78,6 +85,7 @@ CCArmature::CCArmature()
 	, m_pParentBone(NULL)
 	, m_pBoneDic(NULL)
     , m_pTopBoneList(NULL)
+	, m_bArmatureTransformDirty(true)
 {
 }
 
@@ -338,6 +346,8 @@ CCAffineTransform CCArmature::nodeToParentTransform()
 {
     if (m_bTransformDirty)
     {
+		m_bArmatureTransformDirty = true;
+
         // Translate values
         float x = m_obPosition.x;
         float y = m_obPosition.y;
@@ -443,6 +453,8 @@ void CCArmature::update(float dt)
     {
         ((CCBone *)object)->update(dt);
     }
+
+	m_bArmatureTransformDirty = false;
 }
 
 void CCArmature::draw()
@@ -621,7 +633,13 @@ b2Body *CCArmature::getB2Body()
 
 void CCArmature::setB2Body(b2Body *body)
 {
+	if (m_pB2Body == body)
+	{
+		return; 
+	}
+
 	m_pB2Body = body;
+	m_pB2Body->SetUserData(this);
 	
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(m_pChildren, object)
@@ -650,7 +668,13 @@ cpBody *CCArmature::getCPBody()
 
 void CCArmature::setCPBody(cpBody *body)
 {
+	if (m_pCPBody == body)
+	{
+		return;
+	}
+
 	m_pCPBody = body;
+	m_pCPBody->data = this;
 
 	CCObject *object = NULL;
 	CCARRAY_FOREACH(m_pChildren, object)

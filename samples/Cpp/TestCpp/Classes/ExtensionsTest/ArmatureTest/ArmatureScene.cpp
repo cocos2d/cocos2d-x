@@ -589,9 +589,9 @@ void TestColliderDetector::onEnter()
 	armature2->getAnimation()->play("Walk");
 	armature2->setScaleX(-0.2f);
 	armature2->setScaleY(0.2f);
-	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
+	armature2->setPosition(ccp(VisibleRect::right().x - 60, VisibleRect::left().y));
 	addChild(armature2);
-
+	
 	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
 	addChild(bullet);
 
@@ -682,11 +682,8 @@ void TestColliderDetector::update(float delta)
 	{
 		Contact &contact = *it;
 
-		b2Body *b2a = contact.fixtureA->GetBody();
-		b2Body *b2b = contact.fixtureB->GetBody();
-
-		CCBone *ba = (CCBone *)b2a->GetUserData();
-		CCBone *bb = (CCBone *)b2b->GetUserData();
+		CCBone *ba = (CCBone *)contact.fixtureA->GetUserData();
+		CCBone *bb = (CCBone *)contact.fixtureB->GetUserData();
 
 		bb->getArmature()->setVisible(false);
 	}
