@@ -637,6 +637,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     
     if (pvrlen < 0)
     {
+        CC_SAFE_DELETE_ARRAY(pvrdata);
         this->release();
         return false;
     }

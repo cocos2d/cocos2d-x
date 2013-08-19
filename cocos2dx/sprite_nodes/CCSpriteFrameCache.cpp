@@ -226,6 +226,11 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* 
     }
 }
 
+bool CCSpriteFrameCache::isFileLoaded(const char *pszPlist)
+{
+    return m_pLoadedFileNames->find(pszPlist) != m_pLoadedFileNames->end();
+}
+
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
     CCAssert(pszPlist, "plist filename should not be NULL");

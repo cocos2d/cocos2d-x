@@ -112,6 +112,8 @@ public:
     */
     void removeSpriteFramesFromFile(const char* plist);
 
+    bool isFileLoaded(const char *pszPlist);
+
 private:
     /** Removes multiple Sprite Frames from CCDictionary.
     * @since v0.99.5

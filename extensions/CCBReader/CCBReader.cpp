@@ -226,6 +226,9 @@ CCNode* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, CCObject *pOw
     CCNode *ret =  this->readNodeGraphFromData(data, pOwner, parentSize);
     
     data->release();
+
+    // HACK HACK: Make some room
+    CCPoolManager::sharedPoolManager()->pop();
     
     return ret;
 }
@@ -512,6 +515,7 @@ std::string CCBReader::readCachedString() {
 }
 
 CCNode * CCBReader::readNodeGraph(CCNode * pParent) {
+
     /* Read class name. */
     std::string className = this->readCachedString();
 
