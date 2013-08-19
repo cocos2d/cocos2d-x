@@ -17,6 +17,8 @@ CCLayer *CreateLayer(int index)
  	CCLayer *pLayer = NULL;
 	switch(index)
 	{
+	case TEST_ASYNCHRONOUS_LOADING:
+		pLayer = new TestAsynchronousLoading(); break;
 	case TEST_DRAGON_BONES_2_0:
 		pLayer = new TestDragonBones20(); break;
 	case TEST_COCOSTUDIO_WITH_SKELETON:
@@ -97,13 +99,7 @@ ArmatureTestScene::ArmatureTestScene(bool bPortrait)
 void ArmatureTestScene::runThisTest()
 {
 
- 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy.ExportJson");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml");
-	
+
 	s_nActionIdx = -1;
 	addChild(NextTest());
 
@@ -142,16 +138,16 @@ void ArmatureTestLayer::onEnter()
 	}    
 
 	// add menu
-	CCMenuItemImage *item1 = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ArmatureTestLayer::backCallback) );
-	CCMenuItemImage *item2 = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ArmatureTestLayer::restartCallback) );
-	CCMenuItemImage *item3 = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ArmatureTestLayer::nextCallback) );
+	backItem = CCMenuItemImage::create(s_pPathB1, s_pPathB2, this, menu_selector(ArmatureTestLayer::backCallback) );
+	restartItem = CCMenuItemImage::create(s_pPathR1, s_pPathR2, this, menu_selector(ArmatureTestLayer::restartCallback) );
+	nextItem = CCMenuItemImage::create(s_pPathF1, s_pPathF2, this, menu_selector(ArmatureTestLayer::nextCallback) );
 
-	CCMenu *menu = CCMenu::create(item1, item2, item3, NULL);
+	CCMenu *menu = CCMenu::create(backItem, restartItem, nextItem, NULL);
 
 	menu->setPosition(CCPointZero);
-	item1->setPosition(ccp(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-	item2->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-	item3->setPosition(ccp(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+	backItem->setPosition(ccp(VisibleRect::center().x - restartItem->getContentSize().width*2, VisibleRect::bottom().y+restartItem->getContentSize().height/2));
+	restartItem->setPosition(ccp(VisibleRect::center().x, VisibleRect::bottom().y+restartItem->getContentSize().height/2));
+	nextItem->setPosition(ccp(VisibleRect::center().x + restartItem->getContentSize().width*2, VisibleRect::bottom().y+restartItem->getContentSize().height/2));
 
 	addChild(menu, 100);
 
@@ -161,6 +157,8 @@ void ArmatureTestLayer::onEnter()
 void ArmatureTestLayer::onExit()
 {
 	removeAllChildren();
+
+	backItem = restartItem = nextItem = NULL;
 }
 
 std::string ArmatureTestLayer::title()
@@ -196,6 +194,65 @@ void ArmatureTestLayer::backCallback(CCObject* pSender)
 void ArmatureTestLayer::draw()
 {
 	CCLayer::draw();
+}
+
+
+void TestAsynchronousLoading::onEnter()
+{
+	ArmatureTestLayer::onEnter();
+
+	backItem->setEnabled(false);
+	restartItem->setEnabled(false);
+	nextItem->setEnabled(false);
+
+	char pszPercent[255];
+	sprintf(pszPercent, "%s %f", subtitle().c_str(), 0.0f);
+	CCLabelTTF *label = (CCLabelTTF*)getChildByTag(10001);
+	label->setString(pszPercent);
+
+
+	//! create a new thread to load data
+ 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+
+	//! load data directly
+// 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
+// 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
+// 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
+// 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
+// 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml");
+//	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy.ExportJson");
+
+}
+
+std::string TestAsynchronousLoading::title()
+{
+	return "Test Asynchronous Loading";
+}
+std::string TestAsynchronousLoading::subtitle()
+{
+	return "current percent : ";
+}
+void TestAsynchronousLoading::dataLoaded(float percent)
+{
+	CCLabelTTF *label = (CCLabelTTF*)getChildByTag(10001);
+	if (label)
+	{
+		char pszPercent[255];
+		sprintf(pszPercent, "%s %f", subtitle().c_str(), percent * 100);
+		label->setString(pszPercent);
+	}
+
+	if (percent >= 1 && backItem && restartItem && nextItem)
+	{
+		backItem->setEnabled(true);
+		restartItem->setEnabled(true);
+		nextItem->setEnabled(true);
+	}
 }
 
 
@@ -532,9 +589,9 @@ void TestColliderDetector::onEnter()
 	armature2->getAnimation()->play("Walk");
 	armature2->setScaleX(-0.2f);
 	armature2->setScaleY(0.2f);
-	armature2->setPosition(ccp(VisibleRect::right().x - 30, VisibleRect::left().y));
+	armature2->setPosition(ccp(VisibleRect::right().x - 60, VisibleRect::left().y));
 	addChild(armature2);
-
+	
 	bullet = CCPhysicsSprite::createWithSpriteFrameName("25.png");
 	addChild(bullet);
 
@@ -625,11 +682,8 @@ void TestColliderDetector::update(float delta)
 	{
 		Contact &contact = *it;
 
-		b2Body *b2a = contact.fixtureA->GetBody();
-		b2Body *b2b = contact.fixtureB->GetBody();
-
-		CCBone *ba = (CCBone *)b2a->GetUserData();
-		CCBone *bb = (CCBone *)b2b->GetUserData();
+		CCBone *ba = (CCBone *)contact.fixtureA->GetUserData();
+		CCBone *bb = (CCBone *)contact.fixtureB->GetUserData();
 
 		bb->getArmature()->setVisible(false);
 	}

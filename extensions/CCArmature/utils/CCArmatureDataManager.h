@@ -107,10 +107,23 @@ public:
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
 	void addArmatureFileInfo(const char *configFilePath);
+
+	/**
+	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+	 *			It will load data in a new thread
+     */
+	void addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector);
+
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
 	void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+
+	/**
+	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+	 *			It will load data in a new thread
+     */
+	void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name

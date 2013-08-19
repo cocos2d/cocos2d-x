@@ -49,6 +49,7 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 void CCArmatureDataManager::purgeArmatureSystem()
 {
 	CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
+	CCDataReaderHelper::purgeDataReaderHelper();
 	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
@@ -153,14 +154,27 @@ CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
 	m_bAutoLoadSpriteFile = true;
-	CCDataReaderHelper::addDataFromFile(configFilePath);
+	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+}
+
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
+{
+	m_bAutoLoadSpriteFile = true;
+	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
 	m_bAutoLoadSpriteFile = false;
-    CCDataReaderHelper::addDataFromFile(configFilePath);
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
+}
+
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
+{
+	m_bAutoLoadSpriteFile = false;
+	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
+	addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
