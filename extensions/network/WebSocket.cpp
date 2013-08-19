@@ -532,7 +532,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         {
                             CCLOGERROR("%s", "libwebsocket_write error...");
                         }
-                        if (bytesWrite < data->len)
+                        else if (bytesWrite < data->len)
                         {
                             CCLOGERROR("Partial write LWS_CALLBACK_CLIENT_WRITEABLE\n");
                         }
