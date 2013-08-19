@@ -41,6 +41,7 @@ class ScriptingCore : public ScriptEngineProtocol
 	JSObject  *global_;
 	JSObject  *debugGlobal_;
 	SimpleRunLoop* runLoop;
+    std::function<void(const char*)> logSniffer_;
 
 	ScriptingCore();
 public:
@@ -86,7 +87,7 @@ public:
      @return The integer value returned from the script function.
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
-
+    
     virtual int sendEvent(ScriptEvent* message) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
@@ -174,6 +175,11 @@ public:
 	 * run a script from script :)
 	 */
 	static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
+ 
+    /**
+     * set a log sniffer from script :)
+     */
+    static JSBool setLogSniffer(JSContext* cx, uint32_t argc, jsval* vp);
 
 	/**
 	 * Force a cycle of GC
@@ -193,6 +199,7 @@ public:
 	void enableDebugger();
 	JSObject* getDebugGlobal() { return debugGlobal_; }
     JSObject* getGlobalObject() { return global_; }
+    void smellLog(const char* msg) { if (logSniffer_) logSniffer_(msg); }
     
  private:
     void string_report(jsval val);

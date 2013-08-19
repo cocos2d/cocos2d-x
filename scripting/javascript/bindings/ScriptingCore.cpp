@@ -186,6 +186,8 @@ void js_log(const char *format, ...) {
     va_end(vl);
     if (len) {
         CCLOG("JS: %s\n", _js_log_buf);
+        
+        ScriptingCore::getInstance()->smellLog(_js_log_buf);
     }
 }
 
@@ -304,6 +306,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, jsc, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    JS_DefineFunction(cx, jsc, "setLogSniffer", ScriptingCore::setLogSniffer, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     // register some global functions
     JS_DefineFunction(cx, global, "require", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -647,6 +650,42 @@ JSBool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         return res;
     }
     return JS_TRUE;
+}
+
+JSBool ScriptingCore::setLogSniffer(JSContext* cx, uint32_t argc, jsval* vp)
+{
+    if (argc == 1) {
+        jsval* argv = JS_ARGV(cx, vp);
+        do {
+			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+			auto lambda = [=](const char* larg0) -> void {
+				jsval largv[1];
+				do {
+					if (larg0) {
+						largv[0] = c_string_to_jsval(cx, larg0);
+					} else {
+						largv[0] = JSVAL_NULL;
+					}
+				} while (0);
+				jsval rval;
+                jsval exception;
+                if (JS_IsExceptionPending(cx))
+                {                    
+                    JS_GetPendingException(cx,&exception);
+                    JS_ClearPendingException(cx);
+                    func->invoke(1, &largv[0], rval);
+                    JS_SetPendingException(cx,exception);
+                }
+                else
+                {
+                    func->invoke(1, &largv[0], rval);
+                }
+			};
+			getInstance()->logSniffer_ = lambda;
+            return JS_TRUE;
+		} while(0);
+    }
+    return JS_FALSE;
 }
 
 JSBool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
