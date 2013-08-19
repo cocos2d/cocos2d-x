@@ -12,6 +12,8 @@ public:
     ~UIPageViewTest();
     bool init();
     
+    void pageTurningEvent(CCObject* pSender);
+    
 protected:
     UI_SCENE_CREATE_FUNC(UIPageViewTest)
     UILabel* m_pDisplayValueLabel;

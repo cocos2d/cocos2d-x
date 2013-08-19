@@ -67,7 +67,7 @@ bool UIDragPanelTest::init()
         
         dragPanel->setInnerContainerSize(imageView->getContentSize());
         CCSize innerSize = dragPanel->getInnerContainerSize();
-        imageView->setPosition(ccp(innerSize.width / 2, innerSize.height / 2));
+        imageView->setPosition(ccp(innerSize.width / 2, innerSize.height / 2));                
         
         m_pUiLayer->addWidget(dragPanel);
         

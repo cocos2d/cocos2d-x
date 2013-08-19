@@ -38,7 +38,11 @@ m_bIsAutoScrolling(false),
 m_fAutoScrollDistance(0.0f),
 m_fAutoScrollSpeed(0.0f),
 m_nAutoScrollDir(0),
-m_fChildFocusCancelOffset(5.0f)
+m_fChildFocusCancelOffset(5.0f),
+/* gui mark */
+m_pPageTurningListener(NULL),
+m_pfnPageTurningSelector(NULL)
+/**/
 {
     m_WidgetName = WIDGET_PAGEVIEW;
 }
@@ -323,6 +327,9 @@ void UIPageView::update(float dt)
                     step = -m_fAutoScrollDistance;
                     m_fAutoScrollDistance = 0.0f;
                     m_bIsAutoScrolling = false;
+                    /* gui mark */
+                    pageTurningEvent();
+                    /**/
                 }
                 else
                 {
@@ -340,6 +347,9 @@ void UIPageView::update(float dt)
                     step = m_fAutoScrollDistance;
                     m_fAutoScrollDistance = 0.0f;
                     m_bIsAutoScrolling = false;
+                    /* gui mark */
+                    pageTurningEvent();
+                    /**/
                 }
                 else
                 {
@@ -540,5 +550,26 @@ void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             break;
     }
 }
+
+/* gui mark */
+void UIPageView::pageTurningEvent()
+{
+    if (m_pPageTurningListener && m_pfnPageTurningSelector)
+    {
+        (m_pPageTurningListener->*m_pfnPageTurningSelector)(this);
+    }
+}
+
+void UIPageView::addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector)
+{
+    m_pPageTurningListener = target;
+    m_pfnPageTurningSelector = selector;
+}
+
+int UIPageView::getPage()
+{
+    return m_nCurPageIdx;
+}
+/**/
 
 NS_CC_EXT_END
