@@ -49,6 +49,7 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 void CCArmatureDataManager::purgeArmatureSystem()
 {
 	CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
+	CCDataReaderHelper::purgeDataReaderHelper();
 	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
@@ -156,10 +157,10 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
 }
 
-void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_CallFuncO selector)
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
 {
 	m_bAutoLoadSpriteFile = true;
-	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
@@ -167,6 +168,13 @@ void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const cha
 	m_bAutoLoadSpriteFile = false;
     CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
     addSpriteFrameFromFile(plistPath, imagePath);
+}
+
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
+{
+	m_bAutoLoadSpriteFile = false;
+	CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
+	addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
@@ -191,7 +199,7 @@ void CCArmatureDataManager::removeAll()
         m_pTextureDatas->removeAllObjects();
     }
 
-    CCDataReaderHelper::sharedDataReaderHelper()->clear();
+    CCDataReaderHelper::clear();
 }
 
 bool CCArmatureDataManager::isAutoLoadSpriteFile()

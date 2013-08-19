@@ -34,6 +34,7 @@ namespace tinyxml2 { class XMLElement; }
 
 NS_CC_EXT_BEGIN
 
+typedef struct _DataInfo DataInfo;
 
 class  CCDataReaderHelper : CCObject
 {
@@ -47,24 +48,17 @@ public:
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
+	static void purgeDataReaderHelper();
+	static void clear();
 public:
+	~CCDataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-	void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_CallFuncND selector);
+	void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
 
 	void addDataAsyncCallBack(float dt);
 
-    void clear();
-
 public:
-
-    /**
-     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPath Path of xml file
-     */
-    static void addDataFromXML(const char *xmlPath);
 
     /**
      * Translate XML export from Dragon CCBone flash tool to datas, and save them.
@@ -72,7 +66,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent);
+    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = NULL);
 
 
 
@@ -104,9 +98,7 @@ public:
     static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
 
 public:
-
-    static void addDataFromJson(const char *filePath);
-    static void addDataFromJsonCache(const char *fileContent);
+    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
     static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
     static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
