@@ -45,7 +45,7 @@ bool UIDragPanelTest::init()
         dragPanel->setTouchEnable(true);
         dragPanel->setBackGroundImageScale9Enable(true);
         dragPanel->setBackGroundImage("cocosgui/scrollviewbg.png");
-        dragPanel->setSize(CCSizeMake(210, 122.5));
+        dragPanel->setSize(CCSizeMake(210, 122.5));        
         CCSize backgroundSize = background->getContentSize();
         dragPanel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
                                    (backgroundSize.width - dragPanel->getRect().size.width) / 2,
@@ -63,8 +63,11 @@ bool UIDragPanelTest::init()
         UIImageView* imageView = UIImageView::create();
         imageView->setTouchEnable(true);
         imageView->setTexture("cocosgui/b11.png");
-        imageView->setPosition(ccp(dragPanel->getRect().size.width / 2, dragPanel->getRect().size.height / 2));
         dragPanel->addChild(imageView);
+        
+        dragPanel->setInnerContainerSize(imageView->getContentSize());
+        CCSize innerSize = dragPanel->getInnerContainerSize();
+        imageView->setPosition(ccp(innerSize.width / 2, innerSize.height / 2));
         
         m_pUiLayer->addWidget(dragPanel);
         
@@ -175,8 +178,11 @@ bool UIDragPanelTest_Bounce::init()
         UIImageView* imageView = UIImageView::create();
         imageView->setTouchEnable(true);
         imageView->setTexture("cocosgui/b11.png");
-        imageView->setPosition(ccp(dragPanel->getRect().size.width / 2, dragPanel->getRect().size.height / 2));
         dragPanel->addChild(imageView);
+        
+        dragPanel->setInnerContainerSize(imageView->getContentSize());
+        CCSize innerSize = dragPanel->getInnerContainerSize();
+        imageView->setPosition(ccp(innerSize.width / 2, innerSize.height / 2));
         
         m_pUiLayer->addWidget(dragPanel);
         
