@@ -112,7 +112,7 @@ bool UISliderTest_Scale9::init()
         slider->setScale9Size(CCSizeMake(250, slider->getRect().size.height));
         slider->setProgressBarScale9Enable(true);
         slider->setProgressBarCapInsets(CCRectMake(0, 0, 0, 0));
-        slider->setProgressBarScale9Size(CCSizeMake(250, slider->getProgressBar()->boundingBox().size.height));
+        slider->setProgressBarScale9Size(CCSizeMake(250, slider->getProgressBarTextureSize().height));
         slider->setSlidBallPercent(0);
         slider->setProgressBarScale();
         slider->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
