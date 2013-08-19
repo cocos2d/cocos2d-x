@@ -164,7 +164,7 @@ public:
      *
      * @param touch A Touch object that represents a touch.
      *
-     * @return YES whether a touch is inside the receiver¡¯s rect.
+     * @return Whether a touch is inside the receiver's rect.
      */
     virtual bool isTouchInside(Touch * touch);
 
