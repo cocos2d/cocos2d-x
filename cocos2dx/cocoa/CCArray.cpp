@@ -765,26 +765,12 @@ void Array::acceptVisitor(DataVisitor &visitor)
 
 Array::iterator Array::begin()
 {
-    if (count() > 0)
-    {
-        return Array::ArrayIterator( getObjectAtIndex(0), this);
-    }
-    else
-    {
-        return Array::ArrayIterator(nullptr, nullptr);;
-    }
+    return Array::ArrayIterator(data->arr[0], this);
 }
 
 Array::iterator Array::end()
 {
-    if (count() > 0)
-    {
-        return Array::ArrayIterator(getObjectAtIndex(count()), this);
-    }
-    else
-    {
-        return Array::ArrayIterator(nullptr, nullptr);
-    }
+    return Array::ArrayIterator(data->arr[data->num], this);
 }
 
 #endif // uses ccArray
