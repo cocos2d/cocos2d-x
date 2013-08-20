@@ -273,7 +273,8 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count() const {
+    unsigned int count() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
 #else
@@ -281,7 +282,8 @@ public:
 #endif
     }
     /** Returns capacity of the array */
-    unsigned int capacity() const {
+    unsigned int capacity() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
 #else
@@ -293,7 +295,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index */
-    Object* getObjectAtIndex(int index) {
+    Object* getObjectAtIndex(int index)
+    {
         CCASSERT(index>=0 && index < count(), "index out of range in objectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
         return data[index].get();
@@ -331,7 +334,8 @@ public:
     /** sets a certain object at a certain index */
     void setObject(Object* object, int index);
     /** sets a certain object at a certain index without retaining. Use it with caution */
-    void fastSetObject(Object* object, int index) {
+    void fastSetObject(Object* object, int index)
+    {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
 #else
@@ -340,12 +344,13 @@ public:
 #endif
     }
 
-    void swap( int indexOne, int indexTwo ) {
+    void swap(int indexOne, int indexTwo)
+    {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
 #if CC_USE_ARRAY_VECTOR
-        std::swap( data[indexOne], data[indexTwo] );
+        std::swap(data[indexOne], data[indexTwo]);
 #else
-        std::swap( data->arr[indexOne], data->arr[indexTwo] );
+        std::swap(data->arr[indexOne], data->arr[indexTwo]);
 #endif
     }
 
@@ -398,31 +403,97 @@ public:
     const_iterator cend() { return data.cend(); }
 
 #else
-    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
+    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object*>
     {
     public:
-        ArrayIterator(Object *object, Array *array) : _ptr(object), _parent(array) {}
+        ArrayIterator() : _ptr(nullptr), _parent(nullptr) {}
+        ArrayIterator(value_type object, Array *array) : _ptr(object), _parent(array) {}
         ArrayIterator(const ArrayIterator& arrayIterator) : _ptr(arrayIterator._ptr), _parent(arrayIterator._parent) {}
 
-        ArrayIterator& operator++()
-        {
-            int index = _parent->getIndexOfObject(_ptr);
-            _ptr = _parent->getObjectAtIndex(index+1);
-            return *this;
-        }
         ArrayIterator operator++(int)
         {
             ArrayIterator tmp(*this);
-            (*this)++;
+            int index = ccArrayGetIndexOfObject(_parent->data, _ptr);
+            _ptr = _parent->data->arr[index+1];
             return tmp;
         }
-        bool operator==(const ArrayIterator& rhs) { return _ptr == rhs._ptr; }
-        bool operator!=(const ArrayIterator& rhs) { return _ptr != rhs._ptr; }
-        Object* operator*() { return _ptr; }
-        Object* operator->() { return _ptr; }
+        
+        ArrayIterator operator--(int)
+        {
+            ArrayIterator tmp(*this);
+            int index = ccArrayGetIndexOfObject(_parent->data, _ptr);
+            _ptr = _parent->data->arr[index-1];
+            return tmp;
+        }
+        
+        ArrayIterator& operator++()
+        {
+            int index = ccArrayGetIndexOfObject(_parent->data, _ptr);
+            _ptr = _parent->data->arr[index+1];
+            return *this;
+        }
+        
+        ArrayIterator& operator--()
+        {
+            int index = ccArrayGetIndexOfObject(_parent->data, _ptr);
+            _ptr = _parent->data->arr[index-1];
+            return *this;
+        }
+        
+        int operator-(const ArrayIterator &rhs) const
+        {
+            return ccArrayGetIndexOfObject(_parent->data, _ptr) - ccArrayGetIndexOfObject(rhs._parent->data, _ptr);
+        }
+        
+        ArrayIterator operator-(int d)
+        {
+            _ptr = _parent->data->arr[ccArrayGetIndexOfObject(_parent->data, _ptr) - d];
+            return *this;
+        }
+        
+        ArrayIterator operator+(int d)
+        {
+            _ptr = _parent->data->arr[ccArrayGetIndexOfObject(_parent->data, _ptr) + d];
+            return *this;
+        }
+        
+        const ArrayIterator& operator+=(int d)
+        {
+            _ptr = _parent->data->arr[ccArrayGetIndexOfObject(_parent->data, _ptr) + d];
+            return *this;
+        }
+        
+        const ArrayIterator& operator-=(int d)
+        {
+            _ptr = _parent->data->arr[ccArrayGetIndexOfObject(_parent->data, _ptr) - d];
+            return *this;
+        }
+        
+        // add these function to make compiler happy when using std::sort(), it is meaningless
+        bool operator>=(const ArrayIterator& rhs) const
+        {
+            return false;
+        }
+        bool operator<(const ArrayIterator& rhs) const
+        {
+            return false;
+        }
+        bool operator<=(const ArrayIterator& rhs) const
+        {
+            return false;
+        }
+        bool operator>(const ArrayIterator& rhs) const
+        {
+            return false;
+        }
+        
+        bool operator==(const ArrayIterator& rhs) const { return _ptr == rhs._ptr; }
+        bool operator!=(const ArrayIterator& rhs) const { return _ptr != rhs._ptr; }
+        reference operator*() { return _ptr; }
+        value_type operator->() const { return _ptr; }
 
     private:
-        Object *_ptr;
+        value_type _ptr;
         Array *_parent;
     };
 

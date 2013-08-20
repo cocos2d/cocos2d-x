@@ -67,23 +67,12 @@ void TouchDispatcher::setDispatchEvents(bool bDispatchEvents)
     _dispatchEvents = bDispatchEvents;
 }
 
-/*
-+(id) allocWithZone:(Zone *)zone
-{
-    @synchronized(self) {
-        CCASSERT(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
-        return [super allocWithZone:zone];
-    }
-    return nil; // on subsequent allocation attempts return nil
-}
-*/
-
 bool TouchDispatcher::init(void)
 {
     _dispatchEvents = true;
     _targetedHandlers = Array::createWithCapacity(8);
     _targetedHandlers->retain();
-     _standardHandlers = Array::createWithCapacity(4);
+    _standardHandlers = Array::createWithCapacity(4);
     _standardHandlers->retain();
     _handlersToAdd = Array::createWithCapacity(8);
     _handlersToAdd->retain();
@@ -306,8 +295,14 @@ TouchHandler* TouchDispatcher::findHandler(Array* pArray, TouchDelegate *pDelega
 
 void TouchDispatcher::rearrangeHandlers(Array *array)
 {
-    std::sort(array->data->arr, array->data->arr + array->data->num, less);
-//    std::sort( std::begin(*array), std::end(*array), less);
+    std::sort(array->begin(), array->end(), [](const Object* p1, const Object* p2) {
+        TouchHandler *h1, *h2;
+        h1 = (TouchHandler*)(p1);
+        h2 = (TouchHandler*)(p2);
+        return (h1->getPriority() < h2->getPriority());
+    });
+    
+    std::sort(array->begin(), array->end(), less);
 }
 
 void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)
