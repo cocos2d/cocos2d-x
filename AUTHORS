@@ -566,6 +566,9 @@ Developers:
         
     maciekczwa
         Fixing a bug that stroke color with channel color values other than 255 doesn't take effect on android.
+        
+    zcgit
+        a potential bug fix in Layer::init.
 
 Retired Core Developers:
     WenSheng Yang
