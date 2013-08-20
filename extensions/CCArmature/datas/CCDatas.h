@@ -275,6 +275,24 @@ public:
 	float dataVersion;
 };
 
+enum CCBlendType
+{
+	BLEND_NORMAL,
+	BLEND_LAYER,
+	BLEND_DARKEN,
+	BLEND_MULTIPLY,
+	BLEND_LIGHTEN,
+	BLEND_SCREEN,
+	BLEND_OVERLAY,
+	BLEND_HARD_LIGHT,
+	BLEND_ADD,
+	BLEND_SUBSTRACT,
+	BLEND_DIFFERENCE,
+	BLEND_INVERT,
+	BLEND_ALPHA,
+	BLEND_ERASE
+};
+
 
 class  CCFrameData : public CCBaseData
 {
@@ -295,6 +313,8 @@ public:
     * If value is -1, then display will not be shown.
     */
     int displayIndex;
+
+	CCBlendType blendType;
 
 	std::string strEvent;
     /**

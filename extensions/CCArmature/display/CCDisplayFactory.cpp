@@ -70,7 +70,7 @@ void CCDisplayFactory::createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 
 void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
 {
-    CS_RETURN_IF(!decoDisplay);
+    CS_RETURN_IF(!decoDisplay || !dirty);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
@@ -220,8 +220,6 @@ void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *
 }
 void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
-    CS_RETURN_IF(!dirty);
-
     CCArmature *armature = (CCArmature*)display;
     if(armature)
     {

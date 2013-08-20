@@ -165,6 +165,7 @@ public:
      */
     CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
+	CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
     CCTween *m_pTween;				//! Calculate tween effect
 

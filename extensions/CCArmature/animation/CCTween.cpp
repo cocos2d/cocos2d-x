@@ -289,20 +289,25 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 {
     if(keyFrameData)
     {
+		CCDisplayManager *displayManager = m_pBone->getDisplayManager();
+
 		//! Change bone's display
         int displayIndex = keyFrameData->displayIndex;
 
-        if (!m_pBone->getDisplayManager()->getForceChangeDisplay())
+        if (!displayManager->getForceChangeDisplay())
         {
-            m_pBone->getDisplayManager()->changeDisplayByIndex(displayIndex, false);
+            displayManager->changeDisplayByIndex(displayIndex, false);
         }
 
 		//! Update bone zorder, bone's zorder is determined by frame zorder and bone zorder
 		m_pTweenData->zOrder = keyFrameData->zOrder;
         m_pBone->updateZOrder();
 
-        CCArmature *childAramture = m_pBone->getChildArmature();
+		//! Update blend type
+		m_pBone->setBlendType(keyFrameData->blendType);
 
+		//! Update child armature's movement
+        CCArmature *childAramture = m_pBone->getChildArmature();
         if(childAramture)
         {
             if(keyFrameData->strMovement.length() != 0)
@@ -312,7 +317,6 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
         }
     }
 }
-
 
 CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {

@@ -96,6 +96,8 @@ static const char *A_PIVOT_Y = "pY";
 static const char *A_COCOS2D_PIVOT_X = "cocos2d_pX";
 static const char *A_COCOS2D_PIVOT_Y = "cocos2d_pY";
 
+static const char *A_BLEND_TYPE = "bd";
+
 static const char *A_ALPHA = "a";
 static const char *A_RED = "r";
 static const char *A_GREEN = "g";
@@ -918,7 +920,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData)
 {
 	float x, y, scale_x, scale_y, skew_x, skew_y = 0;
-	int duration, displayIndex, zOrder, tweenEasing = 0;
+	int duration, displayIndex, zOrder, tweenEasing, blendType = 0;
 
 	CCFrameData *frameData = new CCFrameData();
 
@@ -996,7 +998,10 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
 	{
 		frameData->zOrder = zOrder;
 	}
-
+	if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
+	{
+		frameData->blendType = (CCBlendType)blendType;
+	}
 
 	tinyxml2::XMLElement *colorTransformXML = frameXML->FirstChildElement(A_COLOR_TRANSFORM);
 	if (colorTransformXML)
@@ -1496,6 +1501,7 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
 
 	frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
 	frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
+	frameData->blendType = (CCBlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
 
 	const char *event = json.getItemStringValue(A_EVENT);
 	if (event != NULL)
