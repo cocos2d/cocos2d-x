@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "text_input_node/CCIMEDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCApplication.h"
+
 #ifdef CC_KEYBOARD_SUPPORT
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #endif
@@ -159,52 +160,119 @@ static bool glew_dynamic_binding()
 	}
 	return true;
 }
+//begin EGLViewEventHandler
+class EGLViewEventHandler
+{
+public:
+    static bool s_captured;
+    static float s_mouseX;
+    static float s_mouseY;
+
+    static void OnGLFWError(int errorID, const char* errorDesc);
+    static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
+    static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+};
+
+bool EGLViewEventHandler::s_captured = false;
+float EGLViewEventHandler::s_mouseX = 0;
+float EGLViewEventHandler::s_mouseY = 0;
+
+void EGLViewEventHandler::OnGLFWError(int errorID, const char* errorDesc)
+{
+    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+}
+
+void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+{
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+    if(GLFW_MOUSE_BUTTON_LEFT == button)
+    {
+        if(GLFW_PRESS == action)
+        {
+            s_captured = true;
+            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
+            {
+                int id = 0;
+                eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
+            }
+        }
+        else if(GLFW_RELEASE == action)
+        {
+            s_captured = false;
+            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
+            {
+                int id = 0;
+                eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
+            }
+        }
+    }
+}
+
+void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+{
+    s_mouseX = (float)x;
+    s_mouseY = (float)y;
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+
+    s_mouseX /= eglView->getFrameZoomFactor();
+    s_mouseY /= eglView->getFrameZoomFactor();
+
+    if(s_captured)
+    {
+        if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
+        {
+            int id = 0;
+            eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
+        }
+    }
+}
+
+//end EGLViewEventHandler
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // impliment EGLView
 //////////////////////////////////////////////////////////////////////////
-static EGLView* s_pMainWindow = NULL;
-static const WCHAR* kWindowClassName = L"Cocos2dxWin32";
 
-static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-    if (s_pMainWindow && s_pMainWindow->getHWnd() == hWnd)
-    {
-        return s_pMainWindow->WindowProc(uMsg, wParam, lParam);
-    }
-    else
-    {
-        return DefWindowProc(hWnd, uMsg, wParam, lParam);
-    }
-}
+EGLView* EGLView::s_pEglView = nullptr;
+
+
 
 EGLView::EGLView()
 : _captured(false)
 , _wnd(NULL)
-, _DC(NULL)
-, _RC(NULL)
 , _lpfnAccelerometerKeyHook(NULL)
 , _menu(NULL)
 , _wndproc(NULL)
 , _frameZoomFactor(1.0f)
 , _supportTouch(false)
+, _mainWindow(nullptr)
 {
+    CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
+    s_pEglView = this;
     strcpy(_viewName, "Cocos2dxWin32");
+    glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
+    glfwInit();
 }
 
 EGLView::~EGLView()
 {
-
+    glfwTerminate();
+    s_pEglView = nullptr;
 }
 
-bool EGLView::initGL()
+bool EGLView::Create()
 {
-    _DC = GetDC(_wnd);
-    SetupPixelFormat(_DC);
-    //SetupPalette();
-    _RC = wglCreateContext(_DC);
-    wglMakeCurrent(_DC, _RC);
-
+    if(nullptr != _mainWindow) return true;
+    _mainWindow = glfwCreateWindow(_screenSize.width, _screenSize.height, _viewName, nullptr, nullptr);
+    glfwMakeContextCurrent(_mainWindow);
+    glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
+    glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     CCLOG("OpenGL version = %s", glVersion);
@@ -213,16 +281,16 @@ bool EGLView::initGL()
     {
         char strComplain[256] = {0};
         sprintf(strComplain,
-		"OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
-		glVersion);
-		MessageBox(strComplain, "OpenGL version too old");
-		return false;
+            "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
+            glVersion);
+        MessageBox(strComplain, "OpenGL version too old");
+        return false;
     }
 
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult)
     {
-		MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
         return false;
     }
 
@@ -245,10 +313,10 @@ bool EGLView::initGL()
     }
 
     if(glew_dynamic_binding() == false)
-	{
-		MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
-		return false;
-	}
+    {
+        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+        return false;
+    }
 
     // Enable point size by default on windows.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
@@ -256,299 +324,222 @@ bool EGLView::initGL()
     return true;
 }
 
-void EGLView::destroyGL()
-{
-    if (_DC != NULL && _RC != NULL)
-    {
-        // deselect rendering context and delete it
-        wglMakeCurrent(_DC, NULL);
-        wglDeleteContext(_RC);
-    }
-}
-
-bool EGLView::Create()
-{
-    bool bRet = false;
-    do
-    {
-        CC_BREAK_IF(_wnd);
-
-        HINSTANCE hInstance = GetModuleHandle( NULL );
-        WNDCLASS  wc;        // Windows Class Structure
-
-        // Redraw On Size, And Own DC For Window.
-        wc.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-        wc.lpfnWndProc    = _WindowProc;                    // WndProc Handles Messages
-        wc.cbClsExtra     = 0;                              // No Extra Window Data
-        wc.cbWndExtra     = 0;                                // No Extra Window Data
-        wc.hInstance      = hInstance;                        // Set The Instance
-        wc.hIcon          = LoadIcon( NULL, IDI_WINLOGO );    // Load The Default Icon
-        wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
-        wc.hbrBackground  = NULL;                           // No Background Required For GL
-        wc.lpszMenuName   = _menu;                         //
-        wc.lpszClassName  = kWindowClassName;               // Set The Class Name
-
-        CC_BREAK_IF(! RegisterClass(&wc) && 1410 != GetLastError());
-
-        // center window position
-        RECT rcDesktop;
-        GetWindowRect(GetDesktopWindow(), &rcDesktop);
-
-        WCHAR wszBuf[50] = {0};
-        MultiByteToWideChar(CP_UTF8, 0, _viewName, -1, wszBuf, sizeof(wszBuf));
-
-        // create window
-        _wnd = CreateWindowEx(
-            WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,    // Extended Style For The Window
-            kWindowClassName,                                    // Class Name
-            wszBuf,                                                // Window Title
-            WS_CAPTION | WS_POPUPWINDOW | WS_MINIMIZEBOX,        // Defined Window Style
-            0, 0,                                                // Window Position
-            //TODO: Initializing width with a large value to avoid getting a wrong client area by 'GetClientRect' function.
-            1000,                                               // Window Width
-            1000,                                               // Window Height
-            NULL,                                                // No Parent Window
-            NULL,                                                // No Menu
-            hInstance,                                            // Instance
-            NULL );
-
-        CC_BREAK_IF(! _wnd);
-
-        bRet = initGL();
-		if(!bRet) destroyGL();
-        CC_BREAK_IF(!bRet);
-
-        s_pMainWindow = this;
-        bRet = true;
-    } while (0);
-
-#if(_MSC_VER >= 1600)
-    _supportTouch = CheckTouchSupport();
-    if(_supportTouch)
-	{
-	    _supportTouch = (s_pfRegisterTouchWindowFunction(_wnd, 0) != 0);
-    }
-#endif /* #if(_MSC_VER >= 1600) */
-
-    return bRet;
-}
-
-LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-    BOOL bProcessed = FALSE;
-
-    switch (message)
-    {
-    case WM_LBUTTONDOWN:
-#if(_MSC_VER >= 1600)
-        // Don't process message generated by Windows Touch
-        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
-#endif /* #if(_MSC_VER >= 1600) */
-
-        if (_delegate && MK_LBUTTON == wParam)
-        {
-            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            Point pt(point.x, point.y);
-            pt.x /= _frameZoomFactor;
-            pt.y /= _frameZoomFactor;
-            Point tmp = Point(pt.x, _screenSize.height - pt.y);
-            if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
-            {
-                _captured = true;
-                SetCapture(_wnd);
-                int id = 0;
-                handleTouchesBegin(1, &id, &pt.x, &pt.y);
-            }
-        }
-        break;
-
-    case WM_MOUSEMOVE:
-#if(_MSC_VER >= 1600)
-        // Don't process message generated by Windows Touch
-        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
-#endif /* #if(_MSC_VER >= 1600) */
-        if (MK_LBUTTON == wParam && _captured)
-        {
-            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            Point pt(point.x, point.y);
-            int id = 0;
-            pt.x /= _frameZoomFactor;
-            pt.y /= _frameZoomFactor;
-            handleTouchesMove(1, &id, &pt.x, &pt.y);
-        }
-        break;
-
-    case WM_LBUTTONUP:
-#if(_MSC_VER >= 1600)
-        // Don't process message generated by Windows Touch
-        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
-#endif /* #if(_MSC_VER >= 1600) */
-        if (_captured)
-        {
-            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
-            Point pt(point.x, point.y);
-            int id = 0;
-            pt.x /= _frameZoomFactor;
-            pt.y /= _frameZoomFactor;
-            handleTouchesEnd(1, &id, &pt.x, &pt.y);
-
-            ReleaseCapture();
-            _captured = false;
-        }
-        break;
-#if(_MSC_VER >= 1600)
-    case WM_TOUCH:
-		{
-            BOOL bHandled = FALSE;
-            UINT cInputs = LOWORD(wParam);
-            PTOUCHINPUT pInputs = new TOUCHINPUT[cInputs];
-            if (pInputs)
-            {
-                if (s_pfGetTouchInputInfoFunction((HTOUCHINPUT)lParam, cInputs, pInputs, sizeof(TOUCHINPUT)))
-                {
-                    for (UINT i=0; i < cInputs; i++)
-                    {
-                        TOUCHINPUT ti = pInputs[i];
-                        POINT input;
-                        input.x = TOUCH_COORD_TO_PIXEL(ti.x);
-                        input.y = TOUCH_COORD_TO_PIXEL(ti.y);
-                        ScreenToClient(_wnd, &input);
-                        Point pt(input.x, input.y);
-                        Point tmp = Point(pt.x, _screenSize.height - pt.y);
-                        if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
-                        {
-                            pt.x /= _frameZoomFactor;
-                            pt.y /= _frameZoomFactor;
-
-                            if (ti.dwFlags & TOUCHEVENTF_DOWN)
-                                handleTouchesBegin(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
-                            else if (ti.dwFlags & TOUCHEVENTF_MOVE)
-                                handleTouchesMove(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
-                            else if (ti.dwFlags & TOUCHEVENTF_UP)
-                                handleTouchesEnd(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
-                         }
-                     }
-                     bHandled = TRUE;
-                 }
-                 delete [] pInputs;
-             }
-             if (bHandled)
-             {
-                 s_pfCloseTouchInputHandleFunction((HTOUCHINPUT)lParam);
-             }
-		}
-      break;
-#endif /* #if(_MSC_VER >= 1600) */
-    case WM_SIZE:
-        switch (wParam)
-        {
-        case SIZE_RESTORED:
-            Application::getInstance()->applicationWillEnterForeground();
-            break;
-        case SIZE_MINIMIZED:
-            Application::getInstance()->applicationDidEnterBackground();
-            break;
-        }
-        break;
-    case WM_KEYDOWN:
-#ifdef CC_KEYBOARD_SUPPORT
-        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, true);
-#endif
-        if (wParam == VK_F1 || wParam == VK_F2)
-        {
-            Director* pDirector = Director::getInstance();
-            if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-                pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
-        }
-        else if (wParam == VK_ESCAPE)
-        {
-            Director::getInstance()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-        }
-
-        if ( _lpfnAccelerometerKeyHook!=NULL )
-        {
-            (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-        }
-        break;
-    case WM_KEYUP:
-#ifdef CC_KEYBOARD_SUPPORT
-        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, false);
-#endif
-        if ( _lpfnAccelerometerKeyHook!=NULL )
-        {
-            (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-        }
-        break;
-    case WM_CHAR:
-        {
-            if (wParam < 0x20)
-            {
-                if (VK_BACK == wParam)
-                {
-                    IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-                }
-                else if (VK_RETURN == wParam)
-                {
-                    IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-                }
-                else if (VK_TAB == wParam)
-                {
-                    // tab input
-                }
-                else if (VK_ESCAPE == wParam)
-                {
-                    // ESC input
-                    //CCDirector::getInstance()->end();
-                }
-            }
-            else if (wParam < 128)
-            {
-                // ascii char
-                IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&wParam, 1);
-            }
-            else
-            {
-                char szUtf8[8] = {0};
-                int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
-                IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
-            }
-            if ( _lpfnAccelerometerKeyHook!=NULL )
-            {
-                (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
-            }
-        }
-        break;
-    case WM_PAINT:
-        PAINTSTRUCT ps;
-        BeginPaint(_wnd, &ps);
-        EndPaint(_wnd, &ps);
-        break;
-
-    case WM_CLOSE:
-        Director::getInstance()->end();
-        break;
-
-    case WM_DESTROY:
-        destroyGL();
-        PostQuitMessage(0);
-        break;
-
-    default:
-        if (_wndproc)
-        {
-
-            _wndproc(message, wParam, lParam, &bProcessed);
-            if (bProcessed) break;
-        }
-        return DefWindowProc(_wnd, message, wParam, lParam);
-    }
-
-    if (_wndproc && !bProcessed)
-    {
-        _wndproc(message, wParam, lParam, &bProcessed);
-    }
-    return 0;
-}
+//LRESULT EGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+//{
+//    BOOL bProcessed = FALSE;
+//
+//    switch (message)
+//    {
+//    case WM_LBUTTONDOWN:
+//#if(_MSC_VER >= 1600)
+//        // Don't process message generated by Windows Touch
+//        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
+//#endif /* #if(_MSC_VER >= 1600) */
+//
+//        if (_delegate && MK_LBUTTON == wParam)
+//        {
+//            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+//            Point pt(point.x, point.y);
+//            pt.x /= _frameZoomFactor;
+//            pt.y /= _frameZoomFactor;
+//            Point tmp = Point(pt.x, _screenSize.height - pt.y);
+//            if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
+//            {
+//                _captured = true;
+//                SetCapture(_wnd);
+//                int id = 0;
+//                handleTouchesBegin(1, &id, &pt.x, &pt.y);
+//            }
+//        }
+//        break;
+//
+//    case WM_MOUSEMOVE:
+//#if(_MSC_VER >= 1600)
+//        // Don't process message generated by Windows Touch
+//        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
+//#endif /* #if(_MSC_VER >= 1600) */
+//        if (MK_LBUTTON == wParam && _captured)
+//        {
+//            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+//            Point pt(point.x, point.y);
+//            int id = 0;
+//            pt.x /= _frameZoomFactor;
+//            pt.y /= _frameZoomFactor;
+//            handleTouchesMove(1, &id, &pt.x, &pt.y);
+//        }
+//        break;
+//
+//    case WM_LBUTTONUP:
+//#if(_MSC_VER >= 1600)
+//        // Don't process message generated by Windows Touch
+//        if (_supportTouch && (s_pfGetMessageExtraInfoFunction() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) break;
+//#endif /* #if(_MSC_VER >= 1600) */
+//        if (_captured)
+//        {
+//            POINT point = {(short)LOWORD(lParam), (short)HIWORD(lParam)};
+//            Point pt(point.x, point.y);
+//            int id = 0;
+//            pt.x /= _frameZoomFactor;
+//            pt.y /= _frameZoomFactor;
+//            handleTouchesEnd(1, &id, &pt.x, &pt.y);
+//
+//            ReleaseCapture();
+//            _captured = false;
+//        }
+//        break;
+//#if(_MSC_VER >= 1600)
+//    case WM_TOUCH:
+//		{
+//            BOOL bHandled = FALSE;
+//            UINT cInputs = LOWORD(wParam);
+//            PTOUCHINPUT pInputs = new TOUCHINPUT[cInputs];
+//            if (pInputs)
+//            {
+//                if (s_pfGetTouchInputInfoFunction((HTOUCHINPUT)lParam, cInputs, pInputs, sizeof(TOUCHINPUT)))
+//                {
+//                    for (UINT i=0; i < cInputs; i++)
+//                    {
+//                        TOUCHINPUT ti = pInputs[i];
+//                        POINT input;
+//                        input.x = TOUCH_COORD_TO_PIXEL(ti.x);
+//                        input.y = TOUCH_COORD_TO_PIXEL(ti.y);
+//                        ScreenToClient(_wnd, &input);
+//                        Point pt(input.x, input.y);
+//                        Point tmp = Point(pt.x, _screenSize.height - pt.y);
+//                        if (_viewPortRect.equals(Rect::ZERO) || _viewPortRect.containsPoint(tmp))
+//                        {
+//                            pt.x /= _frameZoomFactor;
+//                            pt.y /= _frameZoomFactor;
+//
+//                            if (ti.dwFlags & TOUCHEVENTF_DOWN)
+//                                handleTouchesBegin(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
+//                            else if (ti.dwFlags & TOUCHEVENTF_MOVE)
+//                                handleTouchesMove(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
+//                            else if (ti.dwFlags & TOUCHEVENTF_UP)
+//                                handleTouchesEnd(1, reinterpret_cast<int*>(&ti.dwID), &pt.x, &pt.y);
+//                         }
+//                     }
+//                     bHandled = TRUE;
+//                 }
+//                 delete [] pInputs;
+//             }
+//             if (bHandled)
+//             {
+//                 s_pfCloseTouchInputHandleFunction((HTOUCHINPUT)lParam);
+//             }
+//		}
+//      break;
+//#endif /* #if(_MSC_VER >= 1600) */
+//    case WM_SIZE:
+//        switch (wParam)
+//        {
+//        case SIZE_RESTORED:
+//            Application::getInstance()->applicationWillEnterForeground();
+//            break;
+//        case SIZE_MINIMIZED:
+//            Application::getInstance()->applicationDidEnterBackground();
+//            break;
+//        }
+//        break;
+//    case WM_KEYDOWN:
+//#ifdef CC_KEYBOARD_SUPPORT
+//        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, true);
+//#endif
+//        if (wParam == VK_F1 || wParam == VK_F2)
+//        {
+//            Director* pDirector = Director::getInstance();
+//            if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
+//                pDirector->getKeypadDispatcher()->dispatchKeypadMSG(wParam == VK_F1 ? kTypeBackClicked : kTypeMenuClicked);
+//        }
+//        else if (wParam == VK_ESCAPE)
+//        {
+//            Director::getInstance()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+//        }
+//
+//        if ( _lpfnAccelerometerKeyHook!=NULL )
+//        {
+//            (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+//        }
+//        break;
+//    case WM_KEYUP:
+//#ifdef CC_KEYBOARD_SUPPORT
+//        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(wParam, false);
+//#endif
+//        if ( _lpfnAccelerometerKeyHook!=NULL )
+//        {
+//            (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+//        }
+//        break;
+//    case WM_CHAR:
+//        {
+//            if (wParam < 0x20)
+//            {
+//                if (VK_BACK == wParam)
+//                {
+//                    IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+//                }
+//                else if (VK_RETURN == wParam)
+//                {
+//                    IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+//                }
+//                else if (VK_TAB == wParam)
+//                {
+//                    // tab input
+//                }
+//                else if (VK_ESCAPE == wParam)
+//                {
+//                    // ESC input
+//                    //CCDirector::getInstance()->end();
+//                }
+//            }
+//            else if (wParam < 128)
+//            {
+//                // ascii char
+//                IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char *)&wParam, 1);
+//            }
+//            else
+//            {
+//                char szUtf8[8] = {0};
+//                int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)&wParam, 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+//                IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
+//            }
+//            if ( _lpfnAccelerometerKeyHook!=NULL )
+//            {
+//                (*_lpfnAccelerometerKeyHook)( message,wParam,lParam );
+//            }
+//        }
+//        break;
+//    case WM_PAINT:
+//        PAINTSTRUCT ps;
+//        BeginPaint(_wnd, &ps);
+//        EndPaint(_wnd, &ps);
+//        break;
+//
+//    case WM_CLOSE:
+//        Director::getInstance()->end();
+//        break;
+//
+//    case WM_DESTROY:
+//        //destroyGL();
+//        PostQuitMessage(0);
+//        break;
+//
+//    default:
+//        if (_wndproc)
+//        {
+//
+//            _wndproc(message, wParam, lParam, &bProcessed);
+//            if (bProcessed) break;
+//        }
+//        return DefWindowProc(_wnd, message, wParam, lParam);
+//    }
+//
+//    if (_wndproc && !bProcessed)
+//    {
+//        _wndproc(message, wParam, lParam, &bProcessed);
+//    }
+//    return 0;
+//}
 
 void EGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook )
 {
@@ -558,35 +549,33 @@ void EGLView::setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerome
 
 bool EGLView::isOpenGLReady()
 {
-    return (_DC != NULL && _RC != NULL);
+    return nullptr != _mainWindow;
 }
 
 void EGLView::end()
 {
-    if (_wnd)
-    {
-#if(_MSC_VER >= 1600)
-        if(_supportTouch)
-		{
-		    s_pfUnregisterTouchWindowFunction(_wnd);
-		}
-#endif /* #if(_MSC_VER >= 1600) */
-        DestroyWindow(_wnd);
-        _wnd = NULL;
-    }
-    s_pMainWindow = NULL;
-    UnregisterClass(kWindowClassName, GetModuleHandle(NULL));
-    delete this;
+    if(_mainWindow)
+        glfwSetWindowShouldClose(_mainWindow,1);
 }
 
 void EGLView::swapBuffers()
 {
-    if (_DC != NULL)
-    {
-        ::SwapBuffers(_DC);
-    }
+    if(_mainWindow)
+        glfwSwapBuffers(_mainWindow);
 }
 
+bool EGLView::windowShouldClose()
+{
+    if(_mainWindow)
+        return glfwWindowShouldClose(_mainWindow);
+    else
+        return true;
+}
+
+void EGLView::pollEvents()
+{
+    glfwPollEvents();
+}
 
 void EGLView::setIMEKeyboardState(bool /*bOpen*/)
 {
@@ -603,64 +592,59 @@ void EGLView::setMenuResource(LPCWSTR menu)
     }
 }
 
-void EGLView::setWndProc(CUSTOM_WND_PROC proc)
-{
-    _wndproc = proc;
-}
-
 HWND EGLView::getHWnd()
 {
     return _wnd;
 }
 
-void EGLView::resize(int width, int height)
-{
-    if (! _wnd)
-    {
-        return;
-    }
-
-    RECT rcWindow;
-    GetWindowRect(_wnd, &rcWindow);
-
-    RECT rcClient;
-    GetClientRect(_wnd, &rcClient);
-
-    // calculate new window width and height
-    POINT ptDiff;
-    ptDiff.x = (rcWindow.right - rcWindow.left) - rcClient.right;
-    ptDiff.y = (rcWindow.bottom - rcWindow.top) - rcClient.bottom;
-    rcClient.right = rcClient.left + width;
-    rcClient.bottom = rcClient.top + height;
-
-    const Size& frameSize = getFrameSize();
-    if (frameSize.width > 0)
-    {
-        WCHAR wszBuf[MAX_PATH] = {0};
-#ifdef _DEBUG
-        char szBuf[MAX_PATH + 1];
-        memset(szBuf, 0, sizeof(szBuf));
-        snprintf(szBuf, MAX_PATH, "%s - %0.0fx%0.0f - %0.2f",
-                   _viewName, frameSize.width, frameSize.height, _frameZoomFactor);
-        MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-#else
-        MultiByteToWideChar(CP_UTF8, 0, _viewName, -1, wszBuf, sizeof(wszBuf));
-#endif
-        SetWindowText(_wnd, wszBuf);
-    }
-
-    AdjustWindowRectEx(&rcClient, GetWindowLong(_wnd, GWL_STYLE), FALSE, GetWindowLong(_wnd, GWL_EXSTYLE));
-
-    // change width and height
-    SetWindowPos(_wnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y,
-                 SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-}
+//void EGLView::resize(int width, int height)
+//{
+//    if (! _wnd)
+//    {
+//        return;
+//    }
+//
+//    RECT rcWindow;
+//    GetWindowRect(_wnd, &rcWindow);
+//
+//    RECT rcClient;
+//    GetClientRect(_wnd, &rcClient);
+//
+//    // calculate new window width and height
+//    POINT ptDiff;
+//    ptDiff.x = (rcWindow.right - rcWindow.left) - rcClient.right;
+//    ptDiff.y = (rcWindow.bottom - rcWindow.top) - rcClient.bottom;
+//    rcClient.right = rcClient.left + width;
+//    rcClient.bottom = rcClient.top + height;
+//
+//    const Size& frameSize = getFrameSize();
+//    if (frameSize.width > 0)
+//    {
+//        WCHAR wszBuf[MAX_PATH] = {0};
+//#ifdef _DEBUG
+//        char szBuf[MAX_PATH + 1];
+//        memset(szBuf, 0, sizeof(szBuf));
+//        snprintf(szBuf, MAX_PATH, "%s - %0.0fx%0.0f - %0.2f",
+//                   _viewName, frameSize.width, frameSize.height, _frameZoomFactor);
+//        MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+//#else
+//        MultiByteToWideChar(CP_UTF8, 0, _viewName, -1, wszBuf, sizeof(wszBuf));
+//#endif
+//        SetWindowText(_wnd, wszBuf);
+//    }
+//
+//    AdjustWindowRectEx(&rcClient, GetWindowLong(_wnd, GWL_STYLE), FALSE, GetWindowLong(_wnd, GWL_EXSTYLE));
+//
+//    // change width and height
+//    SetWindowPos(_wnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y,
+//                 SWP_NOCOPYBITS | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+//}
 
 void EGLView::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
-    resize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
-    centerWindow();
+    //resize(_screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
+    //centerWindow();
     Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 
@@ -673,41 +657,41 @@ void EGLView::setFrameSize(float width, float height)
 {
     EGLViewProtocol::setFrameSize(width, height);
 
-    resize(width, height); // adjust window size for menubar
-    centerWindow();
+    //resize(width, height); // adjust window size for menubar
+    //centerWindow();
 }
 
-void EGLView::centerWindow()
-{
-    if (! _wnd)
-    {
-        return;
-    }
-
-    RECT rcDesktop, rcWindow;
-    GetWindowRect(GetDesktopWindow(), &rcDesktop);
-
-    // substract the task bar
-    HWND hTaskBar = FindWindow(TEXT("Shell_TrayWnd"), NULL);
-    if (hTaskBar != NULL)
-    {
-        APPBARDATA abd;
-
-        abd.cbSize = sizeof(APPBARDATA);
-        abd.hWnd = hTaskBar;
-
-        SHAppBarMessage(ABM_GETTASKBARPOS, &abd);
-        SubtractRect(&rcDesktop, &rcDesktop, &abd.rc);
-    }
-    GetWindowRect(_wnd, &rcWindow);
-
-    int offsetX = rcDesktop.left + (rcDesktop.right - rcDesktop.left - (rcWindow.right - rcWindow.left)) / 2;
-    offsetX = (offsetX > 0) ? offsetX : rcDesktop.left;
-    int offsetY = rcDesktop.top + (rcDesktop.bottom - rcDesktop.top - (rcWindow.bottom - rcWindow.top)) / 2;
-    offsetY = (offsetY > 0) ? offsetY : rcDesktop.top;
-
-    SetWindowPos(_wnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-}
+//void EGLView::centerWindow()
+//{
+//    if (! _wnd)
+//    {
+//        return;
+//    }
+//
+//    RECT rcDesktop, rcWindow;
+//    GetWindowRect(GetDesktopWindow(), &rcDesktop);
+//
+//    // substract the task bar
+//    HWND hTaskBar = FindWindow(TEXT("Shell_TrayWnd"), NULL);
+//    if (hTaskBar != NULL)
+//    {
+//        APPBARDATA abd;
+//
+//        abd.cbSize = sizeof(APPBARDATA);
+//        abd.hWnd = hTaskBar;
+//
+//        SHAppBarMessage(ABM_GETTASKBARPOS, &abd);
+//        SubtractRect(&rcDesktop, &rcDesktop, &abd.rc);
+//    }
+//    GetWindowRect(_wnd, &rcWindow);
+//
+//    int offsetX = rcDesktop.left + (rcDesktop.right - rcDesktop.left - (rcWindow.right - rcWindow.left)) / 2;
+//    offsetX = (offsetX > 0) ? offsetX : rcDesktop.left;
+//    int offsetY = rcDesktop.top + (rcDesktop.bottom - rcDesktop.top - (rcWindow.bottom - rcWindow.top)) / 2;
+//    offsetY = (offsetY > 0) ? offsetY : rcDesktop.top;
+//
+//    SetWindowPos(_wnd, 0, offsetX, offsetY, 0, 0, SWP_NOCOPYBITS | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+//}
 
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
@@ -727,17 +711,7 @@ void EGLView::setScissorInPoints(float x , float y , float w , float h)
 
 EGLView* EGLView::getInstance()
 {
-    static EGLView* s_pEglView = NULL;
-    if (s_pEglView == NULL)
-    {
-        s_pEglView = new EGLView();
-		if(!s_pEglView->Create())
-		{
-			delete s_pEglView;
-			s_pEglView = NULL;
-		}
-    }
-
+    CCASSERT(nullptr != s_pEglView, "EGL singleton should not be null");
     return s_pEglView;
 }
 
