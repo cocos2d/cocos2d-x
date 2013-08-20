@@ -252,8 +252,8 @@ void SpriteBatchNode::sortAllChildren()
         for(i=1; i<length; i++)
         {
             j = i-1;
-            Node *tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            Node *tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
+            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
             while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
@@ -262,6 +262,8 @@ void SpriteBatchNode::sortAllChildren()
             {
                 _children->fastSetObject( tempJ, j+1 );
                 j = j-1;
+                if(j>=0)
+                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
             }
             _children->fastSetObject(tempI, j+1);
         }

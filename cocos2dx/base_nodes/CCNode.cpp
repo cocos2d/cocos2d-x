@@ -697,7 +697,7 @@ void Node::detachChild(Node *child, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    _children->addObject(child);
+    ccArrayAppendObjectWithResize(_children->data, child);
     child->_setZOrder(z);
 }
 
@@ -719,21 +719,22 @@ void Node::sortAllChildren()
         for(i=1; i<length; i++)
         {
             j = i-1;
-            Node *tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            Node *tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
+            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder ||
-                           ( tempI->_ZOrder== tempJ->_ZOrder &&
-                                tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
+            while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
             {
                 _children->fastSetObject( tempJ, j+1 );
                 j = j-1;
+                if(j>=0)
+                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
             }
             _children->fastSetObject(tempI, j+1);
         }
 
         //don't need to check children recursively, that's done in visit of each child
+
         _reorderChildDirty = false;
     }
 }
@@ -762,8 +763,6 @@ void Node::visit()
      }
 
     this->transform();
-
-    Node* pNode = NULL;
     unsigned int i = 0;
 
     if(_children && _children->count() > 0)
@@ -772,28 +771,22 @@ void Node::visit()
         // draw children zOrder < 0
         for( ; i < _children->count(); i++ )
         {
-            pNode = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
 
-            if ( pNode && pNode->_ZOrder < 0 ) 
-            {
-                pNode->visit();
-            }
+            if ( node && node->_ZOrder < 0 )
+                node->visit();
             else
-            {
                 break;
-            }
         }
         // self draw
         this->draw();
 
         for( ; i < _children->count(); i++ )
         {
-            pNode = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            if (pNode)
-            {
-                pNode->visit();
-            }
-        }        
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            if (node)
+                node->visit();
+        }
     }
     else
     {
