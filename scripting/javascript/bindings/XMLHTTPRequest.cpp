@@ -652,6 +652,45 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 }
 
 /**
+ *  @brief  send xhr
+ *
+ */
+JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, sendFile)
+{
+    
+    JSString *str = NULL;
+    std::string data;
+    
+    // Clean up header map. New request, new headers!
+    http_header.clear();
+    if (argc == 1) {
+        if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
+            return JS_FALSE;
+        };
+        JSStringWrapper strWrap(str);
+        data = strWrap.get();
+    }
+    
+    unsigned long size;
+    unsigned char* buf = FileUtils::getInstance()->getFileData(data.c_str(),"rb",&size);
+
+    if (buf == NULL)
+    {
+        return JS_FALSE;
+    }
+    
+    if (size > 0 && (meth.compare("post") == 0 || meth.compare("POST") == 0)) {
+        cc_request->setRequestData((const char*)buf, size);
+    }
+    delete[] buf;
+    
+    _setHttpRequestHeader();
+    _sendRequest(cx);
+    
+    return JS_TRUE;
+}
+
+/**
  *  @brief abort function Placeholder!
  *
  */
@@ -808,6 +847,7 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JSObject *global) {
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, open),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, abort),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, send),
+        JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, sendFile),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, setRequestHeader),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getAllResponseHeaders),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getResponseHeader),

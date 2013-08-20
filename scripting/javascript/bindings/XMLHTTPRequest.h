@@ -98,6 +98,7 @@ public:
     JS_BINDED_PROP_GET(MinXmlHttpRequest, responseXML);
     JS_BINDED_FUNC(MinXmlHttpRequest, open);
     JS_BINDED_FUNC(MinXmlHttpRequest, send);
+    JS_BINDED_FUNC(MinXmlHttpRequest, sendFile);
     JS_BINDED_FUNC(MinXmlHttpRequest, abort);
     JS_BINDED_FUNC(MinXmlHttpRequest, getAllResponseHeaders);
     JS_BINDED_FUNC(MinXmlHttpRequest, getResponseHeader);
