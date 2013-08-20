@@ -118,7 +118,7 @@ class TestChangeZorder : public ArmatureTestLayer
 };
 
 
-class TestAnimationEvent : public ArmatureTestLayer, public sigslot::has_slots<>
+class TestAnimationEvent : public ArmatureTestLayer
 {
 public:
 
@@ -164,7 +164,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 
 class ContactListener;
 
-class TestColliderDetector : public ArmatureTestLayer, public sigslot::has_slots<>
+class TestColliderDetector : public ArmatureTestLayer
 {
 public:
 	~TestColliderDetector();
@@ -194,7 +194,7 @@ public:
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
 
-class TestColliderDetector : public ArmatureTestLayer, public sigslot::has_slots<>
+class TestColliderDetector : public ArmatureTestLayer
 {
 public:
 	~TestColliderDetector();

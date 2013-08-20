@@ -43,6 +43,13 @@ enum MovementEventType
 class CCArmature;
 class CCBone;
 
+typedef void (CCObject::*SEL_MovementEventCallFunc)(CCArmature *, MovementEventType, const char *);
+typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, int);
+
+#define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
+#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+
+
 class  CCArmatureAnimation : public CCProcessBase
 {
 public:
@@ -140,6 +147,17 @@ public:
 	 * @return The name of current movement
      */
 	std::string getCurrentMovementID();
+
+	void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
+	void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
+
+
+	/**
+     * Emit a frame event
+	 * This is an internal method. Don't call it outside the framework.
+     */
+	void _frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+
 protected:
 
     /**
@@ -168,23 +186,28 @@ protected:
     int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     CCArray *m_pTweenList;
-public:
-    /**
-     * MovementEvent signal. This will emit a signal when trigger a event.
+
+protected:
+	/**
+     * MovementEvent CallFunc.
 	 * @param CCArmature* a CCArmature
 	 * @param MovementEventType, Event Type, like START, COMPLETE.
 	 * @param const char*, Movement ID, also called Movement Name
      */
-    sigslot::signal3<CCArmature *, MovementEventType, const char *> MovementEventSignal;
+	SEL_MovementEventCallFunc m_sMovementEventCallFunc;
 
 	/**
-     * FrameEvent signal. This will emit a signal when trigger a event.
+     * FrameEvent CallFunc.
 	 * @param CCBone*, a CCBone
 	 * @param const char*, the name of this frame event
 	 * @param int, origin frame index
 	 * @param int, current frame index, animation may be delayed
      */
-    sigslot::signal4<CCBone *, const char *, int, int> FrameEventSignal;
+	SEL_FrameEventCallFunc m_sFrameEventCallFunc;
+
+
+	CCObject *m_sMovementEventTarget;
+	CCObject *m_sFrameEventTarget;
 };
 
 NS_CC_EXT_END

@@ -401,7 +401,7 @@ float CCTween::updateFrameData(float currentPrecent)
 			//! Guaranteed to trigger frame event
 			if(from->strEvent.length() != 0)
 			{
-				m_pAnimation->FrameEventSignal.emit(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
+				m_pAnimation->_frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
 			}
 
 			if (playedTime == from->frameID)

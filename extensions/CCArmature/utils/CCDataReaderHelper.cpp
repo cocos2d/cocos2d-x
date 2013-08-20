@@ -141,7 +141,7 @@ static const char *CONFIG_FILE_PATH= "config_file_path";
 NS_CC_EXT_BEGIN
 
 
-	std::vector<std::string> s_arrConfigFileList;
+std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
 static float s_CocoStudioVersion = VERSION_COMBINED;
