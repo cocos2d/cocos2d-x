@@ -234,15 +234,15 @@ class CC_DLL Array : public Object, public Clonable
 {
 public:
 
-    /** Create an array */
+    /** Creates an empty array. Default capacity is 10 */
     static Array* create();
-    /** Create an array with some objects */
+    /** Create an array with objects */
     static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object */
     static Array* createWithObject(Object* object);
-    /** Create an array with capacity */
+    /** Create an array with a default capacity */
     static Array* createWithCapacity(unsigned int capacity);
-    /** Create an array with an existing array */
+    /** Create an array with from an existing array */
     static Array* createWithArray(Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
