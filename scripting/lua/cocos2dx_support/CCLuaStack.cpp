@@ -49,6 +49,7 @@ extern "C" {
 #include "lua_cocos2dx_auto.hpp"
 #include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
+#include "LuaBasicConversions.h"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -125,6 +126,7 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
+    g_luaType.clear();
     register_all_cocos2dx(_state);
     tolua_opengl_open(_state);
     register_all_cocos2dx_extension(_state);

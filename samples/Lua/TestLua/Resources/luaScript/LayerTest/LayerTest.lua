@@ -49,12 +49,14 @@ local function setEnableRecursiveCascading(node, enable)
     local children = node:getChildren()
     if children == nil then
         -- cclog("children is nil")
+        print("children is nil")
         return
     end
 
     local i = 0
     local len = table.getn(children)
     for i = 0, len-1, 1 do
+        print("come in")
         local  child = tolua.cast(children[i + 1], "Node")
         setEnableRecursiveCascading(child, enable)
     end

@@ -23,9 +23,16 @@
  ****************************************************************************/
 
 #include "LuaBasicConversions.h"
+
+#ifdef __cplusplus
 extern "C" {
-#include "tolua++.h"
+#endif
+#include  "tolua_fix.h"
+#ifdef __cplusplus
 }
+#endif
+
+std::map<int, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
@@ -881,6 +888,50 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
     return ok;
 }
 
+
+bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
+{
+    if (nullptr == L || argc == 0 )
+        return false;
+    
+    bool ok = true;
+    
+    Array* array = Array::create();
+    for (int i = 0; i < argc; i++)
+    {
+        double num = 0.0;
+        if (lua_isnumber(L, i + 2))
+        {
+            ok &= luaval_to_number(L, i + 2, &num);
+            if (!ok)
+                break;
+            
+            array->addObject(Integer::create((int)num));
+        }
+        else if (lua_isstring(L, i + 2))
+        {
+            std::string str = lua_tostring(L, i + 2);
+            array->addObject(String::create(str));
+        }
+        else if (lua_isuserdata(L, i + 2))
+        {
+            tolua_Error err;
+            if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
+            {
+                luaval_to_native_err(L,"#ferror:",&err);
+                ok = false;
+                break;
+            }
+            Object* obj = static_cast<Object*>(tolua_tousertype(L, i + 2, nullptr));
+            array->addObject(obj);
+        }
+    }
+    
+    *ret = array;
+    
+    return ok;
+}
+
 void point_to_luaval(lua_State* L,const Point& pt)
 {
     if (NULL  == L)
@@ -1064,171 +1115,171 @@ void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue)
 
 void array_to_luaval(lua_State* L,Array* inValue)
 {
-    if (NULL == L || NULL == inValue)
+    if (nullptr == L || nullptr == inValue)
         return;
     
-    if (0 == inValue->count() )
-        return;
-    
-    Object* obj = NULL;
+    Object* obj = nullptr;
     lua_newtable(L);
     
     std::string className = "";
-    int pos = 0;
-    String* strVal = NULL;
-    Dictionary* dictVal = NULL;
-    Array* arrVal = NULL;
-    Double* doubleVal = NULL;
-    Bool* boolVal = NULL;
-    Float* floatVal = NULL;
-    Integer* intVal = NULL;
+    String* strVal = nullptr;
+    Dictionary* dictVal = nullptr;
+    Array* arrVal = nullptr;
+    Double* doubleVal = nullptr;
+    Bool* boolVal = nullptr;
+    Float* floatVal = nullptr;
+    Integer* intVal = nullptr;
+    int indexTable = 1;
     
     CCARRAY_FOREACH(inValue, obj)
     {
-        if (NULL == obj)
+        if (nullptr == obj)
             continue;
         
-        className = typeid(*obj).name();
-        pos  = className.rfind(":");
-        if (pos > 0 && pos + 1 < className.length() )
+        uint32_t typeId = cocos2d::getHashCodeByString(typeid(*obj).name());
+        auto iter = g_luaType.find(typeId);
+        if (g_luaType.end() != iter)
         {
-            className = className.substr(pos + 1, std::string::npos);
-            
-            luaL_getmetatable(L, className.c_str()); /* stack: table mt */
-            
-            if (!lua_isnil(L, -1))
+            className = iter->second;
+            if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
             {
-                lua_pop(L, 1);
-                tolua_pushusertype(L, (void*)obj, className.c_str());
+                lua_pushnumber(L, (lua_Number)indexTable);                
+                int ID = (obj) ? (int)obj->_ID : -1;
+                int* luaID = (obj) ? &obj->_luaID : NULL;
+                toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,className.c_str());
+                lua_rawset(L, -3);
+                obj->retain();
+                ++indexTable;
             }
-            else
-            {
-                lua_pop(L, -1);
-                if((strVal = dynamic_cast<cocos2d::String *>(obj)))
-                {
-                    lua_pushstring(L, strVal->getCString());
-                }
-                else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj)))
-                {
-                    dictionary_to_luaval(L, dictVal);
-                }
-                else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj)))
-                {
-                    array_to_luaval(L, arrVal);
-                }
-                else if ((doubleVal = dynamic_cast<Double*>(obj)))
-                {
-                    lua_pushnumber(L, (lua_Number)doubleVal->getValue());
-                }
-                else if ((floatVal = dynamic_cast<Float*>(obj)))
-                {
-                    lua_pushnumber(L, (lua_Number)floatVal->getValue());
-                }
-                else if ((intVal = dynamic_cast<Integer*>(obj)))
-                {
-                    lua_pushinteger(L, (lua_Integer)intVal->getValue());
-                }
-                else if ((boolVal = dynamic_cast<Bool*>(obj)))
-                {
-                    lua_pushboolean(L, boolVal->getValue());
-                } else
-                {
-                    CCASSERT(false, "the type isn't suppored.");
-                }
-            }
+        }
+        else if((strVal = dynamic_cast<cocos2d::String *>(obj)))
+        {
+            lua_pushnumber(L, (lua_Number)indexTable);   
+            lua_pushstring(L, strVal->getCString());
+            lua_rawset(L, -3);
+            ++indexTable;
+        }
+        else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj)))
+        {
+            dictionary_to_luaval(L, dictVal);
+        }
+        else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj)))
+        {
+            array_to_luaval(L, arrVal);
+        }
+        else if ((doubleVal = dynamic_cast<Double*>(obj)))
+        {
+            lua_pushnumber(L, (lua_Number)indexTable);   
+            lua_pushnumber(L, (lua_Number)doubleVal->getValue());
+            lua_rawset(L, -3);
+            ++indexTable;
+        }
+        else if ((floatVal = dynamic_cast<Float*>(obj)))
+        {
+            lua_pushnumber(L, (lua_Number)indexTable);   
+            lua_pushnumber(L, (lua_Number)floatVal->getValue());
+            lua_rawset(L, -3);
+            ++indexTable;
+        }
+        else if ((intVal = dynamic_cast<Integer*>(obj)))
+        {
+            lua_pushnumber(L, (lua_Number)indexTable);   
+            lua_pushinteger(L, (lua_Integer)intVal->getValue());
+            lua_rawset(L, -3);
+            ++indexTable;
+        }
+        else if ((boolVal = dynamic_cast<Bool*>(obj)))
+        {
+            lua_pushnumber(L, (lua_Number)indexTable);   
+            lua_pushboolean(L, boolVal->getValue());
+            lua_rawset(L, -3);
+            ++indexTable;
+        }
+        else
+        {
+            CCASSERT(false, "the type isn't suppored.");
         }
     }
 }
 
 void dictionary_to_luaval(lua_State* L, Dictionary* dict)
 {
-    if (NULL == L || NULL == dict)
+    if (nullptr == L || nullptr == dict)
         return;
     
-    if (0 == dict->count() )
-        return;
-    
-    DictElement* element = NULL;
+    DictElement* element = nullptr;
     lua_newtable(L);
     
     std::string className = "";
-    int pos = 0;
-    String* strVal = NULL;
-    Dictionary* dictVal = NULL;
-    Array* arrVal = NULL;
-    Double* doubleVal = NULL;
-    Bool* boolVal = NULL;
-    Float* floatVal = NULL;
-    Integer* intVal = NULL;
-    Object* obj     = NULL;
+    String* strVal = nullptr;
+    Dictionary* dictVal = nullptr;
+    Array* arrVal = nullptr;
+    Double* doubleVal = nullptr;
+    Bool* boolVal = nullptr;
+    Float* floatVal = nullptr;
+    Integer* intVal = nullptr;
     
     CCDICT_FOREACH(dict, element)
     {
         if (NULL == element)
             continue;
         
-        className = typeid(*element).name();
-        pos  = className.rfind(":");
-        if (pos > 0 && pos + 1 < className.length() )
+        uint32_t typeId = cocos2d::getHashCodeByString(typeid(element->getObject()).name());
+        auto iter = g_luaType.find(typeId);
+        if (g_luaType.end() != iter)
         {
-            obj = element->getObject();
-            if (NULL == obj)
-                continue;
-            
-            className = className.substr(pos + 1, std::string::npos);
-            
-            luaL_getmetatable(L, className.c_str()); /* stack: table mt */
-            if (!lua_isnil(L, -1))
+            className = iter->second;
+            if ( nullptr != dynamic_cast<cocos2d::Object *>(element->getObject()))
             {
-                lua_pop(L, 1);
-                tolua_pushusertype(L, (void*)obj, className.c_str());
+                lua_pushstring(L, element->getStrKey());
+                int ID = (element->getObject()) ? (int)element->getObject()->_ID : -1;
+                int* luaID = (element->getObject()) ? &(element->getObject()->_luaID) : NULL;
+                toluafix_pushusertype_ccobject(L, ID, luaID, (void*)element->getObject(),className.c_str());
+                lua_rawset(L, -3);
+                element->getObject()->retain();
             }
-            else
-            {
-                lua_pop(L, -1);
-                if((strVal = dynamic_cast<cocos2d::String *>(obj)))
-                {
-                    lua_pushstring(L, element->getStrKey());
-                    lua_pushstring(L, strVal->getCString());
-                    lua_rawset(L, -3);
-                }
-                else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj)))
-                {
-                    dictionary_to_luaval(L, dictVal);
-                }
-                else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj)))
-                {
-                    array_to_luaval(L, arrVal);
-                }
-                else if ((doubleVal = dynamic_cast<Double*>(obj)))
-                {
-                    lua_pushstring(L, element->getStrKey());
-                    lua_pushnumber(L, (lua_Number)doubleVal->getValue());
-                    lua_rawset(L, -3);
-                }
-                else if ((floatVal = dynamic_cast<Float*>(obj)))
-                {
-                    lua_pushstring(L, element->getStrKey());
-                    lua_pushnumber(L, (lua_Number)floatVal->getValue());
-                    lua_rawset(L, -3);
-                }
-                else if ((intVal = dynamic_cast<Integer*>(obj)))
-                {
-                    lua_pushstring(L, element->getStrKey());
-                    lua_pushinteger(L, (lua_Integer)intVal->getValue());
-                    lua_rawset(L, -3);
-                }
-                else if ((boolVal = dynamic_cast<Bool*>(obj)))
-                {
-                    lua_pushstring(L, element->getStrKey());
-                    lua_pushboolean(L, boolVal->getValue());
-                    lua_rawset(L, -3);
-                }
-                else
-                {
-                    CCASSERT(false, "the type isn't suppored.");
-                }
-            }
+        }
+        else if((strVal = dynamic_cast<cocos2d::String *>(element->getObject())))
+        {
+            lua_pushstring(L, element->getStrKey());
+            lua_pushstring(L, strVal->getCString());
+            lua_rawset(L, -3);
+        }
+        else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(element->getObject())))
+        {
+            dictionary_to_luaval(L, dictVal);
+        }
+        else if ((arrVal = dynamic_cast<cocos2d::Array*>(element->getObject())))
+        {
+            array_to_luaval(L, arrVal);
+        }
+        else if ((doubleVal = dynamic_cast<Double*>(element->getObject())))
+        {
+            lua_pushstring(L, element->getStrKey());
+            lua_pushnumber(L, (lua_Number)doubleVal->getValue());
+            lua_rawset(L, -3);
+        }
+        else if ((floatVal = dynamic_cast<Float*>(element->getObject())))
+        {
+            lua_pushstring(L, element->getStrKey());
+            lua_pushnumber(L, (lua_Number)floatVal->getValue());
+            lua_rawset(L, -3);
+        }
+        else if ((intVal = dynamic_cast<Integer*>(element->getObject())))
+        {
+            lua_pushstring(L, element->getStrKey());
+            lua_pushinteger(L, (lua_Integer)intVal->getValue());
+            lua_rawset(L, -3);
+        }
+        else if ((boolVal = dynamic_cast<Bool*>(element->getObject())))
+        {
+            lua_pushstring(L, element->getStrKey());
+            lua_pushboolean(L, boolVal->getValue());
+            lua_rawset(L, -3);
+        }
+        else
+        {
+            CCASSERT(false, "the type isn't suppored.");
         }
     }
 }
