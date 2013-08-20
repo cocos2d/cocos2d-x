@@ -61,7 +61,7 @@ ScrollView::ScrollView()
 
 ScrollView::~ScrollView()
 {
-    _touches->release();
+    CC_SAFE_RELEASE(_touches);
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
