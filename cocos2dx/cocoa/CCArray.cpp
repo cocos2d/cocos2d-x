@@ -144,7 +144,7 @@ Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 
 bool Array::init()
 {
-    return initWithCapacity(1);
+    return initWithCapacity(10);
 }
 
 bool Array::initWithObject(Object* object)
@@ -509,6 +509,8 @@ Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 
 bool Array::init()
 {
+    CCASSERT(!data, "Array cannot be re-initialized");
+
     return initWithCapacity(1);
 }
 
@@ -618,7 +620,7 @@ bool Array::isEqualToArray(Array* otherArray)
     return true;
 }
 
-void Array::addObject(Object* object)
+void Array::addObject(Object* object) 
 {
     ccArrayAppendObjectWithResize(data, object);
 }
