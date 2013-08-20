@@ -573,6 +573,9 @@ Developers:
     gkosciolek
         Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
 
+    xbruce
+        Fixing a bug that crash appears when extending cc.ScrollView in JS
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
