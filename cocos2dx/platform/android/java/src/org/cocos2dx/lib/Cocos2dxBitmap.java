@@ -172,7 +172,7 @@ public class Cocos2dxBitmap {
 			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 			paintStroke.setStyle(Paint.Style.STROKE);
 			paintStroke.setStrokeWidth(strokeSize * 0.5f);
-			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
+			paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
 			
 			x = 0;
 			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);

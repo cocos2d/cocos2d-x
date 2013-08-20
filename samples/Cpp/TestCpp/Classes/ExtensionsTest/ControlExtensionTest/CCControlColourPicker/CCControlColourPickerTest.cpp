@@ -36,9 +36,9 @@ bool ControlColourPickerTest::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::getInstance()->getWinSize();
+        auto screenSize = Director::getInstance()->getWinSize();
 
-        Node *layer  = Node::create();
+        auto layer  = Node::create();
         layer->setPosition(Point (screenSize.width / 2, screenSize.height / 2));
         addChild(layer, 1);
 
@@ -59,7 +59,7 @@ bool ControlColourPickerTest::init()
         layer_width += colourPicker->getContentSize().width;
 
         // Add the black background for the text
-        Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(150, 50));
         background->setPosition(Point(layer_width + background->getContentSize().width / 2.0f, 0));
         layer->addChild(background);

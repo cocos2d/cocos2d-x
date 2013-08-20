@@ -2,11 +2,11 @@
 
 CurrentLanguageTest::CurrentLanguageTest()
 {
-    LabelTTF* label = LabelTTF::create("Current language Test", "Arial", 28);
+    auto label = LabelTTF::create("Current language Test", "Arial", 28);
     addChild(label, 0);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-50) );
 
-    LabelTTF *labelLanguage = LabelTTF::create("", "Arial", 20);
+    auto labelLanguage = LabelTTF::create("", "Arial", 20);
     labelLanguage->setPosition(VisibleRect::center());
 
     LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
@@ -61,7 +61,7 @@ CurrentLanguageTest::CurrentLanguageTest()
 
 void CurrentLanguageTestScene::runThisTest()
 {
-    Layer* layer = new CurrentLanguageTest();
+    auto layer = new CurrentLanguageTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
