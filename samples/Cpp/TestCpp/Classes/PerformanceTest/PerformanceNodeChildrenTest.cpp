@@ -1,13 +1,49 @@
 #include "PerformanceNodeChildrenTest.h"
 
+// Enable profiles for this file
+#undef CC_PROFILER_DISPLAY_TIMERS
+#define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
+#undef CC_PROFILER_PURGE_ALL
+#define CC_PROFILER_PURGE_ALL() Profiler::getInstance()->releaseAllTimers()
+
+#undef CC_PROFILER_START
+#define CC_PROFILER_START(__name__) ProfilingBeginTimingBlock(__name__)
+#undef CC_PROFILER_STOP
+#define CC_PROFILER_STOP(__name__) ProfilingEndTimingBlock(__name__)
+#undef CC_PROFILER_RESET
+#define CC_PROFILER_RESET(__name__) ProfilingResetTimingBlock(__name__)
+
+#undef CC_PROFILER_START_CATEGORY
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingBeginTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_STOP_CATEGORY
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingEndTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_RESET_CATEGORY
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingResetTimingBlock(__name__); } while(0)
+
+#undef CC_PROFILER_START_INSTANCE
+#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ ProfilingBeginTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_STOP_INSTANCE
+#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ ProfilingEndTimingBlock(    String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_RESET_INSTANCE
+#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+
+static std::function<NodeChildrenMainScene*()> createFunctions[] =
+{
+    CL(IterateSpriteSheetForLoop),
+    CL(IterateSpriteSheetCArray),
+    CL(IterateSpriteSheetIterator),
+
+    CL(AddSpriteSheet),
+    CL(RemoveSpriteSheet),
+    CL(ReorderSpriteSheet),
+};
+
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
 enum {
     kTagInfoLayer = 1,
-    kTagMainLayer = 2,
-    kTagLabelAtlas = 3,
 
     kTagBase = 20000,
-
-    TEST_COUNT = 4,
 };
 
 enum {
@@ -15,7 +51,7 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int s_nCurCase = 0;
+static int g_curCase = 0;
 
 ////////////////////////////////////////////////////////
 //
@@ -25,37 +61,42 @@ static int s_nCurCase = 0;
 NodeChildrenMenuLayer::NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
 : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
 {
+}
 
+void NodeChildrenMenuLayer::onExitTransitionDidStart()
+{
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+
+    sched->unscheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this);
+}
+
+void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
+{
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+
+    CC_PROFILER_PURGE_ALL();
+    sched->scheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
+}
+
+
+void NodeChildrenMenuLayer::dumpProfilerInfo(float dt)
+{
+	CC_PROFILER_DISPLAY_TIMERS();
 }
 
 void NodeChildrenMenuLayer::showCurrentTest()
 {
-    int nNodes = ((NodeChildrenMainScene*)getParent())->getQuantityOfNodes();
-    NodeChildrenMainScene* scene = NULL;
+    int nodes = ((NodeChildrenMainScene*)getParent())->getQuantityOfNodes();
 
-    switch (_curCase)
-    {
-//     case 0:
-//         scene = new IterateSpriteSheetFastEnum();
-//         break;
-    case 0:
-        scene = new IterateSpriteSheetCArray();
-        break;
-    case 1:
-        scene = new AddSpriteSheet();
-        break;
-    case 2:
-        scene = new RemoveSpriteSheet();
-        break;
-    case 3:
-        scene = new ReorderSpriteSheet();
-        break;
-    }
-    s_nCurCase = _curCase;
+    auto scene = createFunctions[_curCase]();
+
+    g_curCase = _curCase;
 
     if (scene)
     {
-        scene->initWithQuantityOfNodes(nNodes);
+        scene->initWithQuantityOfNodes(nodes);
 
         Director::getInstance()->replaceScene(scene);
         scene->release();
@@ -121,7 +162,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Point(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new NodeChildrenMenuLayer(true, TEST_COUNT, s_nCurCase);
+    auto menuLayer = new NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
 
@@ -143,7 +184,7 @@ void NodeChildrenMainScene::updateQuantityLabel()
 {
     if( quantityOfNodes != lastRenderedCount )
     {
-        auto infoLabel = (LabelTTF *) getChildByTag(kTagInfoLayer);
+        auto infoLabel = static_cast<LabelTTF*>( getChildByTag(kTagInfoLayer) );
         char str[20] = {0};
         sprintf(str, "%u nodes", quantityOfNodes);
         infoLabel->setString(str);
@@ -173,7 +214,8 @@ void IterateSpriteSheet::updateQuantityOfNodes()
         {
             auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0, 0, 32, 32));
             batchNode->addChild(sprite);
-            sprite->setPosition(Point( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height));
+            sprite->setVisible(false);
+            sprite->setPosition(Point(-1000,-1000));
         }
     }
 
@@ -207,39 +249,38 @@ const char*  IterateSpriteSheet::profilerName()
 
 ////////////////////////////////////////////////////////
 //
-// IterateSpriteSheetFastEnum
+// IterateSpriteSheetForLoop
 //
 ////////////////////////////////////////////////////////
-void IterateSpriteSheetFastEnum::update(float dt)
+void IterateSpriteSheetForLoop::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto pChildren = batchNode->getChildren();
-    Object* pObject = NULL;
+    auto children = batchNode->getChildren();
 
-    CC_PROFILER_START_INSTANCE(this, this->profilerName());
+    CC_PROFILER_START(this->profilerName());
 
-    CCARRAY_FOREACH(pChildren, pObject)
+    for( const auto &object : *children )
     {
-        auto sprite = static_cast<Sprite*>(pObject);
+        auto sprite = static_cast<Sprite*>(object);
         sprite->setVisible(false);
     }
 
-    CC_PROFILER_STOP_INSTANCE(this, this->profilerName());
+    CC_PROFILER_STOP(this->profilerName());
 }
 
-std::string IterateSpriteSheetFastEnum::title()
+std::string IterateSpriteSheetForLoop::title()
 {
     return "A - Iterate SpriteSheet";
 }
 
-std::string IterateSpriteSheetFastEnum::subtitle()
+std::string IterateSpriteSheetForLoop::subtitle()
 {
-    return "Iterate children using Fast Enum API. See console";
+    return "Iterate children using C++11 range-based for loop. See console";
 }
 
-const char*  IterateSpriteSheetFastEnum::profilerName()
+const char*  IterateSpriteSheetForLoop::profilerName()
 {
-    return "iter fast enum";
+    return "Iterator: C++11 for loop";
 }
 
 ////////////////////////////////////////////////////////
@@ -250,14 +291,14 @@ const char*  IterateSpriteSheetFastEnum::profilerName()
 void IterateSpriteSheetCArray::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto pChildren = batchNode->getChildren();
-    Object* pObject = NULL;
+    auto children = batchNode->getChildren();
+    Object* object = NULL;
 
     CC_PROFILER_START(this->profilerName());
 
-    CCARRAY_FOREACH(pChildren, pObject)
+    CCARRAY_FOREACH(children, object)
     {
-        auto sprite = static_cast<Sprite*>(pObject);
+        auto sprite = static_cast<Sprite*>(object);
         sprite->setVisible(false);
     }
 
@@ -277,8 +318,46 @@ std::string IterateSpriteSheetCArray::subtitle()
 
 const char*  IterateSpriteSheetCArray::profilerName()
 {
-    return "iter c-array";
+    return "Iterator: CC_ARRAY_FOREACH";
 }
+
+////////////////////////////////////////////////////////
+//
+// IterateSpriteSheetIterator
+//
+////////////////////////////////////////////////////////
+void IterateSpriteSheetIterator::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto children = batchNode->getChildren();
+
+    CC_PROFILER_START(this->profilerName());
+
+    for( auto it=std::begin(*children); it != std::end(*children); ++it)
+    {
+        auto sprite = static_cast<Sprite*>(*it);
+        sprite->setVisible(false);
+    }
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string IterateSpriteSheetIterator::title()
+{
+    return "C - Iterate SpriteSheet";
+}
+
+std::string IterateSpriteSheetIterator::subtitle()
+{
+    return "Iterate children using begin() / end(). See console";
+}
+
+const char*  IterateSpriteSheetIterator::profilerName()
+{
+    return "Iterator: begin(), end()";
+}
+
 
 ////////////////////////////////////////////////////////
 //
@@ -520,7 +599,7 @@ const char*  ReorderSpriteSheet::profilerName()
 
 void runNodeChildrenTest()
 {
-    IterateSpriteSheet* scene = new IterateSpriteSheetCArray();
+    auto scene = createFunctions[g_curCase]();
     scene->initWithQuantityOfNodes(kNodesIncrease);
 
     Director::getInstance()->replaceScene(scene);
