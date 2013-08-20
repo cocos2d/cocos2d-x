@@ -694,23 +694,24 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        int i = 0, j = 0, length = _children->data->num;
-        Node** x = (Node**)_children->data->arr;
-        Node *tempItem = NULL;
+        int i = 0, j = 0, length = _children->count();
 
         // insertion sort
         for(i=1; i<length; i++)
         {
-            tempItem = x[i];
             j = i-1;
+            Node *tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            Node *tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
-            while(j>=0 && ( tempItem->getZOrder() < x[j]->getZOrder() || ( tempItem->getZOrder() == x[j]->getZOrder() && tempItem->getOrderOfArrival() < x[j]->getOrderOfArrival() ) ) )
+            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+            while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
+                           ( tempI->getZOrder() == tempJ->getZOrder() &&
+                            tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
             {
-                x[j+1] = x[j];
+                _children->fastSetObject( tempJ, j+1 );
                 j = j-1;
             }
-            x[j+1] = tempItem;
+            _children->fastSetObject(tempI, j+1);
         }
 
         if ( _batchNode)
