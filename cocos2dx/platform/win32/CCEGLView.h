@@ -34,8 +34,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef LRESULT (*CUSTOM_WND_PROC)(UINT message, WPARAM wParam, LPARAM lParam, BOOL* pProcessed);
-
 class EGL;
 
 class CC_DLL EGLView : public EGLViewProtocol
@@ -51,13 +49,10 @@ public:
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
 
-    void setMenuResource(LPCWSTR menu);
     //void setWndProc(CUSTOM_WND_PROC proc);
-    virtual bool Create();
+    virtual bool create();
 public:
 
-    // win32 platform function
-    HWND getHWnd();
     //void resize(int width, int height);
     /* 
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -84,12 +79,8 @@ protected:
 
 private:
     bool _captured;
-    HWND _wnd;
     LPFN_ACCELEROMETER_KEYHOOK _lpfnAccelerometerKeyHook;
     bool _supportTouch;
-
-    LPCWSTR _menu;
-    CUSTOM_WND_PROC _wndproc;
 
     float _frameZoomFactor;
     static EGLView* s_pEglView;
