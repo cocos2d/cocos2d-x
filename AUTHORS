@@ -569,6 +569,9 @@ Developers:
         
     zcgit
         a potential bug fix in Layer::init.
+        
+    gkosciolek
+        Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
 
 Retired Core Developers:
     WenSheng Yang
