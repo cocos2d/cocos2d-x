@@ -697,7 +697,7 @@ void Node::detachChild(Node *child, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    ccArrayAppendObjectWithResize(_children->data, child);
+    _children->addObject(child);
     child->_setZOrder(z);
 }
 
