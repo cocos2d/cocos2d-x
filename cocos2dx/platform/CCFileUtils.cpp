@@ -785,7 +785,14 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 
 std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string ret = strDirectory+strFilename;
+    // get directory+filename, safely adding '/' as necessary 
+    std::string ret = strDirectory;
+    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/'){
+        ret += '/';
+    }
+    ret += strFilename;
+    
+    // if the file doesn't exist, return an empty string
     if (!isFileExist(ret)) {
         ret = "";
     }
