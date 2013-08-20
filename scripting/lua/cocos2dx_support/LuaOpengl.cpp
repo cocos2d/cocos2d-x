@@ -108,7 +108,7 @@ static int tolua_Cocos2d_GLNode_setShaderProgram00(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"CCGLProgram",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"GLProgram",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;

@@ -7226,6 +7226,152 @@ LabelBMFont : function () {},
 cc.Label = {
 
 /**
+ * @method getString
+ * @return A value converted from C/C++ "const char*"
+ */
+getString : function () {},
+
+/**
+ * @method setScale
+ * @param {float}
+ */
+setScale : function () {},
+
+/**
+ * @method setOpacity
+ * @param {unsigned char}
+ */
+setOpacity : function () {},
+
+/**
+ * @method setCascadeOpacityEnabled
+ * @param {bool}
+ */
+setCascadeOpacityEnabled : function () {},
+
+/**
+ * @method getLetterPosXRight
+ * @return A value converted from C/C++ "float"
+ * @param {cocos2d::Sprite*}
+ */
+getLetterPosXRight : function () {},
+
+/**
+ * @method getCommonLineHeight
+ * @return A value converted from C/C++ "int"
+ */
+getCommonLineHeight : function () {},
+
+/**
+ * @method getLabelContentSize
+ * @return A value converted from C/C++ "cocos2d::Size"
+ */
+getLabelContentSize : function () {},
+
+/**
+ * @method breakLineWithoutSpace
+ * @return A value converted from C/C++ "bool"
+ */
+breakLineWithoutSpace : function () {},
+
+/**
+ * @method setWidth
+ * @param {float}
+ */
+setWidth : function () {},
+
+/**
+ * @method getMaxLineWidth
+ * @return A value converted from C/C++ "float"
+ */
+getMaxLineWidth : function () {},
+
+/**
+ * @method isOpacityModifyRGB
+ * @return A value converted from C/C++ "bool"
+ */
+isOpacityModifyRGB : function () {},
+
+/**
+ * @method getRectForChar
+ * @return A value converted from C/C++ "cocos2d::Rect"
+ * @param {unsigned short}
+ */
+getRectForChar : function () {},
+
+/**
+ * @method getAdvanceForChar
+ * @return A value converted from C/C++ "int"
+ * @param {unsigned short}
+ * @param {int}
+ */
+getAdvanceForChar : function () {},
+
+/**
+ * @method isCascadeOpacityEnabled
+ * @return A value converted from C/C++ "bool"
+ */
+isCascadeOpacityEnabled : function () {},
+
+/**
+ * @method setString
+ * @param {const char*}
+ */
+setString : function () {},
+
+/**
+ * @method setCascadeColorEnabled
+ * @param {bool}
+ */
+setCascadeColorEnabled : function () {},
+
+/**
+ * @method setOpacityModifyRGB
+ * @param {bool}
+ */
+setOpacityModifyRGB : function () {},
+
+/**
+ * @method getYOffsetForChar
+ * @return A value converted from C/C++ "int"
+ * @param {unsigned short}
+ */
+getYOffsetForChar : function () {},
+
+/**
+ * @method updateDisplayedOpacity
+ * @param {unsigned char}
+ */
+updateDisplayedOpacity : function () {},
+
+/**
+ * @method getXOffsetForChar
+ * @return A value converted from C/C++ "int"
+ * @param {unsigned short}
+ */
+getXOffsetForChar : function () {},
+
+/**
+ * @method getSpriteForChar
+ * @return A value converted from C/C++ "cocos2d::Sprite*"
+ * @param {unsigned short}
+ * @param {int}
+ */
+getSpriteForChar : function () {},
+
+/**
+ * @method getOpacity
+ * @return A value converted from C/C++ "unsigned char"
+ */
+getOpacity : function () {},
+
+/**
+ * @method getChildrenLetters
+ * @return A value converted from C/C++ "cocos2d::Array*"
+ */
+getChildrenLetters : function () {},
+
+/**
  * @method setLineBreakWithoutSpace
  * @param {bool}
  */
@@ -7244,10 +7390,115 @@ setScaleY : function () {},
 setScaleX : function () {},
 
 /**
- * @method setScale
- * @param {float}
+ * @method getStringNumLines
+ * @return A value converted from C/C++ "int"
  */
-setScale : function () {},
+getStringNumLines : function () {},
+
+/**
+ * @method getCharAtStringPosition
+ * @return A value converted from C/C++ "unsigned short"
+ * @param {int}
+ */
+getCharAtStringPosition : function () {},
+
+/**
+ * @method getStringLenght
+ * @return A value converted from C/C++ "int"
+ */
+getStringLenght : function () {},
+
+/**
+ * @method getColor
+ * @return A value converted from C/C++ "cocos2d::Color3B"
+ */
+getColor : function () {},
+
+/**
+ * @method getDisplayedOpacity
+ * @return A value converted from C/C++ "unsigned char"
+ */
+getDisplayedOpacity : function () {},
+
+/**
+ * @method getLetterPosXLeft
+ * @return A value converted from C/C++ "float"
+ * @param {cocos2d::Sprite*}
+ */
+getLetterPosXLeft : function () {},
+
+/**
+ * @method getKerningForCharsPair
+ * @return A value converted from C/C++ "int"
+ * @param {unsigned short}
+ * @param {unsigned short}
+ */
+getKerningForCharsPair : function () {},
+
+/**
+ * @method setLabelContentSize
+ * @param {cocos2d::Size}
+ */
+setLabelContentSize : function () {},
+
+/**
+ * @method assignNewUTF8String
+ * @param {unsigned short*}
+ */
+assignNewUTF8String : function () {},
+
+/**
+ * @method setColor
+ * @param {cocos2d::Color3B}
+ */
+setColor : function () {},
+
+/**
+ * @method getDisplayedColor
+ * @return A value converted from C/C++ "cocos2d::Color3B"
+ */
+getDisplayedColor : function () {},
+
+/**
+ * @method setText
+ * @return A value converted from C/C++ "bool"
+ * @param {const char*}
+ * @param {float}
+ * @param {cocos2d::TextHAlignment}
+ * @param {bool}
+ */
+setText : function () {},
+
+/**
+ * @method getUTF8String
+ * @return A value converted from C/C++ "unsigned short*"
+ */
+getUTF8String : function () {},
+
+/**
+ * @method getTextAlignment
+ * @return A value converted from C/C++ "cocos2d::TextHAlignment"
+ */
+getTextAlignment : function () {},
+
+/**
+ * @method getSpriteChild
+ * @return A value converted from C/C++ "cocos2d::Sprite*"
+ * @param {int}
+ */
+getSpriteChild : function () {},
+
+/**
+ * @method isCascadeColorEnabled
+ * @return A value converted from C/C++ "bool"
+ */
+isCascadeColorEnabled : function () {},
+
+/**
+ * @method updateDisplayedColor
+ * @param {cocos2d::Color3B}
+ */
+updateDisplayedColor : function () {},
 
 /**
  * @method setAlignment
@@ -7256,28 +7507,14 @@ setScale : function () {},
 setAlignment : function () {},
 
 /**
- * @method setWidth
- * @param {float}
- */
-setWidth : function () {},
-
-/**
  * @method createWithBMFont
  * @return A value converted from C/C++ "cocos2d::Label*"
  * @param {const char*}
  * @param {const char*}
+ * @param {cocos2d::TextHAlignment}
  * @param {int}
  */
 createWithBMFont : function () {},
-
-/**
- * @method createWithBMFontOLD
- * @return A value converted from C/C++ "cocos2d::Label*"
- * @param {const char*}
- * @param {const char*}
- * @param {int}
- */
-createWithBMFontOLD : function () {},
 
 /**
  * @method createWithTTF
@@ -7285,8 +7522,9 @@ createWithBMFontOLD : function () {},
  * @param {const char*}
  * @param {const char*}
  * @param {int}
- * @param {cocos2d::GlyphCollection}
  * @param {int}
+ * @param {cocos2d::TextHAlignment}
+ * @param {cocos2d::GlyphCollection}
  * @param {const char*}
  */
 createWithTTF : function () {},
@@ -8831,18 +9069,6 @@ MenuItemAtlasFont : function () {},
 cc.MenuItemFont = {
 
 /**
- * @method setFontNameObj
- * @param {const char*}
- */
-setFontNameObj : function () {},
-
-/**
- * @method getFontSizeObj
- * @return A value converted from C/C++ "unsigned int"
- */
-getFontSizeObj : function () {},
-
-/**
  * @method initWithString
  * @return A value converted from C/C++ "bool"
  * @param {const char*}
@@ -8851,16 +9077,28 @@ getFontSizeObj : function () {},
 initWithString : function () {},
 
 /**
- * @method setFontSizeObj
- * @param {unsigned int}
- */
-setFontSizeObj : function () {},
-
-/**
  * @method getFontNameObj
  * @return A value converted from C/C++ "const char*"
  */
 getFontNameObj : function () {},
+
+/**
+ * @method getFontSizeObj
+ * @return A value converted from C/C++ "unsigned int"
+ */
+getFontSizeObj : function () {},
+
+/**
+ * @method setFontNameObj
+ * @param {const char*}
+ */
+setFontNameObj : function () {},
+
+/**
+ * @method setFontSizeObj
+ * @param {unsigned int}
+ */
+setFontSizeObj : function () {},
 
 /**
  * @method setFontName
@@ -9469,6 +9707,124 @@ create : function () {},
  * @constructor
  */
 ProgressTimer : function () {},
+
+};
+
+/**
+ * @class Image
+ */
+cc.Image = {
+
+/**
+ * @method hasPremultipliedAlpha
+ * @return A value converted from C/C++ "bool"
+ */
+hasPremultipliedAlpha : function () {},
+
+/**
+ * @method getDataLen
+ * @return A value converted from C/C++ "int"
+ */
+getDataLen : function () {},
+
+/**
+ * @method isCompressed
+ * @return A value converted from C/C++ "bool"
+ */
+isCompressed : function () {},
+
+/**
+ * @method getBitPerPixel
+ * @return A value converted from C/C++ "int"
+ */
+getBitPerPixel : function () {},
+
+/**
+ * @method hasAlpha
+ * @return A value converted from C/C++ "bool"
+ */
+hasAlpha : function () {},
+
+/**
+ * @method getHeight
+ * @return A value converted from C/C++ "int"
+ */
+getHeight : function () {},
+
+/**
+ * @method initWithImageFile
+ * @return A value converted from C/C++ "bool"
+ * @param {const char*}
+ */
+initWithImageFile : function () {},
+
+/**
+ * @method getWidth
+ * @return A value converted from C/C++ "int"
+ */
+getWidth : function () {},
+
+/**
+ * @method isPremultipliedAlpha
+ * @return A value converted from C/C++ "bool"
+ */
+isPremultipliedAlpha : function () {},
+
+/**
+ * @method getFileType
+ * @return A value converted from C/C++ "cocos2d::Image::Format"
+ */
+getFileType : function () {},
+
+/**
+ * @method saveToFile
+ * @return A value converted from C/C++ "bool"
+ * @param {const char*}
+ * @param {bool}
+ */
+saveToFile : function () {},
+
+/**
+ * @method getNumberOfMipmaps
+ * @return A value converted from C/C++ "int"
+ */
+getNumberOfMipmaps : function () {},
+
+/**
+ * @method getRenderFormat
+ * @return A value converted from C/C++ "cocos2d::Texture2D::PixelFormat"
+ */
+getRenderFormat : function () {},
+
+/**
+ * @method getData
+ * @return A value converted from C/C++ "unsigned char*"
+ */
+getData : function () {},
+
+/**
+ * @method getMipmaps
+ * @return A value converted from C/C++ "MipmapInfo*"
+ */
+getMipmaps : function () {},
+
+/**
+ * @method initWithRawData
+ * @return A value converted from C/C++ "bool"
+ * @param {const void*}
+ * @param {int}
+ * @param {int}
+ * @param {int}
+ * @param {int}
+ * @param {bool}
+ */
+initWithRawData : function () {},
+
+/**
+ * @method Image
+ * @constructor
+ */
+Image : function () {},
 
 };
 
@@ -11179,6 +11535,70 @@ destroyInstance : function () {},
  * @return A value converted from C/C++ "cocos2d::SpriteFrameCache*"
  */
 getInstance : function () {},
+
+};
+
+/**
+ * @class UserDefault
+ */
+cc.UserDefault = {
+
+/**
+ * @method setIntegerForKey
+ * @param {const char*}
+ * @param {int}
+ */
+setIntegerForKey : function () {},
+
+/**
+ * @method setDoubleForKey
+ * @param {const char*}
+ * @param {double}
+ */
+setDoubleForKey : function () {},
+
+/**
+ * @method setFloatForKey
+ * @param {const char*}
+ * @param {float}
+ */
+setFloatForKey : function () {},
+
+/**
+ * @method setStringForKey
+ * @param {const char*}
+ * @param {std::string}
+ */
+setStringForKey : function () {},
+
+/**
+ * @method flush
+ */
+flush : function () {},
+
+/**
+ * @method setBoolForKey
+ * @param {const char*}
+ * @param {bool}
+ */
+setBoolForKey : function () {},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function () {},
+
+/**
+ * @method getXMLFilePath
+ * @return A value converted from C/C++ "std::string"
+ */
+getXMLFilePath : function () {},
+
+/**
+ * @method isXMLFileExist
+ * @return A value converted from C/C++ "bool"
+ */
+isXMLFileExist : function () {},
 
 };
 

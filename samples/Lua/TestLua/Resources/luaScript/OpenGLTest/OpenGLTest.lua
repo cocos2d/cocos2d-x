@@ -8,7 +8,7 @@ local function OpenGLTestMainLayer()
     local curCase  = 0
     local accum    = 0
     local labelBMFont = nil
-    local size = CCDirector:getInstance():getWinSize()
+    local size = cc.Director:getInstance():getWinSize()
     local curLayer = nil
     local schedulEntry = nil
     local  function OrderCallbackMenu()
@@ -30,23 +30,23 @@ local function OpenGLTestMainLayer()
             ShowCurrentTest()
         end
 
-        local ordercallbackmenu = CCMenu:create()
-        local size = CCDirector:getInstance():getWinSize()
-        local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+        local ordercallbackmenu = cc.Menu:create()
+        local size = cc.Director:getInstance():getWinSize()
+        local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
         item1:registerScriptTapHandler(backCallback)
         ordercallbackmenu:addChild(item1,kItemTagBasic)
-        local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+        local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
         item2:registerScriptTapHandler(restartCallback)
         ordercallbackmenu:addChild(item2,kItemTagBasic)
-        local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+        local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
         ordercallbackmenu:addChild(item3,kItemTagBasic) 
         item3:registerScriptTapHandler(nextCallback)
                 
-        item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-        item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-        item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+        item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
         
-        ordercallbackmenu:setPosition(CCPoint(0, 0))
+        ordercallbackmenu:setPosition(cc.p(0, 0))
 
         return ordercallbackmenu
     end
@@ -125,14 +125,14 @@ local function OpenGLTestMainLayer()
 
     local function InitTitle(layer)
         --Title
-        local lableTitle = CCLabelTTF:create(GetTitle(), "Arial", 40)
+        local lableTitle = cc.LabelTTF:create(GetTitle(), "Arial", 40)
         layer:addChild(lableTitle, 15)
-        lableTitle:setPosition(CCPoint(size.width/2, size.height-32))
-        lableTitle:setColor(Color3B(255,255,40))
+        lableTitle:setPosition(cc.p(size.width/2, size.height-32))
+        lableTitle:setColor(cc.c3b(255,255,40))
         --SubTitle
-        local subLabelTitle = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        local subLabelTitle = cc.LabelTTF:create(GetSubTitle(), "Thonburi", 16)
         layer:addChild(subLabelTitle, 15)
-        subLabelTitle:setPosition(CCPoint(size.width/2, size.height-80)) 
+        subLabelTitle:setPosition(cc.p(size.width/2, size.height-80)) 
     end
 
     local function updateRetroEffect(fTime)
@@ -145,10 +145,11 @@ local function OpenGLTestMainLayer()
             return
         end
         local i = 0
-        local len = children:count()
+        local len = table.getn(children)
         for i= 0 ,len - 1 do
-            local child = tolua.cast(children:objectAtIndex(i), "CCSprite")
-            local oldPosX,oldPosY = child:getPosition()
+            local child = tolua.cast(children[i + 1], "Sprite")
+            local oldPos = child:getPosition()
+            local oldPosX,oldPosY = oldPos.x, oldPos.y
             child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
             child:setScaleY(scaleY)
@@ -156,15 +157,15 @@ local function OpenGLTestMainLayer()
     end
 
     local function createShaderRetroEffect()
-        local RetroEffectlayer = CCLayer:create()
+        local RetroEffectlayer = cc.Layer:create()
         InitTitle(RetroEffectlayer)
-        local program = CCGLProgram:create("Shaders/example_ColorBars.vsh", "Shaders/example_ColorBars.fsh")
-        program:addAttribute(CCConstants.ATTRIBUTE_NAME_POSITION, CCConstants.VERTEX_ATTRIB_POSITION)
-        program:addAttribute(CCConstants.ATTRIBUTE_NAME_TEX_COORD, CCConstants.VERTEX_ATTRIB_TEX_COORDS)
+        local program = cc.GLProgram:create("Shaders/example_ColorBars.vsh", "Shaders/example_ColorBars.fsh")
+        program:addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION)
+        program:addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS)
         program:link()
         program:updateUniforms()
 
-        label = CCLabelBMFont:create("RETRO EFFECT","fonts/west_england-64.fnt")
+        label = cc.LabelBMFont:create("RETRO EFFECT","fonts/west_england-64.fnt")
         label:setShaderProgram( program )
 
         label:setPosition(size.width/2, size.height/2)
@@ -179,21 +180,21 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local majorLayer = CCLayer:create()
+        local majorLayer = cc.Layer:create()
 
         InitTitle(majorLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh")
 
-        shader:addAttribute("aVertex", CCConstants.VERTEX_ATTRIB_POSITION)
+        shader:addAttribute("aVertex", cc.VERTEX_ATTRIB_POSITION)
         shader:link()
         shader:updateUniforms()
 
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -215,14 +216,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
-                gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+                gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSITION)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -241,11 +242,11 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local mandelbrotLayer = CCLayer:create()
+        local mandelbrotLayer = cc.Layer:create()
 
         InitTitle(mandelbrotLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh")
 
         shader:addAttribute("aVertex", 0)
         shader:link()
@@ -254,8 +255,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -277,14 +278,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
                 gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -303,11 +304,11 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local heartLayer = CCLayer:create()
+        local heartLayer = cc.Layer:create()
 
         InitTitle(heartLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh")
 
         shader:addAttribute("aVertex", 0)
         shader:link()
@@ -316,8 +317,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -339,14 +340,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
                 gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -365,11 +366,11 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local plasmaLayer = CCLayer:create()
+        local plasmaLayer = cc.Layer:create()
 
         InitTitle(plasmaLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh")
 
         shader:addAttribute("aVertex", 0)
         shader:link()
@@ -378,8 +379,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -401,14 +402,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
                 gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -427,11 +428,11 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local flowerLayer = CCLayer:create()
+        local flowerLayer = cc.Layer:create()
 
         InitTitle(flowerLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh")
 
         shader:addAttribute("aVertex", 0)
         shader:link()
@@ -440,8 +441,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -463,14 +464,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
                 gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -489,11 +490,11 @@ local function OpenGLTestMainLayer()
         local uniformResolution    = 0
         local time    = 0
         local squareVertexPositionBuffer = {}
-        local juliaLayer = CCLayer:create()
+        local juliaLayer = cc.Layer:create()
 
         InitTitle(juliaLayer)
         --loadShaderVertex
-        local shader = CCGLProgram:create("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh")
+        local shader = cc.GLProgram:create("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh")
 
         shader:addAttribute("aVertex", 0)
         shader:link()
@@ -502,8 +503,8 @@ local function OpenGLTestMainLayer()
         local program = shader:getProgram()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(256,256))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(256,256))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
         uniformCenter = gl.getUniformLocation(program,"center")
         uniformResolution  = gl.getUniformLocation( program, "resolution")
         glNode:setShaderProgram(shader)
@@ -525,14 +526,14 @@ local function OpenGLTestMainLayer()
                 shader:use()
                 shader:setUniformsForBuiltins()
                 --Uniforms
-                shader:setUniformLocationWith2f( uniformCenter, size.width/2, size.height/2)
-                shader:setUniformLocationWith2f( uniformResolution, 256, 256)
+                shader:setUniformLocationF32( uniformCenter, size.width/2, size.height/2)
+                shader:setUniformLocationF32( uniformResolution, 256, 256)
 
                 gl.glEnableVertexAttribs(0x1)
 
                 --Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER,squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
                 gl.bindBuffer(gl.ARRAY_BUFFER,0)
             end
@@ -547,18 +548,18 @@ local function OpenGLTestMainLayer()
     end
 
     local function createGLGetActiveTest()
-        local glGetActiveLayer = CCLayer:create()
+        local glGetActiveLayer = cc.Layer:create()
         InitTitle(glGetActiveLayer)
-        local sprite = CCSprite:create("Images/grossini.png")
+        local sprite = cc.Sprite:create("Images/grossini.png")
         sprite:setPosition( size.width/2, size.height/2)
         glGetActiveLayer:addChild(sprite)
         local glNode = gl.glNodeCreate()
         glGetActiveLayer:addChild(glNode,-10)
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = cc.Director:getInstance():getScheduler()
 
         local function getCurrentResult()
             local var = {}
-            local glProgam = tolua.cast(sprite:getShaderProgram(),"CCGLProgram")
+            local glProgam = tolua.cast(sprite:getShaderProgram(),"GLProgram")
             if nil ~= glProgam then
                 local p = glProgam:getProgram()
                 local aaSize,aaType,aaName = gl.getActiveAttrib(p,0)
@@ -597,14 +598,14 @@ local function OpenGLTestMainLayer()
         local texture = {}
         local squareVertexPositionBuffer = {}
         local squareVertexTextureBuffer  = {}
-        local texImage2dLayer = CCLayer:create()
+        local texImage2dLayer = cc.Layer:create()
         InitTitle(texImage2dLayer)
         local glNode   = gl.glNodeCreate()
         texImage2dLayer:addChild(glNode, 10)
         glNode:setPosition(size.width/2, size.height/2)
-        glNode:setContentSize(CCSize(128,128))
-        glNode:setAnchorPoint(CCPoint(0.5,0.5))
-        local shaderCache = CCShaderCache:getInstance()
+        glNode:setContentSize(cc.size(128,128))
+        glNode:setAnchorPoint(cc.p(0.5,0.5))
+        local shaderCache = cc.ShaderCache:getInstance()
         local shader = shaderCache:getProgram("ShaderPositionTexture")
         local function initGL()
             texture.texture_id  = gl.createTexture()
@@ -646,14 +647,14 @@ local function OpenGLTestMainLayer()
                 shader:setUniformsForBuiltins()
 
                 gl.bindTexture(gl.TEXTURE_2D, texture.texture_id)
-                gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_TEX_COORDS or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+                gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_TEX_COORDS or cc.VERTEX_ATTRIB_FLAG_POSITION)
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION,2,gl.FLOAT,false,0,0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION,2,gl.FLOAT,false,0,0)
 
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexTextureBuffer.buffer_id)
-                gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_TEX_COORDS,2,gl.FLOAT,false,0,0)
+                gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS,2,gl.FLOAT,false,0,0)
 
                 gl.drawArrays(gl.TRIANGLE_STRIP,0,4)
 
@@ -668,7 +669,7 @@ local function OpenGLTestMainLayer()
     end
 
     local function CreateSupportedExtensionsLayer()
-        local extensionsLayer = CCLayer:create()
+        local extensionsLayer = cc.Layer:create()
         InitTitle(extensionsLayer)
         local glNode = gl.glNodeCreate()
         extensionsLayer:addChild(glNode,-10)
@@ -687,7 +688,7 @@ local function OpenGLTestMainLayer()
     end
 
     local function CreateReadPixelsTest()
-        local readPixelsLayer = CCLayer:create()
+        local readPixelsLayer = cc.Layer:create()
         InitTitle(readPixelsLayer)
         local glNode = gl.glNodeCreate()
         readPixelsLayer:addChild(glNode,-10)
@@ -695,10 +696,10 @@ local function OpenGLTestMainLayer()
         local x = size.width
         local y = size.height
 
-        local blue = CCLayerColor:create(Color4B(0, 0, 255, 255))
-        local red = CCLayerColor:create(Color4B(255, 0, 0, 255))
-        local green = CCLayerColor:create(Color4B(0, 255, 0, 255))
-        local white = CCLayerColor:create(Color4B(255, 255, 255, 255))
+        local blue = cc.LayerColor:create(cc.c4b(0, 0, 255, 255))
+        local red = cc.LayerColor:create(cc.c4b(255, 0, 0, 255))
+        local green = cc.LayerColor:create(cc.c4b(0, 255, 0, 255))
+        local white = cc.LayerColor:create(cc.c4b(255, 255, 255, 255))
 
         blue:setScale(0.5)
         blue:setPosition(-x / 4, -y / 4)
@@ -717,7 +718,7 @@ local function OpenGLTestMainLayer()
         readPixelsLayer:addChild(green,12)
         readPixelsLayer:addChild(red,13)
 
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = cc.Director:getInstance():getScheduler()
 
         local function getCurrentResult()
             local x = size.width
@@ -773,16 +774,16 @@ local function OpenGLTestMainLayer()
     end
 
     local function createClearTest()
-        local clearLayer = CCLayer:create()
+        local clearLayer = cc.Layer:create()
         InitTitle(clearLayer)
 
-        local blue = CCLayerColor:create(Color4B(0, 0, 255, 255))
+        local blue = cc.LayerColor:create(cc.c4b(0, 0, 255, 255))
         clearLayer:addChild( blue, 1 )
 
         local glNode = gl.glNodeCreate()
         clearLayer:addChild(glNode,10)
         --gl.init()
-        local scheduler = CCDirector:getInstance():getScheduler()
+        local scheduler = cc.Director:getInstance():getScheduler()
 
         local function clearDraw()
             gl.clear(gl.COLOR_BUFFER_BIT)
@@ -813,7 +814,7 @@ local function OpenGLTestMainLayer()
     end
 
     local function createNodeWebGLAPITest()
-        local nodeWebGLAPILayer = CCLayer:create()
+        local nodeWebGLAPILayer = cc.Layer:create()
         InitTitle(nodeWebGLAPILayer)
         local glNode = gl.glNodeCreate()
         nodeWebGLAPILayer:addChild(glNode,10)
@@ -971,11 +972,11 @@ local function OpenGLTestMainLayer()
     end
 
     local function createGLNodeCCAPITest()
-        local nodeCCAPILayer = CCLayer:create()
+        local nodeCCAPILayer = cc.Layer:create()
         InitTitle(nodeCCAPILayer)
         local glNode = gl.glNodeCreate()
         nodeCCAPILayer:addChild(glNode,10)
-        local shader = CCShaderCache:getInstance():getProgram("ShaderPositionColor")
+        local shader = cc.ShaderCache:getInstance():getProgram("ShaderPositionColor")
         local triangleVertexPositionBuffer = {}
         local triangleVertexColorBuffer = {}
         local squareVertexPositionBuffer = {}
@@ -1026,22 +1027,22 @@ local function OpenGLTestMainLayer()
         local function GLNodeCCAPIDraw()
             shader:use()
             shader:setUniformsForBuiltins()
-            gl.glEnableVertexAttribs(CCConstants.VERTEX_ATTRIB_FLAG_COLOR or CCConstants.VERTEX_ATTRIB_FLAG_POSITION)
+            gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_COLOR or cc.VERTEX_ATTRIB_FLAG_POSITION)
 
             --
             gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
-            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
 
             gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
-            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 
             gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
-            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0)
 
             gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id)
-            gl.vertexAttribPointer(CCConstants.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.FLOAT, false, 0, 0)
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3)
 
@@ -1056,7 +1057,7 @@ local function OpenGLTestMainLayer()
     end
 
     local function createGLTexParamterTest()
-        local glTexParamLayer = CCLayer:create()
+        local glTexParamLayer = cc.Layer:create()
         InitTitle(glTexParamLayer)
         local glNode  = gl.glNodeCreate()
         glTexParamLayer:addChild(glNode,10)
@@ -1079,14 +1080,14 @@ local function OpenGLTestMainLayer()
     end
 
     local function createGetUniformTest()
-        local getUniformLayer = CCLayer:create()
+        local getUniformLayer = cc.Layer:create()
         InitTitle(getUniformLayer)
         local glNode  = gl.glNodeCreate()
         getUniformLayer:addChild(glNode,10)
         local pMatrix = {1,2,3,4, 4,3,2,1, 1,2,4,8, 1.1,1.2,1.3,1.4}
 
         local function runTest()
-            local shader = CCShaderCache:getInstance():getProgram("ShaderPositionTextureColor")
+            local shader = cc.ShaderCache:getInstance():getProgram("ShaderPositionTextureColor")
             local program = shader:getProgram()
 
             shader:use()
@@ -1147,10 +1148,10 @@ local function OpenGLTestMainLayer()
     end
 
     function ShowCurrentTest()    
-        local curScene = CCScene:create()
+        local curScene = cc.Scene:create()
         if nil ~= curScene then
             if nil ~= curLayer then
-                local scheduler = CCDirector:getInstance():getScheduler()
+                local scheduler = cc.Director:getInstance():getScheduler()
                 if nil ~= schedulEntry then
                     scheduler:unscheduleScriptEntry(schedulEntry)
                 end
@@ -1160,7 +1161,7 @@ local function OpenGLTestMainLayer()
                 curScene:addChild(curLayer)
                 curLayer:addChild(OrderCallbackMenu(),15)
                 curScene:addChild(CreateBackMenuItem())
-                CCDirector:getInstance():replaceScene(curScene)
+                cc.Director:getInstance():replaceScene(curScene)
             end            
         end 
     end
@@ -1170,7 +1171,7 @@ local function OpenGLTestMainLayer()
 end
 
 function OpenGLTestMain()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     scene:addChild(OpenGLTestMainLayer())
     scene:addChild(CreateBackMenuItem())
     return scene

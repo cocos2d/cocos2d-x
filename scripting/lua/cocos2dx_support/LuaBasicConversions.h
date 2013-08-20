@@ -3,11 +3,18 @@
 
 extern "C" {
 #include "lua.h"
+#include "tolua++.h"
 }
 
 #include "cocos2d.h"
 
 using namespace cocos2d;
+
+extern std::map<int, std::string>  g_luaType;
+
+#if COCOS2D_DEBUG >=1
+void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
+#endif
 
 // to native
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue);
@@ -29,6 +36,7 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outVa
 extern bool luaval_to_array(lua_State* L,int lo, Array** outValue);
 extern bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue);
 extern bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints);
+extern bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret);
 
 // from native
 extern void point_to_luaval(lua_State* L,const Point& pt);
