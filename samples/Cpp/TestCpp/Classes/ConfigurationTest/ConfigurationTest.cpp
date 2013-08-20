@@ -25,7 +25,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -39,7 +39,7 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -48,7 +48,7 @@ static Layer* backAction()
 
 static Layer* restartAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -86,7 +86,7 @@ void ConfigurationBase::onExit()
 
 void ConfigurationBase::restartCallback(Object* sender)
 {
-    Scene* s = new ConfigurationTestScene();
+    auto s = new ConfigurationTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -94,7 +94,7 @@ void ConfigurationBase::restartCallback(Object* sender)
 
 void ConfigurationBase::nextCallback(Object* sender)
 {
-    Scene* s = new ConfigurationTestScene();
+    auto s = new ConfigurationTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -102,7 +102,7 @@ void ConfigurationBase::nextCallback(Object* sender)
 
 void ConfigurationBase::backCallback(Object* sender)
 {
-    Scene* s = new ConfigurationTestScene();
+    auto s = new ConfigurationTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -62,6 +62,10 @@
 		01881BCB17B33D850019A3C3 /* s3tc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01881BC817B33B400019A3C3 /* s3tc.cpp */; };
 		01881BCC17B35D800019A3C3 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01881BC917B33B400019A3C3 /* s3tc.h */; };
 		01881BCD17B35D840019A3C3 /* s3tc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01881BC917B33B400019A3C3 /* s3tc.h */; };
+		01C92EE117BB5DE800024119 /* atitc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C92EDF17BB5DE800024119 /* atitc.cpp */; };
+		01C92EE217BB5DE800024119 /* atitc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C92EDF17BB5DE800024119 /* atitc.cpp */; };
+		01C92EE317BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
+		01C92EE417BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
 		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
@@ -2123,6 +2127,8 @@
 		0186A90117A068C300D88A79 /* CCFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFont.cpp; sourceTree = "<group>"; };
 		01881BC817B33B400019A3C3 /* s3tc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = s3tc.cpp; path = common/s3tc/s3tc.cpp; sourceTree = "<group>"; };
 		01881BC917B33B400019A3C3 /* s3tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = s3tc.h; path = common/s3tc/s3tc.h; sourceTree = "<group>"; };
+		01C92EDF17BB5DE800024119 /* atitc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atitc.cpp; path = common/atitc/atitc.cpp; sourceTree = "<group>"; };
+		01C92EE017BB5DE800024119 /* atitc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atitc.h; path = common/atitc/atitc.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A055B81797EBAC0040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Deprecated.lua; sourceTree = "<group>"; };
@@ -3488,6 +3494,15 @@
 			name = s3tc;
 			sourceTree = "<group>";
 		};
+		01C92ED717BB5ADB00024119 /* atitc */ = {
+			isa = PBXGroup;
+			children = (
+				01C92EDF17BB5DE800024119 /* atitc.cpp */,
+				01C92EE017BB5DE800024119 /* atitc.h */,
+			);
+			name = atitc;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -4031,6 +4046,7 @@
 		A03F1F611780BAE5006731B9 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				01C92ED717BB5ADB00024119 /* atitc */,
 				0194D74117AF48FD00729295 /* s3tc */,
 				B33AFB6417A20B150022B711 /* etc */,
 				A07A4D9D17837B910073F6A7 /* ios */,
@@ -6028,6 +6044,7 @@
 				0186A8F8179F328D00D88A79 /* CCFontAtlasCache.h in Headers */,
 				0186A8FE17A0674300D88A79 /* CCFontFNT.h in Headers */,
 				01881BCD17B35D840019A3C3 /* s3tc.h in Headers */,
+				01C92EE317BB5DE800024119 /* atitc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6711,6 +6728,7 @@
 				0186A8FA179F328F00D88A79 /* CCFontAtlasCache.h in Headers */,
 				0186A90017A0674500D88A79 /* CCFontFNT.h in Headers */,
 				01881BCC17B35D800019A3C3 /* s3tc.h in Headers */,
+				01C92EE417BB5DE800024119 /* atitc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7477,6 +7495,7 @@
 				0186A8F7179F328D00D88A79 /* CCFontAtlasCache.cpp in Sources */,
 				0186A8FD17A0674300D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90217A068E800D88A79 /* CCFont.cpp in Sources */,
+				01C92EE117BB5DE800024119 /* atitc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7933,6 +7952,7 @@
 				0186A8F9179F328F00D88A79 /* CCFontAtlasCache.cpp in Sources */,
 				0186A8FF17A0674500D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90317A068E900D88A79 /* CCFont.cpp in Sources */,
+				01C92EE217BB5DE800024119 /* atitc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

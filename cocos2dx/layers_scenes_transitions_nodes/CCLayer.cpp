@@ -68,8 +68,8 @@ bool Layer::init()
         Director * pDirector;
         CC_BREAK_IF(!(pDirector = Director::getInstance()));
         this->setContentSize(pDirector->getWinSize());
-        _touchEnabled = false;
-        _accelerometerEnabled = false;
+        setTouchEnabled(false);
+        setAccelerometerEnabled(false);
         // success
         bRet = true;
     } while(0);

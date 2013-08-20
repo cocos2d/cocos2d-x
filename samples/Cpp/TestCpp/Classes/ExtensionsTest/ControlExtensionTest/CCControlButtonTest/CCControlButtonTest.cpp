@@ -29,17 +29,17 @@ bool ControlButtonTest_HelloVariableSize::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::getInstance()->getWinSize();
+        auto screenSize = Director::getInstance()->getWinSize();
         
         // Defines an array of title to create buttons dynamically
-        Array *stringArray = Array::create(
+        auto stringArray = Array::create(
             ccs("Hello"),
             ccs("Variable"),
             ccs("Size"),
             ccs("!"),
             NULL);
         
-        Node *layer = Node::create();
+        auto layer = Node::create();
         addChild(layer, 1);
         
         double total_width = 0, height = 0;
@@ -49,7 +49,7 @@ bool ControlButtonTest_HelloVariableSize::init()
         int i = 0;
         CCARRAY_FOREACH(stringArray, pObj)
         {
-            String* title = static_cast<String*>(pObj);
+            auto title = static_cast<String*>(pObj);
             // Creates a button with this string as title
             ControlButton *button = standardButtonWithTitle(title->getCString());
             if (i == 0)
@@ -82,7 +82,7 @@ bool ControlButtonTest_HelloVariableSize::init()
         layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
-        Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(total_width + 14, height + 14));
         background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
@@ -94,10 +94,10 @@ bool ControlButtonTest_HelloVariableSize::init()
 ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
 {
     /** Creates and return a button with a default background and title color. */
-    Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/button.png");
-    Scale9Sprite *backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
+    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
     
-    LabelTTF *titleButton = LabelTTF::create(title, "Marker Felt", 30);
+    auto titleButton = LabelTTF::create(title, "Marker Felt", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     
@@ -123,7 +123,7 @@ bool ControlButtonTest_Event::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::getInstance()->getWinSize();
+        auto screenSize = Director::getInstance()->getWinSize();
 
         // Add a label in which the button events will be displayed
         setDisplayValueLabel(LabelTTF::create("No Event", "Marker Felt", 32));
@@ -132,10 +132,10 @@ bool ControlButtonTest_Event::init()
         addChild(_displayValueLabel, 1);
         
         // Add the button
-        Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/button.png");
-        Scale9Sprite *backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+        auto backgroundButton = Scale9Sprite::create("extensions/button.png");
+        auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
         
-        LabelTTF *titleButton = LabelTTF::create("Touch Me!", "Marker Felt", 30);
+        auto titleButton = LabelTTF::create("Touch Me!", "Marker Felt", 30);
 
         titleButton->setColor(Color3B(159, 168, 176));
         
@@ -148,7 +148,7 @@ bool ControlButtonTest_Event::init()
         addChild(controlButton, 1);
 
         // Add the black background
-        Scale9Sprite *background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(300, 170));
         background->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(background);
@@ -214,9 +214,9 @@ bool ControlButtonTest_Styling::init()
 {
     if (ControlScene::init())
     {
-        Size screenSize = Director::getInstance()->getWinSize();
+        auto screenSize = Director::getInstance()->getWinSize();
 
-        Node *layer = Node::create();
+        auto layer = Node::create();
         addChild(layer, 1);
         
         int space = 10; // px
@@ -244,7 +244,7 @@ bool ControlButtonTest_Styling::init()
         layer->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         
         // Add the black background
-        Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
         backgroundButton->setContentSize(Size(max_w + 14, max_h + 14));
         backgroundButton->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         addChild(backgroundButton);
@@ -259,12 +259,12 @@ bool ControlButtonTest_Styling::init()
 ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *title)
 {
     /** Creates and return a button with a default background and title color. */
-    Scale9Sprite *backgroundButton = Scale9Sprite::create("extensions/button.png");
+    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
     backgroundButton->setPreferredSize(Size(45, 45));  // Set the prefered size
-    Scale9Sprite *backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     
-    LabelTTF *titleButton = LabelTTF::create(title, "Marker Felt", 30);
+    auto titleButton = LabelTTF::create(title, "Marker Felt", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     

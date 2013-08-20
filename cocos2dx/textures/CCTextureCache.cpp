@@ -387,7 +387,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
         }
 
     } while (0);
-
+    
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::addImage(texture, image);
 #endif
@@ -653,7 +653,7 @@ void VolatileTexture::reloadAllTextures()
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
                 
-                if (pImage && pImage->initWithImageData((void*)pBuffer, nSize))
+                if (pImage && pImage->initWithImageData(pBuffer, nSize))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);

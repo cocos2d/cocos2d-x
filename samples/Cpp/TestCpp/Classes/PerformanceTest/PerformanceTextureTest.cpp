@@ -45,10 +45,10 @@ void TextureMenuLayer::onEnter()
 {
     PerformBasicLayer::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // Title
-    LabelTTF *label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
     addChild(label, 1);
     label->setPosition(Point(s.width/2, s.height-32));
     label->setColor(Color3B(255,255,40));
@@ -57,7 +57,7 @@ void TextureMenuLayer::onEnter()
     std::string strSubTitle = subtitle();
     if(strSubTitle.length())
     {
-        LabelTTF *l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
+        auto l = LabelTTF::create(strSubTitle.c_str(), "Thonburi", 16);
         addChild(l, 1);
         l->setPosition(Point(s.width/2, s.height-80));
     }
@@ -84,7 +84,7 @@ void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
     Texture2D *texture;
-    TextureCache *cache = TextureCache::getInstance();
+    auto cache = TextureCache::getInstance();
 
     log("RGBA 8888");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
@@ -131,7 +131,7 @@ void TextureTest::performTests()
 {
 //     Texture2D *texture;
 //     struct timeval now;
-//     TextureCache *cache = TextureCache::getInstance();
+//     auto cache = TextureCache::getInstance();
 
     log("--------");
 
@@ -344,7 +344,7 @@ std::string TextureTest::subtitle()
 
 Scene* TextureTest::scene()
 {
-    Scene *scene = Scene::create();
+    auto scene = Scene::create();
     TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
     scene->addChild(layer);
     layer->release();
@@ -355,6 +355,6 @@ Scene* TextureTest::scene()
 void runTextureTest()
 {
     s_nTexCurCase = 0;
-    Scene* scene = TextureTest::scene();
+    auto scene = TextureTest::scene();
     Director::getInstance()->replaceScene(scene);
 }
