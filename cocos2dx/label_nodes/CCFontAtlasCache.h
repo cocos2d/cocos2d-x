@@ -40,7 +40,8 @@ public:
     
     static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0);
     static FontAtlas * getFontAtlasFNT(const char *fontFileName);
-    static bool releaseFontAtlas(FontAtlas *atlas);
+    
+    static bool        releaseFontAtlas(FontAtlas *atlas);
     
 private:
     

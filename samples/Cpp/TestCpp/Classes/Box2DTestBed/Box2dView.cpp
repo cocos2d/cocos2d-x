@@ -37,7 +37,7 @@ MenuLayer::~MenuLayer(void)
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 {
-    MenuLayer* layer = new MenuLayer();
+    auto layer = new MenuLayer();
     layer->initWithEntryID(entryId);
     layer->autorelease();
 
@@ -46,7 +46,7 @@ MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 
 bool MenuLayer::initWithEntryID(int entryId)
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
 	Point visibleOrigin = director->getVisibleOrigin();
 	Size visibleSize = director->getVisibleSize();
 
@@ -60,18 +60,18 @@ bool MenuLayer::initWithEntryID(int entryId)
     view->setAnchorPoint( Point(0,0) );
     view->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//    LabelBMFont* label = LabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
+//    auto label = LabelBMFont::create(view->title().c_str(),  "fonts/arial16.fnt");
 //#else    
-    LabelTTF* label = LabelTTF::create(view->title().c_str(), "Arial", 28);
+    auto label = LabelTTF::create(view->title().c_str(), "Arial", 28);
 //#endif
     addChild(label, 1);
     label->setPosition( Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
 
-    MenuItemImage *item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(MenuLayer::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(MenuLayer::nextCallback, this) );
+    auto item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(MenuLayer::backCallback, this) );
+    auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
+    auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(MenuLayer::nextCallback, this) );
 
-    Menu *menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, NULL);
 
     menu->setPosition( Point::ZERO );
     item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -85,8 +85,8 @@ bool MenuLayer::initWithEntryID(int entryId)
 
 void MenuLayer::restartCallback(Object* sender)
 {
-    Scene* s = new Box2dTestBedScene();
-    MenuLayer* box = MenuLayer::menuWithEntryID(m_entryID);
+    auto s = new Box2dTestBedScene();
+    auto box = MenuLayer::menuWithEntryID(m_entryID);
     s->addChild( box );
     Director::getInstance()->replaceScene( s );
     s->release();
@@ -94,11 +94,11 @@ void MenuLayer::restartCallback(Object* sender)
 
 void MenuLayer::nextCallback(Object* sender)
 {
-    Scene* s = new Box2dTestBedScene();
+    auto s = new Box2dTestBedScene();
     int next = m_entryID + 1;
     if( next >= g_totalEntries)
         next = 0;
-    MenuLayer* box = MenuLayer::menuWithEntryID(next);
+    auto box = MenuLayer::menuWithEntryID(next);
     s->addChild( box );
     Director::getInstance()->replaceScene( s );
     s->release();
@@ -106,13 +106,13 @@ void MenuLayer::nextCallback(Object* sender)
 
 void MenuLayer::backCallback(Object* sender)
 {
-    Scene* s = new Box2dTestBedScene();
+    auto s = new Box2dTestBedScene();
     int next = m_entryID - 1;
     if( next < 0 ) {
         next = g_totalEntries - 1;
     }
     
-    MenuLayer* box = MenuLayer::menuWithEntryID(next);
+    auto box = MenuLayer::menuWithEntryID(next);
 
     s->addChild( box );
     Director::getInstance()->replaceScene( s );
@@ -121,7 +121,7 @@ void MenuLayer::backCallback(Object* sender)
 
 void MenuLayer::registerWithTouchDispatcher()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
@@ -140,9 +140,9 @@ bool MenuLayer::ccTouchBegan(Touch* touch, Event* event)
 
 void MenuLayer::ccTouchMoved(Touch* touch, Event* event)
 {
-    Point diff = touch->getDelta();    
-    Node *node = getChildByTag( kTagBox2DNode );
-    Point currentPos = node->getPosition();
+    auto diff = touch->getDelta();    
+    auto node = getChildByTag( kTagBox2DNode );
+    auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
 
@@ -210,15 +210,15 @@ Box2DView::~Box2DView()
 void Box2DView::registerWithTouchDispatcher()
 {
     // higher priority than dragging
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
 }
 
 bool Box2DView::ccTouchBegan(Touch* touch, Event* event)
 {
-    Point touchLocation = touch->getLocation();    
+    auto touchLocation = touch->getLocation();    
 
-    Point nodePosition = convertToNodeSpace( touchLocation );
+    auto nodePosition = convertToNodeSpace( touchLocation );
 //    NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
     return m_test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));    
@@ -226,16 +226,16 @@ bool Box2DView::ccTouchBegan(Touch* touch, Event* event)
 
 void Box2DView::ccTouchMoved(Touch* touch, Event* event)
 {
-    Point touchLocation = touch->getLocation();    
-    Point nodePosition = convertToNodeSpace( touchLocation );
+    auto touchLocation = touch->getLocation();    
+    auto nodePosition = convertToNodeSpace( touchLocation );
     
     m_test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));        
 }
 
 void Box2DView::ccTouchEnded(Touch* touch, Event* event)
 {
-    Point touchLocation = touch->getLocation();    
-    Point nodePosition = convertToNodeSpace( touchLocation );
+    auto touchLocation = touch->getLocation();    
+    auto nodePosition = convertToNodeSpace( touchLocation );
     
     m_test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }

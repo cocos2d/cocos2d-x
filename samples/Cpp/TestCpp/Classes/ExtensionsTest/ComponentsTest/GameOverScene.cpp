@@ -59,7 +59,7 @@ bool GameOverLayer::init()
 {
 	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
 	{
-		Size winSize = Director::getInstance()->getWinSize();
+		auto winSize = Director::getInstance()->getWinSize();
 		this->_label = LabelTTF::create("","Artial", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
@@ -72,15 +72,15 @@ bool GameOverLayer::init()
                                 NULL));
 		
         
-        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
-            ExtensionsTestScene *scene = new ExtensionsTestScene();
+        auto itemBack = MenuItemFont::create("Back", [](Object* sender){
+            auto scene = new ExtensionsTestScene();
             scene->runThisTest();
             scene->release();
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        Menu *menuBack = Menu::create(itemBack, NULL);
+        auto menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         

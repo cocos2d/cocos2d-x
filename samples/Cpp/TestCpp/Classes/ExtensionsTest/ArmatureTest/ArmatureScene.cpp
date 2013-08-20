@@ -134,7 +134,7 @@ void ArmatureTestLayer::onEnter()
 	std::string strSubtitle = subtitle();
 	if( ! strSubtitle.empty() ) 
 	{
-		LabelTTF* l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
+		auto l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
 		l->setColor(Color3B(0, 0, 0));
 		addChild(l, 1, 10001);
 		l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
@@ -299,7 +299,7 @@ void TestPerformance::update(float delta)
 
 		char pszCount[255];
 		sprintf(pszCount, "%s %i", subtitle().c_str(), armatureCount);
-		LabelTTF *label = (LabelTTF*)getChildByTag(10001);
+		auto label = (LabelTTF*)getChildByTag(10001);
 		label->setString(pszCount);
 	}
 }
@@ -382,14 +382,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
 	{
 		if (id.compare("Fire") == 0)
 		{
-			ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
+			auto actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
 			armature->stopAllActions();
 			armature->runAction(Sequence::create(actionToRight,  CallFunc::create(CC_CALLBACK_0(TestAnimationEvent::callback1,this)), NULL));
 			armature->getAnimation()->play("Walk");
 		}
 		else if (id.compare("FireMax") == 0)
 		{
-			ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
+			auto actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
 			armature->stopAllActions();
 			armature->runAction(Sequence::create(actionToLeft,  CallFunc::create(CC_CALLBACK_0(TestAnimationEvent::callback2,this)), NULL));
 			armature->getAnimation()->play("Walk");

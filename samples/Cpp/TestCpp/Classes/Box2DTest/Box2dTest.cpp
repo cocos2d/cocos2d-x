@@ -25,29 +25,29 @@ Box2DTestLayer::Box2DTestLayer()
     //Set up sprite
 #if 1
     // Use batch node. Faster
-    SpriteBatchNode *parent = SpriteBatchNode::create("Images/blocks.png", 100);
+    auto parent = SpriteBatchNode::create("Images/blocks.png", 100);
     _spriteTexture = parent->getTexture();
 #else
     // doesn't use batch node. Slower
     _spriteTexture = TextureCache::getInstance()->addImage("Images/blocks.png");
-    Node *parent = Node::create();
+    auto parent = Node::create();
 #endif
     addChild(parent, 0, kTagParentNode);
 
 
     addNewSpriteAtPosition(VisibleRect::center());
 
-    LabelTTF *label = LabelTTF::create("Tap screen", "Marker Felt", 32);
+    auto label = LabelTTF::create("Tap screen", "Marker Felt", 32);
     addChild(label, 0);
     label->setColor(Color3B(0,0,255));
     label->setPosition(Point( VisibleRect::center().x, VisibleRect::top().y-50));
     
     scheduleUpdate();
 #else
-    LabelTTF *label = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
+    auto label = LabelTTF::create("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
                                             "Arial",
                                             18);
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     label->setPosition(Point(size.width/2, size.height/2));
     
     addChild(label);
@@ -115,16 +115,16 @@ void Box2DTestLayer::initPhysics()
 
 void Box2DTestLayer::createResetButton()
 {
-    MenuItemImage *reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Object *sender) {
-		Scene* s = new Box2DTestScene();
-		Box2DTestLayer* child = new Box2DTestLayer();
+    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Object *sender) {
+		auto s = new Box2DTestScene();
+		auto child = new Box2DTestLayer();
 		s->addChild(child);
 		child->release();
 		Director::getInstance()->replaceScene(s);
 		s->release();
 	});
 
-    Menu *menu = Menu::create(reset, NULL);
+    auto menu = Menu::create(reset, NULL);
 
     menu->setPosition(Point(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);
@@ -175,13 +175,13 @@ void Box2DTestLayer::addNewSpriteAtPosition(Point p)
     body->CreateFixture(&fixtureDef);    
     
 #if CC_ENABLE_BOX2D_INTEGRATION
-    Node *parent = this->getChildByTag(kTagParentNode);
+    auto parent = this->getChildByTag(kTagParentNode);
     
     //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
     //just randomly picking one of the images
     int idx = (CCRANDOM_0_1() > .5 ? 0:1);
     int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-    PhysicsSprite *sprite = PhysicsSprite::createWithTexture(_spriteTexture,Rect(32 * idx,32 * idy,32,32));
+    auto sprite = PhysicsSprite::createWithTexture(_spriteTexture,Rect(32 * idx,32 * idy,32,32));
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
@@ -218,7 +218,7 @@ void Box2DTestLayer::ccTouchesEnded(Set* touches, Event* event)
         if(!touch)
             break;
 
-        Point location = touch->getLocation();
+        auto location = touch->getLocation();
     
         addNewSpriteAtPosition( location );
     }
@@ -248,7 +248,7 @@ void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration*
 
 void Box2DTestScene::runThisTest()
 {
-    Layer* layer = new Box2DTestLayer();
+    auto layer = new Box2DTestLayer();
     addChild(layer);
     layer->release();
 

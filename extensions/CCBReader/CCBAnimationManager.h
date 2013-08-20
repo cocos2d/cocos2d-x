@@ -6,6 +6,7 @@
 #include "CCBSequence.h"
 #include "CCBValue.h"
 #include "CCBSequenceProperty.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -42,6 +43,8 @@ public:
 
     void addDocumentCallbackNode(Node *node);
     void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackControlEvents(Control::EventType eventType);
+    
     void addDocumentOutletNode(Node *node);
     void addDocumentOutletName(std::string name);
 
@@ -50,6 +53,8 @@ public:
     std::string getDocumentControllerName();
     Array* getDocumentCallbackNames();
     Array* getDocumentCallbackNodes();
+    Array* getDocumentCallbackControlEvents();
+    
     Array* getDocumentOutletNames();
     Array* getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
@@ -123,6 +128,7 @@ private:
     Array *_documentOutletNodes;
     Array *_documentCallbackNames;
     Array *_documentCallbackNodes;
+    Array *_documentCallbackControlEvents;
     Array *_keyframeCallbacks;
     Dictionary *_keyframeCallFuncs;
     

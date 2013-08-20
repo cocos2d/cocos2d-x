@@ -100,6 +100,11 @@ if [ -d "${ANDROID_PROJ_DIR}/ForAssets" ]; then
     cp -rf "${ANDROID_PROJ_DIR}/ForAssets" "${TARGET_DIR}/android"
 fi
 
+#copy CLibs directory to publish directory
+if [ -d "${ANDROID_PROJ_DIR}/CLibs" ]; then
+    cp -rf "${ANDROID_PROJ_DIR}/CLibs" "${TARGET_DIR}/android"
+fi
+
 #Build C++ code
 BUILD_NATIVE_SCRIPT=${ANDROID_PROJ_DIR}/build_native.sh
 if [ -f $BUILD_NATIVE_SCRIPT ]; then

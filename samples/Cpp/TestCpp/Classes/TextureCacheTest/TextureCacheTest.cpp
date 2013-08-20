@@ -9,7 +9,7 @@ TextureCacheTest::TextureCacheTest()
 : _numberOfSprites(20)
 , _numberOfLoadedSprites(0)
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
 
     _labelLoading = LabelTTF::create("loading...", "Arial", 15);
     _labelPercent = LabelTTF::create("%0", "Arial", 15);
@@ -60,28 +60,28 @@ void TextureCacheTest::loadingCallBack(Object *obj)
 
 void TextureCacheTest::addSprite()
 {
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
 
     // create sprites
 
-    Sprite *bg = Sprite::create("Images/HelloWorld.png");
+    auto bg = Sprite::create("Images/HelloWorld.png");
     bg->setPosition(Point(size.width / 2, size.height / 2));
 
-    Sprite *s1 = Sprite::create("Images/grossini.png");
-    Sprite *s2 = Sprite::create("Images/grossini_dance_01.png");
-    Sprite *s3 = Sprite::create("Images/grossini_dance_02.png");
-    Sprite *s4 = Sprite::create("Images/grossini_dance_03.png");
-    Sprite *s5 = Sprite::create("Images/grossini_dance_04.png");
-    Sprite *s6 = Sprite::create("Images/grossini_dance_05.png");
-    Sprite *s7 = Sprite::create("Images/grossini_dance_06.png");
-    Sprite *s8 = Sprite::create("Images/grossini_dance_07.png");
-    Sprite *s9 = Sprite::create("Images/grossini_dance_08.png");
-    Sprite *s10 = Sprite::create("Images/grossini_dance_09.png");
-    Sprite *s11 = Sprite::create("Images/grossini_dance_10.png");
-    Sprite *s12 = Sprite::create("Images/grossini_dance_11.png");
-    Sprite *s13 = Sprite::create("Images/grossini_dance_12.png");
-    Sprite *s14 = Sprite::create("Images/grossini_dance_13.png");
-    Sprite *s15 = Sprite::create("Images/grossini_dance_14.png");
+    auto s1 = Sprite::create("Images/grossini.png");
+    auto s2 = Sprite::create("Images/grossini_dance_01.png");
+    auto s3 = Sprite::create("Images/grossini_dance_02.png");
+    auto s4 = Sprite::create("Images/grossini_dance_03.png");
+    auto s5 = Sprite::create("Images/grossini_dance_04.png");
+    auto s6 = Sprite::create("Images/grossini_dance_05.png");
+    auto s7 = Sprite::create("Images/grossini_dance_06.png");
+    auto s8 = Sprite::create("Images/grossini_dance_07.png");
+    auto s9 = Sprite::create("Images/grossini_dance_08.png");
+    auto s10 = Sprite::create("Images/grossini_dance_09.png");
+    auto s11 = Sprite::create("Images/grossini_dance_10.png");
+    auto s12 = Sprite::create("Images/grossini_dance_11.png");
+    auto s13 = Sprite::create("Images/grossini_dance_12.png");
+    auto s14 = Sprite::create("Images/grossini_dance_13.png");
+    auto s15 = Sprite::create("Images/grossini_dance_14.png");
 
     // just loading textures to slow down
     Sprite::create("Images/background1.png");
@@ -129,7 +129,7 @@ void TextureCacheTest::addSprite()
 
 void TextureCacheTestScene::runThisTest()
 {
-    Layer* layer = new TextureCacheTest();
+    auto layer = new TextureCacheTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

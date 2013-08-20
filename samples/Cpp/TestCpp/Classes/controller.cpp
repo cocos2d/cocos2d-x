@@ -56,6 +56,7 @@ struct {
 	{ "KeypadTest", []() { return new KeypadTestScene(); } },
 #endif
 	{ "LabelTest", [](){return new AtlasTestScene(); } },
+    { "LabelTestNew", [](){return new AtlasTestSceneNew(); } },
 	{ "LayerTest", [](){return new LayerTestScene();} },
 	{ "MenuTest", [](){return new MenuTestScene();} },
 	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },
@@ -94,8 +95,8 @@ TestController::TestController()
 : _beginPos(Point::ZERO)
 {
     // add close menu
-    MenuItemImage *closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
-    Menu* menu =Menu::create(closeItem, NULL);
+    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
+    auto menu =Menu::create(closeItem, NULL);
 
     menu->setPosition( Point::ZERO );
     closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
@@ -105,11 +106,11 @@ TestController::TestController()
     for (int i = 0; i < g_testCount; ++i)
     {
 // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         LabelBMFont* label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
+//         auto label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
 // #else
-        LabelTTF* label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
+        auto label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
 // #endif        
-        MenuItemLabel* menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
+        auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
         menuItem->setPosition( Point( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
@@ -135,11 +136,11 @@ void TestController::menuCallback(Object * sender)
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
-    MenuItem* menuItem = static_cast<MenuItem *>(sender);
+    auto menuItem = static_cast<MenuItem *>(sender);
     int idx = menuItem->getZOrder() - 10000;
 
     // create the test scene and run it
-    TestScene* scene = g_aTestNames[idx].callback();
+    auto scene = g_aTestNames[idx].callback();
 
     if (scene)
     {
@@ -158,20 +159,20 @@ void TestController::closeCallback(Object * sender)
 
 void TestController::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
 void TestController::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
-    Point touchLocation = touch->getLocation();    
+    auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
 
-    Point curPos  = _itemMenu->getPosition();
-    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
