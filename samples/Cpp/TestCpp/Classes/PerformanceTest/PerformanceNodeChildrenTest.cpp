@@ -261,7 +261,8 @@ void IterateSpriteSheetForLoop::update(float dt)
 
     for( const auto &object : *children )
     {
-        auto sprite = static_cast<Sprite*>(object);
+        auto o = static_cast<Object*>(object);
+        auto sprite = static_cast<Sprite*>(o);
         sprite->setVisible(false);
     }
 
@@ -335,7 +336,8 @@ void IterateSpriteSheetIterator::update(float dt)
 
     for( auto it=std::begin(*children); it != std::end(*children); ++it)
     {
-        auto sprite = static_cast<Sprite*>(*it);
+        auto obj = static_cast<Object*>(*it);
+        auto sprite = static_cast<Sprite*>(obj);
         sprite->setVisible(false);
     }
 
