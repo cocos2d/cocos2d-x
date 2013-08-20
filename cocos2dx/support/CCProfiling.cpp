@@ -117,9 +117,10 @@ ProfilingTimer::~ProfilingTimer(void)
 
 const char* ProfilingTimer::description() const
 {
-    static char s_szDesciption[256] = {0};
-    sprintf(s_szDesciption, "%s: avg time, %fms", _nameStr.c_str(), _averageTime);
-    return s_szDesciption;
+    static char s_desciption[512] = {0};
+
+    sprintf(s_desciption, "%s ::\tavg: %fms,\tmin: %fms,\tmax: %fms,\ttotal: %.2fs,\tnr calls: %ld", _nameStr.c_str(), _averageTime, minTime, maxTime, totalTime / 1000.0, (unsigned long)numberOfCalls);
+    return s_desciption;
 }
 
 void ProfilingTimer::reset()
