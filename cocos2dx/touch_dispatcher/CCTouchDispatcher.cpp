@@ -301,8 +301,6 @@ void TouchDispatcher::rearrangeHandlers(Array *array)
         h2 = (TouchHandler*)(p2);
         return (h1->getPriority() < h2->getPriority());
     });
-    
-    std::sort(array->begin(), array->end(), less);
 }
 
 void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)
