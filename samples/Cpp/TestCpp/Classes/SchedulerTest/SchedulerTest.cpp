@@ -695,11 +695,11 @@ void SchedulerUpdate::onEnter()
 void SchedulerUpdate::removeUpdates(float dt)
 {
     auto children = getChildren();
-    Node* node;
 
     for (auto c : *children)
     {
-        node = static_cast<Node*>(c);
+        auto obj = static_cast<Object*>(c);
+        auto node = static_cast<Node*>(obj);
         
         if (! node)
         {
