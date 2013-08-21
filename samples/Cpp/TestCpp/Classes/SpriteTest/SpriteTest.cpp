@@ -203,11 +203,9 @@ void SpriteTestDemo::backCallback(Object* sender)
 Sprite1::Sprite1()
 {
     setTouchEnabled( true );
-    
-    
+
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
-    
 }
 
 void Sprite1::addNewSpriteWithCoords(Point p)
