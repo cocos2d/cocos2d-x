@@ -65,7 +65,7 @@ CCTextureAtlas::~CCTextureAtlas()
 #endif
     CC_SAFE_RELEASE(m_pTexture);
     
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 }
 
 unsigned int CCTextureAtlas::getTotalQuads()
@@ -178,7 +178,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     // listen the event when app go to background
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                            callfuncO_selector(CCTextureAtlas::listenBackToForeground),
-                                                           EVNET_COME_TO_FOREGROUND,
+                                                           EVENT_COME_TO_FOREGROUND,
                                                            NULL);
 
     this->setupIndices();

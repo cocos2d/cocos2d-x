@@ -37,7 +37,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
           
         CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
         CCTextureCache::reloadAllTextures();
-        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
         CCDirector::sharedDirector()->setGLDefaultValues(); 
     }
 }
