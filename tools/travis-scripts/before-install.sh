@@ -67,6 +67,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
 fi
 
 if [ "$PLATFORM"x = "linux"x ]; then
+    sudo apt-get update
     bash $COCOS2DX_ROOT/install-deps-linux.sh
 fi
 
