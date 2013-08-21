@@ -41,7 +41,7 @@ UIDragPanel::UIDragPanel()
 , m_touchStartNodeSpace(CCPointZero)
 , m_touchStartWorldSpace(CCPointZero)
 , m_touchEndWorldSpace(CCPointZero)
-, m_eMoveType(DRAGPANEL_MOVE_TYPE_NONE)
+, m_eMoveType(DRAGPANEL_MOVE_TYPE_AUTOMOVE)
 , m_fAutoMoveDuration(0.5f)
 , m_fAutoMoveEaseRate(2.0f)
 , m_eBerthDirection(DRAGPANEL_BERTH_DIR_NONE)
@@ -217,6 +217,7 @@ void UIDragPanel::removeAllChildrenAndCleanUp(bool cleanup)
     m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
 }
 
+/* gui mark */
 void UIDragPanel::setSize(const CCSize &size)
 {
     UIPanel::setSize(size);
@@ -261,24 +262,52 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::CCSize &size)
     m_pInnerContainer->setPosition(ccp(0, m_fHeight - m_pInnerContainer->getHeight()));
 }
 
-/*
 const CCPoint& UIDragPanel::getInnerContainerPosition() const
 {
     return m_pInnerContainer->getPosition();
 }
 
-void UIDragPanel::setInnerContainerPosition(const CCPoint &point)
+void UIDragPanel::setInnerContainerPosition(const CCPoint &point, bool animated)
 {
-    m_pInnerContainer->setPosition(point);
+    CCPoint delta = ccpSub(point, m_pInnerContainer->getPosition());
+    setInnerContainerOffset(delta, animated);
+}
+
+void UIDragPanel::setInnerContainerOffset(const CCPoint &offset, bool animated)
+{
+    if (animated)
+    {
+        CCPoint delta = offset;
+        
+        if (checkToBoundaryWithDeltaPosition(delta))
+        {
+            delta = calculateToBoundaryDeltaPosition(delta);
+        }
+        actionStartWithWidget(m_pInnerContainer);
+        moveByWithDuration(m_fAutoMoveDuration, delta);
+    }
+    else
+    {
+        setInnerContainerOffset(offset);
+    }
+}
+
+void UIDragPanel::setInnerContainerOffset(const CCPoint &offset)
+{
+    CCPoint delta = offset;
     
-    // berth
+    if (checkToBoundaryWithDeltaPosition(delta))
+    {
+        delta = calculateToBoundaryDeltaPosition(delta);
+    }
+    moveWithDelta(delta);
     if (checkBerth())
     {
         berthEvent();
     }
 }
-*/
- 
+/**/
+
 /*
 void UIDragPanel::updateWidthAndHeight()
 {
@@ -727,7 +756,7 @@ bool UIDragPanel::checkToBoundaryWithDeltaPosition(const CCPoint&  delta)
     return false;
 }
 
-CCPoint UIDragPanel::calculateToBoundaryDeltaPosition(CCPoint& delta)
+CCPoint UIDragPanel::calculateToBoundaryDeltaPosition(const CCPoint& paramDelta)
 {
     float innerLeft = m_pInnerContainer->getRelativeLeftPos();
     float innerTop = m_pInnerContainer->getRelativeTopPos();
@@ -738,6 +767,8 @@ CCPoint UIDragPanel::calculateToBoundaryDeltaPosition(CCPoint& delta)
     float top = getRect().size.height;
     float right = getRect().size.width;
     float bottom = 0;
+    
+    CCPoint delta = paramDelta;
     
     if (innerLeft + delta.x > left && innerBottom + delta.y > bottom) // left bottom
     {

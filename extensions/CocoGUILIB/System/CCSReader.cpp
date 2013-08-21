@@ -1342,6 +1342,7 @@ void CCSReader::setPropsForSliderFromJsonDictionary(UIWidget*widget,cs::CSJsonDi
         // percent
         int percent = DICTOOL->getIntValue_json(options, "percent");
         slider->setSlidBallPercent(percent);
+        slider->setProgressBarScale();
         
         setColorPropsForWidgetFromJsonDictionary(widget,options);
     }
@@ -1581,9 +1582,14 @@ void CCSReader::setPropsForDragPanelFromJsonDictionary(UIWidget *widget, cs::CSJ
     
     UIDragPanel* dragPanel = (UIDragPanel*)widget;
     
-    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
-    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
-    dragPanel->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+    bool innerWidth_exsit = DICTOOL->checkObjectExist_json(options, "innerWidth");
+    bool innerHeight_exsit = DICTOOL->checkObjectExist_json(options, "innerHeight");
+    if (innerWidth_exsit && innerHeight_exsit)
+    {
+        float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+        float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+        dragPanel->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+    }
     
     bool bounceEnable = DICTOOL->getBooleanValue_json(options, "bounceEnable");
     dragPanel->setBounceEnable(bounceEnable);
