@@ -135,6 +135,8 @@ protected:
      */
 	CCBone *createBone(const char *boneName );
     
+	//! Update blend function
+	void updateBlendType(CCBlendType blendType);
     
     CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 

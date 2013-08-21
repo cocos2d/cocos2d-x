@@ -39,6 +39,9 @@ public:
 public:
     CCSkin();
 
+	bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+	bool initWithFile(const char *pszFilename);
+
 	void updateArmatureTransform();
     void updateTransform();
 
@@ -50,6 +53,7 @@ public:
 
 protected:
     CCAffineTransform m_tSkinTransform;
+	CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
 };
 
 NS_CC_EXT_END

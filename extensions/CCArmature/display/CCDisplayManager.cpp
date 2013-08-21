@@ -124,8 +124,36 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
 		m_pDecoDisplayList->addObject(decoDisplay);
 	}
 
-	/*CCDisplayFactory::addDisplay(m_pBone, decoDisplay, displayData);*/
+	CCDisplayData *displayData = NULL;
+	if (CCSkin *skin = dynamic_cast<CCSkin*>(display))
+	{
+		skin->setBone(m_pBone);
+		displayData = CCSpriteDisplayData::create();
+
+		CCDisplayFactory::initSpriteDisplay(m_pBone, decoDisplay, skin->getDisplayName().c_str(), skin);
+
+		if (CCSpriteDisplayData *spriteDisplayData = (CCSpriteDisplayData*)decoDisplay->getDisplayData())
+		{
+			skin->setSkinData(spriteDisplayData->skinData);
+		}
+		else
+		{
+			CCBaseData baseData;
+			skin->setSkinData(baseData);
+		}
+	}
+	else if (CCParticleSystemQuad *particle = dynamic_cast<CCParticleSystemQuad*>(display))
+	{
+		displayData = CCParticleDisplayData::create();
+	}
+	else if(CCArmature *armature = dynamic_cast<CCArmature*>(display))
+	{
+		displayData = CCArmatureDisplayData::create();
+		armature->setParentBone(m_pBone);
+	}
+
 	decoDisplay->setDisplay(display);
+	decoDisplay->setDisplayData(displayData);
 
 	//! if changed display index is current display index, then change current display to the new display
 	if(index == m_iDisplayIndex)

@@ -408,7 +408,12 @@ void TestAnimationEvent::onEnter()
 	armature->setScaleX(-0.24f);
 	armature->setScaleY(0.24f);
 	armature->setPosition(ccp(VisibleRect::left().x + 50, VisibleRect::left().y));
-	armature->getAnimation()->MovementEventSignal.connect(this, &TestAnimationEvent::animationEvent);
+
+	/*
+	* Set armature's movement event callback function
+	* To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+	*/
+	armature->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(TestAnimationEvent::animationEvent));
 	addChild(armature);
 }
 std::string TestAnimationEvent::title()
@@ -523,18 +528,24 @@ void TestUseMutiplePicture::onEnter()
 
 	armature = cocos2d::extension::CCArmature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
-	armature->setPosition(ccp(VisibleRect::left().x+70, VisibleRect::left().y));
+	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::left().y));
 	armature->setScale(1.2f);
 	addChild(armature);
 
 	std::string weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
 
-	CCSpriteDisplayData displayData;
 	for (int i = 0; i < 7; i++)
 	{
-		displayData.setParam(weapon[i].c_str());
-		armature->getBone("weapon")->addDisplay(&displayData, i);
+		CCSkin *skin = CCSkin::createWithSpriteFrameName(weapon[i].c_str());
+	 	armature->getBone("weapon")->addDisplay(skin, i);
 	}
+
+// 	CCSpriteDisplayData displayData;
+// 	for (int i = 0; i < 7; i++)
+// 	{
+// 		displayData.setParam(weapon[i].c_str());
+// 		armature->getBone("weapon")->addDisplay(&displayData, i);
+// 	}
 }
 void TestUseMutiplePicture::onExit()
 {
@@ -581,7 +592,11 @@ void TestColliderDetector::onEnter()
 	armature->setScaleY(0.2f);
 	armature->setPosition(ccp(VisibleRect::left().x + 70, VisibleRect::left().y));
 
-	armature->getAnimation()->FrameEventSignal.connect(this, &TestColliderDetector::onFrameEvent);
+	/*
+	* Set armature's frame event callback function
+	* To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+	*/
+	armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestColliderDetector::onFrameEvent));
 
 	addChild(armature);
 
@@ -603,6 +618,14 @@ std::string TestColliderDetector::title()
 }
 void TestColliderDetector::onFrameEvent(CCBone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
 {
+	CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+
+	/*
+	* originFrameIndex is the frame index editted in Action Editor
+	* currentFrameIndex is the current index animation played to 
+	* frame event may be delay emit, so originFrameIndex may be different from currentFrameIndex.
+	*/
+
 	CCPoint p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(ccp(0, 0));
 	bullet->setPosition(ccp(p.x + 60, p.y));
 

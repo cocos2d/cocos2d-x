@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCSkin.h"
 #include "../utils/CCTransformHelp.h"
+#include "../utils/CCSpriteFrameCacheHelper.h"
 #include "../CCArmature.h"
 
 NS_CC_EXT_BEGIN
@@ -73,6 +74,31 @@ CCSkin *CCSkin::create(const char *pszFileName)
 CCSkin::CCSkin()
     : m_pBone(NULL)
 {
+	m_tSkinTransform = CCAffineTransformIdentity;
+}
+
+bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+{
+	bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+
+	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithDisplayName(pszSpriteFrameName);
+	setTextureAtlas(atlas);
+
+	m_strDisplayName = pszSpriteFrameName;
+
+	return ret;
+}
+
+bool CCSkin::initWithFile(const char *pszFilename)
+{
+	bool ret = CCSprite::initWithFile(pszFilename);
+
+	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithImageName(pszFilename);
+	setTextureAtlas(atlas);
+
+	m_strDisplayName = pszFilename;
+
+	return ret;
 }
 
 void CCSkin::setSkinData(const CCBaseData &var)
