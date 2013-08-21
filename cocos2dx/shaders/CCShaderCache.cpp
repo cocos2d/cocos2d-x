@@ -207,7 +207,7 @@ void CCShaderCache::reloadDefaultShaders()
 	//
     p = programForKey(kCCShader_PositionLengthTexureColor);
     p->reset();
-    loadDefaultShader(p, kCCShaderType_Position_uColor);
+    loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
 }
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
