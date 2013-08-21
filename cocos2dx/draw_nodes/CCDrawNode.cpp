@@ -455,7 +455,7 @@ void CCDrawNode::setBlendFunc(const ccBlendFunc &blendFunc)
 
 /** listen the event that coming to foreground on Android
  */
-void CCDrawNode::listenBackToForeground(Object *obj)
+void CCDrawNode::listenBackToForeground(CCObject *obj)
 {
     init();
 }

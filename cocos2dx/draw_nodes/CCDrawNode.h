@@ -80,7 +80,7 @@ public:
     CCDrawNode();
 
     /** listen the event that coming to foreground on Android  */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(CCObject *obj);
 private:
     void ensureCapacity(unsigned int count);
     void render();
