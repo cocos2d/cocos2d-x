@@ -210,7 +210,7 @@ do {                                                                  \
 }                                                                     \
 while(false)
 
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, object, elementType)   \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -220,7 +220,7 @@ do {                                                                  \
             elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
-                pNode->func(pObject);                                 \
+                pNode->func(object);                                 \
             }                                                         \
         }                                                             \
     }                                                                 \
@@ -234,15 +234,15 @@ class CC_DLL Array : public Object, public Clonable
 {
 public:
 
-    /** Create an array */
+    /** Creates an empty array. Default capacity is 10 */
     static Array* create();
-    /** Create an array with some objects */
-    static Array* create(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
+    /** Create an array with objects */
+    static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object */
-    static Array* createWithObject(Object* pObject);
-    /** Create an array with capacity */
+    static Array* createWithObject(Object* object);
+    /** Create an array with a default capacity */
     static Array* createWithCapacity(unsigned int capacity);
-    /** Create an array with an existing array */
+    /** Create an array with from an existing array */
     static Array* createWithArray(Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
@@ -262,9 +262,9 @@ public:
     /** Initializes an array */
     bool init();
     /** Initializes an array with one object */
-    bool initWithObject(Object* pObject);
+    bool initWithObject(Object* object);
     /** Initializes an array with some objects */
-    bool initWithObjects(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
+    bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
     /** Initializes an array with an existing array */
@@ -319,7 +319,7 @@ public:
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(Object* object) const;
     /** @since 1.1 */
-    bool isEqualToArray(Array* pOtherArray);
+    bool isEqualToArray(Array* otherArray);
     // Adding Objects
 
     /** Add a certain object */
@@ -352,11 +352,11 @@ public:
     // Removing Objects
 
     /** Remove last object */
-    void removeLastObject(bool bReleaseObj = true);
+    void removeLastObject(bool releaseObj = true);
     /** Remove a certain object */
-    void removeObject(Object* object, bool bReleaseObj = true);
+    void removeObject(Object* object, bool releaseObj = true);
     /** Remove an element with a certain index */
-    void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
+    void removeObjectAtIndex(unsigned int index, bool releaseObj = true);
     /** Remove all elements */
     void removeObjectsInArray(Array* otherArray);
     /** Remove all objects */
@@ -374,7 +374,7 @@ public:
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(unsigned int uIndex, Object* pObject, bool bReleaseObject = true);
+    void replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject = true);
 
     /** Revers the array */
     void reverseObjects();
@@ -401,28 +401,27 @@ public:
     class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
     {
     public:
-        ArrayIterator(Object *object, Array *array) : _ptr(object), _parent(array) {}
-        ArrayIterator(const ArrayIterator& arrayIterator) : _ptr(arrayIterator._ptr), _parent(arrayIterator._parent) {}
+        ArrayIterator(int index, Array *array) : _index(index), _parent(array) {}
+        ArrayIterator(const ArrayIterator& arrayIterator) : _index(arrayIterator._index), _parent(arrayIterator._parent) {}
 
         ArrayIterator& operator++()
         {
-            int index = _parent->getIndexOfObject(_ptr);
-            _ptr = _parent->getObjectAtIndex(index+1);
+            ++_index;
             return *this;
         }
-        ArrayIterator operator++(int)
+        ArrayIterator operator++(int dummy)
         {
             ArrayIterator tmp(*this);
             (*this)++;
             return tmp;
         }
-        bool operator==(const ArrayIterator& rhs) { return _ptr == rhs._ptr; }
-        bool operator!=(const ArrayIterator& rhs) { return _ptr != rhs._ptr; }
-        Object* operator*() { return _ptr; }
-        Object* operator->() { return _ptr; }
+        bool operator==(const ArrayIterator& rhs) { return _index == rhs._index; }
+        bool operator!=(const ArrayIterator& rhs) { return _index != rhs._index; }
+        Object* operator*() { return _parent->getObjectAtIndex(_index); }
+        Object* operator->() { return _parent->getObjectAtIndex(_index); }
 
     private:
-        Object *_ptr;
+        int _index;
         Array *_parent;
     };
 
