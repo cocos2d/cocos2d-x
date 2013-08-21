@@ -35,7 +35,7 @@ using namespace std;
 
 /**
  *  @brief Implementation for header retrieving.
- *  @param header 
+ *  @param header
  */
 void MinXmlHttpRequest::_gotHeader(string header) {
 	// Get Header and Set StatusText
@@ -87,7 +87,7 @@ void MinXmlHttpRequest::_gotHeader(string header) {
                 // Get Response Status
                 pch = strtok (NULL, " ");
                 mystream << pch;
-
+                
                 pch = strtok (NULL, " ");
                 mystream << " " << pch;
                 
@@ -99,7 +99,7 @@ void MinXmlHttpRequest::_gotHeader(string header) {
         }
         
     }
-
+    
 }
 
 /**
@@ -132,14 +132,14 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value) 
 
 /**
  * @brief  If headers has been set, pass them to curl.
- * 
+ *
  */
 void MinXmlHttpRequest::_setHttpRequestHeader() {
     
     std::vector<string> header;
-
+    
     for (std::map<string,string>::iterator it = request_header.begin(); it != request_header.end(); ++it) {
-
+        
         const char* first = it->first.c_str();
         const char* second = it->second.c_str();
         size_t len = sizeof(char) * (strlen(first) + 3 + strlen(second));
@@ -149,7 +149,7 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
         strcpy(test, first);
         strcpy(test + strlen(first) , ": ");
         strcpy(test + strlen(first) + 2, second);
-
+        
         header.push_back(test);
         
         free(test);
@@ -168,7 +168,7 @@ void MinXmlHttpRequest::_setHttpRequestHeader() {
  *  @param respone  Response object
  */
 void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response) {
-
+    
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
         CCLOG("%s completed", response->getHttpRequest()->getTag());
@@ -227,16 +227,16 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::extension::CCHttpClient 
     
     if(p){
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-       
+        
         if (onreadystateCallback) {
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
             jsval fval = OBJECT_TO_JSVAL(onreadystateCallback);
             jsval out;
             JS_CallFunctionValue(cx, NULL, fval, 0, NULL, &out);
         }
-     
+        
     }
-
+    
 }
 /**
  * @brief   Send out request and fire callback when done.
@@ -247,7 +247,7 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx) {
     cc_request->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
     cocos2d::extension::CCHttpClient::getInstance()->send(cc_request);
     cc_request->release();
-
+    
 }
 
 /**
@@ -268,10 +268,10 @@ MinXmlHttpRequest::MinXmlHttpRequest() : onreadystateCallback(NULL), isNetwork(t
  *
  */
 MinXmlHttpRequest::~MinXmlHttpRequest() {
-
+    
     http_header.clear();
     request_header.clear();
-
+    
     if (onreadystateCallback != NULL)
     {
         JS_RemoveObjectRoot(cx, &onreadystateCallback);
@@ -279,9 +279,9 @@ MinXmlHttpRequest::~MinXmlHttpRequest() {
     
     if (cc_request) {
         // We don't need to release cc_request here since it will be released in the http callback.
-//        cc_request->release();
+        //        cc_request->release();
     }
-
+    
 }
 
 /**
@@ -308,7 +308,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
         JS_SetPrivate(obj, req);
         out = OBJECT_TO_JSVAL(obj);
     }
-
+    
     JS_SET_RVAL(cx, vp, out);
     p =jsb_new_proxy(req, obj);
     
@@ -318,14 +318,13 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 
 /**
  *  @brief  get Callback function for Javascript
- * 
+ *
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
 {
     if (onreadystateCallback) {
         
-        JSString *tmpstr = JS_NewStringCopyZ(cx, "1");
-        jsval tmpval = STRING_TO_JSVAL(tmpstr);
+        jsval tmpval = c_string_to_jsval(cx, "1");
         JS_SetProperty(cx, onreadystateCallback, "readyState", &tmpval);
         
         jsval out = OBJECT_TO_JSVAL(onreadystateCallback);
@@ -485,10 +484,11 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
 {
-    JSString* str = JS_NewStringCopyZ(cx, statusText.c_str());//, dataSize);
+
+    jsval strVal = std_string_to_jsval(cx, statusText);
     
-    if (str) {
-        vp.set(STRING_TO_JSVAL(str));
+    if (strVal != JSVAL_NULL){
+          vp.set(strVal);
         return JS_TRUE;
     } else {
         JS_ReportError(cx, "Error trying to create JSString from data");
@@ -526,10 +526,11 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 {
-    JSString* str = JS_NewStringCopyZ(cx, data.str().c_str());//, dataSize);
 
-    if (str) {
-        vp.set(STRING_TO_JSVAL(str));
+    jsval strVal = c_string_to_jsval(cx, data.str().c_str());
+    
+    if (strVal != JSVAL_NULL){
+         vp.set(strVal);
         //JS_ReportError(cx, "Result: %s", data.str().c_str());
         return JS_TRUE;
     } else {
@@ -548,9 +549,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
     if (responseType == kRequestResponseTypeJSON) {
         jsval outVal;
         
-        JSString* str = JS_NewStringCopyZ(cx, data.str().c_str());//, dataSize);
-        if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, str), dataSize, &outVal)) {
-            
+        jsval strVal = c_string_to_jsval(cx, data.str().c_str());
+        if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), dataSize, &outVal)){
             vp.set(outVal);
             return JS_TRUE;
         }
@@ -559,7 +559,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
         uint8_t* tmpData = JS_GetArrayBufferData(tmp);
         data.read((char*)tmpData, dataSize);
         jsval outVal = OBJECT_TO_JSVAL(tmp);
-
+        
         vp.set(outVal);
         return JS_TRUE;
     }
@@ -599,7 +599,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
         if (url.length() > 5 && url.compare(url.length() - 5, 5, ".json") == 0) {
             responseType = kRequestResponseTypeJSON;
         }
-
+        
         if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
             cc_request->setRequestType(cocos2d::extension::CCHttpRequest::kHttpPost);
         }
@@ -626,7 +626,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
-
+    
     JSString *str = NULL;
     std::string data;
     
@@ -639,15 +639,15 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
         JSStringWrapper strWrap(str);
         data = strWrap.get();
     }
-
-
+    
+    
     if (data.length() > 0 && (meth.compare("post") == 0 || meth.compare("POST") == 0)) {
         cc_request->setRequestData(data.c_str(), data.length());
     }
-
+    
     _setHttpRequestHeader();
     _sendRequest(cx);
-
+    
     return JS_TRUE;
 }
 
@@ -675,10 +675,9 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getAllResponseHeaders)
     
     responseheader = responseheaders.str();
     
-    JSString* str = JS_NewStringCopyZ(cx, responseheader.c_str());
-    
-    if (str) {
-        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
+    jsval strVal = std_string_to_jsval(cx, responseheader);
+    if (strVal != JSVAL_NULL){
+        JS_SET_RVAL(cx, vp, strVal);
         return JS_TRUE;
     } else {
         JS_ReportError(cx, "Error trying to create JSString from data");
@@ -708,16 +707,14 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
     stringstream streamdata;
     
     streamdata << data;
-
+    
     string value = streamdata.str();
     
     map<string, string>::iterator iter = http_header.find(value);
     if (iter != http_header.end() ) {
         
-        JSString *js_ret_val = JS_NewStringCopyZ(cx, iter->second.c_str());
-        
-        // iter->second
-        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(js_ret_val));
+        jsval js_ret_val =  std_string_to_jsval(cx, iter->second);
+        JS_SET_RVAL(cx, vp, js_ret_val);
         return JS_TRUE;
     }
     else {
@@ -753,7 +750,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, setRequestHeader)
         
         return JS_TRUE;
     }
-     
+    
     return JS_FALSE;
     
 }
