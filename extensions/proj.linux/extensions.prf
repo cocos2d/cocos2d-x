@@ -2,7 +2,7 @@
 # Do not include this file in your project: see cocos2dx.pri.
 ################################################################################
 
-linux {
+*linux-* {
     # We will compile extensions on demand using Makefile.
     build_extension.name = Build extension static library
     build_extension.input = $$PWD/Makefile

@@ -2,7 +2,7 @@
 # Do not include this file in your project: see cocos2dx.pri.
 ################################################################################
 
-linux {
+*linux-* {
     # Use OpenAL in default QtCreator project.
     isEmpty(COCOS2D_USE_FMOD):COCOS2D_USE_FMOD=0
 

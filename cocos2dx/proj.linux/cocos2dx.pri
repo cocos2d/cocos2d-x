@@ -33,7 +33,7 @@ INCLUDEPATH += $$PWD/../kazmath/include
 
 include($$PWD/cocos2dx.prf)
 
-linux {
+*linux-* {
     DEFINES += LINUX
     INCLUDEPATH += $$PWD/../platform/linux
     LIBS += -lpthread
