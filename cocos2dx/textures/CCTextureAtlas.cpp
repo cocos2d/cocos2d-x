@@ -64,8 +64,10 @@ CCTextureAtlas::~CCTextureAtlas()
     glDeleteVertexArrays(1, &m_uVAOname);
 #endif
     CC_SAFE_RELEASE(m_pTexture);
-    
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+#endif
 }
 
 unsigned int CCTextureAtlas::getTotalQuads()
@@ -174,13 +176,15 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
 
     memset( m_pQuads, 0, m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
     memset( m_pIndices, 0, m_uCapacity * 6 * sizeof(GLushort) );
-    
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                            callfuncO_selector(CCTextureAtlas::listenBackToForeground),
                                                            EVENT_COME_TO_FOREGROUND,
                                                            NULL);
-
+#endif
+    
     this->setupIndices();
 
 #if CC_TEXTURE_ATLAS_USE_VAO
