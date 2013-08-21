@@ -528,18 +528,24 @@ void TestUseMutiplePicture::onEnter()
 
 	armature = cocos2d::extension::CCArmature::create("Knight_f/Knight");
 	armature->getAnimation()->playByIndex(0);
-	armature->setPosition(ccp(VisibleRect::left().x+70, VisibleRect::left().y));
+	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::left().y));
 	armature->setScale(1.2f);
 	addChild(armature);
 
 	std::string weapon[] = {"weapon_f-sword.png", "weapon_f-sword2.png", "weapon_f-sword3.png", "weapon_f-sword4.png", "weapon_f-sword5.png", "weapon_f-knife.png", "weapon_f-hammer.png"};
 
-	CCSpriteDisplayData displayData;
 	for (int i = 0; i < 7; i++)
 	{
-		displayData.setParam(weapon[i].c_str());
-		armature->getBone("weapon")->addDisplay(&displayData, i);
+		CCSkin *skin = CCSkin::createWithSpriteFrameName(weapon[i].c_str());
+	 	armature->getBone("weapon")->addDisplay(skin, i);
 	}
+
+// 	CCSpriteDisplayData displayData;
+// 	for (int i = 0; i < 7; i++)
+// 	{
+// 		displayData.setParam(weapon[i].c_str());
+// 		armature->getBone("weapon")->addDisplay(&displayData, i);
+// 	}
 }
 void TestUseMutiplePicture::onExit()
 {
