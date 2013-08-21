@@ -71,6 +71,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TTFFontShadowAndStroke),
     // should be moved to another test
     CL(Atlas1),
+    CL(LabelBMFontCrashTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1610,4 +1611,37 @@ void LabelBMFontBounds::draw()
         Point(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
+}
+
+// LabelBMFontCrashTest
+void LabelBMFontCrashTest::onEnter()
+{
+    AtlasDemo::onEnter();
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    //Create a label and add it
+    auto label1 = new LabelBMFont();
+    label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
+    this->addChild(label1);
+    // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.
+    label1->visit();
+    
+    // Remove this label
+    label1->removeFromParentAndCleanup(true);
+    label1->release();
+    
+    // Create a new label and add it (then crashes)
+    auto label2 = LabelBMFont::create("test 2", "fonts/bitmapFontTest.fnt");
+    label2->setPosition(Point(winSize.width/2, winSize.height/2));
+    this->addChild(label2);
+}
+
+std::string LabelBMFontCrashTest::title()
+{
+    return "LabelBMFont Crash Test";
+}
+
+std::string LabelBMFontCrashTest::subtitle()
+{
+    return "Should not crash.";
 }
