@@ -324,6 +324,9 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, onreadystatechange)
 {
     if (onreadystateCallback) {
         
+//        JSString *tmpstr = JS_NewStringCopyZ(cx, "1");
+//        jsval tmpval = STRING_TO_JSVAL(tmpstr);
+        
         jsval tmpval = c_string_to_jsval(cx, "1");
         JS_SetProperty(cx, onreadystateCallback, "readyState", &tmpval);
         
@@ -484,9 +487,11 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, statusText)
 {
-
+//    JSString* str = JS_NewStringCopyZ(cx, statusText.c_str());//, dataSize);
     jsval strVal = std_string_to_jsval(cx, statusText);
     
+//    if (str) {
+//        vp.set(STRING_TO_JSVAL(str));
     if (strVal != JSVAL_NULL){
           vp.set(strVal);
         return JS_TRUE;
@@ -526,9 +531,11 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 {
-
+//    JSString* str = JS_NewStringCopyZ(cx, data.str().c_str());//, dataSize);
     jsval strVal = c_string_to_jsval(cx, data.str().c_str());
     
+//    if (str) {
+//        vp.set(STRING_TO_JSVAL(str));
     if (strVal != JSVAL_NULL){
          vp.set(strVal);
         //JS_ReportError(cx, "Result: %s", data.str().c_str());
@@ -549,6 +556,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
     if (responseType == kRequestResponseTypeJSON) {
         jsval outVal;
         
+//        JSString* str = JS_NewStringCopyZ(cx, data.str().c_str());//, dataSize);
+//        if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, str), dataSize, &outVal)) {
         jsval strVal = c_string_to_jsval(cx, data.str().c_str());
         if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), dataSize, &outVal)){
             vp.set(outVal);
@@ -675,6 +684,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getAllResponseHeaders)
     
     responseheader = responseheaders.str();
     
+//    JSString* str = JS_NewStringCopyZ(cx, responseheader.c_str());
+//
+//    if (str) {
+//        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
     jsval strVal = std_string_to_jsval(cx, responseheader);
     if (strVal != JSVAL_NULL){
         JS_SET_RVAL(cx, vp, strVal);
@@ -713,6 +726,10 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getResponseHeader)
     map<string, string>::iterator iter = http_header.find(value);
     if (iter != http_header.end() ) {
         
+//        JSString *js_ret_val = JS_NewStringCopyZ(cx, iter->second.c_str());
+//        
+//        // iter->second
+//        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(js_ret_val));
         jsval js_ret_val =  std_string_to_jsval(cx, iter->second);
         JS_SET_RVAL(cx, vp, js_ret_val);
         return JS_TRUE;
