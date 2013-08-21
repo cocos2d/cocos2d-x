@@ -72,6 +72,7 @@ CCBone::CCBone()
     m_bIgnoreMovementBoneData = false;
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
     m_bBoneTransformDirty = true;
+	m_eBlendType = BLEND_NORMAL;
 }
 
 
@@ -352,9 +353,9 @@ void CCBone::addDisplay(CCNode *display, int index)
 	m_pDisplayManager->addDisplay(display, index);
 }
 
-void CCBone::changeDisplayByIndex(int _index, bool _force)
+void CCBone::changeDisplayByIndex(int index, bool force)
 {
-    m_pDisplayManager->changeDisplayByIndex(_index, _force);
+    m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
 NS_CC_EXT_END

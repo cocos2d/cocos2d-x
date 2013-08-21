@@ -35,6 +35,7 @@ THE SOFTWARE.
 
 class b2Body;
 class b2Fixture;
+struct b2Filter;
 
 struct cpBody;
 struct cpShape;
@@ -47,41 +48,18 @@ class ColliderBody : public CCObject
 {
 public:
 #if ENABLE_PHYSICS_BOX2D_DETECT
-	ColliderBody(CCContourData *contourData)
-		: m_pFixture(NULL)
-		, m_pContourData(contourData)
-	{
-		CC_SAFE_RETAIN(m_pContourData);
-	}
-private:
 	CC_SYNTHESIZE(b2Fixture*, m_pFixture, B2Fixture)
+	CC_SYNTHESIZE(b2Filter*, m_pFilter, B2Filter)
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-
-	ColliderBody(CCContourData *contourData)
-		: m_pShape(NULL)
-		, m_pContourData(contourData)
-	{
-		CC_SAFE_RETAIN(m_pContourData);
-	}
-private:
 	CC_SYNTHESIZE(cpShape*, m_pShape, Shape)
-
 #endif
 
-
 public:
-	~ColliderBody()
-	{
-		CC_SAFE_RELEASE(m_pContourData);
-	}
+	ColliderBody(CCContourData *contourData);
+	~ColliderBody();
 
-
-	inline CCContourData *getContourData()
-	{
-		return m_pContourData;
-	}
-
+	inline CCContourData *getContourData(){ return m_pContourData; }
 private:
 	CCContourData *m_pContourData;
 };

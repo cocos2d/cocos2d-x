@@ -302,9 +302,9 @@ void CCArmature::removeBone(CCBone *bone, bool recursion)
 }
 
 
-CCBone *CCArmature::getBone(const char *_name) const
+CCBone *CCArmature::getBone(const char *name) const
 {
-    return (CCBone *)m_pBoneDic->objectForKey(_name);
+    return (CCBone *)m_pBoneDic->objectForKey(name);
 }
 
 
@@ -476,58 +476,67 @@ void CCArmature::draw()
 			if (NULL == node)
 				continue;
 
-			if(CCSkin *skin = dynamic_cast<CCSkin *>(node))
+			switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
 			{
-				CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-				CCBlendType blendType = bone->getBlendType();
-				if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
+			case CS_DISPLAY_SPRITE:
+				{
+					CCSkin *skin = (CCSkin*)node;
+					
+					CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
+					CCBlendType blendType = bone->getBlendType();
+					if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
+					{
+						if (m_pAtlas)
+						{
+							m_pAtlas->drawQuads();
+							m_pAtlas->removeAllQuads();
+						}
+					}
+
+					m_pAtlas = textureAtlas;
+					if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
+						return;
+
+					skin->updateTransform();
+
+					if (blendType != BLEND_NORMAL)
+					{
+						updateBlendType(blendType);
+						m_pAtlas->drawQuads();
+						m_pAtlas->removeAllQuads();
+						ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+					}
+				}
+				break;
+			case CS_DISPLAY_ARMATURE:
+				{
+					CCArmature *armature = (CCArmature *)(node);
+
+					CCTextureAtlas *textureAtlas = armature->getTextureAtlas();
+					if(m_pAtlas != textureAtlas)
+					{
+						if (m_pAtlas)
+						{
+							m_pAtlas->drawQuads();
+							m_pAtlas->removeAllQuads();
+						}
+					}
+					armature->draw();
+				}
+				break;
+			default:
 				{
 					if (m_pAtlas)
 					{
 						m_pAtlas->drawQuads();
 						m_pAtlas->removeAllQuads();
 					}
-				}
+					node->visit();
 
-				m_pAtlas = textureAtlas;
-				if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
-					return;
-
-				skin->updateTransform();
-			
-				if (blendType != BLEND_NORMAL)
-				{
-					updateBlendType(blendType);
-					m_pAtlas->drawQuads();
-					m_pAtlas->removeAllQuads();
+					CC_NODE_DRAW_SETUP();
 					ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
 				}
-			}
-			else if(CCArmature *armature = dynamic_cast<CCArmature *>(node))
-			{
-				CCTextureAtlas *textureAtlas = armature->getTextureAtlas();
-
-				if(m_pAtlas != textureAtlas)
-				{
-					if (m_pAtlas)
-					{
-						m_pAtlas->drawQuads();
-						m_pAtlas->removeAllQuads();
-					}
-				}
-				armature->draw();
-			}
-			else
-			{
-				if (m_pAtlas)
-				{
-					m_pAtlas->drawQuads();
-					m_pAtlas->removeAllQuads();
-				}
-				node->visit();
-
-				CC_NODE_DRAW_SETUP();
-				ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+				break;
 			}
 		}
 		else if(CCNode *node = dynamic_cast<CCNode*>(object))

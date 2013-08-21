@@ -35,6 +35,36 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+ColliderBody::ColliderBody(CCContourData *contourData)
+	: m_pFixture(NULL)
+	, m_pFilter(NULL)
+	, m_pContourData(contourData)
+{
+	CC_SAFE_RETAIN(m_pContourData);
+}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+
+ColliderBody::ColliderBody(CCContourData *contourData)
+	: m_pShape(NULL)
+	, m_pContourData(contourData)
+{
+	CC_SAFE_RETAIN(m_pContourData);
+}
+#endif
+
+ColliderBody::~ColliderBody()
+{
+	CC_SAFE_RELEASE(m_pContourData);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_SAFE_DELETE(m_pFilter);
+#endif
+}
+
+
+
 CCColliderDetector *CCColliderDetector::create()
 {
 	CCColliderDetector *pColliderDetector = new CCColliderDetector();
@@ -143,6 +173,10 @@ void CCColliderDetector::setActive(bool active)
 			{
 				ColliderBody *colliderBody = (ColliderBody *)object;
 				b2Fixture *fixture = colliderBody->getB2Fixture();
+				
+				b2Filter *filter = colliderBody->getB2Filter();
+				*filter = fixture->GetFilterData();
+
 				m_pB2Body->DestroyFixture(fixture);
 				colliderBody->setB2Fixture(NULL);
 			}
@@ -296,6 +330,16 @@ void CCColliderDetector::setB2Body(b2Body *pBody)
 			m_pB2Body->DestroyFixture(colliderBody->getB2Fixture());
 		}
 		colliderBody->setB2Fixture(fixture);
+
+		if (colliderBody->getB2Filter() == NULL)
+		{
+			b2Filter *filter = new b2Filter;
+			colliderBody->setB2Filter(filter);
+		}
+		else
+		{
+			fixture->SetFilterData(*colliderBody->getB2Filter());
+		}
 	}
 }
 

@@ -100,17 +100,19 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 
 	CCNode *display = decoDisplay->getDisplay();
 
-	if (dynamic_cast<CCSkin*>(display) != NULL)
+	switch(decoDisplay->getDisplayData()->displayType)
 	{
+	case CS_DISPLAY_SPRITE:
 		updateSpriteDisplay(bone, display, dt, dirty);
-	}
-	else if (dynamic_cast<CCParticleSystem*>(display) != NULL)
-	{
+		break;
+	case CS_DISPLAY_PARTICLE:
 		updateParticleDisplay(bone, display, dt, dirty);
-	}
-	else if (dynamic_cast<CCArmature*>(display) != NULL)
-	{
+		break;
+	case CS_DISPLAY_ARMATURE:
 		updateArmatureDisplay(bone, display, dt, dirty);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -130,14 +132,13 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     CCSpriteDisplayData *displayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData();
 
-    //! remove .xxx
-    std::string textureName = displayData->displayName;
-    size_t startPos = textureName.find_last_of(".");
+	std::string textureName = displayData->displayName;
+	size_t startPos = textureName.find_last_of(".");
 
-    if(startPos != std::string::npos)
-    {
-        textureName = textureName.erase(startPos);
-    }
+	if(startPos != std::string::npos)
+	{
+		textureName = textureName.erase(startPos);
+	}
 
     //! create display
     if(textureName.length() == 0)
@@ -149,17 +150,9 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
         skin = CCSkin::createWithSpriteFrameName((textureName + ".png").c_str());
     }
 
-    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithDisplayName((textureName + ".png").c_str());
-    skin->setTextureAtlas(atlas);
-
-    CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
-    if(textureData)
-    {
-        //! Init display anchorPoint, every Texture have a anchor point
-        skin->setAnchorPoint(ccp( textureData->pivotX, textureData->pivotY));
-    }
-
     skin->setBone(bone);
+
+	initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
 
 	CCArmature *armature = bone->getArmature();
 	if (armature)
@@ -176,16 +169,37 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     decoDisplay->setDisplay(skin);
 
+}
+
+void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin)
+{
+	//! remove .xxx
+	std::string textureName = displayName;
+	size_t startPos = textureName.find_last_of(".");
+
+	if(startPos != std::string::npos)
+	{
+		textureName = textureName.erase(startPos);
+	}
+
+	CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+	if(textureData)
+	{
+		//! Init display anchorPoint, every Texture have a anchor point
+		skin->setAnchorPoint(ccp( textureData->pivotX, textureData->pivotY));
+	}
+
+
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    if (textureData && textureData->contourDataList.count() > 0)
-    {
+	if (textureData && textureData->contourDataList.count() > 0)
+	{
 
-        //! create ContourSprite
-        CCColliderDetector *colliderDetector = CCColliderDetector::create(bone);
-        colliderDetector->addContourDataList(&textureData->contourDataList);
+		//! create ContourSprite
+		CCColliderDetector *colliderDetector = CCColliderDetector::create(bone);
+		colliderDetector->addContourDataList(&textureData->contourDataList);
 
-        decoDisplay->setColliderDetector(colliderDetector);
-    }
+		decoDisplay->setColliderDetector(colliderDetector);
+	}
 #endif
 }
 
