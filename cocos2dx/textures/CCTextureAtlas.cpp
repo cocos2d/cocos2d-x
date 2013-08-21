@@ -62,6 +62,7 @@ CCTextureAtlas::~CCTextureAtlas()
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     glDeleteVertexArrays(1, &m_uVAOname);
+    ccGLBindVAO(0);
 #endif
     CC_SAFE_RELEASE(m_pTexture);
 
