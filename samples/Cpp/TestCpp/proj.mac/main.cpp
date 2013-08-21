@@ -22,21 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#pragma once
+#include "AppDelegate.h"
+#include "CCEGLView.h"
 
-#import "cocos2d.h"
-#import "EAGLView.h"
+USING_NS_CC;
 
-@interface AppController : NSObject <NSApplicationDelegate>
-	{
-		NSWindow *window;
-		CCEAGLView *glView;
-	}
-
-	@property (nonatomic, assign) IBOutlet NSWindow* window;
-	@property (nonatomic, assign) IBOutlet CCEAGLView* glView;
-
-	-(IBAction) toggleFullScreen:(id)sender;
-	-(IBAction) exitFullScreen:(id)sender;
-
-@end
+int main(int argc, char *argv[])
+{
+    AppDelegate app;
+    EGLView* eglView = new EGLView();
+    eglView->setViewName("TestCpp");
+    eglView->setFrameSize(900, 640);
+    eglView->create();
+    return Application::getInstance()->run();
+}

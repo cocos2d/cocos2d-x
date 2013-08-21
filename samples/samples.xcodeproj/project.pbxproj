@@ -1245,11 +1245,10 @@
 		A07A524A1783A3A90073F6A7 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A523B1783A3A80073F6A7 /* Icon-57.png */; };
 		A07A524B1783A3A90073F6A7 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A07A523C1783A3A80073F6A7 /* Icon-72.png */; };
 		A07A524C1783A3A90073F6A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A07A523E1783A3A80073F6A7 /* main.m */; };
-		A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A07A52531783A3D90073F6A7 /* AppController.mm */; };
 		A07A525D1783A3D90073F6A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A07A52541783A3D90073F6A7 /* InfoPlist.strings */; };
 		A07A525E1783A3D90073F6A7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07A52561783A3D90073F6A7 /* MainMenu.xib */; };
 		A07A525F1783A3D90073F6A7 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A07A52581783A3D90073F6A7 /* Icon.icns */; };
-		A07A52601783A3D90073F6A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A07A52591783A3D90073F6A7 /* main.m */; };
+		A07A52601783A3D90073F6A7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A07A52591783A3D90073F6A7 /* main.cpp */; };
 		A07A52BE1783AF1E0073F6A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
@@ -1284,6 +1283,7 @@
 		A0BD5A1F178F5F6C008915C5 /* sd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5A1D178F5F6C008915C5 /* sd */; };
 		B36FB10617990E14005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		B36FB10917990F13005F39FB /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
+		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2968,12 +2968,10 @@
 		A07A523D1783A3A80073F6A7 /* iphone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_Prefix.pch; sourceTree = "<group>"; };
 		A07A523E1783A3A80073F6A7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A07A523F1783A3A90073F6A7 /* Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
-		A07A52521783A3D90073F6A7 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		A07A52531783A3D90073F6A7 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		A07A52551783A3D90073F6A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A07A52571783A3D90073F6A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		A07A52581783A3D90073F6A7 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		A07A52591783A3D90073F6A7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A07A52591783A3D90073F6A7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A07A525A1783A3D90073F6A7 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		A07A525B1783A3D90073F6A7 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		A07A52961783AD8B0073F6A7 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -2997,6 +2995,7 @@
 		A07A53811784AC9B0073F6A7 /* Hello cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0BD5A1C178F5F6C008915C5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		A0BD5A1D178F5F6C008915C5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3084,6 +3083,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
 				A07A511C17839FF90073F6A7 /* libbox2d Mac.a in Frameworks */,
 				A07A511D17839FF90073F6A7 /* libchipmunk Mac.a in Frameworks */,
 				A07A511E17839FF90073F6A7 /* libcocos2dx Mac.a in Frameworks */,
@@ -3708,6 +3708,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				EDCC747E17C455FD007B692C /* IOKit.framework */,
 				A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */,
 				A035AC3B178245AA00987F6C /* CocosDragonJS */,
 				A035AAC7178242AE00987F6C /* CrystalCraze */,
@@ -5299,12 +5300,10 @@
 		A07A52511783A3D90073F6A7 /* proj.mac */ = {
 			isa = PBXGroup;
 			children = (
-				A07A52521783A3D90073F6A7 /* AppController.h */,
-				A07A52531783A3D90073F6A7 /* AppController.mm */,
 				A07A52541783A3D90073F6A7 /* InfoPlist.strings */,
 				A07A52561783A3D90073F6A7 /* MainMenu.xib */,
 				A07A52581783A3D90073F6A7 /* Icon.icns */,
-				A07A52591783A3D90073F6A7 /* main.m */,
+				A07A52591783A3D90073F6A7 /* main.cpp */,
 				A07A525A1783A3D90073F6A7 /* Test_Info.plist */,
 				A07A525B1783A3D90073F6A7 /* Test_Prefix.pch */,
 			);
@@ -6902,8 +6901,7 @@
 				A0359B0817821D9C00987F6C /* UserDefaultTest.cpp in Sources */,
 				A0359B0917821D9C00987F6C /* VisibleRect.cpp in Sources */,
 				A0359B0A17821D9C00987F6C /* ZwoptexTest.cpp in Sources */,
-				A07A525C1783A3D90073F6A7 /* AppController.mm in Sources */,
-				A07A52601783A3D90073F6A7 /* main.m in Sources */,
+				A07A52601783A3D90073F6A7 /* main.cpp in Sources */,
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 				018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */,
