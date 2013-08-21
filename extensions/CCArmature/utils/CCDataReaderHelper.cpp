@@ -1423,7 +1423,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
 	movementData->durationTween = json.getItemIntValue(A_DURATION_TWEEN, 0);
 	movementData->durationTo = json.getItemIntValue(A_DURATION_TO, 0);
 	movementData->duration = json.getItemIntValue(A_DURATION, 0);
-	movementData->scale = json.getItemIntValue(A_MOVEMENT_SCALE, 1);
+	movementData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
 	movementData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
 
 	const char *name = json.getItemStringValue(A_NAME);

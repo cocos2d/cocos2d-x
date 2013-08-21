@@ -27,7 +27,6 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
-#include "../external_tool/sigslot.h"
 
 NS_CC_EXT_BEGIN
 
