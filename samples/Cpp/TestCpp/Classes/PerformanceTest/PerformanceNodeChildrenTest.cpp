@@ -464,7 +464,7 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "C - Add to spritesheet";
+    return "D - Add to spritesheet";
 }
 
 std::string AddSpriteSheet::subtitle()
@@ -520,7 +520,7 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "D - Del from spritesheet";
+    return "E - Del from spritesheet";
 }
 
 std::string RemoveSpriteSheet::subtitle()
@@ -586,7 +586,7 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "E - Reorder from spritesheet";
+    return "F - Reorder from spritesheet";
 }
 
 std::string ReorderSpriteSheet::subtitle()
