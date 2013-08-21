@@ -118,6 +118,7 @@ CCDrawNode::~CCDrawNode()
     
 #if CC_TEXTURE_ATLAS_USE_VAO      
     glDeleteVertexArrays(1, &m_uVao);
+    ccGLBindVAO(0);
     m_uVao = 0;
 #endif
 
