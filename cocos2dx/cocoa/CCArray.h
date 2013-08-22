@@ -404,99 +404,18 @@ public:
     const_iterator cbegin() { return data.cbegin(); }
     const_iterator cend() { return data.cend(); }
 
-#else
-    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object*>
-    {
-    public:
-        ArrayIterator(int index, Array *array) : _index(index), _parent(array) {}
-        ArrayIterator(const ArrayIterator& arrayIterator) : _index(arrayIterator._index), _parent(arrayIterator._parent) {}
-
-        ArrayIterator& operator++()
-        {
-            ++_index;
-            return *this;
-        }
-        ArrayIterator operator++(int dummy)
-        {
-            ArrayIterator tmp(*this);
-            ++_index;
-            return tmp;
-        }
-        
-        ArrayIterator& operator--()
-        {
-            --_index;
-            return *this;
-        }
-        ArrayIterator operator--(int dummy)
-        {
-            ArrayIterator tmp(*this);
-            --_index;
-            return tmp;
-        }
-        
-        int operator-(const ArrayIterator& rhs) const
-        {
-            return _index - rhs._index;
-        }
-        ArrayIterator operator-(int d)
-        {
-            _index -= d;
-            return *this;
-        }
-        const ArrayIterator& operator-=(int d)
-        {
-            _index -= d;
-            return *this;
-        }
-        
-        ArrayIterator operator+(int d)
-        {
-            _index += d;
-            return *this;
-        }
-        
-        const ArrayIterator& operator+=(int d)
-        {
-            _index += d;
-            return *this;
-        }
-        
-        // add these function to make compiler happy when using std::sort(), it is meaningless
-        bool operator>=(const ArrayIterator& rhs) const { return false; }
-        bool operator<=(const ArrayIterator& rhs) const { return false; }
-        bool operator>(const ArrayIterator& rhs) const { return false; }
-        bool operator<(const ArrayIterator& rhs) const { return false; }
-        
-        bool operator==(const ArrayIterator& rhs) { return _index == rhs._index; }
-        bool operator!=(const ArrayIterator& rhs) { return _index != rhs._index; }
-        reference operator*() { return _parent->data->arr[_index]; }
-        value_type operator->() { return _parent->data->arr[_index];; }
-
-    private:
-        int _index;
-        Array *_parent;
-    };
-
-    // functions for range-based loop
-    typedef ArrayIterator iterator;
-    typedef ArrayIterator const_iterator;
-    iterator begin();
-    iterator end();
-
-#endif
-    
-
-
-public:
-#if CC_USE_ARRAY_VECTOR
     std::vector<RCPtr<Object>> data;
+
 #else
+    Object** begin() { return &data->arr[0]; }
+    Object** end() { return &data->arr[data->num]; }
+
     ccArray* data;
+
 #endif
 
+//protected:
     Array();
-    Array(unsigned int capacity);
 };
 
 // end of data_structure group

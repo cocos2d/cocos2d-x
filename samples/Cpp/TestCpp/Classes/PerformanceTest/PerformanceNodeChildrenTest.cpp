@@ -140,6 +140,8 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
+
+        CC_PROFILER_PURGE_ALL();
 	});
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
@@ -149,6 +151,8 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
+
+        CC_PROFILER_PURGE_ALL();
 	});
     increase->setColor(Color3B(0,200,20));
 

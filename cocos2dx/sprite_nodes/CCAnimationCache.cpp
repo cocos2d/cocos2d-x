@@ -55,7 +55,8 @@ void AnimationCache::destroyInstance()
 
 bool AnimationCache::init()
 {
-    _animations = new Dictionary();
+    _animations = new Dictionary;
+    _animations->init();
     return true;
 }
 
@@ -66,7 +67,7 @@ AnimationCache::AnimationCache()
 
 AnimationCache::~AnimationCache()
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO("deallocing AnimationCache: %p", this);
     CC_SAFE_RELEASE(_animations);
 }
 
