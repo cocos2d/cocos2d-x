@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include <pthread.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/mount.h>
 #include <unistd.h>
 
 USING_NS_CC;
