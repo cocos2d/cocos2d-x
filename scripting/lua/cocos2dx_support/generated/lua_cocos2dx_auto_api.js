@@ -9809,18 +9809,6 @@ getData : function () {},
 getMipmaps : function () {},
 
 /**
- * @method initWithRawData
- * @return A value converted from C/C++ "bool"
- * @param {const void*}
- * @param {int}
- * @param {int}
- * @param {int}
- * @param {int}
- * @param {bool}
- */
-initWithRawData : function () {},
-
-/**
  * @method Image
  * @constructor
  */

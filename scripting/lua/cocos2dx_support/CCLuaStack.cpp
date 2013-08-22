@@ -50,6 +50,7 @@ extern "C" {
 #include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
 #include "LuaBasicConversions.h"
+#include "lua_cocos2dx_extension_manual.h"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -130,15 +131,17 @@ bool LuaStack::init(void)
     register_all_cocos2dx(_state);
     tolua_opengl_open(_state);
     register_all_cocos2dx_extension(_state);
+    register_cocos2dx_extension_CCBProxy(_state);
     register_all_cocos2dx_manual(_state);
+    register_all_cocos2dx_extension_manual(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
-    tolua_extensions_ccb_open(_state);
+//  tolua_extensions_ccb_open(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     tolua_web_socket_open(_state);
 #endif
-    tolua_scroll_view_open(_state);
+//  tolua_scroll_view_open(_state);
     tolua_script_handler_mgr_open(_state);
     
     // add cocos2dx loader

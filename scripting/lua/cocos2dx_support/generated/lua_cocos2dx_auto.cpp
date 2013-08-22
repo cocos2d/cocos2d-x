@@ -72901,77 +72901,6 @@ static int lua_cocos2dx_Image_getMipmaps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_initWithRawData(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Image* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Image",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Image*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_initWithRawData'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 5) 
-    {
-        const void* arg0;
-        int arg1;
-        int arg2;
-        int arg3;
-        int arg4;
-        #pragma warning NO CONVERSION TO NATIVE FOR const void*;
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4);
-        if(!ok)
-            return 0;
-        bool ret = cobj->initWithRawData(arg0, arg1, arg2, arg3, arg4);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    if (argc == 6) 
-    {
-        const void* arg0;
-        int arg1;
-        int arg2;
-        int arg3;
-        int arg4;
-        bool arg5;
-        #pragma warning NO CONVERSION TO NATIVE FOR const void*;
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2);
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3);
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4);
-        ok &= luaval_to_boolean(tolua_S, 7,&arg5);
-        if(!ok)
-            return 0;
-        bool ret = cobj->initWithRawData(arg0, arg1, arg2, arg3, arg4, arg5);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "initWithRawData",argc, 5);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Image_initWithRawData'.",&tolua_err);
-#endif
-    return 0;
-}
 static int lua_cocos2dx_Image_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -73039,7 +72968,6 @@ int lua_register_cocos2dx_Image(lua_State* tolua_S)
         tolua_function(tolua_S,"getRenderFormat",lua_cocos2dx_Image_getRenderFormat);
         tolua_function(tolua_S,"getData",lua_cocos2dx_Image_getData);
         tolua_function(tolua_S,"getMipmaps",lua_cocos2dx_Image_getMipmaps);
-        tolua_function(tolua_S,"initWithRawData",lua_cocos2dx_Image_initWithRawData);
         tolua_function(tolua_S,"new",lua_cocos2dx_Image_constructor);
     tolua_endmodule(tolua_S);
     uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Image).name());

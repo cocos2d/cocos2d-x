@@ -1212,13 +1212,6 @@ getSequenceDuration : function () {},
 addDocumentCallbackNode : function () {},
 
 /**
- * @method setCallFunc
- * @param {cocos2d::CallFunc*}
- * @param {std::string}
- */
-setCallFunc : function () {},
-
-/**
  * @method runAnimationsForSequenceNamed
  * @param {const char*}
  */

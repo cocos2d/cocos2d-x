@@ -66,6 +66,14 @@
 		01C92EE217BB5DE800024119 /* atitc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C92EDF17BB5DE800024119 /* atitc.cpp */; };
 		01C92EE317BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
 		01C92EE417BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
+		159FC83117C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */; };
+		159FC83217C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */; };
+		159FC83317C342DE00AEB473 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 159FC83017C342DE00AEB473 /* lua_cocos2dx_extension_manual.h */; };
+		159FC83417C342DE00AEB473 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 159FC83017C342DE00AEB473 /* lua_cocos2dx_extension_manual.h */; };
+		159FC83717C5A19F00AEB473 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC83517C5A19B00AEB473 /* lua_cocos2dx_manual.cpp */; };
+		159FC83817C5A19F00AEB473 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC83517C5A19B00AEB473 /* lua_cocos2dx_manual.cpp */; };
+		159FC83917C5A19F00AEB473 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 159FC83617C5A19D00AEB473 /* lua_cocos2dx_manual.hpp */; };
+		159FC83A17C5A19F00AEB473 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 159FC83617C5A19D00AEB473 /* lua_cocos2dx_manual.hpp */; };
 		15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */; };
 		15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */; };
@@ -78,10 +86,6 @@
 		15E31DBA17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E31DB117BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp */; };
 		15E31DBB17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15E31DB217BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp */; };
 		15E31DBC17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15E31DB217BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp */; };
-		15E31DBD17BCC94A00BC8230 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E31DB317BCC94A00BC8230 /* lua_cocos2dx_manual.cpp */; };
-		15E31DBE17BCC94A00BC8230 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E31DB317BCC94A00BC8230 /* lua_cocos2dx_manual.cpp */; };
-		15E31DBF17BCC94A00BC8230 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15E31DB417BCC94A00BC8230 /* lua_cocos2dx_manual.hpp */; };
-		15E31DC017BCC94A00BC8230 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15E31DB417BCC94A00BC8230 /* lua_cocos2dx_manual.hpp */; };
 		15E31DC417BCCD7C00BC8230 /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E31DC217BCCD7B00BC8230 /* LuaBasicConversions.cpp */; };
 		15E31DC517BCCD7C00BC8230 /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E31DC217BCCD7B00BC8230 /* LuaBasicConversions.cpp */; };
 		15E31DC617BCCD7C00BC8230 /* LuaBasicConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 15E31DC317BCCD7B00BC8230 /* LuaBasicConversions.h */; };
@@ -2131,6 +2135,10 @@
 		01C92EE017BB5DE800024119 /* atitc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atitc.h; path = common/atitc/atitc.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
+		159FC83017C342DE00AEB473 /* lua_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
+		159FC83517C5A19B00AEB473 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
+		159FC83617C5A19D00AEB473 /* lua_cocos2dx_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_manual.hpp; sourceTree = "<group>"; };
 		15A055B81797EBAC0040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Deprecated.lua; sourceTree = "<group>"; };
 		15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaScriptHandlerMgr.cpp; sourceTree = "<group>"; };
 		15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaScriptHandlerMgr.h; sourceTree = "<group>"; };
@@ -2138,8 +2146,6 @@
 		15E31DB017BCC94A00BC8230 /* lua_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_cocos2dx_auto.hpp; path = generated/lua_cocos2dx_auto.hpp; sourceTree = "<group>"; };
 		15E31DB117BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_extension_auto.cpp; path = generated/lua_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
 		15E31DB217BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_cocos2dx_extension_auto.hpp; path = generated/lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
-		15E31DB317BCC94A00BC8230 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_manual.cpp; path = generated/lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
-		15E31DB417BCC94A00BC8230 /* lua_cocos2dx_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_cocos2dx_manual.hpp; path = generated/lua_cocos2dx_manual.hpp; sourceTree = "<group>"; };
 		15E31DC217BCCD7B00BC8230 /* LuaBasicConversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaBasicConversions.cpp; sourceTree = "<group>"; };
 		15E31DC317BCCD7B00BC8230 /* LuaBasicConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaBasicConversions.h; sourceTree = "<group>"; };
 		1A1195931785201F00D62A44 /* CCBProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBProxy.cpp; sourceTree = "<group>"; };
@@ -3564,14 +3570,16 @@
 		1A1195921785201F00D62A44 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				159FC83517C5A19B00AEB473 /* lua_cocos2dx_manual.cpp */,
+				159FC83617C5A19D00AEB473 /* lua_cocos2dx_manual.hpp */,
+				159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */,
+				159FC83017C342DE00AEB473 /* lua_cocos2dx_extension_manual.h */,
 				15E31DC217BCCD7B00BC8230 /* LuaBasicConversions.cpp */,
 				15E31DC317BCCD7B00BC8230 /* LuaBasicConversions.h */,
 				15E31DAF17BCC94A00BC8230 /* lua_cocos2dx_auto.cpp */,
 				15E31DB017BCC94A00BC8230 /* lua_cocos2dx_auto.hpp */,
 				15E31DB117BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp */,
 				15E31DB217BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp */,
-				15E31DB317BCC94A00BC8230 /* lua_cocos2dx_manual.cpp */,
-				15E31DB417BCC94A00BC8230 /* lua_cocos2dx_manual.hpp */,
 				15CBC6F1178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp */,
 				15CBC6F2178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h */,
 				1A1195931785201F00D62A44 /* CCBProxy.cpp */,
@@ -6072,8 +6080,9 @@
 				15CBC6F6178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */,
 				15E31DB817BCC94A00BC8230 /* lua_cocos2dx_auto.hpp in Headers */,
 				15E31DBC17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp in Headers */,
-				15E31DC017BCC94A00BC8230 /* lua_cocos2dx_manual.hpp in Headers */,
 				15E31DC717BCCD7C00BC8230 /* LuaBasicConversions.h in Headers */,
+				159FC83417C342DE00AEB473 /* lua_cocos2dx_extension_manual.h in Headers */,
+				159FC83A17C5A19F00AEB473 /* lua_cocos2dx_manual.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6101,8 +6110,9 @@
 				15CBC6F5178A57DC00D8BBA7 /* LuaScriptHandlerMgr.h in Headers */,
 				15E31DB717BCC94A00BC8230 /* lua_cocos2dx_auto.hpp in Headers */,
 				15E31DBB17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.hpp in Headers */,
-				15E31DBF17BCC94A00BC8230 /* lua_cocos2dx_manual.hpp in Headers */,
 				15E31DC617BCCD7C00BC8230 /* LuaBasicConversions.h in Headers */,
+				159FC83317C342DE00AEB473 /* lua_cocos2dx_extension_manual.h in Headers */,
+				159FC83917C5A19F00AEB473 /* lua_cocos2dx_manual.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7524,8 +7534,9 @@
 				15CBC6F4178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */,
 				15E31DB617BCC94A00BC8230 /* lua_cocos2dx_auto.cpp in Sources */,
 				15E31DBA17BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp in Sources */,
-				15E31DBE17BCC94A00BC8230 /* lua_cocos2dx_manual.cpp in Sources */,
 				15E31DC517BCCD7C00BC8230 /* LuaBasicConversions.cpp in Sources */,
+				159FC83217C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */,
+				159FC83817C5A19F00AEB473 /* lua_cocos2dx_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7555,8 +7566,9 @@
 				15CBC6F3178A57DC00D8BBA7 /* LuaScriptHandlerMgr.cpp in Sources */,
 				15E31DB517BCC94A00BC8230 /* lua_cocos2dx_auto.cpp in Sources */,
 				15E31DB917BCC94A00BC8230 /* lua_cocos2dx_extension_auto.cpp in Sources */,
-				15E31DBD17BCC94A00BC8230 /* lua_cocos2dx_manual.cpp in Sources */,
 				15E31DC417BCCD7C00BC8230 /* LuaBasicConversions.cpp in Sources */,
+				159FC83117C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */,
+				159FC83717C5A19F00AEB473 /* lua_cocos2dx_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
