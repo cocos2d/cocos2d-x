@@ -722,8 +722,8 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
     
     Node* node = (Node*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
-        if (arr->objectAtIndex(i)) {
-            node->getScheduler()->pauseTarget(arr->objectAtIndex(i));
+        if (arr->getObjectAtIndex(i)) {
+            node->getScheduler()->pauseTarget(arr->getObjectAtIndex(i));
         }
     }
 }
@@ -736,8 +736,8 @@ void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
     
     Node* node = (Node*)p->ptr;
     for(unsigned int i = 0; i < arr->count(); ++i) {
-        if (!arr->objectAtIndex(i)) continue;
-        node->getScheduler()->resumeTarget(arr->objectAtIndex(i));
+        if (!arr->getObjectAtIndex(i)) continue;
+        node->getScheduler()->resumeTarget(arr->getObjectAtIndex(i));
     }
 }
 

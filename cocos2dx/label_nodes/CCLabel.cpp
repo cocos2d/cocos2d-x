@@ -454,7 +454,7 @@ Sprite * Label::getSprite()
 {
     if (_spriteArrayCache->count())
     {
-        Sprite *retSprite = static_cast<Sprite *>( _spriteArrayCache->lastObject() );
+        Sprite *retSprite = static_cast<Sprite *>( _spriteArrayCache->getLastObject() );
         _spriteArrayCache->removeLastObject();
         return retSprite;
     }

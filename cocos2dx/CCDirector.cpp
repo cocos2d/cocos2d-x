@@ -622,7 +622,7 @@ void Director::popScene(void)
     else
     {
         _sendCleanupToScene = true;
-        _nextScene = (Scene*)_scenesStack->objectAtIndex(c - 1);
+        _nextScene = (Scene*)_scenesStack->getObjectAtIndex(c - 1);
     }
 }
 
@@ -650,7 +650,7 @@ void Director::popToSceneStackLevel(int level)
 	// pop stack until reaching desired level
 	while (c > level)
     {
-        Scene *current = (Scene*)_scenesStack->lastObject();
+        Scene *current = (Scene*)_scenesStack->getLastObject();
 
 		if (current->isRunning())
         {
@@ -663,7 +663,7 @@ void Director::popToSceneStackLevel(int level)
 		--c;
 	}
 
-    _nextScene = (Scene*)_scenesStack->lastObject();
+    _nextScene = (Scene*)_scenesStack->getLastObject();
 	_sendCleanupToScene = false;
 }
 

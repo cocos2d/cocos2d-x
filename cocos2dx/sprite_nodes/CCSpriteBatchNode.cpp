@@ -226,7 +226,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
 
 void SpriteBatchNode::removeChildAtIndex(unsigned int uIndex, bool bDoCleanup)
 {
-    removeChild((Sprite*)(_children->objectAtIndex(uIndex)), bDoCleanup);
+    removeChild((Sprite*)(_children->getObjectAtIndex(uIndex)), bDoCleanup);
 }
 
 void SpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
@@ -470,7 +470,7 @@ unsigned int SpriteBatchNode::highestAtlasIndexInChild(Sprite *pSprite)
     }
     else
     {
-        return highestAtlasIndexInChild((Sprite*)(children->lastObject()));
+        return highestAtlasIndexInChild((Sprite*)(children->getLastObject()));
     }
 }
 
@@ -484,14 +484,14 @@ unsigned int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *pSprite)
     }
     else
     {
-        return lowestAtlasIndexInChild((Sprite*)(children->objectAtIndex(0)));
+        return lowestAtlasIndexInChild((Sprite*)(children->getObjectAtIndex(0)));
     }
 }
 
 unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
     Array *pBrothers = sprite->getParent()->getChildren();
-    unsigned int uChildIndex = pBrothers->indexOfObject(sprite);
+    unsigned int uChildIndex = pBrothers->getIndexOfObject(sprite);
 
     // ignore parent Z if parent is spriteSheet
     bool bIgnoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
@@ -499,7 +499,7 @@ unsigned int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     if (uChildIndex > 0 &&
         uChildIndex < UINT_MAX)
     {
-        pPrevious = (Sprite*)(pBrothers->objectAtIndex(uChildIndex - 1));
+        pPrevious = (Sprite*)(pBrothers->getObjectAtIndex(uChildIndex - 1));
     }
 
     // first child of the sprite sheet
@@ -622,7 +622,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     // Cleanup sprite. It might be reused (issue #569)
     sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->indexOfObject(sprite);
+    unsigned int uIndex = _descendants->getIndexOfObject(sprite);
     if (uIndex != UINT_MAX)
     {
         _descendants->removeObjectAtIndex(uIndex);
@@ -632,7 +632,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
         
         for(; uIndex < count; ++uIndex)
         {
-            Sprite* s = (Sprite*)(_descendants->objectAtIndex(uIndex));
+            Sprite* s = (Sprite*)(_descendants->getObjectAtIndex(uIndex));
             s->setAtlasIndex( s->getAtlasIndex() - 1 );
         }
     }

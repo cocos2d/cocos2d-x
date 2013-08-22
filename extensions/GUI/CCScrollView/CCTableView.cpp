@@ -190,7 +190,7 @@ void TableView::insertCellAtIndex(unsigned  int idx)
         newIdx = _cellsUsed->indexOfSortedObject(cell);
         for (unsigned int i=newIdx; i<_cellsUsed->count(); i++)
         {
-            cell = (TableViewCell*)_cellsUsed->objectAtIndex(i);
+            cell = (TableViewCell*)_cellsUsed->getObjectAtIndex(i);
             this->_setIndexForCell(cell->getIdx()+1, cell);
         }
     }
@@ -237,7 +237,7 @@ void TableView::removeCellAtIndex(unsigned int idx)
 //    [_indices shiftIndexesStartingAtIndex:idx+1 by:-1];
     for (unsigned int i=_cellsUsed->count()-1; i > newIdx; i--)
     {
-        cell = (TableViewCell*)_cellsUsed->objectAtIndex(i);
+        cell = (TableViewCell*)_cellsUsed->getObjectAtIndex(i);
         this->_setIndexForCell(cell->getIdx()-1, cell);
     }
 }
@@ -249,7 +249,7 @@ TableViewCell *TableView::dequeueCell()
     if (_cellsFreed->count() == 0) {
         cell = NULL;
     } else {
-        cell = (TableViewCell*)_cellsFreed->objectAtIndex(0);
+        cell = (TableViewCell*)_cellsFreed->getObjectAtIndex(0);
         cell->retain();
         _cellsFreed->removeObjectAtIndex(0);
         cell->autorelease();
@@ -513,7 +513,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
 
     if (_cellsUsed->count() > 0)
     {
-        TableViewCell* cell = (TableViewCell*)_cellsUsed->objectAtIndex(0);
+        TableViewCell* cell = (TableViewCell*)_cellsUsed->getObjectAtIndex(0);
 
         idx = cell->getIdx();
         while(idx <startIdx)
@@ -521,7 +521,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
             this->_moveCellOutOfSight(cell);
             if (_cellsUsed->count() > 0)
             {
-                cell = (TableViewCell*)_cellsUsed->objectAtIndex(0);
+                cell = (TableViewCell*)_cellsUsed->getObjectAtIndex(0);
                 idx = cell->getIdx();
             }
             else
@@ -532,7 +532,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     }
     if (_cellsUsed->count() > 0)
     {
-        TableViewCell *cell = (TableViewCell*)_cellsUsed->lastObject();
+        TableViewCell *cell = (TableViewCell*)_cellsUsed->getLastObject();
         idx = cell->getIdx();
 
         while(idx <= maxIdx && idx > endIdx)
@@ -540,7 +540,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
             this->_moveCellOutOfSight(cell);
             if (_cellsUsed->count() > 0)
             {
-                cell = (TableViewCell*)_cellsUsed->lastObject();
+                cell = (TableViewCell*)_cellsUsed->getLastObject();
                 idx = cell->getIdx();
 
             }
