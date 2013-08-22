@@ -110,6 +110,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
         setTouchEnabled(true);
         _touches = new Array();
+        _touches->init();
+        
         _delegate = NULL;
         _bounceable = true;
         _clippingToBounds = true;

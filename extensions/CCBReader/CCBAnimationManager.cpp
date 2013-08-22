@@ -35,15 +35,28 @@ CCBAnimationManager::CCBAnimationManager()
 bool CCBAnimationManager::init()
 {
     _sequences = new Array();
+    _sequences->init();
     _nodeSequences = new Dictionary();
     _baseValues = new Dictionary();
     
     _documentOutletNames = new Array();
+    _documentOutletNames->init();
+    
     _documentOutletNodes = new Array();
+    _documentOutletNodes->init();
+    
     _documentCallbackNames = new Array();
+    _documentCallbackNames->init();
+    
     _documentCallbackNodes = new Array();
+    _documentCallbackNodes->init();
+    
     _documentCallbackControlEvents = new Array();
+    _documentCallbackControlEvents->init();
+    
     _keyframeCallbacks = new Array();
+    _keyframeCallbacks->init();
+    
     _keyframeCallFuncs = new Dictionary();
 
     _target = NULL;
