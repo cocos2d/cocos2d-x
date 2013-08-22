@@ -153,7 +153,7 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
@@ -169,7 +169,7 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(ShaderNode::listenBackToForeground),
-                                                                  EVNET_COME_TO_FOREGROUND,
+                                                                  EVENT_COME_TO_FOREGROUND,
                                                                   NULL);
 
     loadShaderVertex(vert, frag);
@@ -475,7 +475,7 @@ public:
 
 SpriteBlur::~SpriteBlur()
 {
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 }
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
@@ -505,7 +505,7 @@ bool SpriteBlur::initWithTexture(CCTexture2D* texture, const CCRect& rect)
     {
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(SpriteBlur::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
+                                                                      EVENT_COME_TO_FOREGROUND,
                                                                       NULL);
         
         CCSize s = getTexture()->getContentSizeInPixels();
