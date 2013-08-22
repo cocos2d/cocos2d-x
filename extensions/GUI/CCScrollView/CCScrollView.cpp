@@ -61,7 +61,7 @@ ScrollView::ScrollView()
 
 ScrollView::~ScrollView()
 {
-    _touches->release();
+    CC_SAFE_RELEASE(_touches);
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
@@ -553,13 +553,12 @@ void ScrollView::visit()
 
 	if(_children)
     {
-		ccArray *arrayData = _children->data;
 		unsigned int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ )
+		for( ; i < _children->count(); i++ )
         {
-			Node *child =  (Node*)arrayData->arr[i];
+			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -574,9 +573,9 @@ void ScrollView::visit()
 		this->draw();
 		
 		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ )
+		for( ; i < _children->count(); i++ )
         {
-			Node* child = (Node*)arrayData->arr[i];
+			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
 			child->visit();
 		}
         
