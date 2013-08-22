@@ -90,7 +90,7 @@ Array* Array::create(Object* object, ...)
     {
         array->addObject(object);
         Object *i = va_arg(args, Object*);
-        while(i) 
+        while (i) 
         {
             array->addObject(i);
             i = va_arg(args, Object*);
@@ -129,12 +129,12 @@ Array* Array::createWithCapacity(unsigned int capacity)
 
 Array* Array::createWithContentsOfFile(const char* fileName)
 {
-    Array* pRet = Array::createWithContentsOfFileThreadSafe(fileName);
-    if (pRet != NULL)
+    Array* ret = Array::createWithContentsOfFileThreadSafe(fileName);
+    if (ret != nullptr)
     {
         pRet->autorelease();
     }
-    return pRet;
+    return ret;
 }
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
@@ -163,7 +163,7 @@ bool Array::initWithObjects(Object* object, ...)
     bool ret = false;
     do 
     {
-        CC_BREAK_IF(object == NULL);
+        CC_BREAK_IF(object == nullptr);
 
         va_list args;
         va_start(args, object);
@@ -172,7 +172,7 @@ bool Array::initWithObjects(Object* object, ...)
         {
             this->addObject(object);
             Object* i = va_arg(args, Object*);
-            while(i) 
+            while (i) 
             {
                 this->addObject(i);
                 i = va_arg(args, Object*);
@@ -200,10 +200,6 @@ bool Array::initWithArray(Array* otherArray)
 
 int Array::getIndexOfObject(Object* object) const
 {
-//    auto it = std::find(data.begin(), data.end(), object );
-//    if( it == data.end() )
-//        return -1;
-//    return it - std::begin(data);
     auto it = data.begin();
 
     for (int i = 0; it != data.end(); ++it, ++i)
@@ -239,7 +235,7 @@ Object* Array::getRandomObject()
 bool Array::containsObject(Object* object) const
 {
     int i = this->getIndexOfObject(object);
-    return (i >=0 );
+    return (i >=0);
 }
 
 bool Array::isEqualToArray(Array* otherArray)
@@ -282,14 +278,6 @@ void Array::removeLastObject(bool releaseObj)
 
 void Array::removeObject(Object* object, bool releaseObj /* ignored */)
 {
-//    auto begin = data.begin();
-//    auto end = data.end();
-//
-//    auto it = std::find( begin, end, object);
-//    if( it != end ) {
-//        data.erase(it);
-//    }
-    
     auto it = data.begin();
     for (; it != data.end(); ++it)
     {
@@ -344,7 +332,6 @@ void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
 
 void Array::replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject /* ignored */)
 {
-//    auto obj = data[index];
     data[index] = object;
 }
 
@@ -360,6 +347,7 @@ void Array::reduceMemoryFootprint()
 
 Array::~Array()
 {
+    CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
 }
 
 Array* Array::clone() const
@@ -368,9 +356,9 @@ Array* Array::clone() const
     ret->autorelease();
     ret->initWithCapacity(this->data.size() > 0 ? this->data.size() : 1);
 
-    Object* obj = NULL;
-    Object* tmpObj = NULL;
-    Clonable* clonable = NULL;
+    Object* obj = nullptr;
+    Object* tmpObj = nullptr;
+    Clonable* clonable = nullptr;
     CCARRAY_FOREACH(this, obj)
     {
         clonable = dynamic_cast<Clonable*>(obj);
@@ -402,15 +390,9 @@ void Array::acceptVisitor(DataVisitor &visitor)
 #else
 
 Array::Array()
-: data(NULL)
+: data(nullptr)
 {
 //    init();
-}
-
-Array::Array(unsigned int capacity)
-: data(NULL)
-{
-    initWithCapacity(capacity);
 }
 
 Array* Array::create()
@@ -455,7 +437,7 @@ Array* Array::create(Object* object, ...)
     {
         array->addObject(object);
         Object *i = va_arg(args, Object*);
-        while(i)
+        while (i)
         {
             array->addObject(i);
             i = va_arg(args, Object*);
@@ -494,12 +476,12 @@ Array* Array::createWithCapacity(unsigned int capacity)
 
 Array* Array::createWithContentsOfFile(const char* fileName)
 {
-    Array* pRet = Array::createWithContentsOfFileThreadSafe(fileName);
-    if (pRet != NULL)
+    Array* ret = Array::createWithContentsOfFileThreadSafe(fileName);
+    if (ret != nullptr)
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
-    return pRet;
+    return ret;
 }
 
 Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
@@ -534,7 +516,7 @@ bool Array::initWithObjects(Object* object, ...)
     bool ret = false;
     do
     {
-        CC_BREAK_IF(object == NULL);
+        CC_BREAK_IF(object == nullptr);
 
         va_list args;
         va_start(args, object);
@@ -543,7 +525,7 @@ bool Array::initWithObjects(Object* object, ...)
         {
             this->addObject(object);
             Object* i = va_arg(args, Object*);
-            while(i)
+            while (i)
             {
                 this->addObject(i);
                 i = va_arg(args, Object*);
@@ -588,9 +570,9 @@ int Array::getIndexOfObject(Object* object) const
 
 Object* Array::getRandomObject()
 {
-    if (data->num==0)
+    if (data->num == 0)
     {
-        return NULL;
+        return nullptr;
     }
 
     float r = CCRANDOM_0_1();
@@ -622,16 +604,19 @@ bool Array::isEqualToArray(Array* otherArray)
 
 void Array::addObject(Object* object) 
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayAppendObjectWithResize(data, object);
 }
 
 void Array::addObjectsFromArray(Array* otherArray)
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
 void Array::insertObject(Object* object, int index)
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
@@ -639,7 +624,8 @@ void Array::setObject(Object* object, int index)
 {
     CCASSERT(index>=0 && index < count(), "Invalid index");
     
-    if( object != data->arr[index] ) {
+    if (object != data->arr[index])
+    {
         data->arr[index]->release();
         data->arr[index] = object;
         object->retain();
@@ -685,13 +671,13 @@ void Array::fastRemoveObject(Object* object)
 void Array::exchangeObject(Object* object1, Object* object2)
 {
     unsigned int index1 = ccArrayGetIndexOfObject(data, object1);
-    if(index1 == UINT_MAX)
+    if (index1 == UINT_MAX)
     {
         return;
     }
 
     unsigned int index2 = ccArrayGetIndexOfObject(data, object2);
-    if(index2 == UINT_MAX)
+    if (index2 == UINT_MAX)
     {
         return;
     }
@@ -721,7 +707,7 @@ void Array::reverseObjects()
         for (int i = 0; i < count ; i++)
         {
             ccArraySwapObjectsAtIndexes(data, i, maxIndex);
-            maxIndex--;
+            --maxIndex;
         }
     }
 }
@@ -733,6 +719,8 @@ void Array::reduceMemoryFootprint()
 
 Array::~Array()
 {
+    CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
+
     ccArrayFree(data);
 }
 
@@ -742,9 +730,9 @@ Array* Array::clone() const
     ret->autorelease();
     ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
-    Object* obj = NULL;
-    Object* tmpObj = NULL;
-    Clonable* clonable = NULL;
+    Object* obj = nullptr;
+    Object* tmpObj = nullptr;
+    Clonable* clonable = nullptr;
     CCARRAY_FOREACH(this, obj)
     {
         clonable = dynamic_cast<Clonable*>(obj);
@@ -767,16 +755,6 @@ Array* Array::clone() const
 void Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
-}
-
-Array::iterator Array::begin()
-{
-    return Array::ArrayIterator(0, this);
-}
-
-Array::iterator Array::end()
-{
-    return Array::ArrayIterator(count(), this);
 }
 
 #endif // uses ccArray

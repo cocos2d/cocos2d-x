@@ -11,6 +11,7 @@ NS_CC_EXT_BEGIN
 NodeLoader::NodeLoader()
 {
     _customProperties = new Dictionary();
+    _customProperties->init();
 }
 
 NodeLoader::~NodeLoader()
@@ -967,8 +968,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             
             for (int i = 0 ; i < nCount; i++)
             {
-                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNodes->objectAtIndex(i)) );
+                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNodes->getObjectAtIndex(i)) );
             }
         }
         //set variables
@@ -982,8 +983,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             
             for (int i = 0 ; i < nCount; i++)
             {
-                pCCBReader->addOwnerOutletName((static_cast<String*>(ownerOutletNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerOutletNode(static_cast<Node*>(ownerOutletNodes->objectAtIndex(i)));
+                pCCBReader->addOwnerOutletName((static_cast<String*>(ownerOutletNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(static_cast<Node*>(ownerOutletNodes->getObjectAtIndex(i)));
             }
         }
     }

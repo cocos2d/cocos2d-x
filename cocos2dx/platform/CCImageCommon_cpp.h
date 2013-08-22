@@ -51,7 +51,7 @@ extern "C"
 #endif
 
 #include "ccMacros.h"
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
