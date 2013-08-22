@@ -6,7 +6,7 @@ LOCAL_MODULE := cocos_testcpp_common
 
 LOCAL_MODULE_FILENAME := libtestcppcommon
 
-LOCAL_SRC_FILES :=  \
+LOCAL_SRC_FILES := \
 Classes/AppDelegate.cpp \
 Classes/BaseTest.cpp \
 Classes/controller.cpp \
