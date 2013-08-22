@@ -185,7 +185,8 @@ void ScrollView::setTouchEnabled(bool e)
     {
         _dragging = false;
         _touchMoved = false;
-        if(_touches)_touches->removeAllObjects();
+        if(_touches)
+            _touches->removeAllObjects();
     }
 }
 

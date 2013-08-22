@@ -105,7 +105,7 @@ Node::Node(void)
 
 Node::~Node()
 {
-    CCLOGINFO( "cocos2d: deallocing: %p", this );
+    CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
     if (_updateScriptHandler)
     {

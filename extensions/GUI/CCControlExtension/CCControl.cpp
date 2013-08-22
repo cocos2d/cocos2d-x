@@ -78,7 +78,8 @@ bool Control::init()
         // Set the touch dispatcher priority by default to 1
         this->setTouchPriority(1);
         // Initialise the tables
-        _dispatchTable = new Dictionary(); 
+        _dispatchTable = new Dictionary();
+        _dispatchTable->init();
         
         return true;
     }
