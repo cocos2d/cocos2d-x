@@ -226,7 +226,7 @@ void BoneData::addDisplayData(DisplayData *displayData)
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return static_cast<DisplayData *>( displayDataList->objectAtIndex(index) );
+    return static_cast<DisplayData *>( displayDataList->getObjectAtIndex(index) );
 }
 
 ArmatureData::ArmatureData()
@@ -314,7 +314,7 @@ void MovementBoneData::addFrameData(FrameData *frameData)
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return static_cast<FrameData *>( frameList->objectAtIndex(index) );
+    return static_cast<FrameData *>( frameList->getObjectAtIndex(index) );
 }
 
 MovementData::MovementData(void)
@@ -429,7 +429,7 @@ void TextureData::addContourData(ContourData *contourData)
 
 ContourData *TextureData::getContourData(int index)
 {
-    return static_cast<ContourData *>( contourDataList->objectAtIndex(index) );
+    return static_cast<ContourData *>( contourDataList->getObjectAtIndex(index) );
 }
 
 

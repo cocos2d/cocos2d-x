@@ -167,10 +167,10 @@ void PoolManager::pop()
 
 //         if(nCount > 1)
 //         {
-//             _curReleasePool = _releasePoolStack->objectAtIndex(nCount - 2);
+//             _curReleasePool = _releasePoolStack->getObjectAtIndex(nCount - 2);
 //             return;
 //         }
-        _curReleasePool = (AutoreleasePool*)_releasePoolStack->objectAtIndex(nCount - 2);
+        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(nCount - 2);
     }
 
     /*_curReleasePool = NULL;*/
