@@ -39,7 +39,7 @@ CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper
     return s_SpriteFrameCacheHelper;
 }
 
-void CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper()
+void CCSpriteFrameCacheHelper::purge()
 {
     delete s_SpriteFrameCacheHelper;
     s_SpriteFrameCacheHelper = NULL;

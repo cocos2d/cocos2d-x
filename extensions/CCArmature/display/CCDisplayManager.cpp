@@ -151,6 +151,10 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
 		displayData = CCArmatureDisplayData::create();
 		armature->setParentBone(m_pBone);
 	}
+	else
+	{
+		displayData = CCDisplayData::create();
+	}
 
 	decoDisplay->setDisplay(display);
 	decoDisplay->setDisplayData(displayData);

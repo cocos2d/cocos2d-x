@@ -46,10 +46,10 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
     return s_sharedArmatureDataManager;
 }
 
-void CCArmatureDataManager::purgeArmatureSystem()
+void CCArmatureDataManager::purge()
 {
-	CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-	CCDataReaderHelper::purgeDataReaderHelper();
+	CCSpriteFrameCacheHelper::purge();
+	CCDataReaderHelper::purge();
 	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 

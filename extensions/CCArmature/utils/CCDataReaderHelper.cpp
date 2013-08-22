@@ -289,7 +289,7 @@ float CCDataReaderHelper::getPositionReadScale()
 }
 
 
-void CCDataReaderHelper::purgeDataReaderHelper()
+void CCDataReaderHelper::purge()
 {
 	CCDataReaderHelper::clear();
 	CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
@@ -1358,24 +1358,6 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
 			{
 				((CCParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
 			}
-		}
-		break;
-	case CS_DISPLAY_SHADER:
-		{
-			displayData = new CCShaderDisplayData();
-
-			const char *vert = json.getItemStringValue(A_VERT);
-			if(vert != NULL)
-			{
-				((CCShaderDisplayData *)displayData)->vert = vert;
-			}
-
-			const char *frag = json.getItemStringValue(A_FRAG);
-			if(frag != NULL)
-			{
-				((CCShaderDisplayData *)displayData)->frag = vert;
-			}
-
 		}
 		break;
 	default:

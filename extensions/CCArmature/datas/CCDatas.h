@@ -115,7 +115,6 @@ enum DisplayType
     CS_DISPLAY_SPRITE,                //! display is a single CCSprite
     CS_DISPLAY_ARMATURE,         //! display is a CCArmature
     CS_DISPLAY_PARTICLE,            //! display is a CCParticle.
-    CS_DISPLAY_SHADER,              //! display is a shader
 
     CS_DISPLAY_MAX
 };
@@ -206,26 +205,6 @@ public:
     std::string plist;
 };
 
-
-class  CCShaderDisplayData : public CCDisplayData
-{
-public:
-    CC_CREATE_NO_PARAM_NO_INIT(CCShaderDisplayData)
-public:
-    CCShaderDisplayData();
-    virtual ~CCShaderDisplayData() {};
-
-    inline void setParam(const char *vert, const char *frag)
-    {
-        this->vert = vert;
-        this->frag = frag;
-    }
-
-    void copy(CCShaderDisplayData *displayData);
-public:
-    std::string vert;
-    std::string frag;
-};
 
 
 /**

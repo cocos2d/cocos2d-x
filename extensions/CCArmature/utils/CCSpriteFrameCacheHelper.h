@@ -36,7 +36,7 @@ class  CCSpriteFrameCacheHelper
 public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
-    static void purgeSpriteFrameCacheHelper();
+    static void purge();
 public:
 
     /**

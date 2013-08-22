@@ -110,7 +110,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 	TestScene::MainMenuCallback(pSender);
 
 	removeAllChildren();
-	CCArmatureDataManager::purgeArmatureSystem();
+	CCArmatureDataManager::purge();
 }
 
 
@@ -547,6 +547,11 @@ void TestUseMutiplePicture::onEnter()
 // 		displayData.setParam(weapon[i].c_str());
 // 		armature->getBone("weapon")->addDisplay(&displayData, i);
 // 	}
+
+	CCLabelTTF* l = CCLabelTTF::create("This is a weapon!", "Arial", 18);
+	l->setColor(ccc3(0, 0, 0));
+	l->setAnchorPoint(ccp(0.2f, 0.5f));
+	armature->getBone("weapon")->addDisplay(l, 7);
 }
 void TestUseMutiplePicture::onExit()
 {
@@ -564,7 +569,7 @@ std::string TestUseMutiplePicture::subtitle()
 bool TestUseMutiplePicture::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 	++displayIndex;
-	displayIndex = (displayIndex) % 6;
+	displayIndex = (displayIndex) % 8;
 	armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
 	return false;
 }

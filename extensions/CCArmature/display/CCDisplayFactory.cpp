@@ -112,6 +112,9 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 		updateArmatureDisplay(bone, display, dt, dirty);
 		break;
 	default:
+		{
+			display->setAdditionalTransform(bone->nodeToArmatureTransform());
+		}
 		break;
 	}
 }
