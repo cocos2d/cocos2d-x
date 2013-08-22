@@ -177,6 +177,7 @@ public:
         {
             _state = SAX_ARRAY;
             _array = new Array();
+            _array->init();
             if (_resultType == SAX_RESULT_ARRAY && _rootArray == NULL)
             {
                 _rootArray = _array;

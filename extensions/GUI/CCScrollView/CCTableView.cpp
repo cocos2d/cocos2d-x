@@ -54,7 +54,9 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
     if (ScrollView::initWithViewSize(size,container))
     {
         _cellsUsed      = new ArrayForObjectSorting();
+        _cellsUsed->init();
         _cellsFreed     = new ArrayForObjectSorting();
+        _cellsFreed->init();
         _indices        = new std::set<unsigned int>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
@@ -122,6 +124,7 @@ void TableView::reloadData()
     _indices->clear();
     _cellsUsed->release();
     _cellsUsed = new ArrayForObjectSorting();
+    _cellsUsed->init();
 
     this->_updateCellPositions();
     this->_updateContentSize();
