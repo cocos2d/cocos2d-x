@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>

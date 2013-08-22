@@ -115,7 +115,7 @@ bool Director::init(void)
     _notificationNode = nullptr;
 
     _scenesStack = new Array();
-    _scenesStack->init();
+    _scenesStack->initWithCapacity(15);
 
     // projection delegate if "Custom" projection is used
     _projectionDelegate = nullptr;

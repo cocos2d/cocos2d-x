@@ -14,7 +14,8 @@ CCBSequenceProperty::CCBSequenceProperty()
 
 bool CCBSequenceProperty::init()
 {
-    _keyframes = new Array();
+    _keyframes = Array::createWithCapacity(5);
+    _keyframes->retain();
     
     return true;
 }

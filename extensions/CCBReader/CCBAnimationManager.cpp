@@ -34,17 +34,27 @@ CCBAnimationManager::CCBAnimationManager()
 
 bool CCBAnimationManager::init()
 {
-    _sequences = new Array();
+    _sequences = Array::createWithCapacity(15);
+    _sequences->retain();
     _nodeSequences = new Dictionary();
+    _nodeSequences->init();
     _baseValues = new Dictionary();
+    _baseValues->init();
     
-    _documentOutletNames = new Array();
-    _documentOutletNodes = new Array();
-    _documentCallbackNames = new Array();
-    _documentCallbackNodes = new Array();
-    _documentCallbackControlEvents = new Array();
-    _keyframeCallbacks = new Array();
+    _documentOutletNames = Array::createWithCapacity(5);
+    _documentOutletNames->retain();
+    _documentOutletNodes = Array::createWithCapacity(5);
+    _documentOutletNodes->retain();
+    _documentCallbackNames = Array::createWithCapacity(5);
+    _documentCallbackNames->retain();
+    _documentCallbackNodes = Array::createWithCapacity(5);
+    _documentCallbackNodes->retain();
+    _documentCallbackControlEvents = Array::createWithCapacity(5);
+    _documentCallbackControlEvents->retain();
+    _keyframeCallbacks = Array::createWithCapacity(5);
+    _keyframeCallbacks->retain();
     _keyframeCallFuncs = new Dictionary();
+    _keyframeCallFuncs->init();
 
     _target = NULL;
     _animationCompleteCallbackFunc = NULL;

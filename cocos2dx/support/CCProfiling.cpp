@@ -79,6 +79,7 @@ void Profiler::releaseAllTimers()
 bool Profiler::init()
 {
     _activeTimers = new Dictionary();
+    _activeTimers->init();
     return true;
 }
 

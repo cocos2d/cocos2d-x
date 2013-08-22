@@ -244,7 +244,7 @@ public:
 public:
     std::string name;       //! the bone's name
     std::string parentName; //! the bone parent's name
-    Array displayDataList;  //! save DisplayData informations for the Bone
+    Array *displayDataList;  //! save DisplayData informations for the Bone
 };
 
 
@@ -266,8 +266,8 @@ public:
     BoneData *getBoneData(const char *boneName);
 public:
     std::string name;
-    Dictionary boneDataDic;
-    Array boneList;
+    Dictionary *boneDataDic;
+    Array *boneList;
 };
 
 
@@ -318,7 +318,7 @@ public:
     float duration;     //! this Bone in this movement will last _duration frames
     std::string name;   //! bone name
 
-    Array frameList;
+    Array *frameList;
 };
 
 
@@ -363,7 +363,7 @@ public:
      * Dictionary to save movment bone data.
      * Key type is std::string, value type is MovementBoneData *.
      */
-    Dictionary movBoneDataDic;
+    Dictionary *movBoneDataDic;
 };
 
 
@@ -388,7 +388,7 @@ public:
     int getMovementCount();
 public:
     std::string name;
-    Dictionary movementDataDic;
+    Dictionary *movementDataDic;
     std::vector<std::string> movementNames;
 };
 
@@ -418,7 +418,7 @@ public:
 
     virtual bool init();
 public:
-    Array vertexList;	//! Save contour vertex info, vertex saved in a Point
+    Array *vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -449,7 +449,7 @@ public:
 
     std::string name;   //! The texture's name
 
-    Array contourDataList;
+    Array *contourDataList;
 };
 
 
