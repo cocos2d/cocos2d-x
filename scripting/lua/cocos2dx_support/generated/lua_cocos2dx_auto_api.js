@@ -6004,11 +6004,6 @@ getNotificationNode : function () {},
 getWinSize : function () {},
 
 /**
- * @method end
- */
-end : function () {},
-
-/**
  * @method isSendCleanupToScene
  * @return A value converted from C/C++ "bool"
  */
@@ -6104,6 +6099,11 @@ resume : function () {},
  * @return A value converted from C/C++ "bool"
  */
 isNextDeltaTimeZero : function () {},
+
+/**
+ * @method end
+ */
+end : function () {},
 
 /**
  * @method setOpenGLView

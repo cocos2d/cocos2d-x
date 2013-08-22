@@ -24,6 +24,8 @@ INCLUDEPATH += ../../../cocos2dx/include
 INCLUDEPATH += ../../../cocos2dx
 INCLUDEPATH += ../../../cocos2dx/platform/qt5
 INCLUDEPATH += ../../../cocos2dx/kazmath/include
+INCLUDEPATH += ../cocos2dx_support
+INCLUDEPATH += ../cocos2dx_support/generated
 
 # XXX SHAREDLIBS += -lextension
 

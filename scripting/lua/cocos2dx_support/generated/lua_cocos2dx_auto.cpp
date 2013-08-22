@@ -43467,46 +43467,6 @@ static int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_end(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_end'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->end();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "end",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_end'.",&tolua_err);
-#endif
-    return 0;
-}
 static int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
 {
     int argc = 0;
@@ -44233,6 +44193,46 @@ static int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_isNextDeltaTimeZero'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_Director_end(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_end'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->end();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "end",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_end'.",&tolua_err);
 #endif
     return 0;
 }
@@ -45245,7 +45245,6 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"popToRootScene",lua_cocos2dx_Director_popToRootScene);
         tolua_function(tolua_S,"getNotificationNode",lua_cocos2dx_Director_getNotificationNode);
         tolua_function(tolua_S,"getWinSize",lua_cocos2dx_Director_getWinSize);
-        tolua_function(tolua_S,"end",lua_cocos2dx_Director_end);
         tolua_function(tolua_S,"isSendCleanupToScene",lua_cocos2dx_Director_isSendCleanupToScene);
         tolua_function(tolua_S,"getVisibleOrigin",lua_cocos2dx_Director_getVisibleOrigin);
         tolua_function(tolua_S,"mainLoop",lua_cocos2dx_Director_mainLoop);
@@ -45263,6 +45262,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"popToSceneStackLevel",lua_cocos2dx_Director_popToSceneStackLevel);
         tolua_function(tolua_S,"resume",lua_cocos2dx_Director_resume);
         tolua_function(tolua_S,"isNextDeltaTimeZero",lua_cocos2dx_Director_isNextDeltaTimeZero);
+        tolua_function(tolua_S,"endToLua",lua_cocos2dx_Director_end);
         tolua_function(tolua_S,"setOpenGLView",lua_cocos2dx_Director_setOpenGLView);
         tolua_function(tolua_S,"convertToGL",lua_cocos2dx_Director_convertToGL);
         tolua_function(tolua_S,"purgeCachedData",lua_cocos2dx_Director_purgeCachedData);

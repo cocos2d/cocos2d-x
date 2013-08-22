@@ -1,6 +1,6 @@
 TARGET = liblua.so
 
-INCLUDES += -I.. -I../lua -I../tolua \
+INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../cocos2dx_support/generated \
         -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.o \

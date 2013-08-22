@@ -129,9 +129,9 @@ bool LuaStack::init(void)
     luaL_register(_state, "_G", global_functions);
     g_luaType.clear();
     register_all_cocos2dx(_state);
-    tolua_opengl_open(_state);
     register_all_cocos2dx_extension(_state);
     register_cocos2dx_extension_CCBProxy(_state);
+    tolua_opengl_open(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
