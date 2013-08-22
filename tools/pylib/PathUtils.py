@@ -51,7 +51,7 @@ class PathUtils:
         "set the root path"
         self._root = root
 
-    def find_files(self, pathes, suffixes = [], exclude = []):
+    def find_files(self, pathes, suffixes = (), exclude = ()):
         "find files in pathes(a list) with suffixes. It will not collect files your specified in exclude. all of these pathes passed in must be relative to root"
         lst = []
         
