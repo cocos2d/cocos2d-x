@@ -360,6 +360,7 @@ void Array::reduceMemoryFootprint()
 
 Array::~Array()
 {
+    CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
 }
 
 Array* Array::clone() const
@@ -405,12 +406,6 @@ Array::Array()
 : data(NULL)
 {
 //    init();
-}
-
-Array::Array(unsigned int capacity)
-: data(NULL)
-{
-    initWithCapacity(capacity);
 }
 
 Array* Array::create()
@@ -622,16 +617,19 @@ bool Array::isEqualToArray(Array* otherArray)
 
 void Array::addObject(Object* object) 
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayAppendObjectWithResize(data, object);
 }
 
 void Array::addObjectsFromArray(Array* otherArray)
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
 void Array::insertObject(Object* object, int index)
 {
+    CCASSERT(data, "Array not initialized");
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
@@ -733,6 +731,8 @@ void Array::reduceMemoryFootprint()
 
 Array::~Array()
 {
+    CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
+
     ccArrayFree(data);
 }
 
@@ -767,16 +767,6 @@ Array* Array::clone() const
 void Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
-}
-
-Array::iterator Array::begin()
-{
-    return Array::ArrayIterator(0, this);
-}
-
-Array::iterator Array::end()
-{
-    return Array::ArrayIterator(count(), this);
 }
 
 #endif // uses ccArray
