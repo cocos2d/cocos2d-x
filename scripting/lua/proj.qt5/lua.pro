@@ -9,6 +9,7 @@ SOURCES += $$files(../lua/*.c)
 SOURCES += $$files(../tolua/*.c)
 SOURCES += $$files(../cocos2dx_support/*.c)
 SOURCES += $$files(../cocos2dx_support/*.cpp)
+SOURCES += $$files(../cocos2dx_support/generated/*.cpp)
 
 DEFINES += CC_TARGET_OS_MAC
 

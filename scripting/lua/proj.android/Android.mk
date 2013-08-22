@@ -17,6 +17,11 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
           ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
+          ../cocos2dx_support/LuaBasicConversions.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_auto.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_extension_auto.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
           ../tolua/tolua_event.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
