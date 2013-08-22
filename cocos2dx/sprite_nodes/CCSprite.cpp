@@ -989,7 +989,7 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->objectAtIndex(frameIndex) );
+    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->getObjectAtIndex(frameIndex) );
 
     CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 
