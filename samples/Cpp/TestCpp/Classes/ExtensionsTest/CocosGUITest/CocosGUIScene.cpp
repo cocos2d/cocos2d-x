@@ -9,7 +9,7 @@ CocosGUITestScene::CocosGUITestScene(bool bPortrait)
 
 CocosGUITestScene::~CocosGUITestScene()
 {
-	cocos2d::extension::CCJsonReader::purgeJsonReader();
+	cocos2d::extension::CCSSceneReader::purgeSceneReader();
 	cocos2d::extension::UIActionManager::purgeUIActionManager();
 	cocos2d::extension::UIHelper::purgeUIHelper();
 }
@@ -23,13 +23,8 @@ void CocosGUITestScene::runThisTest()
     ul->scheduleUpdate();
     this->addChild(ul);
     
-    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/Login_1/Login_1.json");
+    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/1_2/1_2.json");
     ul->addWidget(p);
-    
-//    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/CocoGUISample.json");
-//    ((UIScrollView*)p->getChildByName("scrollview"))->setInnerContainerSize(CCSizeMake(300, 275));
-//    ((UIScrollView*)p->getChildByName("scrollview"))->addScrollToBottomEvent(this, coco_ScrollToBottomSelector(CocosGUITestScene::toCocosGUIExampleScene));
-//    ul->addWidget(p);
 }
 void CocosGUITestScene::MainMenuCallback(CCObject* pSender)
 {
