@@ -61,7 +61,7 @@ CCScrollView::CCScrollView()
 
 CCScrollView::~CCScrollView()
 {
-    m_pTouches->release();
+    CC_SAFE_RELEASE(m_pTouches);
 }
 
 CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
