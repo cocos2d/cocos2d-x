@@ -153,9 +153,12 @@ const std::string& CCBReader::getCCBRootPath() const
 
 bool CCBReader::init()
 {
-    _ownerOutletNodes = new Array();
-    _ownerCallbackNodes = new Array();
-    _ownerOwnerCallbackControlEvents = new Array();
+    _ownerOutletNodes = Array::create();
+    _ownerOutletNodes->retain();
+    _ownerCallbackNodes = Array::create();
+    _ownerCallbackNodes->retain();
+    _ownerOwnerCallbackControlEvents = Array::create();
+    _ownerOwnerCallbackControlEvents->retain();
 
     // Setup action manager
     CCBAnimationManager *pActionManager = new CCBAnimationManager();
@@ -277,8 +280,10 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
     // Assign actionManagers to userObject
     if(_jsControlled)
     {
-        _nodesWithAnimationManagers = new Array();
-        _animationManagersForNodes = new Array();
+        _nodesWithAnimationManagers = Array::create();
+        _nodesWithAnimationManagers->retain();
+        _animationManagersForNodes = Array::create();
+        _animationManagersForNodes->retain();
     }
     
     DictElement* pElement = NULL;

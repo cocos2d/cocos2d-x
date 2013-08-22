@@ -83,13 +83,15 @@ ShaderCache::ShaderCache()
 
 ShaderCache::~ShaderCache()
 {
-    CCLOGINFO("cocos2d deallocing %p", this);
+    CCLOGINFO("deallocing ShaderCache: %p", this);
     _programs->release();
 }
 
 bool ShaderCache::init()
 {
-    _programs = new Dictionary();
+    _programs = Dictionary::create();
+    _programs->retain();
+    
     loadDefaultShaders();
     return true;
 }

@@ -359,12 +359,18 @@ Object* Dictionary::randomObject()
 
 Dictionary* Dictionary::create()
 {
-    Dictionary* pRet = new Dictionary();
-    if (pRet != NULL)
+    Dictionary* ret = new Dictionary();
+    if (ret && ret->init() )
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
-    return pRet;
+    return ret;
+}
+
+bool Dictionary::init()
+{
+    retain();
+    return true;
 }
 
 Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
@@ -396,8 +402,7 @@ bool Dictionary::writeToFile(const char *fullPath)
 
 Dictionary* Dictionary::clone() const
 {
-    Dictionary* newDict = new Dictionary();
-    newDict->autorelease();
+    Dictionary* newDict = Dictionary::create();
     
     DictElement* element = NULL;
     Object* tmpObj = NULL;

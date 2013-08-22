@@ -69,6 +69,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
     if( s_pConfigurations == NULL )
     {
         s_pConfigurations = new Dictionary();
+        s_pConfigurations->init();
     }
 
     pRet = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );

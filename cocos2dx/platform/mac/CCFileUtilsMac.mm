@@ -38,13 +38,13 @@ NS_CC_BEGIN
 static void addValueToDict(id key, id value, Dictionary* pDict);
 static void addObjectToNSDict(const char*key, Object* object, NSMutableDictionary *dict);
 
-static void addItemToArray(id item, Array *pArray)
+static void addItemToArray(id item, Array *array)
 {
     // add string value into array
     if ([item isKindOfClass:[NSString class]]) {
         String* pValue = new String([item UTF8String]);
         
-        pArray->addObject(pValue);
+        array->addObject(pValue);
         pValue->release();
         return;
     }
@@ -54,7 +54,7 @@ static void addItemToArray(id item, Array *pArray)
         NSString* pStr = [item stringValue];
         String* pValue = new String([pStr UTF8String]);
         
-        pArray->addObject(pValue);
+        array->addObject(pValue);
         pValue->release();
         return;
     }
@@ -62,24 +62,25 @@ static void addItemToArray(id item, Array *pArray)
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]]) {
         Dictionary* pDictItem = new Dictionary();
+        pDictItem->init();
         for (id subKey in [item allKeys]) {
             id subValue = [item objectForKey:subKey];
             addValueToDict(subKey, subValue, pDictItem);
         }
-        pArray->addObject(pDictItem);
+        array->addObject(pDictItem);
         pDictItem->release();
         return;
     }
     
     // add array value into array
     if ([item isKindOfClass:[NSArray class]]) {
-        Array *pArrayItem = new Array();
-        pArrayItem->init();
+        Array *arrayItem = new Array();
+        arrayItem->initWithCapacity( [item count] );
         for (id subItem in item) {
-            addItemToArray(subItem, pArrayItem);
+            addItemToArray(subItem, arrayItem);
         }
-        pArray->addObject(pArrayItem);
-        pArrayItem->release();
+        array->addObject(arrayItem);
+        arrayItem->release();
         return;
     }
 }
@@ -157,13 +158,13 @@ static void addValueToDict(id key, id value, Dictionary* pDict)
     
     // the value is a array
     if ([value isKindOfClass:[NSArray class]]) {
-        Array *pArray = new Array();
-        pArray->init();
+        Array *array = new Array();
+        array->initWithCapacity([value count]);
         for (id item in value) {
-            addItemToArray(item, pArray);
+            addItemToArray(item, array);
         }
-        pDict->setObject(pArray, pKey.c_str());
-        pArray->release();
+        pDict->setObject(array, pKey.c_str());
+        array->release();
         return;
     }
 }
@@ -304,7 +305,7 @@ Dictionary* FileUtilsMac::createDictionaryWithContentsOfFile(const std::string& 
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
-    Dictionary* pRet = new Dictionary();
+    Dictionary* pRet = Dictionary::create();
     for (id key in [pDict allKeys]) {
         id value = [pDict objectForKey:key];
         addValueToDict(key, value, pRet);
@@ -338,10 +339,10 @@ Array* FileUtilsMac::createArrayWithContentsOfFile(const std::string& filename)
     //    fixing cannot read data using Array::createWithContentsOfFile
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
+    NSArray* array = [NSArray arrayWithContentsOfFile:pPath];
     
-    Array* pRet = new Array();
-    for (id value in pArray) {
+    Array* pRet = Array::createWithCapacity( [array count] );
+    for (id value in array) {
         addItemToArray(value, pRet);
     }
     

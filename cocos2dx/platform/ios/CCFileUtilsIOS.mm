@@ -65,6 +65,7 @@ static void addItemToArray(id item, Array *pArray)
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]]) {
         Dictionary* pDictItem = new Dictionary();
+        pDictItem->init();
         for (id subKey in [item allKeys]) {
             id subValue = [item objectForKey:subKey];
             addValueToDict(subKey, subValue, pDictItem);
@@ -130,6 +131,7 @@ static void addValueToDict(id key, id value, Dictionary* pDict)
     // the value is a new dictionary
     if ([value isKindOfClass:[NSDictionary class]]) {
         Dictionary* pSubDict = new Dictionary();
+        pSubDict->init();
         for (id subKey in [value allKeys]) {
             id subValue = [value objectForKey:subKey];
             addValueToDict(subKey, subValue, pSubDict);
@@ -314,7 +316,7 @@ Dictionary* FileUtilsIOS::createDictionaryWithContentsOfFile(const std::string& 
     
     if (pDict != nil)
     {
-        Dictionary* pRet = new Dictionary();
+        Dictionary* pRet = Dictionary::create();
         for (id key in [pDict allKeys]) {
             id value = [pDict objectForKey:key];
             addValueToDict(key, value, pRet);

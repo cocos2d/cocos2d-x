@@ -109,7 +109,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         this->setViewSize(size);
 
         setTouchEnabled(true);
-        _touches = new Array();
+        _touches = Array::create();
+        _touches->retain();
         _delegate = NULL;
         _bounceable = true;
         _clippingToBounds = true;
@@ -183,7 +184,8 @@ void ScrollView::setTouchEnabled(bool e)
     {
         _dragging = false;
         _touchMoved = false;
-        if(_touches)_touches->removeAllObjects();
+        if(_touches)
+            _touches->removeAllObjects();
     }
 }
 

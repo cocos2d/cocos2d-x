@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #import "CCImage.h"
 #import "CCFileUtils.h"
-#import "CCCommon.h"
+#import "platform/CCCommon.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
