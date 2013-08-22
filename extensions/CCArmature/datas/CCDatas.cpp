@@ -224,7 +224,7 @@ void BoneData::addDisplayData(DisplayData *displayData)
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return (DisplayData *)displayDataList.objectAtIndex(index);
+    return (DisplayData *)displayDataList.getObjectAtIndex(index);
 }
 
 ArmatureData::ArmatureData()
@@ -301,7 +301,7 @@ void MovementBoneData::addFrameData(FrameData *frameData)
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return (FrameData *)frameList.objectAtIndex(index);
+    return (FrameData *)frameList.getObjectAtIndex(index);
 }
 
 
@@ -406,7 +406,7 @@ void TextureData::addContourData(ContourData *contourData)
 
 ContourData *TextureData::getContourData(int index)
 {
-    return (ContourData *)contourDataList.objectAtIndex(index);
+    return (ContourData *)contourDataList.getObjectAtIndex(index);
 }
 
 

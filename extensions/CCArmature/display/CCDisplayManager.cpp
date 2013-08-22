@@ -92,7 +92,7 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
 
     if(index >= 0 && (unsigned int)index < _decoDisplayList->count())
     {
-        decoDisplay = (DecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
+        decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
     }
     else
     {
@@ -145,7 +145,7 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
     }
 
 
-    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)_decoDisplayList->objectAtIndex(_displayIndex);
+    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(_displayIndex);
 
     setCurrentDecorativeDisplay(decoDisplay);
 }
@@ -210,7 +210,7 @@ DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
 
 DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
 {
-    return (DecorativeDisplay *)_decoDisplayList->objectAtIndex(index);
+    return (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
 }
 
 void DisplayManager::initDisplayList(BoneData *boneData)

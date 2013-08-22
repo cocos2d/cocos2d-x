@@ -297,7 +297,7 @@ public:
     /** Returns an element with a certain index */
     Object* getObjectAtIndex(int index)
     {
-        CCASSERT(index>=0 && index < count(), "index out of range in objectAtIndex()");
+        CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
         return data[index].get();
 #else
