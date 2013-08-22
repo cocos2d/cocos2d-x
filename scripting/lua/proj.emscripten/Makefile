@@ -49,7 +49,12 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
-          ../cocos2dx_support/LuaScriptHandlerMgr.cpp
+          ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
+          ../cocos2dx_support/LuaBasicConversions.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_auto.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_extension_auto.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp 
 
 include ../../../cocos2dx/proj.emscripten/cocos2dx.mk
 
