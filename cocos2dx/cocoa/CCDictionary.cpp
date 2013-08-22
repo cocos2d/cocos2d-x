@@ -340,7 +340,7 @@ Object* Dictionary::randomObject()
         return NULL;
     }
     
-    Object* key = allKeys()->randomObject();
+    Object* key = allKeys()->getRandomObject();
     
     if (_dictType == kDictInt)
     {
