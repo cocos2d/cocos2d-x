@@ -82,7 +82,7 @@ static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
         
     } while (0);
 
-	CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+	CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -123,7 +123,7 @@ static int tolua_cocos2d_MenuItemLabel_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -163,7 +163,7 @@ static int tolua_cocos2d_MenuItemFont_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -217,7 +217,7 @@ static int tolua_cocos2d_MenuItemSprite_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 3);
+    CCLOG("create has wrong number of arguments: %d, was expecting %d\n", argc, 3);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -281,7 +281,7 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("create wrong number of arguments: %d, was expecting %d\n", argc, 0);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -325,7 +325,7 @@ static int tolua_cocos2dx_Menu_alignItemsInRows(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments in tolua_cocos2dx_Menu_alignItemsInRows: %d, was expecting %d\n", argc, 1);
+    CCLOG("'alignItemsInRows' has wrong number of arguments in tolua_cocos2dx_Menu_alignItemsInRows: %d, was expecting %d\n", argc, 1);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -368,12 +368,12 @@ static int tolua_cocos2dx_Menu_alignItemsInColumns(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments in tolua_cocos2dx_Menu_alignItemsInColumns: %d, was expecting %d\n", argc, 1);
+    CCLOG("'alignItemsInColumns' has wrong number of arguments in tolua_cocos2dx_Menu_alignItemsInColumns: %d, was expecting %d\n", argc, 1);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-	tolua_error(tolua_S,"#ferror in function 'alignItemsInRows'.\n",&tolua_err);
+	tolua_error(tolua_S,"#ferror in function 'alignItemsInColumns'.\n",&tolua_err);
 #endif
 	return 0;
 }
@@ -424,7 +424,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
 	return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -465,7 +465,7 @@ static int tolua_cocos2d_MenuItem_registerScriptTapHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'registerScriptTapHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -505,7 +505,7 @@ static int tolua_cocos2d_MenuItem_unregisterScriptTapHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptTapHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -587,7 +587,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'registerScriptTouchHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -627,7 +627,7 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptTouchHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -672,7 +672,7 @@ static int tolua_cocos2d_Layer_registerScriptKeypadHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'registerScriptKeypadHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -711,7 +711,7 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
         return 0;
     }
 
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptKeypadHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -757,7 +757,7 @@ static int tolua_cocos2d_Layer_registerScriptAccelerateHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'registerScriptAccelerateHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -796,7 +796,7 @@ static int tolua_cocos2d_Layer_unregisterScriptAccelerateHandler(lua_State* tolu
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptAccelerateHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -846,7 +846,7 @@ static int tolua_cocos2d_Scheduler_scheduleScriptFunc(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 3);
+    CCLOG("'scheduleScriptFunc' has wrong number of arguments: %d, was expecting %d\n", argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -893,7 +893,7 @@ static int tolua_cocos2d_Scheduler_unscheduleScriptEntry(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'unscheduleScriptEntry' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -948,7 +948,7 @@ static int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
         toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Sequence");
         return 1;
     }
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -987,7 +987,7 @@ static int tolua_cocos2d_CallFunc_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1034,7 +1034,7 @@ static int tolua_cocos2d_Node_registerScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'registerScriptHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1073,7 +1073,7 @@ static int tolua_cocos2d_Node_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1123,7 +1123,7 @@ static int tolua_Cocos2d_Node_scheduleUpdateWithPriorityLua(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'scheduleUpdateWithPriorityLua' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1162,7 +1162,7 @@ static int tolua_cocos2d_Node_unscheduleUpdate(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unscheduleUpdate' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1219,7 +1219,7 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1288,7 +1288,7 @@ static int tolua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 3);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1352,7 +1352,7 @@ static int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1416,7 +1416,7 @@ static int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1476,7 +1476,7 @@ static int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1536,7 +1536,7 @@ static int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1629,7 +1629,7 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
         }        
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 5);
+    CCLOG("'drawPolygon' has wrong number of arguments: %d, was expecting %d\n", argc, 5);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1672,7 +1672,7 @@ static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
     }
 
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("'setBlendFunc' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1729,7 +1729,7 @@ static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'create' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1775,7 +1775,7 @@ static int tolua_cocos2dx_Camera_getCenterXYZ(lua_State* tolua_S)
         return 3;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getCenterXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1820,7 +1820,7 @@ static int tolua_cocos2dx_Camera_getEyeXYZ(lua_State* tolua_S)
         return 3;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getEyeXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1865,7 +1865,7 @@ static int tolua_cocos2dx_Camera_getUpXYZ(lua_State* tolua_S)
         return 3;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getUpXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1918,7 +1918,7 @@ static int tolua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
         }
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("'getStringFromFile' has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1949,7 +1949,7 @@ static int tolua_cocos2dx_UserDefault_getInstance(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getInstance' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2245,11 +2245,8 @@ static void extendTexture2D(lua_State* tolua_S)
     }
 }
 
-int register_all_cocos2dx_manual(lua_State* tolua_S)
+static void extendMenuItem(lua_State* tolua_S)
 {
-    if (NULL == tolua_S)
-        return 0;
-    
     lua_pushstring(tolua_S,"MenuItem");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2261,7 +2258,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItem_unregisterScriptTapHandler);
         lua_rawset(tolua_S, -3);
     }
-    
+}
+
+static void extendMenuItemImage(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"MenuItemImage");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2270,7 +2270,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemImage_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendMenuItemLabel(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "MenuItemLabel");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2279,7 +2282,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemLabel_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendMenuItemFont(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "MenuItemFont");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2288,7 +2294,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemFont_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendMenuItemSprite(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "MenuItemSprite");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2297,7 +2306,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemSprite_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendMenuItemToggle(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "MenuItemToggle");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2306,7 +2318,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_MenuItemToggle_create);
         lua_rawset(tolua_S,-3);
     }
+}
 
+static void extendMenu(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "Menu");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S, -1))
@@ -2321,7 +2336,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Menu_alignItemsInColumns);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendNode(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Node");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2339,7 +2357,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Node_unscheduleUpdate);
         lua_rawset(tolua_S, -3);
     }
-    
+}
+
+static void extendLayer(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Layer");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2363,7 +2384,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S, tolua_cocos2d_Layer_unregisterScriptAccelerateHandler);
         lua_rawset(tolua_S, -3);
     }
-    
+}
+
+static void extendScheduler(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Scheduler");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2375,7 +2399,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Scheduler_unscheduleScriptEntry);
         lua_rawset(tolua_S, -3);
     }
-    
+}
+
+static void extendSequence(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Sequence");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2384,7 +2411,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Sequence_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendCallFunc(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"CallFunc");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2393,7 +2423,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CallFunc_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendSpawn(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Spawn");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2402,7 +2435,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Spawn_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendCardinalSplineBy(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"CardinalSplineBy");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2411,7 +2447,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CardinalSplineBy_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendCatmullRomBy(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"CatmullRomBy");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2420,7 +2459,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomBy_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendCatmullRomTo(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"CatmullRomTo");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2429,7 +2471,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomTo_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendBezierBy(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"BezierBy");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2438,7 +2483,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_BezierBy_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendBezierTo(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"BezierTo");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2447,7 +2495,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_BezierTo_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendDrawNode(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"DrawNode");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2456,7 +2507,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_DrawNode_drawPolygon);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendSprite(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"Sprite");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2465,7 +2519,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Sprite_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendLayerColor(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"LayerColor");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2474,7 +2531,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerColor_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendLayerMultiplex(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"LayerMultiplex");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2483,7 +2543,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_LayerMultiplex_create);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendParticleSystem(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S,"ParticleSystem");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2492,7 +2555,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleSystem_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendCamera(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "Camera");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2509,7 +2575,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getEyeXYZ );
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendFileUtils(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "FileUtils");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2518,7 +2587,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getStringFromFile );
         lua_rawset(tolua_S,-3);
     }
-    
+}
+
+static void extendUserDefault(lua_State* tolua_S)
+{
     lua_pushstring(tolua_S, "UserDefault");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
@@ -2527,7 +2599,40 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_UserDefault_getInstance );
         lua_rawset(tolua_S,-3);
     }
+}
+
+
+int register_all_cocos2dx_manual(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
     
+    extendNode(tolua_S);
+    extendLayer(tolua_S);
+    extendMenuItem(tolua_S);
+    extendMenuItemImage(tolua_S);
+    extendMenuItemLabel(tolua_S);
+    extendMenuItemFont(tolua_S);
+    extendMenuItemSprite(tolua_S);
+    extendMenuItemToggle(tolua_S);
+    extendMenu(tolua_S);
+    extendScheduler(tolua_S);
+    extendSequence(tolua_S);
+    extendCallFunc(tolua_S);
+    extendSpawn(tolua_S);
+    extendCardinalSplineBy(tolua_S);
+    extendCatmullRomBy(tolua_S);
+    extendCatmullRomTo(tolua_S);
+    extendBezierBy(tolua_S);
+    extendBezierTo(tolua_S);
+    extendDrawNode(tolua_S);
+    extendSprite(tolua_S);
+    extendLayerColor(tolua_S);
+    extendLayerMultiplex(tolua_S);
+    extendParticleSystem(tolua_S);
+    extendCamera(tolua_S);
+    extendFileUtils(tolua_S);
+    extendUserDefault(tolua_S);
     extendGLProgram(tolua_S);
     extendTexture2D(tolua_S);
     

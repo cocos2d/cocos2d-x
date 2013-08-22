@@ -27,6 +27,7 @@ local testsName =
     "ScrollViewTest",
 }
 
+
 --Create toMainLayr MenuItem
 function CreateExtensionsBasicLayerMenu(pMenu)
 	if nil == pMenu then
@@ -342,7 +343,7 @@ local function runCCControlTest()
         
         --Add the ribbon
         local pRibbon = cc.Scale9Sprite:create("extensions/ribbon.png", cc.rect(1, 1, 48, 55))
-        pRibbon:setContentSize(cc.size(VisibleRect:getVisibleRect().size.width, 57))
+        pRibbon:setContentSize(cc.size(VisibleRect:getVisibleRect().width, 57))
         pRibbon:setPosition(cc.p(VisibleRect:center().x, VisibleRect:top().y - pRibbon:getContentSize().height / 2.0))
         pLayer:addChild(pRibbon)
         
@@ -384,7 +385,7 @@ local function runCCControlTest()
         	end
         	
         	if nil ~= strFmt then
-        		pDisplayValueLabel:setString(cc.String:create(strFmt):getCString())
+        		pDisplayValueLabel:setString(strFmt)
         	end       	
         end
         --Add the slider
@@ -396,7 +397,7 @@ local function runCCControlTest()
 		pSlider:setTag(1)
         
         --When the value of the slider will change, the given selector will be call
-        pSlider:registerControlEventHandler(valueChanged, cc.ControlEventValueChanged)
+        pSlider:registerControlEventHandler(valueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
 		
 		local pRestrictSlider = cc.ControlSlider:create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png")
         pRestrictSlider:setAnchorPoint(cc.p(0.5, 1.0))
@@ -408,7 +409,7 @@ local function runCCControlTest()
         pRestrictSlider:setPosition(cc.p(screenSize.width / 2.0, screenSize.height / 2.0 - 24))
 		pRestrictSlider:setTag(2)		
 		--same with restricted
-		pRestrictSlider:registerControlEventHandler(valueChanged, cc.ControlEventValueChanged)
+		pRestrictSlider:registerControlEventHandler(valueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
 	    pLayer:addChild(pSlider)    
 		pLayer:addChild(pRestrictSlider)
 	end
@@ -435,12 +436,12 @@ local function runCCControlTest()
         	
         	local pPicker = tolua.cast(pSender,"ControlColourPicker")
         	local strFmt  = string.format("#%02X%02X%02X",pPicker:getColor().r, pPicker:getColor().g, pPicker:getColor().b)
-        	pColorLabel:setString(cc.String:create(strFmt):getCString())       	
+        	pColorLabel:setString(strFmt)       	
         end
         local pColourPicker = cc.ControlColourPicker:create()
         pColourPicker:setColor(cc.c3b(37, 46, 252))
         pColourPicker:setPosition(cc.p (pColourPicker:getContentSize().width / 2, 0))
-        pColourPicker:registerControlEventHandler(colourValueChanged, cc.ControlEventValueChanged)
+        pColourPicker:registerControlEventHandler(colourValueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
         pNode:addChild(pColourPicker)     
 	
 	    dLayer_width = dLayer_width + pColourPicker:getContentSize().width
@@ -515,7 +516,7 @@ local function runCCControlTest()
             )
         pSwitchControl:setPosition(cc.p (dLayer_width + 10 + pSwitchControl:getContentSize().width / 2, 0))
         pNode:addChild(pSwitchControl)
-        pSwitchControl:registerControlEventHandler(valueChanged, cc.ControlEventValueChanged)
+        pSwitchControl:registerControlEventHandler(valueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
         
         --Set the layer size
         pNode:setContentSize(cc.size(dLayer_width, 0))
@@ -536,8 +537,8 @@ local function runCCControlTest()
     	pTitleButton:setColor(cc.c3b(159, 168, 176))
     
     	local pButton = cc.ControlButton:create(pTitleButton, pBackgroundButton)
-    	pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.ControlStateHighlighted)
-    	pButton:setTitleColorForState(cc.c3b(255,255,255), cc.ControlStateHighlighted)
+    	pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.CONTROL_STATE_HIGH_LIGHTED )
+    	pButton:setTitleColorForState(cc.c3b(255,255,255), cc.CONTROL_STATE_HIGH_LIGHTED )
     
     	return pButton
 	end
@@ -548,11 +549,7 @@ local function runCCControlTest()
 		end
 		
 		local screenSize = cc.Director:getInstance():getWinSize()
-		local strArray   = cc.Array:create()
-		strArray:addObject(cc.String:create("Hello"))
-		strArray:addObject(cc.String:create("Variable"))
-		strArray:addObject(cc.String:create("Size"))
-		strArray:addObject(cc.String:create("!"))
+		local strArray   = {"Hello", "Variable", "Size", "!"}
 		
 		local pNode = cc.Node:create()
 		pLayer:addChild(pNode,1)
@@ -561,11 +558,10 @@ local function runCCControlTest()
 		local pObj        = nil
 		
 		local i = 0
-    	local nLen = strArray:count()
+    	local nLen = table.getn(strArray)
     	for i = 0, nLen - 1 do
-        	pObj = tolua.cast(strArray:objectAtIndex(i), "String")
         	--Creates a button with pLayer string as title
-            local pButton = HvsStandardButtonWithTitle(pObj:getCString())	
+            local pButton = HvsStandardButtonWithTitle(strArray[i + 1])	
             pButton:setPosition(cc.p (dTotalWidth + pButton:getContentSize().width / 2, pButton:getContentSize().height / 2))
             pNode:addChild(pButton)
             
@@ -596,8 +592,8 @@ local function runCCControlTest()
     	pTitleButton:setColor(cc.c3b(159, 168, 176))
     
     	local pButton = cc.ControlButton:create(pTitleButton, pBackgroundButton)
-        pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.ControlStateHighlighted)
-    	pButton:setTitleColorForState(cc.c3b(255,255,255), cc.ControlStateHighlighted)
+        pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.CONTROL_STATE_HIGH_LIGHTED )
+    	pButton:setTitleColorForState(cc.c3b(255,255,255), cc.CONTROL_STATE_HIGH_LIGHTED )
     
         return pButton
 	end
@@ -622,7 +618,7 @@ local function runCCControlTest()
           for j = 0, 2 do
           	    --Add the buttons
           	    local strFmt = string.format("%d",math.random(0,32767) % 30)
-                local pButton = StylingStandardButtonWithTitle(cc.String:create(strFmt):getCString())
+                local pButton = StylingStandardButtonWithTitle(strFmt)
                 pButton:setAdjustBackgroundImage(false)                                                  
                 pButton:setPosition(cc.p (pButton:getContentSize().width / 2 + (pButton:getContentSize().width + nSpace) * i,
                                          pButton:getContentSize().height / 2 + (pButton:getContentSize().height + nSpace) * j))
@@ -672,72 +668,72 @@ local function runCCControlTest()
         	if nil == pDisplayValueLabel then
         		return
         	end       	
-        	pDisplayValueLabel:setString(cc.String:create("Touch Down"):getCString())
+        	pDisplayValueLabel:setString("Touch Down" )
         end
         
         local function touchDragInsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Drag Inside"):getCString())
+        	pDisplayValueLabel:setString("Drag Inside")
         end
         
         local function touchDragOutsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Drag Outside"):getCString())
+        	pDisplayValueLabel:setString("Drag Outside")
         end
         
         local function touchDragEnterAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Drag Enter"):getCString())
+        	pDisplayValueLabel:setString("Drag Enter")
         end
         
         local function touchDragExitAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Drag Exit"):getCString())
+        	pDisplayValueLabel:setString("Drag Exit")
         end
         
         local function touchUpInsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Touch Up Inside."):getCString())
+        	pDisplayValueLabel:setString("Touch Up Inside.")
         end
         
         local function touchUpOutsideAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Touch Up Outside."):getCString())
+        	pDisplayValueLabel:setString("Touch Up Outside.")
         end
         
         local function touchCancelAction()
         	if nil == pDisplayValueLabel then
         		return
         	end 
-        	pDisplayValueLabel:setString(cc.String:create("Touch Cancel"):getCString())
+        	pDisplayValueLabel:setString("Touch Cancel")
         end
         
         
         
-        pControlButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.ControlStateHighlighted)
-        pControlButton:setTitleColorForState(cc.c3b(255, 255, 255), cc.ControlStateHighlighted)
+        pControlButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.CONTROL_STATE_HIGH_LIGHTED )
+        pControlButton:setTitleColorForState(cc.c3b(255, 255, 255), cc.CONTROL_STATE_HIGH_LIGHTED )
         pControlButton:setAnchorPoint(cc.p(0.5, 1))
         pControlButton:setPosition(cc.p(screenSize.width / 2.0, screenSize.height / 2.0))
-        pControlButton:registerControlEventHandler(touchDownAction,cc.ControlEventTouchDown)
-        pControlButton:registerControlEventHandler(touchDragInsideAction,cc.ControlEventTouchDragInside)
-        pControlButton:registerControlEventHandler(touchDragOutsideAction,cc.ControlEventTouchDragOutside)
-        pControlButton:registerControlEventHandler(touchDragEnterAction,cc.ControlEventTouchDragEnter)
-        pControlButton:registerControlEventHandler(touchDragExitAction,cc.ControlEventTouchDragExit)
-        pControlButton:registerControlEventHandler(touchUpInsideAction,cc.ControlEventTouchUpInside)
-        pControlButton:registerControlEventHandler(touchUpOutsideAction,cc.ControlEventTouchUpOutside)
-        pControlButton:registerControlEventHandler(touchCancelAction,cc.ControlEventTouchCancel)
+        pControlButton:registerControlEventHandler(touchDownAction,cc.CONTROL_EVENTTYPE_TOUCH_DOWN )
+        pControlButton:registerControlEventHandler(touchDragInsideAction,cc.CONTROL_EVENTTYPE_DRAG_INSIDE)
+        pControlButton:registerControlEventHandler(touchDragOutsideAction,cc.CONTROL_EVENTTYPE_DRAG_OUTSIDE)
+        pControlButton:registerControlEventHandler(touchDragEnterAction,cc.CONTROL_EVENTTYPE_DRAG_ENTER)
+        pControlButton:registerControlEventHandler(touchDragExitAction,cc.CONTROL_EVENTTYPE_DRAG_EXIT)
+        pControlButton:registerControlEventHandler(touchUpInsideAction,cc.CONTROL_EVENTTYPE_TOUCH_UP_INSIDE)
+        pControlButton:registerControlEventHandler(touchUpOutsideAction,cc.CONTROL_EVENTTYPE_TOUCH_UP_OUTSIDE)
+        pControlButton:registerControlEventHandler(touchCancelAction,cc.CONTROL_EVENTTYPE_TOUCH_CANCEL)
         pLayer:addChild(pControlButton, 1)
 		
 		--Add the black background
@@ -780,14 +776,14 @@ local function runCCControlTest()
         	
         	local pControl = tolua.cast(pSender,"ControlPotentiometer")
         	local strFmt = string.format("%0.2f",pControl:getValue())
-        	pDisplayValueLabel:setString(cc.String:create(strFmt):getCString())
+        	pDisplayValueLabel:setString(strFmt )
         end
         local pPotentiometer = cc.ControlPotentiometer:create("extensions/potentiometerTrack.png","extensions/potentiometerProgress.png"
                                                                                ,"extensions/potentiometerButton.png")
         pPotentiometer:setPosition(cc.p (dLayer_width + 10 + pPotentiometer:getContentSize().width / 2, 0))
 
         -- When the value of the slider will change, the given selector will be call
-        pPotentiometer:registerControlEventHandler(valueChanged, cc.ControlEventValueChanged)
+        pPotentiometer:registerControlEventHandler(valueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
         
 		pNode:addChild(pPotentiometer)
         
@@ -837,11 +833,11 @@ local function runCCControlTest()
     		
     		local pControl = tolua.cast(pSender,"ControlStepper")
     		local strFmt   = string.format("%0.02f",pControl:getValue() )
-    		pDisplayValueLabel:setString(cc.String:create(strFmt):getCString())
+    		pDisplayValueLabel:setString(strFmt )
     	end
         local stepper   = cc.ControlStepper:create(minusSprite, plusSprite)
         stepper:setPosition(cc.p (layer_width + 10 + stepper:getContentSize().width / 2, 0))
-        stepper:registerControlEventHandler(valueChanged, cc.ControlEventValueChanged)
+        stepper:registerControlEventHandler(valueChanged, cc.CONTROL_EVENTTYPE_VALUE_CHANGED)
         pNode:addChild(stepper)
         
         layer_width  = layer_width + stepper:getContentSize().width
@@ -898,8 +894,8 @@ end
 local function runEditBoxTest()
 	local newScene = cc.Scene:create()
 	local newLayer = cc.Layer:create()
-	local visibleOrigin = cc.EGLView:getInstance():getVisibleOrigin()
-    local visibleSize = cc.EGLView:getInstance():getVisibleSize()
+	local visibleOrigin = cc.Director:getInstance():getVisibleOrigin()
+    local visibleSize = cc.Director:getInstance():getVisibleSize()
     
     local pBg = cc.Sprite:create("Images/HelloWorld.png")
     pBg:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2))
@@ -958,7 +954,7 @@ local function runEditBoxTest()
     EditName:setPlaceHolder("Name:")
     EditName:setPlaceholderFontColor(cc.c3b(255,255,255))
     EditName:setMaxLength(8)
-    EditName:setReturnType(kKeyboardReturnTypeDone)
+    EditName:setReturnType(cc.KEYBOARD_RETURNTYPE_DONE )
 	--Handler
 	EditName:registerScriptEditBoxHandler(editBoxTextEventHandle)
     newLayer:addChild(EditName)
@@ -976,8 +972,8 @@ local function runEditBoxTest()
     EditPassword:setFontColor(cc.c3b(0,255,0))
     EditPassword:setPlaceHolder("Password:")
     EditPassword:setMaxLength(6)
-    EditPassword:setInputFlag(kEditBoxInputFlagPassword)
-    EditPassword:setInputMode(kEditBoxInputModeSingleLine)
+    EditPassword:setInputFlag(cc.EDITBOX_INPUT_FLAG_PASSWORD)
+    EditPassword:setInputMode(cc.EDITBOX_INPUT_MODE_SINGLELINE)
 	EditPassword:registerScriptEditBoxHandler(editBoxTextEventHandle)
     newLayer:addChild(EditPassword)
      
@@ -986,7 +982,7 @@ local function runEditBoxTest()
     EditEmail:setPosition(cc.p(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4))
     EditEmail:setAnchorPoint(cc.p(0.5, 1.0))
     EditEmail:setPlaceHolder("Email:")
-    EditEmail:setInputMode(kEditBoxInputModeEmailAddr)
+    EditEmail:setInputMode(cc.EDITBOX_INPUT_MODE_EMAILADDR)
     EditEmail:registerScriptEditBoxHandler(editBoxTextEventHandle)
     newLayer:addChild(EditEmail)   
     newLayer:setPosition(cc.p(10, 20))
@@ -1027,12 +1023,12 @@ local function runScrollViewTest()
             scrollView1:setContainer(flowersprite1)
             scrollView1:updateInset()
         end
-        scrollView1:setDirection(kScrollViewDirectionBoth)
+        scrollView1:setDirection(cc.SCROLLVIEW_DIRECTION_BOTH )
         scrollView1:setClippingToBounds(true)
         scrollView1:setBounceable(true)
         scrollView1:setDelegate()
-        scrollView1:registerScriptHandler(scrollView1DidScroll,kScrollViewScriptScroll)
-        scrollView1:registerScriptHandler(scrollView1DidZoom,kScrollViewScriptZoom)
+        scrollView1:registerScriptHandler(scrollView1DidScroll,cc.SCROLLVIEW_SCRIPT_SCROLL)
+        scrollView1:registerScriptHandler(scrollView1DidZoom,cc.SCROLLVIEW_SCRIPT_ZOOM)
     end
     newLayer:addChild(scrollView1)
 
@@ -1053,12 +1049,12 @@ local function runScrollViewTest()
             scrollView2:setContainer(flowersprite2)
             scrollView2:updateInset()
         end
-        scrollView2:setDirection(kScrollViewDirectionBoth)
+        scrollView2:setDirection(cc.SCROLLVIEW_DIRECTION_BOTH )
         scrollView2:setClippingToBounds(true)
         scrollView2:setBounceable(true)
         scrollView2:setDelegate()
-        scrollView2:registerScriptHandler(scrollView2DidScroll,kScrollViewScriptScroll)
-        scrollView2:registerScriptHandler(scrollView2DidZoom,kScrollViewScriptZoom)
+        scrollView2:registerScriptHandler(scrollView2DidScroll,cc.SCROLLVIEW_SCRIPT_SCROLL)
+        scrollView2:registerScriptHandler(scrollView2DidZoom,cc.SCROLLVIEW_SCRIPT_ZOOM)
     end
     newLayer:addChild(scrollView2)
 
@@ -1105,13 +1101,13 @@ local function ExtensionsMainLayer()
     cc.MenuItemFont:setFontSize(24)
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     local bSupportWebSocket = false
-    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) then
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) then
         bSupportWebSocket = true
     end
     local bSupportEdit = false
-    if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or 
-        (kTargetAndroid == targetPlatform) or (kTargetWindows == targetPlatform) or 
-        (kTargetMacOS == targetPlatform) or (kTargetTizen == targetPlatform) then
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
+        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or 
+        (cc.PLATFORM_OS_MAC == targetPlatform) or (cc.PLATFORM_OS_TIZEN  == targetPlatform) then
         bSupportEdit = true
     end
     for i = 1, ExtensionTestEnum.TEST_MAX_COUNT do

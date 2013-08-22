@@ -591,8 +591,9 @@ int LuaEngine::handlerControlEvent(void* data)
             
             if (0 != handler)
             {
-                _stack->pushObject((Object*)basicScriptData->nativeObject, "CCObject");
-                ret = _stack->executeFunctionByHandler(handler, 1);
+                _stack->pushObject((Object*)basicScriptData->nativeObject, "Object");
+                _stack->pushInt(controlEvents);
+                ret = _stack->executeFunctionByHandler(handler, 2);
                 _stack->clean();
             }
         }
