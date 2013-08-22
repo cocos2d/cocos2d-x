@@ -5,8 +5,12 @@ import os
 import os.path
 import cStringIO
 
-sys.path.append(os.path.abspath("../pylib"))
-import PathUtils
+try:
+    import PathUtils
+except ImportError, e:
+    import os.path
+    sys.path.append(os.path.abspath("../pylib"))
+    import PathUtils
 
 COCOS_ROOT = "../../"
 
