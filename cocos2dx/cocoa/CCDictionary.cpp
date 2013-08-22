@@ -63,7 +63,7 @@ DictElement::DictElement(intptr_t iKey, Object* pObject)
 
 DictElement::~DictElement()
 {
-
+    CCLOGINFO("deallocing DictElement: %p", this);
 }
 
 // -----------------------------------------------------------------------
@@ -78,6 +78,7 @@ Dictionary::Dictionary()
 
 Dictionary::~Dictionary()
 {
+    CCLOGINFO("deallocing Dictionary: %p", this);
     removeAllObjects();
 }
 

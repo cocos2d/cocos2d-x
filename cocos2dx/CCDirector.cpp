@@ -168,7 +168,7 @@ bool Director::init(void)
     
 Director::~Director(void)
 {
-    CCLOG("cocos2d: deallocing Director %p", this);
+    CCLOGINFO("deallocing Director: %p", this);
 
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);

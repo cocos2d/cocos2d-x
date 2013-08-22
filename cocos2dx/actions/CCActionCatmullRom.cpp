@@ -89,6 +89,8 @@ PointArray* PointArray::clone() const
 
 PointArray::~PointArray()
 {
+    CCLOGINFO("deallocing PointArray: %p", this);
+
     vector<Point*>::iterator iter;
     for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
     {

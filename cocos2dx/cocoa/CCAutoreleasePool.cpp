@@ -36,6 +36,7 @@ AutoreleasePool::AutoreleasePool()
 
 AutoreleasePool::~AutoreleasePool()
 {
+    CCLOGINFO("deallocing AutoreleasePool: %p", this);
     CC_SAFE_DELETE(_managedObjectArray);
 }
 
@@ -113,6 +114,7 @@ PoolManager::PoolManager()
 
 PoolManager::~PoolManager()
 {
+    CCLOGINFO("deallocing PoolManager: %p", this);
     finalize();
  
      // we only release the last autorelease pool here 
