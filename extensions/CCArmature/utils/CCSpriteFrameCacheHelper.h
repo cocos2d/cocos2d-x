@@ -47,20 +47,13 @@ public:
 
     void addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath);
 
-    /**
-     * Get this display in which image
-     */
-    const char *getDisplayImagePath(const char *displayName);
-
-	cocos2d::CCTextureAtlas *getTextureAtlasWithImageName(const char *imageName);
-	cocos2d::CCTextureAtlas *getTextureAtlasWithDisplayName(const char *displayName);
+	CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
 private:
     CCSpriteFrameCacheHelper();
     ~CCSpriteFrameCacheHelper();
 
-    std::map<std::string, std::string> m_Display2ImageMap;
-    CCDictionary *m_pDisplay2TextureAtlas;
+    CCDictionary *m_pTextureAtlasDic;
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };

@@ -264,6 +264,7 @@ void TestCSWithSkeleton::onEnter()
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.2f);
+
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
 	addChild(armature);
 }
@@ -594,7 +595,7 @@ void TestColliderDetector::onEnter()
 
 	/*
 	* Set armature's frame event callback function
-	* To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+	* To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
 	*/
 	armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestColliderDetector::onFrameEvent));
 

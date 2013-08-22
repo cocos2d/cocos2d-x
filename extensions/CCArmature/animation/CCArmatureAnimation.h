@@ -142,12 +142,21 @@ public:
     void update(float dt);
 
 	/**
-     * Get current movementID;
+     * Get current movementID
 	 * @return The name of current movement
      */
 	std::string getCurrentMovementID();
 
+	/**
+	 * Set armature's movement event callback function
+	 * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+	 */
 	void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
+
+	/**
+	 * Set armature's frame event callback function
+	 * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+	 */
 	void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 
 
