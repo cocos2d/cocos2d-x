@@ -720,6 +720,7 @@ static JSBool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContex
         if (nullptr == nativeDelegateArray)
         {
             nativeDelegateArray = new Array();
+            nativeDelegateArray->init();
             cobj->setUserObject(nativeDelegateArray);  // The reference of nativeDelegateArray is added to 2
             nativeDelegateArray->release(); // Release nativeDelegateArray to make the reference to 1
         }
