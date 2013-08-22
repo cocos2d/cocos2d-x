@@ -397,53 +397,18 @@ public:
     const_iterator cbegin() { return data.cbegin(); }
     const_iterator cend() { return data.cend(); }
 
-#else
-    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
-    {
-    public:
-        ArrayIterator(int index, Array *array) : _index(index), _parent(array) {}
-        ArrayIterator(const ArrayIterator& arrayIterator) : _index(arrayIterator._index), _parent(arrayIterator._parent) {}
-
-        ArrayIterator& operator++()
-        {
-            ++_index;
-            return *this;
-        }
-        ArrayIterator operator++(int dummy)
-        {
-            ArrayIterator tmp(*this);
-            (*this)++;
-            return tmp;
-        }
-        bool operator==(const ArrayIterator& rhs) { return _index == rhs._index; }
-        bool operator!=(const ArrayIterator& rhs) { return _index != rhs._index; }
-        Object* operator*() { return _parent->getObjectAtIndex(_index); }
-        Object* operator->() { return _parent->getObjectAtIndex(_index); }
-
-    private:
-        int _index;
-        Array *_parent;
-    };
-
-    // functions for range-based loop
-    typedef ArrayIterator iterator;
-    typedef ArrayIterator const_iterator;
-    iterator begin();
-    iterator end();
-
-#endif
-    
-
-
-public:
-#if CC_USE_ARRAY_VECTOR
     std::vector<RCPtr<Object>> data;
+
 #else
+    Object** begin() { return &data->arr[0]; }
+    Object** end() { return &data->arr[data->num]; }
+
     ccArray* data;
+
 #endif
 
+//protected:
     Array();
-    Array(unsigned int capacity);
 };
 
 // end of data_structure group
