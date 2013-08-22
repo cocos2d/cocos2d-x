@@ -206,13 +206,13 @@ Sequence* Sequence::create(Array* arrayOfActions)
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
 
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
 
         if (count > 1)
         {
             for (unsigned int i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
         }
         else
@@ -578,12 +578,12 @@ Spawn* Spawn::create(Array *arrayOfActions)
     {
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
         if (count > 1)
         {
             for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
         }
         else
@@ -2107,7 +2107,7 @@ void Animate::update(float t)
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->objectAtIndex(i));
+            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->getObjectAtIndex(i));
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 

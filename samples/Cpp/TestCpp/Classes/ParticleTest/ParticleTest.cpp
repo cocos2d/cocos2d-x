@@ -1649,7 +1649,7 @@ void AddAndDeleteParticleSystems::removeSystem(float dt)
     {
         CCLOG("remove random system");
         unsigned int uRand = rand() % (nChildrenCount - 1);
-        _batchNode->removeChild((Node*)_batchNode->getChildren()->objectAtIndex(uRand), true);
+        _batchNode->removeChild((Node*)_batchNode->getChildren()->getObjectAtIndex(uRand), true);
 
         auto particleSystem = ParticleSystemQuad::create("Particles/Spiral.plist");
         //add new
@@ -1796,7 +1796,7 @@ void ReorderParticleSystems::onEnter()
 
 void ReorderParticleSystems::reorderSystem(float time)
 {
-    auto system = (ParticleSystem*)_batchNode->getChildren()->objectAtIndex(1);
+    auto system = (ParticleSystem*)_batchNode->getChildren()->getObjectAtIndex(1);
     _batchNode->reorderChild(system, system->getZOrder() - 1);     
 }
 
