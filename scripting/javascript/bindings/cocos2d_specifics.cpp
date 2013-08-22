@@ -799,6 +799,7 @@ void JSCallFuncWrapper::setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *t
     Array *arr;
     if(!t) {
         arr = new Array();
+        arr->init();
     } else {
         arr = t->obj;
     }
@@ -909,6 +910,7 @@ void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *tar
         Array* targetArray = getTargetForSchedule(sched);
         if (NULL == targetArray) {
             targetArray = new Array();
+            targetArray->init();
             schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
             assert(p);
             p->jsfuncObj = jsfunc;
@@ -935,6 +937,7 @@ void JSScheduleWrapper::setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWr
     Array* targetArray = getTargetForJSObject(jsTargetObj);
     if (NULL == targetArray) {
         targetArray = new Array();
+        targetArray->init();
         schedTarget_proxy_t *p = (schedTarget_proxy_t *)malloc(sizeof(schedTarget_proxy_t));
         assert(p);
         p->jsTargetObj = jsTargetObj;
