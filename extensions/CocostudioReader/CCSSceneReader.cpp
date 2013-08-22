@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCJsonReader.h"
+#include "CCSSceneReader.h"
 #include "cocos-ext.h"
 #include "DictionaryHelper.h"
 #include "CCArmature/CCArmature.h"
@@ -32,17 +32,17 @@
 
 NS_CC_EXT_BEGIN
 
-    CCJsonReader* CCJsonReader::s_sharedJsonReader = NULL;
+    CCSSceneReader* CCSSceneReader::s_sharedReader = NULL;
 
-	CCJsonReader::CCJsonReader()
+	CCSSceneReader::CCSSceneReader()
 	{
 	}
 
-	CCJsonReader::~CCJsonReader()
+	CCSSceneReader::~CCSSceneReader()
 	{
 	}
 
-    cocos2d::CCNode* CCJsonReader::createNodeWithJsonFile(const char* pszFileName)
+    cocos2d::CCNode* CCSSceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
         unsigned long size = 0;
         const char* pData = 0;
@@ -59,7 +59,7 @@ NS_CC_EXT_BEGIN
         return pNode;
 	}
 
-	cocos2d::CCNode* CCJsonReader::createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent)
+	cocos2d::CCNode* CCSSceneReader::createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent)
 	{
 		 const char *pVersion = inputFiles->getItemStringValue("Version");
 		 CCNode* gb = NULL;
@@ -74,7 +74,7 @@ NS_CC_EXT_BEGIN
 		 return gb;
 	}
 
-    CCNode* CCJsonReader::createObject0241(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
+    CCNode* CCSSceneReader::createObject0241(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
     {
         const char* className = inputFiles->getItemStringValue("classname"); 
 
@@ -256,7 +256,7 @@ NS_CC_EXT_BEGIN
         return NULL;
     }
 
-	CCNode* CCJsonReader::createObject0250(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
+	CCNode* CCSSceneReader::createObject0250(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
     {
         const char* className = inputFiles->getItemStringValue("classname"); 
 
@@ -447,6 +447,12 @@ NS_CC_EXT_BEGIN
                     }
                     gb->addComponent(pRender);
 
+					const char *actionName = subDict->getItemStringValue("selectedactionname");
+					if (actionName != NULL && pAr->getAnimation() != NULL)
+					{
+						pAr->getAnimation()->play(actionName);
+					}
+					
                     CC_SAFE_DELETE(jsonDict);
 					CC_SAFE_DELETE(subData);
 					CC_SAFE_DELETE_ARRAY(des);
@@ -495,6 +501,7 @@ NS_CC_EXT_BEGIN
 					bool bLoop = subDict->getItemIntValue("loop", 0);
 					pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
+					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
                 }
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
@@ -531,7 +538,7 @@ NS_CC_EXT_BEGIN
     }
 
 
-    void CCJsonReader::setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict)
+    void CCSSceneReader::setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict)
     {
 		int x = dict->getItemIntValue("x", 0);
 		int y = dict->getItemIntValue("y", 0);
@@ -555,18 +562,18 @@ NS_CC_EXT_BEGIN
         node->setRotation(fRotationZ);
     }
 
-    CCJsonReader* CCJsonReader::sharedJsonReader()
+    CCSSceneReader* CCSSceneReader::sharedSceneReader()
     {
-        if (s_sharedJsonReader == NULL)
+        if (s_sharedReader == NULL)
         {
-            s_sharedJsonReader = new CCJsonReader();
+            s_sharedReader = new CCSSceneReader();
         }
-        return s_sharedJsonReader;
+        return s_sharedReader;
     }
 
-    void CCJsonReader::purgeJsonReader()
+    void CCSSceneReader::purgeSceneReader()
     {
-        CC_SAFE_DELETE(s_sharedJsonReader);
+        CC_SAFE_DELETE(s_sharedReader);
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
     }
 

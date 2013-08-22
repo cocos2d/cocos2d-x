@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCJSONREADER_H__
-#define __CCJSONREADER_H__
+#ifndef __CCSSCENEREADER_H__
+#define __CCSSCENEREADER_H__
 
 #include "CCArmature/external_tool/Json/CSContentJsonDictionary.h"
 #include "cocos2d.h"
@@ -31,17 +31,17 @@
 
 NS_CC_EXT_BEGIN
 
-	class CCJsonReader
+	class CCSSceneReader
 	{
 		public:
-			CCJsonReader(void);
-			~CCJsonReader(void);
+			CCSSceneReader(void);
+			~CCSSceneReader(void);
 
         public:
-            static CCJsonReader* sharedJsonReader();
-			static void purgeJsonReader();
+            static CCSSceneReader* sharedSceneReader();
+			static void purgeSceneReader();
     
-            cocos2d::CCNode* createNodeWithJsonFile(const char *pszFileName);
+            cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
 
 			// all version
 			cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
@@ -52,7 +52,7 @@ NS_CC_EXT_BEGIN
 
             void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
 		public:
-            static CCJsonReader* s_sharedJsonReader;
+            static CCSSceneReader* s_sharedReader;
 	};
 
 

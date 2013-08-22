@@ -381,9 +381,6 @@
     <ClCompile Include="..\CCArmature\animation\CCArmatureAnimation.cpp">
       <Filter>CCArmature\animation</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocostudioReader\CCJsonReader.cpp">
-      <Filter>CocostudioReader</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocostudioReader\DictionaryHelper.cpp">
       <Filter>CocostudioReader</Filter>
     </ClCompile>
@@ -497,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollView.cpp">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocostudioReader\CCSSceneReader.cpp">
+      <Filter>CocostudioReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -766,9 +766,6 @@
     <ClInclude Include="..\CCArmature\animation\CCArmatureAnimation.h">
       <Filter>CCArmature\animation</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocostudioReader\CCJsonReader.h">
-      <Filter>CocostudioReader</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocostudioReader\DictionaryHelper.h">
       <Filter>CocostudioReader</Filter>
     </ClInclude>
@@ -885,6 +882,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollView.h">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocostudioReader\CCSSceneReader.h">
+      <Filter>CocostudioReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

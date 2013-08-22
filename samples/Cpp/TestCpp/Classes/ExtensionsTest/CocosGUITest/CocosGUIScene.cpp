@@ -23,7 +23,7 @@ void CocosGUITestScene::runThisTest()
     ul->scheduleUpdate();
     this->addChild(ul);
     
-    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/1_2/1_2.json");
+    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/Login_1/Login_1.json");
     ul->addWidget(p);
     
 //    UIPanel * p = (UIPanel*)CCUIHELPER->createWidgetFromJsonFile("cocosgui/CocoGUISample.json");
