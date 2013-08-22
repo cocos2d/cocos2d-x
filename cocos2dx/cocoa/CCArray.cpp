@@ -30,6 +30,12 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 
+#if CC_USE_ARRAY_VECTOR
+
+//  ----------------------------------------------------------------------------------
+// std::vector implementation
+//  ----------------------------------------------------------------------------------
+
 Array::Array()
 : data(NULL)
 {
@@ -44,60 +50,60 @@ Array::Array(unsigned int capacity)
 
 Array* Array::create()
 {
-    Array* pArray = new Array();
+    Array* array = new Array();
 
-    if (pArray && pArray->init())
+    if (array && array->init())
     {
-        pArray->autorelease();
+        array->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pArray);
+        CC_SAFE_DELETE(array);
     }
     
-    return pArray;
+    return array;
 }
 
-Array* Array::createWithObject(Object* pObject)
+Array* Array::createWithObject(Object* object)
 {
-    Array* pArray = new Array();
+    Array* array = new Array();
 
-    if (pArray && pArray->initWithObject(pObject))
+    if (array && array->initWithObject(object))
     {
-        pArray->autorelease();
+        array->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pArray);
+        CC_SAFE_DELETE(array);
     }
 
-    return pArray;
+    return array;
 }
 
-Array* Array::create(Object* pObject, ...)
+Array* Array::create(Object* object, ...)
 {
     va_list args;
-    va_start(args,pObject);
+    va_start(args,object);
 
-    Array* pArray = create();
-    if (pArray && pObject)
+    Array* array = create();
+    if (array && object)
     {
-        pArray->addObject(pObject);
+        array->addObject(object);
         Object *i = va_arg(args, Object*);
         while(i) 
         {
-            pArray->addObject(i);
+            array->addObject(i);
             i = va_arg(args, Object*);
         }
     }
     else
     {
-        CC_SAFE_DELETE(pArray);
+        CC_SAFE_DELETE(array);
     }
 
     va_end(args);
 
-    return pArray;
+    return array;
 }
 
 Array* Array::createWithArray(Array* otherArray)
@@ -107,23 +113,23 @@ Array* Array::createWithArray(Array* otherArray)
 
 Array* Array::createWithCapacity(unsigned int capacity)
 {
-    Array* pArray = new Array();
+    Array* array = new Array();
     
-    if (pArray && pArray->initWithCapacity(capacity))
+    if (array && array->initWithCapacity(capacity))
     {
-        pArray->autorelease();
+        array->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pArray);
+        CC_SAFE_DELETE(array);
     }
     
-    return pArray;
+    return array;
 }
 
-Array* Array::createWithContentsOfFile(const char* pFileName)
+Array* Array::createWithContentsOfFile(const char* fileName)
 {
-    Array* pRet = Array::createWithContentsOfFileThreadSafe(pFileName);
+    Array* pRet = Array::createWithContentsOfFileThreadSafe(fileName);
     if (pRet != NULL)
     {
         pRet->autorelease();
@@ -131,114 +137,91 @@ Array* Array::createWithContentsOfFile(const char* pFileName)
     return pRet;
 }
 
-Array* Array::createWithContentsOfFileThreadSafe(const char* pFileName)
+Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 {
-    return FileUtils::getInstance()->createArrayWithContentsOfFile(pFileName);
+    return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
 }
 
 bool Array::init()
 {
-    return initWithCapacity(1);
+    return initWithCapacity(10);
 }
 
-bool Array::initWithObject(Object* pObject)
+bool Array::initWithObject(Object* object)
 {
-    ccArrayFree(data);
-    bool bRet = initWithCapacity(1);
-    if (bRet)
+    bool ret = initWithCapacity(1);
+    if (ret)
     {
-        addObject(pObject);
+        addObject(object);
     }
-    return bRet;
+    return ret;
 }
 
 /** Initializes an array with some objects */
-bool Array::initWithObjects(Object* pObject, ...)
+bool Array::initWithObjects(Object* object, ...)
 {
-    ccArrayFree(data);
-    bool bRet = false;
+    bool ret = false;
     do 
     {
-        CC_BREAK_IF(pObject == NULL);
+        CC_BREAK_IF(object == NULL);
 
         va_list args;
-        va_start(args, pObject);
+        va_start(args, object);
 
-        if (pObject)
+        if (object)
         {
-            this->addObject(pObject);
+            this->addObject(object);
             Object* i = va_arg(args, Object*);
             while(i) 
             {
                 this->addObject(i);
                 i = va_arg(args, Object*);
             }
-            bRet = true;
+            ret = true;
         }
         va_end(args);
 
     } while (false);
 
-    return bRet;
+    return ret;
 }
 
 bool Array::initWithCapacity(unsigned int capacity)
 {
-    ccArrayFree(data);
-    data = ccArrayNew(capacity);
+    data.reserve(capacity);
     return true;
 }
 
 bool Array::initWithArray(Array* otherArray)
 {
-    ccArrayFree(data);
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(! initWithCapacity(otherArray->data->num));
+    data = otherArray->data;
+    return true;
+}
 
-        addObjectsFromArray(otherArray);
-        bRet = true;
-    } while (0);
+int Array::getIndexOfObject(Object* object) const
+{
+//    auto it = std::find(data.begin(), data.end(), object );
+//    if( it == data.end() )
+//        return -1;
+//    return it - std::begin(data);
+    auto it = data.begin();
+
+    for (int i = 0; it != data.end(); ++it, ++i)
+    {
+        if (it->get() == object)
+        {
+            return i;
+        }
+    }
     
-    return bRet;
+    return -1;
 }
 
-unsigned int Array::count() const
+Object* Array::getRandomObject()
 {
-    return data->num;
-}
-
-unsigned int Array::capacity() const
-{
-    return data->max;
-}
-
-unsigned int Array::indexOfObject(Object* object) const
-{
-    return ccArrayGetIndexOfObject(data, object);
-}
-
-Object* Array::objectAtIndex(unsigned int index)
-{
-    CCASSERT(index < data->num, "index out of range in objectAtIndex()");
-
-    return data->arr[index];
-}
-
-Object* Array::lastObject()
-{
-    if( data->num > 0 )
-        return data->arr[data->num-1];
-
-    return NULL;
-}
-
-Object* Array::randomObject()
-{
-    if (data->num==0)
+    if (data.size()==0)
     {
-        return NULL;
+        return nullptr;
     }
 
     float r = CCRANDOM_0_1();
@@ -247,7 +230,376 @@ Object* Array::randomObject()
     {
         r = 0;
     }
+
+    r *= data.size();
     
+    return data[r].get();
+}
+
+bool Array::containsObject(Object* object) const
+{
+    int i = this->getIndexOfObject(object);
+    return (i >=0 );
+}
+
+bool Array::isEqualToArray(Array* otherArray)
+{
+    for (unsigned int i = 0; i< this->count(); i++)
+    {
+        if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Array::addObject(Object* object)
+{
+    data.push_back( RCPtr<Object>(object) );
+}
+
+void Array::addObjectsFromArray(Array* otherArray)
+{
+    data.insert(data.end(), otherArray->data.begin(), otherArray->data.end());
+}
+
+void Array::insertObject(Object* object, int index)
+{
+    data.insert( std::begin(data) + index, RCPtr<Object>(object) );
+}
+
+void Array::setObject(Object* object, int index)
+{
+    data[index] = RCPtr<Object>(object);
+}
+
+void Array::removeLastObject(bool releaseObj)
+{
+    CCASSERT(data.size(), "no objects added");
+    data.pop_back();
+}
+
+void Array::removeObject(Object* object, bool releaseObj /* ignored */)
+{
+//    auto begin = data.begin();
+//    auto end = data.end();
+//
+//    auto it = std::find( begin, end, object);
+//    if( it != end ) {
+//        data.erase(it);
+//    }
+    
+    auto it = data.begin();
+    for (; it != data.end(); ++it)
+    {
+        if (it->get() == object)
+        {
+            data.erase(it);
+            break;
+        }
+    }
+}
+
+void Array::removeObjectAtIndex(unsigned int index, bool releaseObj /* ignored */)
+{
+    auto obj = data[index];
+    data.erase( data.begin() + index );
+}
+
+void Array::removeObjectsInArray(Array* otherArray)
+{
+    CCASSERT(false, "not implemented");
+}
+
+void Array::removeAllObjects()
+{
+    data.erase(std::begin(data), std::end(data));
+}
+
+void Array::fastRemoveObjectAtIndex(unsigned int index)
+{
+    removeObjectAtIndex(index);
+}
+
+void Array::fastRemoveObject(Object* object)
+{
+    removeObject(object);
+}
+
+void Array::exchangeObject(Object* object1, Object* object2)
+{
+    int idx1 = getIndexOfObject(object1);
+    int idx2 = getIndexOfObject(object2);
+
+    CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
+
+    std::swap( data[idx1], data[idx2] );
+}
+
+void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
+{
+    std::swap( data[index1], data[index2] );
+}
+
+void Array::replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject /* ignored */)
+{
+//    auto obj = data[index];
+    data[index] = object;
+}
+
+void Array::reverseObjects()
+{
+    std::reverse( std::begin(data), std::end(data) );
+}
+
+void Array::reduceMemoryFootprint()
+{
+    // N/A
+}
+
+Array::~Array()
+{
+}
+
+Array* Array::clone() const
+{
+    Array* ret = new Array();
+    ret->autorelease();
+    ret->initWithCapacity(this->data.size() > 0 ? this->data.size() : 1);
+
+    Object* obj = NULL;
+    Object* tmpObj = NULL;
+    Clonable* clonable = NULL;
+    CCARRAY_FOREACH(this, obj)
+    {
+        clonable = dynamic_cast<Clonable*>(obj);
+        if (clonable)
+        {
+            tmpObj = dynamic_cast<Object*>(clonable->clone());
+            if (tmpObj)
+            {
+                ret->addObject(tmpObj);
+            }
+        }
+        else
+        {
+            CCLOGWARN("%s isn't clonable.", typeid(*obj).name());
+        }
+    }
+    return ret;
+}
+
+void Array::acceptVisitor(DataVisitor &visitor)
+{
+    visitor.visit(this);
+}
+
+// ----------------------------------------------------------------------------------
+// ccArray implementation
+// ----------------------------------------------------------------------------------
+
+#else
+
+Array::Array()
+: data(NULL)
+{
+//    init();
+}
+
+Array::Array(unsigned int capacity)
+: data(NULL)
+{
+    initWithCapacity(capacity);
+}
+
+Array* Array::create()
+{
+    Array* array = new Array();
+
+    if (array && array->init())
+    {
+        array->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(array);
+    }
+
+    return array;
+}
+
+Array* Array::createWithObject(Object* object)
+{
+    Array* array = new Array();
+
+    if (array && array->initWithObject(object))
+    {
+        array->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(array);
+    }
+
+    return array;
+}
+
+Array* Array::create(Object* object, ...)
+{
+    va_list args;
+    va_start(args,object);
+
+    Array* array = create();
+    if (array && object)
+    {
+        array->addObject(object);
+        Object *i = va_arg(args, Object*);
+        while(i)
+        {
+            array->addObject(i);
+            i = va_arg(args, Object*);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(array);
+    }
+
+    va_end(args);
+
+    return array;
+}
+
+Array* Array::createWithArray(Array* otherArray)
+{
+    return otherArray->clone();
+}
+
+Array* Array::createWithCapacity(unsigned int capacity)
+{
+    Array* array = new Array();
+
+    if (array && array->initWithCapacity(capacity))
+    {
+        array->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(array);
+    }
+
+    return array;
+}
+
+Array* Array::createWithContentsOfFile(const char* fileName)
+{
+    Array* pRet = Array::createWithContentsOfFileThreadSafe(fileName);
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
+}
+
+Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
+{
+    return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
+}
+
+bool Array::init()
+{
+    CCASSERT(!data, "Array cannot be re-initialized");
+
+    return initWithCapacity(1);
+}
+
+bool Array::initWithObject(Object* object)
+{
+    CCASSERT(!data, "Array cannot be re-initialized");
+
+    bool ret = initWithCapacity(1);
+    if (ret)
+    {
+        addObject(object);
+    }
+    return ret;
+}
+
+/** Initializes an array with some objects */
+bool Array::initWithObjects(Object* object, ...)
+{
+    CCASSERT(!data, "Array cannot be re-initialized");
+
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(object == NULL);
+
+        va_list args;
+        va_start(args, object);
+
+        if (object)
+        {
+            this->addObject(object);
+            Object* i = va_arg(args, Object*);
+            while(i)
+            {
+                this->addObject(i);
+                i = va_arg(args, Object*);
+            }
+            ret = true;
+        }
+        va_end(args);
+
+    } while (false);
+
+    return ret;
+}
+
+bool Array::initWithCapacity(unsigned int capacity)
+{
+    CCASSERT(!data, "Array cannot be re-initialized");
+
+    data = ccArrayNew(capacity);
+    return true;
+}
+
+bool Array::initWithArray(Array* otherArray)
+{
+    CCASSERT(!data, "Array cannot be re-initialized");
+
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(! initWithCapacity(otherArray->data->num));
+
+        addObjectsFromArray(otherArray);
+        ret = true;
+    } while (0);
+
+    return ret;
+}
+
+int Array::getIndexOfObject(Object* object) const
+{
+    return ccArrayGetIndexOfObject(data, object);
+}
+
+Object* Array::getRandomObject()
+{
+    if (data->num==0)
+    {
+        return NULL;
+    }
+
+    float r = CCRANDOM_0_1();
+
+    if (r == 1) // to prevent from accessing data-arr[data->num], out of range.
+    {
+        r = 0;
+    }
+
     return data->arr[(int)(data->num * r)];
 }
 
@@ -260,7 +612,7 @@ bool Array::isEqualToArray(Array* otherArray)
 {
     for (unsigned int i = 0; i< this->count(); i++)
     {
-        if (!this->objectAtIndex(i)->isEqual(otherArray->objectAtIndex(i)))
+        if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
             return false;
         }
@@ -268,7 +620,7 @@ bool Array::isEqualToArray(Array* otherArray)
     return true;
 }
 
-void Array::addObject(Object* object)
+void Array::addObject(Object* object) 
 {
     ccArrayAppendObjectWithResize(data, object);
 }
@@ -278,25 +630,36 @@ void Array::addObjectsFromArray(Array* otherArray)
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
-void Array::insertObject(Object* object, unsigned int index)
+void Array::insertObject(Object* object, int index)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
-void Array::removeLastObject(bool bReleaseObj)
+void Array::setObject(Object* object, int index)
+{
+    CCASSERT(index>=0 && index < count(), "Invalid index");
+    
+    if( object != data->arr[index] ) {
+        data->arr[index]->release();
+        data->arr[index] = object;
+        object->retain();
+    }
+}
+
+void Array::removeLastObject(bool releaseObj)
 {
     CCASSERT(data->num, "no objects added");
-    ccArrayRemoveObjectAtIndex(data, data->num-1, bReleaseObj);
+    ccArrayRemoveObjectAtIndex(data, data->num-1, releaseObj);
 }
 
-void Array::removeObject(Object* object, bool bReleaseObj/* = true*/)
+void Array::removeObject(Object* object, bool releaseObj/* = true*/)
 {
-    ccArrayRemoveObject(data, object, bReleaseObj);
+    ccArrayRemoveObject(data, object, releaseObj);
 }
 
-void Array::removeObjectAtIndex(unsigned int index, bool bReleaseObj)
+void Array::removeObjectAtIndex(unsigned int index, bool releaseObj)
 {
-    ccArrayRemoveObjectAtIndex(data, index, bReleaseObj);
+    ccArrayRemoveObjectAtIndex(data, index, releaseObj);
 }
 
 void Array::removeObjectsInArray(Array* otherArray)
@@ -341,9 +704,9 @@ void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::replaceObjectAtIndex(unsigned int index, Object* pObject, bool bReleaseObject/* = true*/)
+void Array::replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject/* = true*/)
 {
-    ccArrayInsertObjectAtIndex(data, pObject, index);
+    ccArrayInsertObjectAtIndex(data, object, index);
     ccArrayRemoveObjectAtIndex(data, index+1);
 }
 
@@ -352,7 +715,7 @@ void Array::reverseObjects()
     if (data->num > 1)
     {
         // floorf(), since in the case of an even number, the number of swaps stays the same
-        int count = (int) floorf(data->num/2.f); 
+        int count = (int) floorf(data->num/2.f);
         unsigned int maxIndex = data->num - 1;
 
         for (int i = 0; i < count ; i++)
@@ -408,26 +771,14 @@ void Array::acceptVisitor(DataVisitor &visitor)
 
 Array::iterator Array::begin()
 {
-    if (data->num > 0)
-    {
-        return Array::ArrayIterator(data->arr[0], this);
-    }
-    else
-    {
-        return Array::ArrayIterator(nullptr, nullptr);;
-    }
+    return Array::ArrayIterator(0, this);
 }
 
 Array::iterator Array::end()
 {
-    if (data->num > 0)
-    {
-        return Array::ArrayIterator(data->arr[data->num], this);
-    }
-    else
-    {
-        return Array::ArrayIterator(nullptr, nullptr);
-    }
+    return Array::ArrayIterator(count(), this);
 }
+
+#endif // uses ccArray
 
 NS_CC_END
