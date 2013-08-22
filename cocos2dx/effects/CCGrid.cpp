@@ -148,7 +148,7 @@ bool GridBase::initWithSize(const Size& gridSize)
 
 GridBase::~GridBase(void)
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO("deallocing GridBase: %p", this);
 
 //TODO: ? why 2.0 comments this line        setActive(false);
     CC_SAFE_RELEASE(_texture);

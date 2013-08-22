@@ -93,7 +93,7 @@ TMXTilesetInfo::TMXTilesetInfo()
 
 TMXTilesetInfo::~TMXTilesetInfo()
 {
-    CCLOGINFO("cocos2d: deallocing: %p", this);
+    CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
 Rect TMXTilesetInfo::rectForGID(unsigned int gid)
