@@ -5,9 +5,6 @@ LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
-dirs := $(shell find $(LOCAL_PATH) -type d -print)
-find_files = $(subst $(LOCAL_PATH)/,,$(wildcard $(dir)/*.cpp)) 
-
 LOCAL_SRC_FILES :=%s
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

@@ -6,9 +6,6 @@ LOCAL_MODULE := cocos_testcpp_common
 
 LOCAL_MODULE_FILENAME := libtestcppcommon
 
-dirs := $(shell find $(LOCAL_PATH)/Classes -type d -print)
-find_files = $(subst $(LOCAL_PATH)/,,$(wildcard $(dir)/*.cpp)) 
-
 LOCAL_SRC_FILES := %s
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
