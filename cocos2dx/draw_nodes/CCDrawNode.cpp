@@ -24,6 +24,8 @@
 #include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 #include "CCGL.h"
+#include "support/CCNotificationCenter.h"
+#include "CCEventType.h"
 
 NS_CC_BEGIN
 
@@ -116,8 +118,13 @@ CCDrawNode::~CCDrawNode()
     
 #if CC_TEXTURE_ATLAS_USE_VAO      
     glDeleteVertexArrays(1, &m_uVao);
+    ccGLBindVAO(0);
     m_uVao = 0;
 #endif
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+#endif    
 }
 
 CCDrawNode* CCDrawNode::create()
@@ -180,7 +187,15 @@ bool CCDrawNode::init()
     CHECK_GL_ERROR_DEBUG();
     
     m_bDirty = true;
-    
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Need to listen the event only when not use batchnode, because it will use VBO
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+            callfuncO_selector(CCDrawNode::listenBackToForeground),
+            EVENT_COME_TO_FOREGROUND,
+            NULL);
+#endif
+
     return true;
 }
 
@@ -216,10 +231,8 @@ void CCDrawNode::render()
 
 void CCDrawNode::draw()
 {
+    CC_NODE_DRAW_SETUP();
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
     
     render();
 }
@@ -438,6 +451,13 @@ ccBlendFunc CCDrawNode::getBlendFunc() const
 void CCDrawNode::setBlendFunc(const ccBlendFunc &blendFunc)
 {
     m_sBlendFunc = blendFunc;
+}
+
+/** listen the event that coming to foreground on Android
+ */
+void CCDrawNode::listenBackToForeground(CCObject *obj)
+{
+    init();
 }
 
 NS_CC_END
