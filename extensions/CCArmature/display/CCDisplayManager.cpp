@@ -210,7 +210,7 @@ DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay()
 
 DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index)
 {
-    return (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
+    return static_cast<DecorativeDisplay *>( _decoDisplayList->getObjectAtIndex(index) );
 }
 
 void DisplayManager::initDisplayList(BoneData *boneData)
@@ -222,7 +222,7 @@ void DisplayManager::initDisplayList(BoneData *boneData)
     CS_RETURN_IF(!boneData);
 
     Object *object = NULL;
-    Array *displayDataList = &boneData->displayDataList;
+    Array *displayDataList = boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {
         DisplayData *displayData = static_cast<DisplayData *>(object);

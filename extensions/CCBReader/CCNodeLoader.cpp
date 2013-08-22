@@ -11,6 +11,7 @@ NS_CC_EXT_BEGIN
 NodeLoader::NodeLoader()
 {
     _customProperties = new Dictionary();
+    _customProperties->init();
 }
 
 NodeLoader::~NodeLoader()

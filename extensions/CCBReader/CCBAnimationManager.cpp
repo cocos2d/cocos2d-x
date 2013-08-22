@@ -37,7 +37,9 @@ bool CCBAnimationManager::init()
     _sequences = new Array();
     _sequences->init();
     _nodeSequences = new Dictionary();
+    _nodeSequences->init();
     _baseValues = new Dictionary();
+    _baseValues->init();
     
     _documentOutletNames = new Array();
     _documentOutletNames->init();
@@ -58,6 +60,7 @@ bool CCBAnimationManager::init()
     _keyframeCallbacks->init();
     
     _keyframeCallFuncs = new Dictionary();
+    _keyframeCallFuncs->init();
 
     _target = NULL;
     _animationCompleteCallbackFunc = NULL;
