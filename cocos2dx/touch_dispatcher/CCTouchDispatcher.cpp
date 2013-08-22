@@ -24,6 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTouchDispatcher.h"
+
+#include <algorithm>
 #include "CCTouchHandler.h"
 #include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
@@ -31,14 +33,13 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
-#include <algorithm>
 
 NS_CC_BEGIN
 
 /**
  * Used for sort
  */
-#if 0
+#if CC_USE_ARRAY_VECTOR
 static int less(const RCPtr<Object>& p1, const RCPtr<Object>& p2)
 {
     Object *o1, *o2;
@@ -306,8 +307,8 @@ TouchHandler* TouchDispatcher::findHandler(Array* pArray, TouchDelegate *pDelega
 
 void TouchDispatcher::rearrangeHandlers(Array *array)
 {
-    std::sort(array->data->arr, array->data->arr + array->data->num, less);
-//    std::sort( std::begin(*array), std::end(*array), less);
+//    std::sort(array->data->arr, array->data->arr + array->data->num, less);
+    std::sort( std::begin(*array), std::end(*array), less);
 }
 
 void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)

@@ -36,6 +36,7 @@ AutoreleasePool::AutoreleasePool()
 
 AutoreleasePool::~AutoreleasePool()
 {
+    CCLOGINFO("deallocing AutoreleasePool: %p", this);
     CC_SAFE_DELETE(_managedObjectArray);
 }
 
@@ -113,6 +114,7 @@ PoolManager::PoolManager()
 
 PoolManager::~PoolManager()
 {
+    CCLOGINFO("deallocing PoolManager: %p", this);
     finalize();
  
      // we only release the last autorelease pool here 
@@ -165,10 +167,10 @@ void PoolManager::pop()
 
 //         if(nCount > 1)
 //         {
-//             _curReleasePool = _releasePoolStack->objectAtIndex(nCount - 2);
+//             _curReleasePool = _releasePoolStack->getObjectAtIndex(nCount - 2);
 //             return;
 //         }
-        _curReleasePool = (AutoreleasePool*)_releasePoolStack->objectAtIndex(nCount - 2);
+        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(nCount - 2);
     }
 
     /*_curReleasePool = NULL;*/
