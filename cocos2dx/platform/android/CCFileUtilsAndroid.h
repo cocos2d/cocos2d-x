@@ -27,7 +27,6 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include <string>
 #include <vector>
 #include "jni.h"
