@@ -34,25 +34,31 @@ CCBAnimationManager::CCBAnimationManager()
 
 bool CCBAnimationManager::init()
 {
-    _sequences = Array::createWithCapacity(15);
-    _sequences->retain();
+    _sequences = new Array();
+    _sequences->init();
     _nodeSequences = new Dictionary();
     _nodeSequences->init();
     _baseValues = new Dictionary();
     _baseValues->init();
     
-    _documentOutletNames = Array::createWithCapacity(5);
-    _documentOutletNames->retain();
-    _documentOutletNodes = Array::createWithCapacity(5);
-    _documentOutletNodes->retain();
-    _documentCallbackNames = Array::createWithCapacity(5);
-    _documentCallbackNames->retain();
-    _documentCallbackNodes = Array::createWithCapacity(5);
-    _documentCallbackNodes->retain();
-    _documentCallbackControlEvents = Array::createWithCapacity(5);
-    _documentCallbackControlEvents->retain();
-    _keyframeCallbacks = Array::createWithCapacity(5);
-    _keyframeCallbacks->retain();
+    _documentOutletNames = new Array();
+    _documentOutletNames->init();
+    
+    _documentOutletNodes = new Array();
+    _documentOutletNodes->init();
+    
+    _documentCallbackNames = new Array();
+    _documentCallbackNames->init();
+    
+    _documentCallbackNodes = new Array();
+    _documentCallbackNodes->init();
+    
+    _documentCallbackControlEvents = new Array();
+    _documentCallbackControlEvents->init();
+    
+    _keyframeCallbacks = new Array();
+    _keyframeCallbacks->init();
+    
     _keyframeCallFuncs = new Dictionary();
     _keyframeCallFuncs->init();
 

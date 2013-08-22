@@ -341,12 +341,12 @@ Array* FileUtilsMac::createArrayWithContentsOfFile(const std::string& filename)
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* array = [NSArray arrayWithContentsOfFile:pPath];
     
-    Array* pRet = Array::createWithCapacity( [array count] );
+    Array* ret = Array::createWithCapacity( [array count] );
     for (id value in array) {
-        addItemToArray(value, pRet);
+        addItemToArray(value, ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 
