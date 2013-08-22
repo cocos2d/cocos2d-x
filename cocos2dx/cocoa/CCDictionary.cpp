@@ -369,7 +369,6 @@ Dictionary* Dictionary::create()
 
 bool Dictionary::init()
 {
-    retain();
     return true;
 }
 
@@ -390,9 +389,7 @@ void Dictionary::acceptVisitor(DataVisitor &visitor)
 
 Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 {
-    Dictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
-    pRet->autorelease();
-    return pRet;
+    return createWithContentsOfFileThreadSafe(pFileName);
 }
 
 bool Dictionary::writeToFile(const char *fullPath)
