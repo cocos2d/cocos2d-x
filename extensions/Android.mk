@@ -137,7 +137,7 @@ Components/CCComAudio.cpp \
 Components/CCComController.cpp \
 Components/CCComRender.cpp \
 Components/CCInputDelegate.cpp \
-CocostudioReader/CCJsonReader.cpp \
+CocostudioReader/CCSSceneReader.cpp \
 CocostudioReader/DictionaryHelper.cpp \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static

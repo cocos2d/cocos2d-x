@@ -144,7 +144,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoGUILIB/UIWidgets/ScrollWidget/UIScrollView.cpp \
 ../CocoGUILIB/UIWidgets/ScrollWidget/UIPageView.cpp \
 ../CocoGUILIB/UIWidgets/ScrollWidget/UIListView.cpp \
-../CocostudioReader/CCJsonReader.cpp \
+../CocostudioReader/CCSSceneReader.cpp \
 ../CocostudioReader/DictionaryHelper.cpp 
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk

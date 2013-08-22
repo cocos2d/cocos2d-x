@@ -51,7 +51,7 @@ void UIScene::toExtensionsMainLayer(CCObject* sender)
     UISceneManager::purgeUISceneManager();
     cocos2d::extension::UIActionManager::purgeUIActionManager();
     cocos2d::extension::UIHelper::purgeUIHelper();
-    cocos2d::extension::CCJsonReader::purgeJsonReader();
+    cocos2d::extension::CCSSceneReader::purgeSceneReader();
     
     ExtensionsTestScene* pScene = new ExtensionsTestScene();
     pScene->runThisTest();
