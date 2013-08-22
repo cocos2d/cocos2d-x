@@ -445,7 +445,7 @@ void AddSpriteSheet::update(float dt)
 
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), zs[i], kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), zs[i], kTagBase+i);
         }
         
         batchNode->sortAllChildren();
@@ -503,7 +503,7 @@ void RemoveSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         // remove them
@@ -559,7 +559,7 @@ void ReorderSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         batchNode->sortAllChildren();
@@ -569,7 +569,7 @@ void ReorderSpriteSheet::update(float dt)
 
         for( int i=0;i <  totalToAdd;i++)
         {
-            auto node = (Node*) (batchNode->getChildren()->objectAtIndex(i));
+            auto node = (Node*) (batchNode->getChildren()->getObjectAtIndex(i));
             batchNode->reorderChild(node, CCRANDOM_MINUS1_1() * 50);
         }
         

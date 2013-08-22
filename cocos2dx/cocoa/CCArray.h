@@ -50,10 +50,10 @@ class RCPtr
 public:
 	//Construct using a C pointer
 	//e.g. RCPtr< T > x = new T();
-	RCPtr(T* ptr = NULL)
+	RCPtr(T* ptr = nullptr)
     : _ptr(ptr)
 	{
-        if(ptr != NULL) {ptr->retain();}
+        if(ptr != nullptr) {ptr->retain();}
 	}
 
 	//Copy constructor
@@ -69,13 +69,13 @@ public:
     : _ptr(ptr._ptr)
 	{
 //        printf("Array: Move Constructor: %p\n", this);
-        ptr._ptr = NULL;
+        ptr._ptr = nullptr;
 	}
 
 	~RCPtr()
 	{
 //        printf("Array: Destructor: %p\n", this);
-        if(_ptr != NULL) {_ptr->release();}
+        if(_ptr != nullptr) {_ptr->release();}
 	}
 
 	//Assign a pointer
@@ -87,8 +87,8 @@ public:
         //The following grab and release operations have to be performed
         //in that order to handle the case where ptr == _ptr
         //(See comment below by David Garlisch)
-        if(ptr != NULL) {ptr->retain();}
-        if(_ptr != NULL) {_ptr->release();}
+        if(ptr != nullptr) {ptr->retain();}
+        if(_ptr != nullptr) {_ptr->release();}
         _ptr = ptr;
         return (*this);
 	}
@@ -113,7 +113,7 @@ public:
     T* operator->() const {return _ptr;}		//x->member
     T &operator*() const {return *_ptr;}		//*x, (*x).member
     explicit operator T*() const {return _ptr;}		//T* y = x;
-    explicit operator bool() const {return _ptr != NULL;}	//if(x) {/*x is not NULL*/}
+    explicit operator bool() const {return _ptr != nullptr;}	//if(x) {/*x is not NULL*/}
     bool operator==(const RCPtr &ptr) {return _ptr == ptr._ptr;}
     bool operator==(const T *ptr) {return _ptr == ptr;}
 
@@ -273,7 +273,8 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count() const {
+    unsigned int count() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
 #else
@@ -281,7 +282,8 @@ public:
 #endif
     }
     /** Returns capacity of the array */
-    unsigned int capacity() const {
+    unsigned int capacity() const
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
 #else
@@ -293,8 +295,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index */
-    Object* getObjectAtIndex(int index) {
-        CCASSERT(index>=0 && index < count(), "index out of range in objectAtIndex()");
+    Object* getObjectAtIndex(int index)
+    {
+        CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
         return data[index].get();
 #else
@@ -303,12 +306,14 @@ public:
     }
     CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
     /** Returns the last element of the array */
-    Object* getLastObject() {
+    Object* getLastObject()
+    {
 #if CC_USE_ARRAY_VECTOR
         return data.back().get();
 #else
-        if( data->num > 0 )
+        if(data->num > 0)
             return data->arr[data->num-1];
+        
         return nullptr;
 #endif
     }
@@ -331,7 +336,8 @@ public:
     /** sets a certain object at a certain index */
     void setObject(Object* object, int index);
     /** sets a certain object at a certain index without retaining. Use it with caution */
-    void fastSetObject(Object* object, int index) {
+    void fastSetObject(Object* object, int index)
+    {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
 #else
@@ -340,12 +346,13 @@ public:
 #endif
     }
 
-    void swap( int indexOne, int indexTwo ) {
+    void swap( int indexOne, int indexTwo )
+    {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
 #if CC_USE_ARRAY_VECTOR
-        std::swap( data[indexOne], data[indexTwo] );
+        std::swap(data[indexOne], data[indexTwo]);
 #else
-        std::swap( data->arr[indexOne], data->arr[indexTwo] );
+        std::swap(data->arr[indexOne], data->arr[indexTwo]);
 #endif
     }
 
@@ -398,7 +405,7 @@ public:
     const_iterator cend() { return data.cend(); }
 
 #else
-    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object>
+    class ArrayIterator : public std::iterator<std::input_iterator_tag, Object*>
     {
     public:
         ArrayIterator(int index, Array *array) : _index(index), _parent(array) {}
@@ -412,13 +419,59 @@ public:
         ArrayIterator operator++(int dummy)
         {
             ArrayIterator tmp(*this);
-            (*this)++;
+            ++_index;
             return tmp;
         }
+        
+        ArrayIterator& operator--()
+        {
+            --_index;
+            return *this;
+        }
+        ArrayIterator operator--(int dummy)
+        {
+            ArrayIterator tmp(*this);
+            --_index;
+            return tmp;
+        }
+        
+        int operator-(const ArrayIterator& rhs) const
+        {
+            return _index - rhs._index;
+        }
+        ArrayIterator operator-(int d)
+        {
+            _index -= d;
+            return *this;
+        }
+        const ArrayIterator& operator-=(int d)
+        {
+            _index -= d;
+            return *this;
+        }
+        
+        ArrayIterator operator+(int d)
+        {
+            _index += d;
+            return *this;
+        }
+        
+        const ArrayIterator& operator+=(int d)
+        {
+            _index += d;
+            return *this;
+        }
+        
+        // add these function to make compiler happy when using std::sort(), it is meaningless
+        bool operator>=(const ArrayIterator& rhs) const { return false; }
+        bool operator<=(const ArrayIterator& rhs) const { return false; }
+        bool operator>(const ArrayIterator& rhs) const { return false; }
+        bool operator<(const ArrayIterator& rhs) const { return false; }
+        
         bool operator==(const ArrayIterator& rhs) { return _index == rhs._index; }
         bool operator!=(const ArrayIterator& rhs) { return _index != rhs._index; }
-        Object* operator*() { return _parent->getObjectAtIndex(_index); }
-        Object* operator->() { return _parent->getObjectAtIndex(_index); }
+        reference operator*() { return _parent->data->arr[_index]; }
+        value_type operator->() { return _parent->data->arr[_index];; }
 
     private:
         int _index;
