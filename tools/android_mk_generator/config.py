@@ -13,4 +13,12 @@
     'pathes' : ("extensions/",),
     'exclude' : ("extensions/proj.win32", "extensions/proj.emscripten", "extensions/proj.ios", "extensions/proj.linux", "extensions/proj.mac", "extensions/proj.nacl", "extensions/proj.qt5", "extensions/proj.tizen")
 },
+{
+    'mkfile' : 'external/Box2D/Android.mk',
+    'pathes' : ("external/Box2D/",),
+},
+{
+    'mkfile' : 'external/chipmunk/Android.mk',
+    'pathes' : ("external/chipmunk/",),
+},
 ]
