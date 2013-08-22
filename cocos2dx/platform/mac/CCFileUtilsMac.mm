@@ -337,15 +337,17 @@ Array* FileUtilsMac::createArrayWithContentsOfFile(const std::string& filename)
     //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
     //    fixing cannot read data using Array::createWithContentsOfFile
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
-    NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSArray* pArray = [NSArray arrayWithContentsOfFile:pPath];
+    NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSArray* array = [NSArray arrayWithContentsOfFile:path];
     
-    Array* pRet = new Array();
-    for (id value in pArray) {
-        addItemToArray(value, pRet);
+    Array* ret = new Array();
+    ret->init();
+    
+    for (id value in array) {
+        addItemToArray(value, ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 
