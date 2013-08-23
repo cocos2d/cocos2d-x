@@ -219,6 +219,7 @@ private:
     typedef std::map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
+    bool _needUnroot;
 };
 
 
