@@ -176,13 +176,13 @@ bool Point::isLineIntersect(const Point& A, const Point& B,
         if (*S == 0 || *T == 0)
         {
             // Lines incident
-            if (C.x != D.x)
+            if (A.x != B.x)
             {
                 isOneDemensionLineIntersect(A.x, B.x, C.x, D.x, S);
             }
             else
             {
-                isOneDemensionLineIntersect(A.x, B.x, C.x, D.x, S);
+                isOneDemensionLineIntersect(A.y, B.y, C.y, D.y, T);
             }
             
             return true;
