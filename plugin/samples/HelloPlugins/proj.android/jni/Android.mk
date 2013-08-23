@@ -31,10 +31,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
     $(LOCAL_PATH)/../../Classes/TestIAPOnline \
     $(LOCAL_PATH)/../../Classes/TestSocial
 
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static \
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static cocos2dxandroid_static \
 PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
 $(call import-module,protocols/android)
+$(call import-module,cocos2dx/platform/android)

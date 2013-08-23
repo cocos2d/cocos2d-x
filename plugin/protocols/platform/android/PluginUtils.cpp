@@ -31,6 +31,22 @@ namespace cocos2d { namespace plugin {
 
 #define JAVAVM    cocos2d::PluginJniHelper::getJavaVM()
 
+void PluginUtils::initPluginWrapper(android_app* app)
+{
+    PluginJniMethodInfo t;
+    if (! PluginJniHelper::getStaticMethodInfo(t
+        , "org/cocos2dx/plugin/PluginWrapper"
+        , "init"
+        , "(Landroid/content/Context;)V"))
+    {
+        outputLog("PluginUtils", "Failed to init context of plugin");
+        return;
+    }
+
+    t.env->CallStaticVoidMethod(t.classID, t.methodID, app->activity->clazz);
+    t.env->DeleteLocalRef(t.classID);
+}
+
 jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* paramMap)
 {
     JNIEnv* env = getEnv();
