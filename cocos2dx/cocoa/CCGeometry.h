@@ -251,6 +251,20 @@ public:
      @param C   the startpoint for the second line L2 = (C - D)
      @param D   the endpoint for the second line L2 = (C - D)
      @param S   the range for a hitpoint in L1 (p = A + S*(B - A))
+     @returns   whether these two lines interects.
+     
+     Note that if two line is intersection, S in line in [0..1]
+     the hit point also is   A + S * (B - A);
+     @since 3.0
+     */
+    static bool isOneDemensionLineIntersect(float A, float B, float C, float D, float *S);
+    
+    /** A general line-line intersection test
+     @param A   the startpoint for the first line L1 = (A - B)
+     @param B   the endpoint for the first line L1 = (A - B)
+     @param C   the startpoint for the second line L2 = (C - D)
+     @param D   the endpoint for the second line L2 = (C - D)
+     @param S   the range for a hitpoint in L1 (p = A + S*(B - A))
      @param T   the range for a hitpoint in L2 (p = C + T*(D - C))
      @returns   whether these two lines interects.
 

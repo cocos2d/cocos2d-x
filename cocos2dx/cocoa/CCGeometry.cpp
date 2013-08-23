@@ -116,6 +116,40 @@ Point Point::rotateByAngle(const Point& pivot, float angle) const
     return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
+bool Point::isOneDemensionLineIntersect(float A, float B, float C, float D, float *S)
+{
+    float ABmin = MIN(A, B);
+    float ABmax = MAX(A, B);
+    float CDmin = MIN(C, D);
+    float CDmax = MAX(C, D);
+    
+    if (ABmax < CDmin || CDmax < ABmin)
+    {
+        // ABmin->ABmax->CDmin->CDmax or CDmin->CDmax->ABmin->ABmax
+        *S = (CDmin - A) / (B - A);
+        return false;
+    }
+    else
+    {
+        if (ABmin >= CDmin && ABmin <= CDmax)
+        {
+            // CDmin->ABmin->CDmax->ABmax or CDmin->ABmin->ABmax->CDmax
+            *S = ABmin==A ? 0 : 1;
+        }
+        else if (ABmax >= CDmin && ABmax <= CDmax)
+        {
+            // ABmin->CDmin->ABmax->CDmax
+            *S = ABmax==A ? 0 : 1;
+        }
+        else
+        {
+            // ABmin->CDmin->CDmax->ABmax
+            *S = (CDmin - A) / (B - A);
+        }
+        return true;
+    }
+}
+
 bool Point::isLineIntersect(const Point& A, const Point& B,
                             const Point& C, const Point& D,
                             float *S, float *T)
@@ -142,6 +176,15 @@ bool Point::isLineIntersect(const Point& A, const Point& B,
         if (*S == 0 || *T == 0)
         {
             // Lines incident
+            if (C.x != D.x)
+            {
+                isOneDemensionLineIntersect(A.x, B.x, C.x, D.x, S);
+            }
+            else
+            {
+                isOneDemensionLineIntersect(A.x, B.x, C.x, D.x, S);
+            }
+            
             return true;
         }
         // Lines parallel and not incident
