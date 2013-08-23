@@ -92,6 +92,16 @@ struct Color4B
     GLubyte g;
     GLubyte b;
     GLubyte a;
+
+    const static Color4B WHITE;
+    const static Color4B YELLOW;
+    const static Color4B BLUE;
+    const static Color4B GREEN;
+    const static Color4B RED;
+    const static Color4B MAGENTA;
+    const static Color4B BLACK;
+    const static Color4B ORANGE;
+    const static Color4B GRAY;
 };
 
 
@@ -135,6 +145,16 @@ struct Color4F
     GLfloat g;
     GLfloat b;
     GLfloat a;
+
+    const static Color4F WHITE;
+    const static Color4F YELLOW;
+    const static Color4F BLUE;
+    const static Color4F GREEN;
+    const static Color4F RED;
+    const static Color4F MAGENTA;
+    const static Color4F BLACK;
+    const static Color4F ORANGE;
+    const static Color4F GRAY;
 };
 
 /** A vertex composed of 2 floats: x, y
