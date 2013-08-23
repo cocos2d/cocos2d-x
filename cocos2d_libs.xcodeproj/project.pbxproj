@@ -242,7 +242,6 @@
 		A03F25B61780BAE8006731B9 /* CCEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E321780BAE4006731B9 /* CCEventType.h */; };
 		A03F25B71780BAE8006731B9 /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E331780BAE4006731B9 /* ccMacros.h */; };
 		A03F25B81780BAE8006731B9 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E341780BAE4006731B9 /* CCProtocols.h */; };
-		A03F25B91780BAE8006731B9 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E351780BAE4006731B9 /* ccTypeInfo.h */; };
 		A03F25BA1780BAE8006731B9 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E361780BAE4006731B9 /* ccTypes.h */; };
 		A03F25BB1780BAE8006731B9 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E371780BAE4006731B9 /* cocos2d.h */; };
 		A03F25BC1780BAE8006731B9 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E3B1780BAE4006731B9 /* aabb.h */; };
@@ -1104,7 +1103,6 @@
 		A07A4CDC1783777C0073F6A7 /* CCEventType.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E321780BAE4006731B9 /* CCEventType.h */; };
 		A07A4CDD1783777C0073F6A7 /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E331780BAE4006731B9 /* ccMacros.h */; };
 		A07A4CDE1783777C0073F6A7 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E341780BAE4006731B9 /* CCProtocols.h */; };
-		A07A4CDF1783777C0073F6A7 /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E351780BAE4006731B9 /* ccTypeInfo.h */; };
 		A07A4CE01783777C0073F6A7 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E361780BAE4006731B9 /* ccTypes.h */; };
 		A07A4CE11783777C0073F6A7 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E371780BAE4006731B9 /* cocos2d.h */; };
 		A07A4CE21783777C0073F6A7 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A03F1E3B1780BAE4006731B9 /* aabb.h */; };
@@ -2255,7 +2253,6 @@
 		A03F1E321780BAE4006731B9 /* CCEventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventType.h; sourceTree = "<group>"; };
 		A03F1E331780BAE4006731B9 /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		A03F1E341780BAE4006731B9 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; };
-		A03F1E351780BAE4006731B9 /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
 		A03F1E361780BAE4006731B9 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		A03F1E371780BAE4006731B9 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		A03F1E3B1780BAE4006731B9 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = aabb.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -3808,7 +3805,6 @@
 				A03F1E321780BAE4006731B9 /* CCEventType.h */,
 				A03F1E331780BAE4006731B9 /* ccMacros.h */,
 				A03F1E341780BAE4006731B9 /* CCProtocols.h */,
-				A03F1E351780BAE4006731B9 /* ccTypeInfo.h */,
 				A03F1E361780BAE4006731B9 /* ccTypes.h */,
 				A03F1E371780BAE4006731B9 /* cocos2d.h */,
 				466BE8EC1793DBE400424245 /* CCDeprecated.h */,
@@ -5785,7 +5781,6 @@
 				A03F25B61780BAE8006731B9 /* CCEventType.h in Headers */,
 				A03F25B71780BAE8006731B9 /* ccMacros.h in Headers */,
 				A03F25B81780BAE8006731B9 /* CCProtocols.h in Headers */,
-				A03F25B91780BAE8006731B9 /* ccTypeInfo.h in Headers */,
 				A03F25BA1780BAE8006731B9 /* ccTypes.h in Headers */,
 				A03F25BB1780BAE8006731B9 /* cocos2d.h in Headers */,
 				A03F25BC1780BAE8006731B9 /* aabb.h in Headers */,
@@ -6448,7 +6443,6 @@
 				A07A4CDC1783777C0073F6A7 /* CCEventType.h in Headers */,
 				A07A4CDD1783777C0073F6A7 /* ccMacros.h in Headers */,
 				A07A4CDE1783777C0073F6A7 /* CCProtocols.h in Headers */,
-				A07A4CDF1783777C0073F6A7 /* ccTypeInfo.h in Headers */,
 				B33AFB6C17A20BE40022B711 /* etc1.h in Headers */,
 				A07A4CE01783777C0073F6A7 /* ccTypes.h in Headers */,
 				A07A4CE11783777C0073F6A7 /* cocos2d.h in Headers */,
