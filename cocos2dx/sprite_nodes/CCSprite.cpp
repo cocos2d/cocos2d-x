@@ -104,10 +104,10 @@ Sprite* Sprite::create(const char *filename, const Rect& rect)
     return NULL;
 }
 
-Sprite* Sprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
+Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 {
     Sprite *sprite = new Sprite();
-    if (pSpriteFrame && sprite && sprite->initWithSpriteFrame(pSpriteFrame))
+    if (spriteFrame && sprite && sprite->initWithSpriteFrame(spriteFrame))
     {
         sprite->autorelease();
         return sprite;
@@ -118,26 +118,26 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 Sprite* Sprite::createWithSpriteFrameName(const char *spriteFrameName)
 {
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName);
-    CCASSERT(pFrame != NULL, msg);
+    CCASSERT(frame != NULL, msg);
 #endif
     
-    return createWithSpriteFrame(pFrame);
+    return createWithSpriteFrame(frame);
 }
 
 Sprite* Sprite::create()
 {
-    Sprite *pSprite = new Sprite();
-    if (pSprite && pSprite->init())
+    Sprite *sprite = new Sprite();
+    if (sprite && sprite->init())
     {
-        pSprite->autorelease();
-        return pSprite;
+        sprite->autorelease();
+        return sprite;
     }
-    CC_SAFE_DELETE(pSprite);
+    CC_SAFE_DELETE(sprite);
     return NULL;
 }
 
@@ -174,11 +174,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         memset(&_quad, 0, sizeof(_quad));
         
         // Atlas: Color
-        Color4B tmpColor(255, 255, 255, 255);
-        _quad.bl.colors = tmpColor;
-        _quad.br.colors = tmpColor;
-        _quad.tl.colors = tmpColor;
-        _quad.tr.colors = tmpColor;
+        _quad.bl.colors = Color4B::WHITE;
+        _quad.br.colors = Color4B::WHITE;
+        _quad.tl.colors = Color4B::WHITE;
+        _quad.tr.colors = Color4B::WHITE;
         
         // shader program
         setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
@@ -248,12 +247,12 @@ bool Sprite::initWithFile(const char *filename, const Rect& rect)
     return false;
 }
 
-bool Sprite::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
+bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(pSpriteFrame != NULL, "");
+    CCASSERT(spriteFrame != NULL, "");
 
-    bool bRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
-    setDisplayFrame(pSpriteFrame);
+    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
+    setDisplayFrame(spriteFrame);
 
     return bRet;
 }
@@ -262,8 +261,8 @@ bool Sprite::initWithSpriteFrameName(const char *spriteFrameName)
 {
     CCASSERT(spriteFrameName != NULL, "");
 
-    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    return initWithSpriteFrame(pFrame);
+    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    return initWithSpriteFrame(frame);
 }
 
 // XXX: deprecated
@@ -293,8 +292,8 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 */
 
 Sprite::Sprite(void)
-: _shouldBeHidden(false),
-_texture(NULL)
+: _shouldBeHidden(false)
+, _texture(NULL)
 {
 }
 
@@ -453,7 +452,7 @@ void Sprite::updateTransform(void)
     if( isDirty() ) {
 
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
-        if( !_visible || ( _parent && _parent != _batchNode && ((Sprite*)_parent)->_shouldBeHidden) )
+        if( !_visible || ( _parent && _parent != _batchNode && static_cast<Sprite*>(_parent)->_shouldBeHidden) )
         {
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
             _shouldBeHidden = true;
@@ -469,7 +468,7 @@ void Sprite::updateTransform(void)
             else 
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , ((Sprite*)_parent)->_transformToBatch );
+                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
             }
 
             //
@@ -659,25 +658,25 @@ void Sprite::reorderChild(Node *child, int zOrder)
     Node::reorderChild(child, zOrder);
 }
 
-void Sprite::removeChild(Node *child, bool bCleanup)
+void Sprite::removeChild(Node *child, bool cleanup)
 {
     if (_batchNode)
     {
         _batchNode->removeSpriteFromAtlas((Sprite*)(child));
     }
 
-    Node::removeChild(child, bCleanup);
+    Node::removeChild(child, cleanup);
     
 }
 
-void Sprite::removeAllChildrenWithCleanup(bool bCleanup)
+void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+        Object* object = NULL;
+        CCARRAY_FOREACH(_children, object)
         {
-            Sprite* child = dynamic_cast<Sprite*>(pObject);
+            Sprite* child = dynamic_cast<Sprite*>(object);
             if (child)
             {
                 _batchNode->removeSpriteFromAtlas(child);
@@ -685,7 +684,7 @@ void Sprite::removeAllChildrenWithCleanup(bool bCleanup)
         }
     }
 
-    Node::removeAllChildrenWithCleanup(bCleanup);
+    Node::removeAllChildrenWithCleanup(cleanup);
     
     _hasChildren = false;
 }
@@ -736,11 +735,11 @@ void Sprite::setReorderChildDirtyRecursively(void)
     if ( ! _reorderChildDirty )
     {
         _reorderChildDirty = true;
-        Node* pNode = (Node*)_parent;
-        while (pNode && pNode != _batchNode)
+        Node* node = static_cast<Node*>(_parent);
+        while (node && node != _batchNode)
         {
-            ((Sprite*)pNode)->setReorderChildDirtyRecursively();
-            pNode=pNode->getParent();
+            static_cast<Sprite*>(node)->setReorderChildDirtyRecursively();
+            node=node->getParent();
         }
     }
 }
@@ -753,10 +752,10 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+        Object* object = NULL;
+        CCARRAY_FOREACH(_children, object)
         {
-            Sprite* child = dynamic_cast<Sprite*>(pObject);
+            Sprite* child = dynamic_cast<Sprite*>(object);
             if (child)
             {
                 child->setDirtyRecursively(true);
@@ -996,13 +995,13 @@ void Sprite::setDisplayFrameWithAnimationName(const char *animationName, int fra
     setDisplayFrame(frame->getSpriteFrame());
 }
 
-bool Sprite::isFrameDisplayed(SpriteFrame *pFrame) const
+bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
 {
-    Rect r = pFrame->getRect();
+    Rect r = frame->getRect();
 
     return (r.equals(_rect) &&
-            pFrame->getTexture()->getName() == _texture->getName() &&
-            pFrame->getOffset().equals(_unflippedOffsetPositionFromCenter));
+            frame->getTexture()->getName() == _texture->getName() &&
+            frame->getOffset().equals(_unflippedOffsetPositionFromCenter));
 }
 
 SpriteFrame* Sprite::displayFrame(void)
