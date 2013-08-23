@@ -33,6 +33,9 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(IterateSpriteSheetCArray),
     CL(IterateSpriteSheetIterator),
 
+    CL(CallFuncsSpriteSheetForEach),
+    CL(CallFuncsSpriteSheetCMacro),
+
     CL(AddSpriteSheet),
     CL(RemoveSpriteSheet),
     CL(ReorderSpriteSheet),
@@ -364,7 +367,78 @@ const char*  IterateSpriteSheetIterator::profilerName()
     return "Iterator: begin(), end()";
 }
 
+////////////////////////////////////////////////////////
+//
+// CallFuncsSpriteSheetForEach
+//
+////////////////////////////////////////////////////////
+void CallFuncsSpriteSheetForEach::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto children = batchNode->getChildren();
 
+    CC_PROFILER_START(this->profilerName());
+
+    std::for_each(std::begin(*children), std::end(*children), [](Object* obj) {
+        static_cast<Node*>(obj)->getPosition();
+    });
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string CallFuncsSpriteSheetForEach::title()
+{
+    return "D - 'map' functional call";
+}
+
+std::string CallFuncsSpriteSheetForEach::subtitle()
+{
+    return "Using 'std::for_each()'. See console";
+}
+
+const char*  CallFuncsSpriteSheetForEach::profilerName()
+{
+    static char _name[256];
+    snprintf(_name, sizeof(_name)-1, "Map: std::for_each(%d)", quantityOfNodes);
+    return _name;
+
+}
+
+////////////////////////////////////////////////////////
+//
+// CallFuncsSpriteSheetCMacro
+//
+////////////////////////////////////////////////////////
+void CallFuncsSpriteSheetCMacro::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto children = batchNode->getChildren();
+
+    CC_PROFILER_START(this->profilerName());
+
+    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string CallFuncsSpriteSheetCMacro::title()
+{
+    return "E - 'map' functional call";
+}
+
+std::string CallFuncsSpriteSheetCMacro::subtitle()
+{
+    return "Using 'arrayMakeObjectsPerformSelector'. See console";
+}
+
+const char*  CallFuncsSpriteSheetCMacro::profilerName()
+{
+    static char _name[256];
+    snprintf(_name, sizeof(_name)-1, "Map: arrayMakeObjectsPerformSelector(%d)", quantityOfNodes);
+    return _name;
+}
 ////////////////////////////////////////////////////////
 //
 // AddRemoveSpriteSheet
