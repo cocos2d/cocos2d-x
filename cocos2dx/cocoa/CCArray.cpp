@@ -42,12 +42,6 @@ Array::Array()
     init();
 }
 
-Array::Array(unsigned int capacity)
-: data(NULL)
-{
-    initWithCapacity(capacity);
-}
-
 Array* Array::create()
 {
     Array* array = new Array();
@@ -132,7 +126,7 @@ Array* Array::createWithContentsOfFile(const char* fileName)
     Array* ret = Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     return ret;
 }

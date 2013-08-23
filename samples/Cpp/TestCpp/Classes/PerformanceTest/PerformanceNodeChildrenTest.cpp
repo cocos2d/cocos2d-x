@@ -41,6 +41,7 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(AddSpriteSheet),
     CL(RemoveSpriteSheet),
     CL(ReorderSpriteSheet),
+    CL(SortAllChildrenSpriteSheet),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -381,9 +382,15 @@ void CallFuncsSpriteSheetForEach::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
+#if CC_USE_ARRAY_VECTOR
+    std::for_each(std::begin(*children), std::end(*children), [](const RCPtr<Object>& obj) {
+        static_cast<Node*>( static_cast<Object*>(obj) )->getPosition();
+    });
+#else
     std::for_each(std::begin(*children), std::end(*children), [](Object* obj) {
         static_cast<Node*>(obj)->getPosition();
     });
+#endif
 
     CC_PROFILER_STOP(this->profilerName());
 }
@@ -544,7 +551,7 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "D - Add to spritesheet";
+    return "F - Add to spritesheet";
 }
 
 std::string AddSpriteSheet::subtitle()
@@ -600,7 +607,7 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "E - Del from spritesheet";
+    return "G - Del from spritesheet";
 }
 
 std::string RemoveSpriteSheet::subtitle()
@@ -666,7 +673,7 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "F - Reorder from spritesheet";
+    return "H - Reorder from spritesheet";
 }
 
 std::string ReorderSpriteSheet::subtitle()
@@ -677,6 +684,67 @@ std::string ReorderSpriteSheet::subtitle()
 const char*  ReorderSpriteSheet::profilerName()
 {
     return "reorder sprites";
+}
+
+////////////////////////////////////////////////////////
+//
+// SortAllChildrenSpriteSheet
+//
+////////////////////////////////////////////////////////
+void SortAllChildrenSpriteSheet::update(float dt)
+{
+    //srandom(0);
+
+    // 15 percent
+    int totalToAdd = currentQuantityOfNodes * 0.15f;
+
+    if( totalToAdd > 0 )
+    {
+        auto sprites = Array::createWithCapacity(totalToAdd);
+
+        // Don't include the sprite's creation time as part of the profiling
+        for(int i=0; i<totalToAdd; i++)
+        {
+            auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            sprites->addObject(sprite);
+        }
+
+        // add them with random Z (very important!)
+        for( int i=0; i < totalToAdd;i++ )
+        {
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+        }
+
+        batchNode->sortAllChildren();
+
+        // reorder them
+        for( int i=0;i <  totalToAdd;i++)
+        {
+            auto node = (Node*) (batchNode->getChildren()->getObjectAtIndex(i));
+            batchNode->reorderChild(node, CCRANDOM_MINUS1_1() * 50);
+        }
+
+        CC_PROFILER_START( this->profilerName() );
+        batchNode->sortAllChildren();
+        CC_PROFILER_STOP( this->profilerName() );
+
+        batchNode->removeAllChildrenWithCleanup(true);
+    }
+}
+
+std::string SortAllChildrenSpriteSheet::title()
+{
+    return "H - Sort All Children from spritesheet";
+}
+
+std::string SortAllChildrenSpriteSheet::subtitle()
+{
+    return "Calls sortOfChildren(). See console";
+}
+
+const char*  SortAllChildrenSpriteSheet::profilerName()
+{
+    return "sort all children";
 }
 
 void runNodeChildrenTest()
