@@ -148,6 +148,16 @@ public:
     virtual const char* profilerName();
 };
 
+class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
 void runNodeChildrenTest();
 
 #endif // __PERFORMANCE_NODE_CHILDREN_TEST_H__
