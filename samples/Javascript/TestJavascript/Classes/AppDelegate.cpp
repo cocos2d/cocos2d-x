@@ -55,6 +55,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
 
+    FileUtils::getInstance()->addSearchPath("res");
+    
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #ifdef JS_OBFUSCATED
