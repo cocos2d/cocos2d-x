@@ -172,7 +172,7 @@ public:
 class CC_DLL Dictionary : public Object, public Clonable
 {
 public:
-    /** 
+    /**
      * The constructor of Dictionary.
      */
     Dictionary();
@@ -182,6 +182,8 @@ public:
      */
     ~Dictionary();
 
+    /** Initializes the dictionary. It returns true if the initializations was successful. */
+    bool init();
     /**
      *  Get the count of elements in Dictionary.
      *

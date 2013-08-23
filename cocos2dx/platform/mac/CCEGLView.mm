@@ -53,7 +53,7 @@ EGLView::EGLView(void)
 
 EGLView::~EGLView(void)
 {
-    CCLOG("cocos2d: deallocing EGLView %p", this);
+    CCLOGINFO("deallocing EGLView: %p", this);
     s_sharedView = NULL;
 }
 

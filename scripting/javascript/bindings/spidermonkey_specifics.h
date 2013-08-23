@@ -37,7 +37,7 @@ class TypeTest
 		But the return string from typeid(*native_obj).name() is the same string, so we must convert the string to hash id to make sure we can get unique id.
 		*/
 		// static const long id = reinterpret_cast<long>(typeid( DERIVED ).name());
-        static const long id = cocos2d::getHashCodeByString(typeid( DERIVED ).name());
+        static const long id = typeid( DERIVED ).hash_code();
 		return id;
 	}
 

@@ -209,22 +209,24 @@ BoneData::BoneData(void)
 
 BoneData::~BoneData(void)
 {
+    CC_SAFE_RELEASE(displayDataList);
 }
 
 bool BoneData::init()
 {
-    displayDataList.init();
+    displayDataList = new Array;
+    displayDataList->init();
     return true;
 }
 
 void BoneData::addDisplayData(DisplayData *displayData)
 {
-    displayDataList.addObject(displayData);
+    displayDataList->addObject(displayData);
 }
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return (DisplayData *)displayDataList.objectAtIndex(index);
+    return static_cast<DisplayData *>( displayDataList->getObjectAtIndex(index) );
 }
 
 ArmatureData::ArmatureData()
@@ -233,22 +235,30 @@ ArmatureData::ArmatureData()
 
 ArmatureData::~ArmatureData()
 {
+    CC_SAFE_RELEASE(boneList);
+    CC_SAFE_RELEASE(boneDataDic);
 }
 
 bool ArmatureData::init()
 {
-    return boneList.init();
+    boneList = new Array;
+    boneList->init();
+
+    boneDataDic = new Dictionary;
+    boneDataDic->init();
+
+    return true;
 }
 
 void ArmatureData::addBoneData(BoneData *boneData)
 {
-    boneDataDic.setObject(boneData, boneData->name);
-    boneList.addObject(boneData);
+    boneDataDic->setObject(boneData, boneData->name);
+    boneList->addObject(boneData);
 }
 
 BoneData *ArmatureData::getBoneData(const char *boneName)
 {
-    return (BoneData *)boneDataDic.objectForKey(boneName);
+    return static_cast<BoneData *>( boneDataDic->objectForKey(boneName) );
 }
 
 FrameData::FrameData(void)
@@ -282,29 +292,30 @@ MovementBoneData::MovementBoneData()
     , duration(0)
     , name("")
 {
+    frameList = new Array;
+    frameList->init();
 }
 
 MovementBoneData::~MovementBoneData(void)
 {
+    CC_SAFE_RELEASE(frameList);
 }
 
 bool MovementBoneData::init()
 {
-    return frameList.init();
+    return true;
 }
 
 void MovementBoneData::addFrameData(FrameData *frameData)
 {
-    frameList.addObject(frameData);
+    frameList->addObject(frameData);
     duration += frameData->duration;
 }
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return (FrameData *)frameList.objectAtIndex(index);
+    return static_cast<FrameData *>( frameList->getObjectAtIndex(index) );
 }
-
-
 
 MovementData::MovementData(void)
     : name("")
@@ -314,30 +325,36 @@ MovementData::MovementData(void)
     , loop(true)
     , tweenEasing(Linear)
 {
+    movBoneDataDic = new Dictionary;
+    movBoneDataDic->init();
 }
 
 MovementData::~MovementData(void)
 {
+    CC_SAFE_RELEASE(movBoneDataDic);
 }
 
 void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 {
-    movBoneDataDic.setObject(movBoneData, movBoneData->name);
+    movBoneDataDic->setObject(movBoneData, movBoneData->name);
 }
 
 MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
 {
-    return (MovementBoneData *)movBoneDataDic.objectForKey(boneName);
+    return static_cast<MovementBoneData *>( movBoneDataDic->objectForKey(boneName) );
 }
 
 
 
 AnimationData::AnimationData(void)
 {
+    movementDataDic = new Dictionary;
+    movementDataDic->init();
 }
 
 AnimationData::~AnimationData(void)
 {
+    CC_SAFE_RELEASE(movementDataDic);
 }
 
 void AnimationData::release()
@@ -352,33 +369,36 @@ void AnimationData::retain()
 
 void AnimationData::addMovement(MovementData *movData)
 {
-    movementDataDic.setObject(movData, movData->name);
+    movementDataDic->setObject(movData, movData->name);
     movementNames.push_back(movData->name);
 }
 
 MovementData *AnimationData::getMovement(const char *movementName)
 {
-    return (MovementData *)movementDataDic.objectForKey(movementName);
+    return (MovementData *)movementDataDic->objectForKey(movementName);
 }
 
 int AnimationData::getMovementCount()
 {
-    return movementDataDic.count();
+    return movementDataDic->count();
 }
 
 
 
 ContourData::ContourData()
 {
+    vertexList = new Array;
+    vertexList->init();
 }
 
 ContourData::~ContourData()
 {
+    CC_SAFE_RELEASE(vertexList);
 }
 
 bool ContourData::init()
 {
-    return vertexList.init();
+    return true;
 }
 
 TextureData::TextureData()
@@ -388,25 +408,28 @@ TextureData::TextureData()
     , pivotY(0.5f)
     , name("")
 {
+    contourDataList = new Array;
+    contourDataList->init();
 }
 
 TextureData::~TextureData()
 {
+    CC_SAFE_RELEASE(contourDataList);
 }
 
 bool TextureData::init()
 {
-    return contourDataList.init();
+    return true;
 }
 
 void TextureData::addContourData(ContourData *contourData)
 {
-    contourDataList.addObject(contourData);
+    contourDataList->addObject(contourData);
 }
 
 ContourData *TextureData::getContourData(int index)
 {
-    return (ContourData *)contourDataList.objectAtIndex(index);
+    return static_cast<ContourData *>( contourDataList->getObjectAtIndex(index) );
 }
 
 

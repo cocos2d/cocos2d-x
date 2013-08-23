@@ -107,7 +107,7 @@ SIOClientImpl::~SIOClientImpl()
 {
 	if (_connected) disconnect();
 
-	CC_SAFE_DELETE(_clients);
+	CC_SAFE_RELEASE(_clients);
 	CC_SAFE_DELETE(_ws);
 }
 
@@ -600,7 +600,7 @@ SocketIO::SocketIO()
 
 SocketIO::~SocketIO(void)
 {
-	CC_SAFE_DELETE(_sockets);
+	CC_SAFE_RELEASE(_sockets);
 	delete _inst;	
 }
 

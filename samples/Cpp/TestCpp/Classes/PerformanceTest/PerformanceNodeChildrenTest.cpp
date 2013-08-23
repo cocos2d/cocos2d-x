@@ -1,5 +1,7 @@
 #include "PerformanceNodeChildrenTest.h"
 
+#include <algorithm>
+
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
 #define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
@@ -32,6 +34,9 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(IterateSpriteSheetForLoop),
     CL(IterateSpriteSheetCArray),
     CL(IterateSpriteSheetIterator),
+
+    CL(CallFuncsSpriteSheetForEach),
+    CL(CallFuncsSpriteSheetCMacro),
 
     CL(AddSpriteSheet),
     CL(RemoveSpriteSheet),
@@ -140,6 +145,8 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
+
+        CC_PROFILER_PURGE_ALL();
 	});
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
@@ -149,6 +156,8 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
+
+        CC_PROFILER_PURGE_ALL();
 	});
     increase->setColor(Color3B(0,200,20));
 
@@ -360,7 +369,78 @@ const char*  IterateSpriteSheetIterator::profilerName()
     return "Iterator: begin(), end()";
 }
 
+////////////////////////////////////////////////////////
+//
+// CallFuncsSpriteSheetForEach
+//
+////////////////////////////////////////////////////////
+void CallFuncsSpriteSheetForEach::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto children = batchNode->getChildren();
 
+    CC_PROFILER_START(this->profilerName());
+
+    std::for_each(std::begin(*children), std::end(*children), [](Object* obj) {
+        static_cast<Node*>(obj)->getPosition();
+    });
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string CallFuncsSpriteSheetForEach::title()
+{
+    return "D - 'map' functional call";
+}
+
+std::string CallFuncsSpriteSheetForEach::subtitle()
+{
+    return "Using 'std::for_each()'. See console";
+}
+
+const char*  CallFuncsSpriteSheetForEach::profilerName()
+{
+    static char _name[256];
+    snprintf(_name, sizeof(_name)-1, "Map: std::for_each(%d)", quantityOfNodes);
+    return _name;
+
+}
+
+////////////////////////////////////////////////////////
+//
+// CallFuncsSpriteSheetCMacro
+//
+////////////////////////////////////////////////////////
+void CallFuncsSpriteSheetCMacro::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto children = batchNode->getChildren();
+
+    CC_PROFILER_START(this->profilerName());
+
+    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string CallFuncsSpriteSheetCMacro::title()
+{
+    return "E - 'map' functional call";
+}
+
+std::string CallFuncsSpriteSheetCMacro::subtitle()
+{
+    return "Using 'arrayMakeObjectsPerformSelector'. See console";
+}
+
+const char*  CallFuncsSpriteSheetCMacro::profilerName()
+{
+    static char _name[256];
+    snprintf(_name, sizeof(_name)-1, "Map: arrayMakeObjectsPerformSelector(%d)", quantityOfNodes);
+    return _name;
+}
 ////////////////////////////////////////////////////////
 //
 // AddRemoveSpriteSheet
@@ -445,7 +525,7 @@ void AddSpriteSheet::update(float dt)
 
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), zs[i], kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), zs[i], kTagBase+i);
         }
         
         batchNode->sortAllChildren();
@@ -503,7 +583,7 @@ void RemoveSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         // remove them
@@ -559,7 +639,7 @@ void ReorderSpriteSheet::update(float dt)
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((Node*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild((Node*) (sprites->getObjectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         batchNode->sortAllChildren();
@@ -569,7 +649,7 @@ void ReorderSpriteSheet::update(float dt)
 
         for( int i=0;i <  totalToAdd;i++)
         {
-            auto node = (Node*) (batchNode->getChildren()->objectAtIndex(i));
+            auto node = (Node*) (batchNode->getChildren()->getObjectAtIndex(i));
             batchNode->reorderChild(node, CCRANDOM_MINUS1_1() * 50);
         }
         
