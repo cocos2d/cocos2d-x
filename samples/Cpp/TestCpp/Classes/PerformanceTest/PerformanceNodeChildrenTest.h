@@ -94,6 +94,30 @@ protected:
 #endif
 };
 
+///
+
+class CallFuncsSpriteSheetForEach : public IterateSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+class CallFuncsSpriteSheetCMacro : public IterateSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+///
+
 class AddSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
