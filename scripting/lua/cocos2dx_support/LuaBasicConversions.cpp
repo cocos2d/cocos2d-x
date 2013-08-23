@@ -1115,11 +1115,12 @@ void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue)
 
 void array_to_luaval(lua_State* L,Array* inValue)
 {
+    lua_newtable(L);
+    
     if (nullptr == L || nullptr == inValue)
         return;
     
     Object* obj = nullptr;
-    lua_newtable(L);
     
     std::string className = "";
     String* strVal = nullptr;
@@ -1204,11 +1205,12 @@ void array_to_luaval(lua_State* L,Array* inValue)
 
 void dictionary_to_luaval(lua_State* L, Dictionary* dict)
 {
+    lua_newtable(L);
+    
     if (nullptr == L || nullptr == dict)
         return;
     
     DictElement* element = nullptr;
-    lua_newtable(L);
     
     std::string className = "";
     String* strVal = nullptr;

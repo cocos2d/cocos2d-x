@@ -29,7 +29,7 @@ function cc.pForAngle(a)
 end
 
 function cc.pGetLength(pt)
-    return math.sqrt( pt.x * pt.x + pt.y * pt.y );
+    return math.sqrt( pt.x * pt.x + pt.y * pt.y )
 end
 
 function cc.pNormalize(pt)
@@ -68,6 +68,36 @@ function cc.pGetDistance(startP,endP)
     return cc.pGetLength(cc.pSub(startP,endP))
 end
 
+function cc.pIsLineIntersect(A, B, C, D, s, t)
+    if ((A.x == B.x) and (A.y == B.y)) or ((C.x == D.x) and (C.y == D.y))then
+        return false, s, t
+    end
+
+    local BAx = B.x - A.x
+    local BAy = B.y - A.y
+    local DCx = D.x - C.x
+    local DCy = D.y - C.y
+    local ACx = A.x - C.x
+    local ACy = A.y - C.y
+
+    local denom = DCy * BAx - DCx * BAy
+    s = DCx * ACy - DCy * ACx
+    t = BAx * ACy - BAy * ACx
+
+    if (denom == 0) then
+        if (s == 0 or t == 0) then
+            return true, s , t
+        end
+
+        return false, s, t
+    end
+    
+    s = s / denom
+    t = t / denom
+
+    return true,s,t
+end
+
 --Size
 function cc.size( _width,_height )
     return { width = _width, height = _height }
@@ -97,7 +127,7 @@ function cc.rectGetMidX(rect)
 end
 
 function cc.rectGetMinX(rect)
-    return rect.x;
+    return rect.x
 end
 
 function cc.rectGetMaxY(rect)
@@ -149,7 +179,7 @@ function cc.rectIntersection( rect1, rect2 )
 
     intersection.width = math.min(rect1.x + rect1.width, rect2.x + rect2.width) - intersection.x
     intersection.height = math.min(rect1.y + rect1.height, rect2.y + rect2.height) - intersection.y
-    return intersection;
+    return intersection
 end
 
 --Color3B

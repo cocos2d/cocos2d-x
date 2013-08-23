@@ -40,9 +40,9 @@ local function setEnableRecursiveCascading(node, enable)
         return
     end
 
-    if node.__CCRGBAProtocol__ ~= nil then
-        node.__CCRGBAProtocol__:setCascadeColorEnabled(enable)
-        node.__CCRGBAProtocol__:setCascadeOpacityEnabled(enable)
+    if node.setCascadeColorEnabled ~= nil and node.setCascadeOpacityEnabled ~= nil then
+        node:setCascadeColorEnabled(enable)
+        node:setCascadeOpacityEnabled(enable)
     end
 
     local obj = nil
@@ -56,9 +56,7 @@ local function setEnableRecursiveCascading(node, enable)
     local i = 0
     local len = table.getn(children)
     for i = 0, len-1, 1 do
-        print("come in")
-        local  child = tolua.cast(children[i + 1], "Node")
-        setEnableRecursiveCascading(child, enable)
+        setEnableRecursiveCascading(children[i + 1], enable)
     end
 end
 

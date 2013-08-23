@@ -5,7 +5,7 @@
 
 
 
-static int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -47,7 +47,7 @@ static int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_getState(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_getState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -88,7 +88,7 @@ static int lua_cocos2dx_extension_Control_getState(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_isTouchInside(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_isTouchInside(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -141,7 +141,7 @@ static int lua_cocos2dx_extension_Control_isTouchInside(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_sendActionsForControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_sendActionsForControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -183,7 +183,7 @@ static int lua_cocos2dx_extension_Control_sendActionsForControlEvents(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_setSelected(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_setSelected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -225,7 +225,7 @@ static int lua_cocos2dx_extension_Control_setSelected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_registerWithTouchDispatcher(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_registerWithTouchDispatcher(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -265,7 +265,7 @@ static int lua_cocos2dx_extension_Control_registerWithTouchDispatcher(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_isEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_isEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -306,7 +306,7 @@ static int lua_cocos2dx_extension_Control_isEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -348,7 +348,7 @@ static int lua_cocos2dx_extension_Control_setOpacityModifyRGB(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_needsLayout(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_needsLayout(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -388,7 +388,7 @@ static int lua_cocos2dx_extension_Control_needsLayout(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_hasVisibleParents(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_hasVisibleParents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -429,7 +429,7 @@ static int lua_cocos2dx_extension_Control_hasVisibleParents(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_isSelected(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_isSelected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -470,7 +470,7 @@ static int lua_cocos2dx_extension_Control_isSelected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -511,7 +511,7 @@ static int lua_cocos2dx_extension_Control_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_setHighlighted(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_setHighlighted(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -553,7 +553,7 @@ static int lua_cocos2dx_extension_Control_setHighlighted(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -594,7 +594,7 @@ static int lua_cocos2dx_extension_Control_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -647,7 +647,7 @@ static int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_isHighlighted(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_isHighlighted(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -688,7 +688,7 @@ static int lua_cocos2dx_extension_Control_isHighlighted(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -731,7 +731,7 @@ static int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Control_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_Control_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Control* cobj = nullptr;
@@ -807,7 +807,7 @@ int lua_register_cocos2dx_extension_Control(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_CCBReader_addOwnerOutletName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_addOwnerOutletName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -849,7 +849,7 @@ static int lua_cocos2dx_extension_CCBReader_addOwnerOutletName(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNames(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -890,7 +890,7 @@ static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNames(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_addDocumentCallbackControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_addDocumentCallbackControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -932,7 +932,7 @@ static int lua_cocos2dx_extension_CCBReader_addDocumentCallbackControlEvents(lua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_setCCBRootPath(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_setCCBRootPath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -974,7 +974,7 @@ static int lua_cocos2dx_extension_CCBReader_setCCBRootPath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_addOwnerOutletNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_addOwnerOutletNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1026,7 +1026,7 @@ static int lua_cocos2dx_extension_CCBReader_addOwnerOutletNode(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNodes(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNodes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1067,7 +1067,7 @@ static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackNodes(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_readSoundKeyframesForSeq(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_readSoundKeyframesForSeq(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1120,7 +1120,7 @@ static int lua_cocos2dx_extension_CCBReader_readSoundKeyframesForSeq(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getCCBRootPath(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getCCBRootPath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1161,7 +1161,7 @@ static int lua_cocos2dx_extension_CCBReader_getCCBRootPath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getOwnerCallbackControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1202,7 +1202,7 @@ static int lua_cocos2dx_extension_CCBReader_getOwnerCallbackControlEvents(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getOwnerOutletNodes(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getOwnerOutletNodes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1243,7 +1243,7 @@ static int lua_cocos2dx_extension_CCBReader_getOwnerOutletNodes(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_readUTF8(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_readUTF8(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1284,7 +1284,7 @@ static int lua_cocos2dx_extension_CCBReader_readUTF8(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_addOwnerCallbackControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_addOwnerCallbackControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1326,7 +1326,7 @@ static int lua_cocos2dx_extension_CCBReader_addOwnerCallbackControlEvents(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getOwnerOutletNames(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getOwnerOutletNames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1367,7 +1367,7 @@ static int lua_cocos2dx_extension_CCBReader_getOwnerOutletNames(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_setAnimationManager(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_setAnimationManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1419,7 +1419,7 @@ static int lua_cocos2dx_extension_CCBReader_setAnimationManager(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_readCallbackKeyframesForSeq(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_readCallbackKeyframesForSeq(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1472,7 +1472,7 @@ static int lua_cocos2dx_extension_CCBReader_readCallbackKeyframesForSeq(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getAnimationManagersForNodes(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getAnimationManagersForNodes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1513,7 +1513,7 @@ static int lua_cocos2dx_extension_CCBReader_getAnimationManagersForNodes(lua_Sta
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getNodesWithAnimationManagers(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getNodesWithAnimationManagers(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1554,7 +1554,7 @@ static int lua_cocos2dx_extension_CCBReader_getNodesWithAnimationManagers(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_getAnimationManager(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_getAnimationManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = nullptr;
@@ -1607,7 +1607,7 @@ static int lua_cocos2dx_extension_CCBReader_getAnimationManager(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_setResolutionScale(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_setResolutionScale(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -1639,7 +1639,7 @@ static int lua_cocos2dx_extension_CCBReader_setResolutionScale(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBReader_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBReader* cobj = NULL;
@@ -1957,7 +1957,7 @@ int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2012,7 +2012,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_resizableSpriteWithCapInsets(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = NULL;
@@ -2066,7 +2066,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2108,7 +2108,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setOpacityModifyRGB(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setContentSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2150,7 +2150,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setContentSize(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setInsetBottom(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setInsetBottom(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2192,7 +2192,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setInsetBottom(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2233,7 +2233,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_isOpacityModifyRGB(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2275,7 +2275,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setInsetTop(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setInsetTop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2317,7 +2317,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setInsetTop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2359,7 +2359,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedOpacity(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2400,7 +2400,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setPreferredSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setPreferredSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2442,7 +2442,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setPreferredSize(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2483,7 +2483,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2535,7 +2535,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setSpriteFrame(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2576,7 +2576,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_initWithBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_initWithBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = NULL;
@@ -2666,7 +2666,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithBatchNode(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getInsetBottom(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getInsetBottom(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2707,7 +2707,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getInsetBottom(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getCapInsets(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getCapInsets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2748,7 +2748,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getCapInsets(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2807,7 +2807,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_updateWithBatchNode(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getInsetRight(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getInsetRight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2848,7 +2848,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getInsetRight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getOriginalSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getOriginalSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -2889,7 +2889,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getOriginalSize(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = NULL;
@@ -2977,7 +2977,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3019,7 +3019,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getInsetTop(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getInsetTop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3060,7 +3060,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getInsetTop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setInsetLeft(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setInsetLeft(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3102,7 +3102,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setInsetLeft(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = NULL;
@@ -3176,7 +3176,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrame(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getPreferredSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getPreferredSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3217,7 +3217,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getPreferredSize(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setCapInsets(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setCapInsets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3259,7 +3259,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setCapInsets(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_getInsetLeft(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_getInsetLeft(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3300,7 +3300,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_getInsetLeft(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3342,7 +3342,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_updateDisplayedColor(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_setInsetRight(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_setInsetRight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3384,7 +3384,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_setInsetRight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -3535,7 +3535,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -3608,7 +3608,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_Sta
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -3701,7 +3701,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_Scale9Sprite_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_Scale9Sprite_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::Scale9Sprite* cobj = nullptr;
@@ -3793,7 +3793,7 @@ int lua_register_cocos2dx_extension_Scale9Sprite(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlButton_setTitleColorDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleColorDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -3835,7 +3835,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleColorDispatchTable(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_isPushed(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_isPushed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -3876,7 +3876,7 @@ static int lua_cocos2dx_extension_ControlButton_isPushed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setSelected(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setSelected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -3918,7 +3918,7 @@ static int lua_cocos2dx_extension_ControlButton_setSelected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -3972,7 +3972,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4037,7 +4037,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4079,7 +4079,7 @@ static int lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(lua_Sta
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4143,7 +4143,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setHighlighted(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setHighlighted(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4185,7 +4185,7 @@ static int lua_cocos2dx_extension_ControlButton_setHighlighted(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4227,7 +4227,7 @@ static int lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4269,7 +4269,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteDispatchTable
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4323,7 +4323,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4364,7 +4364,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleDispatchTable(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4406,7 +4406,7 @@ static int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getPreferredSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getPreferredSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4447,7 +4447,7 @@ static int lua_cocos2dx_extension_ControlButton_getPreferredSize(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4488,7 +4488,7 @@ static int lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_initWithBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_initWithBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4541,7 +4541,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithBackgroundSprite(lua_Sta
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleTTFSizeForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleTTFSizeForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4584,7 +4584,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleTTFSizeForState(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4626,7 +4626,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleDispatchTable(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4668,7 +4668,7 @@ static int lua_cocos2dx_extension_ControlButton_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4709,7 +4709,7 @@ static int lua_cocos2dx_extension_ControlButton_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4753,7 +4753,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4797,7 +4797,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4849,7 +4849,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4913,7 +4913,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4954,7 +4954,7 @@ static int lua_cocos2dx_extension_ControlButton_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getCurrentTitleColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getCurrentTitleColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -4995,7 +4995,7 @@ static int lua_cocos2dx_extension_ControlButton_getCurrentTitleColor(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleColorDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleColorDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5036,7 +5036,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleColorDispatchTable(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5078,7 +5078,7 @@ static int lua_cocos2dx_extension_ControlButton_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5130,7 +5130,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5185,7 +5185,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5226,7 +5226,7 @@ static int lua_cocos2dx_extension_ControlButton_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setMargins(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setMargins(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5270,7 +5270,7 @@ static int lua_cocos2dx_extension_ControlButton_setMargins(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_needsLayout(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_needsLayout(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5310,7 +5310,7 @@ static int lua_cocos2dx_extension_ControlButton_needsLayout(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_initWithTitleAndFontNameAndFontSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_initWithTitleAndFontNameAndFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5357,7 +5357,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithTitleAndFontNameAndFontS
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5410,7 +5410,7 @@ static int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getHorizontalOrigin(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getHorizontalOrigin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5451,7 +5451,7 @@ static int lua_cocos2dx_extension_ControlButton_getHorizontalOrigin(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleTTFForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleTTFForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5494,7 +5494,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleTTFForState(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5547,7 +5547,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleColorForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleColorForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5590,7 +5590,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleColorForState(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleColorForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleColorForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5634,7 +5634,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleColorForState(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5675,7 +5675,7 @@ static int lua_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5729,7 +5729,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5783,7 +5783,7 @@ static int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5825,7 +5825,7 @@ static int lua_cocos2dx_extension_ControlButton_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleLabelDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleLabelDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5866,7 +5866,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabelDispatchTable(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5931,7 +5931,7 @@ static int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setPreferredSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setPreferredSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -5973,7 +5973,7 @@ static int lua_cocos2dx_extension_ControlButton_setPreferredSize(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleLabelDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleLabelDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6015,7 +6015,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleLabelDispatchTable(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6068,7 +6068,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6132,7 +6132,7 @@ static int lua_cocos2dx_extension_ControlButton_ccTouchCancelled(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getVerticalMargin(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getVerticalMargin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6173,7 +6173,7 @@ static int lua_cocos2dx_extension_ControlButton_getVerticalMargin(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteDispatchTable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteDispatchTable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6214,7 +6214,7 @@ static int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteDispatchTable
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6269,7 +6269,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6313,7 +6313,7 @@ static int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleBMFontForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleBMFontForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6356,7 +6356,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleBMFontForState(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getZoomOnTouchDown(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getZoomOnTouchDown(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6397,7 +6397,7 @@ static int lua_cocos2dx_extension_ControlButton_getZoomOnTouchDown(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6452,7 +6452,7 @@ static int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -6606,7 +6606,7 @@ static int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlButton_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlButton_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlButton* cobj = nullptr;
@@ -6723,7 +6723,7 @@ int lua_register_cocos2dx_extension_ControlButton(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ScrollView_isClippingToBounds(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_isClippingToBounds(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -6764,7 +6764,7 @@ static int lua_cocos2dx_extension_ScrollView_isClippingToBounds(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -6816,7 +6816,7 @@ static int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -6860,7 +6860,7 @@ static int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -6904,7 +6904,7 @@ static int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = NULL;
@@ -7004,7 +7004,7 @@ static int lua_cocos2dx_extension_ScrollView_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7069,7 +7069,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7122,7 +7122,7 @@ static int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7186,7 +7186,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7227,7 +7227,7 @@ static int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getZoomScale(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getZoomScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7268,7 +7268,7 @@ static int lua_cocos2dx_extension_ScrollView_getZoomScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_updateInset(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_updateInset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7308,7 +7308,7 @@ static int lua_cocos2dx_extension_ScrollView_updateInset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_initWithViewSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_initWithViewSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7373,7 +7373,7 @@ static int lua_cocos2dx_extension_ScrollView_initWithViewSize(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7425,7 +7425,7 @@ static int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7467,7 +7467,7 @@ static int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7509,7 +7509,7 @@ static int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7562,7 +7562,7 @@ static int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_isDragging(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_isDragging(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7603,7 +7603,7 @@ static int lua_cocos2dx_extension_ScrollView_isDragging(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7644,7 +7644,7 @@ static int lua_cocos2dx_extension_ScrollView_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_isBounceable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_isBounceable(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7685,7 +7685,7 @@ static int lua_cocos2dx_extension_ScrollView_isBounceable(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getContentSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7726,7 +7726,7 @@ static int lua_cocos2dx_extension_ScrollView_getContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7790,7 +7790,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setTouchEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setTouchEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7832,7 +7832,7 @@ static int lua_cocos2dx_extension_ScrollView_setTouchEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getContentOffset(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getContentOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7873,7 +7873,7 @@ static int lua_cocos2dx_extension_ScrollView_getContentOffset(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7925,7 +7925,7 @@ static int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setClippingToBounds(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setClippingToBounds(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -7967,7 +7967,7 @@ static int lua_cocos2dx_extension_ScrollView_setClippingToBounds(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setViewSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setViewSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8009,7 +8009,7 @@ static int lua_cocos2dx_extension_ScrollView_setViewSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_getViewSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_getViewSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8050,7 +8050,7 @@ static int lua_cocos2dx_extension_ScrollView_getViewSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8091,7 +8091,7 @@ static int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setContentSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8133,7 +8133,7 @@ static int lua_cocos2dx_extension_ScrollView_setContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_isTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_isTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8174,7 +8174,7 @@ static int lua_cocos2dx_extension_ScrollView_isTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_isNodeVisible(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_isNodeVisible(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8227,7 +8227,7 @@ static int lua_cocos2dx_extension_ScrollView_isNodeVisible(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8291,7 +8291,7 @@ static int lua_cocos2dx_extension_ScrollView_ccTouchCancelled(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8332,7 +8332,7 @@ static int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_registerWithTouchDispatcher(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_registerWithTouchDispatcher(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8372,7 +8372,7 @@ static int lua_cocos2dx_extension_ScrollView_registerWithTouchDispatcher(lua_Sta
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = NULL;
@@ -8424,7 +8424,7 @@ static int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -8528,7 +8528,7 @@ static int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ScrollView_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8623,7 +8623,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8687,7 +8687,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_moveAnimationsFromNode(lua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setAutoPlaySequenceId(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setAutoPlaySequenceId(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8729,7 +8729,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setAutoPlaySequenceId(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNames(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8770,7 +8770,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNames(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_actionForSoundChannel(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_actionForSoundChannel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8835,7 +8835,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForSoundChannel(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setBaseValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setBaseValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8901,7 +8901,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setBaseValue(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNodes(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNodes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8942,7 +8942,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNodes(lua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -8996,7 +8996,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addNode(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getLastCompletedSequenceName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getLastCompletedSequenceName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9037,7 +9037,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getLastCompletedSequenceNa
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setRootNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setRootNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9089,7 +9089,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setRootNode(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9133,7 +9133,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNa
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9175,7 +9175,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletName(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getSequences(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getSequences(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9216,7 +9216,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getSequences(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getRootContainerSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getRootContainerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9257,7 +9257,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getRootContainerSize(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setDocumentControllerName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setDocumentControllerName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9299,7 +9299,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setDocumentControllerName(
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getContainerSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getContainerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9352,7 +9352,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getContainerSize(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_actionForCallbackChannel(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_actionForCallbackChannel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9417,7 +9417,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_actionForCallbackChannel(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNames(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9458,7 +9458,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentOutletNames(lua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9500,7 +9500,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackControl
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9541,7 +9541,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getKeyframeCallbacks(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getKeyframeCallbacks(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9582,7 +9582,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getKeyframeCallbacks(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackControlEvents(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackControlEvents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9623,7 +9623,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackControl
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setRootContainerSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setRootContainerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9665,7 +9665,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setRootContainerSize(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9709,7 +9709,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceId
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getRunningSequenceName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getRunningSequenceName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9750,7 +9750,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getRunningSequenceName(lua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getAutoPlaySequenceId(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getAutoPlaySequenceId(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9791,7 +9791,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getAutoPlaySequenceId(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9833,7 +9833,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackName(lu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getRootNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getRootNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9886,7 +9886,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getRootNode(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9938,7 +9938,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentOutletNode(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -9981,7 +9981,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceDuration(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10033,7 +10033,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_addDocumentCallbackNode(lu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamed(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNamed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10075,7 +10075,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_runAnimationsForSequenceNa
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceId(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getSequenceId(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10118,7 +10118,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getSequenceId(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNodes(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNodes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10159,7 +10159,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentCallbackNodes(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_setSequences(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_setSequences(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10201,7 +10201,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_setSequences(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_debug(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_debug(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10241,7 +10241,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_debug(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentControllerName(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_getDocumentControllerName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10282,7 +10282,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_getDocumentControllerName(
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_CCBAnimationManager_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_CCBAnimationManager_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::CCBAnimationManager* cobj = nullptr;
@@ -10377,7 +10377,7 @@ int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10419,7 +10419,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10474,7 +10474,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_setHue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_setHue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10516,7 +10516,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_setHue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_getStartPos(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_getStartPos(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10557,7 +10557,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_getStartPos(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_getHue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_getHue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10598,7 +10598,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_getHue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10663,7 +10663,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_ccTouchBegan(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_setBackground(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_setBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10715,7 +10715,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_setBackground(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_setHuePercentage(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_setHuePercentage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10757,7 +10757,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_setHuePercentage(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_getBackground(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_getBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10810,7 +10810,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_getBackground(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10874,7 +10874,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_ccTouchMoved(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_getSlider(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_getSlider(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10927,7 +10927,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_getSlider(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_getHuePercentage(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_getHuePercentage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -10968,7 +10968,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_getHuePercentage(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_setSlider(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_setSlider(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -11020,7 +11020,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_setSlider(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -11077,7 +11077,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlHuePicker_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlHuePicker_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlHuePicker* cobj = nullptr;
@@ -11150,7 +11150,7 @@ int lua_register_cocos2dx_extension_ControlHuePicker(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11203,7 +11203,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow(lu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11258,7 +11258,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTarg
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11299,7 +11299,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getOverlay(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getOverlay(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11352,7 +11352,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getOverlay(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11394,7 +11394,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSlider(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSlider(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11447,7 +11447,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSlider(lu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBackground(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11500,7 +11500,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBackgroun
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSaturation(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSaturation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11541,7 +11541,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSaturatio
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBrightness(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBrightness(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11582,7 +11582,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBrightnes
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -11639,7 +11639,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSaturationBrightnessPicker* cobj = nullptr;
@@ -11708,7 +11708,7 @@ int lua_register_cocos2dx_extension_ControlSaturationBrightnessPicker(lua_State*
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlColourPicker_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -11750,7 +11750,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_setEnabled(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_getHuePicker(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_getHuePicker(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -11803,7 +11803,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_getHuePicker(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_setColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -11845,7 +11845,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_setColor(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -11899,7 +11899,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(lua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_getcolourPicker(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_getcolourPicker(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -11952,7 +11952,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_getcolourPicker(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_setBackground(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_setBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12004,7 +12004,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_setBackground(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_init(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12045,7 +12045,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_setcolourPicker(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_setcolourPicker(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12097,7 +12097,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_setcolourPicker(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12151,7 +12151,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(l
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_setHuePicker(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_setHuePicker(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12203,7 +12203,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_setHuePicker(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_getBackground(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_getBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12256,7 +12256,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_getBackground(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -12299,7 +12299,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlColourPicker_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlColourPicker_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlColourPicker* cobj = nullptr;
@@ -12370,7 +12370,7 @@ int lua_register_cocos2dx_extension_ControlColourPicker(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12412,7 +12412,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12464,7 +12464,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12506,7 +12506,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12570,7 +12570,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchEnded(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getMinimumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getMinimumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12611,7 +12611,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getMinimumValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12663,7 +12663,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12727,7 +12727,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchMoved(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12792,7 +12792,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_ccTouchBegan(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12834,7 +12834,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setEnabled(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12876,7 +12876,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12918,7 +12918,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -12960,7 +12960,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13002,7 +13002,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13047,7 +13047,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPo
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getProgressTimer(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getProgressTimer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13100,7 +13100,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getProgressTimer(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getMaximumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getMaximumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13141,7 +13141,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getMaximumValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13190,7 +13190,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLine
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_isTouchInside(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_isTouchInside(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13243,7 +13243,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_isTouchInside(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13284,7 +13284,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13326,7 +13326,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getThumbSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getThumbSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13379,7 +13379,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getThumbSprite(lua_State*
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_initWithTrackSprite_ProgressTimer_ThumbSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_initWithTrackSprite_ProgressTimer_ThumbSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13456,7 +13456,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_initWithTrackSprite_Progr
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13497,7 +13497,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(lua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -13546,7 +13546,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_create(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlPotentiometer_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlPotentiometer_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlPotentiometer* cobj = nullptr;
@@ -13629,7 +13629,7 @@ int lua_register_cocos2dx_extension_ControlPotentiometer(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlSlider_locationFromTouch(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_locationFromTouch(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13682,7 +13682,7 @@ static int lua_cocos2dx_extension_ControlSlider_locationFromTouch(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setProgressSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setProgressSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13734,7 +13734,7 @@ static int lua_cocos2dx_extension_ControlSlider_setProgressSprite(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getMaximumAllowedValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getMaximumAllowedValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13775,7 +13775,7 @@ static int lua_cocos2dx_extension_ControlSlider_getMaximumAllowedValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getMinimumAllowedValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getMinimumAllowedValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13816,7 +13816,7 @@ static int lua_cocos2dx_extension_ControlSlider_getMinimumAllowedValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getMinimumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getMinimumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13857,7 +13857,7 @@ static int lua_cocos2dx_extension_ControlSlider_getMinimumValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setThumbSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setThumbSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13909,7 +13909,7 @@ static int lua_cocos2dx_extension_ControlSlider_setThumbSprite(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setMinimumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setMinimumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13951,7 +13951,7 @@ static int lua_cocos2dx_extension_ControlSlider_setMinimumValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -13993,7 +13993,7 @@ static int lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14035,7 +14035,7 @@ static int lua_cocos2dx_extension_ControlSlider_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14077,7 +14077,7 @@ static int lua_cocos2dx_extension_ControlSlider_setValue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setMaximumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setMaximumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14119,7 +14119,7 @@ static int lua_cocos2dx_extension_ControlSlider_setMaximumValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_needsLayout(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_needsLayout(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14159,7 +14159,7 @@ static int lua_cocos2dx_extension_ControlSlider_needsLayout(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14212,7 +14212,7 @@ static int lua_cocos2dx_extension_ControlSlider_getBackgroundSprite(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_initWithSprites(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_initWithSprites(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14289,7 +14289,7 @@ static int lua_cocos2dx_extension_ControlSlider_initWithSprites(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getMaximumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getMaximumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14330,7 +14330,7 @@ static int lua_cocos2dx_extension_ControlSlider_getMaximumValue(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_isTouchInside(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_isTouchInside(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14383,7 +14383,7 @@ static int lua_cocos2dx_extension_ControlSlider_isTouchInside(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14424,7 +14424,7 @@ static int lua_cocos2dx_extension_ControlSlider_getValue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getThumbSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getThumbSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14477,7 +14477,7 @@ static int lua_cocos2dx_extension_ControlSlider_getThumbSprite(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_getProgressSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_getProgressSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14530,7 +14530,7 @@ static int lua_cocos2dx_extension_ControlSlider_getProgressSprite(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14582,7 +14582,7 @@ static int lua_cocos2dx_extension_ControlSlider_setBackgroundSprite(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14624,7 +14624,7 @@ static int lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -14736,7 +14736,7 @@ static int lua_cocos2dx_extension_ControlSlider_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSlider_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSlider_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSlider* cobj = nullptr;
@@ -14817,7 +14817,7 @@ int lua_register_cocos2dx_extension_ControlSlider(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlStepper_setMinusSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setMinusSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -14869,7 +14869,7 @@ static int lua_cocos2dx_extension_ControlStepper_setMinusSprite(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -14934,7 +14934,7 @@ static int lua_cocos2dx_extension_ControlStepper_ccTouchBegan(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_getMinusLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_getMinusLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -14987,7 +14987,7 @@ static int lua_cocos2dx_extension_ControlStepper_getMinusLabel(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setWraps(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setWraps(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15029,7 +15029,7 @@ static int lua_cocos2dx_extension_ControlStepper_setWraps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15093,7 +15093,7 @@ static int lua_cocos2dx_extension_ControlStepper_ccTouchEnded(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_isContinuous(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_isContinuous(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15134,7 +15134,7 @@ static int lua_cocos2dx_extension_ControlStepper_isContinuous(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_getMinusSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_getMinusSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15187,7 +15187,7 @@ static int lua_cocos2dx_extension_ControlStepper_getMinusSprite(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15229,7 +15229,7 @@ static int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15273,7 +15273,7 @@ static int lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_getPlusLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_getPlusLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15326,7 +15326,7 @@ static int lua_cocos2dx_extension_ControlStepper_getPlusLabel(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_stopAutorepeat(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_stopAutorepeat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15366,7 +15366,7 @@ static int lua_cocos2dx_extension_ControlStepper_stopAutorepeat(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15430,7 +15430,7 @@ static int lua_cocos2dx_extension_ControlStepper_ccTouchMoved(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setMaximumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setMaximumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15472,7 +15472,7 @@ static int lua_cocos2dx_extension_ControlStepper_setMaximumValue(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setPlusSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setPlusSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15524,7 +15524,7 @@ static int lua_cocos2dx_extension_ControlStepper_setPlusSprite(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15576,7 +15576,7 @@ static int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15618,7 +15618,7 @@ static int lua_cocos2dx_extension_ControlStepper_setValue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setStepValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setStepValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15660,7 +15660,7 @@ static int lua_cocos2dx_extension_ControlStepper_setStepValue(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_getPlusSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_getPlusSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15713,7 +15713,7 @@ static int lua_cocos2dx_extension_ControlStepper_getPlusSprite(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_update(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15755,7 +15755,7 @@ static int lua_cocos2dx_extension_ControlStepper_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setMinimumValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setMinimumValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15797,7 +15797,7 @@ static int lua_cocos2dx_extension_ControlStepper_setMinimumValue(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_startAutorepeat(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_startAutorepeat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15837,7 +15837,7 @@ static int lua_cocos2dx_extension_ControlStepper_startAutorepeat(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_initWithMinusSpriteAndPlusSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_initWithMinusSpriteAndPlusSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15902,7 +15902,7 @@ static int lua_cocos2dx_extension_ControlStepper_initWithMinusSpriteAndPlusSprit
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_getValue(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_getValue(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15943,7 +15943,7 @@ static int lua_cocos2dx_extension_ControlStepper_getValue(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -15995,7 +15995,7 @@ static int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16062,7 +16062,7 @@ static int lua_cocos2dx_extension_ControlStepper_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlStepper_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlStepper_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlStepper* cobj = nullptr;
@@ -16146,7 +16146,7 @@ int lua_register_cocos2dx_extension_ControlStepper(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_ControlSwitch_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16188,7 +16188,7 @@ static int lua_cocos2dx_extension_ControlSwitch_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = NULL;
@@ -16240,7 +16240,7 @@ static int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16305,7 +16305,7 @@ static int lua_cocos2dx_extension_ControlSwitch_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_isOn(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_isOn(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16346,7 +16346,7 @@ static int lua_cocos2dx_extension_ControlSwitch_isOn(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16410,7 +16410,7 @@ static int lua_cocos2dx_extension_ControlSwitch_ccTouchCancelled(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16474,7 +16474,7 @@ static int lua_cocos2dx_extension_ControlSwitch_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = NULL;
@@ -16656,7 +16656,7 @@ static int lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16720,7 +16720,7 @@ static int lua_cocos2dx_extension_ControlSwitch_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_hasMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_hasMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16761,7 +16761,7 @@ static int lua_cocos2dx_extension_ControlSwitch_hasMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_locationFromTouch(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_locationFromTouch(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -16814,7 +16814,7 @@ static int lua_cocos2dx_extension_ControlSwitch_locationFromTouch(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -17008,7 +17008,7 @@ static int lua_cocos2dx_extension_ControlSwitch_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_ControlSwitch_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_ControlSwitch_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ControlSwitch* cobj = nullptr;
@@ -17078,7 +17078,7 @@ int lua_register_cocos2dx_extension_ControlSwitch(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_TableViewCell_reset(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_reset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17118,7 +17118,7 @@ static int lua_cocos2dx_extension_TableViewCell_reset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableViewCell_setIdx(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_setIdx(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17160,7 +17160,7 @@ static int lua_cocos2dx_extension_TableViewCell_setIdx(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableViewCell_setObjectID(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_setObjectID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17202,7 +17202,7 @@ static int lua_cocos2dx_extension_TableViewCell_setObjectID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableViewCell_getObjectID(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_getObjectID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17243,7 +17243,7 @@ static int lua_cocos2dx_extension_TableViewCell_getObjectID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableViewCell_getIdx(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_getIdx(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17284,7 +17284,7 @@ static int lua_cocos2dx_extension_TableViewCell_getIdx(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableViewCell_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableViewCell_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableViewCell* cobj = nullptr;
@@ -17348,7 +17348,7 @@ int lua_register_cocos2dx_extension_TableViewCell(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_TableView_updateCellAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_updateCellAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17390,7 +17390,7 @@ static int lua_cocos2dx_extension_TableView_updateCellAtIndex(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_setVerticalFillOrder(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_setVerticalFillOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17432,7 +17432,7 @@ static int lua_cocos2dx_extension_TableView_setVerticalFillOrder(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17484,7 +17484,7 @@ static int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17549,7 +17549,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_getVerticalFillOrder(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_getVerticalFillOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17590,7 +17590,7 @@ static int lua_cocos2dx_extension_TableView_getVerticalFillOrder(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_removeCellAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_removeCellAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17632,7 +17632,7 @@ static int lua_cocos2dx_extension_TableView_removeCellAtIndex(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_initWithViewSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_initWithViewSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17697,7 +17697,7 @@ static int lua_cocos2dx_extension_TableView_initWithViewSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17749,7 +17749,7 @@ static int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_reloadData(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_reloadData(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17789,7 +17789,7 @@ static int lua_cocos2dx_extension_TableView_reloadData(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17853,7 +17853,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchCancelled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17917,7 +17917,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -17981,7 +17981,7 @@ static int lua_cocos2dx_extension_TableView_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView__updateContentSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView__updateContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -18021,7 +18021,7 @@ static int lua_cocos2dx_extension_TableView__updateContentSize(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_insertCellAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_insertCellAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -18063,7 +18063,7 @@ static int lua_cocos2dx_extension_TableView_insertCellAtIndex(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -18118,7 +18118,7 @@ static int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -18171,7 +18171,7 @@ static int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_TableView_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_TableView_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::TableView* cobj = nullptr;
@@ -18246,7 +18246,7 @@ int lua_register_cocos2dx_extension_TableView(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_extension_EditBox_setAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18288,7 +18288,7 @@ static int lua_cocos2dx_extension_EditBox_setAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_getText(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_getText(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18329,7 +18329,7 @@ static int lua_cocos2dx_extension_EditBox_getText(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPlaceholderFontName(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPlaceholderFontName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18371,7 +18371,7 @@ static int lua_cocos2dx_extension_EditBox_setPlaceholderFontName(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_getPlaceHolder(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_getPlaceHolder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18412,7 +18412,7 @@ static int lua_cocos2dx_extension_EditBox_getPlaceHolder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setFontName(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setFontName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18454,7 +18454,7 @@ static int lua_cocos2dx_extension_EditBox_setFontName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPlaceholderFontSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPlaceholderFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18496,7 +18496,7 @@ static int lua_cocos2dx_extension_EditBox_setPlaceholderFontSize(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setInputMode(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setInputMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18538,7 +18538,7 @@ static int lua_cocos2dx_extension_EditBox_setInputMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPlaceholderFontColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPlaceholderFontColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18580,7 +18580,7 @@ static int lua_cocos2dx_extension_EditBox_setPlaceholderFontColor(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setFontColor(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setFontColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18622,7 +18622,7 @@ static int lua_cocos2dx_extension_EditBox_setFontColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPlaceholderFont(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPlaceholderFont(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18666,7 +18666,7 @@ static int lua_cocos2dx_extension_EditBox_setPlaceholderFont(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setFontSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18708,7 +18708,7 @@ static int lua_cocos2dx_extension_EditBox_setFontSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18763,7 +18763,7 @@ static int lua_cocos2dx_extension_EditBox_initWithSizeAndBackgroundSprite(lua_St
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPlaceHolder(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPlaceHolder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18805,7 +18805,7 @@ static int lua_cocos2dx_extension_EditBox_setPlaceHolder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18847,7 +18847,7 @@ static int lua_cocos2dx_extension_EditBox_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setReturnType(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setReturnType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18889,7 +18889,7 @@ static int lua_cocos2dx_extension_EditBox_setReturnType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setInputFlag(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setInputFlag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18931,7 +18931,7 @@ static int lua_cocos2dx_extension_EditBox_setInputFlag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_getMaxLength(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_getMaxLength(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -18972,7 +18972,7 @@ static int lua_cocos2dx_extension_EditBox_getMaxLength(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setText(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setText(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -19014,7 +19014,7 @@ static int lua_cocos2dx_extension_EditBox_setText(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setMaxLength(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setMaxLength(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -19056,7 +19056,7 @@ static int lua_cocos2dx_extension_EditBox_setMaxLength(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setContentSize(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -19098,7 +19098,7 @@ static int lua_cocos2dx_extension_EditBox_setContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setFont(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setFont(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -19142,7 +19142,7 @@ static int lua_cocos2dx_extension_EditBox_setFont(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_setVisible(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_setVisible(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;
@@ -19184,7 +19184,7 @@ static int lua_cocos2dx_extension_EditBox_setVisible(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -19345,7 +19345,7 @@ static int lua_cocos2dx_extension_EditBox_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_extension_EditBox_constructor(lua_State* tolua_S)
+int lua_cocos2dx_extension_EditBox_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::EditBox* cobj = nullptr;

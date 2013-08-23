@@ -6,7 +6,7 @@
 
 
 
-static int lua_cocos2dx_Object_isSingleReference(lua_State* tolua_S)
+int lua_cocos2dx_Object_isSingleReference(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Object* cobj = nullptr;
@@ -47,7 +47,7 @@ static int lua_cocos2dx_Object_isSingleReference(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Object_release(lua_State* tolua_S)
+int lua_cocos2dx_Object_release(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Object* cobj = nullptr;
@@ -87,7 +87,7 @@ static int lua_cocos2dx_Object_release(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Object_retain(lua_State* tolua_S)
+int lua_cocos2dx_Object_retain(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Object* cobj = nullptr;
@@ -127,7 +127,7 @@ static int lua_cocos2dx_Object_retain(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Object_retainCount(lua_State* tolua_S)
+int lua_cocos2dx_Object_retainCount(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Object* cobj = nullptr;
@@ -168,7 +168,7 @@ static int lua_cocos2dx_Object_retainCount(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Object_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Object_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Object* cobj = nullptr;
@@ -231,7 +231,7 @@ int lua_register_cocos2dx_Object(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -283,7 +283,7 @@ static int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
+int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -335,7 +335,7 @@ static int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_clone(lua_State* tolua_S)
+int lua_cocos2dx_Action_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -388,7 +388,7 @@ static int lua_cocos2dx_Action_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
+int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -441,7 +441,7 @@ static int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_stop(lua_State* tolua_S)
+int lua_cocos2dx_Action_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -481,7 +481,7 @@ static int lua_cocos2dx_Action_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_update(lua_State* tolua_S)
+int lua_cocos2dx_Action_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -523,7 +523,7 @@ static int lua_cocos2dx_Action_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
+int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -576,7 +576,7 @@ static int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_step(lua_State* tolua_S)
+int lua_cocos2dx_Action_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -618,7 +618,7 @@ static int lua_cocos2dx_Action_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_setTag(lua_State* tolua_S)
+int lua_cocos2dx_Action_setTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -660,7 +660,7 @@ static int lua_cocos2dx_Action_setTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_getTag(lua_State* tolua_S)
+int lua_cocos2dx_Action_getTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -701,7 +701,7 @@ static int lua_cocos2dx_Action_getTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
+int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -753,7 +753,7 @@ static int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_isDone(lua_State* tolua_S)
+int lua_cocos2dx_Action_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -794,7 +794,7 @@ static int lua_cocos2dx_Action_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Action* cobj = nullptr;
@@ -878,7 +878,7 @@ int lua_register_cocos2dx_Action(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FiniteTimeAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_FiniteTimeAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FiniteTimeAction* cobj = nullptr;
@@ -931,7 +931,7 @@ static int lua_cocos2dx_FiniteTimeAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FiniteTimeAction_setDuration(lua_State* tolua_S)
+int lua_cocos2dx_FiniteTimeAction_setDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FiniteTimeAction* cobj = nullptr;
@@ -973,7 +973,7 @@ static int lua_cocos2dx_FiniteTimeAction_setDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FiniteTimeAction_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FiniteTimeAction_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FiniteTimeAction* cobj = nullptr;
@@ -1026,7 +1026,7 @@ static int lua_cocos2dx_FiniteTimeAction_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FiniteTimeAction_getDuration(lua_State* tolua_S)
+int lua_cocos2dx_FiniteTimeAction_getDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FiniteTimeAction* cobj = nullptr;
@@ -1089,7 +1089,7 @@ int lua_register_cocos2dx_FiniteTimeAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1141,7 +1141,7 @@ static int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Speed_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1193,7 +1193,7 @@ static int lua_cocos2dx_Speed_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_getSpeed(lua_State* tolua_S)
+int lua_cocos2dx_Speed_getSpeed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1234,7 +1234,7 @@ static int lua_cocos2dx_Speed_getSpeed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_clone(lua_State* tolua_S)
+int lua_cocos2dx_Speed_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1287,7 +1287,7 @@ static int lua_cocos2dx_Speed_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_stop(lua_State* tolua_S)
+int lua_cocos2dx_Speed_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1327,7 +1327,7 @@ static int lua_cocos2dx_Speed_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_step(lua_State* tolua_S)
+int lua_cocos2dx_Speed_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1369,7 +1369,7 @@ static int lua_cocos2dx_Speed_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_setSpeed(lua_State* tolua_S)
+int lua_cocos2dx_Speed_setSpeed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1411,7 +1411,7 @@ static int lua_cocos2dx_Speed_setSpeed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_Speed_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1466,7 +1466,7 @@ static int lua_cocos2dx_Speed_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1519,7 +1519,7 @@ static int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_isDone(lua_State* tolua_S)
+int lua_cocos2dx_Speed_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1560,7 +1560,7 @@ static int lua_cocos2dx_Speed_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Speed_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1613,7 +1613,7 @@ static int lua_cocos2dx_Speed_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_create(lua_State* tolua_S)
+int lua_cocos2dx_Speed_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -1670,7 +1670,7 @@ static int lua_cocos2dx_Speed_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Speed_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Speed_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Speed* cobj = nullptr;
@@ -1741,7 +1741,7 @@ int lua_register_cocos2dx_Speed(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Follow_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Follow_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -1794,7 +1794,7 @@ static int lua_cocos2dx_Follow_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_clone(lua_State* tolua_S)
+int lua_cocos2dx_Follow_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -1847,7 +1847,7 @@ static int lua_cocos2dx_Follow_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -1922,7 +1922,7 @@ static int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_stop(lua_State* tolua_S)
+int lua_cocos2dx_Follow_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -1962,7 +1962,7 @@ static int lua_cocos2dx_Follow_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
+int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -2004,7 +2004,7 @@ static int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_step(lua_State* tolua_S)
+int lua_cocos2dx_Follow_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -2046,7 +2046,7 @@ static int lua_cocos2dx_Follow_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_isDone(lua_State* tolua_S)
+int lua_cocos2dx_Follow_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -2087,7 +2087,7 @@ static int lua_cocos2dx_Follow_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
+int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -2128,7 +2128,7 @@ static int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
+int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -2217,7 +2217,7 @@ static int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Follow_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Follow_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -2285,7 +2285,7 @@ int lua_register_cocos2dx_Follow(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_GLProgram_fragmentShaderLog(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_fragmentShaderLog(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2326,7 +2326,7 @@ static int lua_cocos2dx_GLProgram_fragmentShaderLog(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_addAttribute(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_addAttribute(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2370,7 +2370,7 @@ static int lua_cocos2dx_GLProgram_addAttribute(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2416,7 +2416,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_getUniformLocationForName(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_getUniformLocationForName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2459,7 +2459,7 @@ static int lua_cocos2dx_GLProgram_getUniformLocationForName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_use(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_use(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2499,7 +2499,7 @@ static int lua_cocos2dx_GLProgram_use(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_vertexShaderLog(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_vertexShaderLog(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2540,7 +2540,7 @@ static int lua_cocos2dx_GLProgram_vertexShaderLog(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_initWithVertexShaderByteArray(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_initWithVertexShaderByteArray(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2585,7 +2585,7 @@ static int lua_cocos2dx_GLProgram_initWithVertexShaderByteArray(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_initWithVertexShaderFilename(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_initWithVertexShaderFilename(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2630,7 +2630,7 @@ static int lua_cocos2dx_GLProgram_initWithVertexShaderFilename(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2670,7 +2670,7 @@ static int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2718,7 +2718,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith3i(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2764,7 +2764,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_updateUniforms(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_updateUniforms(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2804,7 +2804,7 @@ static int lua_cocos2dx_GLProgram_updateUniforms(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2850,7 +2850,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_link(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_link(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2891,7 +2891,7 @@ static int lua_cocos2dx_GLProgram_link(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2937,7 +2937,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_reset(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_reset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -2977,7 +2977,7 @@ static int lua_cocos2dx_GLProgram_reset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith4i(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith4i(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -3027,7 +3027,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith4i(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith1i(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith1i(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -3071,7 +3071,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith1i(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_setUniformLocationWith2i(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_setUniformLocationWith2i(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -3117,7 +3117,7 @@ static int lua_cocos2dx_GLProgram_setUniformLocationWith2i(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GLProgram_constructor(lua_State* tolua_S)
+int lua_cocos2dx_GLProgram_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GLProgram* cobj = nullptr;
@@ -3195,7 +3195,7 @@ int lua_register_cocos2dx_GLProgram(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3236,7 +3236,7 @@ static int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3277,7 +3277,7 @@ static int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3318,7 +3318,7 @@ static int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3359,7 +3359,7 @@ static int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3400,7 +3400,7 @@ static int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getID(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3441,7 +3441,7 @@ static int lua_cocos2dx_Touch_getID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_setTouchInfo(lua_State* tolua_S)
+int lua_cocos2dx_Touch_setTouchInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3487,7 +3487,7 @@ static int lua_cocos2dx_Touch_setTouchInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3528,7 +3528,7 @@ static int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
+int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3569,7 +3569,7 @@ static int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Touch_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Touch_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Touch* cobj = nullptr;
@@ -3637,7 +3637,7 @@ int lua_register_cocos2dx_Touch(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Set_count(lua_State* tolua_S)
+int lua_cocos2dx_Set_count(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3678,7 +3678,7 @@ static int lua_cocos2dx_Set_count(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_addObject(lua_State* tolua_S)
+int lua_cocos2dx_Set_addObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3730,7 +3730,7 @@ static int lua_cocos2dx_Set_addObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_mutableCopy(lua_State* tolua_S)
+int lua_cocos2dx_Set_mutableCopy(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3783,7 +3783,7 @@ static int lua_cocos2dx_Set_mutableCopy(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_anyObject(lua_State* tolua_S)
+int lua_cocos2dx_Set_anyObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3836,7 +3836,7 @@ static int lua_cocos2dx_Set_anyObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_removeAllObjects(lua_State* tolua_S)
+int lua_cocos2dx_Set_removeAllObjects(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3876,7 +3876,7 @@ static int lua_cocos2dx_Set_removeAllObjects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_removeObject(lua_State* tolua_S)
+int lua_cocos2dx_Set_removeObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3928,7 +3928,7 @@ static int lua_cocos2dx_Set_removeObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_copy(lua_State* tolua_S)
+int lua_cocos2dx_Set_copy(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -3981,7 +3981,7 @@ static int lua_cocos2dx_Set_copy(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_containsObject(lua_State* tolua_S)
+int lua_cocos2dx_Set_containsObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Set* cobj = nullptr;
@@ -4034,7 +4034,7 @@ static int lua_cocos2dx_Set_containsObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Set_create(lua_State* tolua_S)
+int lua_cocos2dx_Set_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -4104,7 +4104,7 @@ int lua_register_cocos2dx_Set(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4157,7 +4157,7 @@ static int lua_cocos2dx_Texture2D_getShaderProgram(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getMaxT(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getMaxT(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4198,7 +4198,7 @@ static int lua_cocos2dx_Texture2D_getMaxT(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4239,7 +4239,7 @@ static int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = NULL;
@@ -4313,7 +4313,7 @@ static int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4365,7 +4365,7 @@ static int lua_cocos2dx_Texture2D_setShaderProgram(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4406,7 +4406,7 @@ static int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4447,7 +4447,7 @@ static int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4488,7 +4488,7 @@ static int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_initWithMipmaps(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_initWithMipmaps(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4539,7 +4539,7 @@ static int lua_cocos2dx_Texture2D_initWithMipmaps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = NULL;
@@ -4585,7 +4585,7 @@ static int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4626,7 +4626,7 @@ static int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = NULL;
@@ -4769,7 +4769,7 @@ static int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setMaxT(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setMaxT(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4811,7 +4811,7 @@ static int lua_cocos2dx_Texture2D_setMaxT(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_drawInRect(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_drawInRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4853,7 +4853,7 @@ static int lua_cocos2dx_Texture2D_drawInRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getContentSize(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4894,7 +4894,7 @@ static int lua_cocos2dx_Texture2D_getContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setAliasTexParameters(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setAliasTexParameters(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4934,7 +4934,7 @@ static int lua_cocos2dx_Texture2D_setAliasTexParameters(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setAntiAliasTexParameters(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setAntiAliasTexParameters(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -4974,7 +4974,7 @@ static int lua_cocos2dx_Texture2D_setAntiAliasTexParameters(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_generateMipmap(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_generateMipmap(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5014,7 +5014,7 @@ static int lua_cocos2dx_Texture2D_generateMipmap(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5055,7 +5055,7 @@ static int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5096,7 +5096,7 @@ static int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getPixelsWide(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getPixelsWide(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5137,7 +5137,7 @@ static int lua_cocos2dx_Texture2D_getPixelsWide(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5179,7 +5179,7 @@ static int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5220,7 +5220,7 @@ static int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5262,7 +5262,7 @@ static int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -5294,7 +5294,7 @@ static int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getPixelFormatInfoMap(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getPixelFormatInfoMap(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -5325,7 +5325,7 @@ static int lua_cocos2dx_Texture2D_getPixelFormatInfoMap(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -5356,7 +5356,7 @@ static int lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -5388,7 +5388,7 @@ static int lua_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_Texture2D_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Texture2D_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Texture2D* cobj = nullptr;
@@ -5475,7 +5475,7 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
+int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -5575,7 +5575,7 @@ static int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5618,7 +5618,7 @@ static int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -5684,7 +5684,7 @@ static int lua_cocos2dx_Node_getShaderProgram(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
+int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -5726,7 +5726,7 @@ static int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5769,7 +5769,7 @@ static int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
+int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5810,7 +5810,7 @@ static int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_init(lua_State* tolua_S)
+int lua_cocos2dx_Node_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5851,7 +5851,7 @@ static int lua_cocos2dx_Node_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setRotation(lua_State* tolua_S)
+int lua_cocos2dx_Node_setRotation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5893,7 +5893,7 @@ static int lua_cocos2dx_Node_setRotation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setZOrder(lua_State* tolua_S)
+int lua_cocos2dx_Node_setZOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5935,7 +5935,7 @@ static int lua_cocos2dx_Node_setZOrder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setScaleY(lua_State* tolua_S)
+int lua_cocos2dx_Node_setScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5977,7 +5977,7 @@ static int lua_cocos2dx_Node_setScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setScaleX(lua_State* tolua_S)
+int lua_cocos2dx_Node_setScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6019,7 +6019,7 @@ static int lua_cocos2dx_Node_setScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6059,7 +6059,7 @@ static int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6100,7 +6100,7 @@ static int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6141,7 +6141,7 @@ static int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6214,7 +6214,7 @@ static int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6257,7 +6257,7 @@ static int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setSkewX(lua_State* tolua_S)
+int lua_cocos2dx_Node_setSkewX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6299,7 +6299,7 @@ static int lua_cocos2dx_Node_setSkewX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setSkewY(lua_State* tolua_S)
+int lua_cocos2dx_Node_setSkewY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6341,7 +6341,7 @@ static int lua_cocos2dx_Node_setSkewY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6394,7 +6394,7 @@ static int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -6438,7 +6438,7 @@ static int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getRotationX(lua_State* tolua_S)
+int lua_cocos2dx_Node_getRotationX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6479,7 +6479,7 @@ static int lua_cocos2dx_Node_getRotationX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getRotationY(lua_State* tolua_S)
+int lua_cocos2dx_Node_getRotationY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6520,7 +6520,7 @@ static int lua_cocos2dx_Node_getRotationY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
+int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6572,7 +6572,7 @@ static int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6613,7 +6613,7 @@ static int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6656,7 +6656,7 @@ static int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
+int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -6722,7 +6722,7 @@ static int lua_cocos2dx_Node_getGrid(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -6774,7 +6774,7 @@ static int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_stopActionByTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_stopActionByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6816,7 +6816,7 @@ static int lua_cocos2dx_Node_stopActionByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
+int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6870,7 +6870,7 @@ static int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_ignoreAnchorPointForPosition(lua_State* tolua_S)
+int lua_cocos2dx_Node_ignoreAnchorPointForPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6912,7 +6912,7 @@ static int lua_cocos2dx_Node_ignoreAnchorPointForPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setPositionY(lua_State* tolua_S)
+int lua_cocos2dx_Node_setPositionY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6954,7 +6954,7 @@ static int lua_cocos2dx_Node_setPositionY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setPositionX(lua_State* tolua_S)
+int lua_cocos2dx_Node_setPositionX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -6996,7 +6996,7 @@ static int lua_cocos2dx_Node_setPositionX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7037,7 +7037,7 @@ static int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getNumberOfRunningActions(lua_State* tolua_S)
+int lua_cocos2dx_Node_getNumberOfRunningActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7078,7 +7078,7 @@ static int lua_cocos2dx_Node_getNumberOfRunningActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_updateTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_updateTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7118,7 +7118,7 @@ static int lua_cocos2dx_Node_updateTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_isVisible(lua_State* tolua_S)
+int lua_cocos2dx_Node_isVisible(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7159,7 +7159,7 @@ static int lua_cocos2dx_Node_isVisible(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getChildrenCount(lua_State* tolua_S)
+int lua_cocos2dx_Node_getChildrenCount(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7200,7 +7200,7 @@ static int lua_cocos2dx_Node_getChildrenCount(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_Node_setAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7242,7 +7242,7 @@ static int lua_cocos2dx_Node_setAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7285,7 +7285,7 @@ static int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
+int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7338,7 +7338,7 @@ static int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_visit(lua_State* tolua_S)
+int lua_cocos2dx_Node_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7378,7 +7378,7 @@ static int lua_cocos2dx_Node_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
+int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7430,7 +7430,7 @@ static int lua_cocos2dx_Node_setShaderProgram(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
+int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7471,7 +7471,7 @@ static int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_resumeSchedulerAndActions(lua_State* tolua_S)
+int lua_cocos2dx_Node_resumeSchedulerAndActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7511,7 +7511,7 @@ static int lua_cocos2dx_Node_resumeSchedulerAndActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getZOrder(lua_State* tolua_S)
+int lua_cocos2dx_Node_getZOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7552,7 +7552,7 @@ static int lua_cocos2dx_Node_getZOrder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
+int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7593,7 +7593,7 @@ static int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
+int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7658,7 +7658,7 @@ static int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_transform(lua_State* tolua_S)
+int lua_cocos2dx_Node_transform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7698,7 +7698,7 @@ static int lua_cocos2dx_Node_transform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setVertexZ(lua_State* tolua_S)
+int lua_cocos2dx_Node_setVertexZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7740,7 +7740,7 @@ static int lua_cocos2dx_Node_setVertexZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
+int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7792,7 +7792,7 @@ static int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_stopAllActions(lua_State* tolua_S)
+int lua_cocos2dx_Node_stopAllActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7832,7 +7832,7 @@ static int lua_cocos2dx_Node_stopAllActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getSkewX(lua_State* tolua_S)
+int lua_cocos2dx_Node_getSkewX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7873,7 +7873,7 @@ static int lua_cocos2dx_Node_getSkewX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getSkewY(lua_State* tolua_S)
+int lua_cocos2dx_Node_getSkewY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7914,7 +7914,7 @@ static int lua_cocos2dx_Node_getSkewY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -7969,7 +7969,7 @@ static int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setRotationX(lua_State* tolua_S)
+int lua_cocos2dx_Node_setRotationX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8011,7 +8011,7 @@ static int lua_cocos2dx_Node_setRotationX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setRotationY(lua_State* tolua_S)
+int lua_cocos2dx_Node_setRotationY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8053,7 +8053,7 @@ static int lua_cocos2dx_Node_setRotationY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8095,7 +8095,7 @@ static int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
+int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -8161,7 +8161,7 @@ static int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
+int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8202,7 +8202,7 @@ static int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setContentSize(lua_State* tolua_S)
+int lua_cocos2dx_Node_setContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8244,7 +8244,7 @@ static int lua_cocos2dx_Node_setContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
+int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8296,56 +8296,7 @@ static int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getPosition(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = NULL;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPosition'", NULL);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            float* arg0;
-            #pragma warning NO CONVERSION TO NATIVE FOR float*;
-
-            if (!ok) { ok = true; break; }
-            float* arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR float*;
-
-            if (!ok) { ok = true; break; }
-            cobj->getPosition(arg0, arg1);
-            return 0;
-        }
-    }while(0);
-    do{
-        if (argc == 0) {
-            cocos2d::Point ret = cobj->getPosition();
-            point_to_luaval(tolua_S, ret);
-            return 1;
-        }
-    }while(0);
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPosition",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPosition'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
+int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8386,7 +8337,7 @@ static int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
+int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -8452,89 +8403,7 @@ static int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getPositionY(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionY'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        float ret = cobj->getPositionY();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionY",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPositionY'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_Node_getPositionX(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionX'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        float ret = cobj->getPositionX();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionX",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPositionX'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8587,7 +8456,7 @@ static int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setVisible(lua_State* tolua_S)
+int lua_cocos2dx_Node_setVisible(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8629,7 +8498,7 @@ static int lua_cocos2dx_Node_setVisible(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8670,7 +8539,7 @@ static int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_pauseSchedulerAndActions(lua_State* tolua_S)
+int lua_cocos2dx_Node_pauseSchedulerAndActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8710,7 +8579,7 @@ static int lua_cocos2dx_Node_pauseSchedulerAndActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getVertexZ(lua_State* tolua_S)
+int lua_cocos2dx_Node_getVertexZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8751,7 +8620,7 @@ static int lua_cocos2dx_Node_getVertexZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node__setZOrder(lua_State* tolua_S)
+int lua_cocos2dx_Node__setZOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8793,7 +8662,7 @@ static int lua_cocos2dx_Node__setZOrder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
+int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8835,7 +8704,7 @@ static int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8890,7 +8759,7 @@ static int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
+int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8932,7 +8801,7 @@ static int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getScaleY(lua_State* tolua_S)
+int lua_cocos2dx_Node_getScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -8973,7 +8842,7 @@ static int lua_cocos2dx_Node_getScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getScaleX(lua_State* tolua_S)
+int lua_cocos2dx_Node_getScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9014,7 +8883,7 @@ static int lua_cocos2dx_Node_getScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_cleanup(lua_State* tolua_S)
+int lua_cocos2dx_Node_cleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9054,7 +8923,7 @@ static int lua_cocos2dx_Node_cleanup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
+int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9109,7 +8978,7 @@ static int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getContentSize(lua_State* tolua_S)
+int lua_cocos2dx_Node_getContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9150,7 +9019,7 @@ static int lua_cocos2dx_Node_getContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setGrid(lua_State* tolua_S)
+int lua_cocos2dx_Node_setGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9202,7 +9071,7 @@ static int lua_cocos2dx_Node_setGrid(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getBoundingBox(lua_State* tolua_S)
+int lua_cocos2dx_Node_getBoundingBox(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9243,7 +9112,7 @@ static int lua_cocos2dx_Node_getBoundingBox(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_draw(lua_State* tolua_S)
+int lua_cocos2dx_Node_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9283,7 +9152,7 @@ static int lua_cocos2dx_Node_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_transformAncestors(lua_State* tolua_S)
+int lua_cocos2dx_Node_transformAncestors(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9323,7 +9192,7 @@ static int lua_cocos2dx_Node_transformAncestors(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
+int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9375,7 +9244,7 @@ static int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
+int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -9419,7 +9288,7 @@ static int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
+int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9472,7 +9341,7 @@ static int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_update(lua_State* tolua_S)
+int lua_cocos2dx_Node_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9514,7 +9383,7 @@ static int lua_cocos2dx_Node_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_sortAllChildren(lua_State* tolua_S)
+int lua_cocos2dx_Node_sortAllChildren(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9554,7 +9423,7 @@ static int lua_cocos2dx_Node_sortAllChildren(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
+int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9595,7 +9464,7 @@ static int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
+int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9636,7 +9505,7 @@ static int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getCamera(lua_State* tolua_S)
+int lua_cocos2dx_Node_getCamera(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9689,7 +9558,7 @@ static int lua_cocos2dx_Node_getCamera(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_setTag(lua_State* tolua_S)
+int lua_cocos2dx_Node_setTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9731,7 +9600,7 @@ static int lua_cocos2dx_Node_setTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
+int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -9783,7 +9652,7 @@ static int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
+int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = NULL;
@@ -9849,7 +9718,7 @@ static int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_create(lua_State* tolua_S)
+int lua_cocos2dx_Node_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -9892,7 +9761,7 @@ static int lua_cocos2dx_Node_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Node_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Node_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -10005,11 +9874,8 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getOrderOfArrival",lua_cocos2dx_Node_getOrderOfArrival);
         tolua_function(tolua_S,"setContentSize",lua_cocos2dx_Node_setContentSize);
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Node_setActionManager);
-        tolua_function(tolua_S,"getPosition",lua_cocos2dx_Node_getPosition);
         tolua_function(tolua_S,"isRunning",lua_cocos2dx_Node_isRunning);
         tolua_function(tolua_S,"getParent",lua_cocos2dx_Node_getParent);
-        tolua_function(tolua_S,"getPositionY",lua_cocos2dx_Node_getPositionY);
-        tolua_function(tolua_S,"getPositionX",lua_cocos2dx_Node_getPositionX);
         tolua_function(tolua_S,"removeChildByTag",lua_cocos2dx_Node_removeChildByTag);
         tolua_function(tolua_S,"setVisible",lua_cocos2dx_Node_setVisible);
         tolua_function(tolua_S,"getParentToNodeTransform",lua_cocos2dx_Node_getParentToNodeTransform);
@@ -10047,7 +9913,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_NodeRGBA_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10089,7 +9955,7 @@ static int lua_cocos2dx_NodeRGBA_updateDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_setColor(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10131,7 +9997,7 @@ static int lua_cocos2dx_NodeRGBA_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10172,7 +10038,7 @@ static int lua_cocos2dx_NodeRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_getColor(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10213,7 +10079,7 @@ static int lua_cocos2dx_NodeRGBA_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_getDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_getDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10254,7 +10120,7 @@ static int lua_cocos2dx_NodeRGBA_getDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_setCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_setCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10296,7 +10162,7 @@ static int lua_cocos2dx_NodeRGBA_setCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10338,7 +10204,7 @@ static int lua_cocos2dx_NodeRGBA_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10380,7 +10246,7 @@ static int lua_cocos2dx_NodeRGBA_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10422,7 +10288,7 @@ static int lua_cocos2dx_NodeRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10464,7 +10330,7 @@ static int lua_cocos2dx_NodeRGBA_updateDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_init(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10505,7 +10371,7 @@ static int lua_cocos2dx_NodeRGBA_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10546,7 +10412,7 @@ static int lua_cocos2dx_NodeRGBA_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10587,7 +10453,7 @@ static int lua_cocos2dx_NodeRGBA_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_isCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_isCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10628,7 +10494,7 @@ static int lua_cocos2dx_NodeRGBA_isCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_getDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_getDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10669,7 +10535,7 @@ static int lua_cocos2dx_NodeRGBA_getDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_NodeRGBA_constructor(lua_State* tolua_S)
+int lua_cocos2dx_NodeRGBA_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::NodeRGBA* cobj = nullptr;
@@ -10743,7 +10609,7 @@ int lua_register_cocos2dx_NodeRGBA(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -10796,7 +10662,7 @@ static int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setRotated(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setRotated(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -10838,7 +10704,7 @@ static int lua_cocos2dx_SpriteFrame_setRotated(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -10890,7 +10756,7 @@ static int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = NULL;
@@ -10980,7 +10846,7 @@ static int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setRectInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setRectInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11022,7 +10888,7 @@ static int lua_cocos2dx_SpriteFrame_setRectInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11075,7 +10941,7 @@ static int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getRect(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11116,7 +10982,7 @@ static int lua_cocos2dx_SpriteFrame_getRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11158,7 +11024,7 @@ static int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getRectInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getRectInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11199,7 +11065,7 @@ static int lua_cocos2dx_SpriteFrame_getRectInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setOriginalSize(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setOriginalSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11241,7 +11107,7 @@ static int lua_cocos2dx_SpriteFrame_setOriginalSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11282,7 +11148,7 @@ static int lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11324,7 +11190,7 @@ static int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11366,7 +11232,7 @@ static int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11407,7 +11273,7 @@ static int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11448,7 +11314,7 @@ static int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = NULL;
@@ -11518,7 +11384,7 @@ static int lua_cocos2dx_SpriteFrame_initWithTextureFilename(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_setRect(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_setRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11560,7 +11426,7 @@ static int lua_cocos2dx_SpriteFrame_setRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11601,7 +11467,7 @@ static int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_getOriginalSize(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_getOriginalSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrame* cobj = nullptr;
@@ -11642,7 +11508,7 @@ static int lua_cocos2dx_SpriteFrame_getOriginalSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -11727,7 +11593,7 @@ static int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -11871,7 +11737,7 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -11923,7 +11789,7 @@ static int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -11964,7 +11830,7 @@ static int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_setDelayUnits(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_setDelayUnits(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12006,7 +11872,7 @@ static int lua_cocos2dx_AnimationFrame_setDelayUnits(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12059,7 +11925,7 @@ static int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12112,7 +11978,7 @@ static int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_getDelayUnits(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_getDelayUnits(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12153,7 +12019,7 @@ static int lua_cocos2dx_AnimationFrame_getDelayUnits(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_setUserInfo(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_setUserInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12195,7 +12061,7 @@ static int lua_cocos2dx_AnimationFrame_setUserInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_initWithSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_initWithSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12252,7 +12118,7 @@ static int lua_cocos2dx_AnimationFrame_initWithSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationFrame_constructor(lua_State* tolua_S)
+int lua_cocos2dx_AnimationFrame_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationFrame* cobj = nullptr;
@@ -12319,7 +12185,7 @@ int lua_register_cocos2dx_AnimationFrame(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Animation_getLoops(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getLoops(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12360,7 +12226,7 @@ static int lua_cocos2dx_Animation_getLoops(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_setFrames(lua_State* tolua_S)
+int lua_cocos2dx_Animation_setFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12402,7 +12268,7 @@ static int lua_cocos2dx_Animation_setFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_getFrames(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12443,7 +12309,7 @@ static int lua_cocos2dx_Animation_getFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12495,7 +12361,7 @@ static int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_setRestoreOriginalFrame(lua_State* tolua_S)
+int lua_cocos2dx_Animation_setRestoreOriginalFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12537,7 +12403,7 @@ static int lua_cocos2dx_Animation_setRestoreOriginalFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
+int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12590,7 +12456,7 @@ static int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_setDelayPerUnit(lua_State* tolua_S)
+int lua_cocos2dx_Animation_setDelayPerUnit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12632,7 +12498,7 @@ static int lua_cocos2dx_Animation_setDelayPerUnit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_initWithAnimationFrames(lua_State* tolua_S)
+int lua_cocos2dx_Animation_initWithAnimationFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12679,7 +12545,7 @@ static int lua_cocos2dx_Animation_initWithAnimationFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_init(lua_State* tolua_S)
+int lua_cocos2dx_Animation_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12720,7 +12586,7 @@ static int lua_cocos2dx_Animation_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_initWithSpriteFrames(lua_State* tolua_S)
+int lua_cocos2dx_Animation_initWithSpriteFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12775,7 +12641,7 @@ static int lua_cocos2dx_Animation_initWithSpriteFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_setLoops(lua_State* tolua_S)
+int lua_cocos2dx_Animation_setLoops(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12817,7 +12683,7 @@ static int lua_cocos2dx_Animation_setLoops(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_addSpriteFrameWithFileName(lua_State* tolua_S)
+int lua_cocos2dx_Animation_addSpriteFrameWithFileName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12859,7 +12725,7 @@ static int lua_cocos2dx_Animation_addSpriteFrameWithFileName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_getTotalDelayUnits(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getTotalDelayUnits(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12900,7 +12766,7 @@ static int lua_cocos2dx_Animation_getTotalDelayUnits(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_getDelayPerUnit(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getDelayPerUnit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12941,7 +12807,7 @@ static int lua_cocos2dx_Animation_getDelayPerUnit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_getRestoreOriginalFrame(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getRestoreOriginalFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -12982,7 +12848,7 @@ static int lua_cocos2dx_Animation_getRestoreOriginalFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_getDuration(lua_State* tolua_S)
+int lua_cocos2dx_Animation_getDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -13023,7 +12889,7 @@ static int lua_cocos2dx_Animation_getDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -13077,7 +12943,7 @@ static int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
+int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -13177,7 +13043,7 @@ static int lua_cocos2dx_Animation_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
+int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -13246,7 +13112,7 @@ static int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animation_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Animation_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animation* cobj = nullptr;
@@ -13324,7 +13190,7 @@ int lua_register_cocos2dx_Animation(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionInterval_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13376,7 +13242,7 @@ static int lua_cocos2dx_ActionInterval_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13418,7 +13284,7 @@ static int lua_cocos2dx_ActionInterval_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13461,7 +13327,7 @@ static int lua_cocos2dx_ActionInterval_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_clone(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13514,7 +13380,7 @@ static int lua_cocos2dx_ActionInterval_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13555,7 +13421,7 @@ static int lua_cocos2dx_ActionInterval_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_step(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13597,7 +13463,7 @@ static int lua_cocos2dx_ActionInterval_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_getElapsed(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_getElapsed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13638,7 +13504,7 @@ static int lua_cocos2dx_ActionInterval_getElapsed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_isDone(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13679,7 +13545,7 @@ static int lua_cocos2dx_ActionInterval_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInterval_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ActionInterval_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInterval* cobj = nullptr;
@@ -13759,7 +13625,7 @@ int lua_register_cocos2dx_ActionInterval(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Sequence_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -13811,7 +13677,7 @@ static int lua_cocos2dx_Sequence_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sequence_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -13864,7 +13730,7 @@ static int lua_cocos2dx_Sequence_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sequence_clone(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -13917,7 +13783,7 @@ static int lua_cocos2dx_Sequence_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sequence_stop(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -13957,7 +13823,7 @@ static int lua_cocos2dx_Sequence_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sequence_update(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -13999,7 +13865,7 @@ static int lua_cocos2dx_Sequence_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sequence_initWithTwoActions(lua_State* tolua_S)
+int lua_cocos2dx_Sequence_initWithTwoActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sequence* cobj = nullptr;
@@ -14088,7 +13954,7 @@ int lua_register_cocos2dx_Sequence(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14140,7 +14006,7 @@ static int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14192,7 +14058,7 @@ static int lua_cocos2dx_Repeat_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14245,7 +14111,7 @@ static int lua_cocos2dx_Repeat_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_clone(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14298,7 +14164,7 @@ static int lua_cocos2dx_Repeat_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_stop(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14338,7 +14204,7 @@ static int lua_cocos2dx_Repeat_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_update(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14380,7 +14246,7 @@ static int lua_cocos2dx_Repeat_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14435,7 +14301,7 @@ static int lua_cocos2dx_Repeat_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14488,7 +14354,7 @@ static int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_isDone(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Repeat* cobj = nullptr;
@@ -14529,7 +14395,7 @@ static int lua_cocos2dx_Repeat_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
+int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -14614,7 +14480,7 @@ int lua_register_cocos2dx_Repeat(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14666,7 +14532,7 @@ static int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14718,7 +14584,7 @@ static int lua_cocos2dx_RepeatForever_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_reverse(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14771,7 +14637,7 @@ static int lua_cocos2dx_RepeatForever_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_clone(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14824,7 +14690,7 @@ static int lua_cocos2dx_RepeatForever_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_step(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14866,7 +14732,7 @@ static int lua_cocos2dx_RepeatForever_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14919,7 +14785,7 @@ static int lua_cocos2dx_RepeatForever_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -14972,7 +14838,7 @@ static int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_isDone(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -15013,7 +14879,7 @@ static int lua_cocos2dx_RepeatForever_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -15068,7 +14934,7 @@ static int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RepeatForever_constructor(lua_State* tolua_S)
+int lua_cocos2dx_RepeatForever_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RepeatForever* cobj = nullptr;
@@ -15136,7 +15002,7 @@ int lua_register_cocos2dx_RepeatForever(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Spawn_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15188,7 +15054,7 @@ static int lua_cocos2dx_Spawn_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Spawn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15241,7 +15107,7 @@ static int lua_cocos2dx_Spawn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Spawn_clone(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15294,7 +15160,7 @@ static int lua_cocos2dx_Spawn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Spawn_stop(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15334,7 +15200,7 @@ static int lua_cocos2dx_Spawn_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Spawn_update(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15376,7 +15242,7 @@ static int lua_cocos2dx_Spawn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Spawn_initWithTwoActions(lua_State* tolua_S)
+int lua_cocos2dx_Spawn_initWithTwoActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Spawn* cobj = nullptr;
@@ -15465,7 +15331,7 @@ int lua_register_cocos2dx_Spawn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_RotateTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateTo* cobj = nullptr;
@@ -15517,7 +15383,7 @@ static int lua_cocos2dx_RotateTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateTo* cobj = nullptr;
@@ -15570,7 +15436,7 @@ static int lua_cocos2dx_RotateTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateTo* cobj = nullptr;
@@ -15623,7 +15489,7 @@ static int lua_cocos2dx_RotateTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateTo* cobj = NULL;
@@ -15685,7 +15551,7 @@ static int lua_cocos2dx_RotateTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateTo_update(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateTo* cobj = nullptr;
@@ -15727,7 +15593,7 @@ static int lua_cocos2dx_RotateTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
+int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -15830,7 +15696,7 @@ int lua_register_cocos2dx_RotateTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_RotateBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateBy* cobj = nullptr;
@@ -15882,7 +15748,7 @@ static int lua_cocos2dx_RotateBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateBy* cobj = nullptr;
@@ -15935,7 +15801,7 @@ static int lua_cocos2dx_RotateBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateBy* cobj = nullptr;
@@ -15988,7 +15854,7 @@ static int lua_cocos2dx_RotateBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateBy* cobj = NULL;
@@ -16050,7 +15916,7 @@ static int lua_cocos2dx_RotateBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateBy_update(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RotateBy* cobj = nullptr;
@@ -16092,7 +15958,7 @@ static int lua_cocos2dx_RotateBy_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
+int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16195,7 +16061,7 @@ int lua_register_cocos2dx_RotateBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MoveBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveBy* cobj = nullptr;
@@ -16247,7 +16113,7 @@ static int lua_cocos2dx_MoveBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveBy* cobj = nullptr;
@@ -16300,7 +16166,7 @@ static int lua_cocos2dx_MoveBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveBy* cobj = nullptr;
@@ -16353,7 +16219,7 @@ static int lua_cocos2dx_MoveBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveBy* cobj = nullptr;
@@ -16398,7 +16264,7 @@ static int lua_cocos2dx_MoveBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveBy_update(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveBy* cobj = nullptr;
@@ -16440,7 +16306,7 @@ static int lua_cocos2dx_MoveBy_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
+int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16511,7 +16377,7 @@ int lua_register_cocos2dx_MoveBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MoveTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_MoveTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveTo* cobj = nullptr;
@@ -16563,7 +16429,7 @@ static int lua_cocos2dx_MoveTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_MoveTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveTo* cobj = nullptr;
@@ -16616,7 +16482,7 @@ static int lua_cocos2dx_MoveTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_MoveTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MoveTo* cobj = nullptr;
@@ -16661,7 +16527,7 @@ static int lua_cocos2dx_MoveTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
+int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16730,7 +16596,7 @@ int lua_register_cocos2dx_MoveTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SkewTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -16782,7 +16648,7 @@ static int lua_cocos2dx_SkewTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -16835,7 +16701,7 @@ static int lua_cocos2dx_SkewTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -16882,7 +16748,7 @@ static int lua_cocos2dx_SkewTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -16935,7 +16801,7 @@ static int lua_cocos2dx_SkewTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_update(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -16977,7 +16843,7 @@ static int lua_cocos2dx_SkewTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -17026,7 +16892,7 @@ static int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewTo_constructor(lua_State* tolua_S)
+int lua_cocos2dx_SkewTo_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewTo* cobj = nullptr;
@@ -17091,7 +16957,7 @@ int lua_register_cocos2dx_SkewTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SkewBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_SkewBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewBy* cobj = nullptr;
@@ -17143,7 +17009,7 @@ static int lua_cocos2dx_SkewBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_SkewBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewBy* cobj = nullptr;
@@ -17196,7 +17062,7 @@ static int lua_cocos2dx_SkewBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_SkewBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewBy* cobj = nullptr;
@@ -17249,7 +17115,7 @@ static int lua_cocos2dx_SkewBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_SkewBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SkewBy* cobj = nullptr;
@@ -17296,7 +17162,7 @@ static int lua_cocos2dx_SkewBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SkewBy_create(lua_State* tolua_S)
+int lua_cocos2dx_SkewBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -17368,7 +17234,7 @@ int lua_register_cocos2dx_SkewBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_JumpBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpBy* cobj = nullptr;
@@ -17420,7 +17286,7 @@ static int lua_cocos2dx_JumpBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpBy* cobj = nullptr;
@@ -17473,7 +17339,7 @@ static int lua_cocos2dx_JumpBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpBy* cobj = nullptr;
@@ -17526,7 +17392,7 @@ static int lua_cocos2dx_JumpBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpBy* cobj = nullptr;
@@ -17575,7 +17441,7 @@ static int lua_cocos2dx_JumpBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpBy_update(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpBy* cobj = nullptr;
@@ -17617,7 +17483,7 @@ static int lua_cocos2dx_JumpBy_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
+int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -17692,7 +17558,7 @@ int lua_register_cocos2dx_JumpBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_JumpTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_JumpTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTo* cobj = nullptr;
@@ -17744,7 +17610,7 @@ static int lua_cocos2dx_JumpTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_JumpTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTo* cobj = nullptr;
@@ -17797,7 +17663,7 @@ static int lua_cocos2dx_JumpTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_JumpTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTo* cobj = nullptr;
@@ -17850,7 +17716,7 @@ static int lua_cocos2dx_JumpTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
+int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -17923,7 +17789,7 @@ int lua_register_cocos2dx_JumpTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_BezierBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_BezierBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierBy* cobj = nullptr;
@@ -17975,7 +17841,7 @@ static int lua_cocos2dx_BezierBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_BezierBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierBy* cobj = nullptr;
@@ -18028,7 +17894,7 @@ static int lua_cocos2dx_BezierBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_BezierBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierBy* cobj = nullptr;
@@ -18081,7 +17947,7 @@ static int lua_cocos2dx_BezierBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_BezierBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierBy* cobj = nullptr;
@@ -18126,7 +17992,7 @@ static int lua_cocos2dx_BezierBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierBy_update(lua_State* tolua_S)
+int lua_cocos2dx_BezierBy_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierBy* cobj = nullptr;
@@ -18191,7 +18057,7 @@ int lua_register_cocos2dx_BezierBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_BezierTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_BezierTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierTo* cobj = nullptr;
@@ -18243,7 +18109,7 @@ static int lua_cocos2dx_BezierTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_BezierTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierTo* cobj = nullptr;
@@ -18296,7 +18162,7 @@ static int lua_cocos2dx_BezierTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_BezierTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierTo* cobj = nullptr;
@@ -18349,7 +18215,7 @@ static int lua_cocos2dx_BezierTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_BezierTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_BezierTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::BezierTo* cobj = nullptr;
@@ -18416,7 +18282,7 @@ int lua_register_cocos2dx_BezierTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ScaleTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleTo* cobj = nullptr;
@@ -18468,7 +18334,7 @@ static int lua_cocos2dx_ScaleTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleTo* cobj = nullptr;
@@ -18521,7 +18387,7 @@ static int lua_cocos2dx_ScaleTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleTo* cobj = nullptr;
@@ -18574,7 +18440,7 @@ static int lua_cocos2dx_ScaleTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleTo* cobj = NULL;
@@ -18636,7 +18502,7 @@ static int lua_cocos2dx_ScaleTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleTo_update(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleTo* cobj = nullptr;
@@ -18678,7 +18544,7 @@ static int lua_cocos2dx_ScaleTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
+int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -18781,7 +18647,7 @@ int lua_register_cocos2dx_ScaleTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ScaleBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ScaleBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleBy* cobj = nullptr;
@@ -18833,7 +18699,7 @@ static int lua_cocos2dx_ScaleBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_ScaleBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleBy* cobj = nullptr;
@@ -18886,7 +18752,7 @@ static int lua_cocos2dx_ScaleBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ScaleBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ScaleBy* cobj = nullptr;
@@ -18939,7 +18805,7 @@ static int lua_cocos2dx_ScaleBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
+int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -19040,7 +18906,7 @@ int lua_register_cocos2dx_ScaleBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Blink_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Blink_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19092,7 +18958,7 @@ static int lua_cocos2dx_Blink_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Blink_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19145,7 +19011,7 @@ static int lua_cocos2dx_Blink_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Blink_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19190,7 +19056,7 @@ static int lua_cocos2dx_Blink_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_clone(lua_State* tolua_S)
+int lua_cocos2dx_Blink_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19243,7 +19109,7 @@ static int lua_cocos2dx_Blink_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_stop(lua_State* tolua_S)
+int lua_cocos2dx_Blink_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19283,7 +19149,7 @@ static int lua_cocos2dx_Blink_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_update(lua_State* tolua_S)
+int lua_cocos2dx_Blink_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Blink* cobj = nullptr;
@@ -19325,7 +19191,7 @@ static int lua_cocos2dx_Blink_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Blink_create(lua_State* tolua_S)
+int lua_cocos2dx_Blink_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -19397,7 +19263,7 @@ int lua_register_cocos2dx_Blink(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeIn* cobj = nullptr;
@@ -19450,7 +19316,7 @@ static int lua_cocos2dx_FadeIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeIn_update(lua_State* tolua_S)
+int lua_cocos2dx_FadeIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeIn* cobj = nullptr;
@@ -19492,7 +19358,7 @@ static int lua_cocos2dx_FadeIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FadeIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeIn* cobj = nullptr;
@@ -19545,7 +19411,7 @@ static int lua_cocos2dx_FadeIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeIn_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -19612,7 +19478,7 @@ int lua_register_cocos2dx_FadeIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOut* cobj = nullptr;
@@ -19665,7 +19531,7 @@ static int lua_cocos2dx_FadeOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOut_update(lua_State* tolua_S)
+int lua_cocos2dx_FadeOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOut* cobj = nullptr;
@@ -19707,7 +19573,7 @@ static int lua_cocos2dx_FadeOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FadeOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOut* cobj = nullptr;
@@ -19760,7 +19626,7 @@ static int lua_cocos2dx_FadeOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOut_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -19827,7 +19693,7 @@ int lua_register_cocos2dx_FadeOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeTo* cobj = nullptr;
@@ -19879,7 +19745,7 @@ static int lua_cocos2dx_FadeTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeTo* cobj = nullptr;
@@ -19932,7 +19798,7 @@ static int lua_cocos2dx_FadeTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeTo* cobj = nullptr;
@@ -19985,7 +19851,7 @@ static int lua_cocos2dx_FadeTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeTo* cobj = nullptr;
@@ -20030,7 +19896,7 @@ static int lua_cocos2dx_FadeTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeTo_update(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeTo* cobj = nullptr;
@@ -20072,7 +19938,7 @@ static int lua_cocos2dx_FadeTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeTo_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -20143,7 +20009,7 @@ int lua_register_cocos2dx_FadeTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TintTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintTo* cobj = nullptr;
@@ -20195,7 +20061,7 @@ static int lua_cocos2dx_TintTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintTo* cobj = nullptr;
@@ -20248,7 +20114,7 @@ static int lua_cocos2dx_TintTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintTo* cobj = nullptr;
@@ -20301,7 +20167,7 @@ static int lua_cocos2dx_TintTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintTo* cobj = nullptr;
@@ -20350,7 +20216,7 @@ static int lua_cocos2dx_TintTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintTo_update(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintTo* cobj = nullptr;
@@ -20392,7 +20258,7 @@ static int lua_cocos2dx_TintTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
+int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -20467,7 +20333,7 @@ int lua_register_cocos2dx_TintTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TintBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintBy* cobj = nullptr;
@@ -20519,7 +20385,7 @@ static int lua_cocos2dx_TintBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintBy* cobj = nullptr;
@@ -20572,7 +20438,7 @@ static int lua_cocos2dx_TintBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintBy* cobj = nullptr;
@@ -20625,7 +20491,7 @@ static int lua_cocos2dx_TintBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintBy* cobj = nullptr;
@@ -20674,7 +20540,7 @@ static int lua_cocos2dx_TintBy_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintBy_update(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TintBy* cobj = nullptr;
@@ -20716,7 +20582,7 @@ static int lua_cocos2dx_TintBy_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TintBy_create(lua_State* tolua_S)
+int lua_cocos2dx_TintBy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -20791,7 +20657,7 @@ int lua_register_cocos2dx_TintBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_DelayTime_clone(lua_State* tolua_S)
+int lua_cocos2dx_DelayTime_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DelayTime* cobj = nullptr;
@@ -20844,7 +20710,7 @@ static int lua_cocos2dx_DelayTime_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DelayTime_update(lua_State* tolua_S)
+int lua_cocos2dx_DelayTime_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DelayTime* cobj = nullptr;
@@ -20886,7 +20752,7 @@ static int lua_cocos2dx_DelayTime_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DelayTime_reverse(lua_State* tolua_S)
+int lua_cocos2dx_DelayTime_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DelayTime* cobj = nullptr;
@@ -20939,7 +20805,7 @@ static int lua_cocos2dx_DelayTime_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DelayTime_create(lua_State* tolua_S)
+int lua_cocos2dx_DelayTime_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -21006,7 +20872,7 @@ int lua_register_cocos2dx_DelayTime(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Animate_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_Animate_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21058,7 +20924,7 @@ static int lua_cocos2dx_Animate_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = NULL;
@@ -21124,7 +20990,7 @@ static int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Animate_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21177,7 +21043,7 @@ static int lua_cocos2dx_Animate_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_clone(lua_State* tolua_S)
+int lua_cocos2dx_Animate_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21230,7 +21096,7 @@ static int lua_cocos2dx_Animate_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_stop(lua_State* tolua_S)
+int lua_cocos2dx_Animate_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21270,7 +21136,7 @@ static int lua_cocos2dx_Animate_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_update(lua_State* tolua_S)
+int lua_cocos2dx_Animate_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21312,7 +21178,7 @@ static int lua_cocos2dx_Animate_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21365,7 +21231,7 @@ static int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21417,7 +21283,7 @@ static int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_create(lua_State* tolua_S)
+int lua_cocos2dx_Animate_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -21472,7 +21338,7 @@ static int lua_cocos2dx_Animate_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Animate_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Animate_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -21540,7 +21406,7 @@ int lua_register_cocos2dx_Animate(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TargetedAction_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21592,7 +21458,7 @@ static int lua_cocos2dx_TargetedAction_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_reverse(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21645,7 +21511,7 @@ static int lua_cocos2dx_TargetedAction_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21697,7 +21563,7 @@ static int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21750,7 +21616,7 @@ static int lua_cocos2dx_TargetedAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21815,7 +21681,7 @@ static int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_stop(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21855,7 +21721,7 @@ static int lua_cocos2dx_TargetedAction_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_update(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -21897,7 +21763,7 @@ static int lua_cocos2dx_TargetedAction_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = NULL;
@@ -21963,7 +21829,7 @@ static int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -22030,7 +21896,7 @@ static int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TargetedAction_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TargetedAction_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TargetedAction* cobj = nullptr;
@@ -22098,7 +21964,7 @@ int lua_register_cocos2dx_TargetedAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionCamera_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionCamera_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionCamera* cobj = nullptr;
@@ -22150,7 +22016,7 @@ static int lua_cocos2dx_ActionCamera_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionCamera_clone(lua_State* tolua_S)
+int lua_cocos2dx_ActionCamera_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionCamera* cobj = nullptr;
@@ -22203,7 +22069,7 @@ static int lua_cocos2dx_ActionCamera_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionCamera* cobj = nullptr;
@@ -22256,7 +22122,7 @@ static int lua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionCamera_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ActionCamera_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionCamera* cobj = nullptr;
@@ -22318,7 +22184,7 @@ int lua_register_cocos2dx_ActionCamera(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_OrbitCamera_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22370,7 +22236,7 @@ static int lua_cocos2dx_OrbitCamera_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22425,7 +22291,7 @@ static int lua_cocos2dx_OrbitCamera_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_clone(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22478,7 +22344,7 @@ static int lua_cocos2dx_OrbitCamera_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_sphericalRadius(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_sphericalRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22524,7 +22390,7 @@ static int lua_cocos2dx_OrbitCamera_sphericalRadius(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_update(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22566,7 +22432,7 @@ static int lua_cocos2dx_OrbitCamera_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -22623,7 +22489,7 @@ static int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_OrbitCamera_constructor(lua_State* tolua_S)
+int lua_cocos2dx_OrbitCamera_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::OrbitCamera* cobj = nullptr;
@@ -22688,7 +22554,7 @@ int lua_register_cocos2dx_OrbitCamera(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -22755,7 +22621,7 @@ static int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -22809,7 +22675,7 @@ static int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_removeAllActions(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_removeAllActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -22849,7 +22715,7 @@ static int lua_cocos2dx_ActionManager_removeAllActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -22915,7 +22781,7 @@ static int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -22967,7 +22833,7 @@ static int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23020,7 +22886,7 @@ static int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_Stat
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23072,7 +22938,7 @@ static int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23124,7 +22990,7 @@ static int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23176,7 +23042,7 @@ static int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23228,7 +23094,7 @@ static int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23281,7 +23147,7 @@ static int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionManager_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -23351,7 +23217,7 @@ int lua_register_cocos2dx_ActionManager(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionEase_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23403,7 +23269,7 @@ static int lua_cocos2dx_ActionEase_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23456,7 +23322,7 @@ static int lua_cocos2dx_ActionEase_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_clone(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23509,7 +23375,7 @@ static int lua_cocos2dx_ActionEase_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_stop(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_stop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23549,7 +23415,7 @@ static int lua_cocos2dx_ActionEase_stop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_update(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23591,7 +23457,7 @@ static int lua_cocos2dx_ActionEase_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23644,7 +23510,7 @@ static int lua_cocos2dx_ActionEase_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
+int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionEase* cobj = nullptr;
@@ -23722,7 +23588,7 @@ int lua_register_cocos2dx_ActionEase(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseRateAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseRateAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseRateAction* cobj = nullptr;
@@ -23775,7 +23641,7 @@ static int lua_cocos2dx_EaseRateAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseRateAction_setRate(lua_State* tolua_S)
+int lua_cocos2dx_EaseRateAction_setRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseRateAction* cobj = nullptr;
@@ -23817,7 +23683,7 @@ static int lua_cocos2dx_EaseRateAction_setRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseRateAction_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_EaseRateAction_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseRateAction* cobj = nullptr;
@@ -23872,7 +23738,7 @@ static int lua_cocos2dx_EaseRateAction_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseRateAction_getRate(lua_State* tolua_S)
+int lua_cocos2dx_EaseRateAction_getRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseRateAction* cobj = nullptr;
@@ -23913,7 +23779,7 @@ static int lua_cocos2dx_EaseRateAction_getRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseRateAction_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseRateAction_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseRateAction* cobj = nullptr;
@@ -23989,7 +23855,7 @@ int lua_register_cocos2dx_EaseRateAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseIn* cobj = nullptr;
@@ -24042,7 +23908,7 @@ static int lua_cocos2dx_EaseIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseIn* cobj = nullptr;
@@ -24084,7 +23950,7 @@ static int lua_cocos2dx_EaseIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseIn* cobj = nullptr;
@@ -24137,7 +24003,7 @@ static int lua_cocos2dx_EaseIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -24216,7 +24082,7 @@ int lua_register_cocos2dx_EaseIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseOut* cobj = nullptr;
@@ -24269,7 +24135,7 @@ static int lua_cocos2dx_EaseOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseOut* cobj = nullptr;
@@ -24311,7 +24177,7 @@ static int lua_cocos2dx_EaseOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseOut* cobj = nullptr;
@@ -24364,7 +24230,7 @@ static int lua_cocos2dx_EaseOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -24443,7 +24309,7 @@ int lua_register_cocos2dx_EaseOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseInOut* cobj = nullptr;
@@ -24496,7 +24362,7 @@ static int lua_cocos2dx_EaseInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseInOut* cobj = nullptr;
@@ -24538,7 +24404,7 @@ static int lua_cocos2dx_EaseInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseInOut* cobj = nullptr;
@@ -24591,7 +24457,7 @@ static int lua_cocos2dx_EaseInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -24670,7 +24536,7 @@ int lua_register_cocos2dx_EaseInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseExponentialIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialIn* cobj = nullptr;
@@ -24723,7 +24589,7 @@ static int lua_cocos2dx_EaseExponentialIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialIn* cobj = nullptr;
@@ -24765,7 +24631,7 @@ static int lua_cocos2dx_EaseExponentialIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialIn* cobj = nullptr;
@@ -24818,7 +24684,7 @@ static int lua_cocos2dx_EaseExponentialIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -24895,7 +24761,7 @@ int lua_register_cocos2dx_EaseExponentialIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseExponentialOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialOut* cobj = nullptr;
@@ -24948,7 +24814,7 @@ static int lua_cocos2dx_EaseExponentialOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialOut* cobj = nullptr;
@@ -24990,7 +24856,7 @@ static int lua_cocos2dx_EaseExponentialOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialOut* cobj = nullptr;
@@ -25043,7 +24909,7 @@ static int lua_cocos2dx_EaseExponentialOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -25120,7 +24986,7 @@ int lua_register_cocos2dx_EaseExponentialOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseExponentialInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialInOut* cobj = nullptr;
@@ -25173,7 +25039,7 @@ static int lua_cocos2dx_EaseExponentialInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialInOut* cobj = nullptr;
@@ -25215,7 +25081,7 @@ static int lua_cocos2dx_EaseExponentialInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseExponentialInOut* cobj = nullptr;
@@ -25268,7 +25134,7 @@ static int lua_cocos2dx_EaseExponentialInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -25345,7 +25211,7 @@ int lua_register_cocos2dx_EaseExponentialInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseSineIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineIn* cobj = nullptr;
@@ -25398,7 +25264,7 @@ static int lua_cocos2dx_EaseSineIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineIn* cobj = nullptr;
@@ -25440,7 +25306,7 @@ static int lua_cocos2dx_EaseSineIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineIn* cobj = nullptr;
@@ -25493,7 +25359,7 @@ static int lua_cocos2dx_EaseSineIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -25570,7 +25436,7 @@ int lua_register_cocos2dx_EaseSineIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseSineOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineOut* cobj = nullptr;
@@ -25623,7 +25489,7 @@ static int lua_cocos2dx_EaseSineOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineOut* cobj = nullptr;
@@ -25665,7 +25531,7 @@ static int lua_cocos2dx_EaseSineOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineOut* cobj = nullptr;
@@ -25718,7 +25584,7 @@ static int lua_cocos2dx_EaseSineOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -25795,7 +25661,7 @@ int lua_register_cocos2dx_EaseSineOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseSineInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineInOut* cobj = nullptr;
@@ -25848,7 +25714,7 @@ static int lua_cocos2dx_EaseSineInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineInOut* cobj = nullptr;
@@ -25890,7 +25756,7 @@ static int lua_cocos2dx_EaseSineInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseSineInOut* cobj = nullptr;
@@ -25943,7 +25809,7 @@ static int lua_cocos2dx_EaseSineInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -26020,7 +25886,7 @@ int lua_register_cocos2dx_EaseSineInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseElastic_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseElastic_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElastic* cobj = nullptr;
@@ -26073,7 +25939,7 @@ static int lua_cocos2dx_EaseElastic_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
+int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElastic* cobj = nullptr;
@@ -26148,7 +26014,7 @@ static int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
+int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElastic* cobj = nullptr;
@@ -26190,7 +26056,7 @@ static int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
+int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElastic* cobj = nullptr;
@@ -26231,7 +26097,7 @@ static int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElastic_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseElastic_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElastic* cobj = nullptr;
@@ -26307,7 +26173,7 @@ int lua_register_cocos2dx_EaseElastic(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseElasticIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticIn* cobj = nullptr;
@@ -26360,7 +26226,7 @@ static int lua_cocos2dx_EaseElasticIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticIn* cobj = nullptr;
@@ -26402,7 +26268,7 @@ static int lua_cocos2dx_EaseElasticIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticIn* cobj = nullptr;
@@ -26455,7 +26321,7 @@ static int lua_cocos2dx_EaseElasticIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -26570,7 +26436,7 @@ int lua_register_cocos2dx_EaseElasticIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseElasticOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticOut* cobj = nullptr;
@@ -26623,7 +26489,7 @@ static int lua_cocos2dx_EaseElasticOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticOut* cobj = nullptr;
@@ -26665,7 +26531,7 @@ static int lua_cocos2dx_EaseElasticOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticOut* cobj = nullptr;
@@ -26718,7 +26584,7 @@ static int lua_cocos2dx_EaseElasticOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -26833,7 +26699,7 @@ int lua_register_cocos2dx_EaseElasticOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseElasticInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticInOut* cobj = nullptr;
@@ -26886,7 +26752,7 @@ static int lua_cocos2dx_EaseElasticInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticInOut* cobj = nullptr;
@@ -26928,7 +26794,7 @@ static int lua_cocos2dx_EaseElasticInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseElasticInOut* cobj = nullptr;
@@ -26981,7 +26847,7 @@ static int lua_cocos2dx_EaseElasticInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -27096,7 +26962,7 @@ int lua_register_cocos2dx_EaseElasticInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBounce_bounceTime(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounce_bounceTime(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounce* cobj = nullptr;
@@ -27139,7 +27005,7 @@ static int lua_cocos2dx_EaseBounce_bounceTime(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounce_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounce_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounce* cobj = nullptr;
@@ -27192,7 +27058,7 @@ static int lua_cocos2dx_EaseBounce_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounce_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounce_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounce* cobj = nullptr;
@@ -27266,7 +27132,7 @@ int lua_register_cocos2dx_EaseBounce(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBounceIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceIn* cobj = nullptr;
@@ -27319,7 +27185,7 @@ static int lua_cocos2dx_EaseBounceIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceIn* cobj = nullptr;
@@ -27361,7 +27227,7 @@ static int lua_cocos2dx_EaseBounceIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceIn* cobj = nullptr;
@@ -27414,7 +27280,7 @@ static int lua_cocos2dx_EaseBounceIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -27491,7 +27357,7 @@ int lua_register_cocos2dx_EaseBounceIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBounceOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceOut* cobj = nullptr;
@@ -27544,7 +27410,7 @@ static int lua_cocos2dx_EaseBounceOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceOut* cobj = nullptr;
@@ -27586,7 +27452,7 @@ static int lua_cocos2dx_EaseBounceOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceOut* cobj = nullptr;
@@ -27639,7 +27505,7 @@ static int lua_cocos2dx_EaseBounceOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -27716,7 +27582,7 @@ int lua_register_cocos2dx_EaseBounceOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBounceInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceInOut* cobj = nullptr;
@@ -27769,7 +27635,7 @@ static int lua_cocos2dx_EaseBounceInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceInOut* cobj = nullptr;
@@ -27811,7 +27677,7 @@ static int lua_cocos2dx_EaseBounceInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBounceInOut* cobj = nullptr;
@@ -27864,7 +27730,7 @@ static int lua_cocos2dx_EaseBounceInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -27941,7 +27807,7 @@ int lua_register_cocos2dx_EaseBounceInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBackIn_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackIn_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackIn* cobj = nullptr;
@@ -27994,7 +27860,7 @@ static int lua_cocos2dx_EaseBackIn_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackIn_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackIn_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackIn* cobj = nullptr;
@@ -28036,7 +27902,7 @@ static int lua_cocos2dx_EaseBackIn_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackIn_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackIn_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackIn* cobj = nullptr;
@@ -28089,7 +27955,7 @@ static int lua_cocos2dx_EaseBackIn_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -28166,7 +28032,7 @@ int lua_register_cocos2dx_EaseBackIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBackOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackOut* cobj = nullptr;
@@ -28219,7 +28085,7 @@ static int lua_cocos2dx_EaseBackOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackOut* cobj = nullptr;
@@ -28261,7 +28127,7 @@ static int lua_cocos2dx_EaseBackOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackOut* cobj = nullptr;
@@ -28314,7 +28180,7 @@ static int lua_cocos2dx_EaseBackOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -28391,7 +28257,7 @@ int lua_register_cocos2dx_EaseBackOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_EaseBackInOut_clone(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackInOut_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackInOut* cobj = nullptr;
@@ -28444,7 +28310,7 @@ static int lua_cocos2dx_EaseBackInOut_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackInOut_update(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackInOut_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackInOut* cobj = nullptr;
@@ -28486,7 +28352,7 @@ static int lua_cocos2dx_EaseBackInOut_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackInOut_reverse(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackInOut_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::EaseBackInOut* cobj = nullptr;
@@ -28539,7 +28405,7 @@ static int lua_cocos2dx_EaseBackInOut_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -28616,7 +28482,7 @@ int lua_register_cocos2dx_EaseBackInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionInstant_step(lua_State* tolua_S)
+int lua_cocos2dx_ActionInstant_step(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInstant* cobj = nullptr;
@@ -28658,7 +28524,7 @@ static int lua_cocos2dx_ActionInstant_step(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInstant_clone(lua_State* tolua_S)
+int lua_cocos2dx_ActionInstant_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInstant* cobj = nullptr;
@@ -28711,7 +28577,7 @@ static int lua_cocos2dx_ActionInstant_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInstant_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ActionInstant_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInstant* cobj = nullptr;
@@ -28764,7 +28630,7 @@ static int lua_cocos2dx_ActionInstant_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInstant_isDone(lua_State* tolua_S)
+int lua_cocos2dx_ActionInstant_isDone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInstant* cobj = nullptr;
@@ -28805,7 +28671,7 @@ static int lua_cocos2dx_ActionInstant_isDone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionInstant_update(lua_State* tolua_S)
+int lua_cocos2dx_ActionInstant_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionInstant* cobj = nullptr;
@@ -28870,7 +28736,7 @@ int lua_register_cocos2dx_ActionInstant(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Show_clone(lua_State* tolua_S)
+int lua_cocos2dx_Show_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Show* cobj = nullptr;
@@ -28923,7 +28789,7 @@ static int lua_cocos2dx_Show_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Show_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Show_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Show* cobj = nullptr;
@@ -28976,7 +28842,7 @@ static int lua_cocos2dx_Show_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Show_update(lua_State* tolua_S)
+int lua_cocos2dx_Show_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Show* cobj = nullptr;
@@ -29018,7 +28884,7 @@ static int lua_cocos2dx_Show_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Show_create(lua_State* tolua_S)
+int lua_cocos2dx_Show_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -29061,7 +28927,7 @@ static int lua_cocos2dx_Show_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Show_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Show_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Show* cobj = nullptr;
@@ -29124,7 +28990,7 @@ int lua_register_cocos2dx_Show(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Hide_clone(lua_State* tolua_S)
+int lua_cocos2dx_Hide_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Hide* cobj = nullptr;
@@ -29177,7 +29043,7 @@ static int lua_cocos2dx_Hide_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Hide_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Hide_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Hide* cobj = nullptr;
@@ -29230,7 +29096,7 @@ static int lua_cocos2dx_Hide_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Hide_update(lua_State* tolua_S)
+int lua_cocos2dx_Hide_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Hide* cobj = nullptr;
@@ -29272,7 +29138,7 @@ static int lua_cocos2dx_Hide_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Hide_create(lua_State* tolua_S)
+int lua_cocos2dx_Hide_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -29315,7 +29181,7 @@ static int lua_cocos2dx_Hide_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Hide_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Hide_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Hide* cobj = nullptr;
@@ -29378,7 +29244,7 @@ int lua_register_cocos2dx_Hide(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ToggleVisibility_clone(lua_State* tolua_S)
+int lua_cocos2dx_ToggleVisibility_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ToggleVisibility* cobj = nullptr;
@@ -29431,7 +29297,7 @@ static int lua_cocos2dx_ToggleVisibility_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ToggleVisibility_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ToggleVisibility_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ToggleVisibility* cobj = nullptr;
@@ -29484,7 +29350,7 @@ static int lua_cocos2dx_ToggleVisibility_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ToggleVisibility_update(lua_State* tolua_S)
+int lua_cocos2dx_ToggleVisibility_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ToggleVisibility* cobj = nullptr;
@@ -29526,7 +29392,7 @@ static int lua_cocos2dx_ToggleVisibility_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
+int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -29569,7 +29435,7 @@ static int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ToggleVisibility_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ToggleVisibility_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ToggleVisibility* cobj = nullptr;
@@ -29632,7 +29498,7 @@ int lua_register_cocos2dx_ToggleVisibility(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_RemoveSelf_clone(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RemoveSelf* cobj = nullptr;
@@ -29685,7 +29551,7 @@ static int lua_cocos2dx_RemoveSelf_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RemoveSelf_init(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RemoveSelf* cobj = nullptr;
@@ -29728,7 +29594,7 @@ static int lua_cocos2dx_RemoveSelf_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RemoveSelf_reverse(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RemoveSelf* cobj = nullptr;
@@ -29781,7 +29647,7 @@ static int lua_cocos2dx_RemoveSelf_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RemoveSelf_update(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RemoveSelf* cobj = nullptr;
@@ -29823,7 +29689,7 @@ static int lua_cocos2dx_RemoveSelf_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -29888,7 +29754,7 @@ static int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RemoveSelf_constructor(lua_State* tolua_S)
+int lua_cocos2dx_RemoveSelf_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RemoveSelf* cobj = nullptr;
@@ -29952,7 +29818,7 @@ int lua_register_cocos2dx_RemoveSelf(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FlipX_initWithFlipX(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_initWithFlipX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX* cobj = nullptr;
@@ -29995,7 +29861,7 @@ static int lua_cocos2dx_FlipX_initWithFlipX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX_clone(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX* cobj = nullptr;
@@ -30048,7 +29914,7 @@ static int lua_cocos2dx_FlipX_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX* cobj = nullptr;
@@ -30101,7 +29967,7 @@ static int lua_cocos2dx_FlipX_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX_update(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX* cobj = nullptr;
@@ -30143,7 +30009,7 @@ static int lua_cocos2dx_FlipX_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -30188,7 +30054,7 @@ static int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX_constructor(lua_State* tolua_S)
+int lua_cocos2dx_FlipX_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX* cobj = nullptr;
@@ -30252,7 +30118,7 @@ int lua_register_cocos2dx_FlipX(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FlipY_initWithFlipY(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_initWithFlipY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY* cobj = nullptr;
@@ -30295,7 +30161,7 @@ static int lua_cocos2dx_FlipY_initWithFlipY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY_clone(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY* cobj = nullptr;
@@ -30348,7 +30214,7 @@ static int lua_cocos2dx_FlipY_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY_reverse(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY* cobj = nullptr;
@@ -30401,7 +30267,7 @@ static int lua_cocos2dx_FlipY_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY_update(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY* cobj = nullptr;
@@ -30443,7 +30309,7 @@ static int lua_cocos2dx_FlipY_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -30488,7 +30354,7 @@ static int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY_constructor(lua_State* tolua_S)
+int lua_cocos2dx_FlipY_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY* cobj = nullptr;
@@ -30552,7 +30418,7 @@ int lua_register_cocos2dx_FlipY(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Place_reverse(lua_State* tolua_S)
+int lua_cocos2dx_Place_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Place* cobj = nullptr;
@@ -30605,7 +30471,7 @@ static int lua_cocos2dx_Place_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Place_clone(lua_State* tolua_S)
+int lua_cocos2dx_Place_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Place* cobj = nullptr;
@@ -30658,7 +30524,7 @@ static int lua_cocos2dx_Place_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Place_initWithPosition(lua_State* tolua_S)
+int lua_cocos2dx_Place_initWithPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Place* cobj = nullptr;
@@ -30701,7 +30567,7 @@ static int lua_cocos2dx_Place_initWithPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Place_update(lua_State* tolua_S)
+int lua_cocos2dx_Place_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Place* cobj = nullptr;
@@ -30743,7 +30609,7 @@ static int lua_cocos2dx_Place_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Place_create(lua_State* tolua_S)
+int lua_cocos2dx_Place_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -30788,7 +30654,7 @@ static int lua_cocos2dx_Place_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Place_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Place_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Place* cobj = nullptr;
@@ -30852,7 +30718,7 @@ int lua_register_cocos2dx_Place(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_CallFunc_execute(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_execute(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -30892,7 +30758,7 @@ static int lua_cocos2dx_CallFunc_execute(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_reverse(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -30945,7 +30811,7 @@ static int lua_cocos2dx_CallFunc_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_clone(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -30998,7 +30864,7 @@ static int lua_cocos2dx_CallFunc_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_update(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -31040,7 +30906,7 @@ static int lua_cocos2dx_CallFunc_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -31093,7 +30959,7 @@ static int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -31145,7 +31011,7 @@ static int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CallFunc_constructor(lua_State* tolua_S)
+int lua_cocos2dx_CallFunc_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CallFunc* cobj = nullptr;
@@ -31210,7 +31076,7 @@ int lua_register_cocos2dx_CallFunc(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_GridAction_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_GridAction_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridAction* cobj = nullptr;
@@ -31262,7 +31128,7 @@ static int lua_cocos2dx_GridAction_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_GridAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridAction* cobj = nullptr;
@@ -31315,7 +31181,7 @@ static int lua_cocos2dx_GridAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
+int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridAction* cobj = nullptr;
@@ -31368,7 +31234,7 @@ static int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
+int lua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridAction* cobj = nullptr;
@@ -31421,7 +31287,7 @@ static int lua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridAction_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_GridAction_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridAction* cobj = nullptr;
@@ -31489,7 +31355,7 @@ int lua_register_cocos2dx_GridAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Grid3DAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_Grid3DAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3DAction* cobj = nullptr;
@@ -31542,7 +31408,7 @@ static int lua_cocos2dx_Grid3DAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
+int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3DAction* cobj = nullptr;
@@ -31615,7 +31481,7 @@ int lua_register_cocos2dx_Grid3DAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TiledGrid3DAction_clone(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3DAction_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3DAction* cobj = nullptr;
@@ -31668,7 +31534,7 @@ static int lua_cocos2dx_TiledGrid3DAction_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3DAction* cobj = nullptr;
@@ -31741,7 +31607,7 @@ int lua_register_cocos2dx_TiledGrid3DAction(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_StopGrid_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_StopGrid_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::StopGrid* cobj = nullptr;
@@ -31793,7 +31659,7 @@ static int lua_cocos2dx_StopGrid_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_StopGrid_clone(lua_State* tolua_S)
+int lua_cocos2dx_StopGrid_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::StopGrid* cobj = nullptr;
@@ -31846,7 +31712,7 @@ static int lua_cocos2dx_StopGrid_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_StopGrid_reverse(lua_State* tolua_S)
+int lua_cocos2dx_StopGrid_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::StopGrid* cobj = nullptr;
@@ -31899,7 +31765,7 @@ static int lua_cocos2dx_StopGrid_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_StopGrid_create(lua_State* tolua_S)
+int lua_cocos2dx_StopGrid_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -31964,7 +31830,7 @@ int lua_register_cocos2dx_StopGrid(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ReuseGrid_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ReuseGrid_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ReuseGrid* cobj = nullptr;
@@ -32016,7 +31882,7 @@ static int lua_cocos2dx_ReuseGrid_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ReuseGrid_initWithTimes(lua_State* tolua_S)
+int lua_cocos2dx_ReuseGrid_initWithTimes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ReuseGrid* cobj = nullptr;
@@ -32059,7 +31925,7 @@ static int lua_cocos2dx_ReuseGrid_initWithTimes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ReuseGrid_clone(lua_State* tolua_S)
+int lua_cocos2dx_ReuseGrid_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ReuseGrid* cobj = nullptr;
@@ -32112,7 +31978,7 @@ static int lua_cocos2dx_ReuseGrid_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ReuseGrid_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ReuseGrid_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ReuseGrid* cobj = nullptr;
@@ -32165,7 +32031,7 @@ static int lua_cocos2dx_ReuseGrid_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ReuseGrid_create(lua_State* tolua_S)
+int lua_cocos2dx_ReuseGrid_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -32233,7 +32099,7 @@ int lua_register_cocos2dx_ReuseGrid(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Waves3D_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32275,7 +32141,7 @@ static int lua_cocos2dx_Waves3D_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32324,7 +32190,7 @@ static int lua_cocos2dx_Waves3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32377,7 +32243,7 @@ static int lua_cocos2dx_Waves3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_update(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32419,7 +32285,7 @@ static int lua_cocos2dx_Waves3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32460,7 +32326,7 @@ static int lua_cocos2dx_Waves3D_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32502,7 +32368,7 @@ static int lua_cocos2dx_Waves3D_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves3D* cobj = nullptr;
@@ -32543,7 +32409,7 @@ static int lua_cocos2dx_Waves3D_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves3D_create(lua_State* tolua_S)
+int lua_cocos2dx_Waves3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -32620,7 +32486,7 @@ int lua_register_cocos2dx_Waves3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FlipX3D_initWithSize(lua_State* tolua_S)
+int lua_cocos2dx_FlipX3D_initWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX3D* cobj = nullptr;
@@ -32665,7 +32531,7 @@ static int lua_cocos2dx_FlipX3D_initWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_FlipX3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX3D* cobj = nullptr;
@@ -32718,7 +32584,7 @@ static int lua_cocos2dx_FlipX3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX3D_update(lua_State* tolua_S)
+int lua_cocos2dx_FlipX3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX3D* cobj = nullptr;
@@ -32760,7 +32626,7 @@ static int lua_cocos2dx_FlipX3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_FlipX3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipX3D* cobj = nullptr;
@@ -32803,7 +32669,7 @@ static int lua_cocos2dx_FlipX3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipX3D_create(lua_State* tolua_S)
+int lua_cocos2dx_FlipX3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -32871,7 +32737,7 @@ int lua_register_cocos2dx_FlipX3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FlipY3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_FlipY3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY3D* cobj = nullptr;
@@ -32924,7 +32790,7 @@ static int lua_cocos2dx_FlipY3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY3D_update(lua_State* tolua_S)
+int lua_cocos2dx_FlipY3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FlipY3D* cobj = nullptr;
@@ -32966,7 +32832,7 @@ static int lua_cocos2dx_FlipY3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FlipY3D_create(lua_State* tolua_S)
+int lua_cocos2dx_FlipY3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -33032,7 +32898,7 @@ int lua_register_cocos2dx_FlipY3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Lens3D_setConcave(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_setConcave(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33074,7 +32940,7 @@ static int lua_cocos2dx_Lens3D_setConcave(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33123,7 +32989,7 @@ static int lua_cocos2dx_Lens3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_setLensEffect(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_setLensEffect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33165,7 +33031,7 @@ static int lua_cocos2dx_Lens3D_setLensEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_update(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33207,7 +33073,7 @@ static int lua_cocos2dx_Lens3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_getLensEffect(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_getLensEffect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33248,7 +33114,7 @@ static int lua_cocos2dx_Lens3D_getLensEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33290,7 +33156,7 @@ static int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33343,7 +33209,7 @@ static int lua_cocos2dx_Lens3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Lens3D* cobj = nullptr;
@@ -33384,7 +33250,7 @@ static int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
+int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -33462,7 +33328,7 @@ int lua_register_cocos2dx_Lens3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Ripple3D_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33504,7 +33370,7 @@ static int lua_cocos2dx_Ripple3D_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33557,7 +33423,7 @@ static int lua_cocos2dx_Ripple3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33610,7 +33476,7 @@ static int lua_cocos2dx_Ripple3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_update(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33652,7 +33518,7 @@ static int lua_cocos2dx_Ripple3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33693,7 +33559,7 @@ static int lua_cocos2dx_Ripple3D_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33735,7 +33601,7 @@ static int lua_cocos2dx_Ripple3D_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33776,7 +33642,7 @@ static int lua_cocos2dx_Ripple3D_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33818,7 +33684,7 @@ static int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Ripple3D* cobj = nullptr;
@@ -33859,7 +33725,7 @@ static int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
+int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -33942,7 +33808,7 @@ int lua_register_cocos2dx_Ripple3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Shaky3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_Shaky3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Shaky3D* cobj = nullptr;
@@ -33995,7 +33861,7 @@ static int lua_cocos2dx_Shaky3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Shaky3D_update(lua_State* tolua_S)
+int lua_cocos2dx_Shaky3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Shaky3D* cobj = nullptr;
@@ -34037,7 +33903,7 @@ static int lua_cocos2dx_Shaky3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Shaky3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Shaky3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Shaky3D* cobj = nullptr;
@@ -34086,7 +33952,7 @@ static int lua_cocos2dx_Shaky3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
+int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -34159,7 +34025,7 @@ int lua_register_cocos2dx_Shaky3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34201,7 +34067,7 @@ static int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34250,7 +34116,7 @@ static int lua_cocos2dx_Liquid_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_clone(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34303,7 +34169,7 @@ static int lua_cocos2dx_Liquid_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_update(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34345,7 +34211,7 @@ static int lua_cocos2dx_Liquid_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34386,7 +34252,7 @@ static int lua_cocos2dx_Liquid_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34428,7 +34294,7 @@ static int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Liquid* cobj = nullptr;
@@ -34469,7 +34335,7 @@ static int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
+int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -34546,7 +34412,7 @@ int lua_register_cocos2dx_Liquid(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34588,7 +34454,7 @@ static int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Waves_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34641,7 +34507,7 @@ static int lua_cocos2dx_Waves_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_clone(lua_State* tolua_S)
+int lua_cocos2dx_Waves_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34694,7 +34560,7 @@ static int lua_cocos2dx_Waves_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_update(lua_State* tolua_S)
+int lua_cocos2dx_Waves_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34736,7 +34602,7 @@ static int lua_cocos2dx_Waves_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Waves_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34777,7 +34643,7 @@ static int lua_cocos2dx_Waves_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34819,7 +34685,7 @@ static int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Waves* cobj = nullptr;
@@ -34860,7 +34726,7 @@ static int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Waves_create(lua_State* tolua_S)
+int lua_cocos2dx_Waves_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -34941,7 +34807,7 @@ int lua_register_cocos2dx_Waves(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Twirl_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -34983,7 +34849,7 @@ static int lua_cocos2dx_Twirl_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35034,7 +34900,7 @@ static int lua_cocos2dx_Twirl_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_clone(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35087,7 +34953,7 @@ static int lua_cocos2dx_Twirl_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_update(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35129,7 +34995,7 @@ static int lua_cocos2dx_Twirl_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35170,7 +35036,7 @@ static int lua_cocos2dx_Twirl_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35212,7 +35078,7 @@ static int lua_cocos2dx_Twirl_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35253,7 +35119,7 @@ static int lua_cocos2dx_Twirl_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35295,7 +35161,7 @@ static int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Twirl* cobj = nullptr;
@@ -35336,7 +35202,7 @@ static int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
+int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -35417,7 +35283,7 @@ int lua_register_cocos2dx_Twirl(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_PageTurn3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_PageTurn3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PageTurn3D* cobj = nullptr;
@@ -35470,7 +35336,7 @@ static int lua_cocos2dx_PageTurn3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_PageTurn3D_update(lua_State* tolua_S)
+int lua_cocos2dx_PageTurn3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PageTurn3D* cobj = nullptr;
@@ -35512,7 +35378,7 @@ static int lua_cocos2dx_PageTurn3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_PageTurn3D_create(lua_State* tolua_S)
+int lua_cocos2dx_PageTurn3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -35580,7 +35446,7 @@ int lua_register_cocos2dx_PageTurn3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ProgressTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTo* cobj = nullptr;
@@ -35632,7 +35498,7 @@ static int lua_cocos2dx_ProgressTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTo* cobj = nullptr;
@@ -35685,7 +35551,7 @@ static int lua_cocos2dx_ProgressTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTo* cobj = nullptr;
@@ -35738,7 +35604,7 @@ static int lua_cocos2dx_ProgressTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTo* cobj = nullptr;
@@ -35783,7 +35649,7 @@ static int lua_cocos2dx_ProgressTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTo_update(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTo* cobj = nullptr;
@@ -35825,7 +35691,7 @@ static int lua_cocos2dx_ProgressTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTo_create(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -35896,7 +35762,7 @@ int lua_register_cocos2dx_ProgressTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ProgressFromTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressFromTo* cobj = nullptr;
@@ -35948,7 +35814,7 @@ static int lua_cocos2dx_ProgressFromTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressFromTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressFromTo* cobj = nullptr;
@@ -36001,7 +35867,7 @@ static int lua_cocos2dx_ProgressFromTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressFromTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressFromTo* cobj = nullptr;
@@ -36054,7 +35920,7 @@ static int lua_cocos2dx_ProgressFromTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressFromTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressFromTo* cobj = nullptr;
@@ -36101,7 +35967,7 @@ static int lua_cocos2dx_ProgressFromTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressFromTo_update(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressFromTo* cobj = nullptr;
@@ -36143,7 +36009,7 @@ static int lua_cocos2dx_ProgressFromTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressFromTo_create(lua_State* tolua_S)
+int lua_cocos2dx_ProgressFromTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -36216,7 +36082,7 @@ int lua_register_cocos2dx_ProgressFromTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ShakyTiles3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_ShakyTiles3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShakyTiles3D* cobj = nullptr;
@@ -36269,7 +36135,7 @@ static int lua_cocos2dx_ShakyTiles3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShakyTiles3D_update(lua_State* tolua_S)
+int lua_cocos2dx_ShakyTiles3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShakyTiles3D* cobj = nullptr;
@@ -36311,7 +36177,7 @@ static int lua_cocos2dx_ShakyTiles3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShakyTiles3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ShakyTiles3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShakyTiles3D* cobj = nullptr;
@@ -36360,7 +36226,7 @@ static int lua_cocos2dx_ShakyTiles3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShakyTiles3D_create(lua_State* tolua_S)
+int lua_cocos2dx_ShakyTiles3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -36433,7 +36299,7 @@ int lua_register_cocos2dx_ShakyTiles3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ShatteredTiles3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_ShatteredTiles3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShatteredTiles3D* cobj = nullptr;
@@ -36486,7 +36352,7 @@ static int lua_cocos2dx_ShatteredTiles3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShatteredTiles3D_update(lua_State* tolua_S)
+int lua_cocos2dx_ShatteredTiles3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShatteredTiles3D* cobj = nullptr;
@@ -36528,7 +36394,7 @@ static int lua_cocos2dx_ShatteredTiles3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShatteredTiles3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ShatteredTiles3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShatteredTiles3D* cobj = nullptr;
@@ -36577,7 +36443,7 @@ static int lua_cocos2dx_ShatteredTiles3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShatteredTiles3D_create(lua_State* tolua_S)
+int lua_cocos2dx_ShatteredTiles3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -36650,7 +36516,7 @@ int lua_register_cocos2dx_ShatteredTiles3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ShuffleTiles_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36702,7 +36568,7 @@ static int lua_cocos2dx_ShuffleTiles_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36756,7 +36622,7 @@ static int lua_cocos2dx_ShuffleTiles_placeTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36803,7 +36669,7 @@ static int lua_cocos2dx_ShuffleTiles_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_getDelta(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_getDelta(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36846,7 +36712,7 @@ static int lua_cocos2dx_ShuffleTiles_getDelta(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36899,7 +36765,7 @@ static int lua_cocos2dx_ShuffleTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_update(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36941,7 +36807,7 @@ static int lua_cocos2dx_ShuffleTiles_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_shuffle(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_shuffle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShuffleTiles* cobj = nullptr;
@@ -36985,7 +36851,7 @@ static int lua_cocos2dx_ShuffleTiles_shuffle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShuffleTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_ShuffleTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -37060,7 +36926,7 @@ int lua_register_cocos2dx_ShuffleTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37102,7 +36968,7 @@ static int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37144,7 +37010,7 @@ static int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37188,7 +37054,7 @@ static int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37241,7 +37107,7 @@ static int lua_cocos2dx_FadeOutTRTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_update(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37283,7 +37149,7 @@ static int lua_cocos2dx_FadeOutTRTiles_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_testFunc(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_testFunc(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutTRTiles* cobj = nullptr;
@@ -37328,7 +37194,7 @@ static int lua_cocos2dx_FadeOutTRTiles_testFunc(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutTRTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutTRTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -37400,7 +37266,7 @@ int lua_register_cocos2dx_FadeOutTRTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeOutBLTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutBLTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutBLTiles* cobj = nullptr;
@@ -37453,7 +37319,7 @@ static int lua_cocos2dx_FadeOutBLTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutBLTiles_testFunc(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutBLTiles_testFunc(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutBLTiles* cobj = nullptr;
@@ -37498,7 +37364,7 @@ static int lua_cocos2dx_FadeOutBLTiles_testFunc(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutBLTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutBLTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -37566,7 +37432,7 @@ int lua_register_cocos2dx_FadeOutBLTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeOutUpTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutUpTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutUpTiles* cobj = nullptr;
@@ -37619,7 +37485,7 @@ static int lua_cocos2dx_FadeOutUpTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutUpTiles* cobj = nullptr;
@@ -37663,7 +37529,7 @@ static int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutUpTiles_testFunc(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutUpTiles_testFunc(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutUpTiles* cobj = nullptr;
@@ -37708,7 +37574,7 @@ static int lua_cocos2dx_FadeOutUpTiles_testFunc(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutUpTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutUpTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -37777,7 +37643,7 @@ int lua_register_cocos2dx_FadeOutUpTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FadeOutDownTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutDownTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutDownTiles* cobj = nullptr;
@@ -37830,7 +37696,7 @@ static int lua_cocos2dx_FadeOutDownTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutDownTiles_testFunc(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutDownTiles_testFunc(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FadeOutDownTiles* cobj = nullptr;
@@ -37875,7 +37741,7 @@ static int lua_cocos2dx_FadeOutDownTiles_testFunc(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FadeOutDownTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_FadeOutDownTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -37943,7 +37809,7 @@ int lua_register_cocos2dx_FadeOutDownTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -37985,7 +37851,7 @@ static int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38037,7 +37903,7 @@ static int lua_cocos2dx_TurnOffTiles_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38079,7 +37945,7 @@ static int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_shuffle(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_shuffle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38123,7 +37989,7 @@ static int lua_cocos2dx_TurnOffTiles_shuffle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38170,7 +38036,7 @@ static int lua_cocos2dx_TurnOffTiles_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_clone(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38223,7 +38089,7 @@ static int lua_cocos2dx_TurnOffTiles_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_update(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TurnOffTiles* cobj = nullptr;
@@ -38265,7 +38131,7 @@ static int lua_cocos2dx_TurnOffTiles_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -38370,7 +38236,7 @@ int lua_register_cocos2dx_TurnOffTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_WavesTiles3D_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38412,7 +38278,7 @@ static int lua_cocos2dx_WavesTiles3D_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38461,7 +38327,7 @@ static int lua_cocos2dx_WavesTiles3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38514,7 +38380,7 @@ static int lua_cocos2dx_WavesTiles3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_update(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38556,7 +38422,7 @@ static int lua_cocos2dx_WavesTiles3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38597,7 +38463,7 @@ static int lua_cocos2dx_WavesTiles3D_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38639,7 +38505,7 @@ static int lua_cocos2dx_WavesTiles3D_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::WavesTiles3D* cobj = nullptr;
@@ -38680,7 +38546,7 @@ static int lua_cocos2dx_WavesTiles3D_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_WavesTiles3D_create(lua_State* tolua_S)
+int lua_cocos2dx_WavesTiles3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -38757,7 +38623,7 @@ int lua_register_cocos2dx_WavesTiles3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_JumpTiles3D_setAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_setAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -38799,7 +38665,7 @@ static int lua_cocos2dx_JumpTiles3D_setAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -38848,7 +38714,7 @@ static int lua_cocos2dx_JumpTiles3D_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_clone(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -38901,7 +38767,7 @@ static int lua_cocos2dx_JumpTiles3D_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_update(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -38943,7 +38809,7 @@ static int lua_cocos2dx_JumpTiles3D_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_getAmplitudeRate(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_getAmplitudeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -38984,7 +38850,7 @@ static int lua_cocos2dx_JumpTiles3D_getAmplitudeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_setAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_setAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -39026,7 +38892,7 @@ static int lua_cocos2dx_JumpTiles3D_setAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_getAmplitude(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_getAmplitude(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::JumpTiles3D* cobj = nullptr;
@@ -39067,7 +38933,7 @@ static int lua_cocos2dx_JumpTiles3D_getAmplitude(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_JumpTiles3D_create(lua_State* tolua_S)
+int lua_cocos2dx_JumpTiles3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -39144,7 +39010,7 @@ int lua_register_cocos2dx_JumpTiles3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SplitRows_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_SplitRows_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitRows* cobj = nullptr;
@@ -39196,7 +39062,7 @@ static int lua_cocos2dx_SplitRows_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitRows_clone(lua_State* tolua_S)
+int lua_cocos2dx_SplitRows_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitRows* cobj = nullptr;
@@ -39249,7 +39115,7 @@ static int lua_cocos2dx_SplitRows_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitRows_update(lua_State* tolua_S)
+int lua_cocos2dx_SplitRows_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitRows* cobj = nullptr;
@@ -39291,7 +39157,7 @@ static int lua_cocos2dx_SplitRows_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitRows_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_SplitRows_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitRows* cobj = nullptr;
@@ -39336,7 +39202,7 @@ static int lua_cocos2dx_SplitRows_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitRows_create(lua_State* tolua_S)
+int lua_cocos2dx_SplitRows_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -39406,7 +39272,7 @@ int lua_register_cocos2dx_SplitRows(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SplitCols_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_SplitCols_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitCols* cobj = nullptr;
@@ -39458,7 +39324,7 @@ static int lua_cocos2dx_SplitCols_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitCols_clone(lua_State* tolua_S)
+int lua_cocos2dx_SplitCols_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitCols* cobj = nullptr;
@@ -39511,7 +39377,7 @@ static int lua_cocos2dx_SplitCols_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitCols_update(lua_State* tolua_S)
+int lua_cocos2dx_SplitCols_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitCols* cobj = nullptr;
@@ -39553,7 +39419,7 @@ static int lua_cocos2dx_SplitCols_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitCols_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_SplitCols_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SplitCols* cobj = nullptr;
@@ -39598,7 +39464,7 @@ static int lua_cocos2dx_SplitCols_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SplitCols_create(lua_State* tolua_S)
+int lua_cocos2dx_SplitCols_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -39668,7 +39534,7 @@ int lua_register_cocos2dx_SplitCols(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ActionTween_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionTween* cobj = nullptr;
@@ -39720,7 +39586,7 @@ static int lua_cocos2dx_ActionTween_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionTween_clone(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionTween* cobj = nullptr;
@@ -39773,7 +39639,7 @@ static int lua_cocos2dx_ActionTween_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionTween_update(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionTween* cobj = nullptr;
@@ -39815,7 +39681,7 @@ static int lua_cocos2dx_ActionTween_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionTween_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionTween* cobj = nullptr;
@@ -39864,7 +39730,7 @@ static int lua_cocos2dx_ActionTween_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionTween_reverse(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionTween* cobj = nullptr;
@@ -39917,7 +39783,7 @@ static int lua_cocos2dx_ActionTween_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ActionTween_create(lua_State* tolua_S)
+int lua_cocos2dx_ActionTween_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -39992,7 +39858,7 @@ int lua_register_cocos2dx_ActionTween(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_CardinalSplineTo_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40044,7 +39910,7 @@ static int lua_cocos2dx_CardinalSplineTo_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40097,7 +39963,7 @@ static int lua_cocos2dx_CardinalSplineTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40154,7 +40020,7 @@ static int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40207,7 +40073,7 @@ static int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40249,7 +40115,7 @@ static int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40302,7 +40168,7 @@ static int lua_cocos2dx_CardinalSplineTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_update(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40344,7 +40210,7 @@ static int lua_cocos2dx_CardinalSplineTo_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineTo_constructor(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineTo_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineTo* cobj = nullptr;
@@ -40410,7 +40276,7 @@ int lua_register_cocos2dx_CardinalSplineTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_CardinalSplineBy_startWithTarget(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineBy_startWithTarget(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineBy* cobj = nullptr;
@@ -40462,7 +40328,7 @@ static int lua_cocos2dx_CardinalSplineBy_startWithTarget(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineBy* cobj = nullptr;
@@ -40515,7 +40381,7 @@ static int lua_cocos2dx_CardinalSplineBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineBy_updatePosition(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineBy_updatePosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineBy* cobj = nullptr;
@@ -40557,7 +40423,7 @@ static int lua_cocos2dx_CardinalSplineBy_updatePosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineBy* cobj = nullptr;
@@ -40610,7 +40476,7 @@ static int lua_cocos2dx_CardinalSplineBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CardinalSplineBy_constructor(lua_State* tolua_S)
+int lua_cocos2dx_CardinalSplineBy_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CardinalSplineBy* cobj = nullptr;
@@ -40673,7 +40539,7 @@ int lua_register_cocos2dx_CardinalSplineBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_CatmullRomTo_clone(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomTo_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomTo* cobj = nullptr;
@@ -40726,7 +40592,7 @@ static int lua_cocos2dx_CatmullRomTo_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CatmullRomTo_reverse(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomTo_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomTo* cobj = nullptr;
@@ -40779,7 +40645,7 @@ static int lua_cocos2dx_CatmullRomTo_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomTo* cobj = nullptr;
@@ -40855,7 +40721,7 @@ int lua_register_cocos2dx_CatmullRomTo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_CatmullRomBy_clone(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomBy_clone(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomBy* cobj = nullptr;
@@ -40908,7 +40774,7 @@ static int lua_cocos2dx_CatmullRomBy_clone(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CatmullRomBy_reverse(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomBy_reverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomBy* cobj = nullptr;
@@ -40961,7 +40827,7 @@ static int lua_cocos2dx_CatmullRomBy_reverse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CatmullRomBy* cobj = nullptr;
@@ -41037,7 +40903,7 @@ int lua_register_cocos2dx_CatmullRomBy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_AtlasNode_draw(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41077,7 +40943,7 @@ static int lua_cocos2dx_AtlasNode_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_updateAtlasValues(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_updateAtlasValues(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41117,7 +40983,7 @@ static int lua_cocos2dx_AtlasNode_updateAtlasValues(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41176,7 +41042,7 @@ static int lua_cocos2dx_AtlasNode_initWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setColor(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41218,7 +41084,7 @@ static int lua_cocos2dx_AtlasNode_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41260,7 +41126,7 @@ static int lua_cocos2dx_AtlasNode_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41313,7 +41179,7 @@ static int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41365,7 +41231,7 @@ static int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41418,7 +41284,7 @@ static int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41460,7 +41326,7 @@ static int lua_cocos2dx_AtlasNode_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_getQuadsToDraw(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_getQuadsToDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41501,7 +41367,7 @@ static int lua_cocos2dx_AtlasNode_getQuadsToDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41553,7 +41419,7 @@ static int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_getColor(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41594,7 +41460,7 @@ static int lua_cocos2dx_AtlasNode_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_initWithTileFile(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_initWithTileFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41643,7 +41509,7 @@ static int lua_cocos2dx_AtlasNode_initWithTileFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41684,7 +41550,7 @@ static int lua_cocos2dx_AtlasNode_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_setQuadsToDraw(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_setQuadsToDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41726,7 +41592,7 @@ static int lua_cocos2dx_AtlasNode_setQuadsToDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -41777,7 +41643,7 @@ static int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AtlasNode_constructor(lua_State* tolua_S)
+int lua_cocos2dx_AtlasNode_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AtlasNode* cobj = nullptr;
@@ -41852,7 +41718,7 @@ int lua_register_cocos2dx_AtlasNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_DrawNode_draw(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -41892,7 +41758,7 @@ static int lua_cocos2dx_DrawNode_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_clear(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_clear(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -41932,7 +41798,7 @@ static int lua_cocos2dx_DrawNode_clear(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_init(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -41973,7 +41839,7 @@ static int lua_cocos2dx_DrawNode_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -42019,7 +41885,7 @@ static int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -42067,7 +41933,7 @@ static int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -42110,7 +41976,7 @@ static int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_DrawNode_constructor(lua_State* tolua_S)
+int lua_cocos2dx_DrawNode_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::DrawNode* cobj = nullptr;
@@ -42175,7 +42041,7 @@ int lua_register_cocos2dx_DrawNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Camera_locate(lua_State* tolua_S)
+int lua_cocos2dx_Camera_locate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42215,7 +42081,7 @@ static int lua_cocos2dx_Camera_locate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_restore(lua_State* tolua_S)
+int lua_cocos2dx_Camera_restore(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42255,7 +42121,7 @@ static int lua_cocos2dx_Camera_restore(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_setEyeXYZ(lua_State* tolua_S)
+int lua_cocos2dx_Camera_setEyeXYZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42301,7 +42167,7 @@ static int lua_cocos2dx_Camera_setEyeXYZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_setCenterXYZ(lua_State* tolua_S)
+int lua_cocos2dx_Camera_setCenterXYZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42347,7 +42213,7 @@ static int lua_cocos2dx_Camera_setCenterXYZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_isDirty(lua_State* tolua_S)
+int lua_cocos2dx_Camera_isDirty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42388,7 +42254,7 @@ static int lua_cocos2dx_Camera_isDirty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_init(lua_State* tolua_S)
+int lua_cocos2dx_Camera_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42428,7 +42294,7 @@ static int lua_cocos2dx_Camera_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_setDirty(lua_State* tolua_S)
+int lua_cocos2dx_Camera_setDirty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42470,7 +42336,7 @@ static int lua_cocos2dx_Camera_setDirty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_setUpXYZ(lua_State* tolua_S)
+int lua_cocos2dx_Camera_setUpXYZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42516,7 +42382,7 @@ static int lua_cocos2dx_Camera_setUpXYZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_getZEye(lua_State* tolua_S)
+int lua_cocos2dx_Camera_getZEye(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -42547,7 +42413,7 @@ static int lua_cocos2dx_Camera_getZEye(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Camera_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Camera_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -42615,7 +42481,7 @@ int lua_register_cocos2dx_Camera(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelAtlas* cobj = nullptr;
@@ -42657,7 +42523,7 @@ static int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelAtlas* cobj = NULL;
@@ -42764,7 +42630,7 @@ static int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelAtlas_updateAtlasValues(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_updateAtlasValues(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelAtlas* cobj = nullptr;
@@ -42804,7 +42670,7 @@ static int lua_cocos2dx_LabelAtlas_updateAtlasValues(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelAtlas* cobj = nullptr;
@@ -42845,7 +42711,7 @@ static int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -42930,7 +42796,7 @@ static int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelAtlas_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LabelAtlas_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelAtlas* cobj = nullptr;
@@ -42994,7 +42860,7 @@ int lua_register_cocos2dx_LabelAtlas(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Director_pause(lua_State* tolua_S)
+int lua_cocos2dx_Director_pause(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43034,7 +42900,7 @@ static int lua_cocos2dx_Director_pause(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
+int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43076,7 +42942,7 @@ static int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getContentScaleFactor(lua_State* tolua_S)
+int lua_cocos2dx_Director_getContentScaleFactor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43117,7 +42983,7 @@ static int lua_cocos2dx_Director_getContentScaleFactor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
+int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43158,7 +43024,7 @@ static int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
+int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43199,7 +43065,7 @@ static int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setGLDefaultValues(lua_State* tolua_S)
+int lua_cocos2dx_Director_setGLDefaultValues(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43239,7 +43105,7 @@ static int lua_cocos2dx_Director_setGLDefaultValues(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
+int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43291,7 +43157,7 @@ static int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
+int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43333,7 +43199,7 @@ static int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43373,7 +43239,7 @@ static int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
+int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43426,7 +43292,7 @@ static int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
+int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43467,7 +43333,7 @@ static int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43508,7 +43374,7 @@ static int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
+int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43549,7 +43415,7 @@ static int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_mainLoop(lua_State* tolua_S)
+int lua_cocos2dx_Director_mainLoop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43589,7 +43455,7 @@ static int lua_cocos2dx_Director_mainLoop(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setDepthTest(lua_State* tolua_S)
+int lua_cocos2dx_Director_setDepthTest(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43631,7 +43497,7 @@ static int lua_cocos2dx_Director_setDepthTest(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
+int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43672,7 +43538,7 @@ static int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
+int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43715,7 +43581,7 @@ static int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setAccelerometer(lua_State* tolua_S)
+int lua_cocos2dx_Director_setAccelerometer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43767,7 +43633,7 @@ static int lua_cocos2dx_Director_setAccelerometer(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setDefaultValues(lua_State* tolua_S)
+int lua_cocos2dx_Director_setDefaultValues(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43807,7 +43673,7 @@ static int lua_cocos2dx_Director_setDefaultValues(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_init(lua_State* tolua_S)
+int lua_cocos2dx_Director_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43848,7 +43714,7 @@ static int lua_cocos2dx_Director_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
+int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43900,7 +43766,7 @@ static int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43940,7 +43806,7 @@ static int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -43993,7 +43859,7 @@ static int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setViewport(lua_State* tolua_S)
+int lua_cocos2dx_Director_setViewport(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44033,7 +43899,7 @@ static int lua_cocos2dx_Director_setViewport(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44073,7 +43939,7 @@ static int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
+int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44115,7 +43981,7 @@ static int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_resume(lua_State* tolua_S)
+int lua_cocos2dx_Director_resume(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44155,7 +44021,7 @@ static int lua_cocos2dx_Director_resume(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
+int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44196,7 +44062,7 @@ static int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_end(lua_State* tolua_S)
+int lua_cocos2dx_Director_end(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44236,7 +44102,7 @@ static int lua_cocos2dx_Director_end(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
+int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44288,7 +44154,7 @@ static int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
+int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44331,7 +44197,7 @@ static int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_purgeCachedData(lua_State* tolua_S)
+int lua_cocos2dx_Director_purgeCachedData(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44371,7 +44237,7 @@ static int lua_cocos2dx_Director_purgeCachedData(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getTotalFrames(lua_State* tolua_S)
+int lua_cocos2dx_Director_getTotalFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44412,7 +44278,7 @@ static int lua_cocos2dx_Director_getTotalFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44464,7 +44330,7 @@ static int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
+int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44516,7 +44382,7 @@ static int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44556,7 +44422,7 @@ static int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44596,7 +44462,7 @@ static int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_isDisplayStats(lua_State* tolua_S)
+int lua_cocos2dx_Director_isDisplayStats(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44637,7 +44503,7 @@ static int lua_cocos2dx_Director_isDisplayStats(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
+int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44679,7 +44545,7 @@ static int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
+int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44720,7 +44586,7 @@ static int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
+int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44762,7 +44628,7 @@ static int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getVisibleSize(lua_State* tolua_S)
+int lua_cocos2dx_Director_getVisibleSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44803,7 +44669,7 @@ static int lua_cocos2dx_Director_getVisibleSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
+int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44856,7 +44722,7 @@ static int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44908,7 +44774,7 @@ static int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getAnimationInterval(lua_State* tolua_S)
+int lua_cocos2dx_Director_getAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44949,7 +44815,7 @@ static int lua_cocos2dx_Director_getAnimationInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_isPaused(lua_State* tolua_S)
+int lua_cocos2dx_Director_isPaused(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -44990,7 +44856,7 @@ static int lua_cocos2dx_Director_isPaused(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setDisplayStats(lua_State* tolua_S)
+int lua_cocos2dx_Director_setDisplayStats(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -45032,7 +44898,7 @@ static int lua_cocos2dx_Director_setDisplayStats(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -45084,7 +44950,7 @@ static int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
+int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -45126,7 +44992,7 @@ static int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
+int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -45179,7 +45045,7 @@ static int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Director_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_Director_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -45291,7 +45157,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_GridBase_setGridSize(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_setGridSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45333,7 +45199,7 @@ static int lua_cocos2dx_GridBase_setGridSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_calculateVertexPoints(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_calculateVertexPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45373,7 +45239,7 @@ static int lua_cocos2dx_GridBase_calculateVertexPoints(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45425,7 +45291,7 @@ static int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_beforeDraw(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_beforeDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45465,7 +45331,7 @@ static int lua_cocos2dx_GridBase_beforeDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_isTextureFlipped(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_isTextureFlipped(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45506,7 +45372,7 @@ static int lua_cocos2dx_GridBase_isTextureFlipped(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_getGridSize(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_getGridSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45547,7 +45413,7 @@ static int lua_cocos2dx_GridBase_getGridSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45588,7 +45454,7 @@ static int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_set2DProjection(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_set2DProjection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45628,7 +45494,7 @@ static int lua_cocos2dx_GridBase_set2DProjection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45670,7 +45536,7 @@ static int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_setTextureFlipped(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_setTextureFlipped(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45712,7 +45578,7 @@ static int lua_cocos2dx_GridBase_setTextureFlipped(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_blit(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_blit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45752,7 +45618,7 @@ static int lua_cocos2dx_GridBase_blit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_setActive(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_setActive(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45794,7 +45660,7 @@ static int lua_cocos2dx_GridBase_setActive(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45835,7 +45701,7 @@ static int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = NULL;
@@ -45903,7 +45769,7 @@ static int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_setReuseGrid(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_setReuseGrid(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45945,7 +45811,7 @@ static int lua_cocos2dx_GridBase_setReuseGrid(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_isActive(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_isActive(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -45986,7 +45852,7 @@ static int lua_cocos2dx_GridBase_isActive(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_reuse(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_reuse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::GridBase* cobj = nullptr;
@@ -46026,7 +45892,7 @@ static int lua_cocos2dx_GridBase_reuse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
+int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -46148,7 +46014,7 @@ int lua_register_cocos2dx_GridBase(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Grid3D_calculateVertexPoints(lua_State* tolua_S)
+int lua_cocos2dx_Grid3D_calculateVertexPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3D* cobj = nullptr;
@@ -46188,7 +46054,7 @@ static int lua_cocos2dx_Grid3D_calculateVertexPoints(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Grid3D_reuse(lua_State* tolua_S)
+int lua_cocos2dx_Grid3D_reuse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3D* cobj = nullptr;
@@ -46228,7 +46094,7 @@ static int lua_cocos2dx_Grid3D_reuse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Grid3D_blit(lua_State* tolua_S)
+int lua_cocos2dx_Grid3D_blit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3D* cobj = nullptr;
@@ -46268,7 +46134,7 @@ static int lua_cocos2dx_Grid3D_blit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
+int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -46354,7 +46220,7 @@ static int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Grid3D_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Grid3D_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Grid3D* cobj = nullptr;
@@ -46417,7 +46283,7 @@ int lua_register_cocos2dx_Grid3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TiledGrid3D_calculateVertexPoints(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3D_calculateVertexPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3D* cobj = nullptr;
@@ -46457,7 +46323,7 @@ static int lua_cocos2dx_TiledGrid3D_calculateVertexPoints(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TiledGrid3D_reuse(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3D_reuse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3D* cobj = nullptr;
@@ -46497,7 +46363,7 @@ static int lua_cocos2dx_TiledGrid3D_reuse(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TiledGrid3D_blit(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3D_blit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3D* cobj = nullptr;
@@ -46537,7 +46403,7 @@ static int lua_cocos2dx_TiledGrid3D_blit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -46623,7 +46489,7 @@ static int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TiledGrid3D_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TiledGrid3D_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TiledGrid3D* cobj = nullptr;
@@ -46686,7 +46552,7 @@ int lua_register_cocos2dx_TiledGrid3D(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Sprite_draw(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -46726,7 +46592,7 @@ static int lua_cocos2dx_Sprite_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = NULL;
@@ -46826,7 +46692,7 @@ static int lua_cocos2dx_Sprite_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -46878,7 +46744,7 @@ static int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isFlipX(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isFlipX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -46919,7 +46785,7 @@ static int lua_cocos2dx_Sprite_isFlipX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -46972,7 +46838,7 @@ static int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setRotationY(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setRotationY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47014,7 +46880,7 @@ static int lua_cocos2dx_Sprite_setRotationY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setRotationX(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setRotationX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47056,7 +46922,7 @@ static int lua_cocos2dx_Sprite_setRotationX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setScale(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47098,7 +46964,7 @@ static int lua_cocos2dx_Sprite_setScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47140,7 +47006,7 @@ static int lua_cocos2dx_Sprite_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47184,7 +47050,7 @@ static int lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setScaleX(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47226,7 +47092,7 @@ static int lua_cocos2dx_Sprite_setScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47268,7 +47134,7 @@ static int lua_cocos2dx_Sprite_setAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47321,7 +47187,7 @@ static int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47362,7 +47228,7 @@ static int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47403,7 +47269,7 @@ static int lua_cocos2dx_Sprite_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47445,7 +47311,7 @@ static int lua_cocos2dx_Sprite_updateDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_initWithSpriteFrameName(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_initWithSpriteFrameName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47488,7 +47354,7 @@ static int lua_cocos2dx_Sprite_initWithSpriteFrameName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setVertexZ(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setVertexZ(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47530,7 +47396,7 @@ static int lua_cocos2dx_Sprite_setVertexZ(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_reorderChild(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_reorderChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47584,7 +47450,7 @@ static int lua_cocos2dx_Sprite_reorderChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = NULL;
@@ -47640,7 +47506,7 @@ static int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_initWithFile(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_initWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = NULL;
@@ -47701,7 +47567,7 @@ static int lua_cocos2dx_Sprite_initWithFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47754,7 +47620,7 @@ static int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getAtlasIndex(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getAtlasIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47795,7 +47661,7 @@ static int lua_cocos2dx_Sprite_getAtlasIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setRotation(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setRotation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47837,7 +47703,7 @@ static int lua_cocos2dx_Sprite_setRotation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setDisplayFrame(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setDisplayFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47889,7 +47755,7 @@ static int lua_cocos2dx_Sprite_setDisplayFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47941,7 +47807,7 @@ static int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setScaleY(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -47983,7 +47849,7 @@ static int lua_cocos2dx_Sprite_setScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = NULL;
@@ -48086,7 +47952,7 @@ static int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48138,7 +48004,7 @@ static int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setFlipY(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setFlipY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48180,7 +48046,7 @@ static int lua_cocos2dx_Sprite_setFlipY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setFlipX(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setFlipX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48222,7 +48088,7 @@ static int lua_cocos2dx_Sprite_setFlipX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_removeAllChildrenWithCleanup(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48264,7 +48130,7 @@ static int lua_cocos2dx_Sprite_removeAllChildrenWithCleanup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isDirty(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isDirty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48305,7 +48171,7 @@ static int lua_cocos2dx_Sprite_isDirty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setAtlasIndex(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setAtlasIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48347,7 +48213,7 @@ static int lua_cocos2dx_Sprite_setAtlasIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48389,7 +48255,7 @@ static int lua_cocos2dx_Sprite_updateDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setDirty(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setDirty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48431,7 +48297,7 @@ static int lua_cocos2dx_Sprite_setDirty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48472,7 +48338,7 @@ static int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_sortAllChildren(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_sortAllChildren(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48512,7 +48378,7 @@ static int lua_cocos2dx_Sprite_sortAllChildren(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48553,7 +48419,7 @@ static int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_ignoreAnchorPointForPosition(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_ignoreAnchorPointForPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48595,7 +48461,7 @@ static int lua_cocos2dx_Sprite_ignoreAnchorPointForPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setColor(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48637,7 +48503,7 @@ static int lua_cocos2dx_Sprite_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48690,7 +48556,7 @@ static int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_initWithSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_initWithSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48743,7 +48609,7 @@ static int lua_cocos2dx_Sprite_initWithSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48797,7 +48663,7 @@ static int lua_cocos2dx_Sprite_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48837,7 +48703,7 @@ static int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_isFlipY(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_isFlipY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48878,7 +48744,7 @@ static int lua_cocos2dx_Sprite_isFlipY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48920,7 +48786,7 @@ static int lua_cocos2dx_Sprite_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setVertexRect(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setVertexRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -48962,7 +48828,7 @@ static int lua_cocos2dx_Sprite_setVertexRect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setSkewX(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setSkewX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -49004,7 +48870,7 @@ static int lua_cocos2dx_Sprite_setSkewX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setSkewY(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setSkewY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -49046,7 +48912,7 @@ static int lua_cocos2dx_Sprite_setSkewY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_setVisible(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_setVisible(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -49088,7 +48954,7 @@ static int lua_cocos2dx_Sprite_setVisible(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -49182,7 +49048,7 @@ static int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -49275,7 +49141,7 @@ static int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -49320,7 +49186,7 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -49375,7 +49241,7 @@ static int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Sprite_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Sprite_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite* cobj = nullptr;
@@ -49489,7 +49355,7 @@ int lua_register_cocos2dx_Sprite(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LabelTTF_enableShadow(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_enableShadow(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49550,7 +49416,7 @@ static int lua_cocos2dx_LabelTTF_enableShadow(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setDimensions(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setDimensions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49592,7 +49458,7 @@ static int lua_cocos2dx_LabelTTF_setDimensions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getFontSize(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49633,7 +49499,7 @@ static int lua_cocos2dx_LabelTTF_getFontSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getString(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49674,7 +49540,7 @@ static int lua_cocos2dx_LabelTTF_getString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setTextDefinition(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setTextDefinition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49716,7 +49582,7 @@ static int lua_cocos2dx_LabelTTF_setTextDefinition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setFontName(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setFontName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49758,7 +49624,7 @@ static int lua_cocos2dx_LabelTTF_setFontName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getHorizontalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getHorizontalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49799,7 +49665,7 @@ static int lua_cocos2dx_LabelTTF_getHorizontalAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49844,7 +49710,7 @@ static int lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -49886,7 +49752,7 @@ static int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = NULL;
@@ -49991,7 +49857,7 @@ static int lua_cocos2dx_LabelTTF_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_init(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50032,7 +49898,7 @@ static int lua_cocos2dx_LabelTTF_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setFontFillColor(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setFontFillColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50085,7 +49951,7 @@ static int lua_cocos2dx_LabelTTF_setFontFillColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_enableStroke(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_enableStroke(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50142,7 +50008,7 @@ static int lua_cocos2dx_LabelTTF_enableStroke(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getDimensions(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getDimensions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50183,7 +50049,7 @@ static int lua_cocos2dx_LabelTTF_getDimensions(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setVerticalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50225,7 +50091,7 @@ static int lua_cocos2dx_LabelTTF_setVerticalAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setFontSize(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50267,7 +50133,7 @@ static int lua_cocos2dx_LabelTTF_setFontSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getVerticalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50308,7 +50174,7 @@ static int lua_cocos2dx_LabelTTF_getVerticalAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getTextDefinition(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getTextDefinition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50349,7 +50215,7 @@ static int lua_cocos2dx_LabelTTF_getTextDefinition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_getFontName(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_getFontName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50390,7 +50256,7 @@ static int lua_cocos2dx_LabelTTF_getFontName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_setHorizontalAlignment(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_setHorizontalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50432,7 +50298,7 @@ static int lua_cocos2dx_LabelTTF_setHorizontalAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_disableShadow(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_disableShadow(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50481,7 +50347,7 @@ static int lua_cocos2dx_LabelTTF_disableShadow(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_disableStroke(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_disableStroke(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50530,7 +50396,7 @@ static int lua_cocos2dx_LabelTTF_disableStroke(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -50678,7 +50544,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -50725,7 +50591,7 @@ static int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelTTF_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LabelTTF_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelTTF* cobj = nullptr;
@@ -50808,7 +50674,7 @@ int lua_register_cocos2dx_LabelTTF(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -50860,7 +50726,7 @@ static int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -50902,7 +50768,7 @@ static int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = NULL;
@@ -51002,7 +50868,7 @@ static int lua_cocos2dx_SpriteBatchNode_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_visit(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51042,7 +50908,7 @@ static int lua_cocos2dx_SpriteBatchNode_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51094,7 +50960,7 @@ static int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_removeChildAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_removeChildAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51138,7 +51004,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeChildAtIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51190,7 +51056,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51245,7 +51111,7 @@ static int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51298,7 +51164,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51338,7 +51204,7 @@ static int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = NULL;
@@ -51388,7 +51254,7 @@ static int lua_cocos2dx_SpriteBatchNode_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_insertChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_insertChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51442,7 +51308,7 @@ static int lua_cocos2dx_SpriteBatchNode_insertChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51495,7 +51361,7 @@ static int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_draw(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51535,7 +51401,7 @@ static int lua_cocos2dx_SpriteBatchNode_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51590,7 +51456,7 @@ static int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51642,7 +51508,7 @@ static int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51684,7 +51550,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* 
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_sortAllChildren(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_sortAllChildren(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51724,7 +51590,7 @@ static int lua_cocos2dx_SpriteBatchNode_sortAllChildren(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_reorderChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_reorderChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51778,7 +51644,7 @@ static int lua_cocos2dx_SpriteBatchNode_reorderChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51833,7 +51699,7 @@ static int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51886,7 +51752,7 @@ static int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_getDescendants(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_getDescendants(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51927,7 +51793,7 @@ static int lua_cocos2dx_SpriteBatchNode_getDescendants(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -51981,7 +51847,7 @@ static int lua_cocos2dx_SpriteBatchNode_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -52034,7 +51900,7 @@ static int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -52103,7 +51969,7 @@ static int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -52192,7 +52058,7 @@ static int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteBatchNode_constructor(lua_State* tolua_S)
+int lua_cocos2dx_SpriteBatchNode_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteBatchNode* cobj = nullptr;
@@ -52277,7 +52143,7 @@ int lua_register_cocos2dx_SpriteBatchNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LabelBMFont_setAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52319,7 +52185,7 @@ static int lua_cocos2dx_LabelBMFont_setAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_createFontChars(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_createFontChars(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52359,7 +52225,7 @@ static int lua_cocos2dx_LabelBMFont_createFontChars(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getString(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52400,7 +52266,7 @@ static int lua_cocos2dx_LabelBMFont_getString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setScale(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52442,7 +52308,7 @@ static int lua_cocos2dx_LabelBMFont_setScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52484,7 +52350,7 @@ static int lua_cocos2dx_LabelBMFont_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52526,7 +52392,7 @@ static int lua_cocos2dx_LabelBMFont_setCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getFntFile(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getFntFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52567,7 +52433,7 @@ static int lua_cocos2dx_LabelBMFont_getFntFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_updateLabel(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_updateLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52607,7 +52473,7 @@ static int lua_cocos2dx_LabelBMFont_updateLabel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setWidth(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setWidth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52649,7 +52515,7 @@ static int lua_cocos2dx_LabelBMFont_setWidth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52690,7 +52556,7 @@ static int lua_cocos2dx_LabelBMFont_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_isCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_isCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52731,7 +52597,7 @@ static int lua_cocos2dx_LabelBMFont_isCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setString(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = NULL;
@@ -52783,7 +52649,7 @@ static int lua_cocos2dx_LabelBMFont_setString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52876,7 +52742,7 @@ static int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52918,7 +52784,7 @@ static int lua_cocos2dx_LabelBMFont_setCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -52960,7 +52826,7 @@ static int lua_cocos2dx_LabelBMFont_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53002,7 +52868,7 @@ static int lua_cocos2dx_LabelBMFont_updateDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_init(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53043,7 +52909,7 @@ static int lua_cocos2dx_LabelBMFont_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53085,7 +52951,7 @@ static int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53126,7 +52992,7 @@ static int lua_cocos2dx_LabelBMFont_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53168,7 +53034,7 @@ static int lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setScaleY(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53210,7 +53076,7 @@ static int lua_cocos2dx_LabelBMFont_setScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setScaleX(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53252,7 +53118,7 @@ static int lua_cocos2dx_LabelBMFont_setScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getColor(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53293,7 +53159,7 @@ static int lua_cocos2dx_LabelBMFont_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53334,7 +53200,7 @@ static int lua_cocos2dx_LabelBMFont_getDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_isCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_isCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53375,7 +53241,7 @@ static int lua_cocos2dx_LabelBMFont_isCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setColor(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53417,7 +53283,7 @@ static int lua_cocos2dx_LabelBMFont_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setCString(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setCString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53459,7 +53325,7 @@ static int lua_cocos2dx_LabelBMFont_setCString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_getDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_getDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53500,7 +53366,7 @@ static int lua_cocos2dx_LabelBMFont_getDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53542,7 +53408,7 @@ static int lua_cocos2dx_LabelBMFont_updateDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_setAlignment(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_setAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53584,7 +53450,7 @@ static int lua_cocos2dx_LabelBMFont_setAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_purgeCachedData(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_purgeCachedData(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -53614,7 +53480,7 @@ static int lua_cocos2dx_LabelBMFont_purgeCachedData(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -53783,7 +53649,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LabelBMFont_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LabelBMFont_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LabelBMFont* cobj = nullptr;
@@ -53874,7 +53740,7 @@ int lua_register_cocos2dx_LabelBMFont(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Label_getString(lua_State* tolua_S)
+int lua_cocos2dx_Label_getString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -53915,7 +53781,7 @@ static int lua_cocos2dx_Label_getString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setScale(lua_State* tolua_S)
+int lua_cocos2dx_Label_setScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -53957,7 +53823,7 @@ static int lua_cocos2dx_Label_setScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Label_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -53999,7 +53865,7 @@ static int lua_cocos2dx_Label_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Label_setCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54041,7 +53907,7 @@ static int lua_cocos2dx_Label_setCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getLetterPosXRight(lua_State* tolua_S)
+int lua_cocos2dx_Label_getLetterPosXRight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54094,7 +53960,7 @@ static int lua_cocos2dx_Label_getLetterPosXRight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getCommonLineHeight(lua_State* tolua_S)
+int lua_cocos2dx_Label_getCommonLineHeight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54135,7 +54001,7 @@ static int lua_cocos2dx_Label_getCommonLineHeight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getLabelContentSize(lua_State* tolua_S)
+int lua_cocos2dx_Label_getLabelContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54176,7 +54042,7 @@ static int lua_cocos2dx_Label_getLabelContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_breakLineWithoutSpace(lua_State* tolua_S)
+int lua_cocos2dx_Label_breakLineWithoutSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54217,7 +54083,7 @@ static int lua_cocos2dx_Label_breakLineWithoutSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
+int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54259,7 +54125,7 @@ static int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
+int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54300,7 +54166,7 @@ static int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Label_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54341,7 +54207,7 @@ static int lua_cocos2dx_Label_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getRectForChar(lua_State* tolua_S)
+int lua_cocos2dx_Label_getRectForChar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54384,7 +54250,7 @@ static int lua_cocos2dx_Label_getRectForChar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getAdvanceForChar(lua_State* tolua_S)
+int lua_cocos2dx_Label_getAdvanceForChar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54429,7 +54295,7 @@ static int lua_cocos2dx_Label_getAdvanceForChar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_isCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Label_isCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54470,7 +54336,7 @@ static int lua_cocos2dx_Label_isCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setString(lua_State* tolua_S)
+int lua_cocos2dx_Label_setString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54512,7 +54378,7 @@ static int lua_cocos2dx_Label_setString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Label_setCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54554,7 +54420,7 @@ static int lua_cocos2dx_Label_setCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Label_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54596,7 +54462,7 @@ static int lua_cocos2dx_Label_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getYOffsetForChar(lua_State* tolua_S)
+int lua_cocos2dx_Label_getYOffsetForChar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54639,7 +54505,7 @@ static int lua_cocos2dx_Label_getYOffsetForChar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Label_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54681,7 +54547,7 @@ static int lua_cocos2dx_Label_updateDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getXOffsetForChar(lua_State* tolua_S)
+int lua_cocos2dx_Label_getXOffsetForChar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54724,7 +54590,7 @@ static int lua_cocos2dx_Label_getXOffsetForChar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getSpriteForChar(lua_State* tolua_S)
+int lua_cocos2dx_Label_getSpriteForChar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54781,7 +54647,7 @@ static int lua_cocos2dx_Label_getSpriteForChar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Label_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54822,7 +54688,7 @@ static int lua_cocos2dx_Label_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getChildrenLetters(lua_State* tolua_S)
+int lua_cocos2dx_Label_getChildrenLetters(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54863,7 +54729,7 @@ static int lua_cocos2dx_Label_getChildrenLetters(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setLineBreakWithoutSpace(lua_State* tolua_S)
+int lua_cocos2dx_Label_setLineBreakWithoutSpace(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54905,7 +54771,7 @@ static int lua_cocos2dx_Label_setLineBreakWithoutSpace(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setScaleY(lua_State* tolua_S)
+int lua_cocos2dx_Label_setScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54947,7 +54813,7 @@ static int lua_cocos2dx_Label_setScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setScaleX(lua_State* tolua_S)
+int lua_cocos2dx_Label_setScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -54989,7 +54855,7 @@ static int lua_cocos2dx_Label_setScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getStringNumLines(lua_State* tolua_S)
+int lua_cocos2dx_Label_getStringNumLines(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55030,7 +54896,7 @@ static int lua_cocos2dx_Label_getStringNumLines(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getCharAtStringPosition(lua_State* tolua_S)
+int lua_cocos2dx_Label_getCharAtStringPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55073,7 +54939,7 @@ static int lua_cocos2dx_Label_getCharAtStringPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getStringLenght(lua_State* tolua_S)
+int lua_cocos2dx_Label_getStringLenght(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55114,7 +54980,7 @@ static int lua_cocos2dx_Label_getStringLenght(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getColor(lua_State* tolua_S)
+int lua_cocos2dx_Label_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55155,7 +55021,7 @@ static int lua_cocos2dx_Label_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Label_getDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55196,7 +55062,7 @@ static int lua_cocos2dx_Label_getDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getLetterPosXLeft(lua_State* tolua_S)
+int lua_cocos2dx_Label_getLetterPosXLeft(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55249,7 +55115,7 @@ static int lua_cocos2dx_Label_getLetterPosXLeft(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getKerningForCharsPair(lua_State* tolua_S)
+int lua_cocos2dx_Label_getKerningForCharsPair(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55294,7 +55160,7 @@ static int lua_cocos2dx_Label_getKerningForCharsPair(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setLabelContentSize(lua_State* tolua_S)
+int lua_cocos2dx_Label_setLabelContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55336,7 +55202,7 @@ static int lua_cocos2dx_Label_setLabelContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_assignNewUTF8String(lua_State* tolua_S)
+int lua_cocos2dx_Label_assignNewUTF8String(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55378,7 +55244,7 @@ static int lua_cocos2dx_Label_assignNewUTF8String(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setColor(lua_State* tolua_S)
+int lua_cocos2dx_Label_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55420,7 +55286,7 @@ static int lua_cocos2dx_Label_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_Label_getDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55461,7 +55327,7 @@ static int lua_cocos2dx_Label_getDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setText(lua_State* tolua_S)
+int lua_cocos2dx_Label_setText(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55536,7 +55402,7 @@ static int lua_cocos2dx_Label_setText(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getUTF8String(lua_State* tolua_S)
+int lua_cocos2dx_Label_getUTF8String(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55577,7 +55443,7 @@ static int lua_cocos2dx_Label_getUTF8String(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
+int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55618,7 +55484,7 @@ static int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_getSpriteChild(lua_State* tolua_S)
+int lua_cocos2dx_Label_getSpriteChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55673,7 +55539,7 @@ static int lua_cocos2dx_Label_getSpriteChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_isCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Label_isCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55714,7 +55580,7 @@ static int lua_cocos2dx_Label_isCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_Label_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55756,7 +55622,7 @@ static int lua_cocos2dx_Label_updateDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
+int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Label* cobj = nullptr;
@@ -55798,7 +55664,7 @@ static int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
+int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -55899,7 +55765,7 @@ static int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
+int lua_cocos2dx_Label_createWithTTF(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -56136,7 +56002,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Layer_keyBackClicked(lua_State* tolua_S)
+int lua_cocos2dx_Layer_keyBackClicked(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56176,7 +56042,7 @@ static int lua_cocos2dx_Layer_keyBackClicked(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56241,7 +56107,7 @@ static int lua_cocos2dx_Layer_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56282,7 +56148,7 @@ static int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56324,7 +56190,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchesCancelled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchesCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56388,7 +56254,7 @@ static int lua_cocos2dx_Layer_ccTouchesCancelled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchesMoved(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchesMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56452,7 +56318,7 @@ static int lua_cocos2dx_Layer_ccTouchesMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* tolua_S)
+int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56493,7 +56359,7 @@ static int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_getTouchMode(lua_State* tolua_S)
+int lua_cocos2dx_Layer_getTouchMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56534,7 +56400,7 @@ static int lua_cocos2dx_Layer_getTouchMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56576,7 +56442,7 @@ static int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_init(lua_State* tolua_S)
+int lua_cocos2dx_Layer_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56617,7 +56483,7 @@ static int lua_cocos2dx_Layer_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_isTouchEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_isTouchEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56658,7 +56524,7 @@ static int lua_cocos2dx_Layer_isTouchEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56722,7 +56588,7 @@ static int lua_cocos2dx_Layer_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setTouchEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setTouchEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56764,7 +56630,7 @@ static int lua_cocos2dx_Layer_setTouchEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56806,7 +56672,7 @@ static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_isKeypadEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_isKeypadEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56847,7 +56713,7 @@ static int lua_cocos2dx_Layer_isKeypadEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchesEnded(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchesEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56911,7 +56777,7 @@ static int lua_cocos2dx_Layer_ccTouchesEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setTouchMode(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setTouchMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56953,7 +56819,7 @@ static int lua_cocos2dx_Layer_setTouchMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -56994,7 +56860,7 @@ static int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57058,7 +56924,7 @@ static int lua_cocos2dx_Layer_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57122,7 +56988,7 @@ static int lua_cocos2dx_Layer_ccTouchCancelled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57164,7 +57030,7 @@ static int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_ccTouchesBegan(lua_State* tolua_S)
+int lua_cocos2dx_Layer_ccTouchesBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57228,7 +57094,7 @@ static int lua_cocos2dx_Layer_ccTouchesBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setTouchPriority(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setTouchPriority(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57270,7 +57136,7 @@ static int lua_cocos2dx_Layer_setTouchPriority(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_getTouchPriority(lua_State* tolua_S)
+int lua_cocos2dx_Layer_getTouchPriority(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57311,7 +57177,7 @@ static int lua_cocos2dx_Layer_getTouchPriority(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_setKeypadEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Layer_setKeypadEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57353,7 +57219,7 @@ static int lua_cocos2dx_Layer_setKeypadEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_registerWithTouchDispatcher(lua_State* tolua_S)
+int lua_cocos2dx_Layer_registerWithTouchDispatcher(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57393,7 +57259,7 @@ static int lua_cocos2dx_Layer_registerWithTouchDispatcher(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_keyMenuClicked(lua_State* tolua_S)
+int lua_cocos2dx_Layer_keyMenuClicked(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57433,7 +57299,7 @@ static int lua_cocos2dx_Layer_keyMenuClicked(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_create(lua_State* tolua_S)
+int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -57476,7 +57342,7 @@ static int lua_cocos2dx_Layer_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Layer_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Layer_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Layer* cobj = nullptr;
@@ -57563,7 +57429,7 @@ int lua_register_cocos2dx_Layer(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LayerRGBA_updateDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_updateDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57605,7 +57471,7 @@ static int lua_cocos2dx_LayerRGBA_updateDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_setColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57647,7 +57513,7 @@ static int lua_cocos2dx_LayerRGBA_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57688,7 +57554,7 @@ static int lua_cocos2dx_LayerRGBA_isCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_getColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57729,7 +57595,7 @@ static int lua_cocos2dx_LayerRGBA_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_getDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_getDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57770,7 +57636,7 @@ static int lua_cocos2dx_LayerRGBA_getDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_setCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_setCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57812,7 +57678,7 @@ static int lua_cocos2dx_LayerRGBA_setCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57854,7 +57720,7 @@ static int lua_cocos2dx_LayerRGBA_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57896,7 +57762,7 @@ static int lua_cocos2dx_LayerRGBA_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57938,7 +57804,7 @@ static int lua_cocos2dx_LayerRGBA_setCascadeOpacityEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_updateDisplayedOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_updateDisplayedOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -57980,7 +57846,7 @@ static int lua_cocos2dx_LayerRGBA_updateDisplayedOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_init(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58021,7 +57887,7 @@ static int lua_cocos2dx_LayerRGBA_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58062,7 +57928,7 @@ static int lua_cocos2dx_LayerRGBA_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58103,7 +57969,7 @@ static int lua_cocos2dx_LayerRGBA_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_isCascadeColorEnabled(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_isCascadeColorEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58144,7 +58010,7 @@ static int lua_cocos2dx_LayerRGBA_isCascadeColorEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_getDisplayedColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_getDisplayedColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58185,7 +58051,7 @@ static int lua_cocos2dx_LayerRGBA_getDisplayedColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_create(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -58228,7 +58094,7 @@ static int lua_cocos2dx_LayerRGBA_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerRGBA_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LayerRGBA_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerRGBA* cobj = nullptr;
@@ -58303,7 +58169,7 @@ int lua_register_cocos2dx_LayerRGBA(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LayerColor_changeWidthAndHeight(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_changeWidthAndHeight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58347,7 +58213,7 @@ static int lua_cocos2dx_LayerColor_changeWidthAndHeight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_setColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58389,7 +58255,7 @@ static int lua_cocos2dx_LayerColor_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_draw(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58429,7 +58295,7 @@ static int lua_cocos2dx_LayerColor_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58471,7 +58337,7 @@ static int lua_cocos2dx_LayerColor_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_initWithColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_initWithColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = NULL;
@@ -58536,7 +58402,7 @@ static int lua_cocos2dx_LayerColor_initWithColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_changeWidth(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_changeWidth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58578,7 +58444,7 @@ static int lua_cocos2dx_LayerColor_changeWidth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_setContentSize(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_setContentSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58620,7 +58486,7 @@ static int lua_cocos2dx_LayerColor_setContentSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_changeHeight(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_changeHeight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58662,7 +58528,7 @@ static int lua_cocos2dx_LayerColor_changeHeight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -58759,7 +58625,7 @@ static int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerColor_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LayerColor_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerColor* cobj = nullptr;
@@ -58827,7 +58693,7 @@ int lua_register_cocos2dx_LayerColor(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LayerGradient_getStartColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_getStartColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -58868,7 +58734,7 @@ static int lua_cocos2dx_LayerGradient_getStartColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_isCompressedInterpolation(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_isCompressedInterpolation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -58909,7 +58775,7 @@ static int lua_cocos2dx_LayerGradient_isCompressedInterpolation(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_getStartOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_getStartOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -58950,7 +58816,7 @@ static int lua_cocos2dx_LayerGradient_getStartOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -58992,7 +58858,7 @@ static int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setStartOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setStartOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59034,7 +58900,7 @@ static int lua_cocos2dx_LayerGradient_setStartOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setCompressedInterpolation(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setCompressedInterpolation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59076,7 +58942,7 @@ static int lua_cocos2dx_LayerGradient_setCompressedInterpolation(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setEndOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setEndOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59118,7 +58984,7 @@ static int lua_cocos2dx_LayerGradient_setEndOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59159,7 +59025,7 @@ static int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = NULL;
@@ -59228,7 +59094,7 @@ static int lua_cocos2dx_LayerGradient_initWithColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59270,7 +59136,7 @@ static int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_getEndColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_getEndColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59311,7 +59177,7 @@ static int lua_cocos2dx_LayerGradient_getEndColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_getEndOpacity(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_getEndOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59352,7 +59218,7 @@ static int lua_cocos2dx_LayerGradient_getEndOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_setStartColor(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_setStartColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerGradient* cobj = nullptr;
@@ -59394,7 +59260,7 @@ static int lua_cocos2dx_LayerGradient_setStartColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
+int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -59526,7 +59392,7 @@ int lua_register_cocos2dx_LayerGradient(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_LayerMultiplex_initWithArray(lua_State* tolua_S)
+int lua_cocos2dx_LayerMultiplex_initWithArray(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerMultiplex* cobj = nullptr;
@@ -59569,7 +59435,7 @@ static int lua_cocos2dx_LayerMultiplex_initWithArray(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe(lua_State* tolua_S)
+int lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerMultiplex* cobj = nullptr;
@@ -59611,7 +59477,7 @@ static int lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
+int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerMultiplex* cobj = nullptr;
@@ -59663,7 +59529,7 @@ static int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerMultiplex_switchTo(lua_State* tolua_S)
+int lua_cocos2dx_LayerMultiplex_switchTo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerMultiplex* cobj = nullptr;
@@ -59705,7 +59571,7 @@ static int lua_cocos2dx_LayerMultiplex_switchTo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_LayerMultiplex_constructor(lua_State* tolua_S)
+int lua_cocos2dx_LayerMultiplex_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::LayerMultiplex* cobj = nullptr;
@@ -59768,7 +59634,7 @@ int lua_register_cocos2dx_LayerMultiplex(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Scene_init(lua_State* tolua_S)
+int lua_cocos2dx_Scene_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Scene* cobj = nullptr;
@@ -59809,7 +59675,7 @@ static int lua_cocos2dx_Scene_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Scene_create(lua_State* tolua_S)
+int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -59852,7 +59718,7 @@ static int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Scene_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Scene_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Scene* cobj = nullptr;
@@ -59913,7 +59779,7 @@ int lua_register_cocos2dx_Scene(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionEaseScene* cobj = nullptr;
@@ -59997,7 +59863,7 @@ int lua_register_cocos2dx_TransitionEaseScene(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionScene_draw(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60037,7 +59903,7 @@ static int lua_cocos2dx_TransitionScene_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_finish(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_finish(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60077,7 +59943,7 @@ static int lua_cocos2dx_TransitionScene_finish(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60132,7 +59998,7 @@ static int lua_cocos2dx_TransitionScene_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_cleanup(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_cleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60172,7 +60038,7 @@ static int lua_cocos2dx_TransitionScene_cleanup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_hideOutShowIn(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_hideOutShowIn(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60212,7 +60078,7 @@ static int lua_cocos2dx_TransitionScene_hideOutShowIn(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -60269,7 +60135,7 @@ static int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionScene_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionScene_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionScene* cobj = nullptr;
@@ -60334,7 +60200,7 @@ int lua_register_cocos2dx_TransitionScene(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSceneOriented_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSceneOriented_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSceneOriented* cobj = nullptr;
@@ -60391,7 +60257,7 @@ static int lua_cocos2dx_TransitionSceneOriented_initWithDuration(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -60450,7 +60316,7 @@ static int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSceneOriented_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSceneOriented_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSceneOriented* cobj = nullptr;
@@ -60511,7 +60377,7 @@ int lua_register_cocos2dx_TransitionSceneOriented(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -60568,7 +60434,7 @@ static int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionRotoZoom_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionRotoZoom_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionRotoZoom* cobj = nullptr;
@@ -60627,7 +60493,7 @@ int lua_register_cocos2dx_TransitionRotoZoom(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -60684,7 +60550,7 @@ static int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionJumpZoom_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionJumpZoom_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionJumpZoom* cobj = nullptr;
@@ -60743,7 +60609,7 @@ int lua_register_cocos2dx_TransitionJumpZoom(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInL* cobj = nullptr;
@@ -60796,7 +60662,7 @@ static int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInL* cobj = nullptr;
@@ -60861,7 +60727,7 @@ static int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInL_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInL_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInL* cobj = nullptr;
@@ -60901,7 +60767,7 @@ static int lua_cocos2dx_TransitionMoveInL_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -60958,7 +60824,7 @@ static int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInL_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInL_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInL* cobj = nullptr;
@@ -61021,7 +60887,7 @@ int lua_register_cocos2dx_TransitionMoveInL(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionMoveInR_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInR_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInR* cobj = nullptr;
@@ -61061,7 +60927,7 @@ static int lua_cocos2dx_TransitionMoveInR_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -61118,7 +60984,7 @@ static int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInR_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInR_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInR* cobj = nullptr;
@@ -61179,7 +61045,7 @@ int lua_register_cocos2dx_TransitionMoveInR(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionMoveInT_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInT_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInT* cobj = nullptr;
@@ -61219,7 +61085,7 @@ static int lua_cocos2dx_TransitionMoveInT_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -61276,7 +61142,7 @@ static int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInT_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInT_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInT* cobj = nullptr;
@@ -61337,7 +61203,7 @@ int lua_register_cocos2dx_TransitionMoveInT(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionMoveInB_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInB_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInB* cobj = nullptr;
@@ -61377,7 +61243,7 @@ static int lua_cocos2dx_TransitionMoveInB_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -61434,7 +61300,7 @@ static int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionMoveInB_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionMoveInB_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionMoveInB* cobj = nullptr;
@@ -61495,7 +61361,7 @@ int lua_register_cocos2dx_TransitionMoveInB(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInL* cobj = nullptr;
@@ -61548,7 +61414,7 @@ static int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInL* cobj = nullptr;
@@ -61613,7 +61479,7 @@ static int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInL_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInL_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInL* cobj = nullptr;
@@ -61653,7 +61519,7 @@ static int lua_cocos2dx_TransitionSlideInL_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -61710,7 +61576,7 @@ static int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInL_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInL_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInL* cobj = nullptr;
@@ -61773,7 +61639,7 @@ int lua_register_cocos2dx_TransitionSlideInL(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInR* cobj = nullptr;
@@ -61826,7 +61692,7 @@ static int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInR_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInR_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInR* cobj = nullptr;
@@ -61866,7 +61732,7 @@ static int lua_cocos2dx_TransitionSlideInR_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -61923,7 +61789,7 @@ static int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInR_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInR_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInR* cobj = nullptr;
@@ -61985,7 +61851,7 @@ int lua_register_cocos2dx_TransitionSlideInR(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInB* cobj = nullptr;
@@ -62038,7 +61904,7 @@ static int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInB_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInB_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInB* cobj = nullptr;
@@ -62078,7 +61944,7 @@ static int lua_cocos2dx_TransitionSlideInB_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -62135,7 +62001,7 @@ static int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInB_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInB_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInB* cobj = nullptr;
@@ -62197,7 +62063,7 @@ int lua_register_cocos2dx_TransitionSlideInB(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInT* cobj = nullptr;
@@ -62250,7 +62116,7 @@ static int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInT_initScenes(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInT_initScenes(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInT* cobj = nullptr;
@@ -62290,7 +62156,7 @@ static int lua_cocos2dx_TransitionSlideInT_initScenes(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -62347,7 +62213,7 @@ static int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSlideInT_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSlideInT_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSlideInT* cobj = nullptr;
@@ -62409,7 +62275,7 @@ int lua_register_cocos2dx_TransitionSlideInT(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionShrinkGrow* cobj = nullptr;
@@ -62474,7 +62340,7 @@ static int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -62531,7 +62397,7 @@ static int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionShrinkGrow_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionShrinkGrow_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionShrinkGrow* cobj = nullptr;
@@ -62592,7 +62458,7 @@ int lua_register_cocos2dx_TransitionShrinkGrow(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -62691,7 +62557,7 @@ static int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFlipX_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipX_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFlipX* cobj = nullptr;
@@ -62750,7 +62616,7 @@ int lua_register_cocos2dx_TransitionFlipX(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -62849,7 +62715,7 @@ static int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFlipY_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipY_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFlipY* cobj = nullptr;
@@ -62908,7 +62774,7 @@ int lua_register_cocos2dx_TransitionFlipY(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63007,7 +62873,7 @@ static int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFlipAngular_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFlipAngular_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFlipAngular* cobj = nullptr;
@@ -63066,7 +62932,7 @@ int lua_register_cocos2dx_TransitionFlipAngular(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63165,7 +63031,7 @@ static int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionZoomFlipX_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipX_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionZoomFlipX* cobj = nullptr;
@@ -63224,7 +63090,7 @@ int lua_register_cocos2dx_TransitionZoomFlipX(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63323,7 +63189,7 @@ static int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionZoomFlipY_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipY_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionZoomFlipY* cobj = nullptr;
@@ -63382,7 +63248,7 @@ int lua_register_cocos2dx_TransitionZoomFlipY(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63481,7 +63347,7 @@ static int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionZoomFlipAngular_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionZoomFlipAngular_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionZoomFlipAngular* cobj = nullptr;
@@ -63540,7 +63406,7 @@ int lua_register_cocos2dx_TransitionZoomFlipAngular(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFade* cobj = NULL;
@@ -63622,7 +63488,7 @@ static int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63721,7 +63587,7 @@ static int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFade_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFade_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFade* cobj = nullptr;
@@ -63782,7 +63648,7 @@ int lua_register_cocos2dx_TransitionFade(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionCrossFade_draw(lua_State* tolua_S)
+int lua_cocos2dx_TransitionCrossFade_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionCrossFade* cobj = nullptr;
@@ -63822,7 +63688,7 @@ static int lua_cocos2dx_TransitionCrossFade_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -63879,7 +63745,7 @@ static int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionCrossFade_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionCrossFade_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionCrossFade* cobj = nullptr;
@@ -63940,7 +63806,7 @@ int lua_register_cocos2dx_TransitionCrossFade(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionTurnOffTiles* cobj = nullptr;
@@ -64005,7 +63871,7 @@ static int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -64062,7 +63928,7 @@ static int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionTurnOffTiles_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionTurnOffTiles_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionTurnOffTiles* cobj = nullptr;
@@ -64123,7 +63989,7 @@ int lua_register_cocos2dx_TransitionTurnOffTiles(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSplitCols* cobj = nullptr;
@@ -64176,7 +64042,7 @@ static int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSplitCols* cobj = nullptr;
@@ -64241,7 +64107,7 @@ static int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -64298,7 +64164,7 @@ static int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSplitCols_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitCols_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSplitCols* cobj = nullptr;
@@ -64360,7 +64226,7 @@ int lua_register_cocos2dx_TransitionSplitCols(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionSplitRows_action(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitRows_action(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSplitRows* cobj = nullptr;
@@ -64413,7 +64279,7 @@ static int lua_cocos2dx_TransitionSplitRows_action(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -64470,7 +64336,7 @@ static int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionSplitRows_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionSplitRows_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionSplitRows* cobj = nullptr;
@@ -64531,7 +64397,7 @@ int lua_register_cocos2dx_TransitionSplitRows(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeTR* cobj = nullptr;
@@ -64596,7 +64462,7 @@ static int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeTR* cobj = nullptr;
@@ -64651,7 +64517,7 @@ static int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -64708,7 +64574,7 @@ static int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeTR_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeTR_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeTR* cobj = nullptr;
@@ -64770,7 +64636,7 @@ int lua_register_cocos2dx_TransitionFadeTR(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFadeBL_actionWithSize(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeBL_actionWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeBL* cobj = nullptr;
@@ -64825,7 +64691,7 @@ static int lua_cocos2dx_TransitionFadeBL_actionWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -64882,7 +64748,7 @@ static int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeBL_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeBL_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeBL* cobj = nullptr;
@@ -64943,7 +64809,7 @@ int lua_register_cocos2dx_TransitionFadeBL(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFadeUp_actionWithSize(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeUp_actionWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeUp* cobj = nullptr;
@@ -64998,7 +64864,7 @@ static int lua_cocos2dx_TransitionFadeUp_actionWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65055,7 +64921,7 @@ static int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeUp_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeUp_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeUp* cobj = nullptr;
@@ -65116,7 +64982,7 @@ int lua_register_cocos2dx_TransitionFadeUp(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionFadeDown_actionWithSize(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeDown_actionWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeDown* cobj = nullptr;
@@ -65171,7 +65037,7 @@ static int lua_cocos2dx_TransitionFadeDown_actionWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65228,7 +65094,7 @@ static int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionFadeDown_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionFadeDown_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionFadeDown* cobj = nullptr;
@@ -65289,7 +65155,7 @@ int lua_register_cocos2dx_TransitionFadeDown(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
+int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionPageTurn* cobj = nullptr;
@@ -65344,7 +65210,7 @@ static int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
+int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionPageTurn* cobj = nullptr;
@@ -65401,7 +65267,7 @@ static int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65460,7 +65326,7 @@ static int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionPageTurn_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionPageTurn_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionPageTurn* cobj = nullptr;
@@ -65522,7 +65388,7 @@ int lua_register_cocos2dx_TransitionPageTurn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65579,7 +65445,7 @@ static int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TransitionProgress_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgress_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TransitionProgress* cobj = nullptr;
@@ -65638,7 +65504,7 @@ int lua_register_cocos2dx_TransitionProgress(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65714,7 +65580,7 @@ int lua_register_cocos2dx_TransitionProgressRadialCCW(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65790,7 +65656,7 @@ int lua_register_cocos2dx_TransitionProgressRadialCW(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65866,7 +65732,7 @@ int lua_register_cocos2dx_TransitionProgressHorizontal(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -65942,7 +65808,7 @@ int lua_register_cocos2dx_TransitionProgressVertical(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -66018,7 +65884,7 @@ int lua_register_cocos2dx_TransitionProgressInOut(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
+int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -66094,7 +65960,7 @@ int lua_register_cocos2dx_TransitionProgressOutIn(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItem_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66136,7 +66002,7 @@ static int lua_cocos2dx_MenuItem_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_activate(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_activate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66176,7 +66042,7 @@ static int lua_cocos2dx_MenuItem_activate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_isEnabled(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_isEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66217,7 +66083,7 @@ static int lua_cocos2dx_MenuItem_isEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_isSelected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_isSelected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66258,7 +66124,7 @@ static int lua_cocos2dx_MenuItem_isSelected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_selected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_selected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66298,7 +66164,7 @@ static int lua_cocos2dx_MenuItem_selected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_unselected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_unselected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66338,7 +66204,7 @@ static int lua_cocos2dx_MenuItem_unselected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_rect(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_rect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66379,7 +66245,7 @@ static int lua_cocos2dx_MenuItem_rect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItem_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItem_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItem* cobj = nullptr;
@@ -66445,7 +66311,7 @@ int lua_register_cocos2dx_MenuItem(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemLabel_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66487,7 +66353,7 @@ static int lua_cocos2dx_MenuItemLabel_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66539,7 +66405,7 @@ static int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_activate(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_activate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66579,7 +66445,7 @@ static int lua_cocos2dx_MenuItemLabel_activate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_getDisabledColor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_getDisabledColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66620,7 +66486,7 @@ static int lua_cocos2dx_MenuItemLabel_getDisabledColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_setString(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_setString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66662,7 +66528,7 @@ static int lua_cocos2dx_MenuItemLabel_setString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_selected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_selected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66702,7 +66568,7 @@ static int lua_cocos2dx_MenuItemLabel_selected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66784,7 +66650,7 @@ static int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_setDisabledColor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_setDisabledColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66826,7 +66692,7 @@ static int lua_cocos2dx_MenuItemLabel_setDisabledColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66879,7 +66745,7 @@ static int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_unselected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_unselected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66919,7 +66785,7 @@ static int lua_cocos2dx_MenuItemLabel_unselected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemLabel_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemLabel_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemLabel* cobj = nullptr;
@@ -66988,7 +66854,7 @@ int lua_register_cocos2dx_MenuItemLabel(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemAtlasFont_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemAtlasFont_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemAtlasFont* cobj = nullptr;
@@ -67068,7 +66934,7 @@ static int lua_cocos2dx_MenuItemAtlasFont_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemAtlasFont_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemAtlasFont_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemAtlasFont* cobj = nullptr;
@@ -67128,7 +66994,7 @@ int lua_register_cocos2dx_MenuItemAtlasFont(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemFont_initWithString(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_initWithString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67200,7 +67066,7 @@ static int lua_cocos2dx_MenuItemFont_initWithString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67241,7 +67107,7 @@ static int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_getFontSizeObj(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_getFontSizeObj(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67282,7 +67148,7 @@ static int lua_cocos2dx_MenuItemFont_getFontSizeObj(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_setFontNameObj(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_setFontNameObj(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67324,7 +67190,7 @@ static int lua_cocos2dx_MenuItemFont_setFontNameObj(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_setFontSizeObj(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_setFontSizeObj(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67366,7 +67232,7 @@ static int lua_cocos2dx_MenuItemFont_setFontSizeObj(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_setFontName(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_setFontName(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -67398,7 +67264,7 @@ static int lua_cocos2dx_MenuItemFont_setFontName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_getFontSize(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_getFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -67429,7 +67295,7 @@ static int lua_cocos2dx_MenuItemFont_getFontSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_getFontName(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_getFontName(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -67460,7 +67326,7 @@ static int lua_cocos2dx_MenuItemFont_getFontName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_setFontSize(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_setFontSize(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -67492,7 +67358,7 @@ static int lua_cocos2dx_MenuItemFont_setFontSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemFont_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemFont_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemFont* cobj = nullptr;
@@ -67560,7 +67426,7 @@ int lua_register_cocos2dx_MenuItemFont(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemSprite_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67602,7 +67468,7 @@ static int lua_cocos2dx_MenuItemSprite_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_selected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_selected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67642,7 +67508,7 @@ static int lua_cocos2dx_MenuItemSprite_selected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67694,7 +67560,7 @@ static int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67746,7 +67612,7 @@ static int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67852,7 +67718,7 @@ static int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67904,7 +67770,7 @@ static int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -67957,7 +67823,7 @@ static int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -68010,7 +67876,7 @@ static int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -68063,7 +67929,7 @@ static int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_unselected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_unselected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -68103,7 +67969,7 @@ static int lua_cocos2dx_MenuItemSprite_unselected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemSprite_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemSprite_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemSprite* cobj = nullptr;
@@ -68172,7 +68038,7 @@ int lua_register_cocos2dx_MenuItemSprite(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68224,7 +68090,7 @@ static int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68276,7 +68142,7 @@ static int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68328,7 +68194,7 @@ static int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemImage_init(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68369,7 +68235,7 @@ static int lua_cocos2dx_MenuItemImage_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemImage_initWithNormalImage(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_initWithNormalImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68445,7 +68311,7 @@ static int lua_cocos2dx_MenuItemImage_initWithNormalImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemImage_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemImage_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemImage* cobj = nullptr;
@@ -68509,7 +68375,7 @@ int lua_register_cocos2dx_MenuItemImage(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MenuItemToggle_setSubItems(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_setSubItems(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68551,7 +68417,7 @@ static int lua_cocos2dx_MenuItemToggle_setSubItems(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_initWithItem(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_initWithItem(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68604,7 +68470,7 @@ static int lua_cocos2dx_MenuItemToggle_initWithItem(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_setSelectedIndex(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_setSelectedIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68646,7 +68512,7 @@ static int lua_cocos2dx_MenuItemToggle_setSelectedIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68688,7 +68554,7 @@ static int lua_cocos2dx_MenuItemToggle_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_getSelectedIndex(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_getSelectedIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68729,7 +68595,7 @@ static int lua_cocos2dx_MenuItemToggle_getSelectedIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68781,7 +68647,7 @@ static int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_activate(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_activate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68821,7 +68687,7 @@ static int lua_cocos2dx_MenuItemToggle_activate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_selected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_selected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68861,7 +68727,7 @@ static int lua_cocos2dx_MenuItemToggle_selected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_unselected(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_unselected(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68901,7 +68767,7 @@ static int lua_cocos2dx_MenuItemToggle_unselected(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -68954,7 +68820,7 @@ static int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MenuItemToggle_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MenuItemToggle_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MenuItemToggle* cobj = nullptr;
@@ -69023,7 +68889,7 @@ int lua_register_cocos2dx_MenuItemToggle(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Menu_initWithArray(lua_State* tolua_S)
+int lua_cocos2dx_Menu_initWithArray(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69066,7 +68932,7 @@ static int lua_cocos2dx_Menu_initWithArray(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
+int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = NULL;
@@ -69166,7 +69032,7 @@ static int lua_cocos2dx_Menu_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_alignItemsVertically(lua_State* tolua_S)
+int lua_cocos2dx_Menu_alignItemsVertically(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69206,7 +69072,7 @@ static int lua_cocos2dx_Menu_alignItemsVertically(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_ccTouchBegan(lua_State* tolua_S)
+int lua_cocos2dx_Menu_ccTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69271,7 +69137,7 @@ static int lua_cocos2dx_Menu_ccTouchBegan(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_ccTouchEnded(lua_State* tolua_S)
+int lua_cocos2dx_Menu_ccTouchEnded(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69335,7 +69201,7 @@ static int lua_cocos2dx_Menu_ccTouchEnded(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Menu_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69376,7 +69242,7 @@ static int lua_cocos2dx_Menu_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_isEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Menu_isEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69417,7 +69283,7 @@ static int lua_cocos2dx_Menu_isEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_Menu_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69459,7 +69325,7 @@ static int lua_cocos2dx_Menu_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_setHandlerPriority(lua_State* tolua_S)
+int lua_cocos2dx_Menu_setHandlerPriority(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69501,7 +69367,7 @@ static int lua_cocos2dx_Menu_setHandlerPriority(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_init(lua_State* tolua_S)
+int lua_cocos2dx_Menu_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69542,7 +69408,7 @@ static int lua_cocos2dx_Menu_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding(lua_State* tolua_S)
+int lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69584,7 +69450,7 @@ static int lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_alignItemsHorizontally(lua_State* tolua_S)
+int lua_cocos2dx_Menu_alignItemsHorizontally(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69624,7 +69490,7 @@ static int lua_cocos2dx_Menu_alignItemsHorizontally(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_setEnabled(lua_State* tolua_S)
+int lua_cocos2dx_Menu_setEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69666,7 +69532,7 @@ static int lua_cocos2dx_Menu_setEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_ccTouchMoved(lua_State* tolua_S)
+int lua_cocos2dx_Menu_ccTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69730,7 +69596,7 @@ static int lua_cocos2dx_Menu_ccTouchMoved(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_ccTouchCancelled(lua_State* tolua_S)
+int lua_cocos2dx_Menu_ccTouchCancelled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69794,7 +69660,7 @@ static int lua_cocos2dx_Menu_ccTouchCancelled(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_Menu_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69848,7 +69714,7 @@ static int lua_cocos2dx_Menu_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_alignItemsVerticallyWithPadding(lua_State* tolua_S)
+int lua_cocos2dx_Menu_alignItemsVerticallyWithPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69890,7 +69756,7 @@ static int lua_cocos2dx_Menu_alignItemsVerticallyWithPadding(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_registerWithTouchDispatcher(lua_State* tolua_S)
+int lua_cocos2dx_Menu_registerWithTouchDispatcher(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -69930,7 +69796,7 @@ static int lua_cocos2dx_Menu_registerWithTouchDispatcher(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Menu_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Menu_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Menu* cobj = nullptr;
@@ -70007,7 +69873,7 @@ int lua_register_cocos2dx_Menu(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ClippingNode_isInverted(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_isInverted(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70048,7 +69914,7 @@ static int lua_cocos2dx_ClippingNode_isInverted(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_visit(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70088,7 +69954,7 @@ static int lua_cocos2dx_ClippingNode_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_setInverted(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_setInverted(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70130,7 +69996,7 @@ static int lua_cocos2dx_ClippingNode_setInverted(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70182,7 +70048,7 @@ static int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_getAlphaThreshold(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_getAlphaThreshold(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70223,7 +70089,7 @@ static int lua_cocos2dx_ClippingNode_getAlphaThreshold(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_init(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = NULL;
@@ -70279,7 +70145,7 @@ static int lua_cocos2dx_ClippingNode_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70332,7 +70198,7 @@ static int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_setAlphaThreshold(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_setAlphaThreshold(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ClippingNode* cobj = nullptr;
@@ -70374,7 +70240,7 @@ static int lua_cocos2dx_ClippingNode_setAlphaThreshold(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
+int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -70478,7 +70344,7 @@ int lua_register_cocos2dx_ClippingNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_MotionStreak_reset(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_reset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70518,7 +70384,7 @@ static int lua_cocos2dx_MotionStreak_reset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70559,7 +70425,7 @@ static int lua_cocos2dx_MotionStreak_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70611,7 +70477,7 @@ static int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70652,7 +70518,7 @@ static int lua_cocos2dx_MotionStreak_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70694,7 +70560,7 @@ static int lua_cocos2dx_MotionStreak_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70747,7 +70613,7 @@ static int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_tintWithColor(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_tintWithColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70789,7 +70655,7 @@ static int lua_cocos2dx_MotionStreak_tintWithColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setStartingPositionInitialized(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setStartingPositionInitialized(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70831,7 +70697,7 @@ static int lua_cocos2dx_MotionStreak_setStartingPositionInitialized(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_initWithFade(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_initWithFade(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = NULL;
@@ -70923,7 +70789,7 @@ static int lua_cocos2dx_MotionStreak_initWithFade(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_isFastMode(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_isFastMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -70964,7 +70830,7 @@ static int lua_cocos2dx_MotionStreak_isFastMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -71006,7 +70872,7 @@ static int lua_cocos2dx_MotionStreak_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_isStartingPositionInitialized(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_isStartingPositionInitialized(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -71047,7 +70913,7 @@ static int lua_cocos2dx_MotionStreak_isStartingPositionInitialized(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setPosition(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setPosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -71089,7 +70955,7 @@ static int lua_cocos2dx_MotionStreak_setPosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_setFastMode(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_setFastMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -71131,7 +70997,7 @@ static int lua_cocos2dx_MotionStreak_setFastMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -71235,7 +71101,7 @@ static int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_MotionStreak_constructor(lua_State* tolua_S)
+int lua_cocos2dx_MotionStreak_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::MotionStreak* cobj = nullptr;
@@ -71309,7 +71175,7 @@ int lua_register_cocos2dx_MotionStreak(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ProgressTimer_setAnchorPoint(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setAnchorPoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71351,7 +71217,7 @@ static int lua_cocos2dx_ProgressTimer_setAnchorPoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_draw(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71391,7 +71257,7 @@ static int lua_cocos2dx_ProgressTimer_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_isReverseDirection(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_isReverseDirection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71432,7 +71298,7 @@ static int lua_cocos2dx_ProgressTimer_isReverseDirection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71474,7 +71340,7 @@ static int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getPercentage(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getPercentage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71515,7 +71381,7 @@ static int lua_cocos2dx_ProgressTimer_getPercentage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71567,7 +71433,7 @@ static int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getType(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71608,7 +71474,7 @@ static int lua_cocos2dx_ProgressTimer_getType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71649,7 +71515,7 @@ static int lua_cocos2dx_ProgressTimer_getOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setOpacity(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setOpacity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71691,7 +71557,7 @@ static int lua_cocos2dx_ProgressTimer_setOpacity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71744,7 +71610,7 @@ static int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71786,7 +71652,7 @@ static int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71827,7 +71693,7 @@ static int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getColor(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71868,7 +71734,7 @@ static int lua_cocos2dx_ProgressTimer_getColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -71909,7 +71775,7 @@ static int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = NULL;
@@ -71957,7 +71823,7 @@ static int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_initWithSprite(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_initWithSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -72010,7 +71876,7 @@ static int lua_cocos2dx_ProgressTimer_initWithSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setColor(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -72052,7 +71918,7 @@ static int lua_cocos2dx_ProgressTimer_setColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setPercentage(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setPercentage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -72094,7 +71960,7 @@ static int lua_cocos2dx_ProgressTimer_setPercentage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_setType(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_setType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -72136,7 +72002,7 @@ static int lua_cocos2dx_ProgressTimer_setType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -72191,7 +72057,7 @@ static int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ProgressTimer_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ProgressTimer_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
@@ -72270,7 +72136,7 @@ int lua_register_cocos2dx_ProgressTimer(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
+int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72311,7 +72177,7 @@ static int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getDataLen(lua_State* tolua_S)
+int lua_cocos2dx_Image_getDataLen(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72352,7 +72218,7 @@ static int lua_cocos2dx_Image_getDataLen(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_isCompressed(lua_State* tolua_S)
+int lua_cocos2dx_Image_isCompressed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72393,7 +72259,7 @@ static int lua_cocos2dx_Image_isCompressed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getBitPerPixel(lua_State* tolua_S)
+int lua_cocos2dx_Image_getBitPerPixel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72434,7 +72300,7 @@ static int lua_cocos2dx_Image_getBitPerPixel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_hasAlpha(lua_State* tolua_S)
+int lua_cocos2dx_Image_hasAlpha(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72475,7 +72341,7 @@ static int lua_cocos2dx_Image_hasAlpha(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
+int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72516,7 +72382,7 @@ static int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_initWithImageFile(lua_State* tolua_S)
+int lua_cocos2dx_Image_initWithImageFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72559,7 +72425,7 @@ static int lua_cocos2dx_Image_initWithImageFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getWidth(lua_State* tolua_S)
+int lua_cocos2dx_Image_getWidth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72600,7 +72466,7 @@ static int lua_cocos2dx_Image_getWidth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_isPremultipliedAlpha(lua_State* tolua_S)
+int lua_cocos2dx_Image_isPremultipliedAlpha(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72641,7 +72507,7 @@ static int lua_cocos2dx_Image_isPremultipliedAlpha(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getFileType(lua_State* tolua_S)
+int lua_cocos2dx_Image_getFileType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72682,7 +72548,7 @@ static int lua_cocos2dx_Image_getFileType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
+int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72737,7 +72603,7 @@ static int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getNumberOfMipmaps(lua_State* tolua_S)
+int lua_cocos2dx_Image_getNumberOfMipmaps(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72778,7 +72644,7 @@ static int lua_cocos2dx_Image_getNumberOfMipmaps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getRenderFormat(lua_State* tolua_S)
+int lua_cocos2dx_Image_getRenderFormat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72819,7 +72685,7 @@ static int lua_cocos2dx_Image_getRenderFormat(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getData(lua_State* tolua_S)
+int lua_cocos2dx_Image_getData(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72860,7 +72726,7 @@ static int lua_cocos2dx_Image_getData(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_getMipmaps(lua_State* tolua_S)
+int lua_cocos2dx_Image_getMipmaps(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72901,7 +72767,7 @@ static int lua_cocos2dx_Image_getMipmaps(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Image_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Image_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Image* cobj = nullptr;
@@ -72975,7 +72841,7 @@ int lua_register_cocos2dx_Image(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_RenderTexture_clearStencil(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_clearStencil(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73017,7 +72883,7 @@ static int lua_cocos2dx_RenderTexture_clearStencil(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_draw(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73057,7 +72923,7 @@ static int lua_cocos2dx_RenderTexture_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_listenToForeground(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_listenToForeground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73109,7 +72975,7 @@ static int lua_cocos2dx_RenderTexture_listenToForeground(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_getClearDepth(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_getClearDepth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73150,7 +73016,7 @@ static int lua_cocos2dx_RenderTexture_getClearDepth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_getClearStencil(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_getClearStencil(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73191,7 +73057,7 @@ static int lua_cocos2dx_RenderTexture_getClearStencil(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_end(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_end(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73231,7 +73097,7 @@ static int lua_cocos2dx_RenderTexture_end(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setClearStencil(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setClearStencil(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73273,7 +73139,7 @@ static int lua_cocos2dx_RenderTexture_setClearStencil(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = NULL;
@@ -73343,7 +73209,7 @@ static int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_visit(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73383,7 +73249,7 @@ static int lua_cocos2dx_RenderTexture_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73436,7 +73302,7 @@ static int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73477,7 +73343,7 @@ static int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setClearFlags(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setClearFlags(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73519,7 +73385,7 @@ static int lua_cocos2dx_RenderTexture_setClearFlags(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73559,7 +73425,7 @@ static int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = NULL;
@@ -73613,7 +73479,7 @@ static int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setAutoDraw(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setAutoDraw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73655,7 +73521,7 @@ static int lua_cocos2dx_RenderTexture_setAutoDraw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setClearColor(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setClearColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73697,7 +73563,7 @@ static int lua_cocos2dx_RenderTexture_setClearColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73737,7 +73603,7 @@ static int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = NULL;
@@ -73843,7 +73709,7 @@ static int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_clearDepth(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_clearDepth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73885,7 +73751,7 @@ static int lua_cocos2dx_RenderTexture_clearDepth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_getClearColor(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_getClearColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73926,7 +73792,7 @@ static int lua_cocos2dx_RenderTexture_getClearColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_listenToBackground(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_listenToBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -73978,7 +73844,7 @@ static int lua_cocos2dx_RenderTexture_listenToBackground(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_clear(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_clear(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74026,7 +73892,7 @@ static int lua_cocos2dx_RenderTexture_clear(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_getClearFlags(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_getClearFlags(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74067,7 +73933,7 @@ static int lua_cocos2dx_RenderTexture_getClearFlags(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74142,7 +74008,7 @@ static int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74184,7 +74050,7 @@ static int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74236,7 +74102,7 @@ static int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -74348,7 +74214,7 @@ static int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_RenderTexture_constructor(lua_State* tolua_S)
+int lua_cocos2dx_RenderTexture_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::RenderTexture* cobj = nullptr;
@@ -74434,7 +74300,7 @@ int lua_register_cocos2dx_RenderTexture(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = NULL;
@@ -74534,7 +74400,7 @@ static int lua_cocos2dx_ParticleBatchNode_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_draw(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_draw(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74574,7 +74440,7 @@ static int lua_cocos2dx_ParticleBatchNode_draw(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74626,7 +74492,7 @@ static int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_initWithFile(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_initWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74671,7 +74537,7 @@ static int lua_cocos2dx_ParticleBatchNode_initWithFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_disableParticle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_disableParticle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74713,7 +74579,7 @@ static int lua_cocos2dx_ParticleBatchNode_disableParticle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_visit(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74753,7 +74619,7 @@ static int lua_cocos2dx_ParticleBatchNode_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74806,7 +74672,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74858,7 +74724,7 @@ static int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74900,7 +74766,7 @@ static int lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -74953,7 +74819,7 @@ static int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75007,7 +74873,7 @@ static int lua_cocos2dx_ParticleBatchNode_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75061,7 +74927,7 @@ static int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_initWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_initWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75116,7 +74982,7 @@ static int lua_cocos2dx_ParticleBatchNode_initWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_removeChildAtIndex(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_removeChildAtIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75160,7 +75026,7 @@ static int lua_cocos2dx_ParticleBatchNode_removeChildAtIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_reorderChild(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_reorderChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75214,7 +75080,7 @@ static int lua_cocos2dx_ParticleBatchNode_reorderChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -75283,7 +75149,7 @@ static int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -75372,7 +75238,7 @@ static int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleBatchNode_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleBatchNode_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleBatchNode* cobj = nullptr;
@@ -75448,7 +75314,7 @@ int lua_register_cocos2dx_ParticleBatchNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSystem_getStartSizeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartSizeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75489,7 +75355,7 @@ static int lua_cocos2dx_ParticleSystem_getStartSizeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75542,7 +75408,7 @@ static int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_isFull(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_isFull(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75583,7 +75449,7 @@ static int lua_cocos2dx_ParticleSystem_isFull(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75636,7 +75502,7 @@ static int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartColor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75677,7 +75543,7 @@ static int lua_cocos2dx_ParticleSystem_getStartColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getPositionType(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getPositionType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75718,7 +75584,7 @@ static int lua_cocos2dx_ParticleSystem_getPositionType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75760,7 +75626,7 @@ static int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndSpin(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndSpin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75801,7 +75667,7 @@ static int lua_cocos2dx_ParticleSystem_getEndSpin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRotatePerSecondVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRotatePerSecondVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75843,7 +75709,7 @@ static int lua_cocos2dx_ParticleSystem_setRotatePerSecondVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartSpinVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartSpinVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75884,7 +75750,7 @@ static int lua_cocos2dx_ParticleSystem_getStartSpinVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getRadialAccelVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRadialAccelVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75925,7 +75791,7 @@ static int lua_cocos2dx_ParticleSystem_getRadialAccelVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -75966,7 +75832,7 @@ static int lua_cocos2dx_ParticleSystem_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndSizeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndSizeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76007,7 +75873,7 @@ static int lua_cocos2dx_ParticleSystem_getEndSizeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRotation(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRotation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76049,7 +75915,7 @@ static int lua_cocos2dx_ParticleSystem_setRotation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setTangentialAccel(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setTangentialAccel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76091,7 +75957,7 @@ static int lua_cocos2dx_ParticleSystem_setTangentialAccel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setScaleY(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setScaleY(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76133,7 +75999,7 @@ static int lua_cocos2dx_ParticleSystem_setScaleY(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setScaleX(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setScaleX(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76175,7 +76041,7 @@ static int lua_cocos2dx_ParticleSystem_setScaleX(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getRadialAccel(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRadialAccel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76216,7 +76082,7 @@ static int lua_cocos2dx_ParticleSystem_getRadialAccel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartRadius(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76258,7 +76124,7 @@ static int lua_cocos2dx_ParticleSystem_setStartRadius(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRotatePerSecond(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRotatePerSecond(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76300,7 +76166,7 @@ static int lua_cocos2dx_ParticleSystem_setRotatePerSecond(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndSize(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76342,7 +76208,7 @@ static int lua_cocos2dx_ParticleSystem_setEndSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartColorVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartColorVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76383,7 +76249,7 @@ static int lua_cocos2dx_ParticleSystem_getStartColorVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getTangentialAccel(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getTangentialAccel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76424,7 +76290,7 @@ static int lua_cocos2dx_ParticleSystem_getTangentialAccel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndRadius(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76466,7 +76332,7 @@ static int lua_cocos2dx_ParticleSystem_setEndRadius(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getSpeed(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getSpeed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76507,7 +76373,7 @@ static int lua_cocos2dx_ParticleSystem_getSpeed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getAngle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getAngle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76548,7 +76414,7 @@ static int lua_cocos2dx_ParticleSystem_getAngle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndColor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76590,7 +76456,7 @@ static int lua_cocos2dx_ParticleSystem_setEndColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartSpin(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartSpin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76632,7 +76498,7 @@ static int lua_cocos2dx_ParticleSystem_setStartSpin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setDuration(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76674,7 +76540,7 @@ static int lua_cocos2dx_ParticleSystem_setDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76717,7 +76583,7 @@ static int lua_cocos2dx_ParticleSystem_initWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76769,7 +76635,7 @@ static int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76810,7 +76676,7 @@ static int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_updateWithNoTime(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_updateWithNoTime(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76850,7 +76716,7 @@ static int lua_cocos2dx_ParticleSystem_updateWithNoTime(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_isBlendAdditive(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_isBlendAdditive(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76891,7 +76757,7 @@ static int lua_cocos2dx_ParticleSystem_isBlendAdditive(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getSpeedVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getSpeedVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76932,7 +76798,7 @@ static int lua_cocos2dx_ParticleSystem_getSpeedVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setPositionType(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setPositionType(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -76974,7 +76840,7 @@ static int lua_cocos2dx_ParticleSystem_setPositionType(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_stopSystem(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_stopSystem(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77014,7 +76880,7 @@ static int lua_cocos2dx_ParticleSystem_stopSystem(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77055,7 +76921,7 @@ static int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setLifeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setLifeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77097,7 +76963,7 @@ static int lua_cocos2dx_ParticleSystem_setLifeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77139,7 +77005,7 @@ static int lua_cocos2dx_ParticleSystem_setTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndColorVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndColorVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77181,7 +77047,7 @@ static int lua_cocos2dx_ParticleSystem_setEndColorVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_updateQuadWithParticle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_updateQuadWithParticle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77225,7 +77091,7 @@ static int lua_cocos2dx_ParticleSystem_updateQuadWithParticle(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getAtlasIndex(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getAtlasIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77266,7 +77132,7 @@ static int lua_cocos2dx_ParticleSystem_getAtlasIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartSize(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77307,7 +77173,7 @@ static int lua_cocos2dx_ParticleSystem_getStartSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartSpinVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartSpinVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77349,7 +77215,7 @@ static int lua_cocos2dx_ParticleSystem_setStartSpinVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_resetSystem(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_resetSystem(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77389,7 +77255,7 @@ static int lua_cocos2dx_ParticleSystem_resetSystem(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setAtlasIndex(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setAtlasIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77431,7 +77297,7 @@ static int lua_cocos2dx_ParticleSystem_setAtlasIndex(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setTangentialAccelVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setTangentialAccelVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77473,7 +77339,7 @@ static int lua_cocos2dx_ParticleSystem_setTangentialAccelVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndRadiusVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndRadiusVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77515,7 +77381,7 @@ static int lua_cocos2dx_ParticleSystem_setEndRadiusVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndRadius(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77556,7 +77422,7 @@ static int lua_cocos2dx_ParticleSystem_getEndRadius(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_isOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_isOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77597,7 +77463,7 @@ static int lua_cocos2dx_ParticleSystem_isOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_isActive(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_isActive(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77638,7 +77504,7 @@ static int lua_cocos2dx_ParticleSystem_isActive(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRadialAccelVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRadialAccelVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77680,7 +77546,7 @@ static int lua_cocos2dx_ParticleSystem_setRadialAccelVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartSize(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77722,7 +77588,7 @@ static int lua_cocos2dx_ParticleSystem_setStartSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setSpeed(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setSpeed(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77764,7 +77630,7 @@ static int lua_cocos2dx_ParticleSystem_setSpeed(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartSpin(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartSpin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77805,7 +77671,7 @@ static int lua_cocos2dx_ParticleSystem_getStartSpin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getRotatePerSecond(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRotatePerSecond(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77846,7 +77712,7 @@ static int lua_cocos2dx_ParticleSystem_getRotatePerSecond(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_initParticle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_initParticle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77888,7 +77754,7 @@ static int lua_cocos2dx_ParticleSystem_initParticle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEmitterMode(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEmitterMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77930,7 +77796,7 @@ static int lua_cocos2dx_ParticleSystem_setEmitterMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getDuration(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getDuration(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -77971,7 +77837,7 @@ static int lua_cocos2dx_ParticleSystem_getDuration(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78013,7 +77879,7 @@ static int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndSpinVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndSpinVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78054,7 +77920,7 @@ static int lua_cocos2dx_ParticleSystem_getEndSpinVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setBlendAdditive(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setBlendAdditive(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78096,7 +77962,7 @@ static int lua_cocos2dx_ParticleSystem_setBlendAdditive(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setLife(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setLife(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78138,7 +78004,7 @@ static int lua_cocos2dx_ParticleSystem_setLife(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setAngleVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setAngleVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78180,7 +78046,7 @@ static int lua_cocos2dx_ParticleSystem_setAngleVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRotationIsDir(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRotationIsDir(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78222,7 +78088,7 @@ static int lua_cocos2dx_ParticleSystem_setRotationIsDir(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndSizeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndSizeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78264,7 +78130,7 @@ static int lua_cocos2dx_ParticleSystem_setEndSizeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setAngle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setAngle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78306,7 +78172,7 @@ static int lua_cocos2dx_ParticleSystem_setAngle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78358,7 +78224,7 @@ static int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getTangentialAccelVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getTangentialAccelVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78399,7 +78265,7 @@ static int lua_cocos2dx_ParticleSystem_getTangentialAccelVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEmitterMode(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEmitterMode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78440,7 +78306,7 @@ static int lua_cocos2dx_ParticleSystem_getEmitterMode(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndSpinVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndSpinVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78482,7 +78348,7 @@ static int lua_cocos2dx_ParticleSystem_setEndSpinVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_initWithFile(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_initWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78525,7 +78391,7 @@ static int lua_cocos2dx_ParticleSystem_initWithFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getAngleVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getAngleVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78566,7 +78432,7 @@ static int lua_cocos2dx_ParticleSystem_getAngleVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartColor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78608,7 +78474,7 @@ static int lua_cocos2dx_ParticleSystem_setStartColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getRotatePerSecondVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRotatePerSecondVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78649,7 +78515,7 @@ static int lua_cocos2dx_ParticleSystem_getRotatePerSecondVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndSize(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78690,7 +78556,7 @@ static int lua_cocos2dx_ParticleSystem_getEndSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getLife(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getLife(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78731,7 +78597,7 @@ static int lua_cocos2dx_ParticleSystem_getLife(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setSpeedVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setSpeedVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78773,7 +78639,7 @@ static int lua_cocos2dx_ParticleSystem_setSpeedVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78815,7 +78681,7 @@ static int lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78857,7 +78723,7 @@ static int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_postStep(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_postStep(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78897,7 +78763,7 @@ static int lua_cocos2dx_ParticleSystem_postStep(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEmissionRate(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEmissionRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78939,7 +78805,7 @@ static int lua_cocos2dx_ParticleSystem_setEmissionRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -78980,7 +78846,7 @@ static int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79021,7 +78887,7 @@ static int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setScale(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79063,7 +78929,7 @@ static int lua_cocos2dx_ParticleSystem_setScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79104,7 +78970,7 @@ static int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79145,7 +79011,7 @@ static int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getLifeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getLifeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79186,7 +79052,7 @@ static int lua_cocos2dx_ParticleSystem_getLifeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartSizeVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartSizeVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79228,7 +79094,7 @@ static int lua_cocos2dx_ParticleSystem_setStartSizeVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setOpacityModifyRGB(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setOpacityModifyRGB(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79270,7 +79136,7 @@ static int lua_cocos2dx_ParticleSystem_setOpacityModifyRGB(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_addParticle(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_addParticle(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79311,7 +79177,7 @@ static int lua_cocos2dx_ParticleSystem_addParticle(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartRadius(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79352,7 +79218,7 @@ static int lua_cocos2dx_ParticleSystem_getStartRadius(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getParticleCount(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getParticleCount(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79393,7 +79259,7 @@ static int lua_cocos2dx_ParticleSystem_getParticleCount(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getStartRadiusVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getStartRadiusVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79434,7 +79300,7 @@ static int lua_cocos2dx_ParticleSystem_getStartRadiusVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartColorVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartColorVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79476,7 +79342,7 @@ static int lua_cocos2dx_ParticleSystem_setStartColorVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setEndSpin(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setEndSpin(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79518,7 +79384,7 @@ static int lua_cocos2dx_ParticleSystem_setEndSpin(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_update(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79560,7 +79426,7 @@ static int lua_cocos2dx_ParticleSystem_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setRadialAccel(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setRadialAccel(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79602,7 +79468,7 @@ static int lua_cocos2dx_ParticleSystem_setRadialAccel(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_initWithDictionary(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_initWithDictionary(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = NULL;
@@ -79656,7 +79522,7 @@ static int lua_cocos2dx_ParticleSystem_initWithDictionary(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79697,7 +79563,7 @@ static int lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79738,7 +79604,7 @@ static int lua_cocos2dx_ParticleSystem_getTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_setStartRadiusVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_setStartRadiusVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79780,7 +79646,7 @@ static int lua_cocos2dx_ParticleSystem_setStartRadiusVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getEndRadiusVar(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getEndRadiusVar(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79821,7 +79687,7 @@ static int lua_cocos2dx_ParticleSystem_getEndRadiusVar(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -79862,7 +79728,7 @@ static int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -79907,7 +79773,7 @@ static int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -79952,7 +79818,7 @@ static int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystem_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystem_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystem* cobj = nullptr;
@@ -80118,7 +79984,7 @@ int lua_register_cocos2dx_ParticleSystem(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSystemQuad_initTexCoordsWithRect(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_initTexCoordsWithRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystemQuad* cobj = nullptr;
@@ -80160,7 +80026,7 @@ static int lua_cocos2dx_ParticleSystemQuad_initTexCoordsWithRect(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystemQuad* cobj = nullptr;
@@ -80214,7 +80080,7 @@ static int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_initIndices(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_initIndices(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystemQuad* cobj = nullptr;
@@ -80254,7 +80120,7 @@ static int lua_cocos2dx_ParticleSystemQuad_initIndices(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystemQuad* cobj = nullptr;
@@ -80306,7 +80172,7 @@ static int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80373,7 +80239,7 @@ static int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80418,7 +80284,7 @@ static int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSystemQuad_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSystemQuad_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSystemQuad* cobj = nullptr;
@@ -80483,7 +80349,7 @@ int lua_register_cocos2dx_ParticleSystemQuad(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleFire_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFire_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFire* cobj = nullptr;
@@ -80524,7 +80390,7 @@ static int lua_cocos2dx_ParticleFire_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFire_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFire_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFire* cobj = nullptr;
@@ -80567,7 +80433,7 @@ static int lua_cocos2dx_ParticleFire_initWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80610,7 +80476,7 @@ static int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80655,7 +80521,7 @@ static int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFire_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFire_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFire* cobj = nullptr;
@@ -80718,7 +80584,7 @@ int lua_register_cocos2dx_ParticleFire(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleFireworks_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFireworks_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFireworks* cobj = nullptr;
@@ -80759,7 +80625,7 @@ static int lua_cocos2dx_ParticleFireworks_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFireworks_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFireworks_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFireworks* cobj = nullptr;
@@ -80802,7 +80668,7 @@ static int lua_cocos2dx_ParticleFireworks_initWithTotalParticles(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80845,7 +80711,7 @@ static int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -80890,7 +80756,7 @@ static int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFireworks_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFireworks_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFireworks* cobj = nullptr;
@@ -80953,7 +80819,7 @@ int lua_register_cocos2dx_ParticleFireworks(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSun_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSun_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSun* cobj = nullptr;
@@ -80994,7 +80860,7 @@ static int lua_cocos2dx_ParticleSun_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSun_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSun_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSun* cobj = nullptr;
@@ -81037,7 +80903,7 @@ static int lua_cocos2dx_ParticleSun_initWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81080,7 +80946,7 @@ static int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81125,7 +80991,7 @@ static int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSun_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSun_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSun* cobj = nullptr;
@@ -81188,7 +81054,7 @@ int lua_register_cocos2dx_ParticleSun(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleGalaxy_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleGalaxy_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleGalaxy* cobj = nullptr;
@@ -81229,7 +81095,7 @@ static int lua_cocos2dx_ParticleGalaxy_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleGalaxy_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleGalaxy_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleGalaxy* cobj = nullptr;
@@ -81272,7 +81138,7 @@ static int lua_cocos2dx_ParticleGalaxy_initWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81315,7 +81181,7 @@ static int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81360,7 +81226,7 @@ static int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleGalaxy_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleGalaxy_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleGalaxy* cobj = nullptr;
@@ -81423,7 +81289,7 @@ int lua_register_cocos2dx_ParticleGalaxy(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleFlower_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFlower_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFlower* cobj = nullptr;
@@ -81464,7 +81330,7 @@ static int lua_cocos2dx_ParticleFlower_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFlower_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFlower_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFlower* cobj = nullptr;
@@ -81507,7 +81373,7 @@ static int lua_cocos2dx_ParticleFlower_initWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81550,7 +81416,7 @@ static int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81595,7 +81461,7 @@ static int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleFlower_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleFlower_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleFlower* cobj = nullptr;
@@ -81658,7 +81524,7 @@ int lua_register_cocos2dx_ParticleFlower(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleMeteor_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleMeteor_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleMeteor* cobj = nullptr;
@@ -81699,7 +81565,7 @@ static int lua_cocos2dx_ParticleMeteor_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleMeteor_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleMeteor_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleMeteor* cobj = nullptr;
@@ -81742,7 +81608,7 @@ static int lua_cocos2dx_ParticleMeteor_initWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81785,7 +81651,7 @@ static int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -81830,7 +81696,7 @@ static int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleMeteor_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleMeteor_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleMeteor* cobj = nullptr;
@@ -81893,7 +81759,7 @@ int lua_register_cocos2dx_ParticleMeteor(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSpiral_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSpiral_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSpiral* cobj = nullptr;
@@ -81934,7 +81800,7 @@ static int lua_cocos2dx_ParticleSpiral_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSpiral_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSpiral_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSpiral* cobj = nullptr;
@@ -81977,7 +81843,7 @@ static int lua_cocos2dx_ParticleSpiral_initWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82020,7 +81886,7 @@ static int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82065,7 +81931,7 @@ static int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSpiral_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSpiral_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSpiral* cobj = nullptr;
@@ -82128,7 +81994,7 @@ int lua_register_cocos2dx_ParticleSpiral(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleExplosion_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleExplosion_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleExplosion* cobj = nullptr;
@@ -82169,7 +82035,7 @@ static int lua_cocos2dx_ParticleExplosion_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleExplosion_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleExplosion_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleExplosion* cobj = nullptr;
@@ -82212,7 +82078,7 @@ static int lua_cocos2dx_ParticleExplosion_initWithTotalParticles(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82255,7 +82121,7 @@ static int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82300,7 +82166,7 @@ static int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleExplosion_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleExplosion_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleExplosion* cobj = nullptr;
@@ -82363,7 +82229,7 @@ int lua_register_cocos2dx_ParticleExplosion(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSmoke_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSmoke_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSmoke* cobj = nullptr;
@@ -82404,7 +82270,7 @@ static int lua_cocos2dx_ParticleSmoke_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSmoke_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSmoke_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSmoke* cobj = nullptr;
@@ -82447,7 +82313,7 @@ static int lua_cocos2dx_ParticleSmoke_initWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82490,7 +82356,7 @@ static int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82535,7 +82401,7 @@ static int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSmoke_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSmoke_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSmoke* cobj = nullptr;
@@ -82598,7 +82464,7 @@ int lua_register_cocos2dx_ParticleSmoke(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleSnow_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSnow_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSnow* cobj = nullptr;
@@ -82639,7 +82505,7 @@ static int lua_cocos2dx_ParticleSnow_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSnow_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSnow_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSnow* cobj = nullptr;
@@ -82682,7 +82548,7 @@ static int lua_cocos2dx_ParticleSnow_initWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82725,7 +82591,7 @@ static int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82770,7 +82636,7 @@ static int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleSnow_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleSnow_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleSnow* cobj = nullptr;
@@ -82833,7 +82699,7 @@ int lua_register_cocos2dx_ParticleSnow(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParticleRain_init(lua_State* tolua_S)
+int lua_cocos2dx_ParticleRain_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleRain* cobj = nullptr;
@@ -82874,7 +82740,7 @@ static int lua_cocos2dx_ParticleRain_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleRain_initWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleRain_initWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleRain* cobj = nullptr;
@@ -82917,7 +82783,7 @@ static int lua_cocos2dx_ParticleRain_initWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
+int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -82960,7 +82826,7 @@ static int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S)
+int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -83005,7 +82871,7 @@ static int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParticleRain_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParticleRain_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticleRain* cobj = nullptr;
@@ -83068,7 +82934,7 @@ int lua_register_cocos2dx_ParticleRain(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_FileUtils_isFileExist(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_isFileExist(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83111,7 +82977,7 @@ static int lua_cocos2dx_FileUtils_isFileExist(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83152,7 +83018,7 @@ static int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83192,7 +83058,7 @@ static int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83237,7 +83103,7 @@ static int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_getFileData(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_getFileData(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83284,7 +83150,7 @@ static int lua_cocos2dx_FileUtils_getFileData(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83326,7 +83192,7 @@ static int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83368,7 +83234,7 @@ static int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_getFileDataFromZip(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_getFileDataFromZip(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83415,7 +83281,7 @@ static int lua_cocos2dx_FileUtils_getFileDataFromZip(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83458,7 +83324,7 @@ static int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83501,7 +83367,7 @@ static int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83542,7 +83408,7 @@ static int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83584,7 +83450,7 @@ static int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83626,7 +83492,7 @@ static int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83668,7 +83534,7 @@ static int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -83698,7 +83564,7 @@ static int lua_cocos2dx_FileUtils_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_FileUtils_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -83775,7 +83641,7 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
+int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Application* cobj = nullptr;
@@ -83816,7 +83682,7 @@ static int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
+int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Application* cobj = nullptr;
@@ -83858,7 +83724,7 @@ static int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Application_getCurrentLanguage(lua_State* tolua_S)
+int lua_cocos2dx_Application_getCurrentLanguage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Application* cobj = nullptr;
@@ -83899,7 +83765,7 @@ static int lua_cocos2dx_Application_getCurrentLanguage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Application_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_Application_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -83964,7 +83830,7 @@ int lua_register_cocos2dx_Application(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ShaderCache_reloadDefaultShaders(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_reloadDefaultShaders(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShaderCache* cobj = nullptr;
@@ -84004,7 +83870,7 @@ static int lua_cocos2dx_ShaderCache_reloadDefaultShaders(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_addProgram(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_addProgram(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShaderCache* cobj = nullptr;
@@ -84058,7 +83924,7 @@ static int lua_cocos2dx_ShaderCache_addProgram(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_programForKey(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_programForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShaderCache* cobj = nullptr;
@@ -84113,7 +83979,7 @@ static int lua_cocos2dx_ShaderCache_programForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_loadDefaultShaders(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_loadDefaultShaders(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShaderCache* cobj = nullptr;
@@ -84153,7 +84019,7 @@ static int lua_cocos2dx_ShaderCache_loadDefaultShaders(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -84183,7 +84049,7 @@ static int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -84226,7 +84092,7 @@ static int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ShaderCache_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ShaderCache_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ShaderCache* cobj = nullptr;
@@ -84291,7 +84157,7 @@ int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_AnimationCache_animationByName(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_animationByName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84346,7 +84212,7 @@ static int lua_cocos2dx_AnimationCache_animationByName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84400,7 +84266,7 @@ static int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_init(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84441,7 +84307,7 @@ static int lua_cocos2dx_AnimationCache_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_addAnimationsWithDictionary(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_addAnimationsWithDictionary(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84483,7 +84349,7 @@ static int lua_cocos2dx_AnimationCache_addAnimationsWithDictionary(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_removeAnimationByName(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_removeAnimationByName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84525,7 +84391,7 @@ static int lua_cocos2dx_AnimationCache_removeAnimationByName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_addAnimationsWithFile(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_addAnimationsWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84567,7 +84433,7 @@ static int lua_cocos2dx_AnimationCache_addAnimationsWithFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -84597,7 +84463,7 @@ static int lua_cocos2dx_AnimationCache_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -84640,7 +84506,7 @@ static int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_AnimationCache_constructor(lua_State* tolua_S)
+int lua_cocos2dx_AnimationCache_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::AnimationCache* cobj = nullptr;
@@ -84707,7 +84573,7 @@ int lua_register_cocos2dx_AnimationCache(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = NULL;
@@ -84783,7 +84649,7 @@ static int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -84837,7 +84703,7 @@ static int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -84877,7 +84743,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -84932,7 +84798,7 @@ static int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -84974,7 +84840,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile(lua_State* t
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_init(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_init(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -85015,7 +84881,7 @@ static int lua_cocos2dx_SpriteFrameCache_init(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_removeSpriteFrames(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_removeSpriteFrames(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -85055,7 +84921,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeSpriteFrames(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -85107,7 +84973,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::SpriteFrameCache* cobj = nullptr;
@@ -85149,7 +85015,7 @@ static int lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -85179,7 +85045,7 @@ static int lua_cocos2dx_SpriteFrameCache_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SpriteFrameCache_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_SpriteFrameCache_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -85251,7 +85117,7 @@ int lua_register_cocos2dx_SpriteFrameCache(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85295,7 +85161,7 @@ static int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = NULL;
@@ -85349,7 +85215,7 @@ static int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = NULL;
@@ -85403,7 +85269,7 @@ static int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85447,7 +85313,7 @@ static int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85491,7 +85357,7 @@ static int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = NULL;
@@ -85545,7 +85411,7 @@ static int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85589,7 +85455,7 @@ static int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85629,7 +85495,7 @@ static int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = NULL;
@@ -85683,7 +85549,7 @@ static int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = NULL;
@@ -85737,7 +85603,7 @@ static int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::UserDefault* cobj = nullptr;
@@ -85781,7 +85647,7 @@ static int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -85811,7 +85677,7 @@ static int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -85842,7 +85708,7 @@ static int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_UserDefault_isXMLFileExist(lua_State* tolua_S)
+int lua_cocos2dx_UserDefault_isXMLFileExist(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -85905,7 +85771,7 @@ int lua_register_cocos2dx_UserDefault(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TextureCache_dumpCachedTextureInfo(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_dumpCachedTextureInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -85945,7 +85811,7 @@ static int lua_cocos2dx_TextureCache_dumpCachedTextureInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86012,7 +85878,7 @@ static int lua_cocos2dx_TextureCache_addUIImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86054,7 +85920,7 @@ static int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_textureForKey(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_textureForKey(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86109,7 +85975,7 @@ static int lua_cocos2dx_TextureCache_textureForKey(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_snapshotTextures(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_snapshotTextures(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86150,7 +86016,7 @@ static int lua_cocos2dx_TextureCache_snapshotTextures(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86205,7 +86071,7 @@ static int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86245,7 +86111,7 @@ static int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86285,7 +86151,7 @@ static int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86337,7 +86203,7 @@ static int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_destroyInstance(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -86367,7 +86233,7 @@ static int lua_cocos2dx_TextureCache_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_reloadAllTextures(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_reloadAllTextures(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -86397,7 +86263,7 @@ static int lua_cocos2dx_TextureCache_reloadAllTextures(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -86440,7 +86306,7 @@ static int lua_cocos2dx_TextureCache_getInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TextureCache_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TextureCache_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TextureCache* cobj = nullptr;
@@ -86511,7 +86377,7 @@ int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = NULL;
@@ -86599,7 +86465,7 @@ static int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_visit(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_visit(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = nullptr;
@@ -86639,7 +86505,7 @@ static int lua_cocos2dx_ParallaxNode_visit(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = nullptr;
@@ -86681,7 +86547,7 @@ static int lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = nullptr;
@@ -86735,7 +86601,7 @@ static int lua_cocos2dx_ParallaxNode_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_getParallaxArray(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_getParallaxArray(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = NULL;
@@ -86777,7 +86643,7 @@ static int lua_cocos2dx_ParallaxNode_getParallaxArray(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_setParallaxArray(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_setParallaxArray(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = nullptr;
@@ -86819,7 +86685,7 @@ static int lua_cocos2dx_ParallaxNode_setParallaxArray(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -86862,7 +86728,7 @@ static int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_ParallaxNode_constructor(lua_State* tolua_S)
+int lua_cocos2dx_ParallaxNode_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParallaxNode* cobj = nullptr;
@@ -86928,7 +86794,7 @@ int lua_register_cocos2dx_ParallaxNode(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -86970,7 +86836,7 @@ static int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87025,7 +86891,7 @@ static int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87066,7 +86932,7 @@ static int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87109,7 +86975,7 @@ static int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87150,7 +87016,7 @@ static int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87192,7 +87058,7 @@ static int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87233,7 +87099,7 @@ static int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87274,7 +87140,7 @@ static int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_setProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_setProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87316,7 +87182,7 @@ static int lua_cocos2dx_TMXObjectGroup_setProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_setObjects(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_setObjects(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87358,7 +87224,7 @@ static int lua_cocos2dx_TMXObjectGroup_setObjects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXObjectGroup_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXObjectGroup_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXObjectGroup* cobj = nullptr;
@@ -87427,7 +87293,7 @@ int lua_register_cocos2dx_TMXObjectGroup(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXLayerInfo_setProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayerInfo_setProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayerInfo* cobj = nullptr;
@@ -87469,7 +87335,7 @@ static int lua_cocos2dx_TMXLayerInfo_setProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayerInfo_getProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayerInfo_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayerInfo* cobj = nullptr;
@@ -87510,7 +87376,7 @@ static int lua_cocos2dx_TMXLayerInfo_getProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayerInfo_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayerInfo_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayerInfo* cobj = nullptr;
@@ -87571,7 +87437,7 @@ int lua_register_cocos2dx_TMXLayerInfo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXTilesetInfo_rectForGID(lua_State* tolua_S)
+int lua_cocos2dx_TMXTilesetInfo_rectForGID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTilesetInfo* cobj = nullptr;
@@ -87614,7 +87480,7 @@ static int lua_cocos2dx_TMXTilesetInfo_rectForGID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTilesetInfo_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXTilesetInfo_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTilesetInfo* cobj = nullptr;
@@ -87674,7 +87540,7 @@ int lua_register_cocos2dx_TMXTilesetInfo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXMapInfo_setObjectGroups(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87716,7 +87582,7 @@ static int lua_cocos2dx_TMXMapInfo_setObjectGroups(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87758,7 +87624,7 @@ static int lua_cocos2dx_TMXMapInfo_setTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_initWithTMXFile(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_initWithTMXFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87801,7 +87667,7 @@ static int lua_cocos2dx_TMXMapInfo_initWithTMXFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87842,7 +87708,7 @@ static int lua_cocos2dx_TMXMapInfo_getOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_isStoringCharacters(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_isStoringCharacters(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87883,7 +87749,7 @@ static int lua_cocos2dx_TMXMapInfo_isStoringCharacters(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setLayers(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setLayers(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87925,7 +87791,7 @@ static int lua_cocos2dx_TMXMapInfo_setLayers(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_parseXMLFile(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_parseXMLFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -87968,7 +87834,7 @@ static int lua_cocos2dx_TMXMapInfo_parseXMLFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getParentElement(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getParentElement(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88009,7 +87875,7 @@ static int lua_cocos2dx_TMXMapInfo_getParentElement(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setTMXFileName(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setTMXFileName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88051,7 +87917,7 @@ static int lua_cocos2dx_TMXMapInfo_setTMXFileName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88094,7 +87960,7 @@ static int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88135,7 +88001,7 @@ static int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88176,7 +88042,7 @@ static int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getParentGID(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getParentGID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88217,7 +88083,7 @@ static int lua_cocos2dx_TMXMapInfo_getParentGID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setParentElement(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setParentElement(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88259,7 +88125,7 @@ static int lua_cocos2dx_TMXMapInfo_setParentElement(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_initWithXML(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_initWithXML(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88304,7 +88170,7 @@ static int lua_cocos2dx_TMXMapInfo_initWithXML(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setParentGID(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setParentGID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88346,7 +88212,7 @@ static int lua_cocos2dx_TMXMapInfo_setParentGID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getLayerAttribs(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getLayerAttribs(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88387,7 +88253,7 @@ static int lua_cocos2dx_TMXMapInfo_getLayerAttribs(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88428,7 +88294,7 @@ static int lua_cocos2dx_TMXMapInfo_getTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88469,7 +88335,7 @@ static int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88510,7 +88376,7 @@ static int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88551,7 +88417,7 @@ static int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setCurrentString(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setCurrentString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88593,7 +88459,7 @@ static int lua_cocos2dx_TMXMapInfo_setCurrentString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88635,7 +88501,7 @@ static int lua_cocos2dx_TMXMapInfo_setProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88677,7 +88543,7 @@ static int lua_cocos2dx_TMXMapInfo_setOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setTileProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setTileProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88719,7 +88585,7 @@ static int lua_cocos2dx_TMXMapInfo_setTileProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setMapSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setMapSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88761,7 +88627,7 @@ static int lua_cocos2dx_TMXMapInfo_setMapSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setStoringCharacters(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setStoringCharacters(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88803,7 +88669,7 @@ static int lua_cocos2dx_TMXMapInfo_setStoringCharacters(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getMapSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getMapSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88844,7 +88710,7 @@ static int lua_cocos2dx_TMXMapInfo_getMapSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88886,7 +88752,7 @@ static int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88927,7 +88793,7 @@ static int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -88968,7 +88834,7 @@ static int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_setLayerAttribs(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_setLayerAttribs(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -89010,7 +88876,7 @@ static int lua_cocos2dx_TMXMapInfo_setLayerAttribs(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -89055,7 +88921,7 @@ static int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -89102,7 +88968,7 @@ static int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXMapInfo_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXMapInfo_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXMapInfo* cobj = nullptr;
@@ -89195,7 +89061,7 @@ int lua_register_cocos2dx_TMXMapInfo(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXLayer_addChild(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_addChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89251,7 +89117,7 @@ static int lua_cocos2dx_TMXLayer_addChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89306,7 +89172,7 @@ static int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89349,7 +89215,7 @@ static int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setLayerOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setLayerOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89391,7 +89257,7 @@ static int lua_cocos2dx_TMXLayer_setLayerOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_releaseMap(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_releaseMap(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89431,7 +89297,7 @@ static int lua_cocos2dx_TMXLayer_releaseMap(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89473,7 +89339,7 @@ static int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getLayerSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getLayerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89514,7 +89380,7 @@ static int lua_cocos2dx_TMXLayer_getLayerSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setMapTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setMapTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89556,7 +89422,7 @@ static int lua_cocos2dx_TMXLayer_setMapTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getLayerOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getLayerOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89597,7 +89463,7 @@ static int lua_cocos2dx_TMXLayer_getLayerOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89639,7 +89505,7 @@ static int lua_cocos2dx_TMXLayer_setProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setLayerName(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setLayerName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89681,7 +89547,7 @@ static int lua_cocos2dx_TMXLayer_setLayerName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89723,7 +89589,7 @@ static int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89800,7 +89666,7 @@ static int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89840,7 +89706,7 @@ static int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = NULL;
@@ -89900,7 +89766,7 @@ static int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getMapTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getMapTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89941,7 +89807,7 @@ static int lua_cocos2dx_TMXLayer_getMapTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -89996,7 +89862,7 @@ static int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setLayerSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setLayerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90038,7 +89904,7 @@ static int lua_cocos2dx_TMXLayer_setLayerSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90079,7 +89945,7 @@ static int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90131,7 +89997,7 @@ static int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_removeChild(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_removeChild(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90185,7 +90051,7 @@ static int lua_cocos2dx_TMXLayer_removeChild(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90238,7 +90104,7 @@ static int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90279,7 +90145,7 @@ static int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90334,7 +90200,7 @@ static int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -90413,7 +90279,7 @@ static int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXLayer_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXLayer_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXLayer* cobj = nullptr;
@@ -90497,7 +90363,7 @@ int lua_register_cocos2dx_TMXLayer(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90539,7 +90405,7 @@ static int lua_cocos2dx_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90594,7 +90460,7 @@ static int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_setMapSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_setMapSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90636,7 +90502,7 @@ static int lua_cocos2dx_TMXTiledMap_setMapSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90691,7 +90557,7 @@ static int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getPropertiesForGID(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getPropertiesForGID(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90734,7 +90600,7 @@ static int lua_cocos2dx_TMXTiledMap_getPropertiesForGID(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90775,7 +90641,7 @@ static int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_initWithTMXFile(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_initWithTMXFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90818,7 +90684,7 @@ static int lua_cocos2dx_TMXTiledMap_initWithTMXFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90859,7 +90725,7 @@ static int lua_cocos2dx_TMXTiledMap_getTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getMapSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getMapSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90900,7 +90766,7 @@ static int lua_cocos2dx_TMXTiledMap_getMapSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90941,7 +90807,7 @@ static int lua_cocos2dx_TMXTiledMap_getProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_setTileSize(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_setTileSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -90983,7 +90849,7 @@ static int lua_cocos2dx_TMXTiledMap_setTileSize(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_initWithXML(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_initWithXML(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91028,7 +90894,7 @@ static int lua_cocos2dx_TMXTiledMap_initWithXML(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91083,7 +90949,7 @@ static int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91124,7 +90990,7 @@ static int lua_cocos2dx_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91166,7 +91032,7 @@ static int lua_cocos2dx_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_setProperties(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_setProperties(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91208,7 +91074,7 @@ static int lua_cocos2dx_TMXTiledMap_setProperties(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -91253,7 +91119,7 @@ static int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -91300,7 +91166,7 @@ static int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TMXTiledMap_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TMXTiledMap_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TMXTiledMap* cobj = nullptr;
@@ -91377,7 +91243,7 @@ int lua_register_cocos2dx_TMXTiledMap(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_TileMapAtlas_initWithTileFile(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_initWithTileFile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91426,7 +91292,7 @@ static int lua_cocos2dx_TileMapAtlas_initWithTileFile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_releaseMap(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_releaseMap(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91466,7 +91332,7 @@ static int lua_cocos2dx_TileMapAtlas_releaseMap(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_getTGAInfo(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_getTGAInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91507,7 +91373,7 @@ static int lua_cocos2dx_TileMapAtlas_getTGAInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91550,7 +91416,7 @@ static int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91594,7 +91460,7 @@ static int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_setTGAInfo(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_setTGAInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91636,7 +91502,7 @@ static int lua_cocos2dx_TileMapAtlas_setTGAInfo(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -91687,7 +91553,7 @@ static int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_TileMapAtlas_constructor(lua_State* tolua_S)
+int lua_cocos2dx_TileMapAtlas_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::TileMapAtlas* cobj = nullptr;
@@ -91753,7 +91619,7 @@ int lua_register_cocos2dx_TileMapAtlas(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
+int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -91794,7 +91660,7 @@ static int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
+int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -91836,7 +91702,7 @@ static int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Timer_initWithScriptHandler(lua_State* tolua_S)
+int lua_cocos2dx_Timer_initWithScriptHandler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -91881,7 +91747,7 @@ static int lua_cocos2dx_Timer_initWithScriptHandler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Timer_update(lua_State* tolua_S)
+int lua_cocos2dx_Timer_update(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -91923,7 +91789,7 @@ static int lua_cocos2dx_Timer_update(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Timer_getScriptHandler(lua_State* tolua_S)
+int lua_cocos2dx_Timer_getScriptHandler(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -91964,7 +91830,7 @@ static int lua_cocos2dx_Timer_getScriptHandler(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Timer_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Timer_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Timer* cobj = nullptr;
@@ -92028,7 +91894,7 @@ int lua_register_cocos2dx_Timer(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
+int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Scheduler* cobj = nullptr;
@@ -92070,7 +91936,7 @@ static int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
+int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Scheduler* cobj = nullptr;
@@ -92111,7 +91977,7 @@ static int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_Scheduler_constructor(lua_State* tolua_S)
+int lua_cocos2dx_Scheduler_constructor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Scheduler* cobj = nullptr;
@@ -92172,7 +92038,7 @@ int lua_register_cocos2dx_Scheduler(lua_State* tolua_S)
     return 1;
 }
 
-static int lua_cocos2dx_SimpleAudioEngine_stopAllEffects(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_stopAllEffects(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92212,7 +92078,7 @@ static int lua_cocos2dx_SimpleAudioEngine_stopAllEffects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92253,7 +92119,7 @@ static int lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92294,7 +92160,7 @@ static int lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_getEffectsVolume(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_getEffectsVolume(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92335,7 +92201,7 @@ static int lua_cocos2dx_SimpleAudioEngine_getEffectsVolume(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92377,7 +92243,7 @@ static int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* to
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92419,7 +92285,7 @@ static int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92468,7 +92334,7 @@ static int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92521,7 +92387,7 @@ static int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92561,7 +92427,7 @@ static int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92603,7 +92469,7 @@ static int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolu
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92643,7 +92509,7 @@ static int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_playEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92746,7 +92612,7 @@ static int lua_cocos2dx_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92786,7 +92652,7 @@ static int lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic(lua_State* tolua
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92827,7 +92693,7 @@ static int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tol
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92869,7 +92735,7 @@ static int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92911,7 +92777,7 @@ static int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_setEffectsVolume(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_setEffectsVolume(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92953,7 +92819,7 @@ static int lua_cocos2dx_SimpleAudioEngine_setEffectsVolume(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92995,7 +92861,7 @@ static int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -93035,7 +92901,7 @@ static int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -93075,7 +92941,7 @@ static int lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic(lua_State* tolua_
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_resumeEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_resumeEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -93117,7 +92983,7 @@ static int lua_cocos2dx_SimpleAudioEngine_resumeEffect(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_end(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_end(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -93147,7 +93013,7 @@ static int lua_cocos2dx_SimpleAudioEngine_end(lua_State* tolua_S)
 #endif
     return 0;
 }
-static int lua_cocos2dx_SimpleAudioEngine_getInstance(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;

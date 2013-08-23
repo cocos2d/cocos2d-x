@@ -487,8 +487,7 @@ local function DemoFire()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
-    local pos = emitter:getPosition()
-    local pos_x, pos_y = pos.x, pos.y
+    local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
 
 	titleLabel:setString("ParticleFire")
@@ -505,8 +504,7 @@ local function DemoSmoke()
     -- emitter:retain()
     background:addChild(emitter, 10)
     emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
-    local pos = emitter:getPosition()
-    local pos_x, pos_y = pos.x, pos.y
+    local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
 
     setEmitterPosition()
@@ -544,8 +542,7 @@ local function DemoSnow()
 	emitter = cc.ParticleSnow:create()
     -- emitter:retain()
     background:addChild(emitter, 10)
-    local pos = emitter:getPosition()
-    local pos_x, pos_y = pos.x, pos.y
+    local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, pos_y - 110)
     emitter:setLife(3)
     emitter:setLifeVar(1)
@@ -586,8 +583,7 @@ local function DemoRain()
 	emitter = cc.ParticleRain:create()
     -- emitter:retain()
     background:addChild(emitter, 10)
-    local pos = emitter:getPosition()
-    local pos_x, pos_y = pos.x, pos.y
+    local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, pos_y - 100)
     emitter:setLife(4)
 

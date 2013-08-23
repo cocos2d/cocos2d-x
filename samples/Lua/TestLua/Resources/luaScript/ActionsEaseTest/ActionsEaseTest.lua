@@ -72,29 +72,8 @@ local function SpriteEase()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease_in,createSimpleDelayTime(),move_ease_in_back,createSimpleDelayTime())
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
     local seq3 = cc.Sequence:create(move_ease_out,createSimpleDelayTime(),move_ease_out_back,createSimpleDelayTime())
 
     local a2 = grossini:runAction(cc.RepeatForever:create(seq1))
@@ -128,30 +107,8 @@ local function SpriteEaseInOut()
     local move_ease_inout_back3 = move_ease_inout3:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move_ease_inout1)
-	arr1:addObject(delay)
-	arr1:addObject(move_ease_inout_back1)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move_ease_inout1,delay,move_ease_inout_back1,createSimpleDelayTime())
-
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_inout2)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_inout_back2)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease_inout2,createSimpleDelayTime(),move_ease_inout_back2,createSimpleDelayTime())
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_inout3)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_inout_back3)
-	arr3:addObject(createSimpleDelayTime())
-]]--
     local seq3 = cc.Sequence:create(move_ease_inout3, createSimpleDelayTime(), move_ease_inout_back3, createSimpleDelayTime() )
 
     tamara:runAction(cc.RepeatForever:create(seq1))
@@ -178,37 +135,9 @@ local function SpriteEaseExponential()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
-
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-
-	arr1:addObject(createSimpleDelayTime())
-]]--
-    local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime() )
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
-    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime() )
-
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
-    local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back, createSimpleDelayTime() )
+    local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
+    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime())
+    local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back, createSimpleDelayTime())
 
     grossini:runAction(cc.RepeatForever:create(seq1))
     tamara:runAction(cc.RepeatForever:create(seq2))
@@ -231,25 +160,7 @@ local function SpriteEaseExponentialInOut()
     local move_ease_back = move_ease:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-
-	arr1:addObject(createSimpleDelayTime())
-]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
-
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease)
-
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_back)
-
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease, createSimpleDelayTime(), move_ease_back, createSimpleDelayTime() )
 
     positionForTwo()
@@ -277,30 +188,9 @@ local function SpriteEaseSine()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime() )
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
-    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime() )
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
-    local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back,createSimpleDelayTime() )
+    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime())
+    local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back,createSimpleDelayTime())
 
     grossini:runAction(cc.RepeatForever:create(seq1))
     tamara:runAction(cc.RepeatForever:create(seq2))
@@ -323,21 +213,7 @@ local function SpriteEaseSineInOut()
     local move_ease_back = move_ease:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
-    local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime() )
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
+    local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
     local seq2 = cc.Sequence:create(move_ease, createSimpleDelayTime(), move_ease_back, createSimpleDelayTime())
 
     positionForTwo()
@@ -365,29 +241,8 @@ local function SpriteEaseElastic()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime() )
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime())
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
     local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back, createSimpleDelayTime())
 
     grossini:runAction(cc.RepeatForever:create(seq1))
@@ -416,29 +271,8 @@ local function SpriteEaseElasticInOut()
     local move_ease_inout_back3 = move_ease_inout3:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move_ease_inout1)
-	arr1:addObject(delay)
-	arr1:addObject(move_ease_inout_back1)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move_ease_inout1, delay, move_ease_inout_back1, createSimpleDelayTime())
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_inout2)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_inout_back2)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease_inout2, createSimpleDelayTime(), move_ease_inout_back2, createSimpleDelayTime())
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_inout3)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_inout_back3)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
     local seq3 = cc.Sequence:create(move_ease_inout3, createSimpleDelayTime(), move_ease_inout_back3, createSimpleDelayTime())
 
     tamara:runAction(cc.RepeatForever:create(seq1))
@@ -465,29 +299,8 @@ local function SpriteEaseBounce()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime() )
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
-    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime() )
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
+    local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime())
     local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back, createSimpleDelayTime())
 
     grossini:runAction(cc.RepeatForever:create(seq1))
@@ -511,21 +324,7 @@ local function SpriteEaseBounceInOut()
     local move_ease_back = move_ease:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-    local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
---[[    
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease, createSimpleDelayTime(), move_ease_back, createSimpleDelayTime())
 
     positionForTwo()
@@ -553,29 +352,8 @@ local function SpriteEaseBack()
     local move_ease_out_back = move_ease_out:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease_in)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_in_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease_in, createSimpleDelayTime(), move_ease_in_back, createSimpleDelayTime())
---[[
-	local arr3 = CCArray:create()
-	arr3:addObject(move_ease_out)
-	arr3:addObject(createSimpleDelayTime())
-	arr3:addObject(move_ease_out_back)
-	arr3:addObject(createSimpleDelayTime())
-    ]]--
     local seq3 = cc.Sequence:create(move_ease_out, createSimpleDelayTime(), move_ease_out_back, createSimpleDelayTime())
 
     grossini:runAction(cc.RepeatForever:create(seq1))
@@ -599,21 +377,7 @@ local function SpriteEaseBackInOut()
     local move_ease_back = move_ease:reverse()
 
     local delay = createSimpleDelayTime()
---[[
-	local arr1 = CCArray:create()
-	arr1:addObject(move)
-	arr1:addObject(delay)
-	arr1:addObject(move_back)
-	arr1:addObject(createSimpleDelayTime())
-    ]]--
     local seq1 = cc.Sequence:create(move, delay, move_back, createSimpleDelayTime())
---[[
-	local arr2 = CCArray:create()
-	arr2:addObject(move_ease)
-	arr2:addObject(createSimpleDelayTime())
-	arr2:addObject(move_ease_back)
-	arr2:addObject(createSimpleDelayTime())
-    ]]--
     local seq2 = cc.Sequence:create(move_ease,createSimpleDelayTime(), move_ease_back, createSimpleDelayTime())
 
     positionForTwo()

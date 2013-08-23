@@ -54,8 +54,7 @@ local function main()
         -- moving dog at every frame
         local function tick()
             if spriteDog.isPaused then return end
-            local position = spriteDog:getPosition()
-            local x, y = position.x,position.y
+            local x, y = spriteDog:getPosition()
             if x > origin.x + visibleSize.width then
                 x = origin.x
             else
@@ -116,8 +115,7 @@ local function main()
         local function onTouchMoved(x, y)
             cclog("onTouchMoved: %0.2f, %0.2f", x, y)
             if touchBeginPoint then
-                local position = layerFarm:getPosition()
-                local cx, cy = position.x,position.y
+                local cx, cy = layerFarm:getPosition()
                 layerFarm:setPosition(cx + x - touchBeginPoint.x,
                                       cy + y - touchBeginPoint.y)
                 touchBeginPoint = {x = x, y = y}

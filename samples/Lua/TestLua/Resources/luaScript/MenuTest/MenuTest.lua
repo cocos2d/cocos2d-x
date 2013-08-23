@@ -164,8 +164,7 @@ local function MenuLayerMainMenu()
             break
         end
         child = tolua.cast(pObject, "Node")
-        local dstPoint = child:getPosition()
-        local dstPointX, dstPointY = dstPoint.x,dstPoint.y
+        local dstPointX, dstPointY = child:getPosition()
         local offset = s.width/2 + 50
         if  i % 2 == 0 then
             offset = 0-offset
@@ -217,14 +216,12 @@ local function MenuLayer2()
             if i==0 then
                 -- TIP: if no padding, padding = 5
                 menu:alignItemsHorizontally()
-                local menuPos = menu:getPosition()
-                local x, y = menuPos.x,menuPos.y
+                local x, y = menu:getPosition()
                 menu:setPosition( cc.pAdd(cc.p(x, y), cc.p(0,30)) )
             else
                 -- TIP: but padding is configurable
                 menu:alignItemsHorizontallyWithPadding(40)
-                local menuPos = menu:getPosition()
-                local x, y = menuPos.x,menuPos.y
+                local x, y = menu:getPosition()
                 menu:setPosition( cc.pSub(cc.p(x, y), cc.p(0,30)) )
             end
         end
@@ -238,14 +235,12 @@ local function MenuLayer2()
             if i==0 then
                 -- TIP: if no padding, padding = 5
                 menu:alignItemsVertically()
-                local menuPos = menu:getPosition()
-                local x, y = menuPos.x,menuPos.y
+                local x, y = menu:getPosition()
                 menu:setPosition( cc.pAdd(cc.p(x, y), cc.p(100,0)) )
             else
                 -- TIP: but padding is configurable
                 menu:alignItemsVerticallyWithPadding(40)
-                local menuPos = menu:getPosition()
-                local x, y = menuPos.x,menuPos.y
+                local x, y = menu:getPosition()
                 menu:setPosition( cc.pSub(cc.p(x, y), cc.p(100,0)) )
             end
         end
@@ -302,8 +297,7 @@ local function MenuLayer2()
         menu:setTag( kTagMenu )
 
         ret:addChild(menu, 0, 100+i)
-        local menuPos = menu:getPosition()
-        local x, y = menuPos.x,menuPos.y
+        local x, y = menu:getPosition()
         m_centeredMenu = cc.p(x, y)
     end
 

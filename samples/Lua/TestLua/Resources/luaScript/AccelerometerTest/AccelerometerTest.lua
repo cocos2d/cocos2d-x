@@ -25,8 +25,7 @@ local function AccelerometerMainLayer()
     	end
 
     	local szBall  = pBall:getContentSize()
-      local ptNow   = pBall:getPosition()
-    	local ptNowX,ptNowY = ptNow.x, ptNow.y
+    	local ptNowX,ptNowY = pBall:getPosition()
     	
     	local ptTmp = pDir:convertToUI(cc.p(ptNowX,ptNowY))	
     	ptTmp.x   = ptTmp.x + x * 9.81

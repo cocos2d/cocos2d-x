@@ -816,7 +816,7 @@ local function TMXIsoZorder()
     m_tamara:runAction( cc.RepeatForever:create(seq) )
 
     local function repositionSprite(dt)
-        local p = m_tamara:getPosition()
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local map = ret:getChildByTag(kTagTileMap)
 
@@ -874,7 +874,7 @@ local function TMXOrthoZorder()
     m_tamara:runAction( cc.RepeatForever:create(seq))
 
     local function repositionSprite(dt)
-        local p = m_tamara:getPosition()
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local  map = ret:getChildByTag(kTagTileMap)
 
@@ -935,7 +935,7 @@ local function TMXIsoVertexZ()
 
         -- tile height is 64x32
         -- map size: 30x30
-        local p = m_tamara:getPosition()
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local newZ = -(p.y+32) /16
         m_tamara:setVertexZ( newZ )
@@ -991,7 +991,7 @@ local function TMXOrthoVertexZ()
     local function repositionSprite(dt)
         -- tile height is 101x81
         -- map size: 12x12
-        local p = m_tamara:getPosition()
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         m_tamara:setVertexZ( -( (p.y+81) /81) )
     end

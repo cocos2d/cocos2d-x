@@ -138,8 +138,7 @@ local function CocosDenshionTest()
         elseif  eventType == "moved" then
             local touchLocation = cc.p(x, y)
             local nMoveY = touchLocation.y - m_tBeginPos.y
-            local curPos = m_pItmeMenu:getPosition()
-            local curPosX, curPosY = curPos.x,curPos.y
+            local curPosX, curPosY = m_pItmeMenu:getPosition()
             local curPos = cc.p(curPosX, curPosY)
             local nextPos = cc.p(curPos.x, curPos.y + nMoveY)
 

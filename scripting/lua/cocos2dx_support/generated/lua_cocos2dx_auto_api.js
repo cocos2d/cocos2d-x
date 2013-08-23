@@ -1094,18 +1094,6 @@ setActionManager : function () {},
 isRunning : function () {},
 
 /**
- * @method getPositionY
- * @return A value converted from C/C++ "float"
- */
-getPositionY : function () {},
-
-/**
- * @method getPositionX
- * @return A value converted from C/C++ "float"
- */
-getPositionX : function () {},
-
-/**
  * @method removeChildByTag
  * @param {int}
  * @param {bool}

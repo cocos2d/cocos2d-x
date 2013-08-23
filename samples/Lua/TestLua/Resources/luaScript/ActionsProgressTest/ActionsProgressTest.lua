@@ -184,12 +184,6 @@ local function SpriteProgressBarTintAndFade()
 	Helper.initWithLayer(layer)
 
 	local to = cc.ProgressTo:create(6, 100)
-    --[[
-	local array = CCArray:create()
-	array:addObject(CCTintTo:create(1, 255, 0, 0))
-	array:addObject(CCTintTo:create(1, 0, 255, 0))
-	array:addObject(CCTintTo:create(1, 0, 0, 255))
-    ]]--
     local tint = cc.Sequence:create(cc.TintTo:create(1, 255, 0, 0), cc.TintTo:create(1, 0, 255, 0), cc.TintTo:create(1, 0, 0, 255))
     local fade = cc.Sequence:create(cc.FadeTo:create(1.0, 0),cc.FadeTo:create(1.0, 255))
     local left = cc.ProgressTimer:create(cc.Sprite:create(s_pPathSister1))

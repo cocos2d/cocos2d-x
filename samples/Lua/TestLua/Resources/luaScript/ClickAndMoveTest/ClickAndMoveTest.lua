@@ -21,8 +21,7 @@ local function initWithLayer()
         local s = layer:getChildByTag(kTagSprite)
         s:stopAllActions()
         s:runAction(cc.MoveTo:create(1, cc.p(x, y)))
-        local pos = s:getPosition()
-        local posX, posY = pos.x,pos.y
+        local posX, posY = s:getPosition()
         local o = x - posX
         local a = y - posY
         local at = math.atan(o / a) / math.pi * 180.0
