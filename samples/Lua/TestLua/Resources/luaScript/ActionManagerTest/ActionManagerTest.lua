@@ -17,25 +17,13 @@ local function CrashTest()
 
     --Sum of all action's duration is 1.5 second.
     child:runAction(cc.RotateBy:create(1.5, 90))
-    --[[
-    local arr = CCArray:create()
-    arr:addObject(CCDelayTime:create(1.4))
-    arr:addObject(CCFadeOut:create(1.1))
-    ]]--
     child:runAction(cc.Sequence:create(cc.DelayTime:create(1.4),cc.FadeOut:create(1.1)))
     
-    --[[
-    arr = CCArray:create()
-    arr:addObject(CCDelayTime:create(1.4))
-    ]]--
     local function removeThis()
         ret:getParent():removeChild(ret, true)
         Helper.nextAction()
     end
-    --[[
-    local callfunc = CCCallFunc:create(removeThis)
-    arr:addObject(callfunc)
-    ]]--
+
     --After 1.5 second, self will be removed.
     ret:runAction( cc.Sequence:create(cc.DelayTime:create(1.4),cc.CallFunc:create(removeThis)))
     return ret
@@ -52,18 +40,10 @@ local function LogicTest()
     local  grossini = cc.Sprite:create(s_pPathGrossini)
     ret:addChild(grossini, 0, 2)
     grossini:setPosition(200,200)
---[[
-    local arr = CCArray:create()
-    arr:addObject(CCMoveBy:create(1, CCPoint(150,0)))
-]]--
     local function bugMe(node)
         node:stopAllActions() --After this stop next action not working, if remove this stop everything is working
         node:runAction(cc.ScaleTo:create(2, 2))
     end
---[[
-    local callfunc = CCCallFunc:create(bugMe)
-    arr:addObject(callfunc)
-]]--
     grossini:runAction( cc.Sequence:create(cc.MoveBy:create(1, cc.p(150,0)) ,cc.CallFunc:create(bugMe)))
     return ret
 end
@@ -133,11 +113,6 @@ local function RemoveTest()
     end
 
     local callfunc = cc.CallFunc:create(stopAction)
-    --[[
-    local arr = CCArray:create()
-    arr:addObject(pMove)
-    arr:addObject(callfunc)
-    ]]--
     local  pSequence = cc.Sequence:create(pMove,callfunc)
     pSequence:setTag(kTagSequence)
 

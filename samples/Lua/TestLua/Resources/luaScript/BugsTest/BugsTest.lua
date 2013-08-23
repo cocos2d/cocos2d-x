@@ -69,17 +69,12 @@ local function BugTest422()
         pMenuItem1:registerScriptTapHandler(menuCallback)
         local pMenuItem2 = cc.MenuItemFont:create("Two")
         pMenuItem2:registerScriptTapHandler(menuCallback)
-        --[[
-        local arr = cc.Array:create()
-        arr:addObject(pMenuItem1)
-        arr:addObject(pMenuItem2)
-        ]]--
         local pMenu = cc.Menu:create(pMenuItem1, pMenuItem2)
         pMenu:alignItemsVertically()
         local fX = math.random() * 50
         local fY = math.random() * 50
-        local menuPos = pMenu:getPosition()
-        pMenu:setPosition(cc.p(menuPos.x + fX,menuPos.y + fY))
+        local menuPosX ,menuPosY = pMenu:getPosition()
+        pMenu:setPosition(cc.p(menuPosX + fX,menuPosY + fY))
         pResetLayer:addChild(pMenu,0,nLocalTag)
     end
     
@@ -117,8 +112,7 @@ local function BugTest458()
         pCorner:setPosition(cc.p(-(nWidth / 2 + pCorner:getContentSize().width / 2), -(nHeight / 2 + pCorner:getContentSize().height / 2)));
         pSprite:addChild(pCorner);
 		
-        local posCorner = pCorner:getPosition()
-		local nX,nY = posCorner.x,posCorner.y
+		local nX,nY = pCorner:getPosition()
         local pCorner2 = cc.Sprite:create("Images/bugs/corner.png");
         pCorner2:setPosition(cc.p(-nX, nY));
         pCorner2:setFlipX(true);
@@ -178,11 +172,6 @@ local function BugTest458()
     local pLayerColor2 = cc.LayerColor:create(cc.c4b(255,0,0,255), 100, 100);
     local pMenuItemSprite2 = cc.MenuItemSprite:create(pLayerColor1, pLayerColor2);   
     pMenuItemSprite2:registerScriptTapHandler(menuCallback) 
---[[
-    local arr = cc.Array:create()
-    arr:addObject(pMenuItemSprite)
-    arr:addObject(pMenuItemSprite2)
-    ]]--
     local pMenu = cc.Menu:create(pMenuItemSprite, pMenuItemSprite2)
     pMenu:alignItemsVerticallyWithPadding(100);
     pMenu:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2));
@@ -380,12 +369,6 @@ local function BugTest1159()
     sprite_a:ignoreAnchorPointForPosition(false)
     sprite_a:setPosition(cc.p(0.0, Winsize.height/2))
     pLayer:addChild(sprite_a)
-
---[[
-	local arr = cc.Array:create()
-	arr:addObject(cc.MoveTo:create(1.0, cc.p(1024.0, 384.0)))
-	arr:addObject(cc.MoveTo:create(1.0, cc.p(0.0, 384.0)))
-    ]]--
     local seq = cc.Sequence:create(cc.MoveTo:create(1.0, cc.p(1024.0, 384.0)), cc.MoveTo:create(1.0, cc.p(0.0, 384.0)))     
     sprite_a:runAction(cc.RepeatForever:create(seq))
 
@@ -430,13 +413,13 @@ local function BugTest1174()
     local pLayer = cc.Layer:create()
     
     local function check_for_error(p1,p2,p3,p4,s,t)
-        local p4_p3 = cc.p.__sub(p4,p3)
-        local p4_p3_t = cc.p.__mul(p4_p3,t)
-        local hitp1 = cc.p.__add(p3,p4_p3_t)
+        local p4_p3 = cc.pSub(p4,p3)
+        local p4_p3_t = cc.pMul(p4_p3,t)
+        local hitp1 = cc.pAdd(p3,p4_p3_t)
         
-        local p2_p1 = cc.p.__sub(p2,p1)
-        local p2_p1_s = cc.p.__mul(p2_p1,s)
-        local hitp2 = cc.p.__add(p1,p2_p1_s)
+        local p2_p1 = cc.pSub(p2,p1)
+        local p2_p1_s = cc.pMul(p2_p1,s)
+        local hitp2 = cc.pAdd(p1,p2_p1_s)
         
         if math.abs(hitp1.x - hitp2.x ) > 0.1 or math.abs(hitp1.y - hitp2.y) > 0.1 then
         	local strErr = "ERROR: ("..hitp1.x..","..hitp1.y..") != ("..hitp2.x..","..hitp2.y..")"
@@ -491,7 +474,7 @@ local function BugTest1174()
         C = cc.p(cx,cy)
         D = cc.p(dx,dy)
        
-        bRet,s,t = cc.p:isLineIntersect( A, D, B, C, s, t)
+        bRet,s,t = cc.pIsLineIntersect( A, D, B, C, s, t)
         if true == bRet then
             if 1 == check_for_error(A,D,B,C,s,t) then
                 err = err + 1
@@ -513,7 +496,7 @@ local function BugTest1174()
     p4 = cc.p(186,416);
     s  = 0.0;
     t  = 0.0;
-    bRet,s,t = cc.p:isLineIntersect( p1, p2, p3, p4, s, t)
+    bRet,s,t = cc.pIsLineIntersect( p1, p2, p3, p4, s, t)
     if true == bRet then
     	check_for_error(p1, p2, p3, p4, s, t)
     end
@@ -558,7 +541,7 @@ local function BugTest1174()
         
         s = 0.0
         t = 0.0
-        bRet,s,t = cc.p:isLineIntersect(p1, p2, p3, p4, s, t)
+        bRet,s,t = cc.pIsLineIntersect(p1, p2, p3, p4, s, t)
         if true == bRet then 
           if 1 == check_for_error(p1, p2, p3, p4, s,t ) then
              err = err + 1
@@ -635,8 +618,7 @@ local function BugsTestMainLayer()
     
     local function onTouchMoved(x, y)
         local nMoveY = y - ptBeginPos.y
-        local curPos = pItemMenu:getPosition()
-        local curPosx, curPosy = curPos.x,curPos.y
+        local curPosx, curPosy = pItemMenu:getPosition()
         local nextPosy = curPosy + nMoveY
         if nextPosy < 0 then
             pItemMenu:setPosition(0, 0)

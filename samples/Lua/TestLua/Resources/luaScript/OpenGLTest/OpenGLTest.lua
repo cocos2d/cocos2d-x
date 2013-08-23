@@ -148,8 +148,7 @@ local function OpenGLTestMainLayer()
         local len = table.getn(children)
         for i= 0 ,len - 1 do
             local child = tolua.cast(children[i + 1], "Sprite")
-            local oldPos = child:getPosition()
-            local oldPosX,oldPosY = oldPos.x, oldPos.y
+            local oldPosX,oldPosY = child:getPosition()
             child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
             child:setScaleY(scaleY)

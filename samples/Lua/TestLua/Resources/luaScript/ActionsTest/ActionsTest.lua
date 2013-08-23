@@ -289,14 +289,6 @@ local function ActionCardinalSpline()
 	initWithLayer(layer)
 
 	centerSprites(2)
---[[
-	local array = cc.pArray:create(20)
-	array:addControlPoint(cc.p(0, 0))
-	array:addControlPoint(cc.p(size.width / 2 - 30, 0))
-	array:addControlPoint(cc.p(size.width / 2 - 30, size.height - 80))
-	array:addControlPoint(cc.p(0, size.height - 80))
-	array:addControlPoint(cc.p(0, 0))
-]]--
     local array = {
            cc.p(0, 0),
            cc.p(size.width / 2 - 30, 0),
@@ -353,16 +345,6 @@ local function ActionCatmullRom()
 	centerSprites(2)
 
 	tamara:setPosition(cc.p(50, 50))
---[[
-    local array = cc.pArray:create(20)
-    array:addControlPoint(cc.p(0, 0))
-    array:addControlPoint(cc.p(80, 80))
-    array:addControlPoint(cc.p(size.width - 80, 80))
-    array:addControlPoint(cc.p(size.width - 80, size.height - 80))
-    array:addControlPoint(cc.p(80, size.height - 80))
-    array:addControlPoint(cc.p(80, 80))
-    array:addControlPoint(cc.p(size.width / 2, size.height / 2))
-    ]]--
     local array = {
            cc.p(0, 0),
            cc.p(80, 80),
@@ -377,14 +359,7 @@ local function ActionCatmullRom()
     local reverse = action:reverse()
     local seq = cc.Sequence:create(action, reverse)
 	tamara:runAction(seq)
---[[
-    local array2 = cc.pArray:create(20)
-    array2:addControlPoint(cc.p(size.width / 2, 30))
-    array2:addControlPoint(cc.p(size.width  -80, 30))
-    array2:addControlPoint(cc.p(size.width - 80, size.height - 80))
-    array2:addControlPoint(cc.p(size.width / 2, size.height - 80))
-    array2:addControlPoint(cc.p(size.width / 2, 30))
-    ]]--
+
     local array2 = {
            cc.p(size.width / 2, 30),
            cc.p(size.width  -80, 30),
@@ -640,16 +615,6 @@ local function ActionSequence2()
     alignSpritesLeft(1)
 
     grossini:setVisible(false)
-    --[[
-    local array = cc.Array:create()
-    array:addObject(cc.Place:create(cc.p(200,200)))
-    array:addObject(cc.Show:create())
-    array:addObject(cc.MoveBy:create(1, cc.p(100,0)))
-    array:addObject(cc.CallFunc:create(ActionSequenceCallback1))
-    array:addObject(cc.CallFunc:create(ActionSequenceCallback2))
-    array:addObject(cc.CallFunc:create(ActionSequenceCallback3))
-    ]]--
-
     local action = cc.Sequence:create(cc.Place:create(cc.p(200,200)),cc.Show:create(),cc.MoveBy:create(1, cc.p(100,0)), cc.CallFunc:create(ActionSequenceCallback1),cc.CallFunc:create(ActionSequenceCallback2),cc.CallFunc:create(ActionSequenceCallback3))
 
     grossini:runAction(action)
@@ -707,12 +672,6 @@ local function ActionDelaytime()
 	alignSpritesLeft(1)
 
 	local move = cc.MoveBy:create(1, cc.p(150,0))
-    --[[
-	local array = cc.Array:create()
-	array:addObject(move)
-	array:addObject(cc.DelayTime:create(2))
-	array:addObject(move)
-    ]]--
 	local action = cc.Sequence:create(move, cc.DelayTime:create(2), move)
 
     grossini:runAction(action)
@@ -854,19 +813,7 @@ local function ActionCallFunc()
 	local action = cc.Sequence:create(
         cc.MoveBy:create(2, cc.p(200,0)),
         cc.CallFunc:create(CallFucnCallback1) )
---[[
-	local array = cc.Array:create()
-	array:addObject(cc.ScaleBy:create(2, 2))
-	array:addObject(cc.FadeOut:create(2))
-	array:addObject(cc.CallFunc:create(CallFucnCallback2))
-    ]]--
     local action2 = cc.Sequence:create(cc.ScaleBy:create(2, 2),cc.FadeOut:create(2),cc.CallFunc:create(CallFucnCallback2))
---[[
-    local array2 = cc.Array:create()
-    array2:addObject(cc.RotateBy:create(3 , 360))
-    array2:addObject(cc.FadeOut:create(2))
-    array2:addObject(cc.CallFunc:create(CallFucnCallback3))
-    ]]--
     local action3 = cc.Sequence:create(cc.RotateBy:create(3 , 360),cc.FadeOut:create(2),cc.CallFunc:create(CallFucnCallback3))
 
     grossini:runAction(action)
@@ -905,12 +852,6 @@ local function ActionReverseSequence()
 
 	local move1  = cc.MoveBy:create(1, cc.p(250,0))
     local move2  = cc.MoveBy:create(1, cc.p(0,50))
-    --[[
-	local array  = cc.Array:create()
-	array:addObject(move1)
-	array:addObject(move2)
-	array:addObject(move1:reverse())
-    ]]--
     local seq    = cc.Sequence:create(move1, move2, move1:reverse())
     local action = cc.Sequence:create(seq, seq:reverse())
 
@@ -935,14 +876,6 @@ local function ActionReverseSequence2()
     local move2  = cc.MoveBy:create(1, cc.p(0,50))
 	local tog1 = cc.ToggleVisibility:create()
     local tog2 = cc.ToggleVisibility:create()
-    --[[
-	local array  = cc.Array:createWithCapacity(10)
-	array:addObject(move1)
-	array:addObject(tog1)
-	array:addObject(move2)
-	array:addObject(tog2)
-	array:addObject(move1:reverse())
-    ]]--
     local seq = cc.Sequence:create(move1, tog1, move2, tog2, move1:reverse())
     local action = cc.Repeat:create(cc.Sequence:create(seq, seq:reverse()), 3)
 
@@ -953,12 +886,7 @@ local function ActionReverseSequence2()
     local move_tamara = cc.MoveBy:create(1, cc.p(100,0))
     local move_tamara2 = cc.MoveBy:create(1, cc.p(50,0))
     local hide = cc.Hide:create()
-    --[[
-	local array2 = cc.Array:createWithCapacity(10)
-	array2:addObject(move_tamara)
-	array2:addObject(hide)
-	array2:addObject(move_tamara2)
-    ]]--
+
     local seq_tamara = cc.Sequence:create(move_tamara, hide, move_tamara2)
     local seq_back = seq_tamara:reverse()
     tamara:runAction(cc.Sequence:create(seq_tamara, seq_back))
@@ -1056,13 +984,6 @@ local function ActionTargeted()
 
     local t1 = cc.TargetedAction:create(kathia, jump2)
     local t2 = cc.TargetedAction:create(kathia, rot2)
---[[
-	local array = cc.Array:createWithCapacity(10)
-	array:addObject(jump1)
-	array:addObject(t1)
-	array:addObject(rot1)
-	array:addObject(t2)
-    ]]--
     local seq = cc.Sequence:create(jump1, t1, rot1, t2)
     local always = cc.RepeatForever:create(seq)
 
@@ -1214,17 +1135,6 @@ local function ActionIssue1305_2()
     local act6 = cc.CallFunc:create(Issue1305_2_log3)
     local act7 = cc.MoveBy:create(2, cc.p(-100, 0))
     local act8 = cc.CallFunc:create(Issue1305_2_log4)
---[[
-	local array = cc.Array:create()
-	array:addObject(act1)
-	array:addObject(act2)
-	array:addObject(act3)
-	array:addObject(act4)
-	array:addObject(act5)
-	array:addObject(act6)
-	array:addObject(act7)
-	array:addObject(act8)
-    ]]--
     local actF = cc.Sequence:create(act1, act2, act3, act4, act5, act6, act7, act8)
 
     cc.Director:getInstance():getActionManager():addAction(actF ,spr, false)
@@ -1306,18 +1216,6 @@ local function ActionIssue1327()
     local act7 = cc.CallFunc:create(logSprRotation)
     local act8 = cc.RotateBy:create(0.25, 45)
     local act9 = cc.CallFunc:create(logSprRotation)
---[[
-	local array = cc.Array:create()
-	array:addObject(act1)
-	array:addObject(act2)
-	array:addObject(act3)
-	array:addObject(act4)
-	array:addObject(act5)
-	array:addObject(act6)
-	array:addObject(act7)
-	array:addObject(act8)
-	array:addObject(act9)
-    ]]--
     spr:runAction(cc.Sequence:create(act1, act2, act3, act4, act5, act6, act7,act8, act9))
 
 	Helper.titleLabel:setString("Issue 1327")

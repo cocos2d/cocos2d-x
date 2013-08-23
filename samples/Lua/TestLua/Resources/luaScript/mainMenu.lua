@@ -162,8 +162,7 @@ function CreateTestMenu()
 
     local function onTouchMoved(x, y)
         local nMoveY = y - BeginPos.y
-        local curPos = MainMenu:getPosition()
-        local curPosx, curPosy = curPos.x,curPos.y
+        local curPosx, curPosy = MainMenu:getPosition()
         local nextPosy = curPosy + nMoveY
         local winSize = cc.Director:getInstance():getWinSize()
         if nextPosy < 0 then
