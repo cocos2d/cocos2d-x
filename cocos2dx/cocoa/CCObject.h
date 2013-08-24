@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCOBJECT_H__
 
 #include "cocoa/CCDataVisitor.h"
+#include "ccMacros.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -93,7 +94,14 @@ public:
      *
      * @see retain, autorelease
      */
-    void release();
+    inline void release()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        --_reference;
+
+        if (_reference == 0)
+            delete this;
+    }
 
     /**
      * Retains the ownership.
@@ -102,7 +110,11 @@ public:
      *
      * @see release, autorelease
      */
-    void retain();
+    inline void retain()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        ++_reference;
+    }
 
     /**
      * Release the ownership sometime soon automatically.

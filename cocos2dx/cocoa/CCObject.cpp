@@ -64,24 +64,6 @@ Object::~Object()
     }
 }
 
-void Object::release()
-{
-    CCASSERT(_reference > 0, "reference count should greater than 0");
-    --_reference;
-
-    if (_reference == 0)
-    {
-        delete this;
-    }
-}
-
-void Object::retain()
-{
-    CCASSERT(_reference > 0, "reference count should greater than 0");
-
-    ++_reference;
-}
-
 Object* Object::autorelease()
 {
     PoolManager::sharedPoolManager()->addObject(this);
