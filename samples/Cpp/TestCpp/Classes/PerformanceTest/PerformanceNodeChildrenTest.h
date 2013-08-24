@@ -128,6 +128,16 @@ public:
     virtual const char* profilerName();
 };
 
+class GetSpriteSheet : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
