@@ -27,10 +27,12 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -48,6 +50,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	private static Context sContext = null;
+    private static Activity me = null;
 	
 	public static Context getContext() {
 		return sContext;
@@ -62,7 +65,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		super.onCreate(savedInstanceState);
 		sContext = this;
     	this.mHandler = new Cocos2dxHandler(this);
-
+		
+		me = this;
+		
     	this.init();
 
 		Cocos2dxHelper.init(this, this);
@@ -168,6 +173,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       Log.d(TAG, "isEmulator=" + isEmulator);
       return isEmulator;
    }
+	
+	// PLJNS: via http://digitalsynapsesblog.blogspot.kr/2011/09/cocos2d-x-launching-url-on-android.html
+	// and: https://github.com/cocos2d/cocos2d-x/pull/1940/files
+	// and: http://cocos2d-x.org/boards/6/topics/11290
+	public static void openURL(String url) {
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		me.startActivity(i);
+    }
 
 	// ===========================================================
 	// Inner and Anonymous Classes

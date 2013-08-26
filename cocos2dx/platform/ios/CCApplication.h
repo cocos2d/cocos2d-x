@@ -66,6 +66,8 @@ public:
      */
     virtual TargetPlatform getTargetPlatform();
 
+	void openURL(const char* pszUrl);
+	
 protected:
     static CCApplication * sm_pSharedApplication;
 };

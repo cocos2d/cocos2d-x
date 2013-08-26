@@ -45,6 +45,13 @@ CCApplication::~CCApplication()
     sm_pSharedApplication = 0;
 }
 
+void CCApplication::openURL(const char* pszUrl)
+{
+    NSString *msg = [NSString stringWithCString:pszUrl encoding:NSASCIIStringEncoding];
+    NSURL *nsUrl = [NSURL URLWithString:msg];
+    [[UIApplication sharedApplication] openURL:nsUrl];
+}
+
 int CCApplication::run()
 {
     if (applicationDidFinishLaunching()) 
