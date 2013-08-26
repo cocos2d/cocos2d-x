@@ -1,6 +1,6 @@
 #include "SceneEditorTestScene.h"
 #include "../ExtensionsTest.h"
-#include "CocostudioReader/CCJsonReader.h"
+#include "CocostudioReader/CCSSceneReader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -8,7 +8,7 @@ using namespace cocos2d::extension;
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
 	CCArmatureDataManager::purge();
-	CCJsonReader::sharedJsonReader()->purgeJsonReader();
+	CCSSceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::UIActionManager::shareManager()->purgeUIActionManager();
 	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
 }
@@ -59,7 +59,7 @@ bool SceneEditorTestLayer::init()
 
 cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 {
-    CCNode *pNode = CCJsonReader::sharedJsonReader()->createNodeWithJsonFile("FishJoy2.json");
+    CCNode *pNode = CCSSceneReader::sharedSceneReader()->createNodeWithSceneFile("FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
