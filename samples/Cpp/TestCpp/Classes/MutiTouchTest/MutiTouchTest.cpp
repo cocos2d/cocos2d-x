@@ -40,7 +40,7 @@ public:
 
     static TouchPoint* touchPointWithParent(Node* pParent)
     {
-        TouchPoint* pRet = new TouchPoint();
+        auto pRet = new TouchPoint();
         pRet->setContentSize(pParent->getContentSize());
         pRet->setAnchorPoint(Point(0.0f, 0.0f));
         pRet->autorelease();
@@ -74,9 +74,9 @@ void MutiTouchTestLayer::ccTouchesBegan(Set *touches, Event  *event)
 
     for ( auto &item: *touches )
     {
-        Touch* touch = static_cast<Touch*>(item);
-        TouchPoint* touchPoint = TouchPoint::touchPointWithParent(this);
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(item);
+        auto touchPoint = TouchPoint::touchPointWithParent(this);
+        auto location = touch->getLocation();
 
         touchPoint->setTouchPos(location);
         touchPoint->setTouchColor(*s_TouchColors[touch->getID()]);
@@ -92,9 +92,9 @@ void MutiTouchTestLayer::ccTouchesMoved(Set *touches, Event  *event)
 {
     for( auto &item: *touches)
     {
-        Touch* touch = static_cast<Touch*>(item);
-        TouchPoint* pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(item);
+        auto pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
+        auto location = touch->getLocation();
         pTP->setTouchPos(location);
     }
 }
@@ -103,8 +103,8 @@ void MutiTouchTestLayer::ccTouchesEnded(Set *touches, Event  *event)
 {
     for ( auto &item: *touches )
     {
-        Touch* touch = static_cast<Touch*>(item);
-        TouchPoint* pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
+        auto touch = static_cast<Touch*>(item);
+        auto pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
         removeChild(pTP, true);
         s_dic.removeObjectForKey(touch->getID());
     }
@@ -117,7 +117,7 @@ void MutiTouchTestLayer::ccTouchesCancelled(Set  *touches, Event  *event)
 
 void MutiTouchTestScene::runThisTest()
 {
-    MutiTouchTestLayer* layer = MutiTouchTestLayer::create();
+    auto layer = MutiTouchTestLayer::create();
 
     addChild(layer, 0);
 

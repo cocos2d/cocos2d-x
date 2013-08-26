@@ -25,16 +25,15 @@ package org.cocos2dx.plugin;
 
 import org.json.JSONObject;
 
+import com.qihoo.gamecenter.sdk.common.IDispatcherCallback;
+import com.qihoo.gamecenter.sdk.protocols.pay.ProtocolConfigs;
+import com.qihoo.gamecenter.sdk.protocols.pay.ProtocolKeys;
 import com.qihoopay.insdk.activity.ContainerActivity;
 import com.qihoopay.insdk.matrix.Matrix;
-import com.qihoopay.sdk.protocols.IDispatcherCallback;
-import com.qihoopay.sdk.protocols.ProtocolConfigs;
-import com.qihoopay.sdk.protocols.ProtocolKeys;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -79,72 +78,84 @@ public class QH360Wrapper {
             return;
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape(ctx));
-        bundle.putBoolean(ProtocolKeys.IS_LOGIN_BG_TRANSPARENT, true);
-        bundle.putString(ProtocolKeys.RESPONSE_TYPE, "code");
-        bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_LOGIN);
-        Intent intent = new Intent(ctx, ContainerActivity.class);
-        intent.putExtras(bundle);
-
+        final Context curCtx = ctx;
         final IDispatcherCallback curCallback = callback;
-        Matrix.invokeActivity(ctx, intent, new IDispatcherCallback() {
+        PluginWrapper.runOnMainThread(new Runnable() {
             @Override
-            public void onFinished(String data) {
-                if (null == data) {
-                    mLogined = false;
-                    mAuthCode = "";
-                    curCallback.onFinished(data);
-                    return;
-                }
+            public void run() {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape(curCtx));
+                bundle.putBoolean(ProtocolKeys.IS_LOGIN_BG_TRANSPARENT, true);
+                bundle.putString(ProtocolKeys.RESPONSE_TYPE, "code");
+                bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_LOGIN);
+                Intent intent = new Intent(curCtx, ContainerActivity.class);
+                intent.putExtras(bundle);
 
-                String retStr = "Unknown Error";
-                try {
-                    JSONObject json = new JSONObject(data);
-                    int errCode = json.optInt("error_code");
-                    switch (errCode) {
-                    case 0:
-                        {
-                            mLogined = true;
-                            JSONObject content = json.optJSONObject("content");
-                            mAuthCode = content.optString("code");
-                            retStr = "";
+                Matrix.invokeActivity(curCtx, intent, new IDispatcherCallback() {
+                    @Override
+                    public void onFinished(String data) {
+                        if (null == data) {
+                            mLogined = false;
+                            mAuthCode = "";
+                            curCallback.onFinished(data);
+                            return;
                         }
-                        break;
-                    default:
-                        mLogined = false;
-                        mAuthCode = "";
-                        retStr = "Login Failed";
-                        break;
+        
+                        String retStr = "Unknown Error";
+                        try {
+                            JSONObject json = new JSONObject(data);
+                            int errCode = json.optInt("error_code");
+                            switch (errCode) {
+                            case 0:
+                                {
+                                    mLogined = true;
+                                    JSONObject content = json.optJSONObject("data");
+                                    mAuthCode = content.optString("code");
+                                    retStr = "";
+                                }
+                                break;
+                            default:
+                                mLogined = false;
+                                mAuthCode = "";
+                                retStr = "Login Failed";
+                                break;
+                            }
+                        } catch (Exception e) {
+                            mLogined = false;
+                            mAuthCode = "";
+                            retStr = "Unknow Error";
+                            e.printStackTrace();
+                        } finally {
+                            curCallback.onFinished(retStr);
+                        }
                     }
-                } catch (Exception e) {
-                    mLogined = false;
-                    mAuthCode = "";
-                    retStr = "Unknow Error";
-                    e.printStackTrace();
-                } finally {
-                    curCallback.onFinished(retStr);
-                }
+                });
             }
         });
     }
 
     public static void userLogout(Context ctx, IDispatcherCallback callback) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape(ctx));
-        bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_QUIT);
-        Intent intent = new Intent(ctx, ContainerActivity.class);
-        intent.putExtras(bundle);
-
+        final Context curCtx = ctx;
         final IDispatcherCallback curCallback = callback;
-        Matrix.invokeActivity(ctx, intent, new IDispatcherCallback() {
+        PluginWrapper.runOnMainThread(new Runnable() {
             @Override
-            public void onFinished(String data) {
-                if (null == data) {
-                    mAuthCode = "";
-                    mLogined = false;
-                }
-                curCallback.onFinished(data);
+            public void run() {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandscape(curCtx));
+                bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_QUIT);
+                Intent intent = new Intent(curCtx, ContainerActivity.class);
+                intent.putExtras(bundle);
+
+                Matrix.invokeActivity(curCtx, intent, new IDispatcherCallback() {
+                    @Override
+                    public void onFinished(String data) {
+                        if (null == data) {
+                            mAuthCode = "";
+                            mLogined = false;
+                        }
+                        curCallback.onFinished(data);
+                    }
+                });
             }
         });
     }

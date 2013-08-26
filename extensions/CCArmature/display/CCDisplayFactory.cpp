@@ -153,12 +153,12 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
     decoDisplay->setDisplay(skin);
 
 #if ENABLE_PHYSICS_DETECT
-    if (textureData && textureData->contourDataList.count() > 0)
+    if (textureData && textureData->contourDataList->count() > 0)
     {
 
         //! create ContourSprite
         ColliderDetector *colliderDetector = ColliderDetector::create(bone);
-        colliderDetector->addContourDataList(&textureData->contourDataList);
+        colliderDetector->addContourDataList(textureData->contourDataList);
 
         decoDisplay->setColliderDetector(colliderDetector);
     }

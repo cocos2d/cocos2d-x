@@ -30,7 +30,7 @@
 #include "cocos2d.h"
 #include "CCTextImage.h"
 #include "CCFontFreeType.h"
-#include "CCFontRenderFreeType.h"
+#include "CCFont.h"
 
 NS_CC_BEGIN
 
@@ -91,8 +91,6 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     int  dataLenght     = (_width * _height * 4);
     bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::RGBA8888, _width, _height, imageSize);
     
-//    _pageTexture->setPremultipliedAlpha(true);
-
     // release the page data if requested
     if ( releasePageData && textureCreated )
     {
@@ -132,7 +130,7 @@ TextFontPagesDef::~TextFontPagesDef()
     }
 }
 
-TextImage::TextImage(): _font(0), _fontRender(0), _fontPages(0)
+TextImage::TextImage(): _font(0), _fontPages(0)
 {
 }
 
@@ -143,37 +141,38 @@ TextImage::~TextImage()
     
     if (_font)
         _font->release();
-    
-    if (_fontRender)
-        delete _fontRender;
 }
 
-bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, const char * pFontName, int nSize, bool releaseRAWData)
+bool TextImage::initWithString(const char *text, int nWidth, int nHeight, cocos2d::Font* font, bool releaseRAWData)
 {
-    // carloX
     bool textIsUTF16 = false;
     
-    // create the reference to the font we want to use
-    if ( !createFontRef(pFontName, nSize) )
-        return false;
+    if (_font)
+    {
+        _font->release();
+        _font = 0;
+    }
+    
+    // carloX
+    _font = font;
     
     // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
-    if ( !generateTextGlyphs(pText) )
+    if ( !generateTextGlyphs(text) )
         return false;
-
+    
     Size constrainSize;
     unsigned short int *strUTF16 = 0;
-    int stringNumChars;
     
+    int stringNumChars;
     if ( textIsUTF16 )
     {
-        strUTF16       = (unsigned short int *)pText;
+        strUTF16       = (unsigned short int *)text;
         stringNumChars = cc_wcslen(strUTF16);
     }
     else
     {
         // string needs to go to unicode
-        strUTF16 = _font->getUTF16Text(pText, stringNumChars);
+        strUTF16 = _font->getUTF16Text(text, stringNumChars);
     }
     
     if (!strUTF16 || !stringNumChars)
@@ -189,6 +188,8 @@ bool TextImage::initWithString(const char * pText, int nWidth, int nHeight, cons
     
     // actually create the needed images
     return createImageDataFromPages(_fontPages, releaseRAWData);
+    
+    return true;
 }
 
 bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight)
@@ -321,48 +322,6 @@ int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> 
     return numChar;
 }
 
-bool TextImage::createFontRef(const char *fontName, int fontSize)
-{
-    if (_font)
-    {
-        _font->release();
-        _font = 0;
-    }
-    
-    // carloX 
-    _font = new FontFreeType();
-    
-    if (!_font)
-        return false;
-    
-    _font->retain();
-    
-    if( !_font->createFontObject(fontName, fontSize))
-        return false;
-    
-    return true;
-}
-
-bool TextImage::createFontRender()
-{
-    if (!_font)
-        return false;
-    
-    if (_fontRender)
-    {
-        delete _fontRender;
-        _fontRender = 0;
-    }
-    
-    // carloX 
-    _fontRender = new FontRenderFreeType(_font);
-    
-    if (!_fontRender)
-        return false;
-    
-    return true;
-}
-
 bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16)
 {
     if (!_font)
@@ -445,19 +404,104 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
 
 unsigned char * TextImage::preparePageGlyphData(TextPageDef *thePage)
 {
-    if ( !_fontRender )
+    return renderGlyphData(thePage);
+}
+
+unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
+{
+    if (!thePage)
+        return 0;
+    
+    if (!_font)
+        return 0;
+    
+    if (thePage->getNumLines() == 0)
+        return NULL;
+    
+    int pageWidth  = thePage->getWidth();
+    int pageHeight = thePage->getHeight();
+    
+    // prepare memory and clean to 0
+    int sizeInBytes     = (pageWidth * pageHeight * 4);
+    unsigned char* data = new unsigned char[sizeInBytes];
+    
+    if (!data)
+        return 0;
+    
+    memset(data, 0, sizeInBytes);
+    
+    int numLines = thePage->getNumLines();
+    
+    for (int c = 0; c<numLines; ++c)
     {
-        createFontRender();
+        TextLineDef *pCurrentLine   = thePage->getLineAt(c);
+        
+        float origX         = _font->getLetterPadding();
+        float origY         = pCurrentLine->getY();
+        
+        int numGlyphToRender = pCurrentLine->getNumGlyph();
+        
+        for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
+        {
+            GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
+            renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
+            origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
+        }
     }
     
-    if (_fontRender)
+#ifdef _DEBUG_FONTS_
+    static int counter = 0;
+    char outFilename[512];
+    sprintf(outFilename,"testIMG%d", counter);
+    ++counter;
+    Image *pImage = new Image;
+    pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 1024, 1024, 8, false);
+    pImage->saveToFile(outFilename);
+#endif
+    
+    // we are done here
+    return data;
+}
+
+bool TextImage::renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize)
+{
+    if (!_font)
+        return false;
+    
+    unsigned char *sourceBitmap = 0;
+    int sourceWidth  = 0;
+    int sourceHeight = 0;
+    
+    // get the glyph's bitmap
+    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
+    
+    if(!sourceBitmap)
+        return false;
+    
+    int iX = posX;
+    int iY = posY;
+    
+    for (int y = 0; y < sourceHeight; ++y)
     {
-        return _fontRender->preparePageGlyphData(thePage);
+        int bitmap_y = y * sourceWidth;
+        
+        for (int x = 0; x < sourceWidth; ++x)
+        {
+            unsigned char cTemp = sourceBitmap[bitmap_y + x];
+            
+            // the final pixel
+            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+            *(int*) &destMemory[(iX + ( iY * destSize ) ) * 4] = iTemp;
+            
+            iX += 1;
+        }
+        
+        iX  = posX;
+        iY += 1;
     }
-    else
-    {
-        return 0;
-    }
+    
+    //everything good
+    return true;
 }
 
 NS_CC_END

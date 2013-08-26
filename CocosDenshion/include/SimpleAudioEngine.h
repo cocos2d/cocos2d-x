@@ -42,26 +42,6 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
 
-class TypeInfo
-{
-public:
-    virtual long getClassTypeInfo() = 0;
-};
-
-static inline unsigned int getHashCodeByString(const char *key)
-{
-	unsigned int len = strlen(key);
-	const char *end=key+len;
-	unsigned int hash;
-
-	for (hash = 0; key < end; key++)
-	{
-		hash *= 16777619;
-		hash ^= (unsigned int) (unsigned char) toupper(*key);
-	}
-	return (hash);
-}
-
 /**
   @class          SimpleAudioEngine
   @brief          Offers a VERY simple interface to play background music & sound effects.
@@ -69,7 +49,7 @@ static inline unsigned int getHashCodeByString(const char *key)
                   to release allocated resources.
  */
 
-class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+class EXPORT_DLL SimpleAudioEngine
 {
 public:
     /**
@@ -89,10 +69,6 @@ protected:
     virtual ~SimpleAudioEngine();
 
 public:
-
-    virtual long getClassTypeInfo() {
-        return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
-    }
 
     /**
      @brief Preload background music

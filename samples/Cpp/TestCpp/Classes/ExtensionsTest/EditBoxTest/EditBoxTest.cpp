@@ -15,10 +15,10 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    Point visibleOrigin = EGLView::getInstance()->getVisibleOrigin();
-    Size visibleSize = EGLView::getInstance()->getVisibleSize();
+    auto visibleOrigin = EGLView::getInstance()->getVisibleOrigin();
+    auto visibleSize = EGLView::getInstance()->getVisibleSize();
     
-    Sprite* pBg = Sprite::create("Images/HelloWorld.png");
+    auto pBg = Sprite::create("Images/HelloWorld.png");
     pBg->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
     addChild(pBg);
     
@@ -27,13 +27,13 @@ EditBoxTest::EditBoxTest()
     addChild(_TTFShowEditReturn);
     
     // Back Menu
-    MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
+    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Point(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
-    Menu *menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, NULL);
     menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
-    Size editBoxSize = Size(visibleSize.width - 100, 60);
+    auto editBoxSize = Size(visibleSize.width - 100, 60);
 
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
@@ -87,7 +87,7 @@ EditBoxTest::~EditBoxTest()
 
 void EditBoxTest::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-    ExtensionsTestScene *scene = new ExtensionsTestScene();
+    auto scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -127,7 +127,7 @@ void EditBoxTest::editBoxReturn(EditBox* editBox)
 
 void runEditBoxTest()
 {
-    Scene *scene = Scene::create();
+    auto scene = Scene::create();
     EditBoxTest *layer = new EditBoxTest();
     scene->addChild(layer);
     

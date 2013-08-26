@@ -20,11 +20,11 @@ bool ProjectileController::init()
 
 void ProjectileController::onEnter()
 {
-    Size winSize = Director::getInstance()->getVisibleSize();
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    auto winSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
     _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 	_owner->setTag(3);
-    Component *com = _owner->getParent()->getComponent("SceneController");
+    auto com = _owner->getParent()->getComponent("SceneController");
     ((SceneController*)com)->getProjectiles()->addObject(_owner);
 }
 
@@ -35,22 +35,22 @@ void ProjectileController::onExit()
 
 void ProjectileController::update(float delta)
 {
-    Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_targets = ((SceneController*)com)->getTargets();
+    auto com = _owner->getParent()->getComponent("SceneController");
+    auto _targets = ((SceneController*)com)->getTargets();
     
-    Sprite *projectile = dynamic_cast<Sprite*>(_owner);
-    Rect projectileRect = Rect(
+    auto projectile = dynamic_cast<Sprite*>(_owner);
+    auto projectileRect = Rect(
 			projectile->getPosition().x - (projectile->getContentSize().width/2),
 			projectile->getPosition().y - (projectile->getContentSize().height/2),
 			projectile->getContentSize().width,
 			projectile->getContentSize().height);
 
-    Array* targetsToDelete =new Array;
+    auto targetsToDelete = Array::createWithCapacity(20);
     Object* jt = NULL;
     CCARRAY_FOREACH(_targets, jt)
     {
-        Sprite *target = dynamic_cast<Sprite*>(jt);
-        Rect targetRect = Rect(
+        auto target = dynamic_cast<Sprite*>(jt);
+        auto targetRect = Rect(
             target->getPosition().x - (target->getContentSize().width/2),
             target->getPosition().y - (target->getContentSize().height/2),
             target->getContentSize().width,
@@ -65,14 +65,12 @@ void ProjectileController::update(float delta)
     
     CCARRAY_FOREACH(targetsToDelete, jt)
     {
-        Sprite *target = dynamic_cast<Sprite*>(jt);
+        auto target = dynamic_cast<Sprite*>(jt);
         static_cast<EnemyController*>(target->getComponent("EnemyController"))->die();
     }
     
     bool isDied = targetsToDelete->count() > 0;
    
-    targetsToDelete->release();
-    
     if (isDied)
     {
         die();
@@ -100,8 +98,8 @@ void freeFunction( Node *ignore )
 
 void ProjectileController::move(float flocationX, float flocationY)
 {
-    Size winSize = Director::getInstance()->getVisibleSize();
-    Point origin = Director::getInstance()->getVisibleOrigin();
+    auto winSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
     // Determinie offset of location to projectile
 	float offX = flocationX - _owner->getPosition().x;
 	float offY = flocationY - _owner->getPosition().y;
@@ -142,8 +140,8 @@ void ProjectileController::move(float flocationX, float flocationY)
 
 void ProjectileController::die()
 {
-    Component *com = _owner->getParent()->getComponent("SceneController");
-    cocos2d::Array *_projectiles = static_cast<SceneController*>(com)->getProjectiles();
+    auto com = _owner->getParent()->getComponent("SceneController");
+    auto _projectiles = static_cast<SceneController*>(com)->getProjectiles();
     _projectiles->removeObject(_owner);
     _owner->removeFromParentAndCleanup(true);
 }

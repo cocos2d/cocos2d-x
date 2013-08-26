@@ -88,7 +88,10 @@ public:
     bool supportsETC() const;
     
     /** Whether or  not S3TC Texture Compressed is supported */
-    bool supportsS3TC(void ) const;
+    bool supportsS3TC() const;
+    
+    /** Whether or  not ATITC Texture Compressed is supported */
+    bool supportsATITC() const;
     
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
@@ -148,6 +151,7 @@ protected:
     bool            _supportsPVRTC;
     bool            _supportsETC;
     bool            _supportsS3TC;
+    bool            _supportsATITC;
     bool            _supportsNPOT;
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;

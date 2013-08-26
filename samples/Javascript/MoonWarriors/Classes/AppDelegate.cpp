@@ -27,7 +27,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    auto pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(Director::Projection::_2D);
 
@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
     
-    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #if JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("main.debug.js");
@@ -67,7 +67,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {

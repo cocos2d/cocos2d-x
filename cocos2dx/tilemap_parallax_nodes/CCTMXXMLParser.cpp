@@ -56,12 +56,13 @@ TMXLayerInfo::TMXLayerInfo()
 , _maxGID(0)        
 , _offset(Point::ZERO)
 {
-    _properties= new Dictionary();;
+    _properties = new Dictionary();
+    _properties->init();
 }
 
 TMXLayerInfo::~TMXLayerInfo()
 {
-    CCLOGINFO("cocos2d: deallocing: %p", this);
+    CCLOGINFO("deallocing TMXLayerInfo: %p", this);
     CC_SAFE_RELEASE(_properties);
     if( _ownTiles && _tiles )
     {
@@ -93,7 +94,7 @@ TMXTilesetInfo::TMXTilesetInfo()
 
 TMXTilesetInfo::~TMXTilesetInfo()
 {
-    CCLOGINFO("cocos2d: deallocing: %p", this);
+    CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
 Rect TMXTilesetInfo::rectForGID(unsigned int gid)
@@ -157,7 +158,9 @@ void TMXMapInfo::internalInit(const char* tmxFileName, const char* resourcePath)
     _objectGroups->retain();
 
     _properties = new Dictionary();
+    _properties->init();
     _tileProperties = new Dictionary();
+    _tileProperties->init();
 
     // tmp vars
     _currentString = "";
@@ -194,7 +197,7 @@ TMXMapInfo::TMXMapInfo()
 
 TMXMapInfo::~TMXMapInfo()
 {
-    CCLOGINFO("cocos2d: deallocing: %p", this);
+    CCLOGINFO("deallocing TMXMapInfo: %p", this);
     CC_SAFE_RELEASE(_tilesets);
     CC_SAFE_RELEASE(_layers);
     CC_SAFE_RELEASE(_properties);
@@ -330,14 +333,51 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "tile")
     {
-        TMXTilesetInfo* info = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
-        Dictionary *dict = new Dictionary();
-        pTMXMapInfo->setParentGID(info->_firstGid + atoi(valueForKey("id", attributeDict)));
-        pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
-        CC_SAFE_RELEASE(dict);
-        
-        pTMXMapInfo->setParentElement(TMXPropertyTile);
+        if (pTMXMapInfo->getParentElement() == TMXPropertyLayer)
+        {
+            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            Size layerSize = layer->_layerSize;
+            unsigned int gid = (unsigned int)atoi(valueForKey("gid", attributeDict));
+            int tilesAmount = layerSize.width*layerSize.height;
+            
+            do
+            {
+                // Check the gid is legal or not
+                CC_BREAK_IF(gid == 0);
+                
+                if (tilesAmount > 1)
+                {
+                    // Check the value is all set or not
+                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != 0 && layer->_tiles[tilesAmount - 1] != 0);
+                    
+                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 1;
+                    layer->_tiles[currentTileIndex] = gid;
+                    
+                    if (currentTileIndex != tilesAmount - 1)
+                    {
+                        --layer->_tiles[tilesAmount - 1];
+                    }
+                }
+                else if(tilesAmount == 1)
+                {
+                    if (layer->_tiles[0] == 0)
+                    {
+                        layer->_tiles[0] = gid;
+                    }
+                }
+            } while (0);
+        }
+        else
+        {
+            TMXTilesetInfo* info = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->getLastObject();
+            Dictionary *dict = new Dictionary();
+            dict->init();
+            pTMXMapInfo->setParentGID(info->_firstGid + atoi(valueForKey("id", attributeDict)));
+            pTMXMapInfo->getTileProperties()->setObject(dict, pTMXMapInfo->getParentGID());
+            CC_SAFE_RELEASE(dict);
 
+            pTMXMapInfo->setParentElement(TMXPropertyTile);
+        }
     }
     else if (elementName == "layer")
     {
@@ -391,7 +431,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "image")
     {
-        TMXTilesetInfo* tileset = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
+        TMXTilesetInfo* tileset = (TMXTilesetInfo*)pTMXMapInfo->getTilesets()->getLastObject();
 
         // build full path
         std::string imagename = valueForKey("source", attributeDict);
@@ -411,7 +451,34 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string encoding = valueForKey("encoding", attributeDict);
         std::string compression = valueForKey("compression", attributeDict);
 
-        if( encoding == "base64" )
+        if (encoding == "")
+        {
+            pTMXMapInfo->setLayerAttribs(pTMXMapInfo->getLayerAttribs() | TMXLayerAttribNone);
+            
+            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            Size layerSize = layer->_layerSize;
+            int tilesAmount = layerSize.width*layerSize.height;
+
+            int *tiles = (int *) malloc(tilesAmount*sizeof(int));
+            for (int i = 0; i < tilesAmount; i++)
+            {
+                tiles[i] = 0;
+            }
+            
+            /* Save the special index in tiles[tilesAmount - 1];
+             * When we load tiles, we can do this:
+             * tiles[tilesAmount - tiles[tilesAmount - 1] - 1] = tileNum;
+             * --tiles[tilesAmount - 1];
+             * We do this because we can easily contorl how much tiles we loaded without add a "curTilesAmount" into class member.
+             */
+            if (tilesAmount > 1)
+            {
+                tiles[tilesAmount - 1] = tilesAmount - 1;
+            }
+
+            layer->_tiles = (unsigned int*) tiles;
+        }
+        else if (encoding == "base64")
         {
             int layerAttribs = pTMXMapInfo->getLayerAttribs();
             pTMXMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribBase64);
@@ -429,17 +496,17 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
-        CCASSERT( pTMXMapInfo->getLayerAttribs() != TMXLayerAttribNone, "TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 
     } 
     else if (elementName == "object")
     {
         char buffer[32] = {0};
-        TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->lastObject();
+        TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
 
         // The value for "type" was blank or not a valid class name
         // Create an instance of TMXObjectInfo to store the object and its properties
         Dictionary *dict = new Dictionary();
+        dict->init();
         // Parse everything automatically
         const char* pArray[] = {"name", "type", "width", "height", "gid"};
         
@@ -507,7 +574,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyLayer )
         {
             // The parent element is the last layer
-            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
+            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
             String *value = new String(valueForKey("value", attributeDict));
             std::string key = valueForKey("name", attributeDict);
             // Add the property to the layer
@@ -518,7 +585,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
         {
             // The parent element is the last object group
-            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->lastObject();
+            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
             String *value = new String(valueForKey("value", attributeDict));
             const char* key = valueForKey("name", attributeDict);
             objectGroup->getProperties()->setObject(value, key);
@@ -528,8 +595,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else if ( pTMXMapInfo->getParentElement() == TMXPropertyObject )
         {
             // The parent element is the last object
-            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->lastObject();
-            Dictionary* dict = (Dictionary*)objectGroup->getObjects()->lastObject();
+            TMXObjectGroup* objectGroup = (TMXObjectGroup*)pTMXMapInfo->getObjectGroups()->getLastObject();
+            Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
 
             const char* propertyName = valueForKey("name", attributeDict);
             String *propertyValue = new String(valueForKey("value", attributeDict));
@@ -549,14 +616,14 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     else if (elementName == "polygon") 
     {
         // find parent object's dict and add polygon-points to it
-        TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->lastObject();
-        Dictionary* dict = (Dictionary*)objectGroup->getObjects()->lastObject();
+        TMXObjectGroup* objectGroup = (TMXObjectGroup*)_objectGroups->getLastObject();
+        Dictionary* dict = (Dictionary*)objectGroup->getObjects()->getLastObject();
 
         // get points value string
         const char* value = valueForKey("points", attributeDict);
         if(value)
         {
-            Array* pPointsArray = new Array;
+            Array* pointsArray = Array::createWithCapacity(10);
 
             // parse points string into a space-separated set of points
             stringstream pointsStream(value);
@@ -568,7 +635,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 string xStr,yStr;
                 char buffer[32] = {0};
                 
-                Dictionary* pPointDict = new Dictionary;
+                Dictionary* pointDict = new Dictionary;
+                pointDict->init();
 
                 // set x
                 if(std::getline(pointStream, xStr, ','))
@@ -577,7 +645,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                     sprintf(buffer, "%d", x);
                     String* pStr = new String(buffer);
                     pStr->autorelease();
-                    pPointDict->setObject(pStr, "x");
+                    pointDict->setObject(pStr, "x");
                 }
 
                 // set y
@@ -587,16 +655,15 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                     sprintf(buffer, "%d", y);
                     String* pStr = new String(buffer);
                     pStr->autorelease();
-                    pPointDict->setObject(pStr, "y");
+                    pointDict->setObject(pStr, "y");
                 }
                 
                 // add to points array
-                pPointsArray->addObject(pPointDict);
-                pPointDict->release();
+                pointsArray->addObject(pointDict);
+                pointDict->release();
             }
             
-            dict->setObject(pPointsArray, "points");
-            pPointsArray->release();
+            dict->setObject(pointsArray, "points");
         }
     } 
     else if (elementName == "polyline")
@@ -622,52 +689,67 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 
     int len = 0;
 
-    if(elementName == "data" && pTMXMapInfo->getLayerAttribs()&TMXLayerAttribBase64) 
+    if(elementName == "data")
     {
-        pTMXMapInfo->setStoringCharacters(false);
-
-        TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->lastObject();
-
-        std::string currentString = pTMXMapInfo->getCurrentString();
-        unsigned char *buffer;
-        len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
-        if( ! buffer ) 
+        if (pTMXMapInfo->getLayerAttribs() & TMXLayerAttribBase64)
         {
-            CCLOG("cocos2d: TiledMap: decode data error");
-            return;
-        }
-
-        if( pTMXMapInfo->getLayerAttribs() & (TMXLayerAttribGzip | TMXLayerAttribZlib) )
-        {
-            unsigned char *deflated;
-            Size s = layer->_layerSize;
-            // int sizeHint = s.width * s.height * sizeof(uint32_t);
-            int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
-
-            int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
-            CCASSERT(inflatedLen == sizeHint, "");
-
-            inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
+            pTMXMapInfo->setStoringCharacters(false);
             
-            delete [] buffer;
-            buffer = NULL;
-
-            if( ! deflated ) 
+            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            
+            std::string currentString = pTMXMapInfo->getCurrentString();
+            unsigned char *buffer;
+            len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
+            if( ! buffer )
             {
-                CCLOG("cocos2d: TiledMap: inflate data error");
+                CCLOG("cocos2d: TiledMap: decode data error");
                 return;
             }
-
-            layer->_tiles = (unsigned int*) deflated;
+            
+            if( pTMXMapInfo->getLayerAttribs() & (TMXLayerAttribGzip | TMXLayerAttribZlib) )
+            {
+                unsigned char *deflated;
+                Size s = layer->_layerSize;
+                // int sizeHint = s.width * s.height * sizeof(uint32_t);
+                int sizeHint = (int)(s.width * s.height * sizeof(unsigned int));
+                
+                int inflatedLen = ZipUtils::ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+                CCASSERT(inflatedLen == sizeHint, "");
+                
+                inflatedLen = (size_t)&inflatedLen; // XXX: to avoid warnings in compiler
+                
+                delete [] buffer;
+                buffer = NULL;
+                
+                if( ! deflated )
+                {
+                    CCLOG("cocos2d: TiledMap: inflate data error");
+                    return;
+                }
+                
+                layer->_tiles = (unsigned int*) deflated;
+            }
+            else
+            {
+                layer->_tiles = (unsigned int*) buffer;
+            }
+            
+            pTMXMapInfo->setCurrentString("");
         }
-        else
+        else if (pTMXMapInfo->getLayerAttribs() & TMXLayerAttribNone)
         {
-            layer->_tiles = (unsigned int*) buffer;
+            TMXLayerInfo* layer = (TMXLayerInfo*)pTMXMapInfo->getLayers()->getLastObject();
+            Size layerSize = layer->_layerSize;
+            int tilesAmount = layerSize.width * layerSize.height;
+            
+            //reset the layer->_tiles[tilesAmount - 1]
+            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == 0)
+            {
+                layer->_tiles[tilesAmount - 1] = 0;
+            }
         }
 
-        pTMXMapInfo->setCurrentString("");
-
-    } 
+    }
     else if (elementName == "map")
     {
         // The map element has ended

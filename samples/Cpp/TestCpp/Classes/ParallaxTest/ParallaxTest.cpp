@@ -20,7 +20,7 @@ Layer* restartParallaxAction();
 Parallax1::Parallax1()
 {
     // Top Layer, a simple image
-    Sprite* cocosImage = Sprite::create(s_Power);
+    auto cocosImage = Sprite::create(s_Power);
     // scale the image (optional)
     cocosImage->setScale( 2.5f );
     // change the transform anchor point to 0,0 (optional)
@@ -28,7 +28,7 @@ Parallax1::Parallax1()
     
 
     // Middle layer: a Tile map atlas
-    TileMapAtlas *tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
+    auto tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
     tilemap->releaseMap();
     
     // change the transform anchor to 0,0 (optional)
@@ -39,7 +39,7 @@ Parallax1::Parallax1()
     
 
     // background layer: another image
-    Sprite* background = Sprite::create(s_back);
+    auto background = Sprite::create(s_back);
     // scale the image (optional)
     background->setScale( 1.5f );
     // change the transform anchor point (optional)
@@ -47,7 +47,7 @@ Parallax1::Parallax1()
 
     
     // create a void node, a parent node
-    ParallaxNode* voidNode = ParallaxNode::create();
+    auto voidNode = ParallaxNode::create();
     
     // NOW add the 3 layers to the 'void' node
 
@@ -64,11 +64,11 @@ Parallax1::Parallax1()
     // now create some actions that will move the 'void' node
     // and the children of the 'void' node will move at different
     // speed, thus, simulation the 3D environment
-    ActionInterval* goUp = MoveBy::create(4, Point(0,-500) );
-    ActionInterval* goDown = goUp->reverse();
-    ActionInterval* go = MoveBy::create(8, Point(-1000,0) );
-    ActionInterval* goBack = go->reverse();
-    Sequence* seq = Sequence::create(goUp, go, goDown, goBack, NULL);
+    auto goUp = MoveBy::create(4, Point(0,-500) );
+    auto goDown = goUp->reverse();
+    auto go = MoveBy::create(8, Point(-1000,0) );
+    auto goBack = go->reverse();
+    auto seq = Sequence::create(goUp, go, goDown, goBack, NULL);
     voidNode->runAction( (RepeatForever::create(seq) ));
     
     addChild( voidNode );
@@ -90,7 +90,7 @@ Parallax2::Parallax2()
     setTouchEnabled( true );
     
     // Top Layer, a simple image
-    Sprite* cocosImage = Sprite::create(s_Power);
+    auto cocosImage = Sprite::create(s_Power);
     // scale the image (optional)
     cocosImage->setScale( 2.5f );
     // change the transform anchor point to 0,0 (optional)
@@ -98,7 +98,7 @@ Parallax2::Parallax2()
     
     
     // Middle layer: a Tile map atlas
-    TileMapAtlas* tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
+    auto tilemap = TileMapAtlas::create(s_TilesPng, s_LevelMapTga, 16, 16);
     tilemap->releaseMap();
     
     // change the transform anchor to 0,0 (optional)
@@ -109,7 +109,7 @@ Parallax2::Parallax2()
     
     
     // background layer: another image
-    Sprite* background = Sprite::create(s_back);
+    auto background = Sprite::create(s_back);
     // scale the image (optional)
     background->setScale( 1.5f );
     // change the transform anchor point (optional)
@@ -117,7 +117,7 @@ Parallax2::Parallax2()
     
     
     // create a void node, a parent node
-    ParallaxNode* voidNode = ParallaxNode::create();
+    auto voidNode = ParallaxNode::create();
     
     // NOW add the 3 layers to the 'void' node
     
@@ -134,11 +134,11 @@ Parallax2::Parallax2()
 
 void Parallax2::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch *touch = static_cast<Touch*>(touches->anyObject());
-    Point diff = touch->getDelta();
+    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto diff = touch->getDelta();
     
-    Node* node = getChildByTag(kTagNode);
-    Point currentPos = node->getPosition();
+    auto node = getChildByTag(kTagNode);
+    auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
 
@@ -173,7 +173,7 @@ Layer* nextParallaxAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createParallaxTestLayer(sceneIdx);
+    auto layer = createParallaxTestLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -186,7 +186,7 @@ Layer* backParallaxAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* layer = createParallaxTestLayer(sceneIdx);
+    auto layer = createParallaxTestLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -194,7 +194,7 @@ Layer* backParallaxAction()
 
 Layer* restartParallaxAction()
 {
-    Layer* layer = createParallaxTestLayer(sceneIdx);
+    auto layer = createParallaxTestLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -221,7 +221,7 @@ void ParallaxDemo::onEnter()
 
 void ParallaxDemo::restartCallback(Object* sender)
 {
-    Scene* s = new ParallaxTestScene();
+    auto s = new ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -230,7 +230,7 @@ void ParallaxDemo::restartCallback(Object* sender)
 
 void ParallaxDemo::nextCallback(Object* sender)
 {
-    Scene* s = new ParallaxTestScene();
+    auto s = new ParallaxTestScene();
     s->addChild( nextParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -238,7 +238,7 @@ void ParallaxDemo::nextCallback(Object* sender)
 
 void ParallaxDemo::backCallback(Object* sender)
 {
-    Scene* s = new ParallaxTestScene();
+    auto s = new ParallaxTestScene();
     s->addChild( backParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -246,7 +246,7 @@ void ParallaxDemo::backCallback(Object* sender)
 
 void ParallaxTestScene::runThisTest()
 {
-    Layer* layer = nextParallaxAction();
+    auto layer = nextParallaxAction();
 
     addChild(layer);
     Director::getInstance()->replaceScene(this);

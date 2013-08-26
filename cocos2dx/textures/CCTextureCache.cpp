@@ -72,14 +72,17 @@ TextureCache::TextureCache()
 , _imageInfoQueue(nullptr)
 , _needQuit(false)
 , _asyncRefCount(0)
-, _textures(new Dictionary())
 {
     CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+
+    _textures = new Dictionary();
+    _textures->init();
+
 }
 
 TextureCache::~TextureCache()
 {
-    CCLOGINFO("cocos2d: deallocing TextureCache: %p", this);
+    CCLOGINFO("deallocing TextureCache: %p", this);
 
     CC_SAFE_RELEASE(_textures);
 
@@ -142,7 +145,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
     if (_asyncStructQueue == NULL)
     {             
         _asyncStructQueue = new queue<AsyncStruct*>();
-        _imageInfoQueue = new queue<ImageInfo*>();        
+        _imageInfoQueue   = new queue<ImageInfo*>();        
 
         // create a new thread to load images
         _loadingThread = new std::thread(&TextureCache::loadImage, this);
@@ -387,7 +390,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
         }
 
     } while (0);
-
+    
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::addImage(texture, image);
 #endif
@@ -653,7 +656,7 @@ void VolatileTexture::reloadAllTextures()
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
                 
-                if (pImage && pImage->initWithImageData((void*)pBuffer, nSize))
+                if (pImage && pImage->initWithImageData(pBuffer, nSize))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);

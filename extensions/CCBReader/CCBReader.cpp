@@ -65,7 +65,6 @@ CCBReader::CCBReader(NodeLoaderLibrary * pNodeLoaderLibrary, CCBMemberVariableAs
 , _nodesWithAnimationManagers(NULL)
 , _animationManagersForNodes(NULL)
 , _ownerCallbackNodes(NULL)
-, _hasScriptingOwner(false)
 {
     this->_nodeLoaderLibrary = pNodeLoaderLibrary;
     this->_nodeLoaderLibrary->retain();
@@ -88,7 +87,6 @@ CCBReader::CCBReader(CCBReader * ccbReader)
 , _nodesWithAnimationManagers(NULL)
 , _animationManagersForNodes(NULL)
 , _ownerCallbackNodes(NULL)
-, _hasScriptingOwner(false)
 {
     this->_loadedSpriteSheets = ccbReader->_loadedSpriteSheets;
     this->_nodeLoaderLibrary = ccbReader->_nodeLoaderLibrary;
@@ -97,13 +95,6 @@ CCBReader::CCBReader(CCBReader * ccbReader)
     this->_CCBMemberVariableAssigner = ccbReader->_CCBMemberVariableAssigner;
     this->_CCBSelectorResolver = ccbReader->_CCBSelectorResolver;
     this->_nodeLoaderListener = ccbReader->_nodeLoaderListener;
-
-    this->_ownerCallbackNames = ccbReader->_ownerCallbackNames;
-    this->_ownerCallbackNodes = ccbReader->_ownerCallbackNodes;
-    this->_ownerCallbackNodes->retain();
-    this->_ownerOutletNames = ccbReader->_ownerOutletNames;
-    this->_ownerOutletNodes = ccbReader->_ownerOutletNodes;
-    this->_ownerOutletNodes->retain();
     
     this->_CCBRootPath = ccbReader->getCCBRootPath();
     
@@ -124,12 +115,12 @@ CCBReader::CCBReader()
 , _CCBSelectorResolver(NULL)
 , _nodesWithAnimationManagers(NULL)
 , _animationManagersForNodes(NULL)
-, _hasScriptingOwner(false)
 {
     init();
 }
 
-CCBReader::~CCBReader() {
+CCBReader::~CCBReader()
+{
     CC_SAFE_RELEASE_NULL(_owner);
     CC_SAFE_RELEASE_NULL(_data);
 
@@ -139,9 +130,9 @@ CCBReader::~CCBReader() {
     _ownerOutletNames.clear();
     CC_SAFE_RELEASE(_ownerCallbackNodes);
     _ownerCallbackNames.clear();
-
+    CC_SAFE_RELEASE(_ownerOwnerCallbackControlEvents);
+    
     // Clear string cache.
-
     this->_stringCache.clear();
     CC_SAFE_RELEASE(_nodesWithAnimationManagers);
     CC_SAFE_RELEASE(_animationManagersForNodes);
@@ -162,6 +153,13 @@ const std::string& CCBReader::getCCBRootPath() const
 
 bool CCBReader::init()
 {
+    _ownerOutletNodes = new Array();
+    _ownerOutletNodes->init();
+    _ownerCallbackNodes = new Array();
+    _ownerCallbackNodes->init();
+    _ownerOwnerCallbackControlEvents = new Array();
+    _ownerOwnerCallbackControlEvents->init();
+
     // Setup action manager
     CCBAnimationManager *pActionManager = new CCBAnimationManager();
     setAnimationManager(pActionManager);
@@ -269,8 +267,6 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
 
     _actionManager->setRootContainerSize(parentSize);
     _actionManager->_owner = _owner;
-    _ownerOutletNodes = new Array();
-    _ownerCallbackNodes = new Array();
     
     Dictionary* animationManagers = Dictionary::create();
     Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
@@ -280,10 +276,14 @@ Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &
         // Auto play animations
         _actionManager->runAnimationsForSequenceIdTweenDuration(_actionManager->getAutoPlaySequenceId(), 0);
     }
+    
     // Assign actionManagers to userObject
-    if(_jsControlled) {
+    if(_jsControlled)
+    {
         _nodesWithAnimationManagers = new Array();
+        _nodesWithAnimationManagers->init();
         _animationManagersForNodes = new Array();
+        _animationManagersForNodes->init();
     }
     
     DictElement* pElement = NULL;
@@ -716,8 +716,8 @@ Node * CCBReader::readNodeGraph(Node * pParent)
             if(target != NULL)
             {
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
-                if(targetAsCCBMemberVariableAssigner != NULL) {
-                    
+                if(targetAsCCBMemberVariableAssigner != NULL)
+                {
                     Dictionary* pCustomPropeties = ccNodeLoader->getCustomProperties();
                     DictElement* pElement;
                     CCDICT_FOREACH(pCustomPropeties, pElement)
@@ -741,7 +741,8 @@ Node * CCBReader::readNodeGraph(Node * pParent)
 
     /* Read and add children. */
     int numChildren = this->readInt(false);
-    for(int i = 0; i < numChildren; i++) {
+    for(int i = 0; i < numChildren; i++)
+    {
         Node * child = this->readNodeGraph(node);
         node->addChild(child);
     }
@@ -749,12 +750,16 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     // FIX ISSUE #1860: "onNodeLoaded will be called twice if ccb was added as a CCBFile".
     // If it's a sub-ccb node, skip notification to NodeLoaderListener since it will be
     // notified at LINE #734: Node * child = this->readNodeGraph(node);
-    if (!isCCBFileNode) {
+    if (!isCCBFileNode)
+    {
         // Call onNodeLoaded
         NodeLoaderListener * nodeAsNodeLoaderListener = dynamic_cast<NodeLoaderListener *>(node);
-        if(nodeAsNodeLoaderListener != NULL) {
+        if(nodeAsNodeLoaderListener != NULL)
+        {
             nodeAsNodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
-        } else if(this->_nodeLoaderListener != NULL) {
+        }
+        else if(this->_nodeLoaderListener != NULL)
+        {
             this->_nodeLoaderListener->onNodeLoaded(node, ccNodeLoader);
         }
     }
@@ -991,29 +996,43 @@ bool CCBReader::endsWith(const char* pString, const char* pEnding) {
     }
 }
 
-bool CCBReader::isJSControlled() {
+bool CCBReader::isJSControlled()
+{
     return _jsControlled;
 }
 
-void CCBReader::addOwnerCallbackName(std::string name) {
+void CCBReader::addOwnerCallbackName(const std::string& name)
+{
     _ownerCallbackNames.push_back(name);
 }
 
-void CCBReader::addOwnerCallbackNode(Node *node) {
+void CCBReader::addOwnerCallbackNode(Node *node)
+{
     _ownerCallbackNodes->addObject(node);
 }
 
+void CCBReader::addOwnerCallbackControlEvents(Control::EventType type)
+{
+    _ownerOwnerCallbackControlEvents->addObject(Integer::create((int)type));
+}
 
-void CCBReader::addDocumentCallbackName(std::string name) {
+void CCBReader::addDocumentCallbackName(const std::string& name)
+{
     _actionManager->addDocumentCallbackName(name);
 }
 
-void CCBReader::addDocumentCallbackNode(Node *node) {
+void CCBReader::addDocumentCallbackNode(Node *node)
+{
     _actionManager->addDocumentCallbackNode(node);
 }
 
+void CCBReader::addDocumentCallbackControlEvents(Control::EventType eventType)
+{
+    _actionManager->addDocumentCallbackControlEvents(eventType);
+}
 
-Array* CCBReader::getOwnerCallbackNames() {
+Array* CCBReader::getOwnerCallbackNames()
+{
     Array* pRet = Array::createWithCapacity(_ownerCallbackNames.size());
     std::vector<std::string>::iterator it = _ownerCallbackNames.begin();
     for (; it != _ownerCallbackNames.end(); ++it)
@@ -1024,11 +1043,18 @@ Array* CCBReader::getOwnerCallbackNames() {
     return pRet;
 }
 
-Array* CCBReader::getOwnerCallbackNodes() {
+Array* CCBReader::getOwnerCallbackNodes()
+{
     return _ownerCallbackNodes;
 }
 
-Array* CCBReader::getOwnerOutletNames() {
+Array* CCBReader::getOwnerCallbackControlEvents()
+{
+    return _ownerOwnerCallbackControlEvents;
+}
+
+Array* CCBReader::getOwnerOutletNames()
+{
     Array* pRet = Array::createWithCapacity(_ownerOutletNames.size());
     std::vector<std::string>::iterator it = _ownerOutletNames.begin();
     for (; it != _ownerOutletNames.end(); ++it)
@@ -1038,26 +1064,29 @@ Array* CCBReader::getOwnerOutletNames() {
     return pRet;
 }
 
-Array* CCBReader::getOwnerOutletNodes() {
+Array* CCBReader::getOwnerOutletNodes()
+{
     return _ownerOutletNodes;
 }
 
-Array* CCBReader::getNodesWithAnimationManagers() {
+Array* CCBReader::getNodesWithAnimationManagers()
+{
     return _nodesWithAnimationManagers;
 }
 
-Array* CCBReader::getAnimationManagersForNodes() {
+Array* CCBReader::getAnimationManagersForNodes()
+{
     return _animationManagersForNodes;
 }
 
 void CCBReader::addOwnerOutletName(std::string name)
 {
     _ownerOutletNames.push_back(name);
-
 }
+
 void CCBReader::addOwnerOutletNode(Node *node)
 {
-    if (NULL != node)
+    if (NULL == node)
         return;
     
     _ownerOutletNodes->addObject(node);

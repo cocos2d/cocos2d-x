@@ -93,10 +93,10 @@ bool ColliderDetector::init(Bone *bone)
 
 void ColliderDetector::addContourData(ContourData *contourData)
 {
-    const Array *array = &contourData->vertexList;
+    const Array *array = contourData->vertexList;
     Object *object = NULL;
 
-    b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
+    b2Vec2 *b2bv = new b2Vec2[contourData->vertexList->count()];
 
     int i = 0;
     CCARRAY_FOREACH(array, object)
@@ -107,7 +107,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
     }
 
     b2PolygonShape polygon;
-    polygon.Set(b2bv, contourData->vertexList.count());
+    polygon.Set(b2bv, contourData->vertexList->count());
 
     CC_SAFE_DELETE(b2bv);
 
@@ -183,7 +183,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         b2PolygonShape *shape = (b2PolygonShape *)body->GetFixtureList()->GetShape();
 
         //! update every vertex
-        const Array *array = &contourData->vertexList;
+        const Array *array = contourData->vertexList;
         Object *object = NULL;
         int i = 0;
         CCARRAY_FOREACH(array, object)

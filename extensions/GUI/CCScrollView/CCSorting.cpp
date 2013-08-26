@@ -24,6 +24,8 @@
  ****************************************************************************/
 
 #include "CCSorting.h"
+#include "support/data_support/ccCArray.h"
+
 
 NS_CC_EXT_BEGIN
 
@@ -78,7 +80,7 @@ void ArrayForObjectSorting::removeSortedObject(SortableObject* object)
     idx = this->indexOfSortedObject(object);
     
     if (idx < this->count() && idx != CC_INVALID_INDEX) {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
+        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
         
         if(foundObj->getObjectID() == object->getObjectID()) {
             this->removeObjectAtIndex(idx);
@@ -94,7 +96,7 @@ void ArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, Sortabl
     idx = this->indexOfSortedObject(object);
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
+        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
         Object* pObj = dynamic_cast<Object*>(foundObj);
         pObj->retain();
         
@@ -128,7 +130,7 @@ SortableObject* ArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
-        foundObj = dynamic_cast<SortableObject*>(this->objectAtIndex(idx));
+        foundObj = dynamic_cast<SortableObject*>(this->getObjectAtIndex(idx));
         if (foundObj->getObjectID() != tag) {
             foundObj = NULL;
         }
