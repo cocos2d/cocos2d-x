@@ -179,7 +179,7 @@
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextButton.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextField.cpp" />
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UIZoomButton.cpp" />
-    <ClCompile Include="..\CocostudioReader\CCJsonReader.cpp" />
+    <ClCompile Include="..\CocostudioReader\CCSSceneReader.cpp" />
     <ClCompile Include="..\CocostudioReader\DictionaryHelper.cpp" />
     <ClCompile Include="..\Components\CCComAttribute.cpp" />
     <ClCompile Include="..\Components\CCComAudio.cpp" />
@@ -331,7 +331,7 @@
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextButton.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextField.h" />
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UIZoomButton.h" />
-    <ClInclude Include="..\CocostudioReader\CCJsonReader.h" />
+    <ClInclude Include="..\CocostudioReader\CCSSceneReader.h" />
     <ClInclude Include="..\CocostudioReader\DictionaryHelper.h" />
     <ClInclude Include="..\Components\CCComAttribute.h" />
     <ClInclude Include="..\Components\CCComAudio.h" />

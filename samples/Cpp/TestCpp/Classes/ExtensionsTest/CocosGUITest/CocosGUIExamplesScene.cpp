@@ -47,7 +47,7 @@ CocosGUIExamplesScene::CocosGUIExamplesScene(bool bPortrait)
 
 CocosGUIExamplesScene::~CocosGUIExamplesScene()
 {
-	cocos2d::extension::CCJsonReader::purgeJsonReader();
+	cocos2d::extension::CCSSceneReader::purgeSceneReader();
 	cocos2d::extension::UIActionManager::purgeUIActionManager();
 	cocos2d::extension::UIHelper::purgeUIHelper();
 }
