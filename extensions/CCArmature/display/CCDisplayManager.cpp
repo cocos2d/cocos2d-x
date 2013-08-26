@@ -237,7 +237,6 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
         {
             m_pBone->setChildArmature(NULL);
         }
-
         m_pDisplayRenderNode->removeFromParentAndCleanup(true);
         m_pDisplayRenderNode->release();
     }
@@ -246,15 +245,21 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     if(m_pDisplayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != NULL)
+        if (CCArmature *armature = dynamic_cast<CCArmature *>(m_pDisplayRenderNode))
         {
-            m_pBone->setChildArmature((CCArmature *)m_pDisplayRenderNode);
+            m_pBone->setChildArmature(armature);
         }
+		else if (CCParticleSystemQuad *particle = dynamic_cast<CCParticleSystemQuad*>(m_pDisplayRenderNode))
+		{
+			particle->resetSystem();
+		}
+
 		if (CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol*>(m_pDisplayRenderNode))
 		{
 			rgbaProtocaol->setColor(m_pBone->getColor());
 			rgbaProtocaol->setOpacity(m_pBone->getOpacity());
 		}
+		
         m_pDisplayRenderNode->retain();
 		m_pDisplayRenderNode->setVisible(m_bVisible);
     }
