@@ -211,7 +211,7 @@ static int tolua_bnd_releaseownership (lua_State* L)
 
 /* Type casting
 */
-static int tolua_bnd_cast (lua_State* L)
+int tolua_bnd_cast (lua_State* L)
 {
 
     /* // old code

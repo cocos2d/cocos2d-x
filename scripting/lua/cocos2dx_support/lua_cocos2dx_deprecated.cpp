@@ -633,7 +633,7 @@ static int tolua_cocos2d_Point_new00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -642,7 +642,7 @@ static int tolua_cocos2d_Point_new00(lua_State* tolua_S)
     {
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)());
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
         }
     }
     return 1;
@@ -661,7 +661,7 @@ static int tolua_cocos2d_Point_new00_local(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -670,7 +670,7 @@ static int tolua_cocos2d_Point_new00_local(lua_State* tolua_S)
     {
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)());
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
     }
@@ -689,7 +689,7 @@ static int tolua_cocos2d_Point_new01(lua_State* tolua_S)
 
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
         !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -701,7 +701,7 @@ static int tolua_cocos2d_Point_new01(lua_State* tolua_S)
         float y = ((float)  tolua_tonumber(tolua_S,3,0));
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)(x,y));
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
         }
     }
     return 1;
@@ -716,7 +716,7 @@ static int tolua_cocos2d_Point_new01_local(lua_State* tolua_S)
 
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
         !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -728,7 +728,7 @@ static int tolua_cocos2d_Point_new01_local(lua_State* tolua_S)
         float y = ((float)  tolua_tonumber(tolua_S,3,0));
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)(x,y));
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
     }
@@ -744,7 +744,7 @@ static int tolua_cocos2d_Point_new02(lua_State* tolua_S)
 
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -754,7 +754,7 @@ static int tolua_cocos2d_Point_new02(lua_State* tolua_S)
         const Size* size = ((const Size*)  tolua_tousertype(tolua_S,2,0));
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)(*size));
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
         }
     }
     return 1;
@@ -769,7 +769,7 @@ static int tolua_cocos2d_Point_new02_local(lua_State* tolua_S)
 
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCSize",0,&tolua_err)) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -779,7 +779,7 @@ static int tolua_cocos2d_Point_new02_local(lua_State* tolua_S)
         const Size* size = ((const Size*)  tolua_tousertype(tolua_S,2,0));
         {
             Point* tolua_ret = (Point*)  Mtolua_new((Point)(*size));
-            tolua_pushusertype(tolua_S,(void*)tolua_ret,"Point");
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPoint");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
     }
@@ -814,11 +814,11 @@ static int tolua_cocos2d_Point__sub00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -858,11 +858,11 @@ static int tolua_cocos2d_Point__add00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -902,11 +902,11 @@ static int tolua_cocos2d_Point__mul00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -946,11 +946,11 @@ static int tolua_cocos2d_Point_getMidpoint00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1056,11 +1056,11 @@ static int tolua_cocos2d_Point_getPerp00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1098,11 +1098,11 @@ static int tolua_cocos2d_Point_getRPerp00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1142,11 +1142,11 @@ static int tolua_cocos2d_Point_project00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1186,11 +1186,11 @@ static int tolua_cocos2d_Point_rotate00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1230,11 +1230,11 @@ static int tolua_cocos2d_Point_unrotate00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1370,11 +1370,11 @@ static int tolua_cocos2d_Point_normalize00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1448,11 +1448,11 @@ static int tolua_cocos2d_Point_getClampPoint00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1494,11 +1494,11 @@ static int tolua_cocos2d_Point_lerp00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1576,11 +1576,11 @@ static int tolua_cocos2d_Point_rotateByAngle00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1636,7 +1636,7 @@ static int tolua_cocos2d_Point_isLineIntersect00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"const Point",0,&tolua_err)) ||
@@ -1678,7 +1678,7 @@ static int tolua_cocos2d_Point_isSegmentIntersect00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"const Point",0,&tolua_err)) ||
@@ -1714,7 +1714,7 @@ static int tolua_cocos2d_Point_getIntersectPoint00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const Point",0,&tolua_err)) ||
         (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"const Point",0,&tolua_err)) ||
@@ -1734,11 +1734,11 @@ static int tolua_cocos2d_Point_getIntersectPoint00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -1760,7 +1760,7 @@ static int tolua_cocos2d_Point_forAngle00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Point",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"CCPoint",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -1774,11 +1774,11 @@ static int tolua_cocos2d_Point_forAngle00(lua_State* tolua_S)
             {
 #ifdef __cplusplus
                 void* tolua_obj = Mtolua_new((Point)(tolua_ret));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
                 void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
-                tolua_pushusertype(tolua_S,tolua_obj,"Point");
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
                 tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
             }
@@ -2835,7 +2835,7 @@ static int tolua_Cocos2d_CCArray_indexOfObject00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'indexOfObject'", NULL);
 #endif
         {
-            unsigned int tolua_ret = (unsigned int)  self->indexOfObject(object);
+            unsigned int tolua_ret = (unsigned int)  self->getIndexOfObject(object);
             tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
         }
     }
@@ -2869,7 +2869,7 @@ static int tolua_Cocos2d_CCArray_objectAtIndex00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'objectAtIndex'", NULL);
 #endif
         {
-            Object* tolua_ret = (Object*)  self->objectAtIndex(index);
+            Object* tolua_ret = (Object*)  self->getObjectAtIndex(index);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
@@ -2903,7 +2903,7 @@ static int tolua_Cocos2d_CCArray_lastObject00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'lastObject'", NULL);
 #endif
         {
-            Object* tolua_ret = (Object*)  self->lastObject();
+            Object* tolua_ret = (Object*)  self->getLastObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
@@ -2937,7 +2937,7 @@ static int tolua_Cocos2d_CCArray_randomObject00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'randomObject'", NULL);
 #endif
         {
-            Object* tolua_ret = (Object*)  self->randomObject();
+            Object* tolua_ret = (Object*)  self->getRandomObject();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Object");
@@ -3555,6 +3555,680 @@ static int register_cocos2dx_deprecated_Array(lua_State* tolua_S)
 }
 
 
+static int tolua_Cocos2d_CCPointArray_initWithCapacity00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithCapacity'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->initWithCapacity(capacity);
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'initWithCapacity'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_CCPointArray_addControlPoint00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if ( !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addControlPoint'", NULL);
+#endif
+        Point controlPoint;
+        if (luaval_to_point(tolua_S, 2, &controlPoint))
+        {
+            self->addControlPoint(controlPoint);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'addControlPoint'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_insertControlPoint00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        Point* controlPoint = ((Point*)  tolua_tousertype(tolua_S,2,0));
+        unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'insertControlPoint'", NULL);
+#endif
+        {
+            self->insertControlPoint(*controlPoint,index);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'insertControlPoint'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_replaceControlPoint00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        Point* controlPoint = ((Point*)  tolua_tousertype(tolua_S,2,0));
+        unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'replaceControlPoint'", NULL);
+#endif
+        {
+            self->replaceControlPoint(*controlPoint,index);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'replaceControlPoint'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_getControlPointAtIndex00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getControlPointAtIndex'", NULL);
+#endif
+        {
+            Point tolua_ret = (Point)  self->getControlPointAtIndex(index);
+            {
+#ifdef __cplusplus
+                void* tolua_obj = Mtolua_new((Point)(tolua_ret));
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+                tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+                void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Point));
+                tolua_pushusertype(tolua_S,tolua_obj,"CCPoint");
+                tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+            }
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getControlPointAtIndex'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_removeControlPointAtIndex00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeControlPointAtIndex'", NULL);
+#endif
+        {
+            self->removeControlPointAtIndex(index);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeControlPointAtIndex'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_count00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'count'", NULL);
+#endif
+        {
+            unsigned int tolua_ret = (unsigned int)  self->count();
+            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'count'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_reverse00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverse'", NULL);
+#endif
+        {
+            PointArray* tolua_ret = (PointArray*)  self->reverse();
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPointArray");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'reverse'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_reverseInline00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseInline'", NULL);
+#endif
+        {
+            self->reverseInline();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'reverseInline'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_getControlPoints00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getControlPoints'", NULL);
+#endif
+        {
+            const std::vector<Point*>* tolua_ret = (const std::vector<Point*>*)  self->getControlPoints();
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"const std::vector<Point*>");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getControlPoints'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_setControlPoints00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"std::vector<Point*>",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        PointArray* self = (PointArray*)  tolua_tousertype(tolua_S,1,0);
+        std::vector<Point*>* controlPoints = ((std::vector<Point*>*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setControlPoints'", NULL);
+#endif
+        {
+            self->setControlPoints(controlPoints);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setControlPoints'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_CCPointArray_create00(lua_State* tolua_S)
+{
+    deprecatedClassTip("CCPointArray");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        unsigned int capacity = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+        {
+            PointArray* tolua_ret = (PointArray*)  PointArray::create(capacity);
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCPointArray");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int register_cocos2dx_deprecated_PointArray(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S, "CCPointArray");
+    tolua_cclass(tolua_S,"CCPointArray","CCPointArray","CCNode",NULL);
+    
+    tolua_beginmodule(tolua_S,"CCPointArray");
+        tolua_function(tolua_S,"initWithCapacity",tolua_Cocos2d_CCPointArray_initWithCapacity00);
+        tolua_function(tolua_S,"addControlPoint",tolua_Cocos2d_CCPointArray_addControlPoint00);
+        tolua_function(tolua_S,"insertControlPoint",tolua_Cocos2d_CCPointArray_insertControlPoint00);
+        tolua_function(tolua_S,"replaceControlPoint",tolua_Cocos2d_CCPointArray_replaceControlPoint00);
+        tolua_function(tolua_S,"getControlPointAtIndex",tolua_Cocos2d_CCPointArray_getControlPointAtIndex00);
+        tolua_function(tolua_S,"removeControlPointAtIndex",tolua_Cocos2d_CCPointArray_removeControlPointAtIndex00);
+        tolua_function(tolua_S,"count",tolua_Cocos2d_CCPointArray_count00);
+        tolua_function(tolua_S,"reverse",tolua_Cocos2d_CCPointArray_reverse00);
+        tolua_function(tolua_S,"reverseInline",tolua_Cocos2d_CCPointArray_reverseInline00);
+        tolua_function(tolua_S,"getControlPoints",tolua_Cocos2d_CCPointArray_getControlPoints00);
+        tolua_function(tolua_S,"setControlPoints",tolua_Cocos2d_CCPointArray_setControlPoints00);
+        tolua_function(tolua_S,"create",tolua_Cocos2d_CCPointArray_create00);
+    tolua_endmodule(tolua_S);
+    return 1;
+}
+
+
+static int tolua_Cocos2d_ccBezierConfig_new00(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"ccBezierConfig",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ccBezierConfig* tolua_ret = (ccBezierConfig*)  Mtolua_new((ccBezierConfig)());
+        tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccBezierConfig");
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_Cocos2d_ccBezierConfig_new00_local(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"ccBezierConfig",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        {
+            ccBezierConfig* tolua_ret = (ccBezierConfig*)  Mtolua_new((ccBezierConfig)());
+            tolua_pushusertype(tolua_S,(void*)tolua_ret,"ccBezierConfig");
+            tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_get_ccBezierConfig_endPosition(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endPosition'",NULL);
+#endif
+    tolua_pushusertype(tolua_S,(void*)&self->endPosition,"CCPoint");
+    return 1;
+}
+
+static int tolua_set_ccBezierConfig_endPosition(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endPosition'",NULL);
+    if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_istable(tolua_S, 2, 0, &tolua_err)))
+        tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+    
+    Point endPosition;
+    if (luaval_to_point(tolua_S, 2, &endPosition))
+    {
+        self->endPosition = endPosition;
+    }
+    return 0;
+}
+
+static int tolua_get_ccBezierConfig_controlPoint_1(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'controlPoint_1'",NULL);
+#endif
+    tolua_pushusertype(tolua_S,(void*)&self->controlPoint_1,"CCPoint");
+    return 1;
+}
+
+
+static int tolua_set_ccBezierConfig_controlPoint_1(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'controlPoint_1'",NULL);
+    if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_istable(tolua_S, 2, 0, &tolua_err)))
+        tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+    
+    Point controlPoint_1;
+    if (luaval_to_point(tolua_S, 2, &controlPoint_1))
+    {
+        self->controlPoint_1 = controlPoint_1;
+    }
+    return 0;
+}
+
+
+static int tolua_get_ccBezierConfig_controlPoint_2(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'controlPoint_2'",NULL);
+#endif
+    tolua_pushusertype(tolua_S,(void*)&self->controlPoint_2,"CCPoint");
+    return 1;
+}
+
+
+static int tolua_set_ccBezierConfig_controlPoint_2(lua_State* tolua_S)
+{
+    deprecatedClassTip("ccBezierConfig");
+    
+    ccBezierConfig* self = (ccBezierConfig*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'controlPoint_2'",NULL);
+    if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_istable(tolua_S, 2, 0, &tolua_err)))
+        tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+    
+    Point controlPoint_2;
+    if (luaval_to_point(tolua_S, 2, &controlPoint_2))
+    {
+        self->controlPoint_2 = controlPoint_2;
+    }
+    return 0;
+}
+
+static int tolua_collect_ccBezierConfig (lua_State* tolua_S)
+{
+    ccBezierConfig* self = (ccBezierConfig*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int register_cocos2dx_deprecated_ccBezierConfig(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S, "ccBezierConfig");
+    tolua_cclass(tolua_S,"ccBezierConfig","ccBezierConfig","",tolua_collect_ccBezierConfig);
+    
+    tolua_beginmodule(tolua_S,"ccBezierConfig");
+    tolua_function(tolua_S,"new",tolua_Cocos2d_ccBezierConfig_new00);
+    tolua_function(tolua_S,"new_local",tolua_Cocos2d_ccBezierConfig_new00_local);
+    tolua_function(tolua_S,".call",tolua_Cocos2d_ccBezierConfig_new00_local);
+    tolua_variable(tolua_S,"endPosition",tolua_get_ccBezierConfig_endPosition,tolua_set_ccBezierConfig_endPosition);
+    tolua_variable(tolua_S,"controlPoint_1",tolua_get_ccBezierConfig_controlPoint_1,tolua_set_ccBezierConfig_controlPoint_1);
+    tolua_variable(tolua_S,"controlPoint_2",tolua_get_ccBezierConfig_controlPoint_2,tolua_set_ccBezierConfig_controlPoint_2);
+    tolua_endmodule(tolua_S);
+    
+    return 1;
+}
+
+static int tolua_cocos2d_kmGLPushMatrix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isnoobj(tolua_S,1,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        kmGLPushMatrix();
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'kmGLPushMatrix'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_kmGLTranslatef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        float x = ((float)  tolua_tonumber(tolua_S,1,0));
+        float y = ((float)  tolua_tonumber(tolua_S,2,0));
+        float z = ((float)  tolua_tonumber(tolua_S,3,0));
+        {
+            kmGLTranslatef(x,y,z);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'kmGLTranslatef'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_kmGLPopMatrix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isnoobj(tolua_S,1,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        {
+            kmGLPopMatrix();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'kmGLPopMatrix'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int register_all_cocos2dx_deprecated(lua_State* tolua_S)
 {
     tolua_open(tolua_S);
@@ -3566,6 +4240,11 @@ int register_all_cocos2dx_deprecated(lua_State* tolua_S)
     register_cocos2dx_deprecated_Rect(tolua_S);
     register_cocos2dx_deprecated_Size(tolua_S);
     register_cocos2dx_deprecated_Array(tolua_S);
+    register_cocos2dx_deprecated_PointArray(tolua_S);
+    register_cocos2dx_deprecated_ccBezierConfig(tolua_S);
+    tolua_function(tolua_S,"kmGLPushMatrix",tolua_cocos2d_kmGLPushMatrix00);
+    tolua_function(tolua_S,"kmGLTranslatef",tolua_cocos2d_kmGLTranslatef00);
+    tolua_function(tolua_S,"kmGLPopMatrix",tolua_cocos2d_kmGLPopMatrix00);
     tolua_endmodule(tolua_S);
     
     return 0;
@@ -3578,7 +4257,7 @@ static int tolua_cocos2dx_Node_setPosition_deprecated(lua_State* tolua_S)
     tolua_Error tolua_err;
     if (
         !tolua_isusertype(tolua_S,1,"Node",0,&tolua_err) ||
-        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"Point",0,&tolua_err)) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -3785,7 +4464,6 @@ tolua_lerror:
     return lua_cocos2dx_Animation_createWithSpriteFrames(tolua_S);
 }
 
-
 static int tolua_cocos2d_Animation_createWithSpriteFrames_deprecated01(lua_State* tolua_S)
 {
     tolua_Error tolua_err;
@@ -3825,6 +4503,451 @@ static void extendAnimationDeprecated(lua_State* tolua_S)
     }
 }
 
+static int tolua_cocos2d_Sequence_createWithTwoActions(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"Sequence",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        FiniteTimeAction* pActionOne = ((FiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
+        FiniteTimeAction* pActionTwo = ((FiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
+        {
+            Sequence* tolua_ret = (Sequence*)  Sequence::createWithTwoActions(pActionOne,pActionTwo);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Sequence");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'createWithTwoActions'.",&tolua_err);
+    return 0;
+#endif
+}
+
+extern int tolua_cocos2d_Sequence_create(lua_State* tolua_S);
+static int tolua_Cocos2d_Sequence_create_deprecated00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"Sequence",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"CCArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        Array* actions = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        {
+            Sequence* tolua_ret = (Sequence*)  Sequence::create(actions);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Sequence");
+        }
+    }
+    return 1;
+tolua_lerror:
+    return tolua_cocos2d_Sequence_create(tolua_S);
+}
+
+static int extendSequenceDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"Sequence");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "createWithTwoActions",tolua_cocos2d_Sequence_createWithTwoActions);
+        tolua_function(tolua_S, "create", tolua_Cocos2d_Sequence_create_deprecated00);
+    }
+    
+    return 1;
+}
+
+extern int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S);
+
+static int tolua_cocos2d_CardinalSplineBy_create_deprecated(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CardinalSplineBy",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,5,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        float duration = ((float)  tolua_tonumber(tolua_S,2,0));
+        PointArray* points = ((PointArray*)  tolua_tousertype(tolua_S,3,0));
+        float tension = ((float)  tolua_tonumber(tolua_S,4,0));
+        {
+            CardinalSplineBy* tolua_ret = (CardinalSplineBy*)  CardinalSplineBy::create(duration,points,tension);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CardinalSplineBy");
+        }
+    }
+    return 1;
+tolua_lerror:
+    return lua_cocos2d_CardinalSplineBy_create(tolua_S);
+}
+
+static int extendCardinalSplineByDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"CardinalSplineBy");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_cocos2d_CardinalSplineBy_create_deprecated);
+        lua_rawset(tolua_S,-3);
+    }
+    
+    return 1;
+}
+
+
+extern int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S);
+static int tolua_cocos2d_CCDrawPrimitives_ccDrawCardinalSpline_deprecate00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        PointArray* config = ((PointArray*)  tolua_tousertype(tolua_S,1,0));
+        float tension = ((float)  tolua_tonumber(tolua_S,2,0));
+        unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+        DrawPrimitives::drawCardinalSpline(config,tension,segments);
+    }
+    return 0;
+tolua_lerror:
+    return tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(tolua_S);
+}
+
+extern int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S);
+static int tolua_cocos2d_CCDrawPrimitives_ccDrawCatmullRom_deprecated00(lua_State* tolua_S)
+{
+    
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        PointArray* arrayOfControlPoints = ((PointArray*)  tolua_tousertype(tolua_S,1,0));
+        unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
+        DrawPrimitives::drawCatmullRom(arrayOfControlPoints,segments);
+    }
+    return 0;
+tolua_lerror:
+    return tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(tolua_S);
+}
+
+static int extendDrawPrimitivesDeprecated(lua_State* tolua_S)
+{
+    lua_getglobal(tolua_S, "_G");
+    if (lua_istable(tolua_S,-1))//stack:...,_G,
+    {
+        lua_pushstring(tolua_S,"gl");//stack:_G,keyValue
+        lua_gettable(tolua_S, -2);//stack:_G,glMoule
+        if (lua_istable(tolua_S,-1))
+        {
+            lua_pushstring(tolua_S, "DrawPrimitives");//stack:_G,glMoudle,keyValue
+            lua_gettable(tolua_S, -2);//statck:_G,glMoudle,gl.DrawPrimitives
+            if (lua_istable(tolua_S,-1))//statck:_G,glMoudle,gl.DrawPrimitives
+            {
+                lua_pushstring(tolua_S,"ccDrawCardinalSpline");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
+                lua_pushcfunction(tolua_S,tolua_cocos2d_CCDrawPrimitives_ccDrawCardinalSpline_deprecate00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
+                lua_rawset(tolua_S,-3);//statck:_G,glMoudle,gl.DrawPrimitives
+                
+                lua_pushstring(tolua_S,"ccDrawCatmullRom");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
+                lua_pushcfunction(tolua_S,tolua_cocos2d_CCDrawPrimitives_ccDrawCatmullRom_deprecated00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
+                lua_rawset(tolua_S,-3);//statck:_G,glMoudle,gl.DrawPrimitives
+            }
+            lua_pop(tolua_S, 1);//statck:_G,glMoudle
+        }
+        lua_pop(tolua_S, 1);//statck:_G
+    }
+    lua_pop(tolua_S, 1);//statck:...
+    
+    return 1;
+}
+
+extern int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S);
+static int tolua_cocos2d_CatmullRomBy_create_deprecated00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CatmullRomBy",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        float dt = ((float)  tolua_tonumber(tolua_S,2,0));
+        PointArray* points = ((PointArray*)  tolua_tousertype(tolua_S,3,0));
+        {
+            CatmullRomBy* tolua_ret = (CatmullRomBy*)  CatmullRomBy::create(dt,points);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CatmullRomBy");
+        }
+    }
+    return 1;
+tolua_lerror:
+    return tolua_cocos2d_CatmullRomBy_create(tolua_S);
+}
+
+static int extendCatmullRomByDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"CatmullRomBy");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomBy_create_deprecated00);
+        lua_rawset(tolua_S,-3);
+    }
+    return 1;
+}
+
+extern int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S);
+static int tolua_cocos2d_CatmullRomTo_create_deprecated00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"CatmullRomTo",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"CCPointArray",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        float dt = ((float)  tolua_tonumber(tolua_S,2,0));
+        PointArray* points = ((PointArray*)  tolua_tousertype(tolua_S,3,0));
+        {
+            CatmullRomTo* tolua_ret = (CatmullRomTo*)  CatmullRomTo::create(dt,points);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CatmullRomTo");
+        }
+    }
+    return 1;
+tolua_lerror:
+    return tolua_cocos2d_CatmullRomTo_create(tolua_S);
+}
+
+static int extendCatmullRomToDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"CatmullRomTo");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_cocos2d_CatmullRomTo_create_deprecated00);
+        lua_rawset(tolua_S,-3);
+    }
+    return 1;
+}
+
+extern int tolua_cocos2d_BezierBy_create(lua_State* tolua_S);
+static int tolua_Cocos2d_BezierBy_create_deprecated00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"BezierBy",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"ccBezierConfig",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        float t = ((float)  tolua_tonumber(tolua_S,2,0));
+        ccBezierConfig c = *((ccBezierConfig*)  tolua_tousertype(tolua_S,3,0));
+        {
+            BezierBy* tolua_ret = (BezierBy*)  BezierBy::create(t,c);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"BezierBy");
+        }
+    }
+    return 1;
+
+tolua_lerror:
+    return tolua_cocos2d_BezierBy_create(tolua_S);
+}
+
+static int extendBezierByDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"BezierBy");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_Cocos2d_BezierBy_create_deprecated00);
+        lua_rawset(tolua_S,-3);
+    }
+    return 1;
+}
+
+
+extern int tolua_cocos2d_BezierTo_create(lua_State* tolua_S);
+static int tolua_Cocos2d_BezierTo_create_deprecated00(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"BezierTo",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"ccBezierConfig",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        float t = ((float)  tolua_tonumber(tolua_S,2,0));
+        ccBezierConfig c = *((ccBezierConfig*)  tolua_tousertype(tolua_S,3,0));
+        {
+            BezierTo* tolua_ret = (BezierTo*)  BezierTo::create(t,c);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"BezierTo");
+        }
+    }
+    return 1;
+tolua_lerror:
+    return tolua_cocos2d_BezierTo_create(tolua_S);
+}
+
+static int extendBezierToDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"BezierTo");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_Cocos2d_BezierTo_create_deprecated00);
+        lua_rawset(tolua_S,-3);
+    }
+    return 1;
+}
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+extern int tolua_bnd_cast(lua_State* tolua_S);
+#ifdef __cplusplus
+}
+#endif
+
+static int tolua_bnd_cast_deprecated00(lua_State* tolua_S)
+{
+    void* v = nullptr;
+    std::string strValue = "";
+    strValue = tolua_tostring(tolua_S,2,NULL);
+    int pos = strValue.find("CC");
+    if (pos == 0)
+    {
+        strValue = strValue.substr(2);
+        if (lua_islightuserdata(tolua_S, 1)) {
+            v = tolua_touserdata(tolua_S, 1, NULL);
+        } else {
+            v = tolua_tousertype(tolua_S, 1, 0);
+        };
+        if (v && !strValue.empty())
+            tolua_pushusertype(tolua_S,v,strValue.c_str());
+        else
+            lua_pushnil(tolua_S);
+        return 1;        
+    }
+    else
+    {
+        return tolua_bnd_cast(tolua_S);
+    }
+}
+
+static int extendToluaDeprecated(lua_State* tolua_S)
+{
+    lua_getglobal(tolua_S, "_G");
+    if (lua_istable(tolua_S,-1))//stack:...,_G,
+    {
+        lua_pushstring(tolua_S,"tolua");//stack:_G,keyValue
+        lua_gettable(tolua_S, -2);//stack:_G,toluaModule
+        if (lua_istable(tolua_S,-1))
+        {
+            tolua_function(tolua_S, "cast", tolua_bnd_cast_deprecated00);
+        }
+        lua_pop(tolua_S, 1);//statck:_G
+    }
+    lua_pop(tolua_S, 1);//statck:...
+    
+    return 1;
+}
+
+static int tolua_cocos2d_Spawn_createWithTwoActions_deprcated00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertable(tolua_S,1,"Spawn",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        FiniteTimeAction* pAction1 = ((FiniteTimeAction*)  tolua_tousertype(tolua_S,2,0));
+        FiniteTimeAction* pAction2 = ((FiniteTimeAction*)  tolua_tousertype(tolua_S,3,0));
+        {
+            Spawn* tolua_ret = (Spawn*)  Spawn::createWithTwoActions(pAction1,pAction2);
+            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Spawn");
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'createWithTwoActions'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int extendSpawnDeprecated(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"Spawn");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "createWithTwoActions", tolua_cocos2d_Spawn_createWithTwoActions_deprcated00);
+    }
+    
+    return 1;
+}
 
 int register_all_cocos2dx_manual_deprecated(lua_State* tolua_S)
 {
@@ -3834,5 +4957,15 @@ int register_all_cocos2dx_manual_deprecated(lua_State* tolua_S)
     extendNodeDeprecated(tolua_S);
     extendSpriteFrameDeprecated(tolua_S);
     extendAnimationDeprecated(tolua_S);
+    extendSequenceDeprecated(tolua_S);
+    extendCardinalSplineByDeprecated(tolua_S);
+    extendDrawPrimitivesDeprecated(tolua_S);
+    extendCatmullRomByDeprecated(tolua_S);
+    extendCatmullRomToDeprecated(tolua_S);
+    extendBezierByDeprecated(tolua_S);
+    extendBezierToDeprecated(tolua_S);
+    extendToluaDeprecated(tolua_S);
+    extendSpawnDeprecated(tolua_S);
+    
     return 0;
 }
