@@ -147,8 +147,16 @@ const CCSize& UIScrollView::getInerContainerSize() const
 
 bool UIScrollView::addChild(UIWidget* widget)
 {
-    return m_pInnerContainer->addChild(widget);
-    widget->setVisible(checkChildVisibleInParent(this, widget));
+	bool value = false;
+
+	if (m_pInnerContainer->addChild(widget))
+	{
+		value = true;
+		widget->setVisible(checkChildVisibleInParent(this, widget));
+	}
+
+    return value;
+    
 }
 
 void UIScrollView::removeAllChildrenAndCleanUp(bool cleanup)
