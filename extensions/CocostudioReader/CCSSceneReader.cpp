@@ -254,7 +254,7 @@ NS_CC_EXT_BEGIN
         }
         
         return NULL;
-    }
+    }   
 
 	CCNode* CCSSceneReader::createObject0250(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
     {
