@@ -1,6 +1,6 @@
 TARGET = liblua.so
 
-INCLUDES += -I.. -I../lua -I../tolua \
+INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../cocos2dx_support/generated \
         -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.o \
@@ -49,7 +49,13 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
-          ../cocos2dx_support/LuaScriptHandlerMgr.cpp
+          ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
+          ../cocos2dx_support/LuaBasicConversions.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_auto.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_extension_auto.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_deprecated.cpp
 
 include ../../../cocos2dx/proj.linux/cocos2dx.mk
 

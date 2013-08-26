@@ -46,6 +46,12 @@ extern "C" {
 #include "LuaOpengl.h"
 #include "LuaScrollView.h"
 #include "LuaScriptHandlerMgr.h"
+#include "lua_cocos2dx_auto.hpp"
+#include "lua_cocos2dx_extension_auto.hpp"
+#include "lua_cocos2dx_manual.hpp"
+#include "LuaBasicConversions.h"
+#include "lua_cocos2dx_extension_manual.h"
+#include "lua_cocos2dx_deprecated.h"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -113,7 +119,7 @@ bool LuaStack::init(void)
 {
     _state = lua_open();
     luaL_openlibs(_state);
-    tolua_Cocos2d_open(_state);
+//    tolua_Cocos2d_open(_state);
     toluafix_open(_state);
 
     // Register our version of the global "print" function
@@ -122,16 +128,23 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
-
+    g_luaType.clear();
+    register_all_cocos2dx(_state);
+    register_all_cocos2dx_extension(_state);
+    register_all_cocos2dx_deprecated(_state);
+    register_cocos2dx_extension_CCBProxy(_state);
+    tolua_opengl_open(_state);
+    register_all_cocos2dx_manual(_state);
+    register_all_cocos2dx_extension_manual(_state);
+    register_all_cocos2dx_manual_deprecated(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
-    tolua_extensions_ccb_open(_state);
+//  tolua_extensions_ccb_open(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     tolua_web_socket_open(_state);
 #endif
-    tolua_opengl_open(_state);
-    tolua_scroll_view_open(_state);
+//  tolua_scroll_view_open(_state);
     tolua_script_handler_mgr_open(_state);
     
     // add cocos2dx loader
