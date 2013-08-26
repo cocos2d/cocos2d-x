@@ -232,4 +232,17 @@ bool CCArmatureDataManager::isAutoLoadSpriteFile()
 	return m_bAutoLoadSpriteFile;
 }
 
+CCDictionary *CCArmatureDataManager::getArmatureDatas() const
+{
+	return m_pArmarureDatas;
+}
+CCDictionary *CCArmatureDataManager::getAnimationDatas() const
+{
+	return m_pAnimationDatas;
+}
+CCDictionary *CCArmatureDataManager::getTextureDatas() const
+{
+	return m_pTextureDatas;
+}
+
 NS_CC_EXT_END

@@ -148,6 +148,11 @@ public:
 	 *	@brief	Juge whether or not need auto load sprite file
      */
 	bool isAutoLoadSpriteFile();
+
+
+	CCDictionary *getArmatureDatas() const;
+	CCDictionary *getAnimationDatas() const;
+	CCDictionary *getTextureDatas() const;
 private:
     /**
 	 *	@brief	save amature datas
