@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#ff000000"
+	android:layout_marginBottom="35dip"
+	android:layout_marginLeft="15dip" android:layout_marginRight="15dip"
+	android:layout_marginTop="35dip" android:gravity="center">
+	<RelativeLayout 
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="@drawable/upomp_bypay_bg">
+		<ImageView android:id="@+id/iv_logo"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/upomp_bypay_loading_logo"
+			android:layout_centerHorizontal="true" android:layout_above="@+id/rl_hint"
+			android:layout_marginBottom="20dip" />
+		<RelativeLayout android:id="@+id/rl_hint"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_above="@+id/rl_loading" android:gravity="center_horizontal"
+			android:layout_marginBottom="20dip">
+			<TextView android:id="@+id/tv_hint1"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/upomp_bypay_splash_hint1" android:textColor="#123860"
+				android:textSize="18sp" />
+
+			<TextView android:id="@+id/tv_hint2"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_toRightOf="@+id/tv_hint1" android:text="@string/upomp_bypay_splash_hint2"
+				android:textColor="#123860" android:textSize="18sp"
+				android:layout_marginLeft="40dip" />
+		</RelativeLayout>
+
+		<RelativeLayout android:id="@+id/rl_loading"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerVertical="true" android:layout_centerHorizontal="true">
+			<ImageView android:id="@+id/iv_loading_bg"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_loading_bg" />
+			<ImageView android:id="@+id/iv_loading_tag"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_loading_tag" />
+		</RelativeLayout>
+		<RelativeLayout android:id="@+id/rl_bottom"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:layout_marginBottom="10dip">
+			<TextView android:id="@+id/tv_version"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true" android:text="@string/upomp_bypay_splash_version"
+				android:textColor="#123860" android:textSize="14sp" />
+			<TextView android:id="@+id/tv_inc"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true" android:layout_below="@id/tv_version"
+				android:layout_marginTop="10dip" android:text="@string/upomp_bypay_splash_info"
+				android:textColor="#123860" android:singleLine="true" />
+				<TextView android:id="@+id/tv_support"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true" android:layout_below="@id/tv_inc"
+				android:layout_marginTop="10dip" android:text="@string/upomp_bypay_splash_cn"
+				android:textColor="#123860" />
+				
+				
+			
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

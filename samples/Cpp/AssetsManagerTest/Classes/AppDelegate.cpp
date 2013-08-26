@@ -32,7 +32,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
     director->setOpenGLView(EGLView::getInstance());
 
     // turn on display FPS
@@ -47,8 +47,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
     
-    Scene *scene = Scene::create();
-    UpdateLayer *updateLayer = new UpdateLayer();
+    auto scene = Scene::create();
+    auto updateLayer = new UpdateLayer();
     scene->addChild(updateLayer);
     updateLayer->release();
     
@@ -132,7 +132,7 @@ void UpdateLayer::enter(cocos2d::Object *pSender)
         FileUtils::getInstance()->setSearchPaths(searchPaths);
     }
     
-    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
 }
@@ -143,7 +143,7 @@ bool UpdateLayer::init()
     
     createDownloadedDir();
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
 
     pItemReset = MenuItemFont::create("reset", CC_CALLBACK_1(UpdateLayer::reset,this));
     pItemEnter = MenuItemFont::create("enter", CC_CALLBACK_1(UpdateLayer::enter, this));
@@ -153,7 +153,7 @@ bool UpdateLayer::init()
     pItemReset->setPosition(Point(size.width/2, size.height/2));
     pItemUpdate->setPosition(Point(size.width/2, size.height/2 - 50));
     
-    Menu *menu = Menu::create(pItemUpdate, pItemEnter, pItemReset, NULL);
+    auto menu = Menu::create(pItemUpdate, pItemEnter, pItemReset, NULL);
     menu->setPosition(Point(0,0));
     addChild(menu);
     

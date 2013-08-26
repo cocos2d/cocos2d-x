@@ -21,29 +21,29 @@ void SpriteEase::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseIn::create(move->clone(), 2.5f);
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseIn::create(move->clone(), 2.5f);
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseOut::create(move->clone(), 2.5f);
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseOut::create(move->clone(), 2.5f);
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
     
-    Action *a2 = _grossini->runAction(RepeatForever::create(seq1));
+    auto a2 = _grossini->runAction(RepeatForever::create(seq1));
     a2->setTag(1);
 
-    Action *a1 = _tamara->runAction(RepeatForever::create(seq2));
+    auto a1 = _tamara->runAction(RepeatForever::create(seq2));
     a1->setTag(1);
 
-    Action *a = _kathia->runAction(RepeatForever::create(seq3));
+    auto a = _kathia->runAction(RepeatForever::create(seq3));
     a->setTag(1);
 
     schedule(schedule_selector(SpriteEase::testStopAction), 6.25f);
@@ -73,23 +73,23 @@ void SpriteEaseInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    ActionInterval*  move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
 //    id move_back = move->reverse();
     
-    ActionInterval*  move_ease_inout1 = EaseInOut::create(move->clone(), 0.65f);
-    ActionInterval*  move_ease_inout_back1 = move_ease_inout1->reverse();
+    auto move_ease_inout1 = EaseInOut::create(move->clone(), 0.65f);
+    auto move_ease_inout_back1 = move_ease_inout1->reverse();
     
-    ActionInterval*  move_ease_inout2 = EaseInOut::create(move->clone(), 1.35f);
-    ActionInterval*  move_ease_inout_back2 = move_ease_inout2->reverse();
+    auto move_ease_inout2 = EaseInOut::create(move->clone(), 1.35f);
+    auto move_ease_inout_back2 = move_ease_inout2->reverse();
 
-    ActionInterval*  move_ease_inout3 = EaseInOut::create(move->clone(), 1.0f);
-    ActionInterval*  move_ease_inout_back3 = move_ease_inout3->reverse();
+    auto move_ease_inout3 = EaseInOut::create(move->clone(), 1.0f);
+    auto move_ease_inout_back3 = move_ease_inout3->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
 
-    Sequence*  seq1 = Sequence::create( move_ease_inout1, delay, move_ease_inout_back1, delay->clone(), NULL);
-    Sequence*  seq2 = Sequence::create( move_ease_inout2, delay->clone(), move_ease_inout_back2, delay->clone(), NULL);
-    Sequence*  seq3 = Sequence::create( move_ease_inout3, delay->clone(), move_ease_inout_back3, delay->clone(), NULL);
+    auto seq1 = Sequence::create( move_ease_inout1, delay, move_ease_inout_back1, delay->clone(), NULL);
+    auto seq2 = Sequence::create( move_ease_inout2, delay->clone(), move_ease_inout_back2, delay->clone(), NULL);
+    auto seq3 = Sequence::create( move_ease_inout3, delay->clone(), move_ease_inout_back3, delay->clone(), NULL);
         
     _tamara->runAction(RepeatForever::create(seq1));
     _kathia->runAction(RepeatForever::create(seq2));
@@ -112,20 +112,20 @@ void SpriteEaseExponential::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseExponentialIn::create(move->clone());
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseExponentialIn::create(move->clone());
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseExponentialOut::create(move->clone());
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseExponentialOut::create(move->clone());
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
 
     _grossini->runAction( RepeatForever::create(seq1));
@@ -148,16 +148,16 @@ void SpriteEaseExponentialInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease = EaseExponentialInOut::create(move->clone() );
-    ActionInterval* move_ease_back = move_ease->reverse();    //--> reverse()
+    auto move_ease = EaseExponentialInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();    //--> reverse()
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create( move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create( move_ease, delay, move_ease_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create( move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create( move_ease, delay, move_ease_back, delay->clone(), NULL);
     
     this->positionForTwo();
     
@@ -181,20 +181,20 @@ void SpriteEaseSine::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseSineIn::create(move->clone() );
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseSineIn::create(move->clone() );
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseSineOut::create(move->clone() );
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseSineOut::create(move->clone() );
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
         
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
     
     _grossini->runAction( RepeatForever::create(seq1));
@@ -218,16 +218,16 @@ void SpriteEaseSineInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130,0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease = EaseSineInOut::create(move->clone() );
-    ActionInterval* move_ease_back = move_ease->reverse();
+    auto move_ease = EaseSineInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
 
     this->positionForTwo();
 
@@ -250,20 +250,20 @@ void SpriteEaseElastic::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseElasticIn::create(move->clone() );
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseElasticIn::create(move->clone() );
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseElasticOut::create(move->clone() );
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseElasticOut::create(move->clone() );
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
 
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
     _grossini->runAction( RepeatForever::create(seq1));
     _tamara->runAction( RepeatForever::create(seq2));
@@ -286,22 +286,22 @@ void SpriteEaseElasticInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
 
-    ActionInterval* move_ease_inout1 = EaseElasticInOut::create(move->clone(), 0.3f);
-    ActionInterval* move_ease_inout_back1 = move_ease_inout1->reverse();
+    auto move_ease_inout1 = EaseElasticInOut::create(move->clone(), 0.3f);
+    auto move_ease_inout_back1 = move_ease_inout1->reverse();
     
-    ActionInterval* move_ease_inout2 = EaseElasticInOut::create(move->clone(), 0.45f);
-    ActionInterval* move_ease_inout_back2 = move_ease_inout2->reverse();
+    auto move_ease_inout2 = EaseElasticInOut::create(move->clone(), 0.45f);
+    auto move_ease_inout_back2 = move_ease_inout2->reverse();
     
-    ActionInterval* move_ease_inout3 = EaseElasticInOut::create(move->clone(), 0.6f);
-    ActionInterval* move_ease_inout_back3 = move_ease_inout3->reverse();
+    auto move_ease_inout3 = EaseElasticInOut::create(move->clone(), 0.6f);
+    auto move_ease_inout_back3 = move_ease_inout3->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
         
-    Sequence* seq1 = Sequence::create(move_ease_inout1, delay, move_ease_inout_back1, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_inout2, delay->clone(), move_ease_inout_back2, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_inout3, delay->clone(), move_ease_inout_back3, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move_ease_inout1, delay, move_ease_inout_back1, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_inout2, delay->clone(), move_ease_inout_back2, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_inout3, delay->clone(), move_ease_inout_back3, delay->clone(), NULL);
     
     _tamara->runAction( RepeatForever::create(seq1));
     _kathia->runAction( RepeatForever::create(seq2));
@@ -325,20 +325,20 @@ void SpriteEaseBounce::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseBounceIn::create(move->clone() );
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseBounceIn::create(move->clone() );
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseBounceOut::create(move->clone() );
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseBounceOut::create(move->clone() );
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
     _grossini->runAction( RepeatForever::create(seq1));
     _tamara->runAction( RepeatForever::create(seq2));
@@ -362,16 +362,16 @@ void SpriteEaseBounceInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
 
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease = EaseBounceInOut::create(move->clone() );
-    ActionInterval* move_ease_back = move_ease->reverse();
+    auto move_ease = EaseBounceInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
     
     this->positionForTwo();
     
@@ -395,20 +395,20 @@ void SpriteEaseBack::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease_in = EaseBackIn::create(move->clone());
-    ActionInterval* move_ease_in_back = move_ease_in->reverse();
+    auto move_ease_in = EaseBackIn::create(move->clone());
+    auto move_ease_in_back = move_ease_in->reverse();
     
-    ActionInterval* move_ease_out = EaseBackOut::create( move->clone());
-    ActionInterval* move_ease_out_back = move_ease_out->reverse();
+    auto move_ease_out = EaseBackOut::create( move->clone());
+    auto move_ease_out_back = move_ease_out->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
-    Sequence* seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease_in, delay->clone(), move_ease_in_back, delay->clone(), NULL);
+    auto seq3 = Sequence::create(move_ease_out, delay->clone(), move_ease_out_back, delay->clone(), NULL);
     
     _grossini->runAction(RepeatForever::create(seq1));
     _tamara->runAction(RepeatForever::create(seq2));
@@ -431,16 +431,16 @@ void SpriteEaseBackInOut::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    ActionInterval* move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
-    ActionInterval* move_back = move->reverse();
+    auto move = MoveBy::create(3, Point(VisibleRect::right().x-130, 0));
+    auto move_back = move->reverse();
     
-    ActionInterval* move_ease = EaseBackInOut::create(move->clone() );
-    ActionInterval* move_ease_back = move_ease->reverse();
+    auto move_ease = EaseBackInOut::create(move->clone() );
+    auto move_ease_back = move_ease->reverse();
     
-    DelayTime *delay = DelayTime::create(0.25f);
+    auto delay = DelayTime::create(0.25f);
     
-    Sequence* seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
-    Sequence* seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
+    auto seq1 = Sequence::create(move, delay, move_back, delay->clone(), NULL);
+    auto seq2 = Sequence::create(move_ease, delay->clone(), move_ease_back, delay->clone(), NULL);
     
     this->positionForTwo();
     
@@ -464,22 +464,22 @@ void SpeedTest::onEnter()
 {
     EaseSpriteDemo::onEnter();
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // rotate and jump
-    ActionInterval *jump1 = JumpBy::create(4, Point(-s.width+80, 0), 100, 4);
-    ActionInterval *jump2 = jump1->reverse();
-    ActionInterval *rot1 = RotateBy::create(4, 360*2);
-    ActionInterval *rot2 = rot1->reverse();
+    auto jump1 = JumpBy::create(4, Point(-s.width+80, 0), 100, 4);
+    auto jump2 = jump1->reverse();
+    auto rot1 = RotateBy::create(4, 360*2);
+    auto rot2 = rot1->reverse();
     
-    Sequence* seq3_1 = Sequence::create(jump2, jump1, NULL);
-    Sequence* seq3_2 = Sequence::create( rot1, rot2, NULL);
-    Spawn* spawn = Spawn::create(seq3_1, seq3_2, NULL);
-    Speed* action = Speed::create(RepeatForever::create(spawn), 1.0f);
+    auto seq3_1 = Sequence::create(jump2, jump1, NULL);
+    auto seq3_2 = Sequence::create( rot1, rot2, NULL);
+    auto spawn = Spawn::create(seq3_1, seq3_2, NULL);
+    auto action = Speed::create(RepeatForever::create(spawn), 1.0f);
     action->setTag(kTagAction1);
     
-    Action* action2 = action->clone();
-    Action* action3 = action->clone();
+    auto action2 = action->clone();
+    auto action3 = action->clone();
 
     action2->setTag(kTagAction1);
     action3->setTag(kTagAction1);
@@ -493,9 +493,9 @@ void SpeedTest::onEnter()
 
 void SpeedTest::altertime(float dt)
 {    
-    Speed* action1 = static_cast<Speed*>(_grossini->getActionByTag(kTagAction1));
-    Speed* action2 = static_cast<Speed*>(_tamara->getActionByTag(kTagAction1));
-    Speed* action3 = static_cast<Speed*>(_kathia->getActionByTag(kTagAction1));
+    auto action1 = static_cast<Speed*>(_grossini->getActionByTag(kTagAction1));
+    auto action2 = static_cast<Speed*>(_tamara->getActionByTag(kTagAction1));
+    auto action3 = static_cast<Speed*>(_kathia->getActionByTag(kTagAction1));
     
     action1->setSpeed( CCRANDOM_MINUS1_1() * 2 );
     action2->setSpeed( CCRANDOM_MINUS1_1() * 2 );
@@ -552,7 +552,7 @@ Layer* nextEaseAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createEaseLayer(sceneIdx);
+    auto layer = createEaseLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -565,7 +565,7 @@ Layer* backEaseAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* layer = createEaseLayer(sceneIdx);
+    auto layer = createEaseLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -573,7 +573,7 @@ Layer* backEaseAction()
 
 Layer* restartEaseAction()
 {
-    Layer* layer = createEaseLayer(sceneIdx);
+    auto layer = createEaseLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -624,7 +624,7 @@ void EaseSpriteDemo::onEnter()
 
 void EaseSpriteDemo::restartCallback(Object* sender)
 {
-    Scene* s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild(restartEaseAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -633,7 +633,7 @@ void EaseSpriteDemo::restartCallback(Object* sender)
 
 void EaseSpriteDemo::nextCallback(Object* sender)
 {
-    Scene* s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( nextEaseAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -641,7 +641,7 @@ void EaseSpriteDemo::nextCallback(Object* sender)
 
 void EaseSpriteDemo::backCallback(Object* sender)
 {
-    Scene* s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new ActionsEaseTestScene();//CCScene::create();
     s->addChild( backEaseAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -649,7 +649,7 @@ void EaseSpriteDemo::backCallback(Object* sender)
 
 void ActionsEaseTestScene::runThisTest()
 {
-    Layer* layer = nextEaseAction();
+    auto layer = nextEaseAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

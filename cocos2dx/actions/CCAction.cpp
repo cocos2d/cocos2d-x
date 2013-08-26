@@ -43,7 +43,7 @@ Action::Action()
 
 Action::~Action()
 {
-    CCLOGINFO("cocos2d: deallocing");
+    CCLOGINFO("deallocing Action: %p - tag: %i", this, _tag);
 }
 
 const char* Action::description() const

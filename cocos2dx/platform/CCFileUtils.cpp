@@ -177,6 +177,7 @@ public:
         {
             _state = SAX_ARRAY;
             _array = new Array();
+            _array->init();
             if (_resultType == SAX_RESULT_ARRAY && _rootArray == NULL)
             {
                 _rootArray = _array;
@@ -636,7 +637,7 @@ std::string FileUtils::fullPathForFilename(const char* filename)
         for (auto resOrderIter = _searchResolutionsOrderArray.begin();
              resOrderIter != _searchResolutionsOrderArray.end(); ++resOrderIter) {
             
-//            CCLOG("\n\nSEARCHING: %s, %s, %s", newFilename.c_str(), resOrderIter->c_str(), searchPathsIter->c_str());
+//            CCLOG("SEARCHING: %s\n", std::string(*searchPathsIter + *resOrderIter + newFilename).c_str() );
             
             fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
             
@@ -644,7 +645,7 @@ std::string FileUtils::fullPathForFilename(const char* filename)
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
-//                CCLOG("Returning path: %s", fullpath.c_str());
+//                CCLOG("Returning path: %s\n", fullpath.c_str());
                 return fullpath;
             }
         }
@@ -785,7 +786,14 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
 
 std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
-    std::string ret = strDirectory+strFilename;
+    // get directory+filename, safely adding '/' as necessary 
+    std::string ret = strDirectory;
+    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/'){
+        ret += '/';
+    }
+    ret += strFilename;
+    
+    // if the file doesn't exist, return an empty string
     if (!isFileExist(ret)) {
         ret = "";
     }

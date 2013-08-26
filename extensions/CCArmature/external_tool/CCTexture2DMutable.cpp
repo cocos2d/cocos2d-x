@@ -299,7 +299,7 @@ Texture2DMutable::Texture2DMutable(void)
 
 Texture2DMutable::~Texture2DMutable(void)
 {
-	CCLOGINFO("cocos2d: deallocing %p", this);
+	CCLOGINFO("deallocing Texture2DMutable: %p", this);
     
     CC_SAFE_DELETE(image_);
     

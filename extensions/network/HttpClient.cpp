@@ -114,7 +114,7 @@ static void networkThread(void)
         
         if (0 != s_requestQueue->count())
         {
-            request = dynamic_cast<HttpRequest*>(s_requestQueue->objectAtIndex(0));
+            request = dynamic_cast<HttpRequest*>(s_requestQueue->getObjectAtIndex(0));
             s_requestQueue->removeObjectAtIndex(0);
         }
         
@@ -485,7 +485,7 @@ void HttpClient::dispatchResponseCallbacks(float delta)
 
     if (s_responseQueue->count())
     {
-        response = dynamic_cast<HttpResponse*>(s_responseQueue->objectAtIndex(0));
+        response = dynamic_cast<HttpResponse*>(s_responseQueue->getObjectAtIndex(0));
         s_responseQueue->removeObjectAtIndex(0);
     }
     

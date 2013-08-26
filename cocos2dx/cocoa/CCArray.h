@@ -25,7 +25,103 @@ THE SOFTWARE.
 #ifndef __CCARRAY_H__
 #define __CCARRAY_H__
 
+#define CC_USE_ARRAY_VECTOR 0
+
+#if CC_USE_ARRAY_VECTOR
+#include <vector>
+#include <algorithm>
+#include "cocoa/CCObject.h"
+#include "ccMacros.h"
+#else
 #include "support/data_support/ccCArray.h"
+#endif
+
+
+#if CC_USE_ARRAY_VECTOR
+/**
+ * A reference counting-managed pointer for classes derived from RCBase which can
+ * be used as C pointer
+ * Original code: http://www.codeproject.com/Articles/64111/Building-a-Quick-and-Handy-Reference-Counting-Clas
+ * License: http://www.codeproject.com/info/cpol10.aspx
+ */
+template < class T >
+class RCPtr
+{
+public:
+	//Construct using a C pointer
+	//e.g. RCPtr< T > x = new T();
+	RCPtr(T* ptr = nullptr)
+    : _ptr(ptr)
+	{
+        if(ptr != nullptr) {ptr->retain();}
+	}
+
+	//Copy constructor
+	RCPtr(const RCPtr &ptr)
+    : _ptr(ptr._ptr)
+	{
+//        printf("Array: copy constructor: %p\n", this);
+		if(_ptr != NULL) {_ptr->retain();}
+	}
+
+    //Move constructor
+	RCPtr(RCPtr &&ptr)
+    : _ptr(ptr._ptr)
+	{
+//        printf("Array: Move Constructor: %p\n", this);
+        ptr._ptr = nullptr;
+	}
+
+	~RCPtr()
+	{
+//        printf("Array: Destructor: %p\n", this);
+        if(_ptr != nullptr) {_ptr->release();}
+	}
+
+	//Assign a pointer
+	//e.g. x = new T();
+	RCPtr &operator=(T* ptr)
+	{
+//        printf("Array: operator= T*: %p\n", this);
+
+        //The following grab and release operations have to be performed
+        //in that order to handle the case where ptr == _ptr
+        //(See comment below by David Garlisch)
+        if(ptr != nullptr) {ptr->retain();}
+        if(_ptr != nullptr) {_ptr->release();}
+        _ptr = ptr;
+        return (*this);
+	}
+
+	//Assign another RCPtr
+	RCPtr &operator=(const RCPtr &ptr)
+	{
+//        printf("Array: operator= const&: %p\n", this);
+        return (*this) = ptr._ptr;
+	}
+
+	//Retrieve actual pointer
+	T* get() const
+	{
+        return _ptr;
+	}
+
+    //Some overloaded operators to facilitate dealing with an RCPtr
+    //as a conventional C pointer.
+    //Without these operators, one can still use the less transparent
+    //get() method to access the pointer.
+    T* operator->() const {return _ptr;}		//x->member
+    T &operator*() const {return *_ptr;}		//*x, (*x).member
+    explicit operator T*() const {return _ptr;}		//T* y = x;
+    explicit operator bool() const {return _ptr != nullptr;}	//if(x) {/*x is not NULL*/}
+    bool operator==(const RCPtr &ptr) {return _ptr == ptr._ptr;}
+    bool operator==(const T *ptr) {return _ptr == ptr;}
+
+private:
+    T *_ptr;	//Actual pointer
+};
+#endif // CC_USE_ARRAY_VECTOR
+
 
 /**
  * @addtogroup data_structures
@@ -48,6 +144,26 @@ __arr__++)
 
 I found that it's not work in C++. So it keep what it's look like in version 1.0.0-rc3. ---By Bin
 */
+
+#if CC_USE_ARRAY_VECTOR
+#define CCARRAY_FOREACH(__array__, __object__)                  \
+    if (__array__) \
+    for( auto __it__ = (__array__)->data.begin();              \
+        __it__ != (__array__)->data.end() && ((__object__) = __it__->get()) != nullptr;                     \
+        ++__it__)
+
+
+#define CCARRAY_FOREACH_REVERSE(__array__, __object__)          \
+    if (__array__) \
+    for( auto __it__ = (__array__)->data.rbegin();             \
+    __it__ != (__array__)->data.rend() && ((__object__) = __it__->get()) != nullptr;                        \
+    ++__it__ )
+
+
+#define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
+
+#else // ! CC_USE_ARRAY_VECTOR --------------------------
+
 #define CCARRAY_FOREACH(__array__, __object__)                                                                         \
     if ((__array__) && (__array__)->data->num > 0)                                                                     \
     for(Object** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
@@ -72,6 +188,11 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
 #endif
 
+#endif // ! CC_USE_ARRAY_VECTOR
+
+
+// Common defines -----------------------------------------------------------------------------------------------
+
 #define arrayMakeObjectsPerformSelector(pArray, func, elementType)    \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
@@ -89,7 +210,7 @@ do {                                                                  \
 }                                                                     \
 while(false)
 
-#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, pObject, elementType)   \
+#define arrayMakeObjectsPerformSelectorWithObject(pArray, func, object, elementType)   \
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
@@ -99,7 +220,7 @@ do {                                                                  \
             elementType pNode = static_cast<elementType>(child);      \
             if(pNode)                                                 \
             {                                                         \
-                pNode->func(pObject);                                 \
+                pNode->func(object);                                 \
             }                                                         \
         }                                                             \
     }                                                                 \
@@ -112,17 +233,16 @@ NS_CC_BEGIN
 class CC_DLL Array : public Object, public Clonable
 {
 public:
-    ~Array();
 
-    /** Create an array */
+    /** Creates an empty array. Default capacity is 10 */
     static Array* create();
-    /** Create an array with some objects */
-    static Array* create(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
+    /** Create an array with objects */
+    static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object */
-    static Array* createWithObject(Object* pObject);
-    /** Create an array with capacity */
+    static Array* createWithObject(Object* object);
+    /** Create an array with a default capacity */
     static Array* createWithCapacity(unsigned int capacity);
-    /** Create an array with an existing array */
+    /** Create an array with from an existing array */
     static Array* createWithArray(Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
@@ -136,13 +256,15 @@ public:
      invoker should call release().
      */
     static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    
+    ~Array();
 
     /** Initializes an array */
     bool init();
     /** Initializes an array with one object */
-    bool initWithObject(Object* pObject);
+    bool initWithObject(Object* object);
     /** Initializes an array with some objects */
-    bool initWithObjects(Object* pObject, ...) CC_REQUIRES_NULL_TERMINATION;
+    bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity */
     bool initWithCapacity(unsigned int capacity);
     /** Initializes an array with an existing array */
@@ -151,21 +273,58 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count() const;
+    unsigned int count() const
+    {
+#if CC_USE_ARRAY_VECTOR
+        return data.size();
+#else
+        return data->num;
+#endif
+    }
     /** Returns capacity of the array */
-    unsigned int capacity() const;
+    unsigned int capacity() const
+    {
+#if CC_USE_ARRAY_VECTOR
+        return data.capacity();
+#else
+        return data->max;
+#endif
+    }
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    unsigned int indexOfObject(Object* object) const;
+    int getIndexOfObject(Object* object) const;
+    CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
+
     /** Returns an element with a certain index */
-    Object* objectAtIndex(unsigned int index);
-    /** Returns last element */
-    Object* lastObject();
+    Object* getObjectAtIndex(int index)
+    {
+        CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
+#if CC_USE_ARRAY_VECTOR
+        return data[index].get();
+#else
+        return data->arr[index];
+#endif
+    }
+    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
+    /** Returns the last element of the array */
+    Object* getLastObject()
+    {
+#if CC_USE_ARRAY_VECTOR
+        return data.back().get();
+#else
+        if(data->num > 0)
+            return data->arr[data->num-1];
+        
+        return nullptr;
+#endif
+    }
+    CC_DEPRECATED_ATTRIBUTE Object* lastObject() { return getLastObject(); }
     /** Returns a random element */
-    Object* randomObject();
+    Object* getRandomObject();
+    CC_DEPRECATED_ATTRIBUTE Object* randomObject() { return getRandomObject(); }
     /** Returns a Boolean value that indicates whether object is present in array. */
     bool containsObject(Object* object) const;
     /** @since 1.1 */
-    bool isEqualToArray(Array* pOtherArray);
+    bool isEqualToArray(Array* otherArray);
     // Adding Objects
 
     /** Add a certain object */
@@ -173,16 +332,38 @@ public:
     /** Add all elements of an existing array */
     void addObjectsFromArray(Array* otherArray);
     /** Insert a certain object at a certain index */
-    void insertObject(Object* object, unsigned int index);
+    void insertObject(Object* object, int index);
+    /** sets a certain object at a certain index */
+    void setObject(Object* object, int index);
+    /** sets a certain object at a certain index without retaining. Use it with caution */
+    void fastSetObject(Object* object, int index)
+    {
+#if CC_USE_ARRAY_VECTOR
+        setObject(object, index);
+#else
+        // no retain
+        data->arr[index] = object;
+#endif
+    }
+
+    void swap( int indexOne, int indexTwo )
+    {
+        CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
+#if CC_USE_ARRAY_VECTOR
+        std::swap(data[indexOne], data[indexTwo]);
+#else
+        std::swap(data->arr[indexOne], data->arr[indexTwo]);
+#endif
+    }
 
     // Removing Objects
 
     /** Remove last object */
-    void removeLastObject(bool bReleaseObj = true);
+    void removeLastObject(bool releaseObj = true);
     /** Remove a certain object */
-    void removeObject(Object* object, bool bReleaseObj = true);
+    void removeObject(Object* object, bool releaseObj = true);
     /** Remove an element with a certain index */
-    void removeObjectAtIndex(unsigned int index, bool bReleaseObj = true);
+    void removeObjectAtIndex(unsigned int index, bool releaseObj = true);
     /** Remove all elements */
     void removeObjectsInArray(Array* otherArray);
     /** Remove all objects */
@@ -200,7 +381,7 @@ public:
     void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(unsigned int uIndex, Object* pObject, bool bReleaseObject = true);
+    void replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject = true);
 
     /** Revers the array */
     void reverseObjects();
@@ -210,11 +391,31 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor);
     virtual Array* clone() const;
-    
-public:
+
+    // ------------------------------------------
+    // Iterators
+    // ------------------------------------------
+#if CC_USE_ARRAY_VECTOR
+    typedef std::vector<RCPtr<Object>>::iterator iterator;
+    typedef std::vector<RCPtr<Object>>::const_iterator const_iterator;
+
+    iterator begin() { return data.begin(); }
+    iterator end() { return data.end(); }
+    const_iterator cbegin() { return data.cbegin(); }
+    const_iterator cend() { return data.cend(); }
+
+    std::vector<RCPtr<Object>> data;
+
+#else
+    Object** begin() { return &data->arr[0]; }
+    Object** end() { return &data->arr[data->num]; }
+
     ccArray* data;
+
+#endif
+
+//protected:
     Array();
-    Array(unsigned int capacity);
 };
 
 // end of data_structure group

@@ -485,9 +485,6 @@
     <ClCompile Include="..\label_nodes\CCFontAtlasFactory.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCFontCache.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCFontDefinition.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -497,25 +494,19 @@
     <ClCompile Include="..\label_nodes\CCFontFreeType.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCFontRenderFreeType.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabel.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\label_nodes\CCLabelTextFormatter.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\label_nodes\CCStringBMFont.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\label_nodes\CCStringTTF.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\label_nodes\CCTextImage.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1018,12 +1009,6 @@
     <ClInclude Include="..\label_nodes\CCFontFreeType.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\label_nodes\CCFontRender.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\label_nodes\CCFontRenderFreeType.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\label_nodes\CCLabel.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
@@ -1033,16 +1018,13 @@
     <ClInclude Include="..\label_nodes\CCLabelTextFormatter.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\label_nodes\CCStringBMFont.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\label_nodes\CCStringTTF.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\label_nodes\CCTextImage.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\atitc\atitc.h">
       <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>

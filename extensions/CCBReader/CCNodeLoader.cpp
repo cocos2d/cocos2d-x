@@ -11,6 +11,7 @@ NS_CC_EXT_BEGIN
 NodeLoader::NodeLoader()
 {
     _customProperties = new Dictionary();
+    _customProperties->init();
 }
 
 NodeLoader::~NodeLoader()
@@ -800,14 +801,22 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
             } else {
                 CCLOG("Unexpected NULL target for selector.");
             }
-        } else {
-            if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT) {
+        }
+        else
+        {
+            if (selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
+            {
                 ccbReader->addDocumentCallbackNode(pNode);
                 ccbReader->addDocumentCallbackName(selectorName);
-                
-            } else {
+                // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
+                ccbReader->addDocumentCallbackControlEvents(Control::EventType::TOUCH_DOWN);
+            }
+            else if (selectorTarget == CCBReader::TargetType::OWNER)
+            {
                 ccbReader->addOwnerCallbackNode(pNode);
                 ccbReader->addOwnerCallbackName(selectorName);
+                // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
+                ccbReader->addOwnerCallbackControlEvents(Control::EventType::TOUCH_DOWN);
             }
         }
     }
@@ -884,12 +893,13 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             {
                 ccbReader->addDocumentCallbackNode(pNode);
                 ccbReader->addDocumentCallbackName(selectorName);
-                
+                ccbReader->addDocumentCallbackControlEvents((Control::EventType)controlEvents);
             }
             else
             {
                 ccbReader->addOwnerCallbackNode(pNode);
                 ccbReader->addOwnerCallbackName(selectorName);
+                ccbReader->addOwnerCallbackControlEvents((Control::EventType)controlEvents);
             }
         }
     }
@@ -953,11 +963,13 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         if (NULL != ownerCallbackNames && ownerCallbackNames->count() > 0 &&
             NULL != ownerCallbackNodes && ownerCallbackNodes->count() > 0)
         {
-            assert(ownerCallbackNames->count() == ownerCallbackNodes->count());
+            CCASSERT(ownerCallbackNames->count() == ownerCallbackNodes->count(), "");
             int nCount = ownerCallbackNames->count();
-            for (int i = 0 ; i < nCount; i++) {
-                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNames->objectAtIndex(i)) );
+            
+            for (int i = 0 ; i < nCount; i++)
+            {
+                pCCBReader->addOwnerCallbackName((dynamic_cast<String*>(ownerCallbackNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerCallbackNode(dynamic_cast<Node*>(ownerCallbackNodes->getObjectAtIndex(i)) );
             }
         }
         //set variables
@@ -966,11 +978,13 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         if (NULL != ownerOutletNames && ownerOutletNames->count() > 0 &&
             NULL != ownerOutletNodes && ownerOutletNodes->count() > 0)
         {
-            assert(ownerOutletNames->count() == ownerOutletNodes->count());
+            CCASSERT(ownerOutletNames->count() == ownerOutletNodes->count(), "");
             int nCount = ownerOutletNames->count();
-            for (int i = 0 ; i < nCount; i++) {
-                pCCBReader->addOwnerOutletName((dynamic_cast<String*>(ownerOutletNames->objectAtIndex(i)))->getCString());
-                pCCBReader->addOwnerOutletNode(dynamic_cast<Node*>(ownerOutletNodes->objectAtIndex(i)) );
+            
+            for (int i = 0 ; i < nCount; i++)
+            {
+                pCCBReader->addOwnerOutletName((static_cast<String*>(ownerOutletNames->getObjectAtIndex(i)))->getCString());
+                pCCBReader->addOwnerOutletNode(static_cast<Node*>(ownerOutletNodes->getObjectAtIndex(i)));
             }
         }
     }

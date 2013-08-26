@@ -12,14 +12,14 @@ void TestLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
-    //CCMutableArray *array = [UIFont familyNames];
+    //auto array = [UIFont familyNames];
     //for( String *s in array )
     //    NSLog( s );
-    LabelTTF* label = LabelTTF::create("cocos2d", "Tahoma", 64);
+    auto label = LabelTTF::create("cocos2d", "Tahoma", 64);
 
     label->setPosition( Point(x/2,y/2) );
     
@@ -37,13 +37,13 @@ void SpriteLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
     
-    Sprite* sprite = Sprite::create(s_pathGrossini);
-    Sprite* spriteSister1 = Sprite::create(s_pathSister1);
-    Sprite* spriteSister2 = Sprite::create(s_pathSister2);
+    auto sprite = Sprite::create(s_pathGrossini);
+    auto spriteSister1 = Sprite::create(s_pathSister1);
+    auto spriteSister2 = Sprite::create(s_pathSister2);
     
     sprite->setScale(1.5f);
     spriteSister1->setScale(1.5f);
@@ -53,7 +53,7 @@ void SpriteLayer::onEnter()
     spriteSister1->setPosition(Point(40,y/2));
     spriteSister2->setPosition(Point(x-40,y/2));
 
-    Action *rot = RotateBy::create(16, -3600);
+    auto rot = RotateBy::create(16, -3600);
     
     addChild(sprite);
     addChild(spriteSister1);
@@ -61,11 +61,11 @@ void SpriteLayer::onEnter()
     
     sprite->runAction(rot);
 
-    ActionInterval *jump1 = JumpBy::create(4, Point(-400,0), 100, 4);
-    ActionInterval *jump2 = jump1->reverse();
+    auto jump1 = JumpBy::create(4, Point(-400,0), 100, 4);
+    auto jump2 = jump1->reverse();
     
-    ActionInterval *rot1 = RotateBy::create(4, 360*2);
-    ActionInterval *rot2 = rot1->reverse();
+    auto rot1 = RotateBy::create(4, 360*2);
+    auto rot2 = rot1->reverse();
     
     spriteSister1->runAction(Repeat::create( Sequence::create(jump2, jump1, NULL), 5 ));
     spriteSister2->runAction(Repeat::create( Sequence::create(jump1->clone(), jump2->clone(), NULL), 5 ));
@@ -86,14 +86,14 @@ void RotateWorldMainLayer::onEnter()
 
     float x,y;
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
     
-    Node* blue =  LayerColor::create(Color4B(0,0,255,255));
-    Node* red =   LayerColor::create(Color4B(255,0,0,255));
-    Node* green = LayerColor::create(Color4B(0,255,0,255));
-    Node* white = LayerColor::create(Color4B(255,255,255,255));
+    auto blue =  LayerColor::create(Color4B(0,0,255,255));
+    auto red =   LayerColor::create(Color4B(255,0,0,255));
+    auto green = LayerColor::create(Color4B(0,255,0,255));
+    auto white = LayerColor::create(Color4B(255,255,255,255));
 
     blue->setScale(0.5f);
     blue->setPosition(Point(-x/4,-y/4));
@@ -116,7 +116,7 @@ void RotateWorldMainLayer::onEnter()
     addChild(green);
     addChild(red);
 
-    Action* rot = RotateBy::create(8, 720);
+    auto rot = RotateBy::create(8, 720);
     
     blue->runAction(rot);
     red->runAction(rot->clone());
@@ -126,7 +126,7 @@ void RotateWorldMainLayer::onEnter()
 
 void RotateWorldTestScene::runThisTest()
 {
-    Layer* layer = RotateWorldMainLayer::create();
+    auto layer = RotateWorldMainLayer::create();
 
     addChild(layer);
     runAction( RotateBy::create(4, -360) );

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN

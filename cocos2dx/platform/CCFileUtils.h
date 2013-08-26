@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include <map>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 
 NS_CC_BEGIN
 
@@ -41,20 +40,11 @@ class Array;
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL FileUtils : public TypeInfo
+class CC_DLL FileUtils
 {
     friend class Array;
     friend class Dictionary;
 public:
-    /**
-     *  Returns an unique ID for this class.
-     *  @note It's only used for JSBindings now.
-     *  @return The unique ID for this class.
-     */
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::FileUtils).name());
-		return id;
-    }
     
     /**
      *  Gets the instance of FileUtils.

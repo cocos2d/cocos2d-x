@@ -39,7 +39,7 @@ void CocosBuilderTestScene::runThisTest() {
     cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
     
     /* Read a ccbi file. */
-    Node * node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
+    auto node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
     
     ccbReader->release();
 
@@ -52,7 +52,7 @@ void CocosBuilderTestScene::runThisTest() {
 
 
 //void CocosBuilderTestScene::runThisTest() {
-//    CCBIReaderLayer * ccbiReaderLayer = CCBIReaderLayer::node();
+//    auto ccbiReaderLayer = CCBIReaderLayer::node();
 //    
 //    /* Create an autorelease NodeLoaderLibrary. */
 //    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
@@ -62,7 +62,7 @@ void CocosBuilderTestScene::runThisTest() {
 //    ccbReader->autorelease();
 //    
 //    /* Read a ccbi file. */
-//    Node * node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
+//    auto node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
 //    
 //    if(node != NULL) {
 //        ccbiReaderLayer->addChild(node);

@@ -26,15 +26,15 @@ void Bug422Layer::reset()
     // The menu will be removed, but the instance will be alive
     // and then a new node will be allocated occupying the memory.
     // => CRASH BOOM BANG
-    Node *node = getChildByTag(localtag-1);
+    auto node = getChildByTag(localtag-1);
     log("Menu: %p", node);
     removeChild(node, false);
 //    [self removeChildByTag:localtag-1 cleanup:NO];
 
-    MenuItem *item1 = MenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
+    auto item1 = MenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
     log("MenuItemFont: %p", item1);
 	MenuItem *item2 = MenuItemFont::create("Two", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
-    Menu *menu = Menu::create(item1, item2, NULL);
+    auto menu = Menu::create(item1, item2, NULL);
     menu->alignItemsVertically();
 
     float x = CCRANDOM_0_1() * 50;
@@ -47,12 +47,12 @@ void Bug422Layer::reset()
 
 void Bug422Layer::check(Node* t)
 {
-    Array *array = t->getChildren();
+    auto array = t->getChildren();
     Object* pChild = NULL;
     CCARRAY_FOREACH(array, pChild)
     {
         CC_BREAK_IF(! pChild);
-        Node* node = static_cast<Node*>(pChild);
+        auto node = static_cast<Node*>(pChild);
         log("%p, rc: %d", node, node->retainCount());
         check(node);
     }

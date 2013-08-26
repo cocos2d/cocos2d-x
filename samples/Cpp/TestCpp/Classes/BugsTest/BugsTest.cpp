@@ -54,13 +54,13 @@ void BugsTestMainLayer::onEnter()
 {
     Layer::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     _itmeMenu = Menu::create();
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxitems; ++i)
     {
-        MenuItemFont* pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
+        auto pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
         pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
@@ -72,21 +72,21 @@ void BugsTestMainLayer::onEnter()
 
 void BugsTestMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = static_cast<Touch*>( touches->anyObject() );
 
     _beginPos = touch->getLocation();    
 }
 
 void BugsTestMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = static_cast<Touch*>( touches->anyObject() );
 
-    Point touchLocation = touch->getLocation();    
+    auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
 
-    Point curPos  = _itmeMenu->getPosition();
-    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
-    Size winSize = Director::getInstance()->getWinSize();
+    auto curPos  = _itmeMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto winSize = Director::getInstance()->getWinSize();
     if (nextPos.y < 0.0f)
     {
         _itmeMenu->setPosition(Point::ZERO);
@@ -115,9 +115,9 @@ void BugsTestBaseLayer::onEnter()
 
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
-    MenuItemFont* pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
+    auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu* menu = Menu::create(pMainItem, NULL);
+    auto menu = Menu::create(pMainItem, NULL);
     menu->setPosition( Point::ZERO );
     addChild(menu);
 }
@@ -125,7 +125,7 @@ void BugsTestBaseLayer::onEnter()
 void BugsTestBaseLayer::backCallback(Object* sender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
-    BugsTestScene* scene = new BugsTestScene();
+    auto scene = new BugsTestScene();
     scene->runThisTest();
     scene->autorelease();
 }
@@ -137,7 +137,7 @@ void BugsTestBaseLayer::backCallback(Object* sender)
 ////////////////////////////////////////////////////////
 void BugsTestScene::runThisTest()
 {
-    Layer* layer = new BugsTestMainLayer();
+    auto layer = new BugsTestMainLayer();
     addChild(layer);
     layer->release();
 
