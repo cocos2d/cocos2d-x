@@ -73,6 +73,7 @@ CCSkin *CCSkin::create(const char *pszFileName)
 
 CCSkin::CCSkin()
     : m_pBone(NULL)
+	, m_strDisplayName("")
 {
 	m_tSkinTransform = CCAffineTransformIdentity;
 }
@@ -81,7 +82,7 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
 	bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
 
-	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithDisplayName(pszSpriteFrameName);
+	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
 	setTextureAtlas(atlas);
 
 	m_strDisplayName = pszSpriteFrameName;
@@ -93,7 +94,7 @@ bool CCSkin::initWithFile(const char *pszFilename)
 {
 	bool ret = CCSprite::initWithFile(pszFilename);
 
-	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTextureAtlasWithImageName(pszFilename);
+	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
 	setTextureAtlas(atlas);
 
 	m_strDisplayName = pszFilename;

@@ -110,7 +110,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject* pSender)
 	TestScene::MainMenuCallback(pSender);
 
 	removeAllChildren();
-	CCArmatureDataManager::purgeArmatureSystem();
+	CCArmatureDataManager::purge();
 }
 
 
@@ -264,6 +264,7 @@ void TestCSWithSkeleton::onEnter()
 	armature = cocos2d::extension::CCArmature::create("Cowboy");
 	armature->getAnimation()->playByIndex(0);
 	armature->setScale(0.2f);
+
 	armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
 	addChild(armature);
 }
@@ -546,6 +547,10 @@ void TestUseMutiplePicture::onEnter()
 // 		displayData.setParam(weapon[i].c_str());
 // 		armature->getBone("weapon")->addDisplay(&displayData, i);
 // 	}
+
+	CCLabelTTF* l = CCLabelTTF::create("This is a weapon!", "Arial", 18);
+	l->setAnchorPoint(ccp(0.2f, 0.5f));
+	armature->getBone("weapon")->addDisplay(l, 7);
 }
 void TestUseMutiplePicture::onExit()
 {
@@ -563,7 +568,7 @@ std::string TestUseMutiplePicture::subtitle()
 bool TestUseMutiplePicture::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
 	++displayIndex;
-	displayIndex = (displayIndex) % 6;
+	displayIndex = (displayIndex) % 8;
 	armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
 	return false;
 }
@@ -594,7 +599,7 @@ void TestColliderDetector::onEnter()
 
 	/*
 	* Set armature's frame event callback function
-	* To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+	* To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
 	*/
 	armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestColliderDetector::onFrameEvent));
 

@@ -151,7 +151,7 @@ const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 }
 
 CCDisplayData::CCDisplayData(void)
-    : displayType(CS_DISPLAY_SPRITE)
+    : displayType(CS_DISPLAY_MAX)
 {
 }
 
@@ -202,20 +202,6 @@ CCParticleDisplayData::CCParticleDisplayData(void)
 void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
 {
     plist = displayData->plist;
-    displayType = displayData->displayType;
-}
-
-CCShaderDisplayData::CCShaderDisplayData(void)
-    : vert("")
-    , frag("")
-{
-    displayType = CS_DISPLAY_SHADER;
-}
-
-void CCShaderDisplayData::copy(CCShaderDisplayData *displayData)
-{
-    vert = displayData->vert;
-    frag = displayData->frag;
     displayType = displayData->displayType;
 }
 

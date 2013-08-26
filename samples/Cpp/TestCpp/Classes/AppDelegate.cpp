@@ -15,7 +15,7 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-	cocos2d::extension::CCArmatureDataManager::purgeArmatureSystem();
+	cocos2d::extension::CCArmatureDataManager::purge();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
