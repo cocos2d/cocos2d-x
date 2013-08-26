@@ -70,7 +70,7 @@ void CCDisplayFactory::createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
 
 void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty)
 {
-    CS_RETURN_IF(!decoDisplay || !dirty);
+    CS_RETURN_IF(!decoDisplay);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (dirty)
@@ -208,6 +208,7 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
 
 void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
+	CS_RETURN_IF(!dirty);
     CCSkin *skin = (CCSkin *)display;
     skin->updateArmatureTransform();
 }
