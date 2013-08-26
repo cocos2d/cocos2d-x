@@ -36,8 +36,8 @@ void PluginUtils::initPluginWrapper(android_app* app)
     PluginJniMethodInfo t;
     if (! PluginJniHelper::getStaticMethodInfo(t
         , "org/cocos2dx/plugin/PluginWrapper"
-        , "init"
-        , "(Landroid/content/Context;)V"))
+        , "initFromNativeActivity"
+        , "(Landroid/app/Activity;)V"))
     {
         outputLog("PluginUtils", "Failed to init context of plugin");
         return;
