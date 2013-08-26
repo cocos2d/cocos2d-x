@@ -46,10 +46,10 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
     return s_sharedArmatureDataManager;
 }
 
-void CCArmatureDataManager::purgeArmatureSystem()
+void CCArmatureDataManager::purge()
 {
-	CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-	CCDataReaderHelper::purgeDataReaderHelper();
+	CCSpriteFrameCacheHelper::purge();
+	CCDataReaderHelper::purge();
 	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
@@ -114,19 +114,19 @@ CCArmatureData *CCArmatureDataManager::getArmatureData(const char *id)
     return armatureData;
 }
 
+void CCArmatureDataManager::removeArmatureData(const char *id)
+{
+	if (m_pArmarureDatas)
+	{
+		m_pArmarureDatas->removeObjectForKey(id);
+	}
+}
+
 void CCArmatureDataManager::addAnimationData(const char *id, CCAnimationData *animationData)
 {
     if(m_pAnimationDatas)
     {
         m_pAnimationDatas->setObject(animationData, id);
-    }
-}
-
-void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
-{
-    if(m_pTextureDatas)
-    {
-        m_pTextureDatas->setObject(textureData, id);
     }
 }
 
@@ -140,6 +140,23 @@ CCAnimationData *CCArmatureDataManager::getAnimationData(const char *id)
     return animationData;
 }
 
+void CCArmatureDataManager::removeAnimationData(const char *id)
+{
+	if (m_pAnimationDatas)
+	{
+		m_pAnimationDatas->removeObjectForKey(id);
+	}
+}
+
+void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
+{
+	if(m_pTextureDatas)
+	{
+		m_pTextureDatas->setObject(textureData, id);
+	}
+}
+
+
 CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 {
     CCTextureData *textureData = NULL;
@@ -150,6 +167,14 @@ CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
     return textureData;
 }
 
+
+void CCArmatureDataManager::removeTextureData(const char *id)
+{
+	if(m_pTextureDatas)
+	{
+		m_pTextureDatas->removeObjectForKey(id);
+	}
+}
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
 {
@@ -205,6 +230,19 @@ void CCArmatureDataManager::removeAll()
 bool CCArmatureDataManager::isAutoLoadSpriteFile()
 {
 	return m_bAutoLoadSpriteFile;
+}
+
+CCDictionary *CCArmatureDataManager::getArmatureDatas() const
+{
+	return m_pArmarureDatas;
+}
+CCDictionary *CCArmatureDataManager::getAnimationDatas() const
+{
+	return m_pAnimationDatas;
+}
+CCDictionary *CCArmatureDataManager::getTextureDatas() const
+{
+	return m_pTextureDatas;
 }
 
 NS_CC_EXT_END

@@ -39,7 +39,7 @@ class  CCArmatureDataManager : public CCObject
 public:
     static CCArmatureDataManager *sharedArmatureDataManager();
 
-	static void purgeArmatureSystem();
+	static void purge();
 private:
     CCArmatureDataManager(void);
     ~CCArmatureDataManager(void);
@@ -60,48 +60,56 @@ public:
     
 	/**
      *	@brief	get armature data
-     *
      *	@param	id the id of the armature data you want to get
-	 *  
 	 *  @return	CCArmatureData *
      */
     CCArmatureData *getArmatureData(const char *id);
 
+	/**
+     *	@brief	remove armature data
+     *	@param	id the id of the armature data you want to get
+     */
+	void removeArmatureData(const char *id);
+
     /**
      *	@brief	add animation data 
-     *
      *	@param 	id the id of the animation data 
-	 *
 	 *  @return CCAnimationData *
      */
     void addAnimationData(const char *id, CCAnimationData *animationData);
     
 	/**
      *	@brief	get animation data from m_pAnimationDatas(CCDictionary)
-     *
      *	@param 	id the id of the animation data you want to get
-	 *  
 	 *  @return CCAnimationData *
      */
     CCAnimationData *getAnimationData(const char *id);
 
+	/**
+     *	@brief	remove animation data 
+     *	@param 	id the id of the animation data 
+     */
+	void removeAnimationData(const char *id);
+
     /**
      *	@brief	add texture data 
-     *
      *	@param 	id the id of the texture data
-	 *
 	 *  @return CCTextureData *
      */
     void addTextureData(const char *id, CCTextureData *textureData);
     
 	/**
      *	@brief	get texture data
-     *
-     *	@param 	_id the id of the texture data you want to get
-	 *  
+     *	@param 	id the id of the texture data you want to get
 	 *  @return CCTextureData *
      */
     CCTextureData *getTextureData(const char *id);
+
+	/**
+     *	@brief	remove texture data
+     *	@param 	id the id of the texture data you want to get
+     */
+	void removeTextureData(const char *id);
     
     /**
 	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
@@ -140,27 +148,32 @@ public:
 	 *	@brief	Juge whether or not need auto load sprite file
      */
 	bool isAutoLoadSpriteFile();
+
+
+	CCDictionary *getArmatureDatas() const;
+	CCDictionary *getAnimationDatas() const;
+	CCDictionary *getTextureDatas() const;
 private:
     /**
 	 *	@brief	save amature datas
 	 *  @key	std::string
 	 *  @value	CCArmatureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pArmarureDatas, ArmarureDatas);
+	CCDictionary *m_pArmarureDatas;
 
     /**
 	 *	@brief	save animation datas
 	 *  @key	std::string
 	 *  @value	CCAnimationData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pAnimationDatas, AnimationDatas);
+	CCDictionary *m_pAnimationDatas;
 
 	/**
 	 *	@brief	save texture datas
 	 *  @key	std::string
 	 *  @value	CCTextureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pTextureDatas, TextureDatas);
+	CCDictionary *m_pTextureDatas;
 
 	bool m_bAutoLoadSpriteFile;
 };
