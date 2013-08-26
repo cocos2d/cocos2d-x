@@ -226,7 +226,7 @@ int lua_register_cocos2dx_Object(lua_State* tolua_S)
         tolua_function(tolua_S,"retainCount",lua_cocos2dx_Object_retainCount);
         tolua_function(tolua_S,"new",lua_cocos2dx_Object_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Object).name());
+    uint32_t typeId = typeid(cocos2d::Object).hash_code();
     g_luaType[typeId] = "Object";
     return 1;
 }
@@ -873,7 +873,7 @@ int lua_register_cocos2dx_Action(lua_State* tolua_S)
         tolua_function(tolua_S,"isDone",lua_cocos2dx_Action_isDone);
         tolua_function(tolua_S,"reverse",lua_cocos2dx_Action_reverse);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Action).name());
+    uint32_t typeId = typeid(cocos2d::Action).hash_code();
     g_luaType[typeId] = "Action";
     return 1;
 }
@@ -1084,7 +1084,7 @@ int lua_register_cocos2dx_FiniteTimeAction(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_FiniteTimeAction_reverse);
         tolua_function(tolua_S,"getDuration",lua_cocos2dx_FiniteTimeAction_getDuration);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FiniteTimeAction).name());
+    uint32_t typeId = typeid(cocos2d::FiniteTimeAction).hash_code();
     g_luaType[typeId] = "FiniteTimeAction";
     return 1;
 }
@@ -1736,7 +1736,7 @@ int lua_register_cocos2dx_Speed(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Speed_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Speed_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Speed).name());
+    uint32_t typeId = typeid(cocos2d::Speed).hash_code();
     g_luaType[typeId] = "Speed";
     return 1;
 }
@@ -2280,7 +2280,7 @@ int lua_register_cocos2dx_Follow(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Follow_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Follow_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Follow).name());
+    uint32_t typeId = typeid(cocos2d::Follow).hash_code();
     g_luaType[typeId] = "Follow";
     return 1;
 }
@@ -3190,7 +3190,7 @@ int lua_register_cocos2dx_GLProgram(lua_State* tolua_S)
         tolua_function(tolua_S,"setUniformLocationWith2i",lua_cocos2dx_GLProgram_setUniformLocationWith2i);
         tolua_function(tolua_S,"new",lua_cocos2dx_GLProgram_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::GLProgram).name());
+    uint32_t typeId = typeid(cocos2d::GLProgram).hash_code();
     g_luaType[typeId] = "GLProgram";
     return 1;
 }
@@ -3632,7 +3632,7 @@ int lua_register_cocos2dx_Touch(lua_State* tolua_S)
         tolua_function(tolua_S,"getPreviousLocation",lua_cocos2dx_Touch_getPreviousLocation);
         tolua_function(tolua_S,"new",lua_cocos2dx_Touch_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Touch).name());
+    uint32_t typeId = typeid(cocos2d::Touch).hash_code();
     g_luaType[typeId] = "Touch";
     return 1;
 }
@@ -4099,7 +4099,7 @@ int lua_register_cocos2dx_Set(lua_State* tolua_S)
         tolua_function(tolua_S,"containsObject",lua_cocos2dx_Set_containsObject);
         tolua_function(tolua_S,"create", lua_cocos2dx_Set_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Set).name());
+    uint32_t typeId = typeid(cocos2d::Set).hash_code();
     g_luaType[typeId] = "Set";
     return 1;
 }
@@ -5470,7 +5470,7 @@ int lua_register_cocos2dx_Texture2D(lua_State* tolua_S)
         tolua_function(tolua_S,"getDefaultAlphaPixelFormat", lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat);
         tolua_function(tolua_S,"PVRImagesHavePremultipliedAlpha", lua_cocos2dx_Texture2D_PVRImagesHavePremultipliedAlpha);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Texture2D).name());
+    uint32_t typeId = typeid(cocos2d::Texture2D).hash_code();
     g_luaType[typeId] = "Texture2D";
     return 1;
 }
@@ -9908,7 +9908,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Node_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Node_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Node).name());
+    uint32_t typeId = typeid(cocos2d::Node).hash_code();
     g_luaType[typeId] = "Node";
     return 1;
 }
@@ -10604,7 +10604,7 @@ int lua_register_cocos2dx_NodeRGBA(lua_State* tolua_S)
         tolua_function(tolua_S,"getDisplayedColor",lua_cocos2dx_NodeRGBA_getDisplayedColor);
         tolua_function(tolua_S,"new",lua_cocos2dx_NodeRGBA_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::NodeRGBA).name());
+    uint32_t typeId = typeid(cocos2d::NodeRGBA).hash_code();
     g_luaType[typeId] = "NodeRGBA";
     return 1;
 }
@@ -11732,7 +11732,7 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_SpriteFrame_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_SpriteFrame_createWithTexture);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SpriteFrame).name());
+    uint32_t typeId = typeid(cocos2d::SpriteFrame).hash_code();
     g_luaType[typeId] = "SpriteFrame";
     return 1;
 }
@@ -12180,7 +12180,7 @@ int lua_register_cocos2dx_AnimationFrame(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithSpriteFrame",lua_cocos2dx_AnimationFrame_initWithSpriteFrame);
         tolua_function(tolua_S,"new",lua_cocos2dx_AnimationFrame_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::AnimationFrame).name());
+    uint32_t typeId = typeid(cocos2d::AnimationFrame).hash_code();
     g_luaType[typeId] = "AnimationFrame";
     return 1;
 }
@@ -13185,7 +13185,7 @@ int lua_register_cocos2dx_Animation(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_Animation_create);
         tolua_function(tolua_S,"createWithSpriteFrames", lua_cocos2dx_Animation_createWithSpriteFrames);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Animation).name());
+    uint32_t typeId = typeid(cocos2d::Animation).hash_code();
     g_luaType[typeId] = "Animation";
     return 1;
 }
@@ -13620,7 +13620,7 @@ int lua_register_cocos2dx_ActionInterval(lua_State* tolua_S)
         tolua_function(tolua_S,"isDone",lua_cocos2dx_ActionInterval_isDone);
         tolua_function(tolua_S,"reverse",lua_cocos2dx_ActionInterval_reverse);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionInterval).name());
+    uint32_t typeId = typeid(cocos2d::ActionInterval).hash_code();
     g_luaType[typeId] = "ActionInterval";
     return 1;
 }
@@ -13949,7 +13949,7 @@ int lua_register_cocos2dx_Sequence(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_Sequence_update);
         tolua_function(tolua_S,"initWithTwoActions",lua_cocos2dx_Sequence_initWithTwoActions);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Sequence).name());
+    uint32_t typeId = typeid(cocos2d::Sequence).hash_code();
     g_luaType[typeId] = "Sequence";
     return 1;
 }
@@ -14475,7 +14475,7 @@ int lua_register_cocos2dx_Repeat(lua_State* tolua_S)
         tolua_function(tolua_S,"isDone",lua_cocos2dx_Repeat_isDone);
         tolua_function(tolua_S,"create", lua_cocos2dx_Repeat_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Repeat).name());
+    uint32_t typeId = typeid(cocos2d::Repeat).hash_code();
     g_luaType[typeId] = "Repeat";
     return 1;
 }
@@ -14997,7 +14997,7 @@ int lua_register_cocos2dx_RepeatForever(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_RepeatForever_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_RepeatForever_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::RepeatForever).name());
+    uint32_t typeId = typeid(cocos2d::RepeatForever).hash_code();
     g_luaType[typeId] = "RepeatForever";
     return 1;
 }
@@ -15326,7 +15326,7 @@ int lua_register_cocos2dx_Spawn(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_Spawn_update);
         tolua_function(tolua_S,"initWithTwoActions",lua_cocos2dx_Spawn_initWithTwoActions);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Spawn).name());
+    uint32_t typeId = typeid(cocos2d::Spawn).hash_code();
     g_luaType[typeId] = "Spawn";
     return 1;
 }
@@ -15691,7 +15691,7 @@ int lua_register_cocos2dx_RotateTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_RotateTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_RotateTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::RotateTo).name());
+    uint32_t typeId = typeid(cocos2d::RotateTo).hash_code();
     g_luaType[typeId] = "RotateTo";
     return 1;
 }
@@ -16056,7 +16056,7 @@ int lua_register_cocos2dx_RotateBy(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_RotateBy_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_RotateBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::RotateBy).name());
+    uint32_t typeId = typeid(cocos2d::RotateBy).hash_code();
     g_luaType[typeId] = "RotateBy";
     return 1;
 }
@@ -16372,7 +16372,7 @@ int lua_register_cocos2dx_MoveBy(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_MoveBy_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_MoveBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MoveBy).name());
+    uint32_t typeId = typeid(cocos2d::MoveBy).hash_code();
     g_luaType[typeId] = "MoveBy";
     return 1;
 }
@@ -16591,7 +16591,7 @@ int lua_register_cocos2dx_MoveTo(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_MoveTo_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_MoveTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MoveTo).name());
+    uint32_t typeId = typeid(cocos2d::MoveTo).hash_code();
     g_luaType[typeId] = "MoveTo";
     return 1;
 }
@@ -16952,7 +16952,7 @@ int lua_register_cocos2dx_SkewTo(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_SkewTo_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_SkewTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SkewTo).name());
+    uint32_t typeId = typeid(cocos2d::SkewTo).hash_code();
     g_luaType[typeId] = "SkewTo";
     return 1;
 }
@@ -17229,7 +17229,7 @@ int lua_register_cocos2dx_SkewBy(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_SkewBy_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_SkewBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SkewBy).name());
+    uint32_t typeId = typeid(cocos2d::SkewBy).hash_code();
     g_luaType[typeId] = "SkewBy";
     return 1;
 }
@@ -17553,7 +17553,7 @@ int lua_register_cocos2dx_JumpBy(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_JumpBy_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_JumpBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::JumpBy).name());
+    uint32_t typeId = typeid(cocos2d::JumpBy).hash_code();
     g_luaType[typeId] = "JumpBy";
     return 1;
 }
@@ -17784,7 +17784,7 @@ int lua_register_cocos2dx_JumpTo(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_JumpTo_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_JumpTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::JumpTo).name());
+    uint32_t typeId = typeid(cocos2d::JumpTo).hash_code();
     g_luaType[typeId] = "JumpTo";
     return 1;
 }
@@ -18052,7 +18052,7 @@ int lua_register_cocos2dx_BezierBy(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_BezierBy_initWithDuration);
         tolua_function(tolua_S,"update",lua_cocos2dx_BezierBy_update);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::BezierBy).name());
+    uint32_t typeId = typeid(cocos2d::BezierBy).hash_code();
     g_luaType[typeId] = "BezierBy";
     return 1;
 }
@@ -18277,7 +18277,7 @@ int lua_register_cocos2dx_BezierTo(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_BezierTo_reverse);
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_BezierTo_initWithDuration);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::BezierTo).name());
+    uint32_t typeId = typeid(cocos2d::BezierTo).hash_code();
     g_luaType[typeId] = "BezierTo";
     return 1;
 }
@@ -18642,7 +18642,7 @@ int lua_register_cocos2dx_ScaleTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_ScaleTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_ScaleTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ScaleTo).name());
+    uint32_t typeId = typeid(cocos2d::ScaleTo).hash_code();
     g_luaType[typeId] = "ScaleTo";
     return 1;
 }
@@ -18901,7 +18901,7 @@ int lua_register_cocos2dx_ScaleBy(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_ScaleBy_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_ScaleBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ScaleBy).name());
+    uint32_t typeId = typeid(cocos2d::ScaleBy).hash_code();
     g_luaType[typeId] = "ScaleBy";
     return 1;
 }
@@ -19258,7 +19258,7 @@ int lua_register_cocos2dx_Blink(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_Blink_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_Blink_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Blink).name());
+    uint32_t typeId = typeid(cocos2d::Blink).hash_code();
     g_luaType[typeId] = "Blink";
     return 1;
 }
@@ -19473,7 +19473,7 @@ int lua_register_cocos2dx_FadeIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_FadeIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeIn).name());
+    uint32_t typeId = typeid(cocos2d::FadeIn).hash_code();
     g_luaType[typeId] = "FadeIn";
     return 1;
 }
@@ -19688,7 +19688,7 @@ int lua_register_cocos2dx_FadeOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_FadeOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeOut).name());
+    uint32_t typeId = typeid(cocos2d::FadeOut).hash_code();
     g_luaType[typeId] = "FadeOut";
     return 1;
 }
@@ -20004,7 +20004,7 @@ int lua_register_cocos2dx_FadeTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_FadeTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeTo).name());
+    uint32_t typeId = typeid(cocos2d::FadeTo).hash_code();
     g_luaType[typeId] = "FadeTo";
     return 1;
 }
@@ -20328,7 +20328,7 @@ int lua_register_cocos2dx_TintTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_TintTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_TintTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TintTo).name());
+    uint32_t typeId = typeid(cocos2d::TintTo).hash_code();
     g_luaType[typeId] = "TintTo";
     return 1;
 }
@@ -20652,7 +20652,7 @@ int lua_register_cocos2dx_TintBy(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_TintBy_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_TintBy_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TintBy).name());
+    uint32_t typeId = typeid(cocos2d::TintBy).hash_code();
     g_luaType[typeId] = "TintBy";
     return 1;
 }
@@ -20867,7 +20867,7 @@ int lua_register_cocos2dx_DelayTime(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_DelayTime_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_DelayTime_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::DelayTime).name());
+    uint32_t typeId = typeid(cocos2d::DelayTime).hash_code();
     g_luaType[typeId] = "DelayTime";
     return 1;
 }
@@ -21401,7 +21401,7 @@ int lua_register_cocos2dx_Animate(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Animate_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Animate_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Animate).name());
+    uint32_t typeId = typeid(cocos2d::Animate).hash_code();
     g_luaType[typeId] = "Animate";
     return 1;
 }
@@ -21959,7 +21959,7 @@ int lua_register_cocos2dx_TargetedAction(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TargetedAction_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TargetedAction_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TargetedAction).name());
+    uint32_t typeId = typeid(cocos2d::TargetedAction).hash_code();
     g_luaType[typeId] = "TargetedAction";
     return 1;
 }
@@ -22179,7 +22179,7 @@ int lua_register_cocos2dx_ActionCamera(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_ActionCamera_reverse);
         tolua_function(tolua_S,"new",lua_cocos2dx_ActionCamera_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionCamera).name());
+    uint32_t typeId = typeid(cocos2d::ActionCamera).hash_code();
     g_luaType[typeId] = "ActionCamera";
     return 1;
 }
@@ -22549,7 +22549,7 @@ int lua_register_cocos2dx_OrbitCamera(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_OrbitCamera_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_OrbitCamera_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::OrbitCamera).name());
+    uint32_t typeId = typeid(cocos2d::OrbitCamera).hash_code();
     g_luaType[typeId] = "OrbitCamera";
     return 1;
 }
@@ -23212,7 +23212,7 @@ int lua_register_cocos2dx_ActionManager(lua_State* tolua_S)
         tolua_function(tolua_S,"pauseAllRunningActions",lua_cocos2dx_ActionManager_pauseAllRunningActions);
         tolua_function(tolua_S,"new",lua_cocos2dx_ActionManager_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionManager).name());
+    uint32_t typeId = typeid(cocos2d::ActionManager).hash_code();
     g_luaType[typeId] = "ActionManager";
     return 1;
 }
@@ -23583,7 +23583,7 @@ int lua_register_cocos2dx_ActionEase(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithAction",lua_cocos2dx_ActionEase_initWithAction);
         tolua_function(tolua_S,"getInnerAction",lua_cocos2dx_ActionEase_getInnerAction);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionEase).name());
+    uint32_t typeId = typeid(cocos2d::ActionEase).hash_code();
     g_luaType[typeId] = "ActionEase";
     return 1;
 }
@@ -23850,7 +23850,7 @@ int lua_register_cocos2dx_EaseRateAction(lua_State* tolua_S)
         tolua_function(tolua_S,"getRate",lua_cocos2dx_EaseRateAction_getRate);
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseRateAction_reverse);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseRateAction).name());
+    uint32_t typeId = typeid(cocos2d::EaseRateAction).hash_code();
     g_luaType[typeId] = "EaseRateAction";
     return 1;
 }
@@ -24077,7 +24077,7 @@ int lua_register_cocos2dx_EaseIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseIn).hash_code();
     g_luaType[typeId] = "EaseIn";
     return 1;
 }
@@ -24304,7 +24304,7 @@ int lua_register_cocos2dx_EaseOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseOut).hash_code();
     g_luaType[typeId] = "EaseOut";
     return 1;
 }
@@ -24531,7 +24531,7 @@ int lua_register_cocos2dx_EaseInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseInOut).hash_code();
     g_luaType[typeId] = "EaseInOut";
     return 1;
 }
@@ -24756,7 +24756,7 @@ int lua_register_cocos2dx_EaseExponentialIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseExponentialIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseExponentialIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseExponentialIn).hash_code();
     g_luaType[typeId] = "EaseExponentialIn";
     return 1;
 }
@@ -24981,7 +24981,7 @@ int lua_register_cocos2dx_EaseExponentialOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseExponentialOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseExponentialOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseExponentialOut).hash_code();
     g_luaType[typeId] = "EaseExponentialOut";
     return 1;
 }
@@ -25206,7 +25206,7 @@ int lua_register_cocos2dx_EaseExponentialInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseExponentialInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseExponentialInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseExponentialInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseExponentialInOut).hash_code();
     g_luaType[typeId] = "EaseExponentialInOut";
     return 1;
 }
@@ -25431,7 +25431,7 @@ int lua_register_cocos2dx_EaseSineIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseSineIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseSineIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseSineIn).hash_code();
     g_luaType[typeId] = "EaseSineIn";
     return 1;
 }
@@ -25656,7 +25656,7 @@ int lua_register_cocos2dx_EaseSineOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseSineOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseSineOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseSineOut).hash_code();
     g_luaType[typeId] = "EaseSineOut";
     return 1;
 }
@@ -25881,7 +25881,7 @@ int lua_register_cocos2dx_EaseSineInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseSineInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseSineInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseSineInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseSineInOut).hash_code();
     g_luaType[typeId] = "EaseSineInOut";
     return 1;
 }
@@ -26168,7 +26168,7 @@ int lua_register_cocos2dx_EaseElastic(lua_State* tolua_S)
         tolua_function(tolua_S,"getPeriod",lua_cocos2dx_EaseElastic_getPeriod);
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseElastic_reverse);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseElastic).name());
+    uint32_t typeId = typeid(cocos2d::EaseElastic).hash_code();
     g_luaType[typeId] = "EaseElastic";
     return 1;
 }
@@ -26431,7 +26431,7 @@ int lua_register_cocos2dx_EaseElasticIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseElasticIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseElasticIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseElasticIn).hash_code();
     g_luaType[typeId] = "EaseElasticIn";
     return 1;
 }
@@ -26694,7 +26694,7 @@ int lua_register_cocos2dx_EaseElasticOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseElasticOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseElasticOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseElasticOut).hash_code();
     g_luaType[typeId] = "EaseElasticOut";
     return 1;
 }
@@ -26957,7 +26957,7 @@ int lua_register_cocos2dx_EaseElasticInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseElasticInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseElasticInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseElasticInOut).hash_code();
     g_luaType[typeId] = "EaseElasticInOut";
     return 1;
 }
@@ -27127,7 +27127,7 @@ int lua_register_cocos2dx_EaseBounce(lua_State* tolua_S)
         tolua_function(tolua_S,"clone",lua_cocos2dx_EaseBounce_clone);
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBounce_reverse);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBounce).name());
+    uint32_t typeId = typeid(cocos2d::EaseBounce).hash_code();
     g_luaType[typeId] = "EaseBounce";
     return 1;
 }
@@ -27352,7 +27352,7 @@ int lua_register_cocos2dx_EaseBounceIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBounceIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBounceIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseBounceIn).hash_code();
     g_luaType[typeId] = "EaseBounceIn";
     return 1;
 }
@@ -27577,7 +27577,7 @@ int lua_register_cocos2dx_EaseBounceOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBounceOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBounceOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseBounceOut).hash_code();
     g_luaType[typeId] = "EaseBounceOut";
     return 1;
 }
@@ -27802,7 +27802,7 @@ int lua_register_cocos2dx_EaseBounceInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBounceInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBounceInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBounceInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseBounceInOut).hash_code();
     g_luaType[typeId] = "EaseBounceInOut";
     return 1;
 }
@@ -28027,7 +28027,7 @@ int lua_register_cocos2dx_EaseBackIn(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBackIn_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBackIn).name());
+    uint32_t typeId = typeid(cocos2d::EaseBackIn).hash_code();
     g_luaType[typeId] = "EaseBackIn";
     return 1;
 }
@@ -28252,7 +28252,7 @@ int lua_register_cocos2dx_EaseBackOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBackOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBackOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseBackOut).hash_code();
     g_luaType[typeId] = "EaseBackOut";
     return 1;
 }
@@ -28477,7 +28477,7 @@ int lua_register_cocos2dx_EaseBackInOut(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_EaseBackInOut_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_EaseBackInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::EaseBackInOut).name());
+    uint32_t typeId = typeid(cocos2d::EaseBackInOut).hash_code();
     g_luaType[typeId] = "EaseBackInOut";
     return 1;
 }
@@ -28731,7 +28731,7 @@ int lua_register_cocos2dx_ActionInstant(lua_State* tolua_S)
         tolua_function(tolua_S,"isDone",lua_cocos2dx_ActionInstant_isDone);
         tolua_function(tolua_S,"update",lua_cocos2dx_ActionInstant_update);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionInstant).name());
+    uint32_t typeId = typeid(cocos2d::ActionInstant).hash_code();
     g_luaType[typeId] = "ActionInstant";
     return 1;
 }
@@ -28985,7 +28985,7 @@ int lua_register_cocos2dx_Show(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Show_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Show_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Show).name());
+    uint32_t typeId = typeid(cocos2d::Show).hash_code();
     g_luaType[typeId] = "Show";
     return 1;
 }
@@ -29239,7 +29239,7 @@ int lua_register_cocos2dx_Hide(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Hide_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Hide_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Hide).name());
+    uint32_t typeId = typeid(cocos2d::Hide).hash_code();
     g_luaType[typeId] = "Hide";
     return 1;
 }
@@ -29493,7 +29493,7 @@ int lua_register_cocos2dx_ToggleVisibility(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ToggleVisibility_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_ToggleVisibility_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ToggleVisibility).name());
+    uint32_t typeId = typeid(cocos2d::ToggleVisibility).hash_code();
     g_luaType[typeId] = "ToggleVisibility";
     return 1;
 }
@@ -29813,7 +29813,7 @@ int lua_register_cocos2dx_RemoveSelf(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_RemoveSelf_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_RemoveSelf_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::RemoveSelf).name());
+    uint32_t typeId = typeid(cocos2d::RemoveSelf).hash_code();
     g_luaType[typeId] = "RemoveSelf";
     return 1;
 }
@@ -30113,7 +30113,7 @@ int lua_register_cocos2dx_FlipX(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_FlipX_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipX_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FlipX).name());
+    uint32_t typeId = typeid(cocos2d::FlipX).hash_code();
     g_luaType[typeId] = "FlipX";
     return 1;
 }
@@ -30413,7 +30413,7 @@ int lua_register_cocos2dx_FlipY(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_FlipY_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipY_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FlipY).name());
+    uint32_t typeId = typeid(cocos2d::FlipY).hash_code();
     g_luaType[typeId] = "FlipY";
     return 1;
 }
@@ -30713,7 +30713,7 @@ int lua_register_cocos2dx_Place(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Place_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Place_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Place).name());
+    uint32_t typeId = typeid(cocos2d::Place).hash_code();
     g_luaType[typeId] = "Place";
     return 1;
 }
@@ -31071,7 +31071,7 @@ int lua_register_cocos2dx_CallFunc(lua_State* tolua_S)
         tolua_function(tolua_S,"setTargetCallback",lua_cocos2dx_CallFunc_setTargetCallback);
         tolua_function(tolua_S,"new",lua_cocos2dx_CallFunc_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
+    uint32_t typeId = typeid(cocos2d::CallFunc).hash_code();
     g_luaType[typeId] = "CallFunc";
     return 1;
 }
@@ -31350,7 +31350,7 @@ int lua_register_cocos2dx_GridAction(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_GridAction_reverse);
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_GridAction_initWithDuration);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::GridAction).name());
+    uint32_t typeId = typeid(cocos2d::GridAction).hash_code();
     g_luaType[typeId] = "GridAction";
     return 1;
 }
@@ -31476,7 +31476,7 @@ int lua_register_cocos2dx_Grid3DAction(lua_State* tolua_S)
         tolua_function(tolua_S,"clone",lua_cocos2dx_Grid3DAction_clone);
         tolua_function(tolua_S,"getGrid",lua_cocos2dx_Grid3DAction_getGrid);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Grid3DAction).name());
+    uint32_t typeId = typeid(cocos2d::Grid3DAction).hash_code();
     g_luaType[typeId] = "Grid3DAction";
     return 1;
 }
@@ -31602,7 +31602,7 @@ int lua_register_cocos2dx_TiledGrid3DAction(lua_State* tolua_S)
         tolua_function(tolua_S,"clone",lua_cocos2dx_TiledGrid3DAction_clone);
         tolua_function(tolua_S,"getGrid",lua_cocos2dx_TiledGrid3DAction_getGrid);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TiledGrid3DAction).name());
+    uint32_t typeId = typeid(cocos2d::TiledGrid3DAction).hash_code();
     g_luaType[typeId] = "TiledGrid3DAction";
     return 1;
 }
@@ -31825,7 +31825,7 @@ int lua_register_cocos2dx_StopGrid(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_StopGrid_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_StopGrid_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::StopGrid).name());
+    uint32_t typeId = typeid(cocos2d::StopGrid).hash_code();
     g_luaType[typeId] = "StopGrid";
     return 1;
 }
@@ -32094,7 +32094,7 @@ int lua_register_cocos2dx_ReuseGrid(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_ReuseGrid_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_ReuseGrid_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ReuseGrid).name());
+    uint32_t typeId = typeid(cocos2d::ReuseGrid).hash_code();
     g_luaType[typeId] = "ReuseGrid";
     return 1;
 }
@@ -32481,7 +32481,7 @@ int lua_register_cocos2dx_Waves3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Waves3D_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_Waves3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Waves3D).name());
+    uint32_t typeId = typeid(cocos2d::Waves3D).hash_code();
     g_luaType[typeId] = "Waves3D";
     return 1;
 }
@@ -32732,7 +32732,7 @@ int lua_register_cocos2dx_FlipX3D(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_FlipX3D_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipX3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FlipX3D).name());
+    uint32_t typeId = typeid(cocos2d::FlipX3D).hash_code();
     g_luaType[typeId] = "FlipX3D";
     return 1;
 }
@@ -32893,7 +32893,7 @@ int lua_register_cocos2dx_FlipY3D(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_FlipY3D_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_FlipY3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FlipY3D).name());
+    uint32_t typeId = typeid(cocos2d::FlipY3D).hash_code();
     g_luaType[typeId] = "FlipY3D";
     return 1;
 }
@@ -33323,7 +33323,7 @@ int lua_register_cocos2dx_Lens3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getPosition",lua_cocos2dx_Lens3D_getPosition);
         tolua_function(tolua_S,"create", lua_cocos2dx_Lens3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Lens3D).name());
+    uint32_t typeId = typeid(cocos2d::Lens3D).hash_code();
     g_luaType[typeId] = "Lens3D";
     return 1;
 }
@@ -33803,7 +33803,7 @@ int lua_register_cocos2dx_Ripple3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getPosition",lua_cocos2dx_Ripple3D_getPosition);
         tolua_function(tolua_S,"create", lua_cocos2dx_Ripple3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Ripple3D).name());
+    uint32_t typeId = typeid(cocos2d::Ripple3D).hash_code();
     g_luaType[typeId] = "Ripple3D";
     return 1;
 }
@@ -34020,7 +34020,7 @@ int lua_register_cocos2dx_Shaky3D(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_Shaky3D_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_Shaky3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Shaky3D).name());
+    uint32_t typeId = typeid(cocos2d::Shaky3D).hash_code();
     g_luaType[typeId] = "Shaky3D";
     return 1;
 }
@@ -34407,7 +34407,7 @@ int lua_register_cocos2dx_Liquid(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Liquid_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_Liquid_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Liquid).name());
+    uint32_t typeId = typeid(cocos2d::Liquid).hash_code();
     g_luaType[typeId] = "Liquid";
     return 1;
 }
@@ -34802,7 +34802,7 @@ int lua_register_cocos2dx_Waves(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_Waves_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_Waves_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Waves).name());
+    uint32_t typeId = typeid(cocos2d::Waves).hash_code();
     g_luaType[typeId] = "Waves";
     return 1;
 }
@@ -35278,7 +35278,7 @@ int lua_register_cocos2dx_Twirl(lua_State* tolua_S)
         tolua_function(tolua_S,"getPosition",lua_cocos2dx_Twirl_getPosition);
         tolua_function(tolua_S,"create", lua_cocos2dx_Twirl_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Twirl).name());
+    uint32_t typeId = typeid(cocos2d::Twirl).hash_code();
     g_luaType[typeId] = "Twirl";
     return 1;
 }
@@ -35441,7 +35441,7 @@ int lua_register_cocos2dx_PageTurn3D(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_PageTurn3D_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_PageTurn3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::PageTurn3D).name());
+    uint32_t typeId = typeid(cocos2d::PageTurn3D).hash_code();
     g_luaType[typeId] = "PageTurn3D";
     return 1;
 }
@@ -35757,7 +35757,7 @@ int lua_register_cocos2dx_ProgressTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_ProgressTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_ProgressTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ProgressTo).name());
+    uint32_t typeId = typeid(cocos2d::ProgressTo).hash_code();
     g_luaType[typeId] = "ProgressTo";
     return 1;
 }
@@ -36077,7 +36077,7 @@ int lua_register_cocos2dx_ProgressFromTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_ProgressFromTo_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_ProgressFromTo_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ProgressFromTo).name());
+    uint32_t typeId = typeid(cocos2d::ProgressFromTo).hash_code();
     g_luaType[typeId] = "ProgressFromTo";
     return 1;
 }
@@ -36294,7 +36294,7 @@ int lua_register_cocos2dx_ShakyTiles3D(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_ShakyTiles3D_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_ShakyTiles3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ShakyTiles3D).name());
+    uint32_t typeId = typeid(cocos2d::ShakyTiles3D).hash_code();
     g_luaType[typeId] = "ShakyTiles3D";
     return 1;
 }
@@ -36511,7 +36511,7 @@ int lua_register_cocos2dx_ShatteredTiles3D(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_ShatteredTiles3D_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_ShatteredTiles3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ShatteredTiles3D).name());
+    uint32_t typeId = typeid(cocos2d::ShatteredTiles3D).hash_code();
     g_luaType[typeId] = "ShatteredTiles3D";
     return 1;
 }
@@ -36921,7 +36921,7 @@ int lua_register_cocos2dx_ShuffleTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"shuffle",lua_cocos2dx_ShuffleTiles_shuffle);
         tolua_function(tolua_S,"create", lua_cocos2dx_ShuffleTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ShuffleTiles).name());
+    uint32_t typeId = typeid(cocos2d::ShuffleTiles).hash_code();
     g_luaType[typeId] = "ShuffleTiles";
     return 1;
 }
@@ -37261,7 +37261,7 @@ int lua_register_cocos2dx_FadeOutTRTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"testFunc",lua_cocos2dx_FadeOutTRTiles_testFunc);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutTRTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeOutTRTiles).name());
+    uint32_t typeId = typeid(cocos2d::FadeOutTRTiles).hash_code();
     g_luaType[typeId] = "FadeOutTRTiles";
     return 1;
 }
@@ -37427,7 +37427,7 @@ int lua_register_cocos2dx_FadeOutBLTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"testFunc",lua_cocos2dx_FadeOutBLTiles_testFunc);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutBLTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeOutBLTiles).name());
+    uint32_t typeId = typeid(cocos2d::FadeOutBLTiles).hash_code();
     g_luaType[typeId] = "FadeOutBLTiles";
     return 1;
 }
@@ -37638,7 +37638,7 @@ int lua_register_cocos2dx_FadeOutUpTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"testFunc",lua_cocos2dx_FadeOutUpTiles_testFunc);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutUpTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeOutUpTiles).name());
+    uint32_t typeId = typeid(cocos2d::FadeOutUpTiles).hash_code();
     g_luaType[typeId] = "FadeOutUpTiles";
     return 1;
 }
@@ -37804,7 +37804,7 @@ int lua_register_cocos2dx_FadeOutDownTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"testFunc",lua_cocos2dx_FadeOutDownTiles_testFunc);
         tolua_function(tolua_S,"create", lua_cocos2dx_FadeOutDownTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FadeOutDownTiles).name());
+    uint32_t typeId = typeid(cocos2d::FadeOutDownTiles).hash_code();
     g_luaType[typeId] = "FadeOutDownTiles";
     return 1;
 }
@@ -38231,7 +38231,7 @@ int lua_register_cocos2dx_TurnOffTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_TurnOffTiles_update);
         tolua_function(tolua_S,"create", lua_cocos2dx_TurnOffTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TurnOffTiles).name());
+    uint32_t typeId = typeid(cocos2d::TurnOffTiles).hash_code();
     g_luaType[typeId] = "TurnOffTiles";
     return 1;
 }
@@ -38618,7 +38618,7 @@ int lua_register_cocos2dx_WavesTiles3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_WavesTiles3D_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_WavesTiles3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::WavesTiles3D).name());
+    uint32_t typeId = typeid(cocos2d::WavesTiles3D).hash_code();
     g_luaType[typeId] = "WavesTiles3D";
     return 1;
 }
@@ -39005,7 +39005,7 @@ int lua_register_cocos2dx_JumpTiles3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getAmplitude",lua_cocos2dx_JumpTiles3D_getAmplitude);
         tolua_function(tolua_S,"create", lua_cocos2dx_JumpTiles3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::JumpTiles3D).name());
+    uint32_t typeId = typeid(cocos2d::JumpTiles3D).hash_code();
     g_luaType[typeId] = "JumpTiles3D";
     return 1;
 }
@@ -39267,7 +39267,7 @@ int lua_register_cocos2dx_SplitRows(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_SplitRows_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_SplitRows_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SplitRows).name());
+    uint32_t typeId = typeid(cocos2d::SplitRows).hash_code();
     g_luaType[typeId] = "SplitRows";
     return 1;
 }
@@ -39529,7 +39529,7 @@ int lua_register_cocos2dx_SplitCols(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_SplitCols_initWithDuration);
         tolua_function(tolua_S,"create", lua_cocos2dx_SplitCols_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SplitCols).name());
+    uint32_t typeId = typeid(cocos2d::SplitCols).hash_code();
     g_luaType[typeId] = "SplitCols";
     return 1;
 }
@@ -39853,7 +39853,7 @@ int lua_register_cocos2dx_ActionTween(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_ActionTween_reverse);
         tolua_function(tolua_S,"create", lua_cocos2dx_ActionTween_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ActionTween).name());
+    uint32_t typeId = typeid(cocos2d::ActionTween).hash_code();
     g_luaType[typeId] = "ActionTween";
     return 1;
 }
@@ -40271,7 +40271,7 @@ int lua_register_cocos2dx_CardinalSplineTo(lua_State* tolua_S)
         tolua_function(tolua_S,"update",lua_cocos2dx_CardinalSplineTo_update);
         tolua_function(tolua_S,"new",lua_cocos2dx_CardinalSplineTo_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::CardinalSplineTo).name());
+    uint32_t typeId = typeid(cocos2d::CardinalSplineTo).hash_code();
     g_luaType[typeId] = "CardinalSplineTo";
     return 1;
 }
@@ -40534,7 +40534,7 @@ int lua_register_cocos2dx_CardinalSplineBy(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_CardinalSplineBy_reverse);
         tolua_function(tolua_S,"new",lua_cocos2dx_CardinalSplineBy_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::CardinalSplineBy).name());
+    uint32_t typeId = typeid(cocos2d::CardinalSplineBy).hash_code();
     g_luaType[typeId] = "CardinalSplineBy";
     return 1;
 }
@@ -40716,7 +40716,7 @@ int lua_register_cocos2dx_CatmullRomTo(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_CatmullRomTo_reverse);
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_CatmullRomTo_initWithDuration);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::CatmullRomTo).name());
+    uint32_t typeId = typeid(cocos2d::CatmullRomTo).hash_code();
     g_luaType[typeId] = "CatmullRomTo";
     return 1;
 }
@@ -40898,7 +40898,7 @@ int lua_register_cocos2dx_CatmullRomBy(lua_State* tolua_S)
         tolua_function(tolua_S,"reverse",lua_cocos2dx_CatmullRomBy_reverse);
         tolua_function(tolua_S,"initWithDuration",lua_cocos2dx_CatmullRomBy_initWithDuration);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::CatmullRomBy).name());
+    uint32_t typeId = typeid(cocos2d::CatmullRomBy).hash_code();
     g_luaType[typeId] = "CatmullRomBy";
     return 1;
 }
@@ -41713,7 +41713,7 @@ int lua_register_cocos2dx_AtlasNode(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_AtlasNode_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_AtlasNode_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::AtlasNode).name());
+    uint32_t typeId = typeid(cocos2d::AtlasNode).hash_code();
     g_luaType[typeId] = "AtlasNode";
     return 1;
 }
@@ -42036,7 +42036,7 @@ int lua_register_cocos2dx_DrawNode(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_DrawNode_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_DrawNode_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::DrawNode).name());
+    uint32_t typeId = typeid(cocos2d::DrawNode).hash_code();
     g_luaType[typeId] = "DrawNode";
     return 1;
 }
@@ -42476,7 +42476,7 @@ int lua_register_cocos2dx_Camera(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Camera_constructor);
         tolua_function(tolua_S,"getZEye", lua_cocos2dx_Camera_getZEye);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Camera).name());
+    uint32_t typeId = typeid(cocos2d::Camera).hash_code();
     g_luaType[typeId] = "Camera";
     return 1;
 }
@@ -42855,7 +42855,7 @@ int lua_register_cocos2dx_LabelAtlas(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_LabelAtlas_constructor);
         tolua_function(tolua_S,"_create", lua_cocos2dx_LabelAtlas_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LabelAtlas).name());
+    uint32_t typeId = typeid(cocos2d::LabelAtlas).hash_code();
     g_luaType[typeId] = "LabelAtlas";
     return 1;
 }
@@ -42897,6 +42897,58 @@ int lua_cocos2dx_Director_pause(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pause'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNotificationNode'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Node* arg0;
+        do {
+#if COCOS2D_DEBUG >= 1
+				if (!tolua_isusertype(tolua_S,2,"Node",0,&tolua_err)){
+					luaval_to_native_err(tolua_S,"#ferror:",&tolua_err);
+					ok = false;
+					break;
+				}
+#endif
+				if (ok){
+					arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
+				}} while (0);
+        if(!ok)
+            return 0;
+        cobj->setNotificationNode(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setNotificationNode",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setNotificationNode'.",&tolua_err);
 #endif
     return 0;
 }
@@ -44330,58 +44382,6 @@ int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setNotificationNode'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Node* arg0;
-        do {
-#if COCOS2D_DEBUG >= 1
-				if (!tolua_isusertype(tolua_S,2,"Node",0,&tolua_err)){
-					luaval_to_native_err(tolua_S,"#ferror:",&tolua_err);
-					ok = false;
-					break;
-				}
-#endif
-				if (ok){
-					arg0 = (cocos2d::Node*)tolua_tousertype(tolua_S,2,0);
-				}} while (0);
-        if(!ok)
-            return 0;
-        cobj->setNotificationNode(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setNotificationNode",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setNotificationNode'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 {
     int argc = 0;
@@ -45101,6 +45101,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Director");
         tolua_function(tolua_S,"pause",lua_cocos2dx_Director_pause);
+        tolua_function(tolua_S,"setNotificationNode",lua_cocos2dx_Director_setNotificationNode);
         tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_Director_setContentScaleFactor);
         tolua_function(tolua_S,"getContentScaleFactor",lua_cocos2dx_Director_getContentScaleFactor);
         tolua_function(tolua_S,"getWinSizeInPixels",lua_cocos2dx_Director_getWinSizeInPixels);
@@ -45134,7 +45135,6 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"purgeCachedData",lua_cocos2dx_Director_purgeCachedData);
         tolua_function(tolua_S,"getTotalFrames",lua_cocos2dx_Director_getTotalFrames);
         tolua_function(tolua_S,"runWithScene",lua_cocos2dx_Director_runWithScene);
-        tolua_function(tolua_S,"setNotificationNode",lua_cocos2dx_Director_setNotificationNode);
         tolua_function(tolua_S,"drawScene",lua_cocos2dx_Director_drawScene);
         tolua_function(tolua_S,"popScene",lua_cocos2dx_Director_popScene);
         tolua_function(tolua_S,"isDisplayStats",lua_cocos2dx_Director_isDisplayStats);
@@ -45152,7 +45152,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"getActionManager",lua_cocos2dx_Director_getActionManager);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_Director_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Director).name());
+    uint32_t typeId = typeid(cocos2d::Director).hash_code();
     g_luaType[typeId] = "Director";
     return 1;
 }
@@ -46009,7 +46009,7 @@ int lua_register_cocos2dx_GridBase(lua_State* tolua_S)
         tolua_function(tolua_S,"reuse",lua_cocos2dx_GridBase_reuse);
         tolua_function(tolua_S,"create", lua_cocos2dx_GridBase_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::GridBase).name());
+    uint32_t typeId = typeid(cocos2d::GridBase).hash_code();
     g_luaType[typeId] = "GridBase";
     return 1;
 }
@@ -46278,7 +46278,7 @@ int lua_register_cocos2dx_Grid3D(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Grid3D_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Grid3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Grid3D).name());
+    uint32_t typeId = typeid(cocos2d::Grid3D).hash_code();
     g_luaType[typeId] = "Grid3D";
     return 1;
 }
@@ -46547,7 +46547,7 @@ int lua_register_cocos2dx_TiledGrid3D(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TiledGrid3D_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TiledGrid3D_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TiledGrid3D).name());
+    uint32_t typeId = typeid(cocos2d::TiledGrid3D).hash_code();
     g_luaType[typeId] = "TiledGrid3D";
     return 1;
 }
@@ -49350,7 +49350,7 @@ int lua_register_cocos2dx_Sprite(lua_State* tolua_S)
         tolua_function(tolua_S,"createWithSpriteFrameName", lua_cocos2dx_Sprite_createWithSpriteFrameName);
         tolua_function(tolua_S,"createWithSpriteFrame", lua_cocos2dx_Sprite_createWithSpriteFrame);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Sprite).name());
+    uint32_t typeId = typeid(cocos2d::Sprite).hash_code();
     g_luaType[typeId] = "Sprite";
     return 1;
 }
@@ -50669,7 +50669,7 @@ int lua_register_cocos2dx_LabelTTF(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_LabelTTF_create);
         tolua_function(tolua_S,"createWithFontDefinition", lua_cocos2dx_LabelTTF_createWithFontDefinition);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LabelTTF).name());
+    uint32_t typeId = typeid(cocos2d::LabelTTF).hash_code();
     g_luaType[typeId] = "LabelTTF";
     return 1;
 }
@@ -52138,7 +52138,7 @@ int lua_register_cocos2dx_SpriteBatchNode(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_SpriteBatchNode_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_SpriteBatchNode_createWithTexture);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SpriteBatchNode).name());
+    uint32_t typeId = typeid(cocos2d::SpriteBatchNode).hash_code();
     g_luaType[typeId] = "SpriteBatchNode";
     return 1;
 }
@@ -53735,7 +53735,7 @@ int lua_register_cocos2dx_LabelBMFont(lua_State* tolua_S)
         tolua_function(tolua_S,"purgeCachedData", lua_cocos2dx_LabelBMFont_purgeCachedData);
         tolua_function(tolua_S,"create", lua_cocos2dx_LabelBMFont_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LabelBMFont).name());
+    uint32_t typeId = typeid(cocos2d::LabelBMFont).hash_code();
     g_luaType[typeId] = "LabelBMFont";
     return 1;
 }
@@ -55997,7 +55997,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"createWithBMFont", lua_cocos2dx_Label_createWithBMFont);
         tolua_function(tolua_S,"createWithTTF", lua_cocos2dx_Label_createWithTTF);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Label).name());
+    uint32_t typeId = typeid(cocos2d::Label).hash_code();
     g_luaType[typeId] = "Label";
     return 1;
 }
@@ -57424,7 +57424,7 @@ int lua_register_cocos2dx_Layer(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Layer_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Layer_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Layer).name());
+    uint32_t typeId = typeid(cocos2d::Layer).hash_code();
     g_luaType[typeId] = "Layer";
     return 1;
 }
@@ -58164,7 +58164,7 @@ int lua_register_cocos2dx_LayerRGBA(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_LayerRGBA_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_LayerRGBA_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LayerRGBA).name());
+    uint32_t typeId = typeid(cocos2d::LayerRGBA).hash_code();
     g_luaType[typeId] = "LayerRGBA";
     return 1;
 }
@@ -58688,7 +58688,7 @@ int lua_register_cocos2dx_LayerColor(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_LayerColor_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_LayerColor_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LayerColor).name());
+    uint32_t typeId = typeid(cocos2d::LayerColor).hash_code();
     g_luaType[typeId] = "LayerColor";
     return 1;
 }
@@ -59387,7 +59387,7 @@ int lua_register_cocos2dx_LayerGradient(lua_State* tolua_S)
         tolua_function(tolua_S,"setStartColor",lua_cocos2dx_LayerGradient_setStartColor);
         tolua_function(tolua_S,"create", lua_cocos2dx_LayerGradient_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LayerGradient).name());
+    uint32_t typeId = typeid(cocos2d::LayerGradient).hash_code();
     g_luaType[typeId] = "LayerGradient";
     return 1;
 }
@@ -59629,7 +59629,7 @@ int lua_register_cocos2dx_LayerMultiplex(lua_State* tolua_S)
         tolua_function(tolua_S,"switchTo",lua_cocos2dx_LayerMultiplex_switchTo);
         tolua_function(tolua_S,"new",lua_cocos2dx_LayerMultiplex_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::LayerMultiplex).name());
+    uint32_t typeId = typeid(cocos2d::LayerMultiplex).hash_code();
     g_luaType[typeId] = "LayerMultiplex";
     return 1;
 }
@@ -59774,7 +59774,7 @@ int lua_register_cocos2dx_Scene(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Scene_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_Scene_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Scene).name());
+    uint32_t typeId = typeid(cocos2d::Scene).hash_code();
     g_luaType[typeId] = "Scene";
     return 1;
 }
@@ -59858,7 +59858,7 @@ int lua_register_cocos2dx_TransitionEaseScene(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionEaseScene");
         tolua_function(tolua_S,"easeActionWithAction",lua_cocos2dx_TransitionEaseScene_easeActionWithAction);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionEaseScene).name());
+    uint32_t typeId = typeid(cocos2d::TransitionEaseScene).hash_code();
     g_luaType[typeId] = "TransitionEaseScene";
     return 1;
 }
@@ -60195,7 +60195,7 @@ int lua_register_cocos2dx_TransitionScene(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionScene_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionScene_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionScene).name());
+    uint32_t typeId = typeid(cocos2d::TransitionScene).hash_code();
     g_luaType[typeId] = "TransitionScene";
     return 1;
 }
@@ -60372,7 +60372,7 @@ int lua_register_cocos2dx_TransitionSceneOriented(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSceneOriented_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSceneOriented_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSceneOriented).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSceneOriented).hash_code();
     g_luaType[typeId] = "TransitionSceneOriented";
     return 1;
 }
@@ -60488,7 +60488,7 @@ int lua_register_cocos2dx_TransitionRotoZoom(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionRotoZoom");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionRotoZoom_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionRotoZoom).name());
+    uint32_t typeId = typeid(cocos2d::TransitionRotoZoom).hash_code();
     g_luaType[typeId] = "TransitionRotoZoom";
     return 1;
 }
@@ -60604,7 +60604,7 @@ int lua_register_cocos2dx_TransitionJumpZoom(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionJumpZoom");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionJumpZoom_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionJumpZoom).name());
+    uint32_t typeId = typeid(cocos2d::TransitionJumpZoom).hash_code();
     g_luaType[typeId] = "TransitionJumpZoom";
     return 1;
 }
@@ -60882,7 +60882,7 @@ int lua_register_cocos2dx_TransitionMoveInL(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionMoveInL_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInL_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionMoveInL).name());
+    uint32_t typeId = typeid(cocos2d::TransitionMoveInL).hash_code();
     g_luaType[typeId] = "TransitionMoveInL";
     return 1;
 }
@@ -61040,7 +61040,7 @@ int lua_register_cocos2dx_TransitionMoveInR(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionMoveInR_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInR_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionMoveInR).name());
+    uint32_t typeId = typeid(cocos2d::TransitionMoveInR).hash_code();
     g_luaType[typeId] = "TransitionMoveInR";
     return 1;
 }
@@ -61198,7 +61198,7 @@ int lua_register_cocos2dx_TransitionMoveInT(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionMoveInT_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInT_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionMoveInT).name());
+    uint32_t typeId = typeid(cocos2d::TransitionMoveInT).hash_code();
     g_luaType[typeId] = "TransitionMoveInT";
     return 1;
 }
@@ -61356,7 +61356,7 @@ int lua_register_cocos2dx_TransitionMoveInB(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionMoveInB_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionMoveInB_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionMoveInB).name());
+    uint32_t typeId = typeid(cocos2d::TransitionMoveInB).hash_code();
     g_luaType[typeId] = "TransitionMoveInB";
     return 1;
 }
@@ -61634,7 +61634,7 @@ int lua_register_cocos2dx_TransitionSlideInL(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSlideInL_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSlideInL_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSlideInL).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSlideInL).hash_code();
     g_luaType[typeId] = "TransitionSlideInL";
     return 1;
 }
@@ -61846,7 +61846,7 @@ int lua_register_cocos2dx_TransitionSlideInR(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSlideInR_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSlideInR_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSlideInR).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSlideInR).hash_code();
     g_luaType[typeId] = "TransitionSlideInR";
     return 1;
 }
@@ -62058,7 +62058,7 @@ int lua_register_cocos2dx_TransitionSlideInB(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSlideInB_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSlideInB_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSlideInB).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSlideInB).hash_code();
     g_luaType[typeId] = "TransitionSlideInB";
     return 1;
 }
@@ -62270,7 +62270,7 @@ int lua_register_cocos2dx_TransitionSlideInT(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSlideInT_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSlideInT_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSlideInT).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSlideInT).hash_code();
     g_luaType[typeId] = "TransitionSlideInT";
     return 1;
 }
@@ -62453,7 +62453,7 @@ int lua_register_cocos2dx_TransitionShrinkGrow(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionShrinkGrow_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionShrinkGrow_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionShrinkGrow).name());
+    uint32_t typeId = typeid(cocos2d::TransitionShrinkGrow).hash_code();
     g_luaType[typeId] = "TransitionShrinkGrow";
     return 1;
 }
@@ -62611,7 +62611,7 @@ int lua_register_cocos2dx_TransitionFlipX(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionFlipX");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipX_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFlipX).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFlipX).hash_code();
     g_luaType[typeId] = "TransitionFlipX";
     return 1;
 }
@@ -62769,7 +62769,7 @@ int lua_register_cocos2dx_TransitionFlipY(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionFlipY");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipY_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFlipY).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFlipY).hash_code();
     g_luaType[typeId] = "TransitionFlipY";
     return 1;
 }
@@ -62927,7 +62927,7 @@ int lua_register_cocos2dx_TransitionFlipAngular(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionFlipAngular");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFlipAngular_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFlipAngular).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFlipAngular).hash_code();
     g_luaType[typeId] = "TransitionFlipAngular";
     return 1;
 }
@@ -63085,7 +63085,7 @@ int lua_register_cocos2dx_TransitionZoomFlipX(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionZoomFlipX");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipX_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionZoomFlipX).name());
+    uint32_t typeId = typeid(cocos2d::TransitionZoomFlipX).hash_code();
     g_luaType[typeId] = "TransitionZoomFlipX";
     return 1;
 }
@@ -63243,7 +63243,7 @@ int lua_register_cocos2dx_TransitionZoomFlipY(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionZoomFlipY");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipY_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionZoomFlipY).name());
+    uint32_t typeId = typeid(cocos2d::TransitionZoomFlipY).hash_code();
     g_luaType[typeId] = "TransitionZoomFlipY";
     return 1;
 }
@@ -63401,7 +63401,7 @@ int lua_register_cocos2dx_TransitionZoomFlipAngular(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionZoomFlipAngular");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionZoomFlipAngular_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionZoomFlipAngular).name());
+    uint32_t typeId = typeid(cocos2d::TransitionZoomFlipAngular).hash_code();
     g_luaType[typeId] = "TransitionZoomFlipAngular";
     return 1;
 }
@@ -63643,7 +63643,7 @@ int lua_register_cocos2dx_TransitionFade(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionFade_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFade_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFade).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFade).hash_code();
     g_luaType[typeId] = "TransitionFade";
     return 1;
 }
@@ -63801,7 +63801,7 @@ int lua_register_cocos2dx_TransitionCrossFade(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionCrossFade_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionCrossFade_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionCrossFade).name());
+    uint32_t typeId = typeid(cocos2d::TransitionCrossFade).hash_code();
     g_luaType[typeId] = "TransitionCrossFade";
     return 1;
 }
@@ -63984,7 +63984,7 @@ int lua_register_cocos2dx_TransitionTurnOffTiles(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionTurnOffTiles_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionTurnOffTiles_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionTurnOffTiles).name());
+    uint32_t typeId = typeid(cocos2d::TransitionTurnOffTiles).hash_code();
     g_luaType[typeId] = "TransitionTurnOffTiles";
     return 1;
 }
@@ -64221,7 +64221,7 @@ int lua_register_cocos2dx_TransitionSplitCols(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSplitCols_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSplitCols_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSplitCols).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSplitCols).hash_code();
     g_luaType[typeId] = "TransitionSplitCols";
     return 1;
 }
@@ -64392,7 +64392,7 @@ int lua_register_cocos2dx_TransitionSplitRows(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionSplitRows_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionSplitRows_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionSplitRows).name());
+    uint32_t typeId = typeid(cocos2d::TransitionSplitRows).hash_code();
     g_luaType[typeId] = "TransitionSplitRows";
     return 1;
 }
@@ -64631,7 +64631,7 @@ int lua_register_cocos2dx_TransitionFadeTR(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionFadeTR_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeTR_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFadeTR).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFadeTR).hash_code();
     g_luaType[typeId] = "TransitionFadeTR";
     return 1;
 }
@@ -64804,7 +64804,7 @@ int lua_register_cocos2dx_TransitionFadeBL(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionFadeBL_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeBL_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFadeBL).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFadeBL).hash_code();
     g_luaType[typeId] = "TransitionFadeBL";
     return 1;
 }
@@ -64977,7 +64977,7 @@ int lua_register_cocos2dx_TransitionFadeUp(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionFadeUp_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeUp_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFadeUp).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFadeUp).hash_code();
     g_luaType[typeId] = "TransitionFadeUp";
     return 1;
 }
@@ -65150,7 +65150,7 @@ int lua_register_cocos2dx_TransitionFadeDown(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionFadeDown_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionFadeDown_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionFadeDown).name());
+    uint32_t typeId = typeid(cocos2d::TransitionFadeDown).hash_code();
     g_luaType[typeId] = "TransitionFadeDown";
     return 1;
 }
@@ -65383,7 +65383,7 @@ int lua_register_cocos2dx_TransitionPageTurn(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TransitionPageTurn_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionPageTurn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionPageTurn).name());
+    uint32_t typeId = typeid(cocos2d::TransitionPageTurn).hash_code();
     g_luaType[typeId] = "TransitionPageTurn";
     return 1;
 }
@@ -65499,7 +65499,7 @@ int lua_register_cocos2dx_TransitionProgress(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgress");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgress_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgress).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgress).hash_code();
     g_luaType[typeId] = "TransitionProgress";
     return 1;
 }
@@ -65575,7 +65575,7 @@ int lua_register_cocos2dx_TransitionProgressRadialCCW(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressRadialCCW");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressRadialCCW_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressRadialCCW).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressRadialCCW).hash_code();
     g_luaType[typeId] = "TransitionProgressRadialCCW";
     return 1;
 }
@@ -65651,7 +65651,7 @@ int lua_register_cocos2dx_TransitionProgressRadialCW(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressRadialCW");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressRadialCW_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressRadialCW).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressRadialCW).hash_code();
     g_luaType[typeId] = "TransitionProgressRadialCW";
     return 1;
 }
@@ -65727,7 +65727,7 @@ int lua_register_cocos2dx_TransitionProgressHorizontal(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressHorizontal");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressHorizontal_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressHorizontal).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressHorizontal).hash_code();
     g_luaType[typeId] = "TransitionProgressHorizontal";
     return 1;
 }
@@ -65803,7 +65803,7 @@ int lua_register_cocos2dx_TransitionProgressVertical(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressVertical");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressVertical_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressVertical).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressVertical).hash_code();
     g_luaType[typeId] = "TransitionProgressVertical";
     return 1;
 }
@@ -65879,7 +65879,7 @@ int lua_register_cocos2dx_TransitionProgressInOut(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressInOut");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressInOut_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressInOut).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressInOut).hash_code();
     g_luaType[typeId] = "TransitionProgressInOut";
     return 1;
 }
@@ -65955,7 +65955,7 @@ int lua_register_cocos2dx_TransitionProgressOutIn(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TransitionProgressOutIn");
         tolua_function(tolua_S,"create", lua_cocos2dx_TransitionProgressOutIn_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TransitionProgressOutIn).name());
+    uint32_t typeId = typeid(cocos2d::TransitionProgressOutIn).hash_code();
     g_luaType[typeId] = "TransitionProgressOutIn";
     return 1;
 }
@@ -66306,7 +66306,7 @@ int lua_register_cocos2dx_MenuItem(lua_State* tolua_S)
         tolua_function(tolua_S,"rect",lua_cocos2dx_MenuItem_rect);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItem_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItem).name());
+    uint32_t typeId = typeid(cocos2d::MenuItem).hash_code();
     g_luaType[typeId] = "MenuItem";
     return 1;
 }
@@ -66849,7 +66849,7 @@ int lua_register_cocos2dx_MenuItemLabel(lua_State* tolua_S)
         tolua_function(tolua_S,"unselected",lua_cocos2dx_MenuItemLabel_unselected);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItemLabel_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemLabel).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemLabel).hash_code();
     g_luaType[typeId] = "MenuItemLabel";
     return 1;
 }
@@ -66989,7 +66989,7 @@ int lua_register_cocos2dx_MenuItemAtlasFont(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithString",lua_cocos2dx_MenuItemAtlasFont_initWithString);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItemAtlasFont_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemAtlasFont).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemAtlasFont).hash_code();
     g_luaType[typeId] = "MenuItemAtlasFont";
     return 1;
 }
@@ -67421,7 +67421,7 @@ int lua_register_cocos2dx_MenuItemFont(lua_State* tolua_S)
         tolua_function(tolua_S,"getFontName", lua_cocos2dx_MenuItemFont_getFontName);
         tolua_function(tolua_S,"setFontSize", lua_cocos2dx_MenuItemFont_setFontSize);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemFont).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemFont).hash_code();
     g_luaType[typeId] = "MenuItemFont";
     return 1;
 }
@@ -68033,7 +68033,7 @@ int lua_register_cocos2dx_MenuItemSprite(lua_State* tolua_S)
         tolua_function(tolua_S,"unselected",lua_cocos2dx_MenuItemSprite_unselected);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItemSprite_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemSprite).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemSprite).hash_code();
     g_luaType[typeId] = "MenuItemSprite";
     return 1;
 }
@@ -68370,7 +68370,7 @@ int lua_register_cocos2dx_MenuItemImage(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithNormalImage",lua_cocos2dx_MenuItemImage_initWithNormalImage);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItemImage_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemImage).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemImage).hash_code();
     g_luaType[typeId] = "MenuItemImage";
     return 1;
 }
@@ -68884,7 +68884,7 @@ int lua_register_cocos2dx_MenuItemToggle(lua_State* tolua_S)
         tolua_function(tolua_S,"getSelectedItem",lua_cocos2dx_MenuItemToggle_getSelectedItem);
         tolua_function(tolua_S,"new",lua_cocos2dx_MenuItemToggle_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MenuItemToggle).name());
+    uint32_t typeId = typeid(cocos2d::MenuItemToggle).hash_code();
     g_luaType[typeId] = "MenuItemToggle";
     return 1;
 }
@@ -69868,7 +69868,7 @@ int lua_register_cocos2dx_Menu(lua_State* tolua_S)
         tolua_function(tolua_S,"registerWithTouchDispatcher",lua_cocos2dx_Menu_registerWithTouchDispatcher);
         tolua_function(tolua_S,"new",lua_cocos2dx_Menu_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Menu).name());
+    uint32_t typeId = typeid(cocos2d::Menu).hash_code();
     g_luaType[typeId] = "Menu";
     return 1;
 }
@@ -70339,7 +70339,7 @@ int lua_register_cocos2dx_ClippingNode(lua_State* tolua_S)
         tolua_function(tolua_S,"setAlphaThreshold",lua_cocos2dx_ClippingNode_setAlphaThreshold);
         tolua_function(tolua_S,"create", lua_cocos2dx_ClippingNode_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ClippingNode).name());
+    uint32_t typeId = typeid(cocos2d::ClippingNode).hash_code();
     g_luaType[typeId] = "ClippingNode";
     return 1;
 }
@@ -71170,7 +71170,7 @@ int lua_register_cocos2dx_MotionStreak(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_MotionStreak_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_MotionStreak_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::MotionStreak).name());
+    uint32_t typeId = typeid(cocos2d::MotionStreak).hash_code();
     g_luaType[typeId] = "MotionStreak";
     return 1;
 }
@@ -72131,7 +72131,7 @@ int lua_register_cocos2dx_ProgressTimer(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ProgressTimer_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_ProgressTimer_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ProgressTimer).name());
+    uint32_t typeId = typeid(cocos2d::ProgressTimer).hash_code();
     g_luaType[typeId] = "ProgressTimer";
     return 1;
 }
@@ -72836,7 +72836,7 @@ int lua_register_cocos2dx_Image(lua_State* tolua_S)
         tolua_function(tolua_S,"getMipmaps",lua_cocos2dx_Image_getMipmaps);
         tolua_function(tolua_S,"new",lua_cocos2dx_Image_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Image).name());
+    uint32_t typeId = typeid(cocos2d::Image).hash_code();
     g_luaType[typeId] = "Image";
     return 1;
 }
@@ -74295,7 +74295,7 @@ int lua_register_cocos2dx_RenderTexture(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_RenderTexture_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_RenderTexture_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::RenderTexture).name());
+    uint32_t typeId = typeid(cocos2d::RenderTexture).hash_code();
     g_luaType[typeId] = "RenderTexture";
     return 1;
 }
@@ -75309,7 +75309,7 @@ int lua_register_cocos2dx_ParticleBatchNode(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleBatchNode_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_ParticleBatchNode_createWithTexture);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleBatchNode).name());
+    uint32_t typeId = typeid(cocos2d::ParticleBatchNode).hash_code();
     g_luaType[typeId] = "ParticleBatchNode";
     return 1;
 }
@@ -79979,7 +79979,7 @@ int lua_register_cocos2dx_ParticleSystem(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSystem_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSystem_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSystem).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSystem).hash_code();
     g_luaType[typeId] = "ParticleSystem";
     return 1;
 }
@@ -80344,7 +80344,7 @@ int lua_register_cocos2dx_ParticleSystemQuad(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSystemQuad_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSystemQuad).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSystemQuad).hash_code();
     g_luaType[typeId] = "ParticleSystemQuad";
     return 1;
 }
@@ -80579,7 +80579,7 @@ int lua_register_cocos2dx_ParticleFire(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFire_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleFire_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleFire).name());
+    uint32_t typeId = typeid(cocos2d::ParticleFire).hash_code();
     g_luaType[typeId] = "ParticleFire";
     return 1;
 }
@@ -80814,7 +80814,7 @@ int lua_register_cocos2dx_ParticleFireworks(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFireworks_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleFireworks_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleFireworks).name());
+    uint32_t typeId = typeid(cocos2d::ParticleFireworks).hash_code();
     g_luaType[typeId] = "ParticleFireworks";
     return 1;
 }
@@ -81049,7 +81049,7 @@ int lua_register_cocos2dx_ParticleSun(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSun_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSun_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSun).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSun).hash_code();
     g_luaType[typeId] = "ParticleSun";
     return 1;
 }
@@ -81284,7 +81284,7 @@ int lua_register_cocos2dx_ParticleGalaxy(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleGalaxy_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleGalaxy_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleGalaxy).name());
+    uint32_t typeId = typeid(cocos2d::ParticleGalaxy).hash_code();
     g_luaType[typeId] = "ParticleGalaxy";
     return 1;
 }
@@ -81519,7 +81519,7 @@ int lua_register_cocos2dx_ParticleFlower(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleFlower_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleFlower_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleFlower).name());
+    uint32_t typeId = typeid(cocos2d::ParticleFlower).hash_code();
     g_luaType[typeId] = "ParticleFlower";
     return 1;
 }
@@ -81754,7 +81754,7 @@ int lua_register_cocos2dx_ParticleMeteor(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleMeteor_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleMeteor_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleMeteor).name());
+    uint32_t typeId = typeid(cocos2d::ParticleMeteor).hash_code();
     g_luaType[typeId] = "ParticleMeteor";
     return 1;
 }
@@ -81989,7 +81989,7 @@ int lua_register_cocos2dx_ParticleSpiral(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSpiral_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSpiral_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSpiral).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSpiral).hash_code();
     g_luaType[typeId] = "ParticleSpiral";
     return 1;
 }
@@ -82224,7 +82224,7 @@ int lua_register_cocos2dx_ParticleExplosion(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleExplosion_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleExplosion_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleExplosion).name());
+    uint32_t typeId = typeid(cocos2d::ParticleExplosion).hash_code();
     g_luaType[typeId] = "ParticleExplosion";
     return 1;
 }
@@ -82459,7 +82459,7 @@ int lua_register_cocos2dx_ParticleSmoke(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSmoke_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSmoke_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSmoke).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSmoke).hash_code();
     g_luaType[typeId] = "ParticleSmoke";
     return 1;
 }
@@ -82694,7 +82694,7 @@ int lua_register_cocos2dx_ParticleSnow(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSnow_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSnow_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleSnow).name());
+    uint32_t typeId = typeid(cocos2d::ParticleSnow).hash_code();
     g_luaType[typeId] = "ParticleSnow";
     return 1;
 }
@@ -82929,7 +82929,7 @@ int lua_register_cocos2dx_ParticleRain(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleRain_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleRain_createWithTotalParticles);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParticleRain).name());
+    uint32_t typeId = typeid(cocos2d::ParticleRain).hash_code();
     g_luaType[typeId] = "ParticleRain";
     return 1;
 }
@@ -83018,7 +83018,7 @@ int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83037,24 +83037,27 @@ int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathForFilename'", NULL);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
         if(!ok)
             return 0;
-        cobj->purgeCachedEntries();
-        return 0;
+        std::string ret = cobj->fullPathForFilename(arg0);
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "purgeCachedEntries",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "fullPathForFilename",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_fullPathForFilename'.",&tolua_err);
 #endif
     return 0;
 }
@@ -83281,7 +83284,7 @@ int lua_cocos2dx_FileUtils_getFileDataFromZip(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
+int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::FileUtils* cobj = nullptr;
@@ -83300,27 +83303,24 @@ int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_fullPathForFilename'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'", NULL);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        const char* arg0;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
         if(!ok)
             return 0;
-        std::string ret = cobj->fullPathForFilename(arg0);
-        tolua_pushcppstring(tolua_S,ret);
-        return 1;
+        cobj->purgeCachedEntries();
+        return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "fullPathForFilename",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "purgeCachedEntries",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_fullPathForFilename'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_purgeCachedEntries'.",&tolua_err);
 #endif
     return 0;
 }
@@ -83621,13 +83621,13 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"FileUtils");
         tolua_function(tolua_S,"isFileExist",lua_cocos2dx_FileUtils_isFileExist);
         tolua_function(tolua_S,"isPopupNotify",lua_cocos2dx_FileUtils_isPopupNotify);
-        tolua_function(tolua_S,"purgeCachedEntries",lua_cocos2dx_FileUtils_purgeCachedEntries);
+        tolua_function(tolua_S,"fullPathForFilename",lua_cocos2dx_FileUtils_fullPathForFilename);
         tolua_function(tolua_S,"fullPathFromRelativeFile",lua_cocos2dx_FileUtils_fullPathFromRelativeFile);
         tolua_function(tolua_S,"getFileData",lua_cocos2dx_FileUtils_getFileData);
         tolua_function(tolua_S,"setFilenameLookupDictionary",lua_cocos2dx_FileUtils_setFilenameLookupDictionary);
         tolua_function(tolua_S,"addSearchResolutionsOrder",lua_cocos2dx_FileUtils_addSearchResolutionsOrder);
         tolua_function(tolua_S,"getFileDataFromZip",lua_cocos2dx_FileUtils_getFileDataFromZip);
-        tolua_function(tolua_S,"fullPathForFilename",lua_cocos2dx_FileUtils_fullPathForFilename);
+        tolua_function(tolua_S,"purgeCachedEntries",lua_cocos2dx_FileUtils_purgeCachedEntries);
         tolua_function(tolua_S,"isAbsolutePath",lua_cocos2dx_FileUtils_isAbsolutePath);
         tolua_function(tolua_S,"getWritablePath",lua_cocos2dx_FileUtils_getWritablePath);
         tolua_function(tolua_S,"addSearchPath",lua_cocos2dx_FileUtils_addSearchPath);
@@ -83636,7 +83636,7 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_FileUtils_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_FileUtils_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::FileUtils).name());
+    uint32_t typeId = typeid(cocos2d::FileUtils).hash_code();
     g_luaType[typeId] = "FileUtils";
     return 1;
 }
@@ -83825,7 +83825,7 @@ int lua_register_cocos2dx_Application(lua_State* tolua_S)
         tolua_function(tolua_S,"getCurrentLanguage",lua_cocos2dx_Application_getCurrentLanguage);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_Application_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Application).name());
+    uint32_t typeId = typeid(cocos2d::Application).hash_code();
     g_luaType[typeId] = "Application";
     return 1;
 }
@@ -84152,7 +84152,7 @@ int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_ShaderCache_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_ShaderCache_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ShaderCache).name());
+    uint32_t typeId = typeid(cocos2d::ShaderCache).hash_code();
     g_luaType[typeId] = "ShaderCache";
     return 1;
 }
@@ -84568,7 +84568,7 @@ int lua_register_cocos2dx_AnimationCache(lua_State* tolua_S)
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_AnimationCache_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_AnimationCache_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::AnimationCache).name());
+    uint32_t typeId = typeid(cocos2d::AnimationCache).hash_code();
     g_luaType[typeId] = "AnimationCache";
     return 1;
 }
@@ -85112,7 +85112,7 @@ int lua_register_cocos2dx_SpriteFrameCache(lua_State* tolua_S)
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_SpriteFrameCache_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_SpriteFrameCache_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::SpriteFrameCache).name());
+    uint32_t typeId = typeid(cocos2d::SpriteFrameCache).hash_code();
     g_luaType[typeId] = "SpriteFrameCache";
     return 1;
 }
@@ -85766,7 +85766,7 @@ int lua_register_cocos2dx_UserDefault(lua_State* tolua_S)
         tolua_function(tolua_S,"getXMLFilePath", lua_cocos2dx_UserDefault_getXMLFilePath);
         tolua_function(tolua_S,"isXMLFileExist", lua_cocos2dx_UserDefault_isXMLFileExist);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::UserDefault).name());
+    uint32_t typeId = typeid(cocos2d::UserDefault).hash_code();
     g_luaType[typeId] = "UserDefault";
     return 1;
 }
@@ -86372,7 +86372,7 @@ int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
         tolua_function(tolua_S,"reloadAllTextures", lua_cocos2dx_TextureCache_reloadAllTextures);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_TextureCache_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TextureCache).name());
+    uint32_t typeId = typeid(cocos2d::TextureCache).hash_code();
     g_luaType[typeId] = "TextureCache";
     return 1;
 }
@@ -86789,7 +86789,7 @@ int lua_register_cocos2dx_ParallaxNode(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ParallaxNode_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_ParallaxNode_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::ParallaxNode).name());
+    uint32_t typeId = typeid(cocos2d::ParallaxNode).hash_code();
     g_luaType[typeId] = "ParallaxNode";
     return 1;
 }
@@ -87288,7 +87288,7 @@ int lua_register_cocos2dx_TMXObjectGroup(lua_State* tolua_S)
         tolua_function(tolua_S,"setObjects",lua_cocos2dx_TMXObjectGroup_setObjects);
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXObjectGroup_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXObjectGroup).name());
+    uint32_t typeId = typeid(cocos2d::TMXObjectGroup).hash_code();
     g_luaType[typeId] = "TMXObjectGroup";
     return 1;
 }
@@ -87432,7 +87432,7 @@ int lua_register_cocos2dx_TMXLayerInfo(lua_State* tolua_S)
         tolua_function(tolua_S,"getProperties",lua_cocos2dx_TMXLayerInfo_getProperties);
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXLayerInfo_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXLayerInfo).name());
+    uint32_t typeId = typeid(cocos2d::TMXLayerInfo).hash_code();
     g_luaType[typeId] = "TMXLayerInfo";
     return 1;
 }
@@ -87535,7 +87535,7 @@ int lua_register_cocos2dx_TMXTilesetInfo(lua_State* tolua_S)
         tolua_function(tolua_S,"rectForGID",lua_cocos2dx_TMXTilesetInfo_rectForGID);
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXTilesetInfo_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXTilesetInfo).name());
+    uint32_t typeId = typeid(cocos2d::TMXTilesetInfo).hash_code();
     g_luaType[typeId] = "TMXTilesetInfo";
     return 1;
 }
@@ -89056,7 +89056,7 @@ int lua_register_cocos2dx_TMXMapInfo(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_TMXMapInfo_create);
         tolua_function(tolua_S,"createWithXML", lua_cocos2dx_TMXMapInfo_createWithXML);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXMapInfo).name());
+    uint32_t typeId = typeid(cocos2d::TMXMapInfo).hash_code();
     g_luaType[typeId] = "TMXMapInfo";
     return 1;
 }
@@ -90358,7 +90358,7 @@ int lua_register_cocos2dx_TMXLayer(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TMXLayer_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TMXLayer_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXLayer).name());
+    uint32_t typeId = typeid(cocos2d::TMXLayer).hash_code();
     g_luaType[typeId] = "TMXLayer";
     return 1;
 }
@@ -91238,7 +91238,7 @@ int lua_register_cocos2dx_TMXTiledMap(lua_State* tolua_S)
         tolua_function(tolua_S,"create", lua_cocos2dx_TMXTiledMap_create);
         tolua_function(tolua_S,"createWithXML", lua_cocos2dx_TMXTiledMap_createWithXML);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TMXTiledMap).name());
+    uint32_t typeId = typeid(cocos2d::TMXTiledMap).hash_code();
     g_luaType[typeId] = "TMXTiledMap";
     return 1;
 }
@@ -91614,7 +91614,7 @@ int lua_register_cocos2dx_TileMapAtlas(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_TileMapAtlas_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_TileMapAtlas_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::TileMapAtlas).name());
+    uint32_t typeId = typeid(cocos2d::TileMapAtlas).hash_code();
     g_luaType[typeId] = "TileMapAtlas";
     return 1;
 }
@@ -91889,7 +91889,7 @@ int lua_register_cocos2dx_Timer(lua_State* tolua_S)
         tolua_function(tolua_S,"getScriptHandler",lua_cocos2dx_Timer_getScriptHandler);
         tolua_function(tolua_S,"new",lua_cocos2dx_Timer_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Timer).name());
+    uint32_t typeId = typeid(cocos2d::Timer).hash_code();
     g_luaType[typeId] = "Timer";
     return 1;
 }
@@ -92033,11 +92033,102 @@ int lua_register_cocos2dx_Scheduler(lua_State* tolua_S)
         tolua_function(tolua_S,"getTimeScale",lua_cocos2dx_Scheduler_getTimeScale);
         tolua_function(tolua_S,"new",lua_cocos2dx_Scheduler_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::Scheduler).name());
+    uint32_t typeId = typeid(cocos2d::Scheduler).hash_code();
     g_luaType[typeId] = "Scheduler";
     return 1;
 }
 
+int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->preloadBackgroundMusic(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "preloadBackgroundMusic",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->stopBackgroundMusic();
+        return 0;
+    }
+    if (argc == 1) 
+    {
+        bool arg0;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->stopBackgroundMusic(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "stopBackgroundMusic",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_SimpleAudioEngine_stopAllEffects(lua_State* tolua_S)
 {
     int argc = 0;
@@ -92116,6 +92207,130 @@ int lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->resumeBackgroundMusic();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resumeBackgroundMusic",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setBackgroundMusicVolume(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBackgroundMusicVolume",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->preloadEffect(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "preloadEffect",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'.",&tolua_err);
 #endif
     return 0;
 }
@@ -92201,7 +92416,7 @@ int lua_cocos2dx_SimpleAudioEngine_getEffectsVolume(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92220,30 +92435,29 @@ int lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'", NULL);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cobj->setBackgroundMusicVolume(arg0);
-        return 0;
+        bool ret = cobj->willPlayBackgroundMusic();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBackgroundMusicVolume",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "willPlayBackgroundMusic",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'.",&tolua_err);
 #endif
     return 0;
 }
-int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92262,7 +92476,7 @@ int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'", NULL);
         return 0;
     }
 #endif
@@ -92274,238 +92488,14 @@ int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
         ok &= luaval_to_uint32(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cobj->stopEffect(arg0);
+        cobj->pauseEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "stopEffect",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pauseEffect",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->stopBackgroundMusic();
-        return 0;
-    }
-    if (argc == 1) 
-    {
-        bool arg0;
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->stopBackgroundMusic(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "stopBackgroundMusic",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if(!ok)
-            return 0;
-        cobj->playBackgroundMusic(arg0);
-        return 0;
-    }
-    if (argc == 2) 
-    {
-        const char* arg0;
-        bool arg1;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cobj->playBackgroundMusic(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "playBackgroundMusic",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->pauseAllEffects();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pauseAllEffects",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if(!ok)
-            return 0;
-        cobj->preloadBackgroundMusic(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "preloadBackgroundMusic",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->resumeBackgroundMusic();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resumeBackgroundMusic",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'.",&tolua_err);
 #endif
     return 0;
 }
@@ -92652,7 +92642,7 @@ int lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92671,7 +92661,60 @@ int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->playBackgroundMusic(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        const char* arg0;
+        bool arg1;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->playBackgroundMusic(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "playBackgroundMusic",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'", NULL);
         return 0;
     }
 #endif
@@ -92681,99 +92724,14 @@ int lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        bool ret = cobj->willPlayBackgroundMusic();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
+        cobj->resumeAllEffects();
+        return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "willPlayBackgroundMusic",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resumeAllEffects",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if(!ok)
-            return 0;
-        cobj->unloadEffect(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unloadEffect",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_preloadEffect(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-        if(!ok)
-            return 0;
-        cobj->preloadEffect(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "preloadEffect",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_preloadEffect'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'.",&tolua_err);
 #endif
     return 0;
 }
@@ -92819,7 +92777,7 @@ int lua_cocos2dx_SimpleAudioEngine_setEffectsVolume(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
+int lua_cocos2dx_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 {
     int argc = 0;
     CocosDenshion::SimpleAudioEngine* cobj = nullptr;
@@ -92838,7 +92796,7 @@ int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'", NULL);
         return 0;
     }
 #endif
@@ -92850,54 +92808,14 @@ int lua_cocos2dx_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
         ok &= luaval_to_uint32(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        cobj->pauseEffect(arg0);
+        cobj->stopEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pauseEffect",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "stopEffect",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_pauseEffect'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_SimpleAudioEngine_resumeAllEffects(lua_State* tolua_S)
-{
-    int argc = 0;
-    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'", NULL);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->resumeAllEffects();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "resumeAllEffects",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_resumeAllEffects'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_stopEffect'.",&tolua_err);
 #endif
     return 0;
 }
@@ -92938,6 +92856,88 @@ int lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_pauseAllEffects(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->pauseAllEffects();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "pauseAllEffects",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_pauseAllEffects'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SimpleAudioEngine_unloadEffect(lua_State* tolua_S)
+{
+    int argc = 0;
+    CocosDenshion::SimpleAudioEngine* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (CocosDenshion::SimpleAudioEngine*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->unloadEffect(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unloadEffect",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SimpleAudioEngine_unloadEffect'.",&tolua_err);
 #endif
     return 0;
 }
@@ -93068,31 +93068,31 @@ int lua_register_cocos2dx_SimpleAudioEngine(lua_State* tolua_S)
     tolua_cclass(tolua_S,"SimpleAudioEngine","SimpleAudioEngine","",NULL);
 
     tolua_beginmodule(tolua_S,"SimpleAudioEngine");
+        tolua_function(tolua_S,"preloadMusic",lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic);
+        tolua_function(tolua_S,"stopMusic",lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic);
         tolua_function(tolua_S,"stopAllEffects",lua_cocos2dx_SimpleAudioEngine_stopAllEffects);
         tolua_function(tolua_S,"getMusicVolume",lua_cocos2dx_SimpleAudioEngine_getBackgroundMusicVolume);
+        tolua_function(tolua_S,"resumeMusic",lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic);
+        tolua_function(tolua_S,"setMusicVolume",lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume);
+        tolua_function(tolua_S,"preloadEffect",lua_cocos2dx_SimpleAudioEngine_preloadEffect);
         tolua_function(tolua_S,"isMusicPlaying",lua_cocos2dx_SimpleAudioEngine_isBackgroundMusicPlaying);
         tolua_function(tolua_S,"getEffectsVolume",lua_cocos2dx_SimpleAudioEngine_getEffectsVolume);
-        tolua_function(tolua_S,"setMusicVolume",lua_cocos2dx_SimpleAudioEngine_setBackgroundMusicVolume);
-        tolua_function(tolua_S,"stopEffect",lua_cocos2dx_SimpleAudioEngine_stopEffect);
-        tolua_function(tolua_S,"stopMusic",lua_cocos2dx_SimpleAudioEngine_stopBackgroundMusic);
-        tolua_function(tolua_S,"playMusic",lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic);
-        tolua_function(tolua_S,"pauseAllEffects",lua_cocos2dx_SimpleAudioEngine_pauseAllEffects);
-        tolua_function(tolua_S,"preloadMusic",lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic);
-        tolua_function(tolua_S,"resumeMusic",lua_cocos2dx_SimpleAudioEngine_resumeBackgroundMusic);
+        tolua_function(tolua_S,"willPlayMusic",lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic);
+        tolua_function(tolua_S,"pauseEffect",lua_cocos2dx_SimpleAudioEngine_pauseEffect);
         tolua_function(tolua_S,"playEffect",lua_cocos2dx_SimpleAudioEngine_playEffect);
         tolua_function(tolua_S,"rewindMusic",lua_cocos2dx_SimpleAudioEngine_rewindBackgroundMusic);
-        tolua_function(tolua_S,"willPlayMusic",lua_cocos2dx_SimpleAudioEngine_willPlayBackgroundMusic);
-        tolua_function(tolua_S,"unloadEffect",lua_cocos2dx_SimpleAudioEngine_unloadEffect);
-        tolua_function(tolua_S,"preloadEffect",lua_cocos2dx_SimpleAudioEngine_preloadEffect);
-        tolua_function(tolua_S,"setEffectsVolume",lua_cocos2dx_SimpleAudioEngine_setEffectsVolume);
-        tolua_function(tolua_S,"pauseEffect",lua_cocos2dx_SimpleAudioEngine_pauseEffect);
+        tolua_function(tolua_S,"playMusic",lua_cocos2dx_SimpleAudioEngine_playBackgroundMusic);
         tolua_function(tolua_S,"resumeAllEffects",lua_cocos2dx_SimpleAudioEngine_resumeAllEffects);
+        tolua_function(tolua_S,"setEffectsVolume",lua_cocos2dx_SimpleAudioEngine_setEffectsVolume);
+        tolua_function(tolua_S,"stopEffect",lua_cocos2dx_SimpleAudioEngine_stopEffect);
         tolua_function(tolua_S,"pauseMusic",lua_cocos2dx_SimpleAudioEngine_pauseBackgroundMusic);
+        tolua_function(tolua_S,"pauseAllEffects",lua_cocos2dx_SimpleAudioEngine_pauseAllEffects);
+        tolua_function(tolua_S,"unloadEffect",lua_cocos2dx_SimpleAudioEngine_unloadEffect);
         tolua_function(tolua_S,"resumeEffect",lua_cocos2dx_SimpleAudioEngine_resumeEffect);
         tolua_function(tolua_S,"end", lua_cocos2dx_SimpleAudioEngine_end);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_SimpleAudioEngine_getInstance);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
+    uint32_t typeId = typeid(CocosDenshion::SimpleAudioEngine).hash_code();
     g_luaType[typeId] = "SimpleAudioEngine";
     return 1;
 }

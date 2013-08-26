@@ -6309,7 +6309,7 @@ tolua_lerror:
 
 /* function: ccDrawCatmullRom in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S)
+int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6355,7 +6355,7 @@ tolua_lerror:
 
 /* function: ccDrawCardinalSpline in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S)
+int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;

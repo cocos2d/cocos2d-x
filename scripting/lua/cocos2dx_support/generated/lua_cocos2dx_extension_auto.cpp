@@ -802,7 +802,7 @@ int lua_register_cocos2dx_extension_Control(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_Control_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_Control_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::Control).name());
+    uint32_t typeId = typeid(cocos2d::extension::Control).hash_code();
     g_luaType[typeId] = "Control";
     return 1;
 }
@@ -1952,7 +1952,7 @@ int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_CCBReader_constructor);
         tolua_function(tolua_S,"setResolutionScale", lua_cocos2dx_extension_CCBReader_setResolutionScale);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::CCBReader).name());
+    uint32_t typeId = typeid(cocos2d::extension::CCBReader).hash_code();
     g_luaType[typeId] = "CCBReader";
     return 1;
 }
@@ -3788,7 +3788,7 @@ int lua_register_cocos2dx_extension_Scale9Sprite(lua_State* tolua_S)
         tolua_function(tolua_S,"createWithSpriteFrameName", lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName);
         tolua_function(tolua_S,"createWithSpriteFrame", lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrame);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::Scale9Sprite).name());
+    uint32_t typeId = typeid(cocos2d::extension::Scale9Sprite).hash_code();
     g_luaType[typeId] = "Scale9Sprite";
     return 1;
 }
@@ -6718,7 +6718,7 @@ int lua_register_cocos2dx_extension_ControlButton(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlButton_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlButton_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlButton).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlButton).hash_code();
     g_luaType[typeId] = "ControlButton";
     return 1;
 }
@@ -8618,7 +8618,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ScrollView_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ScrollView_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ScrollView).name());
+    uint32_t typeId = typeid(cocos2d::extension::ScrollView).hash_code();
     g_luaType[typeId] = "ScrollView";
     return 1;
 }
@@ -10372,7 +10372,7 @@ int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
         tolua_function(tolua_S,"getDocumentControllerName",lua_cocos2dx_extension_CCBAnimationManager_getDocumentControllerName);
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_CCBAnimationManager_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::CCBAnimationManager).name());
+    uint32_t typeId = typeid(cocos2d::extension::CCBAnimationManager).hash_code();
     g_luaType[typeId] = "CCBAnimationManager";
     return 1;
 }
@@ -11145,7 +11145,7 @@ int lua_register_cocos2dx_extension_ControlHuePicker(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlHuePicker_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlHuePicker_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlHuePicker).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlHuePicker).hash_code();
     g_luaType[typeId] = "ControlHuePicker";
     return 1;
 }
@@ -11703,7 +11703,7 @@ int lua_register_cocos2dx_extension_ControlSaturationBrightnessPicker(lua_State*
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlSaturationBrightnessPicker).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlSaturationBrightnessPicker).hash_code();
     g_luaType[typeId] = "ControlSaturationBrightnessPicker";
     return 1;
 }
@@ -12365,7 +12365,7 @@ int lua_register_cocos2dx_extension_ControlColourPicker(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlColourPicker_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlColourPicker_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlColourPicker).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlColourPicker).hash_code();
     g_luaType[typeId] = "ControlColourPicker";
     return 1;
 }
@@ -13624,7 +13624,7 @@ int lua_register_cocos2dx_extension_ControlPotentiometer(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlPotentiometer_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlPotentiometer_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlPotentiometer).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlPotentiometer).hash_code();
     g_luaType[typeId] = "ControlPotentiometer";
     return 1;
 }
@@ -14812,7 +14812,7 @@ int lua_register_cocos2dx_extension_ControlSlider(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSlider_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlSlider_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlSlider).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlSlider).hash_code();
     g_luaType[typeId] = "ControlSlider";
     return 1;
 }
@@ -16141,7 +16141,7 @@ int lua_register_cocos2dx_extension_ControlStepper(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlStepper_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlStepper_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlStepper).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlStepper).hash_code();
     g_luaType[typeId] = "ControlStepper";
     return 1;
 }
@@ -17073,7 +17073,7 @@ int lua_register_cocos2dx_extension_ControlSwitch(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSwitch_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ControlSwitch_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::ControlSwitch).name());
+    uint32_t typeId = typeid(cocos2d::extension::ControlSwitch).hash_code();
     g_luaType[typeId] = "ControlSwitch";
     return 1;
 }
@@ -17343,7 +17343,7 @@ int lua_register_cocos2dx_extension_TableViewCell(lua_State* tolua_S)
         tolua_function(tolua_S,"getIdx",lua_cocos2dx_extension_TableViewCell_getIdx);
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_TableViewCell_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::TableViewCell).name());
+    uint32_t typeId = typeid(cocos2d::extension::TableViewCell).hash_code();
     g_luaType[typeId] = "TableViewCell";
     return 1;
 }
@@ -18241,7 +18241,7 @@ int lua_register_cocos2dx_extension_TableView(lua_State* tolua_S)
         tolua_function(tolua_S,"dequeueCell",lua_cocos2dx_extension_TableView_dequeueCell);
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_TableView_constructor);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::TableView).name());
+    uint32_t typeId = typeid(cocos2d::extension::TableView).hash_code();
     g_luaType[typeId] = "TableView";
     return 1;
 }
@@ -19422,7 +19422,7 @@ int lua_register_cocos2dx_extension_EditBox(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_EditBox_constructor);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_EditBox_create);
     tolua_endmodule(tolua_S);
-    uint32_t typeId = cocos2d::getHashCodeByString(typeid(cocos2d::extension::EditBox).name());
+    uint32_t typeId = typeid(cocos2d::extension::EditBox).hash_code();
     g_luaType[typeId] = "EditBox";
     return 1;
 }
