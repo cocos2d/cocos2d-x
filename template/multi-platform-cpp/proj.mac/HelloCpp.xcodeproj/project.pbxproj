@@ -239,8 +239,8 @@
 		376663D817B8E0E8007606BB /* CCTransformHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 376663BA17B8E0E8007606BB /* CCTransformHelp.cpp */; };
 		376663D917B8E0E8007606BB /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 376663BC17B8E0E8007606BB /* CCTweenFunction.cpp */; };
 		376663DA17B8E0E8007606BB /* CCUtilMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 376663BE17B8E0E8007606BB /* CCUtilMath.cpp */; };
+		376FE7FE17CB7258007145E2 /* CCSSceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 376FE7FC17CB7258007145E2 /* CCSSceneReader.cpp */; };
 		37B1CE3917A0D9E3004CAFC4 /* CCComRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B1CE3717A0D9E3004CAFC4 /* CCComRender.cpp */; };
-		37B1CEB817A0D9FD004CAFC4 /* CCJsonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B1CEB417A0D9FD004CAFC4 /* CCJsonReader.cpp */; };
 		37B1CEB917A0D9FD004CAFC4 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B1CEB617A0D9FD004CAFC4 /* DictionaryHelper.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
@@ -733,10 +733,10 @@
 		376663BD17B8E0E8007606BB /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		376663BE17B8E0E8007606BB /* CCUtilMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtilMath.cpp; sourceTree = "<group>"; };
 		376663BF17B8E0E8007606BB /* CCUtilMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtilMath.h; sourceTree = "<group>"; };
+		376FE7FC17CB7258007145E2 /* CCSSceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSSceneReader.cpp; sourceTree = "<group>"; };
+		376FE7FD17CB7258007145E2 /* CCSSceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSSceneReader.h; sourceTree = "<group>"; };
 		37B1CE3717A0D9E3004CAFC4 /* CCComRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComRender.cpp; sourceTree = "<group>"; };
 		37B1CE3817A0D9E3004CAFC4 /* CCComRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComRender.h; sourceTree = "<group>"; };
-		37B1CEB417A0D9FD004CAFC4 /* CCJsonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCJsonReader.cpp; sourceTree = "<group>"; };
-		37B1CEB517A0D9FD004CAFC4 /* CCJsonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCJsonReader.h; sourceTree = "<group>"; };
 		37B1CEB617A0D9FD004CAFC4 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		37B1CEB717A0D9FD004CAFC4 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
@@ -1651,8 +1651,8 @@
 		37B1CEB317A0D9FD004CAFC4 /* CocostudioReader */ = {
 			isa = PBXGroup;
 			children = (
-				37B1CEB417A0D9FD004CAFC4 /* CCJsonReader.cpp */,
-				37B1CEB517A0D9FD004CAFC4 /* CCJsonReader.h */,
+				376FE7FC17CB7258007145E2 /* CCSSceneReader.cpp */,
+				376FE7FD17CB7258007145E2 /* CCSSceneReader.h */,
 				37B1CEB617A0D9FD004CAFC4 /* DictionaryHelper.cpp */,
 				37B1CEB717A0D9FD004CAFC4 /* DictionaryHelper.h */,
 			);
@@ -1955,7 +1955,6 @@
 				1A9CE9A51765A7FA000E3062 /* LocalStorage.cpp in Sources */,
 				1A9CE9A61765A7FA000E3062 /* LocalStorageAndroid.cpp in Sources */,
 				37B1CE3917A0D9E3004CAFC4 /* CCComRender.cpp in Sources */,
-				37B1CEB817A0D9FD004CAFC4 /* CCJsonReader.cpp in Sources */,
 				37B1CEB917A0D9FD004CAFC4 /* DictionaryHelper.cpp in Sources */,
 				3766635917B8E0D9007606BB /* UIAction.cpp in Sources */,
 				3766635A17B8E0D9007606BB /* UIActionFrame.cpp in Sources */,
@@ -2016,6 +2015,7 @@
 				376663D817B8E0E8007606BB /* CCTransformHelp.cpp in Sources */,
 				376663D917B8E0E8007606BB /* CCTweenFunction.cpp in Sources */,
 				376663DA17B8E0E8007606BB /* CCUtilMath.cpp in Sources */,
+				376FE7FE17CB7258007145E2 /* CCSSceneReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
