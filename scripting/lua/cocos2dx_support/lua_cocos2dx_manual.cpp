@@ -903,7 +903,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
+int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -1279,7 +1279,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
+int lua_cocos2d_CardinalSplineBy_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -1348,7 +1348,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
+int tolua_cocos2d_CatmullRomBy_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -1412,7 +1412,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
+int tolua_cocos2d_CatmullRomTo_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -1476,7 +1476,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
+int tolua_cocos2d_BezierBy_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -1536,7 +1536,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
+int tolua_cocos2d_BezierTo_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
@@ -2497,7 +2497,7 @@ static void extendCardinalSplineBy(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         lua_pushstring(tolua_S,"create");
-        lua_pushcfunction(tolua_S,tolua_cocos2d_CardinalSplineBy_create);
+        lua_pushcfunction(tolua_S,lua_cocos2d_CardinalSplineBy_create);
         lua_rawset(tolua_S,-3);
     }
 }
