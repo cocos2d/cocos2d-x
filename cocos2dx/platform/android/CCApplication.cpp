@@ -124,7 +124,7 @@ void CCApplication::openURL(const char* pszUrl)
     JniMethodInfo minfo;
 	
     if(JniHelper::getStaticMethodInfo(minfo,
-									  "org/cocos2dx/application/ApplicationDemo",
+									  "org/cocos2dx/lib/Cocos2dxActivity",
 									  "openURL",
 									  "(Ljava/lang/String;)V"))
     {
