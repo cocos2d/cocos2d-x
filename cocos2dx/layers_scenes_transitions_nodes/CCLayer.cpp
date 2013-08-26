@@ -1074,7 +1074,9 @@ void LayerMultiplex::addLayer(Layer* layer)
 }
 
 bool LayerMultiplex::init()
-    if (Layer::init()) {
+{
+    if (Layer::init())
+    {
         _layers = Array::create();
         _layers->retain();
 
@@ -1083,6 +1085,7 @@ bool LayerMultiplex::init()
     }
     return false;
 }
+
 bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
 {
     if (Layer::init())
