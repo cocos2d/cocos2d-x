@@ -202,7 +202,7 @@ void CCDirector::setDefaultValues(void)
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / fps;
 
 	// Display FPS
-	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", kDefaultFPS);
+	m_bDisplayStats = conf->getBool("cocos2d.x.display_fps", false);
 
 	// GL projection
 	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");

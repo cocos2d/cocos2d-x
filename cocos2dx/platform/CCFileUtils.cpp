@@ -475,8 +475,7 @@ CCFileUtils::~CCFileUtils()
 
 bool CCFileUtils::init()
 {
-
-	m_searchPathArray.push_back(m_strDefaultResRootPath);
+    m_searchPathArray.push_back(m_strDefaultResRootPath);
     m_searchResolutionsOrderArray.push_back("");
     return true;
 }
@@ -656,6 +655,7 @@ const char* CCFileUtils::fullPathFromRelativeFile(const char *pszFilename, const
 void CCFileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
     bool bExistDefault = false;
+    m_fullPathCache.clear();
     m_searchResolutionsOrderArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
@@ -696,7 +696,8 @@ const std::vector<std::string>& CCFileUtils::getSearchPaths()
 void CCFileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool bExistDefaultRootPath = false;
-    
+
+    m_fullPathCache.clear();
     m_searchPathArray.clear();
     for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
@@ -765,6 +766,7 @@ void CCFileUtils::removeAllPaths()
 
 void CCFileUtils::setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict)
 {
+    m_fullPathCache.clear();
     CC_SAFE_RELEASE(m_pFilenameLookupDict);
     m_pFilenameLookupDict = pFilenameLookupDict;
     CC_SAFE_RETAIN(m_pFilenameLookupDict);
