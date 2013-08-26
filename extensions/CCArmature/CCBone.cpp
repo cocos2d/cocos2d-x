@@ -199,12 +199,14 @@ void CCBone::update(float delta)
 
 void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
 {
+	_realColor = ccc3(255, 255, 255);
     CCNodeRGBA::updateDisplayedColor(parentColor);
     updateColor();
 }
 
 void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+	_realOpacity = 255;
     CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
     updateColor();
 }

@@ -549,7 +549,6 @@ void TestUseMutiplePicture::onEnter()
 // 	}
 
 	CCLabelTTF* l = CCLabelTTF::create("This is a weapon!", "Arial", 18);
-	l->setColor(ccc3(0, 0, 0));
 	l->setAnchorPoint(ccp(0.2f, 0.5f));
 	armature->getBone("weapon")->addDisplay(l, 7);
 }
