@@ -419,7 +419,7 @@ void HoleDemo::setup()
     
     _outerClipper = ClippingNode::create();
     _outerClipper->retain();
-    AffineTransform tranform = AffineTransformMakeIdentity();
+    AffineTransform tranform = AffineTransform::IDENTITY;
     tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
 
     _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));

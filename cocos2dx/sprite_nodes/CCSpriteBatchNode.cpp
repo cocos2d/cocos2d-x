@@ -654,17 +654,17 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     // Cleanup sprite. It might be reused (issue #569)
     sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->getIndexOfObject(sprite);
-    if (uIndex != UINT_MAX)
+    int index = _descendants->getIndexOfObject(sprite);
+    if (index != UINT_MAX)
     {
-        _descendants->removeObjectAtIndex(uIndex);
+        _descendants->removeObjectAtIndex(index);
 
         // update all sprites beyond this one
-        unsigned int count = _descendants->count();
+        int count = _descendants->count();
         
-        for(; uIndex < count; ++uIndex)
+        for(; index < count; ++index)
         {
-            Sprite* s = (Sprite*)(_descendants->getObjectAtIndex(uIndex));
+            Sprite* s = static_cast<Sprite*>(_descendants->getObjectAtIndex(index));
             s->setAtlasIndex( s->getAtlasIndex() - 1 );
         }
     }
@@ -673,10 +673,10 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     Array *children = sprite->getChildren();
     if (children && children->count() > 0)
     {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(children, pObject)
+        Object* object = NULL;
+        CCARRAY_FOREACH(children, object)
         {
-            Sprite* child = static_cast<Sprite*>(pObject);
+            Sprite* child = static_cast<Sprite*>(object);
             if (child)
             {
                 removeSpriteFromAtlas(child);
