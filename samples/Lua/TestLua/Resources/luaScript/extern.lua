@@ -60,16 +60,16 @@ function class(classname, super)
 end
 
 function schedule(node, callback, delay)
-    local delay = CCDelayTime:create(delay)
-    local sequence = CCSequence:createWithTwoActions(delay, CCCallFunc:create(callback))
-    local action = CCRepeatForever:create(sequence)
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
+    local action = cc.RepeatForever:create(sequence)
     node:runAction(action)
     return action
 end
 
 function performWithDelay(node, callback, delay)
-    local delay = CCDelayTime:create(delay)
-    local sequence = CCSequence:createWithTwoActions(delay, CCCallFunc:create(callback))
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
     node:runAction(sequence)
     return sequence
 end

@@ -17,7 +17,7 @@ public:
     CCBReader* createCCBReader();
     Node* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
     const char* getNodeTypeName(Node* pNode);
-    void setCallback(Node* pNode,int nHandle);
+    void setCallback(Node* node,int handle, int controlEvents = 0);
 };
 
 class CCBLayerLoader:public LayerLoader{

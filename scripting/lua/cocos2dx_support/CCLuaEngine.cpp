@@ -312,7 +312,7 @@ int LuaEngine::handleMenuClickedEvent(void* data)
         return 0;
     
     _stack->pushInt(menuItem->getTag());
-    _stack->pushObject(menuItem, "CCMenuItem");
+    _stack->pushObject(menuItem, "MenuItem");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
@@ -357,7 +357,7 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     Object* target = static_cast<Object*>(basicScriptData->value);
     if (NULL != target)
     {
-        _stack->pushObject(target, "CCNode");
+        _stack->pushObject(target, "Node");
     }
     int ret = _stack->executeFunctionByHandler(handler, target ? 1 : 0);
     _stack->clean();
@@ -591,8 +591,9 @@ int LuaEngine::handlerControlEvent(void* data)
             
             if (0 != handler)
             {
-                _stack->pushObject((Object*)basicScriptData->nativeObject, "CCObject");
-                ret = _stack->executeFunctionByHandler(handler, 1);
+                _stack->pushObject((Object*)basicScriptData->nativeObject, "Object");
+                _stack->pushInt(controlEvents);
+                ret = _stack->executeFunctionByHandler(handler, 2);
                 _stack->clean();
             }
         }
