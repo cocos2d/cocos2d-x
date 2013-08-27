@@ -21,4 +21,8 @@
     'mkfile' : 'external/chipmunk/Android.mk',
     'pathes' : ("external/chipmunk/",),
 },
+{
+    'mkfile' : 'cocos2dx/platform/android/Android.mk',
+    'pathes' : ('cocos2dx/platform/android/',),
+},
 ]
