@@ -60,7 +60,7 @@ AffineTransform AffineTransformMakeIdentity()
 }
 
 extern const AffineTransform AffineTransformIdentity = AffineTransformMakeIdentity();
-
+const AffineTransform AffineTransform::IDENTITY = AffineTransformMakeIdentity();
 
 Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform)
 {
