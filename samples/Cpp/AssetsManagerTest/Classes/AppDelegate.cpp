@@ -8,7 +8,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 #include "cocos2d_specifics.hpp"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
