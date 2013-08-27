@@ -1,6 +1,6 @@
 TARGET = liblua.so
 
-INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../cocos2dx_support/generated \
+INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../../auto-generated/lua-bindings \
         -I../Classes -I../../../CocosDenshion/include -I../../../extensions 
 
 SOURCES = ../lua/lapi.o \
@@ -44,15 +44,14 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/CCLuaStack.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
-          ../cocos2dx_support/LuaCocos2d.cpp \
           ../cocos2dx_support/CCBProxy.cpp \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
           ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
           ../cocos2dx_support/LuaBasicConversions.cpp \
-          ../cocos2dx_support/generated/lua_cocos2dx_auto.cpp \
-          ../cocos2dx_support/generated/lua_cocos2dx_extension_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_extension_auto.cpp \
           ../cocos2dx_support/lua_cocos2dx_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_deprecated.cpp
