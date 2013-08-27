@@ -209,8 +209,6 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, Texture2D *
     Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(fullPath.c_str());
 
     addSpriteFramesWithDictionary(dict, pobTexture);
-
-    dict->release();
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
@@ -239,7 +237,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 
         string texturePath("");
 
-        Dictionary* metadataDict = (Dictionary*)dict->objectForKey("metadata");
+        Dictionary* metadataDict = static_cast<Dictionary*>( dict->objectForKey("metadata") );
         if (metadataDict)
         {
             // try to read  texture file name from meta data
@@ -277,10 +275,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
         {
             CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
         }
-
-        dict->release();
     }
-
 }
 
 void SpriteFrameCache::addSpriteFrame(SpriteFrame *pobFrame, const char *pszFrameName)
@@ -356,8 +351,6 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
     {
         _loadedFileNames->erase(ret);
     }
-
-    dict->release();
 }
 
 void SpriteFrameCache::removeSpriteFramesFromDictionary(Dictionary* dictionary)
