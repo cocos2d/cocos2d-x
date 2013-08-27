@@ -104,6 +104,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     g++ --version
     bash $COCOS2DX_ROOT/install-deps-linux.sh
     install_android_ndk
+    install_llvm
 elif [ "$PLATFORM"x = "nacl"x ]; then
     install_nacl_sdk
 elif [ "$PLATFORM"x = "android"x ]; then
