@@ -5,8 +5,11 @@
 # Don't modify the script until you know what you do.
 
 # set environment paramters
-NDK_ROOT_LOCAL="/home/laschweinski/android/android-ndk-r5"
-ANDROID_SDK_ROOT_LOCAL="/home/laschweinski/android/android-sdk-linux_86"
+#NDK_ROOT_LOCAL="/home/laschweinski/android/android-ndk-r5"
+#ANDROID_SDK_ROOT_LOCAL="/home/laschweinski/android/android-sdk-linux_86"
+
+#NDK_ROOT_LOCAL="$NDK_ROOT"
+#ANDROID_SDK_ROOT_LOCAL="$ANDROID_SDK_ROOT"
 
 NEED_BOX2D=false
 NEED_CHIPMUNK=false
@@ -98,13 +101,13 @@ check_path(){
 
 create_android_project(){
     echo "Input package path. For example: org.cocos2dx.example"
-    read PACKAGE_PATH
+    read -e PACKAGE_PATH
     echo "Now cocos2d-x supports Android 2.2 or upper version"
     $ANDROID_SDK_ROOT_LOCAL/tools/android list targets
     echo "input target id:"
-    read TARGET_ID
+    read -e TARGET_ID
     echo "input your project name:"
-    read PROJECT_NAME
+    read -e PROJECT_NAME
     PROJECT_DIR=`pwd`/$PROJECT_NAME
     
     # check if PROJECT_DIR is exist

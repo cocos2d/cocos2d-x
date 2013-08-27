@@ -1,5 +1,11 @@
 APPNAME="__projectname__"
 
+
+if [[ -f ~/.bashrc ]]
+then
+  . ~/.bashrc
+fi
+
 # options
 
 buildexternalsfromsource=
@@ -35,9 +41,15 @@ echo "please define NDK_ROOT"
 exit 1
 fi
 
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
-COCOS2DX_ROOT="$DIR/../.."
+#COCOS2DX_ROOT="$DIR/../.."
+if [ -z "${COCOS2DX_ROOT+aaa}" ];then
+echo "please define COCOS2DX_ROOT"
+exit 1
+fi
+
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
 
