@@ -46,7 +46,7 @@ Array* Array::create()
 {
     Array* array = new Array();
 
-    if (array && array->init())
+    if (array && array->initWithCapacity(7))
     {
         array->autorelease();
     }
@@ -105,7 +105,7 @@ Array* Array::createWithArray(Array* otherArray)
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(unsigned int capacity)
+Array* Array::createWithCapacity(int capacity)
 {
     Array* array = new Array();
     
@@ -138,12 +138,12 @@ Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
 
 bool Array::init()
 {
-    return initWithCapacity(10);
+    return initWithCapacity(7);
 }
 
 bool Array::initWithObject(Object* object)
 {
-    bool ret = initWithCapacity(1);
+    bool ret = initWithCapacity(7);
     if (ret)
     {
         addObject(object);
@@ -180,7 +180,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(unsigned int capacity)
+bool Array::initWithCapacity(int capacity)
 {
     data.reserve(capacity);
     return true;
@@ -234,7 +234,7 @@ bool Array::containsObject(Object* object) const
 
 bool Array::isEqualToArray(Array* otherArray)
 {
-    for (unsigned int i = 0; i< this->count(); i++)
+    for (int i = 0; i< this->count(); i++)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -272,18 +272,10 @@ void Array::removeLastObject(bool releaseObj)
 
 void Array::removeObject(Object* object, bool releaseObj /* ignored */)
 {
-    auto it = data.begin();
-    for (; it != data.end(); ++it)
-    {
-        if (it->get() == object)
-        {
-            data.erase(it);
-            break;
-        }
-    }
+    data.erase( std::remove( data.begin(), data.end(), object ) );
 }
 
-void Array::removeObjectAtIndex(unsigned int index, bool releaseObj /* ignored */)
+void Array::removeObjectAtIndex(int index, bool releaseObj /* ignored */)
 {
     auto obj = data[index];
     data.erase( data.begin() + index );
@@ -299,7 +291,7 @@ void Array::removeAllObjects()
     data.erase(std::begin(data), std::end(data));
 }
 
-void Array::fastRemoveObjectAtIndex(unsigned int index)
+void Array::fastRemoveObjectAtIndex(int index)
 {
     removeObjectAtIndex(index);
 }
@@ -319,12 +311,12 @@ void Array::exchangeObject(Object* object1, Object* object2)
     std::swap( data[idx1], data[idx2] );
 }
 
-void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
+void Array::exchangeObjectAtIndex(int index1, int index2)
 {
     std::swap( data[index1], data[index2] );
 }
 
-void Array::replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject /* ignored */)
+void Array::replaceObjectAtIndex(int index, Object* object, bool releaseObject /* ignored */)
 {
     data[index] = object;
 }
@@ -393,7 +385,7 @@ Array* Array::create()
 {
     Array* array = new Array();
 
-    if (array && array->init())
+    if (array && array->initWithCapacity(7))
     {
         array->autorelease();
     }
@@ -452,7 +444,7 @@ Array* Array::createWithArray(Array* otherArray)
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(unsigned int capacity)
+Array* Array::createWithCapacity(int capacity)
 {
     Array* array = new Array();
 
@@ -487,14 +479,14 @@ bool Array::init()
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
-    return initWithCapacity(1);
+    return initWithCapacity(7);
 }
 
 bool Array::initWithObject(Object* object)
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
-    bool ret = initWithCapacity(1);
+    bool ret = initWithCapacity(7);
     if (ret)
     {
         addObject(object);
@@ -533,7 +525,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(unsigned int capacity)
+bool Array::initWithCapacity(int capacity)
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
@@ -586,7 +578,7 @@ bool Array::containsObject(Object* object) const
 
 bool Array::isEqualToArray(Array* otherArray)
 {
-    for (unsigned int i = 0; i< this->count(); i++)
+    for (int i = 0; i< this->count(); i++)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -637,7 +629,7 @@ void Array::removeObject(Object* object, bool releaseObj/* = true*/)
     ccArrayRemoveObject(data, object, releaseObj);
 }
 
-void Array::removeObjectAtIndex(unsigned int index, bool releaseObj)
+void Array::removeObjectAtIndex(int index, bool releaseObj)
 {
     ccArrayRemoveObjectAtIndex(data, index, releaseObj);
 }
@@ -652,7 +644,7 @@ void Array::removeAllObjects()
     ccArrayRemoveAllObjects(data);
 }
 
-void Array::fastRemoveObjectAtIndex(unsigned int index)
+void Array::fastRemoveObjectAtIndex(int index)
 {
     ccArrayFastRemoveObjectAtIndex(data, index);
 }
@@ -664,13 +656,13 @@ void Array::fastRemoveObject(Object* object)
 
 void Array::exchangeObject(Object* object1, Object* object2)
 {
-    unsigned int index1 = ccArrayGetIndexOfObject(data, object1);
+    int index1 = ccArrayGetIndexOfObject(data, object1);
     if (index1 == UINT_MAX)
     {
         return;
     }
 
-    unsigned int index2 = ccArrayGetIndexOfObject(data, object2);
+    int index2 = ccArrayGetIndexOfObject(data, object2);
     if (index2 == UINT_MAX)
     {
         return;
@@ -679,12 +671,12 @@ void Array::exchangeObject(Object* object1, Object* object2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::exchangeObjectAtIndex(unsigned int index1, unsigned int index2)
+void Array::exchangeObjectAtIndex(int index1, int index2)
 {
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject/* = true*/)
+void Array::replaceObjectAtIndex(int index, Object* object, bool releaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
     ccArrayRemoveObjectAtIndex(data, index+1);
@@ -696,7 +688,7 @@ void Array::reverseObjects()
     {
         // floorf(), since in the case of an even number, the number of swaps stays the same
         int count = (int) floorf(data->num/2.f);
-        unsigned int maxIndex = data->num - 1;
+        int maxIndex = data->num - 1;
 
         for (int i = 0; i < count ; i++)
         {
