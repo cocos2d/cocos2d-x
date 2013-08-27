@@ -163,7 +163,7 @@ public:
      *	When CCArmature play an animation, if there is not a CCMovementBoneData of this bone in this CCMovementData, this bone will be hidden.
      *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
+    CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
 	CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
@@ -172,7 +172,7 @@ protected:
     //! Used for making tween effect in every frame
     CC_SYNTHESIZE_READONLY(CCFrameData *, m_pTweenData, TweenData);
 
-    CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+    CC_SYNTHESIZE(std::string, m_strName, Name);
 
     CCBone *m_pParentBone;	                //! A weak reference to its parent
     bool m_bBoneTransformDirty;          //! Whether or not transform dirty
