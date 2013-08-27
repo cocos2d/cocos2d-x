@@ -122,14 +122,14 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.cpp" />
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCLuaBridge.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCLuaEngine.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCLuaStack.cpp" />
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp" />
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
-    <ClCompile Include="..\cocos2dx_support\generated\lua_cocos2dx_auto.cpp" />
-    <ClCompile Include="..\cocos2dx_support\generated\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaBasicConversions.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp" />
     <ClCompile Include="..\cocos2dx_support\LuaOpengl.cpp" />
@@ -147,14 +147,14 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\tolua\tolua_to.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp" />
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\cocos2dx_support\CCBProxy.h" />
     <ClInclude Include="..\cocos2dx_support\CCLuaBridge.h" />
     <ClInclude Include="..\cocos2dx_support\CCLuaEngine.h" />
     <ClInclude Include="..\cocos2dx_support\CCLuaStack.h" />
     <ClInclude Include="..\cocos2dx_support\CCLuaValue.h" />
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h" />
-    <ClInclude Include="..\cocos2dx_support\generated\lua_cocos2dx_auto.hpp" />
-    <ClInclude Include="..\cocos2dx_support\generated\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\cocos2dx_support\LuaBasicConversions.h" />
     <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h" />
     <ClInclude Include="..\cocos2dx_support\LuaOpengl.h" />
@@ -171,6 +171,10 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\luajit\include\lualib.h" />
     <ClInclude Include="..\tolua\tolua++.h" />
     <ClInclude Include="..\tolua\tolua_event.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js" />
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto_api.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
