@@ -32,7 +32,6 @@ extern "C" {
 #include "tolua_fix.h"
 }
 
-#include "LuaCocos2d.h"
 #include "Cocos2dxLuaLoader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

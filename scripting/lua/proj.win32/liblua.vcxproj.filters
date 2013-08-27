@@ -39,9 +39,6 @@
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
@@ -81,11 +78,14 @@
     <ClCompile Include="..\cocos2dx_support\LuaBasicConversions.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\generated\lua_cocos2dx_auto.cpp">
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.cpp">
       <Filter>cocos2dx_support\generated</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\generated\lua_cocos2dx_extension_auto.cpp">
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.cpp">
       <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_deprecated.cpp">
+      <Filter>cocos2dx_support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +99,6 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h">
@@ -155,11 +152,22 @@
     <ClInclude Include="..\cocos2dx_support\LuaBasicConversions.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\generated\lua_cocos2dx_auto.hpp">
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp">
       <Filter>cocos2dx_support\generated</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\generated\lua_cocos2dx_extension_auto.hpp">
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.hpp">
       <Filter>cocos2dx_support\generated</Filter>
     </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_deprecated.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
   </ItemGroup>
 </Project>
