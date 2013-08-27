@@ -39,9 +39,6 @@
     <ClCompile Include="..\cocos2dx_support\Cocos2dxLuaLoader.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaCocos2d.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.cpp">
       <Filter>cocos2dx_support\generated</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_deprecated.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tolua\tolua++.h">
@@ -99,9 +99,6 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\Cocos2dxLuaLoader.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaCocos2d.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h">
@@ -160,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.hpp">
       <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_deprecated.h">
+      <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
