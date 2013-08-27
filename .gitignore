@@ -1,3 +1,6 @@
+# Ignore the projects folder
+projects/
+
 # Ignore thumbnails created by windows
 Thumbs.db
 
