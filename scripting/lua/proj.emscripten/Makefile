@@ -1,7 +1,7 @@
 TARGET = liblua.so
 
-INCLUDES += -I.. -I../lua -I../tolua \
-        -I../Classes -I../../../CocosDenshion/include -I../../../extensions
+INCLUDES += -I.. -I../lua -I../tolua -I../cocos2dx_support -I../cocos2dx_support/generated \
+        -I../Classes -I../../../CocosDenshion/include -I../../../extensions 
 
 SOURCES = ../lua/lapi.o \
           ../lua/lauxlib.c \
@@ -49,7 +49,13 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
-          ../cocos2dx_support/LuaScriptHandlerMgr.cpp
+          ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
+          ../cocos2dx_support/LuaBasicConversions.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_auto.cpp \
+          ../cocos2dx_support/generated/lua_cocos2dx_extension_auto.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_deprecated.cpp
 
 include ../../../cocos2dx/proj.emscripten/cocos2dx.mk
 

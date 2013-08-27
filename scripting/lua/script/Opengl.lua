@@ -294,6 +294,6 @@ function gl.getAttachedShaders(program)
 end
 
 function gl.glNodeCreate()
-    return GLNode:create()
+    return cc.GLNode:create()
 end
 

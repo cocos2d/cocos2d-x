@@ -2,7 +2,7 @@ require "luaScript/EffectsTest/EffectsName"
 
 
 local ActionIdx = -1
-local size = CCDirector:getInstance():getWinSize()
+local size = cc.Director:getInstance():getWinSize()
 local kTagTextLayer  = 1
 local kTagBackground = 1
 local kTagLabel      = 2
@@ -26,7 +26,7 @@ local function checkAnim(dt)
 end
 
 local function onEnterOrExit(tag)
-    local scheduler = CCDirector:getInstance():getScheduler()
+    local scheduler = cc.Director:getInstance():getScheduler()
     if tag == "enter" then
         entry = scheduler:scheduleScriptFunc(checkAnim, 0, false)
     elseif tag == "exit" then
@@ -55,256 +55,224 @@ local function nextAction()
 end
 
 local function backCallback(sender)
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     scene:addChild(backAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:getInstance():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 local function restartCallback(sender)
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     scene:addChild(restartAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:getInstance():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 local function nextCallback(sender)
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     scene:addChild(nextAction())
     scene:addChild(CreateBackMenuItem())
 
-    CCDirector:getInstance():replaceScene(scene)
+    cc.Director:getInstance():replaceScene(scene)
 end
 
 --------------------------------------
 --  Shaky3DDemo
 --------------------------------------
 local function Shaky3DDemo(t)
-    return CCShaky3D:create(t, CCSize(15,10), 5, false);
+    return cc.Shaky3D:create(t, cc.size(15,10), 5, false);
 end
 
 --------------------------------------
 --  Waves3DDemo
 --------------------------------------
 local function Waves3DDemo(t)
-    return CCWaves3D:create(t, CCSize(15,10), 5, 40);
+    return cc.Waves3D:create(t, cc.size(15,10), 5, 40);
 end
 
 --------------------------------------
 --  FlipX3DDemo
 --------------------------------------
 local function FlipX3DDemo(t)
-    local flipx  = CCFlipX3D:create(t)
+    local flipx  = cc.FlipX3D:create(t)
     local flipx_back = flipx:reverse()
-    local delay = CCDelayTime:create(2)
+    local delay = cc.DelayTime:create(2)
 
-    local array = CCArray:create()
-    array:addObject(flipx)
-    array:addObject(flipx_back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(flipx, flipx_back, delay)
 end
 
 --------------------------------------
 --  FlipY3DDemo
 --------------------------------------
 local function FlipY3DDemo(t)
-    local flipy  = CCFlipY3D:create(t)
+    local flipy  = cc.FlipY3D:create(t)
     local flipy_back = flipy:reverse()
-    local delay = CCDelayTime:create(2)
+    local delay = cc.DelayTime:create(2)
 
-    local array = CCArray:create()
-    array:addObject(flipy)
-    array:addObject(flipy_back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(flipy, flipy_back, delay)
 end
 
 --------------------------------------
 --  Lens3DDemo
 --------------------------------------
 local function Lens3DDemo(t)
-    return CCLens3D:create(t, CCSize(15,10), CCPoint(size.width/2,size.height/2), 240);
+    return cc.Lens3D:create(t, cc.size(15,10), cc.p(size.width/2,size.height/2), 240);
 end
 
 --------------------------------------
 --  Ripple3DDemo
 --------------------------------------
 local function Ripple3DDemo(t)
-    return CCRipple3D:create(t, CCSize(32,24), CCPoint(size.width/2,size.height/2), 240, 4, 160);
+    return cc.Ripple3D:create(t, cc.size(32,24), cc.p(size.width/2,size.height/2), 240, 4, 160);
 end
 
 --------------------------------------
 --  LiquidDemo
 --------------------------------------
 local function LiquidDemo(t)
-    return CCLiquid:create(t, CCSize(16,12), 4, 20);
+    return cc.Liquid:create(t, cc.size(16,12), 4, 20);
 end
 
 --------------------------------------
 --  WavesDemo
 --------------------------------------
 local function WavesDemo(t)
-    return CCWaves:create(t, CCSize(16,12), 4, 20, true, true);
+    return cc.Waves:create(t, cc.size(16,12), 4, 20, true, true);
 end
 
 --------------------------------------
 --  TwirlDemo
 --------------------------------------
 local function TwirlDemo(t)
-    return CCTwirl:create(t, CCSize(12,8), CCPoint(size.width/2, size.height/2), 1, 2.5);
+    return cc.Twirl:create(t, cc.size(12,8), cc.p(size.width/2, size.height/2), 1, 2.5);
 end
 
 --------------------------------------
 --  ShakyTiles3DDemo
 --------------------------------------
 local function ShakyTiles3DDemo(t)
-    return CCShakyTiles3D:create(t, CCSize(16,12), 5, false);
+    return cc.ShakyTiles3D:create(t, cc.size(16,12), 5, false);
 end
 
 --------------------------------------
 --  ShatteredTiles3DDemo
 --------------------------------------
 local function ShatteredTiles3DDemo(t)
-    return CCShatteredTiles3D:create(t, CCSize(16,12), 5, false);
+    return cc.ShatteredTiles3D:create(t, cc.size(16,12), 5, false);
 end
 
 --------------------------------------
 --  ShuffleTilesDemo
 --------------------------------------
 local function ShuffleTilesDemo(t)
-    local shuffle = CCShuffleTiles:create(t, CCSize(16,12), 25);
+    local shuffle = cc.ShuffleTiles:create(t, cc.size(16,12), 25);
     local shuffle_back = shuffle:reverse()
-    local delay = CCDelayTime:create(2)
+    local delay = cc.DelayTime:create(2)
 
-    local array = CCArray:create()
-    array:addObject(shuffle)
-    array:addObject(shuffle_back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(shuffle, shuffle_back, delay)
 end
 
 --------------------------------------
 --  FadeOutTRTilesDemo
 --------------------------------------
 local function FadeOutTRTilesDemo(t)
-    local fadeout = CCFadeOutTRTiles:create(t, CCSize(16,12));
+    local fadeout = cc.FadeOutTRTiles:create(t, cc.size(16,12));
     local back = fadeout:reverse()
-    local delay = CCDelayTime:create(0.5)
+    local delay = cc.DelayTime:create(0.5)
 
-    local array = CCArray:create()
-    array:addObject(fadeout)
-    array:addObject(back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(fadeout, back, delay)
 end
 
 --------------------------------------
 --  FadeOutBLTilesDemo
 --------------------------------------
 local function FadeOutBLTilesDemo(t)
-    local fadeout = CCFadeOutBLTiles:create(t, CCSize(16,12));
+    local fadeout = cc.FadeOutBLTiles:create(t, cc.size(16,12));
     local back = fadeout:reverse()
-    local delay = CCDelayTime:create(0.5)
+    local delay = cc.DelayTime:create(0.5)
 
-    local array = CCArray:create()
-    array:addObject(fadeout)
-    array:addObject(back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(fadeout, back, delay)
 end
 
 --------------------------------------
 --  FadeOutUpTilesDemo
 --------------------------------------
 local function FadeOutUpTilesDemo(t)
-    local fadeout = CCFadeOutUpTiles:create(t, CCSize(16,12));
+    local fadeout = cc.FadeOutUpTiles:create(t, cc.size(16,12));
     local back = fadeout:reverse()
-    local delay = CCDelayTime:create(0.5)
+    local delay = cc.DelayTime:create(0.5)
 
-    local array = CCArray:create()
-    array:addObject(fadeout)
-    array:addObject(back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(fadeout, back, delay)
 end
 
 --------------------------------------
 --  FadeOutDownTilesDemo
 --------------------------------------
 local function FadeOutDownTilesDemo(t)
-    local fadeout = CCFadeOutDownTiles:create(t, CCSize(16,12));
+    local fadeout = cc.FadeOutDownTiles:create(t, cc.size(16,12));
     local back = fadeout:reverse()
-    local delay = CCDelayTime:create(0.5)
+    local delay = cc.DelayTime:create(0.5)
 
-    local array = CCArray:create()
-    array:addObject(fadeout)
-    array:addObject(back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(fadeout, back, delay)
 end
 
 --------------------------------------
 --  TurnOffTilesDemo
 --------------------------------------
 local function TurnOffTilesDemo(t)
-    local fadeout = CCTurnOffTiles:create(t, CCSize(48,32), 25);
+    local fadeout = cc.TurnOffTiles:create(t, cc.size(48,32), 25);
     local back = fadeout:reverse()
-    local delay = CCDelayTime:create(0.5)
+    local delay = cc.DelayTime:create(0.5)
 
-    local array = CCArray:create()
-    array:addObject(fadeout)
-    array:addObject(back)
-    array:addObject(delay)
-    return CCSequence:create(array)
+    return cc.Sequence:create(fadeout, back, delay)
 end
 
 --------------------------------------
 --  WavesTiles3DDemo
 --------------------------------------
 local function WavesTiles3DDemo(t)
-    return CCWavesTiles3D:create(t, CCSize(15,10), 4, 120);
+    return cc.WavesTiles3D:create(t, cc.size(15,10), 4, 120);
 end
 
 --------------------------------------
 --  JumpTiles3DDemo
 --------------------------------------
 local function JumpTiles3DDemo(t)
-    return CCJumpTiles3D:create(t, CCSize(15,10), 2, 30);
+    return cc.JumpTiles3D:create(t, cc.size(15,10), 2, 30);
 end
 
 --------------------------------------
 --  SplitRowsDemo
 --------------------------------------
 local function SplitRowsDemo(t)
-    return CCSplitRows:create(t, 9);
+    return cc.SplitRows:create(t, 9);
 end
 
 --------------------------------------
 --  SplitColsDemo
 --------------------------------------
 local function SplitColsDemo(t)
-    return CCSplitCols:create(t, 9);
+    return cc.SplitCols:create(t, 9);
 end
 
 --------------------------------------
 --  PageTurn3DDemo
 --------------------------------------
 local function PageTurn3DDemo(t)
-    CCDirector:getInstance():setDepthTest(true)
-    return CCPageTurn3D:create(t, CCSize(15,10));
+    cc.Director:getInstance():setDepthTest(true)
+    return cc.PageTurn3D:create(t, cc.size(15,10));
 end
 
 --------------------------------------
 --  Effects Test
 --------------------------------------
 local function createEffect(idx, t)
-    CCDirector:getInstance():setDepthTest(false)
+    cc.Director:getInstance():setDepthTest(false)
     local action = nil
 
     if idx == 0 then
@@ -357,54 +325,54 @@ local function createEffect(idx, t)
 end
 
 function CreateEffectsTestLayer()
-    testLayer = CCLayerColor:create(Color4B(32,128,32,255))
+    testLayer = cc.LayerColor:create(cc.c4b(32,128,32,255))
 
     local x, y = size.width, size.height
 
-    local node = CCNode:create()
+    local node = cc.Node:create()
     local effect = createEffect(ActionIdx, 3)
     node:runAction(effect)
     testLayer:addChild(node, 0, kTagBackground)
 
-    local bg = CCSprite:create(s_back3)
+    local bg = cc.Sprite:create(s_back3)
     node:addChild(bg, 0)
-    bg:setPosition(CCPoint(size.width / 2, size.height / 2))
+    bg:setPosition(cc.p(size.width / 2, size.height / 2))
 
-    local grossini = CCSprite:create(s_pPathSister2)
+    local grossini = cc.Sprite:create(s_pPathSister2)
     node:addChild(grossini, 1)
-    grossini:setPosition( CCPoint(x / 3, y / 2) )
-    local sc = CCScaleBy:create(2, 5)
+    grossini:setPosition( cc.p(x / 3, y / 2) )
+    local sc = cc.ScaleBy:create(2, 5)
     local sc_back = sc:reverse()
-    grossini:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(sc, sc_back)))
+    grossini:runAction(cc.RepeatForever:create(cc.Sequence:create(sc, sc_back)))
 
-    local tamara = CCSprite:create(s_pPathSister1)
+    local tamara = cc.Sprite:create(s_pPathSister1)
     node:addChild(tamara, 1)
-    tamara:setPosition(CCPoint(2 * x / 3, y / 2))
-    local sc2 = CCScaleBy:create(2, 5)
+    tamara:setPosition(cc.p(2 * x / 3, y / 2))
+    local sc2 = cc.ScaleBy:create(2, 5)
     local sc2_back = sc2:reverse()
-    tamara:runAction(CCRepeatForever:create(CCSequence:createWithTwoActions(sc2, sc2_back)))
+    tamara:runAction(cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)))
 
-    titleLabel = CCLabelTTF:create(EffectsList[ActionIdx], "Marker Felt", 32)
+    titleLabel = cc.LabelTTF:create(EffectsList[ActionIdx], "Marker Felt", 32)
     titleLabel:setPosition(x / 2, y - 80)
     testLayer:addChild(titleLabel)
     titleLabel:setTag(kTagLabel)
 
-    local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-    local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-    local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
+    local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
+    local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     item1:registerScriptTapHandler(backCallback)
     item2:registerScriptTapHandler(restartCallback)
     item3:registerScriptTapHandler(nextCallback)
 
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
 
-    menu:setPosition(CCPoint(0, 0))
-    item1:setPosition(CCPoint(size.width/2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(CCPoint(size.width/2, item2:getContentSize().height / 2))
-    item3:setPosition(CCPoint(size.width/2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    menu:setPosition(cc.p(0, 0))
+    item1:setPosition(cc.p(size.width/2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(size.width/2, item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(size.width/2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
 
     testLayer:addChild(menu, 1)
 
@@ -414,7 +382,7 @@ function CreateEffectsTestLayer()
 end
 
 function EffectsTest()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
 
     ActionIdx = -1
     scene:addChild(nextAction())
