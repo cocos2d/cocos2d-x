@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <algorithm>
 
 #include "cocoa/CCString.h"
+#include "support/data_support/ccCArray.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
@@ -39,6 +40,7 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
@@ -67,9 +69,9 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransform(AffineTransformMakeIdentity())
-, _transform(AffineTransformMakeIdentity())
-, _inverse(AffineTransformMakeIdentity())
+, _additionalTransform(AffineTransform::IDENTITY)
+, _transform(AffineTransform::IDENTITY)
+, _inverse(AffineTransform::IDENTITY)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
@@ -611,10 +613,14 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    if ( _children->containsObject(child) )
-    {
-        this->detachChild(child,cleanup);
-    }
+//    if ( _children->containsObject(child) )
+//    {
+//        this->detachChild(child,cleanup);
+//    }
+
+    int index = _children->getIndexOfObject(child);
+    if( index != CC_INVALID_INDEX )
+        this->detachChild( child, index, cleanup );
 }
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
@@ -672,7 +678,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -693,7 +699,7 @@ void Node::detachChild(Node *child, bool doCleanup)
     // set parent nil at the end
     child->setParent(NULL);
 
-    _children->removeObject(child);
+    _children->removeObjectAtIndex(childIndex);
 }
 
 
