@@ -13,7 +13,9 @@ int main(int argc, char **argv)
 {
     // create the application instance
     AppDelegate app;
-    EGLView* eglView = EGLView::getInstance();
-    eglView->setFrameSize(800, 480);
+    EGLView* eglView = new EGLView();
+    eglView->setViewName("TestCpp");
+    eglView->setFrameSize(900, 640);
+    eglView->create();
     return Application::getInstance()->run();
 }
