@@ -118,9 +118,9 @@ struct Color4F
     {}
     
     explicit Color4F(const Color3B &color3B)
-        : r(color3B.r)
-        , g(color3B.g)
-        , b(color3B.b)
+        : r(color3B.r / 255.0f)
+        , g(color3B.g / 255.0f)
+        , b(color3B.b / 255.0f)
         , a(1.f)
     {}
     
