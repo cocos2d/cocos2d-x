@@ -244,9 +244,23 @@ static bool configureCURL(CURL *handle)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
-
+    
+    if(HttpClient::getInstance()->isIgnoreSslVerification()){
+        if(curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L) != CURLE_OK) return false;
+        if(curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L) != CURLE_OK) return false;
+    }
+    else{
+        if(curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L) != CURLE_OK) return false;
+        if(curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L) != CURLE_OK) return false;
+    }
+    
+    if(HttpClient::getInstance()->getCertificatesFilePath() != ""){
+        code = curl_easy_setopt(handle, CURLOPT_CAINFO, HttpClient::getInstance()->getCertificatesFilePath().c_str());
+        if (code != CURLE_OK) {
+            return false;
+        }
+    }
+    
     return true;
 }
 
@@ -409,6 +423,8 @@ void HttpClient::enableCookies(const char* cookieFile) {
 HttpClient::HttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
+, _ignoreSslVerification(false)
+, _certificatesFilePath("")
 {
     Director::getInstance()->getScheduler()->scheduleSelector(
                     schedule_selector(HttpClient::dispatchResponseCallbacks), this, 0, false);
