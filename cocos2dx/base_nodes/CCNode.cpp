@@ -83,7 +83,7 @@ Node::Node(void)
 , _children(NULL)
 , _parent(NULL)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
-, _tag(kNodeTagInvalid)
+, _tag(Node::INVALID_TAG)
 // userData is always inited as nil
 , _userData(NULL)
 , _userObject(NULL)
@@ -530,7 +530,7 @@ void Node::childrenAlloc(void)
 
 Node* Node::getChildByTag(int aTag)
 {
-    CCASSERT( aTag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
 
     if(_children && _children->count() > 0)
     {
@@ -625,7 +625,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
-    CCASSERT( tag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
     Node *child = this->getChildByTag(tag);
 
@@ -976,13 +976,13 @@ void Node::stopAction(Action* action)
 
 void Node::stopActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     _actionManager->removeActionByTag(tag, this);
 }
 
 Action * Node::getActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
 }
 
