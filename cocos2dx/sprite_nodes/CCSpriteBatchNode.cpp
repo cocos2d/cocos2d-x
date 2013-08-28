@@ -24,7 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #include "CCSpriteBatchNode.h"
+
+#include <algorithm>
+
 #include "ccConfig.h"
 #include "CCSprite.h"
 #include "effects/CCGrid.h"
@@ -241,11 +245,36 @@ void SpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
     _textureAtlas->removeAllQuads();
 }
 
+#if CC_USE_ARRAY_VECTOR
+static bool objectComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+{
+    Object *p1 = static_cast<Object*>(pp1);
+    Object *p2 = static_cast<Object*>(pp2);
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#else
+static bool objectComparisonLess(Object* p1, Object* p2)
+{
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#endif
+
 //override sortAllChildren
 void SpriteBatchNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
+#if 0
         int i = 0,j = 0,length = _children->count();
 
         // insertion sort
@@ -267,6 +296,9 @@ void SpriteBatchNode::sortAllChildren()
             }
             _children->fastSetObject(tempI, j+1);
         }
+#else
+        std::sort(std::begin(*_children), std::end(*_children), objectComparisonLess);
+#endif
 
         //sorted now check all children
         if (_children->count() > 0)
@@ -622,17 +654,17 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     // Cleanup sprite. It might be reused (issue #569)
     sprite->setBatchNode(NULL);
 
-    unsigned int uIndex = _descendants->getIndexOfObject(sprite);
-    if (uIndex != UINT_MAX)
+    int index = _descendants->getIndexOfObject(sprite);
+    if (index != UINT_MAX)
     {
-        _descendants->removeObjectAtIndex(uIndex);
+        _descendants->removeObjectAtIndex(index);
 
         // update all sprites beyond this one
-        unsigned int count = _descendants->count();
+        int count = _descendants->count();
         
-        for(; uIndex < count; ++uIndex)
+        for(; index < count; ++index)
         {
-            Sprite* s = (Sprite*)(_descendants->getObjectAtIndex(uIndex));
+            Sprite* s = static_cast<Sprite*>(_descendants->getObjectAtIndex(index));
             s->setAtlasIndex( s->getAtlasIndex() - 1 );
         }
     }
@@ -641,10 +673,10 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     Array *children = sprite->getChildren();
     if (children && children->count() > 0)
     {
-        Object* pObject = NULL;
-        CCARRAY_FOREACH(children, pObject)
+        Object* object = NULL;
+        CCARRAY_FOREACH(children, object)
         {
-            Sprite* child = static_cast<Sprite*>(pObject);
+            Sprite* child = static_cast<Sprite*>(object);
             if (child)
             {
                 removeSpriteFromAtlas(child);
