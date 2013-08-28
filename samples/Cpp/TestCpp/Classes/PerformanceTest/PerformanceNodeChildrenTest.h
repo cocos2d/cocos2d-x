@@ -9,6 +9,11 @@ class NodeChildrenMenuLayer : public PerformBasicLayer
 public:
     NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
     virtual void showCurrentTest();
+    void dumpProfilerInfo(float dt);
+    
+    // overrides
+    virtual void onExitTransitionDidStart();
+    virtual void onEnterTransitionDidFinish();
 };
 
 class NodeChildrenMainScene : public CCScene

@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
+#include <chrono>
 
 NS_CC_BEGIN
 
@@ -69,22 +70,22 @@ public:
 class CCProfilingTimer : public CCObject
 {
 public:
+    CCProfilingTimer();
+    ~CCProfilingTimer();
     bool initWithName(const char* timerName);
-    ~CCProfilingTimer(void);
     const char* description(void);
-    inline struct cc_timeval * getStartTime(void) { return &m_sStartTime; };
-    inline void setAverageTime(double value) { m_dAverageTime = value; }
-    inline double getAverageTime(void) { return m_dAverageTime; }
+    inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return m_sStartTime; };
     /** resets the timer properties */
     void reset();
 
     std::string m_NameStr;
-    struct cc_timeval m_sStartTime;
-    double m_dAverageTime;
-    double            minTime;
-    double            maxTime;
-    double            totalTime;
-    unsigned int    numberOfCalls;
+    std::chrono::high_resolution_clock::time_point m_sStartTime;
+    int               m_dAverageTime1;
+    int               m_dAverageTime2;
+    int               minTime;
+    int               maxTime;
+    long long         totalTime;
+    int               numberOfCalls;
 };
 
 extern void CCProfilingBeginTimingBlock(const char *timerName);
