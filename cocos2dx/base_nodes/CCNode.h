@@ -59,10 +59,6 @@ class ComponentContainer;
  */
 
 enum {
-    kNodeTagInvalid = -1,
-};
-
-enum {
     kNodeOnEnter,
     kNodeOnExit,
     kNodeOnEnterTransitionDidFinish,
@@ -128,6 +124,9 @@ enum {
 class CC_DLL Node : public Object
 {
 public:
+    /// Default tag used for all the nodes
+    static const int INVALID_TAG = -1;
+
     /// @{
     /// @name Constructor, Distructor and Initializers
 
