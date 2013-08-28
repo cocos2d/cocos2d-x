@@ -57,41 +57,41 @@ public:
             DeleteObject(_font);
             _font = hDefFont;
         }
-		// release temp font resource	
-		if (_curFontPath.size() > 0)
-		{
-			wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-			if (pwszBuffer)
-			{
-				RemoveFontResource(pwszBuffer);
-				SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-				delete [] pwszBuffer;
-				pwszBuffer = NULL;
-			}
-		}
+        // release temp font resource	
+        if (_curFontPath.size() > 0)
+        {
+            wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+            if (pwszBuffer)
+            {
+                RemoveFontResource(pwszBuffer);
+                SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
+                delete [] pwszBuffer;
+                pwszBuffer = NULL;
+            }
+        }
     }
 
-	wchar_t * utf8ToUtf16(std::string nString)
-	{
-		wchar_t * pwszBuffer = NULL;
-		do 
-		{
-			if (nString.size() < 0)
-			{
-				break;
-			}
-			// utf-8 to utf-16
-			int nLen = nString.size();
-			int nBufLen  = nLen + 1;			
-			pwszBuffer = new wchar_t[nBufLen];
-			CC_BREAK_IF(! pwszBuffer);
-			memset(pwszBuffer,0,nBufLen);
-			nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
-			pwszBuffer[nLen] = '\0';
-		} while (0);	
-		return pwszBuffer;
+    wchar_t * utf8ToUtf16(std::string nString)
+    {
+        wchar_t * pwszBuffer = NULL;
+        do 
+        {
+            if (nString.size() < 0)
+            {
+                break;
+            }
+            // utf-8 to utf-16
+            int nLen = nString.size();
+            int nBufLen  = nLen + 1;			
+            pwszBuffer = new wchar_t[nBufLen];
+            CC_BREAK_IF(! pwszBuffer);
+            memset(pwszBuffer,0,nBufLen);
+            nLen = MultiByteToWideChar(CP_UTF8, 0, nString.c_str(), nLen, pwszBuffer, nBufLen);		
+            pwszBuffer[nLen] = '\0';
+        } while (0);	
+        return pwszBuffer;
 
-	}
+    }
 
     bool setFont(const char * pFontName = NULL, int nSize = 0)
     {
@@ -138,39 +138,40 @@ public:
             if (_font != hDefFont)
             {
                 DeleteObject(_font);
-				// release old font register
-				if (_curFontPath.size() > 0)
-				{
-					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-					if (pwszBuffer)
-					{
-						if(RemoveFontResource(pwszBuffer))
-						{
-							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
-				}
-				if (fontPath.size() > 0)
-					_curFontPath = fontPath;
-				else
-					_curFontPath.clear();
-				// register temp font
-				if (_curFontPath.size() > 0)
-				{
-					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-					if (pwszBuffer)
-					{
-						if(AddFontResource(pwszBuffer))
-						{
-							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
-				}
+                // release old font register
+                if (_curFontPath.size() > 0)
+                {
+                    wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+                    if (pwszBuffer)
+                    {
+                        if(RemoveFontResource(pwszBuffer))
+                        {
+                            SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
+                        }						
+                        delete [] pwszBuffer;
+                        pwszBuffer = NULL;
+                    }
+                }
             }
+            if (fontPath.size() > 0)
+                _curFontPath = fontPath;
+            else
+                _curFontPath.clear();
+            // register temp font
+            if (_curFontPath.size() > 0)
+            {
+                wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+                if (pwszBuffer)
+                {
+                    if(AddFontResource(pwszBuffer))
+                    {
+                        SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
+                    }						
+                    delete [] pwszBuffer;
+                    pwszBuffer = NULL;
+                }
+            }
+
             _font = NULL;
 
             // disable Cleartype
