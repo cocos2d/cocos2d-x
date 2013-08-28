@@ -2065,7 +2065,7 @@ void Animate::startWithTarget(Node *target)
 
     if (_animation->getRestoreOriginalFrame())
     {
-        _origFrame = pSprite->displayFrame();
+        _origFrame = pSprite->getDisplayFrame();
         _origFrame->retain();
     }
     _nextFrame = 0;
