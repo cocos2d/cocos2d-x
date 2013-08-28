@@ -27,6 +27,8 @@ public:
     static void OnGLFWError(int errorID, const char* errorDesc);
     static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
 };
 
 bool EGLViewEventHandler::s_captured = false;
@@ -85,6 +87,23 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     }
 }
 
+void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if(GLFW_PRESS == action)
+    {
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key, true);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key,false);
+    }
+}
+
+void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
+{
+    IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
+}
+
 //end EGLViewEventHandler
 
 
@@ -121,6 +140,8 @@ bool EGLView::create()
     glfwMakeContextCurrent(_mainWindow);
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
+    glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
     
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
