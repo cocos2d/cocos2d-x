@@ -23,6 +23,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual void updateQuantityOfNodes() = 0;
+    virtual const char* profilerName() = 0;
 
     void updateQuantityLabel();
 
@@ -166,6 +167,18 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     virtual const char* profilerName();
+};
+
+class VisitSceneGraph : public NodeChildrenMainScene
+{
+public:
+    void initWithQuantityOfNodes(unsigned int nodes) override;
+
+    virtual void update(float dt) override;
+    void updateQuantityOfNodes() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+    virtual const char* profilerName() override;
 };
 
 void runNodeChildrenTest();

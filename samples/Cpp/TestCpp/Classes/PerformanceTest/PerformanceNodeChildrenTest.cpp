@@ -43,6 +43,8 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(RemoveSpriteSheet),
     CL(ReorderSpriteSheet),
     CL(SortAllChildrenSpriteSheet),
+
+    CL(VisitSceneGraph),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -814,6 +816,69 @@ const char*  SortAllChildrenSpriteSheet::profilerName()
     return "sort all children";
 }
 
+
+////////////////////////////////////////////////////////
+//
+// VisitSceneGraph
+//
+////////////////////////////////////////////////////////
+void VisitSceneGraph::initWithQuantityOfNodes(unsigned int nodes)
+{
+    NodeChildrenMainScene::initWithQuantityOfNodes(nodes);
+    scheduleUpdate();
+}
+
+void VisitSceneGraph::updateQuantityOfNodes()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // increase nodes
+    if( currentQuantityOfNodes < quantityOfNodes )
+    {
+        for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
+        {
+            auto sprite = Sprite::create("Images/spritesheet1.png", Rect(0, 0, 32, 32));
+            this->addChild(sprite);
+            sprite->setVisible(true);
+            sprite->setPosition(Point(-1000,-1000));
+            sprite->setTag(1000 + currentQuantityOfNodes + i );
+        }
+    }
+
+    // decrease nodes
+    else if ( currentQuantityOfNodes > quantityOfNodes )
+    {
+        for(int i = 0; i < (currentQuantityOfNodes-quantityOfNodes); i++)
+        {
+            this->removeChildByTag(1000 + currentQuantityOfNodes - i -1 );
+        }
+    }
+
+    currentQuantityOfNodes = quantityOfNodes;
+}
+void VisitSceneGraph::update(float dt)
+{
+    CC_PROFILER_START( this->profilerName() );
+    this->visit();
+    CC_PROFILER_STOP( this->profilerName() );
+}
+
+std::string VisitSceneGraph::title()
+{
+    return "K - Performance of visiting the scene graph";
+}
+
+std::string VisitSceneGraph::subtitle()
+{
+    return "calls visit() on scene graph. See console";
+}
+
+const char*  VisitSceneGraph::profilerName()
+{
+    return "visit scene graph";
+}
+
+///----------------------------------------
 void runNodeChildrenTest()
 {
     auto scene = createFunctions[g_curCase]();
