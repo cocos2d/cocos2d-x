@@ -574,7 +574,8 @@ Developers:
         Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
 
     xbruce
-        Fixing a bug that crash appears when extending cc.ScrollView in JS
+        Fixing a bug that crash appears when extending cc.ScrollView in JS.
+        Fixing a bug that cc.registerTargettedDelegate doesn't support pure js object as its target.
         
 Retired Core Developers:
     WenSheng Yang
