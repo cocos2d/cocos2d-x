@@ -1296,7 +1296,7 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
-private:
+protected:
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1304,12 +1304,12 @@ private:
     void insertChild(Node* child, int z);
     
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
     
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
 
-protected:
+
     float _rotationX;                 ///< rotation angle on x-axis
     float _rotationY;                 ///< rotation angle on y-axis
     

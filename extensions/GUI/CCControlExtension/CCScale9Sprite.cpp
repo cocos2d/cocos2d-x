@@ -225,7 +225,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
     if (!rotated) {
         // log("!rotated");
 
-        AffineTransform t = AffineTransformMakeIdentity();
+        AffineTransform t = AffineTransform::IDENTITY;
         t = AffineTransformTranslate(t, rect.origin.x, rect.origin.y);
 
         centerbounds = RectApplyAffineTransform(centerbounds, t);
@@ -288,7 +288,7 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         // in the spritesheet
         // log("rotated");
 
-        AffineTransform t = AffineTransformMakeIdentity();
+        AffineTransform t = AffineTransform::IDENTITY;
 
         Rect rotatedcenterbounds = centerbounds;
         Rect rotatedrightbottombounds = rightbottombounds;

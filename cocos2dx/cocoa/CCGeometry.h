@@ -262,7 +262,29 @@ public:
      */
     static bool isLineIntersect(const Point& A, const Point& B,
                                  const Point& C, const Point& D,
-                                 float *S, float *T);
+                                 float *S = nullptr, float *T = nullptr);
+    
+    /*
+     returns true if Line A-B overlap with segment C-D
+     @since v3.0
+     */
+    static bool isLineOverlap(const Point& A, const Point& B,
+                                const Point& C, const Point& D);
+    
+    /*
+     returns true if Line A-B parallel with segment C-D
+     @since v3.0
+     */
+    static bool isLineParallel(const Point& A, const Point& B,
+                   const Point& C, const Point& D);
+    
+    /*
+     returns true if Segment A-B overlap with segment C-D
+     @since v3.0
+     */
+    static bool isSegmentOverlap(const Point& A, const Point& B,
+                                 const Point& C, const Point& D,
+                                 Point* S = nullptr, Point* E = nullptr);
     
     /*
      returns true if Segment A-B intersects with segment C-D
@@ -277,6 +299,13 @@ public:
     static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
     
     static const Point ZERO;
+    
+private:
+    // returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
+    static bool isOneDemensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E);
+    
+    // cross procuct of 2 vector. A->B X C->D
+    static float crossProduct2Vector(const Point& A, const Point& B, const Point& C, const Point& D) { return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y); }
 };
 
 class CC_DLL Size

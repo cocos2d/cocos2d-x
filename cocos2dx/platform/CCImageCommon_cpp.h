@@ -41,6 +41,7 @@ extern "C"
 #include "jpeglib.h"
 }
 #include "third_party/common/s3tc/s3tc.h"
+#include "third_party/common/atitc/atitc.h"
 #if defined(__native_client__) || defined(EMSCRIPTEN)
 // TODO(sbc): I'm pretty sure all platforms should be including
 // webph headers in this way.
@@ -50,7 +51,7 @@ extern "C"
 #endif
 
 #include "ccMacros.h"
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 #include "CCStdC.h"
 #include "CCFileUtils.h"
 #include "CCConfiguration.h"
@@ -59,6 +60,10 @@ extern "C"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
 #endif
+
+#define CC_GL_ATC_RGB_AMD                                          0x8C92
+#define CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD                          0x8C93
+#define CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD                      0x87EE
 
 NS_CC_BEGIN
 
@@ -315,7 +320,33 @@ namespace
 }
 //s3tc struct end
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+//struct and data for atitc(ktx) struct
+namespace
+{
+    struct ATITCTexHeader
+    {
+        //HEADER
+        char identifier[12];
+        uint32_t endianness;
+        uint32_t glType;
+        uint32_t glTypeSize;
+        uint32_t glFormat;
+        uint32_t glInternalFormat;
+        uint32_t glBaseInternalFormat;
+        uint32_t pixelWidth;
+        uint32_t pixelHeight;
+        uint32_t pixelDepth;
+        uint32_t numberOfArrayElements;
+        uint32_t numberOfFaces;
+        uint32_t numberOfMipmapLevels;
+        uint32_t bytesOfKeyValueData;
+    };
+}
+//atittc struct end
+
+//////////////////////////////////////////////////////////////////////////
 
 namespace
 {
@@ -437,10 +468,12 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
         if (ZipUtils::ccIsCCZBuffer(data, dataLen))
         {
             unpackedLen = ZipUtils::ccInflateCCZBuffer(data, dataLen, &unpackedData);
-        }else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
+        }
+        else if (ZipUtils::ccIsGZipBuffer(data, dataLen))
         {
             unpackedLen = ZipUtils::ccInflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
-        }else
+        }
+        else
         {
             unpackedData = const_cast<unsigned char*>(data);
             unpackedLen = dataLen;
@@ -470,6 +503,9 @@ bool Image::initWithImageData(const unsigned char * data, int dataLen)
             break;
         case Format::S3TC:
             ret = initWithS3TCData(unpackedData, unpackedLen);
+            break;
+        case Format::ATITC:
+            ret = initWithATITCData(unpackedData, unpackedLen);
             break;
         default:
             CCAssert(false, "unsupport image format!");
@@ -509,9 +545,21 @@ bool Image::isS3TC(const unsigned char * data, int dataLen)
 
     S3TCTexHeader *header = (S3TCTexHeader *)data;
     
-    if (strncmp(header->fileCode, "DDS", 3)!= 0)
+    if (strncmp(header->fileCode, "DDS", 3) != 0)
     {
         CCLOG("cocos2d: the file is not a dds file!");
+        return false;
+    }
+    return true;
+}
+
+bool Image::isATITC(const unsigned char *data, int dataLen)
+{
+    ATITCTexHeader *header = (ATITCTexHeader *)data;
+    
+    if (strncmp(&header->identifier[1], "KTX", 3) != 0)
+    {
+        CCLOG("cocos3d: the file is not a ktx file!");
         return false;
     }
     return true;
@@ -576,24 +624,34 @@ Image::Format Image::detectFormat(const unsigned char * data, int dataLen)
     if (isPng(data, dataLen))
     {
         return Format::PNG;
-    }else if (isJpg(data, dataLen))
+    }
+    else if (isJpg(data, dataLen))
     {
         return Format::JPG;
-    }else if (isTiff(data, dataLen))
+    }
+    else if (isTiff(data, dataLen))
     {
         return Format::TIFF;
-    }else if (isWebp(data, dataLen))
+    }
+    else if (isWebp(data, dataLen))
     {
         return Format::WEBP;
-    }else if (isPvr(data, dataLen))
+    }
+    else if (isPvr(data, dataLen))
     {
         return Format::PVR;
-    }else if (isEtc(data, dataLen))
+    }
+    else if (isEtc(data, dataLen))
     {
         return Format::ETC;
-    }else if (isS3TC(data, dataLen))
+    }
+    else if (isS3TC(data, dataLen))
     {
         return Format::S3TC;
+    }
+    else if (isATITC(data, dataLen))
+    {
+        return Format::ATITC;
     }
     else
     {
@@ -1430,7 +1488,7 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     _width = header->ddsd.width;
     _height = header->ddsd.height;
     _numberOfMipmaps = header->ddsd.DUMMYUNIONNAMEN2.mipMapCount;
-    _dataLen = 0;  
+    _dataLen = 0;
     int blockSize = (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC) ? 8 : 16;
     
     /* caculate the dataLen */
@@ -1527,6 +1585,134 @@ bool Image::initWithS3TCData(const unsigned char * data, int dataLen)
     /* end load the mipmaps */
     
     CC_SAFE_DELETE_ARRAY(pixelData);
+    
+    return true;
+}
+
+
+bool Image::initWithATITCData(const unsigned char *data, int dataLen)
+{
+    /* load the .ktx file */
+    ATITCTexHeader *header = (ATITCTexHeader *)data;
+    _width =  header->pixelWidth;
+    _height = header->pixelHeight;
+    _numberOfMipmaps = header->numberOfMipmapLevels;
+    
+    int blockSize = 0;
+    switch (header->glInternalFormat)
+    {
+        case CC_GL_ATC_RGB_AMD:
+            blockSize = 8;
+            break;
+        case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+            blockSize = 16;
+            break;
+        case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+            blockSize = 16;
+            break;
+        default:
+            break;
+    }
+    
+    /* pixelData point to the compressed data address */
+    unsigned char *pixelData = (unsigned char *)data + sizeof(ATITCTexHeader) + header->bytesOfKeyValueData + 4;
+    
+    /* caculate the dataLen */
+    int width = _width;
+    int height = _height;
+    
+    if (Configuration::getInstance()->supportsATITC())  //compressed data length
+    {
+        _dataLen = dataLen - sizeof(ATITCTexHeader) - header->bytesOfKeyValueData - 4;
+        _data = new unsigned char [_dataLen];
+        memcpy((void *)_data,(void *)pixelData , _dataLen);
+    }
+    else                                               //decompressed data length
+    {
+        for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+        {
+            if (width == 0) width = 1;
+            if (height == 0) height = 1;
+            
+            _dataLen += (height * width *4);
+            
+            width >>= 1;
+            height >>= 1;
+        }
+        _data = new unsigned char [_dataLen];
+    }
+    
+    /* load the mipmaps */
+    int encodeOffset = 0;
+    int decodeOffset = 0;
+    width = _width;  height = _height;
+    
+    for (unsigned int i = 0; i < _numberOfMipmaps && (width || height); ++i)
+    {
+        if (width == 0) width = 1;
+        if (height == 0) height = 1;
+        
+        int size = ((width+3)/4)*((height+3)/4)*blockSize;
+        
+        if (Configuration::getInstance()->supportsATITC())
+        {
+            /* decode texture throught hardware */
+            
+            CCLOG("this is atitc H decode");
+            
+            switch (header->glInternalFormat)
+            {
+                case CC_GL_ATC_RGB_AMD:
+                    _renderFormat = Texture2D::PixelFormat::ATC_RGB;
+                    break;
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                    _renderFormat = Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA;
+                    break;
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    _renderFormat = Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA;
+                    break;
+                default:
+                    break;
+            }
+            
+            _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
+            _mipmaps[i].len = size;
+        }
+        else
+        {
+            /* if it is not gles or device do not support ATITC, decode texture by software */
+            
+            int bytePerPixel = 4;
+            unsigned int stride = width * bytePerPixel;
+            _renderFormat = Texture2D::PixelFormat::RGBA8888;
+            
+            std::vector<unsigned char> decodeImageData(stride * height);
+            switch (header->glInternalFormat)
+            {
+                case CC_GL_ATC_RGB_AMD:
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_RGB);
+                    break;
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_EXPLICIT_ALPHA);
+                    break;
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
+                    break;
+                default:
+                    break;
+            }
+
+            _mipmaps[i].address = (unsigned char *)_data + decodeOffset;
+            _mipmaps[i].len = (stride * height);
+            memcpy((void *)_mipmaps[i].address, (void *)&decodeImageData[0], _mipmaps[i].len);
+            decodeOffset += stride * height;
+        }
+
+        encodeOffset += (size + 4);
+        width >>= 1;
+        height >>= 1;
+    }
+    /* end load the mipmaps */
     
     return true;
 }

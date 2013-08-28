@@ -566,7 +566,16 @@ Developers:
         
     maciekczwa
         Fixing a bug that stroke color with channel color values other than 255 doesn't take effect on android.
+        
+    zcgit
+        a potential bug fix in Layer::init.
+        
+    gkosciolek
+        Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
 
+    xbruce
+        Fixing a bug that crash appears when extending cc.ScrollView in JS
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

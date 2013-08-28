@@ -7,21 +7,19 @@ LOCAL_MODULE := cocos2dxandroid_static
 LOCAL_MODULE_FILENAME := libcocos2dandroid
 
 LOCAL_SRC_FILES := \
-CCDevice.cpp \
-CCEGLView.cpp \
 CCAccelerometer.cpp \
 CCApplication.cpp \
 CCCommon.cpp \
+CCDevice.cpp \
+CCEGLView.cpp \
 CCFileUtilsAndroid.cpp \
 CCImage.cpp \
 nativeactivity.cpp \
+jni/DPIJni.cpp \
+jni/IMEJni.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
-jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
-jni/JniHelper.cpp \
-jni/IMEJni.cpp \
-jni/TouchesJni.cpp \
-jni/DPIJni.cpp
+jni/JniHelper.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 

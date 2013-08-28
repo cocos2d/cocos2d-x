@@ -110,7 +110,7 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
     setMovementBoneData(movementBoneData);
 
 
-    if (_movementBoneData->frameList.count() == 1)
+    if (_movementBoneData->frameList->count() == 1)
     {
         _loopType = SINGLE_FRAME;
         FrameData *_nextKeyFrame = _movementBoneData->getFrameData(0);
@@ -128,7 +128,7 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
         _rawDuration = _movementBoneData->duration;
         _fromIndex = _toIndex = 0;
     }
-    else if (_movementBoneData->frameList.count() > 1)
+    else if (_movementBoneData->frameList->count() > 1)
     {
         if (loop)
         {
@@ -383,7 +383,7 @@ float Tween::updateFrameData(float currentPrecent, bool activeFrame)
          *  Get frame length, if _toIndex >= _length, then set _toIndex to 0, start anew.
          *  _toIndex is next index will play
          */
-        int length = _movementBoneData->frameList.count();
+        int length = _movementBoneData->frameList->count();
         do
         {
             betweenDuration = _movementBoneData->getFrameData(_toIndex)->duration;

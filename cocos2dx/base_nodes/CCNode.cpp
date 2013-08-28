@@ -24,8 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "cocoa/CCString.h"
+
 #include "CCNode.h"
+
+#include <algorithm>
+
+#include "cocoa/CCString.h"
+#include "support/data_support/ccCArray.h"
 #include "support/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
@@ -35,6 +40,7 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
@@ -63,9 +69,9 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransform(AffineTransformMakeIdentity())
-, _transform(AffineTransformMakeIdentity())
-, _inverse(AffineTransformMakeIdentity())
+, _additionalTransform(AffineTransform::IDENTITY)
+, _transform(AffineTransform::IDENTITY)
+, _inverse(AffineTransform::IDENTITY)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
@@ -105,7 +111,7 @@ Node::Node(void)
 
 Node::~Node()
 {
-    CCLOGINFO( "cocos2d: deallocing: %p", this );
+    CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
     if (_updateScriptHandler)
     {
@@ -607,10 +613,14 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    if ( _children->containsObject(child) )
-    {
-        this->detachChild(child,cleanup);
-    }
+//    if ( _children->containsObject(child) )
+//    {
+//        this->detachChild(child,cleanup);
+//    }
+
+    int index = _children->getIndexOfObject(child);
+    if( index != CC_INVALID_INDEX )
+        this->detachChild( child, index, cleanup );
 }
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
@@ -668,7 +678,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -689,7 +699,7 @@ void Node::detachChild(Node *child, bool doCleanup)
     // set parent nil at the end
     child->setParent(NULL);
 
-    _children->removeObject(child);
+    _children->removeObjectAtIndex(childIndex);
 }
 
 
@@ -697,7 +707,7 @@ void Node::detachChild(Node *child, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    ccArrayAppendObjectWithResize(_children->data, child);
+    _children->addObject(child);
     child->_setZOrder(z);
 }
 
@@ -709,33 +719,65 @@ void Node::reorderChild(Node *child, int zOrder)
     child->_setZOrder(zOrder);
 }
 
+#if CC_USE_ARRAY_VECTOR
+static bool objectComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+{
+    Object *p1 = static_cast<Object*>(pp1);
+    Object *p2 = static_cast<Object*>(pp2);
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#else
+static bool objectComparisonLess(Object* p1, Object* p2)
+{
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#endif
+
 void Node::sortAllChildren()
 {
+#if 0
     if (_reorderChildDirty)
     {
-        int i,j,length = _children->data->num;
-        Node ** x = (Node**)_children->data->arr;
-        Node *tempItem;
+        int i,j,length = _children->count();
 
         // insertion sort
         for(i=1; i<length; i++)
         {
-            tempItem = x[i];
             j = i-1;
+            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempItem->_ZOrder < x[j]->_ZOrder || ( tempItem->_ZOrder== x[j]->_ZOrder && tempItem->_orderOfArrival < x[j]->_orderOfArrival ) ) )
+            while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
             {
-                x[j+1] = x[j];
+                _children->fastSetObject( tempJ, j+1 );
                 j = j-1;
+                if(j>=0)
+                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
             }
-            x[j+1] = tempItem;
+            _children->fastSetObject(tempI, j+1);
         }
 
         //don't need to check children recursively, that's done in visit of each child
 
         _reorderChildDirty = false;
     }
+#else
+    if( _reorderChildDirty ) {
+        std::sort( std::begin(*_children), std::end(*_children), objectComparisonLess );
+        _reorderChildDirty = false;
+    }
+#endif
 }
 
 
@@ -762,39 +804,30 @@ void Node::visit()
      }
 
     this->transform();
-
-    Node* pNode = NULL;
     unsigned int i = 0;
 
     if(_children && _children->count() > 0)
     {
         sortAllChildren();
         // draw children zOrder < 0
-        ccArray *arrayData = _children->data;
-        for( ; i < arrayData->num; i++ )
+        for( ; i < _children->count(); i++ )
         {
-            pNode = (Node*) arrayData->arr[i];
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
 
-            if ( pNode && pNode->_ZOrder < 0 ) 
-            {
-                pNode->visit();
-            }
+            if ( node && node->_ZOrder < 0 )
+                node->visit();
             else
-            {
                 break;
-            }
         }
         // self draw
         this->draw();
 
-        for( ; i < arrayData->num; i++ )
+        for( ; i < _children->count(); i++ )
         {
-            pNode = (Node*) arrayData->arr[i];
-            if (pNode)
-            {
-                pNode->visit();
-            }
-        }        
+            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            if (node)
+                node->visit();
+        }
     }
     else
     {

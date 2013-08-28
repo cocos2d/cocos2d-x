@@ -80,26 +80,26 @@ void Light::updateLightState()
 NotificationCenterTest::NotificationCenterTest()
 : _showImage(false)
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
+    auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
     pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    Menu* pBackMenu = Menu::create(pBackItem, NULL);
+    auto pBackMenu = Menu::create(pBackItem, NULL);
     pBackMenu->setPosition( Point::ZERO );
     addChild(pBackMenu);
 
-    LabelTTF *label1 = LabelTTF::create("switch off", "Marker Felt", 26);
-    LabelTTF *label2 = LabelTTF::create("switch on", "Marker Felt", 26);
-    MenuItemLabel *item1 = MenuItemLabel::create(label1);
-    MenuItemLabel *item2 = MenuItemLabel::create(label2);
-    MenuItemToggle *item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::toggleSwitch, this), item1, item2, NULL);
+    auto label1 = LabelTTF::create("switch off", "Marker Felt", 26);
+    auto label2 = LabelTTF::create("switch on", "Marker Felt", 26);
+    auto item1 = MenuItemLabel::create(label1);
+    auto item2 = MenuItemLabel::create(label2);
+    auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::toggleSwitch, this), item1, item2, NULL);
     // turn on
     item->setSelectedIndex(1);
-    Menu *menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, NULL);
     menu->setPosition(Point(s.width/2+100, s.height/2));
     addChild(menu);
 
-    Menu *menuConnect = Menu::create();
+    auto menuConnect = Menu::create();
     menuConnect->setPosition(Point::ZERO);
     addChild(menuConnect);
 
@@ -110,11 +110,11 @@ NotificationCenterTest::NotificationCenterTest()
         light->setPosition(Point(100, s.height/4*i));
         addChild(light);
 
-        LabelTTF *label1 = LabelTTF::create("not connected", "Marker Felt", 26);
-        LabelTTF *label2 = LabelTTF::create("connected", "Marker Felt", 26);
-        MenuItemLabel *item1 = MenuItemLabel::create(label1);
-        MenuItemLabel *item2 = MenuItemLabel::create(label2);
-        MenuItemToggle *item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);
+        auto label1 = LabelTTF::create("not connected", "Marker Felt", 26);
+        auto label2 = LabelTTF::create("connected", "Marker Felt", 26);
+        auto item1 = MenuItemLabel::create(label1);
+        auto item2 = MenuItemLabel::create(label2);
+        auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(NotificationCenterTest::connectToSwitch, this), item1, item2, NULL);
         item->setTag(kTagConnect+i);
         item->setPosition(Point(light->getPosition().x, light->getPosition().y+50));
         menuConnect->addChild(item, 0);
@@ -140,21 +140,21 @@ void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Object* sender)
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
 
-    ExtensionsTestScene* scene = new ExtensionsTestScene();
+    auto scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
 
 void NotificationCenterTest::toggleSwitch(Object *sender)
 {
-    MenuItemToggle* item = (MenuItemToggle*)sender;
+    auto item = (MenuItemToggle*)sender;
     int index = item->getSelectedIndex();
     NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Object*)(intptr_t)index);
 }
 
 void NotificationCenterTest::connectToSwitch(Object *sender)
 {
-    MenuItemToggle* item = (MenuItemToggle*)sender;
+    auto item = (MenuItemToggle*)sender;
     bool bConnected = item->getSelectedIndex() == 0 ? false : true;
     Light* pLight = (Light*)this->getChildByTag(item->getTag()-kTagConnect+kTagLight);
     pLight->setIsConnectToSwitch(bConnected);
@@ -167,7 +167,7 @@ void NotificationCenterTest::doNothing(cocos2d::Object *sender)
 
 void runNotificationCenterTest()
 {
-    Scene* scene = Scene::create();
+    auto scene = Scene::create();
     NotificationCenterTest* layer = new NotificationCenterTest();
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);

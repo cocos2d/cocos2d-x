@@ -42,19 +42,19 @@ bool ControlScene::init()
 {
     if (Layer::init())
     {    
-        MenuItemFont* pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
+        auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        Menu* pBackMenu = Menu::create(pBackItem, NULL);
+        auto pBackMenu = Menu::create(pBackItem, NULL);
         pBackMenu->setPosition( Point::ZERO );
         addChild(pBackMenu, 10);
 
         // Add the generated background
-        Sprite *background = Sprite::create("extensions/background.png");
+        auto background = Sprite::create("extensions/background.png");
         background->setPosition(VisibleRect::center());
         addChild(background);
         
         // Add the ribbon
-        Scale9Sprite *ribbon = Scale9Sprite::create("extensions/ribbon.png", Rect(1, 1, 48, 55));
+        auto ribbon = Scale9Sprite::create("extensions/ribbon.png", Rect(1, 1, 48, 55));
         ribbon->setContentSize(Size(VisibleRect::getVisibleRect().size.width, 57));
         ribbon->setPosition(Point(VisibleRect::center().x, VisibleRect::top().y - ribbon->getContentSize().height / 2.0f));
         addChild(ribbon);
@@ -65,11 +65,11 @@ bool ControlScene::init()
         addChild(_sceneTitleLabel, 1);
         
         // Add the menu
-        MenuItemImage *item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(ControlScene::previousCallback, this));
-        MenuItemImage *item2 = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ControlScene::restartCallback, this));
-        MenuItemImage *item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(ControlScene::nextCallback, this));
+        auto item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(ControlScene::previousCallback, this));
+        auto item2 = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ControlScene::restartCallback, this));
+        auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(ControlScene::nextCallback, this));
         
-        Menu *menu = Menu::create(item1, item3, item2, NULL);
+        auto menu = Menu::create(item1, item3, item2, NULL);
         menu->setPosition(Point::ZERO);
         item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -84,7 +84,7 @@ bool ControlScene::init()
 
 void ControlScene::toExtensionsMainLayer(Object* sender)
 {
-    ExtensionsTestScene* scene = new ExtensionsTestScene();
+    auto scene = new ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }

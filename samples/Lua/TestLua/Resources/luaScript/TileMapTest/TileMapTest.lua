@@ -1,11 +1,11 @@
-local size = CCDirector:getInstance():getWinSize()
-local scheduler = CCDirector:getInstance():getScheduler()
+local size = cc.Director:getInstance():getWinSize()
+local scheduler = cc.Director:getInstance():getScheduler()
 
 local kTagTileMap = 1
 
 
 local function createTileDemoLayer(title, subtitle)
-    local layer = CCLayer:create()
+    local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     local titleStr = title == nil and "No title" or title
     local subTitleStr = subtitle  == nil and "drag the screen" or subtitle
@@ -25,7 +25,7 @@ local function createTileDemoLayer(title, subtitle)
             local diffX = x - prev.x
             local diffY = y - prev.y
 
-            node:setPosition( CCPoint.__add(CCPoint(newX, newY), CCPoint(diffX, diffY)) )
+            node:setPosition( cc.pAdd(cc.p(newX, newY), cc.p(diffX, diffY)) )
             prev.x = x
             prev.y = y
         end
@@ -42,7 +42,7 @@ end
 local function TileMapTest()
     local layer = createTileDemoLayer("TileMapAtlas")
 
-    local  map = CCTileMapAtlas:create(s_TilesPng,  s_LevelMapTga, 16, 16)
+    local  map = cc.TileMapAtlas:create(s_TilesPng,  s_LevelMapTga, 16, 16)
     -- Convert it to "alias" (GL_LINEAR filtering)
     map:getTexture():setAntiAliasTexParameters()
 
@@ -55,17 +55,14 @@ local function TileMapTest()
 
     layer:addChild(map, 0, kTagTileMap)
 
-    map:setAnchorPoint( CCPoint(0, 0.5) )
+    map:setAnchorPoint( cc.p(0, 0.5) )
 
-    local scale = CCScaleBy:create(4, 0.8)
+    local scale = cc.ScaleBy:create(4, 0.8)
     local scaleBack = scale:reverse()
-    local action_arr = CCArray:create()
-    action_arr:addObject(scale)
-    action_arr:addObject(scaleBack)
 
-    local  seq = CCSequence:create(action_arr)
+    local  seq = cc.Sequence:create(scale, scaleBack)
 
-    map:runAction(CCRepeatForever:create(seq))
+    map:runAction(cc.RepeatForever:create(seq))
 
     return layer
 end
@@ -77,7 +74,7 @@ end
 --------------------------------------------------------------------
 local function TileMapEditTest()
     local layer = createTileDemoLayer("Editable TileMapAtlas")
-    local  map = CCTileMapAtlas:create(s_TilesPng, s_LevelMapTga, 16, 16)
+    local  map = cc.TileMapAtlas:create(s_TilesPng, s_LevelMapTga, 16, 16)
     -- Create an Aliased Atlas
     map:getTexture():setAliasTexParameters()
 
@@ -93,7 +90,7 @@ local function TileMapEditTest()
         --   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
         --   The value 0 not rendered so don't assign or change a tile with value 0
 
-        local  tilemap = tolua.cast(layer:getChildByTag(kTagTileMap), "CCTileMapAtlas")
+        local  tilemap = tolua.cast(layer:getChildByTag(kTagTileMap), "TileMapAtlas")
 
         --
         -- For example you can iterate over all the tiles
@@ -109,7 +106,7 @@ local function TileMapEditTest()
         --    end
 
         -- NEW since v0.7
-        local c = tilemap:getTileAt(CCPoint(13,21))
+        local c = tilemap:getTileAt(cc.p(13,21))
         c.r = c.r + 1
         c.r = c.r % 50
 
@@ -117,7 +114,7 @@ local function TileMapEditTest()
             c.r=1
         end
         -- NEW since v0.7
-        tilemap:setTile(c, CCPoint(13,21) )
+        tilemap:setTile(c, cc.p(13,21) )
     end
 
     local schedulerEntry = nil
@@ -133,8 +130,8 @@ local function TileMapEditTest()
 
     layer:addChild(map, 0, kTagTileMap)
 
-    map:setAnchorPoint( CCPoint(0, 0) )
-    map:setPosition( CCPoint(-20,-200) )
+    map:setAnchorPoint( cc.p(0, 0) )
+    map:setPosition( cc.p(-20,-200) )
 
     return layer
 end
@@ -152,10 +149,10 @@ local function TMXOrthoTest()
     --
     -- it should not flicker. No artifacts should appear
     --
-    --local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    --local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     --addChild(color, -1)
 
-    local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
     layer:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -165,10 +162,10 @@ local function TMXOrthoTest()
     local  child = nil
     local  pObject = nil
     local i = 0
-    local len = pChildrenArray:count()
+    local len = table.getn(pChildrenArray)
     for i = 0, len-1, 1 do
-        pObject = pChildrenArray:objectAtIndex(i)
-        child = tolua.cast(pObject, "CCSpriteBatchNode")
+        pObject = pChildrenArray[i + 1]
+        child = tolua.cast(pObject, "SpriteBatchNode")
 
         if child == nil then
             break
@@ -180,18 +177,18 @@ local function TMXOrthoTest()
     local x = 0
     local y = 0
     local z = 0
-    x, y, z = map:getCamera():getEyeXYZ(x, y, z)
+    x, y, z = map:getCamera():getEye()
     cclog("before eye x="..x..",y="..y..",z="..z)
-    map:getCamera():setEyeXYZ(x-200, y, z+300)
-    x, y, z = map:getCamera():getEyeXYZ(x, y, z)
+    map:getCamera():setEye(x-200, y, z+300)
+    x, y, z = map:getCamera():getEye()
     cclog("after eye x="..x..",y="..y..",z="..z)
 
 
     local function onNodeEvent(event)
         if event == "enter" then
-            CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION3_D )
         elseif event == "exit" then
-            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
         end
     end
 
@@ -209,7 +206,7 @@ end
 local function TMXOrthoTest2()
     local layer = createTileDemoLayer("TMX Ortho test2")
 
-    local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test1.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/orthogonal-test1.tmx")
     layer:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -219,10 +216,10 @@ local function TMXOrthoTest2()
     local  child          = nil
     local  pObject        = nil
     local  i              = 0
-    local  len            = pChildrenArray:count()
+    local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray:objectAtIndex(i), "CCSpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
 
         if child == nil then
             break
@@ -230,7 +227,7 @@ local function TMXOrthoTest2()
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    map:runAction( CCScaleBy:create(2, 0.5) )
+    map:runAction( cc.ScaleBy:create(2, 0.5) )
     return layer
 end
 
@@ -241,7 +238,7 @@ end
 --------------------------------------------------------------------
 local function TMXOrthoTest3()
     local layer = createTileDemoLayer("TMX anchorPoint test")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test3.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test3.tmx")
     layer:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -251,10 +248,10 @@ local function TMXOrthoTest3()
     local  child          = nil
     local  pObject        = nil
     local  i              = 0
-    local  len            = pChildrenArray:count()
+    local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray:objectAtIndex(i), "CCSpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
 
         if child == nil then
             break
@@ -263,7 +260,7 @@ local function TMXOrthoTest3()
     end
 
     map:setScale(0.2)
-    map:setAnchorPoint( CCPoint(0.5, 0.5) )
+    map:setAnchorPoint( cc.p(0.5, 0.5) )
     return layer
 end
 
@@ -275,7 +272,7 @@ end
 --------------------------------------------------------------------
 local function TMXOrthoTest4()
     local ret = createTileDemoLayer("TMX width/height test")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test4.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test4.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s1 = map:getContentSize()
@@ -285,10 +282,10 @@ local function TMXOrthoTest4()
     local  child          = nil
     local  pObject        = nil
     local  i              = 0
-    local  len            = pChildrenArray:count()
+    local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray:objectAtIndex(i), "CCSpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
 
         if child == nil then
             break
@@ -296,18 +293,18 @@ local function TMXOrthoTest4()
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    map:setAnchorPoint(CCPoint(0, 0))
+    map:setAnchorPoint(cc.p(0, 0))
 
     local layer  = map:getLayer("Layer 0")
     local s      = layer:getLayerSize()
 
-    local sprite = layer:getTileAt(CCPoint(0,0))
+    local sprite = layer:getTileAt(cc.p(0,0))
     sprite:setScale(2)
-    sprite       = layer:getTileAt(CCPoint(s.width-1,0))
+    sprite       = layer:getTileAt(cc.p(s.width-1,0))
     sprite:setScale(2)
-    sprite       = layer:getTileAt(CCPoint(0,s.height-1))
+    sprite       = layer:getTileAt(cc.p(0,s.height-1))
     sprite:setScale(2)
-    sprite       = layer:getTileAt(CCPoint(s.width-1,s.height-1))
+    sprite       = layer:getTileAt(cc.p(s.width-1,s.height-1))
     sprite:setScale(2)
 
     local schedulerEntry = nil
@@ -315,11 +312,11 @@ local function TMXOrthoTest4()
     local function removeSprite(dt)
         scheduler:unscheduleScriptEntry(schedulerEntry)
         schedulerEntry = nil
-        local map = tolua.cast(ret:getChildByTag(kTagTileMap), "CCTMXTiledMap")
+        local map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
         local  layer0 = map:getLayer("Layer 0")
         local s = layer0:getLayerSize()
 
-        local  sprite = layer0:getTileAt( CCPoint(s.width-1,0) )
+        local  sprite = layer0:getTileAt( cc.p(s.width-1,0) )
         layer0:removeChild(sprite, true)
     end
 
@@ -349,7 +346,7 @@ local function TMXReadWriteTest()
     local ret = createTileDemoLayer("TMX Read/Write test")
     local m_gid  = 0
     local m_gid2 = 0
-    local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/orthogonal-test2.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -361,25 +358,25 @@ local function TMXReadWriteTest()
 
     map:setScale( 1 )
 
-    local tile0 = layer:getTileAt(CCPoint(1,63))
-    local tile1 = layer:getTileAt(CCPoint(2,63))
-    local tile2 = layer:getTileAt(CCPoint(3,62))--CCPoint(1,62))
-    local tile3 = layer:getTileAt(CCPoint(2,62))
-    tile0:setAnchorPoint( CCPoint(0.5, 0.5) )
-    tile1:setAnchorPoint( CCPoint(0.5, 0.5) )
-    tile2:setAnchorPoint( CCPoint(0.5, 0.5) )
-    tile3:setAnchorPoint( CCPoint(0.5, 0.5) )
+    local tile0 = layer:getTileAt(cc.p(1,63))
+    local tile1 = layer:getTileAt(cc.p(2,63))
+    local tile2 = layer:getTileAt(cc.p(3,62))--cc.p(1,62))
+    local tile3 = layer:getTileAt(cc.p(2,62))
+    tile0:setAnchorPoint( cc.p(0.5, 0.5) )
+    tile1:setAnchorPoint( cc.p(0.5, 0.5) )
+    tile2:setAnchorPoint( cc.p(0.5, 0.5) )
+    tile3:setAnchorPoint( cc.p(0.5, 0.5) )
 
-    local  move = CCMoveBy:create(0.5, CCPoint(0,160))
-    local  rotate = CCRotateBy:create(2, 360)
-    local  scale = CCScaleBy:create(2, 5)
-    local  opacity = CCFadeOut:create(2)
-    local  fadein = CCFadeIn:create(2)
-    local  scaleback = CCScaleTo:create(1, 1)
+    local  move = cc.MoveBy:create(0.5, cc.p(0,160))
+    local  rotate = cc.RotateBy:create(2, 360)
+    local  scale = cc.ScaleBy:create(2, 5)
+    local  opacity = cc.FadeOut:create(2)
+    local  fadein = cc.FadeIn:create(2)
+    local  scaleback = cc.ScaleTo:create(1, 1)
 
     local function removeSprite(sender)
         --------cclog("removing tile: %x", sender)
-        local node = tolua.cast(sender, "CCNode")
+        local node = tolua.cast(sender, "Node")
         if nil == node then
             print("Errro node is nil")
         end
@@ -391,19 +388,11 @@ local function TMXReadWriteTest()
         ----------cclog("atlas quantity: %d", p:textureAtlas():totalQuads())
     end
 
-    local finish = CCCallFunc:create(removeSprite)
-    local arr = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(rotate)
-    arr:addObject(scale)
-    arr:addObject(opacity)
-    arr:addObject(fadein)
-    arr:addObject(scaleback)
-    arr:addObject(finish)
-    local  seq0 = CCSequence:create(arr)
-    local  seq1 = tolua.cast(seq0:clone(), "CCAction")
-    local  seq2 = tolua.cast(seq0:clone(), "CCAction")
-    local  seq3 = tolua.cast(seq0:clone(), "CCAction")
+    local finish = cc.CallFunc:create(removeSprite)
+    local  seq0 = cc.Sequence:create(move, rotate, scale, opacity, fadein, scaleback, finish)
+    local  seq1 = tolua.cast(seq0:clone(), "Action")
+    local  seq2 = tolua.cast(seq0:clone(), "Action")
+    local  seq3 = tolua.cast(seq0:clone(), "Action")
 
     tile0:runAction(seq0)
     tile1:runAction(seq1)
@@ -411,7 +400,7 @@ local function TMXReadWriteTest()
     tile3:runAction(seq3)
 
 
-    m_gid = layer:getTileGIDAt(CCPoint(0,63))
+    m_gid = layer:getTileGIDAt(cc.p(0,63))
     --------cclog("Tile GID at:(0,63) is: %d", m_gid)
     local updateColScheduler     = nil
     local repainWithGIDScheduler = nil
@@ -419,8 +408,8 @@ local function TMXReadWriteTest()
 
     local function updateCol(dt)
 
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "CCTMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "CCTMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
 
         --------cclog("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
         --------cclog("++++children: %d", layer:getChildren():count() )
@@ -429,7 +418,7 @@ local function TMXReadWriteTest()
         local s = layer:getLayerSize()
         local y = 0
         for y=0, s.height-1, 1 do
-            layer:setTileGID(m_gid2, CCPoint(3, y))
+            layer:setTileGID(m_gid2, cc.p(3, y))
         end
 
         m_gid2 = (m_gid2 + 1) % 80
@@ -437,27 +426,27 @@ local function TMXReadWriteTest()
 
     local function repaintWithGID(dt)
         --    unschedule:_cmd)
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "CCTMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "CCTMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
 
         local s = layer:getLayerSize()
         local x = 0
         for x=0, s.width-1, 1 do
             local y = s.height-1
-            local tmpgid = layer:getTileGIDAt( CCPoint(x, y) )
-            layer:setTileGID(tmpgid+1, CCPoint(x, y))
+            local tmpgid = layer:getTileGIDAt( cc.p(x, y) )
+            layer:setTileGID(tmpgid+1, cc.p(x, y))
         end
     end
 
     local function removeTiles(dt)
         scheduler:unscheduleScriptEntry(removeTilesScheduler)
         removeTilesScheduler = nil
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "CCTMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "CCTMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
         local s = layer:getLayerSize()
         local y = 0
         for y=0, s.height-1, 1 do
-            layer:removeTileAt( CCPoint(5.0, y) )
+            layer:removeTileAt( cc.p(5.0, y) )
         end
     end
 
@@ -498,10 +487,10 @@ end
 --------------------------------------------------------------------
 local function TMXHexTest()
     local ret = createTileDemoLayer("TMX Hex tes")
-    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     ret:addChild(color, -1)
 
-    local  map = CCTMXTiledMap:create("TileMaps/hexa-test.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/hexa-test.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -516,16 +505,16 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest()
     local ret = createTileDemoLayer("TMX Isometric test 0")
-    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     ret:addChild(color, -1)
 
-    local  map = CCTMXTiledMap:create("TileMaps/iso-test.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/iso-test.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     -- move map to the center of the screen
     local ms = map:getMapSize()
     local ts = map:getTileSize()
-    map:runAction( CCMoveTo:create(1.0, CCPoint( -ms.width * ts.width/2, -ms.height * ts.height/2 )) )
+    map:runAction( cc.MoveTo:create(1.0, cc.p( -ms.width * ts.width/2, -ms.height * ts.height/2 )) )
     return ret
 end
 
@@ -536,16 +525,16 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest1()
     local ret = createTileDemoLayer("TMX Isometric test + anchorPoint")
-    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     ret:addChild(color, -1)
 
-    local map = CCTMXTiledMap:create("TileMaps/iso-test1.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test1.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
-    map:setAnchorPoint(CCPoint(0.5, 0.5))
+    map:setAnchorPoint(cc.p(0.5, 0.5))
     return ret
 end
 
@@ -556,10 +545,10 @@ end
 --------------------------------------------------------------------
 local function TMXIsoTest2()
     local ret = createTileDemoLayer("TMX Isometric test 2")
-    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     ret:addChild(color, -1)
 
-    local map = CCTMXTiledMap:create("TileMaps/iso-test2.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test2.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -568,7 +557,7 @@ local function TMXIsoTest2()
     -- move map to the center of the screen
     local ms = map:getMapSize()
     local ts = map:getTileSize()
-    map:runAction( CCMoveTo:create(1.0, CCPoint( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ))
+    map:runAction( cc.MoveTo:create(1.0, cc.p( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ))
     return ret
 end
 
@@ -579,10 +568,10 @@ end
 --------------------------------------------------------------------
 local function TMXUncompressedTest()
     local ret = createTileDemoLayer("TMX Uncompressed test")
-    local  color = CCLayerColor:create( Color4B(64,64,64,255) )
+    local  color = cc.LayerColor:create( cc.c4b(64,64,64,255) )
     ret:addChild(color, -1)
 
-    local map = CCTMXTiledMap:create("TileMaps/iso-test2-uncompressed.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test2-uncompressed.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -591,15 +580,15 @@ local function TMXUncompressedTest()
     -- move map to the center of the screen
     local ms = map:getMapSize()
     local ts = map:getTileSize()
-    map:runAction(CCMoveTo:create(1.0, CCPoint( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ))
+    map:runAction(cc.MoveTo:create(1.0, cc.p( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ))
 
     -- testing release map
     local  pChildrenArray = map:getChildren()
     local layer = nil
     local i = 0
-    local len = pChildrenArray:count()
+    local len = table.getn(pChildrenArray)
     for i = 0, len-1, 1 do
-        layer = tolua.cast(pChildrenArray:objectAtIndex(i), "CCTMXLayer")
+        layer = tolua.cast(pChildrenArray[i + 1], "TMXLayer")
         if layer == nil then
             break
         end
@@ -615,7 +604,7 @@ end
 --------------------------------------------------------------------
 local function TMXTilesetTest()
     local ret = createTileDemoLayer("TMX Tileset test")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -639,7 +628,7 @@ end
 --------------------------------------------------------------------
 local function TMXOrthoObjectsTest()
     local ret = createTileDemoLayer("TMX Ortho object test", "You should see a white box around the 3 platforms")
-    local map = CCTMXTiledMap:create("TileMaps/ortho-objects.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/ortho-objects.tmx")
     ret:addChild(map, -1, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -651,10 +640,10 @@ local function TMXOrthoObjectsTest()
 
     local  dict    = nil
     local  i       = 0
-    local  len     = objects:count()
+    local  len     = table.getn(objects)
 
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects:objectAtIndex(i), "CCDictionary")
+        dict = objects[i + 1]
 
         if dict == nil then
             break
@@ -670,35 +659,35 @@ end
 
 local function draw()
 
-    local  map = tolua.cast(getChildByTag(kTagTileMap), "CCTMXTiledMap")
+    local  map = tolua.cast(getChildByTag(kTagTileMap), "TMXTiledMap")
     local  group = map:getObjectGroup("Object Group 1")
 
     local  objects = group:getObjects()
     local  dict = nil
     local  i = 0
-    local  len = objects:count()
+    local  len = table.getn(objects)
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects:objectAtIndex(i), "CCDictionary")
+        dict = objects[i + 1]
 
         if dict == nil then
             break
         end
 
         local key = "x"
-        local x = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()
+        local x = dict["x"]
         key = "y"
-        local y = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
+        local y = dict["y"]--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
         key = "width"
-        local width = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
+        local width = dict["width"]--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
-        local height = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
+        local height = dict["height"]--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
 
         glLineWidth(3)
 
-        CCDrawPrimitives.ccDrawLine( CCPoint(x, y), CCPoint((x+width), y) )
-        CCDrawPrimitives.ccDrawLine( CCPoint((x+width), y), CCPoint((x+width), (y+height)) )
-        CCDrawPrimitives.ccDrawLine( CCPoint((x+width), (y+height)), CCPoint(x, (y+height)) )
-        CCDrawPrimitives.ccDrawLine( CCPoint(x, (y+height)), CCPoint(x, y) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x, y), cc.p((x+width), y) )
+        cc.DrawPrimitives.ccDrawLine( cc.p((x+width), y), cc.p((x+width), (y+height)) )
+        cc.DrawPrimitives.ccDrawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x, (y+height)), cc.p(x, y) )
 
         glLineWidth(1)
     end
@@ -712,7 +701,7 @@ end
 
 local function TMXIsoObjectsTest()
     local ret = createTileDemoLayer("TMX Iso object test", "You need to parse them manually. See bug #810")
-    local  map = CCTMXTiledMap:create("TileMaps/iso-test-objectgroup.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/iso-test-objectgroup.tmx")
     ret:addChild(map, -1, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -725,9 +714,9 @@ local function TMXIsoObjectsTest()
     --UxMutableDictionary<std:string>* dict
     local  dict = nil
     local  i = 0
-    local  len = objects:count()
+    local  len = table.getn(objects)
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects:objectAtIndex(i), "CCDictionary")
+        dict = tolua.cast(objects[i + 1], "Dictionary")
 
         if dict == nil then
             break
@@ -739,35 +728,35 @@ end
 
 local function draw()
 
-    local map = tolua.cast(getChildByTag(kTagTileMap), "CCTMXTiledMap")
+    local map = tolua.cast(getChildByTag(kTagTileMap), "TMXTiledMap")
     local group = map:getObjectGroup("Object Group 1")
 
     local  objects = group:getObjects()
     local  dict = nil
     local  i = 0
-    local  len = objects:count()
+    local  len = table.getn(objects)
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects:objectAtIndex(i), "CCDictionary")
+        dict = tolua.cast(objects[i + 1], "Dictionary")
 
         if dict == nil then
             break
         end
 
         local key = "x"
-        local x = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
+        local x = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
         key = "y"
-        local y = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
+        local y = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
         key = "width"
-        local width = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
+        local width = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
-        local height = (tolua.cast(dict:objectForKey(key), "CCString")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
+        local height = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
 
         glLineWidth(3)
 
-        CCDrawPrimitives.ccDrawLine( CCPoint(x,y), CCPoint(x+width,y) )
-        CCDrawPrimitives.ccDrawLine( CCPoint(x+width,y), CCPoint(x+width,y+height) )
-        CCDrawPrimitives.ccDrawLine( CCPoint(x+width,y+height), CCPoint(x,y+height) )
-        CCDrawPrimitives.ccDrawLine( CCPoint(x,y+height), CCPoint(x,y) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x,y), cc.p(x+width,y) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x+width,y), cc.p(x+width,y+height) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x+width,y+height), cc.p(x,y+height) )
+        cc.DrawPrimitives.ccDrawLine( cc.p(x,y+height), cc.p(x,y) )
 
         glLineWidth(1)
     end
@@ -781,7 +770,7 @@ end
 
 local function TMXResizeTest()
     local ret = createTileDemoLayer("TMX resize test", "Should not crash. Testing issue #740")
-    local  map = CCTMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/orthogonal-test5.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -793,7 +782,7 @@ local function TMXResizeTest()
     local y = 0
     for y = 0, ls.height-1, 1 do
         for  x = 0, ls.width-1, 1 do
-            layer:setTileGID(1, CCPoint( x, y ) )
+            layer:setTileGID(1, cc.p( x, y ) )
         end
     end
     return ret
@@ -807,31 +796,27 @@ end
 local function TMXIsoZorder()
     local m_tamara = nil
     local ret = createTileDemoLayer("TMX Iso Zorder", "Sprite should hide behind the trees")
-    local map = CCTMXTiledMap:create("TileMaps/iso-test-zorder.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test-zorder.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
-    map:setPosition(CCPoint(-s.width/2,0))
+    map:setPosition(cc.p(-s.width/2,0))
 
-    m_tamara = CCSprite:create(s_pPathSister1)
-    map:addChild(m_tamara, map:getChildren():count() )
+    m_tamara = cc.Sprite:create(s_pPathSister1)
+    map:addChild(m_tamara, table.getn(map:getChildren()))
     m_tamara:retain()
     local mapWidth = map:getMapSize().width * map:getTileSize().width
-    m_tamara:setPosition(CC_POINT_PIXELS_TO_POINTS(CCPoint( mapWidth/2,0)))
-    m_tamara:setAnchorPoint(CCPoint(0.5,0))
+    m_tamara:setPosition(CC_POINT_PIXELS_TO_POINTS(cc.p( mapWidth/2,0)))
+    m_tamara:setAnchorPoint(cc.p(0.5,0))
 
-    local  move = CCMoveBy:create(10, CCPoint(300,250))
+    local  move = cc.MoveBy:create(10, cc.p(300,250))
     local  back = move:reverse()
-    local  arr  = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(back)
-    local  seq = CCSequence:create(arr)
-    m_tamara:runAction( CCRepeatForever:create(seq) )
+    local  seq = cc.Sequence:create(move, back)
+    m_tamara:runAction( cc.RepeatForever:create(seq) )
 
     local function repositionSprite(dt)
-        local x,y = m_tamara:getPosition()
-        local p = CCPoint(x, y)
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local map = ret:getChildByTag(kTagTileMap)
 
@@ -871,29 +856,25 @@ end
 local function TMXOrthoZorder()
     local m_tamara = nil
     local ret = createTileDemoLayer("TMX Ortho Zorder", "Sprite should hide behind the trees")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-zorder.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test-zorder.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
-    m_tamara = CCSprite:create(s_pPathSister1)
-    map:addChild(m_tamara,  map:getChildren():count())
+    m_tamara = cc.Sprite:create(s_pPathSister1)
+    map:addChild(m_tamara,  table.getn(map:getChildren()))
     m_tamara:retain()
-    m_tamara:setAnchorPoint(CCPoint(0.5,0))
+    m_tamara:setAnchorPoint(cc.p(0.5,0))
 
 
-    local  move = CCMoveBy:create(10, CCPoint(400,450))
+    local  move = cc.MoveBy:create(10, cc.p(400,450))
     local  back = move:reverse()
-    local  arr = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(back)
-    local  seq = CCSequence:create(arr)
-    m_tamara:runAction( CCRepeatForever:create(seq))
+    local  seq = cc.Sequence:create(move, back)
+    m_tamara:runAction( cc.RepeatForever:create(seq))
 
     local function repositionSprite(dt)
-        local x, y = m_tamara:getPosition()
-        local p = CCPoint(x, y)
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local  map = ret:getChildByTag(kTagTileMap)
 
@@ -933,32 +914,28 @@ end
 local function TMXIsoVertexZ()
     local m_tamara = nil
     local ret = createTileDemoLayer("TMX Iso VertexZ", "Sprite should hide behind the trees")
-    local map = CCTMXTiledMap:create("TileMaps/iso-test-vertexz.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test-vertexz.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local s = map:getContentSize()
-    map:setPosition( CCPoint(-s.width/2,0) )
+    map:setPosition( cc.p(-s.width/2,0) )
     cclog("ContentSize: %f, %f", s.width,s.height)
 
     -- because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-    -- can use any CCSprite and it will work OK.
+    -- can use any cc.Sprite and it will work OK.
     local  layer = map:getLayer("Trees")
-    m_tamara = layer:getTileAt( CCPoint(29,29) )
+    m_tamara = layer:getTileAt( cc.p(29,29) )
     m_tamara:retain()
 
-    local  move = CCMoveBy:create(10, CCPoint.__mul( CCPoint(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) )
+    local  move = cc.MoveBy:create(10, cc.pMul( cc.p(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) )
     local  back = move:reverse()
-    local  arr  = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(back)
-    local  seq = CCSequence:create(arr)
-    m_tamara:runAction( CCRepeatForever:create(seq) )
+    local  seq = cc.Sequence:create(move, back)
+    m_tamara:runAction( cc.RepeatForever:create(seq) )
     local function repositionSprite(dt)
 
         -- tile height is 64x32
         -- map size: 30x30
-        local x, y = m_tamara:getPosition()
-        local p = CCPoint(x, y)
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         local newZ = -(p.y+32) /16
         m_tamara:setVertexZ( newZ )
@@ -968,11 +945,11 @@ local function TMXIsoVertexZ()
     local function onNodeEvent(event)
         if event == "enter" then
             -- TIP: 2d projection should be used
-            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    CCDirector:getInstance():setProjection:kCCDirectorProjection3D)
+            --    cc.Director:getInstance():setProjection:cc.DIRECTOR_PROJECTION3_D )
 
             if m_tamara ~= nil then
                 m_tamara:release()
@@ -993,32 +970,28 @@ end
 local function TMXOrthoVertexZ()
     local m_tamara = nil
     local ret = createTileDemoLayer("TMX Ortho vertexZ", "Sprite should hide behind the trees")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-vertexz.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test-vertexz.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
     -- because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
-    -- can use any CCSprite and it will work OK.
+    -- can use any cc.Sprite and it will work OK.
     local  layer = map:getLayer("trees")
-    m_tamara = layer:getTileAt(CCPoint(0,11))
+    m_tamara = layer:getTileAt(cc.p(0,11))
     cclog("vertexZ:"..m_tamara:getVertexZ())
     m_tamara:retain()
 
-    local  move = CCMoveBy:create(10, CCPoint.__mul( CCPoint(400,450), 1/CC_CONTENT_SCALE_FACTOR()))
+    local  move = cc.MoveBy:create(10, cc.pMul( cc.p(400,450), 1/CC_CONTENT_SCALE_FACTOR()))
     local  back = move:reverse()
-    local  arr  = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(back)
-    local  seq = CCSequence:create(arr)
-    m_tamara:runAction( CCRepeatForever:create(seq))
+    local  seq = cc.Sequence:create(move, back)
+    m_tamara:runAction( cc.RepeatForever:create(seq))
 
     local function repositionSprite(dt)
         -- tile height is 101x81
         -- map size: 12x12
-        local x, y = m_tamara:getPosition()
-        local p = CCPoint(x, y)
+        local p = cc.p(m_tamara:getPosition())
         p = CC_POINT_POINTS_TO_PIXELS(p)
         m_tamara:setVertexZ( -( (p.y+81) /81) )
     end
@@ -1027,11 +1000,11 @@ local function TMXOrthoVertexZ()
     local function onNodeEvent(event)
         if event == "enter" then
             -- TIP: 2d projection should be used
-            CCDirector:getInstance():setProjection(kCCDirectorProjection2D)
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             -- At exit use any other projection.
-            --    CCDirector:getInstance():setProjection:kCCDirectorProjection3D)
+            --    cc.Director:getInstance():setProjection:cc.DIRECTOR_PROJECTION3_D )
             if m_tamara ~= nil then
                 m_tamara:release()
             end
@@ -1049,10 +1022,10 @@ end
 --------------------------------------------------------------------
 local function TMXIsoMoveLayer()
     local ret = createTileDemoLayer("TMX Iso Move Layer", "Trees should be horizontally aligned")
-    local  map = CCTMXTiledMap:create("TileMaps/iso-test-movelayer.tmx")
+    local  map = cc.TMXTiledMap:create("TileMaps/iso-test-movelayer.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
-    map:setPosition(CCPoint(-700,-50))
+    map:setPosition(cc.p(-700,-50))
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
@@ -1067,7 +1040,7 @@ end
 --------------------------------------------------------------------
 local function TMXOrthoMoveLayer()
     local ret = createTileDemoLayer("TMX Ortho Move Layer", "Trees should be horizontally aligned")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test-movelayer.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test-movelayer.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
@@ -1083,7 +1056,7 @@ end
 
 local function TMXTilePropertyTest()
     local ret = createTileDemoLayer("TMX Tile Property Test", "In the console you should see tile properties")
-    local map = CCTMXTiledMap:create("TileMaps/ortho-tile-property.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/ortho-tile-property.tmx")
     ret:addChild(map ,0 ,kTagTileMap)
     local i = 0
     for i=1, 20, 1 do
@@ -1100,19 +1073,19 @@ end
 
 local function TMXOrthoFlipTest()
     local ret = createTileDemoLayer("TMX tile flip test")
-    local map = CCTMXTiledMap:create("TileMaps/ortho-rotation-test.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/ortho-rotation-test.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
     local i = 0
-    for i = 0, map:getChildren():count()-1, 1 do
-        local  child = tolua.cast(map:getChildren():objectAtIndex(i), "CCSpriteBatchNode")
+    for i = 0, table.getn(map:getChildren())-1, 1 do
+        local  child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    local  action = CCScaleBy:create(2, 0.5)
+    local  action = cc.ScaleBy:create(2, 0.5)
     map:runAction(action)
     return ret
 end
@@ -1125,54 +1098,54 @@ end
 
 local function TMXOrthoFlipRunTimeTest()
     local ret = createTileDemoLayer("TMX tile flip run time test", "in 2 sec bottom left tiles will flip")
-    local map = CCTMXTiledMap:create("TileMaps/ortho-rotation-test.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/ortho-rotation-test.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
     local i = 0
-    for i = 0, map:getChildren():count()-1, 1 do
-        local child = tolua.cast(map:getChildren():objectAtIndex(i), "CCSpriteBatchNode")
+    for i = 0, table.getn(map:getChildren())-1, 1 do
+        local child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    local  action = CCScaleBy:create(2, 0.5)
+    local  action = cc.ScaleBy:create(2, 0.5)
     map:runAction(action)
     local function flipIt(dt)
 
-        -- local map = tolua.cast(ret:getChildByTag(kTagTileMap), "CCTMXTiledMap")
+        -- local map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
         -- local layer = map:getLayer("Layer 0")
 
         -- --blue diamond
-        -- local tileCoord = CCPoint(1,10)
+        -- local tileCoord = cc.p(1,10)
         -- local flags = 0
         -- local GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
         -- -- Vertical
-        -- if( flags & kCCTMXTileVerticalFlag )
-        -- flags &= ~kCCTMXTileVerticalFlag
+        -- if( flags & kcc.TMXTileVerticalFlag )
+        -- flags &= ~kcc.TMXTileVerticalFlag
         -- else
-        --     flags |= kCCTMXTileVerticalFlag
+        --     flags |= kcc.TMXTileVerticalFlag
         --     layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
 
 
-        --     tileCoord = CCPoint(1,8)
+        --     tileCoord = cc.p(1,8)
         --     GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
         --     -- Vertical
-        --     if( flags & kCCTMXTileVerticalFlag )
-        --     flags &= ~kCCTMXTileVerticalFlag
+        --     if( flags & kcc.TMXTileVerticalFlag )
+        --     flags &= ~kcc.TMXTileVerticalFlag
         --     else
-        --         flags |= kCCTMXTileVerticalFlag
+        --         flags |= kcc.TMXTileVerticalFlag
         --         layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
 
 
-        --         tileCoord = CCPoint(2,8)
+        --         tileCoord = cc.p(2,8)
         --         GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
         --         -- Horizontal
-        --         if( flags & kCCTMXTileHorizontalFlag )
-        --         flags &= ~kCCTMXTileHorizontalFlag
+        --         if( flags & kcc.TMXTileHorizontalFlag )
+        --         flags &= ~kcc.TMXTileHorizontalFlag
         --         else
-        --             flags |= kCCTMXTileHorizontalFlag
+        --             flags |= kcc.TMXTileHorizontalFlag
         --             layer:setTileGID(GID, tileCoord, (ccTMXTileFlags)flags)
     end
     local schedulerEntry = nil
@@ -1198,26 +1171,26 @@ local function TMXOrthoFromXMLTest()
     local resources = "TileMaps"        -- partial paths are OK as resource paths.
     local file = resources.."/orthogonal-test1.tmx"
 
-    local  str = CCString:createWithContentsOfFile(CCFileUtils:getInstance():fullPathForFilename(file)):getCString()
-    --    CCASSERT(str != NULL, "Unable to open file")
+    local  str = cc.FileUtils:getInstance():getStringFromFile(file)
+    --    cc.ASSERT(str != NULL, "Unable to open file")
     if (str == nil) then
         cclog("Unable to open file")
     end
 
-    local map = CCTMXTiledMap:createWithXML(str ,resources)
+    local map = cc.TMXTiledMap:createWithXML(str ,resources)
     ret:addChild(map, 0, kTagTileMap)
 
     local s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
 
     local i = 0
-    local len = map:getChildren():count()
+    local len = table.getn(map:getChildren())
     for i = 0, len-1, 1 do
-        local  child = tolua.cast(map:getChildren():objectAtIndex(i), "CCSpriteBatchNode")
+        local  child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    local  action = CCScaleBy:create(2, 0.5)
+    local  action = cc.ScaleBy:create(2, 0.5)
     map:runAction(action)
     return ret
 end
@@ -1229,7 +1202,7 @@ end
 --------------------------------------------------------------------
 local function TMXBug987()
     local ret = createTileDemoLayer("TMX Bug 987", "You should see an square")
-    local map = CCTMXTiledMap:create("TileMaps/orthogonal-test6.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/orthogonal-test6.tmx")
     ret:addChild(map, 0, kTagTileMap)
 
     local  s1 = map:getContentSize()
@@ -1238,19 +1211,19 @@ local function TMXBug987()
     local  childs = map:getChildren()
 
     local i = 0
-    local len = childs:count()
+    local len = table.getn(childs)
     local pNode = nil
     for i = 0, len-1, 1 do
-        pNode = tolua.cast(childs:objectAtIndex(i), "CCTMXLayer")
+        pNode = tolua.cast(childs[i + 1], "TMXLayer")
         if pNode == nil then
             break
         end
         pNode:getTexture():setAntiAliasTexParameters()
     end
 
-    map:setAnchorPoint(CCPoint(0, 0))
+    map:setAnchorPoint(cc.p(0, 0))
     local layer = map:getLayer("Tile Layer 1")
-    layer:setTileGID(3, CCPoint(2,2))
+    layer:setTileGID(3, cc.p(2,2))
     return ret
 end
 
@@ -1261,7 +1234,7 @@ end
 --------------------------------------------------------------------
 local function TMXBug787()
     local ret = createTileDemoLayer("TMX Bug 787", "You should see a map")
-    local map = CCTMXTiledMap:create("TileMaps/iso-test-bug787.tmx")
+    local map = cc.TMXTiledMap:create("TileMaps/iso-test-bug787.tmx")
     ret:addChild(map, 0, kTagTileMap)
     map:setScale(0.25)
     return ret
@@ -1270,8 +1243,8 @@ end
 function TileMapTestMain()
     cclog("TileMapTestMain")
     Helper.index = 1
-    CCDirector:getInstance():setDepthTest(true)
-    local scene = CCScene:create()
+    cc.Director:getInstance():setDepthTest(true)
+    local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {
         TileMapTest,

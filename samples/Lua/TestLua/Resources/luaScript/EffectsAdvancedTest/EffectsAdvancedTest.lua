@@ -8,29 +8,23 @@ local originCreateLayer = createTestLayer
 
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
-    local bg = CCSprite:create("Images/background3.png")
+    local bg = cc.Sprite:create("Images/background3.png")
     ret:addChild(bg, 0, kTagBackground)
     bg:setPosition( VisibleRect:center() )
 
-    local  grossini = CCSprite:create("Images/grossinis_sister2.png")
+    local  grossini = cc.Sprite:create("Images/grossinis_sister2.png")
     bg:addChild(grossini, 1, kTagSprite1)
-    grossini:setPosition( CCPoint(VisibleRect:left().x+VisibleRect:getVisibleRect().size.width/3.0, VisibleRect:bottom().y+ 200) )
-    local  sc = CCScaleBy:create(2, 5)
+    grossini:setPosition( cc.p(VisibleRect:left().x+VisibleRect:getVisibleRect().width/3.0, VisibleRect:bottom().y+ 200) )
+    local  sc = cc.ScaleBy:create(2, 5)
     local  sc_back = sc:reverse()
-    local arr = CCArray:create()
-    arr:addObject(sc)
-    arr:addObject(sc_back)
-    grossini:runAction( CCRepeatForever:create(CCSequence:create(arr)))
+    grossini:runAction( cc.RepeatForever:create(cc.Sequence:create(sc, sc_back)))
 
-    local  tamara = CCSprite:create("Images/grossinis_sister1.png")
+    local  tamara = cc.Sprite:create("Images/grossinis_sister1.png")
     bg:addChild(tamara, 1, kTagSprite2)
-    tamara:setPosition( CCPoint(VisibleRect:left().x+2*VisibleRect:getVisibleRect().size.width/3.0,VisibleRect:bottom().y+200) )
-    local  sc2 = CCScaleBy:create(2, 5)
+    tamara:setPosition( cc.p(VisibleRect:left().x+2*VisibleRect:getVisibleRect().width/3.0,VisibleRect:bottom().y+200) )
+    local  sc2 = cc.ScaleBy:create(2, 5)
     local  sc2_back = sc2:reverse()
-    arr = CCArray:create()
-    arr:addObject(sc2)
-    arr:addObject(sc2_back)
-    tamara:runAction( CCRepeatForever:create(CCSequence:create(arr)))
+    tamara:runAction( cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)))
 
     return ret
 end
@@ -50,25 +44,17 @@ local function Effect1()
     --     Lens3D is Grid3D and it's size is (15,10)
     --     Waves3D is Grid3D and it's size is (15,10)
 
-    local size = CCDirector:getInstance():getWinSize()
-    local  lens = CCLens3D:create(0.0, CCSize(15,10), CCPoint(size.width/2,size.height/2), 240)
-    local  waves = CCWaves3D:create(10, CCSize(15,10), 18, 15)
+    local size = cc.Director:getInstance():getWinSize()
+    local  lens = cc.Lens3D:create(0.0, cc.size(15,10), cc.p(size.width/2,size.height/2), 240)
+    local  waves = cc.Waves3D:create(10, cc.size(15,10), 18, 15)
 
-    local  reuse = CCReuseGrid:create(1)
-    local  delay = CCDelayTime:create(8)
+    local  reuse = cc.ReuseGrid:create(1)
+    local  delay = cc.DelayTime:create(8)
 
-    local  orbit = CCOrbitCamera:create(5, 1, 2, 0, 180, 0, -90)
+    local  orbit = cc.OrbitCamera:create(5, 1, 2, 0, 180, 0, -90)
     local  orbit_back = orbit:reverse()
-    local arr = CCArray:create()
-    arr:addObject(orbit)
-    arr:addObject(orbit_back)
-    target:runAction( CCRepeatForever:create( CCSequence:create(arr)))
-    arr = CCArray:create()
-    arr:addObject(lens)
-    arr:addObject(delay)
-    arr:addObject(reuse)
-    arr:addObject(waves)
-    target:runAction( CCSequence:create(arr))
+    target:runAction( cc.RepeatForever:create( cc.Sequence:create(orbit, orbit_back)))
+    target:runAction( cc.Sequence:create(lens, delay, reuse, waves))
     return ret
 end
 
@@ -86,28 +72,20 @@ local function Effect2()
     --     ShakyTiles is TiledGrid3D and it's size is (15,10)
     --     Shuffletiles is TiledGrid3D and it's size is (15,10)
     --       TurnOfftiles is TiledGrid3D and it's size is (15,10)
-    local  shaky = CCShakyTiles3D:create(5, CCSize(15,10), 4, false)
-    local  shuffle = CCShuffleTiles:create(0, CCSize(15,10), 3)
-    local  turnoff = CCTurnOffTiles:create(0, CCSize(15,10), 3)
+    local  shaky = cc.ShakyTiles3D:create(5, cc.size(15,10), 4, false)
+    local  shuffle = cc.ShuffleTiles:create(0, cc.size(15,10), 3)
+    local  turnoff = cc.TurnOffTiles:create(0, cc.size(15,10), 3)
     local  turnon = turnoff:reverse()
 
     -- reuse 2 times:
     --   1 for shuffle
     --   2 for turn off
     --   turnon tiles will use a new grid
-    local  reuse = CCReuseGrid:create(2)
+    local  reuse = cc.ReuseGrid:create(2)
 
-    local  delay = CCDelayTime:create(1)
+    local  delay = cc.DelayTime:create(1)
 
-    local arr = CCArray:create()
-    arr:addObject(shaky)
-    arr:addObject(delay)
-    arr:addObject(reuse)
-    arr:addObject(shuffle)
-    arr:addObject(tolua.cast(delay:clone(), "CCAction"))
-    arr:addObject(turnoff)
-    arr:addObject(turnon)
-    target:runAction(CCSequence:create(arr))
+    target:runAction(cc.Sequence:create(shaky, delay ,reuse, shuffle, tolua.cast(delay:clone(), "Action"), turnoff, turnon))
     return ret
 end
 
@@ -122,18 +100,15 @@ local function Effect3()
     local  target1 = bg:getChildByTag(kTagSprite1)
     local  target2 = bg:getChildByTag(kTagSprite2)
 
-    local  waves = CCWaves:create(5, CCSize(15,10), 5, 20, true, false)
-    local  shaky = CCShaky3D:create(5, CCSize(15,10), 4, false)
+    local  waves = cc.Waves:create(5, cc.size(15,10), 5, 20, true, false)
+    local  shaky = cc.Shaky3D:create(5, cc.size(15,10), 4, false)
 
-    target1:runAction( CCRepeatForever:create( waves ) )
-    target2:runAction( CCRepeatForever:create( shaky ) )
+    target1:runAction( cc.RepeatForever:create( waves ) )
+    target2:runAction( cc.RepeatForever:create( shaky ) )
 
     -- moving background. Testing issue #244
-    local  move = CCMoveBy:create(3, CCPoint(200,0) )
-    local arr = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(move:reverse())
-    bg:runAction(CCRepeatForever:create( CCSequence:create(arr)))
+    local  move = cc.MoveBy:create(3, cc.p(200,0) )
+    bg:runAction(cc.RepeatForever:create( cc.Sequence:create(move, move:reverse())))
     return ret
 end
 
@@ -143,20 +118,20 @@ end
 --
 --------------------------------------------------------------------
 
--- class Lens3DTarget : public CCNode
+-- class Lens3DTarget : public cc.Node
 
 -- public:
--- virtual void setPosition(const CCPoint& var)
+-- virtual void setPosition(const cc.p& var)
 
 -- m_pLens3D:setPosition(var)
 -- end
 
--- virtual const CCPoint& getPosition()
+-- virtual const cc.p& getPosition()
 
 -- return m_pLens3D:getPosition()
 -- end
 
--- static Lens3DTarget* create(CCLens3D* pAction)
+-- static Lens3DTarget* create(cc.Lens3D* pAction)
 
 -- Lens3DTarget* pRet = new Lens3DTarget()
 -- pRet:m_pLens3D = pAction
@@ -169,25 +144,22 @@ end
 -- : m_pLens3D(NULL)
 -- {}
 
--- CCLens3D* m_pLens3D
+-- cc.Lens3D* m_pLens3D
 -- end
 
 local function Effect4()
     local ret = createTestLayer("Jumpy Lens3D")
-    local  lens = CCLens3D:create(10, CCSize(32,24), CCPoint(100,180), 150)
-    local  move = CCJumpBy:create(5, CCPoint(380,0), 100, 4)
+    local  lens = cc.Lens3D:create(10, cc.size(32,24), cc.p(100,180), 150)
+    local  move = cc.JumpBy:create(5, cc.p(380,0), 100, 4)
     local  move_back = move:reverse()
-    local arr = CCArray:create()
-    arr:addObject(move)
-    arr:addObject(move_back)
-    local  seq = CCSequence:create( arr)
+    local  seq = cc.Sequence:create( move, move_back)
 
-    --    /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'CCLens3D' as its target.
-    --        While in cocos2d-x, the target of action only supports CCNode or its subclass,
-    --        so we make an encapsulation for CCLens3D to achieve that.
+    --    /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'cc.Lens3D' as its target.
+    --        While in cocos2d-x, the target of action only supports cc.Node or its subclass,
+    --        so we make an encapsulation for cc.Lens3D to achieve that.
     --    */
 
-    local  director = CCDirector:getInstance()
+    local  director = cc.Director:getInstance()
     -- local  pTarget = Lens3DTarget:create(lens)
     -- -- Please make sure the target been added to its parent.
     -- ret:addChild(pTarget)
@@ -205,18 +177,14 @@ end
 local function Effect5()
     local ret = createTestLayer("Test Stop-Copy-Restar")
 
-    local  effect = CCLiquid:create(2, CCSize(32,24), 1, 20)
-    local arr = CCArray:create()
-    arr:addObject(effect)
-    arr:addObject(CCDelayTime:create(2))
-    arr:addObject(CCStopGrid:create())
+    local  effect = cc.Liquid:create(2, cc.size(32,24), 1, 20)
 
-    local  stopEffect = CCSequence:create(arr)
+    local  stopEffect = cc.Sequence:create(effect, cc.DelayTime:create(2), cc.StopGrid:create())
     local  bg = ret:getChildByTag(kTagBackground)
     bg:runAction(stopEffect)
     local function onNodeEvent(event)
         if event == "exit" then
-            CCDirector:getInstance():setProjection(kCCDirectorProjection3D)
+            cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_3D)
         end
     end
 
@@ -233,35 +201,33 @@ end
 local function Issue631()
     local ret = createTestLayer("Testing Opacity",
                        "Effect image should be 100% opaque. Testing issue #631")
-    local arr = CCArray:create()
-    arr:addObject(CCDelayTime:create(2.0))
-    arr:addObject(CCShaky3D:create(5.0, CCSize(5, 5), 16, false))
-    local  effect = CCSequence:create(arr)
+
+    local  effect = cc.Sequence:create(cc.DelayTime:create(2.0),cc.Shaky3D:create(5.0, cc.size(5, 5), 16, false))
 
     -- cleanup
     local  bg = ret:getChildByTag(kTagBackground)
     ret:removeChild(bg, true)
 
     -- background
-    local  layer = CCLayerColor:create( Color4B(255,0,0,255) )
+    local  layer = cc.LayerColor:create( cc.c4b(255,0,0,255) )
     ret:addChild(layer, -10)
-    local  sprite = CCSprite:create("Images/grossini.png")
-    sprite:setPosition( CCPoint(50,80) )
+    local  sprite = cc.Sprite:create("Images/grossini.png")
+    sprite:setPosition( cc.p(50,80) )
     layer:addChild(sprite, 10)
 
     -- foreground
-    local  layer2 = CCLayerColor:create(Color4B( 0, 255,0,255 ) )
-    local  fog = CCSprite:create("Images/Fog.png")
+    local  layer2 = cc.LayerColor:create(cc.c4b( 0, 255,0,255 ) )
+    local  fog = cc.Sprite:create("Images/Fog.png")
 
-    local bf = BlendFunc()
-    bf.src = GL_SRC_ALPHA
-    bf.dst = GL_ONE_MINUS_SRC_ALPHA
+    --local bf = BlendFunc()
+    --bf.src = GL_SRC_ALPHA
+    --bf.dst = GL_ONE_MINUS_SRC_ALPHA
 
-    fog:setBlendFunc(bf)
+    fog:setBlendFunc(gl.SRC_ALPHA , gl.ONE_MINUS_SRC_ALPHA )
     layer2:addChild(fog, 1)
     ret:addChild(layer2, 1)
 
-    layer2:runAction( CCRepeatForever:create(effect) )
+    layer2:runAction( cc.RepeatForever:create(effect) )
     return ret
 end
 
@@ -269,7 +235,7 @@ function EffectAdvancedTestMain()
     cclog("EffectAdvancedTestMain")
     Helper.index = 1
 
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     Helper.createFunctionTable = {
         Effect3,
         Effect2,

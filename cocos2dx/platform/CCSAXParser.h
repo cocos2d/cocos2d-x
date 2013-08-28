@@ -25,7 +25,7 @@
 #define __CCSAXPARSER_H__
 
 #include "CCPlatformConfig.h"
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 
 NS_CC_BEGIN
 

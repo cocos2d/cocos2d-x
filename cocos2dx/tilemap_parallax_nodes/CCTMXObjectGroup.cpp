@@ -38,11 +38,12 @@ TMXObjectGroup::TMXObjectGroup()
     _objects = Array::create();
     _objects->retain();
     _properties = new Dictionary();
+    _properties->init();
 }
 
 TMXObjectGroup::~TMXObjectGroup()
 {
-    CCLOGINFO( "cocos2d: deallocing: %p", this);
+    CCLOGINFO("deallocing TMXObjectGroup: %p", this);
     CC_SAFE_RELEASE(_objects);
     CC_SAFE_RELEASE(_properties);
 }

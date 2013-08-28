@@ -374,6 +374,7 @@ public:
     LayerMultiplex();
     virtual ~LayerMultiplex();
 
+    virtual bool init();
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(Layer* layer, va_list params);
 

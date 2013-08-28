@@ -3,68 +3,68 @@ local kBasicZOrder = 10
 local kNodesIncrease = 250
 local TEST_COUNT = 7
 
-local s = CCDirector:getInstance():getWinSize()
+local s = cc.Director:getInstance():getWinSize()
 
 -----------------------------------
 --  For test functions
 -----------------------------------
 local function performanceActions(sprite)
-	sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+	sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
 
     local period = 0.5 + math.mod(math.random(1, 99999999), 1000) / 500.0
-    local rot = CCRotateBy:create(period, 360.0 * math.random())
-	local rot = CCRotateBy:create(period, 360.0 * math.random())
-    local permanentRotation = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot:reverse()))
+    local rot = cc.RotateBy:create(period, 360.0 * math.random())
+	local rot = cc.RotateBy:create(period, 360.0 * math.random())
+    local permanentRotation = cc.RepeatForever:create(cc.Sequence:createWithTwoActions(rot, rot:reverse()))
     sprite:runAction(permanentRotation)
 
      local growDuration = 0.5 + math.mod(math.random(1, 99999999), 1000) / 500.0
-    local grow = CCScaleBy:create(growDuration, 0.5, 0.5)
-    local permanentScaleLoop = CCRepeatForever:create(CCSequence:createWithTwoActions(grow, grow:reverse()))
+    local grow = cc.ScaleBy:create(growDuration, 0.5, 0.5)
+    local permanentScaleLoop = cc.RepeatForever:create(cc.Sequence:createWithTwoActions(grow, grow:reverse()))
     sprite:runAction(permanentScaleLoop)
 end
 
 local function performanceActions20(sprite)
 	if math.random() < 0.2 then
-        sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+        sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
     else
-        sprite:setPosition(CCPoint(-1000, -1000))
+        sprite:setPosition(cc.p(-1000, -1000))
 	end
 
     local period = 0.5 + math.mod(math.random(1, 99999999), 1000) / 500.0
-    local rot = CCRotateBy:create(period, 360.0 * math.random())
-    local permanentRotation = CCRepeatForever:create(CCSequence:createWithTwoActions(rot, rot:reverse()))
+    local rot = cc.RotateBy:create(period, 360.0 * math.random())
+    local permanentRotation = cc.RepeatForever:create(cc.Sequence:createWithTwoActions(rot, rot:reverse()))
     sprite:runAction(permanentRotation)
 
     local growDuration = 0.5 + math.mod(math.random(1, 99999999), 1000) / 500.0
-    local grow = CCScaleBy:create(growDuration, 0.5, 0.5)
-    local permanentScaleLoop = CCRepeatForever:create(CCSequence:createWithTwoActions(grow, grow:reverse()))
+    local grow = cc.ScaleBy:create(growDuration, 0.5, 0.5)
+    local permanentScaleLoop = cc.RepeatForever:create(cc.Sequence:createWithTwoActions(grow, grow:reverse()))
     sprite:runAction(permanentScaleLoop)
 end
 
 local function performanceRotationScale(sprite)
-	sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+	sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
     sprite:setRotation(math.random() * 360)
     sprite:setScale(math.random() * 2)
 end
 
 local function performancePosition(sprite)
-	sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+	sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
 end
 
 local function performanceout20(sprite)
 	if math.random() < 0.2 then
-        sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+        sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
     else
-        sprite:setPosition(CCPoint(-1000, -1000))
+        sprite:setPosition(cc.p(-1000, -1000))
 	end
 end
 
 local function performanceOut100(sprite)
-	sprite:setPosition(CCPoint( -1000, -1000))
+	sprite:setPosition(cc.p( -1000, -1000))
 end
 
 local function performanceScale(sprite)
-	sprite:setPosition(CCPoint(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
+	sprite:setPosition(cc.p(math.mod(math.random(1, 99999999), s.width), math.mod(math.random(1, 99999999), s.height)))
     sprite:setScale(math.random() * 100 / 50)
 end
 
@@ -72,43 +72,43 @@ end
 --  Subtest
 -----------------------------------
 local subtestNumber = 1
-local batchNode  = nil  -- CCSpriteBatchNode
-local parent     = nil  -- CCNode
+local batchNode  = nil  -- cc.SpriteBatchNode
+local parent     = nil  -- cc.Node
 
 local function initWithSubTest(nSubTest, p)
 	subtestNumber = nSubTest
 	parent = p
 	batchNode = nil
 
-	local mgr = CCTextureCache:getInstance()
+	local mgr = cc.TextureCache:getInstance()
 	-- remove all texture
 	mgr:removeTexture(mgr:addImage("Images/grossinis_sister1.png"))
     mgr:removeTexture(mgr:addImage("Images/grossini_dance_atlas.png"))
     mgr:removeTexture(mgr:addImage("Images/spritesheet1.png"))
 
 	if subtestNumber == 2 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-		batchNode = CCSpriteBatchNode:create("Images/grossinis_sister1.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+		batchNode = cc.SpriteBatchNode:create("Images/grossinis_sister1.png", 100)
 		p:addChild(batchNode, 0)
 	elseif subtestNumber == 3 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-		batchNode = CCSpriteBatchNode:create("Images/grossinis_sister1.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+		batchNode = cc.SpriteBatchNode:create("Images/grossinis_sister1.png", 100)
 		p:addChild(batchNode, 0)
 	elseif subtestNumber == 5 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-		batchNode = CCSpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+		batchNode = cc.SpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
 		p:addChild(batchNode, 0)
 	elseif subtestNumber == 6 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-		batchNode = CCSpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+		batchNode = cc.SpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
 		p:addChild(batchNode, 0)
 	elseif subtestNumber == 8 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-		batchNode = CCSpriteBatchNode:create("Images/spritesheet1.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+		batchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png", 100)
 		p:addChild(batchNode, 0)
 	elseif subtestNumber == 9 then
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-		batchNode = CCSpriteBatchNode:create("Images/spritesheet1.png", 100)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+		batchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png", 100)
 		p:addChild(batchNode, 0)
 	end
 
@@ -117,21 +117,21 @@ local function initWithSubTest(nSubTest, p)
         batchNode:retain()
     end
 
-    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
+    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT)
 end
 
 local function createSpriteWithTag(tag)
-	CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+	cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
 
     local sprite = nil
     if subtestNumber == 1 then
-		sprite = CCSprite:create("Images/grossinis_sister1.png")
+		sprite = cc.Sprite:create("Images/grossinis_sister1.png")
 		parent:addChild(sprite, -1, tag + 100)
 	elseif subtestNumber == 2 then
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(0, 0, 52, 139))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(0, 0, 52, 139))
 		batchNode:addChild(sprite, 0, tag + 100)
 	elseif subtestNumber == 3 then
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(0, 0, 52, 139))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(0, 0, 52, 139))
 		batchNode:addChild(sprite, 0, tag + 100)
 	elseif subtestNumber == 4 then
 		local idx = math.floor((math.random() * 1400 / 100)) + 1
@@ -142,7 +142,7 @@ local function createSpriteWithTag(tag)
 			num = idx
 		end
 		local str = "Images/grossini_dance_" .. num .. ".png"
-		sprite = CCSprite:create(str)
+		sprite = cc.Sprite:create(str)
 		parent:addChild(sprite, -1, tag + 100)
 	elseif subtestNumber == 5 then
 		local y, x
@@ -151,7 +151,7 @@ local function createSpriteWithTag(tag)
         x = math.mod(r, 5)
 		x = x * 85
 		y = y * 121
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(x, y, 85, 121))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(x, y, 85, 121))
 		batchNode:addChild(sprite, 0, tag + 100)
 	elseif subtestNumber == 6 then
 		local y, x
@@ -160,7 +160,7 @@ local function createSpriteWithTag(tag)
 		x = math.mod(r, 5)
 		x = x * 85
 		y = y * 121
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(x, y, 85, 121))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(x, y, 85, 121))
 		batchNode:addChild(sprite, 0, tag + 100)
 	elseif subtestNumber == 7 then
 		local y, x
@@ -168,7 +168,7 @@ local function createSpriteWithTag(tag)
 		y = math.floor(r / 8)
 		x = math.mod(r, 8)
 		local str = "Images/sprites_test/sprite-"..x.."-"..y..".png"
-		sprite = CCSprite:create(str)
+		sprite = cc.Sprite:create(str)
 		parent:addChild(sprite, -1, tag + 100)
 	elseif subtestNumber == 8 then
 		local y, x
@@ -177,7 +177,7 @@ local function createSpriteWithTag(tag)
 		x = math.mod(r, 8)
 		x = x * 32
 		y = y * 32
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(x, y, 32, 32))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(x, y, 32, 32))
 		batchNode:addChild(sprite, 0, tag + 100)
 	elseif subtestNumber == 9 then
 		local y, x
@@ -186,11 +186,11 @@ local function createSpriteWithTag(tag)
 		x = math.mod(r, 8)
 		x = x * 32
 		y = y * 32
-		sprite = CCSprite:createWithTexture(batchNode:getTexture(), CCRect(x, y, 32, 32))
+		sprite = cc.Sprite:createWithTexture(batchNode:getTexture(), cc.rect(x, y, 32, 32))
 		batchNode:addChild(sprite, 0, tag + 100)
 	end
 
-    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
+    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT)
 
     return sprite
 end
@@ -215,7 +215,7 @@ local maxCases = 7
 
 local function showThisTest()
 	local scene = CreateSpriteTestScene()
-	CCDirector:getInstance():replaceScene(scene)
+	cc.Director:getInstance():replaceScene(scene)
 end
 
 local function backCallback(sender)
@@ -240,23 +240,23 @@ local function nextCallback(sender)
 end
 
 local function toPerformanceMainLayer(sender)
-	CCDirector:getInstance():replaceScene(PerformanceTest())
+	cc.Director:getInstance():replaceScene(PerformanceTest())
 end
 
 local function initWithLayer(layer, controlMenuVisible)
-	CCMenuItemFont:setFontName("Arial")
-    CCMenuItemFont:setFontSize(24)
-    local mainItem = CCMenuItemFont:create("Back")
+	cc.MenuItemFont:setFontName("Arial")
+    cc.MenuItemFont:setFontSize(24)
+    local mainItem = cc.MenuItemFont:create("Back")
 	mainItem:registerScriptTapHandler(toPerformanceMainLayer)
     mainItem:setPosition(s.width - 50, 25)
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
 	menu:addChild(mainItem)
-    menu:setPosition(CCPoint(0, 0))
+    menu:setPosition(cc.p(0, 0))
 
     if controlMenuVisible == true then
-        local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
-        local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
-        local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+        local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
+        local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
+        local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
 		item1:registerScriptTapHandler(backCallback)
 		item2:registerScriptTapHandler(restartCallback)
 		item3:registerScriptTapHandler(nextCallback)
@@ -342,56 +342,56 @@ local function initWithMainTest(scene, asubtest, nNodes)
     lastRenderedCount = 0
     quantityNodes = 0
 
-    CCMenuItemFont:setFontSize(65)
-    local decrease = CCMenuItemFont:create(" - ")
+    cc.MenuItemFont:setFontSize(65)
+    local decrease = cc.MenuItemFont:create(" - ")
 	decrease:registerScriptTapHandler(onDecrease)
-    decrease:setColor(Color3B(0, 200, 20))
-    local increase = CCMenuItemFont:create(" + ")
+    decrease:setColor(cc.c3b(0, 200, 20))
+    local increase = cc.MenuItemFont:create(" + ")
 	increase:registerScriptTapHandler(onIncrease)
-    increase:setColor(Color3B(0, 200, 20))
+    increase:setColor(cc.c3b(0, 200, 20))
 
-    local menu = CCMenu:create()
+    local menu = cc.Menu:create()
 	menu:addChild(decrease)
 	menu:addChild(increase)
     menu:alignItemsHorizontally()
     menu:setPosition(s.width / 2, s.height - 65)
     scene:addChild(menu, 1)
 
-    infoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-    infoLabel:setColor(Color3B(0, 200, 20))
+    infoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+    infoLabel:setColor(cc.c3b(0, 200, 20))
     infoLabel:setPosition(s.width / 2, s.height - 90)
     scene:addChild(infoLabel, 1)
 
 	maxCases = TEST_COUNT
 
     --  Sub Tests
-    CCMenuItemFont:setFontSize(32)
-    subMenu = CCMenu:create()
+    cc.MenuItemFont:setFontSize(32)
+    subMenu = cc.Menu:create()
     for i = 1, 9 do
 		local str = i .. " "
-        local itemFont = CCMenuItemFont:create(str)
+        local itemFont = cc.MenuItemFont:create(str)
 		itemFont:registerScriptTapHandler(testNCallback)
         --itemFont:setTag(i)
         subMenu:addChild(itemFont, kBasicZOrder + i, kBasicZOrder + i)
 
         if i <= 3 then
-            itemFont:setColor(Color3B(200, 20, 20))
+            itemFont:setColor(cc.c3b(200, 20, 20))
         elseif i <= 6 then
-            itemFont:setColor(Color3B(0, 200, 20))
+            itemFont:setColor(cc.c3b(0, 200, 20))
         else
-            itemFont:setColor(Color3B(0, 20, 200))
+            itemFont:setColor(cc.c3b(0, 20, 200))
 		end
 	end
 
     subMenu:alignItemsHorizontally()
-    subMenu:setPosition(CCPoint(s.width / 2, 80))
+    subMenu:setPosition(cc.p(s.width / 2, 80))
     scene:addChild(subMenu, 1)
 
     --  add title label
-    titleLabel = CCLabelTTF:create("No title", "Arial", 40)
+    titleLabel = cc.LabelTTF:create("No title", "Arial", 40)
     scene:addChild(titleLabel, 1)
     titleLabel:setPosition(s.width / 2, s.height - 32)
-    titleLabel:setColor(Color3B(255, 255, 40))
+    titleLabel:setColor(cc.c3b(255, 255, 40))
 
     while quantityNodes < nNodes do
         onIncrease()
@@ -406,7 +406,7 @@ function doPerformSpriteTest1(sprite)
 end
 
 local function SpriteTestLayer1()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "A (" .. subtestNumber .. ") position"
@@ -423,7 +423,7 @@ function doPerformSpriteTest2(sprite)
 end
 
 local function SpriteTestLayer2()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "B (" .. subtestNumber .. ") scale"
@@ -440,7 +440,7 @@ function doPerformSpriteTest3(sprite)
 end
 
 local function SpriteTestLayer3()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "C (" .. subtestNumber .. ") scale + rot"
@@ -457,7 +457,7 @@ function doPerformSpriteTest4(sprite)
 end
 
 local function SpriteTestLayer4()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "D (" .. subtestNumber .. ") 100% out"
@@ -474,7 +474,7 @@ function doPerformSpriteTest5(sprite)
 end
 
 local function SpriteTestLayer5()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "E (" .. subtestNumber .. ") 80% out"
@@ -491,7 +491,7 @@ function doPerformSpriteTest6(sprite)
 end
 
 local function SpriteTestLayer6()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "F (" .. subtestNumber .. ") actions"
@@ -508,7 +508,7 @@ function doPerformSpriteTest7(sprite)
 end
 
 local function SpriteTestLayer7()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 	initWithLayer(layer, true)
 
 	local str = "G (" .. subtestNumber .. ") actions 80% out"
@@ -521,7 +521,7 @@ end
 --  PerformanceSpriteTest
 -----------------------------------
 function CreateSpriteTestScene()
-	local scene = CCScene:create()
+	local scene = cc.Scene:create()
 	initWithMainTest(scene, subtestNumber, kNodesIncrease)
 
 	if curCase == 0 then

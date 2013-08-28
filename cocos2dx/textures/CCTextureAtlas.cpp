@@ -53,7 +53,7 @@ TextureAtlas::TextureAtlas()
 
 TextureAtlas::~TextureAtlas()
 {
-    CCLOGINFO("cocos2d: TextureAtlas deallocing %p.", this);
+    CCLOGINFO("deallocing TextureAtlas: %p", this);
 
     CC_SAFE_FREE(_quads);
     CC_SAFE_FREE(_indices);

@@ -72,14 +72,17 @@ TextureCache::TextureCache()
 , _imageInfoQueue(nullptr)
 , _needQuit(false)
 , _asyncRefCount(0)
-, _textures(new Dictionary())
 {
     CCASSERT(_sharedTextureCache == nullptr, "Attempted to allocate a second instance of a singleton.");
+
+    _textures = new Dictionary();
+    _textures->init();
+
 }
 
 TextureCache::~TextureCache()
 {
-    CCLOGINFO("cocos2d: deallocing TextureCache: %p", this);
+    CCLOGINFO("deallocing TextureCache: %p", this);
 
     CC_SAFE_RELEASE(_textures);
 
@@ -387,7 +390,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
         }
 
     } while (0);
-
+    
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTexture::addImage(texture, image);
 #endif
