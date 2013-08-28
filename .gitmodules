@@ -2,7 +2,7 @@
 	path = tools/bindings-generator
 	url = git://github.com/cocos2d/bindings-generator.git
 [submodule "scripting/javascript/bindings/generated"]
-	path = scripting/javascript/bindings/generated
+	path = scripting/auto-generated
 	url = git://github.com/folecr/cocos2dx-autogen-bindings.git
 [submodule "samples/Javascript/Shared"]
 	path = samples/Javascript/Shared

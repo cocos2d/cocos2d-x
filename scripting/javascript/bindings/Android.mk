@@ -23,8 +23,8 @@ LOCAL_SRC_FILES := ScriptingCore.cpp \
                    jsb_opengl_functions.cpp \
                    jsb_opengl_manual.cpp \
                    jsb_opengl_registration.cpp \
-                   generated/jsb_cocos2dx_auto.cpp \
-                   generated/jsb_cocos2dx_extension_auto.cpp \
+                   ../../auto-generated/js-bindings/jsb_cocos2dx_auto.cpp \
+                   ../../auto-generated/js-bindings/jsb_cocos2dx_extension_auto.cpp \
                    XMLHTTPRequest.cpp \
                    jsb_websocket.cpp
 
@@ -33,10 +33,11 @@ LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/../../../CocosDenshion/include
+                    $(LOCAL_PATH)/../../../CocosDenshion/include \
+                    $(LOCAL_PATH)/../../auto-generated/js-bindings
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(LOCAL_PATH)/generated
+                           $(LOCAL_PATH)/../../auto-generated/js-bindings
 
 LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
