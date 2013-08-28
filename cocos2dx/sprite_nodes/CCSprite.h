@@ -329,10 +329,13 @@ public:
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
     
+    /** @deprecated Use getDisplayFrame() instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() { return getDisplayFrame(); };
+    
     /**
      * Returns the current displayed frame.
      */
-    virtual SpriteFrame* displayFrame(void);
+    virtual SpriteFrame* getDisplayFrame();
     
     /// @} End of frames methods
     
