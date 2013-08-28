@@ -350,6 +350,13 @@ public:
 private:
 };
 
+class LabelBMFontCrashTest : public AtlasDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
 
 
 // we don't support linebreak mode
