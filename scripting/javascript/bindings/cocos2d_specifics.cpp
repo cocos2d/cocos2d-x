@@ -39,6 +39,14 @@ void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 
 void JSTouchDelegate::setJSObject(JSObject *obj) {
     _mObj = obj;
+    
+    js_proxy_t *p = jsb_get_js_proxy(_mObj);
+    if (!p)
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS_AddNamedObjectRoot(cx, &_mObj, "JSB_TouchDelegateTarget, target");
+        _needUnroot = true;
+    }
 }
 
 void JSTouchDelegate::registerStandardDelegate() {
@@ -56,6 +64,11 @@ void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouch
 
 void JSTouchDelegate::unregisterTouchDelegate()
 {
+    if (_needUnroot)
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS_RemoveObjectRoot(cx, &_mObj);
+    }
     Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->removeDelegate(this);
 }
@@ -64,10 +77,7 @@ bool JSTouchDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent); 
     jsval retval;
     bool bRet = false;
-
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
+    
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHBEGAN, 
         pTouch, _mObj, retval);
     if(JSVAL_IS_BOOLEAN(retval)) {
@@ -81,10 +91,6 @@ bool JSTouchDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent) {
 void JSTouchDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 
-    //jsval retval;
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
         pTouch, _mObj);
 }
@@ -92,18 +98,12 @@ void JSTouchDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent) {
 void JSTouchDelegate::ccTouchEnded(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHENDED, 
         pTouch, _mObj);
 }
 
 void JSTouchDelegate::ccTouchCancelled(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHCANCELLED, 
         pTouch, _mObj);
 }
