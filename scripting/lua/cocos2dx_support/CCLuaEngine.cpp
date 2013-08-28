@@ -55,6 +55,8 @@ bool LuaEngine::init(void)
     _stack = LuaStack::create();
     _stack->retain();
     extendLuaObject();
+    executeScriptFile("DeprecatedEnum.lua");
+    executeScriptFile("DeprecatedClass.lua");
     executeScriptFile("Deprecated.lua");
     return true;
 }

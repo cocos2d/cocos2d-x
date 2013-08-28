@@ -33,7 +33,7 @@ function cc.pGetLength(pt)
 end
 
 function cc.pNormalize(pt)
-    local length = cc.getPointLength(pt)
+    local length = cc.pGetLength(pt)
     if 0 == length then
         return { x = 1.0,y = 0.0 }
     end
