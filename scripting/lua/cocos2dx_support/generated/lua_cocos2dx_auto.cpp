@@ -8403,6 +8403,88 @@ int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_Node_getPositionY(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionY'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        float ret = cobj->getPositionY();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionY",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPositionY'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_Node_getPositionX(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPositionX'", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        float ret = cobj->getPositionX();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPositionX",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPositionX'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9876,6 +9958,8 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Node_setActionManager);
         tolua_function(tolua_S,"isRunning",lua_cocos2dx_Node_isRunning);
         tolua_function(tolua_S,"getParent",lua_cocos2dx_Node_getParent);
+        tolua_function(tolua_S,"getPositionY",lua_cocos2dx_Node_getPositionY);
+        tolua_function(tolua_S,"getPositionX",lua_cocos2dx_Node_getPositionX);
         tolua_function(tolua_S,"removeChildByTag",lua_cocos2dx_Node_removeChildByTag);
         tolua_function(tolua_S,"setVisible",lua_cocos2dx_Node_setVisible);
         tolua_function(tolua_S,"getParentToNodeTransform",lua_cocos2dx_Node_getParentToNodeTransform);

@@ -4,13 +4,6 @@ local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")
 end
 
---CCDirector class will be Deprecated,begin
-local function CCDirectorClassDeprecated( )
-    deprecatedTip("CCDirector","cc.Director")
-    return cc.Director
-end
-_G["CCDirector"] = CCDirectorClassDeprecated()
-
 
 --functions of CCDirector will be deprecated,begin
 local CCDirectorDeprecated = { }
@@ -19,17 +12,8 @@ function CCDirectorDeprecated.sharedDirector()
     return cc.Director:getInstance()
 end
 rawset(CCDirector,"sharedDirector",CCDirectorDeprecated.sharedDirector)
-
 --functions of CCDirector will be deprecated,end
---CCDirector class will be Deprecated,end
 
-
---CCTextureCache class will be Deprecated,begin
-local function CCTextureCacheClassDeprecated( )
-    deprecatedTip("CCTextureCache ","cc.TextureCache")
-    return cc.TextureCache
-end
-_G["CCTextureCache"] = CCTextureCacheClassDeprecated()
 
 --functions of CCTextureCache will be deprecated begin
 local CCTextureCacheDeprecated = { }
@@ -45,75 +29,49 @@ function CCTextureCacheDeprecated.purgeSharedTextureCache()
 end
 rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
 --functions of CCTextureCache will be deprecated end
---CCTextureCache class will be Deprecated,end
 
---CCSpriteFrame class will be Deprecated,begin
-local function CCSpriteFrameClassDeprecated( )
-    deprecatedTip("CCSpriteFrame ","cc.SpriteFrame")
-    return cc.SpriteFrame
+--functions of CCAnimation will be deprecated begin
+local CCAnimationDeprecated = {}
+function CCAnimationDeprecated.addSpriteFrameWithFileName(self,...)
+    deprecatedTip("CCAnimationDeprecated:addSpriteFrameWithFileName","cc.Animation:addSpriteFrameWithFile")
+    return self:addSpriteFrameWithFile(...)
 end
-_G["CCSpriteFrame"] = CCSpriteFrameClassDeprecated()
+rawset(CCAnimation,"addSpriteFrameWithFileName",CCAnimationDeprecated.addSpriteFrameWithFileName)
+--functions of CCAnimation will be deprecated end
 
---CCSpriteFrame class will be Deprecated,end
 
---CCSprite class will be Deprecated,begin
-local function CCSpriteClassDeprecated( )
-    deprecatedTip("CCSprite ","cc.Sprite")
-    return cc.Sprite
+--functions of CCAnimationCache will be deprecated begin
+local CCAnimationCacheDeprecated = { }
+function CCAnimationCacheDeprecated.sharedAnimationCache()
+    deprecatedTip("CCAnimationCache:sharedAnimationCache","CCAnimationCache:getInstance")
+    return CCAnimationCache:getInstance()
 end
-_G["CCSprite"] = CCSpriteClassDeprecated()
+rawset(CCAnimationCache,"sharedAnimationCache",CCAnimationCacheDeprecated.sharedAnimationCache)
 
---CCSprite class will be Deprecated,end
-
---CCAnimation class will be Deprecated,begin
-local function CCAnimationClassDeprecated( )
-    deprecatedTip("CCAnimation ","cc.Animation")
-    return cc.Animation
+function CCAnimationCacheDeprecated.purgeSharedAnimationCache()
+    deprecatedTip("CCAnimationCache:purgeSharedAnimationCache","CCAnimationCache:destroyInstance")
+    return CCAnimationCache:destroyInstance()
 end
-_G["CCAnimation"] = CCAnimationClassDeprecated()
+rawset(CCAnimationCache,"purgeSharedAnimationCache",CCAnimationCacheDeprecated.purgeSharedAnimationCache)
 
---CCAnimation class will be Deprecated,end
-
---CCAnimate class will be Deprecated,begin
-local function CCAnimateClassDeprecated( )
-    deprecatedTip("CCAnimate ","cc.Animate")
-    return cc.Animate
+function CCAnimationCacheDeprecated.addAnimationsWithFile(self,...)
+    deprecatedTip("CCAnimationCache:addAnimationsWithFile","cc.AnimationCache:addAnimations")
+    return self:addAnimations(...)
 end
-_G["CCAnimate"] = CCAnimateClassDeprecated()
+rawset(CCAnimationCache,"addAnimationsWithFile",CCAnimationCacheDeprecated.addAnimationsWithFile)
 
---CCAnimate class will be Deprecated,end
-
---CCRepeatForever class will be Deprecated,begin
-local function CCRepeatForeverClassDeprecated( )
-    deprecatedTip("CCRepeatForever ","cc.RepeatForever")
-    return cc.RepeatForever
+function CCAnimationCacheDeprecated.animationByName(self,...)
+    deprecatedTip("CCAnimationCache:animationByName","cc.AnimationCache:getAnimation")
+    return self:getAnimation(...)
 end
-_G["CCRepeatForever"] = CCRepeatForeverClassDeprecated()
+rawset(CCAnimationCache,"animationByName",CCAnimationCacheDeprecated.animationByName)
 
---CCRepeatForever class will be Deprecated,end
-
---CCLayer class will be Deprecated,begin
-local function CCLayerClassDeprecated( )
-    deprecatedTip("CCLayer ","cc.Layer")
-    return cc.Layer
+function CCAnimationCacheDeprecated.removeAnimationByName(self)
+    deprecatedTip("CCAnimationCache:removeAnimationByName","cc.AnimationCache:removeAnimation")
+    return self:removeAnimation()
 end
-_G["CCLayer"] = CCLayerClassDeprecated()
---CCLayer class will be Deprecated,end
-
---CCScene class will be Deprecated,begin
-local function CCSceneClassDeprecated( )
-    deprecatedTip("CCScene ","cc.Scene")
-    return cc.Scene
-end
-_G["CCScene"] = CCSceneClassDeprecated()
---CCScene class will be Deprecated,end
-
---CCFileUtils class will be Deprecated,begin
-local function CCFileUtilsClassDeprecated( )
-    deprecatedTip("CCFileUtils ","cc.FileUtils")
-    return cc.FileUtils
-end
-_G["CCFileUtils"] = CCFileUtilsClassDeprecated()
+rawset(CCAnimationCache,"removeAnimationByName",CCAnimationCacheDeprecated.removeAnimationByName)
+--functions of CCAnimationCache will be deprecated end
 
 --functions of CCFileUtils will be deprecated end
 local CCFileUtilsDeprecated = { }
@@ -129,17 +87,9 @@ function CCFileUtilsDeprecated.purgeFileUtils()
 end
 rawset(CCFileUtils,"purgeFileUtils",CCFileUtilsDeprecated.purgeFileUtils)
 --functions of CCFileUtils will be deprecated end
---CCFileUtils class will be Deprecated,end
 
---SimpleAudioEngine will be deprecated begin
-local function SimpleAudioEngineClassDeprecated( )
-    deprecatedTip("SimpleAudioEngine ","cc.SimpleAudioEngine")
-    return cc.SimpleAudioEngine
-end
-_G["SimpleAudioEngine"] = SimpleAudioEngineClassDeprecated()
 
 --functions of SimpleAudioEngine will be deprecated begin
-
 local SimpleAudioEngineDeprecated = { }
 function SimpleAudioEngineDeprecated.sharedEngine()
     deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
@@ -152,28 +102,7 @@ function SimpleAudioEngineDeprecated.playBackgroundMusic(self,...)
     return self:playMusic(...)
 end
 rawset(SimpleAudioEngine,"playBackgroundMusic",SimpleAudioEngineDeprecated.playBackgroundMusic)
-
 --functions of SimpleAudioEngine will be deprecated end
-
---SimpleAudioEngine class will be Deprecated,end
-
---CCMenuItemImage will be deprecated begin
-local function CCMenuItemImageClassDeprecated( )
-    deprecatedTip("CCMenuItemImage ","cc.MenuItemImage")
-    return cc.MenuItemImage
-end
-_G["CCMenuItemImage"] = CCMenuItemImageClassDeprecated( )
-
---CCMenu will be deprecated end
-
---CCMenu will be deprecated begin
-local function CCMenuClassDeprecated( )
-    deprecatedTip("CCMenu ","cc.Menu")
-    return cc.Menu
-end
-_G["CCMenu"] = cc.Menu
-
---functions of SimpleAudioEngine will be deprecated begin
 
 local CCMenuDeprecated = { }
 function CCMenuDeprecated.createWithItem(self,...)
@@ -181,44 +110,266 @@ function CCMenuDeprecated.createWithItem(self,...)
     return self:create(...)
 end
 rawset(CCMenu,"createWithItem",CCMenuDeprecated.createWithItem)
---functions of SimpleAudioEngine will be deprecated end
+--functions of CCMenu will be deprecated end
 
---CCMenu will be deprecated end
+--functions of CCNode will be deprecated begin
+local CCNodeDeprecated = { }
 
+function CCNodeDeprecated.boundingBox(self)
+    deprecatedTip("CCNode:boundingBox","cc.Node:getBoundingBox")
+    return self:getBoundingBox()
+end
+rawset(CCNode,"boundingBox",CCNodeDeprecated.boundingBox)
+
+
+function CCNodeDeprecated.numberOfRunningActions(self)
+    deprecatedTip("CCNode:numberOfRunningActions","cc.Node:getNumberOfRunningActions")
+    return self:getNumberOfRunningActions()
+end
+rawset(CCNode,"numberOfRunningActions",CCNodeDeprecated.numberOfRunningActions)
+
+
+function CCNodeDeprecated.removeFromParentAndCleanup(self)
+    deprecatedTip("CCNode:removeFromParentAndCleanup","cc.Node:removeFromParent")
+    return self:removeFromParent()
+end
+rawset(CCNode,"removeFromParentAndCleanup",CCNodeDeprecated.removeFromParentAndCleanup)
+--functions of CCNode will be deprecated end
+
+--CCDrawPrimitives will be deprecated begin
+local function CCDrawPrimitivesClassDeprecated()
+    deprecatedTip("CCDrawPrimitives","gl.DrawPrimitives")
+    return gl.DrawPrimitives
+end
+_G["CCDrawPrimitives"] = CCDrawPrimitivesClassDeprecated()
+--functions of CCDrawPrimitives will be deprecated begin
+local CCDrawPrimitivesDeprecated = { }
+function CCDrawPrimitivesDeprecated.ccDrawPoint(pt)
+    deprecatedTip("ccDrawPoint","CCDrawPrimitives.ccDrawPoint")
+    return CCDrawPrimitives.ccDrawPoint(pt)
+end
+rawset(_G, "ccDrawPoint", CCDrawPrimitivesDeprecated.ccDrawPoint)
+
+function CCDrawPrimitivesDeprecated.ccDrawLine(origin,destination)
+    deprecatedTip("ccDrawLine","CCDrawPrimitives.ccDrawLine")
+    return CCDrawPrimitives.ccDrawLine(origin,destination)
+end
+rawset(_G, "ccDrawLine", CCDrawPrimitivesDeprecated.ccDrawLine)
+
+function CCDrawPrimitivesDeprecated.ccDrawRect(origin,destination)
+    deprecatedTip("ccDrawRect","CCDrawPrimitives.ccDrawRect")
+    return CCDrawPrimitives.ccDrawRect(origin,destination)
+end
+rawset(_G, "ccDrawRect", CCDrawPrimitivesDeprecated.ccDrawRect)
+
+function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
+    deprecatedTip("ccDrawSolidRect","CCDrawPrimitives.ccDrawSolidRect")
+    return CCDrawPrimitives.ccDrawSolidRect(origin,destination,color)
+end
+rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
+
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
+    deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
+    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
+end
+rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
+
+-- params:... may represent two param(xScale,yScale) or nil
+function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,...)
+    deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
+    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,...)
+end
+rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
+
+function CCDrawPrimitivesDeprecated.ccDrawQuadBezier(origin,control,destination,segments)
+    deprecatedTip("ccDrawQuadBezier","CCDrawPrimitives.ccDrawQuadBezier")
+    return CCDrawPrimitives.ccDrawQuadBezier(origin,control,destination,segments)
+end
+rawset(_G, "ccDrawQuadBezier", CCDrawPrimitivesDeprecated.ccDrawQuadBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+    deprecatedTip("ccDrawCubicBezier","CCDrawPrimitives.ccDrawCubicBezier")
+    return CCDrawPrimitives.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+end
+rawset(_G, "ccDrawCubicBezier", CCDrawPrimitivesDeprecated.ccDrawCubicBezier)
+
+function CCDrawPrimitivesDeprecated.ccDrawCatmullRom(arrayOfControlPoints,segments)
+    deprecatedTip("ccDrawCatmullRom","CCDrawPrimitives.ccDrawCatmullRom")
+    return CCDrawPrimitives.ccDrawCatmullRom(arrayOfControlPoints,segments)
+end
+rawset(_G, "ccDrawCatmullRom", CCDrawPrimitivesDeprecated.ccDrawCatmullRom)
+
+function CCDrawPrimitivesDeprecated.ccDrawCardinalSpline(config,tension,segments)
+    deprecatedTip("ccDrawCardinalSpline","CCDrawPrimitives.ccDrawCardinalSpline")
+    return CCDrawPrimitives.ccDrawCardinalSpline(config,tension,segments)
+end
+rawset(_G, "ccDrawCardinalSpline", CCDrawPrimitivesDeprecated.ccDrawCardinalSpline)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4B(r,g,b,a)
+    deprecatedTip("ccDrawColor4B","CCDrawPrimitives.ccDrawColor4B")
+    return CCDrawPrimitives.ccDrawColor4B(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4B", CCDrawPrimitivesDeprecated.ccDrawColor4B)
+
+function CCDrawPrimitivesDeprecated.ccDrawColor4F(r,g,b,a)
+    deprecatedTip("ccDrawColor4F","CCDrawPrimitives.ccDrawColor4F")
+    return CCDrawPrimitives.ccDrawColor4F(r,g,b,a)
+end
+rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
+
+function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
+    deprecatedTip("ccPointSize","CCDrawPrimitives.ccPointSize")
+    return CCDrawPrimitives.ccPointSize(pointSize)
+end
+rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
+--functions of CCDrawPrimitives will be deprecated end
+--CCDrawPrimitives will be deprecated end
+
+local CCProgressTimerDeprecated = {}
+function CCProgressTimerDeprecated.setReverseProgress(self,...)
+    deprecatedTip("CCProgressTimer","CCProgressTimer:setReverseDirection")
+    return self:setReverseDirection(...)
+end
+rawset(CCProgressTimer,"setReverseProgress",CCProgressTimerDeprecated.setReverseProgress)
+
+--functions of CCSpriteFrameCache will be deprecated begin
+local CCSpriteFrameCacheDeprecated = { }
+function CCSpriteFrameCacheDeprecated.spriteFrameByName(self,szName)
+    deprecatedTip("CCSpriteFrameCache:spriteFrameByName","CCSpriteFrameCache:getSpriteFrameByName")
+    return self:getSpriteFrameByName(szName)
+end
+rawset(CCSpriteFrameCache,"spriteFrameByName",CCSpriteFrameCacheDeprecated.spriteFrameByName)
+
+function CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache()
+    deprecatedTip("CCSpriteFrameCache:sharedSpriteFrameCache","CCSpriteFrameCache:getInstance")
+    return CCSpriteFrameCache:getInstance()
+end
+rawset(CCSpriteFrameCache,"sharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache)
+
+function CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache()
+    deprecatedTip("CCSpriteFrameCache:purgeSharedSpriteFrameCache","CCSpriteFrameCache:destroyInstance")
+    return CCSpriteFrameCache:destroyInstance()
+end
+rawset(CCSpriteFrameCache,"purgeSharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache)
+
+function CCSpriteFrameCacheDeprecated.addSpriteFramesWithFile(self,...)
+    deprecatedTip("CCSpriteFrameCache:addSpriteFramesWithFile","CCSpriteFrameCache:addSpriteFrames")
+    return self:addSpriteFrames(...)
+end
+rawset(CCSpriteFrameCache,"addSpriteFramesWithFile",CCSpriteFrameCacheDeprecated.addSpriteFramesWithFile)
+
+function CCSpriteFrameCacheDeprecated.getSpriteFrameByName(self,...)
+    deprecatedTip("CCSpriteFrameCache:getSpriteFrameByName","CCSpriteFrameCache:getSpriteFrame")
+    return self:getSpriteFrame(...)
+end
+rawset(CCSpriteFrameCache,"getSpriteFrameByName",CCSpriteFrameCacheDeprecated.getSpriteFrameByName)
+--functions of CCSpriteFrameCache will be deprecated end
+
+--functions of CCLabelAtlas will be deprecated begin
+local CCLabelAtlasDeprecated = {}
+function CCLabelAtlasDeprecated.create(self,...)
+    deprecatedTip("CCLabelAtlas:create","CCLabelAtlas:_create")
+    return self:_create(...)
+end
+rawset(CCLabelAtlas,"create",CCLabelAtlasDeprecated.create)
+--functions of CCLabelAtlas will be deprecated end
+
+--functions of CCCamera will be deprecated begin
+local CCCameraDeprecated = {}
+function CCCameraDeprecated.setUpXYZ(self,...)
+    deprecatedTip("CCCameraDeprecated:setUpXYZ","CCCameraDeprecated:setUp")
+    return self:setUp(...)
+end
+rawset(CCCamera,"setUpXYZ",CCCameraDeprecated.setUpXYZ)
+
+function CCCameraDeprecated.setEyeXYZ(self,...)
+    deprecatedTip("CCCameraDeprecated:setEyeXYZ","CCCameraDeprecated:setEye")
+    return self:setEye(...)
+end
+rawset(CCCamera,"setEyeXYZ",CCCameraDeprecated.setEyeXYZ)
+
+function CCCameraDeprecated.setCenterXYZ(self,...)
+    deprecatedTip("CCCameraDeprecated:setCenterXYZ","CCCameraDeprecated:setCenter")
+    return self:setCenter(...)
+end
+rawset(CCCamera,"setCenterXYZ",CCCameraDeprecated.setCenterXYZ)
+--functions of CCCamera will be deprecated end
+
+
+---------------------------
 --global functions wil be deprecated, begin
 local function CCRectMake(x,y,width,height)
-    deprecatedTip("CCRectMake(x,y,width,height)","CCRect(x,y,width,height) in lua")
-    return CCRect(x,y,width,height)
+    deprecatedTip("CCRectMake(x,y,width,height)","cc.rect(x,y,width,height) in lua")
+    return cc.rect(x,y,width,height)
 end
 rawset(_G,"CCRectMake",CCRectMake)
+
+local function ccc3(r,g,b)
+    deprecatedTip("ccc3(r,g,b)","cc.c3b(r,g,b)")
+    return cc.c3b(r,g,b)
+end
+rawset(_G,"ccc3",ccc3)
+
+local function ccp(x,y)
+    deprecatedTip("ccp(x,y)","cc.p(x,y)")
+    return cc.p(x,y)
+end 
+rawset(_G,"ccp",ccp)
+
+local function CCSizeMake(width,height)
+    deprecatedTip("CCSizeMake(width,height)","cc.size(width,height)")
+    return cc.size(width,height)
+end
+rawset(_G,"CCSizeMake",CCSizeMake)
+
+local function ccc4(r,g,b,a)
+    deprecatedTip("ccc4(r,g,b,a)","cc.c4b(r,g,b,a)")
+    return cc.c4b(r,g,b,a)
+end
+rawset(_G,"ccc4",ccc4)
+
+local function ccc4FFromccc3B(color3B)
+    deprecatedTip("ccc4FFromccc3B(color3B)","cc.c4f(color3B.r / 255.0,color3B.g / 255.0,color3B.b / 255.0,1.0)")
+    return cc.c4f(color3B.r/255.0, color3B.g/255.0, color3B.b/255.0, 1.0)
+end
+rawset(_G,"ccc4FFromccc3B",ccc4FFromccc3B)
+
+local function ccc4f(r,g,b,a)
+    deprecatedTip("ccc4f(r,g,b,a)","cc.c4f(r,g,b,a)")
+    return cc.c4f(r,g,b,a)
+end
+rawset(_G,"ccc4f",ccc4f)
+
+local function ccc4FFromccc4B(color4B)
+    deprecatedTip("ccc4FFromccc4B(color4B)","cc.c4f(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)")
+    return cc.c4f(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)   
+end
+rawset(_G,"ccc4FFromccc4B",ccc4FFromccc4B)
+
+local function ccc4FEqual(a,b)
+    deprecatedTip("ccc4FEqual(a,b)","a:equals(b)")
+    return a:equals(b)
+end
+rawset(_G,"ccc4FEqual",ccc4FEqual)
 --global functions wil be deprecated, end
 
 
 --functions of _G will be deprecated begin
 local function ccpLineIntersect(a,b,c,d,s,t)
-    deprecatedTip("ccpLineIntersect","CCPoint:isLineIntersect")
-    return CCPoint:isLineIntersect(a,b,c,d,s,t)
+    deprecatedTip("ccpLineIntersect","cc.pIsLineIntersect")
+    return cc.pIsLineIntersect(a,b,c,d,s,t)
 end
 rawset(_G,"ccpLineIntersect",ccpLineIntersect)
 
 
 local function CCPointMake(x,y)
-    deprecatedTip("CCPointMake(x,y)","CCPoint(x,y)")
-    return CCPoint(x,y)
+    deprecatedTip("CCPointMake(x,y)","cc.p(x,y)")
+    return cc.p(x,y)
 end 
 rawset(_G,"CCPointMake",CCPointMake)
 
-local function ccp(x,y)
-    deprecatedTip("ccp(x,y)","CCPoint(x,y)")
-    return CCPoint(x,y)
-end 
-rawset(_G,"ccp",ccp)
 
-local function CCSizeMake(width,height)
-    deprecatedTip("CCSizeMake(width,height)","CCSize(width,height)")
-    return CCSize(width,height)
-end
-rawset(_G,"CCSizeMake",CCSizeMake)
 
 local function ccpNeg(pt)
     deprecatedTip("ccpNeg","CCPoint.__sub")
@@ -227,20 +378,20 @@ end
 rawset(_G,"ccpNeg",ccpNeg)
 
 local function ccpAdd(pt1,pt2)
-    deprecatedTip("ccpAdd","CCPoint.__add")
-    return CCPoint.__add(pt1,pt2)
+    deprecatedTip("ccpAdd","cc.pAdd")
+    return cc.pAdd(pt1,pt2)
 end
 rawset(_G,"ccpAdd",ccpAdd)
 
 local function ccpSub(pt1,pt2)
-    deprecatedTip("ccpSub","CCPoint.__sub")
-    return CCPoint.__sub(pt1,pt2)
+    deprecatedTip("ccpSub","cc.pSub")
+    return cc.pSub(pt1,pt2)
 end
 rawset(_G,"ccpSub",ccpSub)
 
 local function ccpMult(pt,factor)
-    deprecatedTip("ccpMult","CCPoint.__mul")
-    return CCPoint.__mul(pt,factor)
+    deprecatedTip("ccpMult","cc.pMul")
+    return cc.pMul(pt,factor)
 end
 rawset(_G,"ccpMult",ccpMult)
 
@@ -311,8 +462,8 @@ end
 rawset(_G,"ccpLength",ccpLength)
 
 local function ccpDistance(pt1,pt2)
-    deprecatedTip("ccpDistance","CCPoint:getDistance")
-    return pt1:getDistance(pt2)
+    deprecatedTip("ccpDistance","cc.pGetDistance")
+    return cc.pGetDistance(pt1, pt2)
 end
 rawset(_G,"ccpDistance",ccpDistance)
 
@@ -395,41 +546,6 @@ local function ccpIntersectPoint(pt1,pt2,pt3,pt4)
 end
 rawset(_G,"ccpIntersectPoint",ccpIntersectPoint)
 
-local function ccc3(r,g,b)
-    deprecatedTip("ccc3(r,g,b)","ccColor3B(r,g,b)")
-    return ccColor3B(r,g,b)
-end
-rawset(_G,"ccc3",ccc3)
-
-local function ccc4(r,g,b,a)
-    deprecatedTip("ccc4(r,g,b,a)","Color4B(r,g,b,a)")
-    return Color4B(r,g,b,a)
-end
-rawset(_G,"ccc4",ccc4)
-
-local function ccc4FFromccc3B(color3B)
-    deprecatedTip("ccc4FFromccc3B(color3B)","Color4F(color3B.r / 255.0,color3B.g / 255.0,color3B.b / 255.0,1.0)")
-    return Color4F(color3B.r/255.0, color3B.g/255.0, color3B.b/255.0, 1.0)
-end
-rawset(_G,"ccc4FFromccc3B",ccc4FFromccc3B)
-
-local function ccc4f(r,g,b,a)
-    deprecatedTip("ccc4f(r,g,b,a)","Color4F(r,g,b,a)")
-    return Color4F(r,g,b,a)
-end
-rawset(_G,"ccc4f",ccc4f)
-
-local function ccc4FFromccc4B(color4B)
-    deprecatedTip("ccc4FFromccc4B(color4B)","Color4F(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)")
-    return Color4F(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)   
-end
-rawset(_G,"ccc4FFromccc4B",ccc4FFromccc4B)
-
-local function ccc4FEqual(a,b)
-    deprecatedTip("ccc4FEqual(a,b)","a:equals(b)")
-    return a:equals(b)
-end
-rawset(_G,"ccc4FEqual",ccc4FEqual)
 
 local function vertex2(x,y)
     deprecatedTip("vertex2(x,y)","Vertex2F(x,y)")
@@ -546,12 +662,6 @@ local function ccV2FC4FT2FQuadDeprecated()
 end
 _G["ccV2F_C4F_T2F_Quad"] = ccV2FC4FT2FQuadDeprecated()
 
-local function ccBlendFuncDeprecated()
-    deprecatedTip("ccBlendFunc","BlendFunc")
-    return BlendFunc
-end
-_G["ccBlendFunc"] = ccBlendFuncDeprecated()
-
 local function ccT2FQuadDeprecated()
     deprecatedTip("ccT2F_Quad","T2F_Quad")
     return T2F_Quad
@@ -563,13 +673,6 @@ local function ccAnimationFrameDataDeprecated()
     return AnimationFrameData
 end
 _G["ccAnimationFrameData"] = ccAnimationFrameDataDeprecated()
-
-local function CCCallFuncNDeprecated( )
-    deprecatedTip("CCCallFuncN","CCCallFunc")
-    return CCCallFunc
-end
-_G["CCCallFuncN"] = CCCallFuncNDeprecated()
---functions of _G will be deprecated end
 
 
 --functions of CCControl will be deprecated end
@@ -628,23 +731,6 @@ end
 rawset(CCUserDefault,"purgeSharedUserDefault",CCUserDefaultDeprecated.purgeSharedUserDefault)
 --functions of CCUserDefault will be deprecated end
 
-
---functions of CCNotificationCenter will be deprecated end
-local CCNotificationCenterDeprecated = { }
-function CCNotificationCenterDeprecated.sharedNotificationCenter()
-    deprecatedTip("CCNotificationCenter:sharedNotificationCenter","CCNotificationCenter:getInstance")
-    return CCNotificationCenter:getInstance()
-end
-rawset(CCNotificationCenter,"sharedNotificationCenter",CCNotificationCenterDeprecated.sharedNotificationCenter)
-
-function CCNotificationCenterDeprecated.purgeNotificationCenter()
-    deprecatedTip("CCNotificationCenter:purgeNotificationCenter","CCNotificationCenter:destroyInstance")
-    return CCNotificationCenter:destroyInstance()
-end
-rawset(CCNotificationCenter,"purgeNotificationCenter",CCNotificationCenterDeprecated.purgeNotificationCenter)
---functions of CCNotificationCenter will be deprecated end
-
-
 --functions of CCGrid3DAction will be deprecated begin
 local CCGrid3DActionDeprecated = { }
 function CCGrid3DActionDeprecated.vertex(self,pt)
@@ -677,38 +763,6 @@ rawset(CCTiledGrid3DAction,"originalTile",CCTiledGrid3DActionDeprecated.original
 --functions of CCTiledGrid3DAction will be deprecated end
 
 
---functions of CCAnimationCache will be deprecated begin
-local CCAnimationCacheDeprecated = { }
-function CCAnimationCacheDeprecated.sharedAnimationCache()
-    deprecatedTip("CCAnimationCache:sharedAnimationCache","CCAnimationCache:getInstance")
-    return CCAnimationCache:getInstance()
-end
-rawset(CCAnimationCache,"sharedAnimationCache",CCAnimationCacheDeprecated.sharedAnimationCache)
-
-function CCAnimationCacheDeprecated.purgeSharedAnimationCache()
-    deprecatedTip("CCAnimationCache:purgeSharedAnimationCache","CCAnimationCache:destroyInstance")
-    return CCAnimationCache:destroyInstance()
-end
-rawset(CCAnimationCache,"purgeSharedAnimationCache",CCAnimationCacheDeprecated.purgeSharedAnimationCache)
---functions of CCAnimationCache will be deprecated end
-
-
---functions of CCNode will be deprecated begin
-local CCNodeDeprecated = { }
-function CCNodeDeprecated.boundingBox(self)
-    deprecatedTip("CCNode:boundingBox","CCNode:getBoundingBox")
-    return self:getBoundingBox()
-end
-rawset(CCNode,"boundingBox",CCNodeDeprecated.boundingBox)
-
-function CCNodeDeprecated.numberOfRunningActions(self)
-    deprecatedTip("CCNode:numberOfRunningActions","CCNode:getNumberOfRunningActions")
-    return self:getNumberOfRunningActions()
-end
-rawset(CCNode,"numberOfRunningActions",CCNodeDeprecated.numberOfRunningActions)
---functions of CCNode will be deprecated end
-
-
 --functions of CCTexture2D will be deprecated begin
 local CCTexture2DDeprecated = { }
 function CCTexture2DDeprecated.stringForFormat(self)
@@ -735,28 +789,6 @@ function CCTexture2DDeprecated.defaultAlphaPixelFormat(self)
 end
 rawset(CCTexture2D,"defaultAlphaPixelFormat",CCTexture2DDeprecated.defaultAlphaPixelFormat)
 --functions of CCTexture2D will be deprecated end
-
-
---functions of CCSpriteFrameCache will be deprecated begin
-local CCSpriteFrameCacheDeprecated = { }
-function CCSpriteFrameCacheDeprecated.spriteFrameByName(self,szName)
-    deprecatedTip("CCSpriteFrameCache:spriteFrameByName","CCSpriteFrameCache:getSpriteFrameByName")
-    return self:getSpriteFrameByName(szName)
-end
-rawset(CCSpriteFrameCache,"spriteFrameByName",CCSpriteFrameCacheDeprecated.spriteFrameByName)
-
-function CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache()
-    deprecatedTip("CCSpriteFrameCache:sharedSpriteFrameCache","CCSpriteFrameCache:getInstance")
-    return CCSpriteFrameCache:getInstance()
-end
-rawset(CCSpriteFrameCache,"sharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.sharedSpriteFrameCache)
-
-function CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache()
-    deprecatedTip("CCSpriteFrameCache:purgeSharedSpriteFrameCache","CCSpriteFrameCache:destroyInstance")
-    return CCSpriteFrameCache:destroyInstance()
-end
-rawset(CCSpriteFrameCache,"purgeSharedSpriteFrameCache",CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache)
---functions of CCSpriteFrameCache will be deprecated end
 
 
 --functions of CCTimer will be deprecated begin
@@ -934,90 +966,6 @@ if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTar
     rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 end
 --functions of WebSocket will be deprecated end
-
-
---functions of CCDrawPrimitives will be deprecated begin
-local CCDrawPrimitivesDeprecated = { }
-function CCDrawPrimitivesDeprecated.ccDrawPoint(pt)
-    deprecatedTip("ccDrawPoint","CCDrawPrimitives.ccDrawPoint")
-    return CCDrawPrimitives.ccDrawPoint(pt)
-end
-rawset(_G, "ccDrawPoint", CCDrawPrimitivesDeprecated.ccDrawPoint)
-
-function CCDrawPrimitivesDeprecated.ccDrawLine(origin,destination)
-    deprecatedTip("ccDrawLine","CCDrawPrimitives.ccDrawLine")
-    return CCDrawPrimitives.ccDrawLine(origin,destination)
-end
-rawset(_G, "ccDrawLine", CCDrawPrimitivesDeprecated.ccDrawLine)
-
-function CCDrawPrimitivesDeprecated.ccDrawRect(origin,destination)
-    deprecatedTip("ccDrawRect","CCDrawPrimitives.ccDrawRect")
-    return CCDrawPrimitives.ccDrawRect(origin,destination)
-end
-rawset(_G, "ccDrawRect", CCDrawPrimitivesDeprecated.ccDrawRect)
-
-function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
-    deprecatedTip("ccDrawSolidRect","CCDrawPrimitives.ccDrawSolidRect")
-    return CCDrawPrimitives.ccDrawSolidRect(origin,destination,color)
-end
-rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
-
--- params:... may represent two param(xScale,yScale) or nil
-function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
-    deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
-    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
-end
-rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
-
--- params:... may represent two param(xScale,yScale) or nil
-function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,...)
-    deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
-    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,...)
-end
-rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
-
-function CCDrawPrimitivesDeprecated.ccDrawQuadBezier(origin,control,destination,segments)
-    deprecatedTip("ccDrawQuadBezier","CCDrawPrimitives.ccDrawQuadBezier")
-    return CCDrawPrimitives.ccDrawQuadBezier(origin,control,destination,segments)
-end
-rawset(_G, "ccDrawQuadBezier", CCDrawPrimitivesDeprecated.ccDrawQuadBezier)
-
-function CCDrawPrimitivesDeprecated.ccDrawCubicBezier(origin,control1,control2,destination,segments)
-    deprecatedTip("ccDrawCubicBezier","CCDrawPrimitives.ccDrawCubicBezier")
-    return CCDrawPrimitives.ccDrawCubicBezier(origin,control1,control2,destination,segments)
-end
-rawset(_G, "ccDrawCubicBezier", CCDrawPrimitivesDeprecated.ccDrawCubicBezier)
-
-function CCDrawPrimitivesDeprecated.ccDrawCatmullRom(arrayOfControlPoints,segments)
-    deprecatedTip("ccDrawCatmullRom","CCDrawPrimitives.ccDrawCatmullRom")
-    return CCDrawPrimitives.ccDrawCatmullRom(arrayOfControlPoints,segments)
-end
-rawset(_G, "ccDrawCatmullRom", CCDrawPrimitivesDeprecated.ccDrawCatmullRom)
-
-function CCDrawPrimitivesDeprecated.ccDrawCardinalSpline(config,tension,segments)
-    deprecatedTip("ccDrawCardinalSpline","CCDrawPrimitives.ccDrawCardinalSpline")
-    return CCDrawPrimitives.ccDrawCardinalSpline(config,tension,segments)
-end
-rawset(_G, "ccDrawCardinalSpline", CCDrawPrimitivesDeprecated.ccDrawCardinalSpline)
-
-function CCDrawPrimitivesDeprecated.ccDrawColor4B(r,g,b,a)
-    deprecatedTip("ccDrawColor4B","CCDrawPrimitives.ccDrawColor4B")
-    return CCDrawPrimitives.ccDrawColor4B(r,g,b,a)
-end
-rawset(_G, "ccDrawColor4B", CCDrawPrimitivesDeprecated.ccDrawColor4B)
-
-function CCDrawPrimitivesDeprecated.ccDrawColor4F(r,g,b,a)
-    deprecatedTip("ccDrawColor4F","CCDrawPrimitives.ccDrawColor4F")
-    return CCDrawPrimitives.ccDrawColor4F(r,g,b,a)
-end
-rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
-
-function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
-    deprecatedTip("ccPointSize","CCDrawPrimitives.ccPointSize")
-    return CCDrawPrimitives.ccPointSize(pointSize)
-end
-rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
---functions of CCDrawPrimitives will be deprecated end
 
 --enums of CCParticleSystem will be deprecated begin
 _G["kParticleStartSizeEqualToEndSize"] = _G["kCCParticleStartSizeEqualToEndSize"]
