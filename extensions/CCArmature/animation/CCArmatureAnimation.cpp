@@ -57,6 +57,8 @@ ArmatureAnimation::ArmatureAnimation()
 
 ArmatureAnimation::~ArmatureAnimation(void)
 {
+    CCLOGINFO("deallocing ArmatureAnimation: %p", this);
+
     CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
 }
@@ -185,10 +187,10 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = (Bone *)element->getObject();
-        movementBoneData = (MovementBoneData *)_movementData->movBoneDataDic.objectForKey(bone->getName());
+        movementBoneData = (MovementBoneData *)_movementData->movBoneDataDic->objectForKey(bone->getName());
 
         Tween *tween = bone->getTween();
-        if(movementBoneData && movementBoneData->frameList.count() > 0)
+        if(movementBoneData && movementBoneData->frameList->count() > 0)
         {
             _tweenList->addObject(tween);
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);

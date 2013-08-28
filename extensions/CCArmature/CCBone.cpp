@@ -230,7 +230,7 @@ void Bone::addChildBone(Bone *child)
         childrenAlloc();
     }
 
-    if (_children->indexOfObject(child) == UINT_MAX)
+    if (_children->getIndexOfObject(child) == UINT_MAX)
     {
         _children->addObject(child);
         child->setParentBone(this);
@@ -239,7 +239,7 @@ void Bone::addChildBone(Bone *child)
 
 void Bone::removeChildBone(Bone *bone, bool recursion)
 {
-    if ( _children->indexOfObject(bone) != UINT_MAX )
+    if ( _children->getIndexOfObject(bone) != UINT_MAX )
     {
         if(recursion)
         {

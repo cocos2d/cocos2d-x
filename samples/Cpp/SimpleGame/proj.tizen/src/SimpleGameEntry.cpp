@@ -44,7 +44,7 @@ ApplicationInitialized(void)
 {
     AppDelegate* pAppDelegate = new AppDelegate;
 
-    EGLView* eglView = EGLView::getInstance();
+    auto eglView = EGLView::getInstance();
     eglView->setFrameSize(720, 1280);
 
     Application::getInstance()->run();

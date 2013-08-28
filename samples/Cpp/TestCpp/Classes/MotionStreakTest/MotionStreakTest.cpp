@@ -27,7 +27,7 @@ Layer* nextMotionAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -40,7 +40,7 @@ Layer* backMotionAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -48,7 +48,7 @@ Layer* backMotionAction()
 
 Layer* restartMotionAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -63,7 +63,7 @@ void MotionStreakTest1::onEnter()
 {
     MotionStreakTest::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
   
     // the root object just rotates around
     _root = Sprite::create(s_pathR1);
@@ -81,14 +81,14 @@ void MotionStreakTest1::onEnter()
     // schedule an update on each frame so we can syncronize the streak with the target
     schedule(schedule_selector(MotionStreakTest1::onUpdate));
   
-    ActionInterval* a1 = RotateBy::create(2, 360);
+    auto a1 = RotateBy::create(2, 360);
 
-    Action* action1 = RepeatForever::create(a1);
-    ActionInterval* motion = MoveBy::create(2, Point(100,0) );
+    auto action1 = RepeatForever::create(a1);
+    auto motion = MoveBy::create(2, Point(100,0) );
     _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), NULL) ) );
     _root->runAction( action1 );
 
-    ActionInterval *colorAction = RepeatForever::create(Sequence::create(
+    auto colorAction = RepeatForever::create(Sequence::create(
         TintTo::create(0.2f, 255, 0, 0),
         TintTo::create(0.2f, 0, 255, 0),
         TintTo::create(0.2f, 0, 0, 255),
@@ -123,7 +123,7 @@ void MotionStreakTest2::onEnter()
 
     setTouchEnabled(true);
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
         
     // create the streak object and add it to the scene
     streak = MotionStreak::create(3, 3, 64, Color3B::WHITE, s_streak );
@@ -134,9 +134,9 @@ void MotionStreakTest2::onEnter()
 
 void MotionStreakTest2::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch* touch = static_cast<Touch*>( touches->anyObject() );
+    auto touch = static_cast<Touch*>( touches->anyObject() );
 
-    Point touchLocation = touch->getLocation();    
+    auto touchLocation = touch->getLocation();    
     
     streak->setPosition( touchLocation );
 }
@@ -157,7 +157,7 @@ void Issue1358::onEnter()
     MotionStreakTest::onEnter();
     
     // ask director the the window size
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     
     streak = MotionStreak::create(2.0f, 1.0f, 50.0f, Color3B(255, 255, 0), "Images/Icon.png");
     addChild(streak);
@@ -215,14 +215,14 @@ void MotionStreakTest::onEnter()
 {
     BaseTest::onEnter();
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    MenuItemToggle *itemMode = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
+    auto itemMode = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
         MenuItemFont::create("Use High Quality Mode"),
         MenuItemFont::create("Use Fast Mode"),
         NULL);
 
-    Menu *menuMode = Menu::create(itemMode, NULL);
+    auto menuMode = Menu::create(itemMode, NULL);
     addChild(menuMode);
 
     menuMode->setPosition(Point(s.width/2, s.height/4));
@@ -236,7 +236,7 @@ void MotionStreakTest::modeCallback(Object *pSender)
 
 void MotionStreakTest::restartCallback(Object* sender)
 {
-    Scene* s = new MotionStreakTestScene();//CCScene::create();
+    auto s = new MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -245,7 +245,7 @@ void MotionStreakTest::restartCallback(Object* sender)
 
 void MotionStreakTest::nextCallback(Object* sender)
 {
-    Scene* s = new MotionStreakTestScene();//CCScene::create();
+    auto s = new MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -253,7 +253,7 @@ void MotionStreakTest::nextCallback(Object* sender)
 
 void MotionStreakTest::backCallback(Object* sender)
 {
-    Scene* s = new MotionStreakTestScene;//CCScene::create();
+    auto s = new MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -261,7 +261,7 @@ void MotionStreakTest::backCallback(Object* sender)
 
 void MotionStreakTestScene::runThisTest()
 {
-    Layer* layer = nextMotionAction();
+    auto layer = nextMotionAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

@@ -267,7 +267,7 @@ TransitionScene* createTransition(int nIndex, float t, Scene* s)
 
 void TransitionsTestScene::runThisTest()
 {
-    Layer * layer = new TestLayer1();
+    auto layer = new TestLayer1();
     addChild(layer);
     layer->release();
 
@@ -278,30 +278,30 @@ TestLayer1::TestLayer1(void)
 {
     float x,y;
 
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
-    Sprite* bg1 = Sprite::create(s_back1);
+    auto bg1 = Sprite::create(s_back1);
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    LabelTTF* title = LabelTTF::create( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    auto title = LabelTTF::create( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
 
-    LabelTTF* label = LabelTTF::create("SCENE 1", "Marker Felt", 38);
+    auto label = LabelTTF::create("SCENE 1", "Marker Felt", 38);
     label->setColor( Color3B(16,16,255));
     label->setPosition( Point(x/2,y/2));    
     addChild( label);
 
     // menu
-    MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
+    auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
+    auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
+    auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
 
-    Menu *menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, NULL);
 
     menu->setPosition( Point::ZERO );
     item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -320,12 +320,12 @@ TestLayer1::~TestLayer1(void)
 
 void TestLayer1::restartCallback(Object* sender)
 {
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer2();
+    auto layer = new TestLayer2();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)
@@ -339,12 +339,12 @@ void TestLayer1::nextCallback(Object* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer2();
+    auto layer = new TestLayer2();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)
@@ -360,12 +360,12 @@ void TestLayer1::backCallback(Object* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer2();
+    auto layer = new TestLayer2();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)
@@ -407,30 +407,30 @@ TestLayer2::TestLayer2()
 {
     float x,y;
 
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     x = size.width;
     y = size.height;
 
-    Sprite* bg1 = Sprite::create(s_back2);
+    auto bg1 = Sprite::create(s_back2);
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    LabelTTF* title = LabelTTF::create((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    auto title = LabelTTF::create((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
 
-    LabelTTF* label = LabelTTF::create("SCENE 2", "Marker Felt", 38);
+    auto label = LabelTTF::create("SCENE 2", "Marker Felt", 38);
     label->setColor( Color3B(16,16,255));
     label->setPosition( Point(x/2,y/2));    
     addChild( label);
 
     // menu
-    MenuItemImage *item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
-    MenuItemImage *item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
-    MenuItemImage *item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
+    auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
+    auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
+    auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
 
-    Menu *menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, NULL);
 
     menu->setPosition( Point::ZERO );
     item1->setPosition(Point(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -449,12 +449,12 @@ TestLayer2::~TestLayer2()
 
 void TestLayer2::restartCallback(Object* sender)
 {
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer1();
+    auto layer = new TestLayer1();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)
@@ -468,12 +468,12 @@ void TestLayer2::nextCallback(Object* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer1();
+    auto layer = new TestLayer1();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)
@@ -489,12 +489,12 @@ void TestLayer2::backCallback(Object* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    Scene* s = new TransitionsTestScene();
+    auto s = new TransitionsTestScene();
 
-    Layer* layer = new TestLayer1();
+    auto layer = new TestLayer1();
     s->addChild(layer);
 
-    Scene* scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
+    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
     s->release();
     layer->release();
     if (scene)

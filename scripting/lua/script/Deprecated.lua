@@ -1,7 +1,198 @@
+require "Cocos2d.lua"
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")
 end
+
+--CCDirector class will be Deprecated,begin
+local function CCDirectorClassDeprecated( )
+    deprecatedTip("CCDirector","cc.Director")
+    return cc.Director
+end
+_G["CCDirector"] = CCDirectorClassDeprecated()
+
+
+--functions of CCDirector will be deprecated,begin
+local CCDirectorDeprecated = { }
+function CCDirectorDeprecated.sharedDirector()
+    deprecatedTip("CCDirector:sharedDirector","cc.Director:getInstance")
+    return cc.Director:getInstance()
+end
+rawset(CCDirector,"sharedDirector",CCDirectorDeprecated.sharedDirector)
+
+--functions of CCDirector will be deprecated,end
+--CCDirector class will be Deprecated,end
+
+
+--CCTextureCache class will be Deprecated,begin
+local function CCTextureCacheClassDeprecated( )
+    deprecatedTip("CCTextureCache ","cc.TextureCache")
+    return cc.TextureCache
+end
+_G["CCTextureCache"] = CCTextureCacheClassDeprecated()
+
+--functions of CCTextureCache will be deprecated begin
+local CCTextureCacheDeprecated = { }
+function CCTextureCacheDeprecated.sharedTextureCache()
+    deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")
+    return cc.TextureCache:getInstance()
+end
+rawset(CCTextureCache,"sharedTextureCache",CCTextureCacheDeprecated.sharedTextureCache)
+
+function CCTextureCacheDeprecated.purgeSharedTextureCache()
+    deprecatedTip("CCTextureCache:purgeSharedTextureCache","CCTextureCache:destroyInstance")
+    return cc.TextureCache:destroyInstance()
+end
+rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
+--functions of CCTextureCache will be deprecated end
+--CCTextureCache class will be Deprecated,end
+
+--CCSpriteFrame class will be Deprecated,begin
+local function CCSpriteFrameClassDeprecated( )
+    deprecatedTip("CCSpriteFrame ","cc.SpriteFrame")
+    return cc.SpriteFrame
+end
+_G["CCSpriteFrame"] = CCSpriteFrameClassDeprecated()
+
+--CCSpriteFrame class will be Deprecated,end
+
+--CCSprite class will be Deprecated,begin
+local function CCSpriteClassDeprecated( )
+    deprecatedTip("CCSprite ","cc.Sprite")
+    return cc.Sprite
+end
+_G["CCSprite"] = CCSpriteClassDeprecated()
+
+--CCSprite class will be Deprecated,end
+
+--CCAnimation class will be Deprecated,begin
+local function CCAnimationClassDeprecated( )
+    deprecatedTip("CCAnimation ","cc.Animation")
+    return cc.Animation
+end
+_G["CCAnimation"] = CCAnimationClassDeprecated()
+
+--CCAnimation class will be Deprecated,end
+
+--CCAnimate class will be Deprecated,begin
+local function CCAnimateClassDeprecated( )
+    deprecatedTip("CCAnimate ","cc.Animate")
+    return cc.Animate
+end
+_G["CCAnimate"] = CCAnimateClassDeprecated()
+
+--CCAnimate class will be Deprecated,end
+
+--CCRepeatForever class will be Deprecated,begin
+local function CCRepeatForeverClassDeprecated( )
+    deprecatedTip("CCRepeatForever ","cc.RepeatForever")
+    return cc.RepeatForever
+end
+_G["CCRepeatForever"] = CCRepeatForeverClassDeprecated()
+
+--CCRepeatForever class will be Deprecated,end
+
+--CCLayer class will be Deprecated,begin
+local function CCLayerClassDeprecated( )
+    deprecatedTip("CCLayer ","cc.Layer")
+    return cc.Layer
+end
+_G["CCLayer"] = CCLayerClassDeprecated()
+--CCLayer class will be Deprecated,end
+
+--CCScene class will be Deprecated,begin
+local function CCSceneClassDeprecated( )
+    deprecatedTip("CCScene ","cc.Scene")
+    return cc.Scene
+end
+_G["CCScene"] = CCSceneClassDeprecated()
+--CCScene class will be Deprecated,end
+
+--CCFileUtils class will be Deprecated,begin
+local function CCFileUtilsClassDeprecated( )
+    deprecatedTip("CCFileUtils ","cc.FileUtils")
+    return cc.FileUtils
+end
+_G["CCFileUtils"] = CCFileUtilsClassDeprecated()
+
+--functions of CCFileUtils will be deprecated end
+local CCFileUtilsDeprecated = { }
+function CCFileUtilsDeprecated.sharedFileUtils()
+    deprecatedTip("CCFileUtils:sharedFileUtils","CCFileUtils:getInstance")
+    return cc.FileUtils:getInstance()
+end
+rawset(CCFileUtils,"sharedFileUtils",CCFileUtilsDeprecated.sharedFileUtils)
+
+function CCFileUtilsDeprecated.purgeFileUtils()
+    deprecatedTip("CCFileUtils:purgeFileUtils","CCFileUtils:destroyInstance")
+    return cc.FileUtils:destroyInstance()
+end
+rawset(CCFileUtils,"purgeFileUtils",CCFileUtilsDeprecated.purgeFileUtils)
+--functions of CCFileUtils will be deprecated end
+--CCFileUtils class will be Deprecated,end
+
+--SimpleAudioEngine will be deprecated begin
+local function SimpleAudioEngineClassDeprecated( )
+    deprecatedTip("SimpleAudioEngine ","cc.SimpleAudioEngine")
+    return cc.SimpleAudioEngine
+end
+_G["SimpleAudioEngine"] = SimpleAudioEngineClassDeprecated()
+
+--functions of SimpleAudioEngine will be deprecated begin
+
+local SimpleAudioEngineDeprecated = { }
+function SimpleAudioEngineDeprecated.sharedEngine()
+    deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
+    return cc.SimpleAudioEngine:getInstance()
+end
+rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine)
+
+function SimpleAudioEngineDeprecated.playBackgroundMusic(self,...)
+    deprecatedTip("SimpleAudioEngine:playBackgroundMusic","SimpleAudioEngine:playMusic")
+    return self:playMusic(...)
+end
+rawset(SimpleAudioEngine,"playBackgroundMusic",SimpleAudioEngineDeprecated.playBackgroundMusic)
+
+--functions of SimpleAudioEngine will be deprecated end
+
+--SimpleAudioEngine class will be Deprecated,end
+
+--CCMenuItemImage will be deprecated begin
+local function CCMenuItemImageClassDeprecated( )
+    deprecatedTip("CCMenuItemImage ","cc.MenuItemImage")
+    return cc.MenuItemImage
+end
+_G["CCMenuItemImage"] = CCMenuItemImageClassDeprecated( )
+
+--CCMenu will be deprecated end
+
+--CCMenu will be deprecated begin
+local function CCMenuClassDeprecated( )
+    deprecatedTip("CCMenu ","cc.Menu")
+    return cc.Menu
+end
+_G["CCMenu"] = cc.Menu
+
+--functions of SimpleAudioEngine will be deprecated begin
+
+local CCMenuDeprecated = { }
+function CCMenuDeprecated.createWithItem(self,...)
+    deprecatedTip("CCMenuDeprecated:createWithItem","cc.Menu:create")
+    return self:create(...)
+end
+rawset(CCMenu,"createWithItem",CCMenuDeprecated.createWithItem)
+--functions of SimpleAudioEngine will be deprecated end
+
+--CCMenu will be deprecated end
+
+--global functions wil be deprecated, begin
+local function CCRectMake(x,y,width,height)
+    deprecatedTip("CCRectMake(x,y,width,height)","CCRect(x,y,width,height) in lua")
+    return CCRect(x,y,width,height)
+end
+rawset(_G,"CCRectMake",CCRectMake)
+--global functions wil be deprecated, end
+
 
 --functions of _G will be deprecated begin
 local function ccpLineIntersect(a,b,c,d,s,t)
@@ -28,12 +219,6 @@ local function CCSizeMake(width,height)
     return CCSize(width,height)
 end
 rawset(_G,"CCSizeMake",CCSizeMake)
-
-local function CCRectMake(x,y,width,height)
-    deprecatedTip("CCRectMake(x,y,width,height)","CCRect(x,y,width,height)")
-    return CCRect(x,y,width,height)
-end
-rawset(_G,"CCRectMake",CCRectMake)
 
 local function ccpNeg(pt)
     deprecatedTip("ccpNeg","CCPoint.__sub")
@@ -408,22 +593,6 @@ rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
 --functions of CCFileUtils will be deprecated end
 
 
---functions of CCFileUtils will be deprecated end
-local CCFileUtilsDeprecated = { }
-function CCFileUtilsDeprecated.sharedFileUtils()
-    deprecatedTip("CCFileUtils:sharedFileUtils","CCFileUtils:getInstance")
-    return CCFileUtils:getInstance()
-end
-rawset(CCFileUtils,"sharedFileUtils",CCFileUtilsDeprecated.sharedFileUtils)
-
-function CCFileUtilsDeprecated.purgeFileUtils()
-    deprecatedTip("CCFileUtils:purgeFileUtils","CCFileUtils:destroyInstance")
-    return CCFileUtils:destroyInstance()
-end
-rawset(CCFileUtils,"purgeFileUtils",CCFileUtilsDeprecated.purgeFileUtils)
---functions of CCFileUtils will be deprecated end
-
-
 --functions of CCApplication will be deprecated end
 local CCApplicationDeprecated = { }
 function CCApplicationDeprecated.sharedApplication()
@@ -474,22 +643,6 @@ function CCNotificationCenterDeprecated.purgeNotificationCenter()
 end
 rawset(CCNotificationCenter,"purgeNotificationCenter",CCNotificationCenterDeprecated.purgeNotificationCenter)
 --functions of CCNotificationCenter will be deprecated end
-
-
---functions of CCTextureCache will be deprecated begin
-local CCTextureCacheDeprecated = { }
-function CCTextureCacheDeprecated.sharedTextureCache()
-    deprecatedTip("CCTextureCache:sharedTextureCache","CCTextureCache:getInstance")
-    return CCTextureCache:getInstance()
-end
-rawset(CCTextureCache,"sharedTextureCache",CCTextureCacheDeprecated.sharedTextureCache)
-
-function CCTextureCacheDeprecated.purgeSharedTextureCache()
-    deprecatedTip("CCTextureCache:purgeSharedTextureCache","CCTextureCache:destroyInstance")
-    return CCTextureCache:destroyInstance()
-end
-rawset(CCTextureCache,"purgeSharedTextureCache",CCTextureCacheDeprecated.purgeSharedTextureCache)
---functions of CCTextureCache will be deprecated end
 
 
 --functions of CCGrid3DAction will be deprecated begin
@@ -696,17 +849,6 @@ function CCTMXLayerDeprecated.propertyNamed(self,propertyName)
 end
 rawset(CCTMXLayer,"propertyNamed",CCTMXLayerDeprecated.propertyNamed)
 --functions of CCTMXLayer will be deprecated end
-
-
---functions of SimpleAudioEngine will be deprecated begin
-local SimpleAudioEngineDeprecated = { }
-function SimpleAudioEngineDeprecated.sharedEngine()
-    deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
-    return SimpleAudioEngine:getInstance()
-end
-rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine)
---functions of SimpleAudioEngine will be deprecated end
-
 
 --functions of CCTMXTiledMap will be deprecated begin
 local CCTMXTiledMapDeprecated = { }

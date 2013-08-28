@@ -84,9 +84,9 @@ FontTest::FontTest()
 
 void FontTest::showFont(const char *pFont)
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    Size blockSize = Size(s.width/3, 200);
+    auto blockSize = Size(s.width/3, 200);
     float fontSize = 26;
 
     removeChildByTag(kTagLabel1, true);
@@ -97,17 +97,17 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
 
-    LabelTTF *top = LabelTTF::create(pFont, pFont, 24);
-    LabelTTF *left = LabelTTF::create("alignment left", pFont, fontSize,
+    auto top = LabelTTF::create(pFont, pFont, 24);
+    auto left = LabelTTF::create("alignment left", pFont, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    LabelTTF *center = LabelTTF::create("alignment center", pFont, fontSize,
+    auto center = LabelTTF::create("alignment center", pFont, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    LabelTTF *right = LabelTTF::create("alignment right", pFont, fontSize,
+    auto right = LabelTTF::create("alignment right", pFont, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
-    LayerColor *leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
-    LayerColor *centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
-    LayerColor *rightColor = LayerColor::create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height);
+    auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
+    auto centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
+    auto rightColor = LayerColor::create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height);
 
     leftColor->ignoreAnchorPointForPosition(false);
     centerColor->ignoreAnchorPointForPosition(false);
@@ -166,7 +166,7 @@ void FontTest::restartCallback(Object* sender)
 ///---------------------------------------
 void FontTestScene::runThisTest()
 {
-    Layer* layer = FontTest::create();
+    auto layer = FontTest::create();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

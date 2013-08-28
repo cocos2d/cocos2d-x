@@ -687,7 +687,7 @@ void Scheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 {
     for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
     {
-        SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->objectAtIndex(i));
+        SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
         if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
         {
             pEntry->markedForDeletion();
@@ -909,7 +909,7 @@ void Scheduler::update(float dt)
     {
         for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
         {
-            SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->objectAtIndex(i));
+            SchedulerScriptHandlerEntry* pEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
             if (pEntry->isMarkedForDeletion())
             {
                 _scriptHandlerEntries->removeObjectAtIndex(i);

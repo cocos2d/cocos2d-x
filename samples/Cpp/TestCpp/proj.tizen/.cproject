@@ -653,8 +653,8 @@
 									<listOptionValue builtIn="false" value="idn"/>
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="chipmunk"/>
-									<listOptionValue builtIn="false" value="websockets"/>
 									<listOptionValue builtIn="false" value="sqlite3"/>
+									<listOptionValue builtIn="false" value="websockets"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1522207769" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

@@ -1,7 +1,7 @@
  
  local function WebSocketTestLayer()
-    local layer   = CCLayer:create()
-    local winSize = CCDirector:getInstance():getWinSize()
+    local layer   = cc.Layer:create()
+    local winSize = cc.Director:getInstance():getWinSize()
         
     local MARGIN = 40
     local SPACE  = 35
@@ -15,12 +15,12 @@
     local receiveTextTimes = 0
     local receiveBinaryTimes = 0
     
-    local label = CCLabelTTF:create("WebSocket Test", "Arial", 28)
-    label:setPosition(CCPoint( winSize.width / 2, winSize.height - MARGIN))
+    local label = cc.LabelTTF:create("WebSocket Test", "Arial", 28)
+    label:setPosition(cc.p( winSize.width / 2, winSize.height - MARGIN))
     layer:addChild(label, 0)
 
-    local menuRequest = CCMenu:create()
-    menuRequest:setPosition(CCPoint(0, 0))
+    local menuRequest = cc.Menu:create()
+    menuRequest:setPosition(cc.p(0, 0))
     layer:addChild(menuRequest)
 
     --Send Text
@@ -36,10 +36,10 @@
             end
         end
     end
-    local labelSendText = CCLabelTTF:create("Send Text", "Arial", 22)
-    local itemSendText  = CCMenuItemLabel:create(labelSendText)
+    local labelSendText = cc.LabelTTF:create("Send Text", "Arial", 22)
+    local itemSendText  = cc.MenuItemLabel:create(labelSendText)
     itemSendText:registerScriptTapHandler(onMenuSendTextClicked)
-    itemSendText:setPosition(CCPoint(winSize.width / 2, winSize.height - MARGIN - SPACE))
+    itemSendText:setPosition(cc.p(winSize.width / 2, winSize.height - MARGIN - SPACE))
     menuRequest:addChild(itemSendText)
 
     --Send Binary
@@ -54,33 +54,33 @@
             end
         end
     end
-    local labelSendBinary = CCLabelTTF:create("Send Binary", "Arial", 22)
-    local itemSendBinary = CCMenuItemLabel:create(labelSendBinary)
+    local labelSendBinary = cc.LabelTTF:create("Send Binary", "Arial", 22)
+    local itemSendBinary = cc.MenuItemLabel:create(labelSendBinary)
     itemSendBinary:registerScriptTapHandler(onMenuSendBinaryClicked)
-    itemSendBinary:setPosition(CCPoint(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE))
+    itemSendBinary:setPosition(cc.p(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE))
     menuRequest:addChild(itemSendBinary)
 
     --Send Text Status Label
-    sendTextStatus = CCLabelTTF:create("Send Text WS is waiting...", "Arial", 14,CCSize(160, 100),kCCVerticalTextAlignmentCenter,kCCVerticalTextAlignmentTop)
-    sendTextStatus:setAnchorPoint(CCPoint(0, 0))
-    sendTextStatus:setPosition(CCPoint(0, 25))
+    sendTextStatus = cc.LabelTTF:create("Send Text WS is waiting...", "Arial", 14,cc.size(160, 100),cc.VERTICAL_TEXT_ALIGNMENT_CENTER,cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    sendTextStatus:setAnchorPoint(cc.p(0, 0))
+    sendTextStatus:setPosition(cc.p(0, 25))
     layer:addChild(sendTextStatus)
 
     --Send Binary Status Label
-    sendBinaryStatus = CCLabelTTF:create("Send Binary WS is waiting...", "Arial", 14, CCSize(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
-    sendBinaryStatus:setAnchorPoint(CCPoint(0, 0))
-    sendBinaryStatus:setPosition(CCPoint(160, 25))
+    sendBinaryStatus = cc.LabelTTF:create("Send Binary WS is waiting...", "Arial", 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    sendBinaryStatus:setAnchorPoint(cc.p(0, 0))
+    sendBinaryStatus:setPosition(cc.p(160, 25))
     layer:addChild(sendBinaryStatus)
 
     --Error Label
-    errorStatus = CCLabelTTF:create("Error WS is waiting...", "Arial", 14, CCSize(160, 100), kCCVerticalTextAlignmentCenter, kCCVerticalTextAlignmentTop)
-    errorStatus:setAnchorPoint(CCPoint(0, 0))
-    errorStatus:setPosition(CCPoint(320, 25))
+    errorStatus = cc.LabelTTF:create("Error WS is waiting...", "Arial", 14, cc.size(160, 100), cc.VERTICAL_TEXT_ALIGNMENT_CENTER, cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+    errorStatus:setAnchorPoint(cc.p(0, 0))
+    errorStatus:setPosition(cc.p(320, 25))
     layer:addChild(errorStatus)
 
-    local toMainMenu = CCMenu:create()
+    local toMainMenu = cc.Menu:create()
     CreateExtensionsBasicLayerMenu(toMainMenu)
-    toMainMenu:setPosition(CCPoint(0, 0))
+    toMainMenu:setPosition(cc.p(0, 0))
     layer:addChild(toMainMenu,10)
 
     wsSendText   = WebSocket:create("ws://echo.websocket.org")
@@ -196,7 +196,7 @@
 end
 
  function runWebSocketTest()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     scene:addChild(WebSocketTestLayer())
     return scene
 end

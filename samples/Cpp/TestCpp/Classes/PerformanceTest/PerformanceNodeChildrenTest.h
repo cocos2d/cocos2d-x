@@ -9,6 +9,11 @@ class NodeChildrenMenuLayer : public PerformBasicLayer
 public:
     NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
     virtual void showCurrentTest();
+    void dumpProfilerInfo(float dt);
+
+    // overrides
+    virtual void onExitTransitionDidStart() override;
+    virtual void onEnterTransitionDidFinish() override;
 };
 
 class NodeChildrenMainScene : public Scene
@@ -42,7 +47,17 @@ protected:
     SpriteBatchNode    *batchNode;
 };
 
-class IterateSpriteSheetFastEnum : public IterateSpriteSheet
+class IterateSpriteSheetForLoop : public IterateSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+class IterateSpriteSheetIterator : public IterateSpriteSheet
 {
 public:
     virtual void update(float dt);
@@ -79,7 +94,41 @@ protected:
 #endif
 };
 
+///
+
+class CallFuncsSpriteSheetForEach : public IterateSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+class CallFuncsSpriteSheetCMacro : public IterateSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+///
+
 class AddSpriteSheet : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+class GetSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
     virtual void update(float dt);
@@ -100,6 +149,16 @@ public:
 };
 
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* profilerName();
+};
+
+class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
     virtual void update(float dt);

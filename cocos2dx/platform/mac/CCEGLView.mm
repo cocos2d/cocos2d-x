@@ -123,6 +123,7 @@ EGLView::EGLView()
 
 EGLView::~EGLView()
 {
+    CCLOGINFO("deallocing EGLView: %p", this);
     glfwTerminate();
     s_pEglView = nullptr;
 }
