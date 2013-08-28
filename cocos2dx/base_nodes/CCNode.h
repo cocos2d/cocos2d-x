@@ -157,7 +157,7 @@ public:
      * Gets the description string. It makes debugging easier.
      * @return A string terminated with '\0'
      */
-    const char* description(void) const;
+    virtual const char* description(void) const;
     
     /// @} end of initializers
     
