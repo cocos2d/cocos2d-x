@@ -1152,7 +1152,7 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToParentTransform() const;
+    virtual const AffineTransform& getNodeToParentTransform() const;
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
@@ -1161,7 +1161,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getParentToNodeTransform() const;
+    virtual const AffineTransform& getParentToNodeTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
