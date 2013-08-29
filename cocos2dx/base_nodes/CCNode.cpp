@@ -613,11 +613,6 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-//    if ( _children->containsObject(child) )
-//    {
-//        this->detachChild(child,cleanup);
-//    }
-
     int index = _children->getIndexOfObject(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
@@ -859,8 +854,7 @@ void Node::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    AffineTransform tmpAffine = this->getNodeToParentTransform();
-    CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+    CGAffineToGL(this->getNodeToParentTransform(), transfrom4x4.mat);
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = _vertexZ;
@@ -1101,7 +1095,7 @@ void Node::update(float fDelta)
     }
 }
 
-AffineTransform Node::getNodeToParentTransform() const
+const AffineTransform& Node::getNodeToParentTransform() const
 {
     if (_transformDirty) 
     {
@@ -1184,7 +1178,7 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     _additionalTransformDirty = true;
 }
 
-AffineTransform Node::getParentToNodeTransform() const
+const AffineTransform& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
         _inverse = AffineTransformInvert(this->getNodeToParentTransform());
