@@ -1,4 +1,3 @@
-
 DEFINES += CC_TARGET_QT5
 
 CONFIG += silent
@@ -34,6 +33,7 @@ INCLUDEPATH += $${PWD}/../include
 INCLUDEPATH += $${PWD}/../platform
 INCLUDEPATH += $${PWD}/../platform/qt5
 INCLUDEPATH += $${PWD}/../kazmath/include
+INCLUDEPATH += $${PWD}/../platform/third_party/linux/libtiff/include
 
 COCOS2DX_SYSTEM_LIBS += -lz
 COCOS2DX_SYSTEM_LIBS += -ljpeg -ltiff -lpng
