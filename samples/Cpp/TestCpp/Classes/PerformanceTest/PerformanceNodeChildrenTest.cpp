@@ -43,6 +43,8 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(RemoveSpriteSheet),
     CL(ReorderSpriteSheet),
     CL(SortAllChildrenSpriteSheet),
+
+    CL(VisitSceneGraph),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -147,7 +149,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
-
+        updateProfilerName();
         CC_PROFILER_PURGE_ALL();
 	});
     decrease->setColor(Color3B(0,200,20));
@@ -158,7 +160,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
 		updateQuantityLabel();
 		updateQuantityOfNodes();
-
+        updateProfilerName();
         CC_PROFILER_PURGE_ALL();
 	});
     increase->setColor(Color3B(0,200,20));
@@ -179,6 +181,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     updateQuantityLabel();
     updateQuantityOfNodes();
+    updateProfilerName();
 }
 
 std::string NodeChildrenMainScene::title()
@@ -203,6 +206,17 @@ void NodeChildrenMainScene::updateQuantityLabel()
         lastRenderedCount = quantityOfNodes;
     }
 }
+
+const char * NodeChildrenMainScene::profilerName()
+{
+    return _profilerName;
+}
+
+void NodeChildrenMainScene::updateProfilerName()
+{
+    snprintf(_profilerName, sizeof(_profilerName)-1, "%s(%d)", testName(), quantityOfNodes);
+}
+
 
 ////////////////////////////////////////////////////////
 //
@@ -253,7 +267,7 @@ void IterateSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
     scheduleUpdate();
 }
 
-const char*  IterateSpriteSheet::profilerName()
+const char*  IterateSpriteSheet::testName()
 {
     return "none";
 }
@@ -290,7 +304,7 @@ std::string IterateSpriteSheetForLoop::subtitle()
     return "Iterate children using C++11 range-based for loop. See console";
 }
 
-const char*  IterateSpriteSheetForLoop::profilerName()
+const char*  IterateSpriteSheetForLoop::testName()
 {
     return "Iterator: C++11 for loop";
 }
@@ -328,7 +342,7 @@ std::string IterateSpriteSheetCArray::subtitle()
     return "Iterate children using C Array API. See console";
 }
 
-const char*  IterateSpriteSheetCArray::profilerName()
+const char*  IterateSpriteSheetCArray::testName()
 {
     return "Iterator: CC_ARRAY_FOREACH";
 }
@@ -366,7 +380,7 @@ std::string IterateSpriteSheetIterator::subtitle()
     return "Iterate children using begin() / end(). See console";
 }
 
-const char*  IterateSpriteSheetIterator::profilerName()
+const char*  IterateSpriteSheetIterator::testName()
 {
     return "Iterator: begin(), end()";
 }
@@ -407,12 +421,9 @@ std::string CallFuncsSpriteSheetForEach::subtitle()
     return "Using 'std::for_each()'. See console";
 }
 
-const char*  CallFuncsSpriteSheetForEach::profilerName()
+const char*  CallFuncsSpriteSheetForEach::testName()
 {
-    static char _name[256];
-    snprintf(_name, sizeof(_name)-1, "Map: std::for_each(%d)", quantityOfNodes);
-    return _name;
-
+    return "Map: std::for_each";
 }
 
 ////////////////////////////////////////////////////////
@@ -443,11 +454,9 @@ std::string CallFuncsSpriteSheetCMacro::subtitle()
     return "Using 'arrayMakeObjectsPerformSelector'. See console";
 }
 
-const char*  CallFuncsSpriteSheetCMacro::profilerName()
+const char*  CallFuncsSpriteSheetCMacro::testName()
 {
-    static char _name[256];
-    snprintf(_name, sizeof(_name)-1, "Map: arrayMakeObjectsPerformSelector(%d)", quantityOfNodes);
-    return _name;
+    return "Map: arrayMakeObjectsPerformSelector";
 }
 ////////////////////////////////////////////////////////
 //
@@ -497,7 +506,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
     currentQuantityOfNodes = quantityOfNodes;
 }
 
-const char*  AddRemoveSpriteSheet::profilerName()
+const char*  AddRemoveSpriteSheet::testName()
 {
     return "none";
 }
@@ -560,7 +569,7 @@ std::string AddSpriteSheet::subtitle()
     return "Adds %10 of total sprites with random z. See console";
 }
 
-const char*  AddSpriteSheet::profilerName()
+const char*  AddSpriteSheet::testName()
 {
     return "add sprites";
 }
@@ -625,7 +634,7 @@ std::string GetSpriteSheet::subtitle()
     return "Get sprites using getChildByTag(). See console";
 }
 
-const char*  GetSpriteSheet::profilerName()
+const char*  GetSpriteSheet::testName()
 {
     return "get sprites";
 }
@@ -681,7 +690,7 @@ std::string RemoveSpriteSheet::subtitle()
     return "Remove %10 of total sprites placed randomly. See console";
 }
 
-const char*  RemoveSpriteSheet::profilerName()
+const char*  RemoveSpriteSheet::testName()
 {
     return "remove sprites";
 }
@@ -744,7 +753,7 @@ std::string ReorderSpriteSheet::subtitle()
     return "Reorder %10 of total sprites placed randomly. See console";
 }
 
-const char*  ReorderSpriteSheet::profilerName()
+const char*  ReorderSpriteSheet::testName()
 {
     return "reorder sprites";
 }
@@ -809,11 +818,74 @@ std::string SortAllChildrenSpriteSheet::subtitle()
     return "Calls sortOfChildren(). See console";
 }
 
-const char*  SortAllChildrenSpriteSheet::profilerName()
+const char*  SortAllChildrenSpriteSheet::testName()
 {
     return "sort all children";
 }
 
+
+////////////////////////////////////////////////////////
+//
+// VisitSceneGraph
+//
+////////////////////////////////////////////////////////
+void VisitSceneGraph::initWithQuantityOfNodes(unsigned int nodes)
+{
+    NodeChildrenMainScene::initWithQuantityOfNodes(nodes);
+    scheduleUpdate();
+}
+
+void VisitSceneGraph::updateQuantityOfNodes()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // increase nodes
+    if( currentQuantityOfNodes < quantityOfNodes )
+    {
+        for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
+        {
+            auto node = Node::create();
+            this->addChild(node);
+            node->setVisible(true);
+            node->setPosition(Point(-1000,-1000));
+            node->setTag(1000 + currentQuantityOfNodes + i );
+        }
+    }
+
+    // decrease nodes
+    else if ( currentQuantityOfNodes > quantityOfNodes )
+    {
+        for(int i = 0; i < (currentQuantityOfNodes-quantityOfNodes); i++)
+        {
+            this->removeChildByTag(1000 + currentQuantityOfNodes - i -1 );
+        }
+    }
+
+    currentQuantityOfNodes = quantityOfNodes;
+}
+void VisitSceneGraph::update(float dt)
+{
+    CC_PROFILER_START( this->profilerName() );
+    this->visit();
+    CC_PROFILER_STOP( this->profilerName() );
+}
+
+std::string VisitSceneGraph::title()
+{
+    return "K - Performance of visiting the scene graph";
+}
+
+std::string VisitSceneGraph::subtitle()
+{
+    return "calls visit() on scene graph. See console";
+}
+
+const char*  VisitSceneGraph::testName()
+{
+    return "visit scene graph";
+}
+
+///----------------------------------------
 void runNodeChildrenTest()
 {
     auto scene = createFunctions[g_curCase]();
