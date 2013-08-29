@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt-add-repository ppa:zoogie/sdl2-snapshots -y
+sudo apt-get update -y
+
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
@@ -13,6 +16,7 @@ DEPENDS+=' libcurl4-gnutls-dev'
 DEPENDS+=' libfontconfig1-dev'
 DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew*-dev'
+DEPENDS+=' libglfw-dev'
 
 MISSING=
 echo "Checking for missing packages ..."
