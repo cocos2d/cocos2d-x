@@ -71,7 +71,7 @@ CCNode::CCNode(void)
 , m_nZOrder(0)
 , m_pChildren(NULL)
 , m_pParent(NULL)
-// "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to true
+// "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to false
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
 , m_pUserData(NULL)
