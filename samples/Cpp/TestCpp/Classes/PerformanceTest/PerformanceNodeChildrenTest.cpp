@@ -368,7 +368,7 @@ void CallFuncsSpriteSheetCMacro::update(float dt)
 
 std::string CallFuncsSpriteSheetCMacro::title()
 {
-    return "E - 'map' functional call";
+    return "C - 'map' functional call";
 }
 
 std::string CallFuncsSpriteSheetCMacro::subtitle()
@@ -490,7 +490,7 @@ void GetSpriteSheet::update(float dt)
 
 std::string GetSpriteSheet::title()
 {
-    return "G - getChildByTag from spritesheet";
+    return "E - getChildByTag from spritesheet";
 }
 
 std::string GetSpriteSheet::subtitle()
@@ -553,7 +553,7 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "F - Add to spritesheet";
+    return "D - Add to spritesheet";
 }
 
 std::string AddSpriteSheet::subtitle()
@@ -609,7 +609,7 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "H - Del from spritesheet";
+    return "F - Del from spritesheet";
 }
 
 std::string RemoveSpriteSheet::subtitle()
@@ -675,7 +675,7 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "I - Reorder from spritesheet";
+    return "G - Reorder from spritesheet";
 }
 
 std::string ReorderSpriteSheet::subtitle()
@@ -751,7 +751,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
 
 std::string SortAllChildrenSpriteSheet::title()
 {
-    return "J - Sort All Children from spritesheet";
+    return "H - Sort All Children from spritesheet";
 }
 
 std::string SortAllChildrenSpriteSheet::subtitle()

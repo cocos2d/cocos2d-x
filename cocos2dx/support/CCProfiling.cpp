@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCProfiling.h"
-#include <chrono>
 
 using namespace std;
 
@@ -129,7 +128,7 @@ void CCProfilingTimer::reset()
     totalTime = 0;
     minTime = 100000000;
     maxTime = 0;
-    m_sStartTime = chrono::high_resolution_clock::now();
+    gettimeofday((struct timeval*)&m_sStartTime, NULL);
 }
 
 void CCProfilingBeginTimingBlock(const char *timerName)
@@ -142,7 +141,7 @@ void CCProfilingBeginTimingBlock(const char *timerName)
     }
 
     timer->numberOfCalls++;
-    timer->m_sStartTime = chrono::high_resolution_clock::now();
+    gettimeofday((struct timeval*)&timer->m_sStartTime, NULL);
 }
 
 void CCProfilingEndTimingBlock(const char *timerName)
@@ -152,10 +151,11 @@ void CCProfilingEndTimingBlock(const char *timerName)
 
     CCAssert(timer, "CCProfilingTimer  not found");
     
-    std::chrono::high_resolution_clock::time_point now = chrono::high_resolution_clock::now();
+    struct timeval now;
     
-    int duration = chrono::duration_cast<chrono::microseconds>(now - timer->m_sStartTime).count();
-    
+    gettimeofday( &now, NULL);
+    int duration = 1000000 * (now.tv_sec - timer->m_sStartTime.tv_sec) + (now.tv_usec - timer->m_sStartTime.tv_usec);
+
     timer->totalTime += duration;
     timer->m_dAverageTime1 = (timer->m_dAverageTime1 + duration) / 2.0f;
     timer->m_dAverageTime2 = timer->totalTime / timer->numberOfCalls;
