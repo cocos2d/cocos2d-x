@@ -78,13 +78,13 @@ public:
     void reset();
 
     std::string m_NameStr;
-    struct cc_timeval m_sStartTime;
+    int               numberOfCalls;
     int               m_dAverageTime1;
     int               m_dAverageTime2;
+    long long         totalTime;
     int               minTime;
     int               maxTime;
-    long long         totalTime;
-    int               numberOfCalls;
+    struct cc_timeval m_sStartTime;
 };
 
 extern void CCProfilingBeginTimingBlock(const char *timerName);
