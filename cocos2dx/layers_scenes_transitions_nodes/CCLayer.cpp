@@ -1073,6 +1073,19 @@ void LayerMultiplex::addLayer(Layer* layer)
     _layers->addObject(layer);
 }
 
+bool LayerMultiplex::init()
+{
+    if (Layer::init())
+    {
+        _layers = Array::create();
+        _layers->retain();
+
+        _enabledLayer = 0;
+        return true;
+    }
+    return false;
+}
+
 bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
 {
     if (Layer::init())

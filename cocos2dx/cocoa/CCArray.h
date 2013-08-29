@@ -241,7 +241,7 @@ public:
     /** Create an array with one object */
     static Array* createWithObject(Object* object);
     /** Create an array with a default capacity */
-    static Array* createWithCapacity(unsigned int capacity);
+    static Array* createWithCapacity(int capacity);
     /** Create an array with from an existing array */
     static Array* createWithArray(Array* otherArray);
     /**
@@ -266,14 +266,14 @@ public:
     /** Initializes an array with some objects */
     bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Initializes an array with capacity */
-    bool initWithCapacity(unsigned int capacity);
+    bool initWithCapacity(int capacity);
     /** Initializes an array with an existing array */
     bool initWithArray(Array* otherArray);
 
     // Querying an Array
 
     /** Returns element count of the array */
-    unsigned int count() const
+    int count() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
@@ -282,7 +282,7 @@ public:
 #endif
     }
     /** Returns capacity of the array */
-    unsigned int capacity() const
+    int capacity() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
@@ -363,7 +363,7 @@ public:
     /** Remove a certain object */
     void removeObject(Object* object, bool releaseObj = true);
     /** Remove an element with a certain index */
-    void removeObjectAtIndex(unsigned int index, bool releaseObj = true);
+    void removeObjectAtIndex(int index, bool releaseObj = true);
     /** Remove all elements */
     void removeObjectsInArray(Array* otherArray);
     /** Remove all objects */
@@ -371,17 +371,17 @@ public:
     /** Fast way to remove a certain object */
     void fastRemoveObject(Object* object);
     /** Fast way to remove an element with a certain index */
-    void fastRemoveObjectAtIndex(unsigned int index);
+    void fastRemoveObjectAtIndex(int index);
 
     // Rearranging Content
 
     /** Swap two elements */
     void exchangeObject(Object* object1, Object* object2);
     /** Swap two elements with certain indexes */
-    void exchangeObjectAtIndex(unsigned int index1, unsigned int index2);
+    void exchangeObjectAtIndex(int index1, int index2);
 
     /** Replace object at index with another object. */
-    void replaceObjectAtIndex(unsigned int index, Object* object, bool releaseObject = true);
+    void replaceObjectAtIndex(int index, Object* object, bool releaseObject = true);
 
     /** Revers the array */
     void reverseObjects();

@@ -46,6 +46,7 @@
 		15A02F7517A64DFB0035E92B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6F17A64DFB0035E92B /* main.m */; };
 		15A02F7B17A64E2A0035E92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7717A64E2A0035E92B /* InfoPlist.strings */; };
 		15A02F7C17A64E2A0035E92B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7917A64E2A0035E92B /* MainMenu.xib */; };
+		1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ADB273A17CCA0F500634B5E /* Cocos2d.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +225,7 @@
 		15A02F7A17A64E2A0035E92B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		15A02F7D17A64EF30035E92B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		15A02FAA17A65D810035E92B /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		1ADB273A17CCA0F500634B5E /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cocos2d.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 			children = (
 				1501825217A74F8000E674E5 /* AudioEngine.lua */,
 				1501825317A74F8000E674E5 /* CCBReaderLoad.lua */,
+				1ADB273A17CCA0F500634B5E /* Cocos2d.lua */,
 				1501825417A74F8000E674E5 /* Cocos2dConstants.lua */,
 				1501825517A74F8000E674E5 /* Deprecated.lua */,
 				1501825617A74F8000E674E5 /* DrawPrimitives.lua */,
@@ -561,6 +564,7 @@
 				1501825D17A74F8000E674E5 /* DrawPrimitives.lua in Resources */,
 				1501825E17A74F8000E674E5 /* Opengl.lua in Resources */,
 				1501825F17A74F8000E674E5 /* OpenglConstants.lua in Resources */,
+				1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

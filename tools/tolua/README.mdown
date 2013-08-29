@@ -1,0 +1,20 @@
+How to Use bindings-generator
+==================
+
+On Windows (Not available from 3.0-pre-alpha0, the reason is that Clang3.3 can't work perfectly on windows, therefore, disable windows support temporary.):
+------------
+
+* Make sure that you have installed `android-ndk-r8d` or higher version.
+* Download python2.7.3 from (http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi).
+* Add the installed path of python (e.g. C:\Python27) to windows environment variable named 'PATH'.
+* Download pyyaml from http://pyyaml.org/download/pyyaml/PyYAML-3.10.win32-py2.7.exe and install it.
+* Download pyCheetah from https://raw.github.com/dumganhar/cocos2d-x/download/downloads/Cheetah.zip, unzip it to "C:\Python27\Lib\site-packages"
+* Modify environment variables (`PYTHON_ROOT` and `NDK_ROOT`) in `genbindings-win32.bat`.
+* Go to "cocos2d-x/tools/tojs" folder, and run "genbindings-win32.bat". The generated codes will be under "cocos2d-x\scripting\javascript\bindings\generated".
+
+On MAC:
+----------
+
+* Please refer to https://github.com/cocos2d/bindings-generator/blob/master/README.md
+
+

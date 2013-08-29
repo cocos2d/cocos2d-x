@@ -10,25 +10,31 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/CCLuaStack.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
-          ../cocos2dx_support/LuaCocos2d.cpp \
           ../cocos2dx_support/CCBProxy.cpp \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/Lua_web_socket.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
           ../cocos2dx_support/LuaScrollView.cpp \
           ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
+          ../cocos2dx_support/LuaBasicConversions.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_extension_auto.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_extension_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_deprecated.cpp \
           ../tolua/tolua_event.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
           ../tolua/tolua_push.c \
           ../tolua/tolua_to.c \
           ../cocos2dx_support/tolua_fix.c
-          
+
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../luajit/include \
                            $(LOCAL_PATH)/../tolua \
-                           $(LOCAL_PATH)/../cocos2dx_support
-          
-          
+                           $(LOCAL_PATH)/../cocos2dx_support \
+                           $(LOCAL_PATH)/../../auto-generated/lua-bindings
+
+
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/../luajit/include \
                     $(LOCAL_PATH)/../tolua \
@@ -38,7 +44,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(LOCAL_PATH)/../../../cocos2dx/platform/android \
                     $(LOCAL_PATH)/../../../cocos2dx/kazmath/include \
                     $(LOCAL_PATH)/../../../CocosDenshion/include \
-                    $(LOCAL_PATH)/../../../extensions
+                    $(LOCAL_PATH)/../../../extensions \
+                    $(LOCAL_PATH)/../cocos2dx_support \
+                    $(LOCAL_PATH)/../../auto-generated/lua-bindings
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
