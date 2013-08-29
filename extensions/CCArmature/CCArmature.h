@@ -150,7 +150,7 @@ public:
 	virtual void visit() override;
     virtual void update(float dt) override;
 	virtual void draw() override;
-	virtual AffineTransform getNodeToParentTransform() const override;
+	virtual const AffineTransform& getNodeToParentTransform() const override;
 	/** This boundingBox will calculate all bones' boundingBox every time */
 	virtual Rect getBoundingBox() const override;
 	inline void setBlendFunc(const BlendFunc& blendFunc) override { _blendFunc = blendFunc; }

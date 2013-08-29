@@ -37,7 +37,7 @@ NS_CC_BEGIN
 Action::Action()
 :_originalTarget(NULL)
 ,_target(NULL)
-,_tag(kActionTagInvalid)
+,_tag(Action::INVALID_TAG)
 {
 }
 

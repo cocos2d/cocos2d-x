@@ -24,11 +24,18 @@ public:
     virtual std::string subtitle();
     virtual void updateQuantityOfNodes() = 0;
 
+    const char* profilerName();
+    void updateProfilerName();
+
+    // for the profiler
+    virtual const char* testName() = 0;
+
     void updateQuantityLabel();
 
     int getQuantityOfNodes() { return quantityOfNodes; }
 
 protected:
+    char   _profilerName[256];
     int    lastRenderedCount;
     int    quantityOfNodes;
     int    currentQuantityOfNodes;
@@ -41,7 +48,7 @@ public:
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
-    virtual const char* profilerName();
+    virtual const char* testName();
 
 protected:
     SpriteBatchNode    *batchNode;
@@ -54,7 +61,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class IterateSpriteSheetIterator : public IterateSpriteSheet
@@ -64,7 +71,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class IterateSpriteSheetCArray : public IterateSpriteSheet
@@ -74,7 +81,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
@@ -84,7 +91,7 @@ public:
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
-    virtual const char* profilerName();
+    virtual const char* testName();
 
 protected:
     SpriteBatchNode    *batchNode;
@@ -103,7 +110,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class CallFuncsSpriteSheetCMacro : public IterateSpriteSheet
@@ -113,7 +120,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 ///
@@ -125,7 +132,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class GetSpriteSheet : public AddRemoveSpriteSheet
@@ -135,7 +142,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
@@ -145,7 +152,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
@@ -155,7 +162,7 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
 };
 
 class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
@@ -165,7 +172,19 @@ public:
 
     virtual std::string title();
     virtual std::string subtitle();
-    virtual const char* profilerName();
+    virtual const char* testName();
+};
+
+class VisitSceneGraph : public NodeChildrenMainScene
+{
+public:
+    void initWithQuantityOfNodes(unsigned int nodes) override;
+
+    virtual void update(float dt) override;
+    void updateQuantityOfNodes() override;
+    virtual std::string title() override;
+    virtual std::string subtitle() override;
+    virtual const char* testName() override;
 };
 
 void runNodeChildrenTest();
