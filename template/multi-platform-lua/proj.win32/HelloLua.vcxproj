@@ -79,7 +79,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;websockets.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -99,11 +99,14 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\scripting\lua\script" "$(ProjectDir)..\Resources" /e /Y</Command>
       <Message>
       </Message>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -123,7 +126,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;websockets.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -148,20 +151,16 @@
       <Message>
       </Message>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.h" />
-    <ClInclude Include="..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.h" />
-    <ClInclude Include="..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.h" />
-    <ClInclude Include="..\..\..\scripting\lua\cocos2dx_support\tolua_fix.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.cpp" />
-    <ClCompile Include="..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
-    <ClCompile Include="..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.cpp" />
-    <ClCompile Include="..\..\..\scripting\lua\cocos2dx_support\tolua_fix.c" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

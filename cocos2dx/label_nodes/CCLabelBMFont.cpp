@@ -45,7 +45,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 using namespace std;
 
-
 NS_CC_BEGIN
 
 // The return value needs to be deleted by CC_SAFE_DELETE_ARRAY.
@@ -153,8 +152,8 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 const char* CCBMFontConfiguration::description(void)
 {
     return CCString::createWithFormat(
-        "<CCBMFontConfiguration = %08X | Glphys:%d Kernings:%d | Image = %s>",
-        this,
+        "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
+        (size_t)this,
         HASH_COUNT(m_pFontDefDictionary),
         HASH_COUNT(m_pKerningDictionary),
         m_sAtlasName.c_str()

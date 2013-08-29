@@ -56,6 +56,11 @@ CCSet::~CCSet(void)
     CC_SAFE_DELETE(m_pSet);
 }
 
+void CCSet::acceptVisitor(CCDataVisitor &visitor)
+{
+    visitor.visit(this);
+}
+
 CCSet * CCSet::create()
 {
     CCSet * pRet = new CCSet();

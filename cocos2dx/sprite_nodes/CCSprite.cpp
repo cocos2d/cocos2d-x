@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "platform/CCImage.h"
 // external
 #include "kazmath/GL/matrix.h"
 #include <string.h>
@@ -153,8 +154,6 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
     if (CCNodeRGBA::init())
     {
         m_pobBatchNode = NULL;
-        // shader program
-        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
         m_bRecursiveDirty = false;
         setDirty(false);
@@ -183,6 +182,9 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         m_sQuad.br.colors = tmpColor;
         m_sQuad.tl.colors = tmpColor;
         m_sQuad.tr.colors = tmpColor;
+
+        // shader program
+        setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         
         // update texture (calls updateBlendFunc)
         setTexture(pTexture);
@@ -553,23 +555,16 @@ void CCSprite::draw(void)
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
-    if (m_pobTexture != NULL)
-    {
-        ccGLBindTexture2D( m_pobTexture->getName() );
-    }
-    else
-    {
-        ccGLBindTexture2D(0);
-    }
-    
-    //
-    // Attributes
-    //
-
+    ccGLBindTexture2D( m_pobTexture->getName() );
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(m_sQuad.bl)
+#ifdef EMSCRIPTEN
+    long offset = 0;
+    setGLBufferData(&m_sQuad, 4 * kQuadSize, 0);
+#else
     long offset = (long)&m_sQuad;
+#endif // EMSCRIPTEN
 
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -1073,12 +1068,49 @@ void CCSprite::updateBlendFunc(void)
     }
 }
 
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to NULL.
+ * Supposing codes as follows:
+ *
+ *   CCSprite* sp = new CCSprite();
+ *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+
 void CCSprite::setTexture(CCTexture2D *texture)
 {
     // If batchnode, then texture id should be the same
     CCAssert(! m_pobBatchNode || texture->getName() == m_pobBatchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
+
+    if (NULL == texture)
+    {
+        // Gets the texture by key firstly.
+        texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (NULL == texture)
+        {
+            CCImage* image = new CCImage();
+            bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), CCImage::kFmtRawData, 2, 2, 8);
+            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = CCTextureCache::sharedTextureCache()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
+    }
 
     if (!m_pobBatchNode && m_pobTexture != texture)
     {

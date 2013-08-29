@@ -1,0 +1,65 @@
+enum CCControlEvent
+{
+    CCControlEventTouchDown           = 1 << 0,    
+    CCControlEventTouchDragInside     = 1 << 1,    
+    CCControlEventTouchDragOutside    = 1 << 2,    
+    CCControlEventTouchDragEnter      = 1 << 3,    
+    CCControlEventTouchDragExit       = 1 << 4,   
+    CCControlEventTouchUpInside       = 1 << 5,   
+    CCControlEventTouchUpOutside      = 1 << 6,    
+    CCControlEventTouchCancel         = 1 << 7,    
+    CCControlEventValueChanged        = 1 << 8     
+};
+
+typedef unsigned int CCControlEvent;
+
+enum CCControlState
+{
+    CCControlStateNormal       = 1 << 0,
+    CCControlStateHighlighted  = 1 << 1,
+    CCControlStateDisabled     = 1 << 2,
+    CCControlStateSelected     = 1 << 3
+};
+
+typedef unsigned int CCControlState;
+
+class CCControl:public CCLayerRGBA
+{  
+    virtual CCControlState getState() const; 
+  
+    virtual void setEnabled(bool bEnabled);
+    virtual bool isEnabled();
+    
+    virtual void setSelected(bool bSelected);
+    virtual bool isSelected();
+   
+    virtual void setHighlighted(bool bHighlighted);
+    virtual bool isHighlighted();
+    bool hasVisibleParents();
+   
+    virtual void needsLayout();
+    
+    virtual bool isOpacityModifyRGB();
+    virtual void setOpacityModifyRGB(bool bOpacityModifyRGB); 
+
+    CCControl();
+    virtual bool init(void);
+    virtual ~CCControl();
+
+
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void registerWithTouchDispatcher();
+
+    virtual void sendActionsForControlEvents(CCControlEvent controlEvents); 
+
+    virtual void addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
+
+    virtual void removeTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents);
+
+    virtual CCPoint getTouchLocation(CCTouch* touch);
+    virtual bool isTouchInside(CCTouch * touch);
+
+    void addHandleOfControlEvent(LUA_FUNCTION nFunID,CCControlEvent controlEvents);
+    void removeHandleOfControlEvent(CCControlEvent controlEvents);
+};

@@ -1,0 +1,6 @@
+SampleGame for Tizen
+====================
+
+   * Create Tizen IDE workspace in cocos2d-x/samples/Cpp/SampleGame
+   * Import proj.tizen
+   * Copy cocos2d-x/samples/Cpp/SampleGame/Resources/*.* to cocos2d-x/samples/Cpp/SampleGame/proj.tizen/res

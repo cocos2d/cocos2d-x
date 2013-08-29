@@ -658,7 +658,8 @@ TestNode::~TestNode()
 
 void TestNode::update(float dt)
 {
-    CCLog(m_pstring->getCString());
+    CC_UNUSED_PARAM(dt);
+    CCLog("%s", m_pstring->getCString());
 }
 
 //------------------------------------------------------------------

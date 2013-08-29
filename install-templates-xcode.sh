@@ -2,7 +2,7 @@
 
 echo 'cocos2d-x template installer'
 
-COCOS2D_VER='cocos2d-2.0-rc2-x-2.0.1'
+COCOS2D_VER='2.1rc0-x-2.1.4'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 
@@ -162,6 +162,11 @@ copy_xcode4_project_templates(){
     mkdir -p "$LIBS_DIR"
     copy_cocosdenshion_files
 
+    echo ...copying websockets files
+	LIBS_DIR="$DST_DIR""lib_websockets.xctemplate/libs/libwebsockets"
+	mkdir -p "$LIBS_DIR"
+	copy_files external/libwebsockets/ios "$LIBS_DIR"
+
     LIBS_DIR="$DST_DIR""lib_extensions.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
     copy_extensions_files
@@ -225,7 +230,7 @@ copy_xcode4_project_templates(){
 
 	LIBS_DIR="$DST_DIR""lib_spidermonkey.xctemplate/libs/javascript"
 	mkdir -p "$LIBS_DIR"
-	copy_files scripting/javascript/spidermonkey-ios "$LIBS_DIR"
+	copy_files scripting/javascript/spidermonkey-ios "$LIBS_DIR"	
 
 	echo done!
 

@@ -55,7 +55,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
 }
 
 /**
- * The returned pointer should be deleted using JS_REMOVE_PROXY. Most of the
+ * The returned pointer should be deleted using jsb_remove_proxy. Most of the
  * time you do that in the C++ destructor.
  */
 template<class T>
@@ -72,7 +72,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         }
         
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-        JS_NEW_PROXY(proxy, native_obj, js_obj);
+        proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
         JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else

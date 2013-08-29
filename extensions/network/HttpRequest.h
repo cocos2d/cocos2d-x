@@ -30,11 +30,17 @@
 
 NS_CC_EXT_BEGIN
 
+class CCHttpClient;
+class CCHttpResponse;
+typedef void (CCObject::*SEL_HttpResponse)(CCHttpClient* client, CCHttpResponse* response);
+#define httpresponse_selector(_SELECTOR) (cocos2d::extension::SEL_HttpResponse)(&_SELECTOR)
+
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
+
 class CCHttpRequest : public CCObject
 {
 public:
@@ -43,6 +49,8 @@ public:
     {
         kHttpGet,
         kHttpPost,
+        kHttpPut,
+        kHttpDelete,
         kHttpUnkown,
     } HttpRequestType;
     
@@ -155,7 +163,12 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
+    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(CCObject* pTarget, SEL_CallFuncND pSelector)
+    {
+        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+    }
+
+    inline void setResponseCallback(CCObject* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -170,12 +183,26 @@ public:
     {
         return _pTarget;
     }
-    /** Get the selector function pointer, mainly used by CCHttpClient */
-    inline SEL_CallFuncND getSelector()
-    {
-        return _pSelector;
-    }
 
+    /* This sub class is just for migration SEL_CallFuncND to SEL_HttpResponse, 
+       someday this way will be removed */
+    class _prxy
+    {
+    public:
+        _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
+        ~_prxy(){};
+        operator SEL_HttpResponse() const { return _cb; }
+        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
+    protected:
+        SEL_HttpResponse _cb;
+    };
+    
+    /** Get the selector function pointer, mainly used by CCHttpClient */
+    inline _prxy getSelector()
+    {
+        return _prxy(_pSelector);
+    }
+    
     /** Set any custom headers **/
     inline void setHeaders(std::vector<std::string> pHeaders)
    	{
@@ -196,7 +223,7 @@ protected:
     std::vector<char>           _requestData;    /// used for POST
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     CCObject*          _pTarget;        /// callback target of pSelector function
-    SEL_CallFuncND     _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCObject *sender, void *data)
+    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
     void*                       _pUserData;      /// You can add your customed data here 
     std::vector<std::string>    _headers;		      /// custom http headers
 };

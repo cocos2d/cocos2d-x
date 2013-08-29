@@ -77,6 +77,7 @@ UpdateLayer::UpdateLayer()
 : pItemEnter(NULL)
 , pItemReset(NULL)
 , pItemUpdate(NULL)
+, pProgressLabel(NULL)
 , isUpdateItemClicked(false)
 {
     init();
@@ -90,6 +91,8 @@ UpdateLayer::~UpdateLayer()
 
 void UpdateLayer::update(cocos2d::CCObject *pSender)
 {
+    pProgressLabel->setString("");
+    
     // update resources
     getAssetsManager()->update();
     
@@ -98,6 +101,8 @@ void UpdateLayer::update(cocos2d::CCObject *pSender)
 
 void UpdateLayer::reset(cocos2d::CCObject *pSender)
 {
+    pProgressLabel->setString(" ");
+    
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     string command = "rm -r ";
@@ -152,6 +157,10 @@ bool UpdateLayer::init()
     menu->setPosition(ccp(0,0));
     addChild(menu);
     
+    pProgressLabel = CCLabelTTF::create("", "Arial", 20);
+    pProgressLabel->setPosition(ccp(100, 50));
+    addChild(pProgressLabel);
+    
     return true;
 }
 
@@ -164,6 +173,8 @@ AssetsManager* UpdateLayer::getAssetsManager()
         pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
                                            "https://raw.github.com/minggo/AssetsManagerTest/master/version",
                                            pathToSave.c_str());
+        pAssetsManager->setDelegate(this);
+        pAssetsManager->setConnectionTimeout(3);
     }
     
     return pAssetsManager;
@@ -189,4 +200,29 @@ void UpdateLayer::createDownloadedDir()
 		CreateDirectoryA(pathToSave.c_str(), 0);
 	}
 #endif
+}
+
+void UpdateLayer::onError(AssetsManager::ErrorCode errorCode)
+{
+    if (errorCode == AssetsManager::kNoNewVersion)
+    {
+        pProgressLabel->setString("no new version");
+    }
+    
+    if (errorCode == AssetsManager::kNetwork)
+    {
+        pProgressLabel->setString("network error");
+    }
+}
+
+void UpdateLayer::onProgress(int percent)
+{
+    char progress[20];
+    snprintf(progress, 20, "downloading %d%%", percent);
+    pProgressLabel->setString(progress);
+}
+
+void UpdateLayer::onSuccess()
+{
+    pProgressLabel->setString("download ok");
 }

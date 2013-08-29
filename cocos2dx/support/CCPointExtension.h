@@ -66,7 +66,7 @@ NS_CC_BEGIN
 static inline CCPoint
 ccpNeg(const CCPoint& v)
 {
-    return ccp(-v.x, -v.y);
+    return -v;
 }
 
 /** Calculates sum of two points.
@@ -76,7 +76,7 @@ ccpNeg(const CCPoint& v)
 static inline CCPoint
 ccpAdd(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccp(v1.x + v2.x, v1.y + v2.y);
+    return v1 + v2;
 }
 
 /** Calculates difference of two points.
@@ -86,7 +86,7 @@ ccpAdd(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpSub(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccp(v1.x - v2.x, v1.y - v2.y);
+    return v1 - v2;
 }
 
 /** Returns point multiplied by given factor.
@@ -96,7 +96,7 @@ ccpSub(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpMult(const CCPoint& v, const float s)
 {
-    return ccp(v.x*s, v.y*s);
+    return v * s;
 }
 
 /** Calculates midpoint between two points.
@@ -106,7 +106,7 @@ ccpMult(const CCPoint& v, const float s)
 static inline CCPoint
 ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccpMult(ccpAdd(v1, v2), 0.5f);
+    return (v1 + v2) / 2.f;
 }
 
 /** Calculates dot product of two points.
@@ -116,7 +116,7 @@ ccpMidpoint(const CCPoint& v1, const CCPoint& v2)
 static inline float
 ccpDot(const CCPoint& v1, const CCPoint& v2)
 {
-    return v1.x*v2.x + v1.y*v2.y;
+    return v1.dot(v2);
 }
 
 /** Calculates cross product of two points.
@@ -126,7 +126,7 @@ ccpDot(const CCPoint& v1, const CCPoint& v2)
 static inline float
 ccpCross(const CCPoint& v1, const CCPoint& v2)
 {
-    return v1.x*v2.y - v1.y*v2.x;
+    return v1.cross(v2);
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
@@ -136,7 +136,7 @@ ccpCross(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpPerp(const CCPoint& v)
 {
-    return ccp(-v.y, v.x);
+    return v.getPerp();
 }
 
 /** Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
@@ -146,7 +146,7 @@ ccpPerp(const CCPoint& v)
 static inline CCPoint
 ccpRPerp(const CCPoint& v)
 {
-    return ccp(v.y, -v.x);
+    return v.getRPerp();
 }
 
 /** Calculates the projection of v1 over v2.
@@ -156,7 +156,7 @@ ccpRPerp(const CCPoint& v)
 static inline CCPoint
 ccpProject(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccpMult(v2, ccpDot(v1, v2)/ccpDot(v2, v2));
+    return v1.project(v2);
 }
 
 /** Rotates two points.
@@ -166,7 +166,7 @@ ccpProject(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpRotate(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccp(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
+    return v1.rotate(v2);
 }
 
 /** Unrotates two points.
@@ -176,7 +176,7 @@ ccpRotate(const CCPoint& v1, const CCPoint& v2)
 static inline CCPoint
 ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 {
-    return ccp(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
+    return v1.unrotate(v2);
 }
 
 /** Calculates the square length of a CCPoint (not calling sqrt() )
@@ -186,7 +186,7 @@ ccpUnrotate(const CCPoint& v1, const CCPoint& v2)
 static inline float
 ccpLengthSQ(const CCPoint& v)
 {
-    return ccpDot(v, v);
+    return v.getLengthSq();
 }
 
 
@@ -197,7 +197,7 @@ ccpLengthSQ(const CCPoint& v)
 static inline float
 ccpDistanceSQ(const CCPoint p1, const CCPoint p2)
 {
-    return ccpLengthSQ(ccpSub(p1, p2));
+    return (p1 - p2).getLengthSq();
 }
 
 

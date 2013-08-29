@@ -69,7 +69,7 @@ CCRenderTexture::CCRenderTexture()
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCRenderTexture::listenToForeground),
-                                                                  EVNET_COME_TO_FOREGROUND, // this is misspelt
+                                                                  EVENT_COME_TO_FOREGROUND, // this is misspelt
                                                                   NULL);
 #endif
 }
@@ -88,7 +88,7 @@ CCRenderTexture::~CCRenderTexture()
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 

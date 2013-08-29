@@ -1,0 +1,92 @@
+
+class CCScale9Sprite : public CCNodeRGBA
+{
+
+    CCScale9Sprite();
+    virtual ~CCScale9Sprite();
+
+    CCSize getOriginalSize(void) const;
+
+    CCSize getPreferredSize();
+    void   setPreferredSize(CCSize sz);
+
+    CCRect getCapInsets();
+    void   setCapInsets(CCRect rt);
+
+    float  getInsetLeft();
+    void   setInsetLeft(float fLeft);
+
+    float  getInsetTop();
+    void   setInsetTop(float fTop);
+
+    float  getInsetRight();
+    void   setInsetRight(float fRight);
+
+    float  getInsetBottom();
+    void   setInsetBottom(float fBottom);
+
+    virtual void setContentSize(const CCSize & size);
+    virtual void visit();
+    
+    virtual bool init();
+
+    virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
+    virtual bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
+    
+    virtual bool initWithFile(const char* file, CCRect rect,  CCRect capInsets);
+    
+    
+    static CCScale9Sprite* create(const char* file, CCRect rect,  CCRect capInsets);
+
+    
+    virtual bool initWithFile(const char* file, CCRect rect);
+    
+     
+    static CCScale9Sprite* create(const char* file, CCRect rect);
+
+   
+    virtual bool initWithFile(CCRect capInsets, const char* file);
+
+    
+    static CCScale9Sprite* create(CCRect capInsets, const char* file);
+
+    virtual bool initWithFile(const char* file);
+
+    static CCScale9Sprite* create(const char* file);
+    
+    virtual bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
+
+    static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets); 
+   
+    virtual bool initWithSpriteFrame(CCSpriteFrame* spriteFrame);
+
+    
+    static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame);  
+
+   
+    virtual bool initWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets);
+
+    
+    static CCScale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, CCRect capInsets); 
+
+    
+    virtual bool initWithSpriteFrameName(const char*spriteFrameName);
+
+    
+    static CCScale9Sprite* createWithSpriteFrameName(const char*spriteFrameName);
+    
+    
+    CCScale9Sprite* resizableSpriteWithCapInsets(CCRect capInsets);
+    
+    static CCScale9Sprite* create(); 
+   
+    virtual void setOpacityModifyRGB(bool bValue);
+    
+    virtual bool isOpacityModifyRGB(void);
+    virtual void setOpacity(GLubyte opacity);
+    virtual void setColor(const ccColor3B& color);
+
+    virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
+
+    virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
+};

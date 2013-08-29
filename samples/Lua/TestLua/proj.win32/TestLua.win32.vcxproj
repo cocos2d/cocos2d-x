@@ -62,7 +62,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\lua;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\src;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\lua;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\src;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -79,7 +79,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -99,13 +99,18 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\scripting\lua\script" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
       <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\lua;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\src;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\scripting\lua\cocos2dx_support;$(ProjectDir)..\..\..\..\scripting\lua\lua;$(ProjectDir)..\..\..\..\scripting\lua\tolua;$(ProjectDir)..\..\..\..\scripting\lua\src;$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\external;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -121,7 +126,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libExtensions.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libCocosDenshion.lib;liblua.lib;lua51.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -141,23 +146,20 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\..\Cpp\TestCpp\Resources" "$(ProjectDir)..\..\TestLua\Resources" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\scripting\lua\script" "$(ProjectDir)..\..\TestLua\Resources" /e /Y</Command>
       <Message>copy files from TestCpp to TestLua</Message>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutDir)"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.h" />
-    <ClInclude Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\CCLuaEngine.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\Cocos2dxLuaLoader.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\LuaCocos2d.cpp" />
-    <ClCompile Include="..\..\..\..\scripting\lua\cocos2dx_support\tolua_fix.c" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define __CCScale9Sprite_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -308,7 +308,9 @@ public:
      */
     virtual bool isOpacityModifyRGB(void);
     virtual void setOpacity(GLubyte opacity);
+	virtual GLubyte getOpacity();
     virtual void setColor(const ccColor3B& color);
+	virtual const ccColor3B& getColor();
 
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 

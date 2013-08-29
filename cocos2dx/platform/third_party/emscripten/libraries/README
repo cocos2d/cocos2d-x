@@ -1,0 +1,7 @@
+libfreetype.a from http://download.savannah.gnu.org/releases/freetype/freetype-2.4.12.tar.gz -- configure flags: ./configure --enable-static --prefix=`pwd`/../build
+libpng.a from https://github.com/hachque-Emscripten/libpng-1.2.49.git
+libz.a from http://zlib.net/zlib-1.2.8.tar.gz -- configure flags: ./configure --prefix=`pwd`/../build --static
+libwebp.a from https://code.google.com/p/webp/downloads/detail?name=libwebp-0.3.0.tar.gz -- configure with ./configure --disable-threading --prefix=/tmp/libwebp
+libtiff.a from ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.3.tar.gz -- configure flags: ./configure --enable-static --prefix=`pwd`/../build CFLAGS=-DNDEBUG
+libjpeg.a from http://www.ijg.org/files/jpegsrc.v9.tar.gz -- configure flags: ./configure --enable-static --prefix=`pwd`/../build
+libxml2.a from ftp://xmlsoft.org/libxml2/libxml2-2.9.1.tar.gz -- configure flags: ./configure --with-http=no --with-ftp=no --prefix=`pwd`/../build --with-python=no --with-threads=no --enable-static

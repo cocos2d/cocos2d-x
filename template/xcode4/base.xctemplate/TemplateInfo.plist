@@ -80,7 +80,7 @@
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/kazmath/include&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/CocosDenshion/include&quot;</string>
-				<string>&quot;$(SDKROOT)/usr/include/libxml2&quot;</string>
+				<string>&quot;$(PROJECT_NAME)/libs/extensions&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/include&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/platform/third_party/ios&quot;</string>
 				<string>&quot;$(PROJECT_NAME)/libs/cocos2dx/platform/ios&quot;</string>

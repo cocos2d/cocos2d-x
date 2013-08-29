@@ -130,7 +130,10 @@ bool CCGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, cons
 
 const char* CCGLProgram::description()
 {
-    return CCString::createWithFormat("<CCGLProgram = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
+    return CCString::createWithFormat("<CCGLProgram = "
+                                      CC_FORMAT_PRINTF_SIZE_T
+                                      " | Program = %i, VertexShader = %i, FragmentShader = %i>",
+                                      (size_t)this, m_uProgram, m_uVertShader, m_uFragShader)->getCString();
 }
 
 bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)

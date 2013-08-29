@@ -1,8 +1,25 @@
 
 class CCNotificationCenter : public CCObject
 {
+    CCNotificationCenter();
+
+    ~CCNotificationCenter();    
+    
     static CCNotificationCenter *sharedNotificationCenter(void);
-    void registerScriptObserver(LUA_FUNCTION handler);
-    void unregisterScriptObserver(void);
+    
+    static void purgeNotificationCenter(void);
+
+    int removeAllObservers(CCObject *target);
+
+    void registerScriptObserver(CCObject *target,LUA_FUNCTION funcID,const char* name);
+    
+    void unregisterScriptObserver(CCObject *target,const char* name);   
+
     void postNotification(const char *name);
+
+    void postNotification(const char *name, CCObject *object);
+    
+    int getScriptHandler();    
+
+    int getObserverHandlerByName(const char* name);
 };

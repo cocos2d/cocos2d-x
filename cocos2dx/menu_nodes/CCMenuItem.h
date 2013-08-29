@@ -322,6 +322,9 @@ public:
     , m_pSubItems(NULL)            
     {}
     virtual ~CCMenuItemToggle();
+    
+    /** creates a menu item from a CCArray with a target selector */
+    static CCMenuItemToggle * createWithTarget(CCObject* target, SEL_MenuHandler selector, CCArray* menuItems);
 
     /** creates a menu item from a list of items with a target/selector */
     static CCMenuItemToggle* createWithTarget(CCObject* target, SEL_MenuHandler selector, CCMenuItem* item, ...);  

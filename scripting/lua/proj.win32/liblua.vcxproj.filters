@@ -51,6 +51,15 @@
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tolua\tolua++.h">
@@ -91,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="..\luajit\include\lualib.h">
       <Filter>luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\CCBProxy.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h">
+      <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

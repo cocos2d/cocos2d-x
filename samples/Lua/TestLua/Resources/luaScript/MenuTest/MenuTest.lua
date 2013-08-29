@@ -49,11 +49,14 @@ local function MenuLayerMainMenu()
 
 
     local schedulerEntry = nil
-
+	local scheduler = CCDirector:sharedDirector():getScheduler()
     local function allowTouches(dt)
         local  pDirector = CCDirector:sharedDirector()
-        pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority+1, ret)
-        scheduler:unscheduleScriptEntry(schedulerEntry)
+        --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority+1, ret)
+        if nil ~=  schedulerEntry then 
+            scheduler:unscheduleScriptEntry(schedulerEntry)
+            schedulerEntry = nil
+        end
         cclog("TOUCHES ALLOWED AGAIN")
     end
 
@@ -61,7 +64,7 @@ local function MenuLayerMainMenu()
     local function menuCallbackDisabled(sender)
         -- hijack all touch events for 5 seconds
         local  pDirector = CCDirector:sharedDirector()
-        pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority-1, ret)
+        --pDirector:getTouchDispatcher():setPriority(kCCMenuHandlerPriority-1, ret)
         schedulerEntry = scheduler:scheduleScriptFunc(allowTouches, 5, false)
         cclog("TOUCHES DISABLED FOR 5 SECONDS")
     end
@@ -182,14 +185,14 @@ local function MenuLayerMainMenu()
     ret:addChild(menu)
     menu:setPosition(ccp(s.width/2, s.height/2))
 
-    local schedulerEntry = nil
+--  local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "exit" then
             if (schedulerEntry ~= nil) then
                 scheduler:unscheduleScriptEntry(schedulerEntry)
             end
             if m_disabledItem ~= nil then
-                m_disabledItem:release()
+--                m_disabledItem:release()
             end
         end
     end
@@ -387,7 +390,7 @@ local function MenuLayer3()
     local function onNodeEvent(event)
         if event == "exit" then
             if m_disabledItem ~= nil then
-                m_disabledItem:release()
+                --m_disabledItem:release()
             end
         end
     end
@@ -479,10 +482,15 @@ local function MenuLayer4()
     menu:addChild(item4 )
     menu:addChild(back  )
 
-    -- FIXME:tolua++ doesn't support valist argument.
-    -- menu:alignItemsInColumns(2, 2, 2, 2, 1, NULL)
+    local arr = CCArray:create()
+    arr:addObject(CCInteger:create(2))
+    arr:addObject(CCInteger:create(2))
+    arr:addObject(CCInteger:create(2))
+    arr:addObject(CCInteger:create(2))
+    arr:addObject(CCInteger:create(1))
+    menu:alignItemsInColumnsWithArray(arr)
 
-    ret:addChild( menu )
+    ret:addChild(menu)
 
     local s = CCDirector:sharedDirector():getWinSize()
     menu:setPosition(ccp(s.width/2, s.height/2))
@@ -536,7 +544,7 @@ local function MenuLayerPriorityTest()
     m_pMenu1:addChild(item1)
     m_pMenu1:addChild(item2)
 
-    m_pMenu1:alignItemsVerticallyWithPadding(2)
+    m_pMenu1:alignItemsVerticallyWithPadding(20)
 
     ret:addChild(m_pMenu1)
 
@@ -622,16 +630,17 @@ local function RemoveMenuItemWhenMove()
     menu:setPosition(ccp(s.width/2, s.height/2))
 
     ret:setTouchEnabled(true)
-
+--[[
     local function onNodeEvent(event)
         if event == "enter" then
             CCDirector:sharedDirector():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
         elseif event == "exit" then
-            item:release()
+           -- item:release()
         end
     end
 
     ret:registerScriptHandler(onNodeEvent)
+    ]]--
 
     local function onTouchEvent(eventType, x, y)
         if eventType == "began" then
@@ -639,13 +648,13 @@ local function RemoveMenuItemWhenMove()
         elseif  eventType == "moved" then
             if item ~= nil then
                 item:removeFromParentAndCleanup(true)
-                item:release()
-                item = nil
+                --item:release()
+                --item = nil
             end
         end
     end
 
-    ret:registerScriptTouchHandler(onTouchEvent)
+    ret:registerScriptTouchHandler(onTouchEvent,false,-129,false)
     return ret
 end
 

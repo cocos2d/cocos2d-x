@@ -731,7 +731,7 @@ void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 {
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -797,7 +797,7 @@ void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -863,7 +863,7 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
     glFlush();
 }

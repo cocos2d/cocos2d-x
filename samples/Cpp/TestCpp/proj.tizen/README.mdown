@@ -1,0 +1,6 @@
+TestCpp for Tizen
+==================
+
+   * Create Tizen IDE workspace in cocos2d-x/samples/Cpp/TestCpp
+   * Import proj.tizen
+   * Copy cocos2d-x/samples/Cpp/TestCpp/Resources/*.* to cocos2d-x/samples/Cpp/TestCpp/proj.tizen/res

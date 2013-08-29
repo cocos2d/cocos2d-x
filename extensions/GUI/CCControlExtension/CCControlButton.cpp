@@ -638,6 +638,14 @@ bool CCControlButton::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         return false;
     }
     
+    for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     m_isPushed = true;
     this->setHighlighted(true);
     sendActionsForControlEvents(CCControlEventTouchDown);
@@ -719,6 +727,23 @@ void CCControlButton::setOpacity(GLubyte opacity)
 GLubyte CCControlButton::getOpacity()
 {
     return _realOpacity;
+}
+
+void CCControlButton::setColor(const ccColor3B & color)
+{
+	CCControl::setColor(color);
+	
+	CCDictElement * item = NULL;
+    CCDICT_FOREACH(m_backgroundSpriteDispatchTable, item)
+    {
+        CCScale9Sprite* sprite = (CCScale9Sprite*)item->getObject();
+        sprite->setColor(color);
+    }
+}
+
+const ccColor3B& CCControlButton::getColor()
+{
+	return _realColor;
 }
 
 void CCControlButton::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)

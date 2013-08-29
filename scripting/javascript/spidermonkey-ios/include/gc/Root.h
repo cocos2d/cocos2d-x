@@ -133,6 +133,8 @@
 
 namespace js {
 
+class Module;
+
 template <typename T> class Rooted;
 template <typename T> class Unrooted;
 
@@ -163,6 +165,11 @@ JS_FRIEND_API(void) LeaveAssertNoGCScope();
 /* These are exposing internal state of the GC for inlining purposes. */
 JS_FRIEND_API(bool) InNoGCScope();
 JS_FRIEND_API(bool) isGCEnabled();
+
+#if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
+extern void
+CheckStackRoots(JSContext *cx);
+#endif
 
 /*
  * Handle provides an implicit constructor for NullPtr so that, given:
@@ -200,7 +207,7 @@ class Handle : public js::HandleBase<T>
 
     /* Create a handle for a NULL pointer. */
     Handle(NullPtr) {
-        typedef typename js::tl::StaticAssert<js::tl::IsPointerType<T>::result>::result _;
+        typedef typename js::tl::StaticAssert<mozilla::IsPointer<T>::value>::result _;
         ptr = reinterpret_cast<const T *>(&NullPtr::constNullValue);
     }
 
@@ -243,6 +250,7 @@ class Handle : public js::HandleBase<T>
     T operator->() const { return get(); }
 
     bool operator!=(const T &other) { return *ptr != other; }
+    bool operator==(const T &other) { return *ptr == other; }
 
   private:
     Handle() {}
@@ -254,6 +262,7 @@ class Handle : public js::HandleBase<T>
 };
 
 typedef Handle<JSObject*>    HandleObject;
+typedef Handle<js::Module*>  HandleModule;
 typedef Handle<JSFunction*>  HandleFunction;
 typedef Handle<JSScript*>    HandleScript;
 typedef Handle<JSString*>    HandleString;
@@ -272,24 +281,12 @@ template <typename T>
 class MutableHandle : public js::MutableHandleBase<T>
 {
   public:
-    template <typename S>
-    MutableHandle(MutableHandle<S> handle,
-                  typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0)
-    {
-        this->ptr = reinterpret_cast<const T *>(handle.address());
-    }
-
-    template <typename S>
-    inline MutableHandle(js::Rooted<S> *root,
-                         typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy = 0);
+    inline MutableHandle(js::Rooted<T> *root);
 
     void set(T v) {
         JS_ASSERT(!js::RootMethods<T>::poisoned(v));
         *ptr = v;
     }
-
-    template <typename S>
-    inline void set(const js::Unrooted<S> &v);
 
     /*
      * This may be called only if the location of the T is guaranteed
@@ -505,7 +502,7 @@ class Unrooted
      * NoGCScope on assignment. Instead we tag the pointer when we should
      * disable the LeaveNoGCScope.
      */
-    static inline T UninitializedTag() { return reinterpret_cast<T>(1); };
+    static inline T UninitializedTag() { return reinterpret_cast<T>(2); };
 
     T ptr_;
 };
@@ -613,14 +610,7 @@ class Rooted : public RootedBase<T>
 #endif
     }
 
-    void init(JSRuntime *rtArg) {
-#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
-        PerThreadDataFriendFields *pt = PerThreadDataFriendFields::getMainThread(rtArg);
-        commonInit(pt->thingGCRooters);
-#endif
-    }
-
-    void init(js::PerThreadData *ptArg) {
+    void init(PerThreadData *ptArg) {
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
         PerThreadDataFriendFields *pt = PerThreadDataFriendFields::get(ptArg);
         commonInit(pt->thingGCRooters);
@@ -628,34 +618,9 @@ class Rooted : public RootedBase<T>
     }
 
   public:
-    Rooted(JSRuntime *rt
-           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
-      : ptr(RootMethods<T>::initial())
-#if defined(JSGC_ROOT_ANALYSIS)
-      , scanned(false)
-#endif
-    {
-        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
-        init(rt);
-    }
-
-    Rooted(JSRuntime *rt, T initial
-           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
-      : ptr(initial)
-#if defined(JSGC_ROOT_ANALYSIS)
-      , scanned(false)
-#endif
-    {
-        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
-        init(rt);
-    }
-
     Rooted(JSContext *cx
            MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
       : ptr(RootMethods<T>::initial())
-#if defined(JSGC_ROOT_ANALYSIS)
-      , scanned(false)
-#endif
     {
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
         init(cx);
@@ -664,15 +629,21 @@ class Rooted : public RootedBase<T>
     Rooted(JSContext *cx, T initial
            MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
       : ptr(initial)
-#if defined(JSGC_ROOT_ANALYSIS)
-      , scanned(false)
-#endif
     {
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
         init(cx);
     }
 
-    Rooted(js::PerThreadData *pt
+    template <typename S>
+    Rooted(JSContext *cx, const Unrooted<S> &initial
+           MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(static_cast<S>(initial))
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+        init(cx);
+    }
+
+    Rooted(PerThreadData *pt
            MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
       : ptr(RootMethods<T>::initial())
     {
@@ -680,7 +651,7 @@ class Rooted : public RootedBase<T>
         init(pt);
     }
 
-    Rooted(js::PerThreadData *pt, T initial
+    Rooted(PerThreadData *pt, T initial
            MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
       : ptr(initial)
     {
@@ -689,15 +660,12 @@ class Rooted : public RootedBase<T>
     }
 
     template <typename S>
-    Rooted(JSContext *cx, const Unrooted<S> &initial
+    Rooted(PerThreadData *pt, const Unrooted<S> &initial
            MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
       : ptr(static_cast<S>(initial))
-#if defined(JSGC_ROOT_ANALYSIS)
-      , scanned(false)
-#endif
     {
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
-        init(cx);
+        init(pt);
     }
 
     ~Rooted() {
@@ -729,6 +697,9 @@ class Rooted : public RootedBase<T>
         return ptr;
     }
 
+    bool operator!=(const T &other) { return ptr != other; }
+    bool operator==(const T &other) { return ptr == other; }
+
   private:
     void commonInit(Rooted<void*> **thingGCRooters) {
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
@@ -744,16 +715,22 @@ class Rooted : public RootedBase<T>
 #if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
     Rooted<T> **stack, *prev;
 #endif
+
+#if defined(JSGC_ROOT_ANALYSIS)
+    /* Has the rooting analysis ever scanned this Rooted's stack location? */
+    friend void JS::CheckStackRoots(JSContext*);
+    bool scanned;
+#endif
+
+    /*
+     * |ptr| must be the last field in Rooted because the analysis treats all
+     * Rooted as Rooted<void*> during the analysis. See bug 829372.
+     */
     T ptr;
+
     MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
 
     Rooted(const Rooted &) MOZ_DELETE;
-
-#if defined(JSGC_ROOT_ANALYSIS)
-  public:
-    /* Has the rooting analysis ever scanned this Rooted's stack location? */
-    bool scanned;
-#endif
 };
 
 #if !(defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING))
@@ -775,6 +752,7 @@ Unrooted<T>::Unrooted(const Rooted<S> &root,
 #endif /* DEBUG */
 
 typedef Rooted<JSObject*>    RootedObject;
+typedef Rooted<js::Module*>  RootedModule;
 typedef Rooted<JSFunction*>  RootedFunction;
 typedef Rooted<JSScript*>    RootedScript;
 typedef Rooted<JSString*>    RootedString;
@@ -796,8 +774,8 @@ class SkipRoot
     const uint8_t *end;
 
     template <typename T>
-    void init(ContextFriendFields *cx, const T *ptr, size_t count) {
-        this->stack = &cx->skipGCRooters;
+    void init(SkipRoot **head, const T *ptr, size_t count) {
+        this->stack = head;
         this->prev = *stack;
         *stack = this;
         this->start = (const uint8_t *) ptr;
@@ -809,7 +787,16 @@ class SkipRoot
     SkipRoot(JSContext *cx, const T *ptr, size_t count = 1
              MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
     {
-        init(ContextFriendFields::get(cx), ptr, count);
+        init(&ContextFriendFields::get(cx)->skipGCRooters, ptr, count);
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
+    template <typename T>
+    SkipRoot(js::PerThreadData *ptd, const T *ptr, size_t count = 1
+             MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+    {
+        PerThreadDataFriendFields *ptff = PerThreadDataFriendFields::get(ptd);
+        init(&ptff->skipGCRooters, ptr, count);
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
     }
 
@@ -834,9 +821,152 @@ class SkipRoot
         MOZ_GUARD_OBJECT_NOTIFIER_INIT;
     }
 
+    template <typename T>
+    SkipRoot(PerThreadData *ptd, const T *ptr, size_t count = 1
+             MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
 #endif /* DEBUG && JSGC_ROOT_ANALYSIS */
 
     MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
+};
+
+/* Interface substitute for Rooted<T> which does not root the variable's memory. */
+template <typename T>
+class FakeRooted : public RootedBase<T>
+{
+  public:
+    FakeRooted(JSContext *cx
+                MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(RootMethods<T>::initial())
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
+    FakeRooted(JSContext *cx, T initial
+                MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(initial)
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
+    template <typename S>
+    FakeRooted(JSContext *cx, const Unrooted<S> &initial
+                MOZ_GUARD_OBJECT_NOTIFIER_PARAM)
+      : ptr(static_cast<S>(initial))
+    {
+        MOZ_GUARD_OBJECT_NOTIFIER_INIT;
+    }
+
+    operator T() const { return ptr; }
+    T operator->() const { return ptr; }
+    T *address() { return &ptr; }
+    const T *address() const { return &ptr; }
+    T &get() { return ptr; }
+    const T &get() const { return ptr; }
+
+    T &operator=(T value) {
+        JS_ASSERT(!RootMethods<T>::poisoned(value));
+        ptr = value;
+        return ptr;
+    }
+
+    bool operator!=(const T &other) { return ptr != other; }
+    bool operator==(const T &other) { return ptr == other; }
+
+  private:
+    T ptr;
+
+    MOZ_DECL_USE_GUARD_OBJECT_NOTIFIER
+
+    FakeRooted(const FakeRooted &) MOZ_DELETE;
+};
+
+/* Interface substitute for MutableHandle<T> which is not required to point to rooted memory. */
+template <typename T>
+class FakeMutableHandle : public js::MutableHandleBase<T>
+{
+  public:
+    FakeMutableHandle(T *t) {
+        ptr = t;
+    }
+
+    FakeMutableHandle(FakeRooted<T> *root) {
+        ptr = root->address();
+    }
+
+    void set(T v) {
+        JS_ASSERT(!js::RootMethods<T>::poisoned(v));
+        *ptr = v;
+    }
+
+    T *address() const { return ptr; }
+    T get() const { return *ptr; }
+
+    operator T() const { return get(); }
+    T operator->() const { return get(); }
+
+  private:
+    FakeMutableHandle() {}
+
+    T *ptr;
+
+    template <typename S>
+    void operator=(S v) MOZ_DELETE;
+};
+
+/*
+ * Types for a variable that either should or shouldn't be rooted, depending on
+ * the template parameter Rooted. Used for implementing functions that can
+ * operate on either rooted or unrooted data.
+ *
+ * The toHandle() and toMutableHandle() functions are for calling functions
+ * which require handle types and are only called in the CanGC case. These
+ * allow the calling code to type check.
+ */
+enum AllowGC {
+    NoGC = 0,
+    CanGC = 1
+};
+template <typename T, AllowGC allowGC>
+class MaybeRooted
+{
+};
+
+template <typename T> class MaybeRooted<T, CanGC>
+{
+  public:
+    typedef Handle<T> HandleType;
+    typedef Rooted<T> RootType;
+    typedef MutableHandle<T> MutableHandleType;
+
+    static inline Handle<T> toHandle(HandleType v) {
+        return v;
+    }
+
+    static inline MutableHandle<T> toMutableHandle(MutableHandleType v) {
+        return v;
+    }
+};
+
+template <typename T> class MaybeRooted<T, NoGC>
+{
+  public:
+    typedef T HandleType;
+    typedef FakeRooted<T> RootType;
+    typedef FakeMutableHandle<T> MutableHandleType;
+
+    static inline Handle<T> toHandle(HandleType v) {
+        JS_NOT_REACHED("Bad conversion");
+        return Handle<T>::fromMarkedLocation(NULL);
+    }
+
+    static inline MutableHandle<T> toMutableHandle(MutableHandleType v) {
+        JS_NOT_REACHED("Bad conversion");
+        return MutableHandle<T>::fromMarkedLocation(NULL);
+    }
 };
 
 } /* namespace js */
@@ -859,19 +989,11 @@ Handle<T>::Handle(MutableHandle<S> &root,
     ptr = reinterpret_cast<const T *>(root.address());
 }
 
-template <typename T> template <typename S>
+template <typename T>
 inline
-MutableHandle<T>::MutableHandle(js::Rooted<S> *root,
-                                typename mozilla::EnableIf<mozilla::IsConvertible<S, T>::value, int>::Type dummy)
+MutableHandle<T>::MutableHandle(js::Rooted<T> *root)
 {
     ptr = root->address();
-}
-
-template <typename T> template <typename S>
-inline void MutableHandle<T>::set(const js::Unrooted<S> &v)
-{
-    JS_ASSERT(!js::RootMethods<T>::poisoned(v));
-    *ptr = static_cast<S>(v);
 }
 
 /*
@@ -907,11 +1029,6 @@ AssertCanGC()
     JS_ASSERT_IF(isGCEnabled(), !InNoGCScope());
 }
 
-#if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
-extern void
-CheckStackRoots(JSContext *cx);
-#endif
-
 JS_FRIEND_API(bool) NeedRelaxedRootChecks();
 
 } /* namespace JS */
@@ -940,21 +1057,22 @@ struct Cell;
 class CompilerRootNode
 {
   protected:
-    CompilerRootNode(js::gc::Cell *ptr) : next(NULL), ptr(ptr) {}
+    CompilerRootNode(js::gc::Cell *ptr) : next(NULL), ptr_(ptr) {}
 
   public:
-    void **address() { return (void **)&ptr; }
+    void **address() { return (void **)&ptr_; }
 
   public:
     CompilerRootNode *next;
 
   protected:
-    js::gc::Cell *ptr;
+    js::gc::Cell *ptr_;
 };
 
 }  /* namespace js */
 
 ForwardDeclareJS(Script);
 ForwardDeclareJS(Function);
+ForwardDeclareJS(Object);
 
 #endif  /* jsgc_root_h___ */

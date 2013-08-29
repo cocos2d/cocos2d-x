@@ -300,7 +300,6 @@
 		46A2143916D4ABFD00723F2B /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		46A2143A16D4ABFD00723F2B /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		46A2143B16D4ABFD00723F2B /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		46A2143C16D4ABFD00723F2B /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
 		46A2146016D4B04A00723F2B /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -647,7 +646,6 @@
 				46A2143916D4ABFD00723F2B /* ScriptingCore.cpp */,
 				46A2143A16D4ABFD00723F2B /* ScriptingCore.h */,
 				46A2143B16D4ABFD00723F2B /* spidermonkey_specifics.h */,
-				46A2143C16D4ABFD00723F2B /* uthash.h */,
 			);
 			name = bindings;
 			path = ../../../../scripting/javascript/bindings;
@@ -950,6 +948,7 @@
 					"$(SRCROOT)/../../../../extensions",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../..//cocos2dx/platform/third_party/ios/libraries\"",
@@ -958,7 +957,6 @@
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
-					"-lxml2",
 					"-lz",
 					"-lsqlite3",
 				);
@@ -995,6 +993,7 @@
 					"$(SRCROOT)/../../../../extensions",
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../..//cocos2dx/platform/third_party/ios/libraries\"",
@@ -1003,7 +1002,6 @@
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
-					"-lxml2",
 					"-lz",
 					"-lsqlite3",
 				);

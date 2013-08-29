@@ -42,7 +42,7 @@ struct CC_DLL cc_timeval
 #else
     long    tv_sec;        // seconds
 #endif
-    long    tv_usec;    // microSeconds
+    int tv_usec;    // microSeconds
 };
 
 class CC_DLL CCTime

@@ -3,7 +3,7 @@
 
     <!-- link jar files -->
     <property name="myjar.libs.dir" value="./sdk" />
-    <target name="-pre-build" depends="check-dependens">
+    <target name="-pre-compile" depends="check-dependens">
         <if condition="${jarExisted}">
             <then>
                 <path id="project.all.jars.path">

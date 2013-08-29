@@ -26,29 +26,24 @@
 // boot code needed for cocos2d + JS bindings.
 // Not needed by cocos2d-html5
 require("jsb_cocos2d.js");
-cc.log("main.js12222");
 require("jsb_pluginx.js");
-cc.log("main.js133333");
 var appFiles = [
     'src/resource.js',
     'src/myApp.js'
 ];
-cc.log("main.js33344441");
 cc.dumpConfig();
 
 for( var i=0; i < appFiles.length; i++) {
     require( appFiles[i] );
 }
-cc.log("main.js14555555");
 var director = cc.Director.getInstance();
 director.setDisplayStats(true);
-cc.log("main.js666666661");
+
 // set FPS. the default value is 1.0/60 if you don't call this
 director.setAnimationInterval(1.0 / 60);
-cc.log("main.js177777");
+
 // create a scene. it's an autorelease object
 var myScene = new MyScene();
-cc.log("main.js18888");
+
 // run
 director.runWithScene(myScene);
-cc.log("main.js199999");

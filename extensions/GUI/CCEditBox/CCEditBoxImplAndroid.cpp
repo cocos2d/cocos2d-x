@@ -255,6 +255,15 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
         thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
         thiz->getDelegate()->editBoxReturn(thiz->getCCEditBox());
     }
+    
+    CCEditBox* pEditBox = thiz->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+    }
 }
 
 void CCEditBoxImplAndroid::openKeyboard()
@@ -262,6 +271,12 @@ void CCEditBoxImplAndroid::openKeyboard()
     if (m_pDelegate != NULL)
     {
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
+    }
+    CCEditBox* pEditBox = this->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
     }
 	
     showEditTextDialogJNI(  m_strPlaceHolder.c_str(),

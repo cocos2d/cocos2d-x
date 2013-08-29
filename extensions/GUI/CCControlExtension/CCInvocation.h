@@ -31,7 +31,7 @@
 #define __CCINVOCATION_H__
 
 #include "cocoa/CCObject.h"
-#include "ExtensionMacros.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 

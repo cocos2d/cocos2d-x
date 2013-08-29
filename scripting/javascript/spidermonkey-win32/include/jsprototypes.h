@@ -30,36 +30,32 @@
     macro(Number,                 8,     js_InitNumberClass) \
     macro(String,                 9,     js_InitStringClass) \
     macro(RegExp,                10,     js_InitRegExpClass) \
-    macro(XML,                   11,     js_InitXMLClass) \
-    macro(Namespace,             12,     js_InitNamespaceClass) \
-    macro(QName,                 13,     js_InitQNameClass) \
-    macro(Error,                 14,     js_InitExceptionClasses) \
-    macro(InternalError,         15,     js_InitExceptionClasses) \
-    macro(EvalError,             16,     js_InitExceptionClasses) \
-    macro(RangeError,            17,     js_InitExceptionClasses) \
-    macro(ReferenceError,        18,     js_InitExceptionClasses) \
-    macro(SyntaxError,           19,     js_InitExceptionClasses) \
-    macro(TypeError,             20,     js_InitExceptionClasses) \
-    macro(URIError,              21,     js_InitExceptionClasses) \
-    macro(Iterator,              22,     js_InitIteratorClasses) \
-    macro(StopIteration,         23,     js_InitIteratorClasses) \
-    macro(ArrayBuffer,           24,     js_InitTypedArrayClasses) \
-    macro(Int8Array,             25,     js_InitTypedArrayClasses) \
-    macro(Uint8Array,            26,     js_InitTypedArrayClasses) \
-    macro(Int16Array,            27,     js_InitTypedArrayClasses) \
-    macro(Uint16Array,           28,     js_InitTypedArrayClasses) \
-    macro(Int32Array,            29,     js_InitTypedArrayClasses) \
-    macro(Uint32Array,           30,     js_InitTypedArrayClasses) \
-    macro(Float32Array,          31,     js_InitTypedArrayClasses) \
-    macro(Float64Array,          32,     js_InitTypedArrayClasses) \
-    macro(Uint8ClampedArray,     33,     js_InitTypedArrayClasses) \
-    macro(Proxy,                 34,     js_InitProxyClass) \
-    macro(AnyName,               35,     js_InitNullClass) \
-    macro(WeakMap,               36,     js_InitWeakMapClass) \
-    macro(Map,                   37,     js_InitMapClass) \
-    macro(Set,                   38,     js_InitSetClass) \
-    macro(DataView,              39,     js_InitTypedArrayClasses) \
-    macro(ParallelArray,         40,     js_InitParallelArrayClass) \
-    macro(Intl,                  41,     js_InitIntlClass) \
+    macro(Error,                 11,     js_InitExceptionClasses) \
+    macro(InternalError,         12,     js_InitExceptionClasses) \
+    macro(EvalError,             13,     js_InitExceptionClasses) \
+    macro(RangeError,            14,     js_InitExceptionClasses) \
+    macro(ReferenceError,        15,     js_InitExceptionClasses) \
+    macro(SyntaxError,           16,     js_InitExceptionClasses) \
+    macro(TypeError,             17,     js_InitExceptionClasses) \
+    macro(URIError,              18,     js_InitExceptionClasses) \
+    macro(Iterator,              19,     js_InitIteratorClasses) \
+    macro(StopIteration,         20,     js_InitIteratorClasses) \
+    macro(ArrayBuffer,           21,     js_InitTypedArrayClasses) \
+    macro(Int8Array,             22,     js_InitTypedArrayClasses) \
+    macro(Uint8Array,            23,     js_InitTypedArrayClasses) \
+    macro(Int16Array,            24,     js_InitTypedArrayClasses) \
+    macro(Uint16Array,           25,     js_InitTypedArrayClasses) \
+    macro(Int32Array,            26,     js_InitTypedArrayClasses) \
+    macro(Uint32Array,           27,     js_InitTypedArrayClasses) \
+    macro(Float32Array,          28,     js_InitTypedArrayClasses) \
+    macro(Float64Array,          29,     js_InitTypedArrayClasses) \
+    macro(Uint8ClampedArray,     30,     js_InitTypedArrayClasses) \
+    macro(Proxy,                 31,     js_InitProxyClass) \
+    macro(WeakMap,               32,     js_InitWeakMapClass) \
+    macro(Map,                   33,     js_InitMapClass) \
+    macro(Set,                   34,     js_InitSetClass) \
+    macro(DataView,              35,     js_InitTypedArrayClasses) \
+    macro(ParallelArray,         36,     js_InitParallelArrayClass) \
+    macro(Intl,                  37,     js_InitIntlClass) \
 
 #endif /* jsprototypes_h___ */

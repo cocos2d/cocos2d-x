@@ -91,7 +91,7 @@ class SupportsWeakPtr
     class WeakReference : public RefCounted<WeakReference>
     {
       public:
-        explicit WeakReference(T* ptr) : ptr(ptr) {}
+        explicit WeakReference(T* p) : ptr(p) {}
         T* get() const {
           return ptr;
         }

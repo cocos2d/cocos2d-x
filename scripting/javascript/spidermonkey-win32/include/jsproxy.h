@@ -53,7 +53,7 @@ class JS_FRIEND_API(BaseProxyHandler) {
     bool mHasPrototype;
   protected:
     // Subclasses may set this in their constructor.
-    void setHasPrototype(bool hasPrototype) { mHasPrototype = hasPrototype; }
+    void setHasPrototype(bool aHasPrototype) { mHasPrototype = aHasPrototype; }
 
   public:
     explicit BaseProxyHandler(void *family);
@@ -100,7 +100,6 @@ class JS_FRIEND_API(BaseProxyHandler) {
     virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
     virtual bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
     virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v, bool *bp);
-    virtual JSType typeOf(JSContext *cx, JSObject *proxy);
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
     virtual JSString *obj_toString(JSContext *cx, JSObject *proxy);
     virtual JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);
@@ -159,7 +158,6 @@ public:
                             CallArgs args) MOZ_OVERRIDE;
     virtual bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v,
                              bool *bp) MOZ_OVERRIDE;
-    virtual JSType typeOf(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
     virtual bool objectClassIs(JSObject *obj, ESClassValue classValue,
                                JSContext *cx) MOZ_OVERRIDE;
     virtual JSString *obj_toString(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
@@ -206,7 +204,6 @@ class Proxy {
     static bool construct(JSContext *cx, JSObject *proxy, unsigned argc, Value *argv, Value *rval);
     static bool nativeCall(JSContext *cx, IsAcceptableThis test, NativeImpl impl, CallArgs args);
     static bool hasInstance(JSContext *cx, HandleObject proxy, MutableHandleValue v, bool *bp);
-    static JSType typeOf(JSContext *cx, JSObject *proxy);
     static bool objectClassIs(JSObject *obj, ESClassValue classValue, JSContext *cx);
     static JSString *obj_toString(JSContext *cx, JSObject *proxy);
     static JSString *fun_toString(JSContext *cx, JSObject *proxy, unsigned indent);

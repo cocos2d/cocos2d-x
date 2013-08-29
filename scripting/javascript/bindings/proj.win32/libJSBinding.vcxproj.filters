@@ -71,6 +71,12 @@
     <ClCompile Include="..\jsb_opengl_functions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\XMLHTTPRequest.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jsb_websocket.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp">
@@ -143,6 +149,15 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\jsb_opengl_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\XMLHTTPRequest.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jsb_websocket.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jsb_helper.h">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>

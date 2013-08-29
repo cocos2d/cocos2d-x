@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Manifest xmlns="http://schemas.tizen.org/2012/12/manifest">
+    <Id>YdVYJCPa8k</Id>
+    <Version>1.0.0</Version>
+    <Type>C++App</Type>
+    <Requirements>
+        <Feature Name="http://tizen.org/feature/platform.core.cpu.arch.x86">true</Feature>
+        <Feature Name="http://tizen.org/feature/platform.core.fpu.arch.vfpv3">true</Feature>
+    </Requirements>
+    <Apps>
+        <ApiVersion>2.1</ApiVersion>
+        <Privileges/>
+        <UiApp LaunchingHistoryVisible="True" Main="True" MenuIconVisible="True" Name="HelloLua">
+            <UiScalability BaseScreenSize="Normal" CoordinateSystem="Logical" LogicalCoordinate="720"/>
+            <UiTheme SystemTheme="White"/>
+            <DisplayNames>
+                <DisplayName Locale="eng-GB">HelloLua</DisplayName>
+            </DisplayNames>
+            <Icons>
+                <Icon Section="MainMenu">mainmenu.png</Icon>
+            </Icons>
+            <LaunchConditions/>
+        </UiApp>
+    </Apps>
+</Manifest>

@@ -62,7 +62,4 @@
    correct. */
 #define JS_METHODJIT 1
 
-/* Define to 1 to enable support for E4X (ECMA-357), 0 to disable it. */
-#define JS_HAS_XML_SUPPORT 1
-
 #endif /* js_config_h___ */

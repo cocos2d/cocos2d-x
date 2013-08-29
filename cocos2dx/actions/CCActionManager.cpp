@@ -313,7 +313,7 @@ CCAction* CCActionManager::getActionByTag(unsigned int tag, CCObject *pTarget)
                 }
             }
         }
-        CCLOG("cocos2d : getActionByTag: Action not found");
+        CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
     }
     else
     {

@@ -1,4 +1,4 @@
-#include "LabelTest.h"
+    #include "LabelTest.h"
 #include "../testResource.h"
 
 enum {
@@ -40,7 +40,7 @@ CCLayer* restartAtlasAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    27
+#define MAX_LAYER    29
 
 CCLayer* createAtlasLayer(int nIndex)
 {
@@ -75,6 +75,8 @@ CCLayer* createAtlasLayer(int nIndex)
         case 24: return new Issue1343();
         case 25: return new LabelTTFAlignment();
         case 26: return new LabelBMFontBounds();
+        case 27: return new TTFFontShadowAndStroke();
+        case 28: return new LabelBMFontCrashTest();
     }
 
     return NULL;
@@ -1402,24 +1404,30 @@ std::string BMFontOneAtlas::subtitle()
 BMFontUnicode::BMFontUnicode()
 {
     CCDictionary *strings = CCDictionary::createWithContentsOfFile("fonts/strings.xml");
-    const char *chinese = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
+
+    const char *chinese  = ((CCString*)strings->objectForKey("chinese1"))->m_sString.c_str();
     const char *japanese = ((CCString*)strings->objectForKey("japanese"))->m_sString.c_str();
-    const char *spanish = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();
+    const char *russian  = ((CCString*)strings->objectForKey("russian"))->m_sString.c_str();
+    const char *spanish  = ((CCString*)strings->objectForKey("spanish"))->m_sString.c_str();
 
 
     CCSize s = CCDirector::sharedDirector()->getWinSize();
 
     CCLabelBMFont *label1 = CCLabelBMFont::create(spanish, "fonts/arial-unicode-26.fnt", 200, kCCTextAlignmentLeft);
     addChild(label1);
-    label1->setPosition(ccp(s.width/2, s.height/4*3));
+    label1->setPosition(ccp(s.width/2, s.height/5*4));
 
     CCLabelBMFont *label2 = CCLabelBMFont::create(chinese, "fonts/arial-unicode-26.fnt");
     addChild(label2);
-    label2->setPosition(ccp(s.width/2, s.height/4*2));
+    label2->setPosition(ccp(s.width/2, s.height/5*3));
 
-    CCLabelBMFont *label3 = CCLabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
+    CCLabelBMFont *label3 = CCLabelBMFont::create(russian, "fonts/arial-26-en-ru.fnt");
     addChild(label3);
-    label3->setPosition(ccp(s.width/2, s.height/4*1));
+    label3->setPosition(ccp(s.width/2, s.height/5*2));
+
+    CCLabelBMFont *label4 = CCLabelBMFont::create(japanese, "fonts/arial-unicode-26.fnt");
+    addChild(label4);
+    label4->setPosition(ccp(s.width/2, s.height/5*1));
 }
 
 std::string BMFontUnicode::title()
@@ -1429,7 +1437,7 @@ std::string BMFontUnicode::title()
 
 std::string BMFontUnicode::subtitle()
 {
-    return "You should see 3 differnt labels: In Spanish, Chinese and Korean";
+    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
 }
 
 // BMFontInit
@@ -1482,6 +1490,98 @@ std::string TTFFontInit::title()
 std::string TTFFontInit::subtitle()
 {
     return "Test for support of init method without parameters.";
+}
+
+TTFFontShadowAndStroke::TTFFontShadowAndStroke()
+{
+    CCLayerColor *layer = CCLayerColor::create(ccc4(0,190,0,255));
+    addChild(layer, -10);
+    
+    CCSize s = CCDirector::sharedDirector()->getWinSize();
+    
+    ccColor3B tintColorRed      =  { 255, 0, 0   };
+    ccColor3B tintColorYellow   =  { 255, 255, 0 };
+    ccColor3B tintColorBlue     =  { 0, 0, 255   };
+    ccColor3B strokeColor       =  { 0, 10, 255  };
+    ccColor3B strokeShadowColor =  { 255, 0, 0   };
+    
+    CCSize shadowOffset(12.0, 12.0);
+    
+    ccFontDefinition shadowTextDef;
+    shadowTextDef.m_fontSize = 20;
+    shadowTextDef.m_fontName = std::string("Marker Felt");
+    
+    shadowTextDef.m_shadow.m_shadowEnabled = true;
+    shadowTextDef.m_shadow.m_shadowOffset  = shadowOffset;
+    shadowTextDef.m_shadow.m_shadowOpacity = 1.0;
+    shadowTextDef.m_shadow.m_shadowBlur    = 1.0;
+    shadowTextDef.m_fontFillColor   = tintColorRed;
+    
+    // shadow only label
+    CCLabelTTF* fontShadow = CCLabelTTF::createWithFontDefinition("Shadow Only Red Text", shadowTextDef);
+    
+    // add label to the scene
+    this->addChild(fontShadow);
+    fontShadow->setPosition(ccp(s.width/2,s.height/4*2.5));
+    
+    
+    
+    // create the stroke only label
+    ccFontDefinition strokeTextDef;
+    strokeTextDef.m_fontSize = 20;
+    strokeTextDef.m_fontName = std::string("Marker Felt");
+    
+    strokeTextDef.m_stroke.m_strokeEnabled = true;
+    strokeTextDef.m_stroke.m_strokeColor   = strokeColor;
+    strokeTextDef.m_stroke.m_strokeSize    = 1.5;
+    
+    strokeTextDef.m_fontFillColor   = tintColorYellow;
+    
+    // stroke only label
+    CCLabelTTF* fontStroke = CCLabelTTF::createWithFontDefinition("Stroke Only Yellow Text", strokeTextDef);
+    
+    // add label to the scene
+    this->addChild(fontStroke);
+    fontStroke->setPosition(ccp(s.width/2,s.height/4*1.8));
+    
+    
+    
+    // create the label stroke and shadow
+    ccFontDefinition strokeShaodwTextDef;
+    strokeShaodwTextDef.m_fontSize = 20;
+    strokeShaodwTextDef.m_fontName = std::string("Marker Felt");
+    
+    strokeShaodwTextDef.m_stroke.m_strokeEnabled = true;
+    strokeShaodwTextDef.m_stroke.m_strokeColor   = strokeShadowColor;
+    strokeShaodwTextDef.m_stroke.m_strokeSize    = 1.5;
+    
+    strokeShaodwTextDef.m_shadow.m_shadowEnabled = true;
+    strokeShaodwTextDef.m_shadow.m_shadowOffset  = shadowOffset;
+    strokeShaodwTextDef.m_shadow.m_shadowOpacity = 1.0;
+    strokeShaodwTextDef.m_shadow.m_shadowBlur    = 1.0;
+    
+    
+    strokeShaodwTextDef.m_fontFillColor   = tintColorBlue;
+    
+    // shadow + stroke label
+    CCLabelTTF* fontStrokeAndShadow = CCLabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
+    
+    // add label to the scene
+    this->addChild(fontStrokeAndShadow);
+    fontStrokeAndShadow->setPosition(ccp(s.width/2,s.height/4*1.1));
+    
+
+    
+}
+
+std::string TTFFontShadowAndStroke::title()
+{
+    return "CCLabelTTF  shadows + stroke";
+}
+
+std::string TTFFontShadowAndStroke::subtitle()
+{
+    return "Test for support of TTF label with stroke and shadow";
 }
 
 
@@ -1554,4 +1654,38 @@ void LabelBMFontBounds::draw()
     };
     ccDrawPoly(vertices, 4, true);
 }
+
+// LabelBMFontCrashTest
+void LabelBMFontCrashTest::onEnter()
+{
+    AtlasDemo::onEnter();
+    
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    //Create a label and add it
+    CCLabelBMFont *label1 = new CCLabelBMFont();
+    label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
+    this->addChild(label1);
+    // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.
+    label1->visit();
+    
+    // Remove this label
+    label1->removeFromParentAndCleanup(true);
+    label1->release();
+    
+    // Create a new label and add it (then crashes)
+    CCLabelBMFont *label2 = CCLabelBMFont::create("test 2", "fonts/bitmapFontTest.fnt");
+    label2->setPosition(ccp(winSize.width/2, winSize.height/2));
+    this->addChild(label2);
+}
+
+std::string LabelBMFontCrashTest::title()
+{
+    return "LabelBMFont Crash Test";
+}
+
+std::string LabelBMFontCrashTest::subtitle()
+{
+    return "Should not crash.";
+}
+
 

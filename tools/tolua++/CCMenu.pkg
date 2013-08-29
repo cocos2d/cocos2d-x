@@ -14,10 +14,10 @@ class CCMenu : public CCLayerRGBA
     void alignItemsVerticallyWithPadding(float padding);
     void alignItemsHorizontally();
     void alignItemsHorizontallyWithPadding(float padding);
-    // void alignItemsInColumns(unsigned int columns, va_list args);
-    // void alignItemsInRows(unsigned int rows, va_list args);
+    void alignItemsInColumnsWithArray(CCArray* rows);
+    void alignItemsInRowsWithArray(CCArray* columns);
 
-	setHandlerPriority(int newPriority);
+    void setHandlerPriority(int newPriority);
 
     void addChild(CCMenuItem* child, int zOrder = 0, int tag = -1);
 
@@ -26,7 +26,7 @@ class CCMenu : public CCLayerRGBA
     void setColor(ccColor3B color);
     ccColor3B getColor(void);
 
-	void setOpacityModifyRGB(bool bValue);
+    void setOpacityModifyRGB(bool bValue);
     bool isOpacityModifyRGB(void);
 
     bool isEnabled();
@@ -34,5 +34,5 @@ class CCMenu : public CCLayerRGBA
 
     static CCMenu* create();
     static CCMenu* createWithItem(CCMenuItem* item);
-	static CCMenu* createWithArray(CCArray* pArrayOfItems);
+    static CCMenu* createWithArray(CCArray* pArrayOfItems);
 };

@@ -60,6 +60,14 @@ using namespace JS;
 # define JS_THREADSAFE_ASSERT(expr) ((void) 0)
 #endif
 
+#if defined(DEBUG)
+# define JS_DIAGNOSTICS_ASSERT(expr) MOZ_ASSERT(expr)
+#elif defined(JS_CRASH_DIAGNOSTICS)
+# define JS_DIAGNOSTICS_ASSERT(expr) do { if (!(expr)) MOZ_CRASH(); } while(0)
+#else
+# define JS_DIAGNOSTICS_ASSERT(expr) ((void) 0)
+#endif
+
 #define JS_STATIC_ASSERT(cond)           MOZ_STATIC_ASSERT(cond, "JS_STATIC_ASSERT")
 #define JS_STATIC_ASSERT_IF(cond, expr)  MOZ_STATIC_ASSERT_IF(cond, expr, "JS_STATIC_ASSERT_IF")
 
@@ -546,14 +554,14 @@ struct ScopedFreePtrTraits
     static T* empty() { return NULL; }
     static void release(T* ptr) { js_free(ptr); }
 };
-SCOPED_TEMPLATE(ScopedFreePtr, ScopedFreePtrTraits)
+SCOPED_TEMPLATE(ScopedJSFreePtr, ScopedFreePtrTraits)
 
 template <typename T>
 struct ScopedDeletePtrTraits : public ScopedFreePtrTraits<T>
 {
     static void release(T *ptr) { js_delete(ptr); }
 };
-SCOPED_TEMPLATE(ScopedDeletePtr, ScopedDeletePtrTraits)
+SCOPED_TEMPLATE(ScopedJSDeletePtr, ScopedDeletePtrTraits)
 
 } /* namespace js */
 
@@ -708,6 +716,15 @@ class ReentrancyGuard
 #endif
     }
 };
+
+template <class T>
+JS_ALWAYS_INLINE static void
+Swap(T &t, T &u)
+{
+    T tmp(Move(t));
+    t = Move(u);
+    u = Move(tmp);
+}
 
 /*
  * Round x up to the nearest power of 2.  This function assumes that the most

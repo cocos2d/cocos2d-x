@@ -1,0 +1,287 @@
+<skeleton name="Example03" frameRate="30" version="1.4">
+ <armatures>
+  <armature name="Knight_f/Knight">
+   <b name="horseLegL2" parent="horseBody" x="-8" y="18" kX="0" kY="0" cX="1" cY="1" z="0">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegL1" parent="horseBody" x="13" y="18" kX="0" kY="0" cX="1" cY="1" z="1">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegR2" parent="horseBody" x="-14" y="18" kX="0" kY="0" cX="1" cY="1" z="2">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegR1" parent="horseBody" x="7" y="18" kX="0" kY="0" cX="1" cY="1" z="3">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseBody" x="0" y="2" kX="0" kY="0" cX="1" cY="1" z="4">
+    <d name="Knight_f-horse_body"/>
+   </b>
+   <b name="horseTail" parent="horseBody" x="-20" y="4" kX="0" kY="0" cX="1" cY="1" z="5">
+    <d name="Knight_f-horse_tail"/>
+   </b>
+   <b name="horseHead" parent="horseBody" x="20" y="2" kX="0" kY="0" cX="1" cY="1" z="6">
+    <d name="Knight_f-horse_head"/>
+   </b>
+   <b name="armL" parent="body" x="4.1" y="-12" kX="15" kY="15" cX="1" cY="1" z="7">
+    <d name="Knight_f-hero_arm"/>
+   </b>
+   <b name="body" parent="horseBody" x="0" y="0" kX="0" kY="0" cX="1" cY="1" z="8">
+    <d name="Knight_f-hero_body"/>
+   </b>
+   <b name="leg" parent="body" x="-2" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9">
+    <d name="Knight_f-hero_leg"/>
+   </b>
+   <b name="head" parent="body" x="0" y="-14" kX="0" kY="0" cX="1" cY="1" z="10">
+    <d name="Knight_f-hero_head"/>
+   </b>
+   <b name="weapon" parent="armR" x="-10.05" y="3" kX="20" kY="20" cX="1" cY="1" z="11">
+    <d name="Knight_f-hero_sword"/>
+   </b>
+   <b name="armR" parent="body" x="-4" y="-12" kX="120" kY="120" cX="1" cY="1" z="12">
+    <d name="Knight_f-hero_arm"/>
+   </b>
+  </armature>
+ </armatures>
+ <animations>
+  <animation name="Knight_f/Knight">
+   <mov name="stand" dr="2" to="6" drTW="49" lp="1" twE="2">
+    <b name="horseLegL2" sc="1" dl="0">
+     <f x="-8" y="18" kX="0" kY="0" cX="1" cY="1" z="0" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+     <f x="-8" y="18" kX="0" kY="0" cX="1" cY="1" z="0" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegL1" sc="1" dl="0">
+     <f x="13" y="18" kX="0" kY="0" cX="1" cY="1" z="1" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+     <f x="13" y="18" kX="0" kY="0" cX="1" cY="1" z="1" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegR2" sc="1" dl="0">
+     <f x="-14" y="18" kX="0" kY="0" cX="1" cY="1" z="2" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+     <f x="-14" y="18" kX="0" kY="0" cX="1" cY="1" z="2" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegR1" sc="1" dl="0">
+     <f x="7" y="18" kX="0" kY="0" cX="1" cY="1" z="3" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+     <f x="7" y="18" kX="0" kY="0" cX="1" cY="1" z="3" pX="4" pY="0" width="8" height="14" dI="0" dr="1"/>
+    </b>
+    <b name="horseBody" sc="1" dl="0">
+     <f x="0" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="1"/>
+     <f x="0" y="3" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="1"/>
+    </b>
+    <b name="horseTail" sc="1" dl="0">
+     <f x="-20" y="4" kX="0" kY="0" cX="1" cY="1" z="5" pX="6" pY="2" width="8" height="12" dI="0" dr="1"/>
+     <f x="-20" y="4.95" kX="15" kY="15" cX="1" cY="1" z="5" pX="8.4" pY="3.5" width="11" height="14" dI="0" dr="1"/>
+    </b>
+    <b name="horseHead" sc="1" dl="0">
+     <f x="20" y="2" kX="0" kY="0" cX="1" cY="1" z="6" pX="2" pY="46" width="40" height="48" dI="0" dr="1"/>
+     <f x="20.1" y="3" kX="5" kY="5" cX="1" cY="1" z="6" pX="2.15" pY="46" width="44" height="52" dI="0" dr="1"/>
+    </b>
+    <b name="armL" sc="1" dl="0">
+     <f x="4.1" y="-12" kX="15" kY="15" cX="1" cY="1" z="7" pX="3.5" pY="4.35" width="22" height="15" dI="0" dr="1"/>
+     <f x="4" y="-10.95" kX="24" kY="24" cX="1" cY="1" z="7" pX="4.3" pY="4.45" width="23" height="18" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="1"/>
+     <f x="0" y="1" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="1"/>
+    </b>
+    <b name="leg" sc="1" dl="0">
+     <f x="-2" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="1"/>
+     <f x="-2" y="1" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="0" y="-14" kX="0" kY="0" cX="1" cY="1" z="10" pX="22" pY="37.95" width="44" height="40" dI="0" dr="1"/>
+     <f x="0" y="-11" kX="6" kY="6" cX="1" cY="1" z="10" pX="22.05" pY="40.05" width="48" height="44" dI="0" dr="1"/>
+    </b>
+    <b name="weapon" sc="1" dl="0">
+     <f x="-10.05" y="3" kX="20" kY="20" cX="1" cY="1" z="11" pX="14.55" pY="17.5" width="95" height="59" dI="0" dr="1"/>
+     <f x="-14.1" y="1.05" kX="16" kY="16" cX="1" cY="1" z="11" pX="13.75" pY="17.15" width="95" height="54" dI="0" dr="1"/>
+    </b>
+    <b name="armR" sc="1" dl="0">
+     <f x="-4" y="-12" kX="120" kY="120" cX="1" cY="1" z="12" pX="14.2" pY="4.75" width="19" height="23" dI="0" dr="1"/>
+     <f x="-3.95" y="-11" kX="135" kY="135" cX="1" cY="1" z="12" pX="17" pY="5.65" width="22" height="22" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="run" dr="2" to="6" drTW="81" lp="1" twE="2">
+    <b name="horseLegL2" sc="1" dl="0.1">
+     <f x="-4.85" y="13.2" kX="64.3" kY="64.3" cX="1" cY="1" z="0" pX="14.35" pY="3.6" width="17" height="14" dI="0" dr="1"/>
+     <f x="-8" y="18" kX="-45" kY="-45" cX="1" cY="1" z="0" pX="2.85" pY="2.85" width="16" height="16" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegL1" sc="1" dl="0.1">
+     <f x="15.75" y="9.3" kX="-70.7" kY="-70.7" cX="1" cY="1" z="1" pX="1.3" pY="3.8" width="16" height="13" dI="0" dr="1"/>
+     <f x="10.95" y="19.5" kX="52" kY="52" cX="1" cY="1" z="1" pX="13.5" pY="3.15" width="16" height="15" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegR2" sc="1" dl="0">
+     <f x="-10.7" y="14.35" kX="64.3" kY="64.3" cX="1" cY="1" z="2" pX="14.35" pY="3.6" width="17" height="14" dI="0" dr="1"/>
+     <f x="-15.85" y="16.2" kX="-38" kY="-38" cX="1" cY="1" z="2" pX="3.15" pY="2.45" width="15" height="16" dI="0" dr="1"/>
+    </b>
+    <b name="horseLegR1" sc="1" dl="0">
+     <f x="9.9" y="10.45" kX="-70.7" kY="-70.7" cX="1" cY="1" z="3" pX="1.3" pY="3.8" width="16" height="13" dI="0" dr="1"/>
+     <f x="5" y="18.75" kX="52" kY="52" cX="1" cY="1" z="3" pX="13.5" pY="3.15" width="16" height="15" dI="0" dr="1"/>
+    </b>
+    <b name="horseBody" sc="1" dl="0">
+     <f x="0" y="-4" kX="-10.7" kY="-10.7" cX="1" cY="1" z="4" pX="20" pY="5.65" width="43" height="28" dI="0" dr="1"/>
+     <f x="0" y="2" kX="6.99" kY="6.99" cX="1" cY="1" z="4" pX="22.05" pY="4.45" width="43" height="25" dI="0" dr="1"/>
+    </b>
+    <b name="horseTail" sc="1" dl="0">
+     <f x="-19.25" y="1.7" kX="64.3" kY="64.3" cX="1" cY="1" z="5" pX="11.6" pY="6.25" width="15" height="13" dI="0" dr="1"/>
+     <f x="-20.1" y="1.55" kX="0" kY="0" cX="1" cY="1" z="5" pX="6" pY="2" width="8" height="12" dI="0" dr="1"/>
+    </b>
+    <b name="horseHead" sc="1" dl="0.15">
+     <f x="19.65" y="-7.75" kX="-20" kY="-20" cX="1" cY="1" z="6" pX="17.65" pY="56.2" width="55" height="59" dI="0" dr="1"/>
+     <f x="19.85" y="4.45" kX="27" kY="27" cX="1" cY="1" z="6" pX="2.7" pY="41.9" width="58" height="61" dI="0" dr="1"/>
+    </b>
+    <b name="armL" sc="1" dl="0">
+     <f x="4.1" y="-18" kX="0" kY="0" cX="1" cY="1" z="7" pX="2" pY="4" width="20" height="10" dI="0" dr="1"/>
+     <f x="4.1" y="-12" kX="30" kY="30" cX="1" cY="1" z="7" pX="4.75" pY="4.45" width="23" height="19" dI="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="-6" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="1"/>
+     <f x="0" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="1"/>
+    </b>
+    <b name="leg" sc="1" dl="0">
+     <f x="-2" y="-6" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="1"/>
+     <f x="-2" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="0" y="-20" kX="-10" kY="-10" cX="1" cY="1" z="10" pX="28.25" pY="41.15" width="51" height="47" dI="0" dr="1"/>
+     <f x="0" y="-12" kX="10" kY="10" cX="1" cY="1" z="10" pX="21.9" pY="41.15" width="51" height="47" dI="0" dr="1"/>
+    </b>
+    <b name="weapon" sc="1" dl="0.4">
+     <f x="-5.05" y="-2" kX="10" kY="10" cX="1" cY="1" z="11" pX="12.45" pY="16.5" width="94" height="46" dI="0" dr="1"/>
+     <f x="-10.85" y="2.05" kX="20" kY="20" cX="1" cY="1" z="11" pX="14.55" pY="17.5" width="95" height="59" dI="0" dr="1"/>
+    </b>
+    <b name="armR" sc="1" dl="0">
+     <f x="-4" y="-18" kX="100" kY="100" cX="1" cY="1" z="12" pX="9.05" pY="3" width="14" height="22" dI="0" dr="1"/>
+     <f x="-4" y="-12" kX="119.86" kY="119.85" cX="1" cY="1" z="12" pX="14.15" pY="4.75" width="19" height="23" dI="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="attack" dr="29" to="6" drTW="50" lp="1" twE="NaN">
+    <b name="horseLegL2" sc="1" dl="0">
+     <f x="-13.6" y="19.5" kX="-45" kY="-45" cX="1" cY="1" z="0" pX="2.85" pY="2.85" width="16" height="16" dI="0" dr="5"/>
+     <f x="-5" y="18" kX="30" kY="30" cX="1" cY="1" z="0" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="-9" y="18" kX="-15" kY="-15" cX="1" cY="1" z="0" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="5"/>
+     <f x="-5" y="18" kX="30" kY="30" cX="1" cY="1" z="0" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="-8" y="18" kX="0" kY="0" cX="1" cY="1" z="0" pX="4" pY="0" width="8" height="14" dI="0" dr="6"/>
+     <f x="-8" y="18" kX="30" kY="30" cX="1" cY="1" z="0" pX="10.45" pY="2" width="14" height="17" dI="0" dr="3"/>
+     <f x="-10" y="18" kX="0" kY="0" cX="1" cY="1" z="0" pX="4" pY="0" width="8" height="14" dI="0" dr="6"/>
+    </b>
+    <b name="horseLegL1" sc="1" dl="0">
+     <f x="6.7" y="14.1" kX="-60" kY="-60" cX="1" cY="1" z="1" pX="2" pY="3.45" width="17" height="14" dI="0" dr="5"/>
+     <f x="16" y="18" kX="30" kY="30" cX="1" cY="1" z="1" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="12" y="18" kX="-15" kY="-15" cX="1" cY="1" z="1" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="5"/>
+     <f x="16" y="18" kX="30" kY="30" cX="1" cY="1" z="1" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="13" y="18" kX="0" kY="0" cX="1" cY="1" z="1" pX="4" pY="0" width="8" height="14" dI="0" dr="6"/>
+     <f x="13" y="18" kX="30" kY="30" cX="1" cY="1" z="1" pX="10.45" pY="2" width="14" height="17" dI="0" dr="3"/>
+     <f x="11" y="18" kX="-15" kY="-15" cX="1" cY="1" z="1" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="6"/>
+    </b>
+    <b name="horseLegR2" sc="1" dl="0">
+     <f x="-19.35" y="21.05" kX="-45" kY="-45" cX="1" cY="1" z="2" pX="2.85" pY="2.85" width="16" height="16" dI="0" dr="5"/>
+     <f x="-11" y="18" kX="30" kY="30" cX="1" cY="1" z="2" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="-15" y="18" kX="-15" kY="-15" cX="1" cY="1" z="2" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="5"/>
+     <f x="-11" y="18" kX="30" kY="30" cX="1" cY="1" z="2" pX="10.45" pY="2" width="14" height="17" dI="0" dr="2"/>
+     <f x="-14" y="18" kX="15" kY="15" cX="1" cY="1" z="2" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="6"/>
+     <f x="-14" y="18" kX="15" kY="15" cX="1" cY="1" z="2" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="3"/>
+     <f x="-16" y="18" kX="-15" kY="-15" cX="1" cY="1" z="2" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="6"/>
+    </b>
+    <b name="horseLegR1" sc="1" dl="0">
+     <f x="0.9" y="15.65" kX="-45" kY="-45" cX="1" cY="1" z="3" pX="2.85" pY="2.85" width="16" height="16" dI="0" dr="5"/>
+     <f x="10" y="18" kX="15" kY="15" cX="1" cY="1" z="3" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="2"/>
+     <f x="6" y="18" kX="-15" kY="-15" cX="1" cY="1" z="3" pX="3.85" pY="1.05" width="12" height="16" dI="0" dr="5"/>
+     <f x="10" y="18" kX="15" kY="15" cX="1" cY="1" z="3" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="2"/>
+     <f x="7" y="18" kX="15" kY="15" cX="1" cY="1" z="3" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="6"/>
+     <f x="7" y="18" kX="15" kY="15" cX="1" cY="1" z="3" pX="7.45" pY="1.05" width="12" height="16" dI="0" dr="3"/>
+     <f x="5" y="18" kX="-30" kY="-30" cX="1" cY="1" z="3" pX="3.45" pY="2" width="14" height="17" dI="0" dr="6"/>
+    </b>
+    <b name="horseBody" sc="1" dl="0">
+     <f x="-10" y="2" kX="-15" kY="-15" cX="1" cY="1" z="4" pX="19.8" pY="7.15" width="44" height="30" dI="0" dr="5"/>
+     <f x="3" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="2"/>
+     <f x="-1" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="5"/>
+     <f x="3" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="2"/>
+     <f x="0" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="6"/>
+     <f x="0" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="3"/>
+     <f x="-2" y="2" kX="0" kY="0" cX="1" cY="1" z="4" pX="20" pY="2" width="40" height="20" dI="0" dr="6"/>
+    </b>
+    <b name="horseTail" sc="1" dl="0">
+     <f x="-28.75" y="9.1" kX="15" kY="15" cX="1" cY="1" z="5" pX="8.4" pY="3.5" width="11" height="14" dI="0" dr="5"/>
+     <f x="-17" y="4" kX="0" kY="0" cX="1" cY="1" z="5" pX="6" pY="2" width="8" height="12" dI="0" dr="2"/>
+     <f x="-21" y="4" kX="30" kY="30" cX="1" cY="1" z="5" pX="10.2" pY="4.75" width="13" height="15" dI="0" dr="5"/>
+     <f x="-17" y="4" kX="0" kY="0" cX="1" cY="1" z="5" pX="6" pY="2" width="8" height="12" dI="0" dr="2"/>
+     <f x="-20" y="4" kX="15" kY="15" cX="1" cY="1" z="5" pX="8.4" pY="3.5" width="11" height="14" dI="0" dr="6"/>
+     <f x="-20" y="4" kX="0" kY="0" cX="1" cY="1" z="5" pX="6" pY="2" width="8" height="12" dI="0" dr="3"/>
+     <f x="-22" y="4" kX="-30" kY="-30" cX="1" cY="1" z="5" pX="6.2" pY="2.75" width="13" height="15" dI="0" dr="6"/>
+    </b>
+    <b name="horseHead" sc="1" dl="0">
+     <f x="9.3" y="-3.2" kX="0" kY="0" cX="1" cY="1" z="6" pX="2" pY="46" width="40" height="48" dI="0" dr="5"/>
+     <f x="23" y="2" kX="15" kY="15" cX="1" cY="1" z="6" pX="2.45" pY="44.95" width="52" height="57" dI="0" dr="2"/>
+     <f x="19" y="2" kX="10.7" kY="10.7" cX="1" cY="1" z="6" pX="2.3" pY="45.55" width="49" height="55" dI="0" dr="5"/>
+     <f x="23" y="2" kX="4.31" kY="4.31" cX="1" cY="1" z="6" pX="2.15" pY="46" width="44" height="51" dI="0" dr="2"/>
+     <f x="20" y="2" kX="13.79" kY="13.79" cX="1" cY="1" z="6" pX="2.45" pY="45.2" width="51" height="57" dI="0" dr="6"/>
+     <f x="20" y="2" kX="-4.69" kY="-4.69" cX="1" cY="1" z="6" pX="5.75" pY="48.95" width="44" height="52" dI="0" dr="3"/>
+     <f x="18" y="2" kX="10.31" kY="10.31" cX="1" cY="1" z="6" pX="2.3" pY="45.6" width="48" height="55" dI="0" dr="6"/>
+    </b>
+    <b name="armL" sc="1" dl="0">
+     <f x="-9.65" y="-12.6" kX="0" kY="0" cX="1" cY="1" z="7" pX="2" pY="4" width="20" height="10" dI="0" dr="5"/>
+     <f x="7.1" y="-12" kX="30" kY="30" cX="1" cY="1" z="7" pX="4.75" pY="4.45" width="23" height="19" dI="0" dr="2"/>
+     <f x="5.45" y="-10.9" kX="26.72" kY="26.72" cX="1" cY="1" z="7" pX="4.5" pY="4.45" width="23" height="18" dI="0" dr="5"/>
+     <f x="7.1" y="-12" kX="15" kY="15" cX="1" cY="1" z="7" pX="3.5" pY="4.35" width="22" height="15" dI="0" dr="2"/>
+     <f x="4.1" y="-12" kX="-60" kY="-60" cX="1" cY="1" z="7" pX="4.45" pY="17.6" width="19" height="23" dI="0" dr="6"/>
+     <f x="4.1" y="-12" kX="30" kY="30" cX="1" cY="1" z="7" pX="4.75" pY="4.45" width="23" height="19" dI="0" dr="3"/>
+     <f x="2.1" y="-12" kX="30" kY="30" cX="1" cY="1" z="7" pX="4.75" pY="4.45" width="23" height="19" dI="0" dr="6"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="-10.5" y="0.05" kX="-15" kY="-15" cX="1" cY="1" z="8" pX="10.35" pY="15.3" width="18" height="20" dI="0" dr="5"/>
+     <f x="3" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="2"/>
+     <f x="-1" y="0" kX="11.72" kY="11.72" cX="1" cY="1" z="8" pX="7.25" pY="15.1" width="17" height="19" dI="0" dr="5"/>
+     <f x="3" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="2"/>
+     <f x="0" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="6"/>
+     <f x="0" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="3"/>
+     <f x="-2" y="0" kX="0" kY="0" cX="1" cY="1" z="8" pX="7" pY="14" width="14" height="16" dI="0" dr="6"/>
+    </b>
+    <b name="leg" sc="1" dl="0">
+     <f x="-12.45" y="0.55" kX="-60" kY="-60" cX="1" cY="1" z="9" pX="2" pY="3.45" width="18" height="15" dI="0" dr="5"/>
+     <f x="1" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="2"/>
+     <f x="-3" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="5"/>
+     <f x="1" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="2"/>
+     <f x="-2" y="0" kX="-45" kY="-45" cX="1" cY="1" z="9" pX="2.85" pY="2.85" width="17" height="17" dI="0" dr="6"/>
+     <f x="-2" y="0" kX="-15" kY="-15" cX="1" cY="1" z="9" pX="3.85" pY="1.05" width="12" height="18" dI="0" dr="3"/>
+     <f x="-4" y="0" kX="-15" kY="-15" cX="1" cY="1" z="9" pX="3.85" pY="1.05" width="12" height="18" dI="0" dr="6"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="-14.1" y="-13.45" kX="0" kY="0" cX="1" cY="1" z="10" pX="22" pY="37.95" width="44" height="40" dI="0" dr="5"/>
+     <f x="3" y="-14" kX="15" kY="15" cX="1" cY="1" z="10" pX="21.65" pY="42.35" width="53" height="50" dI="0" dr="2"/>
+     <f x="1.85" y="-13.7" kX="3.99" kY="3.99" cX="1" cY="1" z="10" pX="22.05" pY="39.4" width="47" height="43" dI="0" dr="5"/>
+     <f x="3" y="-14" kX="-15" kY="-15" cX="1" cY="1" z="10" pX="31.05" pY="42.35" width="53" height="50" dI="0" dr="2"/>
+     <f x="0" y="-14" kX="0" kY="0" cX="1" cY="1" z="10" pX="22" pY="37.95" width="44" height="40" dI="0" dr="6"/>
+     <f x="0" y="-14" kX="9.25" kY="9.25" cX="1" cY="1" z="10" pX="21.95" pY="41" width="50" height="47" dI="0" dr="3"/>
+     <f x="-2" y="-14" kX="-5.75" kY="-5.75" cX="1" cY="1" z="10" pX="25.7" pY="39.95" width="48" height="44" dI="0" dr="6"/>
+    </b>
+    <b name="weapon" sc="1" dl="0">
+     <f x="-13.3" y="-25.9" kX="-145" kY="-145" cX="1" cY="1" z="11" pX="74.15" pY="58.2" width="91" height="77" dI="0" dr="5"/>
+     <f x="-14" y="-2" kX="80" kY="80" cX="1" cY="1" z="11" pX="16.5" pY="12.45" width="46" height="94" dI="0" dr="2"/>
+     <f x="-0.05" y="3" kX="105" kY="105" cX="1" cY="1" z="11" pX="35.2" pY="13.55" width="53" height="95" dI="0" dr="5"/>
+     <f x="13.75" y="-17" kX="-60" kY="-60" cX="1" cY="1" z="11" pX="18" pY="76.8" width="71" height="93" dI="0" dr="2"/>
+     <f x="8.75" y="-21" kX="-91.03" kY="-91.03" cX="1" cY="1" z="11" pX="16.45" pY="80.25" width="32" height="91" dI="0" dr="6"/>
+     <f x="-17.65" y="-5.5" kX="150" kY="150" cX="1" cY="1" z="11" pX="76.8" pY="18" width="93" height="71" dI="0" dr="3"/>
+     <f x="-20.65" y="-5.5" kX="159.23" kY="159.23" cX="1" cY="1" z="11" pX="80.1" pY="17.55" width="95" height="60" dI="0" dr="6"/>
+    </b>
+    <b name="armR" sc="1" dl="0">
+     <f x="-17.45" y="-10.5" kX="-66.27" kY="-66.27" cX="1" cY="1" z="12" pX="4.45" pY="18.1" width="18" height="23" dI="0" dr="5"/>
+     <f x="-1" y="-12" kX="150" kY="150" cX="1" cY="1" z="12" pX="18.6" pY="6.2" width="23" height="19" dI="0" dr="2"/>
+     <f x="-2.45" y="-12.55" kX="86.72" kY="86.72" cX="1" cY="1" z="12" pX="6.1" pY="2.25" width="12" height="21" dI="0" dr="5"/>
+     <f x="-1" y="-12" kX="-12" kY="-12" cX="1" cY="1" z="12" pX="2.8" pY="7.65" width="22" height="14" dI="0" dr="2"/>
+     <f x="-4" y="-12" kX="-27" kY="-27" cX="1" cY="1" z="12" pX="3.6" pY="11.7" width="23" height="18" dI="0" dr="6"/>
+     <f x="-4" y="-12" kX="160" kY="160" cX="1" cY="1" z="12" pX="18.95" pY="6.35" width="23" height="17" dI="0" dr="3"/>
+     <f x="-7" y="-12" kX="160" kY="160" cX="1" cY="1" z="12" pX="18.95" pY="6.35" width="23" height="17" dI="0" dr="6"/>
+    </b>
+   </mov>
+  </animation>
+ </animations>
+ <TextureAtlas name="Example03" width="512" height="64">
+  <SubTexture name="Knight_f-hero_sword" pX="10" pY="15" width="90" height="30" x="0" y="0"/>
+  <SubTexture name="Knight_f-hero_head" pX="22" pY="37.95" width="44" height="40" x="134" y="0"/>
+  <SubTexture name="Knight_f-hero_leg" pX="4" pY="0" width="8" height="16" x="260" y="0"/>
+  <SubTexture name="Knight_f-hero_body" pX="7" pY="14" width="14" height="16" x="244" y="0"/>
+  <SubTexture name="Knight_f-hero_arm" pX="2" pY="4" width="20" height="10" x="222" y="0"/>
+  <SubTexture name="Knight_f-horse_head" pX="2" pY="46" width="40" height="48" x="92" y="0"/>
+  <SubTexture name="Knight_f-horse_tail" pX="6" pY="2" width="8" height="12" x="280" y="0"/>
+  <SubTexture name="Knight_f-horse_body" pX="20" pY="2" width="40" height="20" x="180" y="0"/>
+  <SubTexture name="Knight_f-horse_leg" pX="4" pY="0" width="8" height="14" x="270" y="0"/>
+ </TextureAtlas>
+</skeleton>

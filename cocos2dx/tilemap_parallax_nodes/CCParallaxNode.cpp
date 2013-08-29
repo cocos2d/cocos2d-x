@@ -35,6 +35,7 @@ class CCPointObject : CCObject
     CC_SYNTHESIZE(CCPoint, m_tOffset, Offset)
     CC_SYNTHESIZE(CCNode *,m_pChild, Child)    // weak ref
 
+public:
     static CCPointObject * pointWithCCPoint(CCPoint ratio, CCPoint offset)
     {
         CCPointObject *pRet = new CCPointObject();

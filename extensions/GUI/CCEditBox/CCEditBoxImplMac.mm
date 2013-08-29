@@ -146,6 +146,13 @@
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getCCEditBox());
     }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+    }
     return YES;
 }
 
@@ -157,6 +164,14 @@
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getCCEditBox());
         pDelegate->editBoxReturn(getEditBoxImplMac()->getCCEditBox());
+    }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
     }
     return YES;
 }
@@ -193,6 +208,13 @@
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplMac()->getCCEditBox(), getEditBoxImplMac()->getText());
+    }
+    
+    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplMac()->getCCEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
     }
 }
 

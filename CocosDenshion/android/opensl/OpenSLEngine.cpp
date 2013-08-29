@@ -289,7 +289,8 @@ bool initAudioPlayer(AudioPlayer* player, const char* filename)
 		if(fp){
 			SLDataLocator_URI loc_fd = {SL_DATALOCATOR_URI , (SLchar*)filename};
 			SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-			(player->audioSrc) = {&loc_fd, &format_mime};
+			player->audioSrc.pLocator = &loc_fd;
+			player->audioSrc.pFormat = &format_mime;
 			return createAudioPlayerBySource(player);
 		}
 		LOGD("file not found! Stop preload file: %s", filename);
@@ -330,7 +331,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
-		LOGD(errorInfo);
+		LOGD("%s", errorInfo);
 		return;
 	}
 
@@ -399,7 +400,7 @@ void OpenSLEngine::closeEngine()
 		s_pEngineEngine = NULL;
 	}
 
-	LOGD("engine destory");
+	LOGD("%s", "engine destory");
 }
 
 
@@ -482,7 +483,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 	AudioPlayer* newPlayer = new AudioPlayer();
 	if (!initAudioPlayer(newPlayer, filename))
 	{
-		LOGD("failed to recreate");
+		LOGD("%s", "failed to recreate");
 		return false;
 	}
 	vec->push_back(newPlayer);

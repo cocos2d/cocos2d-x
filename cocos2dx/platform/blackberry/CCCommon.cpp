@@ -51,7 +51,7 @@ void CCLog(const char * pszFormat, ...)
 void CCMessageBox(const char * pszMsg, const char * pszTitle)
 {
     //MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
-    CCLog(pszMsg);
+    CCLog("%s", pszMsg);
 }
 
 void CCLuaLog(const char * pszFormat)

@@ -42,5 +42,7 @@ files
 	AppDelegate.cpp
 }
 
-postbuild "${MARMALADE_ROOT}/s3e/python/python ./cccopy.py -s ../../../../samples/Cpp/TestCpp/Resources/ -d ../../../../samples/Lua/TestLua/Resources/"
+postbuild "cccopy.py -s ../../../../samples/Cpp/TestCpp/Resources/ -d ../../../../samples/Lua/TestLua/Resources/"
+
+postbuild "cccopy.py -s ../../../../scripting/lua/script/ -d ../../../../samples/Lua/TestLua/Resources/"
 

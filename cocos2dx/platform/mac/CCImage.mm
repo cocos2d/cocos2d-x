@@ -345,7 +345,6 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:pText];
-		//string = [NSString stringWithFormat:@"d\r\nhello world hello kitty Hello what %@", string];
 		
 		// font
 		NSFont *font = [[NSFontManager sharedFontManager]
@@ -374,7 +373,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		
 		// alignment, linebreak
 		unsigned uHoriFlag = eAlign & 0x0f;
-		unsigned uVertFlag = (eAlign & 0xf0) >> 4;
+		unsigned uVertFlag = (eAlign >> 4) & 0x0f;
 		NSTextAlignment align = (2 == uHoriFlag) ? NSRightTextAlignment
 			: (3 == uHoriFlag) ? NSCenterTextAlignment
 			: NSLeftTextAlignment;
@@ -397,12 +396,15 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 				NSUInteger length = [string length];
 				NSRange range = NSMakeRange(0, 1);
 				NSUInteger width = 0;
+				NSUInteger lastBreakLocation = 0;
 				for (NSUInteger i = 0; i < length; i++) {
 					range.location = i;
-					[lineBreak appendString:[string substringWithRange:range]];
+					NSString *character = [string substringWithRange:range];
+					[lineBreak appendString:character];
+					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) { lastBreakLocation = i; }
 					width = [lineBreak sizeWithAttributes:tokenAttributesDict].width;
 					if (width > pInfo->width) {
-						[lineBreak insertString:@"\r\n" atIndex:[lineBreak length] - 1];
+						[lineBreak insertString:@"\r\n" atIndex:(lastBreakLocation > 0) ? lastBreakLocation : [lineBreak length] - 1];
 					}
 				}
 				string = lineBreak;
@@ -438,9 +440,12 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 			case NSRightTextAlignment: xPadding = dimensions.width-realDimensions.width; break;
 			default: break;
 		}
-		
-		CGFloat yPadding = (1 == uVertFlag || realDimensions.height >= dimensions.height) ? 0	// align to top
-		: (2 == uVertFlag) ? dimensions.height - realDimensions.height							// align to bottom
+
+		// 1: TOP
+		// 2: BOTTOM
+		// 3: CENTER
+		CGFloat yPadding = (1 == uVertFlag || realDimensions.height >= dimensions.height) ? (dimensions.height - realDimensions.height)	// align to top
+		: (2 == uVertFlag) ? 0																	// align to bottom
 		: (dimensions.height - realDimensions.height) / 2.0f;									// align to center
 		
 		
@@ -821,7 +826,11 @@ bool CCImage::initWithImageData(void * pData,
     {
         CC_BREAK_IF(! pData || nDataLen <= 0);
         
-        if (eFmt == CCImage::kFmtWebp)
+        if (eFmt == kFmtRawData)
+        {
+            bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
+        }
+        else if (eFmt == kFmtWebp)
         {
             bRet = _initWithWebpData(pData, nDataLen);
         }
@@ -848,6 +857,30 @@ bool CCImage::initWithImageData(void * pData,
         }
     } while (0);
 	
+    return bRet;
+}
+
+bool CCImage::_initWithRawData(void *pData, int nDatalen, int nWidth, int nHeight, int nBitsPerComponent, bool bPreMulti)
+{
+    bool bRet = false;
+    do
+    {
+        CC_BREAK_IF(0 == nWidth || 0 == nHeight);
+        
+        m_nBitsPerComponent = nBitsPerComponent;
+        m_nHeight   = (short)nHeight;
+        m_nWidth    = (short)nWidth;
+        m_bHasAlpha = true;
+        
+        // only RGBA8888 supported
+        int nBytesPerComponent = 4;
+        int nSize = nHeight * nWidth * nBytesPerComponent;
+        m_pData = new unsigned char[nSize];
+        CC_BREAK_IF(! m_pData);
+        memcpy(m_pData, pData, nSize);
+        
+        bRet = true;
+    } while (0);
     return bRet;
 }
 

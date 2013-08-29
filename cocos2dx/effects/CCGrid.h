@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "CCDirector.h"
 #include "kazmath/mat4.h"
+#ifdef EMSCRIPTEN
+#include "base_nodes/CCGLBufferedNode.h"
+#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -105,6 +108,9 @@ protected:
  CCGrid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
 class CC_DLL CCGrid3D : public CCGridBase
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     CCGrid3D();
@@ -139,6 +145,9 @@ protected:
  the tiles can be separated from the grid.
 */
 class CC_DLL CCTiledGrid3D : public CCGridBase
+#ifdef EMSCRIPTEN
+, public CCGLBufferedNode
+#endif // EMSCRIPTEN
 {
 public:
     CCTiledGrid3D();

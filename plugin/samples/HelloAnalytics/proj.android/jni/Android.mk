@@ -13,11 +13,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static \
-                                PluginFlurryStatic PluginUmengStatic PluginProtocolStatic
+                                PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx) \
-$(call import-module,plugins/flurry/android) \
-$(call import-module,plugins/umeng/android) \
 $(call import-module,protocols/android)

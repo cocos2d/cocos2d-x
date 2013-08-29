@@ -1,0 +1,47 @@
+enum CCControlStepperPart
+{
+    kCCControlStepperPartMinus,
+    kCCControlStepperPartPlus,
+    kCCControlStepperPartNone,
+};
+
+
+class CCControlStepper : public CCControl
+{    
+    CCControlStepper();
+    virtual ~CCControlStepper();
+
+    bool initWithMinusSpriteAndPlusSprite(CCSprite *minusSprite, CCSprite *plusSprite);
+    static CCControlStepper* create(CCSprite *minusSprite, CCSprite *plusSprite);
+    virtual void setWraps(bool wraps);
+    virtual void setMinimumValue(double minimumValue);
+    virtual void setMaximumValue(double maximumValue);
+    virtual void setValue(double value);
+    virtual double getValue();
+    virtual void setStepValue(double stepValue);
+    virtual void setValueWithSendingEvent(double value, bool send);
+    virtual bool isContinuous();
+    void update(float dt);
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+
+    virtual CCSprite*  getMinusSprite() const;
+    virtual void setMinusSprite(CCSprite* var);
+
+    virtual CCSprite*  getPlusSprite() const;
+    virtual void setPlusSprite(CCSprite* var);
+
+    virtual CCLabelTTF*  getMinusLabel() const;
+    virtual void setMinusLabel(CCLabelTTF* var);
+
+    virtual CCLabelTTF*  getPlusLabel() const;
+    virtual void setPlusLabel(CCLabelTTF* var);
+
+    void updateLayoutUsingTouchLocation(CCPoint location);
+
+    void startAutorepeat();
+
+    void stopAutorepeat();
+};

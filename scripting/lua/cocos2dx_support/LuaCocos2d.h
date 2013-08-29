@@ -1,21 +1,13 @@
-
 #ifndef __LUACOCOS2D_H_
 #define __LUACOCOS2D_H_
 
+#ifdef __cplusplus
 extern "C" {
+#endif
 #include "tolua++.h"
-#include "tolua_fix.h"
+#ifdef __cplusplus
 }
-
-#include <map>
-#include <string>
-#include "tolua_fix.h"
-#include "cocos2d.h"
-#include "CCLuaEngine.h"
-#include "SimpleAudioEngine.h"
-
-using namespace cocos2d;
-using namespace CocosDenshion;
+#endif
 
 TOLUA_API int tolua_Cocos2d_open(lua_State* tolua_S);
 

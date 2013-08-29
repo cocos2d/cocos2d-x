@@ -81,6 +81,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 			break;
 		}
 		xmlDoc->Parse(pXmlBuffer);
+        delete[] pXmlBuffer;
 		// get root node
 		rootNode = xmlDoc->RootElement();
 		if (NULL == rootNode)

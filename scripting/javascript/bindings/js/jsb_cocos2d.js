@@ -97,7 +97,7 @@ cc._reuse_size = {width:0, height:0};
 cc._reuse_rect = {x:0, y:0, width:0, height:0};
 cc._reuse_color3b = {r:255, g:255, b:255 };
 cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
-cc.log = cc.log || log;
+cc.log = cc._cocosplayerLog || cc.log || log;
 
 //
 // Color 3B

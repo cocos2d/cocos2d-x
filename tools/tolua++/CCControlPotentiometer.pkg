@@ -1,0 +1,42 @@
+class CCControlPotentiometer : public CCControl
+{    
+    CCControlPotentiometer();
+    virtual ~CCControlPotentiometer();
+
+    static CCControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
+
+    bool initWithTrackSprite_ProgressTimer_ThumbSprite(CCSprite* trackSprite, CCProgressTimer* progressTimer, CCSprite* thumbSprite);
+    void setValue(float value);
+    float getValue();
+     
+    void setMinimumValue(float minimumValue);
+    float getMinimumValue();
+
+    void setMaximumValue(float maximumValue);
+    float getMaximumValue();
+
+    void setEnabled(bool enabled);
+
+    virtual bool isTouchInside(CCTouch * touch);
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+
+    virtual CCSprite*  getThumbSprite() const;
+    virtual void setThumbSprite(CCSprite* var);
+
+    virtual CCProgressTimer* getProgressTimer() const;
+    virtual void setProgressTimer(CCProgressTimer* var);
+
+    virtual CCPoint  getPreviousLocation() const;
+    virtual void setPreviousLocation(CCPoint var);
+
+    void potentiometerBegan(CCPoint location);
+    void potentiometerMoved(CCPoint location);
+    void potentiometerEnded(CCPoint location);
+
+    float distanceBetweenPointAndPoint(CCPoint point1, CCPoint point2);
+
+    float angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(CCPoint beginLineA, CCPoint endLineA,CCPoint beginLineB,CCPoint endLineB);
+};

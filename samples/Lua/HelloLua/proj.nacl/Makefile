@@ -8,17 +8,29 @@ INCLUDES =  -I.. \
 	-I$(COCOS_ROOT)/scripting/lua/tolua \
 	-I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
 	-I$(NACL_SDK_ROOT)/include \
-
-
+	-I$(COCOS_ROOT)/external \
+	-I$(COCOS_ROOT)/external/chipmunk/include/chipmunk \
+	-I$(COCOS_ROOT)/extensions \
+	-I$(COCOS_ROOT)/extensions/Components
+	
 SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaEngine.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCLuaStack.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/LuaCocos2d.cpp \
-        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCBProxy.cpp \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Lua_extensions_CCB.cpp
+
+include $(COCOS2DX_PATH)/../extensions/proj.nacl/Makefile
+SOURCES += $(addprefix $(COCOS_ROOT)/extensions/, $(EXTENSIONS_SOURCES))
 
 include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
+
+CXXFLAGS   += -Wno-multichar
+STATICLIBS += -llua -lnosys
+SHAREDLIBS += -lbox2d
 
 APP_NAME = HelloLua
 TARGET = $(BIN_DIR)/$(APP_NAME)_$(NACL_ARCH).nexe

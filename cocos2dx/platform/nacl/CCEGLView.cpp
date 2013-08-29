@@ -108,7 +108,7 @@ bool OpenGLContext::MakeContextCurrent()
           return false;
     }
 
-    CCLOG("glSetCurrentContextPPAPI: %p", m_graphics3d.pp_resource());
+    CCLOG("glSetCurrentContextPPAPI: %p", (void*)m_graphics3d.pp_resource());
     glSetCurrentContextPPAPI(m_graphics3d.pp_resource());
     return true;
 }

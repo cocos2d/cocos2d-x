@@ -8,10 +8,7 @@
 #ifndef mozilla_Attributes_h_
 #define mozilla_Attributes_h_
 
-/*
- * This header does not include any other headers so that it can be included by
- * code that is (only currently) mfbt-incompatible.
- */
+#include "mozilla/Compiler.h"
 
 /*
  * MOZ_INLINE is a macro which expands to tell the compiler that the method
@@ -36,9 +33,7 @@
  * compilers are not guaranteed to respect it (although they're much more likely
  * to do so).
  */
-#if defined(DEBUG)
-#  define MOZ_ALWAYS_INLINE     MOZ_INLINE
-#elif defined(_MSC_VER)
+#if defined(_MSC_VER)
 #  define MOZ_ALWAYS_INLINE     __forceinline
 #elif defined(__GNUC__)
 #  define MOZ_ALWAYS_INLINE     __attribute__((always_inline)) MOZ_INLINE
@@ -63,16 +58,15 @@
 #  ifndef __has_extension
 #    define __has_extension __has_feature /* compatibility, for older versions of clang */
 #  endif
+#  if __has_extension(cxx_constexpr)
+#    define MOZ_HAVE_CXX11_CONSTEXPR
+#  endif
 #  if __has_extension(cxx_deleted_functions)
 #    define MOZ_HAVE_CXX11_DELETE
 #  endif
 #  if __has_extension(cxx_override_control)
 #    define MOZ_HAVE_CXX11_OVERRIDE
 #    define MOZ_HAVE_CXX11_FINAL         final
-#  endif
-#  if __has_extension(cxx_strong_enums)
-#    define MOZ_HAVE_CXX11_ENUM_TYPE
-#    define MOZ_HAVE_CXX11_STRONG_ENUMS
 #  endif
 #  if __has_attribute(noinline)
 #    define MOZ_HAVE_NEVER_INLINE        __attribute__((noinline))
@@ -82,29 +76,18 @@
 #  endif
 #elif defined(__GNUC__)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if __GNUC__ > 4
-#      define MOZ_HAVE_CXX11_DELETE
+#    if MOZ_GCC_VERSION_AT_LEAST(4, 7, 0)
 #      define MOZ_HAVE_CXX11_OVERRIDE
 #      define MOZ_HAVE_CXX11_FINAL       final
-#    elif __GNUC__ == 4
-#      if __GNUC_MINOR__ >= 7
-#        define MOZ_HAVE_CXX11_OVERRIDE
-#        define MOZ_HAVE_CXX11_FINAL     final
-#      endif
-#      define MOZ_HAVE_CXX11_DELETE
-#      if __GNUC_MINOR__ >= 5
-#        define MOZ_HAVE_CXX11_ENUM_TYPE
-#        define MOZ_HAVE_CXX11_STRONG_ENUMS
-#      endif
 #    endif
+#    if MOZ_GCC_VERSION_AT_LEAST(4, 6, 0)
+#      define MOZ_HAVE_CXX11_CONSTEXPR
+#    endif
+#    define MOZ_HAVE_CXX11_DELETE
 #  else
      /* __final is a non-C++11 GCC synonym for 'final', per GCC r176655. */
-#    if __GNUC__ > 4
+#    if MOZ_GCC_VERSION_AT_LEAST(4, 7, 0)
 #      define MOZ_HAVE_CXX11_FINAL       __final
-#    elif __GNUC__ == 4
-#      if __GNUC_MINOR__ >= 7
-#        define MOZ_HAVE_CXX11_FINAL     __final
-#      endif
 #    endif
 #  endif
 #  define MOZ_HAVE_NEVER_INLINE          __attribute__((noinline))
@@ -112,15 +95,24 @@
 #elif defined(_MSC_VER)
 #  if _MSC_VER >= 1700
 #    define MOZ_HAVE_CXX11_FINAL         final
-#    define MOZ_HAVE_CXX11_STRONG_ENUMS
 #  else
      /* MSVC <= 10 used to spell "final" as "sealed". */
 #    define MOZ_HAVE_CXX11_FINAL         sealed
 #  endif
 #  define MOZ_HAVE_CXX11_OVERRIDE
-#  define MOZ_HAVE_CXX11_ENUM_TYPE
 #  define MOZ_HAVE_NEVER_INLINE          __declspec(noinline)
 #  define MOZ_HAVE_NORETURN              __declspec(noreturn)
+#endif
+
+/*
+ * The MOZ_CONSTEXPR specifier declares that a C++11 compiler can evaluate a
+ * function at compile time. A constexpr function cannot examine any values
+ * except its arguments and can have no side effects except its return value.
+ */
+#ifdef MOZ_HAVE_CXX11_CONSTEXPR
+#  define MOZ_CONSTEXPR         constexpr
+#else
+#  define MOZ_CONSTEXPR         /* no support */
 #endif
 
 /*
@@ -306,170 +298,6 @@
 #  define MOZ_FINAL             MOZ_HAVE_CXX11_FINAL
 #else
 #  define MOZ_FINAL             /* no support */
-#endif
-
-/**
- * MOZ_ENUM_TYPE specifies the underlying numeric type for an enum.  It's
- * specified by placing MOZ_ENUM_TYPE(type) immediately after the enum name in
- * its declaration, and before the opening curly brace, like
- *
- *   enum MyEnum MOZ_ENUM_TYPE(uint16_t)
- *   {
- *     A,
- *     B = 7,
- *     C
- *   };
- *
- * In supporting compilers, the macro will expand to ": uint16_t".  The
- * compiler will allocate exactly two bytes for MyEnum, and will require all
- * enumerators to have values between 0 and 65535.  (Thus specifying "B =
- * 100000" instead of "B = 7" would fail to compile.)  In old compilers, the
- * macro expands to the empty string, and the underlying type is generally
- * undefined.
- */
-#ifdef MOZ_HAVE_CXX11_ENUM_TYPE
-#  define MOZ_ENUM_TYPE(type)   : type
-#else
-#  define MOZ_ENUM_TYPE(type)   /* no support */
-#endif
-
-/**
- * MOZ_BEGIN_ENUM_CLASS and MOZ_END_ENUM_CLASS provide access to the
- * strongly-typed enumeration feature of C++11 ("enum class").  If supported
- * by the compiler, an enum defined using these macros will not be implicitly
- * converted to any other type, and its enumerators will be scoped using the
- * enumeration name.  Place MOZ_BEGIN_ENUM_CLASS(EnumName, type) in place of
- * "enum EnumName {", and MOZ_END_ENUM_CLASS(EnumName) in place of the closing
- * "};".  For example,
- *
- *   MOZ_BEGIN_ENUM_CLASS(Enum, int32_t)
- *     A, B = 6
- *   MOZ_END_ENUM_CLASS(Enum)
- *
- * This will make "Enum::A" and "Enum::B" appear in the global scope, but "A"
- * and "B" will not.  In compilers that support C++11 strongly-typed
- * enumerations, implicit conversions of Enum values to numeric types will
- * fail.  In other compilers, Enum itself will actually be defined as a class,
- * and some implicit conversions will fail while others will succeed.
- *
- * The type argument specifies the underlying type for the enum where
- * supported, as with MOZ_ENUM_TYPE().  For simplicity, it is currently
- * mandatory.  As with MOZ_ENUM_TYPE(), it will do nothing on compilers that do
- * not support it.
- *
- * Note that the workaround implemented here is not compatible with enums
- * nested inside a class.
- */
-#if defined(MOZ_HAVE_CXX11_STRONG_ENUMS)
-  /* All compilers that support strong enums also support an explicit
-   * underlying type, so no extra check is needed */
-#  define MOZ_BEGIN_ENUM_CLASS(Name, type) enum class Name : type {
-#  define MOZ_END_ENUM_CLASS(Name)         };
-#else
-   /**
-    * We need Name to both name a type, and scope the provided enumerator
-    * names.  Namespaces and classes both provide scoping, but namespaces
-    * aren't types, so we need to use a class that wraps the enum values.  We
-    * have an implicit conversion from the inner enum type to the class, so
-    * statements like
-    *
-    *   Enum x = Enum::A;
-    *
-    * will still work.  We need to define an implicit conversion from the class
-    * to the inner enum as well, so that (for instance) switch statements will
-    * work.  This means that the class can be implicitly converted to a numeric
-    * value as well via the enum type, since C++ allows an implicit
-    * user-defined conversion followed by a standard conversion to still be
-    * implicit.
-    *
-    * We have an explicit constructor from int defined, so that casts like
-    * (Enum)7 will still work.  We also have a zero-argument constructor with
-    * no arguments, so declaration without initialization (like "Enum foo;")
-    * will work.
-    *
-    * Additionally, we'll delete as many operators as possible for the inner
-    * enum type, so statements like this will still fail:
-    *
-    *   f(5 + Enum::B); // deleted operator+
-    *
-    * But we can't prevent things like this, because C++ doesn't allow
-    * overriding conversions or assignment operators for enums:
-    *
-    *   int x = Enum::A;
-    *   int f()
-    *   {
-    *     return Enum::A;
-    *   }
-    */
-#  define MOZ_BEGIN_ENUM_CLASS(Name, type) \
-     class Name \
-     { \
-       public: \
-         enum Enum MOZ_ENUM_TYPE(type) \
-         {
-#  define MOZ_END_ENUM_CLASS(Name) \
-         }; \
-         Name() {} \
-         Name(Enum aEnum) : mEnum(aEnum) {} \
-         explicit Name(int num) : mEnum((Enum)num) {} \
-         operator Enum() const { return mEnum; } \
-       private: \
-         Enum mEnum; \
-     }; \
-     inline int operator+(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator+(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator-(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator-(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator*(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator*(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator/(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator/(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator%(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator%(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator+(const Name::Enum&) MOZ_DELETE; \
-     inline int operator-(const Name::Enum&) MOZ_DELETE; \
-     inline int& operator++(Name::Enum&) MOZ_DELETE; \
-     inline int operator++(Name::Enum&, int) MOZ_DELETE; \
-     inline int& operator--(Name::Enum&) MOZ_DELETE; \
-     inline int operator--(Name::Enum&, int) MOZ_DELETE; \
-     inline bool operator==(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator==(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator!=(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator!=(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator>(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator>(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator<(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator<(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator>=(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator>=(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator<=(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator<=(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline bool operator!(const Name::Enum&) MOZ_DELETE; \
-     inline bool operator&&(const bool&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator&&(const Name::Enum&, const bool&) MOZ_DELETE; \
-     inline bool operator||(const bool&, const Name::Enum&) MOZ_DELETE; \
-     inline bool operator||(const Name::Enum&, const bool&) MOZ_DELETE; \
-     inline int operator~(const Name::Enum&) MOZ_DELETE; \
-     inline int operator&(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator&(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator|(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator|(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator^(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator^(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator<<(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator<<(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int operator>>(const int&, const Name::Enum&) MOZ_DELETE; \
-     inline int operator>>(const Name::Enum&, const int&) MOZ_DELETE; \
-     inline int& operator+=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator-=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator*=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator/=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator%=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator&=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator|=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator^=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator<<=(int&, const Name::Enum&) MOZ_DELETE; \
-     inline int& operator>>=(int&, const Name::Enum&) MOZ_DELETE;
 #endif
 
 /**
