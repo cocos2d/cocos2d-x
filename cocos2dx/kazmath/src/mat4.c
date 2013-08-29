@@ -218,13 +218,13 @@ kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
 {
 #if defined(__ARM_NEON__)
 
-    float mat[16];
+    float *mat = pOut->mat;
 
     // Invert column-order with row-order
     NEON_Matrix4Mul( &pM2->mat[0], &pM1->mat[0], &mat[0] );
 
 #else
-    float mat[16];
+    float *mat = pOut->mat;
 
     const float *m1 = pM1->mat, *m2 = pM2->mat;
 
@@ -249,8 +249,6 @@ kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
     mat[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 
 #endif
-
-    memcpy(pOut->mat, mat, sizeof(float)*16);
 
     return pOut;
 }
