@@ -132,9 +132,13 @@ EGLView::~EGLView()
     s_pEglView = nullptr;
 }
 
-bool EGLView::create()
+bool EGLView::init(const char* viewName, float width, float height)
 {
     if(nullptr != _mainWindow) return true;
+
+    setViewName(viewName);
+    setFrameSize(width, height);
+
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
     _mainWindow = glfwCreateWindow(_screenSize.width, _screenSize.height, _viewName, nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
