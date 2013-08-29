@@ -151,17 +151,20 @@ void ProfilingBeginTimingBlock(const char *timerName)
 
     timer->numberOfCalls++;
 
+    // should be the last instruction in order to be more reliable
     timer->_startTime = chrono::high_resolution_clock::now();
 }
 
 void ProfilingEndTimingBlock(const char *timerName)
 {
+    // should be the 1st instruction in order to be more reliable
+    auto now = chrono::high_resolution_clock::now();
+
     Profiler* p = Profiler::getInstance();
     ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
 
     CCASSERT(timer, "CCProfilingTimer  not found");
 
-    auto now = chrono::high_resolution_clock::now();
 
     int duration = chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count();
 
@@ -170,7 +173,6 @@ void ProfilingEndTimingBlock(const char *timerName)
     timer->_averageTime2 = timer->totalTime / timer->numberOfCalls;
     timer->maxTime = MAX( timer->maxTime, duration);
     timer->minTime = MIN( timer->minTime, duration);
-
 }
 
 void ProfilingResetTimingBlock(const char *timerName)

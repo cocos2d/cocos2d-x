@@ -323,7 +323,7 @@ Dictionary *Armature::getBoneDic()
     return _boneDic;
 }
 
-AffineTransform Armature::getNodeToParentTransform() const
+const AffineTransform& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {

@@ -83,7 +83,7 @@ Node::Node(void)
 , _children(NULL)
 , _parent(NULL)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
-, _tag(kNodeTagInvalid)
+, _tag(Node::INVALID_TAG)
 // userData is always inited as nil
 , _userData(NULL)
 , _userObject(NULL)
@@ -530,7 +530,7 @@ void Node::childrenAlloc(void)
 
 Node* Node::getChildByTag(int aTag)
 {
-    CCASSERT( aTag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
 
     if(_children && _children->count() > 0)
     {
@@ -613,11 +613,6 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-//    if ( _children->containsObject(child) )
-//    {
-//        this->detachChild(child,cleanup);
-//    }
-
     int index = _children->getIndexOfObject(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
@@ -625,7 +620,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
 
 void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 {
-    CCASSERT( tag != kNodeTagInvalid, "Invalid tag");
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
     Node *child = this->getChildByTag(tag);
 
@@ -859,8 +854,7 @@ void Node::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    AffineTransform tmpAffine = this->getNodeToParentTransform();
-    CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+    CGAffineToGL(this->getNodeToParentTransform(), transfrom4x4.mat);
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = _vertexZ;
@@ -976,13 +970,13 @@ void Node::stopAction(Action* action)
 
 void Node::stopActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     _actionManager->removeActionByTag(tag, this);
 }
 
 Action * Node::getActionByTag(int tag)
 {
-    CCASSERT( tag != kActionTagInvalid, "Invalid tag");
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     return _actionManager->getActionByTag(tag, this);
 }
 
@@ -1101,7 +1095,7 @@ void Node::update(float fDelta)
     }
 }
 
-AffineTransform Node::getNodeToParentTransform() const
+const AffineTransform& Node::getNodeToParentTransform() const
 {
     if (_transformDirty) 
     {
@@ -1184,7 +1178,7 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     _additionalTransformDirty = true;
 }
 
-AffineTransform Node::getParentToNodeTransform() const
+const AffineTransform& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
         _inverse = AffineTransformInvert(this->getNodeToParentTransform());
