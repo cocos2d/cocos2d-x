@@ -32,8 +32,7 @@ public:
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
     
-    //void setWndProc(CUSTOM_WND_PROC proc);
-    virtual bool create();
+    bool init(const char* viewName, float width, float height);
 public:
     
     //void resize(int width, int height);
