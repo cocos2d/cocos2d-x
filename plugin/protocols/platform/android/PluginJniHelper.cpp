@@ -144,6 +144,10 @@ bool PluginJniHelper::getStaticMethodInfo(PluginJniMethodInfo &methodinfo, const
 
     jmethodID methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
     if (! methodID) {
+        if(pEnv->ExceptionCheck())
+        {
+            pEnv->ExceptionClear();
+        }
         LOGD("Failed to find static method id of %s", methodName);
         return false;
     }
@@ -175,6 +179,10 @@ bool PluginJniHelper::getMethodInfo(PluginJniMethodInfo &methodinfo, const char 
 
     jmethodID methodID = pEnv->GetMethodID(classID, methodName, paramCode);
     if (! methodID) {
+        if(pEnv->ExceptionCheck())
+        {
+            pEnv->ExceptionClear();
+        }
         LOGD("Failed to find method id of %s", methodName);
         return false;
     }
