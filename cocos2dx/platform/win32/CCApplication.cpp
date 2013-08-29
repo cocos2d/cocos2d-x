@@ -50,8 +50,7 @@ int Application::run()
     }
 
     EGLView* pMainWnd = EGLView::getInstance();
-    //pMainWnd->centerWindow();
-    //ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
+
     while(!pMainWnd->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
@@ -65,7 +64,6 @@ int Application::run()
         {
             Sleep(0);
         }
-
     }
     
     return true;
