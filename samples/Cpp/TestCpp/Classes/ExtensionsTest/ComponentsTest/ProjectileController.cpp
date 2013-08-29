@@ -45,7 +45,7 @@ void ProjectileController::update(float delta)
 			projectile->getContentSize().width,
 			projectile->getContentSize().height);
 
-    auto targetsToDelete =new Array;
+    auto targetsToDelete = Array::createWithCapacity(20);
     Object* jt = NULL;
     CCARRAY_FOREACH(_targets, jt)
     {
@@ -71,8 +71,6 @@ void ProjectileController::update(float delta)
     
     bool isDied = targetsToDelete->count() > 0;
    
-    targetsToDelete->release();
-    
     if (isDied)
     {
         die();

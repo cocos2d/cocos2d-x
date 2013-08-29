@@ -31,7 +31,6 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCCommon.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include "ccMacros.h"
 
 #include <unistd.h>

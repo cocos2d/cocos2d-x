@@ -29,7 +29,6 @@
 #include <vector>
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 
 NS_CC_BEGIN
 

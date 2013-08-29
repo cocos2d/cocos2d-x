@@ -68,8 +68,8 @@ bool Layer::init()
         Director * pDirector;
         CC_BREAK_IF(!(pDirector = Director::getInstance()));
         this->setContentSize(pDirector->getWinSize());
-        _touchEnabled = false;
-        _accelerometerEnabled = false;
+        setTouchEnabled(false);
+        setAccelerometerEnabled(false);
         // success
         bRet = true;
     } while(0);
@@ -1073,6 +1073,19 @@ void LayerMultiplex::addLayer(Layer* layer)
     _layers->addObject(layer);
 }
 
+bool LayerMultiplex::init()
+{
+    if (Layer::init())
+    {
+        _layers = Array::create();
+        _layers->retain();
+
+        _enabledLayer = 0;
+        return true;
+    }
+    return false;
+}
+
 bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
 {
     if (Layer::init())
@@ -1088,7 +1101,7 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
         }
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->objectAtIndex(_enabledLayer));
+        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
         return true;
     }
 
@@ -1104,7 +1117,7 @@ bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
         _layers->retain();
 
         _enabledLayer = 0;
-        this->addChild((Node*)_layers->objectAtIndex(_enabledLayer));
+        this->addChild((Node*)_layers->getObjectAtIndex(_enabledLayer));
         return true;
     }
     return false;
@@ -1114,25 +1127,25 @@ void LayerMultiplex::switchTo(unsigned int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
+    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->objectAtIndex(n));
+    this->addChild((Node*)_layers->getObjectAtIndex(n));
 }
 
 void LayerMultiplex::switchToAndReleaseMe(unsigned int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
-    this->removeChild((Node*)_layers->objectAtIndex(_enabledLayer), true);
+    this->removeChild((Node*)_layers->getObjectAtIndex(_enabledLayer), true);
 
     //[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
     _layers->replaceObjectAtIndex(_enabledLayer, NULL);
 
     _enabledLayer = n;
 
-    this->addChild((Node*)_layers->objectAtIndex(n));
+    this->addChild((Node*)_layers->getObjectAtIndex(n));
 }
 
 NS_CC_END

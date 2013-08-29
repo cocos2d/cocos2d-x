@@ -59,10 +59,6 @@ class ComponentContainer;
  */
 
 enum {
-    kNodeTagInvalid = -1,
-};
-
-enum {
     kNodeOnEnter,
     kNodeOnExit,
     kNodeOnEnterTransitionDidFinish,
@@ -128,6 +124,9 @@ enum {
 class CC_DLL Node : public Object
 {
 public:
+    /// Default tag used for all the nodes
+    static const int INVALID_TAG = -1;
+
     /// @{
     /// @name Constructor, Distructor and Initializers
 
@@ -1153,7 +1152,7 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToParentTransform() const;
+    virtual const AffineTransform& getNodeToParentTransform() const;
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
@@ -1162,7 +1161,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getParentToNodeTransform() const;
+    virtual const AffineTransform& getParentToNodeTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
@@ -1296,7 +1295,7 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
-private:
+protected:
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1304,12 +1303,12 @@ private:
     void insertChild(Node* child, int z);
     
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
     
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
 
-protected:
+
     float _rotationX;                 ///< rotation angle on x-axis
     float _rotationY;                 ///< rotation angle on y-axis
     

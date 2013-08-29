@@ -18,17 +18,8 @@ SceneController::SceneController(void)
 
 SceneController::~SceneController(void)
 {
-    if (_targets)
-	{
-		_targets->release();
-		_targets = NULL;
-	}
-
-	if (_projectiles)
-	{
-		_projectiles->release();
-		_projectiles = NULL;
-	}
+    CC_SAFE_RELEASE(_targets);
+    CC_SAFE_RELEASE(_projectiles);
 }
 
 bool SceneController::init()
@@ -40,8 +31,11 @@ void SceneController::onEnter()
 {
     _fAddTargetTime = 1.0f;
     
-    _targets = new Array;
-    _projectiles = new Array;
+    _targets = Array::createWithCapacity(10);
+    _projectiles = Array::createWithCapacity(10);
+
+    _targets->retain();
+    _projectiles->retain();
    
     ((ComAudio*)(_owner->getComponent("Audio")))->playBackgroundMusic("background-music-aac.wav", true);
     ((ComAttribute*)(_owner->getComponent("ComAttribute")))->setInt("KillCount", 0);
@@ -49,8 +43,6 @@ void SceneController::onEnter()
 
 void SceneController::onExit()
 {
-
-
 }
 
 void SceneController::update(float delta)

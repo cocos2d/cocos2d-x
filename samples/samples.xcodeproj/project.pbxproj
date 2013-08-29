@@ -69,6 +69,10 @@
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		15E31DA717B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DA817B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DA917B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
+		15E31DAA17B9D18E00BC8230 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15E31DA617B9D18E00BC8230 /* Cocos2d.lua */; };
 		1A1197CA1785363400D62A44 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50FD17839B9C0073F6A7 /* libcocos2dx iOS.a */; };
 		1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		1A1197CC1785363400D62A44 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
@@ -2282,6 +2286,7 @@
 		15C6482C165F3988007D4F18 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		15E31DA617B9D18E00BC8230 /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
 		1A1197D71785363400D62A44 /* Hello lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A1197E71785376400D62A44 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1A1197E81785376400D62A44 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3641,6 +3646,7 @@
 		1A119C8D17853D6300D62A44 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				15E31DA617B9D18E00BC8230 /* Cocos2d.lua */,
 				15A055C1179E25050040AC39 /* DrawPrimitives.lua */,
 				15A055AC17966C350040AC39 /* Deprecated.lua */,
 				1A119C8E17853D8D00D62A44 /* AudioEngine.lua */,
@@ -6001,6 +6007,7 @@
 				1A119C9B17853D8D00D62A44 /* OpenglConstants.lua in Resources */,
 				15A055AF17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C4179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA917B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6050,6 +6057,7 @@
 				1A6FB4FD17854A8500CDF010 /* luaScript in Resources */,
 				15A055B017966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C5179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DAA17B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6077,6 +6085,7 @@
 				1A6FB55417854FE400CDF010 /* OpenglConstants.lua in Resources */,
 				15A055AD17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C2179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA717B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6122,6 +6131,7 @@
 				1A6FB7D91785620900CDF010 /* zwoptex in Resources */,
 				15A055AE17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C3179E25050040AC39 /* DrawPrimitives.lua in Resources */,
+				15E31DA817B9D18E00BC8230 /* Cocos2d.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8005,6 +8015,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8016,9 +8028,10 @@
 				INFOPLIST_FILE = Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 			};
 			name = Debug;
 		};
@@ -8026,6 +8039,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8036,9 +8051,10 @@
 				INFOPLIST_FILE = Lua/HelloLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8047,6 +8063,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8058,9 +8076,10 @@
 				INFOPLIST_FILE = Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 			};
 			name = Debug;
 		};
@@ -8068,6 +8087,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8078,9 +8099,10 @@
 				INFOPLIST_FILE = Lua/TestLua/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8114,7 +8136,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 			};
 			name = Debug;
 		};
@@ -8146,7 +8168,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8180,7 +8202,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 			};
 			name = Debug;
 		};
@@ -8212,7 +8234,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/lua-bindings\" \"$(SRCROOT)/../cocos2dx/platform/mac\" \"$(SRCROOT)/../cocos2dx/platform/third_party/mac\" \"$(SRCROOT)/../external/libwebsockets/mac/include\" \"$(SRCROOT)/../scripting/lua/cocos2dx_support\" \"$(SRCROOT)/../scripting/lua/luajit/include\" \"$(SRCROOT)/../scripting/lua/tolua\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8259,6 +8281,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8269,6 +8293,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\"";
@@ -8279,6 +8304,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8288,6 +8315,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cpp/SimpleGame/proj.ios/SimpleGame-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\"";
@@ -8299,6 +8327,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8310,9 +8340,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8320,6 +8351,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8330,9 +8363,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8341,6 +8375,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8352,9 +8388,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8362,6 +8399,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8372,9 +8411,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8383,6 +8423,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8394,9 +8436,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8404,6 +8447,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8414,9 +8459,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8425,6 +8471,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8436,9 +8484,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8446,6 +8495,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8456,9 +8507,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8467,6 +8519,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8478,9 +8532,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8488,6 +8543,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8498,9 +8555,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8509,6 +8567,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8521,9 +8581,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Javascript/TestJavascript/proj.ios/Info-obfuscated.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 			};
 			name = Debug;
 		};
@@ -8531,6 +8592,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8542,9 +8605,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Javascript/TestJavascript/proj.ios/Info-obfuscated.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-ios/include\" \"$(SRCROOT)/../scripting/javascript/bindings\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8566,7 +8630,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8586,7 +8650,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8607,7 +8671,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8626,7 +8690,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/TestJavascript/proj.mac/Test_Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8647,7 +8711,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8666,7 +8730,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/WatermelonWithMe/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8687,7 +8751,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8706,7 +8770,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/MoonWarriors/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8727,7 +8791,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8746,7 +8810,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CrystalCraze/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8767,7 +8831,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 			};
 			name = Debug;
 		};
@@ -8786,7 +8850,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = Javascript/CocosDragonJS/proj.mac/Info.plist;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../scripting/auto-generated/js-bindings\" \"$(SRCROOT)/../scripting/javascript/bindings\" \"$(SRCROOT)/../scripting/javascript/spidermonkey-mac/include\" \"$(SRCROOT)/../cocos2dx/platform/mac\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8903,6 +8967,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8922,6 +8988,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libraries",
 				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../cocos2dx/platform/third_party/ios/libfreetype2/freetype\" $(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
@@ -8932,6 +8999,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8950,6 +9019,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2dx/platform/third_party/ios/libraries",
 				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\" $(SRCROOT)/../cocos2dx/platform/third_party/ios/libfreetype2\"";
@@ -8961,6 +9031,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8971,6 +9043,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";
@@ -8981,6 +9054,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8990,6 +9065,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "Cpp/HelloCpp/proj.ios/HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/../cocos2dx/platform/ios\" \"$(SRCROOT)/../cocos2dx/platform/ios/Simulation\" \"$(SRCROOT)/../cocos2dx/platform/third_party/ios\" \"$(SRCROOT)/../external/libwebsockets/ios/include\"";

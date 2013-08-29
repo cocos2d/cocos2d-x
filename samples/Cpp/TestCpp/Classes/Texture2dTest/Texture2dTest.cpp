@@ -2072,9 +2072,9 @@ std::string TextureS3TCDxt5::subtitle()
 //Implement of ATITC
 TextureATITCRGB::TextureATITCRGB()
 {
-    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGB_mipmaps.ktx");
+    auto sprite = Sprite::create("Images/test_256x256_ATC_RGB_mipmaps.ktx");
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(size.width / 2, size.height / 2));
 
     addChild(sprite);
@@ -2090,9 +2090,9 @@ std::string TextureATITCRGB::subtitle()
 
 TextureATITCExplicit::TextureATITCExplicit()
 {
-    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Explicit_mipmaps.ktx");
+    auto sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Explicit_mipmaps.ktx");
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(size.width / 2, size.height / 2));
     
     addChild(sprite);
@@ -2108,9 +2108,9 @@ std::string TextureATITCExplicit::subtitle()
 
 TextureATITCInterpolated::TextureATITCInterpolated()
 {
-    Sprite *sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Interpolated_mipmaps.ktx");
+    auto sprite = Sprite::create("Images/test_256x256_ATC_RGBA_Interpolated_mipmaps.ktx");
     
-    Size size = Director::getInstance()->getWinSize();
+    auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Point(size.width / 2, size.height /2));
 
     addChild(sprite);

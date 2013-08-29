@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.cpp" />
+    <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\cocos2d_specifics.cpp" />
     <ClCompile Include="..\cocosjs_manual_conversions.cpp" />
-    <ClCompile Include="..\generated\jsb_cocos2dx_auto.cpp" />
-    <ClCompile Include="..\generated\jsb_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\jsb_opengl_functions.cpp" />
     <ClCompile Include="..\jsb_opengl_manual.cpp" />
@@ -34,10 +34,10 @@
     <ClCompile Include="..\XMLHTTPRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.hpp" />
+    <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\cocos2d_specifics.hpp" />
     <ClInclude Include="..\cocosjs_manual_conversions.h" />
-    <ClInclude Include="..\generated\jsb_cocos2dx_auto.hpp" />
-    <ClInclude Include="..\generated\jsb_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\jsb_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\jsb_helper.h" />
     <ClInclude Include="..\jsb_opengl_functions.h" />
@@ -63,8 +63,8 @@
     <ClInclude Include="..\XMLHTTPRequest.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\generated\jsb_cocos2dx_auto_api.js" />
-    <None Include="..\generated\jsb_cocos2dx_extension_auto_api.js" />
+    <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto_api.js" />
+    <None Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_extension_auto_api.js" />
     <None Include="..\js\jsb.js" />
     <None Include="..\js\jsb_chipmunk.js" />
     <None Include="..\js\jsb_cocos2d.js" />
@@ -126,7 +126,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;DEBUG;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\auto-generated\js-bindings;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -149,7 +149,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\sqlite3\libraries\win32\*.*" "$(O
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\cocos2dx\kazmath\include;$(ProjectDir)..\..\..\..\cocos2dx\platform\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\pthread;$(ProjectDir)..\..\..\..\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\..\..\CocosDenshion\include;$(ProjectDir)..;$(ProjectDir)..\..\spidermonkey-win32\include;$(ProjectDir)..\..\..\auto-generated\js-bindings;$(ProjectDir)..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\external\libwebsockets\win32\include;$(ProjectDir)..\..\..\..\extensions;$(ProjectDir)..\..\..\..\extensions\LocalStorage;$(ProjectDir)..\..\..\..\extensions\network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>

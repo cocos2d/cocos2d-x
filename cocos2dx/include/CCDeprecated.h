@@ -936,8 +936,8 @@ CC_DEPRECATED_ATTRIBUTE typedef TransitionScene::Orientation tOrientation;
 CC_DEPRECATED_ATTRIBUTE const int kCCPrioritySystem = Scheduler::PRIORITY_SYSTEM;
 CC_DEPRECATED_ATTRIBUTE const int kCCPriorityNonSystemMin = Scheduler::PRIORITY_NON_SYSTEM_MIN;
 
-CC_DEPRECATED_ATTRIBUTE const int kCCActionTagInvalid = kActionTagInvalid;
-CC_DEPRECATED_ATTRIBUTE const int kCCNodeTagInvalid = kNodeTagInvalid;
+CC_DEPRECATED_ATTRIBUTE const int kCCActionTagInvalid = Action::INVALID_TAG;
+CC_DEPRECATED_ATTRIBUTE const int kCCNodeTagInvalid = Node::INVALID_TAG;
 
 CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnEnter = kNodeOnEnter;
 CC_DEPRECATED_ATTRIBUTE const int kCCNodeOnExit = kNodeOnExit;

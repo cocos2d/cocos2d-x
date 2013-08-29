@@ -173,6 +173,7 @@ TextureAtlas *SpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 {
     _display2TextureAtlas = new Dictionary();
+    _display2TextureAtlas->init();
 }
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()

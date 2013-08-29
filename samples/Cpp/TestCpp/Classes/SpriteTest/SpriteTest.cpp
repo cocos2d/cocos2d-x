@@ -203,11 +203,9 @@ void SpriteTestDemo::backCallback(Object* sender)
 Sprite1::Sprite1()
 {
     setTouchEnabled( true );
-    
-    
+
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Point(s.width/2, s.height/2) );
-    
 }
 
 void Sprite1::addNewSpriteWithCoords(Point p)
@@ -639,7 +637,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     {
         if(i!=5)
         {
-            asmtest->reorderChild( static_cast<Node*>(a->objectAtIndex(i)), 9 );
+            asmtest->reorderChild( static_cast<Node*>(a->getObjectAtIndex(i)), 9 );
         }
     }
     
@@ -4149,7 +4147,7 @@ void NodeSort::reorderSprite(float dt)
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     }
     //z-4
-    _node->reorderChild( static_cast<Node*>( _node->getChildren()->objectAtIndex(0) ), -6);
+    _node->reorderChild( static_cast<Node*>( _node->getChildren()->getObjectAtIndex(0) ), -6);
 
     _node->sortAllChildren();
     log("After reorder--");

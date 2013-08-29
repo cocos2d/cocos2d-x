@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-Object::Object(void)
+Object::Object()
 : _luaID(0)
 , _reference(1) // when the object is created, the reference count of it is 1
 , _autoReleaseCount(0)
@@ -40,7 +40,7 @@ Object::Object(void)
     _ID = ++uObjectCount;
 }
 
-Object::~Object(void)
+Object::~Object()
 {
     // if the object is managed, we should remove it
     // from pool manager
@@ -64,43 +64,25 @@ Object::~Object(void)
     }
 }
 
-void Object::release(void)
-{
-    CCASSERT(_reference > 0, "reference count should greater than 0");
-    --_reference;
-
-    if (_reference == 0)
-    {
-        delete this;
-    }
-}
-
-void Object::retain(void)
-{
-    CCASSERT(_reference > 0, "reference count should greater than 0");
-
-    ++_reference;
-}
-
-Object* Object::autorelease(void)
+Object* Object::autorelease()
 {
     PoolManager::sharedPoolManager()->addObject(this);
     return this;
 }
 
-bool Object::isSingleReference(void) const
+bool Object::isSingleReference() const
 {
     return _reference == 1;
 }
 
-unsigned int Object::retainCount(void) const
+unsigned int Object::retainCount() const
 {
     return _reference;
 }
 
-bool Object::isEqual(const Object *pObject)
+bool Object::isEqual(const Object *object)
 {
-    return this == pObject;
+    return this == object;
 }
 
 void Object::acceptVisitor(DataVisitor &visitor)
