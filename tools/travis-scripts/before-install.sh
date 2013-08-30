@@ -103,7 +103,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     g++ --version
     bash $COCOS2DX_ROOT/install-deps-linux.sh
-    bash ./install_glfw.sh
+    bash $PWD/install_glfw.sh
     install_android_ndk
     install_llvm
 elif [ "$PLATFORM"x = "nacl"x ]; then
