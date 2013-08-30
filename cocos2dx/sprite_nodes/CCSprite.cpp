@@ -1004,7 +1004,7 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
             frame->getOffset().equals(_unflippedOffsetPositionFromCenter));
 }
 
-SpriteFrame* Sprite::displayFrame(void)
+SpriteFrame* Sprite::getDisplayFrame()
 {
     return SpriteFrame::createWithTexture(_texture,
                                            CC_RECT_POINTS_TO_PIXELS(_rect),
@@ -1013,7 +1013,7 @@ SpriteFrame* Sprite::displayFrame(void)
                                            CC_SIZE_POINTS_TO_PIXELS(_contentSize));
 }
 
-SpriteBatchNode* Sprite::getBatchNode(void)
+SpriteBatchNode* Sprite::getBatchNode()
 {
     return _batchNode;
 }
