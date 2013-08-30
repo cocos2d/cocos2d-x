@@ -104,9 +104,10 @@ end
 rawset(SimpleAudioEngine,"playBackgroundMusic",SimpleAudioEngineDeprecated.playBackgroundMusic)
 --functions of SimpleAudioEngine will be deprecated end
 
+--functions of CCMenu will be deprecated begin
 local CCMenuDeprecated = { }
 function CCMenuDeprecated.createWithItem(self,...)
-    deprecatedTip("CCMenuDeprecated:createWithItem","cc.Menu:create")
+    deprecatedTip("CCMenuDeprecated:createWithItem","cc.Menu:createWithItem")
     return self:create(...)
 end
 rawset(CCMenu,"createWithItem",CCMenuDeprecated.createWithItem)
@@ -129,17 +130,17 @@ end
 rawset(CCNode,"numberOfRunningActions",CCNodeDeprecated.numberOfRunningActions)
 
 
-function CCNodeDeprecated.removeFromParentAndCleanup(self)
+function CCNodeDeprecated.removeFromParentAndCleanup(self,...)
     deprecatedTip("CCNode:removeFromParentAndCleanup","cc.Node:removeFromParent")
-    return self:removeFromParent()
+    return self:removeFromParent(...)
 end
 rawset(CCNode,"removeFromParentAndCleanup",CCNodeDeprecated.removeFromParentAndCleanup)
 --functions of CCNode will be deprecated end
 
 --CCDrawPrimitives will be deprecated begin
 local function CCDrawPrimitivesClassDeprecated()
-    deprecatedTip("CCDrawPrimitives","gl.DrawPrimitives")
-    return gl.DrawPrimitives
+    deprecatedTip("CCDrawPrimitives","cc.DrawPrimitives")
+    return cc.DrawPrimitives
 end
 _G["CCDrawPrimitives"] = CCDrawPrimitivesClassDeprecated()
 --functions of CCDrawPrimitives will be deprecated begin
@@ -283,17 +284,35 @@ function CCCameraDeprecated.setUpXYZ(self,...)
 end
 rawset(CCCamera,"setUpXYZ",CCCameraDeprecated.setUpXYZ)
 
+function CCCameraDeprecated.getUpXYZ(self)
+    deprecatedTip("CCCameraDeprecated:getUpXYZ","CCCameraDeprecated:getUp")
+    return self:getUp()
+end
+rawset(CCCamera,"getUpXYZ",CCCameraDeprecated.getUpXYZ)
+
 function CCCameraDeprecated.setEyeXYZ(self,...)
     deprecatedTip("CCCameraDeprecated:setEyeXYZ","CCCameraDeprecated:setEye")
     return self:setEye(...)
 end
 rawset(CCCamera,"setEyeXYZ",CCCameraDeprecated.setEyeXYZ)
 
+function CCCameraDeprecated.getEyeXYZ(self)
+    deprecatedTip("CCCameraDeprecated:getEyeXYZ","CCCameraDeprecated:getEye")
+    return self:getEye()
+end
+rawset(CCCamera,"getEyeXYZ",CCCameraDeprecated.getEyeXYZ)
+
 function CCCameraDeprecated.setCenterXYZ(self,...)
     deprecatedTip("CCCameraDeprecated:setCenterXYZ","CCCameraDeprecated:setCenter")
     return self:setCenter(...)
 end
 rawset(CCCamera,"setCenterXYZ",CCCameraDeprecated.setCenterXYZ)
+
+function CCCameraDeprecated.getCenterXYZ(self)
+    deprecatedTip("CCCameraDeprecated:getCenterXYZ","CCCameraDeprecated:getCenter")
+    return self:getCenter()
+end
+rawset(CCCamera,"getCenterXYZ",CCCameraDeprecated.getCenterXYZ)
 --functions of CCCamera will be deprecated end
 
 
@@ -372,8 +391,8 @@ rawset(_G,"CCPointMake",CCPointMake)
 
 
 local function ccpNeg(pt)
-    deprecatedTip("ccpNeg","CCPoint.__sub")
-    return CCPoint.__sub(CCPoint:new_local(0,0),pt)
+    deprecatedTip("ccpNeg","cc.pSub")
+    return cc.pSub({x = 0,y = 0}, pt)
 end
 rawset(_G,"ccpNeg",ccpNeg)
 
@@ -396,68 +415,68 @@ end
 rawset(_G,"ccpMult",ccpMult)
 
 local function ccpMidpoint(pt1,pt2)
-    deprecatedTip("ccpMidpoint","CCPoint:getMidpoint")
-    return pt1:getMidpoint(pt2)
+    deprecatedTip("ccpMidpoint","cc.pMidpoint")
+    return cc.pMidpoint(pt1,pt2)
 end
 rawset(_G,"ccpMidpoint",ccpMidpoint)
 
 local function ccpDot(pt1,pt2)
-    deprecatedTip("ccpDot","CCPoint:dot")
-    return pt1:dot(pt2)
+    deprecatedTip("ccpDot","cc.pDot")
+    return cc.pDot(pt1,pt2)
 end
 rawset(_G,"ccpDot",ccpDot)
 
 local function ccpCross(pt1,pt2)
-    deprecatedTip("ccpCross","CCPoint:cross")
-    return pt1:cross(pt2)
+    deprecatedTip("ccpCross","cc.pCross")
+    return cc.pCross(pt1, pt2)
 end
 rawset(_G,"ccpCross",ccpCross)
 
 local function ccpPerp(pt)
-    deprecatedTip("ccpPerp","CCPoint:getPerp")
-    return pt:getPerp()
+    deprecatedTip("ccpPerp","cc.pPerp")
+    return cc.pPerp(pt)
 end
 rawset(_G,"ccpPerp",ccpPerp)
 
 local function ccpRPerp(pt)
-    deprecatedTip("ccpRPerp","CCPoint:getRPerp")
-    return pt:getRPerp()
+    deprecatedTip("ccpRPerp","cc.RPerp")
+    return cc.RPerp(pt)
 end
 rawset(_G,"ccpRPerp",ccpRPerp)
 
 local function ccpProject(pt1,pt2)
-    deprecatedTip("ccpProject","CCPoint:project")
-    return pt1:project(pt2)
+    deprecatedTip("ccpProject","cc.pProject")
+    return cc.pProject(pt1,pt2)
 end
 rawset(_G,"ccpProject",ccpProject)
 
 local function ccpRotate(pt1,pt2)
-    deprecatedTip("ccpRotate","CCPoint:rotate")
-    return pt1:rotate(pt2)
+    deprecatedTip("ccpRotate","cc.pRotate")
+    return cc.pRotate(pt1,pt2)
 end
 rawset(_G,"ccpRotate",ccpRotate)
 
 local function ccpUnrotate(pt1,pt2)
-    deprecatedTip("ccpUnrotate","CCPoint:unrotate")
-    return pt1:unrotate(pt2)
+    deprecatedTip("ccpUnrotate","cc.pUnrotate")
+    return cc.pUnrotate(pt1,pt2)
 end
 rawset(_G,"ccpUnrotate",ccpUnrotate)
 
 local function ccpLengthSQ(pt)
-    deprecatedTip("ccpLengthSQ","CCPoint:getLengthSq")
-    return pt:getLengthSq(pt)
+    deprecatedTip("ccpLengthSQ","cc.pLengthSQ")
+    return cc.pLengthSQ(pt)
 end
 rawset(_G,"ccpLengthSQ",ccpLengthSQ)
 
 local function ccpDistanceSQ(pt1,pt2)
-    deprecatedTip("ccpDistanceSQ","CCPoint:__sub(pt1,pt2):getLengthSq")
-    return (CCPoint.__sub(pt1,pt2)):getLengthSq()
+    deprecatedTip("ccpDistanceSQ","cc.pDistanceSQ")
+    return cc.pDistanceSQ(pt1,pt2)
 end
 rawset(_G,"ccpDistanceSQ",ccpDistanceSQ)
 
 local function ccpLength(pt)
-    deprecatedTip("ccpLength","CCPoint:getLength")
-    return pt:getLength()
+    deprecatedTip("ccpLength","cc.pGetLength")
+    return cc.pGetLength(pt)
 end
 rawset(_G,"ccpLength",ccpLength)
 
@@ -468,81 +487,81 @@ end
 rawset(_G,"ccpDistance",ccpDistance)
 
 local function ccpNormalize(pt)
-    deprecatedTip("ccpNormalize","CCPoint:normalize")
-    return pt:normalize()
+    deprecatedTip("ccpNormalize","cc.pNormalize")
+    return cc.pNormalize(pt)
 end
 rawset(_G,"ccpNormalize",ccpNormalize)
 
 local function ccpForAngle(angle)
-    deprecatedTip("ccpForAngle","CCPoint:forAngle")
-    return CCPoint:forAngle(angle)
+    deprecatedTip("ccpForAngle","cc.pForAngle")
+    return cc.pForAngle(angle)
 end
 rawset(_G,"ccpForAngle",ccpForAngle)
 
 local function ccpToAngle(pt)
-    deprecatedTip("ccpToAngle","CCPoint:getAngle")
-    return pt:getAngle()
+    deprecatedTip("ccpToAngle","cc.pToAngleSelf")
+    return cc.pToAngleSelf(pt)
 end
 rawset(_G,"ccpToAngle",ccpToAngle)
 
 local function ccpClamp(pt1,pt2,pt3)
-    deprecatedTip("ccpClamp","CCPoint:getClampPoint")
-    return pt1:getClampPoint(pt2, pt3)
+    deprecatedTip("ccpClamp","cc.pGetClampPoint")
+    return cc.pGetClampPoint(pt1,pt2,pt3)
 end
 rawset(_G,"ccpClamp",ccpClamp)
 
 
 local function ccpFromSize(sz)
-    deprecatedTip("ccpFromSize(sz)","CCPoint(sz)")
-    return CCPoint(sz)
+    deprecatedTip("ccpFromSize(sz)","cc.pFromSize")
+    return cc.pFromSize(sz)
 end
 rawset(_G,"ccpFromSize",ccpFromSize)
 
 local function ccpLerp(pt1,pt2,alpha)
-    deprecatedTip("ccpLerp","CCPoint:lerp")
-    return pt1:lerp(pt2,alpha)
+    deprecatedTip("ccpLerp","cc.pLerp")
+    return cc.pLerp(pt1,pt2,alpha) 
 end
 rawset(_G,"ccpLerp",ccpLerp)
 
 local function ccpFuzzyEqual(pt1,pt2,variance)
-    deprecatedTip("ccpFuzzyEqual","CCPoint:fuzzyEquals")
-    return pt1:fuzzyEquals(pt2,variance)
+    deprecatedTip("ccpFuzzyEqual","cc.pFuzzyEqual")
+    return cc.pFuzzyEqual(pt1,pt2,variance)
 end
 rawset(_G,"ccpFuzzyEqual",ccpFuzzyEqual)
 
 local function ccpCompMult(pt1,pt2)
-    deprecatedTip("ccpCompMult","CCPoint")
-    return CCPoint(pt1.x * pt2.x , pt1.y * pt2.y)
+    deprecatedTip("ccpCompMult","cc.p")
+    return cc.p(pt1.x * pt2.x , pt1.y * pt2.y)
 end
 rawset(_G,"ccpCompMult",ccpCompMult)
 
 local function ccpAngleSigned(pt1,pt2)
-    deprecatedTip("ccpAngleSigned","CCPoint:getAngle")
-    return pt1:getAngle(pt2)
+    deprecatedTip("ccpAngleSigned","cc.pGetAngle")
+    return cc.pGetAngle(pt1, pt2)
 end
 rawset(_G,"ccpAngleSigned",ccpAngleSigned)
 
 local function ccpAngle(pt1,pt2)
-    deprecatedTip("ccpAngle","CCPoint:getAngle")
-    return pt1:getAngle(pt2)
+    deprecatedTip("ccpAngle","cc.pGetAngle")
+    return cc.pGetAngle(pt1,ptw)
 end
 rawset(_G,"ccpAngle",ccpAngle)
 
 local function ccpRotateByAngle(pt1,pt2,angle)
-    deprecatedTip("ccpRotateByAngle","CCPoint:rotateByAngle")
-    return pt1:rotateByAngle(pt2, angle)
+    deprecatedTip("ccpRotateByAngle","cc.pRotateByAngle")
+    return cc.pRotateByAngle(pt1, pt2, angle)
 end
 rawset(_G,"ccpRotateByAngle",ccpRotateByAngle)
 
 local function ccpSegmentIntersect(pt1,pt2,pt3,pt4)
-    deprecatedTip("ccpSegmentIntersect","CCPoint:isSegmentIntersect")
-    return CCPoint:isSegmentIntersect(pt1,pt2,pt3,pt4)
+    deprecatedTip("ccpSegmentIntersect","cc.pIsSegmentIntersect")
+    return cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
 end
 rawset(_G,"ccpSegmentIntersect",ccpSegmentIntersect)
 
 local function ccpIntersectPoint(pt1,pt2,pt3,pt4)
-    deprecatedTip("ccpIntersectPoint","CCPoint:getIntersectPoint")
-    return CCPoint:getIntersectPoint(pt1,pt2,pt3,pt4)
+    deprecatedTip("ccpIntersectPoint","cc.pGetIntersectPoint")
+    return cc.pGetIntersectPoint(pt1,pt2,pt3,pt4)
 end
 rawset(_G,"ccpIntersectPoint",ccpIntersectPoint)
 
@@ -966,11 +985,6 @@ if (kTargetIphone == targetPlatform) or (kTargetIpad == targetPlatform) or (kTar
     rawset(WebSocket,"sendBinaryMsg", WebSocketDeprecated.sendBinaryMsg)
 end
 --functions of WebSocket will be deprecated end
-
---enums of CCParticleSystem will be deprecated begin
-_G["kParticleStartSizeEqualToEndSize"] = _G["kCCParticleStartSizeEqualToEndSize"]
-_G["kParticleDurationInfinity"] = _G["kCCParticleDurationInfinity"]
---enums of CCParticleSystem will be deprecated end
 
 --enums of CCRenderTexture will be deprecated begin
 local CCRenderTextureDeprecated = { }

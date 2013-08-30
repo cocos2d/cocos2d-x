@@ -100,7 +100,6 @@ public class Cocos2dxHelper {
 
 		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
         Cocos2dxBitmap.setContext(activity);
-        Cocos2dxETCLoader.setContext(activity);
 	}
 
     public static Activity getActivity() {

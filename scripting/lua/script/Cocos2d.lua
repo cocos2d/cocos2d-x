@@ -3,6 +3,24 @@ cc = cc or {}
 cc.DIRECTOR_PROJECTION_2D = 0
 cc.DIRECTOR_PROJECTION_3D = 1
 
+function cc.clampf(value, min_inclusive, max_inclusive)
+    -- body
+    local temp = 0
+    if min_inclusive > max_inclusive then
+        temp = min_inclusive 
+        min_inclusive =  max_inclusive
+        max_inclusive = temp
+    end
+
+    if value < min_inclusive then
+        return min_inclusive
+    elseif value < max_inclusive then
+        return value
+    else
+        return max_inclusive
+    end
+end
+
 --Point
 function cc.p(_x,_y)
     if nil == _y then
@@ -22,6 +40,10 @@ end
 
 function cc.pMul(pt1,factor)
     return { x = pt1.x * factor , y = pt1.y * factor }
+end
+
+function cc.pMidpoint(pt1,pt2)
+    return { x = (pt1.x + pt2.x) / 2.0 , y = ( pt1.y + pt2.y) / 2.0 }
 end
 
 function cc.pForAngle(a)
@@ -53,7 +75,7 @@ function cc.pToAngleSelf(self)
     return math.atan2(self.y, self.x)
 end
 
-function cc.pToAngle(self,other)
+function cc.pGetAngle(self,other)
     local a2 = cc.pNormalize(self)
     local b2 = cc.pNormalize(other)
     local angle = math.atan2(cc.pCross(a2, b2), cc.pDot(a2, b2) )
@@ -98,6 +120,78 @@ function cc.pIsLineIntersect(A, B, C, D, s, t)
     return true,s,t
 end
 
+function cc.pPerp(pt)
+    return { x = -pt.y, y = pt.x }
+end
+
+function cc.RPerp(pt)
+    return { x = pt.y,  y = -pt.x }
+end
+
+function cc.pProject(pt1, pt2)
+    return { x = pt2.x * (cc.pDot(pt1,pt2) / cc.pDot(pt2,pt2)) , y = pt2.y * (cc.pDot(pt1,pt2) / cc.pDot(pt2,pt2)) }
+end
+
+function cc.pRotate(pt1, pt2)
+    return { x = pt1.x * pt2.x - pt1.y * pt2.y, y = pt1.x * pt2.y + pt1.y * pt2.x }
+end
+
+function cc.pUnrotate(pt1, pt2)
+    return { x = pt1.x * pt2.x + pt1.y * pt2.y, pt1.y * pt2.x - pt1.x * pt2.y }
+end
+
+function cc.pLengthSQ(pt)
+    return cc.pDot(pt)
+end
+
+function cc.pDistanceSQ(pt1,pt2)
+    return cc.pLengthSQ(cc.pSub(pt1,pt2))
+end
+
+function cc.pGetClampPoint(pt1,pt2,pt3)
+    return { x = cc.clampf(pt1.x, pt2.x, pt3.x), y = cc.clampf(pt1.y, pt2.y, pt3.y) }
+end
+
+function cc.pFromSize(sz)
+    return { x = sz.width, y = sz.height }
+end
+
+function cc.pLerp(pt1,pt2,alpha) 
+    return cc.pAdd(cc.pMul(pt1, 1.0 - alpha), cc.pMul(pt2,alpha) )
+end
+
+function cc.pFuzzyEqual(pt1,pt2,variance)
+    if (pt1.x - variance <= pt2.x) and (pt2.x <= pt1.x + variance) and (pt1.y - variance <= pt2.y) and (pt2.y <= pt1.y + variance) then
+        return true
+    else
+        return false
+    end
+end
+
+function cc.pRotateByAngle(pt1, pt2, angle)
+    return cc.pAdd(pt2, cc.pRotate( cc.pSub(pt1, pt2),cc.pForAngle(angle)))    
+end
+
+function cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
+    local s,t,ret = 0,0,false
+    ret,s,t =cc.pIsLineIntersect(pt1, pt2, pt3, pt4,s,t)
+    
+    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 0.0 then
+        return true;
+    end
+
+    return false
+end
+
+function cc.pGetIntersectPoint(pt1,pt2,pt3,pt4)
+    local s,t, ret = 0,0,false
+    ret,s,t = cc.pIsLineIntersect(pt1,pt2,pt3,pt4,s,t) 
+    if ret then
+        return cc.p(pt1.x + s * (pt2.x - pt1.x), pt1.y + s * (pt2.y - pt1.y))
+    else
+        return cc.p(0,0)
+    end
+end
 --Size
 function cc.size( _width,_height )
     return { width = _width, height = _height }

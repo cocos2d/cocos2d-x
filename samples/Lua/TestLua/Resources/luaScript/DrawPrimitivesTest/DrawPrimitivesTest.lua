@@ -86,55 +86,55 @@ local function drawPrimitivesMainLayer()
         glNode:setAnchorPoint(cc.p(0.5, 0.5))
 
         local function primitivesDraw()
-            gl.DrawPrimitives.ccDrawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
+            cc.DrawPrimitives.ccDrawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
 
             gl.lineWidth( 5.0 )
-            gl.DrawPrimitives.ccDrawColor4B(255,0,0,255)
-            gl.DrawPrimitives.ccDrawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
+            cc.DrawPrimitives.ccDrawColor4B(255,0,0,255)
+            cc.DrawPrimitives.ccDrawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
 
 
 
-            gl.DrawPrimitives.ccPointSize(64)
-            gl.DrawPrimitives.ccDrawColor4B(0, 0, 255, 128)
-            gl.DrawPrimitives.ccDrawPoint(VisibleRect:center())
+            cc.DrawPrimitives.ccPointSize(64)
+            cc.DrawPrimitives.ccDrawColor4B(0, 0, 255, 128)
+            cc.DrawPrimitives.ccDrawPoint(VisibleRect:center())
 
             local points = {cc.p(60,60), cc.p(70,70), cc.p(60,70), cc.p(70,60) }
-            gl.DrawPrimitives.ccPointSize(4)
-            gl.DrawPrimitives.ccDrawColor4B(0,255,255,255)
-            gl.DrawPrimitives.ccDrawPoints(points,4)
+            cc.DrawPrimitives.ccPointSize(4)
+            cc.DrawPrimitives.ccDrawColor4B(0,255,255,255)
+            cc.DrawPrimitives.ccDrawPoints(points,4)
 
             gl.lineWidth(16)
-            gl.DrawPrimitives.ccDrawColor4B(0, 255, 0, 255)
-            gl.DrawPrimitives.ccDrawCircle( VisibleRect:center(), 100, 0, 10, false)
+            cc.DrawPrimitives.ccDrawColor4B(0, 255, 0, 255)
+            cc.DrawPrimitives.ccDrawCircle( VisibleRect:center(), 100, 0, 10, false)
 
             gl.lineWidth(2)
-            gl.DrawPrimitives.ccDrawColor4B(0, 255, 255, 255)
-            gl.DrawPrimitives.ccDrawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
+            cc.DrawPrimitives.ccDrawColor4B(0, 255, 255, 255)
+            cc.DrawPrimitives.ccDrawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
 
             gl.lineWidth(2)
-            gl.DrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
-            gl.DrawPrimitives.ccDrawSolidCircle( cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 40, math.rad(90), 50, 1.0, 1.0)
+            cc.DrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
+            cc.DrawPrimitives.ccDrawSolidCircle( cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 40, math.rad(90), 50, 1.0, 1.0)
 
             gl.lineWidth(10)
-            gl.DrawPrimitives.ccDrawColor4B(255, 255, 0, 255)
+            cc.DrawPrimitives.ccDrawColor4B(255, 255, 0, 255)
             local yellowPoints = { cc.p(0,0), cc.p(50,50), cc.p(100,50), cc.p(100,100), cc.p(50,100)}
-            gl.DrawPrimitives.ccDrawPoly( yellowPoints, 5, false)
+            cc.DrawPrimitives.ccDrawPoly( yellowPoints, 5, false)
 
             gl.lineWidth(1)
             local filledVertices = { cc.p(0,120), cc.p(50,120), cc.p(50,170), cc.p(25,200), cc.p(0,170) }
-            gl.DrawPrimitives.ccDrawSolidPoly(filledVertices, 5, cc.c4f(0.5, 0.5, 1, 1))
+            cc.DrawPrimitives.ccDrawSolidPoly(filledVertices, 5, cc.c4f(0.5, 0.5, 1, 1))
 
             gl.lineWidth(2)
-            gl.DrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
+            cc.DrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
             local closePoints= { cc.p(30,130), cc.p(30,230), cc.p(50,200) }
-            gl.DrawPrimitives.ccDrawPoly( closePoints, 3, true)
+            cc.DrawPrimitives.ccDrawPoly( closePoints, 3, true)
 
-            gl.DrawPrimitives.ccDrawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
+            cc.DrawPrimitives.ccDrawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
 
-            gl.DrawPrimitives.ccDrawCubicBezier(VisibleRect:center(), cc.p(VisibleRect:center().x + 30, VisibleRect:center().y + 50), cc.p(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
+            cc.DrawPrimitives.ccDrawCubicBezier(VisibleRect:center(), cc.p(VisibleRect:center().x + 30, VisibleRect:center().y + 50), cc.p(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
 
             local solidvertices = {cc.p(60,160), cc.p(70,190), cc.p(100,190), cc.p(90,160)}
-            gl.DrawPrimitives.ccDrawSolidPoly( solidvertices, 4, cc.c4f(1, 1, 0, 1) )
+            cc.DrawPrimitives.ccDrawSolidPoly( solidvertices, 4, cc.c4f(1, 1, 0, 1) )
 
             local array = {
                 cc.p(0, 0),
@@ -143,13 +143,13 @@ local function drawPrimitivesMainLayer()
                 cc.p(0, size.height - 80),
                 cc.p(0, 0),
             }
-            gl.DrawPrimitives.ccDrawCatmullRom( array, 5)
+            cc.DrawPrimitives.ccDrawCatmullRom( array, 5)
 
-            gl.DrawPrimitives.ccDrawCardinalSpline( array, 0,100)
+            cc.DrawPrimitives.ccDrawCardinalSpline( array, 0,100)
 
             gl.lineWidth(1)
-            gl.DrawPrimitives.ccDrawColor4B(255,255,255,255)
-            gl.DrawPrimitives.ccPointSize(1)
+            cc.DrawPrimitives.ccDrawColor4B(255,255,255,255)
+            cc.DrawPrimitives.ccPointSize(1)
         end
 
         glNode:registerScriptDrawHandler(primitivesDraw)
