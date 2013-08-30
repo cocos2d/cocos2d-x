@@ -251,11 +251,10 @@ static int tolua_cocos2d_Menu_create(lua_State* tolua_S)
         uint32_t i = 1;
         while (i <= argc)
         {
+#if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, 1 + i, "MenuItem", 0, &tolua_err))
-            {
                 goto tolua_lerror;
-                return 0;
-            }
+#endif
             
             cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
             if (NULL != item)
@@ -660,6 +659,8 @@ static int tolua_cocos2d_Layer_registerScriptKeypadHandler(lua_State* tolua_S)
 	}
 #endif
     
+    argc = lua_gettop(tolua_S) - 1;
+    
     if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
@@ -704,6 +705,8 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
 		return 0;
 	}
 #endif
+    
+    argc = lua_gettop(tolua_S) - 1;
     
     if (0 == argc)
     {
@@ -927,11 +930,10 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
         uint32_t i = 1;
         while (i <= argc)
         {
+#if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, 1 + i, "Object", 0, &tolua_err))
-            {
                 goto tolua_lerror;
-                return 0;
-            }
+#endif
             
             cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
             if (NULL != item)
@@ -1248,11 +1250,10 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
         uint32_t i = 1;
         while (i <= argc)
         {
+#if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(tolua_S, 1 + i, "Object", 0, &tolua_err))
-            {
                 goto tolua_lerror;
-                return 0;
-            }
+#endif
             
             cocos2d::Object* item = static_cast<cocos2d::Object*>(tolua_tousertype(tolua_S, 1 + i, NULL));
             if (NULL != item)
@@ -1603,9 +1604,9 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
     
     int argc = 0;
     DrawNode* self = nullptr;
-    
-#if COCOS2D_DEBUG >= 1
+  
     tolua_Error tolua_err;
+#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
     
@@ -1645,7 +1646,9 @@ static int tolua_cocos2d_DrawNode_drawPolygon(lua_State* tolua_S)
                 if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
                 {
                     CC_SAFE_DELETE_ARRAY(points);
+#if COCOS2D_DEBUG >= 1
                     goto tolua_lerror;
+#endif
                 }
                 
                 if(!luaval_to_point(tolua_S, lua_gettop(tolua_S), &points[i]))

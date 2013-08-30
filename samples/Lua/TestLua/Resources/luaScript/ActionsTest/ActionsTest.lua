@@ -954,7 +954,7 @@ local function ActionFollow()
         local x = winSize.width * 2 - 100
         local y = winSize.height
         local vertices = { cc.p(5, 5), cc.p(x - 5, 5), cc.p(x - 5,y - 5), cc.p(5,y - 5) }
-        gl.DrawPrimitives.ccDrawPoly(vertices, 4, true)
+        cc.DrawPrimitives.ccDrawPoly(vertices, 4, true)
     end
 
     local glNode  = gl.glNodeCreate()
