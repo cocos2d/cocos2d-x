@@ -1,5 +1,34 @@
 #include "PerformanceNodeChildrenTest.h"
 
+using namespace cocos2d;
+
+// Enable profiles for this file
+#undef CC_PROFILER_DISPLAY_TIMERS
+#define CC_PROFILER_DISPLAY_TIMERS() CCProfiler::sharedProfiler()->displayTimers()
+#undef CC_PROFILER_PURGE_ALL
+#define CC_PROFILER_PURGE_ALL() CCProfiler::sharedProfiler()->releaseAllTimers()
+
+#undef CC_PROFILER_START
+#define CC_PROFILER_START(__name__) CCProfilingBeginTimingBlock(__name__)
+#undef CC_PROFILER_STOP
+#define CC_PROFILER_STOP(__name__) CCProfilingEndTimingBlock(__name__)
+#undef CC_PROFILER_RESET
+#define CC_PROFILER_RESET(__name__) CCProfilingResetTimingBlock(__name__)
+
+#undef CC_PROFILER_START_CATEGORY
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingBeginTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_STOP_CATEGORY
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingEndTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_RESET_CATEGORY
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingResetTimingBlock(__name__); } while(0)
+
+#undef CC_PROFILER_START_INSTANCE
+#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ CCProfilingBeginTimingBlock( CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_STOP_INSTANCE
+#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ CCProfilingEndTimingBlock(    CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_RESET_INSTANCE
+#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ CCProfilingResetTimingBlock( CCString::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+
 enum {
     kTagInfoLayer = 1,
     kTagMainLayer = 2,
@@ -26,6 +55,28 @@ NodeChildrenMenuLayer::NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxC
 : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
 {
 
+}
+
+void NodeChildrenMenuLayer::onExitTransitionDidStart()
+{
+    CCDirector* director = CCDirector::sharedDirector();
+    CCScheduler* sched = director->getScheduler();
+    
+    sched->unscheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this);
+}
+
+void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
+{
+    CCDirector* director = CCDirector::sharedDirector();
+    CCScheduler* sched = director->getScheduler();
+    
+    CC_PROFILER_PURGE_ALL();
+    sched->scheduleSelector(SEL_SCHEDULE(&NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
+}
+
+void NodeChildrenMenuLayer::dumpProfilerInfo(float dt)
+{
+	CC_PROFILER_DISPLAY_TIMERS();
 }
 
 void NodeChildrenMenuLayer::showCurrentTest()
@@ -232,7 +283,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
     CCArray* pChildren = batchNode->getChildren();
     CCObject* pObject = NULL;
 
-    CC_PROFILER_START_INSTANCE(this, this->profilerName());
+    CC_PROFILER_START_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
@@ -240,7 +291,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
         pSprite->setVisible(false);
     }
 
-    CC_PROFILER_STOP_INSTANCE(this, this->profilerName());
+    CC_PROFILER_STOP_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
 }
 
 std::string IterateSpriteSheetFastEnum::title()
@@ -317,7 +368,7 @@ void CallFuncsSpriteSheetCMacro::update(float dt)
 
 std::string CallFuncsSpriteSheetCMacro::title()
 {
-    return "E - 'map' functional call";
+    return "C - 'map' functional call";
 }
 
 std::string CallFuncsSpriteSheetCMacro::subtitle()
@@ -439,7 +490,7 @@ void GetSpriteSheet::update(float dt)
 
 std::string GetSpriteSheet::title()
 {
-    return "G - getChildByTag from spritesheet";
+    return "E - getChildByTag from spritesheet";
 }
 
 std::string GetSpriteSheet::subtitle()
@@ -502,7 +553,7 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "F - Add to spritesheet";
+    return "D - Add to spritesheet";
 }
 
 std::string AddSpriteSheet::subtitle()
@@ -558,7 +609,7 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "H - Del from spritesheet";
+    return "F - Del from spritesheet";
 }
 
 std::string RemoveSpriteSheet::subtitle()
@@ -624,7 +675,7 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "I - Reorder from spritesheet";
+    return "G - Reorder from spritesheet";
 }
 
 std::string ReorderSpriteSheet::subtitle()
@@ -700,7 +751,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
 
 std::string SortAllChildrenSpriteSheet::title()
 {
-    return "J - Sort All Children from spritesheet";
+    return "H - Sort All Children from spritesheet";
 }
 
 std::string SortAllChildrenSpriteSheet::subtitle()
