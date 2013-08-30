@@ -220,8 +220,8 @@ end
 rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
 
 function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
-    deprecatedTip("ccPointSize","cc.DrawPrimitives.pointSize")
-    return cc.DrawPrimitives.pointSize(pointSize)
+    deprecatedTip("ccPointSize","cc.DrawPrimitives.setPointSize")
+    return cc.DrawPrimitives.setPointSize(pointSize)
 end
 rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
 --functions of CCDrawPrimitives will be deprecated end
