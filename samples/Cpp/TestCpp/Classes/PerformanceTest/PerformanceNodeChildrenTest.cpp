@@ -283,7 +283,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
     CCArray* pChildren = batchNode->getChildren();
     CCObject* pObject = NULL;
 
-    CC_PROFILER_START_INSTANCE(reinterpret_cast<unsigned int>(this), this->profilerName());
+    CC_PROFILER_START_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
@@ -291,7 +291,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
         pSprite->setVisible(false);
     }
 
-    CC_PROFILER_STOP_INSTANCE(reinterpret_cast<unsigned int>(this), this->profilerName());
+    CC_PROFILER_STOP_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
 }
 
 std::string IterateSpriteSheetFastEnum::title()
