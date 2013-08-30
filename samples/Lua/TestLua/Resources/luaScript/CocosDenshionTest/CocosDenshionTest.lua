@@ -1,6 +1,8 @@
 require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
 local MUSIC_FILE  = "background.mp3"
+-- uncomment for BlackBerry
+-- local MUSIC_FILE = "background.ogg"
 
 local LINE_SPACE = 40
 
