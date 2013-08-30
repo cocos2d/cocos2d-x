@@ -6463,9 +6463,9 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: pointSize in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_pointSize00
-static int tolua_cocos2d_DrawPrimitives_pointSize00(lua_State* tolua_S)
+/* function: setPointSize in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_setPointSize00
+static int tolua_cocos2d_DrawPrimitives_setPointSize00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6483,7 +6483,7 @@ static int tolua_cocos2d_DrawPrimitives_pointSize00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'pointSize'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'setPointSize'.",&tolua_err);
     return 0;
 #endif
 }
@@ -6569,7 +6569,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S,"drawCardinalSpline",tolua_cocos2d_DrawPrimitives_drawCardinalSpline00);
         tolua_function(tolua_S,"drawColor4B",tolua_cocos2d_DrawPrimitives_drawColor4B00);
         tolua_function(tolua_S,"drawColor4F",tolua_cocos2d_DrawPrimitives_drawColor4F00);
-        tolua_function(tolua_S,"pointSize",tolua_cocos2d_DrawPrimitives_pointSize00);
+        tolua_function(tolua_S,"setPointSize",tolua_cocos2d_DrawPrimitives_setPointSize00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     tolua_module(tolua_S, "gl", 0);

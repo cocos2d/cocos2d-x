@@ -94,12 +94,12 @@ local function drawPrimitivesMainLayer()
 
 
 
-            cc.DrawPrimitives.pointSize(64)
+            cc.DrawPrimitives.setPointSize(64)
             cc.DrawPrimitives.drawColor4B(0, 0, 255, 128)
             cc.DrawPrimitives.drawPoint(VisibleRect:center())
 
             local points = {cc.p(60,60), cc.p(70,70), cc.p(60,70), cc.p(70,60) }
-            cc.DrawPrimitives.pointSize(4)
+            cc.DrawPrimitives.setPointSize(4)
             cc.DrawPrimitives.drawColor4B(0,255,255,255)
             cc.DrawPrimitives.drawPoints(points,4)
 
@@ -149,7 +149,7 @@ local function drawPrimitivesMainLayer()
 
             gl.lineWidth(1)
             cc.DrawPrimitives.drawColor4B(255,255,255,255)
-            cc.DrawPrimitives.pointSize(1)
+            cc.DrawPrimitives.setPointSize(1)
         end
 
         glNode:registerScriptDrawHandler(primitivesDraw)
