@@ -146,82 +146,82 @@ _G["CCDrawPrimitives"] = CCDrawPrimitivesClassDeprecated()
 --functions of CCDrawPrimitives will be deprecated begin
 local CCDrawPrimitivesDeprecated = { }
 function CCDrawPrimitivesDeprecated.ccDrawPoint(pt)
-    deprecatedTip("ccDrawPoint","CCDrawPrimitives.ccDrawPoint")
-    return CCDrawPrimitives.ccDrawPoint(pt)
+    deprecatedTip("ccDrawPoint","cc.DrawPrimitives.drawPoint")
+    return cc.DrawPrimitives.drawPoint(pt)
 end
 rawset(_G, "ccDrawPoint", CCDrawPrimitivesDeprecated.ccDrawPoint)
 
 function CCDrawPrimitivesDeprecated.ccDrawLine(origin,destination)
-    deprecatedTip("ccDrawLine","CCDrawPrimitives.ccDrawLine")
-    return CCDrawPrimitives.ccDrawLine(origin,destination)
+    deprecatedTip("ccDrawLine","cc.DrawPrimitives.drawLine")
+    return cc.DrawPrimitives.drawLine(origin,destination)
 end
 rawset(_G, "ccDrawLine", CCDrawPrimitivesDeprecated.ccDrawLine)
 
 function CCDrawPrimitivesDeprecated.ccDrawRect(origin,destination)
-    deprecatedTip("ccDrawRect","CCDrawPrimitives.ccDrawRect")
-    return CCDrawPrimitives.ccDrawRect(origin,destination)
+    deprecatedTip("ccDrawRect","cc.DrawPrimitives.drawRect")
+    return cc.DrawPrimitives.drawRect(origin,destination)
 end
 rawset(_G, "ccDrawRect", CCDrawPrimitivesDeprecated.ccDrawRect)
 
 function CCDrawPrimitivesDeprecated.ccDrawSolidRect(origin,destination,color)
-    deprecatedTip("ccDrawSolidRect","CCDrawPrimitives.ccDrawSolidRect")
-    return CCDrawPrimitives.ccDrawSolidRect(origin,destination,color)
+    deprecatedTip("ccDrawSolidRect","cc.DrawPrimitives.drawSolidRect")
+    return cc.DrawPrimitives.drawSolidRect(origin,destination,color)
 end
 rawset(_G, "ccDrawSolidRect", CCDrawPrimitivesDeprecated.ccDrawSolidRect)
 
 -- params:... may represent two param(xScale,yScale) or nil
 function CCDrawPrimitivesDeprecated.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
-    deprecatedTip("ccDrawCircle","CCDrawPrimitives.ccDrawCircle")
-    return CCDrawPrimitives.ccDrawCircle(center,radius,angle,segments,drawLineToCenter,...)
+    deprecatedTip("ccDrawCircle","cc.DrawPrimitives.drawCircle")
+    return cc.DrawPrimitives.drawCircle(center,radius,angle,segments,drawLineToCenter,...)
 end
 rawset(_G, "ccDrawCircle", CCDrawPrimitivesDeprecated.ccDrawCircle)
 
 -- params:... may represent two param(xScale,yScale) or nil
 function CCDrawPrimitivesDeprecated.ccDrawSolidCircle(center,radius,angle,segments,...)
-    deprecatedTip("ccDrawSolidCircle","CCDrawPrimitives.ccDrawSolidCircle")
-    return CCDrawPrimitives.ccDrawSolidCircle(center,radius,angle,segments,...)
+    deprecatedTip("ccDrawSolidCircle","cc.DrawPrimitives.drawSolidCircle")
+    return cc.DrawPrimitives.drawSolidCircle(center,radius,angle,segments,...)
 end
 rawset(_G, "ccDrawSolidCircle", CCDrawPrimitivesDeprecated.ccDrawSolidCircle)
 
 function CCDrawPrimitivesDeprecated.ccDrawQuadBezier(origin,control,destination,segments)
-    deprecatedTip("ccDrawQuadBezier","CCDrawPrimitives.ccDrawQuadBezier")
-    return CCDrawPrimitives.ccDrawQuadBezier(origin,control,destination,segments)
+    deprecatedTip("ccDrawQuadBezier","cc.DrawPrimitives.drawQuadBezier")
+    return cc.DrawPrimitives.drawQuadBezier(origin,control,destination,segments)
 end
 rawset(_G, "ccDrawQuadBezier", CCDrawPrimitivesDeprecated.ccDrawQuadBezier)
 
 function CCDrawPrimitivesDeprecated.ccDrawCubicBezier(origin,control1,control2,destination,segments)
-    deprecatedTip("ccDrawCubicBezier","CCDrawPrimitives.ccDrawCubicBezier")
-    return CCDrawPrimitives.ccDrawCubicBezier(origin,control1,control2,destination,segments)
+    deprecatedTip("ccDrawCubicBezier","cc.DrawPrimitives.drawCubicBezier")
+    return cc.DrawPrimitives.drawCubicBezier(origin,control1,control2,destination,segments)
 end
 rawset(_G, "ccDrawCubicBezier", CCDrawPrimitivesDeprecated.ccDrawCubicBezier)
 
 function CCDrawPrimitivesDeprecated.ccDrawCatmullRom(arrayOfControlPoints,segments)
-    deprecatedTip("ccDrawCatmullRom","CCDrawPrimitives.ccDrawCatmullRom")
-    return CCDrawPrimitives.ccDrawCatmullRom(arrayOfControlPoints,segments)
+    deprecatedTip("ccDrawCatmullRom","cc.DrawPrimitives.drawCatmullRom")
+    return cc.DrawPrimitives.drawCatmullRom(arrayOfControlPoints,segments)
 end
 rawset(_G, "ccDrawCatmullRom", CCDrawPrimitivesDeprecated.ccDrawCatmullRom)
 
 function CCDrawPrimitivesDeprecated.ccDrawCardinalSpline(config,tension,segments)
-    deprecatedTip("ccDrawCardinalSpline","CCDrawPrimitives.ccDrawCardinalSpline")
-    return CCDrawPrimitives.ccDrawCardinalSpline(config,tension,segments)
+    deprecatedTip("ccDrawCardinalSpline","cc.DrawPrimitives.drawCardinalSpline")
+    return cc.DrawPrimitives.drawCardinalSpline(config,tension,segments)
 end
 rawset(_G, "ccDrawCardinalSpline", CCDrawPrimitivesDeprecated.ccDrawCardinalSpline)
 
 function CCDrawPrimitivesDeprecated.ccDrawColor4B(r,g,b,a)
-    deprecatedTip("ccDrawColor4B","CCDrawPrimitives.ccDrawColor4B")
-    return CCDrawPrimitives.ccDrawColor4B(r,g,b,a)
+    deprecatedTip("ccDrawColor4B","cc.DrawPrimitives.drawColor4B")
+    return cc.DrawPrimitives.drawColor4B(r,g,b,a)
 end
 rawset(_G, "ccDrawColor4B", CCDrawPrimitivesDeprecated.ccDrawColor4B)
 
 function CCDrawPrimitivesDeprecated.ccDrawColor4F(r,g,b,a)
-    deprecatedTip("ccDrawColor4F","CCDrawPrimitives.ccDrawColor4F")
-    return CCDrawPrimitives.ccDrawColor4F(r,g,b,a)
+    deprecatedTip("ccDrawColor4F","cc.DrawPrimitives.drawColor4F")
+    return cc.DrawPrimitives.drawColor4F(r,g,b,a)
 end
 rawset(_G, "ccDrawColor4F", CCDrawPrimitivesDeprecated.ccDrawColor4F)
 
 function CCDrawPrimitivesDeprecated.ccPointSize(pointSize)
-    deprecatedTip("ccPointSize","CCDrawPrimitives.ccPointSize")
-    return CCDrawPrimitives.ccPointSize(pointSize)
+    deprecatedTip("ccPointSize","cc.DrawPrimitives.pointSize")
+    return cc.DrawPrimitives.pointSize(pointSize)
 end
 rawset(_G, "ccPointSize", CCDrawPrimitivesDeprecated.ccPointSize)
 --functions of CCDrawPrimitives will be deprecated end

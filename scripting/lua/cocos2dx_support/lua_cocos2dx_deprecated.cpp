@@ -4953,8 +4953,8 @@ static int extendCardinalSplineByDeprecated(lua_State* tolua_S)
 }
 
 
-extern int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S);
-static int tolua_cocos2d_CCDrawPrimitives_ccDrawCardinalSpline_deprecate00(lua_State* tolua_S)
+extern int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S);
+static int tolua_cocos2d_DrawPrimitives_drawCardinalSpline_deprecate00(lua_State* tolua_S)
 {
     tolua_Error tolua_err;
     if (
@@ -4973,11 +4973,11 @@ static int tolua_cocos2d_CCDrawPrimitives_ccDrawCardinalSpline_deprecate00(lua_S
     }
     return 0;
 tolua_lerror:
-    return tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(tolua_S);
+    return tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(tolua_S);
 }
 
-extern int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S);
-static int tolua_cocos2d_CCDrawPrimitives_ccDrawCatmullRom_deprecated00(lua_State* tolua_S)
+extern int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S);
+static int tolua_cocos2d_DrawPrimitives_drawCatmullRom_deprecated00(lua_State* tolua_S)
 {
     
     tolua_Error tolua_err;
@@ -4995,7 +4995,7 @@ static int tolua_cocos2d_CCDrawPrimitives_ccDrawCatmullRom_deprecated00(lua_Stat
     }
     return 0;
 tolua_lerror:
-    return tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(tolua_S);
+    return tolua_cocos2d_DrawPrimitives_drawCatmullRom00(tolua_S);
 }
 
 static int extendDrawPrimitivesDeprecated(lua_State* tolua_S)
@@ -5011,12 +5011,12 @@ static int extendDrawPrimitivesDeprecated(lua_State* tolua_S)
             lua_gettable(tolua_S, -2);//statck:_G,glMoudle,gl.DrawPrimitives
             if (lua_istable(tolua_S,-1))//statck:_G,glMoudle,gl.DrawPrimitives
             {
-                lua_pushstring(tolua_S,"ccDrawCardinalSpline");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
-                lua_pushcfunction(tolua_S,tolua_cocos2d_CCDrawPrimitives_ccDrawCardinalSpline_deprecate00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
+                lua_pushstring(tolua_S,"drawCardinalSpline");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
+                lua_pushcfunction(tolua_S,tolua_cocos2d_DrawPrimitives_drawCardinalSpline_deprecate00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
                 lua_rawset(tolua_S,-3);//statck:_G,glMoudle,gl.DrawPrimitives
                 
-                lua_pushstring(tolua_S,"ccDrawCatmullRom");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
-                lua_pushcfunction(tolua_S,tolua_cocos2d_CCDrawPrimitives_ccDrawCatmullRom_deprecated00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
+                lua_pushstring(tolua_S,"drawCatmullRom");//statck:_G,glMoudle,gl.DrawPrimitives keyValue
+                lua_pushcfunction(tolua_S,tolua_cocos2d_DrawPrimitives_drawCatmullRom_deprecated00);//statck:_G,glMoudle,gl.DrawPrimitives keyValue,func
                 lua_rawset(tolua_S,-3);//statck:_G,glMoudle,gl.DrawPrimitives
             }
             lua_pop(tolua_S, 1);//statck:_G,glMoudle

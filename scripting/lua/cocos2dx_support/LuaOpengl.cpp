@@ -5833,8 +5833,8 @@ tolua_lerror:
 }
 
 /* function: DrawPoint in the DrawPrimitives namespace */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00(lua_State* tolua_S)
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_ccDrawPoint00
+static int tolua_cocos2d_DrawPrimitives_drawPoint00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5854,15 +5854,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawPoint'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawPoint'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawPoints in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00(lua_State* tolua_S)
+/* function: drawPoints in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_DrawPoints00
+static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5908,15 +5908,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawPoints'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawPoints'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawLine in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00(lua_State* tolua_S)
+/* function: drawLine in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawLine00
+static int tolua_cocos2d_DrawPrimitives_drawLine00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5941,15 +5941,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawLine'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawLine'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawRect in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00(lua_State* tolua_S)
+/* function: drawRect in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawRect00
+static int tolua_cocos2d_DrawPrimitives_drawRect00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5974,15 +5974,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawRect'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawRect'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawSolidRect in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00(lua_State* tolua_S)
+/* function: drawSolidRect in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_DrawPrimitives_drawSolidRect00
+static int tolua_cocos2d_DrawPrimitives_drawSolidRect00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6014,15 +6014,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawSolidRect'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawSolidRect'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawPoly in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00(lua_State* tolua_S)
+/* function: drawPoly in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawPoly00
+static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6076,9 +6076,9 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawSolidPoly in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00(lua_State* tolua_S)
+/* function: drawSolidPoly in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawSolidPoly00
+static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6132,15 +6132,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawSolidPoly'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawSolidPoly'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawCircle in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00(lua_State* tolua_S)
+/* function: drawCircle in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCircle00
+static int tolua_cocos2d_DrawPrimitives_drawCircle00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6174,15 +6174,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawCircle'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawCircle'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawSolidCircle in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00(lua_State* tolua_S)
+/* function: drawSolidCircle in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawSolidCircle00
+static int tolua_cocos2d_DrawPrimitives_drawSolidCircle00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6212,16 +6212,16 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00(lua_State* tolua_S
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawSolidCircle'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawSolidCircle'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
 
-/* function: ccDrawQuadBezier in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00(lua_State* tolua_S)
+/* function: drawQuadBezier in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawQuadBezier00
+static int tolua_cocos2d_DrawPrimitives_drawQuadBezier00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6254,15 +6254,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawQuadBezier'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawQuadBezier'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawCubicBezier in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00(lua_State* tolua_S)
+/* function: drawCubicBezier in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCubicBezier00
+static int tolua_cocos2d_DrawPrimitives_drawCubicBezier00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6301,15 +6301,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00(lua_State* tolua_S
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawCubicBezier'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawCubicBezier'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawCatmullRom in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00
-int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S)
+/* function: drawCatmullRom in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCatmullRom00
+int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6347,15 +6347,15 @@ int tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawCatmullRom'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawCatmullRom'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawCardinalSpline in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00
-int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S)
+/* function: drawCardinalSpline in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCardinalSpline00
+int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6393,15 +6393,15 @@ int tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawCardinalSpline'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawCardinalSpline'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawColor4B in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00(lua_State* tolua_S)
+/* function: drawColor4B in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawColor4B00
+static int tolua_cocos2d_DrawPrimitives_drawColor4B00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6425,15 +6425,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawColor4B'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawColor4B'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccDrawColor4F in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00
-static int tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00(lua_State* tolua_S)
+/* function: drawColor4F in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawColor4F00
+static int tolua_cocos2d_DrawPrimitives_drawColor4F00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6457,15 +6457,15 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccDrawColor4F'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'drawColor4F'.",&tolua_err);
     return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: ccPointSize in the DrawPrimitives namespace*/
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCDrawPrimitives_ccPointSize00
-static int tolua_Cocos2d_CCDrawPrimitives_ccPointSize00(lua_State* tolua_S)
+/* function: pointSize in the DrawPrimitives namespace*/
+#ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_pointSize00
+static int tolua_cocos2d_DrawPrimitives_pointSize00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -6483,7 +6483,7 @@ static int tolua_Cocos2d_CCDrawPrimitives_ccPointSize00(lua_State* tolua_S)
     return 0;
 #ifndef TOLUA_RELEASE
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'ccPointSize'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'pointSize'.",&tolua_err);
     return 0;
 #endif
 }
@@ -6554,22 +6554,22 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
       tolua_endmodule(tolua_S);
     tolua_module(tolua_S, "DrawPrimitives", 0);
       tolua_beginmodule(tolua_S,"DrawPrimitives");
-        tolua_function(tolua_S,"ccDrawPoint",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoint00);
-        tolua_function(tolua_S,"ccDrawPoints",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoints00);
-        tolua_function(tolua_S,"ccDrawLine",tolua_Cocos2d_CCDrawPrimitives_ccDrawLine00);
-        tolua_function(tolua_S,"ccDrawRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawRect00);
-        tolua_function(tolua_S,"ccDrawSolidRect",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidRect00);
-        tolua_function(tolua_S,"ccDrawPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawPoly00);
-        tolua_function(tolua_S,"ccDrawSolidPoly",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidPoly00);
-        tolua_function(tolua_S,"ccDrawCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawCircle00);
-        tolua_function(tolua_S,"ccDrawSolidCircle",tolua_Cocos2d_CCDrawPrimitives_ccDrawSolidCircle00);
-        tolua_function(tolua_S,"ccDrawQuadBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawQuadBezier00);
-        tolua_function(tolua_S,"ccDrawCubicBezier",tolua_Cocos2d_CCDrawPrimitives_ccDrawCubicBezier00);
-        tolua_function(tolua_S,"ccDrawCatmullRom",tolua_Cocos2d_CCDrawPrimitives_ccDrawCatmullRom00);
-        tolua_function(tolua_S,"ccDrawCardinalSpline",tolua_Cocos2d_CCDrawPrimitives_ccDrawCardinalSpline00);
-        tolua_function(tolua_S,"ccDrawColor4B",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4B00);
-        tolua_function(tolua_S,"ccDrawColor4F",tolua_Cocos2d_CCDrawPrimitives_ccDrawColor4F00);
-        tolua_function(tolua_S,"ccPointSize",tolua_Cocos2d_CCDrawPrimitives_ccPointSize00);
+        tolua_function(tolua_S,"drawPoint",tolua_cocos2d_DrawPrimitives_drawPoint00);
+        tolua_function(tolua_S,"drawPoints",tolua_cocos2d_DrawPrimitives_drawPoints00);
+        tolua_function(tolua_S,"drawLine",tolua_cocos2d_DrawPrimitives_drawLine00);
+        tolua_function(tolua_S,"drawRect",tolua_cocos2d_DrawPrimitives_drawRect00);
+        tolua_function(tolua_S,"drawSolidRect",tolua_cocos2d_DrawPrimitives_drawSolidRect00);
+        tolua_function(tolua_S,"drawPoly",tolua_cocos2d_DrawPrimitives_drawPoly00);
+        tolua_function(tolua_S,"drawSolidPoly",tolua_cocos2d_DrawPrimitives_drawSolidPoly00);
+        tolua_function(tolua_S,"drawCircle",tolua_cocos2d_DrawPrimitives_drawCircle00);
+        tolua_function(tolua_S,"drawSolidCircle",tolua_cocos2d_DrawPrimitives_drawSolidCircle00);
+        tolua_function(tolua_S,"drawQuadBezier",tolua_cocos2d_DrawPrimitives_drawQuadBezier00);
+        tolua_function(tolua_S,"drawCubicBezier",tolua_cocos2d_DrawPrimitives_drawCubicBezier00);
+        tolua_function(tolua_S,"drawCatmullRom",tolua_cocos2d_DrawPrimitives_drawCatmullRom00);
+        tolua_function(tolua_S,"drawCardinalSpline",tolua_cocos2d_DrawPrimitives_drawCardinalSpline00);
+        tolua_function(tolua_S,"drawColor4B",tolua_cocos2d_DrawPrimitives_drawColor4B00);
+        tolua_function(tolua_S,"drawColor4F",tolua_cocos2d_DrawPrimitives_drawColor4F00);
+        tolua_function(tolua_S,"pointSize",tolua_cocos2d_DrawPrimitives_pointSize00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     tolua_module(tolua_S, "gl", 0);
