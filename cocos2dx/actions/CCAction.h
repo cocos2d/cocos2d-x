@@ -33,11 +33,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-enum {
-    //! Default tag
-    kActionTagInvalid = -1,
-};
-
 /**
  * @addtogroup actions
  * @{
@@ -49,6 +44,9 @@ enum {
 class CC_DLL Action : public Object, public Clonable
 {
 public:
+    /// Default tag used for all the actions
+    static const int INVALID_TAG = -1;
+
     Action(void);
 
     virtual ~Action(void);
