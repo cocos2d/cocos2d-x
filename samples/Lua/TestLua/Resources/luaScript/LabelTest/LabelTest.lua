@@ -320,8 +320,8 @@ end
 
 function Atlas4.draw()
     local s = cc.Director:getInstance():getWinSize()
-    cc.DrawPrimitives.ccDrawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2) )
-    cc.DrawPrimitives.ccDrawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height) )
+    cc.DrawPrimitives.drawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2) )
+    cc.DrawPrimitives.drawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height) )
 end
 
 function Atlas4.step(dt)
