@@ -138,14 +138,8 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
-    void extendNode(lua_State* lua_S);
-    void extendMenuItem(lua_State* lua_S);
-    void extendLayer(lua_State* lua_S);
-    void extendControl(lua_State* lua_S);
     void extendWebsocket(lua_State* lua_S);
     void extendGLNode(lua_State* lua_S);
-    void extendScrollView(lua_State* lua_S);
-    void extendDrawNode(lua_State* lua_S);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

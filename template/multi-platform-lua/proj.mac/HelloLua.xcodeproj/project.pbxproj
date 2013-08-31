@@ -28,6 +28,9 @@
 		1501825E17A74F8000E674E5 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1501825717A74F8000E674E5 /* Opengl.lua */; };
 		1501825F17A74F8000E674E5 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1501825817A74F8000E674E5 /* OpenglConstants.lua */; };
 		1501826E17A7513400E674E5 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A02F0B17A64D060035E92B /* libchipmunk Mac.a */; };
+		1525770C17CEFB6300BE417B /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770917CEFB6200BE417B /* DeprecatedClass.lua */; };
+		1525770D17CEFB6300BE417B /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */; };
+		1525770E17CEFB6300BE417B /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */; };
 		15A02F3817A64D1E0035E92B /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2417A64D1E0035E92B /* background.mp3 */; };
 		15A02F3917A64D1E0035E92B /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2517A64D1E0035E92B /* background.ogg */; };
 		15A02F3C17A64D1E0035E92B /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F2817A64D1E0035E92B /* crop.png */; };
@@ -200,6 +203,9 @@
 		1501825617A74F8000E674E5 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		1501825717A74F8000E674E5 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Opengl.lua; sourceTree = "<group>"; };
 		1501825817A74F8000E674E5 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenglConstants.lua; sourceTree = "<group>"; };
+		1525770917CEFB6200BE417B /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedClass.lua; sourceTree = "<group>"; };
+		1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedEnum.lua; sourceTree = "<group>"; };
+		1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeprecatedOpenglEnum.lua; sourceTree = "<group>"; };
 		15A02E6017A647C90035E92B /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A02E6817A647C90035E92B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A02EF317A64D050035E92B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
@@ -256,6 +262,9 @@
 		1501825117A74F8000E674E5 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1525770917CEFB6200BE417B /* DeprecatedClass.lua */,
+				1525770A17CEFB6300BE417B /* DeprecatedEnum.lua */,
+				1525770B17CEFB6300BE417B /* DeprecatedOpenglEnum.lua */,
 				1501825217A74F8000E674E5 /* AudioEngine.lua */,
 				1501825317A74F8000E674E5 /* CCBReaderLoad.lua */,
 				1ADB273A17CCA0F500634B5E /* Cocos2d.lua */,
@@ -565,6 +574,9 @@
 				1501825E17A74F8000E674E5 /* Opengl.lua in Resources */,
 				1501825F17A74F8000E674E5 /* OpenglConstants.lua in Resources */,
 				1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */,
+				1525770C17CEFB6300BE417B /* DeprecatedClass.lua in Resources */,
+				1525770D17CEFB6300BE417B /* DeprecatedEnum.lua in Resources */,
+				1525770E17CEFB6300BE417B /* DeprecatedOpenglEnum.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -121,12 +121,12 @@ end
 -- class Lens3DTarget : public cc.Node
 
 -- public:
--- virtual void setPosition(const cc.p& var)
+-- virtual void setPosition(const CCPoint& var)
 
 -- m_pLens3D:setPosition(var)
 -- end
 
--- virtual const cc.p& getPosition()
+-- virtual const CCPoint& getPosition()
 
 -- return m_pLens3D:getPosition()
 -- end

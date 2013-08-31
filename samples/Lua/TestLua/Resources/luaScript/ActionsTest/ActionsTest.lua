@@ -313,12 +313,12 @@ local function ActionCardinalSpline()
     local function drawCardinalSpline()
         kmGLPushMatrix()
         kmGLTranslatef(50, 50, 0)
-        cc.DrawPrimitives.ccDrawCardinalSpline(array, 0, 100)
+        cc.DrawPrimitives.drawCardinalSpline(array, 0, 100)
         kmGLPopMatrix()
 
         kmGLPushMatrix()
         kmGLTranslatef(size.width / 2, 50, 0)
-        cc.DrawPrimitives.ccDrawCardinalSpline(array, 1, 100)
+        cc.DrawPrimitives.drawCardinalSpline(array, 1, 100)
         kmGLPopMatrix()
     end
 
@@ -376,10 +376,10 @@ local function ActionCatmullRom()
     local function drawCatmullRom()
         kmGLPushMatrix()
         kmGLTranslatef(50, 50, 0)
-        cc.DrawPrimitives.ccDrawCatmullRom(array, 50)
+        cc.DrawPrimitives.drawCatmullRom(array, 50)
         kmGLPopMatrix()
 
-        cc.DrawPrimitives.ccDrawCatmullRom(array2,50)
+        cc.DrawPrimitives.drawCatmullRom(array2,50)
     end
 
     array:retain()
@@ -954,7 +954,7 @@ local function ActionFollow()
         local x = winSize.width * 2 - 100
         local y = winSize.height
         local vertices = { cc.p(5, 5), cc.p(x - 5, 5), cc.p(x - 5,y - 5), cc.p(5,y - 5) }
-        gl.DrawPrimitives.ccDrawPoly(vertices, 4, true)
+        cc.DrawPrimitives.drawPoly(vertices, 4, true)
     end
 
     local glNode  = gl.glNodeCreate()
