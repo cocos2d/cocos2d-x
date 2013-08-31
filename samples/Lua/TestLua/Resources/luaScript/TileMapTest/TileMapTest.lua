@@ -684,10 +684,10 @@ local function draw()
 
         glLineWidth(3)
 
-        cc.DrawPrimitives.ccDrawLine( cc.p(x, y), cc.p((x+width), y) )
-        cc.DrawPrimitives.ccDrawLine( cc.p((x+width), y), cc.p((x+width), (y+height)) )
-        cc.DrawPrimitives.ccDrawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)) )
-        cc.DrawPrimitives.ccDrawLine( cc.p(x, (y+height)), cc.p(x, y) )
+        cc.DrawPrimitives.drawLine( cc.p(x, y), cc.p((x+width), y) )
+        cc.DrawPrimitives.drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)) )
+        cc.DrawPrimitives.drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)) )
+        cc.DrawPrimitives.drawLine( cc.p(x, (y+height)), cc.p(x, y) )
 
         glLineWidth(1)
     end
@@ -753,10 +753,10 @@ local function draw()
 
         glLineWidth(3)
 
-        cc.DrawPrimitives.ccDrawLine( cc.p(x,y), cc.p(x+width,y) )
-        cc.DrawPrimitives.ccDrawLine( cc.p(x+width,y), cc.p(x+width,y+height) )
-        cc.DrawPrimitives.ccDrawLine( cc.p(x+width,y+height), cc.p(x,y+height) )
-        cc.DrawPrimitives.ccDrawLine( cc.p(x,y+height), cc.p(x,y) )
+        cc.DrawPrimitives.drawLine( cc.p(x,y), cc.p(x+width,y) )
+        cc.DrawPrimitives.drawLine( cc.p(x+width,y), cc.p(x+width,y+height) )
+        cc.DrawPrimitives.drawLine( cc.p(x+width,y+height), cc.p(x,y+height) )
+        cc.DrawPrimitives.drawLine( cc.p(x,y+height), cc.p(x,y) )
 
         glLineWidth(1)
     end
