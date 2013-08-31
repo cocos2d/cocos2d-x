@@ -107,6 +107,8 @@ Array* Array::createWithArray(Array* otherArray)
 
 Array* Array::createWithCapacity(int capacity)
 {
+    CCASSERT(capacity>=0, "Invalid capacity");
+
     Array* array = new Array();
     
     if (array && array->initWithCapacity(capacity))
@@ -182,6 +184,8 @@ bool Array::initWithObjects(Object* object, ...)
 
 bool Array::initWithCapacity(int capacity)
 {
+    CCASSERT(capacity>=0, "Invalid capacity");
+
     data.reserve(capacity);
     return true;
 }
@@ -446,6 +450,8 @@ Array* Array::createWithArray(Array* otherArray)
 
 Array* Array::createWithCapacity(int capacity)
 {
+    CCASSERT(capacity>=0, "Invalid capacity");
+
     Array* array = new Array();
 
     if (array && array->initWithCapacity(capacity))
@@ -527,7 +533,7 @@ bool Array::initWithObjects(Object* object, ...)
 
 bool Array::initWithCapacity(int capacity)
 {
-    CCASSERT(!data, "Array cannot be re-initialized");
+    CCASSERT(capacity>=0 && !data, "Array cannot be re-initialized");
 
     data = ccArrayNew(capacity);
     return true;
