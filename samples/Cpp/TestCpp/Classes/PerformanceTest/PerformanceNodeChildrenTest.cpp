@@ -543,10 +543,10 @@ void AddSpriteSheet::update(float dt)
         {
             batchNode->addChild( sprites[i], zs[i], kTagBase+i);
         }
-        
-        batchNode->sortAllChildren();
-        
         CC_PROFILER_STOP(this->profilerName());
+
+
+        batchNode->sortAllChildren();
 
         // remove them
         for( int i=0;i <  totalToAdd;i++)
