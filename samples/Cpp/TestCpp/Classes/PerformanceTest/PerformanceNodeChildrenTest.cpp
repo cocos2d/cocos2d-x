@@ -296,7 +296,7 @@ void IterateSpriteSheetForLoop::update(float dt)
 
 std::string IterateSpriteSheetForLoop::title()
 {
-    return "A - Iterate SpriteSheet";
+    return "Iterate SpriteSheet";
 }
 
 std::string IterateSpriteSheetForLoop::subtitle()
@@ -334,7 +334,7 @@ void IterateSpriteSheetCArray::update(float dt)
 
 std::string IterateSpriteSheetCArray::title()
 {
-    return "B - Iterate SpriteSheet";
+    return "Iterate SpriteSheet";
 }
 
 std::string IterateSpriteSheetCArray::subtitle()
@@ -372,7 +372,7 @@ void IterateSpriteSheetIterator::update(float dt)
 
 std::string IterateSpriteSheetIterator::title()
 {
-    return "C - Iterate SpriteSheet";
+    return "Iterate SpriteSheet";
 }
 
 std::string IterateSpriteSheetIterator::subtitle()
@@ -413,7 +413,7 @@ void CallFuncsSpriteSheetForEach::update(float dt)
 
 std::string CallFuncsSpriteSheetForEach::title()
 {
-    return "D - 'map' functional call";
+    return "'map' functional call";
 }
 
 std::string CallFuncsSpriteSheetForEach::subtitle()
@@ -446,7 +446,7 @@ void CallFuncsSpriteSheetCMacro::update(float dt)
 
 std::string CallFuncsSpriteSheetCMacro::title()
 {
-    return "E - 'map' functional call";
+    return "'map' functional call";
 }
 
 std::string CallFuncsSpriteSheetCMacro::subtitle()
@@ -521,8 +521,8 @@ void AddSpriteSheet::update(float dt)
     // reset seed
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
@@ -533,7 +533,7 @@ void AddSpriteSheet::update(float dt)
         for(int i=0; i<totalToAdd; i++)
         {
             sprites[i] = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
-            zs[i]      = CCRANDOM_MINUS1_1() * 50;
+            zs[i] = CCRANDOM_MINUS1_1() * 50;
         }
 
         // add them with random Z (very important!)
@@ -561,17 +561,17 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "F - Add to spritesheet";
+    return "addChild() to spritesheet";
 }
 
 std::string AddSpriteSheet::subtitle()
 {
-    return "Adds %10 of total sprites with random z. See console";
+    return "Adds sprites with random z. See console";
 }
 
 const char*  AddSpriteSheet::testName()
 {
-    return "add sprites";
+    return "addChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -584,8 +584,8 @@ void GetSpriteSheet::update(float dt)
     // reset seed
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100% percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
@@ -626,7 +626,7 @@ void GetSpriteSheet::update(float dt)
 
 std::string GetSpriteSheet::title()
 {
-    return "G - getChildByTag from spritesheet";
+    return "getChildByTag from spritesheet";
 }
 
 std::string GetSpriteSheet::subtitle()
@@ -636,7 +636,7 @@ std::string GetSpriteSheet::subtitle()
 
 const char*  GetSpriteSheet::testName()
 {
-    return "get sprites";
+    return "getChildByTag()";
 }
 
 
@@ -649,8 +649,8 @@ void RemoveSpriteSheet::update(float dt)
 {
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
@@ -682,17 +682,17 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "H - Del from spritesheet";
+    return "removeChild() from spritesheet";
 }
 
 std::string RemoveSpriteSheet::subtitle()
 {
-    return "Remove %10 of total sprites placed randomly. See console";
+    return "Remove sprites. See console";
 }
 
 const char*  RemoveSpriteSheet::testName()
 {
-    return "remove sprites";
+    return "removeChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -704,8 +704,8 @@ void ReorderSpriteSheet::update(float dt)
 {
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
@@ -745,17 +745,17 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "I - Reorder from spritesheet";
+    return "reorderChild() from spritesheet";
 }
 
 std::string ReorderSpriteSheet::subtitle()
 {
-    return "Reorder %10 of total sprites placed randomly. See console";
+    return "Reorder sprites. See console";
 }
 
 const char*  ReorderSpriteSheet::testName()
 {
-    return "reorder sprites";
+    return "reorderChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -767,8 +767,8 @@ void SortAllChildrenSpriteSheet::update(float dt)
 {
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
@@ -810,7 +810,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
 
 std::string SortAllChildrenSpriteSheet::title()
 {
-    return "J - Sort All Children from spritesheet";
+    return "sortAllChildren() from spritesheet";
 }
 
 std::string SortAllChildrenSpriteSheet::subtitle()
@@ -820,7 +820,7 @@ std::string SortAllChildrenSpriteSheet::subtitle()
 
 const char*  SortAllChildrenSpriteSheet::testName()
 {
-    return "sort all children";
+    return "sortAllChildren()";
 }
 
 
@@ -872,7 +872,7 @@ void VisitSceneGraph::update(float dt)
 
 std::string VisitSceneGraph::title()
 {
-    return "K - Performance of visiting the scene graph";
+    return "Performance of visiting the scene graph";
 }
 
 std::string VisitSceneGraph::subtitle()
@@ -882,7 +882,7 @@ std::string VisitSceneGraph::subtitle()
 
 const char*  VisitSceneGraph::testName()
 {
-    return "visit scene graph";
+    return "visit()";
 }
 
 ///----------------------------------------
