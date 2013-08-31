@@ -218,8 +218,9 @@ kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
 {
 #if defined(__ARM_NEON__)
 
-    float mat[16];
-//    float *mat = pOut->mat;
+    // It is possible to skip the memcpy() since "out" does not overwrite p1 or p2.
+    // otherwise a temp must be needed.
+    float *mat = pOut->mat;
 
     // Invert column-order with row-order
     NEON_Matrix4Mul( &pM2->mat[0], &pM1->mat[0], &mat[0] );
