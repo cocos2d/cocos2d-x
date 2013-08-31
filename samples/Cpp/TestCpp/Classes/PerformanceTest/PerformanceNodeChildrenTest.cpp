@@ -36,7 +36,7 @@ enum {
 
     kTagBase = 20000,
 
-    TEST_COUNT = 7,
+    TEST_COUNT = 8,
 };
 
 enum {
@@ -110,6 +110,9 @@ void NodeChildrenMenuLayer::showCurrentTest()
         case 6:
             pScene = new SortAllChildrenSpriteSheet();
             break;
+        case 7:
+            pScene = new VisitSceneGraph();
+            break;
     }
     s_nCurCase = m_nCurCase;
 
@@ -173,6 +176,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 
     updateQuantityLabel();
     updateQuantityOfNodes();
+    updateProfilerName();
+
+    CC_PROFILER_PURGE_ALL();
 }
 
 void NodeChildrenMainScene::onDecrease(CCObject* pSender)
@@ -183,6 +189,9 @@ void NodeChildrenMainScene::onDecrease(CCObject* pSender)
 
     updateQuantityLabel();
     updateQuantityOfNodes();
+    updateProfilerName();
+
+    CC_PROFILER_PURGE_ALL();
 }
 
 void NodeChildrenMainScene::onIncrease(CCObject* pSender)
@@ -193,6 +202,9 @@ void NodeChildrenMainScene::onIncrease(CCObject* pSender)
 
     updateQuantityLabel();
     updateQuantityOfNodes();
+    updateProfilerName();
+
+    CC_PROFILER_PURGE_ALL();
 }
 
 std::string NodeChildrenMainScene::title()
@@ -217,6 +229,17 @@ void NodeChildrenMainScene::updateQuantityLabel()
         lastRenderedCount = quantityOfNodes;
     }
 }
+
+const char * NodeChildrenMainScene::profilerName()
+{
+    return _profilerName;
+}
+
+void NodeChildrenMainScene::updateProfilerName()
+{
+    snprintf(_profilerName, sizeof(_profilerName)-1, "%s(%d)", testName(), quantityOfNodes);
+}
+
 
 ////////////////////////////////////////////////////////
 //
@@ -267,7 +290,7 @@ void IterateSpriteSheet::initWithQuantityOfNodes(unsigned int nNodes)
     scheduleUpdate();
 }
 
-const char*  IterateSpriteSheet::profilerName()
+const char*  IterateSpriteSheet::testName()
 {
     return "none";
 }
@@ -283,7 +306,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
     CCArray* pChildren = batchNode->getChildren();
     CCObject* pObject = NULL;
 
-    CC_PROFILER_START_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
+    CC_PROFILER_START(this->profilerName());
 
     CCARRAY_FOREACH(pChildren, pObject)
     {
@@ -291,7 +314,7 @@ void IterateSpriteSheetFastEnum::update(float dt)
         pSprite->setVisible(false);
     }
 
-    CC_PROFILER_STOP_INSTANCE((unsigned int)((unsigned long long)(this)), this->profilerName());
+    CC_PROFILER_STOP(this->profilerName());
 }
 
 std::string IterateSpriteSheetFastEnum::title()
@@ -304,7 +327,7 @@ std::string IterateSpriteSheetFastEnum::subtitle()
     return "Iterate children using Fast Enum API. See console";
 }
 
-const char*  IterateSpriteSheetFastEnum::profilerName()
+const char*  IterateSpriteSheetFastEnum::testName()
 {
     return "iter fast enum";
 }
@@ -342,9 +365,9 @@ std::string IterateSpriteSheetCArray::subtitle()
     return "Iterate children using C Array API. See console";
 }
 
-const char*  IterateSpriteSheetCArray::profilerName()
+const char*  IterateSpriteSheetCArray::testName()
 {
-    return "iter c-array";
+    return "CC_ARRAY_FOREACH";
 }
 
 
@@ -376,11 +399,9 @@ std::string CallFuncsSpriteSheetCMacro::subtitle()
     return "Using 'arrayMakeObjectsPerformSelector'. See console";
 }
 
-const char*  CallFuncsSpriteSheetCMacro::profilerName()
+const char*  CallFuncsSpriteSheetCMacro::testName()
 {
-    static char _name[256];
-    snprintf(_name, sizeof(_name)-1, "Map: arrayMakeObjectsPerformSelector(%d)", quantityOfNodes);
-    return _name;
+    return "Map: arrayMakeObjectsPerformSelector";
 }
 
 ////////////////////////////////////////////////////////
@@ -431,7 +452,7 @@ void AddRemoveSpriteSheet::updateQuantityOfNodes()
     currentQuantityOfNodes = quantityOfNodes;
 }
 
-const char*  AddRemoveSpriteSheet::profilerName()
+const char*  AddRemoveSpriteSheet::testName()
 {
     return "none";
 }
@@ -448,41 +469,41 @@ void GetSpriteSheet::update(float dt)
     // reset seed
     //srandom(0);
     
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
-    
+    // 100% percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
     if( totalToAdd > 0 )
     {
         CCSprite **sprites = new CCSprite*[totalToAdd];
         int *zs = new int[totalToAdd];
-        
+
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
             sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
             zs[i]      = CCRANDOM_MINUS1_1() * 50;
         }
-        
+
         for( int i=0; i < totalToAdd;i++ )
         {
             batchNode->addChild( sprites[i], zs[i], kTagBase+i);
         }
-        
+
         batchNode->sortAllChildren();
-        
+
         CC_PROFILER_START( this->profilerName() );
         for( int i=0; i < totalToAdd;i++ )
         {
             batchNode->getChildByTag(kTagBase+1);
         }
         CC_PROFILER_STOP(this->profilerName());
-        
+
         // remove them
         for( int i=0;i <  totalToAdd;i++)
         {
             batchNode->removeChild( sprites[i], true);
         }
-        
+
         delete [] sprites;
         delete [] zs;
     }
@@ -498,9 +519,9 @@ std::string GetSpriteSheet::subtitle()
     return "Get sprites using getChildByTag(). See console";
 }
 
-const char*  GetSpriteSheet::profilerName()
+const char*  GetSpriteSheet::testName()
 {
-    return "get sprites";
+    return "getChildByTag()";
 }
 
 ////////////////////////////////////////////////////////
@@ -513,20 +534,19 @@ void AddSpriteSheet::update(float dt)
     // reset seed
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
-        int         *zs      = new int[totalToAdd];
+        CCSprite **sprites = new CCSprite*[totalToAdd];
+        int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
-            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites->addObject(pSprite);
-            zs[i]      = CCRANDOM_MINUS1_1() * 50;
+            sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
+            zs[i] = CCRANDOM_MINUS1_1() * 50;
         }
 
         // add them with random Z (very important!)
@@ -534,22 +554,22 @@ void AddSpriteSheet::update(float dt)
 
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), zs[i], kTagBase+i);
+            batchNode->addChild( sprites[i], zs[i], kTagBase+i);
         }
-        
-        batchNode->sortAllChildren();
-        
         CC_PROFILER_STOP(this->profilerName());
+
+
+        batchNode->sortAllChildren();
 
         // remove them
         for( int i=0;i <  totalToAdd;i++)
         {
-            batchNode->removeChildByTag(kTagBase+i, true);
+            batchNode->removeChild( sprites[i], true);
         }
 
+        delete [] sprites;
         delete [] zs;
-    }
-}
+    }}
 
 std::string AddSpriteSheet::title()
 {
@@ -561,9 +581,9 @@ std::string AddSpriteSheet::subtitle()
     return "Adds %10 of total sprites with random z. See console";
 }
 
-const char*  AddSpriteSheet::profilerName()
+const char*  AddSpriteSheet::testName()
 {
-    return "add sprites";
+    return "addChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -575,37 +595,35 @@ void RemoveSpriteSheet::update(float dt)
 {
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
+        CCSprite **sprites = new CCSprite*[totalToAdd];
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
         {
-            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites->addObject(pSprite);
+            sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
         }
 
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         // remove them
         CC_PROFILER_START( this->profilerName() );
-
         for( int i=0;i <  totalToAdd;i++)
         {
-            batchNode->removeChildByTag(kTagBase+i, true);
+            batchNode->removeChild( sprites[i], true);
         }
-
         CC_PROFILER_STOP( this->profilerName() );
-    }
-}
+
+        delete [] sprites;
+    }}
 
 std::string RemoveSpriteSheet::title()
 {
@@ -617,9 +635,9 @@ std::string RemoveSpriteSheet::subtitle()
     return "Remove %10 of total sprites placed randomly. See console";
 }
 
-const char*  RemoveSpriteSheet::profilerName()
+const char*  RemoveSpriteSheet::testName()
 {
-    return "remove sprites";
+    return "removeChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -631,45 +649,42 @@ void ReorderSpriteSheet::update(float dt)
 {
     //srandom(0);
 
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
 
     if( totalToAdd > 0 )
     {
-        CCArray* sprites = CCArray::createWithCapacity(totalToAdd);
+        CCSprite **sprites = new CCSprite*[totalToAdd];
 
         // Don't include the sprite creation time as part of the profiling
-        for(int i=0;i<totalToAdd;i++)
+        for(int i=0; i<totalToAdd; i++)
         {
-            CCSprite* pSprite = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0,0,32,32));
-            sprites->addObject(pSprite);
+            sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
         }
 
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
-            batchNode->addChild((CCNode*) (sprites->objectAtIndex(i)), CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+            batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
 
         batchNode->sortAllChildren();
 
         // reorder them
         CC_PROFILER_START( this->profilerName() );
-
         for( int i=0;i <  totalToAdd;i++)
         {
-            CCNode* pNode = (CCNode*) (batchNode->getChildren()->objectAtIndex(i));
-            batchNode->reorderChild(pNode, CCRANDOM_MINUS1_1() * 50);
+            batchNode->reorderChild(sprites[i], CCRANDOM_MINUS1_1() * 50);
         }
-        
-        batchNode->sortAllChildren();
         CC_PROFILER_STOP( this->profilerName() );
 
         // remove them
         for( int i=0;i <  totalToAdd;i++)
         {
-            batchNode->removeChildByTag(kTagBase+i, true);
+            batchNode->removeChild( sprites[i], true);
         }
+        
+        delete [] sprites;
     }
 }
 
@@ -683,9 +698,9 @@ std::string ReorderSpriteSheet::subtitle()
     return "Reorder %10 of total sprites placed randomly. See console";
 }
 
-const char*  ReorderSpriteSheet::profilerName()
+const char*  ReorderSpriteSheet::testName()
 {
-    return "reorder sprites";
+    return "reorderChild()";
 }
 
 void runNodeChildrenTest()
@@ -759,7 +774,66 @@ std::string SortAllChildrenSpriteSheet::subtitle()
     return "Calls sortOfChildren(). See console";
 }
 
-const char*  SortAllChildrenSpriteSheet::profilerName()
+const char*  SortAllChildrenSpriteSheet::testName()
 {
-    return "sort all children";
+    return "sortAllChildren()";
+}
+
+////////////////////////////////////////////////////////
+//
+// VisitSceneGraph
+//
+////////////////////////////////////////////////////////
+void VisitSceneGraph::initWithQuantityOfNodes(unsigned int nodes)
+{
+    NodeChildrenMainScene::initWithQuantityOfNodes(nodes);
+    scheduleUpdate();
+}
+
+void VisitSceneGraph::updateQuantityOfNodes()
+{
+    // increase nodes
+    if( currentQuantityOfNodes < quantityOfNodes )
+    {
+        for(int i = 0; i < (quantityOfNodes-currentQuantityOfNodes); i++)
+        {
+            CCNode * node = CCNode::create();
+            this->addChild(node);
+            node->setVisible(true);
+            node->setPosition(CCPoint(-1000,-1000));
+            node->setTag(1000 + currentQuantityOfNodes + i );
+        }
+    }
+
+    // decrease nodes
+    else if ( currentQuantityOfNodes > quantityOfNodes )
+    {
+        for(int i = 0; i < (currentQuantityOfNodes-quantityOfNodes); i++)
+        {
+            this->removeChildByTag(1000 + currentQuantityOfNodes - i -1 );
+        }
+    }
+
+    currentQuantityOfNodes = quantityOfNodes;
+}
+void VisitSceneGraph::update(float dt)
+{
+    CC_PROFILER_START( this->profilerName() );
+    this->visit();
+    CC_PROFILER_STOP( this->profilerName() );
+}
+
+std::string VisitSceneGraph::title()
+{
+    return "Performance of visiting the scene graph";
+}
+
+std::string VisitSceneGraph::subtitle()
+{
+    return "calls visit() on scene graph. See console";
+}
+
+const char*  VisitSceneGraph::testName()
+{
+    return "visit()";
 }
