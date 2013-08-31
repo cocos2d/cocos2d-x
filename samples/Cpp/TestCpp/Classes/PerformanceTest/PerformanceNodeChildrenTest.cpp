@@ -177,6 +177,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
+    srandom(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -190,6 +191,7 @@ void NodeChildrenMainScene::onDecrease(CCObject* pSender)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
+    srandom(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -203,6 +205,7 @@ void NodeChildrenMainScene::onIncrease(CCObject* pSender)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
+    srandom(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -723,37 +726,37 @@ void SortAllChildrenSpriteSheet::update(float dt)
 {
     //srandom(0);
     
-    // 15 percent
-    int totalToAdd = currentQuantityOfNodes * 0.15f;
-    
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
     if( totalToAdd > 0 )
     {
         CCSprite **sprites = new CCSprite*[totalToAdd];
-        
+
         // Don't include the sprite's creation time as part of the profiling
         for(int i=0; i<totalToAdd; i++)
         {
             sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
         }
-        
+
         // add them with random Z (very important!)
         for( int i=0; i < totalToAdd;i++ )
         {
             batchNode->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
         }
-        
+
         batchNode->sortAllChildren();
-        
+
         // reorder them
         for( int i=0;i <  totalToAdd;i++)
         {
             batchNode->reorderChild(sprites[i], CCRANDOM_MINUS1_1() * 50);
         }
-        
+
         CC_PROFILER_START( this->profilerName() );
         batchNode->sortAllChildren();
         CC_PROFILER_STOP( this->profilerName() );
-        
+
         // remove them
         for( int i=0;i <  totalToAdd;i++)
         {
