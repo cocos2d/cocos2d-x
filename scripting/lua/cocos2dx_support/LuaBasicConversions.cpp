@@ -63,6 +63,25 @@ void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
 }
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+extern int lua_isusertype (lua_State* L, int lo, const char* type);
+#ifdef __cplusplus
+}
+#endif
+
+bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
+{
+    if (def && lua_gettop(L)<abs(lo))
+        return true;
+    
+    if (lua_isnil(L,lo) || lua_isusertype(L,lo,type))
+        return true;
+    
+    return false;
+}
+
 
 bool luaval_to_int32(lua_State* L,int lo,int* outValue)
 {
@@ -70,14 +89,15 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isnumber(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -93,14 +113,15 @@ bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isnumber(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -116,14 +137,15 @@ bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isnumber(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -139,14 +161,15 @@ bool luaval_to_boolean(lua_State* L,int lo,bool* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isboolean(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -162,14 +185,15 @@ bool luaval_to_number(lua_State* L,int lo,double* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isnumber(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -185,14 +209,15 @@ bool luaval_to_long_long(lua_State* L,int lo,long long* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_isnumber(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -208,14 +233,15 @@ bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_iscppstring(L,lo,0,&tolua_err))
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -231,14 +257,16 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
+
     
     if (ok)
     {
@@ -261,14 +289,15 @@ bool luaval_to_size(lua_State* L,int lo,Size* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -292,14 +321,15 @@ bool luaval_to_rect(lua_State* L,int lo,Rect* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -333,14 +363,15 @@ bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if(ok)
     {
@@ -374,14 +405,15 @@ bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -415,14 +447,15 @@ bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -451,14 +484,15 @@ bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -501,14 +535,15 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue )
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
         ok = false;
-    }
 #endif
+    }
     
     if (ok)
     {
@@ -641,14 +676,15 @@ bool luaval_to_array(lua_State* L,int lo, Array** outValue)
         return false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -740,14 +776,15 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
         return  false;
     
     bool ok = true;
-#if COCOS2D_DEBUG >=1
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -843,14 +880,15 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
     
     bool ok = true;
     
-#if COCOS2D_DEBUG >=1
     tolua_Error tolua_err;
+
     if (!tolua_istable(L, lo, 0, &tolua_err) )
     {
+#if COCOS2D_DEBUG >=1
         luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
         ok = false;
     }
-#endif
     
     if (ok)
     {
@@ -866,7 +904,9 @@ bool luaval_to_array_of_Point(lua_State* L,int lo,Point **points, int *numPoints
                 lua_gettable(L,lo);
                 if (!tolua_istable(L,-1, 0, &tolua_err))
                 {
+#if COCOS2D_DEBUG >=1
                     luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
                     lua_pop(L, 1);
                     free(array);
                     return false;
@@ -918,7 +958,9 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
             tolua_Error err;
             if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
             {
+#if COCOS2D_DEBUG >=1
                 luaval_to_native_err(L,"#ferror:",&err);
+#endif
                 ok = false;
                 break;
             }

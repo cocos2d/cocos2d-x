@@ -55,6 +55,8 @@ bool LuaEngine::init(void)
     _stack = LuaStack::create();
     _stack->retain();
     extendLuaObject();
+    executeScriptFile("DeprecatedEnum.lua");
+    executeScriptFile("DeprecatedClass.lua");
     executeScriptFile("Deprecated.lua");
     return true;
 }
@@ -608,100 +610,10 @@ void LuaEngine::extendLuaObject()
         return;
     
     lua_State* lua_S = _stack->getLuaState();
-    extendNode(lua_S);
-    extendMenuItem(lua_S);
-    extendLayer(lua_S);
-    extendControl(lua_S);
     extendWebsocket(lua_S);
     extendGLNode(lua_S);
-    extendScrollView(lua_S);
-    extendDrawNode(lua_S);
     
     _stack->clean();
-}
-
-void LuaEngine::extendNode(lua_State* lua_S)
-{
-   if(NULL == lua_S)
-       return;
-    
-    lua_pushstring(lua_S,"CCNode");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S,"unregisterScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_unregisterScriptHandler00);
-        lua_rawset(lua_S, -3);
-    }
-}
-
-void LuaEngine::extendMenuItem(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"CCMenuItem");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX); 
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptTapHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptTapHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S, "unregisterScriptTapHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_unregisterScriptTapHandler00);
-        lua_rawset(lua_S, -3);
-    }
-}
-
-void LuaEngine::extendLayer(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"CCLayer");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX); 
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptTouchHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_registerScriptTouchHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S, "unregisterScriptTouchHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_unregisterScriptTouchHandler00);
-        lua_rawset(lua_S, -3);
-        lua_pushstring(lua_S, "registerScriptKeypadHandler");
-        lua_pushcfunction(lua_S, tolua_Cocos2d_registerScriptKeypadHandler00);
-        lua_rawset(lua_S, -3);
-        lua_pushstring(lua_S, "unregisterScriptKeypadHandler");
-        lua_pushcfunction(lua_S, tolua_Cocos2d_unregisterScriptKeypadHandler00);
-        lua_rawset(lua_S, -3);
-        lua_pushstring(lua_S, "registerScriptAccelerateHandler");
-        lua_pushcfunction(lua_S, tolua_Cocos2d_registerScriptAccelerateHandler00);
-        lua_rawset(lua_S, -3);
-        lua_pushstring(lua_S, "unregisterScriptAccelerateHandler");
-        lua_pushcfunction(lua_S, tolua_Cocos2d_unregisterScriptAccelerateHandler00);
-        lua_rawset(lua_S, -3);
-    }
-}
-
-void LuaEngine::extendControl(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"CCControl");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerControlEventHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_registerControlEventHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S,"unregisterControlEventHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_unregisterControlEventHandler00);
-        lua_rawset(lua_S,-3);
-    }
 }
 
 void LuaEngine::extendWebsocket(lua_State* lua_S)
@@ -740,39 +652,5 @@ void LuaEngine::extendGLNode(lua_State* lua_S)
         lua_pushcfunction(lua_S,tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
         lua_rawset(lua_S,-3);
     }
-}
-
-void LuaEngine::extendScrollView(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"CCScrollView");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_ScrollView_registerScriptHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S,"unregisterScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_ScrollView_unregisterScriptHandler00);
-        lua_rawset(lua_S,-3);
-    }
-}
-
-void LuaEngine::extendDrawNode(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-		return;
-	
-    lua_pushstring(lua_S,"CCDrawNode");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-		lua_pushstring(lua_S,"drawPolygon");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_CCDrawNode_drawPolygon00);
-        lua_rawset(lua_S,-3);
-    }
-	
 }
 NS_CC_END

@@ -54,6 +54,14 @@
 /* Begin PBXBuildFile section */
 		018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
 		018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
+		159FC84817CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
+		159FC84917CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
+		159FC84A17CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
+		159FC84B17CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
+		159FC84F17CB4D0100AEB473 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */; };
+		159FC85017CB4D0100AEB473 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */; };
+		159FC85117CB4D0100AEB473 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */; };
+		159FC85217CB4D0100AEB473 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */; };
 		15A055AD17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
 		15A055AE17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
 		15A055AF17966C350040AC39 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A055AC17966C350040AC39 /* Deprecated.lua */; };
@@ -2276,6 +2284,8 @@
 /* Begin PBXFileReference section */
 		018DB84C17B419BA006EC77B /* LabelTestNew.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LabelTestNew.cpp; sourceTree = "<group>"; };
 		018DB84D17B419BA006EC77B /* LabelTestNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelTestNew.h; sourceTree = "<group>"; };
+		159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedEnum.lua; path = ../scripting/lua/script/DeprecatedEnum.lua; sourceTree = "<group>"; };
+		159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedClass.lua; path = ../scripting/lua/script/DeprecatedClass.lua; sourceTree = "<group>"; };
 		15A055AC17966C350040AC39 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Deprecated.lua; path = ../scripting/lua/script/Deprecated.lua; sourceTree = "<group>"; };
 		15A055C1179E25050040AC39 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DrawPrimitives.lua; path = ../scripting/lua/script/DrawPrimitives.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -3646,6 +3656,8 @@
 		1A119C8D17853D6300D62A44 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				159FC84E17CB4D0100AEB473 /* DeprecatedClass.lua */,
+				159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */,
 				15E31DA617B9D18E00BC8230 /* Cocos2d.lua */,
 				15A055C1179E25050040AC39 /* DrawPrimitives.lua */,
 				15A055AC17966C350040AC39 /* Deprecated.lua */,
@@ -6008,6 +6020,8 @@
 				15A055AF17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C4179E25050040AC39 /* DrawPrimitives.lua in Resources */,
 				15E31DA917B9D18E00BC8230 /* Cocos2d.lua in Resources */,
+				159FC84A17CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */,
+				159FC85117CB4D0100AEB473 /* DeprecatedClass.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6058,6 +6072,8 @@
 				15A055B017966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C5179E25050040AC39 /* DrawPrimitives.lua in Resources */,
 				15E31DAA17B9D18E00BC8230 /* Cocos2d.lua in Resources */,
+				159FC84B17CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */,
+				159FC85217CB4D0100AEB473 /* DeprecatedClass.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6086,6 +6102,8 @@
 				15A055AD17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C2179E25050040AC39 /* DrawPrimitives.lua in Resources */,
 				15E31DA717B9D18E00BC8230 /* Cocos2d.lua in Resources */,
+				159FC84817CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */,
+				159FC84F17CB4D0100AEB473 /* DeprecatedClass.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6132,6 +6150,8 @@
 				15A055AE17966C350040AC39 /* Deprecated.lua in Resources */,
 				15A055C3179E25050040AC39 /* DrawPrimitives.lua in Resources */,
 				15E31DA817B9D18E00BC8230 /* Cocos2d.lua in Resources */,
+				159FC84917CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */,
+				159FC85017CB4D0100AEB473 /* DeprecatedClass.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

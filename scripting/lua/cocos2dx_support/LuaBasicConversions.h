@@ -16,6 +16,12 @@ extern std::map<int, std::string>  g_luaType;
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
 #endif
 
+#define LUA_PRECONDITION( condition, ...) if( ! (condition) ) {														\
+cocos2d::log("lua: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );                                                         \
+cocos2d::log(__VA_ARGS__);                                                  \
+}                                                                           \
+
+extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue);
 extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue);
