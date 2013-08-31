@@ -250,7 +250,7 @@ void SpriteBatchNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-#if 1
+#if 0
         int i = 0,j = 0,length = _children->count();
 
         // insertion sort

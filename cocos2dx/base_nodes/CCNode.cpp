@@ -740,7 +740,7 @@ void Node::reorderChild(Node *child, int zOrder)
 
 void Node::sortAllChildren()
 {
-#if 1
+#if 0
     if (_reorderChildDirty)
     {
         int i,j,length = _children->count();
