@@ -61,19 +61,19 @@ class Sprite;
 */
 class CC_DLL SpriteBatchNode : public Node, public TextureProtocol
 {
-    static const int kDefaultSpriteBatchCapacity = 29;
+    static const int DEFAULT_CAPACITY = 29;
 
 public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = kDefaultSpriteBatchCapacity);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
 
     /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, int capacity = kDefaultSpriteBatchCapacity);
+    static SpriteBatchNode* create(const char* fileImage, int capacity = DEFAULT_CAPACITY);
 
     SpriteBatchNode();
     virtual ~SpriteBatchNode();
@@ -110,16 +110,16 @@ public:
     /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
     @warning Removing a child from a SpriteBatchNode is very slow
     */
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(int index, bool doCleanup);
 
-    void insertChild(Sprite *child, unsigned int index);
+    void insertChild(Sprite *child, int index);
     void appendChild(Sprite* sprite);
     void removeSpriteFromAtlas(Sprite *sprite);
 
-    unsigned int rebuildIndexInOrder(Sprite *parent, unsigned int index);
-    unsigned int highestAtlasIndexInChild(Sprite *sprite);
-    unsigned int lowestAtlasIndexInChild(Sprite *sprite);
-    unsigned int atlasIndexForChild(Sprite *sprite, int z);
+    int rebuildIndexInOrder(Sprite *parent, int index);
+    int highestAtlasIndexInChild(Sprite *sprite);
+    int lowestAtlasIndexInChild(Sprite *sprite);
+    int atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
 
