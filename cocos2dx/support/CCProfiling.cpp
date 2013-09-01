@@ -140,20 +140,22 @@ void CCProfilingBeginTimingBlock(const char *timerName)
         timer = p->createAndAddTimerWithName(timerName);
     }
 
+    // must the be last thing to execute
     timer->numberOfCalls++;
     gettimeofday((struct timeval*)&timer->m_sStartTime, NULL);
 }
 
 void CCProfilingEndTimingBlock(const char *timerName)
 {
+    // must the be 1st thing to execute
+    struct timeval now;
+    gettimeofday( &now, NULL);
+
     CCProfiler* p = CCProfiler::sharedProfiler();
     CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);
 
     CCAssert(timer, "CCProfilingTimer  not found");
     
-    struct timeval now;
-    
-    gettimeofday( &now, NULL);
     int duration = 1000000 * (now.tv_sec - timer->m_sStartTime.tv_sec) + (now.tv_usec - timer->m_sStartTime.tv_usec);
 
     timer->totalTime += duration;
@@ -161,7 +163,6 @@ void CCProfilingEndTimingBlock(const char *timerName)
     timer->m_dAverageTime2 = timer->totalTime / timer->numberOfCalls;
     timer->maxTime = MAX( timer->maxTime, duration);
     timer->minTime = MIN( timer->minTime, duration);
-
 }
 
 void CCProfilingResetTimingBlock(const char *timerName)
