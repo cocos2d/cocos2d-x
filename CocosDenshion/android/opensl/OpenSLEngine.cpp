@@ -4,6 +4,13 @@
 
 using namespace std;
 
+#include <cstdlib>
+#include <pthread.h>
+
+// mutex fot shared list
+static pthread_mutex_t s_mutexSharedList;
+static pthread_mutex_t s_mutexRemovalList;
+
 
 OpenSLEngine::OpenSLEngine()
  :_musicVolume(0),
@@ -175,6 +182,14 @@ private:
 
 static AudioPlayer s_musicPlayer; /* for background music */
 
+
+typedef struct _CallbackContext
+{
+	vector<AudioPlayer*>* vec;
+	AudioPlayer* player;
+} CallbackContext; /* for PlayOverEvent callback function */
+
+
 typedef map<unsigned int, vector<AudioPlayer*>* > EffectList;
 typedef pair<unsigned int, vector<AudioPlayer*>* > Effect;
 
@@ -184,6 +199,12 @@ void* s_pOpenSLESHandle = NULL;
 static EffectList& sharedList()
 {
 	static EffectList s_List;
+	return s_List;
+}
+
+static vector<CallbackContext*>& removalList()
+{
+	static vector<CallbackContext*> s_List;
 	return s_List;
 }
 
@@ -447,19 +468,119 @@ void OpenSLEngine::closeEngine()
 /**********************************************************************************
  *   sound effect
  **********************************************************************************/
-typedef struct _CallbackContext
+void FirstPlayOverEvent(SLPlayItf caller, void* pPlayer, SLuint32 playEvent)
 {
-	vector<AudioPlayer*>* vec;
-	AudioPlayer* player;
-} CallbackContext;
+	pthread_mutex_lock(&s_mutexSharedList);
+
+	AudioPlayer* player = (AudioPlayer*)pPlayer;
+	int state = getSingleEffectState(player);
+	if (state != SL_PLAYSTATE_STOPPED)
+	{
+		setSingleEffectState( player, SL_PLAYSTATE_STOPPED );
+	}
+
+	pthread_mutex_unlock(&s_mutexSharedList);
+}
 
 void PlayOverEvent(SLPlayItf caller, void* pContext, SLuint32 playEvent)
 {
 	CallbackContext* context = (CallbackContext*)pContext;
 	if (playEvent == SL_PLAYEVENT_HEADATEND)
 	{
+		int state = getSingleEffectState(context->player);
+		if (state == SL_PLAYSTATE_PLAYING)
+		{
+			return;	// sound is probably looping
+		}
+		if (state != SL_PLAYSTATE_STOPPED)
+		{
+			// somehow PlayOverEvent is called for a sample that is not playing and not stopped... Set to stopped.
+			setSingleEffectState( context->player, SL_PLAYSTATE_STOPPED );
+		}
+
+		pthread_mutex_lock(&s_mutexRemovalList);
+		removalList().push_back( context );
+		pthread_mutex_unlock(&s_mutexRemovalList);
+	}
+}
+
+bool unloadAnyEffectBut( unsigned int effectID )
+{
+	bool unloadedEffect = false;
+	bool allStopped = true;
+	int state = SL_PLAYSTATE_STOPPED;
+
+	// find effect to unload
+	EffectList::iterator r = sharedList().begin();
+	while (!unloadedEffect && r != sharedList().end())
+	{
+		if (r->first == effectID)	// do not delete yourself
+		{
+			r++;
+			continue;
+		}
+
+		vector<AudioPlayer*>* vec = r->second;
 		vector<AudioPlayer*>::iterator iter;
-		for (iter = (context->vec)->begin() ; iter != (context->vec)->end() ; ++ iter)
+
+		allStopped = true;
+
+		for (iter = vec->begin(); allStopped && !unloadedEffect && iter != vec->end(); ++iter)
+		{
+			state = getSingleEffectState(*iter);
+			if (state != SL_PLAYSTATE_STOPPED)
+			{
+				allStopped = false;
+			}
+		}
+
+		if (!allStopped)	// avoid mutex
+		{
+			r++;
+			continue;
+		}
+
+		pthread_mutex_lock(&s_mutexSharedList);
+		for (vector<AudioPlayer*>::iterator iter = vec->begin(); allStopped && !unloadedEffect && iter != vec->end() ; ++iter)
+		{
+			destroyAudioPlayer(*iter);
+			delete *iter;
+			*iter = NULL;
+			vec->erase(iter);
+			unloadedEffect = true;
+		}
+
+		if (vec->size() == 0)
+		{
+			delete vec;
+			vec = NULL;
+			EffectList::iterator temp = r;
+			r++;
+			sharedList().erase(temp);
+		}
+		else
+		{
+			r++;
+		}
+		pthread_mutex_unlock(&s_mutexSharedList);
+	}
+}
+
+void checkRemovalList()
+{
+	if (removalList().size() > 0)
+	{
+		pthread_mutex_lock(&s_mutexRemovalList);
+
+		// get and remove the first item from the list
+		CallbackContext* context = (CallbackContext*)*removalList().begin();
+		removalList().erase(removalList().begin());
+
+		pthread_mutex_unlock(&s_mutexRemovalList);
+
+
+		pthread_mutex_lock(&s_mutexSharedList);
+		for (vector<AudioPlayer*>::iterator iter = (context->vec)->begin(); iter != (context->vec)->end() ; ++iter)
 		{
 			if (*iter == context->player)
 			{
@@ -467,8 +588,14 @@ void PlayOverEvent(SLPlayItf caller, void* pContext, SLuint32 playEvent)
 				break;
 			}
 		}
-		destroyAudioPlayer(context->player);
-		free(context);
+
+		AudioPlayer* player = context->player;
+		delete context;
+
+		pthread_mutex_unlock(&s_mutexSharedList);
+
+		destroyAudioPlayer(player);
+		delete player;
 	}
 }
 
@@ -511,15 +638,34 @@ void resumeSingleEffect(AudioPlayer * player)
 bool OpenSLEngine::recreatePlayer(const char* filename)
 {
 	unsigned int effectID = _Hash(filename);
+
+	// Count number of players
+	int totalAudioPlayers = 0;
+	for (EffectList::iterator r = sharedList().begin(); r != sharedList().end(); r++)
+	{
+		totalAudioPlayers += r->second->size();
+	}
+
+	bool unloadedEffect = false;
+	int state = PLAYSTATE_UNKNOWN;
+	if (totalAudioPlayers >= 30)
+	{
+		unloadedEffect = unloadAnyEffectBut( effectID );
+	}
+
+	pthread_mutex_lock(&s_mutexSharedList);
 	EffectList::iterator p = sharedList().find(effectID);
 	vector<AudioPlayer*>* vec = p->second;
 	AudioPlayer* newPlayer = new AudioPlayer();
 	if (!initAudioPlayer(newPlayer, filename))
 	{
 		LOGD("failed to recreate");
+		delete newPlayer;
+		pthread_mutex_unlock(&s_mutexSharedList);
 		return false;
 	}
 	vec->push_back(newPlayer);
+	pthread_mutex_unlock(&s_mutexSharedList);
 
 	// set callback
 	SLresult result;
@@ -544,6 +690,9 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 unsigned int OpenSLEngine::preloadEffect(const char * filename)
 {
 	unsigned int nID = _Hash(filename);
+
+	checkRemovalList();
+
 	// if already exists
 	EffectList::iterator p = sharedList().find(nID);
 	if (p != sharedList().end())
@@ -551,19 +700,46 @@ unsigned int OpenSLEngine::preloadEffect(const char * filename)
 		return nID;
 	}
 
+	// count number of players
+	int totalAudioPlayers = 0;
+	for (EffectList::iterator r = sharedList().begin(); r != sharedList().end(); r++)
+	{
+		totalAudioPlayers += r->second->size();
+	}
+
+	bool unloadedEffect = false;
+	int state = PLAYSTATE_UNKNOWN;
+	if (totalAudioPlayers >= 30)
+	{
+		unloadedEffect = unloadAnyEffectBut( nID );
+	}
+
+	pthread_mutex_lock(&s_mutexSharedList);
 	AudioPlayer* player = new AudioPlayer();
 	if (!initAudioPlayer(player, filename))
 	{
-		free(player);
+		delete player;
+		pthread_mutex_unlock(&s_mutexSharedList);
 		return FILE_NOT_FOUND;
 	}
 	
-    // set the new player's volume as others'
-    player->applyEffectsVolume(_effectVolume);
+	// set the new player's volume as others'
+	setSingleEffectVolume(player, m_effectVolume);
 
 	vector<AudioPlayer*>* vec = new vector<AudioPlayer*>;
 	vec->push_back(player);
 	sharedList().insert(Effect(nID, vec));
+	pthread_mutex_unlock(&s_mutexSharedList);
+
+	// set callback
+	SLresult result;
+
+	result = (*(player->fdPlayerPlay))->RegisterCallback(player->fdPlayerPlay, FirstPlayOverEvent, (void*)player);
+	assert(SL_RESULT_SUCCESS == result);
+
+	result = (*(player->fdPlayerPlay))->SetCallbackEventsMask(player->fdPlayerPlay, SL_PLAYEVENT_HEADATEND);
+	assert(SL_RESULT_SUCCESS == result);
+
 	return nID;
 }
 
@@ -571,6 +747,7 @@ void OpenSLEngine::unloadEffect(const char * filename)
 {
 	unsigned int nID = _Hash(filename);
 
+	pthread_mutex_lock(&s_mutexSharedList);
 	EffectList::iterator p = sharedList().find(nID);
 	if (p != sharedList().end())
 	{
@@ -578,10 +755,13 @@ void OpenSLEngine::unloadEffect(const char * filename)
 		for (vector<AudioPlayer*>::iterator iter = vec->begin() ; iter != vec->end() ; ++ iter)
 		{
 			destroyAudioPlayer(*iter);
+			delete *iter;
 		}
 		vec->clear();
+		delete vec; vec = NULL;
 		sharedList().erase(nID);
 	}
+	pthread_mutex_unlock(&s_mutexSharedList);
 }
 
 int OpenSLEngine::getEffectState(unsigned int effectID)
@@ -609,14 +789,18 @@ void OpenSLEngine::setEffectState(unsigned int effectID, int state, bool isClear
 			// if stopped, clear the recreated players which are unused
 			if (isClear)
 			{
+				pthread_mutex_lock(&s_mutexSharedList);
 				setSingleEffectState(*(vec->begin()), state);
 				vector<AudioPlayer*>::reverse_iterator r_iter = vec->rbegin();
 				for (int i = 1, size = vec->size() ; i < size ; ++ i)
 				{
 					destroyAudioPlayer(*r_iter);
-					r_iter ++;
-					vec->pop_back();
+					delete *r_iter;
+					r_iter++;
+					vec->erase( --(r_iter.base()) );	// cannot use a reverse_iterator directly. See http://stackoverflow.com/questions/1830158/how-to-call-erase-with-a-reverse-iterator
+
 				}
+				pthread_mutex_unlock(&s_mutexSharedList);
 			}
 			else
 			{
