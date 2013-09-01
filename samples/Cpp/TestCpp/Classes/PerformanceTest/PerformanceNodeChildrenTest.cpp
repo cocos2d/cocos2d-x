@@ -38,8 +38,10 @@ static std::function<NodeChildrenMainScene*()> createFunctions[] =
     CL(CallFuncsSpriteSheetForEach),
     CL(CallFuncsSpriteSheetCMacro),
 
+    CL(AddSprite),
     CL(AddSpriteSheet),
     CL(GetSpriteSheet),
+    CL(RemoveSprite),
     CL(RemoveSpriteSheet),
     CL(ReorderSpriteSheet),
     CL(SortAllChildrenSpriteSheet),
@@ -516,6 +518,69 @@ const char*  AddRemoveSpriteSheet::testName()
 
 ////////////////////////////////////////////////////////
 //
+// AddSprite
+//
+////////////////////////////////////////////////////////
+void AddSprite::update(float dt)
+{
+    // reset seed
+    //srandom(0);
+
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
+    if( totalToAdd > 0 )
+    {
+        Sprite **sprites = new Sprite*[totalToAdd];
+        int *zs = new int[totalToAdd];
+
+        // Don't include the sprite creation time and random as part of the profiling
+        for(int i=0; i<totalToAdd; i++)
+        {
+            sprites[i] = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+            zs[i] = CCRANDOM_MINUS1_1() * 50;
+        }
+
+        // add them with random Z (very important!)
+        CC_PROFILER_START( this->profilerName() );
+
+        for( int i=0; i < totalToAdd;i++ )
+        {
+            this->addChild( sprites[i], zs[i], kTagBase+i);
+        }
+        CC_PROFILER_STOP(this->profilerName());
+
+
+        batchNode->sortAllChildren();
+
+        // remove them
+        for( int i=0;i <  totalToAdd;i++)
+        {
+            this->removeChild( sprites[i], true);
+        }
+
+        delete [] sprites;
+        delete [] zs;
+    }
+}
+
+std::string AddSprite::title()
+{
+    return "Node::addChild()";
+}
+
+std::string AddSprite::subtitle()
+{
+    return "Adds sprites with random z. See console";
+}
+
+const char*  AddSprite::testName()
+{
+    return "Node::addChild()";
+}
+
+////////////////////////////////////////////////////////
+//
 // AddSpriteSheet
 //
 ////////////////////////////////////////////////////////
@@ -564,7 +629,7 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "addChild() to spritesheet";
+    return "SpriteBatchNode::addChild()";
 }
 
 std::string AddSpriteSheet::subtitle()
@@ -574,7 +639,7 @@ std::string AddSpriteSheet::subtitle()
 
 const char*  AddSpriteSheet::testName()
 {
-    return "addChild()";
+    return "SpriteBatchNode::addChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -639,9 +704,64 @@ std::string GetSpriteSheet::subtitle()
 
 const char*  GetSpriteSheet::testName()
 {
-    return "getChildByTag()";
+    return "SpriteBatchNode::getChildByTag()";
 }
 
+
+////////////////////////////////////////////////////////
+//
+// RemoveSprite
+//
+////////////////////////////////////////////////////////
+void RemoveSprite::update(float dt)
+{
+    //srandom(0);
+
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
+    if( totalToAdd > 0 )
+    {
+        Sprite **sprites = new Sprite*[totalToAdd];
+
+        // Don't include the sprite creation time as part of the profiling
+        for(int i=0;i<totalToAdd;i++)
+        {
+            sprites[i] = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,32,32));
+        }
+
+        // add them with random Z (very important!)
+        for( int i=0; i < totalToAdd;i++ )
+        {
+            this->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+        }
+
+        // remove them
+        CC_PROFILER_START( this->profilerName() );
+        for( int i=0;i <  totalToAdd;i++)
+        {
+            this->removeChild( sprites[i], true);
+        }
+        CC_PROFILER_STOP( this->profilerName() );
+
+        delete [] sprites;
+    }
+}
+
+std::string RemoveSprite::title()
+{
+    return "Node::removeChild()";
+}
+
+std::string RemoveSprite::subtitle()
+{
+    return "Remove sprites. See console";
+}
+
+const char*  RemoveSprite::testName()
+{
+    return "Node::removeChild()";
+}
 
 ////////////////////////////////////////////////////////
 //
@@ -685,7 +805,7 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "removeChild() from spritesheet";
+    return "SpriteBatchNode::removeChild()";
 }
 
 std::string RemoveSpriteSheet::subtitle()
@@ -695,7 +815,7 @@ std::string RemoveSpriteSheet::subtitle()
 
 const char*  RemoveSpriteSheet::testName()
 {
-    return "removeChild()";
+    return "SpriteBatchNode::removeChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -748,7 +868,7 @@ void ReorderSpriteSheet::update(float dt)
 
 std::string ReorderSpriteSheet::title()
 {
-    return "reorderChild() from spritesheet";
+    return "SpriteBatchNode::reorderChild()";
 }
 
 std::string ReorderSpriteSheet::subtitle()
@@ -758,7 +878,7 @@ std::string ReorderSpriteSheet::subtitle()
 
 const char*  ReorderSpriteSheet::testName()
 {
-    return "reorderChild()";
+    return "SpriteBatchNode::reorderChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -813,7 +933,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
 
 std::string SortAllChildrenSpriteSheet::title()
 {
-    return "sortAllChildren() from spritesheet";
+    return "SpriteBatchNode::sortAllChildren()";
 }
 
 std::string SortAllChildrenSpriteSheet::subtitle()
@@ -823,7 +943,7 @@ std::string SortAllChildrenSpriteSheet::subtitle()
 
 const char*  SortAllChildrenSpriteSheet::testName()
 {
-    return "sortAllChildren()";
+    return "SpriteBatchNode::sortAllChildren()";
 }
 
 
