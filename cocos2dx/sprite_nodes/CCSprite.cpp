@@ -25,6 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSpriteBatchNode.h"
+#include <string.h>
+#include <algorithm>
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
 #include "ccConfig.h"
@@ -44,7 +46,7 @@ THE SOFTWARE.
 #include "support/CCProfiling.h"
 // external
 #include "kazmath/GL/matrix.h"
-#include <string.h>
+
 
 using namespace std;
 
