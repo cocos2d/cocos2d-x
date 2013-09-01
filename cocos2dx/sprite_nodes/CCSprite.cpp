@@ -25,6 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSpriteBatchNode.h"
+#include <string.h>
+#include <algorithm>
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
 #include "ccConfig.h"
@@ -44,7 +46,7 @@ THE SOFTWARE.
 #include "support/CCProfiling.h"
 // external
 #include "kazmath/GL/matrix.h"
-#include <string.h>
+
 
 using namespace std;
 
@@ -693,6 +695,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
+#if 0
         int i = 0, j = 0, length = _children->count();
 
         // insertion sort
@@ -714,6 +717,9 @@ void Sprite::sortAllChildren()
             }
             _children->fastSetObject(tempI, j+1);
         }
+#else
+        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
+#endif
 
         if ( _batchNode)
         {
