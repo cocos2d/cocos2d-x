@@ -1,4 +1,5 @@
 #include "PerformanceNodeChildrenTest.h"
+#include <stdlib.h>
 
 using namespace cocos2d;
 
