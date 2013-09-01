@@ -246,30 +246,6 @@ void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-#if CC_USE_ARRAY_VECTOR
-static bool objectComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
-{
-    Object *p1 = static_cast<Object*>(pp1);
-    Object *p2 = static_cast<Object*>(pp2);
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#else
-static bool objectComparisonLess(Object* p1, Object* p2)
-{
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#endif
-
 //override sortAllChildren
 void SpriteBatchNode::sortAllChildren()
 {
@@ -298,7 +274,7 @@ void SpriteBatchNode::sortAllChildren()
             _children->fastSetObject(tempI, j+1);
         }
 #else
-        std::sort(std::begin(*_children), std::end(*_children), objectComparisonLess);
+        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
 #endif
 
         //sorted now check all children

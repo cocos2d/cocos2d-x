@@ -66,6 +66,12 @@ enum {
     kNodeOnCleanup
 };
 
+#if CC_USE_ARRAY_VECTOR
+bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
+#else
+bool nodeComparisonLess(Object* p1, Object* p2);
+#endif
+
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
 
