@@ -36,7 +36,7 @@ enum {
 
     kTagBase = 20000,
 
-    TEST_COUNT = 8,
+    TEST_COUNT = 10,
 };
 
 enum {
@@ -96,21 +96,27 @@ void NodeChildrenMenuLayer::showCurrentTest()
             pScene = new CallFuncsSpriteSheetCMacro();
             break;
         case 2:
-            pScene = new AddSpriteSheet();
+            pScene = new AddSprite();
             break;
         case 3:
-            pScene = new GetSpriteSheet();
+            pScene = new AddSpriteSheet();
             break;
         case 4:
-            pScene = new RemoveSpriteSheet();
+            pScene = new GetSpriteSheet();
             break;
         case 5:
-            pScene = new ReorderSpriteSheet();
+            pScene = new RemoveSprite();
             break;
         case 6:
-            pScene = new SortAllChildrenSpriteSheet();
+            pScene = new RemoveSpriteSheet();
             break;
         case 7:
+            pScene = new ReorderSpriteSheet();
+            break;
+        case 8:
+            pScene = new SortAllChildrenSpriteSheet();
+            break;
+        case 9:
             pScene = new VisitSceneGraph();
             break;
     }
@@ -514,7 +520,7 @@ void GetSpriteSheet::update(float dt)
 
 std::string GetSpriteSheet::title()
 {
-    return "E - getChildByTag from spritesheet";
+    return "SpriteBatchNode::getChildByTag()";
 }
 
 std::string GetSpriteSheet::subtitle()
@@ -524,7 +530,70 @@ std::string GetSpriteSheet::subtitle()
 
 const char*  GetSpriteSheet::testName()
 {
-    return "getChildByTag()";
+    return "SpriteBatchNode::getChildByTag()";
+}
+
+////////////////////////////////////////////////////////
+//
+// AddSprite
+//
+////////////////////////////////////////////////////////
+void AddSprite::update(float dt)
+{
+    // reset seed
+    //srandom(0);
+
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
+    if( totalToAdd > 0 )
+    {
+        CCSprite **sprites = new CCSprite*[totalToAdd];
+        int *zs = new int[totalToAdd];
+
+        // Don't include the sprite creation time and random as part of the profiling
+        for(int i=0; i<totalToAdd; i++)
+        {
+            sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
+            zs[i] = CCRANDOM_MINUS1_1() * 50;
+        }
+
+        // add them with random Z (very important!)
+        CC_PROFILER_START( this->profilerName() );
+
+        for( int i=0; i < totalToAdd;i++ )
+        {
+            this->addChild( sprites[i], zs[i], kTagBase+i);
+        }
+        CC_PROFILER_STOP(this->profilerName());
+
+
+        batchNode->sortAllChildren();
+
+        // remove them
+        for( int i=0;i <  totalToAdd;i++)
+        {
+            this->removeChild( sprites[i], true);
+        }
+
+        delete [] sprites;
+        delete [] zs;
+    }
+}
+
+std::string AddSprite::title()
+{
+    return "Node::addChild()";
+}
+
+std::string AddSprite::subtitle()
+{
+    return "Adds sprites with random z. See console";
+}
+
+const char*  AddSprite::testName()
+{
+    return "Node::addChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -576,17 +645,71 @@ void AddSpriteSheet::update(float dt)
 
 std::string AddSpriteSheet::title()
 {
-    return "D - Add to spritesheet";
+    return "SpriteBatchNode::addChild()";
 }
 
 std::string AddSpriteSheet::subtitle()
 {
-    return "Adds %10 of total sprites with random z. See console";
+    return "Adds sprites with random z. See console";
 }
 
 const char*  AddSpriteSheet::testName()
 {
-    return "addChild()";
+    return "SpriteBatchNode::addChild()";
+}
+
+////////////////////////////////////////////////////////
+//
+// RemoveSprite
+//
+////////////////////////////////////////////////////////
+void RemoveSprite::update(float dt)
+{
+    //srandom(0);
+
+    // 100 percent
+    int totalToAdd = currentQuantityOfNodes * 1;
+
+    if( totalToAdd > 0 )
+    {
+        CCSprite **sprites = new CCSprite*[totalToAdd];
+
+        // Don't include the sprite creation time as part of the profiling
+        for(int i=0;i<totalToAdd;i++)
+        {
+            sprites[i] = CCSprite::createWithTexture(batchNode->getTexture(), CCRect(0,0,32,32));
+        }
+
+        // add them with random Z (very important!)
+        for( int i=0; i < totalToAdd;i++ )
+        {
+            this->addChild( sprites[i], CCRANDOM_MINUS1_1() * 50, kTagBase+i);
+        }
+
+        // remove them
+        CC_PROFILER_START( this->profilerName() );
+        for( int i=0;i <  totalToAdd;i++)
+        {
+            this->removeChild( sprites[i], true);
+        }
+        CC_PROFILER_STOP( this->profilerName() );
+
+        delete [] sprites;
+    }}
+
+std::string RemoveSprite::title()
+{
+    return "Node::removeChild()";
+}
+
+std::string RemoveSprite::subtitle()
+{
+    return "Removes sprites placed randomly. See console";
+}
+
+const char*  RemoveSprite::testName()
+{
+    return "Node::removeChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -630,17 +753,17 @@ void RemoveSpriteSheet::update(float dt)
 
 std::string RemoveSpriteSheet::title()
 {
-    return "F - Del from spritesheet";
+    return "SpriteBatchNode::removeChild()";
 }
 
 std::string RemoveSpriteSheet::subtitle()
 {
-    return "Remove %10 of total sprites placed randomly. See console";
+    return "Removes sprites placed randomly. See console";
 }
 
 const char*  RemoveSpriteSheet::testName()
 {
-    return "removeChild()";
+    return "SpriteBatchNode::removeChild()";
 }
 
 ////////////////////////////////////////////////////////
@@ -703,7 +826,7 @@ std::string ReorderSpriteSheet::subtitle()
 
 const char*  ReorderSpriteSheet::testName()
 {
-    return "reorderChild()";
+    return "SpriteBatchNode::reorderChild()";
 }
 
 void runNodeChildrenTest()
@@ -779,7 +902,7 @@ std::string SortAllChildrenSpriteSheet::subtitle()
 
 const char*  SortAllChildrenSpriteSheet::testName()
 {
-    return "sortAllChildren()";
+    return "SpriteBatchNode::sortAllChildren()";
 }
 
 ////////////////////////////////////////////////////////
