@@ -129,7 +129,7 @@ UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
     {
         return NULL;
     }
-    if (root->getWidgetTag() == tag)
+    if (root->getTag() == tag)
     {
         return root;
     }
