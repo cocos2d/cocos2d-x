@@ -32,18 +32,39 @@ NS_CC_EXT_BEGIN
 class UILabelBMFont : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UILabelBMFont();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UILabelBMFont();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UILabelBMFont* create();
+    
+    /** init a bitmap font atlas with an initial string and the FNT file */
     void setFntFile(const char* fileName);
+    
+    /** set string value for labelbmfont*/
     void setText(const char* value);
+    
+    /** get string value for labelbmfont*/
     const char* getStringValue();
-    virtual CCNode* getValidNode();
     virtual void setAnchorPoint(const CCPoint &pt);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
 protected:
-    virtual void initNodes();
+    virtual void initRenderer();
+    virtual void onSizeChanged();
+    void labelBMFontScaleChangedWithSize();
 protected:
-    CCLabelBMFont* m_pLabelBMFont;
+    CCLabelBMFont* m_pLabelBMFontRenderer;
+    bool m_bFntFileHasInit;
 };
     
 NS_CC_EXT_END

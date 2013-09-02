@@ -27,7 +27,22 @@
 NS_CC_EXT_BEGIN
 
 UIListView::UIListView()
-: m_pInitChildListener(NULL)
+: m_eDirection(LISTVIEW_DIR_VERTICAL)
+, m_eMoveDirection(LISTVIEW_MOVE_DIR_NONE)
+, m_fTouchStartLocation(0.0f)
+, m_fTouchEndLocation(0.0f)
+, m_fTouchMoveStartLocation(0.0f)
+, m_fTopBoundary(0.0f)
+, m_fBottomBoundary(0.0f)
+, m_fLeftBoundary(0.0f)
+, m_fRightBoundary(0.0f)
+, m_bAutoScroll(false)
+, m_fAutoScrollOriginalSpeed(0.0f)
+, m_fAutoScrollAcceleration(600.0f)
+, m_bBePressed(false)
+, m_fSlidTime(0.0f)
+, m_fChildFocusCancelOffset(5.0f)
+, m_pInitChildListener(NULL)
 , m_pfnInitChildSelector(NULL)
 , m_pUpdateChildListener(NULL)
 , m_pfnUpdateChildSelector(NULL)
@@ -45,14 +60,18 @@ UIListView::UIListView()
 , m_overRightArray(NULL)
 , m_fDisBoundaryToChild_0(0.0f)
 , m_fDisBetweenChild(0.0f)
+/* gui mark */
+, m_fScrollDegreeRange(45.0f)
+/**/
 {
-    m_WidgetName = WIDGET_LISTVIEW;
 }
 
 UIListView::~UIListView()
-{    
+{
+    /* gui mark */
     CC_SAFE_RELEASE_NULL(m_pChildPool);
-    CC_SAFE_RELEASE_NULL(m_pUpdatePool);     
+    CC_SAFE_RELEASE_NULL(m_pUpdatePool);
+    /**/
     CC_SAFE_RELEASE_NULL(m_overTopArray);
     CC_SAFE_RELEASE_NULL(m_overBottomArray);
     CC_SAFE_RELEASE_NULL(m_overLeftArray);
@@ -70,15 +89,14 @@ UIListView* UIListView::create()
     return NULL;
 }
 
-void UIListView::releaseResoures()
-{
-    UIPanel::releaseResoures();
-}
-
 bool UIListView::init()
 {
-    if (UIScrollView::init())
+    if (Layout::init())
     {
+        setUpdateEnabled(true);
+        setTouchEnabled(true);
+        setClippingEnabled(true);
+        
         m_pChildPool = CCArray::create();
         m_pUpdatePool = CCArray::create();
         CC_SAFE_RETAIN(m_pChildPool);
@@ -97,29 +115,26 @@ bool UIListView::init()
     return false;
 }
 
-void UIListView::initNodes()
+void UIListView::onSizeChanged()
 {
-    UIPanel::initNodes();
+    Layout::onSizeChanged();
+    m_fTopBoundary = m_size.height;
+    m_fRightBoundary = m_size.width;
 }
 
 bool UIListView::addChild(UIWidget* widget)
 {
-    UIPanel::addChild(widget);
-    widget->setVisible(checkChildVisibleInParent(this, widget));
+    Layout::addChild(widget);
     resetProperty();
     return true;
 }
 
 void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
 {
-	m_pUpdatePool->removeAllObjects();
-	m_pChildPool->removeAllObjects();
-    UIPanel::removeAllChildrenAndCleanUp(cleanup);
-    
-    /*
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
-     */
+    Layout::removeAllChildrenAndCleanUp(cleanup);
+    
     /*
     m_pUpdatePool->clear();
     m_pChildPool->clear();
@@ -130,13 +145,68 @@ bool UIListView::removeChild(UIWidget* child,bool cleanup)
 {
     bool value = false;
     
-    if (UIPanel::removeChild(child, cleanup))
+    if (Layout::removeChild(child, cleanup))
     {
         value = true;
         resetProperty();
     }
     
     return value;
+}
+
+bool UIListView::onTouchBegan(const CCPoint &touchPoint)
+{
+    bool pass = Layout::onTouchBegan(touchPoint);
+    handlePressLogic(touchPoint);
+    return pass;    
+}
+
+void UIListView::onTouchMoved(const CCPoint &touchPoint)
+{
+    Layout::onTouchMoved(touchPoint);
+    /* gui mark */
+//    if (isInScrollDegreeRange(this))
+    {
+        handleMoveLogic(touchPoint);
+    }    
+    // before
+//    handleMoveLogic(touchPoint);
+    /**/
+}
+
+void UIListView::onTouchEnded(const CCPoint &touchPoint)
+{
+    Layout::onTouchEnded(touchPoint);
+    handleReleaseLogic(touchPoint);
+}
+
+void UIListView::onTouchCancelled(const CCPoint &touchPoint)
+{
+    Layout::onTouchCancelled(touchPoint);
+}
+
+void UIListView::onTouchLongClicked(const CCPoint &touchPoint)
+{
+    
+}
+
+void UIListView::update(float dt)
+{
+    if (m_bAutoScroll)
+    {
+        autoScrollChildren(dt);
+    }
+    recordSlidTime(dt);
+}
+
+void UIListView::setDirection(ListViewDirection dir)
+{
+    m_eDirection = dir;
+}
+
+ListViewDirection UIListView::getDirection()
+{
+    return m_eDirection;
 }
 
 void UIListView::resetProperty()
@@ -146,19 +216,18 @@ void UIListView::resetProperty()
     if (arrayChildren->num <= 0)
     {
         return;
-    }
-    
+    }    
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             if (m_fTopBoundary == 0)
             {
                 return;
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             if (m_fRightBoundary == 0)
             {
                 return;
@@ -180,14 +249,14 @@ void UIListView::resetProperty()
             
             switch (m_eDirection)
             {
-                case SCROLLVIEW_DIR_VERTICAL: // vertical
+                case LISTVIEW_DIR_VERTICAL: // vertical
                 {
                     float child_0_top = child_0->getRelativeTopPos();
                     m_fDisBoundaryToChild_0 = scroll_top - child_0_top;
                 }
                     break;
                     
-                case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+                case LISTVIEW_DIR_HORIZONTAL: // horizontal
                 {
                     float child_0_left = child_0->getRelativeLeftPos();
                     m_fDisBoundaryToChild_0 = child_0_left - scroll_left;
@@ -207,7 +276,7 @@ void UIListView::resetProperty()
             
             switch (m_eDirection)
             {
-                case SCROLLVIEW_DIR_VERTICAL: // vertical
+                case LISTVIEW_DIR_VERTICAL: // vertical
                 {
                     float child_0_top = child_0->getRelativeTopPos();
                     m_fDisBoundaryToChild_0 = scroll_top - child_0_top;
@@ -215,7 +284,7 @@ void UIListView::resetProperty()
                 }
                     break;
                     
-                case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+                case LISTVIEW_DIR_HORIZONTAL: // horizontal
                 {
                     float child_0_left = child_0->getRelativeLeftPos();
                     m_fDisBoundaryToChild_0 = child_0_left - scroll_left;
@@ -231,39 +300,183 @@ void UIListView::resetProperty()
     }
 }
 
-void UIListView::setSize(const CCSize &size)
-{
-    UIPanel::setSize(size);
-    m_fTopBoundary = size.height;
-    m_fRightBoundary = size.width;
-}
-
 void UIListView::handlePressLogic(const CCPoint &touchPoint)
 {
-    UIScrollView::handlePressLogic(touchPoint);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    
+    switch (m_eDirection)
+    {
+        case LISTVIEW_DIR_VERTICAL: // vertical
+            m_fTouchMoveStartLocation = nsp.y;
+            m_fTouchStartLocation = nsp.y;
+            break;
+            
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
+            m_fTouchMoveStartLocation = nsp.x;
+            m_fTouchStartLocation = nsp.x;
+            break;
+            
+        default:
+            break;
+    }
+    startRecordSlidAction();
     clearCollectOverArray();
 }
 
-void UIListView::endRecordSlidAction()
+void UIListView::handleMoveLogic(const CCPoint &touchPoint)
 {
-    if (m_children->count() <= 0)
-    {
-        return;
-    }
-    if (m_fSlidTime <= 0.016f)
-    {
-        return;
-    }
-    float totalDis = 0;
-    totalDis = m_fTouchEndLocation-m_fTouchStartLocation;
-    float orSpeed = fabs(totalDis)/(m_fSlidTime);
-    startAutoScrollChildren(orSpeed / 4);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    float offset = 0.0f;
     
-    m_bBePressed = false;
-    m_fSlidTime = 0.0;
+    switch (m_eDirection)
+    {
+        case LISTVIEW_DIR_VERTICAL: // vertical
+        {
+            float moveY = nsp.y;
+            offset = moveY - m_fTouchMoveStartLocation;
+            m_fTouchMoveStartLocation = moveY;
+            
+            if (offset < 0.0f)
+            {
+                m_eMoveDirection = LISTVIEW_MOVE_DIR_DOWN; // down
+            }
+            else if (offset > 0.0f)
+            {
+                m_eMoveDirection = LISTVIEW_MOVE_DIR_UP; // up
+            }
+        }
+            break;
+            
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
+        {
+            float moveX = nsp.x;
+            offset = moveX - m_fTouchMoveStartLocation;
+            m_fTouchMoveStartLocation = moveX;
+            
+            if (offset < 0)
+            {
+                m_eMoveDirection = LISTVIEW_MOVE_DIR_LEFT; // left
+            }
+            else if (offset > 0)
+            {
+                m_eMoveDirection = LISTVIEW_MOVE_DIR_RIGHT; // right
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    scrollChildren(offset);
+}
+
+void UIListView::handleReleaseLogic(const CCPoint &touchPoint)
+{
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
     
-//    UIScrollView::endRecordSlidAction();
-//    m_fAutoScrollOriginalSpeed /= 6;
+    switch (m_eDirection)
+    {
+        case LISTVIEW_DIR_VERTICAL: // vertical
+            m_fTouchEndLocation = nsp.y;
+            break;
+            
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
+            m_fTouchEndLocation = nsp.x;
+            break;
+            
+        default:
+            break;
+    }
+    endRecordSlidAction();
+}
+
+void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CCPoint &touchPoint)
+{
+    switch (handleState)
+    {
+        case 0:
+            handlePressLogic(touchPoint);
+            break;
+            
+        case 1:
+        {
+            float offset = 0;
+            switch (m_eDirection)
+            {
+                case LISTVIEW_DIR_VERTICAL: // vertical
+                    offset = fabs(sender->getTouchStartPos().y - touchPoint.y);
+                    break;
+                    
+                case LISTVIEW_DIR_HORIZONTAL: // horizontal
+                    offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
+                    break;
+                    
+                default:
+                    break;
+            }
+            if (offset > m_fChildFocusCancelOffset)
+            {
+//                if (isInScrollDegreeRange(sender))
+                {
+                    sender->setFocus(false);
+                    handleMoveLogic(touchPoint);
+                }
+            }
+        }
+            break;
+            
+        case 2:
+            handleReleaseLogic(touchPoint);
+            break;
+            
+        case 3:
+            break;
+    }
+}
+
+void UIListView::checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint)
+{
+    /* gui mark */
+//    Layout::checkChildInfo(handleState, sender, touchPoint);
+    /**/
+    interceptTouchEvent(handleState, sender, touchPoint);
+}
+
+void UIListView::moveChildren(float offset)
+{
+    switch (m_eDirection)
+    {
+        case LISTVIEW_DIR_VERTICAL: // vertical
+        {
+            ccArray* arrayChildren = m_children->data;
+            int childrenCount = arrayChildren->num;
+            for (int i = 0; i < childrenCount; i++)
+            {
+                UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
+                moveChildPoint.x = child->getPosition().x;
+                moveChildPoint.y = child->getPosition().y + offset;
+                child->setPosition(moveChildPoint);
+            }
+            break;
+        }
+            
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
+        {
+            ccArray* arrayChildren = m_children->data;
+            int childrenCount = arrayChildren->num;
+            for (int i=0;i<childrenCount;i++)
+            {
+                UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
+                moveChildPoint.x = child->getPosition().x + offset;
+                moveChildPoint.y = child->getPosition().y;
+                child->setPosition(moveChildPoint);
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 bool UIListView::scrollChildren(float touchOffset)
@@ -272,10 +485,10 @@ bool UIListView::scrollChildren(float touchOffset)
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical            
+        case LISTVIEW_DIR_VERTICAL: // vertical            
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     {
                         realOffset = MIN(realOffset, m_fDisBetweenChild);
                         
@@ -308,7 +521,7 @@ bool UIListView::scrollChildren(float touchOffset)
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     {
                         realOffset = MAX(realOffset, -m_fDisBetweenChild);
                         
@@ -347,10 +560,10 @@ bool UIListView::scrollChildren(float touchOffset)
             return true;
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     {
                         realOffset = MAX(realOffset, -m_fDisBetweenChild);
                         
@@ -383,7 +596,7 @@ bool UIListView::scrollChildren(float touchOffset)
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     {
                         realOffset = MIN(realOffset, m_fDisBetweenChild);
                         
@@ -424,43 +637,151 @@ bool UIListView::scrollChildren(float touchOffset)
     }
     
     return false;
-}        
+}
 
-void UIListView::moveChildren(float offset)
+void UIListView::autoScrollChildren(float dt)
 {
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
+            switch (m_eMoveDirection)
         {
-            ccArray* arrayChildren = m_children->data;
-            int childrenCount = arrayChildren->num;
-            for (int i = 0; i < childrenCount; i++)
+            case LISTVIEW_MOVE_DIR_UP: // up
             {
-                UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-                moveChildPoint.x = child->getPosition().x;
-                moveChildPoint.y = child->getPosition().y + offset;
-                child->setPosition(moveChildPoint);
-                child->setVisible(checkChildVisibleInParent(this, child));
+                float curDis = getCurAutoScrollDistance(dt);
+                if (curDis <= 0)
+                {
+                    curDis = 0;
+                    stopAutoScrollChildren();
+                }
+                if (!scrollChildren(curDis))
+                {
+                    stopAutoScrollChildren();
+                }
             }
-            break;
+                break;
+                
+            case LISTVIEW_MOVE_DIR_DOWN: // down
+            {
+                float curDis = getCurAutoScrollDistance(dt);
+                if (curDis <= 0)
+                {
+                    curDis = 0;
+                    stopAutoScrollChildren();
+                }
+                if (!scrollChildren(-curDis))
+                {
+                    stopAutoScrollChildren();
+                }
+            }
+                break;
+                
+            default:
+                break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+            break;
+            
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
+            switch (m_eMoveDirection)
         {
-            ccArray* arrayChildren = m_children->data;
-            int childrenCount = arrayChildren->num;
-            for (int i=0;i<childrenCount;i++)
+            case LISTVIEW_MOVE_DIR_LEFT: // left
             {
-                UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-                moveChildPoint.x = child->getPosition().x + offset;
-                moveChildPoint.y = child->getPosition().y;
-                child->setPosition(moveChildPoint);
-                child->setVisible(checkChildVisibleInParent(this, child));
+                float curDis = getCurAutoScrollDistance(dt);
+                if (curDis <= 0)
+                {
+                    curDis = 0;
+                    stopAutoScrollChildren();
+                }
+                if (!scrollChildren(-curDis))
+                {
+                    stopAutoScrollChildren();
+                }
             }
-            break;
+                break;
+                
+            case LISTVIEW_MOVE_DIR_RIGHT: // right
+            {
+                float curDis = getCurAutoScrollDistance(dt);
+                if (curDis <= 0)
+                {
+                    curDis = 0;
+                    stopAutoScrollChildren();
+                }
+                if (!scrollChildren(curDis))
+                {
+                    stopAutoScrollChildren();
+                }
+            }
+                break;
+                
+            default:
+                break;
         }
+            break;
+            
         default:
             break;
     }
+}
+
+float UIListView::getCurAutoScrollDistance(float time)
+{
+    float dt = time;
+    m_fAutoScrollOriginalSpeed -= m_fAutoScrollAcceleration*dt;
+    return m_fAutoScrollOriginalSpeed*dt;
+}
+
+void UIListView::startAutoScrollChildren(float v)
+{
+    m_fAutoScrollOriginalSpeed = v;
+    m_bAutoScroll = true;
+}
+
+void UIListView::stopAutoScrollChildren()
+{
+    m_bAutoScroll = false;
+    m_fAutoScrollOriginalSpeed = 0.0f;
+}
+
+void UIListView::recordSlidTime(float dt)
+{
+    if (m_bBePressed)
+    {
+        m_fSlidTime += dt;
+    }
+}
+
+void UIListView::startRecordSlidAction()
+{
+    if (m_children->count() <= 0)
+    {
+        return;
+    }
+    if (m_bAutoScroll)
+    {
+        stopAutoScrollChildren();
+    }
+    m_bBePressed = true;
+    m_fSlidTime = 0.0;
+}
+
+void UIListView::endRecordSlidAction()
+{
+    if (m_children->count() <= 0)
+    {
+        return;
+    }
+    if (m_fSlidTime <= 0.016f)
+    {
+        return;
+    }
+    float totalDis = 0;
+    totalDis = m_fTouchEndLocation-m_fTouchStartLocation;
+    float orSpeed = fabs(totalDis)/(m_fSlidTime);
+    startAutoScrollChildren(orSpeed / 4);
+    
+    m_bBePressed = false;
+    m_fSlidTime = 0.0;
 }
 
 UIWidget* UIListView::getCheckPositionChild()
@@ -469,15 +790,15 @@ UIWidget* UIListView::getCheckPositionChild()
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
 //                    child = m_pChildPool->rbegin();
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
 //                    child = m_pChildPool->begin();
                     break;
@@ -487,15 +808,15 @@ UIWidget* UIListView::getCheckPositionChild()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
 //                    child = m_pChildPool->rbegin();
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
 //                    child = m_pChildPool->begin();
                     break;
@@ -519,7 +840,6 @@ void UIListView::initChildWithDataLength(int length)
     m_nEnd = 0;        
     
     // init child pool
-//    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
@@ -549,10 +869,10 @@ void UIListView::pushChildToPool()
 {
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     {
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
                         m_pUpdatePool->insertObject(child, 0);
@@ -565,7 +885,7 @@ void UIListView::pushChildToPool()
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     {
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
                         m_pUpdatePool->insertObject(child, 0);
@@ -583,10 +903,10 @@ void UIListView::pushChildToPool()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     {
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->objectAtIndex(0));
                         m_pUpdatePool->insertObject(child, 0);
@@ -599,7 +919,7 @@ void UIListView::pushChildToPool()
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     {
                         UIWidget* child = dynamic_cast<UIWidget*>(m_pChildPool->lastObject());
                         m_pUpdatePool->insertObject(child, 0);
@@ -633,10 +953,10 @@ void UIListView::getAndCallback()
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     ++m_nEnd;
                     setUpdateChild(child);
                     setUpdateDataIndex(m_nEnd);
@@ -652,7 +972,7 @@ void UIListView::getAndCallback()
                     ++m_nBegin;
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     --m_nBegin;
                     setUpdateChild(child);
                     setUpdateDataIndex(m_nBegin);
@@ -673,10 +993,10 @@ void UIListView::getAndCallback()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     ++m_nEnd;
                     setUpdateChild(child);
                     setUpdateDataIndex(m_nEnd);
@@ -692,7 +1012,7 @@ void UIListView::getAndCallback()
                     ++m_nBegin;
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     --m_nBegin;
                     setUpdateChild(child);
                     setUpdateDataIndex(m_nBegin);
@@ -719,15 +1039,15 @@ void UIListView::getAndCallback()
     
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     m_pChildPool->addObject(child);
 //                    m_pChildPool->push_back(child);
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     m_pChildPool->insertObject(child, 0);
 //                    m_pChildPool->push_front(child);
                     break;
@@ -737,15 +1057,15 @@ void UIListView::getAndCallback()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     m_pChildPool->addObject(child);
 //                    m_pChildPool->push_back(child);
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     m_pChildPool->insertObject(child, 0);
 //                    m_pChildPool->push_front(child);
                     break;
@@ -799,12 +1119,12 @@ void UIListView::clearCollectOverArray()
 {
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL:
+        case LISTVIEW_DIR_VERTICAL:
             m_overTopArray->removeAllObjects();
             m_overBottomArray->removeAllObjects();
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL:
+        case LISTVIEW_DIR_HORIZONTAL:
             m_overLeftArray->removeAllObjects();
             m_overRightArray->removeAllObjects();
             break;
@@ -818,7 +1138,6 @@ void UIListView::collectOverTopChild()
 {
     float scroll_top = m_fTopBoundary;
     
-//    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
@@ -837,7 +1156,6 @@ void UIListView::collectOverBottomChild()
 {
     float scroll_bottom = m_fBottomBoundary;        
     
-//    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
@@ -856,7 +1174,6 @@ void UIListView::collectOverLeftChild()
 {
     float scroll_left = m_fLeftBoundary;        
     
-//    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
@@ -875,7 +1192,6 @@ void UIListView::collectOverRightChild()
 {
     float scroll_right = m_fRightBoundary;
     
-//    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
     ccArray* arrayChildren = m_children->data;
     int times = arrayChildren->num;
     for (int i = 0; i < times; ++i)
@@ -893,12 +1209,11 @@ void UIListView::setLoopPosition()
 {
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                 {
-//                    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                     ccArray* arrayChildren = m_children->data;
                     int childrenCount = arrayChildren->num;
                     
@@ -911,7 +1226,7 @@ void UIListView::setLoopPosition()
                             
                             if (i == 0)
                             {
-                                float height = child->getRect().size.height;
+                                float height = child->getSize().height;
                                 float offset = (child->getWidgetType() == WidgetTypeWidget) ? height / 2 : height;
                                 float y = m_fTopBoundary - m_fDisBoundaryToChild_0 - offset;
                                 child->setPosition(ccp(child->getPosition().x, y));
@@ -927,7 +1242,6 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_top = m_fTopBoundary;
                         
-//                        ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                         ccArray* arrayChildren = m_children->data;
                         int count = arrayChildren->num;
                         for (int i = 0; i < count; ++i)
@@ -946,9 +1260,8 @@ void UIListView::setLoopPosition()
                 }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                 {
-//                    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                     ccArray* arrayChildren = m_children->data;
                     int childrenCount = arrayChildren->num;
                     
@@ -975,7 +1288,6 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_bottom = m_fBottomBoundary;
                         
-//                        ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                         ccArray* arrayChildren = m_children->data;
                         int count = arrayChildren->num;
                         for (int i = count - 1; i >= 0; --i)
@@ -999,12 +1311,11 @@ void UIListView::setLoopPosition()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                 {
-//                    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                     ccArray* arrayChildren = m_children->data;
                     int childrenCount = arrayChildren->num;
                     
@@ -1017,7 +1328,7 @@ void UIListView::setLoopPosition()
                             
                             if (i == 0)
                             {
-                                float width = child->getRect().size.width;
+                                float width = child->getSize().width;
                                 float offset = (child->getWidgetType() == WidgetTypeWidget) ? (width / 2) : 0;                                
                                 float x = m_fLeftBoundary + m_fDisBoundaryToChild_0 + width + offset;
                                 child->setPosition(ccp(x, child->getPosition().y));
@@ -1033,7 +1344,6 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_left = m_fLeftBoundary;
                         
-//                        ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                         ccArray* arrayChildren = m_children->data;
                         int count = arrayChildren->num;
                         for (int i = 0; i < count; ++i)
@@ -1052,9 +1362,8 @@ void UIListView::setLoopPosition()
                 }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                 {
-//                    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                     ccArray* arrayChildren = m_children->data;
                     int childrenCount = arrayChildren->num;
                     
@@ -1081,7 +1390,6 @@ void UIListView::setLoopPosition()
                     {
                         float scroll_right = m_fRightBoundary;
                         
-//                        ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
                         ccArray* arrayChildren = m_children->data;
                         int count = arrayChildren->num;
                         for (int i = count - 1; i >= 0; --i)
@@ -1114,10 +1422,10 @@ void UIListView::updateChild()
 {
     switch (m_eDirection)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case LISTVIEW_DIR_VERTICAL: // vertical
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_UP: // up
+                case LISTVIEW_MOVE_DIR_UP: // up
                     {
                         int count = m_overTopArray->count();
                         for (int i = 0; i < count; ++i)
@@ -1128,7 +1436,7 @@ void UIListView::updateChild()
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
+                case LISTVIEW_MOVE_DIR_DOWN: // down
                     {
                         int count = m_overBottomArray->count();
                         for (int i = 0; i < count; ++i)
@@ -1144,10 +1452,10 @@ void UIListView::updateChild()
             }
             break;
             
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case LISTVIEW_DIR_HORIZONTAL: // horizontal
             switch (m_eMoveDirection)
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
+                case LISTVIEW_MOVE_DIR_LEFT: // left
                     {
                         int count = m_overLeftArray->count();
                         for (int i = 0; i < count; ++i)
@@ -1158,7 +1466,7 @@ void UIListView::updateChild()
                     }
                     break;
                     
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
+                case LISTVIEW_MOVE_DIR_RIGHT: // right
                     {
                         int count = m_overRightArray->count();
                         for (int i = 0; i < count; ++i)
@@ -1206,5 +1514,51 @@ void UIListView::addUpdateChildEvent(cocos2d::CCObject *target, SEL_ListViewUpda
     m_pUpdateChildListener = target;
     m_pfnUpdateChildSelector = selector;
 }
+
+/* gui mark */
+//float UIListView::getScrollDegreeRange() const
+//{
+//    return m_fScrollDegreeRange;
+//}
+//
+//void UIListView::setScrollDegreeRange(float range)
+//{
+//    m_fScrollDegreeRange = range;
+//}
+//
+//bool UIListView::isInScrollDegreeRange(UIWidget* widget)
+//{
+//    CCPoint vector = ccpSub(widget->getTouchMovePos(), widget->getTouchStartPos());
+//    float radians = ccpToAngle(vector);
+//    float degrees = CC_RADIANS_TO_DEGREES(radians);
+//    
+//    float compare = m_fScrollDegreeRange / 2;
+//    
+//    switch (m_eDirection)
+//    {
+//        case LISTVIEW_DIR_VERTICAL:
+//            if ((degrees >= 90 - compare && degrees <= 90 + compare)
+//                || (degrees >= -90 - compare && degrees <= -90 + compare))
+//            {
+//                return true;
+//            }
+//            break;
+//            
+//        case LISTVIEW_DIR_HORIZONTAL:
+//            if ((degrees >= -compare && degrees <= compare)
+//                || (degrees >= -179.99 && degrees <= -179.99 + compare)
+//                || (degrees >= 180 - compare && degrees <= 180))
+//            {
+//                return true;
+//            }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
+//    return false;
+//}
+/**/
 
 NS_CC_EXT_END

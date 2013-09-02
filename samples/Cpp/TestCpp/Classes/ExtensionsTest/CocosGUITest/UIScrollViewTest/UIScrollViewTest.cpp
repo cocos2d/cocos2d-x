@@ -2,6 +2,12 @@
 
 #include "UIScrollViewTest.h"
 
+const char* font_UIScrollViewTest =
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+"Marker Felt";
+#else
+"cocosgui/Marker Felt.ttf";
+#endif
 
 // UIScrollViewTest_Vertical
 
@@ -23,7 +29,7 @@ bool UIScrollViewTest_Vertical::init()
         // Add a label in which the scrollview alert will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("Move by vertical direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
+        m_pDisplayValueLabel->setFontName(font_UIScrollViewTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
@@ -32,17 +38,16 @@ bool UIScrollViewTest_Vertical::init()
         // Add the alert
         UILabel *alert = UILabel::create();
         alert->setText("ScrollView");
-        alert->setFontName("Marker Felt");
+        alert->setFontName(font_UIScrollViewTest);
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the scrollview by vertical
         UIScrollView* scrollView = UIScrollView::create();
-        scrollView->setClippingEnable(true);
         scrollView->setTouchEnable(true);
         scrollView->setSize(CCSizeMake(280, 150));        
         CCSize backgroundSize = background->getContentSize();
@@ -62,30 +67,24 @@ bool UIScrollViewTest_Vertical::init()
         
         UIButton* button = UIButton::create();
         button->setTouchEnable(true);
-        button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
-        button->setPosition(ccp(innerWidth / 2, scrollView->getInerContainerSize().height - button->getRect().size.height / 2));
+        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->setPosition(ccp(innerWidth / 2, scrollView->getInnerContainerSize().height - button->getRect().size.height / 2));
         scrollView->addChild(button);
         
         UITextButton* textButton = UITextButton::create();
         textButton->setTouchEnable(true);
-        textButton->setTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        textButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
         textButton->setText("Text Button");
         textButton->setPosition(ccp(innerWidth / 2, button->getRelativeBottomPos() - button->getRect().size.height));
         scrollView->addChild(textButton);
         
-        UIZoomButton* zoomButton = UIZoomButton::create();
-        zoomButton->setTouchEnable(true);
-        zoomButton->setTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "cocosgui/button.png");
-        zoomButton->setTitle("ZoomButton", "ZoomButton", "ZoomButton");
-        zoomButton->setNormalFontSize(16);
-        zoomButton->setNormalFontName("Marker Felt");
-        zoomButton->setPressedFontSize(16);
-        zoomButton->setPressedFontName("Marker Felt");
-        zoomButton->setDisabledFontSize(16);
-        zoomButton->setDisabledFontName("Marker Felt");
-        zoomButton->setPreferredSize(CCSizeMake(100, zoomButton->getContentSize().height * 2.0f));
-        zoomButton->setPosition(ccp(innerWidth / 2, textButton->getRelativeBottomPos() - textButton->getRect().size.height));
-        scrollView->addChild(zoomButton);
+        UIButton* button_scale9 = UIButton::create();
+        button_scale9->setTouchEnable(true);
+        button_scale9->setScale9Enabled(true);
+        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
+        button_scale9->setPosition(ccp(innerWidth / 2, textButton->getRelativeBottomPos() - textButton->getRect().size.height));
+        scrollView->addChild(button_scale9);
         
         imageView->setPosition(ccp(innerWidth / 2, imageView->getRect().size.height / 2));
         scrollView->addChild(imageView);
@@ -116,7 +115,7 @@ bool UIScrollViewTest_Horizontal::init()
         // Add a label in which the scrollview alert will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("Move by horizontal direction");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
+        m_pDisplayValueLabel->setFontName(font_UIScrollViewTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
@@ -124,18 +123,17 @@ bool UIScrollViewTest_Horizontal::init()
         
         UILabel *alert = UILabel::create();
         alert->setText("ScrollView");
-        alert->setFontName("Marker Felt");
+        alert->setFontName(font_UIScrollViewTest);
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the scrollview by horizontal
         UIScrollView* scrollView = UIScrollView::create();        
         scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
-        scrollView->setClippingEnable(true);
         scrollView->setTouchEnable(true);
         scrollView->setSize(CCSizeMake(280, 150));
         scrollView->setInnerContainerSize(scrollView->getRect().size);
@@ -156,36 +154,30 @@ bool UIScrollViewTest_Horizontal::init()
         
         UIButton* button = UIButton::create();
         button->setTouchEnable(true);
-        button->setTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
+        button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(ccp(button->getRect().size.width / 2,
-                                scrollView->getInerContainerSize().height - button->getRect().size.height / 2));
+                                scrollView->getInnerContainerSize().height - button->getRect().size.height / 2));
         scrollView->addChild(button);
         
         UITextButton* textButton = UITextButton::create();
         textButton->setTouchEnable(true);
-        textButton->setTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+        textButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
         textButton->setText("Text Button");
         textButton->setPosition(ccp(button->getRelativeRightPos() + button->getRect().size.width / 2,
                                     button->getRelativeBottomPos() - button->getRect().size.height / 2));
         scrollView->addChild(textButton);
         
-        UIZoomButton* zoomButton = UIZoomButton::create();
-        zoomButton->setTouchEnable(true);
-        zoomButton->setTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "cocosgui/button.png");
-        zoomButton->setTitle("ControlButton", "ControlButton", "ControlButton");
-        zoomButton->setNormalFontSize(16);
-        zoomButton->setNormalFontName("Marker Felt");
-        zoomButton->setPressedFontSize(16);
-        zoomButton->setPressedFontName("Marker Felt");
-        zoomButton->setDisabledFontSize(16);
-        zoomButton->setDisabledFontName("Marker Felt");
-        zoomButton->setPreferredSize(CCSizeMake(100, zoomButton->getContentSize().height * 2.0f));
-        zoomButton->setPosition(ccp(textButton->getRelativeRightPos() + textButton->getRect().size.width / 2,
-                                    textButton->getRelativeBottomPos() - textButton->getRect().size.height / 2));
-        scrollView->addChild(zoomButton);
+        UIButton* button_scale9 = UIButton::create();
+        button_scale9->setTouchEnable(true);
+        button_scale9->setScale9Enabled(true);
+        button_scale9->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+        button_scale9->setSize(CCSizeMake(100, button_scale9->getContentSize().height));
+        button_scale9->setPosition(ccp(textButton->getRelativeRightPos() + textButton->getRect().size.width / 2,
+                                       textButton->getRelativeBottomPos() - textButton->getRect().size.height / 2));
+        scrollView->addChild(button_scale9);                
                 
         imageView->setPosition(ccp(innerWidth - imageView->getRect().size.width / 2,
-                                   zoomButton->getRelativeBottomPos() - zoomButton->getRect().size.height / 2));
+                                   button_scale9->getRelativeBottomPos() - button_scale9->getRect().size.height / 2));
         scrollView->addChild(imageView);                
         
         return true;

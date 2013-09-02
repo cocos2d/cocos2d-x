@@ -28,7 +28,6 @@ NS_CC_EXT_BEGIN
     
 UINodeContainer::UINodeContainer()
 {
-    m_WidgetName = WIDGET_NODECONTAINER;
 }
 
 UINodeContainer::~UINodeContainer()
@@ -65,7 +64,7 @@ void UINodeContainer::addCCNode(cocos2d::CCNode *node)
     }
     m_pCCNode = node;
     m_pCCNode->retain();
-    m_pRender->addChild(node);
+    m_pRenderer->addChild(node);
 }
 
 void UINodeContainer::removeCCNode(bool cleanup)
@@ -75,7 +74,7 @@ void UINodeContainer::removeCCNode(bool cleanup)
         return;
     }
     m_pCCNode->release();
-    m_pRender->removeChild(m_pCCNode,cleanup);
+    m_pRenderer->removeChild(m_pCCNode,cleanup);
     m_pCCNode = NULL;
 }
 

@@ -70,9 +70,6 @@
     <Filter Include="CocoGUILIB\BaseClasses">
       <UniqueIdentifier>{5dd0ca29-1913-4536-b72b-d5780490918a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CocoGUILIB\Drawable">
-      <UniqueIdentifier>{b351307c-e799-4487-a51d-c2e2507eb129}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CocoGUILIB\System">
       <UniqueIdentifier>{c93885f4-1bc3-4c4b-b674-101af5c1a84a}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,9 @@
     </Filter>
     <Filter Include="CocoGUILIB\UIWidgets\ScrollWidget">
       <UniqueIdentifier>{87b09cdd-761c-4c87-8f9f-e8b79dff04ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CocoGUILIB\UIWidgets\Compatible">
+      <UniqueIdentifier>{0b09fc59-9c57-4674-b855-15bbf2462cf5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -399,28 +399,13 @@
     <ClCompile Include="..\CocoGUILIB\Action\UIActionNode.cpp">
       <Filter>CocoGUILIB\Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\BaseClasses\UIContainerWidget.cpp">
-      <Filter>CocoGUILIB\BaseClasses</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoGUILIB\BaseClasses\UIRootWidget.cpp">
       <Filter>CocoGUILIB\BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\BaseClasses\UIWidget.cpp">
       <Filter>CocoGUILIB\BaseClasses</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\Drawable\UICCLabelAtlas.cpp">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\Drawable\UICCTextField.cpp">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\Drawable\UIClippingLayer.cpp">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoGUILIB\Layouts\UILayoutDefine.cpp">
-      <Filter>CocoGUILIB\Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\Layouts\UILayoutUnit.cpp">
       <Filter>CocoGUILIB\Layouts</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\System\CCSReader.cpp">
@@ -462,25 +447,16 @@
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UINodeContainer.cpp">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIPanel.cpp">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UISlider.cpp">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UISwitch.cpp">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextArea.cpp">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextButton.cpp">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\UITextField.cpp">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CocoGUILIB\UIWidgets\UIZoomButton.cpp">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.cpp">
@@ -497,6 +473,15 @@
     </ClCompile>
     <ClCompile Include="..\CocostudioReader\CCSSceneReader.cpp">
       <Filter>CocostudioReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Layouts\Layout.cpp">
+      <Filter>CocoGUILIB\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Layouts\LayoutExecutant.cpp">
+      <Filter>CocoGUILIB\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoGUILIB\Layouts\LayoutParameter.cpp">
+      <Filter>CocoGUILIB\Layouts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -784,28 +769,13 @@
     <ClInclude Include="..\CocoGUILIB\Action\UIActionNode.h">
       <Filter>CocoGUILIB\Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\BaseClasses\UIContainerWidget.h">
-      <Filter>CocoGUILIB\BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoGUILIB\BaseClasses\UIRootWidget.h">
       <Filter>CocoGUILIB\BaseClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\BaseClasses\UIWidget.h">
       <Filter>CocoGUILIB\BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\Drawable\UICCLabelAtlas.h">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\Drawable\UICCTextField.h">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\Drawable\UIClippingLayer.h">
-      <Filter>CocoGUILIB\Drawable</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoGUILIB\Layouts\UILayoutDefine.h">
-      <Filter>CocoGUILIB\Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\Layouts\UILayoutUnit.h">
       <Filter>CocoGUILIB\Layouts</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\System\CCSReader.h">
@@ -847,25 +817,16 @@
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UINodeContainer.h">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIPanel.h">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UISlider.h">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UISwitch.h">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextArea.h">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextButton.h">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\UITextField.h">
-      <Filter>CocoGUILIB\UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\UIWidgets\UIZoomButton.h">
       <Filter>CocoGUILIB\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIDragPanel.h">
@@ -877,14 +838,26 @@
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIPageView.h">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
-    <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollDelegate.h">
-      <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollView.h">
       <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
     <ClInclude Include="..\CocostudioReader\CCSSceneReader.h">
       <Filter>CocostudioReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Layouts\Layout.h">
+      <Filter>CocoGUILIB\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Layouts\LayoutExecutant.h">
+      <Filter>CocoGUILIB\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\Layouts\LayoutParameter.h">
+      <Filter>CocoGUILIB\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\Compatible\CompatibleClasses.h">
+      <Filter>CocoGUILIB\UIWidgets\Compatible</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoGUILIB\UIWidgets\ScrollWidget\UIScrollInterface.h">
+      <Filter>CocoGUILIB\UIWidgets\ScrollWidget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

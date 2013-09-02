@@ -4,7 +4,6 @@
 #include "UIScene.h"
 #include "UIButtonTest/UIButtonTest.h"
 #include "UITextButtonTest/UITextButtonTest.h"
-#include "UIZoomButtonTest/UIZoomButtonTest.h"
 #include "UICheckBoxTest/UICheckBoxTest.h"
 #include "UISliderTest/UISliderTest.h"
 #include "UIImageViewTest/UIImageViewTest.h"
@@ -27,9 +26,9 @@ enum
 {
     kUIButtonTest = 0,
     kUIButtonTest_Scale9,
+    kUIButtonTest_PressedAction,
     kUITextButtonTest,
     kUITextButtonTest_Scale9,
-    kUIZoomButtonTest,
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
@@ -53,7 +52,7 @@ enum
     kUIPanelTest_BackGroundImage_Scale9,
     kUIPanelTest_Layout_Linear_Vertical,
     kUIPanelTest_Layout_Linear_Horizontal,
-    kUIPanelTest_Layout_Relative,
+//    kUIPanelTest_Layout_Linear_Relative,
     kUIScrollViewTest_Vertical,
     kUIScrollViewTest_Horizontal,
     kUIPageViewTest,
@@ -61,7 +60,7 @@ enum
     kUIListViewTest_Horizontal,
     kUIDragPanelTest,
     kUIDragPanelTest_Bounce,
-    kUINodeContainerTest,    
+    kUINodeContainerTest,
     kUITestMax
 };
 
@@ -69,16 +68,16 @@ static const char* s_testArray[] =
 {
     "UIButtonTest",
     "UIButtonTest_Scale9",
+    "UIButtonTest_PressedAction",
     "UITextButtonTest",
     "UITextButtonTest_Scale9",
-    "UIZoomButtonTest",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
     "UILoadingBarTest_Left",
-    "UILoadingBarTest_Right"
+    "UILoadingBarTest_Right",
     "UILoadingBarTest_Left_Scale9",
     "UILoadingBarTest_Right_Scale9",
     "UILabelAtlasTest",
@@ -95,7 +94,7 @@ static const char* s_testArray[] =
     "UIPanelTest_BackGroundImage_Scale9",
     "UIPanelTest_Layout_Linear_Vertical",
     "UIPanelTest_Layout_Linear_Horizontal",
-    "UIPanelTest_Layout_Relative",
+//    "UIPanelTest_Layout_Linear_Relative",
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
     "UIPageViewTest,",
@@ -152,7 +151,7 @@ CCScene *UISceneManager::previousUIScene()
 }
 
 CCScene *UISceneManager::currentUIScene()
-{
+{    
     switch (m_nCurrentUISceneId)
     {
         case kUIButtonTest:
@@ -161,14 +160,14 @@ CCScene *UISceneManager::currentUIScene()
         case kUIButtonTest_Scale9:
             return UIButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
+        case kUIButtonTest_PressedAction:
+            return UIButtonTest_PressedAction::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            
         case kUITextButtonTest:
             return UITextButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
         case kUITextButtonTest_Scale9:
-            return UITextButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
-            
-        case kUIZoomButtonTest:
-            return UIZoomButtonTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            return UITextButtonTest_Scale9::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);            
             
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
@@ -239,8 +238,10 @@ CCScene *UISceneManager::currentUIScene()
         case kUIPanelTest_Layout_Linear_Horizontal:
             return UIPanelTest_Layout_Linear_Horizontal::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
-        case kUIPanelTest_Layout_Relative:
+            /*
+        case kUIPanelTest_Layout_Linear_Relative:
             return UIPanelTest_Layout_Relative::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+             */
             
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
@@ -264,7 +265,7 @@ CCScene *UISceneManager::currentUIScene()
             return UIDragPanelTest_Bounce::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
             
         case kUINodeContainerTest:
-            return UINodeContainerTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);
+            return UINodeContainerTest::sceneWithTitle(s_testArray[m_nCurrentUISceneId]);                    
     }
     return NULL;
 }

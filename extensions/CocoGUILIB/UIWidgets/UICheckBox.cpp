@@ -27,23 +27,22 @@
 NS_CC_EXT_BEGIN
 
 UICheckBox::UICheckBox():
-m_pBackGroundBox(NULL),
-m_pBackGroundSelectedBox(NULL),
-m_pFrontCross(NULL),
+m_pBackGroundBoxRenderer(NULL),
+m_pBackGroundSelectedBoxRenderer(NULL),
+m_pFrontCrossRenderer(NULL),
+m_pBackGroundBoxDisabledRenderer(NULL),
+m_pFrontCrossDisabledRenderer(NULL),
 m_bIsSelected(true),
 m_pSelectListener(NULL),
 m_pfnSelectSelector(NULL),
 m_pUnSelectListener(NULL),
 m_pfnUnSelectSelector(NULL),
-m_pBackGroundBoxDisabled(NULL),
-m_pFrontCrossDisabled(NULL),
 m_eBackGroundTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL)
 {
-    m_WidgetName = WIDGET_CHECKBOX;
 }
 
 UICheckBox::~UICheckBox()
@@ -66,38 +65,37 @@ bool UICheckBox::init()
 {
     if (UIWidget::init())
     {
-        setPressState(WidgetStateNormal);
         setSelectedState(false);
         return true;
     }
     return false;
 }
 
-void UICheckBox::initNodes()
+void UICheckBox::initRenderer()
 {
-    UIWidget::initNodes();
-    m_pBackGroundBox = CCSprite::create();
-    m_pBackGroundSelectedBox = CCSprite::create();
-    m_pFrontCross = CCSprite::create();
-    m_pBackGroundBoxDisabled = CCSprite::create();
-    m_pFrontCrossDisabled = CCSprite::create();
-    m_pRender->addChild(m_pBackGroundBox);
-    m_pRender->addChild(m_pBackGroundSelectedBox);
-    m_pRender->addChild(m_pFrontCross);
-    m_pRender->addChild(m_pBackGroundBoxDisabled);
-    m_pRender->addChild(m_pFrontCrossDisabled);
+    UIWidget::initRenderer();
+    m_pBackGroundBoxRenderer = CCSprite::create();
+    m_pBackGroundSelectedBoxRenderer = CCSprite::create();
+    m_pFrontCrossRenderer = CCSprite::create();
+    m_pBackGroundBoxDisabledRenderer = CCSprite::create();
+    m_pFrontCrossDisabledRenderer = CCSprite::create();
+    m_pRenderer->addChild(m_pBackGroundBoxRenderer);
+    m_pRenderer->addChild(m_pBackGroundSelectedBoxRenderer);
+    m_pRenderer->addChild(m_pFrontCrossRenderer);
+    m_pRenderer->addChild(m_pBackGroundBoxDisabledRenderer);
+    m_pRenderer->addChild(m_pFrontCrossDisabledRenderer);
 }
 
-void UICheckBox::setTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
+void UICheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
 {
-    setBackGroundTexture(backGround,texType);
-    setBackGroundSelectedTexture(backGroundSelected,texType);
-    setFrontCrossTexture(cross,texType);
-    setBackGroundDisabledTexture(backGroundDisabled,texType);
-    setFrontCrossDisabledTexture(frontCrossDisabled,texType);
+    loadBackGroundTexture(backGround,texType);
+    loadBackGroundSelectedTexture(backGroundSelected,texType);
+    loadFrontCrossTexture(cross,texType);
+    loadBackGroundDisabledTexture(backGroundDisabled,texType);
+    loadFrontCrossDisabledTexture(frontCrossDisabled,texType);
 }
 
-void UICheckBox::setBackGroundTexture(const char *backGround,TextureResType texType)
+void UICheckBox::loadBackGroundTexture(const char *backGround,TextureResType texType)
 {
     if (!backGround || strcmp(backGround, "") == 0)
     {
@@ -108,19 +106,20 @@ void UICheckBox::setBackGroundTexture(const char *backGround,TextureResType texT
     switch (m_eBackGroundTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            m_pBackGroundBox->initWithFile(backGround);
+            m_pBackGroundBoxRenderer->initWithFile(backGround);
             break;
         case UI_TEX_TYPE_PLIST:
-            m_pBackGroundBox->initWithSpriteFrameName(backGround);
+            m_pBackGroundBoxRenderer->initWithSpriteFrameName(backGround);
             break;
         default:
             break;
     }
-    m_pBackGroundBox->setColor(getColor());
-    m_pBackGroundBox->setOpacity(getOpacity());
+    m_pBackGroundBoxRenderer->setColor(getColor());
+    m_pBackGroundBoxRenderer->setOpacity(getOpacity());
+    backGroundTextureScaleChangedWithSize();
 }
 
-void UICheckBox::setBackGroundSelectedTexture(const char *backGroundSelected,TextureResType texType)
+void UICheckBox::loadBackGroundSelectedTexture(const char *backGroundSelected,TextureResType texType)
 {
     if (!backGroundSelected || strcmp(backGroundSelected, "") == 0)
     {
@@ -131,19 +130,20 @@ void UICheckBox::setBackGroundSelectedTexture(const char *backGroundSelected,Tex
     switch (m_eBackGroundSelectedTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            m_pBackGroundSelectedBox->initWithFile(backGroundSelected);
+            m_pBackGroundSelectedBoxRenderer->initWithFile(backGroundSelected);
             break;
         case UI_TEX_TYPE_PLIST:
-            m_pBackGroundSelectedBox->initWithSpriteFrameName(backGroundSelected);
+            m_pBackGroundSelectedBoxRenderer->initWithSpriteFrameName(backGroundSelected);
             break;
         default:
             break;
     }
-    m_pBackGroundSelectedBox->setColor(getColor());
-    m_pBackGroundSelectedBox->setOpacity(getOpacity());
+    m_pBackGroundSelectedBoxRenderer->setColor(getColor());
+    m_pBackGroundSelectedBoxRenderer->setOpacity(getOpacity());
+    backGroundSelectedTextureScaleChangedWithSize();
 }
 
-void UICheckBox::setFrontCrossTexture(const char *cross,TextureResType texType)
+void UICheckBox::loadFrontCrossTexture(const char *cross,TextureResType texType)
 {
     if (!cross || strcmp(cross, "") == 0)
     {
@@ -154,19 +154,20 @@ void UICheckBox::setFrontCrossTexture(const char *cross,TextureResType texType)
     switch (m_eFrontCrossTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            m_pFrontCross->initWithFile(cross);
+            m_pFrontCrossRenderer->initWithFile(cross);
             break;
         case UI_TEX_TYPE_PLIST:
-            m_pFrontCross->initWithSpriteFrameName(cross);
+            m_pFrontCrossRenderer->initWithSpriteFrameName(cross);
             break;
         default:
             break;
     }
-    m_pFrontCross->setColor(getColor());
-    m_pFrontCross->setOpacity(getOpacity());
+    m_pFrontCrossRenderer->setColor(getColor());
+    m_pFrontCrossRenderer->setOpacity(getOpacity());
+    frontCrossTextureScaleChangedWithSize();
 }
 
-void UICheckBox::setBackGroundDisabledTexture(const char *backGroundDisabled,TextureResType texType)
+void UICheckBox::loadBackGroundDisabledTexture(const char *backGroundDisabled,TextureResType texType)
 {
     if (!backGroundDisabled || strcmp(backGroundDisabled, "") == 0)
     {
@@ -177,19 +178,20 @@ void UICheckBox::setBackGroundDisabledTexture(const char *backGroundDisabled,Tex
     switch (m_eBackGroundDisabledTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            m_pBackGroundBoxDisabled->initWithFile(backGroundDisabled);
+            m_pBackGroundBoxDisabledRenderer->initWithFile(backGroundDisabled);
             break;
         case UI_TEX_TYPE_PLIST:
-            m_pBackGroundBoxDisabled->initWithSpriteFrameName(backGroundDisabled);
+            m_pBackGroundBoxDisabledRenderer->initWithSpriteFrameName(backGroundDisabled);
             break;
         default:
             break;
     }
-    m_pBackGroundBoxDisabled->setColor(getColor());
-    m_pBackGroundBoxDisabled->setOpacity(getOpacity());
+    m_pBackGroundBoxDisabledRenderer->setColor(getColor());
+    m_pBackGroundBoxDisabledRenderer->setOpacity(getOpacity());
+    backGroundDisabledTextureScaleChangedWithSize();
 }
 
-void UICheckBox::setFrontCrossDisabledTexture(const char *frontCrossDisabled,TextureResType texType)
+void UICheckBox::loadFrontCrossDisabledTexture(const char *frontCrossDisabled,TextureResType texType)
 {
     if (!frontCrossDisabled || strcmp(frontCrossDisabled, "") == 0)
     {
@@ -200,16 +202,17 @@ void UICheckBox::setFrontCrossDisabledTexture(const char *frontCrossDisabled,Tex
     switch (m_eFrontCrossDisabledTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            m_pFrontCrossDisabled->initWithFile(frontCrossDisabled);
+            m_pFrontCrossDisabledRenderer->initWithFile(frontCrossDisabled);
             break;
         case UI_TEX_TYPE_PLIST:
-            m_pFrontCrossDisabled->initWithSpriteFrameName(frontCrossDisabled);
+            m_pFrontCrossDisabledRenderer->initWithSpriteFrameName(frontCrossDisabled);
             break;
         default:
             break;
     }
-    m_pFrontCrossDisabled->setColor(getColor());
-    m_pFrontCross->setOpacity(getOpacity());
+    m_pFrontCrossDisabledRenderer->setColor(getColor());
+    m_pFrontCrossRenderer->setOpacity(getOpacity());
+    frontCrossDisabledTextureScaleChangedWithSize();
 }
 
 void UICheckBox::onTouchEnded(const CCPoint &touchPoint)
@@ -233,29 +236,29 @@ void UICheckBox::onTouchEnded(const CCPoint &touchPoint)
 
 void UICheckBox::onPressStateChangedToNormal()
 {
-    m_pBackGroundBox->setVisible(true);
-    m_pBackGroundSelectedBox->setVisible(false);
-    m_pBackGroundBoxDisabled->setVisible(false);
-    m_pFrontCrossDisabled->setVisible(false);
+    m_pBackGroundBoxRenderer->setVisible(true);
+    m_pBackGroundSelectedBoxRenderer->setVisible(false);
+    m_pBackGroundBoxDisabledRenderer->setVisible(false);
+    m_pFrontCrossDisabledRenderer->setVisible(false);
 }
 
 void UICheckBox::onPressStateChangedToPressed()
 {
-    m_pBackGroundBox->setVisible(false);
-    m_pBackGroundSelectedBox->setVisible(true);
-    m_pBackGroundBoxDisabled->setVisible(false);
-    m_pFrontCrossDisabled->setVisible(false);
+    m_pBackGroundBoxRenderer->setVisible(false);
+    m_pBackGroundSelectedBoxRenderer->setVisible(true);
+    m_pBackGroundBoxDisabledRenderer->setVisible(false);
+    m_pFrontCrossDisabledRenderer->setVisible(false);
 }
 
 void UICheckBox::onPressStateChangedToDisabled()
 {
-    m_pBackGroundBox->setVisible(false);
-    m_pBackGroundSelectedBox->setVisible(false);
-    m_pBackGroundBoxDisabled->setVisible(true);
-    m_pFrontCross->setVisible(false);
+    m_pBackGroundBoxRenderer->setVisible(false);
+    m_pBackGroundSelectedBoxRenderer->setVisible(false);
+    m_pBackGroundBoxDisabledRenderer->setVisible(true);
+    m_pFrontCrossRenderer->setVisible(false);
     if (m_bIsSelected)
     {
-        m_pFrontCrossDisabled->setVisible(true);
+        m_pFrontCrossDisabledRenderer->setVisible(true);
     }
 }
 
@@ -266,7 +269,7 @@ void UICheckBox::setSelectedState(bool selected)
         return;
     }
     m_bIsSelected = selected;
-    m_pFrontCross->setVisible(m_bIsSelected);
+    m_pFrontCrossRenderer->setVisible(m_bIsSelected);
 }
 
 bool UICheckBox::getSelectedState()
@@ -290,11 +293,6 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-CCNode* UICheckBox::getValidNode()
-{
-    return m_pBackGroundBox;
-}
-
 void UICheckBox::addSelectEvent(CCObject *target, SEL_SelectEvent selector)
 {
     m_pSelectListener = target;
@@ -309,40 +307,165 @@ void UICheckBox::addUnSelectEvent(CCObject *target, SEL_UnSelectEvent selector)
 
 void UICheckBox::setFlipX(bool flipX)
 {
-    m_pBackGroundBox->setFlipX(flipX);
-    m_pBackGroundSelectedBox->setFlipX(flipX);
-    m_pFrontCross->setFlipX(flipX);
-    m_pBackGroundBoxDisabled->setFlipX(flipX);
-    m_pFrontCrossDisabled->setFlipX(flipX);
+    m_pBackGroundBoxRenderer->setFlipX(flipX);
+    m_pBackGroundSelectedBoxRenderer->setFlipX(flipX);
+    m_pFrontCrossRenderer->setFlipX(flipX);
+    m_pBackGroundBoxDisabledRenderer->setFlipX(flipX);
+    m_pFrontCrossDisabledRenderer->setFlipX(flipX);
 }
 
 void UICheckBox::setFlipY(bool flipY)
 {
-    m_pBackGroundBox->setFlipX(flipY);
-    m_pBackGroundSelectedBox->setFlipY(flipY);
-    m_pFrontCross->setFlipY(flipY);
-    m_pBackGroundBoxDisabled->setFlipY(flipY);
-    m_pFrontCrossDisabled->setFlipY(flipY);
+    m_pBackGroundBoxRenderer->setFlipX(flipY);
+    m_pBackGroundSelectedBoxRenderer->setFlipY(flipY);
+    m_pFrontCrossRenderer->setFlipY(flipY);
+    m_pBackGroundBoxDisabledRenderer->setFlipY(flipY);
+    m_pFrontCrossDisabledRenderer->setFlipY(flipY);
 }
 
 bool UICheckBox::isFlipX()
 {
-    return m_pBackGroundBox->isFlipX();
+    return m_pBackGroundBoxRenderer->isFlipX();
 }
 
 bool UICheckBox::isFlipY()
 {
-    return m_pBackGroundBox->isFlipY();
+    return m_pBackGroundBoxRenderer->isFlipY();
 }
 
 void UICheckBox::setAnchorPoint(const CCPoint &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    m_pBackGroundBox->setAnchorPoint(pt);
-    m_pBackGroundSelectedBox->setAnchorPoint(pt);
-    m_pBackGroundBoxDisabled->setAnchorPoint(pt);
-    m_pFrontCross->setAnchorPoint(pt);
-    m_pFrontCrossDisabled->setAnchorPoint(pt);
+    m_pBackGroundBoxRenderer->setAnchorPoint(pt);
+    m_pBackGroundSelectedBoxRenderer->setAnchorPoint(pt);
+    m_pBackGroundBoxDisabledRenderer->setAnchorPoint(pt);
+    m_pFrontCrossRenderer->setAnchorPoint(pt);
+    m_pFrontCrossDisabledRenderer->setAnchorPoint(pt);
+}
+
+void UICheckBox::onSizeChanged()
+{
+    backGroundTextureScaleChangedWithSize();
+    backGroundSelectedTextureScaleChangedWithSize();
+    frontCrossTextureScaleChangedWithSize();
+    backGroundDisabledTextureScaleChangedWithSize();
+    frontCrossDisabledTextureScaleChangedWithSize();
+}
+
+const CCSize& UICheckBox::getContentSize() const
+{
+    return m_pBackGroundBoxRenderer->getContentSize();
+}
+
+CCNode* UICheckBox::getVirtualRenderer()
+{
+    return m_pBackGroundBoxRenderer;
+}
+
+void UICheckBox::backGroundTextureScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pBackGroundBoxRenderer->setScale(1.0f);
+        m_size = m_pBackGroundBoxRenderer->getContentSize();
+    }
+    else
+    {
+        CCSize textureSize = m_pBackGroundBoxRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pBackGroundBoxRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pBackGroundBoxRenderer->setScaleX(scaleX);
+        m_pBackGroundBoxRenderer->setScaleY(scaleY);
+    }
+}
+
+void UICheckBox::backGroundSelectedTextureScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pBackGroundSelectedBoxRenderer->setScale(1.0f);
+    }
+    else
+    {
+        CCSize textureSize = m_pBackGroundSelectedBoxRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pBackGroundSelectedBoxRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pBackGroundSelectedBoxRenderer->setScaleX(scaleX);
+        m_pBackGroundSelectedBoxRenderer->setScaleY(scaleY);
+    }
+}
+
+void UICheckBox::frontCrossTextureScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pFrontCrossRenderer->setScale(1.0f);
+    }
+    else
+    {
+        CCSize textureSize = m_pFrontCrossRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pFrontCrossRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pFrontCrossRenderer->setScaleX(scaleX);
+        m_pFrontCrossRenderer->setScaleY(scaleY);
+    }
+}
+
+void UICheckBox::backGroundDisabledTextureScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pBackGroundBoxDisabledRenderer->setScale(1.0f);
+    }
+    else
+    {
+        CCSize textureSize = m_pBackGroundBoxDisabledRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pBackGroundBoxDisabledRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pBackGroundBoxDisabledRenderer->setScaleX(scaleX);
+        m_pBackGroundBoxDisabledRenderer->setScaleY(scaleY);
+    }
+}
+
+void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pFrontCrossDisabledRenderer->setScale(1.0f);
+    }
+    else
+    {
+        CCSize textureSize = m_pFrontCrossDisabledRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pFrontCrossDisabledRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pFrontCrossDisabledRenderer->setScaleX(scaleX);
+        m_pFrontCrossDisabledRenderer->setScaleY(scaleY);
+    }
 }
 
 NS_CC_EXT_END

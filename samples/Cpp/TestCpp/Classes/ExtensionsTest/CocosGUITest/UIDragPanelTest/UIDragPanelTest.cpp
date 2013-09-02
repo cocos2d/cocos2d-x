@@ -2,6 +2,13 @@
 
 #include "UIDragPanelTest.h"
 
+const char* font_UIDragPanelTest =
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+"Marker Felt";
+#else
+"cocosgui/Marker Felt.ttf";
+#endif
+
 // UIDragPanelTest
 UIDragPanelTest::UIDragPanelTest()
 : m_pDisplayValueLabel(NULL)
@@ -22,7 +29,7 @@ bool UIDragPanelTest::init()
         // Add a label in which the dragpanel events will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
+        m_pDisplayValueLabel->setFontName(font_UIDragPanelTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getRect().size.height * 1.5));
@@ -31,19 +38,18 @@ bool UIDragPanelTest::init()
         // Add the alert
         UILabel *alert = UILabel::create();
         alert->setText("DragPanel");
-        alert->setFontName("Marker Felt");
+        alert->setFontName(font_UIDragPanelTest);
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the dragpanel
         UIDragPanel* dragPanel = UIDragPanel::create();
-        dragPanel->setClippingEnable(true);
         dragPanel->setTouchEnable(true);
-        dragPanel->setBackGroundImageScale9Enable(true);
+        dragPanel->setBackGroundImageScale9Enabled(true);
         dragPanel->setBackGroundImage("cocosgui/scrollviewbg.png");
         dragPanel->setSize(CCSizeMake(210, 122.5));        
         CCSize backgroundSize = background->getContentSize();
@@ -136,7 +142,7 @@ bool UIDragPanelTest_Bounce::init()
         // Add a label in which the dragpanel events will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
+        m_pDisplayValueLabel->setFontName(font_UIDragPanelTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getRect().size.height * 1.5));
@@ -145,21 +151,20 @@ bool UIDragPanelTest_Bounce::init()
         // Add the alert
         UILabel *alert = UILabel::create();
         alert->setText("DragPanel Bounce");
-        alert->setFontName("Marker Felt");
+        alert->setFontName(font_UIDragPanelTest);
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
         m_pUiLayer->addWidget(alert);
         
-        UIPanel *background = dynamic_cast<UIPanel*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout *background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the dragpanel
         UIDragPanel* dragPanel = UIDragPanel::create();
-        dragPanel->setClippingEnable(true);
         dragPanel->setTouchEnable(true);
         dragPanel->setBounceEnable(true);
-        dragPanel->setBackGroundImageScale9Enable(true);
-        dragPanel->setBackGroundImage("extensions/green_edit.png");
+        dragPanel->setBackGroundImageScale9Enabled(true);
+        dragPanel->setBackGroundImage("cocosgui/green_edit.png");
         dragPanel->setSize(CCSizeMake(210, 122.5));
         CCSize backgroundSize = background->getContentSize();
         dragPanel->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +

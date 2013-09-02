@@ -25,7 +25,7 @@
 #ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
-#include "UIButton.h"
+#include "../BaseClasses/UIWidget.h"
 
 NS_CC_EXT_BEGIN
 
@@ -34,71 +34,184 @@ typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 class UISlider : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UISlider();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UISlider();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UISlider* create();
-    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setScale9Enable(bool able);
+    
+    /**
+     * Load texture for slider bar.
+     *
+     * @param fileName   file name of texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Sets if slider is using scale9 renderer.
+     *
+     * @param true that using scale9 renderer, false otherwise.
+     */
+    void setScale9Enabled(bool able);
+    
+    /**
+     * Sets capinsets for slider, if slider is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for slider
+     */
     void setCapInsets(const CCRect &capInsets);
-    void setScale9Size(const CCSize &size);
-    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallAnchorPoint(const CCPoint& anchor);
-    void setBarLength(float length);
-    bool isProgressBarVisible();
-    void setProgressBarVisible(bool show);    
-	const CCSize& getProgressBarTextureSize() const;
-    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setProgressBarScale9Enable(bool able);
-    void setProgressBarCapInsets(const CCRect &capInsets);
-    void setProgressBarScale9Size(const CCSize &size);
-    void setProgressBarScale();
-    void setSlidBallPercent(int percent);
-    virtual bool pointAtSelfBody(const CCPoint &pt);
-    virtual CCNode* getValidNode();
-    virtual void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector);
+    
+    /**
+     * Load textures for slider ball.
+     *
+     * @param slider ball normal    normal state texture.
+     *
+     * @param slider ball selected    selected state texture.
+     *
+     * @param slider ball disabled    dark state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load normal state texture for slider ball.
+     *
+     * @param normal    normal state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load selected state texture for slider ball.
+     *
+     * @param selected    selected state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load dark state texture for slider ball.
+     *
+     * @param disabled    dark state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load dark state texture for slider progress bar.
+     *
+     * @param fileName    file path of texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Changes the progress direction of slider.
+     *
+     * @param percent    percent value from 1 to 100.
+     */
+    void setPercent(int percent);
+    
+    /**
+     * Gets the progress direction of slider.
+     *
+     * @return percent    percent value from 1 to 100.
+     */
     int getPercent();
-    virtual void onTouchBegan(const CCPoint &touchPoint);
+    
+    /**
+     * Add call back function called when slider's percent has changed to slider.
+     */
+    virtual void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector);
+    
+    //override "onTouchBegan" method of widget.
+    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    
+    //override "onTouchMoved" method of widget.
     virtual void onTouchMoved(const CCPoint &touchPoint);
+    
+    //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(const CCPoint &touchPoint);
+    
+    //override "onTouchCancelled" method of widget.
     virtual void onTouchCancelled(const CCPoint &touchPoint);
     
+    //override "getContentSize" method of widget.
+    virtual const CCSize& getContentSize() const;
+    
+    //override "getVirtualRenderer" method of widget.
+    virtual CCNode* getVirtualRenderer();
+    
+    //override "ignoreContentAdaptWithSize" method of widget.
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    /*Compatible*/
+    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
+    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
+    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallNormalTexture(normal,texType);};
+    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallPressedTexture(pressed,texType);};
+    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallDisabledTexture(disabled,texType);};
+    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
+    void setSlidBallPercent(int percent){setPercent(percent);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    void setScale9Enable(bool is){setScale9Enabled(is);};
+    /************/
 protected:
-    virtual bool init();
-    int getClickPercent(float location);
-    void checkSlidBoundary();
-    float getPercentWithBallPos(float px,float py);
+    virtual void initRenderer();
+    float getPercentWithBallPos(float location);
     void percentChangedEvent();
+    virtual void onPressStateChangedToNormal();
+    virtual void onPressStateChangedToPressed();
+    virtual void onPressStateChangedToDisabled();
+    virtual void onSizeChanged();
+    void barRendererScaleChangedWithSize();
+    void progressBarRendererScaleChangedWithSize();
 protected:
-    CCNode*  m_pBarNode;
-    float m_fMinLength;
+    CCNode*  m_pBarRenderer;
+    CCNode* m_pProgressBarRenderer;
+    CCSize m_ProgressBarTextureSize;
+    
+    CCSprite* m_pSlidBallNormalRenderer;
+    CCSprite* m_pSlidBallPressedRenderer;
+    CCSprite* m_pSlidBallDisabledRenderer;
+    CCNode* m_pSlidBallRenderer;
+    
     float m_fBarLength;
-    int m_nDirection;
-    int m_nBarPercent;
-    UIButton* m_pSlidBall;
+    int m_nPercent;
+    
     float m_fBarNodeScaleValue;
     float m_fTouchMoveStartLocation;
-    bool m_bBarScale9Enable;
+    bool m_bScale9Enabled;
+    bool m_bPrevIgnoreSize;
     std::string m_strTextureFile;
+    std::string m_strProgressBarTextureFile;
+    std::string m_strSlidBallNormalTextureFile;
+    std::string m_strSlidBallPressedTextureFile;
+    std::string m_strSlidBallDisabledTextureFile;
     CCRect m_capInsets;
-    CCSize m_scale9Size;
-    bool m_bProgressBarVisible;
-    CCNode* m_pProgressBarNode;
-	CCSize m_pProgressBarTextureSize;
-    std::string m_strProgressTextureFile;
-    bool m_bProgressBarScale9Enable;
-    CCRect m_progressBarCapInsets;
-    CCSize m_progressBarScale9Size;
     CCObject*       m_pPercentListener;
     SEL_PushEvent    m_pfnPercentSelector;
     TextureResType m_eBarTexType;
-    TextureResType m_eBarTexS9Type;
+    TextureResType m_eProgressBarTexType;
     TextureResType m_eBallNTexType;
     TextureResType m_eBallPTexType;
     TextureResType m_eBallDTexType;
-	TextureResType m_eProgressBarTexType;
 };
 
 NS_CC_EXT_END

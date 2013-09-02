@@ -22,34 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIDragPanel__
-#define __TestCpp__UIDragPanel__
+#ifndef __UIDRAGPANEL_H__
+#define __UIDRAGPANEL_H__
 
-#include "../UIPanel.h"
-#include "UIScrollDelegate.h"
+#include "../../Layouts/Layout.h"
+#include "UIScrollInterface.h"
 
 NS_CC_EXT_BEGIN
 
-/*
-enum DRAGPANEL_DIR
-{
-    DRAGPANEL_DIR_NONE,
-    DRAGPANEL_DIR_BOTH,
-    DRAGPANEL_DIR_VERTICAL,
-    DRAGPANEL_DIR_HORIZONTAL,
-};
-
-enum DRAGPANEL_MOVE_DIR
-{
-    DRAGPANEL_MOVE_DIR_NONE,
-    DRAGPANEL_MOVE_DIR_ANY,
-    DRAGPANEL_MOVE_DIR_UP,
-    DRAGPANEL_MOVE_DIR_DOWN,
-    DRAGPANEL_MOVE_DIR_LEFT,
-    DRAGPANEL_MOVE_DIR_RIGHT,
-};
+/**
+ *  drag panel move type
  */
-
 enum DRAGPANEL_MOVE_TYPE
 {
     DRAGPANEL_MOVE_TYPE_NONE,
@@ -57,6 +40,9 @@ enum DRAGPANEL_MOVE_TYPE
     DRAGPANEL_MOVE_TYPE_BOUNCE,
 };
 
+/**
+ *  dragpanel berth direction 
+ */
 enum DRAGPANEL_BERTH_DIR
 {
     DRAGPANEL_BERTH_DIR_NONE,
@@ -70,6 +56,9 @@ enum DRAGPANEL_BERTH_DIR
     DRAGPANEL_BERTH_DIR_BOTTOM,
 };
 
+/**
+ *  dragpanel bounce direction
+ */
 enum DRAGPANEL_BOUNCE_DIR
 {
     DRAGPANEL_BOUNCE_DIR_NONE,
@@ -83,6 +72,9 @@ enum DRAGPANEL_BOUNCE_DIR
     DRAGPANEL_BOUNCE_DIR_BOTTOM,
 };
 
+/**
+ *  dragpanel berth event
+ */
 typedef void (CCObject::*SEL_DragPanelBerthToLeftBottomEvent)(CCObject*);
 #define coco_DragPane_BerthToLeftBottom_selector(_SELECTOR) (SEL_DragPanelBerthToLeftBottomEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBerthToLeftTopEvent)(CCObject*);
@@ -100,6 +92,9 @@ typedef void (CCObject::*SEL_DragPanelBerthToTopEvent)(CCObject*);
 typedef void (CCObject::*SEL_DragPanelBerthToBottomEvent)(CCObject*);
 #define coco_DragPanel_BerthToBottom_selector(_SELECTOR) (SEL_DragPanelBerthToBottomEvent)(&_SELECTOR)
 
+/**
+ *  dragpanel bounce event
+ */
 typedef void (CCObject::*SEL_DragPanelBounceOverEvent)(CCObject*);
 #define coco_DragPanel_BounceOver_selector(_SELECTOR) (SEL_DragPanelBounceOverEvent)(&_SELECTOR)
 typedef void (CCObject::*SEL_DragPanelBounceToLeftBottomEvent)(CCObject*);
@@ -119,7 +114,7 @@ typedef void (CCObject::*SEL_DragPanelBounceToRightEvent)(CCObject*);
 typedef void (CCObject::*SEL_DragPanelBounceToBottomEvent)(CCObject*);
 #define coco_DragPanel_BounceToBottom_selector(_SELECTOR) (SEL_DragPanelBounceToBottomEvent)(&_SELECTOR)
 
-class UIDragPanel : public UIPanel, public UIScrollDelegate
+class UIDragPanel : public Layout, public UIScrollInterface
 {
 public:
     UIDragPanel();
@@ -127,7 +122,7 @@ public:
     
     static UIDragPanel* create();        
     
-    virtual void onTouchBegan(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(const CCPoint &touchPoint);
     virtual void onTouchMoved(const CCPoint &touchPoint);
     virtual void onTouchEnded(const CCPoint &touchPoint);
     virtual void onTouchCancelled(const CCPoint &touchPoint);
@@ -135,36 +130,58 @@ public:
     
     virtual void update(float dt);
     
+    /**
+     *  add widget child override
+     */
     virtual bool addChild(UIWidget* widget);
+    /**
+     *  remove widget child override
+     */
     virtual bool removeChild(UIWidget* child,bool cleanup);
+    /**
+     *  remove all widget children override
+     */
     virtual void removeAllChildrenAndCleanUp(bool cleanup);
-    
+    /**
+     *  get widget children of inner container
+     */
+    virtual CCArray* getChildren();
     /* gui mark */
-    virtual void setSize(const CCSize &size);
-    
-    CCNode* getInnerContainerNode();
+    /**
+     *  get and set inner container size
+     */
     const CCSize& getInnerContainerSize() const;
     void setInnerContainerSize(const CCSize &size);
+    /**
+     *  get and set inner container position
+     */
     const CCPoint& getInnerContainerPosition() const;    
-    void setInnerContainerPosition(const CCPoint& point, bool animated);    
+    void setInnerContainerPosition(const CCPoint& point, bool animated);
+    /**
+     *  set inner container offset
+     */
     void setInnerContainerOffset(const CCPoint& offset, bool animated);
     /**/
     
-    /*
-    void setDirection(DRAGPANEL_DIR dir);
-    DRAGPANEL_DIR getDirection();
-    void setMoveDirection(DRAGPANEL_MOVE_DIR moveDir);
-    DRAGPANEL_MOVE_DIR getMoveDirection();
-     */
-    
     // auto move
+    /**
+     *  set auto move duration
+     */
     void setAutoMoveDuration(float duration);
+    /**
+     *  set auto move ease rate
+     */
     void setAutoMoveEaseRate(float rate);        
     
     // berth
+    /**
+     *  get berth or not
+     */
     bool isBerth();
     
-    // berth event
+    /**
+     *  berth event by direction
+     */
     void addBerthToLeftBottomEvent(CCObject* target, SEL_DragPanelBerthToLeftBottomEvent selector);
     void addBerthToLeftTopEvent(CCObject* target, SEL_DragPanelBerthToLeftTopEvent selector);
     void addBerthToRightBottomEvent(CCObject* target, SEL_DragPanelBerthToRightBottomEvent selector);
@@ -174,12 +191,22 @@ public:
     void addBerthToRightEvent(CCObject* target, SEL_DragPanelBerthToRightEvent selector);
     void addBerthToBottomEvent(CCObject* target, SEL_DragPanelBerthToBottomEvent selector);
     
-    // bounce
+    /**
+     *  get and set bounce enable
+     */
     bool isBounceEnable();
     void setBounceEnable(bool bounce);
+    /**
+     *  set bounce duration
+     */
     void setBounceDuratoin(float duration);
+    /**
+     *  set bounce ease rate
+     */
     void setBounceEaseRate(float rate);
-    // bounce event
+    /**
+     *  bounce event by dircetion
+     */
     void addBounceOverEvent(CCObject* target, SEL_DragPanelBounceOverEvent selector);
     void addBounceToLeftBottomEvent(CCObject* target, SEL_DragPanelBounceToLeftBottomEvent selector);
     void addBounceToLeftTopEvent(CCObject* target, SEL_DragPanelBounceToLeftTopEvent selector);
@@ -192,13 +219,16 @@ public:
     
 protected:
     virtual bool init();
-    virtual void initNodes();    
+    virtual void initRenderer();
     virtual void releaseResoures();
     
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
     virtual void interceptTouchEvent(int handleState,UIWidget* sender, const CCPoint &touchPoint);
+    /* gui mark */
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    /**/
     virtual void checkChildInfo(int handleState, UIWidget *sender, const CCPoint &touchPoint);
 //    void updateWidthAndHeight();
     void recordSlidTime(float dt);
@@ -270,9 +300,13 @@ protected:
     void moveToWithDuration(float duration, const CCPoint& position);
     void moveToInit();
     void moveToUpdate(float t);
-    
+    virtual void onSizeChanged();
+    /*compatible*/
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
+    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
-    UIContainerWidget* m_pInnerContainer;
+    Layout* m_pInnerContainer;
     
     /*
     DRAGPANEL_DIR m_eDirection;

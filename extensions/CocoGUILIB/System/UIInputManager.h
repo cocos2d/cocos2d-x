@@ -26,34 +26,76 @@
 #define __UIINPUTMANAGER_H__
 
 #include "cocos2d.h"
-#include "../BaseClasses/UIWidget.h"
+#include "../Layouts/Layout.h"
 
 NS_CC_EXT_BEGIN
 
 class UIInputManager
 {
 public:
+    /**
+     * Default constructor
+     */
     UIInputManager();
+    
+    /**
+     * Default destructor
+     */
     ~UIInputManager();
+    
+    /**
+     * Regist a widget to input manager.
+     *
+     * @param widget    registed widget can be touched.
+     */
     void registWidget(UIWidget* widget);
+    
+    /**
+     * A call back function called when widget tree struct has changed.
+     *
+     * If widget tree struct has changed, uiinputmanager will resort registed widgets.
+     */
     void uiSceneHasChanged();
-    void sortWidgets(UIWidget* widget);
-    void sortRootWidgets(UIWidget* root);
+    
+    /**
+     * Remove a registed widget from input manager.
+     *
+     * @param widget    widget which will be removed.
+     */
     void removeManageredWidget(UIWidget* widget);
-    UIWidget* checkEventWidget(const CCPoint &touchPoint);
-    void addCheckedDoubleClickWidget(UIWidget* widget);
+    
+    /**
+     * Finds a widget which is selected and call it's "onTouchBegan" method.
+     *
+     * @param touch point.
+     *
+     * @return true that find a widget selected, false otherwise.
+     */
+    bool checkEventWidget(const CCPoint &touchPoint);
+    
+    
     void update(float dt);
     bool onTouchBegan(CCTouch* touch);
-    bool onTouchMoved(CCTouch* touch);
-    bool onTouchEnd(CCTouch* touch);
-    bool onTouchCancelled(CCTouch* touch);
+    void onTouchMoved(CCTouch* touch);
+    void onTouchEnd(CCTouch* touch);
+    void onTouchCancelled(CCTouch* touch);
     
     void setRootWidget(UIWidget* root);
     UIWidget* getRootWidget();
+    void addCheckedDoubleClickWidget(UIWidget* widget);
+protected:
+    /**
+     * Sort a widget tree by z order.
+     *
+     * @param widget    widget tree which will be sorted.
+     */
+    void sortWidgets(UIWidget* widget);
+    void sortRootWidgets(UIWidget* root);
     
 protected:
     CCArray* m_manageredWidget;
-    UIWidget* m_pCurSelectedWidget;
+    CCArray* m_pSelectedWidgets;
+//    UIWidget* m_pCurSelectedWidget;
     CCPoint touchBeganedPoint;
     CCPoint touchMovedPoint;
     CCPoint touchEndedPoint;

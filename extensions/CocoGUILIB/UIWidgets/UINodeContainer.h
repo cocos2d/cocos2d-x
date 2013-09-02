@@ -33,7 +33,14 @@ class UINodeContainer : public UIWidget
 {
     
 public:
+    /**
+     * Default constructor
+     */
     UINodeContainer();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UINodeContainer();
     virtual void releaseResoures();
     static UINodeContainer* create();

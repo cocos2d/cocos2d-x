@@ -238,9 +238,6 @@
     <Filter Include="Classes\ExtensionsTest\SceneEditorTest">
       <UniqueIdentifier>{9c7cc3f8-d58e-4fce-8e5a-3f32e405596f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest">
-      <UniqueIdentifier>{78602eb1-3f80-4c94-a0d1-941700ac5547}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocosGUITest\UITextFieldTest">
       <UniqueIdentifier>{d95c5873-555b-4b16-a98d-e5576704fcd7}</UniqueIdentifier>
     </Filter>
@@ -666,8 +663,20 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.cpp">
       <Filter>Classes\ExtensionsTest\CocosGUITest\UITextFieldTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest</Filter>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesEquipScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesMapScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesPageScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesRegisterScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesWeaponScene.cpp">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1223,8 +1232,20 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.h">
       <Filter>Classes\ExtensionsTest\CocosGUITest\UITextFieldTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.h">
-      <Filter>Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest</Filter>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesEquipScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesMapScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesPageScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesRegisterScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesWeaponScene.h">
+      <Filter>Classes\ExtensionsTest\CocosGUITest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

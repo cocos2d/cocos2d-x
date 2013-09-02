@@ -52,7 +52,7 @@ bool UILayer::init()
     {
         m_pRootWidget = UIRootWidget::create();
         m_pRootWidget->setUILayer(this);
-        addChild(m_pRootWidget->getContainerNode());
+        addChild(m_pRootWidget->getRenderer());
         m_pInputManager = new UIInputManager();
         m_pInputManager->setRootWidget(m_pRootWidget);
         m_updateEnableWidget = CCArray::create();
