@@ -827,6 +827,8 @@ static int tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed(lua_
             strKey = keyframeCallback;
         }
         self->setCallFunc(pCallFunc, strKey);
+        
+        return 0;
     }
     
     CCLOG("'setCallFuncForLuaCallbackNamed' function of CCBAnimationManager  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
