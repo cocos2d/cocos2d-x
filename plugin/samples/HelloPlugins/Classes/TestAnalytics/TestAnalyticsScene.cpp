@@ -113,7 +113,7 @@ bool TestAnalytics::init()
     std::string strVer = _pluginAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Point(visibleSize.width, 0), Label::HAlignment::CENTER);
+    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Size(visibleSize.width, 0), TextHAlignment::CENTER);
     pLabel->setPosition(Point(visibleSize.width / 2, yPos - 80));
     addChild(pLabel);
 

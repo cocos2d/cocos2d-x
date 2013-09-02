@@ -25,6 +25,7 @@ package org.cocos2dx.plugin;
 
 import java.lang.reflect.Field;
 
+import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
@@ -36,6 +37,7 @@ public class PluginWrapper {
 	protected static Context sContext = null;
 	protected static GLSurfaceView sGLSurfaceView = null; 
 	protected static Handler sMainThreadHandler = null;
+	protected static Handler sGLThreadHandler = null;
 	private static final String TAG = "PluginWrapper";
 	
 	public static void init(Context context)
@@ -49,6 +51,14 @@ public class PluginWrapper {
 	public static void setGLSurfaceView(GLSurfaceView value) {
 		sGLSurfaceView = value;
 	}
+
+    protected static void initFromNativeActivity(Activity act) {
+        sContext = act;
+        // @warning These lines will cause crash.
+//        if (null == sGLThreadHandler) {
+//            sGLThreadHandler = new Handler();
+//        }
+    }
 	
 	protected static Object initPlugin(String classFullName)
 	{
@@ -98,14 +108,22 @@ public class PluginWrapper {
 	public static void runOnGLThread(Runnable r) {
 		if (null != sGLSurfaceView) {
 			sGLSurfaceView.queueEvent(r);
+		} else
+		if (null != sGLThreadHandler) {
+		    sGLThreadHandler.post(r);
 		} else {
-			Log.i(TAG, "runOnGLThread sGLSurfaceView is null");
+			Log.i(TAG, "call back invoked on main thread");
 			r.run();
 		}
 	}
 
 	public static void runOnMainThread(Runnable r) {
-		if (null == sMainThreadHandler) return;
-		sMainThreadHandler.post(r);
+        if (null != sMainThreadHandler) {
+            sMainThreadHandler.post(r);
+        } else
+        if (null != sContext && sContext instanceof Activity) {
+            Activity act = (Activity) sContext;
+            act.runOnUiThread(r);
+        }
 	}
 }

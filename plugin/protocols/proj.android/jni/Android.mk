@@ -30,5 +30,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../include $(LOCAL_PATH)/../../platf
 
 LOCAL_LDLIBS := -landroid
 LOCAL_LDLIBS += -llog
+LOCAL_STATIC_LIBRARIES := android_native_app_glue
 
 include $(BUILD_STATIC_LIBRARY)
+
+$(call import-module,android/native_app_glue)

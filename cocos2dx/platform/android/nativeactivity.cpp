@@ -35,7 +35,7 @@
 #define LOG_EVENTS_DEBUG(...)
 // #define LOG_EVENTS_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
-void cocos_android_app_init(void);
+void cocos_android_app_init(struct android_app* app);
 
 /**
  * Our saved state data.
@@ -72,19 +72,19 @@ typedef struct cocos_dimensions {
     int h;
 } cocos_dimensions;
 
-static void cocos_init(cocos_dimensions d, AAssetManager* assetmanager) {
+static void cocos_init(cocos_dimensions d, struct android_app* app) {
     LOGI("cocos_init(...)");
     pthread_t thisthread = pthread_self();
     LOGI("pthread_self() = %X", thisthread);
 
-    cocos2d::FileUtilsAndroid::setassetmanager(assetmanager);
+    cocos2d::FileUtilsAndroid::setassetmanager(app->activity->assetManager);
 
     if (!cocos2d::Director::getInstance()->getOpenGLView())
     {
         cocos2d::EGLView *view = cocos2d::EGLView::getInstance();
         view->setFrameSize(d.w, d.h);
 
-        cocos_android_app_init();
+        cocos_android_app_init(app);
 
         cocos2d::Application::getInstance()->run();
     }
@@ -431,7 +431,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                                                             ccxhelperInit.methodID,
                                                             app->activity->clazz);
 
-                    cocos_init(d, app->activity->assetManager);
+                    cocos_init(d, app);
                 }
                 engine->animating = 1;
                 engine_draw_frame(engine);
