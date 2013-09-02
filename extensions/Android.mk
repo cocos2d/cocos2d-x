@@ -79,14 +79,12 @@ CocoGUILIB/Action/UIAction.cpp \
 CocoGUILIB/Action/UIActionFrame.cpp \
 CocoGUILIB/Action/UIActionManager.cpp \
 CocoGUILIB/Action/UIActionNode.cpp \
-CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
 CocoGUILIB/BaseClasses/UIRootWidget.cpp \
 CocoGUILIB/BaseClasses/UIWidget.cpp \
-CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
-CocoGUILIB/Drawable/UIClippingLayer.cpp \
-CocoGUILIB/Drawable/UICCTextField.cpp \
+CocoGUILIB/Layouts/Layout.cpp \
+CocoGUILIB/Layouts/LayoutExecutant.cpp \
+CocoGUILIB/Layouts/LayoutParameter.cpp \
 CocoGUILIB/Layouts/UILayoutDefine.cpp \
-CocoGUILIB/Layouts/UILayoutUnit.cpp \
 CocoGUILIB/System/CCSReader.cpp \
 CocoGUILIB/System/CocosGUI.cpp \
 CocoGUILIB/System/UIHelper.cpp \
@@ -104,13 +102,10 @@ CocoGUILIB/UIWidgets/UILabelAtlas.cpp \
 CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
 CocoGUILIB/UIWidgets/UILoadingBar.cpp \
 CocoGUILIB/UIWidgets/UINodeContainer.cpp \
-CocoGUILIB/UIWidgets/UIPanel.cpp \
 CocoGUILIB/UIWidgets/UISlider.cpp \
 CocoGUILIB/UIWidgets/UISwitch.cpp \
-CocoGUILIB/UIWidgets/UITextArea.cpp \
 CocoGUILIB/UIWidgets/UITextButton.cpp \
 CocoGUILIB/UIWidgets/UITextField.cpp \
-CocoGUILIB/UIWidgets/UIZoomButton.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -156,8 +151,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-			   $(LOCAL_PATH)/CCArmature \
-			   $(LOCAL_PATH)/CocoGUILIB
+                           $(LOCAL_PATH)/CCArmature \
+	                   $(LOCAL_PATH)/CocoGUILIB
 
 LOCAL_CFLAGS := -fexceptions
                     
