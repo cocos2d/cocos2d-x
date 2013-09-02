@@ -28,11 +28,12 @@ THE SOFTWARE.
 #ifndef __CC_SPRITE_BATCH_NODE_H__
 #define __CC_SPRITE_BATCH_NODE_H__
 
+#include <vector>
+
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
 #include "textures/CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "cocoa/CCArray.h"
 
 NS_CC_BEGIN
 
@@ -89,11 +90,11 @@ public:
     bool initWithFile(const char* fileImage, int capacity);
     bool init();
 
-    // property
-    
-    // retain
+    /** returns the TextureAtlas object */
     inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
-    inline void setTextureAtlas(TextureAtlas* textureAtlas) 
+
+    /** sets the TextureAtlas object */
+    inline void setTextureAtlas(TextureAtlas* textureAtlas)
     { 
         if (textureAtlas != _textureAtlas)
         {
@@ -103,7 +104,9 @@ public:
         }
     }
 
-    inline Array* getDescendants(void) { return _descendants; }
+    /** returns an array with the descendants (children, gran children, etc.). 
+     This is specific to BatchNode. In order to use the children, use getChildren() instead */
+    inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
     void increaseAtlasCapacity();
 
@@ -112,7 +115,6 @@ public:
     */
     void removeChildAtIndex(int index, bool doCleanup);
 
-    void insertChild(Sprite *child, int index);
     void appendChild(Sprite* sprite);
     void removeSpriteFromAtlas(Sprite *sprite);
 
@@ -133,12 +135,11 @@ public:
     virtual const BlendFunc& getBlendFunc(void) const override;
 
     virtual void visit(void) override;
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void reorderChild(Node * child, int zOrder) override;
+    virtual void reorderChild(Node *child, int zOrder) override;
         
-    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeChild(Node *child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
     virtual void draw(void) override;
@@ -157,7 +158,7 @@ protected:
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
-    SpriteBatchNode * addSpriteWithoutQuad(Sprite*child, int z, int aTag);
+    SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 
 private:
     void updateAtlasIndex(Sprite* sprite, int* curIndex);
@@ -169,7 +170,9 @@ protected:
     BlendFunc _blendFunc;
 
     // all descendants: children, grand children, etc...
-    Array* _descendants;
+    // There is not need to retain/release these objects, since they are already retained by _children
+    // So, using std::vector<Sprite*> is slightly faster than using cocos2d::Array for this particular case
+    std::vector<Sprite*> _descendants;
 };
 
 // end of sprite_nodes group
