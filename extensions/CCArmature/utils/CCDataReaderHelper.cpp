@@ -63,8 +63,8 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-static const char *A_VERT = "vert";
-static const char *A_FRAG = "frag";
+// static const char *A_VERT = "vert";
+// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -357,7 +357,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector)
 {
 #ifdef EMSCRIPTEN
-    CCLOGWARN("Cannot load data %s asynchronously in Emscripten builds.", path);
+    CCLOGWARN("Cannot load data %s asynchronously in Emscripten builds.", filePath);
     return;
 #endif // EMSCRIPTEN
 
@@ -490,7 +490,6 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
 
         CCObject *target = pAsyncStruct->target;
         SEL_SCHEDULE selector = pAsyncStruct->selector;
-        const char *filename = pAsyncStruct->filename.c_str();
 
         --s_nAsyncRefCount;
 
