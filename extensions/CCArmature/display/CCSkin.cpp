@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "CCSkin.h"
 #include "../utils/CCTransformHelp.h"
+#include "../utils/CCSpriteFrameCacheHelper.h"
+#include "../CCArmature.h"
 
 NS_CC_EXT_BEGIN
 
@@ -57,9 +59,47 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
+CCSkin *CCSkin::create(const char *pszFileName)
+{
+    CCSkin *skin = new CCSkin();
+    if(skin && skin->initWithFile(pszFileName))
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
+}
+
 CCSkin::CCSkin()
     : m_pBone(NULL)
+    , m_strDisplayName("")
 {
+    m_tSkinTransform = CCAffineTransformIdentity;
+}
+
+bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+{
+    bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+
+    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+    setTextureAtlas(atlas);
+
+    m_strDisplayName = pszSpriteFrameName;
+
+    return ret;
+}
+
+bool CCSkin::initWithFile(const char *pszFilename)
+{
+    bool ret = CCSprite::initWithFile(pszFilename);
+
+    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+    setTextureAtlas(atlas);
+
+    m_strDisplayName = pszFilename;
+
+    return ret;
 }
 
 void CCSkin::setSkinData(const CCBaseData &var)
@@ -79,12 +119,12 @@ const CCBaseData &CCSkin::getSkinData()
     return m_sSkinData;
 }
 
-void CCSkin::updateTransform()
+void CCSkin::updateArmatureTransform()
 {
     m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
 }
 
-void CCSkin::draw()
+void CCSkin::updateTransform()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !m_bVisible)
@@ -97,7 +137,7 @@ void CCSkin::draw()
         // calculate the Quad based on the Affine Matrix
         //
 
-        CCSize size = m_obRect.size;
+        CCSize &size = m_obRect.size;
 
         float x1 = m_obOffsetPosition.x;
         float y1 = m_obOffsetPosition.y;
@@ -135,6 +175,24 @@ void CCSkin::draw()
     {
         m_pobTextureAtlas->updateQuad(&m_sQuad, m_pobTextureAtlas->getTotalQuads());
     }
+}
+
+CCAffineTransform CCSkin::nodeToWorldTransform()
+{
+    return CCAffineTransformConcat(m_sTransform, m_pBone->getArmature()->nodeToWorldTransform());
+}
+
+CCAffineTransform CCSkin::nodeToWorldTransformAR()
+{
+    CCAffineTransform displayTransform = m_sTransform;
+    CCPoint anchorPoint =  m_obAnchorPointInPoints;
+
+    anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
+
+    displayTransform.tx = anchorPoint.x;
+    displayTransform.ty = anchorPoint.y;
+
+    return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
 }
 
 NS_CC_EXT_END

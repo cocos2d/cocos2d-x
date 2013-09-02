@@ -27,21 +27,27 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
-#include "../external_tool/sigslot.h"
 
 NS_CC_EXT_BEGIN
 
 
 enum MovementEventType
 {
-	START,
-	COMPLETE,
-	LOOP_COMPLETE
+    START,
+    COMPLETE,
+    LOOP_COMPLETE
 };
 
 
 class CCArmature;
 class CCBone;
+
+typedef void (CCObject::*SEL_MovementEventCallFunc)(CCArmature *, MovementEventType, const char *);
+typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, int);
+
+#define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
+#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+
 
 class  CCArmatureAnimation : public CCProcessBase
 {
@@ -66,6 +72,17 @@ public:
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
+    virtual float getAnimationScale() const;
+
+    /**
+     * Scale animation play speed.
+     * @param animationScale Scale value
+     */
+    virtual void setSpeedScale(float speedScale);
+    virtual float getSpeedScale() const;
+
+    //! The animation update speed
+    virtual void setAnimationInternal(float animationInternal);
 
     /**
      * Play animation by animation name.
@@ -123,6 +140,25 @@ public:
     int getMovementCount();
 
     void update(float dt);
+
+    /**
+     * Get current movementID
+     * @return The name of current movement
+     */
+    std::string getCurrentMovementID();
+
+    /**
+     * Set armature's movement event callback function
+     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+     */
+    void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
+
+    /**
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
+
 protected:
 
     /**
@@ -135,10 +171,18 @@ protected:
      */
     void updateFrameData(float currentPercent);
 
+    /**
+     * Emit a frame event
+     */
+    void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+
+    friend class CCTween;
 protected:
     //! CCAnimationData save all MovementDatas this animation used.
     CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
 
+    //! Scale the animation speed
+    float m_fSpeedScale;
 
     CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
 
@@ -146,18 +190,31 @@ protected:
 
     std::string m_strMovementID;				//! Current movment's name
 
-    int m_iPrevFrameIndex;						//! Prev key frame index
     int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     CCArray *m_pTweenList;
-public:
-    /**
-     * MovementEvent signal. This will emit a signal when trigger a event.
-     * The 1st param is the CCArmature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
-     */
-    sigslot::signal3<CCArmature *, MovementEventType, const char *> MovementEventSignal;
 
-    sigslot::signal2<CCBone *, const char *> FrameEventSignal;
+protected:
+    /**
+     * MovementEvent CallFunc.
+     * @param CCArmature* a CCArmature
+     * @param MovementEventType, Event Type, like START, COMPLETE.
+     * @param const char*, Movement ID, also called Movement Name
+     */
+    SEL_MovementEventCallFunc m_sMovementEventCallFunc;
+
+    /**
+     * FrameEvent CallFunc.
+     * @param CCBone*, a CCBone
+     * @param const char*, the name of this frame event
+     * @param int, origin frame index
+     * @param int, current frame index, animation may be delayed
+     */
+    SEL_FrameEventCallFunc m_sFrameEventCallFunc;
+
+
+    CCObject *m_sMovementEventTarget;
+    CCObject *m_sFrameEventTarget;
 };
 
 NS_CC_EXT_END

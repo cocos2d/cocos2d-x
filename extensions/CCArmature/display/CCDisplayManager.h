@@ -50,7 +50,7 @@ public:
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
      * If the display is a CCArmature, then create a new CCArmature
      */
-    void initDisplayList(CCBoneData *boneData);
+    virtual void initDisplayList(CCBoneData *boneData);
 
     /**
      * Add display and use  _DisplayData init the display.
@@ -64,6 +64,8 @@ public:
      *					-1 : append display from back
      */
     void addDisplay(CCDisplayData *displayData, int index);
+
+    void addDisplay(CCNode *display, int index);
 
     void removeDisplay(int index);
 
@@ -85,9 +87,9 @@ public:
 
     int getCurrentDisplayIndex();
 
-    void setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay);
-    CCDecorativeDisplay *getCurrentDecorativeDisplay();
-    CCDecorativeDisplay *getDecorativeDisplayByIndex( int index);
+    virtual void setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay);
+    virtual CCDecorativeDisplay *getCurrentDecorativeDisplay();
+    virtual CCDecorativeDisplay *getDecorativeDisplayByIndex( int index);
 
     /**
      * Sets whether the display is visible
@@ -121,15 +123,15 @@ public:
     virtual bool containPoint(float x, float y);
 
 protected:
-	CCArray *m_pDecoDisplayList;
-	//! Display render node.
-	CCNode *m_pDisplayRenderNode;
+    CCArray *m_pDecoDisplayList;
+    //! Display render node.
+    CCNode *m_pDisplayRenderNode;
     //! Include current display information, like contour sprite, etc.
     CCDecorativeDisplay *m_pCurrentDecoDisplay;
     //! Current display index
     int m_iDisplayIndex;
 
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bForceChangeDisplay, ForceChangeDisplay)
+    CC_SYNTHESIZE(bool, m_bForceChangeDisplay, ForceChangeDisplay)
 
     //! Whether of not the bone is visible. Default is true
     bool m_bVisible;

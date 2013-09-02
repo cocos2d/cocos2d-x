@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCDataReaderHelper.h"
 #include "CCSpriteFrameCacheHelper.h"
-#include "../physics/CCPhysicsWorld.h"
 
 
 NS_CC_EXT_BEGIN
@@ -47,11 +46,19 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
     return s_sharedArmatureDataManager;
 }
 
+void CCArmatureDataManager::purge()
+{
+    CCSpriteFrameCacheHelper::purge();
+    CCDataReaderHelper::purge();
+    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
+}
+
 CCArmatureDataManager::CCArmatureDataManager(void)
 {
-	m_pArmarureDatas = NULL;
+    m_pArmarureDatas = NULL;
     m_pAnimationDatas = NULL;
     m_pTextureDatas = NULL;
+    m_bAutoLoadSpriteFile = false;
 }
 
 
@@ -64,13 +71,6 @@ CCArmatureDataManager::~CCArmatureDataManager(void)
     CC_SAFE_DELETE(m_pTextureDatas);
 }
 
-void CCArmatureDataManager::purgeArmatureSystem()
-{
-    CCSpriteFrameCacheHelper::purgeSpriteFrameCacheHelper();
-    CCPhysicsWorld::purgePhysicsWorld();
-
-    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
-}
 
 bool CCArmatureDataManager::init()
 {
@@ -114,19 +114,19 @@ CCArmatureData *CCArmatureDataManager::getArmatureData(const char *id)
     return armatureData;
 }
 
+void CCArmatureDataManager::removeArmatureData(const char *id)
+{
+    if (m_pArmarureDatas)
+    {
+        m_pArmarureDatas->removeObjectForKey(id);
+    }
+}
+
 void CCArmatureDataManager::addAnimationData(const char *id, CCAnimationData *animationData)
 {
     if(m_pAnimationDatas)
     {
         m_pAnimationDatas->setObject(animationData, id);
-    }
-}
-
-void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
-{
-    if(m_pTextureDatas)
-    {
-        m_pTextureDatas->setObject(textureData, id);
     }
 }
 
@@ -140,6 +140,23 @@ CCAnimationData *CCArmatureDataManager::getAnimationData(const char *id)
     return animationData;
 }
 
+void CCArmatureDataManager::removeAnimationData(const char *id)
+{
+    if (m_pAnimationDatas)
+    {
+        m_pAnimationDatas->removeObjectForKey(id);
+    }
+}
+
+void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textureData)
+{
+    if(m_pTextureDatas)
+    {
+        m_pTextureDatas->setObject(textureData, id);
+    }
+}
+
+
 CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 {
     CCTextureData *textureData = NULL;
@@ -151,29 +168,42 @@ CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 }
 
 
-
-void CCArmatureDataManager::addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath)
+void CCArmatureDataManager::removeTextureData(const char *id)
 {
-    addArmatureFileInfo(imagePath, plistPath, configFilePath);
+    if(m_pTextureDatas)
+    {
+        m_pTextureDatas->removeObjectForKey(id);
+    }
+}
+
+void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
+{
+    m_bAutoLoadSpriteFile = true;
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+}
+
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
+{
+    m_bAutoLoadSpriteFile = true;
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
 }
 
 void CCArmatureDataManager::addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath)
 {
+    m_bAutoLoadSpriteFile = false;
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
+    addSpriteFrameFromFile(plistPath, imagePath);
+}
 
-    CCDataReaderHelper::addDataFromFile(configFilePath);
+void CCArmatureDataManager::addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector)
+{
+    m_bAutoLoadSpriteFile = false;
+    CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFileAsync(configFilePath, target, selector);
     addSpriteFrameFromFile(plistPath, imagePath);
 }
 
 void CCArmatureDataManager::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-    //	if(Game::sharedGame()->isUsePackage())
-    //	{
-    //		CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromPak(plistPath, imagePath);
-    //	}
-    //    else
-    //	{
-    //		CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
-    //	}
     CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->addSpriteFrameFromFile(plistPath, imagePath);
 }
 
@@ -195,6 +225,24 @@ void CCArmatureDataManager::removeAll()
     }
 
     CCDataReaderHelper::clear();
+}
+
+bool CCArmatureDataManager::isAutoLoadSpriteFile()
+{
+    return m_bAutoLoadSpriteFile;
+}
+
+CCDictionary *CCArmatureDataManager::getArmatureDatas() const
+{
+    return m_pArmarureDatas;
+}
+CCDictionary *CCArmatureDataManager::getAnimationDatas() const
+{
+    return m_pAnimationDatas;
+}
+CCDictionary *CCArmatureDataManager::getTextureDatas() const
+{
+    return m_pTextureDatas;
 }
 
 NS_CC_EXT_END

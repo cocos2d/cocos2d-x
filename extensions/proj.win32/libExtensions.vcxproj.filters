@@ -228,9 +228,6 @@
     <ClCompile Include="..\CCArmature\display\CCDisplayManager.cpp">
       <Filter>CCArmature\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCArmature\display\CCShaderNode.cpp">
-      <Filter>CCArmature\display</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCArmature\display\CCSkin.cpp">
       <Filter>CCArmature\display</Filter>
     </ClCompile>
@@ -258,17 +255,11 @@
     <ClCompile Include="..\CCArmature\physics\CCColliderDetector.cpp">
       <Filter>CCArmature\physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCArmature\physics\CCPhysicsWorld.cpp">
-      <Filter>CCArmature\physics</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCArmature\CCArmature.cpp">
       <Filter>CCArmature</Filter>
     </ClCompile>
     <ClCompile Include="..\CCArmature\CCBone.cpp">
       <Filter>CCArmature</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCArmature\external_tool\GLES-Render.cpp">
-      <Filter>CCArmature\external_tool</Filter>
     </ClCompile>
     <ClCompile Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.cpp">
       <Filter>CCArmature\external_tool\Json</Filter>
@@ -556,9 +547,6 @@
     <ClInclude Include="..\CCArmature\display\CCDisplayManager.h">
       <Filter>CCArmature\display</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\display\CCShaderNode.h">
-      <Filter>CCArmature\display</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\display\CCSkin.h">
       <Filter>CCArmature\display</Filter>
     </ClInclude>
@@ -572,9 +560,6 @@
       <Filter>CCArmature\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h">
-      <Filter>CCArmature\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h">
       <Filter>CCArmature\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h">
@@ -595,17 +580,11 @@
     <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h">
       <Filter>CCArmature\physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\physics\CCPhysicsWorld.h">
-      <Filter>CCArmature\physics</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\CCArmature.h">
       <Filter>CCArmature</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\CCBone.h">
       <Filter>CCArmature</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCArmature\external_tool\GLES-Render.h">
-      <Filter>CCArmature\external_tool</Filter>
     </ClInclude>
     <ClInclude Include="..\CCArmature\external_tool\Json\CSContentJsonDictionary.h">
       <Filter>CCArmature\external_tool\Json</Filter>
