@@ -23,24 +23,47 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
+#include "cocos2d.h"
 
 NS_CC_EXT_BEGIN
 
 CCComAttribute::CCComAttribute(void)
-: m_pAttributes(NULL)
+: m_pJsonDict(NULL),
+ m_pAttributes(NULL)
 {
     m_strName = "ComAttribute";
 }
 
+CCComAttribute::CCComAttribute(const char *pszFileName)
+: m_pJsonDict(NULL)
+{
+	  m_strName = "ComAttribute";
+	  if (pszFileName != NULL)
+	  {
+		  m_strFileName.assign(pszFileName);
+	  }
+}
+
 CCComAttribute::~CCComAttribute(void)
 {
-    CC_SAFE_RELEASE(m_pAttributes);
+    CC_SAFE_DELETE(m_pJsonDict);
+	CC_SAFE_RELEASE(m_pAttributes);
 }
 
 bool CCComAttribute::init()
 {
-    m_pAttributes = CCDictionary::create();
-    m_pAttributes->retain();
+	m_pAttributes = CCDictionary::create();
+	m_pAttributes->retain();
+
+	unsigned long size = 0;
+	const char* pData = 0;
+	pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(m_strFileName.c_str(), "r", &size));
+	if(pData != NULL && strcmp(pData, "") != 0)
+	{
+		m_pJsonDict= new cs::CSJsonDictionary();
+		m_pJsonDict->initWithDescription(pData);
+	}
+
     return true;
 }
 
@@ -57,6 +80,27 @@ CCComAttribute* CCComAttribute::create(void)
     }
     return pRet;
 }
+
+CCComAttribute* CCComAttribute::create(const char *pszFileName)
+{
+	CCComAttribute *pRet = NULL;
+	do 
+	{
+		CC_BREAK_IF(pszFileName == NULL);
+		pRet = new CCComAttribute(pszFileName);
+		if (pRet && pRet->init())
+		{
+			pRet->autorelease();
+		}
+		else
+		{
+			CC_SAFE_DELETE(pRet);
+		}
+	} while (0);
+	
+    return pRet;
+}
+
 
 void CCComAttribute::setInt(const char *key, int value)
 {
@@ -178,6 +222,11 @@ const char* CCComAttribute::getCString(const char *key) const
 CCObject* CCComAttribute::getObject(const char *key) const
 {
     return m_pAttributes->objectForKey(key);
+}
+ 
+cs::CSJsonDictionary* CCComAttribute::getDict()
+{
+	return m_pJsonDict;
 }
 
 NS_CC_EXT_END
