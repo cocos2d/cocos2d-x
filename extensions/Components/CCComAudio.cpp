@@ -30,6 +30,7 @@ NS_CC_EXT_BEGIN
 CCComAudio::CCComAudio(void)
 {
     m_strName = "Audio";
+	m_bLoop = false;
 }
 
 CCComAudio::~CCComAudio(void)
@@ -201,5 +202,24 @@ void CCComAudio::unloadEffect(const char *pszFilePath)
     CocosDenshion::SimpleAudioEngine::sharedEngine()->unloadEffect(pszFilePath);
 }
 
+void CCComAudio::setFile(const char* pszFilePath)
+{
+	m_strFilePath.assign(pszFilePath);
+}
+
+void CCComAudio::setLoop(bool bLoop)
+{
+	m_bLoop = bLoop;
+}
+
+const char* CCComAudio::getFile()
+{
+	return m_strFilePath.c_str();
+}
+
+bool CCComAudio::isLoop()
+{
+	return m_bLoop;
+}
 
 NS_CC_EXT_END

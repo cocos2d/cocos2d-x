@@ -1,0 +1,66 @@
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#ifndef __UIACTION_H__
+#define __UIACTION_H__
+
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+#include "UIActionNode.h"
+#include "../../CCArmature/external_tool/Json/CSContentJsonDictionary.h"
+
+NS_CC_EXT_BEGIN
+
+class UIAction : public CCObject
+{
+protected:
+	cocos2d::CCArray* m_ActionNodeList;/*actionnode*/
+    std::string m_name;
+public:
+    UIAction();
+    virtual ~UIAction();
+
+	void Play();
+	void Pause();
+	void Stop();
+
+	void UpdateToFrameByIndex(int index);
+
+    
+	//
+//	CC_SYNTHESIZE(std::string, m_name, Name);
+	//
+	CC_SYNTHESIZE(bool, m_loop, Loop);
+	//
+	CC_SYNTHESIZE(float, m_fUnitTime, UnitTime);
+    
+    void initWithDictionary(cs::CSJsonDictionary* dic,UIWidget* root);
+    
+    void setName(const char* name);
+    const char* getName() const;
+};
+
+NS_CC_EXT_END
+
+#endif

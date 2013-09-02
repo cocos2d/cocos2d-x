@@ -22,45 +22,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "support/component/CCComponent.h"
+#include "CCComRender.h"
 
+NS_CC_EXT_BEGIN
 
-NS_CC_BEGIN
-
-CCComponent::CCComponent(void)
-: m_pOwner(NULL)
-, m_bEnabled(true)
+CCComRender::CCComRender(void)
+: m_pRender(NULL)
 {
+  
 }
 
-CCComponent::~CCComponent(void)
+
+CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
 {
+    m_pRender = node;
+    m_strName.assign(comName);
 }
 
-bool CCComponent::init()
+CCComRender::~CCComRender(void)
 {
-    return true;
+    m_pRender = NULL;
 }
 
-void CCComponent::onEnter()
+void CCComRender::onEnter()
 {
+    if (m_pOwner != NULL)
+    {
+        m_pOwner->addChild(m_pRender);
+    }
 }
 
-void CCComponent::onExit()
+void CCComRender::onExit()
 {
+    m_pRender = NULL;
 }
 
-void CCComponent::update(float delta)
+cocos2d::CCNode* CCComRender::getRender()
 {
+    return m_pRender;
 }
 
-void CCComponent::serialize(void *ar)
+CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
 {
-}
-
-CCComponent* CCComponent::create(void)
-{
-    CCComponent * pRet = new CCComponent();
+    CCComRender * pRet = new CCComRender(pNode, comName);
     if (pRet != NULL && pRet->init())
     {
         pRet->autorelease();
@@ -72,44 +76,4 @@ CCComponent* CCComponent::create(void)
 	return pRet;
 }
 
-const char* CCComponent::getName() const
-{
-    return m_strName.c_str();
-}
-
-void  CCComponent::setName(const char *pName)
-{
-	m_strName.assign(pName);
-}
-
-CCNode* CCComponent::getOwner() const
-{
-    return m_pOwner;
-}
-
-void CCComponent::setOwner(CCNode *pOwner)
-{
-    m_pOwner = pOwner;
-}
-
-bool CCComponent::isEnabled() const
-{
-    return m_bEnabled;
-}
-
-void CCComponent::setEnabled(bool b)
-{
-    m_bEnabled = b;
-}
-
-void CCComponent::setNode(CCNode *pNode)
-{
-
-}
-
-CCNode* CCComponent::getNode()
-{
-	return NULL;
-}
-
-NS_CC_END
+NS_CC_EXT_END
