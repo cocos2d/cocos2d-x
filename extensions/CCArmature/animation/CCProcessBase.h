@@ -118,8 +118,8 @@ protected:
     virtual void updateHandler() {};
 
 protected:
-	//! Scale the process speed
-	CC_SYNTHESIZE(float, m_fProcessScale, ProcessScale);
+    //! Scale the process speed
+    CC_SYNTHESIZE(float, m_fProcessScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
     CC_SYNTHESIZE(bool, m_bIsPause, IsPause);

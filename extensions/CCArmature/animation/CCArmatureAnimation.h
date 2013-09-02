@@ -33,9 +33,9 @@ NS_CC_EXT_BEGIN
 
 enum MovementEventType
 {
-	START,
-	COMPLETE,
-	LOOP_COMPLETE
+    START,
+    COMPLETE,
+    LOOP_COMPLETE
 };
 
 
@@ -72,17 +72,17 @@ public:
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
-	virtual float getAnimationScale() const;
+    virtual float getAnimationScale() const;
 
-	/**
+    /**
      * Scale animation play speed.
      * @param animationScale Scale value
      */
-	virtual void setSpeedScale(float speedScale);
-	virtual float getSpeedScale() const;
+    virtual void setSpeedScale(float speedScale);
+    virtual float getSpeedScale() const;
 
-	//! The animation update speed
-	virtual void setAnimationInternal(float animationInternal);
+    //! The animation update speed
+    virtual void setAnimationInternal(float animationInternal);
 
     /**
      * Play animation by animation name.
@@ -141,30 +141,23 @@ public:
 
     void update(float dt);
 
-	/**
+    /**
      * Get current movementID
-	 * @return The name of current movement
+     * @return The name of current movement
      */
-	std::string getCurrentMovementID();
+    std::string getCurrentMovementID();
 
-	/**
-	 * Set armature's movement event callback function
-	 * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
-	 */
-	void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
-
-	/**
-	 * Set armature's frame event callback function
-	 * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
-	 */
-	void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
-
-
-	/**
-     * Emit a frame event
-	 * This is an internal method. Don't call it outside the framework.
+    /**
+     * Set armature's movement event callback function
+     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
      */
-	void _frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+    void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
+
+    /**
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 
 protected:
 
@@ -178,12 +171,18 @@ protected:
      */
     void updateFrameData(float currentPercent);
 
+    /**
+     * Emit a frame event
+     */
+    void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+
+    friend class CCTween;
 protected:
     //! CCAnimationData save all MovementDatas this animation used.
     CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
 
-	//! Scale the animation speed
-	float m_fSpeedScale;
+    //! Scale the animation speed
+    float m_fSpeedScale;
 
     CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
 
@@ -196,26 +195,26 @@ protected:
     CCArray *m_pTweenList;
 
 protected:
-	/**
+    /**
      * MovementEvent CallFunc.
-	 * @param CCArmature* a CCArmature
-	 * @param MovementEventType, Event Type, like START, COMPLETE.
-	 * @param const char*, Movement ID, also called Movement Name
+     * @param CCArmature* a CCArmature
+     * @param MovementEventType, Event Type, like START, COMPLETE.
+     * @param const char*, Movement ID, also called Movement Name
      */
-	SEL_MovementEventCallFunc m_sMovementEventCallFunc;
+    SEL_MovementEventCallFunc m_sMovementEventCallFunc;
 
-	/**
+    /**
      * FrameEvent CallFunc.
-	 * @param CCBone*, a CCBone
-	 * @param const char*, the name of this frame event
-	 * @param int, origin frame index
-	 * @param int, current frame index, animation may be delayed
+     * @param CCBone*, a CCBone
+     * @param const char*, the name of this frame event
+     * @param int, origin frame index
+     * @param int, current frame index, animation may be delayed
      */
-	SEL_FrameEventCallFunc m_sFrameEventCallFunc;
+    SEL_FrameEventCallFunc m_sFrameEventCallFunc;
 
 
-	CCObject *m_sMovementEventTarget;
-	CCObject *m_sFrameEventTarget;
+    CCObject *m_sMovementEventTarget;
+    CCObject *m_sFrameEventTarget;
 };
 
 NS_CC_EXT_END

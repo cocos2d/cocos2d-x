@@ -201,6 +201,8 @@ void TestAsynchronousLoading::onEnter()
 {
 	ArmatureTestLayer::onEnter();
 
+	CCLOG("armature version : %s", CCArmature::armatureVersion());
+
 	backItem->setEnabled(false);
 	restartItem->setEnabled(false);
 	nextItem->setEnabled(false);
@@ -445,12 +447,12 @@ void TestAnimationEvent::animationEvent(cocos2d::extension::CCArmature *armature
 }
 void TestAnimationEvent::callback1()
 {
-	armature->runAction(CCScaleTo::create(0.3f, 0.3f, 0.3f));
+	armature->runAction(CCScaleTo::create(0.3f, 0.24f, 0.24f));
 	armature->getAnimation()->play("FireMax", 10);
 }
 void TestAnimationEvent::callback2()
 {
-	armature->runAction(CCScaleTo::create(0.3f, -0.3f, 0.3f));
+	armature->runAction(CCScaleTo::create(0.3f, -0.24f, 0.24f));
 	armature->getAnimation()->play("Fire", 10);
 }
 

@@ -31,12 +31,12 @@ CCProcessBase::CCProcessBase(void)
     : m_fProcessScale(1)
     , m_bIsPause(true)
     , m_bIsComplete(true)
-	, m_bIsPlaying(false)
-	, m_fCurrentPercent(0.0f)
-	, m_iRawDuration(0)
-	, m_eLoopType(ANIMATION_LOOP_BACK)
-	, m_eTweenEasing(Linear)
-	, m_iDurationTween(0)
+    , m_bIsPlaying(false)
+    , m_fCurrentPercent(0.0f)
+    , m_iRawDuration(0)
+    , m_eLoopType(ANIMATION_LOOP_BACK)
+    , m_eTweenEasing(Linear)
+    , m_iDurationTween(0)
     , m_fCurrentFrame(0)
     , m_iCurFrameIndex(0)
     , m_bIsLoopBack(false)
@@ -57,20 +57,20 @@ CCProcessBase::~CCProcessBase(void)
 void CCProcessBase::pause()
 {
     m_bIsPause = true;
-	m_bIsPlaying = false;
+    m_bIsPlaying = false;
 }
 
 
 void CCProcessBase::resume()
 {
     m_bIsPause = false;
-	m_bIsPlaying = true;
+    m_bIsPlaying = true;
 }
 
 void CCProcessBase::stop()
 {
     m_bIsComplete = true;
-	m_bIsPlaying = false;
+    m_bIsPlaying = false;
     m_fCurrentFrame = 0;
     m_fCurrentPercent = 0;
 }
@@ -108,29 +108,29 @@ void CCProcessBase::update(float dt)
         return;
     }
 
-	if (m_iNextFrameIndex <= 0)
-	{
-		m_fCurrentPercent = 1;
-		m_fCurrentFrame = 0;
-	}
-	else
-	{
-		/*
-		*  update m_fCurrentFrame, every update add the frame passed.
-		*  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
-		*  animation speed slower or quicker.
-		*/
-		m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
+    if (m_iNextFrameIndex <= 0)
+    {
+        m_fCurrentPercent = 1;
+        m_fCurrentFrame = 0;
+    }
+    else
+    {
+        /*
+        *  update m_fCurrentFrame, every update add the frame passed.
+        *  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
+        *  animation speed slower or quicker.
+        */
+        m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
 
 
-		m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
+        m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
 
-		/*
-		*	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
-		*  smaller than m_iTotalFrames
-		*/
-		m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
-	}
+        /*
+        *	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
+        *  smaller than m_iTotalFrames
+        */
+        m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+    }
 
     updateHandler();
 }
@@ -145,7 +145,7 @@ void CCProcessBase::gotoFrame(int frameIndex)
 
 int CCProcessBase::getCurrentFrameIndex()
 {
-	m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
+    m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
     return m_iCurFrameIndex;
 }
 

@@ -40,6 +40,11 @@ NS_CC_EXT_BEGIN
 
 std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
 
+const char* CCArmature::armatureVersion()
+{
+	return "0.3.3.0";
+}
+
 CCArmature *CCArmature::create()
 {
     CCArmature *armature = new CCArmature();
@@ -78,14 +83,14 @@ CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
 }
 
 CCArmature::CCArmature()
-    : m_pAnimation(NULL)
-	, m_pArmatureData(NULL)
-	, m_pBatchNode(NULL)
+    : m_pArmatureData(NULL)
+    , m_pBatchNode(NULL)
     , m_pAtlas(NULL)
-	, m_pParentBone(NULL)
-	, m_pBoneDic(NULL)
+    , m_pParentBone(NULL)
+    , m_bArmatureTransformDirty(true)
+    , m_pBoneDic(NULL)
     , m_pTopBoneList(NULL)
-	, m_bArmatureTransformDirty(true)
+    , m_pAnimation(NULL)
 {
 }
 
@@ -313,10 +318,10 @@ void CCArmature::changeBoneParent(CCBone *bone, const char *parentName)
     CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
 
     if(bone->getParentBone())
-	{
-		bone->getParentBone()->getChildren()->removeObject(bone);
-		bone->setParentBone(NULL);
-	}
+    {
+        bone->getParentBone()->getChildren()->removeObject(bone);
+        bone->setParentBone(NULL);
+    }
 
     if (parentName != NULL)
     {
@@ -325,15 +330,15 @@ void CCArmature::changeBoneParent(CCBone *bone, const char *parentName)
         if (boneParent)
         {
             boneParent->addChildBone(bone);
-			if (m_pTopBoneList->containsObject(bone))
-			{
-				m_pTopBoneList->removeObject(bone);
-			}
+            if (m_pTopBoneList->containsObject(bone))
+            {
+                m_pTopBoneList->removeObject(bone);
+            }
         }
-		else
-		{
-			m_pTopBoneList->addObject(bone);
-		}
+        else
+        {
+            m_pTopBoneList->addObject(bone);
+        }
     }
 }
 
@@ -346,7 +351,7 @@ CCAffineTransform CCArmature::nodeToParentTransform()
 {
     if (m_bTransformDirty)
     {
-		m_bArmatureTransformDirty = true;
+        m_bArmatureTransformDirty = true;
 
         // Translate values
         float x = m_obPosition.x;
@@ -428,20 +433,20 @@ void CCArmature::updateOffsetPoint()
     CCRect rect = boundingBox();
     setContentSize(rect.size);
     m_pOffsetPoint = ccp(-rect.origin.x,  -rect.origin.y);
-	if (rect.size.width != 0 && rect.size.height!= 0)
-	{
-		setAnchorPoint(ccp(m_pOffsetPoint.x / rect.size.width, m_pOffsetPoint.y / rect.size.height));
-	}
+    if (rect.size.width != 0 && rect.size.height != 0)
+    {
+        setAnchorPoint(ccp(m_pOffsetPoint.x / rect.size.width, m_pOffsetPoint.y / rect.size.height));
+    }
 }
 
 void CCArmature::setAnimation(CCArmatureAnimation *animation)
 {
-	m_pAnimation = animation;
+    m_pAnimation = animation;
 }
 
 CCArmatureAnimation *CCArmature::getAnimation()
 {
-	return m_pAnimation;
+    return m_pAnimation;
 }
 
 void CCArmature::update(float dt)
@@ -454,7 +459,7 @@ void CCArmature::update(float dt)
         ((CCBone *)object)->update(dt);
     }
 
-	m_bArmatureTransformDirty = false;
+    m_bArmatureTransformDirty = false;
 }
 
 void CCArmature::draw()
@@ -468,89 +473,89 @@ void CCArmature::draw()
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
     {
-		if (CCBone *bone = dynamic_cast<CCBone*>(object))
-		{
-			CCDisplayManager *displayManager = bone->getDisplayManager();
-			CCNode *node = displayManager->getDisplayRenderNode();
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            CCDisplayManager *displayManager = bone->getDisplayManager();
+            CCNode *node = displayManager->getDisplayRenderNode();
 
-			if (NULL == node)
-				continue;
+            if (NULL == node)
+                continue;
 
-			switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
-			{
-			case CS_DISPLAY_SPRITE:
-				{
-					CCSkin *skin = (CCSkin*)node;
-					
-					CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-					CCBlendType blendType = bone->getBlendType();
-					if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
-					{
-						if (m_pAtlas)
-						{
-							m_pAtlas->drawQuads();
-							m_pAtlas->removeAllQuads();
-						}
-					}
+            switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
+            {
+            case CS_DISPLAY_SPRITE:
+            {
+                CCSkin *skin = (CCSkin *)node;
 
-					m_pAtlas = textureAtlas;
-					if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
-						return;
+                CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
+                CCBlendType blendType = bone->getBlendType();
+                if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
+                {
+                    if (m_pAtlas)
+                    {
+                        m_pAtlas->drawQuads();
+                        m_pAtlas->removeAllQuads();
+                    }
+                }
 
-					skin->updateTransform();
+                m_pAtlas = textureAtlas;
+                if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
+                    return;
 
-					if (blendType != BLEND_NORMAL)
-					{
-						updateBlendType(blendType);
-						m_pAtlas->drawQuads();
-						m_pAtlas->removeAllQuads();
-						ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-					}
-				}
-				break;
-			case CS_DISPLAY_ARMATURE:
-				{
-					CCArmature *armature = (CCArmature *)(node);
+                skin->updateTransform();
 
-					CCTextureAtlas *textureAtlas = armature->getTextureAtlas();
-					if(m_pAtlas != textureAtlas)
-					{
-						if (m_pAtlas)
-						{
-							m_pAtlas->drawQuads();
-							m_pAtlas->removeAllQuads();
-						}
-					}
-					armature->draw();
-				}
-				break;
-			default:
-				{
-					if (m_pAtlas)
-					{
-						m_pAtlas->drawQuads();
-						m_pAtlas->removeAllQuads();
-					}
-					node->visit();
+                if (blendType != BLEND_NORMAL)
+                {
+                    updateBlendType(blendType);
+                    m_pAtlas->drawQuads();
+                    m_pAtlas->removeAllQuads();
+                    ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+                }
+            }
+            break;
+            case CS_DISPLAY_ARMATURE:
+            {
+                CCArmature *armature = (CCArmature *)(node);
 
-					CC_NODE_DRAW_SETUP();
-					ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-				}
-				break;
-			}
-		}
-		else if(CCNode *node = dynamic_cast<CCNode*>(object))
-		{
-			if (m_pAtlas)
-			{
-				m_pAtlas->drawQuads();
-				m_pAtlas->removeAllQuads();
-			}
-			node->visit();
+                CCTextureAtlas *textureAtlas = armature->getTextureAtlas();
+                if(m_pAtlas != textureAtlas)
+                {
+                    if (m_pAtlas)
+                    {
+                        m_pAtlas->drawQuads();
+                        m_pAtlas->removeAllQuads();
+                    }
+                }
+                armature->draw();
+            }
+            break;
+            default:
+            {
+                if (m_pAtlas)
+                {
+                    m_pAtlas->drawQuads();
+                    m_pAtlas->removeAllQuads();
+                }
+                node->visit();
 
-			CC_NODE_DRAW_SETUP();
-			ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-		}
+                CC_NODE_DRAW_SETUP();
+                ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+            }
+            break;
+            }
+        }
+        else if(CCNode *node = dynamic_cast<CCNode *>(object))
+        {
+            if (m_pAtlas)
+            {
+                m_pAtlas->drawQuads();
+                m_pAtlas->removeAllQuads();
+            }
+            node->visit();
+
+            CC_NODE_DRAW_SETUP();
+            ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+        }
     }
 
     if(m_pAtlas && !m_pBatchNode && m_pParentBone == NULL)
@@ -563,41 +568,41 @@ void CCArmature::draw()
 
 void CCArmature::updateBlendType(CCBlendType blendType)
 {
-	ccBlendFunc blendFunc;
-	switch (blendType)
-	{
-	case BLEND_NORMAL:
-		{
-			blendFunc.src = CC_BLEND_SRC;
-			blendFunc.dst = CC_BLEND_DST;
-		}
-		break;
-	case BLEND_ADD:
-		{
-			blendFunc.src = GL_SRC_ALPHA;
-			blendFunc.dst = GL_ONE;
-		}
-		break;
-	case BLEND_MULTIPLY:
-		{
-			blendFunc.src = GL_DST_COLOR;
-			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		}
-		break;
-	case BLEND_SCREEN:
-		{
-			blendFunc.src = GL_ONE;
-			blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
-		}
-		break;
-	default:
-		{
-			blendFunc.src = CC_BLEND_SRC;
-			blendFunc.dst = CC_BLEND_DST;
-		}
-		break;
-	}
-	ccGLBlendFunc(blendFunc.src, blendFunc.dst);
+    ccBlendFunc blendFunc;
+    switch (blendType)
+    {
+    case BLEND_NORMAL:
+    {
+        blendFunc.src = CC_BLEND_SRC;
+        blendFunc.dst = CC_BLEND_DST;
+    }
+    break;
+    case BLEND_ADD:
+    {
+        blendFunc.src = GL_SRC_ALPHA;
+        blendFunc.dst = GL_ONE;
+    }
+    break;
+    case BLEND_MULTIPLY:
+    {
+        blendFunc.src = GL_DST_COLOR;
+        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+    }
+    break;
+    case BLEND_SCREEN:
+    {
+        blendFunc.src = GL_ONE;
+        blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+    }
+    break;
+    default:
+    {
+        blendFunc.src = CC_BLEND_SRC;
+        blendFunc.dst = CC_BLEND_DST;
+    }
+    break;
+    }
+    ccGLBlendFunc(blendFunc.src, blendFunc.dst);
 }
 
 
@@ -642,30 +647,30 @@ CCRect CCArmature::boundingBox()
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
     {
-		if (CCBone *bone = dynamic_cast<CCBone*>(object))
-		{
-			CCRect r = bone->getDisplayManager()->getBoundingBox();
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            CCRect r = bone->getDisplayManager()->getBoundingBox();
 
-			if(first)
-			{
-				minx = r.getMinX();
-				miny = r.getMinY();
-				maxx = r.getMaxX();
-				maxy = r.getMaxY();
+            if(first)
+            {
+                minx = r.getMinX();
+                miny = r.getMinY();
+                maxx = r.getMaxX();
+                maxy = r.getMaxY();
 
-				first = false;
-			}
-			else
-			{
-				minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-				miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-				maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-				maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
-			}
+                first = false;
+            }
+            else
+            {
+                minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
+                miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
+                maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
+                maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+            }
 
-			boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-		}
-     }
+            boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
+        }
+    }
 
     return boundingBox;
 }
@@ -688,72 +693,72 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
 #if ENABLE_PHYSICS_BOX2D_DETECT
 b2Body *CCArmature::getB2Body()
 {
-	return m_pB2Body;
+    return m_pB2Body;
 }
 
 void CCArmature::setB2Body(b2Body *body)
 {
-	if (m_pB2Body == body)
-	{
-		return; 
-	}
+    if (m_pB2Body == body)
+    {
+        return;
+    }
 
-	m_pB2Body = body;
-	m_pB2Body->SetUserData(this);
-	
-	CCObject *object = NULL;
-	CCARRAY_FOREACH(m_pChildren, object)
-	{
-		if (CCBone *bone = dynamic_cast<CCBone*>(object))
-		{
-			CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+    m_pB2Body = body;
+    m_pB2Body->SetUserData(this);
 
-			CCObject *displayObject = NULL;
-			CCARRAY_FOREACH(displayList, displayObject)
-			{
-				CCColliderDetector *detector = ((CCDecorativeDisplay*)displayObject)->getColliderDetector();
-				if (detector != NULL)
-				{
-					detector->setB2Body(m_pB2Body);
-				}
-			}
-		}
-	}
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(m_pChildren, object)
+    {
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+
+            CCObject *displayObject = NULL;
+            CCARRAY_FOREACH(displayList, displayObject)
+            {
+                CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
+                if (detector != NULL)
+                {
+                    detector->setB2Body(m_pB2Body);
+                }
+            }
+        }
+    }
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 cpBody *CCArmature::getCPBody()
 {
-	return m_pCPBody;
+    return m_pCPBody;
 }
 
 void CCArmature::setCPBody(cpBody *body)
 {
-	if (m_pCPBody == body)
-	{
-		return;
-	}
+    if (m_pCPBody == body)
+    {
+        return;
+    }
 
-	m_pCPBody = body;
-	m_pCPBody->data = this;
+    m_pCPBody = body;
+    m_pCPBody->data = this;
 
-	CCObject *object = NULL;
-	CCARRAY_FOREACH(m_pChildren, object)
-	{
-		if (CCBone *bone = dynamic_cast<CCBone*>(object))
-		{
-			CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(m_pChildren, object)
+    {
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            CCArray *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-			CCObject *displayObject = NULL;
-			CCARRAY_FOREACH(displayList, displayObject)
-			{
-				CCColliderDetector *detector = ((CCDecorativeDisplay*)displayObject)->getColliderDetector();
-				if (detector != NULL)
-				{
-					detector->setCPBody(m_pCPBody);
-				}
-			}
-		}
-	}
+            CCObject *displayObject = NULL;
+            CCARRAY_FOREACH(displayList, displayObject)
+            {
+                CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
+                if (detector != NULL)
+                {
+                    detector->setCPBody(m_pCPBody);
+                }
+            }
+        }
+    }
 }
 #endif
 
