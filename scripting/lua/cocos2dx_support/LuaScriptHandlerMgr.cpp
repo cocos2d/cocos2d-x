@@ -16,7 +16,6 @@ extern "C" {
 #include "CCLuaEngine.h"
 #include "Lua_web_socket.h"
 #include "LuaOpengl.h"
-#include "LuaScrollView.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -622,58 +621,6 @@ int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'unregisterScriptDrawHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-int tolua_Cocos2d_ScrollView_registerScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,3,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-int tolua_Cocos2d_ScrollView_unregisterScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,2,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
     return 0;
 #endif
 }

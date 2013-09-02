@@ -11,10 +11,8 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
           ../cocos2dx_support/CCBProxy.cpp \
-          ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/Lua_web_socket.cpp \
           ../cocos2dx_support/LuaOpengl.cpp \
-          ../cocos2dx_support/LuaScrollView.cpp \
           ../cocos2dx_support/LuaScriptHandlerMgr.cpp \
           ../cocos2dx_support/LuaBasicConversions.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_auto.cpp \
