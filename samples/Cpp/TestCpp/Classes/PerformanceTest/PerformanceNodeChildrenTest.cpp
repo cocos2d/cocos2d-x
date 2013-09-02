@@ -184,7 +184,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srandom(0);
+    srand(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -198,7 +198,7 @@ void NodeChildrenMainScene::onDecrease(CCObject* pSender)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srandom(0);
+    srand(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -212,7 +212,7 @@ void NodeChildrenMainScene::onIncrease(CCObject* pSender)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srandom(0);
+    srand(0);
 
     CC_PROFILER_PURGE_ALL();
 }
@@ -477,7 +477,7 @@ const char*  AddRemoveSpriteSheet::testName()
 void GetSpriteSheet::update(float dt)
 {
     // reset seed
-    //srandom(0);
+    //srand(0);
     
     // 100% percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -542,7 +542,7 @@ const char*  GetSpriteSheet::testName()
 void AddSprite::update(float dt)
 {
     // reset seed
-    //srandom(0);
+    //srand(0);
 
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -605,7 +605,7 @@ const char*  AddSprite::testName()
 void AddSpriteSheet::update(float dt)
 {
     // reset seed
-    //srandom(0);
+    //srand(0);
 
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -666,7 +666,7 @@ const char*  AddSpriteSheet::testName()
 ////////////////////////////////////////////////////////
 void RemoveSprite::update(float dt)
 {
-    //srandom(0);
+    //srand(0);
 
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -720,7 +720,7 @@ const char*  RemoveSprite::testName()
 ////////////////////////////////////////////////////////
 void RemoveSpriteSheet::update(float dt)
 {
-    //srandom(0);
+    //srand(0);
 
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -774,7 +774,7 @@ const char*  RemoveSpriteSheet::testName()
 ////////////////////////////////////////////////////////
 void ReorderSpriteSheet::update(float dt)
 {
-    //srandom(0);
+    //srand(0);
 
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
@@ -848,7 +848,7 @@ void runNodeChildrenTest()
 ////////////////////////////////////////////////////////
 void SortAllChildrenSpriteSheet::update(float dt)
 {
-    //srandom(0);
+    //srand(0);
     
     // 100 percent
     int totalToAdd = currentQuantityOfNodes * 1;
