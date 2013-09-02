@@ -233,10 +233,8 @@
 		1A70B1FF176318E80003A116 /* CCDecorativeDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1BF176318E80003A116 /* CCDecorativeDisplay.cpp */; };
 		1A70B200176318E80003A116 /* CCDisplayFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1C1176318E80003A116 /* CCDisplayFactory.cpp */; };
 		1A70B201176318E80003A116 /* CCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1C3176318E80003A116 /* CCDisplayManager.cpp */; };
-		1A70B202176318E80003A116 /* CCShaderNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1C5176318E80003A116 /* CCShaderNode.cpp */; };
 		1A70B203176318E80003A116 /* CCSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1C7176318E80003A116 /* CCSkin.cpp */; };
 		1A70B204176318E80003A116 /* CCTexture2DMutable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1CA176318E80003A116 /* CCTexture2DMutable.cpp */; };
-		1A70B205176318E80003A116 /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1CC176318E80003A116 /* GLES-Render.cpp */; };
 		1A70B206176318E80003A116 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1CF176318E80003A116 /* CSContentJsonDictionary.cpp */; };
 		1A70B207176318E80003A116 /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A70B1D7176318E80003A116 /* json_internalarray.inl */; };
 		1A70B208176318E80003A116 /* json_internalmap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A70B1D8176318E80003A116 /* json_internalmap.inl */; };
@@ -246,7 +244,6 @@
 		1A70B20C176318E80003A116 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1DE176318E80003A116 /* json_writer.cpp */; };
 		1A70B20D176318E80003A116 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A70B1E0176318E80003A116 /* sconscript */; };
 		1A70B20E176318E80003A116 /* CCColliderDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1E5176318E80003A116 /* CCColliderDetector.cpp */; };
-		1A70B20F176318E80003A116 /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1E7176318E80003A116 /* CCPhysicsWorld.cpp */; };
 		1A70B210176318E80003A116 /* CCArmatureDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1EA176318E80003A116 /* CCArmatureDataManager.cpp */; };
 		1A70B211176318E80003A116 /* CCDataReaderHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1EE176318E80003A116 /* CCDataReaderHelper.cpp */; };
 		1A70B212176318E80003A116 /* CCSpriteFrameCacheHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A70B1F0176318E80003A116 /* CCSpriteFrameCacheHelper.cpp */; };
@@ -882,14 +879,10 @@
 		1A70B1C2176318E80003A116 /* CCDisplayFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDisplayFactory.h; sourceTree = "<group>"; };
 		1A70B1C3176318E80003A116 /* CCDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDisplayManager.cpp; sourceTree = "<group>"; };
 		1A70B1C4176318E80003A116 /* CCDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDisplayManager.h; sourceTree = "<group>"; };
-		1A70B1C5176318E80003A116 /* CCShaderNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderNode.cpp; sourceTree = "<group>"; };
-		1A70B1C6176318E80003A116 /* CCShaderNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderNode.h; sourceTree = "<group>"; };
 		1A70B1C7176318E80003A116 /* CCSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkin.cpp; sourceTree = "<group>"; };
 		1A70B1C8176318E80003A116 /* CCSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkin.h; sourceTree = "<group>"; };
 		1A70B1CA176318E80003A116 /* CCTexture2DMutable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2DMutable.cpp; sourceTree = "<group>"; };
 		1A70B1CB176318E80003A116 /* CCTexture2DMutable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2DMutable.h; sourceTree = "<group>"; };
-		1A70B1CC176318E80003A116 /* GLES-Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "GLES-Render.cpp"; sourceTree = "<group>"; };
-		1A70B1CD176318E80003A116 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		1A70B1CF176318E80003A116 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
 		1A70B1D0176318E80003A116 /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		1A70B1D2176318E80003A116 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
@@ -912,12 +905,9 @@
 		1A70B1E3176318E80003A116 /* sigslot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sigslot.h; sourceTree = "<group>"; };
 		1A70B1E5176318E80003A116 /* CCColliderDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCColliderDetector.cpp; sourceTree = "<group>"; };
 		1A70B1E6176318E80003A116 /* CCColliderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColliderDetector.h; sourceTree = "<group>"; };
-		1A70B1E7176318E80003A116 /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorld.cpp; sourceTree = "<group>"; };
-		1A70B1E8176318E80003A116 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		1A70B1EA176318E80003A116 /* CCArmatureDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureDataManager.cpp; sourceTree = "<group>"; };
 		1A70B1EB176318E80003A116 /* CCArmatureDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDataManager.h; sourceTree = "<group>"; };
 		1A70B1EC176318E80003A116 /* CCArmatureDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDefine.h; sourceTree = "<group>"; };
-		1A70B1ED176318E80003A116 /* CCConstValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConstValue.h; sourceTree = "<group>"; };
 		1A70B1EE176318E80003A116 /* CCDataReaderHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDataReaderHelper.cpp; sourceTree = "<group>"; };
 		1A70B1EF176318E80003A116 /* CCDataReaderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDataReaderHelper.h; sourceTree = "<group>"; };
 		1A70B1F0176318E80003A116 /* CCSpriteFrameCacheHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrameCacheHelper.cpp; sourceTree = "<group>"; };
@@ -2450,8 +2440,6 @@
 				1A70B1C2176318E80003A116 /* CCDisplayFactory.h */,
 				1A70B1C3176318E80003A116 /* CCDisplayManager.cpp */,
 				1A70B1C4176318E80003A116 /* CCDisplayManager.h */,
-				1A70B1C5176318E80003A116 /* CCShaderNode.cpp */,
-				1A70B1C6176318E80003A116 /* CCShaderNode.h */,
 				1A70B1C7176318E80003A116 /* CCSkin.cpp */,
 				1A70B1C8176318E80003A116 /* CCSkin.h */,
 			);
@@ -2463,8 +2451,6 @@
 			children = (
 				1A70B1CA176318E80003A116 /* CCTexture2DMutable.cpp */,
 				1A70B1CB176318E80003A116 /* CCTexture2DMutable.h */,
-				1A70B1CC176318E80003A116 /* GLES-Render.cpp */,
-				1A70B1CD176318E80003A116 /* GLES-Render.h */,
 				1A70B1CE176318E80003A116 /* Json */,
 				1A70B1E3176318E80003A116 /* sigslot.h */,
 			);
@@ -2510,8 +2496,6 @@
 			children = (
 				1A70B1E5176318E80003A116 /* CCColliderDetector.cpp */,
 				1A70B1E6176318E80003A116 /* CCColliderDetector.h */,
-				1A70B1E7176318E80003A116 /* CCPhysicsWorld.cpp */,
-				1A70B1E8176318E80003A116 /* CCPhysicsWorld.h */,
 			);
 			path = physics;
 			sourceTree = "<group>";
@@ -2522,7 +2506,6 @@
 				1A70B1EA176318E80003A116 /* CCArmatureDataManager.cpp */,
 				1A70B1EB176318E80003A116 /* CCArmatureDataManager.h */,
 				1A70B1EC176318E80003A116 /* CCArmatureDefine.h */,
-				1A70B1ED176318E80003A116 /* CCConstValue.h */,
 				1A70B1EE176318E80003A116 /* CCDataReaderHelper.cpp */,
 				1A70B1EF176318E80003A116 /* CCDataReaderHelper.h */,
 				1A70B1F0176318E80003A116 /* CCSpriteFrameCacheHelper.cpp */,
@@ -3176,16 +3159,13 @@
 				1A70B1FF176318E80003A116 /* CCDecorativeDisplay.cpp in Sources */,
 				1A70B200176318E80003A116 /* CCDisplayFactory.cpp in Sources */,
 				1A70B201176318E80003A116 /* CCDisplayManager.cpp in Sources */,
-				1A70B202176318E80003A116 /* CCShaderNode.cpp in Sources */,
 				1A70B203176318E80003A116 /* CCSkin.cpp in Sources */,
 				1A70B204176318E80003A116 /* CCTexture2DMutable.cpp in Sources */,
-				1A70B205176318E80003A116 /* GLES-Render.cpp in Sources */,
 				1A70B206176318E80003A116 /* CSContentJsonDictionary.cpp in Sources */,
 				1A70B209176318E80003A116 /* json_reader.cpp in Sources */,
 				1A70B20A176318E80003A116 /* json_value.cpp in Sources */,
 				1A70B20C176318E80003A116 /* json_writer.cpp in Sources */,
 				1A70B20E176318E80003A116 /* CCColliderDetector.cpp in Sources */,
-				1A70B20F176318E80003A116 /* CCPhysicsWorld.cpp in Sources */,
 				1A70B210176318E80003A116 /* CCArmatureDataManager.cpp in Sources */,
 				1A70B211176318E80003A116 /* CCDataReaderHelper.cpp in Sources */,
 				1A70B212176318E80003A116 /* CCSpriteFrameCacheHelper.cpp in Sources */,

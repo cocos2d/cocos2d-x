@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCARMATUREDATAMANAGER_H__
 
 #include "CCArmatureDefine.h"
-#include "CCConstValue.h"
 #include "../datas/CCDatas.h"
 
 
@@ -35,116 +34,148 @@ NS_CC_EXT_BEGIN
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  CCArmatureDataManager : public CCObject 
+class  CCArmatureDataManager : public CCObject
 {
 public:
     static CCArmatureDataManager *sharedArmatureDataManager();
-    static void purgeArmatureSystem();
+
+    static void purge();
 private:
     CCArmatureDataManager(void);
     ~CCArmatureDataManager(void);
 
 public:
-	/**
+
+    /**
      * Init CCArmatureDataManager
      */
     virtual bool init();
-    
+
     /**
      * Add armature data
      * @param id The id of the armature data
-	 * @param armatureData CCArmatureData *
+     * @param armatureData CCArmatureData *
      */
     void addArmatureData(const char *id, CCArmatureData *armatureData);
-    
-	/**
+
+    /**
      *	@brief	get armature data
-     *
      *	@param	id the id of the armature data you want to get
-	 *  
-	 *  @return	CCArmatureData *
+     *  @return	CCArmatureData *
      */
     CCArmatureData *getArmatureData(const char *id);
 
     /**
-     *	@brief	add animation data 
-     *
-     *	@param 	id the id of the animation data 
-	 *
-	 *  @return CCAnimationData *
+     *	@brief	remove armature data
+     *	@param	id the id of the armature data you want to get
+     */
+    void removeArmatureData(const char *id);
+
+    /**
+     *	@brief	add animation data
+     *	@param 	id the id of the animation data
+     *  @return CCAnimationData *
      */
     void addAnimationData(const char *id, CCAnimationData *animationData);
-    
-	/**
+
+    /**
      *	@brief	get animation data from m_pAnimationDatas(CCDictionary)
-     *
      *	@param 	id the id of the animation data you want to get
-	 *  
-	 *  @return CCAnimationData *
+     *  @return CCAnimationData *
      */
     CCAnimationData *getAnimationData(const char *id);
 
     /**
-     *	@brief	add texture data 
-     *
+     *	@brief	remove animation data
+     *	@param 	id the id of the animation data
+     */
+    void removeAnimationData(const char *id);
+
+    /**
+     *	@brief	add texture data
      *	@param 	id the id of the texture data
-	 *
-	 *  @return CCTextureData *
+     *  @return CCTextureData *
      */
     void addTextureData(const char *id, CCTextureData *textureData);
-    
-	/**
+
+    /**
      *	@brief	get texture data
-     *
-     *	@param 	_id the id of the texture data you want to get
-	 *  
-	 *  @return CCTextureData *
+     *	@param 	id the id of the texture data you want to get
+     *  @return CCTextureData *
      */
     CCTextureData *getTextureData(const char *id);
-    
+
     /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	remove texture data
+     *	@param 	id the id of the texture data you want to get
      */
-	void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
+    void removeTextureData(const char *id);
+
     /**
-	 *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
-	void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+    void addArmatureFileInfo(const char *configFilePath);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *			It will load data in a new thread
+     */
+    void addArmatureFileInfoAsync(const char *configFilePath, CCObject *target, SEL_SCHEDULE selector);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     */
+    void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *			It will load data in a new thread
+     */
+    void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, CCObject *target, SEL_SCHEDULE selector);
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
-    
-	
-	/**
-	 *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
+
+
+    /**
+     *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
      */
     void removeAll();
 
-   
+    /**
+     *	@brief	Juge whether or not need auto load sprite file
+     */
+    bool isAutoLoadSpriteFile();
+
+
+    CCDictionary *getArmatureDatas() const;
+    CCDictionary *getAnimationDatas() const;
+    CCDictionary *getTextureDatas() const;
 private:
     /**
-	 *	@brief	save amature datas
-	 *  @key	std::string
-	 *  @value	CCArmatureData *
+     *	@brief	save amature datas
+     *  @key	std::string
+     *  @value	CCArmatureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pArmarureDatas, ArmarureDatas);
+    CCDictionary *m_pArmarureDatas;
 
     /**
-	 *	@brief	save animation datas
-	 *  @key	std::string
-	 *  @value	CCAnimationData *
+     *	@brief	save animation datas
+     *  @key	std::string
+     *  @value	CCAnimationData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pAnimationDatas, AnimationDatas);
+    CCDictionary *m_pAnimationDatas;
 
-	/**
-	 *	@brief	save texture datas
-	 *  @key	std::string
-	 *  @value	CCTextureData *
+    /**
+     *	@brief	save texture datas
+     *  @key	std::string
+     *  @value	CCTextureData *
      */
-	CC_SYNTHESIZE_READONLY(CCDictionary *, m_pTextureDatas, TextureDatas);
+    CCDictionary *m_pTextureDatas;
 
+    bool m_bAutoLoadSpriteFile;
 };
 
 

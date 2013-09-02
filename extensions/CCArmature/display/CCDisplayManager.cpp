@@ -44,12 +44,12 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
 
 
 CCDisplayManager::CCDisplayManager()
-	: m_pDecoDisplayList(NULL)
-	, m_pDisplayRenderNode(NULL)
+    : m_pDecoDisplayList(NULL)
+    , m_pDisplayRenderNode(NULL)
     , m_pCurrentDecoDisplay(NULL)
     , m_iDisplayIndex(-1)
-	, m_bForceChangeDisplay(false)
-	, m_bVisible(true)
+    , m_bForceChangeDisplay(false)
+    , m_bVisible(true)
     , m_pBone(NULL)
 {
 }
@@ -110,6 +110,63 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     }
 }
 
+void CCDisplayManager::addDisplay(CCNode *display, int index)
+{
+    CCDecorativeDisplay *decoDisplay = NULL;
+
+    if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
+    {
+        decoDisplay = (CCDecorativeDisplay *)m_pDecoDisplayList->objectAtIndex(index);
+    }
+    else
+    {
+        decoDisplay = CCDecorativeDisplay::create();
+        m_pDecoDisplayList->addObject(decoDisplay);
+    }
+
+    CCDisplayData *displayData = NULL;
+    if (CCSkin *skin = dynamic_cast<CCSkin *>(display))
+    {
+        skin->setBone(m_pBone);
+        displayData = CCSpriteDisplayData::create();
+
+        CCDisplayFactory::initSpriteDisplay(m_pBone, decoDisplay, skin->getDisplayName().c_str(), skin);
+
+        if (CCSpriteDisplayData *spriteDisplayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData())
+        {
+            skin->setSkinData(spriteDisplayData->skinData);
+        }
+        else
+        {
+            CCBaseData baseData;
+            skin->setSkinData(baseData);
+        }
+    }
+    else if (dynamic_cast<CCParticleSystemQuad *>(display))
+    {
+        displayData = CCParticleDisplayData::create();
+    }
+    else if(CCArmature *armature = dynamic_cast<CCArmature *>(display))
+    {
+        displayData = CCArmatureDisplayData::create();
+        armature->setParentBone(m_pBone);
+    }
+    else
+    {
+        displayData = CCDisplayData::create();
+    }
+
+    decoDisplay->setDisplay(display);
+    decoDisplay->setDisplayData(displayData);
+
+    //! if changed display index is current display index, then change current display to the new display
+    if(index == m_iDisplayIndex)
+    {
+        m_iDisplayIndex = -1;
+        changeDisplayByIndex(index, false);
+    }
+}
+
 void CCDisplayManager::removeDisplay(int index)
 {
     m_pDecoDisplayList->removeObjectAtIndex(index);
@@ -118,6 +175,11 @@ void CCDisplayManager::removeDisplay(int index)
     {
         setCurrentDecorativeDisplay(NULL);
     }
+}
+
+CCArray *CCDisplayManager::getDecorativeDisplayList()
+{
+    return m_pDecoDisplayList;
 }
 
 void CCDisplayManager::changeDisplayByIndex(int index, bool force)
@@ -152,7 +214,7 @@ void CCDisplayManager::changeDisplayByIndex(int index, bool force)
 
 void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(false);
@@ -161,7 +223,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     m_pCurrentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     if (m_pCurrentDecoDisplay && m_pCurrentDecoDisplay->getColliderDetector())
     {
         m_pCurrentDecoDisplay->getColliderDetector()->setActive(true);
@@ -175,7 +237,6 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
         {
             m_pBone->setChildArmature(NULL);
         }
-
         m_pDisplayRenderNode->removeFromParentAndCleanup(true);
         m_pDisplayRenderNode->release();
     }
@@ -184,12 +245,23 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
     if(m_pDisplayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != NULL)
+        if (CCArmature *armature = dynamic_cast<CCArmature *>(m_pDisplayRenderNode))
         {
-            m_pBone->setChildArmature((CCArmature *)m_pDisplayRenderNode);
+            m_pBone->setChildArmature(armature);
         }
+        else if (CCParticleSystemQuad *particle = dynamic_cast<CCParticleSystemQuad *>(m_pDisplayRenderNode))
+        {
+            particle->resetSystem();
+        }
+
+        if (CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(m_pDisplayRenderNode))
+        {
+            rgbaProtocaol->setColor(m_pBone->getColor());
+            rgbaProtocaol->setOpacity(m_pBone->getOpacity());
+        }
+
         m_pDisplayRenderNode->retain();
-		m_pDisplayRenderNode->setVisible(m_bVisible);
+        m_pDisplayRenderNode->setVisible(m_bVisible);
     }
 }
 

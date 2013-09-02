@@ -153,77 +153,77 @@ float CCTweenFunction::linear(float t, float b, float c, float d)
 
 float CCTweenFunction::quadEaseIn(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return c * t * t + b;
 }
 float CCTweenFunction::quadEaseOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return -c * t * (t - 2) + b;
 }
 float CCTweenFunction::quadEaseInOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if ((t / 2) < 1)
         return c / 2 * t * t + b;
-	--t;
+    --t;
     return -c / 2 * (t * (t - 2) - 1) + b;
 }
 
 float CCTweenFunction::cubicEaseIn(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return c * t * t * t + b;
 }
 float CCTweenFunction::cubicEaseOut(float t, float b, float c, float d)
 {
-	t = t / d - 1;
+    t = t / d - 1;
     return c * (t * t * t + 1) + b;
 }
 float CCTweenFunction::cubicEaseInOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if ((t / 2) < 1)
         return c / 2 * t * t * t + b;
     t -= 2;
-	return c / 2 * (t * t * t + 2) + b;
+    return c / 2 * (t * t * t + 2) + b;
 }
 
 float CCTweenFunction::quartEaseIn(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return c * t * t * t * t + b;
 }
 float CCTweenFunction::quartEaseOut(float t, float b, float c, float d)
 {
-	 t = t / d - 1;
+    t = t / d - 1;
     return -c * (t * t * t * t - 1) + b;
 }
 float CCTweenFunction::quartEaseInOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if ((t / 2) < 1)
         return c / 2 * t * t * t * t + b;
     t -= 2;
-	return -c / 2 * (t * t * t * t - 2) + b;
+    return -c / 2 * (t * t * t * t - 2) + b;
 }
 
 float CCTweenFunction::quintEaseIn(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return c * t * t * t * t * t + b;
 }
 float CCTweenFunction::quintEaseOut(float t, float b, float c, float d)
 {
-	t = t / d - 1;
+    t = t / d - 1;
     return c * (t * t * t * t * t + 1) + b;
 }
 float CCTweenFunction::quintEaseInOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if ((t / 2) < 1)
         return c / 2 * t * t * t * t * t + b;
-	t -= 2;
+    t -= 2;
     return c / 2 * (t * t * t * t * t + 2) + b;
 }
 
@@ -256,26 +256,26 @@ float CCTweenFunction::expoEaseInOut(float t, float b, float c, float d)
         return b + c;
     if ((t /= d / 2) < 1)
         return c / 2 * pow(2, 10 * (t - 1)) + b;
-	--t;
+    --t;
     return c / 2 * (-pow(2, -10 * t) + 2) + b;
 }
 
 float CCTweenFunction::circEaseIn(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     return -c * (sqrt(1 - t * t) - 1) + b;
 }
 float CCTweenFunction::circEaseOut(float t, float b, float c, float d)
 {
-	t = t / d - 1;
+    t = t / d - 1;
     return c * sqrt(1 - t * t) + b;
 }
 float CCTweenFunction::circEaseInOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if ((t / 2) < 1)
         return -c / 2 * (sqrt(1 - t * t) - 1) + b;
-	t -= 2;
+    t -= 2;
     return c / 2 * (sqrt(1 - t * t) + 1) + b;
 }
 
@@ -285,7 +285,7 @@ float CCTweenFunction::elasticEaseIn(float t, float b, float c, float d, float a
     if (t == 0)
         return b;
     t /= d;
-	if (t == 1)
+    if (t == 1)
         return b + c;
     if (!p)
         p = d * .3;
@@ -296,7 +296,7 @@ float CCTweenFunction::elasticEaseIn(float t, float b, float c, float d, float a
     }
     else
         s = p / (2 * M_PI) * asin(c / a);
-	t -= 1;
+    t -= 1;
     return -(a * pow(2, 10 * t) * sin((t * d - s) * (2 * M_PI) / p)) + b;
 }
 float CCTweenFunction::elasticEaseOut(float t, float b, float c, float d, float a, float p)
@@ -304,7 +304,7 @@ float CCTweenFunction::elasticEaseOut(float t, float b, float c, float d, float 
     float s = 0;
     if (t == 0)
         return b;
-	t /= d;
+    t /= d;
     if (t == 1)
         return b + c;
     if (!p)
@@ -324,7 +324,7 @@ float CCTweenFunction::elasticEaseInOut(float t, float b, float c, float d, floa
     if (t == 0)
         return b;
     t /= d;
-	if ((t / 2) == 2)
+    if ((t / 2) == 2)
         return b + c;
     if (!p)
         p = d * (.3 * 1.5);
@@ -336,11 +336,11 @@ float CCTweenFunction::elasticEaseInOut(float t, float b, float c, float d, floa
     else
         s = p / (2 * M_PI) * asin(c / a);
     if (t < 1)
-	{
-		t -= 1;
-		return -.5 * (a * pow(2, 10 * t) * sin((t * d - s) * (2 * M_PI) / p)) + b;
-	}
-	t -= 1;
+    {
+        t -= 1;
+        return -.5 * (a * pow(2, 10 * t) * sin((t * d - s) * (2 * M_PI) / p)) + b;
+    }
+    t -= 1;
     return a * pow(2, -10 * t) * sin((t * d - s) * (2 * M_PI) / p) * .5 + c + b;
 }
 
@@ -349,13 +349,13 @@ float CCTweenFunction::backEaseIn(float t, float b, float c, float d, float s)
     if (s == 0)
         s = 1.70158f;
     t /= d;
-	return c * t * t * ((s + 1) * t - s) + b;
+    return c * t * t * ((s + 1) * t - s) + b;
 }
 float CCTweenFunction::backEaseOut(float t, float b, float c, float d, float s)
 {
     if (s == 0)
         s = 1.70158f;
-	t = t / d - 1;
+    t = t / d - 1;
     return c * (t * t * ((s + 1) * t + s) + 1) + b;
 }
 float CCTweenFunction::backEaseInOut(float t, float b, float c, float d, float s)
@@ -363,13 +363,13 @@ float CCTweenFunction::backEaseInOut(float t, float b, float c, float d, float s
     if (s == 0)
         s = 1.70158f;
     if ((t /= d / 2) < 1)
-	{
-		s *= (1.525f);
-		return c / 2 * (t * t * ((s + 1) * t - s)) + b;
-	}
-        
-	t -= 2;
-	s *= (1.525f);
+    {
+        s *= (1.525f);
+        return c / 2 * (t * t * ((s + 1) * t - s)) + b;
+    }
+
+    t -= 2;
+    s *= (1.525f);
     return c / 2 * (t * t * ((s + 1) * t + s) + 2) + b;
 }
 
@@ -380,24 +380,24 @@ float CCTweenFunction::bounceEaseIn(float t, float b, float c, float d)
 
 float CCTweenFunction::bounceEaseOut(float t, float b, float c, float d)
 {
-	t /= d;
+    t /= d;
     if (t < (1 / 2.75f))
     {
         return c * (7.5625f * t * t) + b;
     }
     else if (t < (2 / 2.75f))
     {
-		t -= (1.5f / 2.75f);
+        t -= (1.5f / 2.75f);
         return c * (7.5625f * t * t + .75f) + b;
     }
     else if (t < (2.5f / 2.75f))
     {
-		t -= (2.25f / 2.75f);
+        t -= (2.25f / 2.75f);
         return c * (7.5625f * t * t + .9375f) + b;
     }
     else
     {
-		t -= (2.625f / 2.75f);
+        t -= (2.625f / 2.75f);
         return c * (7.5625f * t * t + .984375f) + b;
     }
 }

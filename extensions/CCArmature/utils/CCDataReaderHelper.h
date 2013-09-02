@@ -27,19 +27,23 @@ THE SOFTWARE.
 
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "../utils/CCConstValue.h"
 #include "../CCArmature.h"
 #include "../external_tool/Json/CSContentJsonDictionary.h"
 
-namespace tinyxml2 { class XMLElement; }
+namespace tinyxml2
+{
+    class XMLElement;
+}
 
 NS_CC_EXT_BEGIN
 
+typedef struct _DataInfo DataInfo;
 
-class  CCDataReaderHelper
+class  CCDataReaderHelper : CCObject
 {
-
 public:
+    static CCDataReaderHelper *sharedDataReaderHelper();
+
     /**
      * Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
@@ -47,26 +51,17 @@ public:
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-    static void addDataFromFile(const char *filePath);
-
+    static void purge();
     static void clear();
 public:
+    ~CCDataReaderHelper();
 
-    /**
-     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPath Path of xml file
-     */
-    static void addDataFromXML(const char *xmlPath);
+    void addDataFromFile(const char *filePath);
+    void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
 
-    /**
-     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPath Path of pak file
-     */
-    static void addDataFromXMLPak(const char *xmlPakPath);
+    void addDataAsyncCallBack(float dt);
+
+public:
 
     /**
      * Translate XML export from Dragon CCBone flash tool to datas, and save them.
@@ -74,7 +69,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent);
+    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = NULL);
 
 
 
@@ -106,9 +101,7 @@ public:
     static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
 
 public:
-
-    static void addDataFromJson(const char *filePath);
-    static void addDataFromJsonCache(const char *fileContent);
+    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
     static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
     static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
@@ -124,6 +117,9 @@ public:
     static CCContourData *decodeContour(cs::CSJsonDictionary &json);
 
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
+
+private:
+    static CCDataReaderHelper *s_DataReaderHelper;
 };
 
 NS_CC_EXT_END

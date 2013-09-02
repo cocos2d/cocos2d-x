@@ -61,7 +61,7 @@ CCBone *CCBone::create(const char *name)
 CCBone::CCBone()
 {
     m_pTweenData = NULL;
-    m_pParent = NULL;
+    m_pParentBone = NULL;
     m_pArmature = NULL;
     m_pChildArmature = NULL;
     m_pBoneData = NULL;
@@ -71,7 +71,8 @@ CCBone::CCBone()
     m_pDisplayManager = NULL;
     m_bIgnoreMovementBoneData = false;
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
-    m_bTransformDirty = true;
+    m_bBoneTransformDirty = true;
+    m_eBlendType = BLEND_NORMAL;
 }
 
 
@@ -146,44 +147,44 @@ CCBoneData *CCBone::getBoneData()
 
 void CCBone::setArmature(CCArmature *armature)
 {
-	m_pArmature = armature;
-	m_pTween->setAnimation(m_pArmature->getAnimation());
+    m_pArmature = armature;
+    if (m_pArmature)
+    {
+        m_pTween->setAnimation(m_pArmature->getAnimation());
+    }
 }
 
 
 CCArmature *CCBone::getArmature()
 {
-	return m_pArmature;
+    return m_pArmature;
 }
 
 void CCBone::update(float delta)
 {
-    if (m_pParent)
-        m_bTransformDirty = m_bTransformDirty || m_pParent->isTransformDirty();
+    if (m_pParentBone)
+        m_bBoneTransformDirty = m_bBoneTransformDirty || m_pParentBone->isTransformDirty();
 
-    if (m_bTransformDirty)
+    if (m_bBoneTransformDirty)
     {
-        float cosX	= cos(m_pTweenData->skewX);
-        float cosY	= cos(m_pTweenData->skewY);
-        float sinX	= sin(m_pTweenData->skewX);
-        float sinY  = sin(m_pTweenData->skewY);
+        if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+        {
+            CCTransformHelp::nodeConcat(*m_pTweenData, *m_pBoneData);
+            m_pTweenData->scaleX -= 1;
+            m_pTweenData->scaleY -= 1;
+        }
 
-        m_tWorldTransform.a = m_pTweenData->scaleX * cosY;
-        m_tWorldTransform.b = m_pTweenData->scaleX * sinY;
-        m_tWorldTransform.c = m_pTweenData->scaleY * sinX;
-        m_tWorldTransform.d = m_pTweenData->scaleY * cosX;
-        m_tWorldTransform.tx = m_pTweenData->x;
-        m_tWorldTransform.ty = m_pTweenData->y;
+        CCTransformHelp::nodeToMatrix(*m_pTweenData, m_tWorldTransform);
 
         m_tWorldTransform = CCAffineTransformConcat(nodeToParentTransform(), m_tWorldTransform);
 
-        if(m_pParent)
+        if(m_pParentBone)
         {
-            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParent->m_tWorldTransform);
+            m_tWorldTransform = CCAffineTransformConcat(m_tWorldTransform, m_pParentBone->m_tWorldTransform);
         }
     }
 
-    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bTransformDirty);
+    CCDisplayFactory::updateDisplay(this, m_pDisplayManager->getCurrentDecorativeDisplay(), delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
@@ -192,18 +193,20 @@ void CCBone::update(float delta)
         childBone->update(delta);
     }
 
-    m_bTransformDirty = false;
+    m_bBoneTransformDirty = false;
 }
 
 
 void CCBone::updateDisplayedColor(const ccColor3B &parentColor)
 {
+    _realColor = ccc3(255, 255, 255);
     CCNodeRGBA::updateDisplayedColor(parentColor);
     updateColor();
 }
 
 void CCBone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+    _realOpacity = 255;
     CCNodeRGBA::updateDisplayedOpacity(parentOpacity);
     updateColor();
 }
@@ -219,15 +222,28 @@ void CCBone::updateColor()
     }
 }
 
+void CCBone::updateZOrder()
+{
+    if (m_pArmature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+    {
+        int zorder = m_pTweenData->zOrder + m_pBoneData->zOrder;
+        setZOrder(zorder);
+    }
+    else
+    {
+        setZOrder(m_pTweenData->zOrder);
+    }
+}
 
 void CCBone::addChildBone(CCBone *child)
 {
     CCAssert( NULL != child, "Argument must be non-nil");
-    CCAssert( NULL == child->m_pParent, "child already added. It can't be added again");
+    CCAssert( NULL == child->m_pParentBone, "child already added. It can't be added again");
 
     if(!m_pChildren)
     {
-        childrenAlloc();
+        m_pChildren = CCArray::createWithCapacity(4);
+        m_pChildren->retain();
     }
 
     if (m_pChildren->indexOfObject(child) == UINT_MAX)
@@ -262,29 +278,21 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
 
 void CCBone::removeFromParent(bool recursion)
 {
-    if (NULL != m_pParent)
+    if (NULL != m_pParentBone)
     {
-        m_pParent->removeChildBone(this, recursion);
+        m_pParentBone->removeChildBone(this, recursion);
     }
 }
 
 void CCBone::setParentBone(CCBone *parent)
 {
-    m_pParent = parent;
+    m_pParentBone = parent;
 }
 
 CCBone *CCBone::getParentBone()
 {
-    return m_pParent;
+    return m_pParentBone;
 }
-
-void CCBone::childrenAlloc(void)
-{
-    CC_SAFE_DELETE(m_pChildren);
-    m_pChildren = CCArray::createWithCapacity(4);
-    m_pChildren->retain();
-}
-
 
 void CCBone::setChildArmature(CCArmature *armature)
 {
@@ -301,11 +309,6 @@ CCArmature *CCBone::getChildArmature()
     return m_pChildArmature;
 }
 
-CCArray *CCBone::getChildren()
-{
-    return m_pChildren;
-}
-
 CCTween *CCBone::getTween()
 {
     return m_pTween;
@@ -319,27 +322,42 @@ void CCBone::setZOrder(int zOrder)
 
 void CCBone::setTransformDirty(bool dirty)
 {
-	m_bTransformDirty = dirty;
+    m_bBoneTransformDirty = dirty;
 }
 
 bool CCBone::isTransformDirty()
 {
-	return m_bTransformDirty;
+    return m_bBoneTransformDirty;
 }
 
 CCAffineTransform CCBone::nodeToArmatureTransform()
 {
-	return m_tWorldTransform;
+    return m_tWorldTransform;
 }
 
-void CCBone::addDisplay(CCDisplayData *_displayData, int _index)
+CCAffineTransform CCBone::nodeToWorldTransform()
 {
-    m_pDisplayManager->addDisplay(_displayData, _index);
+    return CCAffineTransformConcat(m_tWorldTransform, m_pArmature->nodeToWorldTransform());
 }
 
-void CCBone::changeDisplayByIndex(int _index, bool _force)
+CCNode *CCBone::getDisplayRenderNode()
 {
-    m_pDisplayManager->changeDisplayByIndex(_index, _force);
+    return m_pDisplayManager->getDisplayRenderNode();
+}
+
+void CCBone::addDisplay(CCDisplayData *displayData, int index)
+{
+    m_pDisplayManager->addDisplay(displayData, index);
+}
+
+void CCBone::addDisplay(CCNode *display, int index)
+{
+    m_pDisplayManager->addDisplay(display, index);
+}
+
+void CCBone::changeDisplayByIndex(int index, bool force)
+{
+    m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
 NS_CC_EXT_END

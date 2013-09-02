@@ -118,32 +118,32 @@ protected:
     virtual void updateHandler() {};
 
 protected:
-	//! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationScale, AnimationScale);
+    //! Scale the process speed
+    CC_SYNTHESIZE(float, m_fProcessScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPause, IsPause);
+    CC_SYNTHESIZE(bool, m_bIsPause, IsPause);
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsComplete, IsComplete);
+    CC_SYNTHESIZE(bool, m_bIsComplete, IsComplete);
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bIsPlaying, IsPlaying);
+    CC_SYNTHESIZE(bool, m_bIsPlaying, IsPlaying);
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_fCurrentPercent, CurrentPercent);
+    CC_SYNTHESIZE(float, m_fCurrentPercent, CurrentPercent);
 
     //! The raw duration
-    CC_SYNTHESIZE_PASS_BY_REF(int, m_iRawDuration, RawDuration);
+    CC_SYNTHESIZE(int, m_iRawDuration, RawDuration);
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, m_eLoopType, LoopType);
+    CC_SYNTHESIZE(AnimationType, m_eLoopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE_PASS_BY_REF(CCTweenType, m_eTweenEasing, TweenEasing);
+    CC_SYNTHESIZE(CCTweenType, m_eTweenEasing, TweenEasing);
 
     //! The animation update speed
-    CC_SYNTHESIZE_PASS_BY_REF(float, m_fAnimationInternal, AnimationInternal);
+    CC_SYNTHESIZE(float, m_fAnimationInternal, AnimationInternal);
 
 
 protected:

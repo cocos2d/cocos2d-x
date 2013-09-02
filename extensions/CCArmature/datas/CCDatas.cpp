@@ -23,28 +23,29 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "CCArmature/utils/CCUtilMath.h"
+#include "../utils/CCUtilMath.h"
+#include "../utils/CCTransformHelp.h"
 
 NS_CC_EXT_BEGIN
 
 
-	CCBaseData::CCBaseData()
-	: x(0.0f)
-	, y(0.0f)
-	, zOrder(0)
+CCBaseData::CCBaseData()
+    : x(0.0f)
+    , y(0.0f)
+    , zOrder(0)
 
-	, skewX(0.0f)
-	, skewY(0.0f)
-	, scaleX(1.0f)
-	, scaleY(1.0f)
+    , skewX(0.0f)
+    , skewY(0.0f)
+    , scaleX(1.0f)
+    , scaleY(1.0f)
 
-	, tweenRotate(0.0f)
+    , tweenRotate(0.0f)
 
-	, isUseColorInfo(false)
-	, a(255)
-	, r(255)
-	, g(255)
-	, b(255)
+    , isUseColorInfo(false)
+    , a(255)
+    , r(255)
+    , g(255)
+    , b(255)
 {
 }
 
@@ -54,70 +55,86 @@ CCBaseData::~CCBaseData()
 
 void CCBaseData::copy(const CCBaseData *node )
 {
-	x = node->x;
-	y = node->y;
-	zOrder = node->zOrder;
+    x = node->x;
+    y = node->y;
+    zOrder = node->zOrder;
 
-	scaleX = node->scaleX;
-	scaleY = node->scaleY;
-	skewX = node->skewX;
-	skewY = node->skewY;
+    scaleX = node->scaleX;
+    scaleY = node->scaleY;
+    skewX = node->skewX;
+    skewY = node->skewY;
 
-	tweenRotate = node->tweenRotate;
+    tweenRotate = node->tweenRotate;
 
-	isUseColorInfo = node->isUseColorInfo;
-	r = node->r;
-	g = node->g;
-	b = node->b;
-	a = node->a;
+    isUseColorInfo = node->isUseColorInfo;
+    r = node->r;
+    g = node->g;
+    b = node->b;
+    a = node->a;
 }
 
 
 void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 {
-	x = to->x - from->x;
-	y = to->y - from->y;
-	scaleX = to->scaleX - from->scaleX;
-	scaleY = to->scaleY - from->scaleY;
-	skewX = to->skewX - from->skewX;
-	skewY = to->skewY - from->skewY;
+    x = to->x - from->x;
+    y = to->y - from->y;
+    scaleX = to->scaleX - from->scaleX;
+    scaleY = to->scaleY - from->scaleY;
+    skewX = to->skewX - from->skewX;
+    skewY = to->skewY - from->skewY;
 
-	if(from->isUseColorInfo || to->isUseColorInfo)
-	{
-		a = to->a - from->a;
-		r = to->r - from->r;
-		g = to->g - from->g;
-		b = to->b - from->b;
+    if(isUseColorInfo || from->isUseColorInfo || to->isUseColorInfo)
+    {
+        a = to->a - from->a;
+        r = to->r - from->r;
+        g = to->g - from->g;
+        b = to->b - from->b;
 
-		isUseColorInfo = true;
-	}
+        isUseColorInfo = true;
+    }
+    else
+    {
+        a = r = g = b = 0;
+        isUseColorInfo = false;
+    }
 
+    if (skewX > M_PI)
+    {
+        skewX -= (float)CC_DOUBLE_PI;
+    }
+    if (skewX < -M_PI)
+    {
+        skewX += (float)CC_DOUBLE_PI;
+    }
 
-	if (skewX > M_PI)
-	{
-		skewX -= (float)CC_DOUBLE_PI;
-	}
-	if (skewX < -M_PI)
-	{
-		skewX += (float)CC_DOUBLE_PI;
-	}
+    if (skewY > M_PI)
+    {
+        skewY -= (float)CC_DOUBLE_PI;
+    }
+    if (skewY < -M_PI)
+    {
+        skewY += (float)CC_DOUBLE_PI;
+    }
 
-	if (skewY > M_PI)
-	{
-		skewY -= (float)CC_DOUBLE_PI;
-	}
-	if (skewY < -M_PI)
-	{
-		skewY += (float)CC_DOUBLE_PI;
-	}
-
-	if (to->tweenRotate)
-	{
-		skewX += to->tweenRotate;
-		skewY -= to->tweenRotate;
-	}
+    if (to->tweenRotate)
+    {
+        skewX += to->tweenRotate;
+        skewY -= to->tweenRotate;
+    }
 }
 
+void CCBaseData::setColor(const ccColor4B &color)
+{
+    r = color.r;
+    g = color.g;
+    b = color.b;
+    a = color.a;
+}
+
+ccColor4B CCBaseData::getColor()
+{
+    return ccc4(r, g, b, a);
+}
 
 const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
@@ -134,7 +151,7 @@ const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 }
 
 CCDisplayData::CCDisplayData(void)
-    : displayType(CS_DISPLAY_SPRITE)
+    : displayType(CS_DISPLAY_MAX)
 {
 }
 
@@ -156,6 +173,8 @@ void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
+
+    skinData = displayData->skinData;
 }
 
 CCArmatureDisplayData::CCArmatureDisplayData(void)
@@ -186,20 +205,6 @@ void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
     displayType = displayData->displayType;
 }
 
-CCShaderDisplayData::CCShaderDisplayData(void)
-    : vert("")
-    , frag("")
-{
-    displayType = CS_DISPLAY_SHADER;
-}
-
-void CCShaderDisplayData::copy(CCShaderDisplayData *displayData)
-{
-    vert = displayData->vert;
-    frag = displayData->frag;
-    displayType = displayData->displayType;
-}
-
 
 CCBoneData::CCBoneData(void)
     : name("")
@@ -227,7 +232,9 @@ CCDisplayData *CCBoneData::getDisplayData(int index)
     return (CCDisplayData *)displayDataList.objectAtIndex(index);
 }
 
+
 CCArmatureData::CCArmatureData()
+    : dataVersion(0.1f)
 {
 }
 
@@ -237,13 +244,12 @@ CCArmatureData::~CCArmatureData()
 
 bool CCArmatureData::init()
 {
-    return boneList.init();
+    return true;
 }
 
 void CCArmatureData::addBoneData(CCBoneData *boneData)
 {
     boneDataDic.setObject(boneData, boneData->name);
-    boneList.addObject(boneData);
 }
 
 CCBoneData *CCArmatureData::getBoneData(const char *boneName)
@@ -252,14 +258,16 @@ CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 }
 
 CCFrameData::CCFrameData(void)
-    : duration(1)
+    : frameID(0)
+    , duration(1)
     , tweenEasing(Linear)
     , displayIndex(0)
+    , blendType(BLEND_NORMAL)
 
-    , m_strMovement("")
-    , m_strEvent("")
-    , m_strSound("")
-    , m_strSoundEffect("")
+    , strEvent("")
+    , strMovement("")
+    , strSound("")
+    , strSoundEffect("")
 {
 }
 
@@ -274,6 +282,7 @@ void CCFrameData::copy(CCFrameData *frameData)
     duration = frameData->duration;
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
+    blendType = frameData->blendType;
 }
 
 CCMovementBoneData::CCMovementBoneData()
@@ -296,7 +305,6 @@ bool CCMovementBoneData::init()
 void CCMovementBoneData::addFrameData(CCFrameData *frameData)
 {
     frameList.addObject(frameData);
-    duration += frameData->duration;
 }
 
 CCFrameData *CCMovementBoneData::getFrameData(int index)
@@ -309,6 +317,7 @@ CCFrameData *CCMovementBoneData::getFrameData(int index)
 CCMovementData::CCMovementData(void)
     : name("")
     , duration(0)
+    , scale(1.0f)
     , durationTo(0)
     , durationTween(0)
     , loop(true)
@@ -340,16 +349,6 @@ CCAnimationData::~CCAnimationData(void)
 {
 }
 
-void CCAnimationData::release()
-{
-    CCObject::release();
-}
-
-void CCAnimationData::retain()
-{
-    CCObject::retain();
-}
-
 void CCAnimationData::addMovement(CCMovementData *movData)
 {
     movementDataDic.setObject(movData, movData->name);
@@ -379,6 +378,14 @@ CCContourData::~CCContourData()
 bool CCContourData::init()
 {
     return vertexList.init();
+}
+
+void CCContourData::addVertex(CCPoint *vertex)
+{
+    CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
+    vertex2->autorelease();
+
+    vertexList.addObject(vertex2);
 }
 
 CCTextureData::CCTextureData()

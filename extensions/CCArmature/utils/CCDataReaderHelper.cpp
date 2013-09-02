@@ -26,10 +26,16 @@ THE SOFTWARE.
 #include "CCDataReaderHelper.h"
 #include "CCArmatureDataManager.h"
 #include "CCTransformHelp.h"
+#include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-
-
+#include <errno.h>
+#include <stack>
+#include <string>
+#include <cctype>
+#include <queue>
+#include <list>
+#include <pthread.h>
 
 static const char *VERSION = "version";
 static const float VERSION_2_0 = 2.0f;
@@ -49,6 +55,7 @@ static const char *SUB_TEXTURE = "SubTexture";
 
 static const char *A_NAME = "name";
 static const char *A_DURATION = "dr";
+static const char *A_FRAME_INDEX = "fi";
 static const char *A_DURATION_TO = "to";
 static const char *A_DURATION_TWEEN = "drTW";
 static const char *A_LOOP = "lp";
@@ -56,8 +63,8 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-static const char *A_VERT = "vert";
-static const char *A_FRAG = "frag";
+// static const char *A_VERT = "vert";
+// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -89,6 +96,8 @@ static const char *A_PIVOT_Y = "pY";
 static const char *A_COCOS2D_PIVOT_X = "cocos2d_pX";
 static const char *A_COCOS2D_PIVOT_Y = "cocos2d_pY";
 
+static const char *A_BLEND_TYPE = "bd";
+
 static const char *A_ALPHA = "a";
 static const char *A_RED = "r";
 static const char *A_GREEN = "g";
@@ -118,6 +127,7 @@ static const char *MOVEMENT_BONE_DATA = "mov_bone_data";
 static const char *MOVEMENT_DATA = "mov_data";
 static const char *ANIMATION_DATA = "animation_data";
 static const char *DISPLAY_DATA = "display_data";
+static const char *SKIN_DATA = "skin_data";
 static const char *BONE_DATA = "bone_data";
 static const char *ARMATURE_DATA = "armature_data";
 static const char *CONTOUR_DATA = "contour_data";
@@ -125,12 +135,150 @@ static const char *TEXTURE_DATA = "texture_data";
 static const char *VERTEX_POINT = "vertex";
 static const char *COLOR_INFO = "color";
 
+static const char *CONFIG_FILE_PATH = "config_file_path";
+
 
 NS_CC_EXT_BEGIN
+
 
 std::vector<std::string> s_arrConfigFileList;
 float s_PositionReadScale = 1;
 static float s_FlashToolVersion = VERSION_2_0;
+static float s_CocoStudioVersion = VERSION_COMBINED;
+
+static std::string s_BasefilePath = "";
+
+CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
+
+enum ConfigType
+{
+    DragonBone_XML,
+    CocoStudio_JSON
+};
+
+
+//! Async load
+
+typedef struct _AsyncStruct
+{
+    std::string    filename;
+    std::string    fileContent;
+    ConfigType     configType;
+    std::string    baseFilePath;
+    CCObject       *target;
+    SEL_SCHEDULE   selector;
+    bool           autoLoadSpriteFile;
+} AsyncStruct;
+
+typedef struct _DataInfo
+{
+    AsyncStruct *asyncStruct;
+    std::queue<std::string>      configFileQueue;
+} DataInfo;
+
+static pthread_t s_loadingThread;
+
+static pthread_mutex_t		s_SleepMutex;
+static pthread_cond_t		s_SleepCondition;
+
+static pthread_mutex_t      s_asyncStructQueueMutex;
+static pthread_mutex_t      s_DataInfoMutex;
+
+static pthread_mutex_t      s_addDataMutex;
+static pthread_mutex_t      s_ReadFileMutex;
+
+#ifdef EMSCRIPTEN
+// Hack to get ASM.JS validation (no undefined symbols allowed).
+#define pthread_cond_signal(_)
+#endif // EMSCRIPTEN
+
+static unsigned long s_nAsyncRefCount = 0;
+static unsigned long s_nAsyncRefTotalCount = 0;
+
+static bool need_quit = false;
+
+static std::queue<AsyncStruct *> *s_pAsyncStructQueue = NULL;
+static std::queue<DataInfo *>   *s_pDataQueue = NULL;
+
+static void *loadData(void *)
+{
+    AsyncStruct *pAsyncStruct = NULL;
+
+    while (true)
+    {
+        // create autorelease pool for iOS
+        CCThread thread;
+        thread.createAutoreleasePool();
+
+        std::queue<AsyncStruct *> *pQueue = s_pAsyncStructQueue;
+        pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
+        if (pQueue->empty())
+        {
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+            if (need_quit)
+            {
+                break;
+            }
+            else
+            {
+                pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
+                continue;
+            }
+        }
+        else
+        {
+            pAsyncStruct = pQueue->front();
+            pQueue->pop();
+            pthread_mutex_unlock(&s_asyncStructQueueMutex);
+        }
+
+        // generate image info
+        DataInfo *pDataInfo = new DataInfo();
+        pDataInfo->asyncStruct = pAsyncStruct;
+
+        if (pAsyncStruct->configType == DragonBone_XML)
+        {
+            CCDataReaderHelper::addDataFromCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+        }
+        else if(pAsyncStruct->configType == CocoStudio_JSON)
+        {
+            CCDataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+        }
+
+        // put the image info into the queue
+        pthread_mutex_lock(&s_DataInfoMutex);
+        s_pDataQueue->push(pDataInfo);
+        pthread_mutex_unlock(&s_DataInfoMutex);
+    }
+
+    if( s_pAsyncStructQueue != NULL )
+    {
+        delete s_pAsyncStructQueue;
+        s_pAsyncStructQueue = NULL;
+        delete s_pDataQueue;
+        s_pDataQueue = NULL;
+
+        pthread_mutex_destroy(&s_asyncStructQueueMutex);
+        pthread_mutex_destroy(&s_DataInfoMutex);
+        pthread_mutex_destroy(&s_SleepMutex);
+        pthread_mutex_destroy(&s_addDataMutex);
+        pthread_mutex_destroy(&s_ReadFileMutex);
+        pthread_cond_destroy(&s_SleepCondition);
+    }
+
+    return NULL;
+}
+
+
+CCDataReaderHelper *CCDataReaderHelper::sharedDataReaderHelper()
+{
+    if(!s_DataReaderHelper)
+    {
+        s_DataReaderHelper = new CCDataReaderHelper();
+    }
+
+    return s_DataReaderHelper;
+}
 
 void CCDataReaderHelper::setPositionReadScale(float scale)
 {
@@ -142,9 +290,22 @@ float CCDataReaderHelper::getPositionReadScale()
     return s_PositionReadScale;
 }
 
+
+void CCDataReaderHelper::purge()
+{
+    CCDataReaderHelper::clear();
+    CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
+}
+
 void CCDataReaderHelper::clear()
 {
     s_arrConfigFileList.clear();
+}
+
+CCDataReaderHelper::~CCDataReaderHelper()
+{
+    need_quit = true;
+    pthread_cond_signal(&s_SleepCondition);
 }
 
 void CCDataReaderHelper::addDataFromFile(const char *filePath)
@@ -162,56 +323,200 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     s_arrConfigFileList.push_back(filePath);
 
 
-    std::string filePathStr = filePath;
+    //! find the base file path
+    s_BasefilePath = filePath;
+    size_t pos = s_BasefilePath.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        s_BasefilePath = s_BasefilePath.substr(0, pos + 1);
+    }
+    else
+    {
+        s_BasefilePath = "";
+    }
+
+
+    std::string filePathStr =  filePath;
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
+    unsigned long size;
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
+    const char *pFileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+
     if (str.compare(".xml") == 0)
     {
-        CCDataReaderHelper::addDataFromXML(filePathStr.c_str());
+        CCDataReaderHelper::addDataFromCache(pFileContent);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        CCDataReaderHelper::addDataFromJson(filePathStr.c_str());
+        CCDataReaderHelper::addDataFromJsonCache(pFileContent);
     }
 }
 
-
-
-void CCDataReaderHelper::addDataFromXML(const char *xmlPath)
+void CCDataReaderHelper::addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector)
 {
-    /*
-    *  Need to get the full path of the xml file, or the Tiny XML can't find the xml at IOS
-    */
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(xmlPath);
+#ifdef EMSCRIPTEN
+    CCLOGWARN("Cannot load data %s asynchronously in Emscripten builds.", filePath);
+    return;
+#endif // EMSCRIPTEN
 
     /*
-    *  Need to read the tiny xml into memory first, or the Tiny XML can't find the xml at IOS
+    * Check if file is already added to CCArmatureDataManager, if then return.
     */
-    unsigned long size;
-    const char *pFileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
-
-    if (pFileContent)
+    for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
     {
-        addDataFromCache(pFileContent);
+        if (s_arrConfigFileList[i].compare(filePath) == 0)
+        {
+            if (target && selector)
+            {
+                if (s_nAsyncRefTotalCount == 0 && s_nAsyncRefCount == 0)
+                {
+                    (target->*selector)(1);
+                }
+                else
+                {
+                    (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
+                }
+            }
+            return;
+        }
+    }
+    s_arrConfigFileList.push_back(filePath);
+
+    //! find the base file path
+    s_BasefilePath = filePath;
+    size_t pos = s_BasefilePath.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        s_BasefilePath = s_BasefilePath.substr(0, pos + 1);
+    }
+    else
+    {
+        s_BasefilePath = "";
+    }
+
+
+    // lazy init
+    if (s_pAsyncStructQueue == NULL)
+    {
+        s_pAsyncStructQueue = new std::queue<AsyncStruct *>();
+        s_pDataQueue = new std::queue<DataInfo *>();
+
+        pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
+        pthread_mutex_init(&s_DataInfoMutex, NULL);
+        pthread_mutex_init(&s_SleepMutex, NULL);
+        pthread_mutex_init(&s_addDataMutex, NULL);
+        pthread_mutex_init(&s_ReadFileMutex, NULL);
+        pthread_cond_init(&s_SleepCondition, NULL);
+        pthread_create(&s_loadingThread, NULL, loadData, NULL);
+
+        need_quit = false;
+    }
+
+    if (0 == s_nAsyncRefCount)
+    {
+        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(CCDataReaderHelper::addDataAsyncCallBack), this, 0, false);
+    }
+
+    ++s_nAsyncRefCount;
+    ++s_nAsyncRefTotalCount;
+
+    if (target)
+    {
+        target->retain();
+    }
+
+    // generate async struct
+    AsyncStruct *data = new AsyncStruct();
+    data->filename = filePath;
+    data->baseFilePath = s_BasefilePath;
+    data->target = target;
+    data->selector = selector;
+    data->autoLoadSpriteFile = CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile();
+
+
+    std::string filePathStr =  filePath;
+    size_t startPos = filePathStr.find_last_of(".");
+    std::string str = &filePathStr[startPos];
+
+    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
+    unsigned long size;
+    data->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+
+    if (str.compare(".xml") == 0)
+    {
+        data->configType = DragonBone_XML;
+    }
+    else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
+    {
+        data->configType = CocoStudio_JSON;
+    }
+
+
+    // add async struct into queue
+    pthread_mutex_lock(&s_asyncStructQueueMutex);
+    s_pAsyncStructQueue->push(data);
+    pthread_mutex_unlock(&s_asyncStructQueueMutex);
+
+    pthread_cond_signal(&s_SleepCondition);
+}
+
+void CCDataReaderHelper::addDataAsyncCallBack(float dt)
+{
+    // the data is generated in loading thread
+    std::queue<DataInfo *> *dataQueue = s_pDataQueue;
+
+    pthread_mutex_lock(&s_DataInfoMutex);
+    if (dataQueue->empty())
+    {
+        pthread_mutex_unlock(&s_DataInfoMutex);
+    }
+    else
+    {
+        DataInfo *pDataInfo = dataQueue->front();
+        dataQueue->pop();
+        pthread_mutex_unlock(&s_DataInfoMutex);
+
+        AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
+
+        while (!pDataInfo->configFileQueue.empty())
+        {
+            std::string configPath = pDataInfo->configFileQueue.front();
+            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
+            pDataInfo->configFileQueue.pop();
+        }
+
+
+        CCObject *target = pAsyncStruct->target;
+        SEL_SCHEDULE selector = pAsyncStruct->selector;
+
+        --s_nAsyncRefCount;
+
+        if (target && selector)
+        {
+            (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
+            target->release();
+        }
+
+
+        delete pAsyncStruct;
+        delete pDataInfo;
+
+        if (0 == s_nAsyncRefCount)
+        {
+            s_nAsyncRefTotalCount = 0;
+            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(CCDataReaderHelper::addDataAsyncCallBack), this);
+        }
     }
 }
 
-void CCDataReaderHelper::addDataFromXMLPak(const char *xmlPakPath)
-{
-    // #if CS_TOOL_PLATFORM
-    //
-    // 	char *_pFileContent = NULL;
-    // 	JsonReader::getFileBuffer(xmlPakPath, &_pFileContent);
-    //
-    // 	if (_pFileContent)
-    // 	{
-    // 		addDataFromCache(_pFileContent);
-    // 	}
-    // #endif
-}
 
-void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
+
+
+
+
+void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *dataInfo)
 {
     tinyxml2::XMLDocument document;
     document.Parse(pFileContent);
@@ -221,6 +526,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
 
     root->QueryFloatAttribute(VERSION, &s_FlashToolVersion);
 
+
     /*
     * Begin decode armature data from xml
     */
@@ -229,10 +535,21 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
     while(armatureXML)
     {
         CCArmatureData *armatureData = CCDataReaderHelper::decodeArmature(armatureXML);
+
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
         CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
+        armatureData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
 
         armatureXML = armatureXML->NextSiblingElement(ARMATURE);
     }
+
 
     /*
     * Begin decode animation data from xml
@@ -242,10 +559,19 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
     while(animationXML)
     {
         CCAnimationData *animationData = CCDataReaderHelper::decodeAnimation(animationXML);
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
         CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
-
+        animationData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
         animationXML = animationXML->NextSiblingElement(ANIMATION);
     }
+
 
     /*
     * Begin decode texture data from xml
@@ -255,19 +581,27 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent)
     while(textureXML)
     {
         CCTextureData *textureData = CCDataReaderHelper::decodeTexture(textureXML);
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
 
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
+        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
+        textureData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
         textureXML = textureXML->NextSiblingElement(SUB_TEXTURE);
     }
-
 }
 
 CCArmatureData *CCDataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML)
 {
+    CCArmatureData *armatureData = new CCArmatureData();
+    armatureData->init();
+
     const char	*name = armatureXML->Attribute(A_NAME);
-
-
-    CCArmatureData *armatureData = CCArmatureData::create();
     armatureData->name = name;
 
 
@@ -296,6 +630,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatur
 
         CCBoneData *boneData = decodeBone(boneXML, parentXML);
         armatureData->addBoneData(boneData);
+        boneData->release();
 
         boneXML = boneXML->NextSiblingElement(BONE);
     }
@@ -305,13 +640,10 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatur
 
 CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXml)
 {
+    CCBoneData *boneData = new CCBoneData();
+    boneData->init();
 
     std::string name = boneXML->Attribute(A_NAME);
-
-    CCAssert(name.length() != 0, "");
-
-    CCBoneData *boneData = CCBoneData::create();
-
     boneData->name = name;
 
     if( boneXML->Attribute(A_PARENT) != NULL )
@@ -319,11 +651,14 @@ CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxm
         boneData->parentName = boneXML->Attribute(A_PARENT);
     }
 
+    boneXML->QueryIntAttribute(A_Z, &boneData->zOrder);
+
     tinyxml2::XMLElement *displayXML = boneXML->FirstChildElement(DISPLAY);
     while(displayXML)
     {
         CCDisplayData *displayData = decodeBoneDisplay(displayXML);
         boneData->addDisplayData(displayData);
+        displayData->release();
 
         displayXML = displayXML->NextSiblingElement(DISPLAY);
     }
@@ -341,21 +676,22 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displ
     {
         if(!_isArmature)
         {
-            displayData = CCSpriteDisplayData::create();
+            displayData = new CCSpriteDisplayData();
             displayData->displayType  = CS_DISPLAY_SPRITE;
         }
         else
         {
-            displayData = CCArmatureDisplayData::create();
+            displayData = new CCArmatureDisplayData();
             displayData->displayType  = CS_DISPLAY_ARMATURE;
         }
 
     }
     else
     {
-        displayData = CCSpriteDisplayData::create();
+        displayData = new CCSpriteDisplayData();
         displayData->displayType  = CS_DISPLAY_SPRITE;
     }
+
 
     if(displayXML->Attribute(A_NAME) != NULL )
     {
@@ -375,10 +711,9 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displ
 
 CCAnimationData *CCDataReaderHelper::decodeAnimation(tinyxml2::XMLElement *animationXML)
 {
+    CCAnimationData *aniData =  new CCAnimationData();
+
     const char	*name = animationXML->Attribute(A_NAME);
-
-
-    CCAnimationData *aniData =  CCAnimationData::create();
 
     CCArmatureData *armatureData = CCArmatureDataManager::sharedArmatureDataManager()->getArmatureData(name);
 
@@ -390,6 +725,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(tinyxml2::XMLElement *anima
     {
         CCMovementData *movementData = decodeMovement(movementXML, armatureData);
         aniData->addMovement(movementData);
+        movementData->release();
 
         movementXML = movementXML->NextSiblingElement(MOVEMENT);
 
@@ -400,10 +736,9 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(tinyxml2::XMLElement *anima
 
 CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData)
 {
+    CCMovementData *movementData = new CCMovementData();
+
     const char *movName = movementXML->Attribute(A_NAME);
-
-    CCMovementData *movementData = CCMovementData::create();
-
     movementData->name = movName;
 
 
@@ -475,8 +810,9 @@ CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movemen
             }
         }
 
-        CCMovementBoneData *_moveBoneData = decodeMovementBone(movBoneXml, parentXml, boneData);
-        movementData->addMovementBoneData(_moveBoneData);
+        CCMovementBoneData *moveBoneData = decodeMovementBone(movBoneXml, parentXml, boneData);
+        movementData->addMovementBoneData(moveBoneData);
+        moveBoneData->release();
 
         movBoneXml = movBoneXml->NextSiblingElement(BONE);
     }
@@ -487,7 +823,9 @@ CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movemen
 
 CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData)
 {
-    CCMovementBoneData *movBoneData = CCMovementBoneData::create();
+    CCMovementBoneData *movBoneData = new CCMovementBoneData();
+    movBoneData->init();
+
     float scale, delay;
 
     if( movBoneXml )
@@ -560,99 +898,111 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
         CCFrameData *frameData = decodeFrame( frameXML, parentFrameXML, boneData);
         movBoneData->addFrameData(frameData);
+        frameData->release();
 
+        frameData->frameID = totalDuration;
         totalDuration += frameData->duration;
+        movBoneData->duration = totalDuration;
 
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
 
+
+    //
+    CCFrameData *frameData = new CCFrameData();
+    frameData->copy((CCFrameData *)movBoneData->frameList.lastObject());
+    frameData->frameID = movBoneData->duration;
+    movBoneData->addFrameData(frameData);
+    frameData->release();
 
     return movBoneData;
 }
 
 CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData)
 {
-    float _x, _y, _scale_x, _scale_y, _skew_x, _skew_y = 0;
-    int _duration, _displayIndex, _zOrder, _tweenEasing = 0;
+    float x, y, scale_x, scale_y, skew_x, skew_y = 0;
+    int duration, displayIndex, zOrder, tweenEasing, blendType = 0;
 
-    CCFrameData *frameData = CCFrameData::create();
-
+    CCFrameData *frameData = new CCFrameData();
 
     if(frameXML->Attribute(A_MOVEMENT) != NULL)
     {
-        frameData->m_strMovement = frameXML->Attribute(A_MOVEMENT);
+        frameData->strMovement = frameXML->Attribute(A_MOVEMENT);
     }
     if(frameXML->Attribute(A_EVENT) != NULL)
     {
-        frameData->m_strEvent = frameXML->Attribute(A_EVENT);
+        frameData->strEvent = frameXML->Attribute(A_EVENT);
     }
     if(frameXML->Attribute(A_SOUND) != NULL)
     {
-        frameData->m_strSound = frameXML->Attribute(A_SOUND);
+        frameData->strSound = frameXML->Attribute(A_SOUND);
     }
     if(frameXML->Attribute(A_SOUND_EFFECT) != NULL)
     {
-        frameData->m_strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
+        frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
 
 
     if (s_FlashToolVersion >= VERSION_2_0)
     {
-        if(frameXML->QueryFloatAttribute(A_COCOS2DX_X, &_x) == tinyxml2::XML_SUCCESS)
+        if(frameXML->QueryFloatAttribute(A_COCOS2DX_X, &x) == tinyxml2::XML_SUCCESS)
         {
-            frameData->x = _x;
+            frameData->x = x;
             frameData->x *= s_PositionReadScale;
         }
-        if(frameXML->QueryFloatAttribute(A_COCOS2DX_Y, &_y) == tinyxml2::XML_SUCCESS)
+        if(frameXML->QueryFloatAttribute(A_COCOS2DX_Y, &y) == tinyxml2::XML_SUCCESS)
         {
-            frameData->y = -_y;
+            frameData->y = -y;
             frameData->y *= s_PositionReadScale;
         }
     }
     else
     {
-        if(frameXML->QueryFloatAttribute(A_X, &_x) == tinyxml2::XML_SUCCESS)
+        if(frameXML->QueryFloatAttribute(A_X, &x) == tinyxml2::XML_SUCCESS)
         {
-            frameData->x = _x;
+            frameData->x = x;
             frameData->x *= s_PositionReadScale;
         }
-        if(frameXML->QueryFloatAttribute(A_Y, &_y) == tinyxml2::XML_SUCCESS)
+        if(frameXML->QueryFloatAttribute(A_Y, &y) == tinyxml2::XML_SUCCESS)
         {
-            frameData->y = -_y;
+            frameData->y = -y;
             frameData->y *= s_PositionReadScale;
         }
     }
 
-    if( frameXML->QueryFloatAttribute(A_SCALE_X, &_scale_x) == tinyxml2::XML_SUCCESS )
+    if( frameXML->QueryFloatAttribute(A_SCALE_X, &scale_x) == tinyxml2::XML_SUCCESS )
     {
-        frameData->scaleX = _scale_x;
+        frameData->scaleX = scale_x;
     }
-    if( frameXML->QueryFloatAttribute(A_SCALE_Y, &_scale_y) == tinyxml2::XML_SUCCESS )
+    if( frameXML->QueryFloatAttribute(A_SCALE_Y, &scale_y) == tinyxml2::XML_SUCCESS )
     {
-        frameData->scaleY = _scale_y;
+        frameData->scaleY = scale_y;
     }
-    if( frameXML->QueryFloatAttribute(A_SKEW_X, &_skew_x) == tinyxml2::XML_SUCCESS )
+    if( frameXML->QueryFloatAttribute(A_SKEW_X, &skew_x) == tinyxml2::XML_SUCCESS )
     {
-        frameData->skewX = CC_DEGREES_TO_RADIANS(_skew_x);
+        frameData->skewX = CC_DEGREES_TO_RADIANS(skew_x);
     }
-    if( frameXML->QueryFloatAttribute(A_SKEW_Y, &_skew_y) == tinyxml2::XML_SUCCESS )
+    if( frameXML->QueryFloatAttribute(A_SKEW_Y, &skew_y) == tinyxml2::XML_SUCCESS )
     {
-        frameData->skewY = CC_DEGREES_TO_RADIANS(-_skew_y);
+        frameData->skewY = CC_DEGREES_TO_RADIANS(-skew_y);
     }
-    if( frameXML->QueryIntAttribute(A_DURATION, &_duration) == tinyxml2::XML_SUCCESS )
+    if( frameXML->QueryIntAttribute(A_DURATION, &duration) == tinyxml2::XML_SUCCESS )
     {
-        frameData->duration = _duration;
+        frameData->duration = duration;
     }
-    if(  frameXML->QueryIntAttribute(A_DISPLAY_INDEX, &_displayIndex) == tinyxml2::XML_SUCCESS )
+    if(  frameXML->QueryIntAttribute(A_DISPLAY_INDEX, &displayIndex) == tinyxml2::XML_SUCCESS )
     {
-        frameData->displayIndex = _displayIndex;
+        frameData->displayIndex = displayIndex;
     }
-    if(  frameXML->QueryIntAttribute(A_Z, &_zOrder) == tinyxml2::XML_SUCCESS )
+    if(  frameXML->QueryIntAttribute(A_Z, &zOrder) == tinyxml2::XML_SUCCESS )
     {
-        frameData->zOrder = _zOrder;
+        frameData->zOrder = zOrder;
     }
-
+    if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
+    {
+        frameData->blendType = (CCBlendType)blendType;
+    }
 
     tinyxml2::XMLElement *colorTransformXML = frameXML->FirstChildElement(A_COLOR_TRANSFORM);
     if (colorTransformXML)
@@ -685,9 +1035,9 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
         std::string str = _easing;
         if(str.compare(FL_NAN) != 0)
         {
-            if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(_tweenEasing)) == tinyxml2::XML_SUCCESS)
+            if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
-                frameData->tweenEasing = (CCTweenType)_tweenEasing;
+                frameData->tweenEasing = (CCTweenType)tweenEasing;
             }
         }
         else
@@ -728,7 +1078,8 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
 
 CCTextureData *CCDataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML)
 {
-    CCTextureData *textureData = CCTextureData::create();
+    CCTextureData *textureData = new CCTextureData();
+    textureData->init();
 
     if( textureXML->Attribute(A_NAME) != NULL)
     {
@@ -763,6 +1114,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXM
     {
         CCContourData *contourData = decodeContour(contourXML);
         textureData->addContourData(contourData);
+        contourData->release();
 
         contourXML = contourXML->NextSiblingElement(CONTOUR);
     }
@@ -772,14 +1124,15 @@ CCTextureData *CCDataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXM
 
 CCContourData *CCDataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML)
 {
-    CCContourData *contourData = CCContourData::create();
+    CCContourData *contourData = new CCContourData();
+    contourData->init();
 
     tinyxml2::XMLElement *vertexDataXML = contourXML->FirstChildElement(CONTOUR_VERTEX);
 
     while (vertexDataXML)
     {
         CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-        vertex->autorelease();
+        vertex->release();
 
         vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
         vertexDataXML->QueryFloatAttribute(A_Y, &vertex->y);
@@ -791,21 +1144,11 @@ CCContourData *CCDataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXM
     }
 
     return contourData;
-
 }
 
 
 
-void CCDataReaderHelper::addDataFromJson(const char *filePath)
-{
-    unsigned long size;
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    const char *pFileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
-
-    addDataFromJsonCache(pFileContent);
-}
-
-void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
+void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo)
 {
     cs::CSJsonDictionary json;
     json.initWithDescription(fileContent);
@@ -816,8 +1159,17 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
     {
         cs::CSJsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
         CCArmatureData *armatureData = decodeArmature(*armatureDic);
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
 
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
+        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
+        armatureData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
         delete armatureDic;
     }
 
@@ -827,8 +1179,17 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
     {
         cs::CSJsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
         CCAnimationData *animationData = decodeAnimation(*animationDic);
-        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
 
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
+        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
+        animationData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
         delete animationDic;
     }
 
@@ -838,15 +1199,56 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent)
     {
         cs::CSJsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
         CCTextureData *textureData = decodeTexture(*textureDic);
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
 
+        if (dataInfo)
+        {
+            pthread_mutex_lock(&s_addDataMutex);
+        }
+        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
+        textureData->release();
+        if (dataInfo)
+        {
+            pthread_mutex_unlock(&s_addDataMutex);
+        }
         delete textureDic;
+    }
+
+    // Auto load sprite file
+    bool autoLoad = dataInfo == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+    if (autoLoad)
+    {
+        length = json.getArrayItemCount(CONFIG_FILE_PATH);
+        for (int i = 0; i < length; i++)
+        {
+            const char *path = json.getStringValueFromArray(CONFIG_FILE_PATH, i);
+            if (path == NULL)
+            {
+                CCLOG("load CONFIG_FILE_PATH error.");
+                return;
+            }
+
+            std::string filePath = path;
+            filePath = filePath.erase(filePath.find_last_of("."));
+
+            if (dataInfo != NULL)
+            {
+                dataInfo->configFileQueue.push(filePath);
+            }
+            else
+            {
+                std::string plistPath = filePath + ".plist";
+                std::string pngPath =  filePath + ".png";
+
+                CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((s_BasefilePath + plistPath).c_str(), (s_BasefilePath + pngPath).c_str());
+            }
+        }
     }
 }
 
 CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
 {
-    CCArmatureData *armatureData = CCArmatureData::create();
+    CCArmatureData *armatureData = new CCArmatureData();
+    armatureData->init();
 
     const char *name = json.getItemStringValue(A_NAME);
     if(name != NULL)
@@ -854,11 +1256,15 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
         armatureData->name = name;
     }
 
+    s_CocoStudioVersion = armatureData->dataVersion = json.getItemFloatValue(VERSION, 0.1f);
+
     int length = json.getArrayItemCount(BONE_DATA);
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
-        armatureData->addBoneData(decodeBone(*dic));
+        CCBoneData *boneData = decodeBone(*dic);
+        armatureData->addBoneData(boneData);
+        boneData->release();
 
         delete dic;
     }
@@ -868,7 +1274,8 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
 
 CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
 {
-    CCBoneData *boneData = CCBoneData::create();
+    CCBoneData *boneData = new CCBoneData();
+    boneData->init();
 
     decodeNode(boneData, json);
 
@@ -889,7 +1296,9 @@ CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
-        boneData->addDisplayData(decodeBoneDisplay(*dic));
+        CCDisplayData *displayData = decodeBoneDisplay(*dic);
+        boneData->addDisplayData(displayData);
+        displayData->release();
 
         delete dic;
     }
@@ -907,18 +1316,33 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
     {
     case CS_DISPLAY_SPRITE:
     {
-        displayData = CCSpriteDisplayData::create();
+        displayData = new CCSpriteDisplayData();
+
         const char *name = json.getItemStringValue(A_NAME);
         if(name != NULL)
         {
             ((CCSpriteDisplayData *)displayData)->displayName = name;
+        }
+
+        cs::CSJsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
+        if (dic != NULL)
+        {
+            CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
+            sdd->skinData.x = dic->getItemFloatValue(A_X, 0) * s_PositionReadScale;
+            sdd->skinData.y = dic->getItemFloatValue(A_Y, 0) * s_PositionReadScale;
+            sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
+            sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
+            sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
+            sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
+            delete dic;
         }
     }
 
     break;
     case CS_DISPLAY_ARMATURE:
     {
-        displayData = CCArmatureDisplayData::create();
+        displayData = new CCArmatureDisplayData();
+
         const char *name = json.getItemStringValue(A_NAME);
         if(name != NULL)
         {
@@ -928,35 +1352,21 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
     break;
     case CS_DISPLAY_PARTICLE:
     {
-        displayData = CCParticleDisplayData::create();
+        displayData = new CCParticleDisplayData();
+
         const char *plist = json.getItemStringValue(A_PLIST);
         if(plist != NULL)
         {
-            ((CCParticleDisplayData *)displayData)->plist = plist;
+            ((CCParticleDisplayData *)displayData)->plist = s_BasefilePath + plist;
         }
-    }
-    break;
-    case CS_DISPLAY_SHADER:
-    {
-        displayData = CCShaderDisplayData::create();
-        const char *vert = json.getItemStringValue(A_VERT);
-        if(vert != NULL)
-        {
-            ((CCShaderDisplayData *)displayData)->vert = vert;
-        }
-
-        const char *frag = json.getItemStringValue(A_FRAG);
-        if(frag != NULL)
-        {
-            ((CCShaderDisplayData *)displayData)->frag = vert;
-        }
-
     }
     break;
     default:
-        displayData = CCSpriteDisplayData::create();
+        displayData = new CCSpriteDisplayData();
+
         break;
     }
+
 
     displayData->displayType = displayType;
 
@@ -965,7 +1375,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
 
 CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
 {
-    CCAnimationData *aniData = CCAnimationData::create();
+    CCAnimationData *aniData = new CCAnimationData();
 
     const char *name = json.getItemStringValue(A_NAME);
     if(name != NULL)
@@ -978,7 +1388,9 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
-        aniData->addMovement(decodeMovement(*dic));
+        CCMovementData *movementData = decodeMovement(*dic);
+        aniData->addMovement(movementData);
+        movementData->release();
 
         delete dic;
     }
@@ -988,12 +1400,13 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
 
 CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
 {
-    CCMovementData *movementData = CCMovementData::create();
+    CCMovementData *movementData = new CCMovementData();
 
     movementData->loop = json.getItemBoolvalue(A_LOOP, true);
     movementData->durationTween = json.getItemIntValue(A_DURATION_TWEEN, 0);
     movementData->durationTo = json.getItemIntValue(A_DURATION_TO, 0);
     movementData->duration = json.getItemIntValue(A_DURATION, 0);
+    movementData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
     movementData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
 
     const char *name = json.getItemStringValue(A_NAME);
@@ -1006,7 +1419,9 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
-        movementData->addMovementBoneData(decodeMovementBone(*dic));
+        CCMovementBoneData *movementBoneData = decodeMovementBone(*dic);
+        movementData->addMovementBoneData(movementBoneData);
+        movementBoneData->release();
 
         delete dic;
     }
@@ -1016,10 +1431,10 @@ CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
 
 CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json)
 {
-    CCMovementBoneData *movementBoneData = CCMovementBoneData::create();
+    CCMovementBoneData *movementBoneData = new CCMovementBoneData();
+    movementBoneData->init();
 
     movementBoneData->delay = json.getItemFloatValue(A_MOVEMENT_DELAY, 0);
-    movementBoneData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
 
     const char *name = json.getItemStringValue(A_NAME);
     if(name != NULL)
@@ -1032,10 +1447,30 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
         CCFrameData *frameData = decodeFrame(*dic);
+
         movementBoneData->addFrameData(frameData);
-        //movementBoneData->duration += frameData->duration;
+        frameData->release();
+
+        if (s_CocoStudioVersion < VERSION_COMBINED)
+        {
+            frameData->frameID = movementBoneData->duration;
+            movementBoneData->duration += frameData->duration;
+        }
 
         delete dic;
+    }
+
+    if (s_CocoStudioVersion < VERSION_COMBINED)
+    {
+        if (movementBoneData->frameList.count() > 0)
+        {
+            CCFrameData *frameData = new CCFrameData();
+            frameData->copy((CCFrameData *)movementBoneData->frameList.lastObject());
+            movementBoneData->addFrameData(frameData);
+            frameData->release();
+
+            frameData->frameID = movementBoneData->duration;
+        }
     }
 
     return movementBoneData;
@@ -1043,18 +1478,27 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
 
 CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
 {
-    CCFrameData *frameData = CCFrameData::create();
+    CCFrameData *frameData = new CCFrameData();
 
     decodeNode(frameData, json);
 
-    frameData->duration = json.getItemIntValue(A_DURATION, 1);
     frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
+    frameData->blendType = (CCBlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
 
     const char *event = json.getItemStringValue(A_EVENT);
     if (event != NULL)
     {
-        frameData->m_strEvent = event;
+        frameData->strEvent = event;
+    }
+
+    if (s_CocoStudioVersion < VERSION_COMBINED)
+    {
+        frameData->duration = json.getItemIntValue(A_DURATION, 1);
+    }
+    else
+    {
+        frameData->frameID = json.getItemIntValue(A_FRAME_INDEX, 0);
     }
 
     return frameData;
@@ -1062,7 +1506,8 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
 
 CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
 {
-    CCTextureData *textureData = CCTextureData::create();
+    CCTextureData *textureData = new CCTextureData();
+    textureData->init();
 
     const char *name = json.getItemStringValue(A_NAME);
     if(name != NULL)
@@ -1079,7 +1524,9 @@ CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
     for (int i = 0; i < length; i++)
     {
         cs::CSJsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
-        textureData->contourDataList.addObject(decodeContour(*dic));
+        CCContourData *contourData = decodeContour(*dic);
+        textureData->contourDataList.addObject(contourData);
+        contourData->release();
 
         delete dic;
     }
@@ -1089,7 +1536,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
 
 CCContourData *CCDataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
 {
-    CCContourData *contourData = CCContourData::create();
+    CCContourData *contourData = new CCContourData();
 
     int length = json.getArrayItemCount(VERTEX_POINT);
     for (int i = length - 1; i >= 0; i--)

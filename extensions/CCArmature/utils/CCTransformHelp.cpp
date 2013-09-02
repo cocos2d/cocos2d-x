@@ -139,4 +139,14 @@ void CCTransformHelp::nodeConcat(CCBaseData &target, CCBaseData &source)
     target.scaleY += source.scaleY;
 }
 
+void CCTransformHelp::nodeSub(CCBaseData &target, CCBaseData &source)
+{
+    target.x -= source.x;
+    target.y -= source.y;
+    target.skewX -= source.skewX;
+    target.skewY -= source.skewY;
+    target.scaleX -= source.scaleX;
+    target.scaleY -= source.scaleY;
+}
+
 NS_CC_EXT_END

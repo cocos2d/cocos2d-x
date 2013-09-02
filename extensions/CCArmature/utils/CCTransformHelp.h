@@ -48,6 +48,7 @@ public:
     static void matrixToNode(const CCAffineTransform &_matrix, CCBaseData &_node);
 
     static void nodeConcat(CCBaseData &target, CCBaseData &source);
+    static void nodeSub(CCBaseData &target, CCBaseData &source);
 public:
     static CCAffineTransform helpMatrix1;
     static CCAffineTransform helpMatrix2;

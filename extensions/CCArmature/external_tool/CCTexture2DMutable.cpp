@@ -118,7 +118,7 @@ ccColor4B CCTexture2DMutable::pixelAt(const CCPoint& pt)
     
     //! modified, texture origin point is left top, cocos2d origin point is left bottom
     //! unsigned int x = pt.x, y = pt.y
-	unsigned int x = pt.x, y = m_uPixelsHigh - pt.y;
+	unsigned int x = pt.x, y = m_uPixelsHigh - 1 - pt.y;
     
 	if(m_ePixelFormat == kTexture2DPixelFormat_RGBA8888){
 		unsigned int *pixel = (unsigned int *)data_;
@@ -301,9 +301,15 @@ CCTexture2DMutable::~CCTexture2DMutable(void)
 {
 	CCLOGINFO("cocos2d: deallocing %p", this);
     
-    CC_SAFE_DELETE(image_);
+	if (image_)
+	{
+		CC_SAFE_DELETE(image_);
+	}
+	else
+	{
+		free(data_);
+	}
     
-	free(data_);
 #if CC_MUTABLE_TEXTURE_SAVE_ORIGINAL_DATA
 	free(originalData_);
 #endif
