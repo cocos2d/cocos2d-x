@@ -25,6 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCSpriteBatchNode.h"
+#include <string.h>
+#include <algorithm>
 #include "CCAnimation.h"
 #include "CCAnimationCache.h"
 #include "ccConfig.h"
@@ -44,7 +46,7 @@ THE SOFTWARE.
 #include "support/CCProfiling.h"
 // external
 #include "kazmath/GL/matrix.h"
-#include <string.h>
+
 
 using namespace std;
 
@@ -693,6 +695,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
+#if 0
         int i = 0, j = 0, length = _children->count();
 
         // insertion sort
@@ -714,6 +717,9 @@ void Sprite::sortAllChildren()
             }
             _children->fastSetObject(tempI, j+1);
         }
+#else
+        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
+#endif
 
         if ( _batchNode)
         {
@@ -904,7 +910,7 @@ void Sprite::updateColor(void)
     // renders using batch node
     if (_batchNode)
     {
-        if (_atlasIndex != kSpriteIndexNotInitialized)
+        if (_atlasIndex != INDEX_NOT_INITIALIZED)
         {
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
@@ -1024,7 +1030,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
     // self render
     if( ! _batchNode ) {
-        _atlasIndex = kSpriteIndexNotInitialized;
+        _atlasIndex = INDEX_NOT_INITIALIZED;
         setTextureAtlas(NULL);
         _recursiveDirty = false;
         setDirty(false);
@@ -1102,7 +1108,7 @@ void Sprite::setTexture(Texture2D *texture)
         {
             Image* image = new Image();
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
-            CCAssert(isOK, "The 2x2 empty texture was created unsuccessfully.");
+            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
             texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);

@@ -54,6 +54,30 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#if CC_USE_ARRAY_VECTOR
+bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+{
+    Object *p1 = static_cast<Object*>(pp1);
+    Object *p2 = static_cast<Object*>(pp2);
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#else
+bool nodeComparisonLess(Object* p1, Object* p2)
+{
+    Node *n1 = static_cast<Node*>(p1);
+    Node *n2 = static_cast<Node*>(p2);
+
+    return( n1->getZOrder() < n2->getZOrder() ||
+           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+           );
+}
+#endif
+
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
 
@@ -714,30 +738,6 @@ void Node::reorderChild(Node *child, int zOrder)
     child->_setZOrder(zOrder);
 }
 
-#if CC_USE_ARRAY_VECTOR
-static bool objectComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
-{
-    Object *p1 = static_cast<Object*>(pp1);
-    Object *p2 = static_cast<Object*>(pp2);
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#else
-static bool objectComparisonLess(Object* p1, Object* p2)
-{
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#endif
-
 void Node::sortAllChildren()
 {
 #if 0
@@ -769,7 +769,7 @@ void Node::sortAllChildren()
     }
 #else
     if( _reorderChildDirty ) {
-        std::sort( std::begin(*_children), std::end(*_children), objectComparisonLess );
+        std::sort( std::begin(*_children), std::end(*_children), nodeComparisonLess );
         _reorderChildDirty = false;
     }
 #endif

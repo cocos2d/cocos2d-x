@@ -125,6 +125,16 @@ public:
 
 ///
 
+class AddSprite : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* testName();
+};
+
 class AddSpriteSheet : public AddRemoveSpriteSheet
 {
 public:
@@ -136,6 +146,16 @@ public:
 };
 
 class GetSpriteSheet : public AddRemoveSpriteSheet
+{
+public:
+    virtual void update(float dt);
+
+    virtual std::string title();
+    virtual std::string subtitle();
+    virtual const char* testName();
+};
+
+class RemoveSprite : public AddRemoveSpriteSheet
 {
 public:
     virtual void update(float dt);

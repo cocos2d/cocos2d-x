@@ -83,7 +83,7 @@ class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
 {
 public:
 
-    static const int kSpriteIndexNotInitialized = -1; /// Sprite invalid index on the SpriteBatchNode
+    static const int INDEX_NOT_INITIALIZED = -1; /// Sprite invalid index on the SpriteBatchNode
 
     /// @{
     /// @name Creators
