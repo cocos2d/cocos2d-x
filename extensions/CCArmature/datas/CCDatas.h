@@ -82,12 +82,12 @@ public:
     */
     virtual void subtract(CCBaseData *from, CCBaseData *to);
 
-	virtual void setColor(const ccColor4B &color);
-	virtual ccColor4B getColor();
+    virtual void setColor(const ccColor4B &color);
+    virtual ccColor4B getColor();
 public:
-	float x;					//! position x attribute
-	float y;					//! position y attribute
-	int zOrder;			//! zorder attribute, used to order the CCBone's depth order
+    float x;					//! position x attribute
+    float y;					//! position y attribute
+    int zOrder;			//! zorder attribute, used to order the CCBone's depth order
 
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -157,7 +157,7 @@ public:
     */
     std::string displayName;
 
-	CCBaseData skinData;
+    CCBaseData skinData;
 };
 
 
@@ -228,7 +228,7 @@ public:
     std::string name;                //! the bone's name
     std::string parentName;     //! the bone parent's name
     CCArray displayDataList;    //! save CCDisplayData informations for the CCBone
-	CCAffineTransform boneDataTransform;
+    CCAffineTransform boneDataTransform;
 };
 
 
@@ -251,25 +251,25 @@ public:
 public:
     std::string name;
     CCDictionary boneDataDic;
-	float dataVersion;
+    float dataVersion;
 };
 
 enum CCBlendType
 {
-	BLEND_NORMAL,
-	BLEND_LAYER,
-	BLEND_DARKEN,
-	BLEND_MULTIPLY,
-	BLEND_LIGHTEN,
-	BLEND_SCREEN,
-	BLEND_OVERLAY,
-	BLEND_HARD_LIGHT,
-	BLEND_ADD,
-	BLEND_SUBSTRACT,
-	BLEND_DIFFERENCE,
-	BLEND_INVERT,
-	BLEND_ALPHA,
-	BLEND_ERASE
+    BLEND_NORMAL,
+    BLEND_LAYER,
+    BLEND_DARKEN,
+    BLEND_MULTIPLY,
+    BLEND_LIGHTEN,
+    BLEND_SCREEN,
+    BLEND_OVERLAY,
+    BLEND_HARD_LIGHT,
+    BLEND_ADD,
+    BLEND_SUBSTRACT,
+    BLEND_DIFFERENCE,
+    BLEND_INVERT,
+    BLEND_ALPHA,
+    BLEND_ERASE
 };
 
 
@@ -283,7 +283,7 @@ public:
 
     virtual void copy(CCFrameData *frameData);
 public:
-	int frameID;
+    int frameID;
     int duration;                //! The frame will last duration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
 
@@ -293,9 +293,9 @@ public:
     */
     int displayIndex;
 
-	CCBlendType blendType;
+    CCBlendType blendType;
 
-	std::string strEvent;
+    std::string strEvent;
     /**
     * strMovement, strEvent, strSound, strSoundEffect do not support yet
     */
@@ -319,7 +319,7 @@ public:
     CCFrameData *getFrameData(int index);
 public:
     float delay;             //! movement delay percent, this value can produce a delay effect
-	float scale;             //! scale this movement
+    float scale;             //! scale this movement
     float duration;        //! this CCBone in this movement will last m_iDuration frames
     std::string name;    //! bone name
 
@@ -340,7 +340,7 @@ public:
 public:
     std::string name;
     int duration;        //! the frames this movement will last
-	float scale;		  //! scale this movement
+    float scale;		  //! scale this movement
 
     /**
     * Change to this movement will last durationTo frames. Use this effect can avoid too suddenly changing.
@@ -352,13 +352,13 @@ public:
 
     /*
     * This is different from duration, durationTween contain tween effect.
-	* duration is the raw time that the animation will last, it's the same with the time you edit in the Action Editor.
-	* durationTween is the actual time you want this animation last.
+    * duration is the raw time that the animation will last, it's the same with the time you edit in the Action Editor.
+    * durationTween is the actual time you want this animation last.
     * Example : If we edit 10 frames in the flash, then duration is 10. When we set durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
     */
     int durationTween;
 
-	bool loop;           //! whether the movement was looped
+    bool loop;           //! whether the movement was looped
 
     /**
     * Which tween easing effect the movement use
@@ -422,7 +422,7 @@ public:
     ~CCContourData(void);
 
     virtual bool init();
-	virtual void addVertex(CCPoint *vertex);
+    virtual void addVertex(CCPoint *vertex);
 public:
     CCArray vertexList;	//! Save contour vertex info, vertex saved in a CCPoint
 };
@@ -447,13 +447,13 @@ public:
     CCContourData *getContourData(int index);
 public:
 
-	float height;		//! The texture's width, height
-	float width;
+    float height;		//! The texture's width, height
+    float width;
 
     float pivotX;		//! The texture's anchor point
     float pivotY;
 
-	std::string name;	//! The texture's name
+    std::string name;	//! The texture's name
 
     CCArray contourDataList;
 };

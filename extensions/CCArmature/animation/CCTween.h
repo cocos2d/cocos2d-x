@@ -76,8 +76,14 @@ public:
      */
     virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
-	inline void setAnimation(CCArmatureAnimation *animation) { m_pAnimation = animation; }
-	inline CCArmatureAnimation *getAnimation() const { return m_pAnimation; }
+    inline void setAnimation(CCArmatureAnimation *animation)
+    {
+        m_pAnimation = animation;
+    }
+    inline CCArmatureAnimation *getAnimation() const
+    {
+        return m_pAnimation;
+    }
 protected:
 
     /**
@@ -88,7 +94,7 @@ protected:
     /**
      * Calculate which frame arrived, and if current frame have event, then call the event listener
      */
-    virtual float updateFrameData(float currentPrecent);
+    virtual float updateFrameData(float currentPercent);
 
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
@@ -100,10 +106,10 @@ protected:
      */
     virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
 
-	/**
+    /**
      * According to the percent to calculate current color with tween effect
      */
-	virtual void tweenColorTo(float percent, CCFrameData *node);
+    virtual void tweenColorTo(float percent, CCFrameData *node);
 
     /**
      * Update display index and process the key frame event when arrived a key frame

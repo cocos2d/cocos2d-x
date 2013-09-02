@@ -35,25 +35,25 @@ class CCSkin : public CCSprite
 public:
     static CCSkin *create();
     static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-	static CCSkin *create(const char *pszFileName);
+    static CCSkin *create(const char *pszFileName);
 public:
     CCSkin();
 
-	bool initWithSpriteFrameName(const char *pszSpriteFrameName);
-	bool initWithFile(const char *pszFilename);
+    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+    bool initWithFile(const char *pszFilename);
 
-	void updateArmatureTransform();
+    void updateArmatureTransform();
     void updateTransform();
 
-	CCAffineTransform nodeToWorldTransform();
-	CCAffineTransform nodeToWorldTransformAR();
+    CCAffineTransform nodeToWorldTransform();
+    CCAffineTransform nodeToWorldTransformAR();
 
     CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
     CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 
 protected:
     CCAffineTransform m_tSkinTransform;
-	CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
+    CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
 };
 
 NS_CC_EXT_END
