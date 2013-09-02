@@ -147,7 +147,7 @@ void UISlider::loadProgressBarTexture(const char *fileName, TextureResType texTy
     }
     m_strProgressBarTextureFile = fileName;
     m_eProgressBarTexType = texType;
-    switch (m_eBarTexType)
+    switch (m_eProgressBarTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             if (m_bScale9Enabled)
@@ -260,7 +260,7 @@ void UISlider::loadSlidBallNormalTexture(const char* normal,TextureResType texTy
     }
     m_strSlidBallNormalTextureFile = normal;
     m_eBallNTexType = texType;
-    switch (m_eBarTexType)
+    switch (m_eBallNTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             m_pSlidBallNormalRenderer->initWithFile(normal);
@@ -283,7 +283,7 @@ void UISlider::loadSlidBallPressedTexture(const char* pressed,TextureResType tex
     }
     m_strSlidBallPressedTextureFile = pressed;
     m_eBallPTexType = texType;
-    switch (m_eBarTexType)
+    switch (m_eBallPTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             m_pSlidBallPressedRenderer->initWithFile(pressed);
@@ -306,7 +306,7 @@ void UISlider::loadSlidBallDisabledTexture(const char* disabled,TextureResType t
     }
     m_strSlidBallDisabledTextureFile = disabled;
     m_eBallDTexType = texType;
-    switch (m_eBarTexType)
+    switch (m_eBallDTexType)
     {
         case UI_TEX_TYPE_LOCAL:
             m_pSlidBallDisabledRenderer->initWithFile(disabled);

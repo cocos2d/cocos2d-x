@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
+#include "CCArmature/external_tool/Json/CSContentJsonDictionary.h"
 #include <string>
 
 NS_CC_EXT_BEGIN
@@ -35,10 +36,12 @@ class CCComAttribute : public cocos2d::CCComponent
 {
 protected:
     CCComAttribute(void);
+	CCComAttribute(const char *pszFileName);
     virtual ~CCComAttribute(void);
     
 public:
    virtual bool init();
+   static CCComAttribute* create(const char *pszFileName);
    static CCComAttribute* create(void);
 
    void setInt(const char *key, int value);
@@ -55,9 +58,11 @@ public:
    const char* getCString(const char *key) const;
    CCObject* getObject(const char *key) const;
    
+   cs::CSJsonDictionary* getDict();
 private:
    CCDictionary *m_pAttributes;  
-   
+   cs::CSJsonDictionary *m_pJsonDict;
+   std::string m_strFileName;
 };
 
 NS_CC_EXT_END
