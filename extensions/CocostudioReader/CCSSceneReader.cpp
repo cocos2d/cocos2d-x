@@ -476,7 +476,7 @@ NS_CC_EXT_BEGIN
                     CCComAttribute *pAttribute = NULL;
 					if (nResType == 0)
 					{
-						pAttribute = CCComAttribute::create();
+						pAttribute = CCComAttribute::create(pPath.c_str());
 					}
 					else
 					{
