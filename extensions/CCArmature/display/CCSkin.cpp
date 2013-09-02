@@ -61,45 +61,45 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
 
 CCSkin *CCSkin::create(const char *pszFileName)
 {
-	CCSkin *skin = new CCSkin();
-	if(skin && skin->initWithFile(pszFileName))
-	{
-		skin->autorelease();
-		return skin;
-	}
-	CC_SAFE_DELETE(skin);
-	return NULL;
+    CCSkin *skin = new CCSkin();
+    if(skin && skin->initWithFile(pszFileName))
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
 }
 
 CCSkin::CCSkin()
     : m_pBone(NULL)
-	, m_strDisplayName("")
+    , m_strDisplayName("")
 {
-	m_tSkinTransform = CCAffineTransformIdentity;
+    m_tSkinTransform = CCAffineTransformIdentity;
 }
 
 bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-	bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+    bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
 
-	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-	setTextureAtlas(atlas);
+    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+    setTextureAtlas(atlas);
 
-	m_strDisplayName = pszSpriteFrameName;
+    m_strDisplayName = pszSpriteFrameName;
 
-	return ret;
+    return ret;
 }
 
 bool CCSkin::initWithFile(const char *pszFilename)
 {
-	bool ret = CCSprite::initWithFile(pszFilename);
+    bool ret = CCSprite::initWithFile(pszFilename);
 
-	CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-	setTextureAtlas(atlas);
+    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+    setTextureAtlas(atlas);
 
-	m_strDisplayName = pszFilename;
+    m_strDisplayName = pszFilename;
 
-	return ret;
+    return ret;
 }
 
 void CCSkin::setSkinData(const CCBaseData &var)
@@ -179,20 +179,20 @@ void CCSkin::updateTransform()
 
 CCAffineTransform CCSkin::nodeToWorldTransform()
 {
-	return CCAffineTransformConcat(m_sTransform, m_pBone->getArmature()->nodeToWorldTransform());
+    return CCAffineTransformConcat(m_sTransform, m_pBone->getArmature()->nodeToWorldTransform());
 }
 
 CCAffineTransform CCSkin::nodeToWorldTransformAR()
 {
-	CCAffineTransform displayTransform = m_sTransform;
-	CCPoint anchorPoint =  m_obAnchorPointInPoints;
+    CCAffineTransform displayTransform = m_sTransform;
+    CCPoint anchorPoint =  m_obAnchorPointInPoints;
 
-	anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
-	
-	displayTransform.tx = anchorPoint.x;
-	displayTransform.ty = anchorPoint.y;
+    anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
 
-	return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
+    displayTransform.tx = anchorPoint.x;
+    displayTransform.ty = anchorPoint.y;
+
+    return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
 }
 
 NS_CC_EXT_END

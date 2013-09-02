@@ -218,7 +218,6 @@
     <ClInclude Include="..\CCArmature\physics\CCColliderDetector.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDataManager.h" />
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h" />
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h" />
     <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h" />
     <ClInclude Include="..\CCArmature\utils\CCSpriteFrameCacheHelper.h" />
     <ClInclude Include="..\CCArmature\utils\CCTransformHelp.h" />
