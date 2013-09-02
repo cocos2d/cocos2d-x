@@ -40,13 +40,13 @@
 		15A02F4617A64D1E0035E92B /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F3317A64D1E0035E92B /* menu1.png */; };
 		15A02F4717A64D1E0035E92B /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F3417A64D1E0035E92B /* menu2.png */; };
 		15A02F4D17A64D390035E92B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F4B17A64D390035E92B /* AppDelegate.cpp */; };
-		15A02F7017A64DFB0035E92B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6417A64DFB0035E92B /* AppController.mm */; };
 		15A02F7317A64DFB0035E92B /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F6D17A64DFB0035E92B /* Icon.icns */; };
 		15A02F7417A64DFB0035E92B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F6E17A64DFB0035E92B /* Info.plist */; };
-		15A02F7517A64DFB0035E92B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6F17A64DFB0035E92B /* main.m */; };
+		15A02F7517A64DFB0035E92B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A02F6F17A64DFB0035E92B /* main.cpp */; };
 		15A02F7B17A64E2A0035E92B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7717A64E2A0035E92B /* InfoPlist.strings */; };
 		15A02F7C17A64E2A0035E92B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A02F7917A64E2A0035E92B /* MainMenu.xib */; };
 		1ADB273B17CCA0F500634B5E /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ADB273A17CCA0F500634B5E /* Cocos2d.lua */; };
+		ED4D1B4B17D4460E0058FC68 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D1B4A17D4460E0058FC68 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,16 +216,14 @@
 		15A02F3417A64D1E0035E92B /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
 		15A02F4B17A64D390035E92B /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		15A02F4C17A64D390035E92B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		15A02F6317A64DFB0035E92B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		15A02F6417A64DFB0035E92B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		15A02F6D17A64DFB0035E92B /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		15A02F6E17A64DFB0035E92B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15A02F6F17A64DFB0035E92B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15A02F6F17A64DFB0035E92B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		15A02F7817A64E2A0035E92B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		15A02F7A17A64E2A0035E92B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		15A02F7D17A64EF30035E92B /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		15A02FAA17A65D810035E92B /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1ADB273A17CCA0F500634B5E /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cocos2d.lua; sourceTree = "<group>"; };
+		ED4D1B4A17D4460E0058FC68 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4D1B4B17D4460E0058FC68 /* IOKit.framework in Frameworks */,
 				1501826E17A7513400E674E5 /* libchipmunk Mac.a in Frameworks */,
 				1501821D17A6706400E674E5 /* libcocos2dx Mac.a in Frameworks */,
 				1501821E17A6706400E674E5 /* libcocos2dx-extensions Mac.a in Frameworks */,
@@ -293,6 +292,7 @@
 		15A02E6217A647C90035E92B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED4D1B4A17D4460E0058FC68 /* IOKit.framework */,
 				150181F517A6696400E674E5 /* libcurl.dylib */,
 				150181F317A6695400E674E5 /* libz.dylib */,
 				150181EC17A6679B00E674E5 /* ApplicationServices.framework */,
@@ -359,13 +359,10 @@
 		15A02F6217A64DFB0035E92B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
-				15A02F7D17A64EF30035E92B /* Prefix.pch */,
-				15A02F6317A64DFB0035E92B /* AppController.h */,
-				15A02F6417A64DFB0035E92B /* AppController.mm */,
 				15A02F7617A64E2A0035E92B /* en.lproj */,
 				15A02F6D17A64DFB0035E92B /* Icon.icns */,
 				15A02F6E17A64DFB0035E92B /* Info.plist */,
-				15A02F6F17A64DFB0035E92B /* main.m */,
+				15A02F6F17A64DFB0035E92B /* main.cpp */,
 			);
 			name = Mac;
 			sourceTree = "<group>";
@@ -576,8 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A02F4D17A64D390035E92B /* AppDelegate.cpp in Sources */,
-				15A02F7017A64DFB0035E92B /* AppController.mm in Sources */,
-				15A02F7517A64DFB0035E92B /* main.m in Sources */,
+				15A02F7517A64DFB0035E92B /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
