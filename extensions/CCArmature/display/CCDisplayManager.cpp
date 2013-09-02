@@ -142,7 +142,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
             skin->setSkinData(baseData);
         }
     }
-    else if (CCParticleSystemQuad *particle = dynamic_cast<CCParticleSystemQuad *>(display))
+    else if (dynamic_cast<CCParticleSystemQuad *>(display))
     {
         displayData = CCParticleDisplayData::create();
     }
