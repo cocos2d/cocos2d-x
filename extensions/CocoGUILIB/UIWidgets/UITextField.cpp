@@ -334,6 +334,7 @@ void UITextField::setText(const char* text)
 	}
     std::string strText(text);
     m_pTextFieldRenderer->setString(strText.c_str());
+	textfieldRendererScaleChangedWithSize();
 }
 
 //void UITextField::setSize(const CCSize &size)
@@ -344,16 +345,19 @@ void UITextField::setText(const char* text)
 void UITextField::setPlaceHolder(const char *value)
 {
     m_pTextFieldRenderer->setPlaceHolder(value);
+	textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontSize(int size)
 {
     m_pTextFieldRenderer->setFontSize(size);
+	textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontName(const char *name)
 {
     m_pTextFieldRenderer->setFontName(name);
+	textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::didNotSelectSelf()
