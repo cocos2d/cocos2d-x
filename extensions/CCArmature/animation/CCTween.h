@@ -55,25 +55,19 @@ public:
     /**
      * Start the Process
      *
-     * @param  movementBoneData  the CCMovementBoneData include all frame datas
-     * @param  durationTo the frames between two animation changing-over.
-     *         It's meaning is changing to this animation need how many frames
-     *
-     *         -1 : use the value from CCMovementData get from flash design panel
-     * @param  durationTween  the frame count you want to play in the game.
-     *         if  _durationTween is 80, then the animation will played 80 frames in a loop
-     *
-     *         -1 : use the value from CCMovementData get from flash design panel
+     * @param  movementBoneData  the CCMovementBoneData include all CCFrameData
+     * @param  durationTo the number of frames changing to this animation needs.
+     * @param  durationTween  the number of frames this animation actual last.
      *
      * @param  loop   whether the animation is loop
      *
-     *         loop < 0 : use the value from CCMovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from Action Editor
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
      * @param  tweenEasing    tween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from Action Editor
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -82,8 +76,14 @@ public:
      */
     virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
-	inline void setAnimation(CCArmatureAnimation *animation) { m_pAnimation = animation; }
-	inline CCArmatureAnimation *getAnimation() const { return m_pAnimation; }
+    inline void setAnimation(CCArmatureAnimation *animation)
+    {
+        m_pAnimation = animation;
+    }
+    inline CCArmatureAnimation *getAnimation() const
+    {
+        return m_pAnimation;
+    }
 protected:
 
     /**
@@ -94,7 +94,7 @@ protected:
     /**
      * Calculate which frame arrived, and if current frame have event, then call the event listener
      */
-    virtual float updateFrameData(float currentPrecent, bool activeFrame = false);
+    virtual float updateFrameData(float currentPercent);
 
     /**
      * Calculate the between value of _from and _to, and give it to between frame data
@@ -105,6 +105,11 @@ protected:
      * According to the percent to calculate current CCFrameData with tween effect
      */
     virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
+
+    /**
+     * According to the percent to calculate current color with tween effect
+     */
+    virtual void tweenColorTo(float percent, CCFrameData *node);
 
     /**
      * Update display index and process the key frame event when arrived a key frame
@@ -119,15 +124,12 @@ protected:
     CCFrameData *m_pTo;				//! To frame data, used for calculate between value
     CCFrameData *m_pBetween;			//! Between frame data, used for calculate current CCFrameData(m_pNode) value
 
-    CCFrameData *m_pCurrentKeyFrame;	//! A weak reference to the current CCFrameData. The data is in the data pool
 
     CCBone *m_pBone;					//! A weak reference to the CCBone
 
     CCTweenType m_eFrameTweenEasing;	//! Dedermine which tween effect current frame use
 
-    bool m_bIsTweenKeyFrame;
-
-    int betweenDuration;			//! Current key frame will last betweenDuration frames
+    int m_iBetweenDuration;			//! Current key frame will last m_iBetweenDuration frames
     int m_iTotalDuration;
 
 
@@ -135,6 +137,7 @@ protected:
     int m_iToIndex;					//! The next frame index in FrameList of CCMovementBoneData, it's different from m_iFrameIndex
 
     CCArmatureAnimation *m_pAnimation;
+
 };
 
 NS_CC_EXT_END

@@ -36,29 +36,21 @@ class  CCSpriteFrameCacheHelper
 public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
-    static void purgeSpriteFrameCacheHelper();
+    static void purge();
 public:
 
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
-     *
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    void addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath);
-
-    /**
-     * Get this display in which image
-     */
-    const char *getDisplayImagePath(const char *displayName);
-    CCTextureAtlas *getTextureAtlas(const char *displayName);
+    CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
 private:
     CCSpriteFrameCacheHelper();
     ~CCSpriteFrameCacheHelper();
 
-    std::map<std::string, std::string> m_Display2ImageMap;
-    CCDictionary *m_pDisplay2TextureAtlas;
+    CCDictionary *m_pTextureAtlasDic;
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
