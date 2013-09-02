@@ -115,27 +115,28 @@ UIDragPanel* UIDragPanel::create()
 
 bool UIDragPanel::init()
 {
-    if (UIPanel::init())
+    if (Layout::init())
     {
-        setUpdateEnable(true);
-        setTouchEnable(true);                        
+        setUpdateEnabled(true);
+        setTouchEnabled(true);
+        setClippingEnabled(true);
         return true;
     }
     return false;
 }
 
-void UIDragPanel::initNodes()
+void UIDragPanel::initRenderer()
 {
-    UIPanel::initNodes();
+    Layout::initRenderer();
     
-    m_pInnerContainer = UIContainerWidget::create();
-    UIPanel::addChild(m_pInnerContainer);
+    m_pInnerContainer = Layout::create();
+    Layout::addChild(m_pInnerContainer);
 
 }
 
 void UIDragPanel::releaseResoures()
 {
-    UIPanel::releaseResoures();
+    Layout::releaseResoures();
     m_pInnerContainer->structureChangedEvent();
     m_pInnerContainer->releaseResoures();
     m_pInnerContainer->setWidgetParent(NULL);
@@ -143,27 +144,28 @@ void UIDragPanel::releaseResoures()
     m_pInnerContainer = NULL;
 }
 
-void UIDragPanel::onTouchBegan(const CCPoint &touchPoint)
+bool UIDragPanel::onTouchBegan(const CCPoint &touchPoint)
 {
-    UIPanel::onTouchBegan(touchPoint);
+    bool pass = Layout::onTouchBegan(touchPoint);
     handlePressLogic(touchPoint);
+    return pass;
 }
 
 void UIDragPanel::onTouchMoved(const CCPoint &touchPoint)
 {
-    UIPanel::onTouchMoved(touchPoint);
+    Layout::onTouchMoved(touchPoint);
     handleMoveLogic(touchPoint);
 }
 
 void UIDragPanel::onTouchEnded(const CCPoint &touchPoint)
 {
-    UIPanel::onTouchEnded(touchPoint);
+    Layout::onTouchEnded(touchPoint);
     handleReleaseLogic(touchPoint);
 }
 
 void UIDragPanel::onTouchCancelled(const CCPoint &touchPoint)
 {
-    UIPanel::onTouchCancelled(touchPoint);
+    Layout::onTouchCancelled(touchPoint);
 }
 
 void UIDragPanel::onTouchLongClicked(const CCPoint &touchPoint)
@@ -193,10 +195,6 @@ void UIDragPanel::update(float dt)
 bool UIDragPanel::addChild(UIWidget *widget)
 {
     m_pInnerContainer->addChild(widget);
-    widget->setVisible(checkChildVisibleInParent(this, widget));    
-    
-//    updateWidthAndHeight();
-    
     return true;
 }
 
@@ -217,20 +215,20 @@ void UIDragPanel::removeAllChildrenAndCleanUp(bool cleanup)
     m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
 }
 
-/* gui mark */
-void UIDragPanel::setSize(const CCSize &size)
+CCArray* UIDragPanel::getChildren()
 {
-    UIPanel::setSize(size);
-    float orginInnerSizeWidth = m_pInnerContainer->getWidth();
-    float orginInnerSizeHeight = m_pInnerContainer->getHeight();
-    float innerSizeWidth = MAX(orginInnerSizeWidth, m_fWidth);
-    float innerSizeHeight = MAX(orginInnerSizeHeight, m_fHeight);
-    m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
+    return m_pInnerContainer->getChildren();
 }
 
-CCNode* UIDragPanel::getInnerContainerNode()
+void UIDragPanel::onSizeChanged()
 {
-	return m_pInnerContainer->getContainerNode();
+    Layout::onSizeChanged();
+    CCSize innerSize = m_pInnerContainer->getSize();
+    float orginInnerSizeWidth = innerSize.width;
+    float orginInnerSizeHeight = innerSize.height;
+    float innerSizeWidth = MAX(orginInnerSizeWidth, m_size.width);
+    float innerSizeHeight = MAX(orginInnerSizeHeight, m_size.height);
+    m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
 }
 
 const CCSize& UIDragPanel::getInnerContainerSize() const
@@ -240,9 +238,9 @@ const CCSize& UIDragPanel::getInnerContainerSize() const
 
 void UIDragPanel::setInnerContainerSize(const cocos2d::CCSize &size)
 {
-    float innerSizeWidth = m_fWidth;
-    float innerSizeHeight = m_fHeight;
-    if (size.width < m_fWidth)
+    float innerSizeWidth = m_size.width;
+    float innerSizeHeight = m_size.height;
+    if (size.width < m_size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
     }
@@ -250,7 +248,7 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::CCSize &size)
     {
         innerSizeWidth = size.width;
     }
-    if (size.height < m_fHeight)
+    if (size.height < m_size.height)
     {
         CCLOG("Inner height <= scrollview height, it will be force sized!");
     }
@@ -259,7 +257,7 @@ void UIDragPanel::setInnerContainerSize(const cocos2d::CCSize &size)
         innerSizeHeight = size.height;
     }
     m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(ccp(0, m_fHeight - m_pInnerContainer->getHeight()));
+    m_pInnerContainer->setPosition(ccp(0, m_size.height - m_pInnerContainer->getSize().height));
 }
 
 const CCPoint& UIDragPanel::getInnerContainerPosition() const
@@ -442,7 +440,7 @@ void UIDragPanel::handleMoveLogic(const CCPoint &touchPoint)
     if (m_bBounceEnable)
     {
         // bounce
-        if (!pointAtSelfBody(touchPoint))
+        if (!hitTest(touchPoint))
         {
             m_bTouchMoved = false;
             
@@ -519,7 +517,7 @@ void UIDragPanel::handleReleaseLogic(const CCPoint &touchPoint)
         return;
     }
     
-    if (pointAtSelfBody(touchPoint))
+    if (hitTest(touchPoint))
     {
         m_touchEndWorldSpace = touchPoint;
         startAutoMove();
@@ -558,6 +556,13 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const C
             break;
     }
 }
+
+/* gui mark */
+//bool UIDragPanel::isInScrollDegreeRange(UIWidget *widget)
+//{
+//    return false;
+//}
+/**/
 
 /*
 void UIDragPanel::setDirection(DRAGPANEL_DIR dir)
@@ -600,10 +605,10 @@ void UIDragPanel::recordSlidTime(float dt)
 // check if dragpanel rect contain inner rect
 bool UIDragPanel::checkContainInnerRect()
 {
-    float width = getRect().size.width;
-    float height = getRect().size.height;
-    float innerWidth = m_pInnerContainer->getRect().size.width;
-    float innerHeight = m_pInnerContainer->getRect().size.height;
+    float width = m_size.width;
+    float height = m_size.height;
+    float innerWidth = m_pInnerContainer->getSize().width;
+    float innerHeight = m_pInnerContainer->getSize().height;
     
     if (innerWidth <= width && innerHeight <= height)
     {
@@ -618,14 +623,6 @@ void UIDragPanel::moveWithDelta(const CCPoint &delta)
 {    
     CCPoint newPos = ccpAdd(m_pInnerContainer->getPosition(), delta);
     m_pInnerContainer->setPosition(newPos);
-    
-    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
-    int childrenCount = arrayChildren->num;
-    for (int i = 0; i < childrenCount; ++i)
-    {
-        UIWidget* child = dynamic_cast<UIWidget*>(arrayChildren->arr[i]);
-        child->setVisible(checkChildVisibleInParent(this, child));
-    }
 }
 
 // auto move
@@ -701,8 +698,8 @@ bool UIDragPanel::checkToBoundaryWithDeltaPosition(const CCPoint&  delta)
     float innerBottom = m_pInnerContainer->getRelativeBottomPos();
     
     float left = 0;
-    float top = getRect().size.height;
-    float right = getRect().size.width;
+    float top = m_size.height;
+    float right = m_size.width;
     float bottom = 0;
     
     bool toLeftBottom = false;
@@ -764,8 +761,8 @@ CCPoint UIDragPanel::calculateToBoundaryDeltaPosition(const CCPoint& paramDelta)
     float innerBottom = m_pInnerContainer->getRelativeBottomPos();
     
     float left = 0;
-    float top = getRect().size.height;
-    float right = getRect().size.width;
+    float top = m_size.height;
+    float right = m_size.width;
     float bottom = 0;
     
     CCPoint delta = paramDelta;
@@ -824,8 +821,8 @@ bool UIDragPanel::checkBerth()
     float innerBottom = m_pInnerContainer->getRelativeBottomPos();
     
     float left = 0;
-    float top = getRect().size.height;
-    float right = getRect().size.width;
+    float top = m_size.height;
+    float right = m_size.width;
     float bottom = 0;
     
     if (innerLeft == left && innerBottom == bottom) // left bottom
@@ -1042,8 +1039,8 @@ bool UIDragPanel::checkNeedBounce()
     float innerBottom = m_pInnerContainer->getRelativeBottomPos();
     
     float left = 0;
-    float top = getRect().size.height;
-    float right = getRect().size.width;
+    float top = m_size.height;
+    float right = m_size.width;
     float bottom = 0;        
     
     bool need = ((innerLeft > left && innerBottom > bottom)
@@ -1081,8 +1078,8 @@ void UIDragPanel::bounceToCorner()
     float innerRight = m_pInnerContainer->getRelativeRightPos();
     float innerBottom = m_pInnerContainer->getRelativeBottomPos();
     
-    float width = getRect().size.width;
-    float height = getRect().size.height;
+    float width = m_size.width;
+    float height = m_size.height;
     float left = 0;
     float top = height;
     float right = width;
@@ -1405,14 +1402,6 @@ void UIDragPanel::actionUpdate(float dt)
             
         default:
             break;
-    }
-    
-    ccArray* arrayChildren = m_pInnerContainer->getChildren()->data;
-    int childrenCount = arrayChildren->num;
-    for (int i = 0; i < childrenCount; ++i)
-    {
-        UIWidget* child = dynamic_cast<UIWidget*>(arrayChildren->arr[i]);
-        child->setVisible(checkChildVisibleInParent(this, child));
     }
 }
 

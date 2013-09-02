@@ -38,43 +38,106 @@ typedef enum
 class UILoadingBar : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UILoadingBar();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UILoadingBar();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UILoadingBar* create();
+    
+    /**
+     * Changes the progress direction of loadingbar.
+     *
+     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     *
+     * @param LoadingBarType
+     */
     void setDirection(LoadingBarType dir);
+    
+    /**
+     * Gets the progress direction of loadingbar.
+     *
+     * @see LoadingBarType  LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
+     *
+     * @param LoadingBarType
+     */
     int getDirection();
-    void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    /* gui mark */
-    void setScale9Enable(bool able);
-    void setCapInsets(const CCRect &capInsets);
-    void setScale9Size(const CCSize &size);
-    /**/
+    
+    /**
+     * Load texture for loadingbar.
+     *
+     * @param fileName   file name of texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Changes the progress direction of loadingbar.
+     *
+     * @param percent    percent value from 1 to 100.
+     */
     void setPercent(int percent);
+    
+    /**
+     * Gets the progress direction of loadingbar.
+     *
+     * @return percent    percent value from 1 to 100.
+     */
     int getPercent();
-    float getTotalWidth();
-    float getTotalHeight();
-    virtual CCNode* getValidNode();
+    
+    /**
+     * Sets if loadingbar is using scale9 renderer.
+     *
+     * @param true that using scale9 renderer, false otherwise.
+     */
+    void setScale9Enabled(bool enabled);
+    
+    /**
+     * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for loadingbar
+     */
+    void setCapInsets(const CCRect &capInsets);
+    
+    //override "ignoreContentAdaptWithSize" method of widget.
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    //override "getContentSize" method of widget.
+    virtual const CCSize& getContentSize() const;
+    
+    //override "getVirtualRenderer" method of widget.
+    virtual CCNode* getVirtualRenderer();
+    
+    /*Compatible*/
+    void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(texture,texType);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    void setScale9Enable(bool is){setScale9Enabled(is);};
+    /************/
 protected:
-    virtual void initNodes();
+    virtual void initRenderer();
+    virtual void onSizeChanged();
     void setScale9Scale();
+    void barRendererScaleChangedWithSize();
 protected:
     LoadingBarType m_nBarType;
     int m_nPercent;
     float m_fTotalLength;
-    float m_fBarHeight;
-    /* gui mark */
-    bool m_bScale9Enable;
-    CCRect m_capInsets;
-    CCSize m_scale9Size;
-    std::string m_strTextureFile;
-    /**/
-    /* gui mark */
-    CCNode* m_pRenderBar;
-    // before
-//    CCSprite* m_pRenderBar;
-    /**/
+    CCNode* m_pBarRenderer;
     TextureResType m_eRenderBarTexType;
-//    bool m_bUseSpriteFrame;
+    CCSize m_barRendererTextureSize;
+    bool m_bScale9Enabled;
+    bool m_bPrevIgnoreSize;
+    CCRect m_capInsets;
+    std::string m_strTextureFile;
 };
 
 NS_CC_EXT_END

@@ -1,10 +1,10 @@
 
 
 #include "CocosGUIExamplesScene.h"
+#include "CocosGUIExamplesRegisterScene.h"
 #include "CocosGUIScene.h"
 
-
-const char* weapon_introduce_text[31] =
+const char* weapon_introduce_text_examples[31] =
 {
 	"Chinese: 1",
 	"Japanese: 2",
@@ -42,34 +42,36 @@ const char* weapon_introduce_text[31] =
 
 CocosGUIExamplesScene::CocosGUIExamplesScene(bool bPortrait)
 {
-	TestScene::init();
+	CCScene::init();
 }
 
 CocosGUIExamplesScene::~CocosGUIExamplesScene()
 {
-	cocos2d::extension::CCSSceneReader::purgeSceneReader();
-	cocos2d::extension::UIActionManager::purgeUIActionManager();
-	cocos2d::extension::UIHelper::purgeUIHelper();
+    m_pUILayer->removeFromParent();
+    
+    CCSSceneReader::purgeSceneReader();
+    UIHelper::purgeUIHelper();
+	UIActionManager::purgeUIActionManager();
 }
 
 void CocosGUIExamplesScene::onEnter()
 {
-    TestScene::onEnter();
+    CCScene::onEnter();
     
-    ul = UILayer::create();
-    ul->scheduleUpdate();
-    this->addChild(ul);
+    m_pUILayer = UILayer::create();
+    m_pUILayer->scheduleUpdate();
+    addChild(m_pUILayer);
     
     // ui init
     ExamplesInit();
     
-    // exit
-    UIButton* exit = UIButton::create();
-    exit->setTextures("cocosgui/CloseNormal.png", "cocosgui/CloseSelected.png", "");
-    exit->setPosition(ccp(430, 60));
-    exit->setTouchEnable(true);
-    exit->addReleaseEvent(this, coco_releaseselector(CocosGUIExamplesScene::toCocosGUITestScene));
-    ul->addWidget(exit);
+    // back button
+    UIButton* back_button = UIButton::create();
+    back_button->setTouchEnable(true);
+    back_button->loadTextures("cocosgui/UITest/b1.png", "cocosgui/UITest/b2.png", "");
+    back_button->setPosition(ccp(back_button->getContentSize().width, back_button->getContentSize().height));
+    back_button->addReleaseEvent(this, coco_releaseselector(CocosGUIExamplesScene::toCocosGUIExamplesRegisterScene));
+    m_pUILayer->addWidget(back_button);    
 }
 
 void CocosGUIExamplesScene::onExit()
@@ -82,31 +84,20 @@ void CocosGUIExamplesScene::runThisTest()
 	CCDirector::sharedDirector()->replaceScene(this);
 }
 
-void CocosGUIExamplesScene::MainMenuCallback(CCObject* pSender)
+void CocosGUIExamplesScene::toCocosGUIExamplesRegisterScene(CCObject *pSender)
 {
-    ul->removeFromParent();
-	TestScene::MainMenuCallback(pSender);
-}
-
-void CocosGUIExamplesScene::toCocosGUITestScene(CCObject *pSender)
-{
-    ul->removeFromParent();
-    
-    CocosGUITestScene *pScene = new CocosGUITestScene();
-    if (pScene)
-    {
-        pScene->runThisTest();
-        pScene->release();
-    }
+    CocosGUIExamplesRegisterScene* pScene = new CocosGUIExamplesRegisterScene();
+    pScene->runThisTest();
+    pScene->release();
 }
 
 // ui
 void CocosGUIExamplesScene::ExamplesInit()
 {
     // example root
-    UIWidget* example_root = CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/examples_1.json");
+    UIWidget* example_root = CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/examples.json");
     example_root->setWidgetTag(EXAMPLE_PANEL_TAG_ROOT);
-    ul->addWidget(example_root);
+    m_pUILayer->addWidget(example_root);
     
     // example button initialize
     ExamplesButtonPanelInit();
@@ -122,7 +113,7 @@ void CocosGUIExamplesScene::ExamplesInit()
 void CocosGUIExamplesScene::ExamplesButtonPanelInit()
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // examples initialize
     UIPanel* button_panel = dynamic_cast<UIPanel*>(example_root->getChildByName("button_panel")); 
@@ -137,7 +128,7 @@ void CocosGUIExamplesScene::ExamplesButtonPanelInit()
 void CocosGUIExamplesScene::ExamplesShowEquip(CCObject* pSender)
 {    
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // equip
     UIPanel* equip_root = dynamic_cast<UIPanel*>(example_root->getChildByName("equip_root"));
@@ -151,7 +142,7 @@ void CocosGUIExamplesScene::ExamplesShowEquip(CCObject* pSender)
 void CocosGUIExamplesScene::ExamplesShowWeapon(CCObject* pSender)
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // examples button panel
     UIPanel* button_panel = dynamic_cast<UIPanel*>(example_root->getChildByName("button_panel"));
@@ -164,18 +155,19 @@ void CocosGUIExamplesScene::ExamplesShowWeapon(CCObject* pSender)
     // weapon reset
     // introduce panel
     UIPanel* weapon_introduce_panel = dynamic_cast<UIPanel*>(weapon_root->getChildByName("introduce_panel"));
-    UITextArea* weapon_introduce_text = dynamic_cast<UITextArea*>(weapon_introduce_panel->getChildByName("introduce_text"));
-    weapon_introduce_text->setText("Please touch weapon icon to watch introduce,and scroll panel to check more");
+    UITextArea* weapon_introduce_text_examples = dynamic_cast<UITextArea*>(weapon_introduce_panel->getChildByName("introduce_text"));
+    weapon_introduce_text_examples->setText("Please touch weapon icon to watch introduce,and scroll panel to check more");
     
     // weapon panel
     UIPanel* weapon_panel = dynamic_cast<UIPanel*>(weapon_root->getChildByName("weapon_panel"));
     
     // weapon scrollview
-    UIScrollView* weapon_scrlv = dynamic_cast<UIScrollView*>(weapon_panel->getChildByName("weapon_scrollview"));    
+    UIScrollView* weapon_scrlv = dynamic_cast<UIScrollView*>(weapon_panel->getChildByName("weapon_scrollview"));
+    UIContainerWidget* innerContainer = dynamic_cast<UIContainerWidget*>(weapon_scrlv->getInnerContainer());
     CCObject* obj = NULL;
-    CCARRAY_FOREACH(weapon_scrlv->getChildren(), obj)
+    CCARRAY_FOREACH(innerContainer->getChildren(), obj)
     {
-        UIPanel* item = dynamic_cast<UIPanel*>(obj);
+        UIPanel* item = dynamic_cast<UIPanel*>(obj);                
         
         UIImageView* normal = dynamic_cast<UIImageView*>(item->getChildByName("normal"));
         normal->setVisible(true);
@@ -221,7 +213,7 @@ void CocosGUIExamplesScene::EquipInit()
     //    
     
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // equip root
     UIPanel* equipe_root = dynamic_cast<UIPanel*>(example_root->getChildByName("equip_root"));
@@ -336,7 +328,7 @@ void CocosGUIExamplesScene::EquipCreate()
 
 void CocosGUIExamplesScene::EquipCreateClothes()
 {
-    UIPanel* clothes_panel = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EQUIP_PANEL_TAG_CLOTHES));
+    UIPanel* clothes_panel = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EQUIP_PANEL_TAG_CLOTHES));
     
     // clothes
     float parent_w = clothes_panel->getRect().size.width;
@@ -381,8 +373,8 @@ void CocosGUIExamplesScene::EquipCreateClothes()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(jacket_iv->getPosition()))
+            
+            if (slot->hitTest(jacket_iv->getPosition()))
             {
                 jacket_iv->setPosition(CCPointZero);
                 slot->addChild(jacket_iv);
@@ -427,8 +419,7 @@ void CocosGUIExamplesScene::EquipCreateClothes()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(kimono_iv->getPosition()))
+            if (slot->hitTest(kimono_iv->getPosition()))
             {
                 kimono_iv->setPosition(CCPointZero);
                 slot->addChild(kimono_iv);
@@ -442,7 +433,7 @@ void CocosGUIExamplesScene::EquipCreateClothes()
 
 void CocosGUIExamplesScene::EquipCreateWeapons()
 {
-    UIPanel* weapons_panel = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EQUIP_PANEL_TAG_WEAPONS));
+    UIPanel* weapons_panel = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EQUIP_PANEL_TAG_WEAPONS));
     
     // weapons
     float parent_w = weapons_panel->getRect().size.width;
@@ -484,8 +475,7 @@ void CocosGUIExamplesScene::EquipCreateWeapons()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(sword_iv->getPosition()))
+            if (slot->hitTest(sword_iv->getPosition()))
             {
                 sword_iv->setPosition(CCPointZero);
                 slot->addChild(sword_iv);
@@ -530,8 +520,7 @@ void CocosGUIExamplesScene::EquipCreateWeapons()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(arrow_iv->getPosition()))
+            if (slot->hitTest(arrow_iv->getPosition()))
             {
                 arrow_iv->setPosition(CCPointZero);
                 slot->addChild(arrow_iv);
@@ -572,13 +561,12 @@ void CocosGUIExamplesScene::EquipCreateWeapons()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(bomb_iv->getPosition()))
+            if (slot->hitTest(bomb_iv->getPosition()))
             {
                 bomb_iv->setPosition(CCPointZero);
                 slot->addChild(bomb_iv);
                 break;
-            }
+            }            
         }
         
         m_dicEquipWeapons->setObject(bomb_iv, bomb_iv->getName());
@@ -587,7 +575,7 @@ void CocosGUIExamplesScene::EquipCreateWeapons()
 
 void CocosGUIExamplesScene::EquipCreatePets()
 {
-    UIPanel* pets_panel = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EQUIP_PANEL_TAG_PETS));
+    UIPanel* pets_panel = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EQUIP_PANEL_TAG_PETS));
     
     // pets
     float parent_w = pets_panel->getRect().size.width;
@@ -625,13 +613,12 @@ void CocosGUIExamplesScene::EquipCreatePets()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(dragon_iv->getPosition()))
+            if (slot->hitTest(dragon_iv->getPosition()))
             {
                 dragon_iv->setPosition(CCPointZero);
                 slot->addChild(dragon_iv);
                 break;
-            }
+            }            
         }
         
         m_dicEquipPets->setObject(dragon_iv, dragon_iv->getName());
@@ -667,13 +654,12 @@ void CocosGUIExamplesScene::EquipCreatePets()
         {
             UIWidget* slot = dynamic_cast<UIWidget*>(obj);
             slot->setCascadeColorEnabled(false);
-            CCRect slot_rect = slot->getRelativeRect();
-            if (slot_rect.containsPoint(crab_iv->getPosition()))
+            if (slot->hitTest(crab_iv->getPosition()))
             {
                 crab_iv->setPosition(CCPointZero);
                 slot->addChild(crab_iv);
                 break;
-            }
+            }            
         }
         
         m_dicEquipPets->setObject(crab_iv, crab_iv->getName());
@@ -687,7 +673,7 @@ void CocosGUIExamplesScene::EquipSwitchBtnCallBack(CCObject *pSender)
     UIButton* button = dynamic_cast<UIButton*>(pSender);
     
     // equip root
-    UIPanel* root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EQUIP_PANEL_TAG_ROOT));
+    UIPanel* root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EQUIP_PANEL_TAG_ROOT));
     
     // equip repertory
     UIPanel* clothes_panel = dynamic_cast<UIPanel*>(root->getChildByTag(EQUIP_PANEL_TAG_CLOTHES));
@@ -784,7 +770,7 @@ void CocosGUIExamplesScene::EquipTouch(CCObject *pSender)
     lastWidgetParent = widget->getWidgetParent();
     widget->removeFromParentAndCleanup(false);
     
-    ul->addWidget(widget);
+    m_pUILayer->addWidget(widget);
     
     widget->setPosition(widget->getTouchStartPos());
     movePoint = widget->getTouchStartPos();
@@ -897,7 +883,7 @@ void CocosGUIExamplesScene::EquipDrop(CCObject *pSender)
         }
         
         // equip up panel
-        UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+        UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
         UIPanel* equipe_root = dynamic_cast<UIPanel*>(example_root->getChildByName("equip_root"));
         UIPanel* up_panel = dynamic_cast<UIPanel*>(equipe_root->getChildByName("UP"));
         up_panel->setTouchEnable(false, true);        
@@ -940,7 +926,7 @@ void CocosGUIExamplesScene::EquipBackOver(CCObject *pObject)
     }
     
     // equip up panel
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     UIPanel* equipe_root = dynamic_cast<UIPanel*>(example_root->getChildByName("equip_root"));
     UIPanel* up_panel = dynamic_cast<UIPanel*>(equipe_root->getChildByName("UP"));
     up_panel->setTouchEnable(true, true);
@@ -949,7 +935,7 @@ void CocosGUIExamplesScene::EquipBackOver(CCObject *pObject)
 void CocosGUIExamplesScene::EquipClose(CCObject* pObject)
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // equip
     UIPanel* equip_root = dynamic_cast<UIPanel*>(example_root->getChildByName("equip_root"));
@@ -964,7 +950,7 @@ void CocosGUIExamplesScene::EquipClose(CCObject* pObject)
 void CocosGUIExamplesScene::WeaponInit()
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // weapon
     UIPanel* weapon_root = dynamic_cast<UIPanel*>(example_root->getChildByName("weapon_root"));
@@ -987,22 +973,23 @@ void CocosGUIExamplesScene::WeaponInit()
 void CocosGUIExamplesScene::WeaponCreate()
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // weapon root
     UIPanel* weapon_root = dynamic_cast<UIPanel*>(example_root->getChildByName("weapon_root"));
-    weapon_root->setWidgetTag(WEAPON_PANEL_TAG_ROOT);    
+    weapon_root->setWidgetTag(WEAPON_PANEL_TAG_ROOT);
     
     // weapon panel
     UIPanel* weapon_panel = dynamic_cast<UIPanel*>(weapon_root->getChildByName("weapon_panel"));
     
     // weapon scrollview
-    UIScrollView* weapon_scrlv = dynamic_cast<UIScrollView*>(weapon_panel->getChildByName("weapon_scrollview"));
-    float weapon_scrlv_width = weapon_scrlv->getRect().size.width;
-    float weapon_scrlv_height = weapon_scrlv->getRect().size.height;
+    UIScrollView* weapon_scrlv = dynamic_cast<UIScrollView*>(weapon_panel->getChildByName("weapon_scrollview"));    
+    
+    float weapon_scrlv_inner_width = weapon_scrlv->getInnerContainerSize().width;
+    float weapon_scrlv_inner_height = weapon_scrlv->getInnerContainerSize().height;
     
     // weapon item create
-    int dataLength = sizeof(weapon_introduce_text) / sizeof(weapon_introduce_text[0]);
+    int dataLength = sizeof(weapon_introduce_text_examples) / sizeof(weapon_introduce_text_examples[0]);
     int columnMax = 4;
     int mod = dataLength % columnMax;
     int rowMax = dataLength / columnMax;
@@ -1011,7 +998,7 @@ void CocosGUIExamplesScene::WeaponCreate()
         rowMax += 1;
     }
     
-    for (int i = 0; i  < rowMax; ++i)
+    for (int i = 0; i < rowMax; ++i)
     {
         bool isBreak_i = false;
         
@@ -1028,18 +1015,17 @@ void CocosGUIExamplesScene::WeaponCreate()
             if (isBreak_j)
             {
                 break;
-            }
+            }            
             
-            
-            UIPanel* item = dynamic_cast<UIPanel*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/weapon_introduce/weapon_item/weapon_item_1.json"));
+            UIPanel* item = dynamic_cast<UIPanel*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/examples/weapon_introduce/weapon_item_1/weapon_item_1.json"));
             item->setWidgetTag(WEAPON_ITEM_PANEL_TAG + i * columnMax + j);
             
             float width = item->getRect().size.width;
             float height = item->getRect().size.height;
             float interval_x = width / 10;
             float interval_y = height / 10;
-            float start_x = weapon_scrlv_width / 25;
-            float start_y = weapon_scrlv_height - height;
+            float start_x = weapon_scrlv_inner_width / 25;
+            float start_y = weapon_scrlv_inner_height - (height + height / 9);
             float x = start_x + j * (width + interval_x);
             float y = start_y - i * (height + interval_y);
             item->setPosition(ccp(x, y));
@@ -1073,9 +1059,9 @@ void CocosGUIExamplesScene::WeaponItemTouch(CCObject* pObject)
     UIPanel* item = dynamic_cast<UIPanel*>(widget->getWidgetParent());
     
     // weapon scrollview
-    UIScrollView* scrollview = dynamic_cast<UIScrollView*>(item->getWidgetParent());
+    UIContainerWidget* innerContainer = dynamic_cast<UIContainerWidget*>(item->getWidgetParent());
     CCObject* obj = NULL;
-    CCARRAY_FOREACH(scrollview->getChildren(), obj)
+    CCARRAY_FOREACH(innerContainer->getChildren(), obj)
     {
         UIPanel* item = dynamic_cast<UIPanel*>(obj);
         
@@ -1100,7 +1086,7 @@ void CocosGUIExamplesScene::WeaponItemTouch(CCObject* pObject)
 void CocosGUIExamplesScene::WeaponItemShowDetail(UIWidget* widget)
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // weapon
     UIPanel* weapon_root = dynamic_cast<UIPanel*>(example_root->getChildByName("weapon_root"));
@@ -1108,13 +1094,13 @@ void CocosGUIExamplesScene::WeaponItemShowDetail(UIWidget* widget)
     UIPanel* introduce_panel = dynamic_cast<UIPanel*>(weapon_root->getChildByName("introduce_panel"));
     UITextArea* introduce_text = dynamic_cast<UITextArea*>(introduce_panel->getChildByName("introduce_text"));
         
-    introduce_text->setText(weapon_introduce_text[widget->getWidgetTag() - WEAPON_ITEM_PANEL_TAG]);
+    introduce_text->setText(weapon_introduce_text_examples[widget->getWidgetTag() - WEAPON_ITEM_PANEL_TAG]);
 }
 
 void CocosGUIExamplesScene::WeaponClose(CCObject* pObject)
 {
     // examples root
-    UIWidget* example_root = dynamic_cast<UIPanel*>(ul->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
+    UIWidget* example_root = dynamic_cast<UIPanel*>(m_pUILayer->getWidgetByTag(EXAMPLE_PANEL_TAG_ROOT));
     
     // weapon
     UIPanel* weapon_root = dynamic_cast<UIPanel*>(example_root->getChildByName("weapon_root"));

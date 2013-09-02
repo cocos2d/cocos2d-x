@@ -159,7 +159,7 @@ void UIActionNode::RunAction(float fUnitTime, bool bloop)
 		return;
 	}	
 
-	CCArray* actionFrame = new CCArray();
+	CCArray* actionFrame = CCArray::create();
 
 	for ( int i = 0; i < frameNum; i++ )
 	{

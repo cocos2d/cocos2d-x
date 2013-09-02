@@ -27,9 +27,8 @@
 NS_CC_EXT_BEGIN
 
 UITextButton::UITextButton():
-m_pTextLable(NULL)
+m_pTextLableRenderer(NULL)
 {
-    m_WidgetName = WIDGET_TEXTBUTTON;
 }
 
 UITextButton::~UITextButton()
@@ -52,16 +51,8 @@ bool UITextButton::init()
 {
     if (UIButton::init())
     {
-        m_pTextLable = CCLabelTTF::create();
-        m_pRender->addChild(m_pTextLable);
-        
-        CCRGBAProtocol* renderRGBA = dynamic_cast<CCRGBAProtocol*>(m_pRender);
-        if (renderRGBA)
-        {
-            renderRGBA->setCascadeColorEnabled(false);
-            renderRGBA->setCascadeOpacityEnabled(false);
-        }
-        
+        m_pTextLableRenderer = CCLabelTTF::create();
+        m_pRenderer->addChild(m_pTextLableRenderer);
         return true;
     }
     return false;
@@ -74,41 +65,40 @@ void UITextButton::setText(const char* text)
 		return;
 	}
     std::string strText(text);
-    m_pTextLable->setString(strText.c_str());
+    m_pTextLableRenderer->setString(strText.c_str());
 }
 
 void UITextButton::setTextColor(int r,int g,int b)
 {
-    m_pTextLable->setColor(ccc3(r, g, b));
+    m_pTextLableRenderer->setColor(ccc3(r, g, b));
 }
 
 void UITextButton::setFontSize(int size)
 {
-    m_pTextLable->setFontSize(size);
+    m_pTextLableRenderer->setFontSize(size);
 }
 
 void UITextButton::setFontName(const char *fontName)
 {
-    m_pTextLable->setFontName(fontName);
+    m_pTextLableRenderer->setFontName(fontName);
 }
 
 void UITextButton::setFlipX(bool flipX)
 {
     UIButton::setFlipX(flipX);
-    m_pTextLable->setFlipX(flipX);
+    m_pTextLableRenderer->setFlipX(flipX);
 }
 
 void UITextButton::setFlipY(bool flipY)
 {
     UIButton::setFlipY(flipY);
-    m_pTextLable->setFlipY(flipY);
+    m_pTextLableRenderer->setFlipY(flipY);
 }
 
 void UITextButton::setAnchorPoint(const CCPoint &pt)
 {
     UIButton::setAnchorPoint(pt);
-    m_pTextLable->setPosition(ccp(m_pButtonNormal->getContentSize().width*(0.5f-m_pButtonNormal->getAnchorPoint().x), m_pButtonNormal->getContentSize().height*(0.5f-m_pButtonNormal->getAnchorPoint().y)));
+    m_pTextLableRenderer->setPosition(ccp(m_pButtonNormalRenderer->getContentSize().width*(0.5f-m_pButtonNormalRenderer->getAnchorPoint().x), m_pButtonNormalRenderer->getContentSize().height*(0.5f-m_pButtonNormalRenderer->getAnchorPoint().y)));
 }
-
 
 NS_CC_EXT_END

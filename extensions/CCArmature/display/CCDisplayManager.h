@@ -131,7 +131,7 @@ protected:
     //! Current display index
     int m_iDisplayIndex;
 
-    CC_SYNTHESIZE_PASS_BY_REF(bool, m_bForceChangeDisplay, ForceChangeDisplay)
+    CC_SYNTHESIZE(bool, m_bForceChangeDisplay, ForceChangeDisplay)
 
     //! Whether of not the bone is visible. Default is true
     bool m_bVisible;

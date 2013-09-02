@@ -28,7 +28,6 @@ NS_CC_EXT_BEGIN
 
 UIRootWidget::UIRootWidget()
 {
-    m_WidgetName = WIDGET_ROOTWIDGET;
 }
 
 UIRootWidget::~UIRootWidget()
@@ -49,8 +48,9 @@ UIRootWidget* UIRootWidget::create()
 
 bool UIRootWidget::init()
 {
-    if (UIContainerWidget::init())
+    if (Layout::init())
     {
+        setSize(CCDirector::sharedDirector()->getWinSize());
         return true;
     }
     return false;

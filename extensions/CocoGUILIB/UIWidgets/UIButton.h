@@ -32,46 +32,148 @@ NS_CC_EXT_BEGIN
 class UIButton : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UIButton();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UIButton();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UIButton* create();
-    virtual void initPressState(WidgetState state);
-    virtual void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load textures for button.
+     *
+     * @param normal    normal state texture.
+     *
+     * @param selected    selected state texture.
+     *
+     * @param disabled    dark state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load normal state texture for button.
+     *
+     * @param normal    normal state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load selected state texture for button.
+     *
+     * @param selected    selected state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Load dark state texture for button.
+     *
+     * @param disabled    dark state texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Sets capinsets for button, if button is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for button
+     */
     void setCapInsets(const CCRect &capInsets);
-    virtual CCNode* getValidNode();
+    
+    //override "setAnchorPoint" of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void setScale9Enable(bool able);
-    virtual void setScale9Size(const CCSize &size);
+    
+    /**
+     * Sets if button is using scale9 renderer.
+     *
+     * @param true that using scale9 renderer, false otherwise.
+     */
+    virtual void setScale9Enabled(bool able);
+    
+    //override "setFlipX" of widget.
     virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" of widget.
     virtual void setFlipY(bool flipY);
+    
+    //override "isFlipX" of widget.
     virtual bool isFlipX();
+    
+    //override "isFlipY" of widget.
     virtual bool isFlipY();
+    
+    /**
+     * Changes if button can be clicked zoom effect.
+     *
+     * @param true that can be clicked zoom effect, false otherwise.
+     */
+    void setPressedActionEnabled(bool enabled);
+    
+    //override "ignoreContentAdaptWithSize" method of widget.
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    //override "getContentSize" method of widget.
+    virtual const CCSize& getContentSize() const;
+    
+    //override "getVirtualRenderer" method of widget.
+    virtual CCNode* getVirtualRenderer();
+    
     virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
     virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
     virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
-    virtual void setColor(const ccColor3B &color);
+    
+    
+    /*Compatible*/
+    void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
+    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadNormalTexture(normal,texType);};
+    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadPressedTexture(selected,texType);};
+    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadDisabledTexture(disabled,texType);};
+    void setScale9Enable(bool able){setScale9Enabled(able);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    /************/
+
 protected:
     virtual bool init();
-    virtual void initNodes();
+    virtual void initRenderer();
     virtual void onPressStateChangedToNormal();
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
+    virtual void onSizeChanged();
+    
+    void normalTextureScaleChangedWithSize();
+    void pressedTextureScaleChangedWithSize();
+    void disabledTextureScaleChangedWithSize();
 protected:
-    CCNode* m_pButtonNormal;
-    CCNode* m_pButtonClicked;
-    CCNode* m_pButtonDisable;
+    CCNode* m_pButtonNormalRenderer;
+    CCNode* m_pButtonClickedRenderer;
+    CCNode* m_pButtonDisableRenderer;
     std::string m_strNormalFileName;
     std::string m_strClickedFileName;
     std::string m_strDisabledFileName;
-    bool m_bScale9Enable;
+    bool m_bPrevIgnoreSize;
+    bool m_bScale9Enabled;
     CCRect m_capInsets;
-    CCSize m_scale9Size;
     TextureResType m_eNormalTexType;
     TextureResType m_ePressedTexType;
     TextureResType m_eDisabledTexType;
+    CCSize m_normalTextureSize;
+    CCSize m_pressedTextureSize;
+    CCSize m_disabledTextureSize;
+    bool m_bPressedActionEnabled;
 };
 
 NS_CC_EXT_END

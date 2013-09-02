@@ -27,15 +27,13 @@
 NS_CC_EXT_BEGIN
 
 UILabel::UILabel():
-m_bTouchScaleChangeAble(false),
-m_nGravity(LabelGravityCenter),
+m_bTouchScaleChangeEnabled(false),
 m_sFontName("Thonburi"),
 m_nFontSize(10),
 m_fOnSelectedScaleOffset(0.5),
 m_fNormalScaleValue(1),
-m_pRenderLabel(NULL)
+m_pLabelRenderer(NULL)
 {
-    m_WidgetName = WIDGET_LABEL;
 }
 
 UILabel::~UILabel()
@@ -58,17 +56,16 @@ bool UILabel::init()
 {
     if (UIWidget::init())
     {
-        setPressState(WidgetStateNormal);
         return true;
     }
     return false;
 }
 
-void UILabel::initNodes()
+void UILabel::initRenderer()
 {
-    UIWidget::initNodes();
-    m_pRenderLabel = CCLabelTTF::create();
-    m_pRender->addChild(m_pRenderLabel);
+    UIWidget::initRenderer();
+    m_pLabelRenderer = CCLabelTTF::create();
+    m_pRenderer->addChild(m_pLabelRenderer);
 }
 
 void UILabel::setText(const char* text)
@@ -78,44 +75,66 @@ void UILabel::setText(const char* text)
 		return;
 	}
     std::string strText(text);
-    m_pRenderLabel->setString(strText.c_str());
+    m_pLabelRenderer->setString(strText.c_str());
+    labelScaleChangedWithSize();
 }
 
 const char* UILabel::getStringValue()
 {
-    return m_pRenderLabel->getString();
+    return m_pLabelRenderer->getString();
 }
 
 int UILabel::getStringLength()
 {
-    const char* str = m_pRenderLabel->getString();
+    const char* str = m_pLabelRenderer->getString();
     return strlen(str);
 }
 
 void UILabel::setFontSize(int size)
 {
-    m_pRenderLabel->setFontSize(size);
+    m_pLabelRenderer->setFontSize(size);
+    labelScaleChangedWithSize();
 }
 
 void UILabel::setFontName(const char* name)
 {
-    m_pRenderLabel->setFontName(name);
+    m_pLabelRenderer->setFontName(name);
+    labelScaleChangedWithSize();
 }
 
-void UILabel::setTouchScaleChangeAble(bool able)
+void UILabel::setTextAreaSize(const CCSize &size)
 {
-    m_bTouchScaleChangeAble = able;
+    m_pLabelRenderer->setDimensions(size);
+    labelScaleChangedWithSize();
+}
+
+void UILabel::setTextHorizontalAlignment(CCTextAlignment alignment)
+{
+    m_pLabelRenderer->setHorizontalAlignment(alignment);
+    labelScaleChangedWithSize();
+}
+
+void UILabel::setTextVerticalAlignment(CCVerticalTextAlignment alignment)
+{
+    m_pLabelRenderer->setVerticalAlignment(alignment);
+    labelScaleChangedWithSize();
+}
+
+void UILabel::setTouchScaleChangeEnabled(bool enable)
+{
+    m_bTouchScaleChangeEnabled = enable;
     m_fNormalScaleValue = getScale();
 }
 
-bool UILabel::getTouchScaleChangeAble()
+bool UILabel::isTouchScaleChangeEnabled()
 {
-    return m_bTouchScaleChangeAble;
+    return m_bTouchScaleChangeEnabled;
 }
 
 void UILabel::onPressStateChangedToNormal()
 {
-    if (!m_bTouchScaleChangeAble){
+    if (!m_bTouchScaleChangeEnabled)
+    {
         return;
     }
     clickScale(m_fNormalScaleValue);
@@ -123,7 +142,8 @@ void UILabel::onPressStateChangedToNormal()
 
 void UILabel::onPressStateChangedToPressed()
 {
-    if (!m_bTouchScaleChangeAble){
+    if (!m_bTouchScaleChangeEnabled)
+    {
         return;
     }
     clickScale(m_fNormalScaleValue + m_fOnSelectedScaleOffset);
@@ -136,63 +156,71 @@ void UILabel::onPressStateChangedToDisabled()
 
 void UILabel::clickScale(float scale)
 {
-    m_pRender->setScale(scale);
+    m_pRenderer->setScale(scale);
 }
 
 void UILabel::setFlipX(bool flipX)
 {
-    m_pRenderLabel->setFlipX(flipX);
+    m_pLabelRenderer->setFlipX(flipX);
 }
 
 void UILabel::setFlipY(bool flipY)
 {
-    m_pRenderLabel->setFlipY(flipY);
+    m_pLabelRenderer->setFlipY(flipY);
 }
 
 bool UILabel::isFlipX()
 {
-    return m_pRenderLabel->isFlipX();
+    return m_pLabelRenderer->isFlipX();
 }
 
 bool UILabel::isFlipY()
 {
-    return m_pRenderLabel->isFlipY();
-}
-
-void UILabel::setGravity(LabelGravity gravity)
-{
-    m_nGravity = gravity;
-    switch (m_nGravity)
-    {
-        case LabelGravityCenter:
-            m_pRenderLabel->setAnchorPoint(ccp(0.5f, 0.5f));
-            break;
-        case LabelGravityLelf:
-            m_pRenderLabel->setAnchorPoint(ccp(0.0f, 0.5f));
-            break;
-        case LabelGravityRight:
-            m_pRenderLabel->setAnchorPoint(ccp(1.0f, 0.5f));
-            break;
-        default:
-            break;
-    }
-}
-
-void UILabel::adaptSize(float xProportion, float yProportion)
-{
-    float res = xProportion > yProportion ? xProportion : yProportion;
-    m_pRenderLabel->setFontSize(m_pRenderLabel->getFontSize()*res);
-}
-
-CCNode* UILabel::getValidNode()
-{
-    return m_pRenderLabel;
+    return m_pLabelRenderer->isFlipY();
 }
 
 void UILabel::setAnchorPoint(const CCPoint &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    m_pRenderLabel->setAnchorPoint(pt);
+    m_pLabelRenderer->setAnchorPoint(pt);
+}
+
+void UILabel::onSizeChanged()
+{
+    labelScaleChangedWithSize();
+}
+
+const CCSize& UILabel::getContentSize() const
+{
+    return m_pLabelRenderer->getContentSize();
+}
+
+CCNode* UILabel::getVirtualRenderer()
+{
+    return m_pLabelRenderer;
+}
+
+void UILabel::labelScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pLabelRenderer->setScale(1.0f);
+        m_size = m_pLabelRenderer->getContentSize();
+    }
+    else
+    {
+        CCSize textureSize = m_pLabelRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pLabelRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pLabelRenderer->setScaleX(scaleX);
+        m_pLabelRenderer->setScaleY(scaleY);
+    }
+    
 }
 
 NS_CC_EXT_END

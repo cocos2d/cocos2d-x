@@ -255,6 +255,7 @@
 		1A8F3B22175DC6D800049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B1F175DC6D800049216 /* CCSkeletonAnimation.cpp */; };
 		1AB2D72816B6804D00D72C48 /* FileUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB2D72616B6804D00D72C48 /* FileUtilsTest.cpp */; };
 		1ABA2873174DAF67007A6C10 /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */; };
+		3716DB5617CB6DD40078CF1E /* CCSSceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3716DB5417CB6DD40078CF1E /* CCSSceneReader.cpp */; };
 		37551BF717B26D5E0044749D /* CCArmatureAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37551BB417B26D5E0044749D /* CCArmatureAnimation.cpp */; };
 		37551BF817B26D5E0044749D /* CCProcessBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37551BB617B26D5E0044749D /* CCProcessBase.cpp */; };
 		37551BF917B26D5E0044749D /* CCTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37551BB817B26D5E0044749D /* CCTween.cpp */; };
@@ -377,7 +378,6 @@
 		37551E2F17B33A0E0044749D /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37551E1617B33A0E0044749D /* UITextFieldTest.cpp */; };
 		37551E3017B33A0E0044749D /* UIZoomButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37551E1917B33A0E0044749D /* UIZoomButtonTest.cpp */; };
 		37799352178C28AC00C68990 /* CCComRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37799350178C28AC00C68990 /* CCComRender.cpp */; };
-		377993C1178C28BC00C68990 /* CCJsonReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3779939C178C28BC00C68990 /* CCJsonReader.cpp */; };
 		377993C2178C28BC00C68990 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3779939E178C28BC00C68990 /* DictionaryHelper.cpp */; };
 		377993CD178C28F900C68990 /* SceneEditorTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 377993C9178C28F900C68990 /* SceneEditorTestScene.cpp */; };
 		379F8E47176328A40028C07D /* ArmatureScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379F8E45176328A40028C07D /* ArmatureScene.cpp */; };
@@ -974,6 +974,8 @@
 		1ABA2871174DAF67007A6C10 /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
 		1ABA2872174DAF67007A6C10 /* ConfigurationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TestCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3716DB5417CB6DD40078CF1E /* CCSSceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSSceneReader.cpp; sourceTree = "<group>"; };
+		3716DB5517CB6DD40078CF1E /* CCSSceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSSceneReader.h; sourceTree = "<group>"; };
 		37551BB417B26D5E0044749D /* CCArmatureAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureAnimation.cpp; sourceTree = "<group>"; };
 		37551BB517B26D5E0044749D /* CCArmatureAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureAnimation.h; sourceTree = "<group>"; };
 		37551BB617B26D5E0044749D /* CCProcessBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProcessBase.cpp; sourceTree = "<group>"; };
@@ -1188,8 +1190,6 @@
 		37551E1A17B33A0E0044749D /* UIZoomButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIZoomButtonTest.h; sourceTree = "<group>"; };
 		37799350178C28AC00C68990 /* CCComRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComRender.cpp; sourceTree = "<group>"; };
 		37799351178C28AC00C68990 /* CCComRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComRender.h; sourceTree = "<group>"; };
-		3779939C178C28BC00C68990 /* CCJsonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCJsonReader.cpp; sourceTree = "<group>"; };
-		3779939D178C28BC00C68990 /* CCJsonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCJsonReader.h; sourceTree = "<group>"; };
 		3779939E178C28BC00C68990 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		3779939F178C28BC00C68990 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
 		377993C9178C28F900C68990 /* SceneEditorTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTestScene.cpp; sourceTree = "<group>"; };
@@ -3062,8 +3062,8 @@
 		3779939B178C28BC00C68990 /* CocostudioReader */ = {
 			isa = PBXGroup;
 			children = (
-				3779939C178C28BC00C68990 /* CCJsonReader.cpp */,
-				3779939D178C28BC00C68990 /* CCJsonReader.h */,
+				3716DB5417CB6DD40078CF1E /* CCSSceneReader.cpp */,
+				3716DB5517CB6DD40078CF1E /* CCSSceneReader.h */,
 				3779939E178C28BC00C68990 /* DictionaryHelper.cpp */,
 				3779939F178C28BC00C68990 /* DictionaryHelper.h */,
 			);
@@ -3666,7 +3666,6 @@
 				37EEEC77175DE9FF003C1193 /* SceneController.cpp in Sources */,
 				379F8E47176328A40028C07D /* ArmatureScene.cpp in Sources */,
 				37799352178C28AC00C68990 /* CCComRender.cpp in Sources */,
-				377993C1178C28BC00C68990 /* CCJsonReader.cpp in Sources */,
 				377993C2178C28BC00C68990 /* DictionaryHelper.cpp in Sources */,
 				377993CD178C28F900C68990 /* SceneEditorTestScene.cpp in Sources */,
 				37551BF717B26D5E0044749D /* CCArmatureAnimation.cpp in Sources */,
@@ -3750,6 +3749,7 @@
 				37551E2E17B33A0E0044749D /* UITextButtonTest.cpp in Sources */,
 				37551E2F17B33A0E0044749D /* UITextFieldTest.cpp in Sources */,
 				37551E3017B33A0E0044749D /* UIZoomButtonTest.cpp in Sources */,
+				3716DB5617CB6DD40078CF1E /* CCSSceneReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

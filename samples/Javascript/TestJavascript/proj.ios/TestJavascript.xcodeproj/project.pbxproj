@@ -796,7 +796,6 @@
 				15A3D31A1682F0A0002FB0C5 /* ScriptingCore.cpp */,
 				15A3D31B1682F0A0002FB0C5 /* ScriptingCore.h */,
 				15A3D31C1682F0A0002FB0C5 /* spidermonkey_specifics.h */,
-				A2278C4D17438CFB001FC8E0 /* XMLHTTPHelper.h */,
 				A2278C4E17438CFB001FC8E0 /* XMLHTTPRequest.cpp */,
 				A2278C4F17438CFB001FC8E0 /* XMLHTTPRequest.h */,
 			);

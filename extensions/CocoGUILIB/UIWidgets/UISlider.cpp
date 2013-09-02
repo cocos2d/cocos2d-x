@@ -27,35 +27,34 @@
 
 NS_CC_EXT_BEGIN
 
-UISlider::UISlider()
-: m_fBarLength(0.0)
-, m_nDirection(0)
-, m_nBarPercent(0)
-, m_pSlidBall(NULL)
-, m_fBarNodeScaleValue(1.0)
-, m_fTouchMoveStartLocation(0.0)
-, m_fMinLength(0.0)
-, m_pBarNode(NULL)
-, m_pPercentListener(NULL)
-, m_pfnPercentSelector(NULL)
-, m_bBarScale9Enable(false)
-, m_bProgressBarVisible(false)
-, m_pProgressBarNode(NULL)
-, m_eBarTexType(UI_TEX_TYPE_LOCAL)
-, m_eBarTexS9Type(UI_TEX_TYPE_LOCAL)
-, m_eBallNTexType(UI_TEX_TYPE_LOCAL)
-, m_eBallPTexType(UI_TEX_TYPE_LOCAL)
-, m_eBallDTexType(UI_TEX_TYPE_LOCAL)
-, m_strTextureFile("")
-, m_capInsets(CCRectZero)
-, m_scale9Size(CCSizeZero)
-, m_strProgressTextureFile("")
-, m_eProgressBarTexType(UI_TEX_TYPE_LOCAL)
-, m_bProgressBarScale9Enable(false)
-, m_progressBarCapInsets(CCRectZero)
-, m_progressBarScale9Size(CCSizeZero)
+UISlider::UISlider():
+m_fBarLength(0.0),
+m_nPercent(0),
+m_fBarNodeScaleValue(1.0),
+m_fTouchMoveStartLocation(0.0),
+m_pBarRenderer(NULL),
+m_pProgressBarRenderer(NULL),
+m_pSlidBallNormalRenderer(NULL),
+m_pSlidBallPressedRenderer(NULL),
+m_pSlidBallDisabledRenderer(NULL),
+m_pSlidBallRenderer(NULL),
+m_pPercentListener(NULL),
+m_pfnPercentSelector(NULL),
+m_bScale9Enabled(false),
+m_eBarTexType(UI_TEX_TYPE_LOCAL),
+m_eBallNTexType(UI_TEX_TYPE_LOCAL),
+m_eBallPTexType(UI_TEX_TYPE_LOCAL),
+m_eBallDTexType(UI_TEX_TYPE_LOCAL),
+m_eProgressBarTexType(UI_TEX_TYPE_LOCAL),
+m_strTextureFile(""),
+m_strProgressBarTextureFile(""),
+m_strSlidBallNormalTextureFile(""),
+m_strSlidBallPressedTextureFile(""),
+m_strSlidBallDisabledTextureFile(""),
+m_capInsets(CCRectZero),
+m_ProgressBarTextureSize(CCSizeZero),
+m_bPrevIgnoreSize(true)
 {
-    m_WidgetName = WIDGET_SLIDER;
 }
 
 UISlider::~UISlider()
@@ -74,27 +73,27 @@ UISlider* UISlider::create()
     return NULL;
 }
 
-bool UISlider::init()
+void UISlider::initRenderer()
 {
-    if (UIWidget::init())
-    {
-        m_pBarNode = CCSprite::create();
-        m_pRender->addChild(m_pBarNode, -1);
-        
-        m_pProgressBarNode = CCSprite::create();
-        m_pProgressBarNode->setVisible(false);
-        m_pRender->addChild(m_pProgressBarNode, 0);
-        
-        m_pSlidBall = UIButton::create();
-		m_pSlidBall->setWidgetZOrder(1);
-        addChild(m_pSlidBall);
-        
-        return true;
-    }
-    return false;
+    UIWidget::initRenderer();
+    m_pBarRenderer = CCSprite::create();
+    m_pProgressBarRenderer = CCSprite::create();
+    m_pProgressBarRenderer->setAnchorPoint(ccp(0.0f, 0.5f));
+    m_pRenderer->addChild(m_pBarRenderer, -1);
+    m_pRenderer->addChild(m_pProgressBarRenderer, -1);
+    m_pSlidBallNormalRenderer = CCSprite::create();
+    m_pSlidBallPressedRenderer = CCSprite::create();
+    m_pSlidBallPressedRenderer->setVisible(false);
+    m_pSlidBallDisabledRenderer = CCSprite::create();
+    m_pSlidBallDisabledRenderer->setVisible(false);
+    m_pSlidBallRenderer = CCNode::create();
+    m_pSlidBallRenderer->addChild(m_pSlidBallNormalRenderer);
+    m_pSlidBallRenderer->addChild(m_pSlidBallPressedRenderer);
+    m_pSlidBallRenderer->addChild(m_pSlidBallDisabledRenderer);
+    m_pRenderer->addChild(m_pSlidBallRenderer);
 }
 
-void UISlider::setBarTexture(const char* fileName, TextureResType texType)
+void UISlider::loadBarTexture(const char* fileName, TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)
     {
@@ -105,411 +104,293 @@ void UISlider::setBarTexture(const char* fileName, TextureResType texType)
     switch (m_eBarTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            if (m_bBarScale9Enable)
+            if (m_bScale9Enabled)
             {
-                dynamic_cast<CCScale9Sprite*>(m_pBarNode)->initWithFile(fileName);
+                dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->initWithFile(fileName);
             }
             else
             {
-                dynamic_cast<CCSprite*>(m_pBarNode)->initWithFile(fileName);
+                dynamic_cast<CCSprite*>(m_pBarRenderer)->initWithFile(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
-            if (m_bBarScale9Enable)
+            if (m_bScale9Enabled)
             {
-                dynamic_cast<CCScale9Sprite*>(m_pBarNode)->initWithSpriteFrameName(fileName);
+                dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->initWithSpriteFrameName(fileName);
             }
             else
             {
-                dynamic_cast<CCSprite*>(m_pBarNode)->initWithSpriteFrameName(fileName);
+                dynamic_cast<CCSprite*>(m_pBarRenderer)->initWithSpriteFrameName(fileName);
             }
             break;
         default:
             break;
     }
-    if (m_bBarScale9Enable)
+    if (m_bScale9Enabled)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setColor(getColor());
-        dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setColor(getColor());
+        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<CCSprite*>(m_pBarNode)->setColor(getColor());
-        dynamic_cast<CCSprite*>(m_pBarNode)->setOpacity(getOpacity());
+        dynamic_cast<CCSprite*>(m_pBarRenderer)->setColor(getColor());
+        dynamic_cast<CCSprite*>(m_pBarRenderer)->setOpacity(getOpacity());
     }
-    
-    m_fBarLength = m_pBarNode->getContentSize().width - m_pSlidBall->getContentSize().width;
-    setSlidBallPercent(m_nBarPercent);	
-
-	m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - (m_fBarLength / 2 + m_pSlidBall->getContentSize().width / 2), 
-										m_pBarNode->getPosition().y));
+    barRendererScaleChangedWithSize();
 }
 
-void UISlider::setScale9Enable(bool able)
+void UISlider::loadProgressBarTexture(const char *fileName, TextureResType texType)
 {
-    if (m_bBarScale9Enable == able)
-    {
-        return;
-    }
-    m_bBarScale9Enable = able;
-    
-    m_pRender->removeChild(m_pBarNode, true);
-    m_pBarNode = NULL;
-    if (m_bBarScale9Enable)
-    {
-        m_pBarNode = CCScale9Sprite::create();
-    }
-    else
-    {
-        m_pBarNode = CCSprite::create();
-    }
-    
-    setBarTexture(m_strTextureFile.c_str(), m_eBarTexType);
-    m_pRender->addChild(m_pBarNode, -1);	
-}
-
-void UISlider::setCapInsets(const CCRect &capInsets)
-{
-    if (!m_bBarScale9Enable)
-    {
-        return;
-    }
-    m_capInsets = capInsets;
-    dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setCapInsets(capInsets);
-}
-
-void UISlider::setScale9Size(const CCSize &size)
-{
-    if (!m_bBarScale9Enable)
-    {
-        return;
-    }
-    if (size.equals(CCSizeZero))
-    {
-        return;
-    }
-    else
-    {
-        m_scale9Size = size;
-    }
-    dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setContentSize(size);
-    m_fBarLength = size.width - m_pSlidBall->getContentSize().width;
-    setSlidBallPercent(m_nBarPercent);	
-
-	m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - (m_fBarLength / 2 + m_pSlidBall->getContentSize().width / 2), 
-                                        m_pBarNode->getPosition().y));
-}
-
-void UISlider::setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
-{
-    m_pSlidBall->setTextures(normal, pressed, disabled,texType);
-    if (m_bBarScale9Enable)
-    {
-        m_fBarLength = m_scale9Size.width - m_pSlidBall->getContentSize().width;
-    }
-    else
-    {
-        m_fBarLength = m_pBarNode->getContentSize().width - m_pSlidBall->getContentSize().width;
-    }
-    setSlidBallPercent(m_nBarPercent);
-}
-
-void UISlider::setSlidBallNormalTexture(const char* normal,TextureResType texType)
-{
-    m_pSlidBall->setNormalTexture(normal,texType);
-	if (m_bBarScale9Enable)
-	{
-		m_fBarLength = m_scale9Size.width - m_pSlidBall->getContentSize().width;
-	}
-	else
-	{
-		m_fBarLength = m_pBarNode->getContentSize().width - m_pSlidBall->getContentSize().width;
-	}
-	setSlidBallPercent(m_nBarPercent);
-}
-
-void UISlider::setSlidBallPressedTexture(const char* pressed,TextureResType texType)
-{
-    m_pSlidBall->setPressedTexture(pressed,texType);
-	if (m_bBarScale9Enable)
-	{
-		m_fBarLength = m_scale9Size.width - m_pSlidBall->getContentSize().width;
-	}
-	else
-	{
-		m_fBarLength = m_pBarNode->getContentSize().width - m_pSlidBall->getContentSize().width;
-	}
-	setSlidBallPercent(m_nBarPercent);
-}
-
-void UISlider::setSlidBallDisabledTexture(const char* disabled,TextureResType texType)
-{
-    m_pSlidBall->setDisabledTexture(disabled,texType);
-	if (m_bBarScale9Enable)
-	{
-		m_fBarLength = m_scale9Size.width - m_pSlidBall->getContentSize().width;
-	}
-	else
-	{
-		m_fBarLength = m_pBarNode->getContentSize().width - m_pSlidBall->getContentSize().width;
-	}
-	setSlidBallPercent(m_nBarPercent);
-}
-
-void UISlider::setSlidBallAnchorPoint(const CCPoint &anchor)
-{
-    m_pSlidBall->setAnchorPoint(anchor);
-}
-
-void UISlider::setBarLength(float length)
-{
-    if (!m_bBarScale9Enable)
-    {
-        return;
-    }
-    m_fBarLength = length;
-    dynamic_cast<CCScale9Sprite*>(m_pBarNode)->setContentSize(CCSize(length, m_pBarNode->getContentSize().height));
-    setSlidBallPercent(m_nBarPercent);
-    setProgressBarScale();
-}
-
-void UISlider::setSlidBallPercent(int percent)
-{
-    m_nBarPercent = percent;
-    float dis = m_fBarLength * (percent / 100.0);
-    m_pSlidBall->setPosition(ccp(-m_fBarLength / 2.0 + dis, 0));    
-}
-
-int UISlider::getClickPercent(float location)
-{
-    getLocationInWindow();
-    float leftEndPos = m_locationInWindow.x - m_fBarLength/2.0;
-    float per = (location - leftEndPos)/m_fBarLength;
-    per *= 100;
-    return per;
-}
-
-void UISlider::checkSlidBoundary()
-{
-    if (m_pSlidBall->getPosition().x > m_fBarLength / 2.0)
-    {
-        m_pSlidBall->setPosition(ccp(m_fBarLength / 2.0, 0));
-    }
-    else if(m_pSlidBall->getPosition().x < -m_fBarLength / 2.0)
-    {
-        m_pSlidBall->setPosition(ccp(-m_fBarLength / 2.0, 0));
-    }
-}
-
-bool UISlider::isProgressBarVisible()
-{
-    return m_bProgressBarVisible;
-}
-
-void UISlider::setProgressBarVisible(bool show)
-{
-    if (m_bProgressBarVisible == show)
-    {
-        return;
-    }
-    m_bProgressBarVisible = show;
-    
-    m_pProgressBarNode->setVisible(m_bProgressBarVisible);
-}
-
-const CCSize& UISlider::getProgressBarTextureSize() const
-{
-	return m_pProgressBarTextureSize;
-}
-
-void UISlider::setProgressBarTexture(const char *fileName, TextureResType texType)
-{   
     if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
-    m_strProgressTextureFile = fileName;
-    
-	m_eProgressBarTexType = texType;
-    switch (m_eProgressBarTexType)
+    m_strProgressBarTextureFile = fileName;
+    m_eProgressBarTexType = texType;
+    switch (m_eBarTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            if (m_bProgressBarScale9Enable)
+            if (m_bScale9Enabled)
             {
-                dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->initWithFile(fileName);
+                dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->initWithFile(fileName);
             }
             else
             {
-                dynamic_cast<CCSprite*>(m_pProgressBarNode)->initWithFile(fileName);
+                dynamic_cast<CCSprite*>(m_pProgressBarRenderer)->initWithFile(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
-            if (m_bProgressBarScale9Enable)
+            if (m_bScale9Enabled)
             {
-                dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
+                dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->initWithSpriteFrameName(fileName);
             }
             else
-            {                
-                dynamic_cast<CCSprite*>(m_pProgressBarNode)->initWithSpriteFrameName(fileName);
+            {
+                dynamic_cast<CCSprite*>(m_pProgressBarRenderer)->initWithSpriteFrameName(fileName);
             }
             break;
         default:
             break;
     }
-    if (m_bProgressBarScale9Enable)
+    if (m_bScale9Enabled)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setColor(getColor());
-        dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->setColor(getColor());
+        dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setColor(getColor());
-        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setOpacity(getOpacity());
-    }    
-	m_pProgressBarTextureSize = m_pProgressBarNode->getContentSize();
-    m_pProgressBarNode->setAnchorPoint(ccp(0.0, 0.5));    
-	m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - (m_fBarLength / 2 + m_pSlidBall->getContentSize().width / 2), 
-										m_pBarNode->getPosition().y));
+        dynamic_cast<CCSprite*>(m_pProgressBarRenderer)->setColor(getColor());
+        dynamic_cast<CCSprite*>(m_pProgressBarRenderer)->setOpacity(getOpacity());
+    }
+    m_pProgressBarRenderer->setAnchorPoint(ccp(0.0f, 0.5f));
+    m_ProgressBarTextureSize = m_pProgressBarRenderer->getContentSize();
+    progressBarRendererScaleChangedWithSize();
 }
 
-void UISlider::setProgressBarScale9Enable(bool able)
+void UISlider::setScale9Enabled(bool able)
 {
-    if (m_bProgressBarScale9Enable == able)
+    if (m_bScale9Enabled == able)
     {
         return;
     }
-    m_bProgressBarScale9Enable = able;
     
-    m_pRender->removeChild(m_pProgressBarNode, true);
-    m_pProgressBarNode = NULL;
-    if (m_bProgressBarScale9Enable)
+    m_bScale9Enabled = able;
+    m_pRenderer->removeChild(m_pBarRenderer, true);
+    m_pRenderer->removeChild(m_pProgressBarRenderer, true);
+    m_pBarRenderer = NULL;
+    m_pProgressBarRenderer = NULL;
+    if (m_bScale9Enabled)
     {
-        m_pProgressBarNode = CCScale9Sprite::create();
+        m_pBarRenderer = CCScale9Sprite::create();
+        m_pProgressBarRenderer = CCScale9Sprite::create();
     }
     else
     {
-        m_pProgressBarNode = CCSprite::create();
+        m_pBarRenderer = CCSprite::create();
+        m_pProgressBarRenderer = CCSprite::create();
     }
-    m_pProgressBarNode->setVisible(m_bProgressBarVisible);
-    
-    setProgressBarTexture(m_strProgressTextureFile.c_str(), m_eProgressBarTexType);
-    m_pRender->addChild(m_pProgressBarNode, 0);
-}
-
-void UISlider::setProgressBarCapInsets(const CCRect &capInsets)
-{
-    if (!m_bProgressBarScale9Enable)
+    loadBarTexture(m_strTextureFile.c_str(), m_eBarTexType);
+    loadProgressBarTexture(m_strProgressBarTextureFile.c_str(), m_eProgressBarTexType);
+    m_pRenderer->addChild(m_pBarRenderer, -1);
+    m_pRenderer->addChild(m_pProgressBarRenderer, -1);
+    if (m_bScale9Enabled)
     {
-        return;
-    }
-    m_progressBarCapInsets = capInsets;
-    dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setCapInsets(capInsets);
-}
-
-void UISlider::setProgressBarScale9Size(const CCSize &size)
-{
-    if (!m_bProgressBarScale9Enable)
-    {
-        return;
-    }
-    if (size.equals(CCSizeZero))
-    {
-        return;
+        bool ignoreBefore = m_bIgnoreSize;
+        ignoreContentAdaptWithSize(false);
+        m_bPrevIgnoreSize = ignoreBefore;
     }
     else
     {
-        m_progressBarScale9Size = size;
+        ignoreContentAdaptWithSize(m_bPrevIgnoreSize);
     }
-	dynamic_cast<CCScale9Sprite*>(m_pProgressBarNode)->setContentSize(size);	
+    setCapInsets(m_capInsets);
 }
 
-void UISlider::setProgressBarScale()
+void UISlider::ignoreContentAdaptWithSize(bool ignore)
 {
-    float width = (float)(m_nBarPercent) / 100 * m_fBarLength;
-    
-    float offset = m_pSlidBall->getContentSize().width / 2;
-    	
-    m_pProgressBarNode->setPosition(ccp(m_pBarNode->getPosition().x - (m_fBarLength / 2 + offset), m_pBarNode->getPosition().y));
-    if (m_bProgressBarScale9Enable)
+    if (!m_bScale9Enabled || (m_bScale9Enabled && !ignore))
     {
-        if (width < m_pSlidBall->getContentSize().width)
-        {			
-            width = m_pSlidBall->getContentSize().width;
+        UIWidget::ignoreContentAdaptWithSize(ignore);
+        m_bPrevIgnoreSize = ignore;
+    }
+}
+
+void UISlider::setCapInsets(const CCRect &capInsets)
+{
+    m_capInsets = capInsets;
+    if (!m_bScale9Enabled)
+    {
+        return;
+    }
+    dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(capInsets);
+}
+
+void UISlider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
+{
+    loadSlidBallNormalTexture(normal, texType);
+    loadSlidBallPressedTexture(pressed,texType);
+    loadSlidBallDisabledTexture(disabled,texType);
+}
+
+void UISlider::loadSlidBallNormalTexture(const char* normal,TextureResType texType)
+{
+    if (!normal || strcmp(normal, "") == 0)
+    {
+        return;
+    }
+    m_strSlidBallNormalTextureFile = normal;
+    m_eBallNTexType = texType;
+    switch (m_eBarTexType)
+    {
+        case UI_TEX_TYPE_LOCAL:
+            m_pSlidBallNormalRenderer->initWithFile(normal);
+            break;
+        case UI_TEX_TYPE_PLIST:
+            m_pSlidBallNormalRenderer->initWithSpriteFrameName(normal);
+            break;
+        default:
+            break;
+    }
+    m_pSlidBallNormalRenderer->setColor(getColor());
+    m_pSlidBallNormalRenderer->setOpacity(getOpacity());
+}
+
+void UISlider::loadSlidBallPressedTexture(const char* pressed,TextureResType texType)
+{
+    if (!pressed || strcmp(pressed, "") == 0)
+    {
+        return;
+    }
+    m_strSlidBallPressedTextureFile = pressed;
+    m_eBallPTexType = texType;
+    switch (m_eBarTexType)
+    {
+        case UI_TEX_TYPE_LOCAL:
+            m_pSlidBallPressedRenderer->initWithFile(pressed);
+            break;
+        case UI_TEX_TYPE_PLIST:
+            m_pSlidBallPressedRenderer->initWithSpriteFrameName(pressed);
+            break;
+        default:
+            break;
+    }
+    m_pSlidBallPressedRenderer->setColor(getColor());
+    m_pSlidBallPressedRenderer->setOpacity(getOpacity());
+}
+
+void UISlider::loadSlidBallDisabledTexture(const char* disabled,TextureResType texType)
+{
+    if (!disabled || strcmp(disabled, "") == 0)
+    {
+        return;
+    }
+    m_strSlidBallDisabledTextureFile = disabled;
+    m_eBallDTexType = texType;
+    switch (m_eBarTexType)
+    {
+        case UI_TEX_TYPE_LOCAL:
+            m_pSlidBallDisabledRenderer->initWithFile(disabled);
+            break;
+        case UI_TEX_TYPE_PLIST:
+            m_pSlidBallDisabledRenderer->initWithSpriteFrameName(disabled);
+            break;
+        default:
+            break;
+    }
+    m_pSlidBallDisabledRenderer->setColor(getColor());
+    m_pSlidBallDisabledRenderer->setOpacity(getOpacity());
+}
+
+void UISlider::setPercent(int percent)
+{
+    if (percent > 100)
+    {
+        percent = 100;
+    }
+    if (percent < 0)
+    {
+        percent = 0;
+    }
+    m_nPercent = percent;
+    float dis = m_fBarLength*(percent/100.0f);
+    m_pSlidBallRenderer->setPosition(ccp(-m_fBarLength/2.0f + dis, 0.0f));
+    if (m_bScale9Enabled)
+    {
+        dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->setPreferredSize(CCSizeMake(dis,m_ProgressBarTextureSize.height));
+    }
+    else
+    {
+        int x = 0, y = 0;
+        switch (m_eProgressBarTexType)
+        {
+            case UI_TEX_TYPE_PLIST:
+            {
+                CCSprite* barNode = dynamic_cast<CCSprite*>(m_pProgressBarRenderer);
+                if (barNode)
+                {
+                    CCPoint to = barNode->getTextureRect().origin;
+                    x = to.x;
+                    y = to.y;
+                }
+                break;
+            }
+            default:
+                break;
         }
-        else
-        {			
-            width += offset;
-        }
-        m_pProgressBarNode->setContentSize(CCSize(width, m_pProgressBarNode->getContentSize().height));
-    }
-    else
-    {
-        CCRect textureRect = dynamic_cast<CCSprite*>(m_pProgressBarNode)->getTextureRect();
-        CCPoint textureOrigin = textureRect.origin;
-		CCSize textureSize = textureRect.size;
-        dynamic_cast<CCSprite*>(m_pProgressBarNode)->setTextureRect(CCRectMake(textureOrigin.x, textureOrigin.y, width + offset, textureSize.height));
+        dynamic_cast<CCSprite*>(m_pProgressBarRenderer)->setTextureRect(CCRectMake(x, y, m_ProgressBarTextureSize.width * (percent/100.0f), m_ProgressBarTextureSize.height));
     }
 }
 
-void UISlider::onTouchBegan(const CCPoint &touchPoint)
+bool UISlider::onTouchBegan(const CCPoint &touchPoint)
 {
-    UIWidget::onTouchBegan(touchPoint);
-    CCPoint nsp = m_pRender->convertToNodeSpace(touchPoint);
-    m_pSlidBall->setPosition(ccp(nsp.x,0));
-    m_pSlidBall->setPressState(WidgetStateSelected);
-    m_nBarPercent = getPercentWithBallPos(m_pSlidBall->getPosition().x,0);
+    bool pass = UIWidget::onTouchBegan(touchPoint);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
-    setProgressBarScale();
+    return pass;
 }
 
 void UISlider::onTouchMoved(const CCPoint &touchPoint)
 {
-    CCPoint nsp = m_pRender->convertToNodeSpace(touchPoint);
-    m_pSlidBall->setPosition(ccp(nsp.x,0));
-    checkSlidBoundary();
-    m_nBarPercent = getPercentWithBallPos(m_pSlidBall->getPosition().x,0);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
+    m_pSlidBallRenderer->setPosition(ccp(nsp.x,0));
+    setPercent(getPercentWithBallPos(nsp.x));
     percentChangedEvent();
-    setProgressBarScale();
 }
 
 void UISlider::onTouchEnded(const CCPoint &touchPoint)
 {
     UIWidget::onTouchEnded(touchPoint);
-    m_pSlidBall->setPressState(WidgetStateNormal);
 }
 
 void UISlider::onTouchCancelled(const CCPoint &touchPoint)
 {
     UIWidget::onTouchCancelled(touchPoint);
-    m_pSlidBall->setPressState(WidgetStateNormal);
 }
 
-float UISlider::getPercentWithBallPos(float px,float py)
+float UISlider::getPercentWithBallPos(float px)
 {
-    return (((px-(-m_fBarLength/2.0))/m_fBarLength)*100);
-}
-
-bool UISlider::pointAtSelfBody(const CCPoint &pt)
-{
-    if (!getAbsoluteVisible())
-    {
-        return false;
-    }
-    if (UIWidget::pointAtSelfBody(pt))
-    {
-        return true;
-    }
-    
-    bool hitBall = hitTest(m_pSlidBall->getValidNode(),pt);
-    if (hitBall) {
-        return true;
-    }
-    return false;
-}
-
-CCNode* UISlider::getValidNode()
-{
-    return m_pBarNode;
+    return (((px-(-m_fBarLength/2.0f))/m_fBarLength)*100.0f);
 }
 
 void UISlider::addPercentChangedEvent(CCObject *target, SEL_PushEvent selector)
@@ -528,7 +409,113 @@ void UISlider::percentChangedEvent()
 
 int UISlider::getPercent()
 {
-    return m_nBarPercent;
+    return m_nPercent;
 }
 
+void UISlider::onSizeChanged()
+{
+    barRendererScaleChangedWithSize();
+    progressBarRendererScaleChangedWithSize();
+}
+
+const CCSize& UISlider::getContentSize() const
+{
+    return m_pBarRenderer->getContentSize();
+}
+
+CCNode* UISlider::getVirtualRenderer()
+{
+    return m_pBarRenderer;
+}
+
+void UISlider::barRendererScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        
+        m_pBarRenderer->setScale(1.0f);
+        m_size = m_pBarRenderer->getContentSize();
+        m_fBarLength = m_size.width;
+    }
+    else
+    {
+        m_fBarLength = m_size.width;
+        if (m_bScale9Enabled)
+        {
+            dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(m_size);
+        }
+        else
+        {
+            CCSize btextureSize = m_pBarRenderer->getContentSize();
+            if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
+            {
+                m_pBarRenderer->setScale(1.0f);
+                return;
+            }
+            float bscaleX = m_size.width / btextureSize.width;
+            float bscaleY = m_size.height / btextureSize.height;
+            m_pBarRenderer->setScaleX(bscaleX);
+            m_pBarRenderer->setScaleY(bscaleY);
+        }
+    }
+    setPercent(m_nPercent);
+}
+
+void UISlider::progressBarRendererScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        if (!m_bScale9Enabled)
+        {
+            CCSize ptextureSize = m_ProgressBarTextureSize;
+            float pscaleX = m_size.width / ptextureSize.width;
+            float pscaleY = m_size.height / ptextureSize.height;
+            m_pProgressBarRenderer->setScaleX(pscaleX);
+            m_pProgressBarRenderer->setScaleY(pscaleY);
+        }
+    }
+    else
+    {
+        if (m_bScale9Enabled)
+        {
+            dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->setPreferredSize(m_size);
+        }
+        else
+        {
+            CCSize ptextureSize = m_ProgressBarTextureSize;
+            if (ptextureSize.width <= 0.0f || ptextureSize.height <= 0.0f)
+            {
+                m_pProgressBarRenderer->setScale(1.0f);
+                return;
+            }
+            float pscaleX = m_size.width / ptextureSize.width;
+            float pscaleY = m_size.height / ptextureSize.height;
+            m_pProgressBarRenderer->setScaleX(pscaleX);
+            m_pProgressBarRenderer->setScaleY(pscaleY);
+        }
+    }
+    m_pProgressBarRenderer->setPosition(ccp(-m_fBarLength * 0.5f, 0.0f));
+    setPercent(m_nPercent);
+}
+
+void UISlider::onPressStateChangedToNormal()
+{
+    m_pSlidBallNormalRenderer->setVisible(true);
+    m_pSlidBallPressedRenderer->setVisible(false);
+    m_pSlidBallDisabledRenderer->setVisible(false);
+}
+
+void UISlider::onPressStateChangedToPressed()
+{
+    m_pSlidBallNormalRenderer->setVisible(false);
+    m_pSlidBallPressedRenderer->setVisible(true);
+    m_pSlidBallDisabledRenderer->setVisible(false);
+}
+
+void UISlider::onPressStateChangedToDisabled()
+{
+    m_pSlidBallNormalRenderer->setVisible(false);
+    m_pSlidBallPressedRenderer->setVisible(false);
+    m_pSlidBallDisabledRenderer->setVisible(true);
+}
 NS_CC_EXT_END

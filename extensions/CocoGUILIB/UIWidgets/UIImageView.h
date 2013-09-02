@@ -32,48 +32,106 @@ NS_CC_EXT_BEGIN
 class UIImageView : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UIImageView();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UIImageView();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UIImageView* create();
-    virtual void setTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    virtual void setTextureRect(const CCRect& rect);
-    void doubleClickEvent();
-    void checkDoubleClick(float dt);
-    void setDoubleClickEnable(bool able);
+    
+    /**
+     * Load texture for imageview.
+     *
+     * @param fileName   file name of texture.
+     *
+     * @param texType    @see UI_TEX_TYPE_LOCAL
+     */
+    void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    /**
+     * Updates the texture rect of the UIImageView in points.
+     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     */
+    void setTextureRect(const CCRect& rect);
+    
+    /**
+     * Sets if imageview is using scale9 renderer.
+     *
+     * @param true that using scale9 renderer, false otherwise.
+     */
+    void setScale9Enabled(bool able);
+    
+    /**
+     * Sets capinsets for imageview, if imageview is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for imageview
+     */
+    void setCapInsets(const CCRect &capInsets);
+    
+    //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" method of widget.
     virtual void setFlipY(bool flipY);
+    
+    //override "isFlipX" method of widget.
     virtual bool isFlipX();
+    
+    //override "isFlipY" method of widget.
     virtual bool isFlipY();
-    void setScale9Enable(bool able);
-    void setScale9Size(const CCSize &size);
+    
+    //override "setAnchorPoint" method of widget.
+    virtual void setAnchorPoint(const CCPoint &pt);
+    
+    //override "onTouchBegan" method of widget.
+    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    
+    //override "onTouchEnded" method of widget.
+    virtual void onTouchEnded(const CCPoint &touchPoint);
+    
+    //override "ignoreContentAdaptWithSize" method of widget.
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    
+    
     void setDisplayFrame(CCSpriteFrame *pNewFrame);
     void setSpriteFrame(CCSpriteFrame *pNewFrame);
-    void setPreferredSize(const CCSize& pSize);
-    void setInsetLeft(float insetLeft);
-    void setInsetTop(float insetTop);
-    void setInsetRight(float insetRight);
-    void setInsetBottom(float insetBottom);
-    void setCapInsets(const CCRect &capInsets);
-    virtual CCNode* getValidNode();
-    virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void onTouchBegan(const CCPoint &touchPoint);
-    virtual void onTouchEnded(const CCPoint &touchPoint);
+    void setDoubleClickEnabled(bool able);
+    void doubleClickEvent();
+    void checkDoubleClick(float dt);
+    /*Compatible*/
+    void setTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(fileName,texType);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    void setScale9Enable(bool is){setScale9Enabled(is);};
+    /************/
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
 protected:
-    virtual void initNodes();
+    virtual void initRenderer();
+    virtual void onSizeChanged();
+    void imageTextureScaleChangedWithSize();
 protected:
     int m_nViewType;
     int m_nClickCount;
     float m_fClickTimeInterval;
     bool m_bStartCheckDoubleClick;
     bool m_touchRelease;
-    bool m_bDoubleClickEnable;
-    
-    bool m_bScale9Enable;
+    bool m_bDoubleClickEnabled;
+    bool m_bScale9Enabled;
+    bool m_bPrevIgnoreSize;
     CCRect m_capInsets;
-    CCSize m_scale9Size;
-    CCNode* m_pImageRender;
+    CCNode* m_pImageRenderer;
     std::string m_strTextureFile;
     TextureResType m_eImageTexType;
+    CCSize m_imageTextureSize;
 };
 
 NS_CC_EXT_END

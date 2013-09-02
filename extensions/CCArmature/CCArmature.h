@@ -142,7 +142,7 @@ protected:
 
 	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
 
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+	CC_SYNTHESIZE(std::string, m_strName, Name);
 
 	CC_SYNTHESIZE(CCTextureAtlas*, m_pAtlas, TextureAtlas);
 
