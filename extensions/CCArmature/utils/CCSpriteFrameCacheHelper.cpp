@@ -47,19 +47,19 @@ void CCSpriteFrameCacheHelper::purge()
 
 void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
 CCTextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(CCTexture2D *texture)
 {
-	int key = texture->getName();
-	CCTextureAtlas *atlas = (CCTextureAtlas*)m_pTextureAtlasDic->objectForKey(key);
-	if (atlas == NULL)
-	{
-		atlas = CCTextureAtlas::createWithTexture(texture, 4);
-		m_pTextureAtlasDic->setObject(atlas, key);
-	}
-	return atlas;
+    int key = texture->getName();
+    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(texture, 4);
+        m_pTextureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
 }
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()

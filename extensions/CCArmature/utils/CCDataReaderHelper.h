@@ -30,7 +30,10 @@ THE SOFTWARE.
 #include "../CCArmature.h"
 #include "../external_tool/Json/CSContentJsonDictionary.h"
 
-namespace tinyxml2 { class XMLElement; }
+namespace tinyxml2
+{
+    class XMLElement;
+}
 
 NS_CC_EXT_BEGIN
 
@@ -39,24 +42,24 @@ typedef struct _DataInfo DataInfo;
 class  CCDataReaderHelper : CCObject
 {
 public:
-	static CCDataReaderHelper *sharedDataReaderHelper();
+    static CCDataReaderHelper *sharedDataReaderHelper();
 
-	/**
+    /**
      * Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
      */
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-	static void purge();
-	static void clear();
+    static void purge();
+    static void clear();
 public:
-	~CCDataReaderHelper();
+    ~CCDataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-	void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
 
-	void addDataAsyncCallBack(float dt);
+    void addDataAsyncCallBack(float dt);
 
 public:
 
@@ -116,7 +119,7 @@ public:
     static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
 
 private:
-	static CCDataReaderHelper *s_DataReaderHelper;
+    static CCDataReaderHelper *s_DataReaderHelper;
 };
 
 NS_CC_EXT_END

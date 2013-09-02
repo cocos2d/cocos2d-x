@@ -562,9 +562,6 @@
     <ClInclude Include="..\CCArmature\utils\CCArmatureDefine.h">
       <Filter>CCArmature\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCArmature\utils\CCConstValue.h">
-      <Filter>CCArmature\utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCArmature\utils\CCDataReaderHelper.h">
       <Filter>CCArmature\utils</Filter>
     </ClInclude>

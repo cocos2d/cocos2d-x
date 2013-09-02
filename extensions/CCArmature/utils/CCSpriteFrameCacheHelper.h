@@ -44,7 +44,7 @@ public:
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-	CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
+    CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
 private:
     CCSpriteFrameCacheHelper();

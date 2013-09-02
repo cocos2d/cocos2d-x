@@ -80,7 +80,7 @@ public:
      */
     void addDisplay(CCDisplayData *displayData, int index);
 
-	void addDisplay(CCNode *display, int index);
+    void addDisplay(CCNode *display, int index);
 
     void changeDisplayByIndex(int index, bool force);
 
@@ -126,12 +126,12 @@ public:
     //! Update color to render display
     void updateColor();
 
-	//! Update zorder
-	void updateZOrder();
+    //! Update zorder
+    void updateZOrder();
 
     virtual void setZOrder(int zOrder);
 
-	CCTween *getTween();
+    CCTween *getTween();
 
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
@@ -141,9 +141,9 @@ public:
     virtual bool isTransformDirty();
 
     virtual CCAffineTransform nodeToArmatureTransform();
-	virtual CCAffineTransform nodeToWorldTransform();
+    virtual CCAffineTransform nodeToWorldTransform();
 
-	CCNode *getDisplayRenderNode();
+    CCNode *getDisplayRenderNode();
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
@@ -165,7 +165,7 @@ public:
      */
     CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
-	CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
+    CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
     CCTween *m_pTween;				//! Calculate tween effect
 

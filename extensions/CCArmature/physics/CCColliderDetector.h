@@ -48,20 +48,23 @@ class ColliderBody : public CCObject
 {
 public:
 #if ENABLE_PHYSICS_BOX2D_DETECT
-	CC_SYNTHESIZE(b2Fixture*, m_pFixture, B2Fixture)
-	CC_SYNTHESIZE(b2Filter*, m_pFilter, B2Filter)
+    CC_SYNTHESIZE(b2Fixture *, m_pFixture, B2Fixture)
+    CC_SYNTHESIZE(b2Filter *, m_pFilter, B2Filter)
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-	CC_SYNTHESIZE(cpShape*, m_pShape, Shape)
+    CC_SYNTHESIZE(cpShape *, m_pShape, Shape)
 #endif
 
 public:
-	ColliderBody(CCContourData *contourData);
-	~ColliderBody();
+    ColliderBody(CCContourData *contourData);
+    ~ColliderBody();
 
-	inline CCContourData *getContourData(){ return m_pContourData; }
+    inline CCContourData *getContourData()
+    {
+        return m_pContourData;
+    }
 private:
-	CCContourData *m_pContourData;
+    CCContourData *m_pContourData;
 };
 
 /*
@@ -70,42 +73,42 @@ private:
 class CCColliderDetector : public CCObject
 {
 public:
-	static CCColliderDetector *create();
+    static CCColliderDetector *create();
     static CCColliderDetector *create(CCBone *bone);
 public:
-	CCColliderDetector();
-	~CCColliderDetector(void);
-    
+    CCColliderDetector();
+    ~CCColliderDetector(void);
+
     virtual bool init();
-	virtual bool init(CCBone *bone);
-    
+    virtual bool init(CCBone *bone);
+
     void addContourData(CCContourData *contourData);
     void addContourDataList(CCArray *contourDataList);
-    
-	void removeContourData(CCContourData *contourData);
-	void removeAll();
-    
+
+    void removeContourData(CCContourData *contourData);
+    void removeAll();
+
     void updateTransform(CCAffineTransform &t);
 
-	void setActive(bool active);
-	bool getActive();
+    void setActive(bool active);
+    bool getActive();
 
-	CCArray *getColliderBodyList();
+    CCArray *getColliderBodyList();
 
 protected:
-	CCArray *m_pColliderBodyList;
-	CC_SYNTHESIZE(CCBone*, m_pBone, Bone);
+    CCArray *m_pColliderBodyList;
+    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-	CC_PROPERTY(b2Body*, m_pB2Body, B2Body);
+    CC_PROPERTY(b2Body *, m_pB2Body, B2Body);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
+    CC_PROPERTY(cpBody *, m_pCPBody, CPBody);
 #endif
 
 protected:
-	bool m_bActive;
+    bool m_bActive;
 };
-		
+
 NS_CC_EXT_END
 
 #endif /*__CCCOLLIDERDETECTOR_H__*/

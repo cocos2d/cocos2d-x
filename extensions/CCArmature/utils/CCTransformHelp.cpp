@@ -123,8 +123,8 @@ void CCTransformHelp::matrixToNode(const CCAffineTransform &matrix, CCBaseData &
 
     node.skewX = -(atan2f(helpPoint1.y, helpPoint1.x) - 1.5707964f);
     node.skewY = atan2f(helpPoint2.y, helpPoint2.x);
-	node.scaleX = sqrt(matrix.a * matrix.a + matrix.b * matrix.b);
-	node.scaleY = sqrt(matrix.c * matrix.c + matrix.d * matrix.d);
+    node.scaleX = sqrt(matrix.a * matrix.a + matrix.b * matrix.b);
+    node.scaleY = sqrt(matrix.c * matrix.c + matrix.d * matrix.d);
     node.x = matrix.tx;
     node.y = matrix.ty;
 }
@@ -141,12 +141,12 @@ void CCTransformHelp::nodeConcat(CCBaseData &target, CCBaseData &source)
 
 void CCTransformHelp::nodeSub(CCBaseData &target, CCBaseData &source)
 {
-	target.x -= source.x;
-	target.y -= source.y;
-	target.skewX -= source.skewX;
-	target.skewY -= source.skewY;
-	target.scaleX -= source.scaleX;
-	target.scaleY -= source.scaleY;
+    target.x -= source.x;
+    target.y -= source.y;
+    target.skewX -= source.skewX;
+    target.skewY -= source.skewY;
+    target.scaleX -= source.scaleX;
+    target.scaleY -= source.scaleY;
 }
 
 NS_CC_EXT_END
