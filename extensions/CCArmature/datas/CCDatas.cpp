@@ -264,8 +264,8 @@ CCFrameData::CCFrameData(void)
     , displayIndex(0)
     , blendType(BLEND_NORMAL)
 
-    , strMovement("")
     , strEvent("")
+    , strMovement("")
     , strSound("")
     , strSoundEffect("")
 {

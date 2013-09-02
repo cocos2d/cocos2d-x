@@ -68,7 +68,7 @@ public:
     virtual bool init(const char *name);
 
     /**
-     * Add display and use  _DisplayData init the display.
+     * Add display and use  displayData init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
      *
@@ -92,7 +92,7 @@ public:
 
     /**
      * Set parent bone.
-     * If _parent is NUll, then also remove this bone from armature.
+     * If parent is NUll, then also remove this bone from armature.
      * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* _parentName).
      *
      * @param parent  the parent bone.
@@ -174,7 +174,7 @@ protected:
 
     CC_SYNTHESIZE(std::string, m_strName, Name);
 
-    CCBone *m_pParentBone;	                //! A weak reference to its parent
+    CCBone *m_pParentBone;	             //! A weak reference to its parent
     bool m_bBoneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
