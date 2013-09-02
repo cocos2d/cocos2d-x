@@ -5402,46 +5402,6 @@ static int extendMenuDeprecated(lua_State* tolua_S)
     return 1;
 }
 
-extern int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S);
-static int tolua_cocos2dx_LabelTTF_setString_deprecated00(lua_State* tolua_S)
-{
-    deprecatedFunctionTip("LabelTTF:setString(String object)","LabelTTF:setString(lua string)");
-    
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"LabelTTF",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-    {
-        LabelTTF* self = (LabelTTF*)  tolua_tousertype(tolua_S,1,0);
-        const char* label = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setString'", NULL);
-#endif
-        {
-            self->setString(label);
-        }
-    }
-    return 0;
-tolua_lerror:
-    return lua_cocos2dx_LabelTTF_setString(tolua_S);
-}
-
-static int extendLabelTTFDeprecated(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S,"LabelTTF");
-    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        tolua_function(tolua_S, "setString", tolua_cocos2dx_LabelTTF_setString_deprecated00);
-    }
-    return 1;
-}
-
-
 static int tolua_cocos2d_LayerMultiplex_createWithArray00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -5501,7 +5461,6 @@ int register_all_cocos2dx_manual_deprecated(lua_State* tolua_S)
     extendToluaDeprecated(tolua_S);
     extendSpawnDeprecated(tolua_S);
     extendMenuDeprecated(tolua_S);
-    extendLabelTTFDeprecated(tolua_S);
     extendLayerMultiplexDeprecated(tolua_S);
     return 0;
 }

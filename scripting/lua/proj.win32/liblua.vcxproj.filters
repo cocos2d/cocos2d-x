@@ -51,9 +51,6 @@
     <ClCompile Include="..\cocos2dx_support\CCLuaValue.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
     <ClCompile Include="..\cocos2dx_support\LuaOpengl.cpp">
-      <Filter>cocos2dx_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cocos2dx_support\LuaScrollView.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
     <ClCompile Include="..\cocos2dx_support\LuaScriptHandlerMgr.cpp">
@@ -125,9 +119,6 @@
     <ClInclude Include="..\luajit\include\lualib.h">
       <Filter>luajit\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
     <ClInclude Include="..\cocos2dx_support\CCBProxy.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
@@ -135,9 +126,6 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\LuaOpengl.h">
-      <Filter>cocos2dx_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\cocos2dx_support\LuaScrollView.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\LuaScriptHandlerMgr.h">
