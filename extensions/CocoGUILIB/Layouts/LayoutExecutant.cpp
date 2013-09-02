@@ -113,7 +113,7 @@ void LinearVerticalLayoutExecutant::doLayout()
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
                 child->setPosition(ccp(finalPosX, finalPosY));
-                topBoundary = child->getRelativeBottomPos() - mg.bottom;
+                topBoundary = child->getBottomInParent() - mg.bottom;
             }
         }
     }
@@ -158,7 +158,7 @@ void LinearHorizontalLayoutExecutant::doLayout()
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
                 child->setPosition(ccp(finalPosX, finalPosY));
-                leftBoundary = child->getRelativeRightPos() + mg.right;
+                leftBoundary = child->getRightInParent() + mg.right;
             }
         }
     }
@@ -216,8 +216,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
                         if (relativeWidget)
                         {
-                            float locationTop = relativeWidget->getRelativeTopPos();
-                            float locationRight = relativeWidget->getRelativeLeftPos();
+                            float locationTop = relativeWidget->getTopInParent();
+                            float locationRight = relativeWidget->getLeftInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationTop - ap.y * cs.height : locationTop - cs.height;
                             finalPosX = childType == WidgetTypeWidget ? locationRight - (1.0f - ap.x) * cs.width : locationRight - cs.width;
                         }
@@ -227,8 +227,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                         if (relativeWidget)
                         {
-                            float locationRight = relativeWidget->getRelativeLeftPos();
-                            float locationBottom = relativeWidget->getRelativeBottomPos();
+                            float locationRight = relativeWidget->getLeftInParent();
+                            float locationBottom = relativeWidget->getBottomInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationBottom + ap.y * cs.height : locationBottom;
                             finalPosX = childType == WidgetTypeWidget ? locationRight - (1.0f - ap.x) * cs.width : locationRight - cs.width;
                         }
@@ -236,8 +236,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
                         if (relativeWidget)
                         {
-                            float locationTop = relativeWidget->getRelativeTopPos();
-                            float locationLeft = relativeWidget->getRelativeRightPos();
+                            float locationTop = relativeWidget->getTopInParent();
+                            float locationLeft = relativeWidget->getRightInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationTop - ap.y * cs.height : locationTop - cs.height;
                             finalPosX = childType == WidgetTypeWidget ? locationLeft + ap.x * cs.width : locationLeft;
                         }
@@ -247,8 +247,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                         if (relativeWidget)
                         {
-                            float locationLeft = relativeWidget->getRelativeRightPos();
-                            float locationBottom = relativeWidget->getRelativeBottomPos();
+                            float locationLeft = relativeWidget->getRightInParent();
+                            float locationBottom = relativeWidget->getBottomInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationBottom + ap.y * cs.height : locationBottom;
                             finalPosX = childType == WidgetTypeWidget ? locationLeft + ap.x * cs.width : locationLeft;
                         }
@@ -256,8 +256,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
                         if (relativeWidget)
                         {
-                            float locationBottom = relativeWidget->getRelativeTopPos();
-                            float locationLeft = relativeWidget->getRelativeLeftPos();
+                            float locationBottom = relativeWidget->getTopInParent();
+                            float locationLeft = relativeWidget->getLeftInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationBottom + ap.y * cs.height : locationBottom;
                             finalPosX = childType == WidgetTypeWidget ? locationLeft + ap.x * cs.width : locationLeft;
                         }
@@ -267,8 +267,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                         if (relativeWidget)
                         {
-                            float locationBottom = relativeWidget->getRelativeTopPos();
-                            float locationRight = relativeWidget->getRelativeRightPos();
+                            float locationBottom = relativeWidget->getTopInParent();
+                            float locationRight = relativeWidget->getRightInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationBottom + ap.y * cs.height : locationBottom;
                             finalPosX = childType == WidgetTypeWidget ? locationRight - (1.0f - ap.x) * cs.width : locationRight - cs.width;
                         }
@@ -276,8 +276,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_BELOW_LEFTALIGN:
                         if (relativeWidget)
                         {
-                            float locationTop = relativeWidget->getRelativeBottomPos();
-                            float locationLeft = relativeWidget->getRelativeLeftPos();
+                            float locationTop = relativeWidget->getBottomInParent();
+                            float locationLeft = relativeWidget->getLeftInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationTop - (1.0f - ap.y) * cs.height : locationTop - cs.height;
                             finalPosX = childType == WidgetTypeWidget ? locationLeft + ap.x * cs.width : locationLeft;
                         }
@@ -287,8 +287,8 @@ void RelativeLayoutExecutant::doLayout()
                     case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
                         if (relativeWidget)
                         {
-                            float locationTop = relativeWidget->getRelativeBottomPos();
-                            float locationRight = relativeWidget->getRelativeRightPos();
+                            float locationTop = relativeWidget->getBottomInParent();
+                            float locationRight = relativeWidget->getRightInParent();
                             finalPosY = childType == WidgetTypeWidget ? locationTop - (1.0f - ap.y) * cs.height : locationTop - cs.height;
                             finalPosX = childType == WidgetTypeWidget ? locationRight - (1.0f - ap.x) * cs.width : locationRight - cs.width;
                         }

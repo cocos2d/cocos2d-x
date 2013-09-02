@@ -47,131 +47,19 @@ void CCSpriteFrameCacheHelper::purge()
 
 void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plistPath);
-    CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(path.c_str());
-
-
-    CCTexture2D *pobTexture = CCTextureCache::sharedTextureCache()->addImage(imagePath);
-
-    addSpriteFrameFromDict(dict, pobTexture, imagePath);
-
-    dict->release();
-
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
 }
-
-void string_replace(std::string& str, const std::string & strsrc, const std::string &strdst)
-{
-	std::string::size_type pos = 0;
-
-	while( (pos = str.find(strsrc, pos)) != string::npos)
-	{
-		str.replace(pos, strsrc.length(), strdst);
-		pos += strdst.length();
-
-	}
-}
-
-void CCSpriteFrameCacheHelper::addSpriteFrameFromDict(CCDictionary *dictionary, CCTexture2D *pobTexture, const char *imagePath)
-{
-    /*
-    Supported Zwoptex Formats:
-
-    ZWTCoordinatesFormatOptionXMLLegacy = 0, // Flash Version
-    ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
-    ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
-    ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
-    */
-
-    CCDictionary *metadataDict = (CCDictionary *)dictionary->objectForKey("metadata");
-    CCDictionary *framesDict = (CCDictionary *)dictionary->objectForKey("frames");
-    int format = 0;
-
-    // get the format
-    if(metadataDict != NULL)
-    {
-        format = metadataDict->valueForKey("format")->intValue();
-    }
-
-    // check the format
-    CCAssert(format >= 0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
-
-    CCDictElement *pElement = NULL;
-    CCDICT_FOREACH(framesDict, pElement)
-    {
-        CCDictionary *frameDict = (CCDictionary *)pElement->getObject();
-        std::string spriteFrameName = pElement->getStrKey();
-        
-        string_replace(spriteFrameName, "\\", "/");
-
-        CCSpriteFrame *spriteFrame = (CCSpriteFrame *)CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName.c_str());
-        if (spriteFrame)
-        {
-            continue;
-        }
-
-        if(format == 0)
-        {
-            float x = frameDict->valueForKey("x")->floatValue();
-            float y = frameDict->valueForKey("y")->floatValue();
-            float w = frameDict->valueForKey("width")->floatValue();
-            float h = frameDict->valueForKey("height")->floatValue();
-            float ox = frameDict->valueForKey("offsetX")->floatValue();
-            float oy = frameDict->valueForKey("offsetY")->floatValue();
-            int ow = frameDict->valueForKey("originalWidth")->intValue();
-            int oh = frameDict->valueForKey("originalHeight")->intValue();
-            // check ow/oh
-            if(!ow || !oh)
-            {
-                CCLOG("cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
-            }
-            // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
-            // create frame
-            spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, CCRectMake(x, y, w, h), false, CCPointMake(ox, oy), CCSizeMake((float)ow, (float)oh));
-		}
-        else if(format == 1 || format == 2)
-        {
-            CCRect frame = CCRectFromString(frameDict->valueForKey("frame")->getCString());
-            bool rotated = false;
-
-            // rotation
-            if (format == 2)
-            {
-                rotated = frameDict->valueForKey("rotated")->boolValue();
-            }
-
-            CCPoint offset = CCPointFromString(frameDict->valueForKey("offset")->getCString());
-            CCSize sourceSize = CCSizeFromString(frameDict->valueForKey("sourceSize")->getCString());
-
-            // create frame
-            spriteFrame = new CCSpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, frame, rotated, offset, sourceSize );
-        }
-        else if (format == 3)
-        {
-
-        }
-
-        // add sprite frame
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
-        spriteFrame->release();
-    }
-}
-
 
 CCTextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(CCTexture2D *texture)
 {
-	int key = texture->getName();
-	CCTextureAtlas *atlas = (CCTextureAtlas*)m_pTextureAtlasDic->objectForKey(key);
-	if (atlas == NULL)
-	{
-		atlas = CCTextureAtlas::createWithTexture(texture, 4);
-		m_pTextureAtlasDic->setObject(atlas, key);
-	}
-	return atlas;
+    int key = texture->getName();
+    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
+    if (atlas == NULL)
+    {
+        atlas = CCTextureAtlas::createWithTexture(texture, 4);
+        m_pTextureAtlasDic->setObject(atlas, key);
+    }
+    return atlas;
 }
 
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()

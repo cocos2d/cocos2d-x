@@ -421,18 +421,18 @@ bool UIPageView::scrollPages(float touchOffset)
     switch (m_touchMoveDir)
     {
         case PAGEVIEW_TOUCHLEFT: // left
-            if (m_pRightChild->getRelativeRightPos() + touchOffset <= m_fRightBoundary)
+            if (m_pRightChild->getRightInParent() + touchOffset <= m_fRightBoundary)
             {
-                realOffset = m_fRightBoundary - m_pRightChild->getRelativeRightPos();
+                realOffset = m_fRightBoundary - m_pRightChild->getRightInParent();
                 movePages(realOffset);
                 return false;
             }
             break;
             
         case PAGEVIEW_TOUCHRIGHT: // right
-            if (m_pLeftChild->getRelativeLeftPos() + touchOffset >= m_fLeftBoundary)
+            if (m_pLeftChild->getLeftInParent() + touchOffset >= m_fLeftBoundary)
             {
-                realOffset = m_fLeftBoundary - m_pLeftChild->getRelativeLeftPos();
+                realOffset = m_fLeftBoundary - m_pLeftChild->getLeftInParent();
                 movePages(realOffset);
                 return false;
             }

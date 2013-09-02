@@ -78,45 +78,46 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
         CCColliderDetector *detector = decoDisplay->getColliderDetector();
         if (detector)
         {
-			do 
-			{
+            do
+            {
 #if ENABLE_PHYSICS_BOX2D_DETECT
-				CC_BREAK_IF(!detector->getB2Body());
+                CC_BREAK_IF(!detector->getB2Body());
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-				CC_BREAK_IF(!detector->getCPBody());
+                CC_BREAK_IF(!detector->getCPBody());
 #endif
-				CCNode *node = decoDisplay->getDisplay();
-				CCAffineTransform displayTransform = node->nodeToParentTransform();
-				CCPoint anchorPoint =  node->getAnchorPointInPoints();
-				anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
-				displayTransform.tx = anchorPoint.x;
-				displayTransform.ty = anchorPoint.y;
-				CCAffineTransform t = CCAffineTransformConcat(displayTransform, bone->getArmature()->nodeToParentTransform());
-				detector->updateTransform(t);
-			} while (0);
+                CCNode *node = decoDisplay->getDisplay();
+                CCAffineTransform displayTransform = node->nodeToParentTransform();
+                CCPoint anchorPoint =  node->getAnchorPointInPoints();
+                anchorPoint = CCPointApplyAffineTransform(anchorPoint, displayTransform);
+                displayTransform.tx = anchorPoint.x;
+                displayTransform.ty = anchorPoint.y;
+                CCAffineTransform t = CCAffineTransformConcat(displayTransform, bone->getArmature()->nodeToParentTransform());
+                detector->updateTransform(t);
+            }
+            while (0);
         }
     }
 #endif
 
-	CCNode *display = decoDisplay->getDisplay();
+    CCNode *display = decoDisplay->getDisplay();
 
-	switch(decoDisplay->getDisplayData()->displayType)
-	{
-	case CS_DISPLAY_SPRITE:
-		updateSpriteDisplay(bone, display, dt, dirty);
-		break;
-	case CS_DISPLAY_PARTICLE:
-		updateParticleDisplay(bone, display, dt, dirty);
-		break;
-	case CS_DISPLAY_ARMATURE:
-		updateArmatureDisplay(bone, display, dt, dirty);
-		break;
-	default:
-		{
-			display->setAdditionalTransform(bone->nodeToArmatureTransform());
-		}
-		break;
-	}
+    switch(decoDisplay->getDisplayData()->displayType)
+    {
+    case CS_DISPLAY_SPRITE:
+        updateSpriteDisplay(bone, display, dt, dirty);
+        break;
+    case CS_DISPLAY_PARTICLE:
+        updateParticleDisplay(bone, display, dt, dirty);
+        break;
+    case CS_DISPLAY_ARMATURE:
+        updateArmatureDisplay(bone, display, dt, dirty);
+        break;
+    default:
+    {
+        display->setAdditionalTransform(bone->nodeToArmatureTransform());
+    }
+    break;
+    }
 }
 
 
@@ -135,13 +136,13 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     CCSpriteDisplayData *displayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData();
 
-	std::string textureName = displayData->displayName;
-	size_t startPos = textureName.find_last_of(".");
+    std::string textureName = displayData->displayName;
+    size_t startPos = textureName.find_last_of(".");
 
-	if(startPos != std::string::npos)
-	{
-		textureName = textureName.erase(startPos);
-	}
+    if(startPos != std::string::npos)
+    {
+        textureName = textureName.erase(startPos);
+    }
 
     //! create display
     if(textureName.length() == 0)
@@ -155,20 +156,20 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     skin->setBone(bone);
 
-	initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
+    initSpriteDisplay(bone, decoDisplay, displayData->displayName.c_str(), skin);
 
-	CCArmature *armature = bone->getArmature();
-	if (armature)
-	{
-		if (armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
-		{
-			skin->setSkinData(displayData->skinData);
-		}
-		else
-		{
-			skin->setSkinData(*bone->getBoneData());
-		}
-	}
+    CCArmature *armature = bone->getArmature();
+    if (armature)
+    {
+        if (armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
+        {
+            skin->setSkinData(displayData->skinData);
+        }
+        else
+        {
+            skin->setSkinData(*bone->getBoneData());
+        }
+    }
 
     decoDisplay->setDisplay(skin);
 
@@ -176,39 +177,39 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
 void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin)
 {
-	//! remove .xxx
-	std::string textureName = displayName;
-	size_t startPos = textureName.find_last_of(".");
+    //! remove .xxx
+    std::string textureName = displayName;
+    size_t startPos = textureName.find_last_of(".");
 
-	if(startPos != std::string::npos)
-	{
-		textureName = textureName.erase(startPos);
-	}
+    if(startPos != std::string::npos)
+    {
+        textureName = textureName.erase(startPos);
+    }
 
-	CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
-	if(textureData)
-	{
-		//! Init display anchorPoint, every Texture have a anchor point
-		skin->setAnchorPoint(ccp( textureData->pivotX, textureData->pivotY));
-	}
+    CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+    if(textureData)
+    {
+        //! Init display anchorPoint, every Texture have a anchor point
+        skin->setAnchorPoint(ccp( textureData->pivotX, textureData->pivotY));
+    }
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-	if (textureData && textureData->contourDataList.count() > 0)
-	{
+    if (textureData && textureData->contourDataList.count() > 0)
+    {
 
-		//! create ContourSprite
-		CCColliderDetector *colliderDetector = CCColliderDetector::create(bone);
-		colliderDetector->addContourDataList(&textureData->contourDataList);
+        //! create ContourSprite
+        CCColliderDetector *colliderDetector = CCColliderDetector::create(bone);
+        colliderDetector->addContourDataList(&textureData->contourDataList);
 
-		decoDisplay->setColliderDetector(colliderDetector);
-	}
+        decoDisplay->setColliderDetector(colliderDetector);
+    }
 #endif
 }
 
 void CCDisplayFactory::updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
-	CS_RETURN_IF(!dirty);
+    CS_RETURN_IF(!dirty);
     CCSkin *skin = (CCSkin *)display;
     skin->updateArmatureTransform();
 }
@@ -238,7 +239,7 @@ void CCDisplayFactory::createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *
 }
 void CCDisplayFactory::updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty)
 {
-    CCArmature *armature = (CCArmature*)display;
+    CCArmature *armature = (CCArmature *)display;
     if(armature)
     {
         armature->sortAllChildren();

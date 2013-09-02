@@ -94,19 +94,21 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoGUILIB/Action/UIActionFrame.cpp \
 ../CocoGUILIB/Action/UIActionManager.cpp \
 ../CocoGUILIB/Action/UIActionNode.cpp \
-../CocoGUILIB/BaseClasses/UIContainerWidget.cpp \
 ../CocoGUILIB/BaseClasses/UIRootWidget.cpp \
 ../CocoGUILIB/BaseClasses/UIWidget.cpp \
-../CocoGUILIB/Drawable/UICCLabelAtlas.cpp \
-../CocoGUILIB/Drawable/UICCTextField.cpp \
-../CocoGUILIB/Drawable/UIClippingLayer.cpp \
+../CocoGUILIB/Layouts/Layout.cpp \
+../CocoGUILIB/Layouts/LayoutExecutant.cpp \
+../CocoGUILIB/Layouts/LayoutParameter.cpp \
 ../CocoGUILIB/Layouts/UILayoutDefine.cpp \
-../CocoGUILIB/Layouts/UILayoutUnit.cpp \
 ../CocoGUILIB/System/CCSReader.cpp \
 ../CocoGUILIB/System/CocosGUI.cpp \
 ../CocoGUILIB/System/UIHelper.cpp \
 ../CocoGUILIB/System/UIInputManager.cpp \
 ../CocoGUILIB/System/UILayer.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIDragPanel.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIListView.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIPageView.cpp \
+../CocoGUILIB/UIWidgets/ScrollWidget/UIScrollView.cpp \
 ../CocoGUILIB/UIWidgets/UIButton.cpp \
 ../CocoGUILIB/UIWidgets/UICheckBox.cpp \
 ../CocoGUILIB/UIWidgets/UIImageView.cpp \
@@ -115,16 +117,10 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoGUILIB/UIWidgets/UILabelBMFont.cpp \
 ../CocoGUILIB/UIWidgets/UILoadingBar.cpp \
 ../CocoGUILIB/UIWidgets/UINodeContainer.cpp \
-../CocoGUILIB/UIWidgets/UIPanel.cpp \
 ../CocoGUILIB/UIWidgets/UISlider.cpp \
 ../CocoGUILIB/UIWidgets/UISwitch.cpp \
-../CocoGUILIB/UIWidgets/UITextArea.cpp \
 ../CocoGUILIB/UIWidgets/UITextButton.cpp \
 ../CocoGUILIB/UIWidgets/UITextField.cpp \
-../CocoGUILIB/UIWidgets/ScrollWidget/UIDragPanel.cpp \
-../CocoGUILIB/UIWidgets/ScrollWidget/UIScrollView.cpp \
-../CocoGUILIB/UIWidgets/ScrollWidget/UIPageView.cpp \
-../CocoGUILIB/UIWidgets/ScrollWidget/UIListView.cpp \
 ../CocostudioReader/CCSSceneReader.cpp \
 ../CocostudioReader/DictionaryHelper.cpp 
 

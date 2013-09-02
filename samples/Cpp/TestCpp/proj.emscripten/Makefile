@@ -58,8 +58,13 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
     ../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
     ../Classes/ExtensionsTest/SceneEditorTest/SceneEditorTestScene.cpp \
-	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesScene.cpp \
-	../Classes/ExtensionsTest/CocosGUITest/CocosGUIScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesEquipScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesMapScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesPageScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesRegisterScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesWeaponScene.cpp \
+    ../Classes/ExtensionsTest/CocosGUITest/CocosGUIScene.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UIScene.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UISceneManager.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UIButtonTest/UIButtonTest.cpp \
@@ -79,7 +84,6 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UITextAreaTest/UITextAreaTest.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UITextButtonTest/UITextButtonTest.cpp \
     ../Classes/ExtensionsTest/CocosGUITest/UITextFieldTest/UITextFieldTest.cpp \
-    ../Classes/ExtensionsTest/CocosGUITest/UIZoomButtonTest/UIZoomButtonTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \

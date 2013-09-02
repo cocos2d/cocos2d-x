@@ -38,23 +38,23 @@ class CCDisplayData;
 class CCDisplayFactory
 {
 public:
-	static void addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
+    static void addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+    static void createDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+    static void updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, float dt, bool dirty);
 
-	static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin);
-	static void updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
-	
+    static void addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+    static void createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+    static void initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, const char *displayName, CCSkin *skin);
+    static void updateSpriteDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 
-	static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 
-	static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
-	static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
-	static void updateParticleDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
+    static void addArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+    static void createArmatureDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+    static void updateArmatureDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
+
+    static void addParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);
+    static void createParticleDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay);
+    static void updateParticleDisplay(CCBone *bone, CCNode *display, float dt, bool dirty);
 };
 
 
