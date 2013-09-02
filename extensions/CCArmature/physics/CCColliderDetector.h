@@ -28,8 +28,17 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
+#ifndef PT_RATIO
+#define PT_RATIO 32
+#endif
+
+
 class b2Body;
+class b2Fixture;
 struct b2Filter;
+
+struct cpBody;
+struct cpShape;
 
 NS_CC_EXT_BEGIN
 
@@ -38,32 +47,20 @@ class CCBone;
 class ColliderBody : public CCObject
 {
 public:
-	ColliderBody(b2Body *b2b, CCContourData *contourData)
-		:m_pB2b(NULL)
-		,m_pContourData(NULL)
-	{
-		this->m_pB2b = b2b;
-		this->m_pContourData = contourData;
-		CC_SAFE_RETAIN(m_pContourData);
-	}
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_SYNTHESIZE(b2Fixture*, m_pFixture, B2Fixture)
+	CC_SYNTHESIZE(b2Filter*, m_pFilter, B2Filter)
 
-	~ColliderBody()
-	{
-		CC_SAFE_RELEASE(m_pContourData);
-	}
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	CC_SYNTHESIZE(cpShape*, m_pShape, Shape)
+#endif
 
-	inline b2Body *getB2Body()
-	{
-		return m_pB2b;
-	}
+public:
+	ColliderBody(CCContourData *contourData);
+	~ColliderBody();
 
-	inline CCContourData *getContourData()
-	{
-		return m_pContourData;
-	}
-
+	inline CCContourData *getContourData(){ return m_pContourData; }
 private:
-	b2Body *m_pB2b;
 	CCContourData *m_pContourData;
 };
 
@@ -90,14 +87,23 @@ public:
     
     void updateTransform(CCAffineTransform &t);
 
-	void setColliderFilter(b2Filter &filter);
+	void setActive(bool active);
+	bool getActive();
 
-    void setActive(bool active);
-private:
-    CCArray *m_pColliderBodyList;
-    
+	CCArray *getColliderBodyList();
+
+protected:
+	CCArray *m_pColliderBodyList;
 	CC_SYNTHESIZE(CCBone*, m_pBone, Bone);
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_PROPERTY(b2Body*, m_pB2Body, B2Body);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
+#endif
+
+protected:
+	bool m_bActive;
 };
 		
 NS_CC_EXT_END

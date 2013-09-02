@@ -30,6 +30,9 @@ THE SOFTWARE.
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
 
+class b2Body;
+struct cpBody;
+
 NS_CC_EXT_BEGIN
     
 class  CCArmature : public CCNodeRGBA, public CCBlendProtocol 
@@ -37,15 +40,15 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
 public:
    /**
-	* Allocates and initializes a armature.
-	* @return A initialized armature which is marked as "autorelease".
+	* Allocates and initializes an armature.
+	* @return An initialized armature which is marked as "autorelease".
 	*/
 	static CCArmature *create();
     
    /**
-	* Allocates a armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
+	* Allocates an armature, and use the CCArmatureData named name in CCArmatureDataManager to initializes the armature. 
 	*
-	* @param  name CCArmature will use the name to find to the CCArmatureData to initializes it.
+	* @param  name CCArmature will use the name to find the CCArmatureData to initializes it.
 	* @return A initialized armature which is marked as "autorelease".
 	*/
 	static CCArmature *create(const char *name);
@@ -62,7 +65,7 @@ public:
     virtual bool init();
     
     /**
-     * Init a armature with specified name
+     * Init an armature with specified name
      * @param name CCArmature name
      */
     virtual bool init(const char *name);
@@ -72,7 +75,7 @@ public:
      * Add a CCBone to this CCArmature, 
      *
      * @param bone  The CCBone you want to add to CCArmature
-     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to it's parent
+     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to its parent
      */
     virtual void addBone(CCBone *bone, const char* parentName);
     /**
@@ -123,6 +126,8 @@ public:
 	inline void setBlendFunc(ccBlendFunc blendFunc) { m_sBlendFunc = blendFunc; }
 	inline ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
 
+	virtual void setAnimation(CCArmatureAnimation *animation);
+	virtual CCArmatureAnimation *getAnimation();
 protected:
     
     /*
@@ -130,18 +135,22 @@ protected:
      */
 	CCBone *createBone(const char *boneName );
     
-
-	CC_SYNTHESIZE_RETAIN(CCArmatureAnimation *, m_pAnimation, Animation);
+	//! Update blend function
+	void updateBlendType(CCBlendType blendType);
     
-    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, CCArmatureData);
+    CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 
 	CC_SYNTHESIZE(CCBatchNode*, m_pBatchNode, BatchNode);
 
-	CC_SYNTHESIZE_PASS_BY_REF(std::string, m_strName, Name);
+	CC_SYNTHESIZE(std::string, m_strName, Name);
 
 	CC_SYNTHESIZE(CCTextureAtlas*, m_pAtlas, TextureAtlas);
 
 	CC_SYNTHESIZE(CCBone*, m_pParentBone, ParentBone);
+
+	CC_SYNTHESIZE(float, m_fVersion, Version);
+
+	CC_SYNTHESIZE_READONLY(bool, m_bArmatureTransformDirty, ArmatureTransformDirty);
 protected:
     CCDictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
@@ -152,6 +161,14 @@ protected:
 	ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
 
 	CCPoint m_pOffsetPoint;
+
+	CCArmatureAnimation *m_pAnimation;
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+	CC_PROPERTY(b2Body*, m_pB2Body, B2Body);
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+	CC_PROPERTY(cpBody*, m_pCPBody, CPBody);
+#endif
 };
 
 NS_CC_EXT_END
