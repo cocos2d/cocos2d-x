@@ -87,9 +87,9 @@ public:
     struct cc_timeval m_sStartTime;
 };
 
-extern void CCProfilingBeginTimingBlock(const char *timerName);
-extern void CCProfilingEndTimingBlock(const char *timerName);
-extern void CCProfilingResetTimingBlock(const char *timerName);
+extern CC_DLL void CCProfilingBeginTimingBlock(const char *timerName);
+extern CC_DLL void CCProfilingEndTimingBlock(const char *timerName);
+extern CC_DLL void CCProfilingResetTimingBlock(const char *timerName);
 
 /*
  * cocos2d profiling categories
