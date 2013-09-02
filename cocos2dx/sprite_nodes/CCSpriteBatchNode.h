@@ -160,12 +160,10 @@ protected:
     */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 
-private:
     void updateAtlasIndex(Sprite* sprite, int* curIndex);
     void swap(int oldIndex, int newIndex);
     void updateBlendFunc();
 
-protected:
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
 

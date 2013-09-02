@@ -350,10 +350,10 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 
         if (needNewIndex)
         {//all children have a zOrder < 0)
-            oldIndex=sprite->getAtlasIndex();
+            oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
             sprite->setOrderOfArrival(0);
-            if (oldIndex!=*curIndex) {
+            if (oldIndex != *curIndex) {
                 swap(oldIndex, *curIndex);
             }
             (*curIndex)++;
@@ -374,7 +374,7 @@ void SpriteBatchNode::swap(int oldIndex, int newIndex)
     auto newIt = std::next( _descendants.begin(), newIndex );
 
     (*newIt)->setAtlasIndex(oldIndex);
-    (*oldIt)->setAtlasIndex(newIndex);
+//    (*oldIt)->setAtlasIndex(newIndex);
 
     std::swap( *oldIt, *newIt );
 }
