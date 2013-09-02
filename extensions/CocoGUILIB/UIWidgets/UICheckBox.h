@@ -156,12 +156,12 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /*Compatible*/
-    void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
-    void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadBackGroundTexture(backGround,type);};
-    void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundSelectedTexture(backGroundSelected,texType);};
-    void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossTexture(cross,texType);};
-    void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundDisabledTexture(backGroundDisabled,texType);};
-    void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossDisabledTexture(frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadBackGroundTexture(backGround,type);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundSelectedTexture(backGroundSelected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossTexture(cross,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundDisabledTexture(backGroundDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossDisabledTexture(frontCrossDisabled,texType);};
     /************/
 
 protected:

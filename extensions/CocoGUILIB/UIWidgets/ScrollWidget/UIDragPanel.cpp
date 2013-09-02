@@ -139,7 +139,7 @@ void UIDragPanel::releaseResoures()
     Layout::releaseResoures();
     m_pInnerContainer->structureChangedEvent();
     m_pInnerContainer->releaseResoures();
-    m_pInnerContainer->setWidgetParent(NULL);
+    m_pInnerContainer->setParent(NULL);
     delete m_pInnerContainer;
     m_pInnerContainer = NULL;
 }
@@ -395,7 +395,7 @@ void UIDragPanel::handlePressLogic(const CCPoint &touchPoint)
         }
     }
     
-    CCPoint nsp = getContainerNode()->convertToNodeSpace(touchPoint);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
     m_touchStartNodeSpace = nsp;
     
     m_touchStartWorldSpace = touchPoint;    
@@ -416,7 +416,7 @@ void UIDragPanel::handleMoveLogic(const CCPoint &touchPoint)
         
     m_bTouchMoved = true;
     
-    CCPoint nsp = getContainerNode()->convertToNodeSpace(touchPoint);
+    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
     CCPoint delta = ccpSub(nsp, m_touchStartNodeSpace);
     m_touchStartNodeSpace = nsp;
     
@@ -692,10 +692,10 @@ void UIDragPanel::setAutoMoveEaseRate(float rate)
 
 bool UIDragPanel::checkToBoundaryWithDeltaPosition(const CCPoint&  delta)
 {
-    float innerLeft = m_pInnerContainer->getRelativeLeftPos();
-    float innerTop = m_pInnerContainer->getRelativeTopPos();
-    float innerRight = m_pInnerContainer->getRelativeRightPos();
-    float innerBottom = m_pInnerContainer->getRelativeBottomPos();
+    float innerLeft = m_pInnerContainer->getLeftInParent();
+    float innerTop = m_pInnerContainer->getTopInParent();
+    float innerRight = m_pInnerContainer->getRightInParent();
+    float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
     float top = m_size.height;
@@ -755,10 +755,10 @@ bool UIDragPanel::checkToBoundaryWithDeltaPosition(const CCPoint&  delta)
 
 CCPoint UIDragPanel::calculateToBoundaryDeltaPosition(const CCPoint& paramDelta)
 {
-    float innerLeft = m_pInnerContainer->getRelativeLeftPos();
-    float innerTop = m_pInnerContainer->getRelativeTopPos();
-    float innerRight = m_pInnerContainer->getRelativeRightPos();
-    float innerBottom = m_pInnerContainer->getRelativeBottomPos();
+    float innerLeft = m_pInnerContainer->getLeftInParent();
+    float innerTop = m_pInnerContainer->getTopInParent();
+    float innerRight = m_pInnerContainer->getRightInParent();
+    float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
     float top = m_size.height;
@@ -815,10 +815,10 @@ bool UIDragPanel::isBerth()
 // check berth
 bool UIDragPanel::checkBerth()
 {
-    float innerLeft = m_pInnerContainer->getRelativeLeftPos();
-    float innerTop = m_pInnerContainer->getRelativeTopPos();
-    float innerRight = m_pInnerContainer->getRelativeRightPos();
-    float innerBottom = m_pInnerContainer->getRelativeBottomPos();
+    float innerLeft = m_pInnerContainer->getLeftInParent();
+    float innerTop = m_pInnerContainer->getTopInParent();
+    float innerRight = m_pInnerContainer->getRightInParent();
+    float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
     float top = m_size.height;
@@ -1033,10 +1033,10 @@ void UIDragPanel::setBounceEnable(bool bounce)
 
 bool UIDragPanel::checkNeedBounce()
 {
-    float innerLeft = m_pInnerContainer->getRelativeLeftPos();
-    float innerTop = m_pInnerContainer->getRelativeTopPos();
-    float innerRight = m_pInnerContainer->getRelativeRightPos();
-    float innerBottom = m_pInnerContainer->getRelativeBottomPos();
+    float innerLeft = m_pInnerContainer->getLeftInParent();
+    float innerTop = m_pInnerContainer->getTopInParent();
+    float innerRight = m_pInnerContainer->getRightInParent();
+    float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float left = 0;
     float top = m_size.height;
@@ -1073,10 +1073,10 @@ void UIDragPanel::stopBounce()
 
 void UIDragPanel::bounceToCorner()
 {
-    float innerLeft = m_pInnerContainer->getRelativeLeftPos();
-    float innerTop = m_pInnerContainer->getRelativeTopPos();
-    float innerRight = m_pInnerContainer->getRelativeRightPos();
-    float innerBottom = m_pInnerContainer->getRelativeBottomPos();
+    float innerLeft = m_pInnerContainer->getLeftInParent();
+    float innerTop = m_pInnerContainer->getTopInParent();
+    float innerRight = m_pInnerContainer->getRightInParent();
+    float innerBottom = m_pInnerContainer->getBottomInParent();
     
     float width = m_size.width;
     float height = m_size.height;
