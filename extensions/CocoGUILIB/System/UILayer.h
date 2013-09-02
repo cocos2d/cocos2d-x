@@ -44,11 +44,23 @@ class UILayer : public CCLayer
 {
     
 public:
+    /**
+     * Default constructor
+     */
     UILayer();
-    virtual ~UILayer();
-    virtual bool init();
     
+    /**
+     * Default destructor
+     */
+    virtual ~UILayer();
+    
+    /**
+     * Allocates and initializes a widget.
+     */
     static UILayer *create(void);
+    
+    //initializes state of uilayer.
+    virtual bool init();
     
     virtual void onEnter();
     virtual void onExit();
@@ -59,22 +71,74 @@ public:
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
-    
+    /**
+     * Add a widget to UILayer, for drawing.
+     *
+     * @param widget.
+     */
     void addWidget(UIWidget* widget);
+    
+    /**
+     * Remove a widget from UILayer.
+     *
+     * @param widget.
+     *
+     * @param cleanup true if all running actions on all children widgets should be cleanup, false otherwise.
+     */
     void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup);
+    
+    /**
+     * Sets whether the UILayer is visible
+     *
+     * The default value is true, a UILayer is default to visible
+     *
+     * @param visible   true if the UILayer is visible, false if the UILayer is hidden.
+     */
     virtual void setVisible(bool visible);
+    
+    /**
+     * Finds a widget whose tag is equal tag param from widget tree.
+     *
+     * @param tag.
+     */
+    UIWidget* getWidgetByTag(int tag);
+    
+    /**
+     * Seek a widget whose name is equal name param from widget tree.
+     *
+     * @param name.
+     */
+    UIWidget* getWidgetByName(const char* name);
+    
+    /**
+     * Gets UIInputManager.
+     *
+     * UIInputManager is the touch manager of UILayer.
+     *
+     * @return UIInputManager.
+     */
+    UIInputManager* getInputManager();
+    
+    /**
+     * Remove and clean up all of UILayer's widget.
+     */
+    virtual void clear();
+    
+    /**
+     * Gets root widget of UILayer.
+     *
+     * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
+     */
+    UIRootWidget* getRootWidget();
+    
+    //update method
     void update(float dt);
     void addUpdateEnableWidget(UIWidget* widget);
     void removeUpdateEnableWidget(UIWidget* widget);
-    UIWidget* getWidgetByTag(int tag);
-    UIWidget* getWidgetByName(const char* name);
-    UIInputManager* getInputManager();
-    virtual void clear();
-    virtual void dispose();
-    UIRootWidget* getRootWidget();
-    
 //    void setUIType(GUITYPE type);
-    
+    /*compatible*/
+    virtual void dispose();
+    /************/
 protected:
 
 //    GUITYPE m_UIType;

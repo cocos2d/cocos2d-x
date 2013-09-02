@@ -26,10 +26,60 @@
 
 NS_CC_EXT_BEGIN
 
-UILabelAtlas::UILabelAtlas():
-m_pRenderLaberAtlas(NULL)
+UICCLabelAtlas::UICCLabelAtlas()
 {
-    m_WidgetName = WIDGET_LABELATLAS;
+    
+}
+
+UICCLabelAtlas::~UICCLabelAtlas()
+{
+    
+}
+
+UICCLabelAtlas* UICCLabelAtlas::create()
+{
+    UICCLabelAtlas *pRet = new UICCLabelAtlas();
+    if(pRet)
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    
+    return NULL;
+}
+
+void UICCLabelAtlas::setProperty(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+{
+    initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap);
+}
+
+void UICCLabelAtlas::setProperty(const char *string, CCTexture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+{
+    initWithString(string, texture, itemWidth, itemHeight, startCharMap);
+}
+
+void UICCLabelAtlas::draw()
+{
+    if (!m_pTextureAtlas)
+    {
+        return;
+    }
+    
+    CCAtlasNode::draw();
+}
+
+void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
+{
+    CCAtlasNode::setOpacity(opacity);
+}
+
+
+
+
+UILabelAtlas::UILabelAtlas():
+m_pLaberAtlasRenderer(NULL)
+{
 }
 
 UILabelAtlas::~UILabelAtlas()
@@ -48,43 +98,72 @@ UILabelAtlas* UILabelAtlas::create()
     return NULL;
 }
 
-void UILabelAtlas::initNodes()
+void UILabelAtlas::initRenderer()
 {
-    UIWidget::initNodes();
-    m_pRenderLaberAtlas = UICCLabelAtlas::create();
-    m_pRender->addChild(m_pRenderLaberAtlas);
+    UIWidget::initRenderer();
+    m_pLaberAtlasRenderer = UICCLabelAtlas::create();
+    m_pRenderer->addChild(m_pLaberAtlasRenderer);
 }
 
 void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile, int itemWidth, int itemHeight, const char *startCharMap,bool useSpriteFrame)
 {
-    m_pRenderLaberAtlas->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    m_pLaberAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    updateAnchorPoint();
+    labelAtlasScaleChangedWithSize();
 }
 
 void UILabelAtlas::setStringValue(const char *value)
 {
-    m_pRenderLaberAtlas->setString(value);
+    m_pLaberAtlasRenderer->setString(value);
+    labelAtlasScaleChangedWithSize();
 }
 
 const char* UILabelAtlas::getStringValue()
 {
-    return m_pRenderLaberAtlas->getString();
+    return m_pLaberAtlasRenderer->getString();
 }
 
 void UILabelAtlas::setAnchorPoint(const CCPoint &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    m_pRenderLaberAtlas->setAnchorPoint(ccp(pt.x, pt.y-0.25f));
+    m_pLaberAtlasRenderer->setAnchorPoint(ccp(pt.x, pt.y));
 }
 
-CCNode* UILabelAtlas::getValidNode()
+void UILabelAtlas::onSizeChanged()
 {
-    return m_pRenderLaberAtlas;
+    labelAtlasScaleChangedWithSize();
 }
 
-// pipu cheat
-//void UILabelAtlas::setOpacity(int opacity)
-//{
-//    m_pRenderLaberAtlas->setOpacity(opacity);
-//}
+const CCSize& UILabelAtlas::getContentSize() const
+{
+    return m_pLaberAtlasRenderer->getContentSize();
+}
+
+CCNode* UILabelAtlas::getVirtualRenderer()
+{
+    return m_pLaberAtlasRenderer;
+}
+
+void UILabelAtlas::labelAtlasScaleChangedWithSize()
+{
+    if (m_bIgnoreSize)
+    {
+        m_pLaberAtlasRenderer->setScale(1.0f);
+        m_size = m_pLaberAtlasRenderer->getContentSize();
+    }
+    else
+    {
+        CCSize textureSize = m_pLaberAtlasRenderer->getContentSize();
+        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+        {
+            m_pLaberAtlasRenderer->setScale(1.0f);
+            return;
+        }
+        float scaleX = m_size.width / textureSize.width;
+        float scaleY = m_size.height / textureSize.height;
+        m_pLaberAtlasRenderer->setScaleX(scaleX);
+        m_pLaberAtlasRenderer->setScaleY(scaleY);
+    }
+}
 
 NS_CC_EXT_END

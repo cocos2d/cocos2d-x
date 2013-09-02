@@ -25,17 +25,29 @@
 #ifndef __UIROOTWIDGET_H__
 #define __UIROOTWIDGET_H__
 
-#include "UIContainerWidget.h"
+#include "../Layouts/Layout.h"
 
 NS_CC_EXT_BEGIN
 
-class UIRootWidget : public UIContainerWidget
+class UIRootWidget : public Layout
 {
 public:
+    /**
+     * Default constructor
+     */
     UIRootWidget();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UIRootWidget();
+    
+    /**
+     * Allocates and initializes a widget.
+     */
     static UIRootWidget* create();
 protected:
+    //initializes state of widget.
     virtual bool init();
 };
 

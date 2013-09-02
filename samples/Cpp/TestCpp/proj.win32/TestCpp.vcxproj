@@ -79,7 +79,7 @@
     <Link>
       <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;websockets.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Visual Leak Detector\lib\Win32;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -137,7 +137,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\ArmatureTest\ArmatureScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesEquipScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesMapScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesPageScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesRegisterScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesScene.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesWeaponScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIButtonTest\UIButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
@@ -158,7 +163,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextAreaTest\UITextAreaTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextButtonTest\UITextButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.cpp" />
@@ -266,7 +270,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesEquipScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesMapScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesPageScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesRegisterScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesScene.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIExamplesWeaponScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIButtonTest\UIButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UICheckBoxTest\UICheckBoxTest.h" />
@@ -287,7 +296,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextAreaTest\UITextAreaTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextButtonTest\UITextButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UITextFieldTest\UITextFieldTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocosGUITest\UIZoomButtonTest\UIZoomButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\ComponentsTestScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\EnemyController.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ComponentsTest\GameOverScene.h" />

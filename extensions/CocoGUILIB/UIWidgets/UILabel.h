@@ -29,51 +29,117 @@
 
 NS_CC_EXT_BEGIN
 
-typedef enum
-{
-    LabelGravityNone = -1,
-    LabelGravityCenter,
-    LabelGravityLelf,
-    LabelGravityRight,
-    
-}LabelGravity;
-
 class UILabel : public UIWidget
 {
 public:
+    /**
+     * Default constructor
+     */
     UILabel();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UILabel();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UILabel* create();
+    
+    /**
+     * Changes the string value of label.
+     *
+     * @param text  string value.
+     */
     void setText(const char* text);
+    
+    /**
+     * Gets the string value of label.
+     *
+     * @return text  string value.
+     */
     const char* getStringValue();
+    
+    /**
+     * Gets the string length of label.
+     *
+     * @return  string length.
+     */
     int getStringLength();
+    
+    /**
+     * Sets the font size of label.
+     *
+     * @param  font size.
+     */
     void setFontSize(int size);
+    
+    /**
+     * Sets the font name of label.
+     *
+     * @param  font name.
+     */
     void setFontName(const char* name);
-    void setTouchScaleChangeAble(bool able);
-    bool getTouchScaleChangeAble();
-    void clickScale(float scale);
+    
+    /**
+     * Sets the touch scale enabled of label.
+     *
+     * @param  touch scale enabled of label.
+     */
+    void setTouchScaleChangeEnabled(bool enabled);
+    
+    /**
+     * Gets the touch scale enabled of label.
+     *
+     * @return  touch scale enabled of label.
+     */
+    bool isTouchScaleChangeEnabled();
+
+    //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" method of widget.
     virtual void setFlipY(bool flipY);
+    
+    //override "isFlipX" method of widget.
     virtual bool isFlipX();
+    
+    //override "isFlipY" method of widget.
     virtual bool isFlipY();
-    void setGravity(LabelGravity gravity);
-    virtual void adaptSize(float xProportion,float yProportion);
-    virtual CCNode* getValidNode();
+    
+    //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
+    
+    //override "getContentSize" method of widget.
+    virtual const CCSize& getContentSize() const;
+    
+    //override "getVirtualRenderer" method of widget.
+    virtual CCNode* getVirtualRenderer();
+    
+    void setTextAreaSize(const CCSize &size);
+    void setTextHorizontalAlignment(CCTextAlignment alignment);
+    void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+
+    
+    void setTouchScaleChangeAble(bool able){setTouchScaleChangeEnabled(able);};
+    bool getTouchScaleChangeAble(){return isTouchScaleChangeEnabled();};
 protected:
     virtual bool init();
-    virtual void initNodes();
+    virtual void initRenderer();
     virtual void onPressStateChangedToNormal();
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
+    virtual void onSizeChanged();
+    void clickScale(float scale);
+    void labelScaleChangedWithSize();
 protected:
-    bool m_bTouchScaleChangeAble;
+    bool m_bTouchScaleChangeEnabled;
     float m_fNormalScaleValue;
-    LabelGravity m_nGravity;
     std::string m_sFontName;
     int m_nFontSize;
     float m_fOnSelectedScaleOffset;
-    CCLabelTTF* m_pRenderLabel;
+    CCLabelTTF* m_pLabelRenderer;
 };
 
 NS_CC_EXT_END

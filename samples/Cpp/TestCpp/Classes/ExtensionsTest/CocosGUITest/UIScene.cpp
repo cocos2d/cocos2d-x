@@ -3,6 +3,7 @@
 #include "UIScene.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
+#include "CocosGUIScene.h"
 
 UIScene::UIScene()
 : m_pSceneTitle(NULL)
@@ -13,7 +14,7 @@ UIScene::UIScene()
 
 UIScene::~UIScene()
 {
-    m_pUiLayer->removeFromParent();	
+	
 }
 
 bool UIScene::init()
@@ -24,7 +25,7 @@ bool UIScene::init()
         m_pUiLayer->scheduleUpdate();
         addChild(m_pUiLayer);
         
-        m_pWidget = CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json");
+        m_pWidget = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
@@ -49,26 +50,33 @@ bool UIScene::init()
 void UIScene::toExtensionsMainLayer(CCObject* sender)
 {
     UISceneManager::purgeUISceneManager();
-    cocos2d::extension::UIActionManager::purgeUIActionManager();
-    cocos2d::extension::UIHelper::purgeUIHelper();
-    cocos2d::extension::CCSSceneReader::purgeSceneReader();
+    UIActionManager::purgeUIActionManager();
+    UIHelper::purgeUIHelper();
+    CCSSceneReader::purgeSceneReader();
     
-    ExtensionsTestScene* pScene = new ExtensionsTestScene();
+    CocosGUITestScene* pScene = new CocosGUITestScene();
     pScene->runThisTest();
     pScene->release();
+  
 }
 
 void UIScene::previousCallback(CCObject* sender)
 {
+	m_pUiLayer->unscheduleUpdate();
+	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
 }
 
 void UIScene::restartCallback(CCObject* sender)
 {
+	m_pUiLayer->unscheduleUpdate();
+	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
 }
 
 void UIScene::nextCallback(CCObject* sender)
 {
+	m_pUiLayer->unscheduleUpdate();
+	m_pUiLayer->removeFromParent();
     CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
 }

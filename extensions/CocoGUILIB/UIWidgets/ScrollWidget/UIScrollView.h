@@ -25,8 +25,8 @@
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
 
-#include "../UIPanel.h"
-#include "UIScrollDelegate.h"
+#include "../../Layouts/Layout.h"
+#include "UIScrollInterface.h"
 
 NS_CC_EXT_BEGIN
 
@@ -56,41 +56,139 @@ typedef void (CCObject::*SEL_ScrollToRightEvent)(CCObject*);
 #define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
 
 
-class UIScrollView : public UIPanel , public UIScrollDelegate
+class UIScrollView : public Layout , public UIScrollInterface
 {
 public:
+    /**
+     * Default constructor
+     */
     UIScrollView();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UIScrollView();
-    virtual void releaseResoures();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UIScrollView* create();
-    virtual bool addChild(UIWidget* widget);
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
-	virtual bool removeChild(UIWidget* child,bool cleanup);
-    void scrollToBottom();
-    void scrollToTop();
-    virtual void setSize(const CCSize &size);
-    void setInnerContainerSize(const CCSize &size);
-	const CCSize& getInerContainerSize() const;
     
-	CCNode* getInnerContainerNode();
-    
-    void addScrollToTopEvent(CCObject* target, SEL_ScrollToTopEvent selector);
-    void addScrollToBottomEvent(CCObject* target, SEL_ScrollToBottomEvent selector);
-    void addScrollToLeftEvent(CCObject* target, SEL_ScrollToLeftEvent selector);
-    void addScrollToRightEvent(CCObject* target, SEL_ScrollToRightEvent selector);
-    
-    virtual void onTouchBegan(const CCPoint &touchPoint);
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
+    /**
+     * Changes scroll direction of scrollview.
+     *
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     *
+     * @param SCROLLVIEW_DIR
+     */
     void setDirection(SCROLLVIEW_DIR dir);
+    
+    /**
+     * Gets scroll direction of scrollview.
+     *
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     *
+     * @return SCROLLVIEW_DIR
+     */
     SCROLLVIEW_DIR getDirection();
     
-    virtual void setLayoutType(LayoutType type);
+    /**
+     * Gets inner container of scrollview.
+     *
+     * Inner container is the container of scrollview's children.
+     *
+     * @return inner container.
+     */
+    Layout* getInnerContainer();
+    
+    /**
+     * Scroll inner container to bottom boundary of scrollview.
+     */
+    void scrollToBottom();
+    
+    /**
+     * Scroll inner container to top boundary of scrollview.
+     */
+    void scrollToTop();
+    
+    /**
+     * Changes inner container size of scrollview.
+     *
+     * Inner container size must be larger than or equal scrollview's size.
+     *
+     * @param inner container size.
+     */
+    void setInnerContainerSize(const CCSize &size);
+    
+    /**
+     * Gets inner container size of scrollview.
+     *
+     * Inner container size must be larger than or equal scrollview's size.
+     *
+     * @return inner container size.
+     */
+	const CCSize& getInnerContainerSize() const;
+    
+    /**
+     * Add call back function called when scrollview scrolled to top.
+     */
+    void addScrollToTopEvent(CCObject* target, SEL_ScrollToTopEvent selector);
+    
+    /**
+     * Add call back function called when scrollview scrolled to bottom.
+     */
+    void addScrollToBottomEvent(CCObject* target, SEL_ScrollToBottomEvent selector);
+    
+    /**
+     * Add call back function called when scrollview scrolled to left.
+     */
+    void addScrollToLeftEvent(CCObject* target, SEL_ScrollToLeftEvent selector);
+    
+    /**
+     * Add call back function called when scrollview scrolled to right.
+     */
+    void addScrollToRightEvent(CCObject* target, SEL_ScrollToRightEvent selector);
+    
+    //override "setLayoutExecutant" method of widget.
+    virtual void setLayoutExecutant(LayoutExecutant* exe);
+    
+    //override "getLayoutExecutant" method of widget.
+    virtual LayoutExecutant* getLayoutExecutant() const;
+
+    //override "releaseResoures" method of widget.
+    virtual void releaseResoures();
+    
+    //override "addChild" method of widget.
+    virtual bool addChild(UIWidget* widget);
+    
+    //override "removeAllChildrenAndCleanUp" method of widget.
+    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    
+    //override "removeChild" method of widget.
+	virtual bool removeChild(UIWidget* child,bool cleanup);
+    
+    //override "getChildren" method of widget.
+    virtual CCArray* getChildren();
+    
+    //override "onTouchBegan" method of widget.
+    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    
+    //override "onTouchMoved" method of widget.
+    virtual void onTouchMoved(const CCPoint &touchPoint);
+    
+    //override "onTouchEnded" method of widget.
+    virtual void onTouchEnded(const CCPoint &touchPoint);
+    
+    //override "onTouchCancelled" method of widget.
+    virtual void onTouchCancelled(const CCPoint &touchPoint);
+    
+    //override "onTouchLongClicked" method of widget.
+    virtual void onTouchLongClicked(const CCPoint &touchPoint);
+//    float getScrollDegreeRange() const;
+//    void setScrollDegreeRange(float range);
 protected:
     virtual bool init();
-    virtual void initNodes();
+    virtual void initRenderer();
     void moveChildren(float offset);
     void autoScrollChildren(float dt);
     void startAutoScrollChildren(float v);
@@ -113,6 +211,12 @@ protected:
     void scrollToRightEvent();
     void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
     SCROLLVIEW_MOVE_DIR getMoveDirection();
+    virtual void onSizeChanged();
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    /*compatible*/
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
+    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     SCROLLVIEW_DIR m_eDirection;
     SCROLLVIEW_MOVE_DIR m_eMoveDirection;
@@ -151,8 +255,8 @@ protected:
     CCObject* m_pScrollToRightListener;
     SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
     
-    UIContainerWidget* m_pInnerContainer;
-    
+    Layout* m_pInnerContainer;
+    float m_fScrollDegreeRange;
 };
 
 NS_CC_EXT_END

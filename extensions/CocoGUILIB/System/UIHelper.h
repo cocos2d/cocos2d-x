@@ -36,24 +36,81 @@ NS_CC_EXT_BEGIN
 class UIHelper
 {
 public:
+    /**
+     * Default constructor
+     */
     UIHelper();
+    
+    /**
+     * Default destructor
+     */
     ~UIHelper();
+    
+    //initializes state of UIHelper.
     void init();
     
+    /**
+     * Load a widget with json file.
+     *
+     * @return a widget created with json file.
+     */
     UIWidget* createWidgetFromJsonFile(const char* fileName);
+    
+    //get instance
     static UIHelper* instance();
+    
+    //release instance
 	static void purgeUIHelper();
+    
+    //add a plist file for loading widget's texture.
     void addSpriteFrame(const char* fileName);
+    
+    //remove a plist file for loading widget's texture.
     void removeSpriteFrame(const char* fileName);
+    
+    //remove all plist files for loading widget's texture.
     void removeAllSpriteFrame();
+    
+    /**
+     * Finds a widget whose tag equals to param tag from root widget.
+     *
+     * @param root      widget which will be seeked.
+     *
+     * @tag             tag value.
+     *
+     * @return finded result.
+     */
     UIWidget* seekWidgetByTag(UIWidget* root, int tag);
+    
+    /**
+     * Finds a widget whose name equals to param name from root widget.
+     *
+     * @param root      widget which will be seeked.
+     *
+     * @name             name value.
+     *
+     * @return finded result.
+     */
     UIWidget* seekWidgetByName(UIWidget* root, const char* name);
-	UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
+    
+    /**
+     * Finds a widget whose name equals to param name from root widget.
+     *
+     * RelativeLayout will call this method to find the widget witch is needed.
+     *
+     * @param root      widget which will be seeked.
+     *
+     * @name             name value.
+     *
+     * @return finded result.
+     */
     UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
     void setFileDesignWidth(float width);
     float getFileDesignWidth();
     void setFileDesignHeight(float height);
     float getFileDesignHeight();
+    /*temp action*/
+    UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 protected:
     
     float m_fFileDesignWidth;

@@ -32,22 +32,64 @@ NS_CC_EXT_BEGIN
 class UITextButton : public UIButton
 {
 public:
+    /**
+     * Default constructor
+     */
     UITextButton();
+    
+    /**
+     * Default destructor
+     */
     virtual ~UITextButton();
+    
+    /**
+     * Allocates and initializes.
+     */
     static UITextButton* create();
-    virtual bool init();
+    
+    /**
+     * Changes string value of button's title.
+     *
+     * @param text   string value of button's title.
+     */
     void setText(const char* text);
+    
+    /**
+     * Changes color of button's title.
+     *
+     * @param color   color of button's title.
+     */
     void setTextColor(int r,int g,int b);
+    
+    /**
+     * Changes font size of button's title.
+     *
+     * @param font size   font size of button's title.
+     */
     void setFontSize(int size);
+    
+    /**
+     * Changes font name of button's title.
+     *
+     * @param font name   font name of button's title.
+     */
     void setFontName(const char* fontName);
+    
+    //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" method of widget.
     virtual void setFlipY(bool flipY);
-    virtual void setAnchorPoint(const CCPoint &pt);    
+    
+    //override "setAnchorPoint" method of widget.
+    virtual void setAnchorPoint(const CCPoint &pt);
 protected:
-    CCLabelTTF* m_pTextLable;
+    virtual bool init();
+protected:
+    CCLabelTTF* m_pTextLableRenderer;
     
 };
 
 NS_CC_EXT_END
 
-#endif /* defined(__CocoGUI__TextButton__) */
+#endif /* defined(__TextButton__) */

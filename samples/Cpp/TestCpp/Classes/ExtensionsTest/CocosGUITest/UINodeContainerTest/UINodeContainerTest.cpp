@@ -3,6 +3,13 @@
 #include "UINodeContainerTest.h"
 #include "cocos-ext.h"
 
+const char* font_UINodeContainerTest =
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+"Marker Felt";
+#else
+"cocosgui/Marker Felt.ttf";
+#endif
+
 // UINodeContainerTest
 
 UINodeContainerTest::UINodeContainerTest()
@@ -24,7 +31,7 @@ bool UINodeContainerTest::init()
         // Add a label in which the UINodeContainer alert will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("NodeContainer Add CCNode");
-        m_pDisplayValueLabel->setFontName("Marker Felt");
+        m_pDisplayValueLabel->setFontName(font_UINodeContainerTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
@@ -33,7 +40,7 @@ bool UINodeContainerTest::init()
         // Add the alert
         UILabel *alert = UILabel::create();
         alert->setText("NodeContainer");
-        alert->setFontName("Marker Felt");
+        alert->setFontName(font_UINodeContainerTest);
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
         alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 1.75));
