@@ -40,6 +40,11 @@ NS_CC_EXT_BEGIN
 
 std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
 
+const char* CCArmature::armatureVersion()
+{
+	return "0.3.3.0";
+}
+
 CCArmature *CCArmature::create()
 {
     CCArmature *armature = new CCArmature();
