@@ -153,7 +153,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
         srandom(0);
+#endif
 	});
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
@@ -165,7 +167,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srandom(0);        
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+        srandom(0);
+#endif      
 	});
     increase->setColor(Color3B(0,200,20));
 
@@ -186,7 +190,9 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srandom(0);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+     srandom(0);
+#endif
 }
 
 std::string NodeChildrenMainScene::title()
