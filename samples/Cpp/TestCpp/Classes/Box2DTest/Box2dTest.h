@@ -21,7 +21,7 @@ public:
 
     void addNewSpriteAtPosition(Point p);
     void update(float dt);
-    virtual void ccTouchesEnded(Set* touches, Event* event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
     //CREATE_NODE(Box2DTestLayer);
 } ;

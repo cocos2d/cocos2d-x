@@ -1477,9 +1477,9 @@ void TileDemo::backCallback(Object* sender)
     s->release();
 } 
 
-void TileDemo::ccTouchesMoved(Set  *touches, Event  *event)
+void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = touches[0];
     
     auto diff = touch->getDelta();
     auto node = getChildByTag(kTagTileMap);

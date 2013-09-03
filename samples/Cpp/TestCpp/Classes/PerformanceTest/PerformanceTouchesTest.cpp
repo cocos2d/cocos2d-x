@@ -90,6 +90,17 @@ void TouchesPerformTest1::onEnter()
 {
     TouchesMainScene::onEnter();
     setTouchEnabled(true);
+    
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TouchesPerformTest1::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(TouchesPerformTest1::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(TouchesPerformTest1::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(TouchesPerformTest1::onTouchCancelled, this);
+    
+    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest1::title()
@@ -97,29 +108,29 @@ std::string TouchesPerformTest1::title()
     return "Targeted touches";
 }
 
-void TouchesPerformTest1::registerWithTouchDispatcher()
-{
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-}
+//void TouchesPerformTest1::registerWithTouchDispatcher()
+//{
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+//}
 
-bool TouchesPerformTest1::ccTouchBegan(Touch* touch, Event* event)
+bool TouchesPerformTest1::onTouchBegan(Touch* touch, Event* event)
 {
     numberOfTouchesB++;
     return true;
 }
 
-void TouchesPerformTest1::ccTouchMoved(Touch* touch, Event* event)
+void TouchesPerformTest1::onTouchMoved(Touch* touch, Event* event)
 {
     numberOfTouchesM++;
 }
 
-void TouchesPerformTest1::ccTouchEnded(Touch* touch, Event* event)
+void TouchesPerformTest1::onTouchEnded(Touch* touch, Event* event)
 {
     numberOfTouchesE++;
 }
 
-void TouchesPerformTest1::ccTouchCancelled(Touch* touch, Event* event)
+void TouchesPerformTest1::onTouchCancelled(Touch* touch, Event* event)
 {
     numberOfTouchesC++;
 }
@@ -133,6 +144,16 @@ void TouchesPerformTest2::onEnter()
 {
     TouchesMainScene::onEnter();
     setTouchEnabled(true);
+    
+    // Register Touch Event
+//    auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
+//    
+//    listener->onTouchesBegan = CC_CALLBACK_2(TouchesPerformTest2::onTouchesBegan, this);
+//    listener->onTouchesMoved = CC_CALLBACK_2(TouchesPerformTest2::onTouchesMoved, this);
+//    listener->onTouchesEnded = CC_CALLBACK_2(TouchesPerformTest2::onTouchesEnded, this);
+//    listener->onTouchesCancelled = CC_CALLBACK_2(TouchesPerformTest2::onTouchesCancelled, this);
+//    
+//    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
 }
 
 std::string TouchesPerformTest2::title()
@@ -140,29 +161,29 @@ std::string TouchesPerformTest2::title()
     return "Standard touches";
 }
 
-void TouchesPerformTest2::registerWithTouchDispatcher()
+//void TouchesPerformTest2::registerWithTouchDispatcher()
+//{
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addStandardDelegate(this, 0);
+//}
+
+void TouchesPerformTest2::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addStandardDelegate(this, 0);
+    numberOfTouchesB += touches.size();
 }
 
-void TouchesPerformTest2::ccTouchesBegan(Set* touches, Event* event)
+void TouchesPerformTest2::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    numberOfTouchesB += touches->count();
+    numberOfTouchesM += touches.size();
+}
+void TouchesPerformTest2::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    numberOfTouchesE += touches.size();
 }
 
-void TouchesPerformTest2::ccTouchesMoved(Set* touches, Event* event)
+void TouchesPerformTest2::onTouchesCancelled(const std::vector<Touch*>& touches, Event* event)
 {
-    numberOfTouchesM += touches->count();
-}
-void TouchesPerformTest2::ccTouchesEnded(Set* touches, Event* event)
-{
-    numberOfTouchesE += touches->count();
-}
-
-void TouchesPerformTest2::ccTouchesCancelled(Set* touches, Event* event)
-{
-    numberOfTouchesC += touches->count();
+    numberOfTouchesC += touches.size();
 }
 
 void runTouchesTest()

@@ -70,9 +70,9 @@ public:
     // Overrides
     virtual bool isTouchInside(Touch * touch) override;
     void setEnabled(bool enabled) override;
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
     /** Factorize the event dispath into these methods. */
     void potentiometerBegan(Point location);

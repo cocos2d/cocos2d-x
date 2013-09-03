@@ -41,7 +41,6 @@ NS_CC_BEGIN
 
 class Object;
 class Node;
-class Event;
 
 /** Interface that defines how to clone an object */
 class CC_DLL Clonable
@@ -170,7 +169,6 @@ typedef void (Object::*SEL_CallFuncN)(Node*);
 typedef void (Object::*SEL_CallFuncND)(Node*, void*);
 typedef void (Object::*SEL_CallFuncO)(Object*);
 typedef void (Object::*SEL_MenuHandler)(Object*);
-typedef void (Object::*SEL_EventHandler)(Event*);
 typedef int (Object::*SEL_Compare)(Object*);
 
 #define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)

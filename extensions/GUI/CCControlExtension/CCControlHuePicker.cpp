@@ -164,7 +164,7 @@ bool ControlHuePicker::checkSliderPosition(Point location)
     return false;
 }
 
-bool ControlHuePicker::ccTouchBegan(Touch* touch, Event* event)
+bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -179,7 +179,7 @@ bool ControlHuePicker::ccTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlHuePicker::ccTouchMoved(Touch* touch, Event* event)
+void ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
     Point touchLocation=getTouchLocation(touch);

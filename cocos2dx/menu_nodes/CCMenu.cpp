@@ -25,10 +25,11 @@ THE SOFTWARE.
 #include "CCMenu.h"
 #include "CCDirector.h"
 #include "CCApplication.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "CCStdC.h"
 #include "cocoa/CCInteger.h"
+#include "event_dispatcher/CCTouchEventListener.h"
+
 
 #include <vector>
 #include <stdarg.h>
@@ -57,6 +58,11 @@ enum
 //
 //CCMenu
 //
+
+Menu::~Menu()
+{
+    CCLOGINFO("In the destructor of Menu. %p", this);
+}
 
 Menu* Menu::create()
 {
@@ -121,7 +127,6 @@ bool Menu::initWithArray(Array* pArrayOfItems)
 {
     if (Layer::init())
     {
-        setTouchPriority(Menu::HANDLER_PRIORITY);
         setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         setTouchEnabled(true);
 
@@ -179,6 +184,14 @@ void Menu::addChild(Node * child, int zOrder, int tag)
     Layer::addChild(child, zOrder, tag);
 }
 
+void Menu::onEnter()
+{
+    Layer::onEnter();
+    
+    setTouchEnabled(true);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+}
+
 void Menu::onExit()
 {
     if (_state == Menu::State::TRACKING_TOUCH)
@@ -212,24 +225,24 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 void Menu::setHandlerPriority(int newPriority)
 {
-    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-    pDispatcher->setPriority(newPriority, this);
+    CCASSERT(false, "Not needed since we're using new ");
+//    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
+//    pDispatcher->setPriority(newPriority, this);
 }
 
-void Menu::registerWithTouchDispatcher()
-{
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
-}
+//void Menu::registerWithTouchDispatcher()
+//{
+//    Director* pDirector = Director::getInstance();
+//    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
+//}
 
-bool Menu::ccTouchBegan(Touch* touch, Event* event)
+bool Menu::onTouchBegan(Touch* touch, Event* event)
 {
-    CC_UNUSED_PARAM(event);
     if (_state != Menu::State::WAITING || ! _visible || !_enabled)
     {
         return false;
     }
-
+    
     for (Node *c = this->_parent; c != NULL; c = c->getParent())
     {
         if (c->isVisible() == false)
@@ -237,21 +250,21 @@ bool Menu::ccTouchBegan(Touch* touch, Event* event)
             return false;
         }
     }
-
+    
     _selectedItem = this->itemForTouch(touch);
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
         _selectedItem->selected();
+        
         return true;
     }
+    
     return false;
 }
 
-void Menu::ccTouchEnded(Touch *touch, Event* event)
+void Menu::onTouchEnded(Touch* touch, Event* event)
 {
-    CC_UNUSED_PARAM(touch);
-    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     if (_selectedItem)
     {
@@ -261,10 +274,8 @@ void Menu::ccTouchEnded(Touch *touch, Event* event)
     _state = Menu::State::WAITING;
 }
 
-void Menu::ccTouchCancelled(Touch *touch, Event* event)
+void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
-    CC_UNUSED_PARAM(touch);
-    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     if (_selectedItem)
     {
@@ -273,12 +284,11 @@ void Menu::ccTouchCancelled(Touch *touch, Event* event)
     _state = Menu::State::WAITING;
 }
 
-void Menu::ccTouchMoved(Touch* touch, Event* event)
+void Menu::onTouchMoved(Touch* touch, Event* event)
 {
-    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->itemForTouch(touch);
-    if (currentItem != _selectedItem) 
+    if (currentItem != _selectedItem)
     {
         if (_selectedItem)
         {
@@ -607,7 +617,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
     if (_children && _children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+        CCARRAY_FOREACH_REVERSE(_children, pObject)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(pObject);
             if (child && child->isVisible() && child->isEnabled())

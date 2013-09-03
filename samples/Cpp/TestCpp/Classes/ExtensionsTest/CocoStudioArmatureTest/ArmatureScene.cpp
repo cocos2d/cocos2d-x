@@ -441,6 +441,15 @@ void TestParticleDisplay::onEnter()
 	bone->setZOrder(100);
 	bone->setScale(1.2f);
 	armature->addBone(bone, "bady-a30");
+    
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TestParticleDisplay::onTouchBegan, this);
+    
+    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    
 }
 std::string TestParticleDisplay::title()
 {
@@ -450,7 +459,7 @@ std::string TestParticleDisplay::subtitle()
 {
 	return "Touch to change animation";
 }
-bool TestParticleDisplay::ccTouchBegan(Touch  *touch, Event  *event)
+bool TestParticleDisplay::onTouchBegan(Touch  *touch, Event  *event)
 {
 	++animationID;
 	animationID = animationID % armature->getAnimation()->getMovementCount();
@@ -458,10 +467,10 @@ bool TestParticleDisplay::ccTouchBegan(Touch  *touch, Event  *event)
 	return false;
 }
 
-void TestParticleDisplay::registerWithTouchDispatcher()
-{
-	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
-}
+//void TestParticleDisplay::registerWithTouchDispatcher()
+//{
+//	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+//}
 
 
 
@@ -487,6 +496,15 @@ void TestUseMutiplePicture::onEnter()
 		displayData.setParam(weapon[i].c_str());
 		armature->getBone("weapon")->addDisplay(&displayData, i);
 	}
+    
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TestUseMutiplePicture::onTouchBegan, this);
+    
+    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    
 }
 std::string TestUseMutiplePicture::title()
 {
@@ -496,17 +514,17 @@ std::string TestUseMutiplePicture::subtitle()
 {
 	return "weapon and armature are in different picture";
 }
-bool TestUseMutiplePicture::ccTouchBegan(Touch  *touch, Event  *event)
+bool TestUseMutiplePicture::onTouchBegan(Touch  *touch, Event  *event)
 {
 	++displayIndex;
 	displayIndex = (displayIndex) % 6;
 	armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
 	return false;
 }
-void TestUseMutiplePicture::registerWithTouchDispatcher()
-{
-	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
-}
+//void TestUseMutiplePicture::registerWithTouchDispatcher()
+//{
+//	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+//}
 
 
 
@@ -626,12 +644,23 @@ void TestArmatureNesting::onEnter()
 	addChild(armature);
 
 	weaponIndex = 0;
+    
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(TestArmatureNesting::onTouchBegan, this);
+    
+    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    
 }
+
 std::string TestArmatureNesting::title()
 {
 	return "Test Armature Nesting";
 }
-bool TestArmatureNesting::ccTouchBegan(Touch  *touch, Event  *event)
+
+bool TestArmatureNesting::onTouchBegan(Touch  *touch, Event  *event)
 {
 	++weaponIndex;
 	weaponIndex = weaponIndex % 4;
@@ -640,7 +669,8 @@ bool TestArmatureNesting::ccTouchBegan(Touch  *touch, Event  *event)
 	armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
 	return false;
 }
-void TestArmatureNesting::registerWithTouchDispatcher()
-{
-	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
-}
+//void TestArmatureNesting::registerWithTouchDispatcher()
+//{
+//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, INT_MIN+1, true);
+//}
+

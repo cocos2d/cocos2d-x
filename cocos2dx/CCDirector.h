@@ -333,48 +333,6 @@ public:
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
-    
-    /** Gets the TouchDispatcher associated with this director
-     @since v2.0
-     */
-    TouchDispatcher* getTouchDispatcher() const;
-    
-    /** Sets the TouchDispatcher associated with this director
-     @since v2.0
-     */
-    void setTouchDispatcher(TouchDispatcher* touchDispatcher);
-
-    /** Gets the KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     */
-    KeyboardDispatcher* getKeyboardDispatcher() const;
-
-    /** Sets the KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     */
-    void setKeyboardDispatcher(KeyboardDispatcher* keyboardDispatcher);
-    
-    /** Gets the KeypadDispatcher associated with this director
-     @since v2.0
-     */
-    KeypadDispatcher* getKeypadDispatcher() const;
-
-    /** Sets the KeypadDispatcher associated with this director
-     @since v2.0
-     */
-    void setKeypadDispatcher(KeypadDispatcher* keypadDispatcher);
-    
-    /** Gets Accelerometer associated with this director
-     @since v2.0
-     */
-    Accelerometer* getAccelerometer() const;
-    
-    /** Sets Accelerometer associated with this director
-     @since v2.0
-     */
-    void setAccelerometer(Accelerometer* acc);
 
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
@@ -403,28 +361,7 @@ protected:
      @since v2.0
      */
     ActionManager* _actionManager;
-    
-    /** TouchDispatcher associated with this director
-     @since v2.0
-     */
-    TouchDispatcher* _touchDispatcher;
-    
-    /** KeyboardDispatcher associated with this director
-     @note Supported on Mac and Linux only now.
-     @since v3.0
-     */
-    KeyboardDispatcher* _keyboardDispatcher;
-    
-    /** KeypadDispatcher associated with this director
-     @since v2.0
-     */
-    KeypadDispatcher* _keypadDispatcher;
-    
-    /** Accelerometer associated with this director
-     @since v2.0
-     */
-    Accelerometer* _accelerometer;
-    
+        
     /* delta time since last tick to main loop */
 	float _deltaTime;
     

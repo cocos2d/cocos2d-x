@@ -178,11 +178,16 @@ public:
     //set the margins at once (so we only have to do one call of needsLayout)
     virtual void setMargins(int marginH, int marginV);
 
+    virtual bool onTouchBegan(Touch *touch, Event *event) override;
+    virtual void onTouchMoved(Touch *touch, Event *event) override;
+    virtual void onTouchEnded(Touch *touch, Event *event) override;
+    virtual void onTouchCancelled(Touch *touch, Event *event) override;
+    
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual GLubyte getOpacity(void) const override;
     virtual void setOpacity(GLubyte var) override;
 	virtual const Color3B& getColor(void) const override;

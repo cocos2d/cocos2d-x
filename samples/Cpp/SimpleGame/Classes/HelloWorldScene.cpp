@@ -187,7 +187,7 @@ void HelloWorld::gameLogic(float dt)
 }
 
 // cpp with cocos2d-x
-void HelloWorld::ccTouchesEnded(Set* touches, Event* event)
+void HelloWorld::ccTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
 	// Choose one of the touches to work with
 	Touch* touch = static_cast<Touch*>( touches->anyObject() );

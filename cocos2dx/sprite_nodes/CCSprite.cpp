@@ -1101,7 +1101,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (NULL == texture)
     {
         // Gets the texture by key firstly.
-        texture = TextureCache::getInstance()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = TextureCache::getInstance()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
         
         // If texture wasn't in cache, create it from RAW data.
         if (NULL == texture)
