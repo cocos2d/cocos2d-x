@@ -68,6 +68,7 @@ void download(std::string url, std::string destFile, std::function<void(bool)> c
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, true);
+	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, true);
 
 	CURLcode res = curl_easy_perform(curl);
 
