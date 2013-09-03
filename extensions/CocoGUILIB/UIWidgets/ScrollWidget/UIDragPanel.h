@@ -161,6 +161,14 @@ public:
      *  set inner container offset
      */
     void setInnerContainerOffset(const CCPoint& offset, bool animated);
+	    /**
+     * Gets inner container of DragPanel.
+     *
+     * Inner container is the container of DragPanel's children.
+     *
+     * @return inner container.
+     */
+    Layout* getInnerContainer();
     /**/
     
     // auto move
