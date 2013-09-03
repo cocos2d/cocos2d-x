@@ -94,3 +94,6 @@ tools/jenkins_scripts/mac/android/userconf.ini
 
 # CTags
 tags
+
+# generated js bindings
+scripting/javascript/bindings/generated
