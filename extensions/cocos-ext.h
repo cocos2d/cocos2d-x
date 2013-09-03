@@ -40,6 +40,7 @@
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
 #include "network/WebSocket.h"
+#include "network/WebFile.h"
 #include "network/SocketIO.h"
 
 // Physics integration
