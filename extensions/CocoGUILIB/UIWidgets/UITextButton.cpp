@@ -101,4 +101,11 @@ void UITextButton::setAnchorPoint(const CCPoint &pt)
     m_pTextLableRenderer->setPosition(ccp(m_pButtonNormalRenderer->getContentSize().width*(0.5f-m_pButtonNormalRenderer->getAnchorPoint().x), m_pButtonNormalRenderer->getContentSize().height*(0.5f-m_pButtonNormalRenderer->getAnchorPoint().y)));
 }
 
+void UITextButton::setColor(const ccColor3B &color)
+{
+	UIWidget::setColor(color);
+	//refresh for text color
+	m_pTextLableRenderer->setColor(m_pTextLableRenderer->getColor());
+}
+
 NS_CC_EXT_END
