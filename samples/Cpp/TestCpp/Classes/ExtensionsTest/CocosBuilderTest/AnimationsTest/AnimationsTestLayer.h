@@ -26,6 +26,9 @@ public:
     
     void setAnimationManager(cocos2d::extension::CCBAnimationManager *pAnimationManager);
     
+    void changeSpeed(int buttonId);
+
+    bool init() override;
 private:
     cocos2d::extension::CCBAnimationManager *mAnimationManager;
 };

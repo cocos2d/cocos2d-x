@@ -135,6 +135,8 @@ private:
     
     SEL_CallFunc _animationCompleteCallbackFunc;
     Object *_target;
+
+    CC_SYNTHESIZE(float, _speed, Speed);
 };
 
 class CCBSetSpriteFrame : public ActionInstant

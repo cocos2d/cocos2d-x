@@ -27,7 +27,7 @@ CCBAnimationManager::CCBAnimationManager()
 , _rootContainerSize(Size::ZERO)
 , _delegate(NULL)
 , _runningSequence(NULL)
-
+, _speed(1.0f)
 {
     init();
 }
@@ -766,8 +766,9 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
             }
         }
         
-        FiniteTimeAction *seq = Sequence::create(actions);
-        pNode->runAction(seq);
+        FiniteTimeAction *seq = Sequence::create(actions);        
+        CCSpeed* action = CCSpeed::create((CCActionInterval*)seq, _speed);
+        pNode->runAction(action);
     }
 }
 
@@ -841,7 +842,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     
     // Make callback at end of sequence
     CCBSequence *seq = getSequence(nSeqId);
-    Action *completeAction = Sequence::createWithTwoActions(DelayTime::create(seq->getDuration() + fTweenDuration),
+    Action *completeAction = Sequence::createWithTwoActions(DelayTime::create( (seq->getDuration() + fTweenDuration) / _speed ),
                                                                 CallFunc::create( CC_CALLBACK_0(CCBAnimationManager::sequenceCompleted,this)));
     _rootNode->runAction(completeAction);
     
