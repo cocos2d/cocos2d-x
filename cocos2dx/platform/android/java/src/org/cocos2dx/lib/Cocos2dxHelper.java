@@ -27,13 +27,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -73,6 +75,7 @@ public class Cocos2dxHelper {
 		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
 		
 		Cocos2dxHelper.sActivity = activity;
+		Cocos2dxHelper.sCocos2dxHelperListener = new Cocos2dxHelperListenerImpl(activity);
 
         try {
         // Get the lib_name from AndroidManifest.xml metadata
@@ -240,13 +243,7 @@ public class Cocos2dxHelper {
 	public static void setEditTextDialogResult(final String pResult) {
 		try {
 			final byte[] bytesUTF8 = pResult.getBytes("UTF8");
-
-			Cocos2dxHelper.sCocos2dxHelperListener.runOnGLThread(new Runnable() {
-				@Override
-				public void run() {
-					Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);
-				}
-			});
+			Cocos2dxHelper.nativeSetEditTextDialogResult(bytesUTF8);
 		} catch (UnsupportedEncodingException pUnsupportedEncodingException) {
 			/* Nothing. */
 		}
@@ -344,7 +341,52 @@ public class Cocos2dxHelper {
 	public static interface Cocos2dxHelperListener {
 		public void showDialog(final String pTitle, final String pMessage);
 		public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength);
-
-		public void runOnGLThread(final Runnable pRunnable);
 	}
+}
+
+class Cocos2dxHelperListenerImpl implements Cocos2dxHelper.Cocos2dxHelperListener {
+	private final Activity mActivity;
+	private final Handler mHandler;
+	
+	public Cocos2dxHelperListenerImpl(Activity activity){
+		this.mActivity = activity;
+		this.mHandler = new Handler( activity.getMainLooper() );
+	}
+
+	@Override
+	public void showDialog(final String pTitle, final String pMessage) {
+		this.mHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				new AlertDialog.Builder(mActivity)
+				.setTitle(pTitle)
+				.setMessage(pMessage)
+				.setPositiveButton("Ok", 
+						new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								
+							}
+						}).create().show();
+			}
+		});
+	}
+
+	@Override
+	public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
+		mHandler.post(new Runnable() {
+			public void run() {
+				new Cocos2dxEditBoxDialog(mActivity,
+						pTitle,
+						pMessage,
+						pInputMode,
+						pInputFlag,
+						pReturnType,
+						pMaxLength).show();
+			}
+		});
+	}
+
 }

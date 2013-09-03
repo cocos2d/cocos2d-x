@@ -30,6 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
+#include <atomic>
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
@@ -69,6 +70,8 @@ public:
     virtual void closeKeyboard();
     
 private:
+	static void editBoxCallbackFunc(const char* pText, void* ctx);
+	std::atomic<std::string*> _updatedText;
     LabelTTF* _label;
     LabelTTF* _labelPlaceHolder;
     EditBox::InputMode    _editBoxInputMode;
