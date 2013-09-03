@@ -1,4 +1,6 @@
 #include "SpriteTest.h"
+
+#include <algorithm>
 #include "../testResource.h"
 
 
