@@ -83,6 +83,15 @@ public:
     
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
+
+	    /**
+     * Sets color to widget
+     *
+     * It default change the color of widget's children.
+     *
+     * @param color
+     */
+    virtual void setColor(const ccColor3B &color);
 protected:
     virtual bool init();
 protected:
