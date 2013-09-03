@@ -179,6 +179,34 @@ void Menu::addChild(Node * child, int zOrder, int tag)
     Layer::addChild(child, zOrder, tag);
 }
 
+void Menu::onEnter()
+{
+    Layer::onEnter();
+    
+    this->registerEventCallback(TouchEvent::EVENT_TYPE, [this](Event* evt){
+        TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
+        
+        switch (touchEvent->getEventCode()) {
+            case TouchEvent::EventCode::BEGAN:
+                this->onTouchesBegan(touchEvent);
+                break;
+            case TouchEvent::EventCode::MOVED:
+                this->onTouchesMoved(touchEvent);
+                break;
+            case TouchEvent::EventCode::ENDED:
+                this->onTouchesEnded(touchEvent);
+                break;
+            case TouchEvent::EventCode::CANCELLED:
+                this->onTouchesCancelled(touchEvent);
+                break;
+            default:
+                break;
+        }
+        
+        return true;
+    }, true);
+}
+
 void Menu::onExit()
 {
     if (_state == Menu::State::TRACKING_TOUCH)
@@ -212,46 +240,45 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 void Menu::setHandlerPriority(int newPriority)
 {
-    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-    pDispatcher->setPriority(newPriority, this);
+//    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
+//    pDispatcher->setPriority(newPriority, this);
 }
 
 void Menu::registerWithTouchDispatcher()
 {
-    Director* pDirector = Director::getInstance();
-    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
+//    Director* pDirector = Director::getInstance();
+//    pDirector->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), true);
 }
 
-bool Menu::ccTouchBegan(Touch* touch, Event* event)
+void Menu::onTouchesBegan(TouchEvent* evt)
 {
-    CC_UNUSED_PARAM(event);
     if (_state != Menu::State::WAITING || ! _visible || !_enabled)
     {
-        return false;
+        return;
     }
-
+    
     for (Node *c = this->_parent; c != NULL; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
-            return false;
+            return;
         }
     }
-
-    _selectedItem = this->itemForTouch(touch);
+    
+    _selectedItem = this->itemForTouch(evt->getTouches()[0]);
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
         _selectedItem->selected();
-        return true;
+        
+        evt->stopPropagation();
     }
-    return false;
 }
 
-void Menu::ccTouchEnded(Touch *touch, Event* event)
+void Menu::onTouchesEnded(TouchEvent* evt)
 {
-    CC_UNUSED_PARAM(touch);
-    CC_UNUSED_PARAM(event);
+    if (_state != Menu::State::TRACKING_TOUCH) return;
+    
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     if (_selectedItem)
     {
@@ -261,10 +288,10 @@ void Menu::ccTouchEnded(Touch *touch, Event* event)
     _state = Menu::State::WAITING;
 }
 
-void Menu::ccTouchCancelled(Touch *touch, Event* event)
+void Menu::onTouchesCancelled(TouchEvent* evt)
 {
-    CC_UNUSED_PARAM(touch);
-    CC_UNUSED_PARAM(event);
+    if (_state != Menu::State::TRACKING_TOUCH) return;
+    
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     if (_selectedItem)
     {
@@ -273,12 +300,13 @@ void Menu::ccTouchCancelled(Touch *touch, Event* event)
     _state = Menu::State::WAITING;
 }
 
-void Menu::ccTouchMoved(Touch* touch, Event* event)
+void Menu::onTouchesMoved(TouchEvent* evt)
 {
-    CC_UNUSED_PARAM(event);
+    if (_state != Menu::State::TRACKING_TOUCH) return;
+    
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
-    MenuItem *currentItem = this->itemForTouch(touch);
-    if (currentItem != _selectedItem) 
+    MenuItem *currentItem = this->itemForTouch(evt->getTouches()[0]);
+    if (currentItem != _selectedItem)
     {
         if (_selectedItem)
         {
@@ -607,7 +635,7 @@ MenuItem* Menu::itemForTouch(Touch *touch)
     if (_children && _children->count() > 0)
     {
         Object* pObject = NULL;
-        CCARRAY_FOREACH(_children, pObject)
+        CCARRAY_FOREACH_REVERSE(_children, pObject)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(pObject);
             if (child && child->isVisible() && child->isEnabled())

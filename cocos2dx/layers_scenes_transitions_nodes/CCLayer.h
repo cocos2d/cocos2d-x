@@ -55,7 +55,7 @@ All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
+class CC_DLL Layer : public Node/*, public TouchDelegate*/, public KeypadDelegate
 {
 public:    
     /** creates a fullscreen black layer */
@@ -65,16 +65,16 @@ public:
     virtual bool init();
     
     // default implements are used to call script callback if exist
-    virtual bool ccTouchBegan(Touch *touch, Event *event);
-    virtual void ccTouchMoved(Touch *touch, Event *event);
-    virtual void ccTouchEnded(Touch *touch, Event *event);
-    virtual void ccTouchCancelled(Touch *touch, Event *event);
-
-    // default implements are used to call script callback if exist
-    virtual void ccTouchesBegan(Set *touches, Event *event);
-    virtual void ccTouchesMoved(Set *touches, Event *event);
-    virtual void ccTouchesEnded(Set *touches, Event *event);
-    virtual void ccTouchesCancelled(Set *touches, Event *event);
+//    virtual bool ccTouchBegan(Touch *touch, Event *event);
+//    virtual void ccTouchMoved(Touch *touch, Event *event);
+//    virtual void ccTouchEnded(Touch *touch, Event *event);
+//    virtual void ccTouchCancelled(Touch *touch, Event *event);
+//
+//    // default implements are used to call script callback if exist
+//    virtual void ccTouchesBegan(Set *touches, Event *event);
+//    virtual void ccTouchesMoved(Set *touches, Event *event);
+//    virtual void ccTouchesEnded(Set *touches, Event *event);
+//    virtual void ccTouchesCancelled(Set *touches, Event *event);
     
     virtual void didAccelerate(Acceleration* accelerationValue);
 
@@ -88,7 +88,7 @@ public:
     }
     @since v0.8.0
     */
-    virtual void registerWithTouchDispatcher(void);
+//    virtual void registerWithTouchDispatcher(void);
 
     /** whether or not it will receive Touch events.
     You can enable / disable touch events with this property.

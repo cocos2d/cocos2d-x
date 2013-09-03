@@ -93,16 +93,16 @@ Layer *Layer::create()
 
 /// Touch and Accelerometer related
 
-void Layer::registerWithTouchDispatcher()
-{
-    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-
-    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
-        pDispatcher->addStandardDelegate(this, 0);
-    } else {
-        pDispatcher->addTargetedDelegate(this, _touchPriority, _swallowsTouches);
-    }
-}
+//void Layer::registerWithTouchDispatcher()
+//{
+//    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
+//
+//    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
+//        pDispatcher->addStandardDelegate(this, 0);
+//    } else {
+//        pDispatcher->addTargetedDelegate(this, _touchPriority, _swallowsTouches);
+//    }
+//}
 
 int Layer::executeScriptTouchHandler(int eventType, Touch* touch)
 {
@@ -138,22 +138,22 @@ bool Layer::isTouchEnabled() const
 /// isTouchEnabled setter
 void Layer::setTouchEnabled(bool enabled)
 {
-    if (_touchEnabled != enabled)
-    {
-        _touchEnabled = enabled;
-        if (_running)
-        {
-            if (enabled)
-            {
-                this->registerWithTouchDispatcher();
-            }
-            else
-            {
-                // have problems?
-                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
-            }
-        }
-    }
+//    if (_touchEnabled != enabled)
+//    {
+//        _touchEnabled = enabled;
+//        if (_running)
+//        {
+//            if (enabled)
+//            {
+//                this->registerWithTouchDispatcher();
+//            }
+//            else
+//            {
+//                // have problems?
+//                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
+//            }
+//        }
+//    }
 }
 
 void Layer::setTouchMode(Touch::DispatchMode mode)
@@ -347,10 +347,10 @@ void Layer::onEnter()
     Director* pDirector = Director::getInstance();
     // register 'parent' nodes first
     // since events are propagated in reverse order
-    if (_touchEnabled)
-    {
-        this->registerWithTouchDispatcher();
-    }
+//    if (_touchEnabled)
+//    {
+//        this->registerWithTouchDispatcher();
+//    }
 
     // then iterate over all the children
     Node::onEnter();
@@ -371,10 +371,10 @@ void Layer::onEnter()
 void Layer::onExit()
 {
     Director* pDirector = Director::getInstance();
-    if( _touchEnabled )
-    {
-        pDirector->getTouchDispatcher()->removeDelegate(this);
-    }
+//    if( _touchEnabled )
+//    {
+//        pDirector->getTouchDispatcher()->removeDelegate(this);
+//    }
 
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (_accelerometerEnabled)
@@ -402,102 +402,102 @@ void Layer::onEnterTransitionDidFinish()
     Node::onEnterTransitionDidFinish();
 }
 
-bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        return executeScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
-    }
-
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-    CCASSERT(false, "Layer#ccTouchBegan override me");
-    return true;
-}
-
-void Layer::ccTouchMoved(Touch *pTouch, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchHandler(CCTOUCHMOVED, pTouch);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-}
-    
-void Layer::ccTouchEnded(Touch *pTouch, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchHandler(CCTOUCHENDED, pTouch);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void Layer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
-}    
-
-void Layer::ccTouchesBegan(Set *pTouches, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void Layer::ccTouchesMoved(Set *pTouches, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchesHandler(CCTOUCHMOVED, pTouches);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void Layer::ccTouchesEnded(Set *pTouches, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchesHandler(CCTOUCHENDED, pTouches);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
-}
-
-void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
-{
-    if (kScriptTypeNone != _scriptType)
-    {
-        executeScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
-        return;
-    }
-
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
-}
+//bool Layer::ccTouchBegan(Touch *pTouch, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        return executeScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouch);
+//    CC_UNUSED_PARAM(pEvent);
+//    CCASSERT(false, "Layer#ccTouchBegan override me");
+//    return true;
+//}
+//
+//void Layer::ccTouchMoved(Touch *pTouch, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchHandler(CCTOUCHMOVED, pTouch);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouch);
+//    CC_UNUSED_PARAM(pEvent);
+//}
+//    
+//void Layer::ccTouchEnded(Touch *pTouch, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchHandler(CCTOUCHENDED, pTouch);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouch);
+//    CC_UNUSED_PARAM(pEvent);
+//}
+//
+//void Layer::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouch);
+//    CC_UNUSED_PARAM(pEvent);
+//}    
+//
+//void Layer::ccTouchesBegan(Set *pTouches, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchesHandler(CCTOUCHBEGAN, pTouches);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouches);
+//    CC_UNUSED_PARAM(pEvent);
+//}
+//
+//void Layer::ccTouchesMoved(Set *pTouches, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchesHandler(CCTOUCHMOVED, pTouches);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouches);
+//    CC_UNUSED_PARAM(pEvent);
+//}
+//
+//void Layer::ccTouchesEnded(Set *pTouches, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchesHandler(CCTOUCHENDED, pTouches);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouches);
+//    CC_UNUSED_PARAM(pEvent);
+//}
+//
+//void Layer::ccTouchesCancelled(Set *pTouches, Event *pEvent)
+//{
+//    if (kScriptTypeNone != _scriptType)
+//    {
+//        executeScriptTouchesHandler(CCTOUCHCANCELLED, pTouches);
+//        return;
+//    }
+//
+//    CC_UNUSED_PARAM(pTouches);
+//    CC_UNUSED_PARAM(pEvent);
+//}
 
 // LayerRGBA
 LayerRGBA::LayerRGBA()
