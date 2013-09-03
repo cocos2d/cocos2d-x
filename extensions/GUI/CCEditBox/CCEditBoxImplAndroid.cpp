@@ -236,7 +236,8 @@ void EditBoxImplAndroid::setAnchorPoint(const Point& anchorPoint)
 }
 
 void EditBoxImplAndroid::visit(void)
-{ // don't need to be implemented on android platform.
+{
+	// checking whether user edited the text or not.
 	std::string* const changed = this->_updatedText.exchange(NULL);
 	if( changed != NULL ){
 		CCLOG("Updated to: %s", changed->c_str());
