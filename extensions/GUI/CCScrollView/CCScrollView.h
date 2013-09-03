@@ -90,7 +90,7 @@ public:
      */
     bool initWithViewSize(Size size, Node* container = NULL);
 
-    virtual void registerWithTouchDispatcher();
+//    virtual void registerWithTouchDispatcher();
 
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
@@ -184,11 +184,16 @@ public:
     bool isClippingToBounds() { return _clippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
+    virtual bool onTouchBegan(Touch *touch, Event *event);
+    virtual void onTouchMoved(Touch *touch, Event *event);
+    virtual void onTouchEnded(Touch *touch, Event *event);
+    virtual void onTouchCancelled(Touch *touch, Event *event);
+    
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
+//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
     virtual void visit() override;

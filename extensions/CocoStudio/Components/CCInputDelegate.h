@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class InputDelegate : public TouchDelegate, public KeypadDelegate
+class InputDelegate
 {
 protected:
     InputDelegate(void);
@@ -52,23 +52,40 @@ public:
     virtual void setTouchPriority(int priority);
     virtual int  getTouchPriority() const;
 
-    virtual void didAccelerate(Acceleration* accelerationValue);
+    /** @deprecated Please override onAcceleration */
+    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
+    // Deprecated touch callbacks.
+    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    
+    virtual void onAcceleration(Acceleration* acc, Event* event) {};
 
-    // Overrides
-    virtual bool ccTouchBegan(Touch *touch, Event *event) override;
-    virtual void ccTouchMoved(Touch *touch, Event *event) override;
-    virtual void ccTouchEnded(Touch *touch, Event *event) override;
-    virtual void ccTouchCancelled(Touch *touch, Event *event) override;
-    virtual void ccTouchesBegan(Set *touches, Event *event) override;
-    virtual void ccTouchesMoved(Set *touches, Event *event) override;
-    virtual void ccTouchesEnded(Set *touches, Event *event) override;
-    virtual void ccTouchesCancelled(Set *touches, Event *event) override;
+    virtual void onKeyPressed(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    virtual void onKeyReleased(KeyboardEvent::KeyCode keyCode, Event* event) {};
+    
+    virtual bool onTouchBegan(Touch *touch, Event *event);
+    virtual void onTouchMoved(Touch *touch, Event *event);
+    virtual void onTouchEnded(Touch *touch, Event *event);
+    virtual void onTouchCancelled(Touch *touch, Event *event);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesCancelled(const std::vector<Touch*>& touches, Event *event);
 
 protected:   
     bool _touchEnabled;
+    int  _touchListenerId;
     bool _accelerometerEnabled;
+    int  _accelerometerListenerId;
     bool _keypadEnabled;
-    
+    int  _keyboardListenerId;
 private:
      int _touchPriority;
     Touch::DispatchMode _touchMode;

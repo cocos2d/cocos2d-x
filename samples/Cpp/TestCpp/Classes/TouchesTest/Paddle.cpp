@@ -35,15 +35,26 @@ bool Paddle::initWithTexture(Texture2D* aTexture)
 
 void Paddle::onEnter()
 {
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
     Sprite::onEnter();
+    
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+    
+    // Register Touch Event
+    auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(Paddle::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(Paddle::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(Paddle::onTouchEnded, this);
+    
+    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void Paddle::onExit()
 {
-    auto director = Director::getInstance();
-    director->getTouchDispatcher()->removeDelegate(this);
+//    auto director = Director::getInstance();
+//    director->getTouchDispatcher()->removeDelegate(this);
     Sprite::onExit();
 }    
 
@@ -52,16 +63,19 @@ bool Paddle::containsTouchLocation(Touch* touch)
     return getRect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
-bool Paddle::ccTouchBegan(Touch* touch, Event* event)
+bool Paddle::onTouchBegan(Touch* touch, Event* event)
 {
+    CCLOG("Paddle::onTouchBegan id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
+    
     if (_state != kPaddleStateUngrabbed) return false;
     if ( !containsTouchLocation(touch) ) return false;
     
     _state = kPaddleStateGrabbed;
+    CCLOG("return true");
     return true;
 }
 
-void Paddle::ccTouchMoved(Touch* touch, Event* event)
+void Paddle::onTouchMoved(Touch* touch, Event* event)
 {
     // If it weren't for the TouchDispatcher, you would need to keep a reference
     // to the touch from touchBegan and check that the current touch is the same
@@ -69,6 +83,8 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     // Actually, it would be even more complicated since in the Cocos dispatcher
     // you get Sets instead of 1 UITouch, so you'd need to loop through the set
     // in each touchXXX method.
+    
+    CCLOG("Paddle::onTouchMoved id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
     
     CCASSERT(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
@@ -86,7 +102,7 @@ Paddle* Paddle::clone() const
     return ret;
 }
 
-void Paddle::ccTouchEnded(Touch* touch, Event* event)
+void Paddle::onTouchEnded(Touch* touch, Event* event)
 {
     CCASSERT(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     

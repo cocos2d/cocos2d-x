@@ -29,10 +29,11 @@
 
 #include "CCControl.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
 #include "menu_nodes/CCMenu.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "CCInvocation.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCTouchEventListener.h"
 
 NS_CC_EXT_BEGIN
 
@@ -75,8 +76,6 @@ bool Control::init()
         setSelected(false);
         setHighlighted(false);
 
-        // Set the touch dispatcher priority by default to 1
-        this->setTouchPriority(1);
         // Initialise the tables
         _dispatchTable = new Dictionary();
         _dispatchTable->init();
@@ -94,15 +93,17 @@ Control::~Control()
     CC_SAFE_RELEASE(_dispatchTable);
 }
 
-    //Menu - Events
-void Control::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
-}
+////Menu - Events
+//void Control::registerWithTouchDispatcher()
+//{
+//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), true);
+//}
 
 void Control::onEnter()
 {
     Layer::onEnter();
+
+    this->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 }
 
 void Control::onExit()

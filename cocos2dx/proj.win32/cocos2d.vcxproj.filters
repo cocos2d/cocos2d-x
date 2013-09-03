@@ -58,12 +58,6 @@
     <Filter Include="tilemap_parallax_nodes">
       <UniqueIdentifier>{f2671200-b2d8-4d2e-9728-06719cf6f835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="touch_dispatcher">
-      <UniqueIdentifier>{eaa16c9b-dfbc-4a37-8e3e-e961d9ca1d1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="keypad_dispatcher">
-      <UniqueIdentifier>{3c91932f-7667-4049-b9bd-caac4c8eab15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="text_input_node">
       <UniqueIdentifier>{535c04b0-fe2b-44c9-9a8c-9029e2b6de5c}</UniqueIdentifier>
     </Filter>
@@ -103,11 +97,11 @@
     <Filter Include="support\component">
       <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="keyboard_dispatcher">
-      <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="platform\etc">
       <UniqueIdentifier>{47fda93e-6eb4-4abc-b5bc-725bf667a395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="event_dispatcher">
+      <UniqueIdentifier>{3ff2746c-a91b-4b86-93b7-43a9ec14825b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,21 +342,6 @@
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXXMLParser.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\touch_dispatcher\CCTouch.cpp">
-      <Filter>touch_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\touch_dispatcher\CCTouchDispatcher.cpp">
-      <Filter>touch_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\touch_dispatcher\CCTouchHandler.cpp">
-      <Filter>touch_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\keypad_dispatcher\CCKeypadDelegate.cpp">
-      <Filter>keypad_dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\keypad_dispatcher\CCKeypadDispatcher.cpp">
-      <Filter>keypad_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\text_input_node\CCIMEDispatcher.cpp">
       <Filter>text_input_node</Filter>
     </ClCompile>
@@ -465,9 +444,6 @@
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
-    <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
-      <Filter>keyboard_dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\ccTypes.cpp" />
     <ClCompile Include="..\platform\third_party\common\etc\etc1.cpp">
       <Filter>platform\etc</Filter>
@@ -508,6 +484,36 @@
     </ClCompile>
     <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCAccelerationEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCAccelerationEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventDispatcher.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCKeyboardEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCKeyboardEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCTouch.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCTouchEvent.cpp">
+      <Filter>event_dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event_dispatcher\CCTouchEventListener.cpp">
+      <Filter>event_dispatcher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,9 +670,6 @@
     <ClInclude Include="..\particle_nodes\CCParticleSystemQuad.h">
       <Filter>particle_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCAccelerometerDelegate.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCApplicationProtocol.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -798,24 +801,6 @@
     </ClInclude>
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXXMLParser.h">
       <Filter>tilemap_parallax_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouch.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchDelegateProtocol.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h">
-      <Filter>touch_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\keypad_dispatcher\CCKeypadDelegate.h">
-      <Filter>keypad_dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\keypad_dispatcher\CCKeypadDispatcher.h">
-      <Filter>keypad_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\text_input_node\CCIMEDelegate.h">
       <Filter>text_input_node</Filter>
@@ -975,16 +960,12 @@
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
     </ClInclude>
-    <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
-      <Filter>keyboard_dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\CCDeprecated.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\third_party\common\etc\etc1.h">
       <Filter>platform\etc</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\platform.h" />
     <ClInclude Include="..\label_nodes\CCFont.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
@@ -1026,6 +1007,39 @@
     </ClInclude>
     <ClInclude Include="..\platform\third_party\common\atitc\atitc.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCDevice.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCAccelerationEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCAccelerationEventListener.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventDispatcher.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCEventListener.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCKeyboardEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCKeyboardEventListener.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCTouch.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCTouchEvent.h">
+      <Filter>event_dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event_dispatcher\CCTouchEventListener.h">
+      <Filter>event_dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,45 +1,49 @@
 #include "CCEGLViewProtocol.h"
-#include "touch_dispatcher/CCTouchDispatcher.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 #include "cocoa/CCSet.h"
-#include "cocoa/CCDictionary.h"
-#include "cocoa/CCInteger.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCTouchEvent.h"
 
 NS_CC_BEGIN
 
-static Touch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
-static unsigned int s_indexBitsUsed = 0;
-static Dictionary s_TouchesIntergerDict;
-
-static int getUnUsedIndex()
-{
-    int i;
-    int temp = s_indexBitsUsed;
-
-    for (i = 0; i < CC_MAX_TOUCHES; i++) {
-        if (! (temp & 0x00000001)) {
-            s_indexBitsUsed |= (1 <<  i);
-            return i;
-        }
-
-        temp >>= 1;
-    }
-
-    // all bits are used
-    return -1;
-}
-
-static void removeUsedIndexBit(int index)
-{
-    if (index < 0 || index >= CC_MAX_TOUCHES) 
+namespace {
+    
+    static Touch* _touches[CC_MAX_TOUCHES] = { NULL };
+    static unsigned int _indexBitsUsed = 0;
+    // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
+    static std::map<int, int> _touchIdReorderMap;
+    
+    static int getUnUsedIndex()
     {
-        return;
+        int i;
+        int temp = _indexBitsUsed;
+        
+        for (i = 0; i < CC_MAX_TOUCHES; i++) {
+            if (! (temp & 0x00000001)) {
+                _indexBitsUsed |= (1 <<  i);
+                return i;
+            }
+            
+            temp >>= 1;
+        }
+        
+        // all bits are used
+        return -1;
     }
-
-    unsigned int temp = 1 << index;
-    temp = ~temp;
-    s_indexBitsUsed &= temp;
+    
+    static void removeUsedIndexBit(int index)
+    {
+        if (index < 0 || index >= CC_MAX_TOUCHES)
+        {
+            return;
+        }
+        
+        unsigned int temp = 1 << index;
+        temp = ~temp;
+        _indexBitsUsed &= temp;
+    }
+    
 }
 
 EGLViewProtocol::EGLViewProtocol()
@@ -206,11 +210,11 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
         float x = xs[i];
         float y = ys[i];
 
-        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
+        auto iter = _touchIdReorderMap.find(id);
         int nUnusedIndex = 0;
 
         // it is a new touch
-        if (pIndex == NULL)
+        if (iter == _touchIdReorderMap.end())
         {
             nUnusedIndex = getUnUsedIndex();
 
@@ -220,16 +224,14 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
                 continue;
             }
 
-            Touch* pTouch = s_pTouches[nUnusedIndex] = new Touch();
+            Touch* pTouch = _touches[nUnusedIndex] = new Touch();
 			pTouch->setTouchInfo(nUnusedIndex, (x - _viewPortRect.origin.x) / _scaleX, 
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             //CCLOG("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
-            Integer* pInterObj = new Integer(nUnusedIndex);
-            s_TouchesIntergerDict.setObject(pInterObj, id);
+            _touchIdReorderMap.insert(std::make_pair(id, nUnusedIndex));
             set.addObject(pTouch);
-            pInterObj->release();
         }
     }
 
@@ -239,7 +241,16 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
         return;
     }
 
-    _delegate->touchesBegan(&set, NULL);
+    
+    TouchEvent touchEvent;
+
+    for (auto iter = set.begin(); iter != set.end(); ++iter)
+    {
+        touchEvent._touches.push_back(static_cast<Touch*>(*iter));
+    }
+    
+    touchEvent._eventCode = TouchEvent::EventCode::BEGAN;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
@@ -251,17 +262,18 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         float x = xs[i];
         float y = ys[i];
 
-        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
-        if (pIndex == NULL) {
+        auto iter = _touchIdReorderMap.find(id);
+        if (iter == _touchIdReorderMap.end())
+        {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
         }
 
         CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
-        Touch* pTouch = s_pTouches[pIndex->getValue()];
+        Touch* pTouch = _touches[iter->second];
         if (pTouch)
         {
-			pTouch->setTouchInfo(pIndex->getValue(), (x - _viewPortRect.origin.x) / _scaleX, 
+			pTouch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX, 
 								(y - _viewPortRect.origin.y) / _scaleY);
             
             set.addObject(pTouch);
@@ -279,8 +291,17 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         CCLOG("touchesMoved: count = 0");
         return;
     }
-
-    _delegate->touchesMoved(&set, NULL);
+    
+    TouchEvent touchEvent;
+    
+    for (auto iter = set.begin(); iter != set.end(); ++iter)
+    {
+        touchEvent._touches.push_back(static_cast<Touch*>(*iter));
+    }
+    
+    touchEvent._eventCode = TouchEvent::EventCode::MOVED;
+    
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::getSetOfTouchesEndOrCancel(Set& set, int num, int ids[], float xs[], float ys[])
@@ -291,29 +312,28 @@ void EGLViewProtocol::getSetOfTouchesEndOrCancel(Set& set, int num, int ids[], f
         float x = xs[i];
         float y = ys[i];
 
-        Integer* pIndex = (Integer*)s_TouchesIntergerDict.objectForKey(id);
-        if (pIndex == NULL)
+        auto iter = _touchIdReorderMap.find(id);
+        if (iter == _touchIdReorderMap.end())
         {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
         }
         /* Add to the set to send to the director */
-        Touch* pTouch = s_pTouches[pIndex->getValue()];        
+        Touch* pTouch = _touches[iter->second];
         if (pTouch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-			pTouch->setTouchInfo(pIndex->getValue(), (x - _viewPortRect.origin.x) / _scaleX, 
+			pTouch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX, 
 								(y - _viewPortRect.origin.y) / _scaleY);
 
             set.addObject(pTouch);
 
             // release the object
             pTouch->release();
-            s_pTouches[pIndex->getValue()] = NULL;
-            removeUsedIndexBit(pIndex->getValue());
+            _touches[iter->second] = NULL;
+            removeUsedIndexBit(iter->second);
 
-            s_TouchesIntergerDict.removeObjectForKey(id);
-
+            _touchIdReorderMap.erase(id);
         } 
         else
         {
@@ -334,14 +354,32 @@ void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[
 {
     Set set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    _delegate->touchesEnded(&set, NULL);
+    
+    TouchEvent touchEvent;
+    
+    for (auto iter = set.begin(); iter != set.end(); ++iter)
+    {
+        touchEvent._touches.push_back(static_cast<Touch*>(*iter));
+    }
+    
+    touchEvent._eventCode = TouchEvent::EventCode::ENDED;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
     Set set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    _delegate->touchesCancelled(&set, NULL);
+    
+    TouchEvent touchEvent;
+    
+    for (auto iter = set.begin(); iter != set.end(); ++iter)
+    {
+        touchEvent._touches.push_back(static_cast<Touch*>(*iter));
+    }
+    
+    touchEvent._eventCode = TouchEvent::EventCode::CANCELLED;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 const Rect& EGLViewProtocol::getViewPortRect() const

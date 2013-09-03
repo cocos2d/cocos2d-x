@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "cocoa/CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"

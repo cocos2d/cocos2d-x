@@ -35,12 +35,12 @@ public:
 
     virtual void onEnter();
     virtual std::string title();
-    virtual void registerWithTouchDispatcher();
+//    virtual void registerWithTouchDispatcher();
 
-    virtual bool ccTouchBegan(Touch* touch, Event* event);
-    virtual void ccTouchMoved(Touch* touch, Event* event);
-    virtual void ccTouchEnded(Touch* touch, Event* event);
-    virtual void ccTouchCancelled(Touch* touch, Event* event);
+    virtual bool onTouchBegan(Touch* touch, Event* event);
+    virtual void onTouchMoved(Touch* touch, Event* event);
+    virtual void onTouchEnded(Touch* touch, Event* event);
+    virtual void onTouchCancelled(Touch* touch, Event* event);
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -53,12 +53,12 @@ public:
 
     virtual void onEnter();
     virtual std::string title();
-    virtual void registerWithTouchDispatcher();
+//    virtual void registerWithTouchDispatcher();
 
-    virtual void ccTouchesBegan(Set* touches, Event* event);
-    virtual void ccTouchesMoved(Set* touches, Event* event);
-    virtual void ccTouchesEnded(Set* touches, Event* event);
-    virtual void ccTouchesCancelled(Set* touches, Event* event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event);
 };
 
 void runTouchesTest();

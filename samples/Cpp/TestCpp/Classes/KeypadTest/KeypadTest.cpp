@@ -22,14 +22,16 @@ KeypadTest::~KeypadTest()
     _label->release();
 }
 
-void KeypadTest::keyBackClicked()
+void KeypadTest::onKeyReleased(KeyboardEvent::KeyCode keycode, Event* event)
 {
-    _label->setString("BACK clicked!");
-}
-
-void KeypadTest::keyMenuClicked()
-{
-    _label->setString("MENU clicked!");
+    if (keycode == KeyboardEvent::KeyCode::KEY_BACKSPACE)
+    {
+        _label->setString("BACK clicked!");
+    }
+    else if (keycode == KeyboardEvent::KeyCode::KEY_MENU)
+    {
+        _label->setString("MENU clicked!");
+    }
 }
 
 void KeypadTestScene::runThisTest()

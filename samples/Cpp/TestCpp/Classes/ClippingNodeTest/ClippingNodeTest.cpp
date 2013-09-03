@@ -476,9 +476,9 @@ void HoleDemo::pokeHoleAtPoint(Point point)
 }
 
 
-void HoleDemo::ccTouchesBegan(Set* touches, Event* event)
+void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
-	Touch *touch = (Touch *)touches->anyObject();
+	Touch *touch = (Touch *)touches[0];
 	Point point = _outerClipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, _outerClipper->getContentSize().width, _outerClipper->getContentSize().height);
     if (!rect.containsPoint(point)) return;
@@ -529,9 +529,9 @@ void ScrollViewDemo::setup()
     this->setTouchEnabled(true);
 }
 
-void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-	Touch *touch = static_cast<Touch*>(touches->anyObject());
+	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
 	Point point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
     auto rect = Rect(0, 0, clipper->getContentSize().width, clipper->getContentSize().height);
@@ -539,10 +539,10 @@ void ScrollViewDemo::ccTouchesBegan(Set  *touches, Event  *event)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     if (!_scrolling) return;
-	Touch *touch = static_cast<Touch*>(touches->anyObject());
+	Touch *touch = touches[0];
     auto clipper = this->getChildByTag(kTagClipperNode);
     auto point = clipper->convertToNodeSpace(Director::getInstance()->convertToGL(touch->getLocationInView()));
 	Point diff = point - _lastPoint;
@@ -551,7 +551,7 @@ void ScrollViewDemo::ccTouchesMoved(Set  *touches, Event  *event)
     _lastPoint = point;
 }
 
-void ScrollViewDemo::ccTouchesEnded(Set  *touches, Event  *event)
+void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     if (!_scrolling) return;
     _scrolling = false;

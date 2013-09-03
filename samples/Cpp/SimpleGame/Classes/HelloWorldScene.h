@@ -31,7 +31,7 @@ public:
 	void updateGame(float dt);
 
 	void registerWithTouchDispatcher();
-	void ccTouchesEnded(cocos2d::Set* touches, cocos2d::Event* event);
+	void onTouchesEnded(cocos2d::const std::vector<Touch*>& touches, cocos2d::Event* event);
     
     
 protected:

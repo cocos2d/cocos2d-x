@@ -109,6 +109,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         this->setViewSize(size);
 
         setTouchEnabled(true);
+        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+        
         _touches = new Array();
         _touches->init();
         
@@ -122,6 +124,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         
         this->addChild(_container);
         _minScale = _maxScale = 1.0f;
+
+        
         return true;
     }
     return false;
@@ -132,10 +136,10 @@ bool ScrollView::init()
     return this->initWithViewSize(Size(200, 200), NULL);
 }
 
-void ScrollView::registerWithTouchDispatcher()
-{
-    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, Layer::getTouchPriority(), false);
-}
+//void ScrollView::registerWithTouchDispatcher()
+//{
+//    Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, Layer::getTouchPriority(), false);
+//}
 
 bool ScrollView::isNodeVisible(Node* node)
 {
@@ -597,7 +601,7 @@ void ScrollView::visit()
 	kmGLPopMatrix();
 }
 
-bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
+bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
@@ -640,7 +644,7 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
     return true;
 }
 
-void ScrollView::ccTouchMoved(Touch* touch, Event* event)
+void ScrollView::onTouchMoved(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
@@ -721,7 +725,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
     }
 }
 
-void ScrollView::ccTouchEnded(Touch* touch, Event* event)
+void ScrollView::onTouchEnded(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {
@@ -743,7 +747,7 @@ void ScrollView::ccTouchEnded(Touch* touch, Event* event)
     }
 }
 
-void ScrollView::ccTouchCancelled(Touch* touch, Event* event)
+void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 {
     if (!this->isVisible())
     {

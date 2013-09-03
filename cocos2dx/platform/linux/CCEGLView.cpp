@@ -9,10 +9,11 @@
 #include "CCGL.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
-#include "touch_dispatcher/CCTouch.h"
+#include "event_dispatcher/CCTouch.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "text_input_node/CCIMEDispatcher.h"
-#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCKeyboardEvent.h"
 #include <unistd.h>
 
 NS_CC_BEGIN
@@ -89,14 +90,10 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    if(GLFW_PRESS == action)
-    {
-        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key, true);
-    }
-    else if(GLFW_RELEASE == action)
-    {
-        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key,false);
-    }
+    KeyboardEvent event;
+    event.keyCode = key;
+    event.isPressed = (GLFW_PRESS == action);
+    EventDispatcher::getInstance()->dispatchEvent(event);
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
