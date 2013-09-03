@@ -1337,6 +1337,10 @@ void CCSReader::setPropsForTextAreaFromJsonDictionary(UIWidget*widget,cs::CSJson
 void CCSReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
 {
     setPropsForButtonFromJsonDictionary(widget, options);
+    /* gui mark modify text button text color parse */
+    setColorPropsForWidgetFromJsonDictionary(widget,options);
+    /**/
+    
     UITextButton* textButton = (UITextButton*)widget;
     textButton->setText(DICTOOL->getStringValue_json(options, "text"));
     bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
@@ -1356,7 +1360,10 @@ void CCSReader::setPropsForTextButtonFromJsonDictionary(UIWidget*widget,cs::CSJs
     {
         textButton->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
     }
-    setColorPropsForWidgetFromJsonDictionary(widget,options);
+    /* gui mark modify text button text color parse */
+    // before
+//    setColorPropsForWidgetFromJsonDictionary(widget,options);
+    /**/
 }
 
 void CCSReader::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,cs::CSJsonDictionary* options)
@@ -1464,6 +1471,24 @@ void CCSReader::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, cs::CS
                 break;
         }
 		CC_SAFE_DELETE(imageFileNameDic);
+        /* gui mark add load bar scale9 parse */
+        bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");        
+        loadingBar->setScale9Enabled(scale9Enable);
+        
+        if (scale9Enable)
+        {
+            float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
+            float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
+            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
+            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            
+            loadingBar->setCapInsets(CCRectMake(cx, cy, cw, ch));
+            
+            float width = DICTOOL->getFloatValue_json(options, "width");
+            float height = DICTOOL->getFloatValue_json(options, "height");
+            loadingBar->setSize(CCSizeMake(width, height));
+        }
+        /**/
 
         loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
         loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
