@@ -131,6 +131,10 @@
 		1AE019851790023400D574A8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE019821790023400D574A8 /* SocketIO.cpp */; };
 		1AE019861790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
 		1AE019871790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
+		211AA4DA17D6CA1400A7D5FC /* WebFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 211AA4D817D6CA1400A7D5FC /* WebFile.cpp */; };
+		211AA4DB17D6CA1400A7D5FC /* WebFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 211AA4D817D6CA1400A7D5FC /* WebFile.cpp */; };
+		211AA4DC17D6CA1400A7D5FC /* WebFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 211AA4D917D6CA1400A7D5FC /* WebFile.h */; };
+		211AA4DD17D6CA1400A7D5FC /* WebFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 211AA4D917D6CA1400A7D5FC /* WebFile.h */; };
 		466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
@@ -1936,6 +1940,8 @@
 		1A94D34C16C2014900D79D09 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
 		1AE019821790023400D574A8 /* SocketIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIO.cpp; sourceTree = "<group>"; };
 		1AE019831790023400D574A8 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
+		211AA4D817D6CA1400A7D5FC /* WebFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebFile.cpp; sourceTree = "<group>"; };
+		211AA4D917D6CA1400A7D5FC /* WebFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebFile.h; sourceTree = "<group>"; };
 		466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		466AF69E17A12297002EE9BB /* CCDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeprecated.cpp; sourceTree = "<group>"; };
 		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
@@ -4440,6 +4446,8 @@
 		A03F309C178145F3006731B9 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				211AA4D817D6CA1400A7D5FC /* WebFile.cpp */,
+				211AA4D917D6CA1400A7D5FC /* WebFile.h */,
 				A03F309D178145F3006731B9 /* HttpClient.cpp */,
 				A03F309E178145F3006731B9 /* HttpClient.h */,
 				A03F309F178145F3006731B9 /* HttpRequest.h */,
@@ -5444,6 +5452,7 @@
 				A03F31E1178145F3006731B9 /* spine.h in Headers */,
 				1AE019861790023400D574A8 /* SocketIO.h in Headers */,
 				1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
+				211AA4DC17D6CA1400A7D5FC /* WebFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5870,6 +5879,7 @@
 				A07A4EF81783867C0073F6A7 /* spine.h in Headers */,
 				1AE019871790023400D574A8 /* SocketIO.h in Headers */,
 				1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */,
+				211AA4DD17D6CA1400A7D5FC /* WebFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6763,6 +6773,7 @@
 				A03F31DF178145F3006731B9 /* spine-cocos2dx.cpp in Sources */,
 				1AE019841790023400D574A8 /* SocketIO.cpp in Sources */,
 				466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */,
+				211AA4DA17D6CA1400A7D5FC /* WebFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7049,6 +7060,7 @@
 				A07A4E7A1783867C0073F6A7 /* spine-cocos2dx.cpp in Sources */,
 				1AE019851790023400D574A8 /* SocketIO.cpp in Sources */,
 				466AF6A817A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */,
+				211AA4DB17D6CA1400A7D5FC /* WebFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
