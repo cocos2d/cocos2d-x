@@ -94,8 +94,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _children = new Array();
     _children->initWithCapacity(capacity);
 
-    _descendants = new Array();
-    _descendants->initWithCapacity(capacity);
+    _descendants.reserve(capacity);
 
     setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
@@ -119,14 +118,12 @@ bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
 
 SpriteBatchNode::SpriteBatchNode()
 : _textureAtlas(NULL)
-, _descendants(NULL)
 {
 }
 
 SpriteBatchNode::~SpriteBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_descendants);
 }
 
 // override visit
@@ -184,16 +181,6 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
     appendChild(sprite);
 }
 
-void SpriteBatchNode::addChild(Node *child)
-{
-    Node::addChild(child);
-}
-
-void SpriteBatchNode::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 // override reorderChild
 void SpriteBatchNode::reorderChild(Node *child, int zOrder)
 {
@@ -238,11 +225,13 @@ void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
     // Invalidate atlas index. issue #569
     // useSelfRender should be performed on all descendants. issue #1216
-    arrayMakeObjectsPerformSelectorWithObject(_descendants, setBatchNode, NULL, Sprite*);
+    std::for_each(_descendants.begin(), _descendants.end(), [](Sprite* sprite) {
+        sprite->setBatchNode(nullptr);
+    });
 
     Node::removeAllChildrenWithCleanup(doCleanup);
 
-    _descendants->removeAllObjects();
+    _descendants.clear();
     _textureAtlas->removeAllQuads();
 }
 
@@ -361,10 +350,10 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 
         if (needNewIndex)
         {//all children have a zOrder < 0)
-            oldIndex=sprite->getAtlasIndex();
+            oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
             sprite->setOrderOfArrival(0);
-            if (oldIndex!=*curIndex) {
+            if (oldIndex != *curIndex) {
                 swap(oldIndex, *curIndex);
             }
             (*curIndex)++;
@@ -374,15 +363,20 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
 
 void SpriteBatchNode::swap(int oldIndex, int newIndex)
 {
-    CCASSERT(oldIndex>=0 && oldIndex < _descendants->count() && newIndex >=0 && newIndex < _descendants->count(), "Invalid index");
+    CCASSERT(oldIndex>=0 && oldIndex < _descendants.size() && newIndex >=0 && newIndex < _descendants.size(), "Invalid index");
 
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
+    std::swap( quads[oldIndex], quads[newIndex] );
 
     //update the index of other swapped item
-    static_cast<Sprite*>( _descendants->getObjectAtIndex(newIndex) )->setAtlasIndex(oldIndex);
 
-    std::swap( quads[oldIndex], quads[newIndex] );
-    _descendants->swap( oldIndex, newIndex );
+    auto oldIt = std::next( _descendants.begin(), oldIndex );
+    auto newIt = std::next( _descendants.begin(), newIndex );
+
+    (*newIt)->setAtlasIndex(oldIndex);
+//    (*oldIt)->setAtlasIndex(newIndex);
+
+    std::swap( *oldIt, *newIt );
 }
 
 void SpriteBatchNode::reorderBatch(bool reorder)
@@ -560,43 +554,6 @@ int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
     return 0;
 }
 
-// add child helper
-
-void SpriteBatchNode::insertChild(Sprite *sprite, int index)
-{
-    sprite->setBatchNode(this);
-    sprite->setAtlasIndex(index);
-    sprite->setDirty(true);
-
-    if(_textureAtlas->getTotalQuads() == _textureAtlas->getCapacity())
-    {
-        increaseAtlasCapacity();
-    }
-
-    V3F_C4B_T2F_Quad quad = sprite->getQuad();
-    _textureAtlas->insertQuad(&quad, index);
-
-    _descendants->insertObject(sprite, index);
-
-    // update indices
-    int i = index+1;
-    
-    Sprite* child = nullptr;
-    for(; i < _descendants->count(); i++){
-        child = static_cast<Sprite*>(_descendants->getObjectAtIndex(i));
-        child->setAtlasIndex(child->getAtlasIndex() + 1);
-    }
-
-    // add children recursively
-    Object* obj = nullptr;
-    CCARRAY_FOREACH(sprite->getChildren(), obj)
-    {
-        child = static_cast<Sprite*>(obj);
-        int idx = atlasIndexForChild(child, child->getZOrder());
-        insertChild(child, idx);
-    }
-}
-
 // addChild helper, faster than insertChild
 void SpriteBatchNode::appendChild(Sprite* sprite)
 {
@@ -608,8 +565,8 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
         increaseAtlasCapacity();
     }
 
-    _descendants->addObject(sprite);
-    int index=_descendants->count()-1;
+    _descendants.push_back(sprite);
+    int index = _descendants.size()-1;
 
     sprite->setAtlasIndex(index);
 
@@ -634,19 +591,16 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     // Cleanup sprite. It might be reused (issue #569)
     sprite->setBatchNode(NULL);
 
-    int index = _descendants->getIndexOfObject(sprite);
-    if (index != -1)
+    auto it = std::find(_descendants.begin(), _descendants.end(), sprite );
+    if( it != _descendants.end() )
     {
-        _descendants->removeObjectAtIndex(index);
+        auto next = std::next(it);
 
-        // update all sprites beyond this one
-        int count = _descendants->count();
-        
-        for(; index < count; ++index)
-        {
-            Sprite* s = static_cast<Sprite*>(_descendants->getObjectAtIndex(index));
-            s->setAtlasIndex( s->getAtlasIndex() - 1 );
-        }
+        std::for_each(next, _descendants.end(), [](Sprite *sprite) {
+            sprite->setAtlasIndex( sprite->getAtlasIndex() - 1 );
+        });
+
+        _descendants.erase(it);
     }
 
     // remove children recursively
@@ -754,22 +708,17 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     child->setAtlasIndex(z);
 
     // XXX: optimize with a binary search
-    int i=0;
- 
-    Object* object = NULL;
-    CCARRAY_FOREACH(_descendants, object)
-    {
-        Sprite* child = static_cast<Sprite*>(object);
-        if (child && (child->getAtlasIndex() >= z))
-        {
-            ++i;
-        }
-    }
-    
-    _descendants->insertObject(child, i);
+    auto it = std::begin(_descendants);
+    std::for_each(_descendants.begin(), _descendants.end(), [&](Sprite *sprite) {
+        if(sprite->getAtlasIndex() >= z)
+            std::next(it);
+    });
+
+    _descendants.insert(it, child);
 
     // IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
     Node::addChild(child, z, aTag);
+
     //#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
     reorderBatch(false);
 
