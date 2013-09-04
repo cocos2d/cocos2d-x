@@ -23,16 +23,39 @@ private:
 private:
 	std::mutex _mutex;
 	std::list<cb_pair_t> _queue;
+    size_t _pending_requests;
+    bool _scheduled;
 
 public:
+    Caller()
+    : _pending_requests(0), _scheduled(false)
+    {}
+    
+    // curl thread
 	void requestCall(fn_cb_t callback, bool result)
 	{
 		_mutex.lock();
 		_queue.push_front(cb_pair_t(callback, result));
-		doScheduled();
 		_mutex.unlock();
 	}
+    
+    // main thread
+    void increment()
+    {
+        if (++_pending_requests) {
+            doScheduled();
+        }
+    }
+    
+    // main thread
+    void decrement()
+    {
+        if (_pending_requests-- == 0) {
+            doUnscheduled();
+        }
+    }
 
+    // main thread communicates with curl thread via _queue
 	void update(float dt)
 	{
 		_mutex.lock();
@@ -41,24 +64,31 @@ public:
 			cb_pair_t p = _queue.back();
 			p.first(p.second);
 			_queue.pop_back();
+            
+            decrement();
 		}
-		doUnscheduled();
 		_mutex.unlock();
 	}
 
 private:
+    // main thread
 	void doScheduled()
 	{
+        if (_scheduled) return;
+        _scheduled = true;
 		Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 10, false);
 	}
 
+    // main thread
 	void doUnscheduled()
 	{
+        return;
+        // -_-;
 		Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 	}
 };
 
-Caller caller;
+static Caller* caller = NULL;
 
 typedef std::vector<fn_cb_t> cb_arr_t;
 typedef std::map<std::string, cb_arr_t> duple_map_t;
@@ -95,7 +125,7 @@ void download(std::string url, std::string destFile, fn_cb_t callback)
 	if (!fp)
 	{
 		CCLOGERROR("[ERROR] webfile : when open file : %s", destFile.c_str());
-		caller.requestCall(callback, false);
+		caller->requestCall(callback, false);
 		return;
 	}
 
@@ -107,7 +137,7 @@ void download(std::string url, std::string destFile, fn_cb_t callback)
 	{
 		CCLOG("[ERROR] webfile : cannot init curl context");
 		fclose(fp);
-		caller.requestCall(callback, false);
+		caller->requestCall(callback, false);
 		return;
 	}
 
@@ -146,14 +176,18 @@ void download(std::string url, std::string destFile, fn_cb_t callback)
 	if (!succeeded)
 	{
 		CCLOGERROR("[ERROR] webfile : when downloading with curl : %d", res);		
-		caller.requestCall(callback, false);
+		caller->requestCall(callback, false);
 		return;
 	}
-	else caller.requestCall(callback, true);
+	else caller->requestCall(callback, true);
 }
 
 void WebFile::get(const char * url, const char * destFile, fn_cb_t callback)
 {
+    if (caller == NULL) {
+        caller = new Caller();
+    }
+
 	if(clearing)
 	{
 		callback(false);
@@ -167,6 +201,8 @@ void WebFile::get(const char * url, const char * destFile, fn_cb_t callback)
 		// not exists in current downloading list...
 		if (!fileExists(destFile))
 		{
+            caller->increment();
+            
 			// file not exists -> download file
 			std::thread t(&download, std::string(url), std::string(destFile), callback);
 			t.detach();
@@ -188,13 +224,18 @@ void WebFile::get(const char * url, const char * destFile, fn_cb_t callback)
 
 void clear(fn_cb_t callback)
 {
-	caller.requestCall(callback, true);
+	caller->requestCall(callback, true);
 	clearing = true;
 }
 
 void WebFile::clearStorage(fn_cb_t callback)
 {
+    if (caller == NULL) {
+        caller = new Caller();
+    }
+
 	clearing = true;
+    caller->increment();
 	std::thread t(&clear, callback);
 	t.detach();
 }
