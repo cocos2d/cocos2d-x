@@ -161,21 +161,21 @@ public:
      *
      * @return true if the widget is touch enabled, false if the widget is touch disabled.
      */
-    bool isTouchEnabled();
-    
-    /**
-     * Sets whether the widget is on focus
-     *
-     * The default value is false, a widget is default to not on focus
-     *
-     * @param visible   true if the widget is on focus, false if the widget is not on focus.
-     */
-    bool isFocus();
+    bool isTouchEnabled() const;
     
     /**
      * Determines if the widget is on focus
      *
      * @return true if the widget is on focus, false if the widget is not on focus.
+     */
+    bool isFocus() const;
+
+    /**
+     * Sets whether the widget is on focus
+     *
+     * The default value is false, a widget is default to not on focus
+     *
+     * @param fucos   true if the widget is on focus, false if the widget is not on focus.
      */
     void setFocus(bool fucos);
     
@@ -661,7 +661,7 @@ public:
      *
      * @return A interger that identifies the widget.
      */
-    int getTag();
+    int getTag() const;
     
     /**
      * Changes the name that is used to identify the widget easily.
@@ -677,7 +677,7 @@ public:
      *
      * @return A const char* that identifies the widget.
      */
-    const char* getName();
+    const char* getName() const;
     
     /**
      * Returns a type that is widget's type
@@ -686,7 +686,7 @@ public:
      *
      * @return A WidgetType
      */
-    WidgetType getWidgetType();
+    WidgetType getWidgetType() const;
     
     /**
      * Changes the size that is widget's size
@@ -817,24 +817,24 @@ public:
     virtual const CCSize& getContentSize() const;
     
     /*******to be removed*******/
-    virtual void setTouchEnable(bool enabled, bool containChildren = false);
-    void disable(bool containChildren = false);
-    void active(bool containChildren = false);
-    bool isActive();
-    void setBright(bool bright, bool containChild);
-    CCRect getRect();
-    CCNode* getValidNode(){return getVirtualRenderer();};
-    void setWidgetZOrder(int z){setZOrder(z);};
-    int getWidgetZOrder(){return getZOrder();};
-    float getRelativeLeftPos(){return getLeftInParent();};
-    float getRelativeBottomPos(){return getBottomInParent();};
-    float getRelativeRightPos(){return getRightInParent();};
-    float getRelativeTopPos(){return getTopInParent();};
-    CCNode* getContainerNode(){return getRenderer();};
-    void setWidgetParent(UIWidget* parent){setParent(parent);};
-    UIWidget* getWidgetParent(){return getParent();};
-    void setWidgetTag(int tag){setTag(tag);};
-    int getWidgetTag(){return getTag();};
+    CC_DEPRECATED_ATTRIBUTE virtual void setTouchEnable(bool enabled, bool containChildren = false);
+    CC_DEPRECATED_ATTRIBUTE void disable(bool containChildren = false);
+    CC_DEPRECATED_ATTRIBUTE void active(bool containChildren = false);
+    CC_DEPRECATED_ATTRIBUTE bool isActive();
+    CC_DEPRECATED_ATTRIBUTE void setBright(bool bright, bool containChild);
+    CC_DEPRECATED_ATTRIBUTE CCRect getRect();
+    CC_DEPRECATED_ATTRIBUTE CCNode* getValidNode(){return getVirtualRenderer();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetZOrder(int z){setZOrder(z);};
+    CC_DEPRECATED_ATTRIBUTE int getWidgetZOrder(){return getZOrder();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeLeftPos(){return getLeftInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeBottomPos(){return getBottomInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeRightPos(){return getRightInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeTopPos(){return getTopInParent();};
+    CC_DEPRECATED_ATTRIBUTE CCNode* getContainerNode(){return getRenderer();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetParent(UIWidget* parent){setParent(parent);};
+    CC_DEPRECATED_ATTRIBUTE UIWidget* getWidgetParent(){return getParent();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetTag(int tag){setTag(tag);};
+    CC_DEPRECATED_ATTRIBUTE int getWidgetTag(){return getTag();};
     /***************************/
     
     /*temp action*/

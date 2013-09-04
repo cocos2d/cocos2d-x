@@ -138,12 +138,12 @@ public:
     
     
     /*Compatible*/
-    void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
-    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadNormalTexture(normal,texType);};
-    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadPressedTexture(selected,texType);};
-    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadDisabledTexture(disabled,texType);};
-    void setScale9Enable(bool able){setScale9Enabled(able);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    CC_DEPRECATED_ATTRIBUTE void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
+    CC_DEPRECATED_ATTRIBUTE void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadNormalTexture(normal,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadPressedTexture(selected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadDisabledTexture(disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool able){setScale9Enabled(able);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     /************/
 
 protected:

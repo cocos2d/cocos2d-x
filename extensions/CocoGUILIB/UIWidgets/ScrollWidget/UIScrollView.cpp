@@ -305,7 +305,7 @@ bool UIScrollView::scrollChildren(float touchOffset)
             {                        
                 case SCROLLVIEW_MOVE_DIR_UP: // up
                 {
-                    float icBottomPos = m_pInnerContainer->getRelativeBottomPos();
+                    float icBottomPos = m_pInnerContainer->getBottomInParent();
                     if (icBottomPos + touchOffset >= m_fBottomBoundary)
                     {
                         realOffset = m_fBottomBoundary - icBottomPos;
@@ -318,7 +318,7 @@ bool UIScrollView::scrollChildren(float touchOffset)
                 }
                 case SCROLLVIEW_MOVE_DIR_DOWN: // down
                 {
-                    float icTopPos = m_pInnerContainer->getRelativeTopPos();
+                    float icTopPos = m_pInnerContainer->getTopInParent();
                     if (icTopPos + touchOffset <= m_fTopBoundary)
                     {
                         realOffset = m_fTopBoundary - icTopPos;
@@ -342,7 +342,7 @@ bool UIScrollView::scrollChildren(float touchOffset)
             {
                 case SCROLLVIEW_MOVE_DIR_LEFT: // left
                 {
-                    float icRightPos = m_pInnerContainer->getRelativeRightPos();
+                    float icRightPos = m_pInnerContainer->getRightInParent();
                     if (icRightPos + touchOffset <= m_fRightBoundary)
                     {
                         realOffset = m_fRightBoundary - icRightPos;
@@ -355,7 +355,7 @@ bool UIScrollView::scrollChildren(float touchOffset)
                 }
                 case SCROLLVIEW_MOVE_DIR_RIGHT: // right
                 {
-                    float icLeftPos = m_pInnerContainer->getRelativeLeftPos();
+                    float icLeftPos = m_pInnerContainer->getLeftInParent();
                     if (icLeftPos + touchOffset >= m_fLeftBoundary)
                     {
                         realOffset = m_fLeftBoundary - icLeftPos;

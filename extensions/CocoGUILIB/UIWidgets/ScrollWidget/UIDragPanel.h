@@ -302,7 +302,7 @@ protected:
     void moveToUpdate(float t);
     virtual void onSizeChanged();
     /*compatible*/
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:

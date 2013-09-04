@@ -53,7 +53,7 @@ m_colorType(LAYOUT_COLOR_NONE)
 
 Layout::~Layout()
 {
-    
+    CC_SAFE_RELEASE_NULL(m_pLayoutExecutant);
 }
 
 Layout* Layout::create()

@@ -74,7 +74,7 @@ m_pBindingAction(NULL)
 
 UIWidget::~UIWidget()
 {
-    
+    CC_SAFE_RELEASE_NULL(m_pLayoutParameter);
 }
 
 UIWidget* UIWidget::create()
@@ -151,7 +151,7 @@ bool UIWidget::addChild(UIWidget *child)
         for (int i=childrenCount-1; i>=0; --i)
         {
             UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
-            if (child->getWidgetZOrder() >= widget->getWidgetZOrder())
+            if (child->getZOrder() >= widget->getZOrder())
             {
                 if (i == childrenCount-1)
                 {
@@ -172,7 +172,7 @@ bool UIWidget::addChild(UIWidget *child)
             m_children->insertObject(child,0);
         }
     }
-    child->getRenderer()->setZOrder(child->getWidgetZOrder());
+    child->getRenderer()->setZOrder(child->getZOrder());
     m_pRenderer->addChild(child->getRenderer());
     
     if (m_pUILayer)
@@ -265,7 +265,7 @@ void UIWidget::reorderChild(UIWidget* child)
         for (int i=childrenCount-1; i>=0; --i)
         {
             UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
-            if (child->getWidgetZOrder() >= widget->getWidgetZOrder())
+            if (child->getZOrder() >= widget->getZOrder())
             {
                 if (i == childrenCount-1)
                 {
@@ -449,7 +449,7 @@ void UIWidget::setTouchEnabled(bool enable)
     structureChangedEvent();
 }
 
-bool UIWidget::isTouchEnabled()
+bool UIWidget::isTouchEnabled() const
 {
     return m_bTouchEnabled;
 }
@@ -478,7 +478,7 @@ bool UIWidget::isUpdateEnabled()
     return m_bUpdateEnabled;
 }
 
-bool UIWidget::isFocus()
+bool UIWidget::isFocus() const
 {
     return m_bFocus;
 }
@@ -885,12 +885,12 @@ float UIWidget::getBottomInParent()
 
 float UIWidget::getRightInParent()
 {
-    return getRelativeLeftPos() + m_size.width;
+    return getLeftInParent() + m_size.width;
 }
 
 float UIWidget::getTopInParent()
 {
-    return getRelativeBottomPos() + m_size.height;
+    return getBottomInParent() + m_size.height;
 }
 
 UIWidget* UIWidget::getParent()
@@ -1043,7 +1043,7 @@ void UIWidget::setTag(int tag)
     m_nWidgetTag = tag;
 }
 
-int UIWidget::getTag()
+int UIWidget::getTag() const
 {
     return m_nWidgetTag;
 }
@@ -1053,12 +1053,12 @@ void UIWidget::setName(const char* name)
     m_strName = name;
 }
 
-const char* UIWidget::getName()
+const char* UIWidget::getName() const
 {
     return m_strName.c_str();
 }
 
-WidgetType UIWidget::getWidgetType()
+WidgetType UIWidget::getWidgetType() const
 {
     return m_WidgetType;
 }
