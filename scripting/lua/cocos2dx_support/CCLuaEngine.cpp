@@ -268,7 +268,7 @@ int LuaEngine::handleNodeEvent(void* data)
     if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kNodeHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::NODE);
     
     if (0 == handler)
         return 0;
@@ -315,7 +315,7 @@ int LuaEngine::handleMenuClickedEvent(void* data)
         
     MenuItem* menuItem = static_cast<MenuItem*>(basicScriptData->nativeObject);
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(menuItem, ScriptHandlerMgr::kMenuClickHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(menuItem, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
     if (0 == handler)
         return 0;
     
@@ -357,7 +357,7 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     if (NULL == basicScriptData->nativeObject)
         return 0;
         
-    int handler =ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kCallFuncHandler);
+    int handler =ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::CALLFUNC);
     
     if (0 == handler)
         return 0;
@@ -395,7 +395,7 @@ int LuaEngine::handleKeypadEvent(void* data)
     if (NULL == keypadScriptData->nativeObject)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(keypadScriptData->nativeObject, ScriptHandlerMgr::kKeypadHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(keypadScriptData->nativeObject, ScriptHandlerMgr::HandlerType::KEYPAD);
     
     if (0 == handler)
         return 0;
@@ -429,7 +429,7 @@ int LuaEngine::handleAccelerometerEvent(void* data)
     if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kAccelerometerHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
     if (0 == handler)
         return 0;
     
@@ -478,7 +478,7 @@ int LuaEngine::handleTouchEvent(void* data)
     if (NULL == touchScriptData->nativeObject || NULL == touchScriptData->touch)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)touchScriptData->nativeObject, ScriptHandlerMgr::kTouchesHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)touchScriptData->nativeObject, ScriptHandlerMgr::HandlerType::TOUCHES);
     
     if (0 == handler)
         return 0;
@@ -527,7 +527,7 @@ int LuaEngine::handleTouchesEvent(void* data)
     if (NULL == touchesScriptData->nativeObject || NULL == touchesScriptData->touches)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)touchesScriptData->nativeObject, ScriptHandlerMgr::kTouchesHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)touchesScriptData->nativeObject, ScriptHandlerMgr::HandlerType::TOUCHES);
     
     if (0 == handler)
         return 0;
@@ -587,28 +587,28 @@ int LuaEngine::handleTableViewEvent(void* data)
         return 0;
     
     LuaTableViewEventData* tableViewEventData = static_cast<LuaTableViewEventData*>(eventData->value);
-    if (tableViewEventData->eventType < ScriptHandlerMgr::kScrollViewScrollHandler || tableViewEventData->eventType > ScriptHandlerMgr::kNumberOfCellsInTableView )
+    if (tableViewEventData->handlerType < ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL || tableViewEventData->handlerType > ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS )
         return 0;
 
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->eventType);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->handlerType);
     
     if (0 == handler)
         return 0;
     
     int ret = 0;
-    switch (tableViewEventData->eventType)
+    switch (tableViewEventData->handlerType)
     {
-        case ScriptHandlerMgr::kScrollViewScrollHandler:
-        case ScriptHandlerMgr::kScrollViewZoomHandler:
+        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL:
+        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
                 ret = _stack->executeFunctionByHandler(handler, 1);
             }
             break;
-        case ScriptHandlerMgr::kTableCellTouched:
-        case ScriptHandlerMgr::kTableCellHighlight:
-        case ScriptHandlerMgr::kTableCellUnhighlight:
-        case ScriptHandlerMgr::kTableCellWillRecycle:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
                 _stack->pushObject(static_cast<Object*>(tableViewEventData->value), "TableViewCell");
@@ -640,7 +640,8 @@ int LuaEngine::handlerControlEvent(void* data)
     {
         if ((controlEvents & (1 << i)))
         {
-            handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::kControlTouchDownHandler + i);
+            ScriptHandlerMgr::HandlerType controlHandler = ScriptHandlerMgr::HandlerType((int)ScriptHandlerMgr::HandlerType::CONTROL_TOUCH_DOWN + i);
+            handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, controlHandler);
             
             if (0 != handler)
             {
@@ -734,32 +735,32 @@ int LuaEngine::handleTableViewEventReturnArray(void* data,int numResults,Array& 
         return 0;
     
     LuaTableViewEventData* tableViewEventData = static_cast<LuaTableViewEventData*>(eventData->value);
-    if (tableViewEventData->eventType < ScriptHandlerMgr::kScrollViewScrollHandler || tableViewEventData->eventType > ScriptHandlerMgr::kNumberOfCellsInTableView )
+    if (tableViewEventData->handlerType < ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL || tableViewEventData->handlerType > ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS )
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->eventType);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->handlerType);
     
     if (0 == handler)
         return 0;
     
     int ret = 0;
-    switch (tableViewEventData->eventType)
+    switch (tableViewEventData->handlerType)
     {
-        case ScriptHandlerMgr::kTableCellSizeForIndex:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
                 _stack->pushInt(*((int*)tableViewEventData->value));
                 ret = _stack->executeFunctionReturnArray(handler, 2, 2, resultArray);
             }
             break;
-        case ScriptHandlerMgr::kTableCellAtIndex:
+        case ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
                 _stack->pushInt(*((int*)tableViewEventData->value));
                 ret = _stack->executeFunctionReturnArray(handler, 2, 1, resultArray);
             }
             break;
-        case ScriptHandlerMgr::kNumberOfCellsInTableView:
+        case ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS:
             {
                 _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
                 ret = _stack->executeFunctionReturnArray(handler, 1, 1, resultArray);               

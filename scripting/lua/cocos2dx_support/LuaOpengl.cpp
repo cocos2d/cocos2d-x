@@ -24,7 +24,7 @@ using namespace cocos2d::extension;
     
 void GLNode::draw()
 {
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::kGLNodeDrawHandler);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
     if (0 != handler)
     {
             CommonScriptData data(handler,"");
