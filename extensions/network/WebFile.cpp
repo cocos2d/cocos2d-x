@@ -7,11 +7,58 @@
 #include <mutex>
 #include <vector>
 #include <algorithm>
+#include <list>
+#include <utility>
 
 #include <curl/curl.h>
 #include <curl/easy.h>
 
 NS_CC_EXT_BEGIN
+
+class Caller : public cocos2d::Object
+{
+private:
+	typedef std::pair<fn_cb_t, bool> cb_pair_t;
+
+private:
+	std::mutex _mutex;
+	std::list<cb_pair_t> _queue;
+
+public:
+	void requestCall(fn_cb_t callback, bool result)
+	{
+		_mutex.lock();
+		_queue.push_front(callback);
+		doScheduled();
+		_mutex.unlock();
+	}
+
+	void update(float dt)
+	{
+		_mutex.lock();
+		while(!_queue.empty())
+		{
+			cb_pair_t pair = _queue.back();
+			pair.first(pair.second);
+			_queue.pop_back();
+		}
+		doUnscheduled();
+		_mutex.unlock();
+	}
+
+private:
+	void doScheduled()
+	{
+		Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 10, false);
+	}
+
+	void doUnscheduled()
+	{
+		Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+	}
+};
+
+Caller caller;
 
 typedef std::vector<std::function<void(bool)>> cb_arr_t;
 typedef std::map<std::string, cb_arr_t> duple_map_t;
@@ -48,7 +95,7 @@ void download(std::string url, std::string destFile, std::function<void(bool)> c
 	if (!fp)
 	{
 		CCLOGERROR("[ERROR] webfile : when open file : %s", destFile.c_str());
-		callback(false);
+		caller.requestCall(callback, false);
 		return;
 	}
 
@@ -60,7 +107,7 @@ void download(std::string url, std::string destFile, std::function<void(bool)> c
 	{
 		CCLOG("[ERROR] webfile : cannot init curl context");
 		fclose(fp);
-		callback(false);
+		caller.requestCall(callback, false);
 		return;
 	}
 
@@ -99,10 +146,10 @@ void download(std::string url, std::string destFile, std::function<void(bool)> c
 	if (!succeeded)
 	{
 		CCLOGERROR("[ERROR] webfile : when downloading with curl : %d", res);		
-		callback(false);
+		caller.requestCall(callback, false);
 		return;
 	}
-	else callback(true);
+	else caller.requestCall(callback, true);
 }
 
 void WebFile::get(const char * url, const char * destFile, std::function<void(bool)> callback)
@@ -141,7 +188,7 @@ void WebFile::get(const char * url, const char * destFile, std::function<void(bo
 
 void clear(std::function<void(bool)> callback)
 {
-	callback(true);
+	caller.requestCall(callback, true);
 	clearing = true;
 }
 

@@ -8,11 +8,13 @@
 
 NS_CC_EXT_BEGIN
 
+typedef std::function<void(bool)> fn_cb_t;
+
 class WebFile : public Object {
 public :
-	static void get( const char * url, const char * destFile, std::function<void(bool)> callback );
+	static void get(const char * url, const char * destFile, fn_cb_t callback);
 
-	static void clearStorage(std::function<void(bool)> callback);
+	static void clearStorage(fn_cb_t callback);
 };
 
 NS_CC_EXT_END
