@@ -55,4 +55,5 @@ extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValu
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
 extern void array_to_luaval(lua_State* L,Array* inValue);
 extern void dictionary_to_luaval(lua_State* L, Dictionary* dict);
+extern void std_vector_to_luaval(lua_State* L,const std::vector<Sprite*>& inValue);
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

@@ -460,7 +460,7 @@ static int tolua_cocos2d_MenuItem_registerScriptTapHandler(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)cobj, handler, ScriptHandlerMgr::kMenuClickHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)cobj, handler, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
         return 0;
     }
     
@@ -500,7 +500,7 @@ static int tolua_cocos2d_MenuItem_unregisterScriptTapHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)cobj, ScriptHandlerMgr::kMenuClickHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)cobj, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
         return 0;
     }
     
@@ -582,7 +582,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         self->setTouchMode(touchesMode);
         self->setTouchPriority(priority);
 		self->setSwallowsTouches(swallowTouches);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kTouchesHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
     
@@ -622,7 +622,7 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kTouchesHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
     
@@ -669,7 +669,7 @@ static int tolua_cocos2d_Layer_registerScriptKeypadHandler(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kKeypadHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::KEYPAD);
         return 0;
     }
     
@@ -710,7 +710,7 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler(self, ScriptHandlerMgr::kKeypadHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler(self, ScriptHandlerMgr::HandlerType::KEYPAD);
         return 0;
     }
 
@@ -756,7 +756,7 @@ static int tolua_cocos2d_Layer_registerScriptAccelerateHandler(lua_State* tolua_
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kAccelerometerHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
         return 0;
     }
     
@@ -795,7 +795,7 @@ static int tolua_cocos2d_Layer_unregisterScriptAccelerateHandler(lua_State* tolu
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kAccelerometerHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
         return 0;
     }
     
@@ -1031,7 +1031,7 @@ static int tolua_cocos2d_Node_registerScriptHandler(lua_State* tolua_S)
 #endif
         
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kNodeHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::NODE);
 
         return 0;
     }
@@ -1071,7 +1071,7 @@ static int tolua_cocos2d_Node_unregisterScriptHandler(lua_State* tolua_S)
     
     if (argc == 0)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kNodeHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::NODE);
         return 0;
     }
     
