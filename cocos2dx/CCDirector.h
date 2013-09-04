@@ -110,6 +110,8 @@ public:
     virtual bool init(void);
 
     // attribute
+    
+    void setDesignResolutionSize(float width, float height, int resolutionPolicy);
 
     /** Get current running Scene. Director can only run one Scene at the time */
     inline Scene* getRunningScene() { return _runningScene; }
