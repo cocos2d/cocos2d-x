@@ -669,6 +669,11 @@ JSBool ScriptingCore::setLogSniffer(JSContext* cx, uint32_t argc, jsval* vp)
 				} while (0);
 				jsval rval;
                 jsval exception;
+                
+                static bool avoidRecursion = false;
+                if (avoidRecursion) return;
+                
+                avoidRecursion = true;
                 if (JS_IsExceptionPending(cx))
                 {                    
                     JS_GetPendingException(cx,&exception);
@@ -680,6 +685,7 @@ JSBool ScriptingCore::setLogSniffer(JSContext* cx, uint32_t argc, jsval* vp)
                 {
                     func->invoke(1, &largv[0], rval);
                 }
+                avoidRecursion = false;
 			};
 			getInstance()->logSniffer_ = lambda;
             return JS_TRUE;
