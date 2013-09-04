@@ -169,6 +169,7 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
+    kTableViewEvent,//Now it's only used in LuaBinding
 };
 
 struct BasicScriptData

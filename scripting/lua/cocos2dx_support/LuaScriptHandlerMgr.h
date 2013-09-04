@@ -72,34 +72,42 @@ public:
             
     enum HandlerEventType
     {
-       kNodeHandler = 0,
-       kMenuClickHandler,
-       kNotificationHandler,
-       kCallFuncHandler,
-       kScheduleHandler,
-       kTouchesHandler,
-       kKeypadHandler,
-       kAccelerometerHandler,
-       
-       kControlTouchDownHandler,
-       kControlTouchDragInsideHandler,
-       kControlTouchDragOutsideHandler,
-       kControlTouchDragEnterHandler,
-       kControlTouchDragExitHandler,
-       kControlTouchUpInsideHandler,
-       kControlTouchUpOutsideHandler,
-       kControlTouchCancelHandler,
-       kControlValueChangedHandler,
-       
-       kWebSocketScriptHandlerOpen,
-       kWebSocketScriptHandlerMessage,
-       kWebSocketScriptHandlerClose,
-       kWebSocketScriptHandlerError,
+        kNodeHandler = 0,
+        kMenuClickHandler,
+        kNotificationHandler,
+        kCallFuncHandler,
+        kScheduleHandler,
+        kTouchesHandler,
+        kKeypadHandler,
+        kAccelerometerHandler,
         
-       kGLNodeDrawHandler,
+        kControlTouchDownHandler,
+        kControlTouchDragInsideHandler,
+        kControlTouchDragOutsideHandler,
+        kControlTouchDragEnterHandler,
+        kControlTouchDragExitHandler,
+        kControlTouchUpInsideHandler,
+        kControlTouchUpOutsideHandler,
+        kControlTouchCancelHandler,
+        kControlValueChangedHandler,
+
+        kWebSocketScriptHandlerOpen,
+        kWebSocketScriptHandlerMessage,
+        kWebSocketScriptHandlerClose,
+        kWebSocketScriptHandlerError,
+ 
+        kGLNodeDrawHandler,
+ 
+        kScrollViewScrollHandler,
+        kScrollViewZoomHandler,
         
-       kScrollViewScrollHandler,
-       kScrollViewZoomHandler,
+        kTableCellTouched,
+        kTableCellHighlight,
+        kTableCellUnhighlight,
+        kTableCellWillRecycle,
+        kTableCellSizeForIndex,
+        kTableCellAtIndex,
+        kNumberOfCellsInTableView,
     };
     
     
