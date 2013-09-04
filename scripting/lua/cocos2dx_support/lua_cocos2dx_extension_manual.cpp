@@ -33,7 +33,7 @@ public:
             {
                 CommonScriptData data(handler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                LuaEngine::getInstance()->sendEvent(&event);
             }
 
         }
@@ -48,7 +48,7 @@ public:
             {
                 CommonScriptData data(handler,"");
                 ScriptEvent event(kCommonEvent,(void*)&data);
-                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+                LuaEngine::getInstance()->sendEvent(&event);
             }
         }
     }
@@ -853,6 +853,482 @@ static void extendCCBAnimationManager(lua_State* tolua_S)
     }
 }
 
+#define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
+#define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
+
+class LUA_TableViewDelegate:public Object, public TableViewDelegate
+{
+public:
+    LUA_TableViewDelegate(){}
+    
+    virtual ~LUA_TableViewDelegate(){}
+    
+    
+    virtual void scrollViewDidScroll(ScrollView* view)
+    {
+        if (nullptr != view)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewScrollHandler);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kScrollViewScrollHandler);
+                BasicScriptData data(view,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+    
+    virtual void scrollViewDidZoom(ScrollView* view)
+    {
+        if (nullptr != view)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewZoomHandler);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kScrollViewZoomHandler);
+                BasicScriptData data(view,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+    
+    virtual void tableCellTouched(TableView* table, TableViewCell* cell)
+    {
+        if (nullptr != table && nullptr != cell)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellTouched);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellTouched,cell);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+    
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell)
+    {
+        if (nullptr != table && nullptr != cell)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellHighlight);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellHighlight,cell);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+    
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell)
+    {
+        if (nullptr != table && nullptr != cell)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellUnhighlight);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellUnhighlight,cell);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+    
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell)
+    {
+        if (nullptr != table && nullptr != cell)
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellWillRecycle);
+            if (0 != handler)
+            {
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellWillRecycle,cell);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEvent(&event);
+            }
+        }
+    }
+};
+
+static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    TableView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"TableView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (TableView*)  tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_TableView_setDelegate'\n", nullptr);
+		return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        LUA_TableViewDelegate* delegate = new LUA_TableViewDelegate();
+        if (nullptr == delegate)
+            return 0;
+        
+        Dictionary* userDict = static_cast<Dictionary*>(self->getUserObject());
+        if (nullptr == userDict)
+        {
+            userDict = new Dictionary();
+            if (NULL == userDict)
+                return 0;
+            
+            self->setUserObject(userDict);
+            userDict->release();
+        }
+        
+        userDict->setObject(delegate, KEY_TABLEVIEW_DELEGATE);
+        self->setDelegate(delegate);
+        delegate->release();
+        
+        return 0;
+    }
+    
+    CCLOG("'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setDelegate'.",&tolua_err);
+    return 0;
+#endif
+}
+
+class LUA_TableViewDataSource:public Object,public TableViewDataSource
+{
+public:
+    LUA_TableViewDataSource(){}
+    virtual ~LUA_TableViewDataSource(){}
+    
+    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    {
+        if (nullptr != table )
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellSizeForIndex);
+            if (0 != handler)
+            {
+                Array resultArray;
+                resultArray.initWithCapacity(1);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellSizeForIndex,&idx);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEventReturnArray(&event, 2, resultArray);
+                CCASSERT(resultArray.count() == 2, "tableCellSizeForIndex Array count error");
+                Double* width  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
+                Double* height = dynamic_cast<Double*>(resultArray.getObjectAtIndex(1));
+                if (nullptr != width && nullptr != height)
+                {
+                    return Size((float)width->getValue(), (float)height->getValue());
+                }
+            }
+        }
+        
+        return Size::ZERO;
+    }
+    
+    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    {
+        if (nullptr != table )
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellAtIndex);
+            if (0 != handler)
+            {
+                Array resultArray;
+                resultArray.initWithCapacity(1);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellAtIndex,&idx);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
+                TableViewCell* viewCell = nullptr;
+                if (resultArray.count() > 0)
+                {
+                    viewCell = dynamic_cast<TableViewCell*>(resultArray.getObjectAtIndex(0));
+                }
+                 
+                return viewCell;
+            }
+        }
+        
+        return NULL;
+    }
+    
+    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    {
+        if (nullptr != table )
+        {
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kNumberOfCellsInTableView);
+            if (0 != handler)
+            {
+                Array resultArray;
+                resultArray.initWithCapacity(1);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::kNumberOfCellsInTableView);
+                BasicScriptData data(table,&eventData);
+                ScriptEvent event(kTableViewEvent,(void*)&data);
+                LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
+                Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
+                if (NULL != numbers)
+                {
+                    return (int)numbers->getValue();
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    TableView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"TableView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (TableView*)  tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_TableView_setDataSource'\n", nullptr);
+		return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        if (nullptr == dataSource)
+            return 0;
+        
+        Dictionary* userDict = static_cast<Dictionary*>(self->getUserObject());
+        if (nullptr == userDict)
+        {
+            userDict = new Dictionary();
+            if (NULL == userDict)
+                return 0;
+            
+            self->setUserObject(userDict);
+            userDict->release();
+        }
+        
+        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        
+        self->setDataSource(dataSource);
+        
+        dataSource->release();
+        
+        return 0;
+    }
+    
+    CCLOG("'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setDataSource'.",&tolua_err);
+    return 0;
+#endif    
+}
+
+static int lua_cocos2dx_TableView_create(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    bool ok = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(L,1,"TableView",0,&tolua_err)) goto tolua_lerror;
+#endif
+        
+    argc = lua_gettop(L) - 1;
+    
+    if (2 == argc || 1 == argc)
+    {
+        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        Size size;
+        ok &= luaval_to_size(L, 2, &size);
+        
+        TableView* ret = nullptr;
+        
+        if (1 == argc)
+        {
+            ret = TableView::create(dataSource, size);
+        }
+        else
+        {
+#if COCOS2D_DEBUG >= 1
+            if (!tolua_isusertype(L,3,"Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+            Node* node = static_cast<Node*>(tolua_tousertype(L, 2, nullptr));
+            ret = TableView::create(dataSource, size, node);
+        }
+        
+        if (nullptr ==  ret)
+            return 0;
+        
+        ret->reloadData();
+        
+        Dictionary* userDict = new Dictionary();
+        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        ret->setUserObject(userDict);
+        userDict->release();
+        
+        dataSource->release();
+        
+        
+        int  nID = (int)ret->_ID;
+        int* pLuaID =  &ret->_luaID;
+        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)ret,"TableView");
+        
+        return 1;
+    }
+    CCLOG("'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'create'.",&tolua_err);
+    return 0;
+#endif    
+}
+
+static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
+{
+    if (NULL == L)
+        return 0;
+    
+    int argc = 0;
+    TableView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"TableView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<TableView*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_TableView_registerScriptHandler'\n", NULL);
+		return 0;
+	}
+#endif
+    argc = lua_gettop(L) - 1;
+    if (2 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err) ||
+            !tolua_isnumber(L, 3, 0, &tolua_err) )
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(L,3,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
+        return 0;
+    }
+    
+    CCLOG("'registerScriptHandler' function of TableView has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
+{
+    if (NULL == L)
+        return 0;
+    
+    int argc = 0;
+    TableView* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"TableView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<TableView*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2d_TableView_unregisterScriptHandler'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isnumber(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(L,2,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
+        return 0;
+    }
+    
+    CCLOG("'unregisterScriptHandler' function of TableView  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendTableView(lua_State* L)
+{
+    lua_pushstring(L, "TableView");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "setDelegate", lua_cocos2dx_TableView_setDelegate);
+        tolua_function(L, "setDataSource", lua_cocos2dx_TableView_setDataSource);
+        tolua_function(L, "create", lua_cocos2dx_TableView_create);
+        tolua_function(L, "registerScriptHandler", lua_cocos2d_TableView_registerScriptHandler);
+        tolua_function(L, "unregisterScriptHandler", lua_cocos2d_TableView_unregisterScriptHandler);
+    }
+}
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendScrollView(tolua_S);
@@ -860,5 +1336,6 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendEditBox(tolua_S);
     extendCCBReader(tolua_S);
     extendCCBAnimationManager(tolua_S);
+    extendTableView(tolua_S);
     return 0;
 }
