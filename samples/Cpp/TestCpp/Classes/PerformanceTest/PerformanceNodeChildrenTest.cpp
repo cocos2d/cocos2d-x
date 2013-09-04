@@ -2,6 +2,14 @@
 
 #include <algorithm>
 
+#ifndef srandom
+#define srandom srand
+#endif
+
+#ifndef random
+#define random rand
+#endif
+
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
 #define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
