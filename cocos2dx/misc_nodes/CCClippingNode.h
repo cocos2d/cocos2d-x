@@ -94,7 +94,7 @@ public:
     bool isInverted() const;
     void setInverted(bool bInverted);
     
-private:
+protected:
     CCClippingNode();
 };
 
