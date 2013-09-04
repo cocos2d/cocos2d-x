@@ -30,8 +30,7 @@ if [ -z "${PYTHON_BIN+aaa}" ]; then
 fi
 
 # find current dir
-DIR=$(pwd)
-#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # paths with defaults hardcoded to relative paths
 
@@ -63,20 +62,19 @@ then
     rm "$_CONF_INI_FILE"
 fi
 
-NEWLINE='\n'
 _CONTENTS=""
-_CONTENTS=$_CONTENTS"[DEFAULT]"$NEWLINE
-_CONTENTS=$_CONTENTS"androidndkdir=$NDK_ROOT"$NEWLINE
-_CONTENTS=$_CONTENTS"clangllvmdir=$CLANG_ROOT"$NEWLINE
-_CONTENTS=$_CONTENTS"cocosdir=$COCOS2DX_ROOT"$NEWLINE
-_CONTENTS=$_CONTENTS"cxxgeneratordir=$CXX_GENERATOR_ROOT"$NEWLINE
-_CONTENTS=$_CONTENTS"extra_flags="$NEWLINE
+_CONTENTS+="[DEFAULT]"'\n'
+_CONTENTS+="androidndkdir=$NDK_ROOT"'\n'
+_CONTENTS+="clangllvmdir=$CLANG_ROOT"'\n'
+_CONTENTS+="cocosdir=$COCOS2DX_ROOT"'\n'
+_CONTENTS+="cxxgeneratordir=$CXX_GENERATOR_ROOT"'\n'
+_CONTENTS+="extra_flags="'\n'
 
 echo 
 echo "generating userconf.ini..."
 echo ---
-echo "$_CONTENTS"
-echo "$_CONTENTS" > "$_CONF_INI_FILE"
+echo -e "$_CONTENTS"
+echo -e "$_CONTENTS" > "$_CONF_INI_FILE"
 echo ---
 
 # Generate bindings for cocos2dx
