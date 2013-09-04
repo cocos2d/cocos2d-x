@@ -28,7 +28,7 @@ public:
 	void requestCall(fn_cb_t callback, bool result)
 	{
 		_mutex.lock();
-		_queue.push_front(callback);
+		_queue.push_front(cb_pair_t(callback, result));
 		doScheduled();
 		_mutex.unlock();
 	}
@@ -38,8 +38,8 @@ public:
 		_mutex.lock();
 		while(!_queue.empty())
 		{
-			cb_pair_t pair = _queue.back();
-			pair.first(pair.second);
+			cb_pair_t p = _queue.back();
+			p.first(p.second);
 			_queue.pop_back();
 		}
 		doUnscheduled();
@@ -60,7 +60,7 @@ private:
 
 Caller caller;
 
-typedef std::vector<std::function<void(bool)>> cb_arr_t;
+typedef std::vector<fn_cb_t> cb_arr_t;
 typedef std::map<std::string, cb_arr_t> duple_map_t;
 
 static bool clearing = false;
@@ -85,7 +85,7 @@ size_t write(void * ptr, size_t size, size_t nmemb, void * userdata)
 	return written;
 }
 
-void download(std::string url, std::string destFile, std::function<void(bool)> callback)
+void download(std::string url, std::string destFile, fn_cb_t callback)
 {
 	g_mutex.lock();
 	downloadingFiles.push_back(destFile);
@@ -152,7 +152,7 @@ void download(std::string url, std::string destFile, std::function<void(bool)> c
 	else caller.requestCall(callback, true);
 }
 
-void WebFile::get(const char * url, const char * destFile, std::function<void(bool)> callback)
+void WebFile::get(const char * url, const char * destFile, fn_cb_t callback)
 {
 	if(clearing)
 	{
@@ -186,13 +186,13 @@ void WebFile::get(const char * url, const char * destFile, std::function<void(bo
 	g_mutex.unlock();
 }
 
-void clear(std::function<void(bool)> callback)
+void clear(fn_cb_t callback)
 {
 	caller.requestCall(callback, true);
 	clearing = true;
 }
 
-void WebFile::clearStorage(std::function<void(bool)> callback)
+void WebFile::clearStorage(fn_cb_t callback)
 {
 	clearing = true;
 	std::thread t(&clear, callback);
