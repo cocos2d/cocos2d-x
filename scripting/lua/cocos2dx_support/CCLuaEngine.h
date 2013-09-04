@@ -120,6 +120,7 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
+    virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
     void extendLuaObject();
 private:
     LuaEngine(void)
@@ -138,6 +139,8 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
+    int handleTableViewEvent(void* data);
+    int handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray);
     void extendWebsocket(lua_State* lua_S);
     void extendGLNode(lua_State* lua_S);
 private:
