@@ -1,4 +1,6 @@
 #include "SpriteTest.h"
+
+#include <algorithm>
 #include "../testResource.h"
 
 
@@ -658,18 +660,13 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     }
     
     prev = -1;
-    auto sChildren = asmtest->getDescendants();
-    CCARRAY_FOREACH(sChildren, pObject)
-    {
-        child = static_cast<Sprite*>(pObject);
-        if(! child )
-            break;
-
-        int currentIndex = child->getAtlasIndex();
+    auto descendants = asmtest->getDescendants();
+    std::for_each(descendants.begin(), descendants.end(), [&](Sprite* sprite) {
+        int currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
-    }
+    });
 }
 
 std::string SpriteBatchNodeReorder::title()
@@ -4205,11 +4202,10 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
     _batchNode->reorderChild(_sprite1, 4);
 
     _batchNode->sortAllChildren();
-    Object *child;
-    CCARRAY_FOREACH(_batchNode->getDescendants(), child)
-    {
-        log("tag %i", (int)( static_cast<Node*>(child)->getTag()) );
-    }    
+
+    std::for_each(_batchNode->getDescendants().begin(), _batchNode->getDescendants().end(), [&](Sprite* sprite) {
+        log("tag %i", sprite->getTag() );
+    });
 }
 
 /// SpriteBatchNodeReorderOneChild
