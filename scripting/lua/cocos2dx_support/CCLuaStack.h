@@ -113,6 +113,7 @@ public:
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
+    virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray);
 
     virtual bool handleAssert(const char *msg);
     

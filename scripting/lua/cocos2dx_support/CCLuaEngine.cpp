@@ -29,6 +29,7 @@
 #include "LuaScriptHandlerMgr.h"
 #include "GUI/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
+#include "lua_cocos2dx_extension_manual.h"
 
 NS_CC_BEGIN
 
@@ -246,6 +247,11 @@ int LuaEngine::sendEvent(ScriptEvent* evt)
                 return handlerControlEvent(evt->data);
             }
             break;
+        case kTableViewEvent:
+            {
+                return handleTableViewEvent(evt->data);
+            }
+            break;
         default:
             break;
     }
@@ -455,7 +461,7 @@ int LuaEngine::handleCommonEvent(void* data)
         }
         else
         {
-            _stack->pushObject(commonInfo->eventSource, "CCObject");
+            _stack->pushObject(commonInfo->eventSource, "Object");
         }
     }
     int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
@@ -571,6 +577,51 @@ int LuaEngine::handleTouchesEvent(void* data)
     return ret;
 }
 
+int LuaEngine::handleTableViewEvent(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);    
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaTableViewEventData* tableViewEventData = static_cast<LuaTableViewEventData*>(eventData->value);
+    if (tableViewEventData->eventType < ScriptHandlerMgr::kScrollViewScrollHandler || tableViewEventData->eventType > ScriptHandlerMgr::kNumberOfCellsInTableView )
+        return 0;
+
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->eventType);
+    
+    if (0 == handler)
+        return 0;
+    
+    int ret = 0;
+    switch (tableViewEventData->eventType)
+    {
+        case ScriptHandlerMgr::kScrollViewScrollHandler:
+        case ScriptHandlerMgr::kScrollViewZoomHandler:
+            {
+                _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
+                ret = _stack->executeFunctionByHandler(handler, 1);
+            }
+            break;
+        case ScriptHandlerMgr::kTableCellTouched:
+        case ScriptHandlerMgr::kTableCellHighlight:
+        case ScriptHandlerMgr::kTableCellUnhighlight:
+        case ScriptHandlerMgr::kTableCellWillRecycle:
+            {
+                _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
+                _stack->pushObject(static_cast<Object*>(tableViewEventData->value), "TableViewCell");
+                ret = _stack->executeFunctionByHandler(handler, 2);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
+}
+
 int LuaEngine::handlerControlEvent(void* data)
 {
     if ( NULL == data )
@@ -652,5 +703,72 @@ void LuaEngine::extendGLNode(lua_State* lua_S)
         lua_pushcfunction(lua_S,tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
         lua_rawset(lua_S,-3);
     }
+}
+
+int LuaEngine::sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray)
+{
+    if (nullptr == message || numResults <= 0)
+        return 0;
+    
+    switch (message->type)
+    {
+        case kTableViewEvent:
+            return handleTableViewEventReturnArray(message->data,numResults,resultArray);
+            break;
+        default:
+            break;
+    }
+    return 0;
+}
+
+int LuaEngine::handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray)
+{
+    if (nullptr == data || numResults <= 0)
+        return 0;
+    
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
+    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
+        return 0;
+    
+    LuaTableViewEventData* tableViewEventData = static_cast<LuaTableViewEventData*>(eventData->value);
+    if (tableViewEventData->eventType < ScriptHandlerMgr::kScrollViewScrollHandler || tableViewEventData->eventType > ScriptHandlerMgr::kNumberOfCellsInTableView )
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, tableViewEventData->eventType);
+    
+    if (0 == handler)
+        return 0;
+    
+    int ret = 0;
+    switch (tableViewEventData->eventType)
+    {
+        case ScriptHandlerMgr::kTableCellSizeForIndex:
+            {
+                _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
+                _stack->pushInt(*((int*)tableViewEventData->value));
+                ret = _stack->executeFunctionReturnArray(handler, 2, 2, resultArray);
+            }
+            break;
+        case ScriptHandlerMgr::kTableCellAtIndex:
+            {
+                _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
+                _stack->pushInt(*((int*)tableViewEventData->value));
+                ret = _stack->executeFunctionReturnArray(handler, 2, 1, resultArray);
+            }
+            break;
+        case ScriptHandlerMgr::kNumberOfCellsInTableView:
+            {
+                _stack->pushObject(static_cast<Object*>(eventData->nativeObject), "TableView");
+                ret = _stack->executeFunctionReturnArray(handler, 1, 1, resultArray);               
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
 }
 NS_CC_END

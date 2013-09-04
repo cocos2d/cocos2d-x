@@ -26,7 +26,7 @@
     --Send Text
     local function onMenuSendTextClicked()
         if nil ~= wsSendText then
-            if kStateOpen == wsSendText:getReadyState() then
+            if cc.WEBSOCKET_STATE_OPEN == wsSendText:getReadyState() then
                sendTextStatus:setString("Send Text WS is waiting...")
                wsSendText:sendString("Hello WebSocket中文, I'm a text message.")
             else
@@ -45,7 +45,7 @@
     --Send Binary
     local function onMenuSendBinaryClicked()
         if nil ~= wsSendBinary then
-            if kStateOpen == wsSendBinary:getReadyState() then
+            if cc.WEBSOCKET_STATE_OPEN == wsSendBinary:getReadyState() then
                sendBinaryStatus:setString("Send Binary WS is waiting...")
                wsSendBinary:sendString("Hello WebSocket中文--,\0 I'm\0 a\0 binary\0 message\0.")
             else
@@ -156,24 +156,24 @@
     end
 
     if nil ~= wsSendText then
-        wsSendText:registerScriptHandler(wsSendTextOpen,kWebSocketScriptHandlerOpen)
-        wsSendText:registerScriptHandler(wsSendTextMessage,kWebSocketScriptHandlerMessage)
-        wsSendText:registerScriptHandler(wsSendTextClose,kWebSocketScriptHandlerClose)
-        wsSendText:registerScriptHandler(wsSendTextError,kWebSocketScriptHandlerError)
+        wsSendText:registerScriptHandler(wsSendTextOpen,cc.WEBSOCKET_OPEN)
+        wsSendText:registerScriptHandler(wsSendTextMessage,cc.WEBSOCKET_MESSAGE)
+        wsSendText:registerScriptHandler(wsSendTextClose,cc.WEBSOCKET_CLOSE)
+        wsSendText:registerScriptHandler(wsSendTextError,cc.WEBSOCKET_ERROR)
     end
 
     if nil ~= wsSendBinary then
-        wsSendBinary:registerScriptHandler(wsSendBinaryOpen,kWebSocketScriptHandlerOpen)
-        wsSendBinary:registerScriptHandler(wsSendBinaryMessage,kWebSocketScriptHandlerMessage)
-        wsSendBinary:registerScriptHandler(wsSendBinaryClose,kWebSocketScriptHandlerClose)
-        wsSendBinary:registerScriptHandler(wsSendBinaryError,kWebSocketScriptHandlerError)
+        wsSendBinary:registerScriptHandler(wsSendBinaryOpen,cc.WEBSOCKET_OPEN)
+        wsSendBinary:registerScriptHandler(wsSendBinaryMessage,cc.WEBSOCKET_MESSAGE)
+        wsSendBinary:registerScriptHandler(wsSendBinaryClose,cc.WEBSOCKET_CLOSE)
+        wsSendBinary:registerScriptHandler(wsSendBinaryError,cc.WEBSOCKET_ERROR)
     end
 
     if nil ~= wsError then
-        wsError:registerScriptHandler(wsErrorOpen,kWebSocketScriptHandlerOpen)
-        wsError:registerScriptHandler(wsErrorMessage,kWebSocketScriptHandlerMessage)
-        wsError:registerScriptHandler(wsErrorClose,kWebSocketScriptHandlerClose)
-        wsError:registerScriptHandler(wsErrorError,kWebSocketScriptHandlerError)
+        wsError:registerScriptHandler(wsErrorOpen,cc.WEBSOCKET_OPEN)
+        wsError:registerScriptHandler(wsErrorMessage,cc.WEBSOCKET_MESSAGE)
+        wsError:registerScriptHandler(wsErrorClose,cc.WEBSOCKET_CLOSE)
+        wsError:registerScriptHandler(wsErrorError,cc.WEBSOCKET_ERROR)
     end
 
     local function OnExit(strEventName)

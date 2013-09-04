@@ -385,3 +385,13 @@ _G.CCControlStateNormal         = cc.CONTROL_STATE_NORMAL
 _G.CCControlStateHighlighted    = cc.CONTROL_STATE_HIGH_LIGHTED
 _G.CCControlStateDisabled       = cc.CONTROL_STATE_DISABLED
 _G.CCControlStateSelected       = cc.CONTROL_STATE_SELECTED
+
+_G.kWebSocketScriptHandlerOpen  = cc.WEBSOCKET_OPEN
+_G.kWebSocketScriptHandlerMessage = cc.WEBSOCKET_MESSAGE
+_G.kWebSocketScriptHandlerClose   = cc.WEBSOCKET_CLOSE
+_G.kWebSocketScriptHandlerError   = cc.WEBSOCKET_ERROR
+
+_G.kStateConnecting               = cc.WEBSOCKET_STATE_CONNECTING 
+_G.kStateOpen                     = cc.WEBSOCKET_STATE_OPEN 
+_G.kStateClosing                  = cc.WEBSOCKET_STATE_CLOSING
+_G.kStateClosed                   = cc.WEBSOCKET_STATE_CLOSED 
