@@ -22,94 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "support/component/CCComponent.h"
+#ifndef __CC_EXTENTIONS_CCCOMNODE_H__
+#define __CC_EXTENTIONS_CCCOMNODE_H__
 
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
-CCComponent::CCComponent(void)
-: m_pOwner(NULL)
-, m_bEnabled(true)
+class CCComRender : public cocos2d::CCComponent
 {
-}
+protected:
+    CCComRender(void);
+    CCComRender(cocos2d::CCNode *node, const char *comName);
+    virtual ~CCComRender(void);
+    
+public:
+   virtual void onEnter();
+   virtual void onExit();
+   cocos2d::CCNode* getRender();
 
-CCComponent::~CCComponent(void)
-{
-}
+   static CCComRender* create(cocos2d::CCNode *pNode, const char *comName);
+   
+private:
+   cocos2d::CCNode *m_pRender;
+};
 
-bool CCComponent::init()
-{
-    return true;
-}
-
-void CCComponent::onEnter()
-{
-}
-
-void CCComponent::onExit()
-{
-}
-
-void CCComponent::update(float delta)
-{
-}
-
-void CCComponent::serialize(void *ar)
-{
-}
-
-CCComponent* CCComponent::create(void)
-{
-    CCComponent * pRet = new CCComponent();
-    if (pRet != NULL && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-	return pRet;
-}
-
-const char* CCComponent::getName() const
-{
-    return m_strName.c_str();
-}
-
-void  CCComponent::setName(const char *pName)
-{
-	m_strName.assign(pName);
-}
-
-CCNode* CCComponent::getOwner() const
-{
-    return m_pOwner;
-}
-
-void CCComponent::setOwner(CCNode *pOwner)
-{
-    m_pOwner = pOwner;
-}
-
-bool CCComponent::isEnabled() const
-{
-    return m_bEnabled;
-}
-
-void CCComponent::setEnabled(bool b)
-{
-    m_bEnabled = b;
-}
-
-void CCComponent::setNode(CCNode *pNode)
-{
-
-}
-
-CCNode* CCComponent::getNode()
-{
-	return NULL;
-}
-
-NS_CC_END
+NS_CC_EXT_END
+#endif  // __FUNDATION__CCCOMPONENT_H__
