@@ -591,7 +591,7 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
                 //temp mark
 //                if (isInScrollDegreeRange(sender))
                 {
-                    sender->setFocus(false);
+                    sender->setFocused(false);
                     handleMoveLogic(touchPoint);
                 }
             }

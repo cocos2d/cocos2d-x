@@ -88,14 +88,14 @@ void UICheckBox::initRenderer()
 
 void UICheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)
 {
-    loadBackGroundTexture(backGround,texType);
-    loadBackGroundSelectedTexture(backGroundSelected,texType);
-    loadFrontCrossTexture(cross,texType);
-    loadBackGroundDisabledTexture(backGroundDisabled,texType);
-    loadFrontCrossDisabledTexture(frontCrossDisabled,texType);
+    loadTextureBackGround(backGround,texType);
+    loadTextureBackGroundSelected(backGroundSelected,texType);
+    loadTextureFrontCross(cross,texType);
+    loadTextureBackGroundDisabled(backGroundDisabled,texType);
+    loadTextureFrontCrossDisabled(frontCrossDisabled,texType);
 }
 
-void UICheckBox::loadBackGroundTexture(const char *backGround,TextureResType texType)
+void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType texType)
 {
     if (!backGround || strcmp(backGround, "") == 0)
     {
@@ -119,7 +119,7 @@ void UICheckBox::loadBackGroundTexture(const char *backGround,TextureResType tex
     backGroundTextureScaleChangedWithSize();
 }
 
-void UICheckBox::loadBackGroundSelectedTexture(const char *backGroundSelected,TextureResType texType)
+void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,TextureResType texType)
 {
     if (!backGroundSelected || strcmp(backGroundSelected, "") == 0)
     {
@@ -143,7 +143,7 @@ void UICheckBox::loadBackGroundSelectedTexture(const char *backGroundSelected,Te
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
-void UICheckBox::loadFrontCrossTexture(const char *cross,TextureResType texType)
+void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
 {
     if (!cross || strcmp(cross, "") == 0)
     {
@@ -167,7 +167,7 @@ void UICheckBox::loadFrontCrossTexture(const char *cross,TextureResType texType)
     frontCrossTextureScaleChangedWithSize();
 }
 
-void UICheckBox::loadBackGroundDisabledTexture(const char *backGroundDisabled,TextureResType texType)
+void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,TextureResType texType)
 {
     if (!backGroundDisabled || strcmp(backGroundDisabled, "") == 0)
     {
@@ -191,7 +191,7 @@ void UICheckBox::loadBackGroundDisabledTexture(const char *backGroundDisabled,Te
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
-void UICheckBox::loadFrontCrossDisabledTexture(const char *frontCrossDisabled,TextureResType texType)
+void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,TextureResType texType)
 {
     if (!frontCrossDisabled || strcmp(frontCrossDisabled, "") == 0)
     {
@@ -230,7 +230,7 @@ void UICheckBox::onTouchEnded(const CCPoint &touchPoint)
             selectedEvent();
         }
     }
-    setFocus(false);
+    setFocused(false);
     m_pWidgetParent->checkChildInfo(2,this,touchPoint);
 }
 

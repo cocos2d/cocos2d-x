@@ -418,7 +418,7 @@ void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             {
 //                if (isInScrollDegreeRange(sender))
                 {
-                    sender->setFocus(false);
+                    sender->setFocused(false);
                     handleMoveLogic(touchPoint);
                 }
             }

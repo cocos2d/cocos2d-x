@@ -247,12 +247,12 @@ void UISlider::setCapInsets(const CCRect &capInsets)
 
 void UISlider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
 {
-    loadSlidBallNormalTexture(normal, texType);
-    loadSlidBallPressedTexture(pressed,texType);
-    loadSlidBallDisabledTexture(disabled,texType);
+    loadSlidBallTextureNormal(normal, texType);
+    loadSlidBallTexturePressed(pressed,texType);
+    loadSlidBallTextureDisabled(disabled,texType);
 }
 
-void UISlider::loadSlidBallNormalTexture(const char* normal,TextureResType texType)
+void UISlider::loadSlidBallTextureNormal(const char* normal,TextureResType texType)
 {
     if (!normal || strcmp(normal, "") == 0)
     {
@@ -275,7 +275,7 @@ void UISlider::loadSlidBallNormalTexture(const char* normal,TextureResType texTy
     m_pSlidBallNormalRenderer->setOpacity(getOpacity());
 }
 
-void UISlider::loadSlidBallPressedTexture(const char* pressed,TextureResType texType)
+void UISlider::loadSlidBallTexturePressed(const char* pressed,TextureResType texType)
 {
     if (!pressed || strcmp(pressed, "") == 0)
     {
@@ -298,7 +298,7 @@ void UISlider::loadSlidBallPressedTexture(const char* pressed,TextureResType tex
     m_pSlidBallPressedRenderer->setOpacity(getOpacity());
 }
 
-void UISlider::loadSlidBallDisabledTexture(const char* disabled,TextureResType texType)
+void UISlider::loadSlidBallTextureDisabled(const char* disabled,TextureResType texType)
 {
     if (!disabled || strcmp(disabled, "") == 0)
     {

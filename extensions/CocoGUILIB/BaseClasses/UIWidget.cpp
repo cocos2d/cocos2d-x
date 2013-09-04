@@ -478,12 +478,12 @@ bool UIWidget::isUpdateEnabled()
     return m_bUpdateEnabled;
 }
 
-bool UIWidget::isFocus() const
+bool UIWidget::isFocused() const
 {
     return m_bFocus;
 }
 
-void UIWidget::setFocus(bool fucos)
+void UIWidget::setFocused(bool fucos)
 {
     if (fucos == m_bFocus)
     {
@@ -563,7 +563,7 @@ void UIWidget::didNotSelectSelf()
 
 bool UIWidget::onTouchBegan(const CCPoint &touchPoint)
 {
-    setFocus(true);
+    setFocused(true);
     m_touchStartPos.x = touchPoint.x;
     m_touchStartPos.y = touchPoint.y;
     if (m_pWidgetParent)
@@ -578,7 +578,7 @@ void UIWidget::onTouchMoved(const CCPoint &touchPoint)
 {
     m_touchMovePos.x = touchPoint.x;
     m_touchMovePos.y = touchPoint.y;
-    setFocus(hitTest(touchPoint));
+    setFocused(hitTest(touchPoint));
     if (m_pWidgetParent)
     {
         m_pWidgetParent->checkChildInfo(1,this,touchPoint);
@@ -591,7 +591,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
     m_touchEndPos.x = touchPoint.x;
     m_touchEndPos.y = touchPoint.y;
     bool focus = m_bFocus;
-    setFocus(false);
+    setFocused(false);
     if (m_pWidgetParent)
     {
         m_pWidgetParent->checkChildInfo(2,this,touchPoint);
@@ -608,7 +608,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
 
 void UIWidget::onTouchCancelled(const CCPoint &touchPoint)
 {
-    setFocus(false);
+    setFocused(false);
 }
 
 void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)

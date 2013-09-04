@@ -73,7 +73,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGround(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load backGroundSelected texture for checkbox.
@@ -82,7 +82,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundSelected(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load cross texture for checkbox.
@@ -91,7 +91,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCross(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load backGroundDisabled texture for checkbox.
@@ -100,7 +100,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundDisabled(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load frontCrossDisabled texture for checkbox.
@@ -109,7 +109,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCrossDisabled(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Sets selcted state for checkbox.
@@ -157,11 +157,11 @@ public:
     
     /*Compatible*/
     CC_DEPRECATED_ATTRIBUTE void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadBackGroundTexture(backGround,type);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundSelectedTexture(backGroundSelected,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossTexture(cross,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBackGroundDisabledTexture(backGroundDisabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadFrontCrossDisabledTexture(frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
     /************/
 
 protected:

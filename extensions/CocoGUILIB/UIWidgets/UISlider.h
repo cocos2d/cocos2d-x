@@ -92,7 +92,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureNormal(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load selected state texture for slider ball.
@@ -101,7 +101,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTexturePressed(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load dark state texture for slider ball.
@@ -110,7 +110,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureDisabled(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
@@ -164,9 +164,9 @@ public:
     /*Compatible*/
     CC_DEPRECATED_ATTRIBUTE void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
     CC_DEPRECATED_ATTRIBUTE void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallNormalTexture(normal,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallPressedTexture(pressed,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallDisabledTexture(disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
     CC_DEPRECATED_ATTRIBUTE void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
     CC_DEPRECATED_ATTRIBUTE void setSlidBallPercent(int percent){setPercent(percent);};
     CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};

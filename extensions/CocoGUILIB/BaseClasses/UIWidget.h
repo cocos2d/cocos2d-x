@@ -164,20 +164,20 @@ public:
     bool isTouchEnabled() const;
     
     /**
-     * Determines if the widget is on focus
+     * Determines if the widget is on focused
      *
-     * @return true if the widget is on focus, false if the widget is not on focus.
+     * @return true if the widget is on focused, false if the widget is not on focused.
      */
-    bool isFocus() const;
+    bool isFocused() const;
 
     /**
-     * Sets whether the widget is on focus
+     * Sets whether the widget is on focused
      *
-     * The default value is false, a widget is default to not on focus
+     * The default value is false, a widget is default to not on focused
      *
-     * @param fucos   true if the widget is on focus, false if the widget is not on focus.
+     * @param fucosed   true if the widget is on focused, false if the widget is not on focused.
      */
-    void setFocus(bool fucos);
+    void setFocused(bool fucosed);
     
     /**
      * Sets the Z order which stands for the drawing order, and reorder this widget in its parent's children array.
