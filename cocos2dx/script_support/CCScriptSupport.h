@@ -353,6 +353,7 @@ public:
     
     static ScriptEngineManager* getInstance();
     static void destroyInstance();
+	static bool hasInstance();
     
     CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
