@@ -242,7 +242,7 @@ public:
 
     void setFntFile(const char* fntFile);
     const char* getFntFile();
-	CCBMFontConfiguration* getConfiguration();
+	CCBMFontConfiguration* getConfiguration() const;
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
