@@ -138,9 +138,6 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
     
-//    float getScrollDegreeRange() const;
-//    void setScrollDegreeRange(float range);
-    
     /*compatible*/
     CC_DEPRECATED_ATTRIBUTE int getPage() const{return getCurPageIndex();};
     /************/
@@ -161,10 +158,6 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
-    /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
-    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     int m_nCurPageIdx;

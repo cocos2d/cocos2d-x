@@ -67,7 +67,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureNormal(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load selected state texture for button.
@@ -76,7 +76,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTexturePressed(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Load dark state texture for button.
@@ -85,7 +85,7 @@ public:
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
-    void loadDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureDisabled(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
@@ -132,20 +132,40 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
     
+    /**
+     * Sets color to widget
+     *
+     * It default change the color of widget's children.
+     *
+     * @param color
+     */
+    virtual void setColor(const ccColor3B &color);
+    
+    void setTitleText(const char* text);
+    const char* getTitleText() const;
+    void setTitleColor(const ccColor3B& color);
+    const ccColor3B& getTitleColor() const;
+    void setTitleFontSize(float size);
+    float getTitleFontSize() const;
+    void setTitleFontName(const char* fontName);
+    const char* getTitleFontName() const;
     virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
     virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
     virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
-    
+   
     
     /*Compatible*/
+    CC_DEPRECATED_ATTRIBUTE void setText(const char* text){setTitleText(text);};
+    CC_DEPRECATED_ATTRIBUTE void setTextColor(int r,int g,int b){setTitleColor(ccc3(r, g, b));};
+    CC_DEPRECATED_ATTRIBUTE void setFontSize(int size){setTitleFontSize(size);};
+    CC_DEPRECATED_ATTRIBUTE void setFontName(const char* fontName){setTitleFontName(fontName);};
     CC_DEPRECATED_ATTRIBUTE void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
-    CC_DEPRECATED_ATTRIBUTE void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadNormalTexture(normal,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadPressedTexture(selected,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadDisabledTexture(disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureNormal(normal,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexturePressed(selected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureDisabled(disabled,texType);};
     CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool able){setScale9Enabled(able);};
     CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     /************/
-
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -161,6 +181,7 @@ protected:
     CCNode* m_pButtonNormalRenderer;
     CCNode* m_pButtonClickedRenderer;
     CCNode* m_pButtonDisableRenderer;
+    CCLabelTTF* m_pTitleRenderer;
     std::string m_strNormalFileName;
     std::string m_strClickedFileName;
     std::string m_strDisabledFileName;
@@ -174,6 +195,7 @@ protected:
     CCSize m_pressedTextureSize;
     CCSize m_disabledTextureSize;
     bool m_bPressedActionEnabled;
+    ccColor3B m_titleColor;
 };
 
 NS_CC_EXT_END
