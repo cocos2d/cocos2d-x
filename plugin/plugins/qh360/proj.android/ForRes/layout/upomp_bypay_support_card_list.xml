@@ -1,21 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:background="#00000000">
-
-	<RelativeLayout android:id="@+id/rl_content_card_list" android:layout_width="wrap_content"
-		android:layout_height="40dip" android:gravity="center_vertical" android:layout_centerHorizontal="true">
-		<TextView android:id="@+id/tv_card_item"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			 android:textColor="#6a7482" android:textSize="13sp" 
-			android:layout_marginLeft="5dip"/>
-		<ImageView android:id="@+id/iv_debit_item"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:background="@drawable/upomp_bypay_bank_list_icon1" android:layout_marginRight="10dip"
-			android:layout_alignParentRight="true"/>
-		<ImageView android:id="@+id/iv_credit_item"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:background="@drawable/upomp_bypay_bank_list_icon1" android:layout_marginRight="40dip"
-			android:layout_toLeftOf="@+id/iv_debit_item"/>			</RelativeLayout>
-	<ImageView android:layout_width="fill_parent" android:layout_height="1dip"
-	android:background="#dbdee0" android:layout_below="@id/rl_content_card_list"/></RelativeLayout>
