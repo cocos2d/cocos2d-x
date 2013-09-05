@@ -172,12 +172,10 @@ public:
      */
     virtual bool isClippingEnabled();
     
-    
     /*Compatible*/
     CC_DEPRECATED_ATTRIBUTE void setBackGroundImageScale9Enable(bool is){setBackGroundImageScale9Enabled(is);};
     CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
-
 protected:
     //override "init" method of widget.
     virtual bool init();

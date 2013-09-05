@@ -116,7 +116,7 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
-    
+
     /*Compatible*/
     CC_DEPRECATED_ATTRIBUTE void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(texture,texType);};
     CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
