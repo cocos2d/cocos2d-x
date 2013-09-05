@@ -1,7 +1,7 @@
 
 #include "cocos-ext.h"
-#include "SceneEditorTestScene.h"
 #include "../ExtensionsTest.h"
+#include "SceneEditorTest.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

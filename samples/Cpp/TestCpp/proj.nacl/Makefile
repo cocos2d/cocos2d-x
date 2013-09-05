@@ -55,13 +55,40 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
-	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
+	../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
+	../Classes/ExtensionsTest/SceneEditorTest/SceneEditorTestScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesEquipScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesMapScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesPageScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesRegisterScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIExamplesWeaponScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/CocosGUIScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIScene.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UISceneManager.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIButtonTest/UIButtonTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIImageViewTest/UIImageViewTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UILabelTest/UILabelTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIListViewTest/UIListViewTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIPageViewTest/UIPageViewTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIPanelTest/UIPanelTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UISliderTest/UISliderTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UITextAreaTest/UITextAreaTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UITextButtonTest/UITextButtonTest.cpp \
+	../Classes/ExtensionsTest/CocosGUITest/UITextFieldTest/UITextFieldTest.cpp \
 	../Classes/FileUtilsTest/FileUtilsTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \

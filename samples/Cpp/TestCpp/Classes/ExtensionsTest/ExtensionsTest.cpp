@@ -9,7 +9,7 @@
 #include "TableViewTest/TableViewTestScene.h"
 #include "CocoStudioArmatureTest/ArmatureScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
-#include "CocoStudioSceneTest/SceneEditorTestScene.h"
+#include "CocoStudioSceneTest/SceneEditorTest.h"
 #include "CocoStudioGUITest/CocosGUIScene.h"
 #include "CocoStudioGUITest/UISceneManager.h"
 
