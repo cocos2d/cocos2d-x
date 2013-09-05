@@ -597,9 +597,6 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTestScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
     </ClCompile>
@@ -677,6 +674,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1166,9 +1166,6 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTestScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
     </ClInclude>
@@ -1246,6 +1243,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
