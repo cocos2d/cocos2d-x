@@ -330,9 +330,6 @@
     <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp">
       <Filter>CocoStudio\Armature\display</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Armature\external_tool\CCTexture2DMutable.cpp">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
-    </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\physics\CCColliderDetector.cpp">
       <Filter>CocoStudio\Armature\physics</Filter>
     </ClCompile>
@@ -684,9 +681,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h">
       <Filter>CocoStudio\Armature\display</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\CCTexture2DMutable.h">
-      <Filter>CocoStudio\Armature\external_tool</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h">
       <Filter>CocoStudio\Armature\external_tool</Filter>

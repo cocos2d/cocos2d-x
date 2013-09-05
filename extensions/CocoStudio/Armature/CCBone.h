@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "utils/CCArmatureDefine.h"
 #include "datas/CCDatas.h"
 #include "animation/CCTween.h"
-#include "external_tool/CCTexture2DMutable.h"
 #include "display/CCDecorativeDisplay.h"
 #include "display/CCDisplayManager.h"
 
