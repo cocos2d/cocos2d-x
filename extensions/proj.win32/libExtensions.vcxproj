@@ -127,7 +127,6 @@
     <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayFactory.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\display\CCDisplayManager.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\display\CCSkin.cpp" />
-    <ClCompile Include="..\CocoStudio\Armature\external_tool\CCTexture2DMutable.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\physics\CCColliderDetector.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\utils\CCDataReaderHelper.cpp" />
@@ -264,7 +263,6 @@
     <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayFactory.h" />
     <ClInclude Include="..\CocoStudio\Armature\display\CCDisplayManager.h" />
     <ClInclude Include="..\CocoStudio\Armature\display\CCSkin.h" />
-    <ClInclude Include="..\CocoStudio\Armature\external_tool\CCTexture2DMutable.h" />
     <ClInclude Include="..\CocoStudio\Armature\external_tool\sigslot.h" />
     <ClInclude Include="..\CocoStudio\Armature\physics\CCColliderDetector.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCArmatureDataManager.h" />
