@@ -86,7 +86,7 @@ UIAction* UIActionManager::GetActionByName(const char* jsonName,const char* acti
     {
         return NULL;
     }
-    for (int i=0; i<actionList->count(); i++)
+    for (unsigned int i=0; i<actionList->count(); i++)
     {
         UIAction* action = dynamic_cast<UIAction*>(actionList->objectAtIndex(i));
         if (strcmp(actionName, action->getName()) == 0)

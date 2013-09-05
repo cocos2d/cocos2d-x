@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 

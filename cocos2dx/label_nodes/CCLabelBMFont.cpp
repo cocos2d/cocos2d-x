@@ -1233,7 +1233,7 @@ const char* CCLabelBMFont::getFntFile()
     return m_sFntFile.c_str();
 }
 
-CCBMFontConfiguration* CCLabelBMFont::getConfiguration()
+CCBMFontConfiguration* CCLabelBMFont::getConfiguration() const
 {
 	return m_pConfiguration;
 }
