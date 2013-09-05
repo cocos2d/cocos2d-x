@@ -26,11 +26,14 @@
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_EXT_BEGIN
+
+#define NORMALRENDERER
     
 UIButton::UIButton():
 m_pButtonNormalRenderer(NULL),
 m_pButtonClickedRenderer(NULL),
 m_pButtonDisableRenderer(NULL),
+m_pTitleRenderer(NULL),
 m_bScale9Enabled(false),
 m_strClickedFileName(""),
 m_strDisabledFileName(""),
@@ -43,7 +46,8 @@ m_normalTextureSize(m_size),
 m_pressedTextureSize(m_size),
 m_disabledTextureSize(m_size),
 m_bPressedActionEnabled(false),
-m_bPrevIgnoreSize(true)
+m_bPrevIgnoreSize(true),
+m_titleColor(ccWHITE)
 {
     
 }
@@ -79,9 +83,11 @@ void UIButton::initRenderer()
     m_pButtonNormalRenderer = CCSprite::create();
     m_pButtonClickedRenderer = CCSprite::create();
     m_pButtonDisableRenderer = CCSprite::create();
+    m_pTitleRenderer = CCLabelTTF::create();
     m_pRenderer->addChild(m_pButtonNormalRenderer,-1);
     m_pRenderer->addChild(m_pButtonClickedRenderer,-1);
     m_pRenderer->addChild(m_pButtonDisableRenderer,-1);
+    m_pRenderer->addChild(m_pTitleRenderer);
 }
 
 void UIButton::setScale9Enabled(bool able)
@@ -115,9 +121,9 @@ void UIButton::setScale9Enabled(bool able)
     }
 
 //    setTextures(m_strNormalFileName.c_str(), m_strClickedFileName.c_str(), m_strDisabledFileName.c_str(),getUseMergedTexture());
-    loadNormalTexture(m_strNormalFileName.c_str(), m_eNormalTexType);
-    loadPressedTexture(m_strClickedFileName.c_str(), m_ePressedTexType);
-    loadDisabledTexture(m_strDisabledFileName.c_str(), m_eDisabledTexType);
+    loadTextureNormal(m_strNormalFileName.c_str(), m_eNormalTexType);
+    loadTexturePressed(m_strClickedFileName.c_str(), m_ePressedTexType);
+    loadTextureDisabled(m_strDisabledFileName.c_str(), m_eDisabledTexType);
     m_pRenderer->addChild(m_pButtonNormalRenderer,-1);
     m_pRenderer->addChild(m_pButtonClickedRenderer,-1);
     m_pRenderer->addChild(m_pButtonDisableRenderer,-1);
@@ -146,12 +152,12 @@ void UIButton::ignoreContentAdaptWithSize(bool ignore)
 
 void UIButton::loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType)
 {
-    loadNormalTexture(normal,texType);
-    loadPressedTexture(selected,texType);
-    loadDisabledTexture(disabled,texType);
+    loadTextureNormal(normal,texType);
+    loadTexturePressed(selected,texType);
+    loadTextureDisabled(disabled,texType);
 }
 
-void UIButton::loadNormalTexture(const char* normal,TextureResType texType)
+void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
 {
     if (!normal || strcmp(normal, "") == 0)
     {
@@ -197,7 +203,7 @@ void UIButton::loadNormalTexture(const char* normal,TextureResType texType)
     normalTextureScaleChangedWithSize();
 }
 
-void UIButton::loadPressedTexture(const char* selected,TextureResType texType)
+void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
 {
     if (!selected || strcmp(selected, "") == 0)
     {
@@ -243,7 +249,7 @@ void UIButton::loadPressedTexture(const char* selected,TextureResType texType)
     pressedTextureScaleChangedWithSize();
 }
 
-void UIButton::loadDisabledTexture(const char* disabled,TextureResType texType)
+void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
 {
     if (!disabled || strcmp(disabled, "") == 0)
     {
@@ -348,6 +354,7 @@ void UIButton::onPressStateChangedToDisabled()
 
 void UIButton::setFlipX(bool flipX)
 {
+    m_pTitleRenderer->setFlipX(flipX);
     if (m_bScale9Enabled)
     {
         return;
@@ -359,6 +366,7 @@ void UIButton::setFlipX(bool flipX)
 
 void UIButton::setFlipY(bool flipY)
 {
+    m_pTitleRenderer->setFlipY(flipY);
     if (m_bScale9Enabled)
     {
         return;
@@ -392,6 +400,7 @@ void UIButton::setAnchorPoint(const CCPoint &pt)
     m_pButtonNormalRenderer->setAnchorPoint(pt);
     m_pButtonClickedRenderer->setAnchorPoint(pt);
     m_pButtonDisableRenderer->setAnchorPoint(pt);
+    m_pTitleRenderer->setPosition(ccp(m_size.width*(0.5f-m_anchorPoint.x), m_size.height*(0.5f-m_anchorPoint.y)));
 }
 
 void UIButton::setNormalSpriteFrame(CCSpriteFrame *frame)
@@ -581,4 +590,50 @@ void UIButton::setPressedActionEnabled(bool enabled)
     m_bPressedActionEnabled = enabled;
 }
 
+void UIButton::setTitleText(const char* text)
+{
+    m_pTitleRenderer->setString(text);
+}
+
+const char* UIButton::getTitleText() const
+{
+    return m_pTitleRenderer->getString();
+}
+
+void UIButton::setTitleColor(const ccColor3B& color)
+{
+    m_titleColor = color;
+    m_pTitleRenderer->setColor(color);
+}
+
+const ccColor3B& UIButton::getTitleColor() const
+{
+    return m_pTitleRenderer->getColor();
+}
+
+void UIButton::setTitleFontSize(float size)
+{
+    m_pTitleRenderer->setFontSize(size);
+}
+
+float UIButton::getTitleFontSize() const
+{
+    return m_pTitleRenderer->getFontSize();
+}
+
+void UIButton::setTitleFontName(const char* fontName)
+{
+    m_pTitleRenderer->setFontName(fontName);
+}
+
+const char* UIButton::getTitleFontName() const
+{
+    return m_pTitleRenderer->getFontName();
+}
+
+void UIButton::setColor(const ccColor3B &color)
+{
+    UIWidget::setColor(color);
+    setTitleColor(m_titleColor);
+}
 NS_CC_EXT_END

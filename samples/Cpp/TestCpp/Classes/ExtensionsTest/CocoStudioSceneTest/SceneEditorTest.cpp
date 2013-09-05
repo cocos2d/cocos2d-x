@@ -67,10 +67,6 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 	}
 	m_pCurNode = pNode;
 
-	//play back music
-    CCComAudio *pAudio = (CCComAudio*)(pNode->getComponent("Audio"));
-	pAudio->playBackgroundMusic(pAudio->getFile(), pAudio->isLoop());
-
 	//fishes
 	CCArmature *pBlowFish = getFish(10008, "blowFish");
 	CCArmature *pButterFlyFish = getFish(10009, "butterFlyFish");

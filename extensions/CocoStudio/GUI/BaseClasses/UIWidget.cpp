@@ -37,19 +37,17 @@ NS_CC_EXT_BEGIN
     
 UIWidget::UIWidget():
 m_bEnabled(true),
+m_bVisible(true),
 m_bBright(true),
-m_bFocus(false),
-m_nWidgetZOrder(0),
-m_pWidgetParent(NULL),
-m_eBrightStyle(BRIGHT_NONE),
 m_bTouchEnabled(false),
 m_bTouchPassedEnabled(false),
-m_nWidgetTag(-1),
+m_bFocus(false),
+m_nWidgetZOrder(0),
+m_anchorPoint(ccp(0.5f, 0.5f)),
+m_pWidgetParent(NULL),
+m_eBrightStyle(BRIGHT_NONE),
 m_bUpdateEnabled(false),
 m_pRenderer(NULL),
-m_strName("default"),
-m_WidgetType(WidgetTypeWidget),
-m_bVisible(true),
 m_pPushListener(NULL),
 m_pfnPushSelector(NULL),
 m_pMoveListener(NULL),
@@ -58,12 +56,15 @@ m_pReleaseListener(NULL),
 m_pfnReleaseSelector(NULL),
 m_pCancelListener(NULL),
 m_pfnCancelSelector(NULL),
-m_anchorPoint(ccp(0.5f, 0.5f)),
+m_nWidgetTag(-1),
+m_strName("default"),
+m_WidgetType(WidgetTypeWidget),
 m_pUILayer(NULL),
 m_nActionTag(0),
-m_pLayoutParameter(NULL),
 m_size(CCSizeZero),
 m_customSize(CCSizeZero),
+m_pLayoutParameter(NULL),
+
 m_bIgnoreSize(false),
 m_children(NULL),
 m_bAffectByClipping(false),
@@ -478,12 +479,12 @@ bool UIWidget::isUpdateEnabled()
     return m_bUpdateEnabled;
 }
 
-bool UIWidget::isFocus() const
+bool UIWidget::isFocused() const
 {
     return m_bFocus;
 }
 
-void UIWidget::setFocus(bool fucos)
+void UIWidget::setFocused(bool fucos)
 {
     if (fucos == m_bFocus)
     {
@@ -563,7 +564,7 @@ void UIWidget::didNotSelectSelf()
 
 bool UIWidget::onTouchBegan(const CCPoint &touchPoint)
 {
-    setFocus(true);
+    setFocused(true);
     m_touchStartPos.x = touchPoint.x;
     m_touchStartPos.y = touchPoint.y;
     if (m_pWidgetParent)
@@ -578,7 +579,7 @@ void UIWidget::onTouchMoved(const CCPoint &touchPoint)
 {
     m_touchMovePos.x = touchPoint.x;
     m_touchMovePos.y = touchPoint.y;
-    setFocus(hitTest(touchPoint));
+    setFocused(hitTest(touchPoint));
     if (m_pWidgetParent)
     {
         m_pWidgetParent->checkChildInfo(1,this,touchPoint);
@@ -591,7 +592,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
     m_touchEndPos.x = touchPoint.x;
     m_touchEndPos.y = touchPoint.y;
     bool focus = m_bFocus;
-    setFocus(false);
+    setFocused(false);
     if (m_pWidgetParent)
     {
         m_pWidgetParent->checkChildInfo(2,this,touchPoint);
@@ -608,7 +609,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
 
 void UIWidget::onTouchCancelled(const CCPoint &touchPoint)
 {
-    setFocus(false);
+    setFocused(false);
 }
 
 void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)
@@ -1138,7 +1139,6 @@ CCRect UIWidget::getRect()
 }
 
 /***************************/
-
 /*temp action*/
 void UIWidget::setActionTag(int tag)
 {
