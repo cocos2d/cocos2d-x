@@ -542,7 +542,7 @@ void UIDragPanel::interceptTouchEvent(int handleState, UIWidget *sender, const C
             float offset = ccpDistance(sender->getTouchStartPos(), touchPoint);
             if (offset > 5.0)
             {
-                sender->setFocus(false);
+                sender->setFocused(false);
                 handleMoveLogic(touchPoint);
             }
         }

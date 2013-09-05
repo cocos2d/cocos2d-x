@@ -131,7 +131,7 @@ void UIImageView::setTextureRect(const CCRect &rect)
 
 bool UIImageView::onTouchBegan(const CCPoint &touchPoint)
 {
-    setFocus(true);
+    setFocused(true);
     m_touchStartPos.x = touchPoint.x;
     m_touchStartPos.y = touchPoint.y;
     m_pWidgetParent->checkChildInfo(0,this,touchPoint);

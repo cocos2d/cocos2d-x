@@ -587,11 +587,8 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             }
             if (offset > m_fChildFocusCancelOffset)
             {
-                
-                //temp mark
-//                if (isInScrollDegreeRange(sender))
                 {
-                    sender->setFocus(false);
+                    sender->setFocused(false);
                     handleMoveLogic(touchPoint);
                 }
             }

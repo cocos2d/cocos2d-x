@@ -114,6 +114,7 @@ public:
     /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
+
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
