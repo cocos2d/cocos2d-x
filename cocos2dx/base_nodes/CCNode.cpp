@@ -40,11 +40,17 @@ THE SOFTWARE.
 #include "actions/CCActionManager.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCGLProgram.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCEventTarget.h"
+#include "event_dispatcher/CCEvent.h"
+#include "event_dispatcher/CCTouchEvent.h"
 
 // externals
 #include "kazmath/GL/matrix.h"
 #include "support/component/CCComponent.h"
 #include "support/component/CCComponentContainer.h"
+
+
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -120,6 +126,8 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
+, _touchable(false)
+, _eventDispatcherUnit(nullptr)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -170,6 +178,8 @@ Node::~Node()
           // _comsContainer
     _componentContainer->removeAll();
     CC_SAFE_DELETE(_componentContainer);
+    
+    CC_SAFE_DELETE(_eventDispatcherUnit);
 }
 
 bool Node::init()
@@ -1269,6 +1279,85 @@ bool Node::removeComponent(const char *pName)
 void Node::removeAllComponents()
 {
     _componentContainer->removeAll();
+}
+
+CallbackId Node::registerEventCallback(const std::string& type, std::function<bool(Event*)> callback, bool useCapture)
+{
+    if (_eventDispatcherUnit == nullptr)
+    {
+        _eventDispatcherUnit = new EventDispatcherUnit;
+    }
+    
+    if (type == TouchEvent::EVENT_TYPE && !_touchable)
+    {
+        _touchable = true;
+    }
+    
+    return _eventDispatcherUnit->registerEventCallback(type, callback, useCapture);
+}
+
+void Node::unregisterEventCallback(CallbackId callbackId)
+{
+    if (_eventDispatcherUnit != nullptr)
+    {
+        _eventDispatcherUnit->unregisterEventCallback(callbackId);
+    }
+    
+    if (_eventDispatcherUnit->getCallbackCountForEventType(TouchEvent::EVENT_TYPE) == 0)
+    {
+        _touchable = false;
+    }
+}
+
+bool Node::dispatchEvent(Event* evt)
+{
+    if (evt->getType().empty()) {
+        CCASSERT(false, "empty event is not allowed.");
+    }
+
+    evt->setTarget(this);
+    evt->setCurrentPhase(Event::PhaseType::CAPTURING);
+
+    if (_parent) _parent->captureEvent(evt);
+
+    if (_eventDispatcherUnit && !evt->isStopped())
+    {
+        evt->setCurrentPhase(Event::PhaseType::AT);
+        evt->setCurrentTarget(this);
+        _eventDispatcherUnit->dispatchEvent(evt);
+    }
+    if (!evt->isStopped() && evt->isBubbled() && _parent)
+    {
+        evt->setCurrentPhase(Event::PhaseType::BUBBLING);
+        _parent->bubbleEvent(evt);
+    }
+
+    return evt->isCanceled();
+}
+
+
+void Node::captureEvent(Event* evt)
+{
+    if (_parent)
+        _parent->captureEvent(evt);
+
+    if (_eventDispatcherUnit && !evt->isStopped())
+    {
+        evt->setCurrentTarget(this);
+        _eventDispatcherUnit->captureEvent(evt);
+    }
+}
+
+
+void Node::bubbleEvent(Event* evt)
+{
+    evt->setCurrentTarget(this);
+    if (_eventDispatcherUnit)
+    {
+        _eventDispatcherUnit->bubbleEvent(evt);
+    }
+    if (_parent && !evt->isStopped())
+        _parent->bubbleEvent(evt);
 }
 
 // NodeRGBA

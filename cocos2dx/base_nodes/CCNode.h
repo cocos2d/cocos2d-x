@@ -37,6 +37,8 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "event_dispatcher/CCEventTarget.h"
+#include "event_dispatcher/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -52,6 +54,7 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
+class EventDispatcher;
 
 /**
  * @addtogroup base_nodes
@@ -127,14 +130,14 @@ bool nodeComparisonLess(Object* p1, Object* p2);
  - Each node has a camera. By default it points to the center of the Node.
  */
 
-class CC_DLL Node : public Object
+class CC_DLL Node : public Object, public EventTarget
 {
 public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Distructor and Initializers
+    /// @name Constructor, Destructor and Initializers
 
     /**
      * Allocates and initializes a node.
@@ -201,6 +204,7 @@ public:
     virtual int getZOrder() const;
 
 
+    bool isTouchable() const { return _touchable; };
     /**
      * Sets the real OpenGL Z vertex.
      *
@@ -1301,7 +1305,17 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+    // Overrides
+    virtual CallbackId registerEventCallback(const std::string& type, std::function<bool(Event*)> callback, bool useCapture) override;
+	virtual void unregisterEventCallback(CallbackId callbackId) override;
+    virtual bool dispatchEvent(Event* evt) override;
+    //
+
 protected:
+    void captureEvent(Event* evt);
+    void bubbleEvent(Event* evt);
+
+    
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1379,6 +1393,8 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
+    EventDispatcherUnit* _eventDispatcherUnit;
+    bool _touchable;
 };
 
 //#pragma mark - NodeRGBA

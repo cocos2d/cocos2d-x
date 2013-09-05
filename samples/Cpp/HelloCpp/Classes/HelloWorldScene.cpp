@@ -1,5 +1,8 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
+
+
+
 USING_NS_CC;
 
 
@@ -42,12 +45,27 @@ bool HelloWorld::init()
                                         CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
     
     closeItem->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2));
-
+    closeItem->setRotation(30);
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu, 1);
+//    closeItem->setVisible(false);
 
+    auto closeItem2 = MenuItemImage::create(
+                                      "CloseNormal.png",
+                                      "CloseSelected.png",
+                                      CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
+    
+    closeItem2->setPosition(origin + Point(visibleSize) - Point(closeItem->getContentSize() / 2) - Point(0, 20));
+    closeItem2->setRotation(30);
+    menu->addChild(closeItem2, 100);
+    // create menu, it's an autorelease object
+    
+
+    
+//    closeItem->unregisterEventCallback(touchEventId);
+    
     /////////////////////////////
     // 3. add your codes below...
 
@@ -72,15 +90,67 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
     
+    sprite->registerEventCallback(TouchEvent::EVENT_TYPE, [](Event* evt){
+        TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
+        if (touchEvent->getEventCode() == TouchEvent::EventCode::BEGAN)
+        {
+            CCLOG("Touch sprite.... began...");
+        }
+        return true;
+    }, false);
+    
+    
+    CallbackId touchEventId = closeItem->registerEventCallback(TouchEvent::EVENT_TYPE, [=](Event* evt) {
+        TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
+        
+//        CCLOG("helloworld handle event. %d", touchEvent->_eventCode);
+        
+        auto touchBegan = [=] (Touch* touch) -> bool {
+            label->setString("touch Began....");
+            CCLOG("Touch began...");
+            return true;
+        };
+        
+        if (touchEvent->getEventCode() == TouchEvent::EventCode::BEGAN)
+        {
+            touchBegan(touchEvent->getTouches()[0]);
+        }
+        
+        
+        
+        return true;
+    }, false);
+    
+    
+    
+    CallbackId touchEventId2 = closeItem2->registerEventCallback(TouchEvent::EVENT_TYPE, [=](Event* evt) {
+        TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
+        
+//        CCLOG("helloworld2 handle event. %d", touchEvent->_eventCode);
+        
+        auto touchBegan = [=] (Touch* touch) -> bool {
+            CCLOG("Touch2 began...");
+            return true;
+        };
+        
+        if (touchEvent->getEventCode() == TouchEvent::EventCode::BEGAN)
+        {
+            touchBegan(touchEvent->getTouches()[0]);
+        }
+//        evt->stopPropagation();
+        return true;
+    }, false);
+    
+//    closeItem->unregisterEventCallback(touchEventId);
+    
     return true;
 }
 
-
 void HelloWorld::menuCloseCallback(Object* sender)
 {
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+//    Director::getInstance()->end();
+//
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    exit(0);
+//#endif
 }

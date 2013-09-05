@@ -118,6 +118,10 @@
 		1A11982C1785388100D62A44 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A11969A1785201F00D62A44 /* tolua_to.c */; };
 		1A2E82381793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
 		1A2E82391793EDB70058E421 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E82371793EDB70058E421 /* jsb_deprecated.js */; };
+		1A4332BF17D2216900CBBDF1 /* CCTouchEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4332BD17D2216900CBBDF1 /* CCTouchEvent.cpp */; };
+		1A4332C017D2216900CBBDF1 /* CCTouchEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4332BD17D2216900CBBDF1 /* CCTouchEvent.cpp */; };
+		1A4332C117D2216900CBBDF1 /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4332BE17D2216900CBBDF1 /* CCTouchEvent.h */; };
+		1A4332C217D2216900CBBDF1 /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4332BE17D2216900CBBDF1 /* CCTouchEvent.h */; };
 		1A50FEA517A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
 		1A50FEA617A0C89300A422C8 /* CCDeprecated-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */; };
 		1A6FB50617854BC200CDF010 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1196951785201F00D62A44 /* tolua_event.c */; };
@@ -172,6 +176,20 @@
 		1AE019851790023400D574A8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE019821790023400D574A8 /* SocketIO.cpp */; };
 		1AE019861790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
 		1AE019871790023400D574A8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE019831790023400D574A8 /* SocketIO.h */; };
+		1AFEF19517CF41AF003A06DE /* CCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF18D17CF41AF003A06DE /* CCEvent.cpp */; };
+		1AFEF19617CF41AF003A06DE /* CCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF18D17CF41AF003A06DE /* CCEvent.cpp */; };
+		1AFEF19717CF41AF003A06DE /* CCEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF18E17CF41AF003A06DE /* CCEvent.h */; };
+		1AFEF19817CF41AF003A06DE /* CCEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF18E17CF41AF003A06DE /* CCEvent.h */; };
+		1AFEF19917CF41AF003A06DE /* CCEventDispatcherUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF18F17CF41AF003A06DE /* CCEventDispatcherUnit.cpp */; };
+		1AFEF19A17CF41AF003A06DE /* CCEventDispatcherUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF18F17CF41AF003A06DE /* CCEventDispatcherUnit.cpp */; };
+		1AFEF19B17CF41AF003A06DE /* CCEventDispatcherUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF19017CF41AF003A06DE /* CCEventDispatcherUnit.h */; };
+		1AFEF19C17CF41AF003A06DE /* CCEventDispatcherUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF19017CF41AF003A06DE /* CCEventDispatcherUnit.h */; };
+		1AFEF1A317CF41AF003A06DE /* CCEventTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF19417CF41AF003A06DE /* CCEventTarget.h */; };
+		1AFEF1A417CF41AF003A06DE /* CCEventTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF19417CF41AF003A06DE /* CCEventTarget.h */; };
+		1AFEF1B617D09810003A06DE /* CCEventDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF1B417D09810003A06DE /* CCEventDispatcher.cpp */; };
+		1AFEF1B717D09810003A06DE /* CCEventDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFEF1B417D09810003A06DE /* CCEventDispatcher.cpp */; };
+		1AFEF1B817D09810003A06DE /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF1B517D09810003A06DE /* CCEventDispatcher.h */; };
+		1AFEF1B917D09810003A06DE /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFEF1B517D09810003A06DE /* CCEventDispatcher.h */; };
 		466AF6A017A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A117A12298002EE9BB /* CCDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF69E17A12297002EE9BB /* CCDeprecated.cpp */; };
 		466AF6A717A23A07002EE9BB /* CCDeprecated-ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */; };
@@ -2175,6 +2193,8 @@
 		1A11969A1785201F00D62A44 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E82371793EDB70058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		1A4332BD17D2216900CBBDF1 /* CCTouchEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchEvent.cpp; sourceTree = "<group>"; };
+		1A4332BE17D2216900CBBDF1 /* CCTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchEvent.h; sourceTree = "<group>"; };
 		1A50FEA417A0C89300A422C8 /* CCDeprecated-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDeprecated-ext.h"; sourceTree = "<group>"; };
 		1A6FB53017854BC300CDF010 /* libluabindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB53317854DD600CDF010 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit.a; sourceTree = "<group>"; };
@@ -2188,6 +2208,13 @@
 		1ADB26EA17CC92D200634B5E /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
 		1AE019821790023400D574A8 /* SocketIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIO.cpp; sourceTree = "<group>"; };
 		1AE019831790023400D574A8 /* SocketIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIO.h; sourceTree = "<group>"; };
+		1AFEF18D17CF41AF003A06DE /* CCEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEvent.cpp; sourceTree = "<group>"; };
+		1AFEF18E17CF41AF003A06DE /* CCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEvent.h; sourceTree = "<group>"; };
+		1AFEF18F17CF41AF003A06DE /* CCEventDispatcherUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventDispatcherUnit.cpp; sourceTree = "<group>"; };
+		1AFEF19017CF41AF003A06DE /* CCEventDispatcherUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcherUnit.h; sourceTree = "<group>"; };
+		1AFEF19417CF41AF003A06DE /* CCEventTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventTarget.h; sourceTree = "<group>"; };
+		1AFEF1B417D09810003A06DE /* CCEventDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEventDispatcher.cpp; sourceTree = "<group>"; };
+		1AFEF1B517D09810003A06DE /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
 		466AF689179FCBBB002EE9BB /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DrawPrimitives.lua; sourceTree = "<group>"; };
 		466AF69E17A12297002EE9BB /* CCDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeprecated.cpp; sourceTree = "<group>"; };
 		466AF6A617A23A07002EE9BB /* CCDeprecated-ext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDeprecated-ext.cpp"; sourceTree = "<group>"; };
@@ -3712,12 +3739,29 @@
 			path = "lua-bindings";
 			sourceTree = "<group>";
 		};
+		1AFEF18C17CF41AF003A06DE /* event_dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				1AFEF18D17CF41AF003A06DE /* CCEvent.cpp */,
+				1AFEF18E17CF41AF003A06DE /* CCEvent.h */,
+				1AFEF18F17CF41AF003A06DE /* CCEventDispatcherUnit.cpp */,
+				1AFEF19017CF41AF003A06DE /* CCEventDispatcherUnit.h */,
+				1AFEF19417CF41AF003A06DE /* CCEventTarget.h */,
+				1AFEF1B417D09810003A06DE /* CCEventDispatcher.cpp */,
+				1AFEF1B517D09810003A06DE /* CCEventDispatcher.h */,
+				1A4332BD17D2216900CBBDF1 /* CCTouchEvent.cpp */,
+				1A4332BE17D2216900CBBDF1 /* CCTouchEvent.h */,
+			);
+			path = event_dispatcher;
+			sourceTree = "<group>";
+		};
 		A03F1DDA1780BAE4006731B9 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
 				A03F1E041780BAE4006731B9 /* ccFPSImages.c */,
 				A03F1DFE1780BAE4006731B9 /* CCCamera.cpp */,
 				A03F1E001780BAE4006731B9 /* CCConfiguration.cpp */,
+				466AF69E17A12297002EE9BB /* CCDeprecated.cpp */,
 				A03F1E021780BAE4006731B9 /* CCDirector.cpp */,
 				A03F1E061780BAE4006731B9 /* CCScheduler.cpp */,
 				46B9C9611786763E00F808DD /* ccTypes.cpp */,
@@ -3732,6 +3776,7 @@
 				A03F1E081780BAE4006731B9 /* cocoa */,
 				A03F1E261780BAE4006731B9 /* draw_nodes */,
 				A03F1E2B1780BAE4006731B9 /* effects */,
+				1AFEF18C17CF41AF003A06DE /* event_dispatcher */,
 				A03F1E301780BAE4006731B9 /* include */,
 				A03F1E381780BAE4006731B9 /* kazmath */,
 				A03F1E5B1780BAE4006731B9 /* keyboard_dispatcher */,
@@ -3750,7 +3795,6 @@
 				A03F25461780BAE8006731B9 /* textures */,
 				A03F25511780BAE8006731B9 /* tilemap_parallax_nodes */,
 				A03F255E1780BAE8006731B9 /* touch_dispatcher */,
-				466AF69E17A12297002EE9BB /* CCDeprecated.cpp */,
 			);
 			path = cocos2dx;
 			sourceTree = "<group>";
@@ -6051,6 +6095,11 @@
 				0186A8FE17A0674300D88A79 /* CCFontFNT.h in Headers */,
 				01881BCD17B35D840019A3C3 /* s3tc.h in Headers */,
 				01C92EE317BB5DE800024119 /* atitc.h in Headers */,
+				1AFEF19717CF41AF003A06DE /* CCEvent.h in Headers */,
+				1AFEF19B17CF41AF003A06DE /* CCEventDispatcherUnit.h in Headers */,
+				1AFEF1A317CF41AF003A06DE /* CCEventTarget.h in Headers */,
+				1AFEF1B817D09810003A06DE /* CCEventDispatcher.h in Headers */,
+				1A4332C117D2216900CBBDF1 /* CCTouchEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6732,6 +6781,11 @@
 				0186A90017A0674500D88A79 /* CCFontFNT.h in Headers */,
 				01881BCC17B35D800019A3C3 /* s3tc.h in Headers */,
 				01C92EE417BB5DE800024119 /* atitc.h in Headers */,
+				1AFEF19817CF41AF003A06DE /* CCEvent.h in Headers */,
+				1AFEF19C17CF41AF003A06DE /* CCEventDispatcherUnit.h in Headers */,
+				1AFEF1A417CF41AF003A06DE /* CCEventTarget.h in Headers */,
+				1AFEF1B917D09810003A06DE /* CCEventDispatcher.h in Headers */,
+				1A4332C217D2216900CBBDF1 /* CCTouchEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7499,6 +7553,10 @@
 				0186A8FD17A0674300D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90217A068E800D88A79 /* CCFont.cpp in Sources */,
 				01C92EE117BB5DE800024119 /* atitc.cpp in Sources */,
+				1AFEF19517CF41AF003A06DE /* CCEvent.cpp in Sources */,
+				1AFEF19917CF41AF003A06DE /* CCEventDispatcherUnit.cpp in Sources */,
+				1AFEF1B617D09810003A06DE /* CCEventDispatcher.cpp in Sources */,
+				1A4332BF17D2216900CBBDF1 /* CCTouchEvent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7954,6 +8012,10 @@
 				0186A8FF17A0674500D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90317A068E900D88A79 /* CCFont.cpp in Sources */,
 				01C92EE217BB5DE800024119 /* atitc.cpp in Sources */,
+				1AFEF19617CF41AF003A06DE /* CCEvent.cpp in Sources */,
+				1AFEF19A17CF41AF003A06DE /* CCEventDispatcherUnit.cpp in Sources */,
+				1AFEF1B717D09810003A06DE /* CCEventDispatcher.cpp in Sources */,
+				1A4332C017D2216900CBBDF1 /* CCTouchEvent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

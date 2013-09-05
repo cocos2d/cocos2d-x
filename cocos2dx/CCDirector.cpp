@@ -372,7 +372,6 @@ void Director::setOpenGLView(EGLView *pobOpenGLView)
         
         CHECK_GL_ERROR_DEBUG();
 
-        _openGLView->setTouchDelegate(_touchDispatcher);
         _touchDispatcher->setDispatchEvents(true);
     }
 }

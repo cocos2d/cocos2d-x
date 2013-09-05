@@ -31,8 +31,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class Touch;
 class Event;
+class Touch;
 class Set;
 class TouchDispatcher;
 

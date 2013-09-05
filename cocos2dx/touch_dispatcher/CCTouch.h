@@ -92,10 +92,6 @@ private:
     Point _prevPoint;
 };
 
-class CC_DLL Event : public Object
-{
-};
-
 // end of input group
 /// @}
 

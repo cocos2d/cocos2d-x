@@ -48,25 +48,12 @@ enum {
 };
 
 class Set;
-class Event;
 
 struct ccTouchHandlerHelperData {
     // we only use the type
 //    void (StandardTouchDelegate::*touchesSel)(Set*, Event*);
 //    void (TargetedTouchDelegate::*touchSel)(NSTouch*, Event*);
     int  _type;
-};
-
-
-class CC_DLL EGLTouchDelegate
-{
-public:
-    virtual void touchesBegan(Set* touches, Event* pEvent) = 0;
-    virtual void touchesMoved(Set* touches, Event* pEvent) = 0;
-    virtual void touchesEnded(Set* touches, Event* pEvent) = 0;
-    virtual void touchesCancelled(Set* touches, Event* pEvent) = 0;
-
-    virtual ~EGLTouchDelegate() {}
 };
 
 class TouchHandler;
@@ -87,18 +74,12 @@ struct _ccCArray;
 
  @since v0.8.0
  */
-class CC_DLL TouchDispatcher : public Object, public EGLTouchDelegate
+class CC_DLL TouchDispatcher : public Object
 {
 public:
     ~TouchDispatcher();
     bool init(void);
-    TouchDispatcher() 
-        : _targetedHandlers(NULL)
-        , _standardHandlers(NULL)
-        , _handlersToAdd(NULL)
-        , _handlersToRemove(NULL)
-        
-    {}
+    TouchDispatcher();
 
 public:
     /** Whether or not the events are going to be dispatched. Default: true */
@@ -159,6 +140,8 @@ protected:
 
     // 4, 1 for each type of event
     struct ccTouchHandlerHelperData _handlerHelperData[ccTouchMax];
+    
+    int _touchCallbackId;
 };
 
 // end of input group

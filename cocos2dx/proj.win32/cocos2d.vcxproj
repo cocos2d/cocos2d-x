@@ -173,6 +173,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionProgressTimer.cpp" />
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
+    <ClCompile Include="..\event_dispatcher\Event.cpp" />
+    <ClCompile Include="..\event_dispatcher\EventDispatcher.cpp" />
+    <ClCompile Include="..\event_dispatcher\EventListener.cpp" />
+    <ClCompile Include="..\event_dispatcher\EventTarget.cpp" />
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp" />
     <ClCompile Include="..\label_nodes\CCFont.cpp" />
     <ClCompile Include="..\label_nodes\CCFontAtlas.cpp" />
@@ -315,6 +319,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\actions\CCActionProgressTimer.h" />
     <ClInclude Include="..\actions\CCActionTiledGrid.h" />
     <ClInclude Include="..\actions\CCActionTween.h" />
+    <ClInclude Include="..\event_dispatcher\Event.h" />
+    <ClInclude Include="..\event_dispatcher\EventDispatcher.h" />
+    <ClInclude Include="..\event_dispatcher\EventListener.h" />
+    <ClInclude Include="..\event_dispatcher\EventTarget.h" />
     <ClInclude Include="..\include\ccConfig.h" />
     <ClInclude Include="..\include\CCDeprecated.h" />
     <ClInclude Include="..\include\CCEventType.h" />

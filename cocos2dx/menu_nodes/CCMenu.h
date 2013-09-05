@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "CCMenuItem.h"
 #include "layers_scenes_transitions_nodes/CCLayer.h"
 
+#include "event_dispatcher/CCTouchEvent.h"
+
 NS_CC_BEGIN
 
 /**
@@ -120,13 +122,22 @@ public:
     virtual void setEnabled(bool value) { _enabled = value; };
 
     // overrides
+    
+   
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
-    virtual void ccTouchEnded(Touch* touch, Event* event) override;
-    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
-    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+//    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
+//    virtual void ccTouchEnded(Touch* touch, Event* event) override;
+//    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
+//    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+    
+    void onTouchesBegan(TouchEvent* evt);
+    void onTouchesEnded(TouchEvent* evt);
+    void onTouchesCancelled(TouchEvent* evt);
+    void onTouchesMoved(TouchEvent* evt);
+    
+    virtual void onEnter() override;
     virtual void onExit() override;
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) const override { return false;}

@@ -33,6 +33,11 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
+#include "cocoa/CCDictionary.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCTouchEvent.h"
+
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
@@ -58,6 +63,16 @@ static int less(const Object* p1, const Object* p2)
 }
 #endif
 
+TouchDispatcher::TouchDispatcher()
+: _targetedHandlers(NULL)
+, _standardHandlers(NULL)
+, _handlersToAdd(NULL)
+, _handlersToRemove(NULL)
+, _touchCallbackId(-1)
+{
+    
+}
+
 bool TouchDispatcher::isDispatchEvents(void)
 {
     return _dispatchEvents;
@@ -66,6 +81,39 @@ bool TouchDispatcher::isDispatchEvents(void)
 void TouchDispatcher::setDispatchEvents(bool bDispatchEvents)
 {
     _dispatchEvents = bDispatchEvents;
+    if (_dispatchEvents)
+    {
+        _touchCallbackId = EventDispatcher::getInstance()->registerEventCallback(TouchEvent::EVENT_TYPE, [this](Event* evt) -> bool {
+            TouchEvent* touchEvent = static_cast<TouchEvent*>(evt);
+            Set set;
+            for (auto iter = touchEvent->getTouches().begin(); iter != touchEvent->getTouches().end(); ++iter)
+            {
+                set.addObject(*iter);
+            }
+            switch (touchEvent->getEventCode()) {
+                case TouchEvent::EventCode::BEGAN:
+                    this->touchesBegan(&set, NULL);
+                    break;
+                case TouchEvent::EventCode::MOVED:
+                    this->touchesMoved(&set, NULL);
+                    break;
+                case TouchEvent::EventCode::ENDED:
+                    this->touchesEnded(&set, NULL);
+                    break;
+                case TouchEvent::EventCode::CANCELLED:
+                    this->touchesCancelled(&set, NULL);
+                    break;
+                default:
+                    break;
+            }
+            
+            return true;
+        });
+    }
+    else
+    {
+        EventDispatcher::getInstance()->unregisterEventCallback(_touchCallbackId);
+    }
 }
 
 /*
