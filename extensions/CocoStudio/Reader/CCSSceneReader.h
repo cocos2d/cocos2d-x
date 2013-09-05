@@ -41,9 +41,9 @@ NS_CC_EXT_BEGIN
 			static CCSSceneReader* sharedSceneReader();
 			void purgeSceneReader();
 			static const char* sceneReaderVersion();
-
 			cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
-			cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
+	    private:
+		    cocos2d::CCNode* createObject(cs::CSJsonDictionary * inputFiles, cocos2d::CCNode* parent);
             void setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict);
 
 	    private:
