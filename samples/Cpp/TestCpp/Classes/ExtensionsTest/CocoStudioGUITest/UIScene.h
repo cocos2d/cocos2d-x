@@ -50,25 +50,6 @@ static CCScene* sceneWithTitle(const char * title) \
     return pScene; \
 }
 
-//#define UI_SCENE_CREATE_FUNC(UIScene) \
-//public: \
-//static CCScene* sceneWithTitle(const char * title) \
-//{ \
-//    CCScene* pScene = CCScene::create(); \
-//    UIScene* uiLayer = new UIScene(); \
-//    if (uiLayer && uiLayer->init()) \
-//    { \
-//        uiLayer->autorelease(); \
-//        uiLayer->getSceneTitleLabel()->setString(title); \
-//        pScene->addChild(uiLayer); \
-//    } \
-//    else \
-//    { \
-//        CC_SAFE_DELETE(uiLayer); \
-//    } \
-//    return pScene; \
-//}
-
 class UIScene : public CCLayer
 {
 public:
@@ -81,11 +62,9 @@ public:
     virtual void restartCallback(CCObject* sender);
     virtual void nextCallback(CCObject* sender);
     
-    /** Title label of the scene. */
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
-    
+    /** Title label of the scene.*/
     CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
-    
+        
     UI_SCENE_CREATE_FUNC(UIScene);
     
 protected:
