@@ -213,7 +213,7 @@ protected:
     SCROLLVIEW_MOVE_DIR getMoveDirection();
     virtual void onSizeChanged();
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 

@@ -220,7 +220,7 @@ void UICCTextField::setPasswordStyleText(const char* styleText)
 void UICCTextField::setPasswordText(const char *text)
 {
     std::string tempStr;
-    for (int i = 0; i < strlen(text); ++i)
+    for (size_t i = 0; i < strlen(text); ++i)
     {
         tempStr.append(m_strPasswordStyleText);
     }

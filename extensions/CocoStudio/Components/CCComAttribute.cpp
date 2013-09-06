@@ -28,8 +28,8 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 CCComAttribute::CCComAttribute(void)
-: m_pJsonDict(NULL),
- m_pAttributes(NULL)
+: m_pAttributes(NULL)
+, m_pJsonDict(NULL)
 {
     m_strName = "ComAttribute";
 }
