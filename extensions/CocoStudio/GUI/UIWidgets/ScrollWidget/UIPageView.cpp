@@ -30,6 +30,10 @@ UIPageView::UIPageView():
 m_nCurPageIdx(0),
 m_pages(NULL),
 m_touchMoveDir(PAGEVIEW_TOUCHLEFT),
+m_fTouchStartLocation(0.0f),
+m_fTouchEndLocation(0.0f),
+m_fTouchMoveStartLocation(0.0f),
+movePagePoint(ccp(0.0f, 0.0f)),
 m_pLeftChild(NULL),
 m_pRightChild(NULL),
 m_fLeftBoundary(0.0f),
@@ -200,7 +204,7 @@ void UIPageView::removePage(Layout* page, bool cleanup)
 
 void UIPageView::removePageAtIndex(int index, bool cleanup)
 {
-    if (index < 0 || index >= m_pages->count())
+    if (index < 0 || index >= (int)(m_pages->count()))
     {
         return;
     }
@@ -258,7 +262,7 @@ void UIPageView::updateChildrenSize()
     }
     
     CCSize selfSize = getSize();
-    for (int i=0; i<m_pages->count(); i++)
+    for (unsigned int i=0; i<m_pages->count(); i++)
     {
         Layout* page = dynamic_cast<Layout*>(m_pages->objectAtIndex(i));
         page->setSize(selfSize);
@@ -299,7 +303,7 @@ void UIPageView::removeAllChildrenAndCleanUp(bool cleanup)
 
 void UIPageView::scrollToPage(int idx)
 {
-    if (idx < 0 || idx >= m_pages->count())
+    if (idx < 0 || idx >= (int)(m_pages->count()))
     {
         return;
     }

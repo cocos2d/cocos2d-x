@@ -35,10 +35,11 @@ m_nPercent(100),
 m_fTotalLength(0),
 m_pBarRenderer(NULL),
 m_eRenderBarTexType(UI_TEX_TYPE_LOCAL),
+m_barRendererTextureSize(ccp(0.0f, 0.0f)),
 m_bScale9Enabled(false),
+m_bPrevIgnoreSize(true),
 m_capInsets(CCRectZero),
-m_strTextureFile(""),
-m_bPrevIgnoreSize(true)
+m_strTextureFile("")
 {
 }
 

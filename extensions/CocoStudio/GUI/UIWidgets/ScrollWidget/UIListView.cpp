@@ -509,7 +509,7 @@ bool UIListView::scrollChildren(float touchOffset)
                         if (m_nEnd < m_nDataLength - 1)
                         {
                             collectOverTopChild();
-                            int count = m_overTopArray->count();
+                            unsigned int count = m_overTopArray->count();
                             if (count > 0)
                             {
                                 updateChild();
@@ -1214,12 +1214,12 @@ void UIListView::setLoopPosition()
                 case LISTVIEW_MOVE_DIR_UP: // up
                 {
                     ccArray* arrayChildren = m_children->data;
-                    int childrenCount = arrayChildren->num;
+                    unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overTopArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {   
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overTopArray->objectAtIndex(i));
                             
@@ -1316,12 +1316,12 @@ void UIListView::setLoopPosition()
                 case LISTVIEW_MOVE_DIR_LEFT: // left
                 {
                     ccArray* arrayChildren = m_children->data;
-                    int childrenCount = arrayChildren->num;
+                    unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overLeftArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overLeftArray->objectAtIndex(i));
                             
@@ -1364,12 +1364,12 @@ void UIListView::setLoopPosition()
                 case LISTVIEW_MOVE_DIR_RIGHT: // right
                 {
                     ccArray* arrayChildren = m_children->data;
-                    int childrenCount = arrayChildren->num;
+                    unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overRightArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overRightArray->objectAtIndex(i));
                             
