@@ -15,102 +15,227 @@
 #include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include <unistd.h>
 
-bool initExtensions()
+NS_CC_BEGIN
+//begin EGLViewEventHandler
+class EGLViewEventHandler
 {
-    // Do nothing, on Linux we use GLEW.
+public:
+    static bool s_captured;
+    static float s_mouseX;
+    static float s_mouseY;
+    
+    static void OnGLFWError(int errorID, const char* errorDesc);
+    static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
+    static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
+};
+
+bool EGLViewEventHandler::s_captured = false;
+float EGLViewEventHandler::s_mouseX = 0;
+float EGLViewEventHandler::s_mouseY = 0;
+
+void EGLViewEventHandler::OnGLFWError(int errorID, const char* errorDesc)
+{
+    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
 }
 
-NS_CC_BEGIN
+void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+{
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+    if(GLFW_MOUSE_BUTTON_LEFT == button)
+    {
+        if(GLFW_PRESS == action)
+        {
+            s_captured = true;
+            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
+            {
+                int id = 0;
+                eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
+            }
+        }
+        else if(GLFW_RELEASE == action)
+        {
+            s_captured = false;
+            if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
+            {
+                int id = 0;
+                eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
+            }
+        }
+    }
+}
+
+void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+{
+    s_mouseX = (float)x;
+    s_mouseY = (float)y;
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+    
+    s_mouseX /= eglView->getFrameZoomFactor();
+    s_mouseY /= eglView->getFrameZoomFactor();
+    
+    if(s_captured)
+    {
+        if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
+        {
+            int id = 0;
+            eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
+        }
+    }
+}
+
+void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if(GLFW_PRESS == action)
+    {
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key, true);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        Director::getInstance()->getKeyboardDispatcher()->dispatchKeyboardEvent(key,false);
+    }
+}
+
+void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
+{
+    IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
+}
+
+//end EGLViewEventHandler
+
+
+//////////////////////////////////////////////////////////////////////////
+// impliment EGLView
+//////////////////////////////////////////////////////////////////////////
+
+EGLView* EGLView::s_pEglView = nullptr;
 
 EGLView::EGLView()
-: _wasInit(false)
+: _captured(false)
 , _frameZoomFactor(1.0f)
-,_window(nullptr)
-,_context(nullptr)
+, _supportTouch(false)
+, _mainWindow(nullptr)
 {
+    CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
+    s_pEglView = this;
+    strcpy(_viewName, "Cocos2dxWin32");
+    glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
+    glfwInit();
 }
 
 EGLView::~EGLView()
 {
+    glfwTerminate();
+    s_pEglView = nullptr;
 }
 
-static std::string getApplicationName()
+bool EGLView::init(const char* viewName, float width, float height)
 {
-    char fullpath[256] = {0};
-    ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
+    if(nullptr != _mainWindow) return true;
 
-    if (length <= 0) {
-        return "Cocos2dx-Linux";
-    }
+    setViewName(viewName);
+    setFrameSize(width, height);
 
-    fullpath[length] = '\0';
-    const std::string appPath = fullpath;
-    return appPath.substr(appPath.find_last_of('/') + 1);
-}
-
-void checkSDLError(int line)
-{
-#if COCOS2D_DEBUG > 0
-    const char *error = SDL_GetError();
-    if (*error != '\0')
+    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    _mainWindow = glfwCreateWindow(_screenSize.width, _screenSize.height, _viewName, nullptr, nullptr);
+    glfwMakeContextCurrent(_mainWindow);
+    glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
+    glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
+    glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
+    
+    // check OpenGL version at first
+    const GLubyte* glVersion = glGetString(GL_VERSION);
+    CCLOG("OpenGL version = %s", glVersion);
+    
+    if ( atof((const char*)glVersion) < 1.5 )
     {
-        if (line != -1)
-            CCLOG("SDL Error: %s, line: %i", error, line);
-        else
-            CCLOG("SDL Error: %s", error);
-        SDL_ClearError();
+        char strComplain[256] = {0};
+        sprintf(strComplain,
+                "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
+                glVersion);
+        MessageBox(strComplain, "OpenGL version too old");
+        return false;
     }
-#endif
+    
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult)
+    {
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        return false;
+    }
+    
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        log("Ready for GLSL");
+    }
+    else
+    {
+        log("Not totally ready :(");
+    }
+    
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+       log("Ready for OpenGL 2.0");
+    }
+    else
+    {
+        log("OpenGL 2.0 not supported");
+    }
+    
+//    if(glew_dynamic_binding() == false)
+//    {
+//        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+//        return false;
+//    }
+//    
+    // Enable point size by default on windows.
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    
+    return true;
 }
 
-void EGLView::setFrameSize(float width, float height)
+bool EGLView::isOpenGLReady()
 {
-    bool eResult = false;
-    //create the window by SDL2.
+    return nullptr != _mainWindow;
+}
 
-    //check
-    CCAssert(width!=0&&height!=0, "invalid window's size equal 0");
+void EGLView::end()
+{
+    if(_mainWindow)
+        glfwSetWindowShouldClose(_mainWindow,1);
+}
 
-    //Inits SDL2
-    eResult = SDL_Init(SDL_INIT_VIDEO) == 0;
-    if (!eResult) {
-        CCAssert(0, "fail to init the SDL");
-    }
+void EGLView::swapBuffers()
+{
+    if(_mainWindow)
+        glfwSwapBuffers(_mainWindow);
+}
 
-    const std::string appName = getApplicationName();
-    const int iDepth = 16; // set default value
+bool EGLView::windowShouldClose()
+{
+    if(_mainWindow)
+        return glfwWindowShouldClose(_mainWindow);
+    else
+        return true;
+}
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+void EGLView::pollEvents()
+{
+    glfwPollEvents();
+}
 
-    _window = SDL_CreateWindow(appName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                          width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, iDepth);
-    checkSDLError(__LINE__);
-
-    _context = SDL_GL_CreateContext(_window);
-
-    if (!_window || !_context) {
-        CCAssert(0, "Failed to initialize OpenGL context");
-    } else {
-        SDL_GL_SetSwapInterval(1);
-        checkSDLError(__LINE__);
-        _wasInit = true;
-
-        EGLViewProtocol::setFrameSize(width, height);
-        initGL();
-        if (!GLEW_ARB_framebuffer_object)
-            CCAssert(0, "fail to init OpenGL extension ARB_framebuffer_object");
-        if (!GLEW_ARB_vertex_buffer_object)
-            CCAssert(0, "fail to init OpenGL extension ARB_vertex_buffer_object");
-    }
+void EGLView::setIMEKeyboardState(bool /*bOpen*/)
+{
+    
 }
 
 void EGLView::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
-    SDL_SetWindowSize(_window, _screenSize.width * fZoomFactor, _screenSize.height * fZoomFactor);
     Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 
@@ -119,12 +244,17 @@ float EGLView::getFrameZoomFactor()
     return _frameZoomFactor;
 }
 
+void EGLView::setFrameSize(float width, float height)
+{
+    EGLViewProtocol::setFrameSize(width, height);
+}
+
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * _scaleX * _frameZoomFactor+ _viewPortRect.origin.x * _frameZoomFactor),
-        (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
-        (GLsizei)(w * _scaleX * _frameZoomFactor),
-        (GLsizei)(h * _scaleY * _frameZoomFactor));
+    glViewport((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
+               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
+               (GLsizei)(w * _scaleX * _frameZoomFactor),
+               (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
 void EGLView::setScissorInPoints(float x , float y , float w , float h)
@@ -135,179 +265,9 @@ void EGLView::setScissorInPoints(float x , float y , float w , float h)
               (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
-
-bool EGLView::isOpenGLReady()
-{
-    return _wasInit;
-}
-
-void EGLView::end()
-{
-    SDL_GL_DeleteContext(_context);
-    SDL_DestroyWindow(_window);
-    SDL_Quit();
-
-    delete this;
-    exit(0);
-}
-
-void EGLView::swapBuffers() {
-    if (_wasInit) {
-        /* Swap buffers */
-        SDL_GL_SwapWindow(_window);
-    }
-}
-
-// Polls events if SDL backend is on.
-// Note that finger events allow multi-touch on Linux, but libsdl with X11
-// backend does not support multitouch. However multitouch should work
-// out of the box on upcoming Weston and Mir display servers.
-// Also supports mouse touches emulation, keyboard events, text events.
-void EGLView::pollInputEvents()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-        case SDL_QUIT:
-            Director::sharedDirector()->end();
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-            if (event.button.button == SDL_BUTTON_LEFT) {
-                int id = event.button.which;
-                _pressedMouseInstances.insert(id);
-                Point oPoint((float)event.button.x, (float)event.button.y);
-                oPoint.x /= _frameZoomFactor;
-                oPoint.y /= _frameZoomFactor;
-                handleTouchesBegin(1, &id, &oPoint.x, &oPoint.y);
-            }
-            break;
-        case SDL_MOUSEBUTTONUP:
-            if (event.button.button == SDL_BUTTON_LEFT) {
-                int id = event.button.which;
-                _pressedMouseInstances.erase(id);
-                Point oPoint((float)event.button.x, (float)event.button.y);
-                oPoint.x /= _frameZoomFactor;
-                oPoint.y /= _frameZoomFactor;
-                handleTouchesEnd(1, &id, &oPoint.x, &oPoint.y);
-            }
-            break;
-        case SDL_MOUSEMOTION:
-            if (_pressedMouseInstances.count(event.motion.which)) {
-                int id = event.motion.which;
-                Point oPoint((float)event.motion.x, (float)event.motion.y);
-                oPoint.x /= _frameZoomFactor;
-                oPoint.y /= _frameZoomFactor;
-                handleTouchesMove(1, &id, &oPoint.x, &oPoint.y);
-            }
-            break;
-        case SDL_FINGERDOWN: {
-            int fingerId = event.tfinger.fingerId;
-            Point oPoint((float)event.tfinger.x, (float)event.tfinger.y);
-            oPoint.x /= _frameZoomFactor;
-            oPoint.y /= _frameZoomFactor;
-            handleTouchesBegin(1, &fingerId, &oPoint.x, &oPoint.y);
-        }
-            break;
-        case SDL_FINGERUP: {
-            int fingerId = event.tfinger.fingerId;
-            Point oPoint((float)event.tfinger.x, (float)event.tfinger.y);
-            oPoint.x /= _frameZoomFactor;
-            oPoint.y /= _frameZoomFactor;
-            handleTouchesEnd(1, &fingerId, &oPoint.x, &oPoint.y);
-            break;
-        }
-        case SDL_FINGERMOTION: {
-            int fingerId = event.tfinger.fingerId;
-            Point oPoint((float)event.tfinger.x, (float)event.tfinger.y);
-            oPoint.x /= _frameZoomFactor;
-            oPoint.y /= _frameZoomFactor;
-            handleTouchesMove(1, &fingerId, &oPoint.x, &oPoint.y);
-        }
-            break;
-        case SDL_TEXTINPUT: {
-            const std::string text = event.text.text;
-            IMEDispatcher::sharedDispatcher()->dispatchInsertText(text.c_str(), text.size());
-        }
-            break;
-        case SDL_TEXTEDITING:
-            // TODO: not implemented.
-            // In SDL text editing is similar to patching. Each patch consists of
-            // selected text range and string that replaces selected text.
-            break;
-        case SDL_KEYDOWN: {
-            if (event.key.keysym.sym == SDLK_BACKSPACE)
-                IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-            Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.key.keysym.sym, true);
-            break;
-        case SDL_KEYUP:
-            Director::sharedDirector()->getKeyboardDispatcher()->dispatchKeyboardEvent(event.key.keysym.sym, false);
-            }
-            break;
-        }
-    }
-}
-
-void EGLView::setIMEKeyboardState(bool bOpen)
-{
-    _IMEKeyboardOpened = bOpen;
-    Rect zeroRect(0, 0, 0, 0);
-    IMEKeyboardNotificationInfo info;
-    info.begin = zeroRect;
-    info.end = zeroRect;
-    info.duration = 0;
-    if (bOpen) {
-        IMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
-        IMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
-    } else {
-        IMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
-        IMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
-    }
-}
-
-bool EGLView::initGL()
-{
-    GLenum GlewInitResult = glewInit();
-    if (GLEW_OK != GlewInitResult) 
-    {
-        fprintf(stderr,"ERROR: %s\n",glewGetErrorString(GlewInitResult));
-        return false;
-    }
-
-    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
-    {
-        log("Ready for GLSL");
-    }
-    else 
-    {
-        log("Not totally ready :(");
-    }
-
-    if (glewIsSupported("GL_VERSION_2_0"))
-    {
-        log("Ready for OpenGL 2.0");
-    }
-    else
-    {
-        log("OpenGL 2.0 not supported");
-    }
-
-    // Enable point size by default on linux.
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-
-    return true;
-}
-
-void EGLView::destroyGL()
-{
-}
-
 EGLView* EGLView::getInstance()
 {
-    static EGLView* s_pEglView = NULL;
-    if (s_pEglView == NULL)
-    {
-        s_pEglView = new EGLView();
-    }
+    CCASSERT(nullptr != s_pEglView, "EGL singleton should not be null");
     return s_pEglView;
 }
 
