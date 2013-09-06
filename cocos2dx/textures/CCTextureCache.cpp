@@ -178,7 +178,7 @@ void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO
 
 void TextureCache::loadImage()
 {
-    AsyncStruct *pAsyncStruct = nullptr;
+    AsyncStruct *asyncStruct = nullptr;
 
     while (true)
     {
@@ -202,30 +202,30 @@ void TextureCache::loadImage()
         }
         else
         {
-            pAsyncStruct = pQueue->front();
+            asyncStruct = pQueue->front();
             pQueue->pop();
             _asyncStructQueueMutex.unlock();
         }        
 
-        const char *filename = pAsyncStruct->filename.c_str();
+        const char *filename = asyncStruct->filename.c_str();
         
         // generate image            
-        Image *pImage = new Image();
-        if (pImage && !pImage->initWithImageFileThreadSafe(filename))
+        Image *image = new Image();
+        if (image && !image->initWithImageFileThreadSafe(filename))
         {
-            CC_SAFE_RELEASE(pImage);
+            CC_SAFE_RELEASE(image);
             CCLOG("can not load %s", filename);
             continue;
         }
 
         // generate image info
-        ImageInfo *pImageInfo = new ImageInfo();
-        pImageInfo->asyncStruct = pAsyncStruct;
-        pImageInfo->image = pImage;
+        ImageInfo *imageInfo = new ImageInfo();
+        imageInfo->asyncStruct = asyncStruct;
+        imageInfo->image = image;
 
         // put the image info into the queue
         _imageInfoMutex.lock();
-        _imageInfoQueue->push(pImageInfo);
+        _imageInfoQueue->push(imageInfo);
         _imageInfoMutex.unlock();
     }
     
@@ -250,21 +250,21 @@ void TextureCache::addImageAsyncCallBack(float dt)
     }
     else
     {
-        ImageInfo *pImageInfo = imagesQueue->front();
+        ImageInfo *imageInfo = imagesQueue->front();
         imagesQueue->pop();
         _imageInfoMutex.unlock();
 
-        AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
-        Image *pImage = pImageInfo->image;
+        AsyncStruct *asyncStruct = imageInfo->asyncStruct;
+        Image *image = imageInfo->image;
 
-        Object *target = pAsyncStruct->target;
-        SEL_CallFuncO selector = pAsyncStruct->selector;
-        const char* filename = pAsyncStruct->filename.c_str();
+        Object *target = asyncStruct->target;
+        SEL_CallFuncO selector = asyncStruct->selector;
+        const char* filename = asyncStruct->filename.c_str();
 
         // generate texture in render thread
         Texture2D *texture = new Texture2D();
 
-        texture->initWithImage(pImage);
+        texture->initWithImage(image);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
@@ -280,9 +280,9 @@ void TextureCache::addImageAsyncCallBack(float dt)
             target->release();
         }        
 
-        pImage->release();
-        delete pAsyncStruct;
-        delete pImageInfo;
+        image->release();
+        delete asyncStruct;
+        delete imageInfo;
 
         --_asyncRefCount;
         if (0 == _asyncRefCount)
@@ -297,47 +297,39 @@ Texture2D * TextureCache::addImage(const char * path)
     CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");
 
     Texture2D * texture = NULL;
-    Image* pImage = NULL;
+    Image* image = NULL;
     // Split up directory and filename
     // MUTEX:
     // Needed since addImageAsync calls this method from a different thread
 
-    std::string pathKey = path;
-
-    pathKey = FileUtils::getInstance()->fullPathForFilename(pathKey.c_str());
+    std::string pathKey = FileUtils::getInstance()->fullPathForFilename(path);
     if (pathKey.size() == 0)
     {
         return NULL;
     }
-    texture = static_cast<Texture2D*>(_textures->objectForKey(pathKey.c_str()));
+    texture = static_cast<Texture2D*>(_textures->objectForKey(pathKey));
 
-    std::string fullpath = pathKey;
+    std::string fullpath(pathKey);
     if (! texture) 
     {
-        std::string lowerCase(pathKey);
-        for (unsigned int i = 0; i < lowerCase.length(); ++i)
-        {
-            lowerCase[i] = tolower(lowerCase[i]);
-        }
         // all images are handled by UIImage except PVR extension that is handled by our own handler
         do 
         {
-            pImage = new Image();
-            CC_BREAK_IF(NULL == pImage);
+            image = new Image();
+            CC_BREAK_IF(NULL == image);
 
-            bool bRet = pImage->initWithImageFile(fullpath.c_str());
+            bool bRet = image->initWithImageFile(fullpath.c_str());
             CC_BREAK_IF(!bRet);
 
             texture = new Texture2D();
 
-            if( texture &&
-                texture->initWithImage(pImage) )
+            if( texture && texture->initWithImage(image) )
             {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
                 VolatileTexture::addImageTexture(texture, fullpath.c_str());
 #endif
-                _textures->setObject(texture, pathKey.c_str());
+                _textures->setObject(texture, pathKey);
                 texture->release();
             }
             else
@@ -347,30 +339,21 @@ Texture2D * TextureCache::addImage(const char * path)
         } while (0);
     }
 
-    CC_SAFE_RELEASE(pImage);
+    CC_SAFE_RELEASE(image);
 
     return texture;
 }
 
-Texture2D* TextureCache::addUIImage(Image *image, const char *key)
+Texture2D* TextureCache::addImage(Image *image, const char *key)
 {
     CCASSERT(image != NULL, "TextureCache: image MUST not be nil");
 
     Texture2D * texture = NULL;
-    // textureForKey() use full path,so the key should be full path
-    std::string forKey;
-    if (key)
-    {
-        forKey = FileUtils::getInstance()->fullPathForFilename(key);
-    }
 
-    // Don't have to lock here, because addImageAsync() will not 
-    // invoke opengl function in loading thread.
-
-    do 
+    do
     {
         // If key is nil, then create a new texture each time
-        if(key && (texture = (Texture2D *)_textures->objectForKey(forKey.c_str())))
+        if(key && (texture = static_cast<Texture2D*>(_textures->objectForKey(key))) )
         {
             break;
         }
@@ -381,7 +364,7 @@ Texture2D* TextureCache::addUIImage(Image *image, const char *key)
 
         if(key && texture)
         {
-            _textures->setObject(texture, forKey.c_str());
+            _textures->setObject(texture, key);
             texture->autorelease();
         }
         else
@@ -652,20 +635,20 @@ void VolatileTexture::reloadAllTextures()
         {
         case kImageFile:
             {
-                Image* pImage = new Image();
+                Image* image = new Image();
                 unsigned long nSize = 0;
                 unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &nSize);
                 
-                if (pImage && pImage->initWithImageData(pBuffer, nSize))
+                if (image && image->initWithImageData(pBuffer, nSize))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
-                    vt->_texture->initWithImage(pImage);
+                    vt->_texture->initWithImage(image);
                     Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                 }
                 
                 CC_SAFE_DELETE_ARRAY(pBuffer);
-                CC_SAFE_RELEASE(pImage);
+                CC_SAFE_RELEASE(image);
             }
             break;
         case kImageData:
