@@ -67,8 +67,6 @@ void CocosGUITestScene::load(CCObject *pSender, int count)
     char tmp[10];
     sprintf(tmp,"%d", count);
     m_pLabel->setString(CCString::createWithFormat("%i", count)->getCString());
-    
-    UIWidget* widget = dynamic_cast<UIWidget*>(pSender);
 }
 
 void CocosGUITestScene::menuCallback(CCObject *pSender)
