@@ -139,7 +139,7 @@ public:
     virtual void update(float dt);
     
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE int getPage() const{return getCurPageIndex();};
+    int getPage() const{return getCurPageIndex();};
     /************/
 protected:
     virtual bool addChild(UIWidget* widget);

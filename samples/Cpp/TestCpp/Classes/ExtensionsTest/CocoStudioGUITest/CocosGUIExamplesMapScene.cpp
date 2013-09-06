@@ -100,7 +100,7 @@ void CocosGUIExamplesMapScene::MapInit()
     // build button on map root
     Layout* button_layout = dynamic_cast<Layout*>(map_root->getChildByName("button_Panel"));
     
-    for (int i = 0; i < button_layout->getChildren()->count(); ++i)
+    for (unsigned int i = 0; i < button_layout->getChildren()->count(); ++i)
     {
         UIButton* build_button = dynamic_cast<UIButton*>(button_layout->getChildren()->objectAtIndex(i));
         build_button->setPressedActionEnabled(true);
