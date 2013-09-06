@@ -1262,7 +1262,7 @@ void UIListView::setLoopPosition()
                 case LISTVIEW_MOVE_DIR_DOWN: // down
                 {
                     ccArray* arrayChildren = m_children->data;
-                    int childrenCount = arrayChildren->num;
+                    unsigned int childrenCount = arrayChildren->num;
                     
                     if (m_overBottomArray->count() == childrenCount)
                     {

@@ -828,13 +828,13 @@ public:
     void setWidgetTag(int tag){setTag(tag);};
     int getWidgetTag(){return getTag();};
     CCNode* getContainerNode(){return getRenderer();};
+    UIWidget* getWidgetParent(){return getParent();};
     CC_DEPRECATED_ATTRIBUTE CCNode* getValidNode(){return getVirtualRenderer();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeLeftPos(){return getLeftInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeBottomPos(){return getBottomInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeRightPos(){return getRightInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeTopPos(){return getTopInParent();};
     CC_DEPRECATED_ATTRIBUTE void setWidgetParent(UIWidget* parent){setParent(parent);};
-    CC_DEPRECATED_ATTRIBUTE UIWidget* getWidgetParent(){return getParent();};
     /***************************/
     /*temp action*/
     void setActionTag(int tag);
