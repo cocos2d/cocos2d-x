@@ -247,11 +247,25 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
-      * Add search path.
-      *
-      * @since v2.1
+      * Adds a path to search paths.
+	  *
+	  * @since v2.2
       */
-     void addSearchPath(const char* path);
+     virtual void addSearchPath(const char* path);
+
+    /**
+      * Removes a path from search paths.
+      *
+      * @since v2.2
+      */
+	 virtual void removeSearchPath(const char *path);
+
+    /**
+      * Removes all paths.
+      *
+      * @since v2.2
+      */
+	 void removeAllPaths();
     
     /**
      *  Gets the array of search paths.
