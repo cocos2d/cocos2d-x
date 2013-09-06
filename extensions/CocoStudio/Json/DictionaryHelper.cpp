@@ -84,7 +84,7 @@ float DictionaryHelper::getFloatValue(cocos2d::CCDictionary* root,const char* ke
     }
     cocos2d::CCObject* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return 0.0f;
     }
     cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
     return cstr->floatValue();
