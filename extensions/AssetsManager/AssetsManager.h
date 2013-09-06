@@ -147,15 +147,6 @@ public:
      */
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
 
-    /** @brief Initializes storage path. 
-     */
-    void createStoragePath();
-
-    /** @brief Destroys storage path. 
-     */
-    void destroyStoragePath();
-
-    
 protected:
     bool downLoad();
     void checkStoragePath();
@@ -190,6 +181,14 @@ private:
         std::mutex _messageQueueMutex;
     };
 
+private:
+    /** @brief Initializes storage path.
+     */
+    void createStoragePath();
+    
+    /** @brief Destroys storage path.
+     */
+    void destroyStoragePath();
     
 private:
     //! The path to store downloaded resources.

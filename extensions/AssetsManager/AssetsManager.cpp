@@ -110,7 +110,7 @@ void AssetsManager::checkStoragePath()
 }
 
 // Multiple key names
-static std::string key_with_hash( const char* prefix, const std::string& url )
+static std::string keyWithHash( const char* prefix, const std::string& url )
 {
     char buf[256];
     sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
@@ -120,13 +120,13 @@ static std::string key_with_hash( const char* prefix, const std::string& url )
 // hashed version
 std::string AssetsManager::keyOfVersion() const
 {
-    return key_with_hash(KEY_OF_VERSION,_packageUrl);
+    return keyWithHash(KEY_OF_VERSION,_packageUrl);
 }
 
 // hashed version
 std::string AssetsManager::keyOfDownloadedVersion() const
 {
-    return key_with_hash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
+    return keyWithHash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
 }
 
 static size_t getVersionCode(void *ptr, size_t size, size_t nmemb, void *userdata)
