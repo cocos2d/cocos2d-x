@@ -73,6 +73,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/NodeTest/NodeTest.cpp \
 	../Classes/ParallaxTest/ParallaxTest.cpp \
 	../Classes/ParticleTest/ParticleTest.cpp \
+	../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 	../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 	../Classes/PerformanceTest/PerformanceParticleTest.cpp \
 	../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
