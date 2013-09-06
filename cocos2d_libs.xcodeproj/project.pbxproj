@@ -2008,6 +2008,7 @@
 		B3D8DD62179922F30039C204 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD5E179922F30039C204 /* libpng.a */; };
 		B3D8DD63179922F30039C204 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD5F179922F30039C204 /* libtiff.a */; };
 		B3D8DD64179922F30039C204 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD60179922F30039C204 /* libwebp.a */; };
+		ED255CDE17CDC8A10029A42B /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED255CDD17CDC8A10029A42B /* libglfw3.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3350,6 +3351,7 @@
 		B3D8DD5E179922F30039C204 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/mac/libraries/libpng.a; sourceTree = "<group>"; };
 		B3D8DD5F179922F30039C204 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = cocos2dx/platform/third_party/mac/libraries/libtiff.a; sourceTree = "<group>"; };
 		B3D8DD60179922F30039C204 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = cocos2dx/platform/third_party/mac/libraries/libwebp.a; sourceTree = "<group>"; };
+		ED255CDD17CDC8A10029A42B /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = cocos2dx/platform/third_party/mac/libraries/libglfw3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3363,6 +3365,7 @@
 				A0C80A7B1799DF39002532D9 /* libfreetype.a in Frameworks */,
 				B3D8DD61179922F30039C204 /* libjpeg.a in Frameworks */,
 				B3D8DD62179922F30039C204 /* libpng.a in Frameworks */,
+				ED255CDE17CDC8A10029A42B /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5752,6 +5755,7 @@
 		B3D8D4471799219B0039C204 /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				ED255CDD17CDC8A10029A42B /* libglfw3.a */,
 				B3D8DD5D179922F30039C204 /* libjpeg.a */,
 				B3D8DD5E179922F30039C204 /* libpng.a */,
 				B3D8DD5F179922F30039C204 /* libtiff.a */,
