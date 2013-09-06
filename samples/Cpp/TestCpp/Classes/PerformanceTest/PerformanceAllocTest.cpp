@@ -122,7 +122,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srandom(0);
+        srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
@@ -134,7 +134,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srandom(0);
+        srand(0);
 	});
     increase->setColor(Color3B(0,200,20));
 
@@ -155,7 +155,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srandom(0);
+    srand(0);
 }
 
 std::string PerformceAllocScene::title()
