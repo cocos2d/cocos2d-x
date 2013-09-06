@@ -144,40 +144,40 @@ public:
 	SLObjectItf fdPlayerObject;
 	SLPlayItf fdPlayerPlay;
 	SLSeekItf fdPlayerSeek;
-    SLVolumeItf fdPlayerVolume;
-    SLPlaybackRateItf fdPlaybackRate;
+	SLVolumeItf fdPlayerVolume;
+	SLPlaybackRateItf fdPlaybackRate;
 
-    /// Applies global effects volume, takes effect gain into account.
+	/// Applies global effects volume, takes effect gain into account.
     /// @param volume In range 0..1.
-    void applyEffectsVolume(float volume)
-    {
-        SLmillibel finalVolume = int (RANGE_VOLUME_MILLIBEL * (volume * _gain)) + MIN_VOLUME_MILLIBEL;
-        SLresult result = (*fdPlayerVolume)->SetVolumeLevel(fdPlayerVolume, finalVolume);
-        assert(SL_RESULT_SUCCESS == result);
-    }
+	void applyEffectsVolume(float volume)
+	{
+		SLmillibel finalVolume = int (RANGE_VOLUME_MILLIBEL * (volume * _gain)) + MIN_VOLUME_MILLIBEL;
+		SLresult result = (*fdPlayerVolume)->SetVolumeLevel(fdPlayerVolume, finalVolume);
+		assert(SL_RESULT_SUCCESS == result);
+	}
 
-    void applyParameters(bool isLooping, float pitch, float pan, float gain, float effectsVolume)
-    {
-        SLresult result = (*fdPlayerSeek)->SetLoop(fdPlayerSeek, (SLboolean) isLooping, 0, SL_TIME_UNKNOWN);
-        assert(SL_RESULT_SUCCESS == result);
+	void applyParameters(bool isLooping, float pitch, float pan, float gain, float effectsVolume)
+	{
+		SLresult result = (*fdPlayerSeek)->SetLoop(fdPlayerSeek, (SLboolean) isLooping, 0, SL_TIME_UNKNOWN);
+		assert(SL_RESULT_SUCCESS == result);
 
-        SLpermille stereo = SLpermille(1000 * pan);
-        result = (*fdPlayerVolume)->EnableStereoPosition(fdPlayerVolume, SL_BOOLEAN_TRUE);
-        assert(SL_RESULT_SUCCESS == result);
-        result = (*fdPlayerVolume)->SetStereoPosition(fdPlayerVolume, stereo);
-        assert(SL_RESULT_SUCCESS == result);
+		SLpermille stereo = SLpermille(1000 * pan);
+		result = (*fdPlayerVolume)->EnableStereoPosition(fdPlayerVolume, SL_BOOLEAN_TRUE);
+		assert(SL_RESULT_SUCCESS == result);
+		result = (*fdPlayerVolume)->SetStereoPosition(fdPlayerVolume, stereo);
+		assert(SL_RESULT_SUCCESS == result);
 
-        SLpermille playbackRate = SLpermille(1000 * pitch);
-        if (fdPlaybackRate)
-            result = (*fdPlaybackRate)->SetRate(fdPlaybackRate, playbackRate);
-        assert(SL_RESULT_SUCCESS == result);
+		SLpermille playbackRate = SLpermille(1000 * pitch);
+		if (fdPlaybackRate)
+			result = (*fdPlaybackRate)->SetRate(fdPlaybackRate, playbackRate);
+		assert(SL_RESULT_SUCCESS == result);
 
-        _gain = gain;
-        applyEffectsVolume(effectsVolume);
-    }
+		_gain = gain;
+		applyEffectsVolume(effectsVolume);
+	}
 
 private:
-    float _gain;
+	float _gain;
 };
 
 static AudioPlayer s_musicPlayer; /* for background music */
@@ -300,6 +300,10 @@ static SLObjectItf s_pEngineObject = NULL;
 static SLEngineItf s_pEngineEngine = NULL;
 static SLObjectItf s_pOutputMixObject = NULL;
 
+// OpenSL ES for Android supports a single engine per application, and up to 32 objects. Available device memory and CPU may further restrict the usable number of objects.
+// http://mobilepearls.com/labs/native-android-api/ndk/docs/opensles/index.html
+static int s_freeObjectsAvailable = 32; 
+
 bool createAudioPlayerBySource(AudioPlayer* player)
 {
 	// configure audio sink
@@ -315,6 +319,7 @@ bool createAudioPlayerBySource(AudioPlayer* player)
 	{
 		return false;
 	}
+	s_freeObjectsAvailable--;
 
 	// realize the player
 	result = (*(player->fdPlayerObject))->Realize(player->fdPlayerObject, SL_BOOLEAN_FALSE);
@@ -332,8 +337,8 @@ bool createAudioPlayerBySource(AudioPlayer* player)
 	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_SEEK"), &(player->fdPlayerSeek));
 	assert(SL_RESULT_SUCCESS == result);
 
-    // get the playback rate interface, if available
-    (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_PLAYBACKRATE"), &(player->fdPlaybackRate));
+	// get the playback rate interface, if available
+	(*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_PLAYBACKRATE"), &(player->fdPlaybackRate));
 
 	return true;
 }
@@ -377,7 +382,7 @@ void destroyAudioPlayer(AudioPlayer * player)
 		player->fdPlayerPlay = NULL;
 		player->fdPlayerSeek = NULL;
 		player->fdPlayerVolume = NULL;
-        player->fdPlaybackRate = NULL;
+		s_freeObjectsAvailable++;
 	}
 }
 
@@ -405,6 +410,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 			getFuncPtr("slCreateEngine");
 		result = slCreateEngine(&s_pEngineObject, 0, NULL, 0, NULL, NULL);
 		assert(SL_RESULT_SUCCESS == result);
+		s_freeObjectsAvailable--;
 
 		// realize the engine
 		result = (*s_pEngineObject)->Realize(s_pEngineObject, SL_BOOLEAN_FALSE);
@@ -419,19 +425,35 @@ void OpenSLEngine::createEngine(void* pHandle)
 		const SLboolean req[1] = {SL_BOOLEAN_FALSE};
 		result = (*s_pEngineEngine)->CreateOutputMix(s_pEngineEngine, &s_pOutputMixObject, 1, ids, req);
 		assert(SL_RESULT_SUCCESS == result);
+		s_freeObjectsAvailable--;
 
 		// realize the output mix object in sync. mode
 		result = (*s_pOutputMixObject)->Realize(s_pOutputMixObject, SL_BOOLEAN_FALSE);
 		assert(SL_RESULT_SUCCESS == result);
 	}
+
+	pthread_mutex_init(&s_mutexSharedList, 0);
+	pthread_mutex_init(&s_mutexRemovalList, 0);
 }
 
 void OpenSLEngine::closeEngine()
 {
 	// destroy background players
-    destroyAudioPlayer(&s_musicPlayer);
+	destroyAudioPlayer(&s_musicPlayer);
+
+	// clear removal list
+	pthread_mutex_lock(&s_mutexRemovalList);
+	for (vector<CallbackContext*>::iterator r = removalList().begin(); r != removalList().end(); ++r)
+	{
+		delete *r;
+	}
+	removalList().clear();
+	pthread_mutex_unlock(&s_mutexRemovalList);
+
+	pthread_mutex_destroy(&s_mutexRemovalList);
 
 	// destroy effect players
+	pthread_mutex_lock(&s_mutexSharedList);
 	vector<AudioPlayer*>* vec;
 	EffectList::iterator p = sharedList().begin();
 	while (p != sharedList().end())
@@ -440,17 +462,23 @@ void OpenSLEngine::closeEngine()
 		for (vector<AudioPlayer*>::iterator iter = vec->begin() ; iter != vec->end() ; ++ iter)
 		{
 			destroyAudioPlayer(*iter);
+			delete *iter;
 		}
 		vec->clear();
+		delete vec; vec = NULL;
 		p++;
 	}
 	sharedList().clear();
+	pthread_mutex_unlock(&s_mutexSharedList);
+
+	pthread_mutex_destroy(&s_mutexSharedList);
 
 	// destroy output mix interface
 	if (s_pOutputMixObject)
 	{
 		(*s_pOutputMixObject)->Destroy(s_pOutputMixObject);
 		s_pOutputMixObject = NULL;
+		s_freeObjectsAvailable++;
 	}
 
 	// destroy opensl engine
@@ -459,6 +487,7 @@ void OpenSLEngine::closeEngine()
 		(*s_pEngineObject)->Destroy(s_pEngineObject);
 		s_pEngineObject = NULL;
 		s_pEngineEngine = NULL;
+		s_freeObjectsAvailable++;
 	}
 
 	LOGD("engine destory");
@@ -639,19 +668,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 {
 	unsigned int effectID = _Hash(filename);
 
-	// Count number of players
-	int totalAudioPlayers = 0;
-	for (EffectList::iterator r = sharedList().begin(); r != sharedList().end(); r++)
-	{
-		totalAudioPlayers += r->second->size();
-	}
-
-	bool unloadedEffect = false;
-	int state = PLAYSTATE_UNKNOWN;
-	if (totalAudioPlayers >= 30)
-	{
-		unloadedEffect = unloadAnyEffectBut( effectID );
-	}
+	if (s_freeObjectsAvailable <= 0) { unloadAnyEffectBut( effectID ); }
 
 	pthread_mutex_lock(&s_mutexSharedList);
 	EffectList::iterator p = sharedList().find(effectID);
@@ -679,7 +696,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 	assert(SL_RESULT_SUCCESS == result);
 
 	// set volume 
-    newPlayer->applyEffectsVolume(_effectVolume);
+	newPlayer->applyEffectsVolume(_effectVolume);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_STOPPED);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_PLAYING);
 
@@ -700,19 +717,7 @@ unsigned int OpenSLEngine::preloadEffect(const char * filename)
 		return nID;
 	}
 
-	// count number of players
-	int totalAudioPlayers = 0;
-	for (EffectList::iterator r = sharedList().begin(); r != sharedList().end(); r++)
-	{
-		totalAudioPlayers += r->second->size();
-	}
-
-	bool unloadedEffect = false;
-	int state = PLAYSTATE_UNKNOWN;
-	if (totalAudioPlayers >= 30)
-	{
-		unloadedEffect = unloadAnyEffectBut( nID );
-	}
+	if (s_freeObjectsAvailable <= 0) { unloadAnyEffectBut( nID ); }
 
 	pthread_mutex_lock(&s_mutexSharedList);
 	AudioPlayer* player = new AudioPlayer();
@@ -870,14 +875,14 @@ void OpenSLEngine::setEffectParameters(unsigned int effectID, bool isLooping,
 
 	if (player && player->fdPlayerSeek) 
 	{
-        player->applyParameters(isLooping, pitch, pan, gain, _effectVolume);
+		player->applyParameters(isLooping, pitch, pan, gain, _effectVolume);
 	}
 }
 
 void OpenSLEngine::setEffectsVolume(float volume)
 {
 	assert(volume <= 1.0f && volume >= 0.0f);
-    _effectVolume = volume;
+	_effectVolume = volume;
 
 	EffectList::iterator p;
 	AudioPlayer * player;
@@ -887,7 +892,7 @@ void OpenSLEngine::setEffectsVolume(float volume)
 		for (vector<AudioPlayer*>::iterator iter = vec->begin() ; iter != vec->end() ; ++ iter)
 		{
 			player = *iter;
-            player->applyEffectsVolume(_effectVolume);
+			player->applyEffectsVolume(_effectVolume);
 		}
 	}
 }
