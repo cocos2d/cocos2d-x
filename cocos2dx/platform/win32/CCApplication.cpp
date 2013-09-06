@@ -50,44 +50,23 @@ int Application::run()
     }
 
     EGLView* pMainWnd = EGLView::getInstance();
-    pMainWnd->centerWindow();
-    ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
 
-    while (1)
+    while(!pMainWnd->windowShouldClose())
     {
-        if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        QueryPerformanceCounter(&nNow);
+        if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
-            // Get current time tick.
-            QueryPerformanceCounter(&nNow);
-
-            // If it's the time to draw next frame, draw it, else sleep a while.
-            if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
-            {
-                nLast.QuadPart = nNow.QuadPart;
-                Director::getInstance()->mainLoop();
-            }
-            else
-            {
-                Sleep(0);
-            }
-            continue;
+            nLast.QuadPart = nNow.QuadPart;
+            Director::getInstance()->mainLoop();
+            pMainWnd->pollEvents();
         }
-
-        if (WM_QUIT == msg.message)
+        else
         {
-            // Quit message loop.
-            break;
-        }
-
-        // Deal with windows message.
-        if (! _accelTable || ! TranslateAccelerator(msg.hwnd, _accelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            Sleep(0);
         }
     }
-
-    return (int) msg.wParam;
+    
+    return true;
 }
 
 void Application::setAnimationInterval(double interval)

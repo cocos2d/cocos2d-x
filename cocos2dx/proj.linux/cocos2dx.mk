@@ -120,7 +120,7 @@ SHAREDLIBS += -lfmodex
 endif
 endif
 
-SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL -lpng
+SHAREDLIBS += -lSDL2 -lGLEW -lfontconfig -lpthread -lGL -lpng `pkg-config --libs glfw3`
 SHAREDLIBS += -L$(FMOD_LIBDIR) -Wl,-rpath,$(abspath $(FMOD_LIBDIR))
 SHAREDLIBS += -L$(LIB_DIR) -Wl,-rpath,$(abspath $(LIB_DIR))
 
