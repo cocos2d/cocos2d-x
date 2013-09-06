@@ -819,22 +819,22 @@ public:
     /*******to be removed*******/
     virtual void setTouchEnable(bool enabled, bool containChildren = false);
 	void setBright(bool bright, bool containChild);
-    CC_DEPRECATED_ATTRIBUTE void disable(bool containChildren = false);
-    CC_DEPRECATED_ATTRIBUTE void active(bool containChildren = false);
-    CC_DEPRECATED_ATTRIBUTE bool isActive();
-    CC_DEPRECATED_ATTRIBUTE CCRect getRect();
+    void disable(bool containChildren = false);
+    void active(bool containChildren = false);
+    bool isActive();
+    CCRect getRect();
+    void setWidgetZOrder(int z){setZOrder(z);};
+    int getWidgetZOrder(){return getZOrder();};
+    void setWidgetTag(int tag){setTag(tag);};
+    int getWidgetTag(){return getTag();};
+    CCNode* getContainerNode(){return getRenderer();};
     CC_DEPRECATED_ATTRIBUTE CCNode* getValidNode(){return getVirtualRenderer();};
-    CC_DEPRECATED_ATTRIBUTE void setWidgetZOrder(int z){setZOrder(z);};
-    CC_DEPRECATED_ATTRIBUTE int getWidgetZOrder(){return getZOrder();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeLeftPos(){return getLeftInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeBottomPos(){return getBottomInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeRightPos(){return getRightInParent();};
     CC_DEPRECATED_ATTRIBUTE float getRelativeTopPos(){return getTopInParent();};
-    CC_DEPRECATED_ATTRIBUTE CCNode* getContainerNode(){return getRenderer();};
     CC_DEPRECATED_ATTRIBUTE void setWidgetParent(UIWidget* parent){setParent(parent);};
     CC_DEPRECATED_ATTRIBUTE UIWidget* getWidgetParent(){return getParent();};
-    CC_DEPRECATED_ATTRIBUTE void setWidgetTag(int tag){setTag(tag);};
-    CC_DEPRECATED_ATTRIBUTE int getWidgetTag(){return getTag();};
     /***************************/
     /*temp action*/
     void setActionTag(int tag);

@@ -37,6 +37,7 @@ m_bBackGroundScale9Enable(false),
 m_pBackGroundImage(NULL),
 m_strBackGroundImageFileName(""),
 m_backGroundImageCapInsets(CCRectZero),
+m_colorType(LAYOUT_COLOR_NONE),
 m_eBGImageTexType(UI_TEX_TYPE_LOCAL),
 m_pColorRender(NULL),
 m_pGradientRender(NULL),
@@ -45,8 +46,7 @@ m_gStartColor(ccWHITE),
 m_gEndColor(ccWHITE),
 m_AlongVector(ccp(0.0f, -1.0f)),
 m_nCOpacity(255),
-m_backGroundImageTextureSize(CCSizeZero),
-m_colorType(LAYOUT_COLOR_NONE)
+m_backGroundImageTextureSize(CCSizeZero)
 {
     m_WidgetType = WidgetTypeContainer;
 }
