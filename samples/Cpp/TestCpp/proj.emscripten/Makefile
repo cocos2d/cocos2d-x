@@ -82,7 +82,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
-	../Classes/ExtensionsTest/CocoStudioSceneTest/CocoStudioSceneTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
