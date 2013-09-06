@@ -38,12 +38,12 @@ m_bStartCheckDoubleClick(false),
 m_touchRelease(false),
 m_bDoubleClickEnabled(false),
 m_bScale9Enabled(false),
+m_bPrevIgnoreSize(true),
+m_capInsets(CCRectZero),
 m_pImageRenderer(NULL),
 m_strTextureFile(""),
-m_capInsets(CCRectZero),
 m_eImageTexType(UI_TEX_TYPE_LOCAL),
-m_imageTextureSize(m_size),
-m_bPrevIgnoreSize(true)
+m_imageTextureSize(m_size)
 {
 
 }

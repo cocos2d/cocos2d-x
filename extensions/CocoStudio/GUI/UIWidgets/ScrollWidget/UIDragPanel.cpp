@@ -29,11 +29,6 @@ NS_CC_EXT_BEGIN
 
 UIDragPanel::UIDragPanel()
 : m_pInnerContainer(NULL)
-/*
-, m_eDirection(DRAGPANEL_DIR_BOTH)
-, m_eMoveDirection(DRAGPANEL_MOVE_DIR_ANY)
- */
-, m_fSlidTime(0.0f)
 , m_bTouchPressed(false)
 , m_bTouchMoved(false)
 , m_bTouchReleased(false)
@@ -41,6 +36,7 @@ UIDragPanel::UIDragPanel()
 , m_touchStartNodeSpace(CCPointZero)
 , m_touchStartWorldSpace(CCPointZero)
 , m_touchEndWorldSpace(CCPointZero)
+, m_fSlidTime(0.0f)
 , m_eMoveType(DRAGPANEL_MOVE_TYPE_AUTOMOVE)
 , m_fAutoMoveDuration(0.5f)
 , m_fAutoMoveEaseRate(2.0f)
@@ -89,10 +85,10 @@ UIDragPanel::UIDragPanel()
 , m_fDuration(0.0f)
 , m_elapsed(0.0f)
 , m_bFirstTick(false)
-, m_endPosition(CCPointZero)
-, m_startPosition(CCPointZero)
 , m_positionDelta(CCPointZero)
+, m_startPosition(CCPointZero)
 , m_previousPosition(CCPointZero)
+, m_endPosition(CCPointZero)
 {
     
 }
