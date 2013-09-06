@@ -1840,7 +1840,7 @@ JSBool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         //
         // repeat
         //
-        double repeat = -1;
+        double repeat = kRepeatForever;
         if( argc >= 4 ) {
             ok &= JS_ValueToNumber(cx, argv[3], &repeat );
         }
