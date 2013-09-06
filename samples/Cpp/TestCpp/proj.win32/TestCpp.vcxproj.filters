@@ -555,6 +555,9 @@
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp">
       <Filter>Classes\LabelTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
