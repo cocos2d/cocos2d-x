@@ -70,6 +70,18 @@ public:
     std::string subtitle();
 };
 
+class SpriteCreateEmptyTest : public PerformceAllocScene
+{
+public:
+    virtual void updateQuantityOfNodes();
+    virtual void initWithQuantityOfNodes(unsigned int nNodes);
+    virtual void update(float dt);
+    virtual const char* testName();
+
+    std::string title();
+    std::string subtitle();
+};
+
 class SpriteCreateTest : public PerformceAllocScene
 {
 public:

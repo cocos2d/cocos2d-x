@@ -36,6 +36,7 @@ static std::function<PerformceAllocScene*()> createFunctions[] =
 {
     CL(NodeCreateTest),
     CL(NodeDeallocTest),
+    CL(SpriteCreateEmptyTest),
     CL(SpriteCreateTest),
     CL(SpriteDeallocTest),
 };
@@ -320,6 +321,56 @@ const char*  NodeDeallocTest::testName()
 
 ////////////////////////////////////////////////////////
 //
+// SpriteCreateEmptyTest
+//
+////////////////////////////////////////////////////////
+void SpriteCreateEmptyTest::updateQuantityOfNodes()
+{
+    currentQuantityOfNodes = quantityOfNodes;
+}
+
+void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
+{
+    PerformceAllocScene::initWithQuantityOfNodes(nNodes);
+
+    printf("Size of Node: %lu\n", sizeof(Sprite));
+
+    scheduleUpdate();
+}
+
+void SpriteCreateEmptyTest::update(float dt)
+{
+    // iterate using fast enumeration protocol
+
+    Sprite **sprites = new Sprite*[quantityOfNodes];
+
+    Sprite::create("Images/grossini.png");
+
+    CC_PROFILER_START(this->profilerName());
+    for( int i=0; i<quantityOfNodes; ++i)
+        sprites[i] = Sprite::create();
+    CC_PROFILER_STOP(this->profilerName());
+
+    delete [] sprites;
+}
+
+std::string SpriteCreateEmptyTest::title()
+{
+    return "Create Empty Sprite";
+}
+
+std::string SpriteCreateEmptyTest::subtitle()
+{
+    return "Create Empty Sprite Perf test. See console";
+}
+
+const char*  SpriteCreateEmptyTest::testName()
+{
+    return "Sprite::create(void)";
+}
+
+////////////////////////////////////////////////////////
+//
 // SpriteCreateTest
 //
 ////////////////////////////////////////////////////////
@@ -343,9 +394,11 @@ void SpriteCreateTest::update(float dt)
 
     Sprite **sprites = new Sprite*[quantityOfNodes];
 
+    Sprite::create("Images/grossini.png");
+    
     CC_PROFILER_START(this->profilerName());
     for( int i=0; i<quantityOfNodes; ++i)
-        sprites[i] = Sprite::create();
+        sprites[i] = Sprite::create("Images/grossini.png");
     CC_PROFILER_STOP(this->profilerName());
 
     delete [] sprites;
@@ -353,17 +406,17 @@ void SpriteCreateTest::update(float dt)
 
 std::string SpriteCreateTest::title()
 {
-    return "Sprite Create Perf test.";
+    return "Create Sprite.";
 }
 
 std::string SpriteCreateTest::subtitle()
 {
-    return "Sprite Create Perf test. See console";
+    return "Create Empty Sprite. See console";
 }
 
 const char*  SpriteCreateTest::testName()
 {
-    return "Sprite::create()";
+    return "Sprite::create(\"image\")";
 }
 
 ////////////////////////////////////////////////////////
