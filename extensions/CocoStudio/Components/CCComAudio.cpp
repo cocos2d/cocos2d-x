@@ -28,9 +28,10 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 CCComAudio::CCComAudio(void)
+: m_strFilePath("")
+, m_bLoop(false)
 {
     m_strName = "Audio";
-	m_bLoop = false;
 }
 
 CCComAudio::~CCComAudio(void)

@@ -162,15 +162,15 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     /*Compatible*/
-    CC_DEPRECATED_ATTRIBUTE void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallPercent(int percent){setPercent(percent);};
-    CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool is){setScale9Enabled(is);};
+    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
+    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
+    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
+    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
+    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
+    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
+    void setSlidBallPercent(int percent){setPercent(percent);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    void setScale9Enable(bool is){setScale9Enabled(is);};
     /************/
 protected:
     virtual void initRenderer();
