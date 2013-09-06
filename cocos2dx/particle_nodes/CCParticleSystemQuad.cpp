@@ -347,6 +347,12 @@ void CCParticleSystemQuad::postStep()
 // overriding draw method
 void CCParticleSystemQuad::draw()
 {    
+
+	if (NULL == m_pTexture)
+	{
+		return;
+	}
+	
     CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
 
     CC_NODE_DRAW_SETUP();

@@ -473,6 +473,17 @@ void CCDirector::setAlphaBlending(bool bOn)
     CHECK_GL_ERROR_DEBUG();
 }
 
+void CCDirector::reshapeProjection(const CCSize& newWindowSize)
+{
+	CC_UNUSED_PARAM(newWindowSize);
+	if (m_pobOpenGLView)
+	{
+		m_obWinSizeInPoints = CCSizeMake(newWindowSize.width * m_fContentScaleFactor,
+			newWindowSize.height * m_fContentScaleFactor);
+		setProjection(m_eProjection);       
+	}
+
+}
 void CCDirector::setDepthTest(bool bOn)
 {
     if (bOn)

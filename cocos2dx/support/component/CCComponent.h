@@ -46,6 +46,7 @@ public:
     static CCComponent* create(void);
     
     const char* getName() const;
+	void setName(const char *pName);
     
     void setOwner(CCNode *pOwner);
     CCNode* getOwner() const;
