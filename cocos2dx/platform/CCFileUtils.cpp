@@ -449,7 +449,7 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::Array *array, tiny
 #else
 NS_CC_BEGIN
 
-/* The subclass FileUtilsIOS and FileUtilsMac should override these two method. */
+/* The subclass FileUtilsApple should override these two method. */
 Dictionary* FileUtils::createDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
 bool FileUtils::writeToFile(cocos2d::Dictionary *dict, const std::string &fullPath) {return NULL;}
 Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {return NULL;}
@@ -459,21 +459,10 @@ Array* FileUtils::createArrayWithContentsOfFile(const std::string& filename) {re
 
 FileUtils* FileUtils::s_sharedFileUtils = NULL;
 
-// XXX: deprecated
-FileUtils* FileUtils::sharedFileUtils()
-{
-    return FileUtils::getInstance();
-}
 
 void FileUtils::destroyInstance()
 {
     CC_SAFE_DELETE(s_sharedFileUtils);
-}
-
-// XXX: deprecated
-void FileUtils::purgeFileUtils()
-{
-    FileUtils::destroyInstance();
 }
 
 FileUtils::FileUtils()
@@ -572,17 +561,17 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
 std::string FileUtils::getNewFilename(const char* filename)
 {
-    const char* pszNewFileName = NULL;
+    const char* newFileName = NULL;
+    
     // in Lookup Filename dictionary ?
     String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(filename) : NULL;
     if( NULL == fileNameFound || fileNameFound->length() == 0) {
-        pszNewFileName = filename;
+        newFileName = filename;
     }
     else {
-        pszNewFileName = fileNameFound->getCString();
-        //CCLOG("FOUND NEW FILE NAME: %s.", pszNewFileName);
+        newFileName = fileNameFound->getCString();
     }
-    return pszNewFileName;
+    return newFileName;
 }
 
 std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -615,15 +604,13 @@ std::string FileUtils::fullPathForFilename(const char* filename)
     std::string strFileName = filename;
     if (isAbsolutePath(filename))
     {
-        //CCLOG("Return absolute path( %s ) directly.", filename);
         return filename;
     }
     
     // Already Cached ?
-    std::map<std::string, std::string>::iterator cacheIter = _fullPathCache.find(filename);
+    auto cacheIter = _fullPathCache.find(filename);
     if (cacheIter != _fullPathCache.end())
     {
-        //CCLOG("Return full path from cache: %s", cacheIter->second.c_str());
         return cacheIter->second;
     }
     
@@ -632,27 +619,23 @@ std::string FileUtils::fullPathForFilename(const char* filename)
     
     string fullpath = "";
     
-    for (auto searchPathsIter = _searchPathArray.begin();
-         searchPathsIter != _searchPathArray.end(); ++searchPathsIter) {
-        for (auto resOrderIter = _searchResolutionsOrderArray.begin();
-             resOrderIter != _searchResolutionsOrderArray.end(); ++resOrderIter) {
+    for (auto searchIt = _searchPathArray.begin(); searchIt != _searchPathArray.end(); ++searchIt) {
+        for (auto resolutionIt = _searchResolutionsOrderArray.begin(); resolutionIt != _searchResolutionsOrderArray.end(); ++resolutionIt) {
             
-//            CCLOG("SEARCHING: %s\n", std::string(*searchPathsIter + *resOrderIter + newFilename).c_str() );
-            
-            fullpath = this->getPathForFilename(newFilename, *resOrderIter, *searchPathsIter);
+            fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
             
             if (fullpath.length() > 0)
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::pair<std::string, std::string>(filename, fullpath));
-//                CCLOG("Returning path: %s\n", fullpath.c_str());
                 return fullpath;
             }
         }
     }
     
-//    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename);
+    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename);
 
+    // XXX: Should it return nullptr ? or an empty string ?
     // The file wasn't found, return the file name passed in.
     return filename;
 }

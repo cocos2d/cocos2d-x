@@ -85,8 +85,8 @@ public:
 
     Dictionary* snapshotTextures();
 
-    /** Returns a Texture2D object given an file image
-    * If the file image was not previously loaded, it will create a new Texture2D
+    /** Returns a Texture2D object given an filename.
+    * If the filename was not previously loaded, it will create a new Texture2D
     *  object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
@@ -102,13 +102,14 @@ public:
     */
     virtual void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
 
-    /** Returns a Texture2D object given an UIImage image
+    /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
-    * Otherwise it will return a reference of a previously loaded image
+    * Otherwise it will return a reference of a previously loaded image.
     * The "key" parameter will be used as the "key" for the cache.
     * If "key" is nil, then a new texture will be created each time.
     */
-    Texture2D* addUIImage(Image *image, const char *key);
+    Texture2D* addImage(Image *image, const char *key);
+    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const char *key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5

@@ -57,10 +57,10 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils();
+    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils();
+    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
 
     /**
      *  The destructor of FileUtils.
@@ -308,6 +308,7 @@ protected:
     
     /**
      *  Gets the new filename from the filename lookup dictionary.
+     *  It is possible to have a override names.
      *  @param filename The original filename.
      *  @return The new filename after searching in the filename lookup dictionary.
      *          If the original filename wasn't in the dictionary, it will return the original filename.

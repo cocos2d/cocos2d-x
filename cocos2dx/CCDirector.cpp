@@ -861,7 +861,7 @@ void Director::createStatsLabel()
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_SPFLabel);
         CC_SAFE_RELEASE_NULL(_drawsLabel);
-        textureCache->removeTextureForKey("cc_fps_images");
+        textureCache->removeTextureForKey("/cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
@@ -878,7 +878,7 @@ void Director::createStatsLabel()
         return;
     }
 
-    texture = textureCache->addUIImage(image, "cc_fps_images");
+    texture = textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
     /*
