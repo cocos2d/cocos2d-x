@@ -53,10 +53,10 @@ CCArmature *CCArmature::create()
 }
 
 
-CCArmature *CCArmature::create(const char *_name)
+CCArmature *CCArmature::create(const char *name)
 {
     CCArmature *armature = new CCArmature();
-    if (armature && armature->init(_name))
+    if (armature && armature->init(name))
     {
         armature->autorelease();
         return armature;

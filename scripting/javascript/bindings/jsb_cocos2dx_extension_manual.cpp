@@ -650,12 +650,9 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
     {
         jsval percentVal = DOUBLE_TO_JSVAL(percent);
         
-        jsval valArr[0];
-        valArr[0] = percentVal;
-        
-        JS_AddValueRoot(cx, valArr);
-        JS_CallFunctionValue(cx, thisObj, jsCallback, 1, valArr, &retval);
-        JS_RemoveValueRoot(cx, valArr);
+        JS_AddValueRoot(cx, &percentVal);
+        JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &percentVal, &retval);
+        JS_RemoveValueRoot(cx, &percentVal);
     }
 }
 
@@ -732,7 +729,7 @@ static JSBool js_cocos2dx_CCArmatureAnimation_setFrameEventCallFunc(JSContext *c
     return JS_FALSE;
 }
 
-static JSBool jsb_Animation_setAddArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
+static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
@@ -745,13 +742,36 @@ static JSBool jsb_Animation_setAddArmatureFileInfoAsyncCallFunc(JSContext *cx, u
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
         
-        tmpObj->setJSCallbackFunc(argv[0]);
+        tmpObj->setJSCallbackFunc(argv[2]);
         tmpObj->setJSCallbackThis(argv[1]);
         
         std::string ret;
         jsval_to_std_string(cx, argv[0], &ret);
         
         cobj->addArmatureFileInfoAsync(ret.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
+        
+        return JS_TRUE;
+    }
+    
+    if(argc == 5){
+		jsval *argv = JS_ARGV(cx, vp);
+        
+        JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+        tmpObj->autorelease();
+        
+        tmpObj->setJSCallbackFunc(argv[4]);
+        tmpObj->setJSCallbackThis(argv[3]);
+        
+        std::string imagePath;
+        jsval_to_std_string(cx ,argv[0] , &imagePath);
+        
+        std::string plistPath;
+        jsval_to_std_string(cx ,argv[1] , &plistPath);
+        
+        std::string configFilePath;
+        jsval_to_std_string(cx ,argv[2] , &configFilePath);
+        
+        cobj->addArmatureFileInfoAsync(imagePath.c_str(), plistPath.c_str(), configFilePath.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
         
         return JS_TRUE;
     }
@@ -776,7 +796,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_CCArmatureAnimation_prototype, "setFrameEventCallFunc", js_cocos2dx_CCArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, jsb_CCArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_setAddArmatureFileInfoAsyncCallFunc, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
