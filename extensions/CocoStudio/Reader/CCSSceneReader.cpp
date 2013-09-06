@@ -69,7 +69,6 @@ NS_CC_EXT_BEGIN
 	CCNode* CCSSceneReader::createObject(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
     {
         const char *className = inputFiles->getItemStringValue("classname"); 
-		const char *version = inputFiles->getItemStringValue("Version");
         if(strcmp(className, "CCNode") == 0)
         {
             CCNode* gb = NULL;
