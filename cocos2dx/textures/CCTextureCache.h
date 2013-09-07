@@ -33,9 +33,9 @@ THE SOFTWARE.
 #include <condition_variable>
 #include <queue>
 #include <string>
+#include <unordered_map>
 
 #include "cocoa/CCObject.h"
-#include "cocoa/CCDictionary.h"
 #include "textures/CCTexture2D.h"
 #include "platform/CCImage.h"
 
@@ -83,7 +83,7 @@ public:
 
     const char* description(void) const;
 
-    Dictionary* snapshotTextures();
+//    Dictionary* snapshotTextures();
 
     /** Returns a Texture2D object given an filename.
     * If the filename was not previously loaded, it will create a new Texture2D
@@ -91,7 +91,7 @@ public:
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
     */
-    Texture2D* addImage(const char* fileimage);
+    Texture2D* addImage(const std::string &filepath);
 
     /* Returns a Texture2D object given a file image
     * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -100,7 +100,7 @@ public:
     * Supported image extensions: .png, .jpg
     * @since v0.8
     */
-    virtual void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const std::string &filepath, Object *target, SEL_CallFuncO selector);
 
     /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -108,13 +108,14 @@ public:
     * The "key" parameter will be used as the "key" for the cache.
     * If "key" is nil, then a new texture will be created each time.
     */
-    Texture2D* addImage(Image *image, const char *key);
+    Texture2D* addImage(Image *image, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const char *key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5
     */
-    Texture2D* textureForKey(const char* key);
+    Texture2D* getTextureForKey(const std::string& key) const;
+    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const char* key) const { return getTextureForKey(key); }
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
@@ -138,14 +139,14 @@ public:
     /** Deletes a texture from the cache given a its key name
     @since v0.99.4
     */
-    void removeTextureForKey(const char *textureKeyName);
+    void removeTextureForKey(const std::string &key);
 
     /** Output to CCLOG the current contents of this TextureCache
     * This will attempt to calculate the size of each texture, and the total texture memory in use
     *
     * @since v1.0
     */
-    void dumpCachedTextureInfo();
+    void dumpCachedTextureInfo() const;
 
 private:
     void addImageAsyncCallBack(float dt);
@@ -157,9 +158,9 @@ public:
     public:
         AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
 
-        std::string            filename;
-        Object    *target;
-        SEL_CallFuncO        selector;
+        std::string filename;
+        Object *target;
+        SEL_CallFuncO selector;
     };
 
 protected:
@@ -184,7 +185,7 @@ protected:
 
     int _asyncRefCount;
 
-    Dictionary* _textures;
+    std::unordered_map<std::string, Texture2D*> _textures;
 
     static TextureCache *_sharedTextureCache;
 };
