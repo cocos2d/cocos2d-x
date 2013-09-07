@@ -41,8 +41,8 @@ static Texture2D* getDefaultTexture()
     do 
     {
         bool bRet = false;
-        const char* key = "__firePngData";
-        texture = TextureCache::getInstance()->textureForKey(key);
+        const char* key = "/__firePngData";
+        texture = TextureCache::getInstance()->getTextureForKey(key);
         CC_BREAK_IF(texture != NULL);
 
         pImage = new Image();
