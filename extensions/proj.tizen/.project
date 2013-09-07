@@ -7,11 +7,8 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
 			<arguments>
-				<dictionary>
-					<key>?children?</key>
-					<value>?name?=outputEntries\|?children?=?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|?name?=entry\\\\\\\|\\\|\||</value>
-				</dictionary>
 				<dictionary>
 					<key>?name?</key>
 					<value></value>
@@ -34,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>${workspace_loc:/extensions/Debug-Tizen-Emulator}</value>
+					<value>${workspace_loc:/extensions/Debug-Tizen-Device}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -46,7 +43,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
-					<value>true</value>
+					<value>false</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>
@@ -91,9 +88,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/CCArmature</name>
+			<name>src/AssetsManager</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/AssetsManager</locationURI>
 		</link>
 		<link>
 			<name>src/CCBReader</name>
@@ -101,14 +98,29 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
-			<name>src/Components</name>
+			<name>src/CocoStudio</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CocoStudio</locationURI>
+		</link>
+		<link>
+			<name>src/ExtensionMacros.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/ExtensionMacros.h</locationURI>
 		</link>
 		<link>
 			<name>src/GUI</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/GUI</locationURI>
+		</link>
+		<link>
+			<name>src/LocalStorage</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LocalStorage</locationURI>
+		</link>
+		<link>
+			<name>src/cocos-ext.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/cocos-ext.h</locationURI>
 		</link>
 		<link>
 			<name>src/network</name>
@@ -126,15 +138,4 @@
 			<locationURI>PARENT-1-PROJECT_LOC/spine</locationURI>
 		</link>
 	</linkedResources>
-	<filteredResources>
-		<filter>
-			<id>1370769426773</id>
-			<name>src/network</name>
-			<type>6</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-WebSocket*</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
 </projectDescription>
