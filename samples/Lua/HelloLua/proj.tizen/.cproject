@@ -158,6 +158,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/scripting/lua/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/Box2D/proj.tizen/Debug-Tizen-Emulator&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/proj.tizen/Debug-Tizen-Emulator&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/lib/x86&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-emulator-2.2.native/usr/lib&quot;"/>
@@ -186,6 +187,7 @@
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="curl"/>
 									<listOptionValue builtIn="false" value="websockets"/>
+									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1406428633" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -193,7 +195,7 @@
 								</inputType>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1853332970" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.1205632231" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.1205632231" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1409803232" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.529331995" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
@@ -683,6 +685,7 @@
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/scripting/lua/proj.tizen/Debug-Tizen-Device&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/extensions/proj.tizen/Debug-Tizen-Device&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/Box2D/proj.tizen/Debug-Tizen-Device&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/chipmunk/proj.tizen/Debug-Tizen-Device&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_ROOT}/external/libwebsockets/tizen/lib/armv7l&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-device-2.2.native/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${COCOS_SRC}/platform/third_party/tizen/rootstraps/tizen-device-2.2.native/usr/lib&quot;"/>
@@ -711,6 +714,7 @@
 									<listOptionValue builtIn="false" value="box2d"/>
 									<listOptionValue builtIn="false" value="curl"/>
 									<listOptionValue builtIn="false" value="websockets"/>
+									<listOptionValue builtIn="false" value="chipmunk"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1630451820" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -718,7 +722,7 @@
 								</inputType>
 							</tool>
 							<tool command="arm-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.1834101561" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.654060403" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.654060403" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2118687343" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.1027113708" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
@@ -751,4 +755,5 @@
 	</storageModule>
 	<storageModule moduleId="com.samsung.tizen.nativeapp.projectInfo" version="1.0.0"/>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

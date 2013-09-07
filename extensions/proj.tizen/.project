@@ -93,19 +93,14 @@
 			<locationURI>PARENT-1-PROJECT_LOC/AssetsManager</locationURI>
 		</link>
 		<link>
-			<name>src/CCArmature</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
-		</link>
-		<link>
 			<name>src/CCBReader</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
-			<name>src/Components</name>
+			<name>src/CocoStudio</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CocoStudio</locationURI>
 		</link>
 		<link>
 			<name>src/ExtensionMacros.h</name>

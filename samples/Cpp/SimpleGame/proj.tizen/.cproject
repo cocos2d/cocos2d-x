@@ -168,7 +168,7 @@
 								</inputType>
 							</tool>
 							<tool command="i386-linux-gnueabi-as.exe" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.155065772" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.1450832748" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.1450832748" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1958270434" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="org.tizen.nativecpp.tool.sbi.po.compiler.1918264112" name="PO Resource Compiler" superClass="org.tizen.nativecpp.tool.sbi.po.compiler"/>
