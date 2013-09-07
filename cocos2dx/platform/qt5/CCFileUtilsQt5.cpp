@@ -84,7 +84,7 @@ FileUtilsQt5::init()
 }
 
 std::string
-FileUtilsQt5::getWritablePath()
+FileUtilsQt5::getWritablePath() const
 {
     QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
@@ -96,7 +96,7 @@ FileUtilsQt5::getWritablePath()
     return dir.path().toStdString();
 }
 
-bool FileUtilsQt5::isFileExist(const std::string& strFilePath)
+bool FileUtilsQt5::isFileExist(const std::string& strFilePath) const
 {
     QString filePath = QString::fromStdString(strFilePath);
 

@@ -42,12 +42,13 @@ class CC_DLL FileUtilsEmscripten : public FileUtils
 {
     friend class FileUtils;
     FileUtilsEmscripten();
+
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
-    virtual bool isAbsolutePath(const std::string& strPath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
+    virtual bool isAbsolutePath(const std::string& strPath) const;
 };
 
 // end of platform group
