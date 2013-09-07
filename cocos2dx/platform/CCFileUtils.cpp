@@ -488,41 +488,41 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtils::getFileData(const char* filename, const char* mode, unsigned long * size)
 {
-    unsigned char * pBuffer = NULL;
-    CCASSERT(filename != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
-    *pSize = 0;
+    unsigned char * buffer = NULL;
+    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
+    *size = 0;
     do
     {
         // read the file from hardware
         std::string fullPath = fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), pszMode);
+        FILE *fp = fopen(fullPath.c_str(), mode);
         CC_BREAK_IF(!fp);
         
         fseek(fp,0,SEEK_END);
-        *pSize = ftell(fp);
+        *size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        pBuffer = new unsigned char[*pSize];
-        *pSize = fread(pBuffer,sizeof(unsigned char), *pSize,fp);
+        buffer = new unsigned char[*size];
+        *size = fread(buffer,sizeof(unsigned char), *size,fp);
         fclose(fp);
     } while (0);
     
-    if (! pBuffer)
+    if (! buffer)
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
         
         CCLOG("%s", msg.c_str());
     }
-    return pBuffer;
+    return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * pSize)
+unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * size)
 {
-    unsigned char * pBuffer = NULL;
+    unsigned char * buffer = NULL;
     unzFile pFile = NULL;
-    *pSize = 0;
+    *size = 0;
 
     do 
     {
@@ -543,11 +543,11 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
         nRet = unzOpenCurrentFile(pFile);
         CC_BREAK_IF(UNZ_OK != nRet);
 
-        pBuffer = new unsigned char[FileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(pFile, pBuffer, FileInfo.uncompressed_size);
+        buffer = new unsigned char[FileInfo.uncompressed_size];
+        int CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, FileInfo.uncompressed_size);
         CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
 
-        *pSize = FileInfo.uncompressed_size;
+        *size = FileInfo.uncompressed_size;
         unzCloseCurrentFile(pFile);
     } while (0);
 
@@ -556,7 +556,7 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
         unzClose(pFile);
     }
 
-    return pBuffer;
+    return buffer;
 }
 
 std::string FileUtils::getNewFilename(const char* filename)
@@ -601,21 +601,20 @@ std::string FileUtils::fullPathForFilename(const char* filename)
 {
     CCASSERT(filename != NULL, "CCFileUtils: Invalid path");
     
-    std::string strFileName = filename;
     if (isAbsolutePath(filename))
     {
         return filename;
     }
-    
+
     // Already Cached ?
     auto cacheIter = _fullPathCache.find(filename);
-    if (cacheIter != _fullPathCache.end())
+    if( cacheIter != _fullPathCache.end() )
     {
         return cacheIter->second;
     }
     
     // Get the new file name.
-    std::string newFilename = getNewFilename(filename);
+    std::string newFilename( getNewFilename(filename) );
     
     string fullpath = "";
     
@@ -640,26 +639,24 @@ std::string FileUtils::fullPathForFilename(const char* filename)
     return filename;
 }
 
-const char* FileUtils::fullPathFromRelativeFile(const char *filename, const char *pszRelativeFile)
+std::string FileUtils::fullPathFromRelativeFile(const char *filename, const char *relFile)
 {
-    std::string relativeFile = pszRelativeFile;
-    String *pRet = String::create("");
-    pRet->_string = relativeFile.substr(0, relativeFile.rfind('/')+1);
-    pRet->_string += getNewFilename(filename);
-    return pRet->getCString();
+    std::string relativeFile( relFile );
+
+    return relativeFile.substr(0, relativeFile.rfind('/')+1) + getNewFilename(filename);
 }
 
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    bool bExistDefault = false;
+    bool existDefault = false;
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
-    for (std::vector<std::string>::const_iterator iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
+    for(auto iter = searchResolutionsOrder.begin(); iter != searchResolutionsOrder.end(); ++iter)
     {
         std::string resolutionDirectory = *iter;
-        if (!bExistDefault && resolutionDirectory == "")
+        if (!existDefault && resolutionDirectory == "")
         {
-            bExistDefault = true;
+            existDefault = true;
         }
         
         if (resolutionDirectory.length() > 0 && resolutionDirectory[resolutionDirectory.length()-1] != '/')
@@ -669,7 +666,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
         
         _searchResolutionsOrderArray.push_back(resolutionDirectory);
     }
-    if (!bExistDefault)
+    if (!existDefault)
     {
         _searchResolutionsOrderArray.push_back("");
     }
@@ -692,31 +689,32 @@ const std::vector<std::string>& FileUtils::getSearchPaths()
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
-    bool bExistDefaultRootPath = false;
+    bool existDefaultRootPath = false;
     
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (std::vector<std::string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+    for (auto iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
         std::string strPrefix;
         std::string path;
+        
         if (!isAbsolutePath(*iter))
         { // Not an absolute path
             strPrefix = _defaultResRootPath;
         }
-        path = strPrefix+(*iter);
+        path = strPrefix + (*iter);
         if (path.length() > 0 && path[path.length()-1] != '/')
         {
             path += "/";
         }
-        if (!bExistDefaultRootPath && path == _defaultResRootPath)
+        if (!existDefaultRootPath && path == _defaultResRootPath)
         {
-            bExistDefaultRootPath = true;
+            existDefaultRootPath = true;
         }
         _searchPathArray.push_back(path);
     }
     
-    if (!bExistDefaultRootPath)
+    if (!existDefaultRootPath)
     {
         //CCLOG("Default root path doesn't exist, adding it.");
         _searchPathArray.push_back(_defaultResRootPath);
@@ -752,17 +750,17 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
     std::string fullPath = this->fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
-        Dictionary* pDict = Dictionary::createWithContentsOfFile(fullPath.c_str());
-        if (pDict)
+        Dictionary* dict = Dictionary::createWithContentsOfFile(fullPath.c_str());
+        if (dict)
         {
-            Dictionary* pMetadata = (Dictionary*)pDict->objectForKey("metadata");
-            int version = ((String*)pMetadata->objectForKey("version"))->intValue();
+            Dictionary* metadata = static_cast<Dictionary*>( dict->objectForKey("metadata") );
+            int version = static_cast<String*>( metadata->objectForKey("version"))->intValue();
             if (version != 1)
             {
                 CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
                 return;
             }
-            setFilenameLookupDictionary((Dictionary*)pDict->objectForKey("filenames"));
+            setFilenameLookupDictionary( static_cast<Dictionary*>( dict->objectForKey("filenames")) );
         }
     }
 }
@@ -785,22 +783,22 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& str
 
 bool FileUtils::isAbsolutePath(const std::string& strPath)
 {
-    return strPath[0] == '/' ? true : false;
+    return (strPath[0] == '/');
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
 //////////////////////////////////////////////////////////////////////////
-static bool s_bPopupNotify = true;
+static bool s_popupNotify = true;
 
-void FileUtils::setPopupNotify(bool bNotify)
+void FileUtils::setPopupNotify(bool notify)
 {
-    s_bPopupNotify = bNotify;
+    s_popupNotify = notify;
 }
 
 bool FileUtils::isPopupNotify()
 {
-    return s_bPopupNotify;
+    return s_popupNotify;
 }
 
 NS_CC_END

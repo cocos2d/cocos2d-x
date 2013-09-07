@@ -50,7 +50,7 @@ static Texture2D* getDefaultTexture()
         bRet = pImage->initWithImageData(__firePngData, sizeof(__firePngData));
         CC_BREAK_IF(!bRet);
 
-        texture = TextureCache::getInstance()->addUIImage(pImage, key);
+        texture = TextureCache::getInstance()->addImage(pImage, key);
     } while (0);
 
     CC_SAFE_RELEASE(pImage);
