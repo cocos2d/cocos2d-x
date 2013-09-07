@@ -309,9 +309,10 @@ Texture2D * TextureCache::addImage(const char * path)
     }
     texture = static_cast<Texture2D*>(_textures->objectForKey(pathKey));
 
-    std::string fullpath(pathKey);
-    if (! texture) 
+    if (! texture)
     {
+        std::string fullpath(pathKey);
+
         // all images are handled by UIImage except PVR extension that is handled by our own handler
         do 
         {
