@@ -91,7 +91,7 @@ bool FileUtilsWin32::init()
     return FileUtils::init();
 }
 
-bool FileUtilsWin32::isFileExist(const std::string& strFilePath)
+bool FileUtilsWin32::isFileExist(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {
@@ -110,7 +110,7 @@ bool FileUtilsWin32::isFileExist(const std::string& strFilePath)
     return GetFileAttributesW(utf16Buf) != -1 ? true : false;
 }
 
-bool FileUtilsWin32::isAbsolutePath(const std::string& strPath)
+bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 {
     if (   strPath.length() > 2 
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
@@ -182,7 +182,7 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
     return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
 }
 
-string FileUtilsWin32::getWritablePath()
+string FileUtilsWin32::getWritablePath() const
 {
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[CC_MAX_PATH + 1];

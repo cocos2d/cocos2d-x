@@ -230,7 +230,7 @@ FileUtils* FileUtils::getInstance()
 }
 
 
-std::string FileUtilsApple::getWritablePath()
+std::string FileUtilsApple::getWritablePath() const
 {
     // save to document folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -240,7 +240,7 @@ std::string FileUtilsApple::getWritablePath()
     return strRet;
 }
 
-bool FileUtilsApple::isFileExist(const std::string& strFilePath)
+bool FileUtilsApple::isFileExist(const std::string& strFilePath) const
 {
     if(strFilePath.length() == 0)
     {
@@ -306,7 +306,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 
 Dictionary* FileUtilsApple::createDictionaryWithContentsOfFile(const std::string& filename)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
+    std::string fullPath = fullPathForFilename(filename);
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
@@ -351,7 +351,7 @@ Array* FileUtilsApple::createArrayWithContentsOfFile(const std::string& filename
     //    pPath = [pPath stringByDeletingPathExtension];
     //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
     //    fixing cannot read data using Array::createWithContentsOfFile
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
+    std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* array = [NSArray arrayWithContentsOfFile:path];
     

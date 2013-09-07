@@ -76,7 +76,7 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
-bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
+bool FileUtilsAndroid::isFileExist(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {
@@ -116,7 +116,7 @@ bool FileUtilsAndroid::isFileExist(const std::string& strFilePath)
     return bFound;
 }
 
-bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath)
+bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 {
     // On Android, there are two situations for full path.
     // 1) Files in APK, e.g. assets/path/path/file.png
@@ -235,7 +235,7 @@ unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char*
     return pData;
 }
 
-string FileUtilsAndroid::getWritablePath()
+string FileUtilsAndroid::getWritablePath() const
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
