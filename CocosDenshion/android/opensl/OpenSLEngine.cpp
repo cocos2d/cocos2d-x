@@ -382,6 +382,7 @@ void destroyAudioPlayer(AudioPlayer * player)
 		player->fdPlayerPlay = NULL;
 		player->fdPlayerSeek = NULL;
 		player->fdPlayerVolume = NULL;
+		player->fdPlaybackRate = NULL;
 		s_freeObjectsAvailable++;
 	}
 }
@@ -623,6 +624,7 @@ void checkRemovalList()
 
 		pthread_mutex_unlock(&s_mutexSharedList);
 
+		// Destroy audio player after mutex unlock, because this function does not always return
 		destroyAudioPlayer(player);
 		delete player;
 	}
