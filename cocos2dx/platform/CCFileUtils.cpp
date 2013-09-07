@@ -518,7 +518,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, un
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long * size)
+unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, unsigned long * size)
 {
     unsigned char * buffer = NULL;
     unzFile pFile = NULL;
@@ -526,10 +526,10 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
 
     do 
     {
-        CC_BREAK_IF(!pszZipFilePath || !filename);
-        CC_BREAK_IF(strlen(pszZipFilePath) == 0);
+        CC_BREAK_IF(!zipFilePath || !filename);
+        CC_BREAK_IF(strlen(zipFilePath) == 0);
 
-        pFile = unzOpen(pszZipFilePath);
+        pFile = unzOpen(zipFilePath);
         CC_BREAK_IF(!pFile);
 
         int nRet = unzLocateFile(pFile, filename, 1);
@@ -559,9 +559,9 @@ unsigned char* FileUtils::getFileDataFromZip(const char* pszZipFilePath, const c
     return buffer;
 }
 
-std::string FileUtils::getNewFilename(const char* filename)
+std::string FileUtils::getNewFilename(const std::string &filename)
 {
-    const char* newFileName = NULL;
+    std::string newFileName;
     
     // in Lookup Filename dictionary ?
     String* fileNameFound = _filenameLookupDict ? (String*)_filenameLookupDict->objectForKey(filename) : NULL;
@@ -597,10 +597,8 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 }
 
 
-std::string FileUtils::fullPathForFilename(const char* filename)
+std::string FileUtils::fullPathForFilename(const std::string &filename)
 {
-    CCASSERT(filename != NULL, "CCFileUtils: Invalid path");
-    
     if (isAbsolutePath(filename))
     {
         return filename;
@@ -632,17 +630,15 @@ std::string FileUtils::fullPathForFilename(const char* filename)
         }
     }
     
-    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename);
+    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
 
     // XXX: Should it return nullptr ? or an empty string ?
     // The file wasn't found, return the file name passed in.
     return filename;
 }
 
-std::string FileUtils::fullPathFromRelativeFile(const char *filename, const char *relFile)
+std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile)
 {
-    std::string relativeFile( relFile );
-
     return relativeFile.substr(0, relativeFile.rfind('/')+1) + getNewFilename(filename);
 }
 
@@ -672,7 +668,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
     }
 }
 
-void FileUtils::addSearchResolutionsOrder(const char* order)
+void FileUtils::addSearchResolutionsOrder(const std::string &order)
 {
     _searchResolutionsOrderArray.push_back(order);
 }
@@ -682,7 +678,7 @@ const std::vector<std::string>& FileUtils::getSearchResolutionsOrder()
     return _searchResolutionsOrderArray;
 }
 
-const std::vector<std::string>& FileUtils::getSearchPaths()
+const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
     return _searchPathArray;
 }
@@ -721,15 +717,13 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     }
 }
 
-void FileUtils::addSearchPath(const char* path_)
+void FileUtils::addSearchPath(const std::string &searchpath)
 {
     std::string strPrefix;
-    std::string path(path_);
-    if (!isAbsolutePath(path))
-    { // Not an absolute path
+    if (!isAbsolutePath(searchpath))
         strPrefix = _defaultResRootPath;
-    }
-    path = strPrefix + path;
+
+    std::string path = strPrefix + searchpath;
     if (path.length() > 0 && path[path.length()-1] != '/')
     {
         path += "/";
@@ -745,9 +739,9 @@ void FileUtils::setFilenameLookupDictionary(Dictionary* pFilenameLookupDict)
     CC_SAFE_RETAIN(_filenameLookupDict);
 }
 
-void FileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
+void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
 {
-    std::string fullPath = this->fullPathForFilename(filename);
+    std::string fullPath = fullPathForFilename(filename);
     if (fullPath.length() > 0)
     {
         Dictionary* dict = Dictionary::createWithContentsOfFile(fullPath.c_str());
@@ -757,7 +751,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const char* filename)
             int version = static_cast<String*>( metadata->objectForKey("version"))->intValue();
             if (version != 1)
             {
-                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename);
+                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
                 return;
             }
             setFilenameLookupDictionary( static_cast<Dictionary*>( dict->objectForKey("filenames")) );
@@ -781,7 +775,7 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& str
     return ret;
 }
 
-bool FileUtils::isAbsolutePath(const std::string& strPath)
+bool FileUtils::isAbsolutePath(const std::string& strPath) const
 {
     return (strPath[0] == '/');
 }
