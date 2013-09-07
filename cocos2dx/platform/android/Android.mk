@@ -14,6 +14,8 @@ CCApplication.cpp \
 CCCommon.cpp \
 CCFileUtilsAndroid.cpp \
 CCImage.cpp \
+Queue.cpp \
+Executor.cpp \
 nativeactivity.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \

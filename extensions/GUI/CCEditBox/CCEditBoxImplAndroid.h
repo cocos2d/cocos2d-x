@@ -27,6 +27,7 @@
 #define __CCEDITBOXIMPLANDROID_H__
 
 #include "cocos2d.h"
+#include "platform/android/Queue.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
@@ -40,6 +41,9 @@ class EditBox;
 
 class EditBoxImplAndroid : public EditBoxImpl
 {
+	enum class EventCode {
+		UPDATE_TEXT
+	};
 public:
     EditBoxImplAndroid(EditBox* pEditText);
     virtual ~EditBoxImplAndroid();
@@ -71,7 +75,7 @@ public:
     
 private:
 	static void editBoxCallbackFunc(const char* pText, void* ctx);
-	std::atomic<std::string*> _updatedText;
+	android::Queue _queue;
     LabelTTF* _label;
     LabelTTF* _labelPlaceHolder;
     EditBox::InputMode    _editBoxInputMode;

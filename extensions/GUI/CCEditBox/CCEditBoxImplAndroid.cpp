@@ -41,7 +41,7 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 
 EditBoxImplAndroid::EditBoxImplAndroid(EditBox* pEditText)
 : EditBoxImpl(pEditText)
-, _updatedText(NULL)
+, _queue()
 , _label(NULL)
 , _labelPlaceHolder(NULL)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
@@ -238,33 +238,32 @@ void EditBoxImplAndroid::setAnchorPoint(const Point& anchorPoint)
 void EditBoxImplAndroid::visit(void)
 {
 	// checking whether user edited the text or not.
-	std::string* const changed = this->_updatedText.exchange(NULL);
-	if( changed != NULL ){
-		CCLOG("Updated to: %s", changed->c_str());
-	    this->setText(changed->c_str());
-	    delete changed;
-
-		if (this->getDelegate() != NULL)
-		{
-		    this->getDelegate()->editBoxTextChanged(this->getEditBox(), this->getText());
-		    this->getDelegate()->editBoxEditingDidEnd(this->getEditBox());
-		    this->getDelegate()->editBoxReturn(this->getEditBox());
-		}
-		
-		EditBox* pEditBox = this->getEditBox();
-		if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-		{        
-		    CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-		    ScriptEvent event(kCommonEvent,(void*)&data);
-		    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-		    memset(data.eventName,0,64*sizeof(char));
-		    strncpy(data.eventName,"ended",64);
-		    event.data = (void*)&data;
-		    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-		    memset(data.eventName,0,64*sizeof(char));
-		    strncpy(data.eventName,"return",64);
-		    event.data = (void*)&data;
-		    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+	android::Queue::Payload p;
+	while( this->_queue.pop(p) ){
+		EventCode const code = static_cast<EventCode>(p.code());
+		if(p.is<std::string>() && code == EventCode::UPDATE_TEXT){
+	    	this->setText(p.as<std::string>("").c_str());
+			if (this->getDelegate() != NULL)
+			{
+				this->getDelegate()->editBoxTextChanged(this->getEditBox(), this->getText());
+				this->getDelegate()->editBoxEditingDidEnd(this->getEditBox());
+				this->getDelegate()->editBoxReturn(this->getEditBox());
+			}
+			EditBox* const pEditBox = this->getEditBox();
+			if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+			{        
+				CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+				ScriptEvent event(kCommonEvent,(void*)&data);
+				ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+				memset(data.eventName,0,64*sizeof(char));
+				strncpy(data.eventName,"ended",64);
+				event.data = (void*)&data;
+				ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+				memset(data.eventName,0,64*sizeof(char));
+				strncpy(data.eventName,"return",64);
+				event.data = (void*)&data;
+				ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+			}
 		}
 	}
 }
@@ -278,11 +277,8 @@ void EditBoxImplAndroid::editBoxCallbackFunc(const char* pText, void* ctx)
 {
 	//this function is called under Android GUI Thread (!= cocos2d-x main loop thread)
     EditBoxImplAndroid* thiz = reinterpret_cast<EditBoxImplAndroid*>(ctx);
-    std::string* expected = NULL;
-    std::string* changed = new std::string(pText);
-    if(!thiz->_updatedText.compare_exchange_strong(expected, changed)){
-    	delete changed; //failed to store data.
-	}
+	std::string newText(pText);
+	thiz->_queue.push(static_cast<int>(EventCode::UPDATE_TEXT), newText);
 }
 
 void EditBoxImplAndroid::openKeyboard()
