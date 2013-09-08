@@ -476,7 +476,7 @@ unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
 unsigned int TMXLayer::atlasIndexForNewZ(int z)
 {
     // XXX: This can be improved with a sort of binary search
-    unsigned int i=0;
+    int i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {
         int val = (size_t) _atlasIndexArray->arr[i];

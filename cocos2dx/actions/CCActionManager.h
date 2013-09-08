@@ -119,7 +119,7 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
+    void removeActionAtIndex(int index, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);

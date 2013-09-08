@@ -799,7 +799,7 @@ void Node::visit()
      }
 
     this->transform();
-    unsigned int i = 0;
+    int i = 0;
 
     if(_children && _children->count() > 0)
     {
