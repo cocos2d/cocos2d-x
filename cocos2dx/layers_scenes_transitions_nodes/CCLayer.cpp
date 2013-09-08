@@ -1123,7 +1123,7 @@ bool LayerMultiplex::initWithArray(Array* arrayOfLayers)
     return false;
 }
 
-void LayerMultiplex::switchTo(unsigned int n)
+void LayerMultiplex::switchTo(int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 
@@ -1134,7 +1134,7 @@ void LayerMultiplex::switchTo(unsigned int n)
     this->addChild((Node*)_layers->getObjectAtIndex(n));
 }
 
-void LayerMultiplex::switchToAndReleaseMe(unsigned int n)
+void LayerMultiplex::switchToAndReleaseMe(int n)
 {
     CCASSERT( n < _layers->count(), "Invalid index in MultiplexLayer switchTo message" );
 

@@ -1,4 +1,4 @@
-    #include "LabelTestNew.h"
+#include "LabelTestNew.h"
 #include "../testResource.h"
 
 enum {

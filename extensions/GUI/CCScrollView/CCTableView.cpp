@@ -184,13 +184,13 @@ void TableView::insertCellAtIndex(unsigned  int idx)
     TableViewCell* cell = NULL;
     int newIdx = 0;
 
-    cell = (TableViewCell*)_cellsUsed->objectWithObjectID(idx);
+    cell = static_cast<TableViewCell*>(_cellsUsed->objectWithObjectID(idx));
     if (cell)
     {
         newIdx = _cellsUsed->indexOfSortedObject(cell);
-        for (unsigned int i=newIdx; i<_cellsUsed->count(); i++)
+        for (int i=newIdx; i<_cellsUsed->count(); i++)
         {
-            cell = (TableViewCell*)_cellsUsed->getObjectAtIndex(i);
+            cell = static_cast<TableViewCell*>(_cellsUsed->getObjectAtIndex(i));
             this->_setIndexForCell(cell->getIdx()+1, cell);
         }
     }
