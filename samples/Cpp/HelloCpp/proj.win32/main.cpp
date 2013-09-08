@@ -16,6 +16,5 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     AppDelegate app;
     EGLView* eglView = new EGLView();
     eglView->init("TestCPP",900,640);
-	eglView->setFrameZoomFactor(0.5f);
     return Application::getInstance()->run();
 }
