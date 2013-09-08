@@ -56,7 +56,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         Array* children = theLabel->getChildrenLetters();
         
-        for (unsigned int j = 0; j < children->count(); j++)
+        for (int j = 0; j < children->count(); j++)
         {
             Sprite* characterSprite;
             unsigned int justSkipped = 0;

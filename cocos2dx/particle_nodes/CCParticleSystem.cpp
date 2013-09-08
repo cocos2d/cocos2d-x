@@ -405,7 +405,7 @@ bool ParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
 
     if (_batchNode)
     {
-        for (unsigned int i = 0; i < _totalParticles; i++)
+        for (int i = 0; i < _totalParticles; i++)
         {
             _particles[i].atlasIndex=i;
         }
@@ -1020,12 +1020,12 @@ bool ParticleSystem::isActive() const
     return _isActive;
 }
 
-unsigned int ParticleSystem::getTotalParticles() const
+int ParticleSystem::getTotalParticles() const
 {
     return _totalParticles;
 }
 
-void ParticleSystem::setTotalParticles(unsigned int var)
+void ParticleSystem::setTotalParticles(int var)
 {
     CCASSERT( var <= _allocatedParticles, "Particle: resizing particle array only supported for quads");
     _totalParticles = var;
@@ -1070,7 +1070,7 @@ void ParticleSystem::setBatchNode(ParticleBatchNode* batchNode)
 
         if( batchNode ) {
             //each particle needs a unique index
-            for (unsigned int i = 0; i < _totalParticles; i++)
+            for (int i = 0; i < _totalParticles; i++)
             {
                 _particles[i].atlasIndex=i;
             }
