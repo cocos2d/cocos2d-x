@@ -202,10 +202,12 @@ static EffectList& sharedList()
 	return s_List;
 }
 
+// list to keep track of CallbackContexts that need to be removed.
+// removing them in another thread (like during the callback) will cause problems.
 static vector<CallbackContext*>& removalList()
 {
-	static vector<CallbackContext*> s_List;
-	return s_List;
+	static vector<CallbackContext*> s_ContextList;
+	return s_ContextList;
 }
 
 unsigned int _Hash(const char *key)
