@@ -121,6 +121,7 @@ Node::Node(void)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
 , _scene(nullptr)
+, _physicsBody(nullptr)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
