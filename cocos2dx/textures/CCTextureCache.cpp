@@ -114,6 +114,26 @@ Dictionary* TextureCache::snapshotTextures()
     return pRet;
 }
 
+void TextureCache::addImageAsync(const char *path, std::function<void(Object*)> callback)
+{
+    class TempClass : public Object
+    {
+    public :
+        TempClass( std::function<void(Object*)> inFunction ) : _function(inFunction) {}
+        
+        void fireEvent(Object* texture)
+        {
+            _function(texture);
+            release();
+        }
+        
+        std::function<void(Object*)> _function;
+    };
+    
+    auto* temp = new TempClass(callback);
+    addImageAsync(path,temp,callfuncO_selector(TempClass::fireEvent));
+}
+
 void TextureCache::addImageAsync(const char *path, Object *target, SEL_CallFuncO selector)
 {
     CCASSERT(path != NULL, "TextureCache: fileimage MUST not be NULL");    

@@ -101,6 +101,7 @@ public:
     * @since v0.8
     */
     virtual void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const char* path, std::function<void(Object*)> callback);
 
     /** Returns a Texture2D object given an UIImage image
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
