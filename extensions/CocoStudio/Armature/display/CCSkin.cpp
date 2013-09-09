@@ -82,10 +82,13 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
     bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
 
-    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-    setTextureAtlas(atlas);
+    if (ret)
+    {
+		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+		setTextureAtlas(atlas);
 
-    m_strDisplayName = pszSpriteFrameName;
+		m_strDisplayName = pszSpriteFrameName;
+    }
 
     return ret;
 }
@@ -94,10 +97,13 @@ bool CCSkin::initWithFile(const char *pszFilename)
 {
     bool ret = CCSprite::initWithFile(pszFilename);
 
-    CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-    setTextureAtlas(atlas);
+    if (ret)
+    {
+		CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
+		setTextureAtlas(atlas);
 
-    m_strDisplayName = pszFilename;
+		m_strDisplayName = pszFilename;
+    }
 
     return ret;
 }

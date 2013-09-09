@@ -483,6 +483,9 @@
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
+      <Filter>CocoStudio\Armature\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">

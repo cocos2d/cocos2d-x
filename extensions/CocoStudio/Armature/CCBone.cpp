@@ -360,7 +360,7 @@ void CCBone::changeDisplayByIndex(int index, bool force)
     m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
-CCArray *CCBone::getShapeList()
+CCArray *CCBone::getColliderBodyList()
 {
     if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
     {

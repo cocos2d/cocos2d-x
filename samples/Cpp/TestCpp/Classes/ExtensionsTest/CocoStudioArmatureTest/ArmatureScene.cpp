@@ -213,7 +213,7 @@ void TestAsynchronousLoading::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
-    CCLOG("armature version : %s", CCArmature::armatureVersion());
+    CCLOG("armature version : %s", armatureVersion());
 
     backItem->setEnabled(false);
     restartItem->setEnabled(false);

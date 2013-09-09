@@ -40,8 +40,6 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
 public:
 
-    static const char *armatureVersion();
-
     /**
     * Allocates and initializes an armature.
     * @return An initialized armature which is marked as "autorelease".
