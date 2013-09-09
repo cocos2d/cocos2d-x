@@ -80,7 +80,7 @@ bool FileUtilsTizen::init()
     return FileUtils::init();
 }
 
-string FileUtilsTizen::getWritablePath()
+string FileUtilsTizen::getWritablePath() const
 {
     UiApp* pApp = UiApp::GetInstance();
     if (!pApp)
@@ -101,7 +101,7 @@ string FileUtilsTizen::getWritablePath()
     return path;
 }
 
-bool FileUtilsTizen::isFileExist(const std::string& strFilePath)
+bool FileUtilsTizen::isFileExist(const std::string& strFilePath) const
 {
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))

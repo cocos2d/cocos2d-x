@@ -227,7 +227,7 @@ void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 
 void ParticleSystemQuad::initIndices()
 {
-    for(unsigned int i = 0; i < _totalParticles; ++i)
+    for(int i = 0; i < _totalParticles; ++i)
     {
         const unsigned int i6 = i*6;
         const unsigned int i4 = i*4;
@@ -401,7 +401,7 @@ void ParticleSystemQuad::draw()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ParticleSystemQuad::setTotalParticles(unsigned int tp)
+void ParticleSystemQuad::setTotalParticles(int tp)
 {
     // If we are setting the total number of particles to a number higher
     // than what is allocated, we need to allocate new arrays
@@ -447,7 +447,7 @@ void ParticleSystemQuad::setTotalParticles(unsigned int tp)
         // Init particles
         if (_batchNode)
         {
-            for (unsigned int i = 0; i < _totalParticles; i++)
+            for (int i = 0; i < _totalParticles; i++)
             {
                 _particles[i].atlasIndex=i;
             }

@@ -94,7 +94,7 @@ public:
     virtual void postStep() override;
     virtual void draw() override;
     virtual void setBatchNode(ParticleBatchNode* batchNode) override;
-    virtual void setTotalParticles(unsigned int tp) override;
+    virtual void setTotalParticles(int tp) override;
 
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO

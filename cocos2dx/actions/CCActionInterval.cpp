@@ -581,7 +581,7 @@ Spawn* Spawn::create(Array *arrayOfActions)
         FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
         if (count > 1)
         {
-            for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
+            for (int i = 1; i < arrayOfActions->count(); ++i)
             {
                 prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
@@ -2100,7 +2100,7 @@ void Animate::update(float t)
     }
 
     Array* frames = _animation->getFrames();
-    unsigned int numberOfFrames = frames->count();
+    int numberOfFrames = frames->count();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {

@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CC_FILEUTILSMAC_H__
-#define __CC_FILEUTILSMAC_H__
+#ifndef __CC_FILEUTILS_APPLE_H__
+#define __CC_FILEUTILS_APPLE_H__
 
 #include "CCFileUtils.h"
 #include <string>
@@ -31,26 +31,25 @@
 #include "ccTypes.h"
 
 NS_CC_BEGIN
+
 /**
  * @addtogroup platform
  * @{
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL FileUtilsMac : public FileUtils
+class CC_DLL FileUtilsApple : public FileUtils
 {
 public:
     /* override funtions */
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
-    virtual bool isAbsolutePath(const std::string& strPath);
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    virtual std::string getWritablePath() const override;
+    virtual bool isFileExist(const std::string& strFilePath) const override;
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
     
-    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename);
-    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath);
+    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename) override;
+    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath) override;
     
-    virtual Array* createArrayWithContentsOfFile(const std::string& filename);
-
+    virtual Array* createArrayWithContentsOfFile(const std::string& filename) override;
 };
 
 // end of platform group
@@ -58,5 +57,5 @@ public:
 
 NS_CC_END
 
-#endif    // __CC_FILEUTILSMAC_H__
+#endif    // __CC_FILEUTILS_APPLE_H__
 

@@ -556,7 +556,7 @@ void ScrollView::visit()
 
 	if(_children)
     {
-		unsigned int i=0;
+		int i=0;
 		
 		// draw children zOrder < 0
 		for( ; i < _children->count(); i++ )

@@ -1052,6 +1052,8 @@
 		A035AF6F1782567A00987F6C /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6C1782567A00987F6C /* ipad */; };
 		A035AF701782567A00987F6C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6D1782567A00987F6C /* ipadhd */; };
 		A035AF711782567A00987F6C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = A035AF6E1782567A00987F6C /* iphone */; };
+		A03A915017D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */; };
+		A03A915117D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A510B17839F040073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
 		A07A511017839FC80073F6A7 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F117839B9C0073F6A7 /* libcocos2dx Mac.a */; };
@@ -2950,6 +2952,8 @@
 		A035AF6C1782567A00987F6C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipad; sourceTree = "<group>"; };
 		A035AF6D1782567A00987F6C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ipadhd; sourceTree = "<group>"; };
 		A035AF6E1782567A00987F6C /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone; sourceTree = "<group>"; };
+		A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceAllocTest.cpp; sourceTree = "<group>"; };
+		A03A914F17D95C5400FEABDE /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A07A50DF17839B9B0073F6A7 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A07A52291783A1D20073F6A7 /* Test cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52321783A3A80073F6A7 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -4610,6 +4614,8 @@
 		A0359A5D17821D9C00987F6C /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				A03A914E17D95C5400FEABDE /* PerformanceAllocTest.cpp */,
+				A03A914F17D95C5400FEABDE /* PerformanceAllocTest.h */,
 				A0359A5E17821D9C00987F6C /* PerformanceNodeChildrenTest.cpp */,
 				A0359A5F17821D9C00987F6C /* PerformanceNodeChildrenTest.h */,
 				A0359A6017821D9C00987F6C /* PerformanceParticleTest.cpp */,
@@ -6912,6 +6918,7 @@
 				1ACD13F3178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCD1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 				018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */,
+				A03A915017D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7185,6 +7192,7 @@
 				1ACD13F4178E487D00682DBD /* Scale9SpriteTest.cpp in Sources */,
 				1A96FFCE1791701800E3AF98 /* SocketIOTest.cpp in Sources */,
 				018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */,
+				A03A915117D95C5400FEABDE /* PerformanceAllocTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

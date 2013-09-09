@@ -460,7 +460,7 @@ void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
     if (_toRemove)
     {
         _toRemove = false;
-        for (unsigned int i = 0; i < _handlersToRemove->num; ++i)
+        for (int i = 0; i < _handlersToRemove->num; ++i)
         {
             forceRemoveDelegate((TouchDelegate*)_handlersToRemove->arr[i]);
         }
