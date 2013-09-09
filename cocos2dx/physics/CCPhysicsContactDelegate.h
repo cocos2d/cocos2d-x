@@ -33,15 +33,15 @@ NS_CC_BEGIN
 
 class PhysicsBody;
 
-class PhysicsContactDelegate : public Object
+class PhysicsContactDelegate
 {
 public:
-    virtual void onContactBegin(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint);
-    virtual void onContactEnd(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint);
-    
-protected:
     PhysicsContactDelegate();
     virtual ~PhysicsContactDelegate();
+    
+public:
+    virtual void onContactBegin(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint) = 0;
+    virtual void onContactEnd(PhysicsBody* bodyA, PhysicsBody* bodyB, float collisionImpulse, Point contactPoint) = 0;
 };
 
 NS_CC_END

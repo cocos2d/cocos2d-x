@@ -28,13 +28,15 @@
 #include "CCObject.h"
 #include "CCGeometry.h"
 #include "CCPhysicsSetting.h"
+#include <vector>
 
 NS_CC_BEGIN
-class Node;
+class Sprite;
 class PhysicsWorld;
+class PhysicsJoint;
 class PhysicsFixture;
 
-class PhysicsBody : public Object
+class PhysicsBody : public Object, public Clonable
 {
 public:
     static PhysicsBody* createCircle(Point centre, float radius);
@@ -55,19 +57,23 @@ public:
     virtual void applyAngularImpulse(float impulse);
     
     void addFixture(PhysicsFixture* fixture);
-    inline Array* getFixtures() { return _fixtures; }
+    inline Array* getFixtures() const { return _fixtures; }
     void removeFixture(PhysicsFixture* fixture);
     void removeAllFixtures();
     
-    inline PhysicsWorld* getWorld() { return _physicsWorld; }
-    inline Array* getJoints() { return _joints; }
+    inline PhysicsWorld* getWorld() const { return _physicsWorld; }
+    inline const std::vector<PhysicsJoint*>* getJoints() const { return &_joints; }
+    
+    inline Sprite* getOwner() const { return _owner; }
     
     void setCategoryBitmask(int bitmask);
-    inline int getCategoryBitmask() { return _categoryBitmask; }
+    inline int getCategoryBitmask() const { return _categoryBitmask; }
     void setContactTestBitmask(int bitmask);
-    inline int getContactTestBitmask() { return _contactTestBitmask; }
+    inline int getContactTestBitmask() const { return _contactTestBitmask; }
     void setCollisionBitmask(int bitmask);
-    inline int getCollisionBitmask() { return _collisionBitmask; }
+    inline int getCollisionBitmask() const { return _collisionBitmask; }
+    
+    virtual Clonable* clone() const override;
     
 protected:
     bool init();
@@ -81,7 +87,7 @@ private:
     float  _density;
     float  _area;
     float  _friction;
-    Node*  _node;
+    Sprite*  _owner;
     Point  _velocity;
     float  _angularVelocity;
     bool   _resting;
@@ -90,7 +96,7 @@ private:
     int    _contactTestBitmask;
     int    _collisionBitmask;
     
-    Array* _joints;
+    std::vector<PhysicsJoint*> _joints;
     Array* _fixtures;
     PhysicsWorld* _physicsWorld;
 };

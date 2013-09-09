@@ -29,6 +29,7 @@
 #include "CCGeometry.h"
 #include "CCPhysicsSetting.h"
 
+
 NS_CC_BEGIN
 
 class PhysicsBody;
@@ -36,35 +37,40 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsContactDelegate;
 
-class PhysicsWorld : public Object
+class Sprite;
+class Scene;
+
+class PhysicsWorld
 {
 public:
-    static PhysicsWorld* create();
-    void addChild(PhysicsBody* body);
-    
     void addJoint(PhysicsJoint* joint);
     void removeJoint(PhysicsJoint* joint);
     void removeAllJoints();
     
-    Array* bodysAlongRay(Point start, Point end);
-    Array* bodysAtPoint(Point point);
-    Array* bodysInRect(Rect rect);
-    Array* getAllBody();
+    Array* getBodysAlongRay(Point start, Point end) const;
+    Array* getBodysAtPoint(Point point) const;
+    Array* getBodysInRect(Rect rect) const;
+    Array* getAllBody() const;
     
     void registerContactDelegate(PhysicsContactDelegate* delegate);
     
 protected:
+    static PhysicsWorld* create();
     bool init();
+    virtual void addChild(PhysicsBody* body);
     
 protected:
     Point _gravity;
     float _speed;
     
-    class PhysicsWorldInfo* _worldInfo;
+    PhysicsWorldInfo* _worldInfo;
     
 protected:
     PhysicsWorld();
     virtual ~PhysicsWorld();
+    
+    friend class Sprite;
+    friend class Scene;
 };
 
 NS_CC_END

@@ -26,6 +26,9 @@ THE SOFTWARE.
 
 #include "CCScene.h"
 #include "CCDirector.h"
+#include "CCLayer.h"
+#include "sprite_nodes/CCSprite.h"
+#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
@@ -81,7 +84,31 @@ void Scene::addChild(Node* child, int zOrder)
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
-    child->setScene(this);
+    
+    auto addToPhysicsWorldFunc = [this](Object* node) -> void
+    {
+        if (typeid(Sprite).hash_code() == typeid(node).hash_code())
+        {
+            Sprite* sp = dynamic_cast<Sprite*>(node);
+            
+            if (sp && sp->getPhysicsBody())
+            {
+                _physicsWorld->addChild(sp->getPhysicsBody());
+            }
+        }
+    };
+    
+    if(typeid(Layer).hash_code() == typeid(child).hash_code())
+    {
+        Object* subChild = nullptr;
+        CCARRAY_FOREACH(child->getChildren(), subChild)
+        {
+            addToPhysicsWorldFunc(subChild);
+        }
+    }else
+    {
+        addToPhysicsWorldFunc(child);
+    }
 }
 
 

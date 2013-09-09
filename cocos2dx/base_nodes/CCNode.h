@@ -1302,35 +1302,6 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
-    
-    /// @{
-    /// @name scene functions
-    
-    /**
-     *   set the scene the node belongs to
-     *   DO NOT call it manually
-     */
-    virtual void setScene(Scene* scene);
-    
-    /**
-     *   get the scene the node belongs to
-     */
-    virtual Scene* getScene();
-    /// @} end of scene functions
-    
-    /// @{
-    /// @name physics functions
-    
-    /**
-     *   set the PhysicsBody that let the node effect with physics
-     */
-    virtual void setPhysicsBody(PhysicsBody* body);
-    
-    /**
-     *   get the PhysicsBody the node have
-     */
-    PhysicsBody* getPhysicsBody();
-    /// @} end of physics functions
 
 protected:
     /// lazy allocs
@@ -1409,10 +1380,6 @@ protected:
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
-    
-    Scene* _scene;                    ///< the scene the node belongs to
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
-
 };
 
 //#pragma mark - NodeRGBA
