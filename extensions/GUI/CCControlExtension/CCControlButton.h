@@ -128,7 +128,7 @@ public:
      * If a property is not specified for a state, the default is to use
      * the ButtonStateNormal value.
      *
-     * @param title The title label to use for the specified state.
+     * @param label The title label to use for the specified state.
      * @param state The state that uses the specified title. The values are described
      * in "CCControlState".
      */
@@ -179,10 +179,10 @@ public:
     virtual void setMargins(int marginH, int marginV);
 
     // Overrides
-    virtual bool ccTouchBegan(Touch *pTouch, cocos2d::Event *pEvent) override;
-    virtual void ccTouchMoved(Touch *pTouch, cocos2d::Event *pEvent) override;
-    virtual void ccTouchEnded(Touch *pTouch, cocos2d::Event *pEvent) override;
-    virtual void ccTouchCancelled(Touch *pTouch, cocos2d::Event *pEvent) override;
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual GLubyte getOpacity(void) const override;
     virtual void setOpacity(GLubyte var) override;
 	virtual const Color3B& getColor(void) const override;

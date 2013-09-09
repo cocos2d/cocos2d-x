@@ -206,13 +206,13 @@ Sequence* Sequence::create(Array* arrayOfActions)
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
 
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
 
         if (count > 1)
         {
             for (unsigned int i = 1; i < count; ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
         }
         else
@@ -578,12 +578,12 @@ Spawn* Spawn::create(Array *arrayOfActions)
     {
         unsigned  int count = arrayOfActions->count();
         CC_BREAK_IF(count == 0);
-        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(0) );
+        FiniteTimeAction* prev = static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(0));
         if (count > 1)
         {
-            for (unsigned int i = 1; i < arrayOfActions->count(); ++i)
+            for (int i = 1; i < arrayOfActions->count(); ++i)
             {
-                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>( arrayOfActions->objectAtIndex(i)) );
+                prev = createWithTwoActions(prev, static_cast<FiniteTimeAction*>(arrayOfActions->getObjectAtIndex(i)));
             }
         }
         else
@@ -2065,7 +2065,7 @@ void Animate::startWithTarget(Node *target)
 
     if (_animation->getRestoreOriginalFrame())
     {
-        _origFrame = pSprite->displayFrame();
+        _origFrame = pSprite->getDisplayFrame();
         _origFrame->retain();
     }
     _nextFrame = 0;
@@ -2100,14 +2100,14 @@ void Animate::update(float t)
     }
 
     Array* frames = _animation->getFrames();
-    unsigned int numberOfFrames = frames->count();
+    int numberOfFrames = frames->count();
     SpriteFrame *frameToDisplay = NULL;
 
     for( int i=_nextFrame; i < numberOfFrames; i++ ) {
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->objectAtIndex(i));
+            AnimationFrame* frame = static_cast<AnimationFrame*>(frames->getObjectAtIndex(i));
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setDisplayFrame(frameToDisplay);
 
@@ -2201,8 +2201,11 @@ TargetedAction* TargetedAction::clone() const
 
 TargetedAction* TargetedAction::reverse(void) const
 {
-	// no reverse for this action, just clone it
-	return this->clone();
+	// just reverse the internal action
+	auto a = new TargetedAction();
+	a->initWithTarget(_forcedTarget, _action->reverse());
+	a->autorelease();
+	return a;
 }
 
 void TargetedAction::startWithTarget(Node *target)

@@ -31,8 +31,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 struct AffineTransform {
-  float a, b, c, d;
-  float tx, ty;
+    float a, b, c, d;
+    float tx, ty;
+
+    static const AffineTransform IDENTITY;
 };
 
 CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);

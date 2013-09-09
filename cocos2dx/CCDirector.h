@@ -36,7 +36,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "label_nodes/CCLabelAtlas.h"
-#include "ccTypeInfo.h"
 
 
 NS_CC_BEGIN
@@ -79,7 +78,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-class CC_DLL Director : public Object, public TypeInfo
+class CC_DLL Director : public Object
 {
 public:
     /** @typedef ccDirectorProjection
@@ -109,23 +108,19 @@ public:
     Director(void);
     virtual ~Director(void);
     virtual bool init(void);
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::Director).name());
-		return id;
-    }
 
     // attribute
 
     /** Get current running Scene. Director can only run one Scene at the time */
-    inline Scene* getRunningScene(void) { return _runningScene; }
+    inline Scene* getRunningScene() { return _runningScene; }
 
     /** Get the FPS value */
-    inline double getAnimationInterval(void) { return _animationInterval; }
+    inline double getAnimationInterval() { return _animationInterval; }
     /** Set the FPS value. */
     virtual void setAnimationInterval(double dValue) = 0;
 
     /** Whether or not to display the FPS on the bottom-left corner */
-    inline bool isDisplayStats(void) { return _displayStats; }
+    inline bool isDisplayStats() { return _displayStats; }
     /** Display the FPS on the bottom-left corner */
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
@@ -133,22 +128,22 @@ public:
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
     /** Get the EGLView, where everything is rendered */
-    inline EGLView* getOpenGLView(void) { return _openGLView; }
+    inline EGLView* getOpenGLView() { return _openGLView; }
     void setOpenGLView(EGLView *pobOpenGLView);
 
-    inline bool isNextDeltaTimeZero(void) { return _nextDeltaTimeZero; }
+    inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
     /** Whether or not the Director is paused */
-    inline bool isPaused(void) { return _paused; }
+    inline bool isPaused() { return _paused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getTotalFrames(void) { return _totalFrames; }
+    inline unsigned int getTotalFrames() { return _totalFrames; }
     
     /** Sets an OpenGL projection
      @since v0.8.2
      */
-    inline Projection getProjection(void) { return _projection; }
+    inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
     
     /** Sets the glViewport*/
@@ -162,7 +157,7 @@ public:
      If the new scene replaces the old one, the it will receive the "cleanup" message.
      @since v0.99.0
      */
-    inline bool isSendCleanupToScene(void) { return _sendCleanupToScene; }
+    inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
      This object MUST implement the "visit" selector.
@@ -176,17 +171,17 @@ public:
      @since v0.99.5
      */
     DirectorDelegate* getDelegate() const;
-    void setDelegate(DirectorDelegate* pDelegate);
+    void setDelegate(DirectorDelegate* delegate);
 
     // window size
 
     /** returns the size of the OpenGL view in points.
     */
-    const Size& getWinSize(void) const;
+    const Size& getWinSize() const;
 
     /** returns the size of the OpenGL view in pixels.
     */
-    Size getWinSizeInPixels(void) const;
+    Size getWinSizeInPixels() const;
     
     /** returns visible size of the OpenGL view in points.
      *  the value is equal to getWinSize if don't invoke
@@ -209,7 +204,7 @@ public:
     Point convertToUI(const Point& point);
 
     /// XXX: missing description 
-    float getZEye(void) const;
+    float getZEye() const;
 
     // Scene Management
 
@@ -233,13 +228,13 @@ public:
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
-    void popScene(void);
+    void popScene();
 
     /** Pops out all scenes from the queue until the root scene in the queue.
      * This scene will replace the running one.
      * Internally it will call `popToSceneStackLevel(1)`
      */
-    void popToRootScene(void);
+    void popToRootScene();
 
     /** Pops out all scenes from the queue until it reaches `level`.
      If level is 0, it will end the director.
@@ -256,35 +251,35 @@ public:
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
      */
-    void end(void);
+    void end();
 
     /** Pauses the running scene.
      The running scene will be _drawed_ but all scheduled timers will be paused
      While paused, the draw rate will be 4 FPS to reduce CPU consumption
      */
-    void pause(void);
+    void pause();
 
     /** Resumes the paused scene
      The scheduled timers will be activated again.
      The "delta time" will be 0 (as if the game wasn't paused)
      */
-    void resume(void);
+    void resume();
 
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      If you don't want to pause your animation call [pause] instead.
      */
-    virtual void stopAnimation(void) = 0;
+    virtual void stopAnimation() = 0;
 
     /** The main loop is triggered again.
      Call this function only if [stopAnimation] was called earlier
      @warning Don't call this function to start the main loop. To run the main loop call runWithScene
      */
-    virtual void startAnimation(void) = 0;
+    virtual void startAnimation() = 0;
 
     /** Draw the scene.
     This method is called every frame. Don't call it manually.
     */
-    void drawScene(void);
+    void drawScene();
 
     // Memory Helper
 
@@ -292,23 +287,23 @@ public:
      It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
      @since v0.99.3
      */
-    void purgeCachedData(void);
+    void purgeCachedData();
 
 	/** sets the default values based on the Configuration info */
-    void setDefaultValues(void);
+    void setDefaultValues();
 
     // OpenGL Helper
 
     /** sets the OpenGL default values */
-    void setGLDefaultValues(void);
+    void setGLDefaultValues();
 
     /** enables/disables OpenGL alpha blending */
-    void setAlphaBlending(bool bOn);
+    void setAlphaBlending(bool on);
 
     /** enables/disables OpenGL depth test */
-    void setDepthTest(bool bOn);
+    void setDepthTest(bool on);
 
-    virtual void mainLoop(void) = 0;
+    virtual void mainLoop() = 0;
 
     /** The size in pixels of the surface. It could be different than the screen size.
     High-res devices might have a higher surface size than the screen size.
@@ -316,7 +311,7 @@ public:
     @since v0.99.4
     */
     void setContentScaleFactor(float scaleFactor);
-    float getContentScaleFactor(void) const;
+    float getContentScaleFactor() const;
 
 public:
     /** Gets the Scheduler associated with this director
@@ -388,7 +383,7 @@ protected:
     void purgeDirector();
     bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
     
-    void setNextScene(void);
+    void setNextScene();
     
     void showStats();
     void createStatsLabel();
@@ -465,7 +460,7 @@ protected:
      nextScene is a weak reference. */
     Scene *_nextScene;
     
-    /* If YES, then "old" scene will receive the cleanup message */
+    /* If true, then "old" scene will receive the cleanup message */
     bool    _sendCleanupToScene;
 
     /* scheduled scenes */
@@ -511,16 +506,16 @@ protected:
 class DisplayLinkDirector : public Director
 {
 public:
-    DisplayLinkDirector(void) 
+    DisplayLinkDirector() 
         : _invalid(false)
     {}
 
     //
     // Overrides
     //
-    virtual void mainLoop(void) override;
-    virtual void setAnimationInterval(double dValue) override;
-    virtual void startAnimation(void) override;
+    virtual void mainLoop() override;
+    virtual void setAnimationInterval(double value) override;
+    virtual void startAnimation() override;
     virtual void stopAnimation() override;
 
 protected:

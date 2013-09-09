@@ -40,15 +40,10 @@ extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     js_type_class_t *typeProxy;
-    long typeId = cocos2d::getHashCodeByString(typeid(*native_obj).name());
+    long typeId = typeid(*native_obj).hash_code();
     HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     if (!typeProxy) {
-        cocos2d::TypeInfo *typeInfo = dynamic_cast<cocos2d::TypeInfo *>(native_obj);
-        if (typeInfo) {
-            typeId = typeInfo->getClassTypeInfo();
-        } else {
-            typeId = cocos2d::getHashCodeByString(typeid(T).name());
-        }
+        typeId = typeid(T).hash_code();
         HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
     }
     return typeProxy;
@@ -219,6 +214,7 @@ private:
     typedef std::map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
+    bool _needUnroot;
 };
 
 

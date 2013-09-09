@@ -26,6 +26,13 @@
 
 NS_CC_BEGIN
 
+Color4B::Color4B(const Color4F &color4F)
+: r((GLubyte)(color4F.r * 255.0f)),
+g((GLubyte)(color4F.g * 255.0f)),
+b((GLubyte)(color4F.b * 255.0f)),
+a((GLubyte)(color4F.a * 255.0f))
+{}
+
 const Color3B Color3B::WHITE(255,255,255);
 const Color3B Color3B::YELLOW(255,255,0);
 const Color3B Color3B::GREEN(0,255,0);
@@ -36,12 +43,25 @@ const Color3B Color3B::BLACK(0,0,0);
 const Color3B Color3B::ORANGE(255,127,0);
 const Color3B Color3B::GRAY(166,166,166);
 
-Color4B::Color4B(const Color4F &color4F)
-: r((GLubyte)(color4F.r * 255.0f)),
-  g((GLubyte)(color4F.g * 255.0f)),
-  b((GLubyte)(color4F.b * 255.0f)),
-  a((GLubyte)(color4F.a * 255.0f))
-{}
+const Color4B Color4B::WHITE(255,255,255,255);
+const Color4B Color4B::YELLOW(255,255,0,255);
+const Color4B Color4B::GREEN(0,255,0,255);
+const Color4B Color4B::BLUE(0,0,255,255);
+const Color4B Color4B::RED(255,0,0,255);
+const Color4B Color4B::MAGENTA(255,0,255,255);
+const Color4B Color4B::BLACK(0,0,0,255);
+const Color4B Color4B::ORANGE(255,127,0,255);
+const Color4B Color4B::GRAY(166,166,166,255);
+
+const Color4F Color4F::WHITE(1,1,1,1);
+const Color4F Color4F::YELLOW(1,1,0,1);
+const Color4F Color4F::GREEN(0,1,0,1);
+const Color4F Color4F::BLUE(0,0,1,1);
+const Color4F Color4F::RED(1,0,0,1);
+const Color4F Color4F::MAGENTA(1,0,1,1);
+const Color4F Color4F::BLACK(0,0,0,1);
+const Color4F Color4F::ORANGE(1,0.5f,0,1);
+const Color4F Color4F::GRAY(0.65f,0.65f,0.65f,1);
 
 const BlendFunc BlendFunc::DISABLE = {GL_ONE, GL_ZERO};
 const BlendFunc BlendFunc::ALPHA_PREMULTIPLIED = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};

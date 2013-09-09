@@ -42,26 +42,6 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
 
-class TypeInfo
-{
-public:
-    virtual long getClassTypeInfo() = 0;
-};
-
-static inline unsigned int getHashCodeByString(const char *key)
-{
-	unsigned int len = strlen(key);
-	const char *end=key+len;
-	unsigned int hash;
-
-	for (hash = 0; key < end; key++)
-	{
-		hash *= 16777619;
-		hash ^= (unsigned int) (unsigned char) toupper(*key);
-	}
-	return (hash);
-}
-
 /**
   @class          SimpleAudioEngine
   @brief          Offers a VERY simple interface to play background music & sound effects.
@@ -69,7 +49,7 @@ static inline unsigned int getHashCodeByString(const char *key)
                   to release allocated resources.
  */
 
-class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+class EXPORT_DLL SimpleAudioEngine
 {
 public:
     /**
@@ -84,58 +64,57 @@ public:
      */
     static void end();
 
+protected:
     SimpleAudioEngine();
-    ~SimpleAudioEngine();
+    virtual ~SimpleAudioEngine();
 
-    virtual long getClassTypeInfo() {
-        return getHashCodeByString(typeid(CocosDenshion::SimpleAudioEngine).name());
-    }
+public:
 
     /**
      @brief Preload background music
      @param pszFilePath The path of the background music file.
      */
-    void preloadBackgroundMusic(const char* pszFilePath);
+    virtual void preloadBackgroundMusic(const char* pszFilePath);
     
     /**
     @brief Play background music
     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
     @param bLoop Whether the background music loop or not
     */
-    void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
+    virtual void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
 
     /**
     @brief Stop playing background music
     @param bReleaseData If release the background music data or not.As default value is false
     */
-    void stopBackgroundMusic(bool bReleaseData = false);
+    virtual void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
     @brief Pause playing background music
      */
-    void pauseBackgroundMusic();
+    virtual void pauseBackgroundMusic();
 
     /**
     @brief Resume playing background music
      */
-    void resumeBackgroundMusic();
+    virtual void resumeBackgroundMusic();
 
     /**
     @brief Rewind playing background music
      */
-    void rewindBackgroundMusic();
+    virtual void rewindBackgroundMusic();
 
     /**
      @brief Indicates whether any background music can be played or not.
      @return <i>true</i> if background music can be played, otherwise <i>false</i>.
      */
-    bool willPlayBackgroundMusic();
+    virtual bool willPlayBackgroundMusic();
 
     /**
     @brief Indicates whether the background music is playing
     @return <i>true</i> if the background music is playing, otherwise <i>false</i>
     */
-    bool isBackgroundMusicPlaying();
+    virtual bool isBackgroundMusicPlaying();
 
     // 
     // properties
@@ -144,24 +123,24 @@ public:
     /**
     @brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
-    float getBackgroundMusicVolume();
+    virtual float getBackgroundMusicVolume();
 
     /**
     @brief Set the volume of background music
     @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
-    void setBackgroundMusicVolume(float volume);
+    virtual void setBackgroundMusicVolume(float volume);
 
     /**
     @brief The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
-    float getEffectsVolume();
+    virtual float getEffectsVolume();
 
     /**
     @brief Set the volume of sound effects
     @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
     */
-    void setEffectsVolume(float volume);
+    virtual void setEffectsVolume(float volume);
 
     // 
     // for sound effects
@@ -179,59 +158,56 @@ public:
         - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
         - no pitch/pan/gain on emscrippten, win32, marmalade.
     */
-    unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
-                            float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
+    virtual unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
+                                    float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
 
     /**
     @brief Pause playing sound effect
     @param nSoundId The return value of function playEffect
     */
-    void pauseEffect(unsigned int nSoundId);
+    virtual void pauseEffect(unsigned int nSoundId);
 
     /**
     @brief Pause all playing sound effect
-    @param nSoundId The return value of function playEffect
     */
-    void pauseAllEffects();
+    virtual void pauseAllEffects();
 
     /**
     @brief Resume playing sound effect
     @param nSoundId The return value of function playEffect
     */
-    void resumeEffect(unsigned int nSoundId);
+    virtual void resumeEffect(unsigned int nSoundId);
 
     /**
     @brief Resume all playing sound effect
-    @param nSoundId The return value of function playEffect
     */
-    void resumeAllEffects();
+    virtual void resumeAllEffects();
 
     /**
     @brief Stop playing sound effect
     @param nSoundId The return value of function playEffect
     */
-    void stopEffect(unsigned int nSoundId);
+    virtual void stopEffect(unsigned int nSoundId);
 
     /**
     @brief Stop all playing sound effects
     */
-    void stopAllEffects();
+    virtual void stopAllEffects();
 
     /**
     @brief          preload a compressed audio file
     @details        the compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine
     @param pszFilePath The path of the effect file
     */
-    void preloadEffect(const char* pszFilePath);
+    virtual void preloadEffect(const char* pszFilePath);
 
     /**
     @brief          unload the preloaded effect from internal buffer
     @param pszFilePath        The path of the effect file
     */
-    void unloadEffect(const char* pszFilePath);
+    virtual void unloadEffect(const char* pszFilePath);
 };
 
 } // end of namespace CocosDenshion
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_
-

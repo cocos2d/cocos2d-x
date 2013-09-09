@@ -12,7 +12,7 @@ bool Bug899Layer::init()
 //    Director::getInstance()->enableRetinaDisplay(true);
     if (BugsTestBaseLayer::init())
     {
-        Sprite *bg = Sprite::create("Images/bugs/RetinaDisplay.jpg");
+        auto bg = Sprite::create("Images/bugs/RetinaDisplay.jpg");
         addChild(bg, 0);
         bg->setAnchorPoint(Point::ZERO);
 

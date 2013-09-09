@@ -84,10 +84,12 @@ Armature::Armature()
 
 Armature::~Armature(void)
 {
+    CCLOGINFO("deallocing Armature: %p", this);
+
     if(NULL != _boneDic)
     {
         _boneDic->removeAllObjects();
-        CC_SAFE_DELETE(_boneDic);
+        CC_SAFE_RELEASE(_boneDic);
     }
     if (NULL != _topBoneList)
     {
@@ -115,12 +117,13 @@ bool Armature::init(const char *name)
         _animation = new ArmatureAnimation();
         _animation->init(this);
 
-        CC_SAFE_DELETE(_boneDic);
+        CC_SAFE_RELEASE(_boneDic);
         _boneDic	= new Dictionary();
+        _boneDic->init();
 
         CC_SAFE_DELETE(_topBoneList);
-        _topBoneList = new Array();
-        _topBoneList->init();
+        _topBoneList = Array::create();
+        _topBoneList->retain();
 
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
@@ -145,7 +148,7 @@ bool Armature::init(const char *name)
 
 
             DictElement *_element = NULL;
-            Dictionary *boneDataDic = &armatureData->boneDataDic;
+            Dictionary *boneDataDic = armatureData->boneDataDic;
             CCDICT_FOREACH(boneDataDic, _element)
             {
                 Bone *bone = createBone(_element->getStrKey());
@@ -158,7 +161,7 @@ bool Armature::init(const char *name)
                     CC_BREAK_IF(!movData);
 
                     MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
-                    CC_BREAK_IF(!movBoneData || movBoneData->frameList.count() <= 0);
+                    CC_BREAK_IF(!movBoneData || movBoneData->frameList->count() <= 0);
 
                     FrameData *frameData = movBoneData->getFrameData(0);
                     CC_BREAK_IF(!frameData);
@@ -320,7 +323,7 @@ Dictionary *Armature::getBoneDic()
     return _boneDic;
 }
 
-AffineTransform Armature::getNodeToParentTransform() const
+const AffineTransform& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -559,14 +562,15 @@ Rect Armature::getBoundingBox() const
 
 Bone *Armature::getBoneAtPoint(float x, float y)
 {
-    int length = _children->data->num;
-    Bone **bs = (Bone **)_children->data->arr;
+    int length = _children->count();
+    Bone *bs;
 
     for(int i = length - 1; i >= 0; i--)
     {
-        if(bs[i]->getDisplayManager()->containPoint(x, y))
+        bs = static_cast<Bone*>( _children->getObjectAtIndex(i) );
+        if(bs->getDisplayManager()->containPoint(x, y))
         {
-            return bs[i];
+            return bs;
         }
     }
     return NULL;

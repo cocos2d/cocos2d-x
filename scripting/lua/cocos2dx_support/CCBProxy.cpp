@@ -28,9 +28,6 @@
 CCBReader* CCBProxy::createCCBReader()
 {
     NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    
-    ccNodeLoaderLibrary->registerNodeLoader("", CCBLayerLoader::loader());
-    
     CCBReader * pCCBReader = new CCBReader(ccNodeLoaderLibrary);
     pCCBReader->autorelease();
     
@@ -61,99 +58,106 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
     }
     
     if (NULL != dynamic_cast<LabelTTF*>(pNode)) {
-        return "CCLabelTTF";
+        return "LabelTTF";
     }
 
     if (NULL != dynamic_cast<LabelBMFont*>(pNode)) {
-        return "CCLabelBMFont";
+        return "LabelBMFont";
     }
 
     if (NULL != dynamic_cast<Sprite*>(pNode)) {
-        return "CCSprite";
+        return "Sprite";
     }
     
     if (NULL != dynamic_cast<ControlButton*>(pNode)) {
-        return "CCControlButton";
+        return "ControlButton";
     }
     
     if (NULL != dynamic_cast<LayerGradient*>(pNode)) {
-        return "CCLayerGradient";
+        return "LayerGradient";
     }
     
     if (NULL != dynamic_cast<LayerColor*>(pNode)) {
-        return "CCLayerColor";
+        return "LayerColor";
     }
     
     if (NULL != dynamic_cast<Scale9Sprite*>(pNode)) {
-        return "CCLayerGradient";
+        return "LayerGradient";
     }
     
     if (NULL != dynamic_cast<Menu*>(pNode)) {
-        return "CCMenu";
+        return "Menu";
     }
     
     if (NULL != dynamic_cast<MenuItemAtlasFont*>(pNode)) {
-        return "CCMenuItemAtlasFont";
+        return "MenuItemAtlasFont";
     }
     
     if (NULL != dynamic_cast<MenuItemFont*>(pNode)) {
-        return "CCMenuItemFont";
+        return "MenuItemFont";
     }
     
     if (NULL != dynamic_cast<MenuItemLabel*>(pNode)) {
-        return "CCMenuItemLabel";
+        return "MenuItemLabel";
     }
     
     if (NULL != dynamic_cast<MenuItemImage*>(pNode)) {
-        return "CCMenuItemImage";
+        return "MenuItemImage";
     }
     
     if (NULL != dynamic_cast<MenuItemToggle*>(pNode)) {
-        return "CCMenuItemToggle";
+        return "MenuItemToggle";
     }
     
     if (NULL != dynamic_cast<MenuItemSprite*>(pNode)) {
-        return "CCMenuItemSprite";
+        return "MenuItemSprite";
     }
 
     if (NULL != dynamic_cast<MenuItem*>(pNode)) {
-        return "CCMenuItem";
+        return "MenuItem";
     }
 
     if (NULL != dynamic_cast<Layer*>(pNode)) {
-        return "CCLayer";
+        return "Layer";
     }
 
     if (NULL != dynamic_cast<String*>(pNode)) {
-        return "CCString";
+        return "String";
     }
     
     if (NULL != dynamic_cast<ParticleSystemQuad*>(pNode)) {
-        return "CCParticleSystemQuad";
+        return "ParticleSystemQuad";
     }
 
     return "No Support";
 }
 
-void CCBProxy::setCallback(Node* pNode,int nHandle)
+void CCBProxy::setCallback(Node* node,int handle, int controlEvents)
 {
-    if (NULL == pNode) {
+    if (nullptr == node) {
         return;
     }
     
-    if (NULL != dynamic_cast<MenuItem*>(pNode))
+    if (nullptr != dynamic_cast<MenuItem*>(node))
     {
-        MenuItem *pMenuItem = dynamic_cast<MenuItem*>(pNode);
-        if (NULL != pMenuItem) {
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)pMenuItem, nHandle, ScriptHandlerMgr::kMenuClickHandler);
+        MenuItem *menuItem = dynamic_cast<MenuItem*>(node);
+        if (nullptr != menuItem) {
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)menuItem, handle, ScriptHandlerMgr::kMenuClickHandler);
         }
     }
-    else  if (NULL != dynamic_cast<ControlButton*>(pNode))
+    else  if (NULL != dynamic_cast<Control*>(node))
     {
-        ControlButton *pBtnItem = dynamic_cast<ControlButton*>(pNode);
-        if (NULL != pBtnItem) {
-            //UNOD,need Btn Pros to addHanldeOfControlEvent
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)pBtnItem, nHandle, ScriptHandlerMgr::kControlTouchUpInsideHandler);
+        Control* control = dynamic_cast<Control*>(node);
+        if (nullptr != control)
+        {
+            for (int i = 0; i < kControlEventTotalNumber; i++)
+            {
+                if ((controlEvents & (1 << i)))
+                {
+                    int handlerevent  = ScriptHandlerMgr::kControlTouchDownHandler + i;
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)control, handle, handlerevent);
+                }
+            }
         }
     }
 }

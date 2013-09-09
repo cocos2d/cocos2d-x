@@ -20,6 +20,7 @@
 #include "TileMapTest/TileMapTest.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
+#include "LabelTest/LabelTestNew.h"
 #include "TextInputTest/TextInputTest.h"
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"

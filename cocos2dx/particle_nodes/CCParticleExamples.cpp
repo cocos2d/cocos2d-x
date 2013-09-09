@@ -41,16 +41,16 @@ static Texture2D* getDefaultTexture()
     do 
     {
         bool bRet = false;
-        const char* key = "__firePngData";
-        texture = TextureCache::getInstance()->textureForKey(key);
+        const char* key = "/__firePngData";
+        texture = TextureCache::getInstance()->getTextureForKey(key);
         CC_BREAK_IF(texture != NULL);
 
         pImage = new Image();
         CC_BREAK_IF(NULL == pImage);
-        bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), Image::Format::PNG);
+        bRet = pImage->initWithImageData(__firePngData, sizeof(__firePngData));
         CC_BREAK_IF(!bRet);
 
-        texture = TextureCache::getInstance()->addUIImage(pImage, key);
+        texture = TextureCache::getInstance()->addImage(pImage, key);
     } while (0);
 
     CC_SAFE_RELEASE(pImage);

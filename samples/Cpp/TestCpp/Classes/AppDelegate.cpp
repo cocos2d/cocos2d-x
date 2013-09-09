@@ -27,21 +27,21 @@ bool AppDelegate::applicationDidFinishLaunching()
 	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
     director->setOpenGLView(EGLView::getInstance());
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
 
-    Size screenSize = EGLView::getInstance()->getFrameSize();
+    auto screenSize = EGLView::getInstance()->getFrameSize();
 
-    Size designSize = Size(480, 320);
+    auto designSize = Size(480, 320);
 
-    FileUtils* pFileUtils = FileUtils::getInstance();
+    auto pFileUtils = FileUtils::getInstance();
     
     if (screenSize.height > 320)
     {
-        Size resourceSize = Size(960, 640);
+        auto resourceSize = Size(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);

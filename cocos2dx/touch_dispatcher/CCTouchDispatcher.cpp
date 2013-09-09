@@ -24,6 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTouchDispatcher.h"
+
+#include <algorithm>
 #include "CCTouchHandler.h"
 #include "cocoa/CCArray.h"
 #include "cocoa/CCSet.h"
@@ -31,17 +33,30 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "support/data_support/ccCArray.h"
 #include "ccMacros.h"
-#include <algorithm>
 
 NS_CC_BEGIN
 
 /**
  * Used for sort
  */
+#if CC_USE_ARRAY_VECTOR
+static int less(const RCPtr<Object>& p1, const RCPtr<Object>& p2)
+{
+    Object *o1, *o2;
+    o1 = static_cast<Object*>(p1);
+    o2 = static_cast<Object*>(p2);
+
+    TouchHandler *h1, *h2;
+    h1 = static_cast<TouchHandler*>( o1 );
+    h2 = static_cast<TouchHandler*>( o2 );
+    return ( h1->getPriority() < h2->getPriority() );
+}
+#else
 static int less(const Object* p1, const Object* p2)
 {
     return ((TouchHandler*)p1)->getPriority() < ((TouchHandler*)p2)->getPriority();
 }
+#endif
 
 bool TouchDispatcher::isDispatchEvents(void)
 {
@@ -290,9 +305,10 @@ TouchHandler* TouchDispatcher::findHandler(Array* pArray, TouchDelegate *pDelega
     return NULL;
 }
 
-void TouchDispatcher::rearrangeHandlers(Array *pArray)
+void TouchDispatcher::rearrangeHandlers(Array *array)
 {
-    std::sort(pArray->data->arr, pArray->data->arr + pArray->data->num, less);
+//    std::sort(array->data->arr, array->data->arr + array->data->num, less);
+    std::sort( std::begin(*array), std::end(*array), less);
 }
 
 void TouchDispatcher::setPriority(int nPriority, TouchDelegate *pDelegate)
@@ -444,7 +460,7 @@ void TouchDispatcher::touches(Set *pTouches, Event *pEvent, unsigned int uIndex)
     if (_toRemove)
     {
         _toRemove = false;
-        for (unsigned int i = 0; i < _handlersToRemove->num; ++i)
+        for (int i = 0; i < _handlersToRemove->num; ++i)
         {
             forceRemoveDelegate((TouchDelegate*)_handlersToRemove->arr[i]);
         }

@@ -99,6 +99,7 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelAtlas.h"
 #include "label_nodes/CCLabelTTF.h"
 #include "label_nodes/CCLabelBMFont.h"
+#include "label_nodes/CCLabel.h"
 
 // layers_scenes_transitions_nodes
 #include "layers_scenes_transitions_nodes/CCLayer.h"
@@ -257,7 +258,6 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "textures/CCTextureAtlas.h"
 #include "textures/CCTextureCache.h"
-#include "textures/CCTexturePVR.h"
 
 // tilemap_parallax_nodes
 #include "tilemap_parallax_nodes/CCParallaxNode.h"

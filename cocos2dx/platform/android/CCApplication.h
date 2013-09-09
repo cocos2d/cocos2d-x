@@ -6,8 +6,6 @@
 
 NS_CC_BEGIN
 
-class Rect;
-
 class CC_DLL Application : public ApplicationProtocol
 {
 public:
@@ -16,7 +14,7 @@ public:
 
     /**
     @brief    Callback by Director to limit FPS.
-    @interval       The time, expressed in seconds, between current frame and next. 
+    @param interval The time, expressed in seconds, between current frame and next.
     */
     void setAnimationInterval(double interval);
 

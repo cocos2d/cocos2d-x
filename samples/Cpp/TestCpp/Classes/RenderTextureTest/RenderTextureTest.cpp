@@ -23,7 +23,7 @@ static Layer* nextTestCase()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -36,7 +36,7 @@ static Layer* backTestCase()
     if( sceneIdx < 0 )
         sceneIdx += total;    
 
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -44,7 +44,7 @@ static Layer* backTestCase()
 
 static Layer* restartTestCase()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
 
     return layer;
@@ -57,7 +57,7 @@ void RenderTextureTest::onEnter()
 
 void RenderTextureTest::restartCallback(Object* sender)
 {
-    Scene* s = new RenderTextureScene();
+    auto s = new RenderTextureScene();
     s->addChild(restartTestCase()); 
 
     Director::getInstance()->replaceScene(s);
@@ -66,7 +66,7 @@ void RenderTextureTest::restartCallback(Object* sender)
 
 void RenderTextureTest::nextCallback(Object* sender)
 {
-    Scene* s = new RenderTextureScene();
+    auto s = new RenderTextureScene();
     s->addChild( nextTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -74,7 +74,7 @@ void RenderTextureTest::nextCallback(Object* sender)
 
 void RenderTextureTest::backCallback(Object* sender)
 {
-    Scene* s = new RenderTextureScene();
+    auto s = new RenderTextureScene();
     s->addChild( backTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -95,7 +95,7 @@ std::string RenderTextureTest::subtitle()
 */
 RenderTextureSave::RenderTextureSave()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
     _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
@@ -115,9 +115,9 @@ RenderTextureSave::RenderTextureSave()
 
     // Save Image menu
     MenuItemFont::setFontSize(16);
-    MenuItem *item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
-    MenuItem *item2 = MenuItemFont::create("Clear", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
-    Menu *menu = Menu::create(item1, item2, NULL);
+    auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
+    auto item2 = MenuItemFont::create("Clear", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
+    auto menu = Menu::create(item1, item2, NULL);
     this->addChild(menu);
     menu->alignItemsVertically();
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
@@ -133,12 +133,12 @@ string RenderTextureSave::subtitle()
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
 
-void RenderTextureSave::clearImage(cocos2d::Object *pSender)
+void RenderTextureSave::clearImage(cocos2d::Object *sender)
 {
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Object *pSender)
+void RenderTextureSave::saveImage(cocos2d::Object *sender)
 {
     static int counter = 0;
 
@@ -151,13 +151,13 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
     _target->saveToFile(jpg, Image::Format::JPG);
     
 
-    Image *pImage = _target->newImage();
+    auto image = _target->newImage();
 
-    Texture2D *tex = TextureCache::getInstance()->addUIImage(pImage, png);
+    auto tex = TextureCache::getInstance()->addImage(image, png);
 
-    CC_SAFE_DELETE(pImage);
+    CC_SAFE_DELETE(image);
 
-    Sprite *sprite = Sprite::createWithTexture(tex);
+    auto sprite = Sprite::createWithTexture(tex);
 
     sprite->setScale(0.3f);
     addChild(sprite);
@@ -178,9 +178,9 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::ccTouchesMoved(Set* touches, Event* event)
 {
-    Touch *touch = static_cast<Touch*>( touches->anyObject() );
-    Point start = touch->getLocation();
-    Point end = touch->getPreviousLocation();
+    auto touch = static_cast<Touch*>( touches->anyObject() );
+    auto start = touch->getLocation();
+    auto end = touch->getPreviousLocation();
 
     // begin drawing to the render texture
     _target->begin();
@@ -230,20 +230,20 @@ RenderTextureIssue937::RenderTextureIssue937()
     *  B1: non-premulti sprite
     *  B2: non-premulti render
     */
-    LayerColor *background = LayerColor::create(Color4B(200,200,200,255));
+    auto background = LayerColor::create(Color4B(200,200,200,255));
     addChild(background);
 
-    Sprite *spr_premulti = Sprite::create("Images/fire.png");
+    auto spr_premulti = Sprite::create("Images/fire.png");
     spr_premulti->setPosition(Point(16,48));
 
-    Sprite *spr_nonpremulti = Sprite::create("Images/fire.png");
+    auto spr_nonpremulti = Sprite::create("Images/fire.png");
     spr_nonpremulti->setPosition(Point(16,16));
 
 
     
     
     /* A2 & B2 setup */
-    RenderTexture *rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
     if (NULL == rend)
     {
@@ -258,7 +258,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->visit();
     rend->end(); 
 
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
     /* A1: setup */
     spr_premulti->setPosition(Point(s.width/2-16, s.height/2+16));
@@ -284,7 +284,7 @@ std::string RenderTextureIssue937::subtitle()
 
 void RenderTextureScene::runThisTest()
 {
-    Layer* layer = nextTestCase();
+    auto layer = nextTestCase();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
@@ -297,16 +297,16 @@ void RenderTextureScene::runThisTest()
 RenderTextureZbuffer::RenderTextureZbuffer()
 {
     this->setTouchEnabled(true);
-    Size size = Director::getInstance()->getWinSize();
-    LabelTTF *label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
+    auto size = Director::getInstance()->getWinSize();
+    auto label = LabelTTF::create("vertexZ = 50", "Marker Felt", 64);
     label->setPosition(Point(size.width / 2, size.height * 0.25f));
     this->addChild(label);
 
-    LabelTTF *label2 = LabelTTF::create("vertexZ = 0", "Marker Felt", 64);
+    auto label2 = LabelTTF::create("vertexZ = 0", "Marker Felt", 64);
     label2->setPosition(Point(size.width / 2, size.height * 0.5f));
     this->addChild(label2);
 
-    LabelTTF *label3 = LabelTTF::create("vertexZ = -50", "Marker Felt", 64);
+    auto label3 = LabelTTF::create("vertexZ = -50", "Marker Felt", 64);
     label3->setPosition(Point(size.width / 2, size.height * 0.75f));
     this->addChild(label3);
 
@@ -366,8 +366,8 @@ void RenderTextureZbuffer::ccTouchesBegan(cocos2d::Set *touches, cocos2d::Event 
 
     for (auto &item: *touches)
     {
-        Touch *touch = static_cast<Touch*>(item);
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(item);
+        auto location = touch->getLocation();
 
         sp1->setPosition(location);
         sp2->setPosition(location);
@@ -385,8 +385,8 @@ void RenderTextureZbuffer::ccTouchesMoved(Set* touches, Event* event)
 {
     for (auto &item: *touches)
     {
-        Touch *touch = static_cast<Touch*>(item);
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(item);
+        auto location = touch->getLocation();
 
         sp1->setPosition(location);
         sp2->setPosition(location);
@@ -407,7 +407,7 @@ void RenderTextureZbuffer::ccTouchesEnded(Set* touches, Event* event)
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    RenderTexture *texture = RenderTexture::create(512, 512);
+    auto texture = RenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -419,7 +419,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     texture->end();
 
-    Sprite *sprite = Sprite::createWithTexture(texture->getSprite()->getTexture());
+    auto sprite = Sprite::createWithTexture(texture->getSprite()->getTexture());
 
     sprite->setPosition(Point(256, 256));
     sprite->setOpacity(182);
@@ -436,12 +436,12 @@ void RenderTextureZbuffer::renderScreenShot()
 
 RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-    Sprite *sprite = Sprite::create("Images/fire.png");
+    auto sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    RenderTexture *rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -491,7 +491,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
 	 *  B1: non-premulti sprite
 	 *  B2: non-premulti render
 	 */
-    LayerColor *background = LayerColor::create(Color4B(40,40,40,255));
+    auto background = LayerColor::create(Color4B(40,40,40,255));
     addChild(background);
     
     // sprite 1
@@ -500,10 +500,10 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     // sprite 2
     sprite2 = Sprite::create("Images/fire_rgba8888.pvr");
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    RenderTexture *renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -524,8 +524,8 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     scheduleUpdate();
     
     // Toggle clear on / off
-    MenuItemFont *item = MenuItemFont::create("Clear On/Off", CC_CALLBACK_1(RenderTextureTargetNode::touched, this));
-    Menu *menu = Menu::create(item, NULL);
+    auto item = MenuItemFont::create("Clear On/Off", CC_CALLBACK_1(RenderTextureTargetNode::touched, this));
+    auto menu = Menu::create(item, NULL);
     addChild(menu);
 
     menu->setPosition(Point(s.width/2, s.height/2));
@@ -570,7 +570,7 @@ SpriteRenderTextureBug::SimpleSprite::SimpleSprite() : rt(NULL) {}
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
-    SimpleSprite *sprite = new SimpleSprite();
+    auto sprite = new SimpleSprite();
     if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();
@@ -587,7 +587,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 {
     if (rt == NULL)
     {
-		Size s = Director::getInstance()->getWinSize();
+		auto s = Director::getInstance()->getWinSize();
         rt = new RenderTexture();
         rt->initWithWidthAndHeight(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
 	}
@@ -629,7 +629,7 @@ SpriteRenderTextureBug::SpriteRenderTextureBug()
 {
     setTouchEnabled(true);
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Point(s.width/2, s.height/2));
 }
 
@@ -639,7 +639,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
     
-    SpriteRenderTextureBug::SimpleSprite *sprite = SpriteRenderTextureBug::SimpleSprite::create("Images/grossini_dance_atlas.png",
+    auto sprite = SpriteRenderTextureBug::SimpleSprite::create("Images/grossini_dance_atlas.png",
                                                                                                 Rect(x,y,85,121));
     addChild(sprite);
     
@@ -659,8 +659,8 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 	else
 		action = FadeOut::create(2);
     
-    FiniteTimeAction *action_back = action->reverse();
-    Sequence *seq = Sequence::create(action, action_back, NULL);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create(action, action_back, NULL);
     
     sprite->runAction(RepeatForever::create(seq));
     
@@ -672,8 +672,8 @@ void SpriteRenderTextureBug::ccTouchesEnded(Set* touches, Event* event)
 {
     for (auto &item: *touches)
     {
-        Touch *touch = static_cast<Touch*>(item);
-        Point location = touch->getLocation();
+        auto touch = static_cast<Touch*>(item);
+        auto location = touch->getLocation();
         addNewSpriteWithCoords(location);
     }
 }

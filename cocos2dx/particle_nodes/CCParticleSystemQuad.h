@@ -73,7 +73,7 @@ public:
     void initTexCoordsWithRect(const Rect& rect);
 
     /** Sets a new SpriteFrame as particle.
-    WARNING: this method is experimental. Use setTexture:withRect instead.
+    WARNING: this method is experimental. Use setTextureWithRect instead.
     @since v0.99.4
     */
     void setDisplayFrame(SpriteFrame *spriteFrame);
@@ -94,7 +94,7 @@ public:
     virtual void postStep() override;
     virtual void draw() override;
     virtual void setBatchNode(ParticleBatchNode* batchNode) override;
-    virtual void setTotalParticles(unsigned int tp) override;
+    virtual void setTotalParticles(int tp) override;
 
 private:
 #if CC_TEXTURE_ATLAS_USE_VAO

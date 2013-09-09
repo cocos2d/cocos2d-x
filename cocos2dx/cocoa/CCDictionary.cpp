@@ -63,7 +63,7 @@ DictElement::DictElement(intptr_t iKey, Object* pObject)
 
 DictElement::~DictElement()
 {
-
+    CCLOGINFO("deallocing DictElement: %p", this);
 }
 
 // -----------------------------------------------------------------------
@@ -78,6 +78,7 @@ Dictionary::Dictionary()
 
 Dictionary::~Dictionary()
 {
+    CCLOGINFO("deallocing Dictionary: %p", this);
     removeAllObjects();
 }
 
@@ -340,7 +341,7 @@ Object* Dictionary::randomObject()
         return NULL;
     }
     
-    Object* key = allKeys()->randomObject();
+    Object* key = allKeys()->getRandomObject();
     
     if (_dictType == kDictInt)
     {
@@ -358,12 +359,17 @@ Object* Dictionary::randomObject()
 
 Dictionary* Dictionary::create()
 {
-    Dictionary* pRet = new Dictionary();
-    if (pRet != NULL)
+    Dictionary* ret = new Dictionary();
+    if (ret && ret->init() )
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
-    return pRet;
+    return ret;
+}
+
+bool Dictionary::init()
+{
+    return true;
 }
 
 Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
@@ -383,9 +389,7 @@ void Dictionary::acceptVisitor(DataVisitor &visitor)
 
 Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
 {
-    Dictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
-    pRet->autorelease();
-    return pRet;
+    return createWithContentsOfFileThreadSafe(pFileName);
 }
 
 bool Dictionary::writeToFile(const char *fullPath)
@@ -395,8 +399,7 @@ bool Dictionary::writeToFile(const char *fullPath)
 
 Dictionary* Dictionary::clone() const
 {
-    Dictionary* newDict = new Dictionary();
-    newDict->autorelease();
+    Dictionary* newDict = Dictionary::create();
     
     DictElement* element = NULL;
     Object* tmpObj = NULL;

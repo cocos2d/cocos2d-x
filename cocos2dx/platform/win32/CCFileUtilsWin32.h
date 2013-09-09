@@ -27,7 +27,6 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include <string>
 #include <vector>
 
@@ -46,16 +45,16 @@ class CC_DLL FileUtilsWin32 : public FileUtils
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
-    virtual bool isAbsolutePath(const std::string& strPath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
+    virtual bool isAbsolutePath(const std::string& strPath) const;
 protected:
     /**
      *  Gets resource file data
      *
-     *  @param[in]  filename The resource file name which contains the path.
-     *  @param[in]  pszMode The read mode of the file.
-     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @param[in]  filename    The resource file name which contains the path.
+     *  @param[in]  mode        The read mode of the file.
+     *  @param[out] size        If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
@@ -77,11 +76,11 @@ protected:
      *  @note Only iOS and Mac need to override this method since they are using
      *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
      *        Other platforms will use the default implementation of this method.
-     *  @param strDirectory The directory contains the file we are looking for.
-     *  @param strFilename  The name of the file.
+     *  @param directory The directory contains the file we are looking for.
+     *  @param filename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
 };
 
 // end of platform group

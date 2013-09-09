@@ -65,6 +65,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/KeyboardTest/KeyboardTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
 	../Classes/LabelTest/LabelTest.cpp \
+	../Classes/LabelTest/LabelTestNew.cpp \
 	../Classes/LayerTest/LayerTest.cpp \
 	../Classes/MenuTest/MenuTest.cpp \
 	../Classes/MotionStreakTest/MotionStreakTest.cpp \
@@ -72,6 +73,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/NodeTest/NodeTest.cpp \
 	../Classes/ParallaxTest/ParallaxTest.cpp \
 	../Classes/ParticleTest/ParticleTest.cpp \
+	../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 	../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 	../Classes/PerformanceTest/PerformanceParticleTest.cpp \
 	../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
@@ -106,7 +108,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl -lpng
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk

@@ -3,7 +3,7 @@
 #include "cocos2d_specifics.hpp"
 #include <typeinfo>
 #include "js_bindings_config.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
 
 USING_NS_CC_EXT;
 
@@ -39,6 +39,14 @@ void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 
 void JSTouchDelegate::setJSObject(JSObject *obj) {
     _mObj = obj;
+    
+    js_proxy_t *p = jsb_get_js_proxy(_mObj);
+    if (!p)
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS_AddNamedObjectRoot(cx, &_mObj, "JSB_TouchDelegateTarget, target");
+        _needUnroot = true;
+    }
 }
 
 void JSTouchDelegate::registerStandardDelegate() {
@@ -56,6 +64,11 @@ void JSTouchDelegate::registerTargettedDelegate(int priority, bool swallowsTouch
 
 void JSTouchDelegate::unregisterTouchDelegate()
 {
+    if (_needUnroot)
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS_RemoveObjectRoot(cx, &_mObj);
+    }
     Director* pDirector = Director::getInstance();
     pDirector->getTouchDispatcher()->removeDelegate(this);
 }
@@ -64,10 +77,7 @@ bool JSTouchDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent); 
     jsval retval;
     bool bRet = false;
-
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
+    
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHBEGAN, 
         pTouch, _mObj, retval);
     if(JSVAL_IS_BOOLEAN(retval)) {
@@ -81,10 +91,6 @@ bool JSTouchDelegate::ccTouchBegan(Touch *pTouch, Event *pEvent) {
 void JSTouchDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 
-    //jsval retval;
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHMOVED, 
         pTouch, _mObj);
 }
@@ -92,18 +98,12 @@ void JSTouchDelegate::ccTouchMoved(Touch *pTouch, Event *pEvent) {
 void JSTouchDelegate::ccTouchEnded(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
 
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHENDED, 
         pTouch, _mObj);
 }
 
 void JSTouchDelegate::ccTouchCancelled(Touch *pTouch, Event *pEvent) {
     CC_UNUSED_PARAM(pEvent);
-    js_proxy_t* p = jsb_get_js_proxy(_mObj);
-    CCASSERT(p, "js object has been unrooted.");
-
     ScriptingCore::getInstance()->executeCustomTouchEvent(CCTOUCHCANCELLED, 
         pTouch, _mObj);
 }
@@ -522,14 +522,23 @@ JSBool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *
 // "setCallback" in JS
 // item.setCallback( callback_fn, [this]);
 template<class T>
-JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp) {
-
-    if(argc == 1 || argc == 2) {
+JSBool js_cocos2dx_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if(argc == 1 || argc == 2)
+    {
         jsval *argv = JS_ARGV(cx, vp);
         JSObject *obj = JS_THIS_OBJECT(cx, vp);
         jsval jsThis = JSVAL_VOID;
         jsval jsFunc = argv[0];
-        if (argc == 2) {
+        
+        if (jsFunc.isUndefined())
+        {
+            JS_ReportError(cx, "The callback function is undefined.");
+            return JS_FALSE;
+        }
+        
+        if (argc == 2)
+        {
             jsThis = argv[1];
         }
         
@@ -790,6 +799,7 @@ void JSCallFuncWrapper::setTargetForNativeNode(Node *pNode, JSCallFuncWrapper *t
     Array *arr;
     if(!t) {
         arr = new Array();
+        arr->init();
     } else {
         arr = t->obj;
     }
@@ -900,6 +910,7 @@ void JSScheduleWrapper::setTargetForSchedule(jsval sched, JSScheduleWrapper *tar
         Array* targetArray = getTargetForSchedule(sched);
         if (NULL == targetArray) {
             targetArray = new Array();
+            targetArray->init();
             schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
             assert(p);
             p->jsfuncObj = jsfunc;
@@ -926,6 +937,7 @@ void JSScheduleWrapper::setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWr
     Array* targetArray = getTargetForJSObject(jsTargetObj);
     if (NULL == targetArray) {
         targetArray = new Array();
+        targetArray->init();
         schedTarget_proxy_t *p = (schedTarget_proxy_t *)malloc(sizeof(schedTarget_proxy_t));
         assert(p);
         p->jsTargetObj = jsTargetObj;
@@ -1310,7 +1322,7 @@ JSBool js_cocos2dx_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, j
         if(! arr) return JS_TRUE;
         JSScheduleWrapper* wrapper = NULL;
         for(unsigned int i = 0; i < arr->count(); ++i) {
-            wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
+            wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
             if(wrapper) {
                 cobj->getScheduler()->unscheduleAllForTarget(wrapper);
             }
@@ -1572,7 +1584,7 @@ JSBool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *
             
             JSScheduleWrapper* wrapper = NULL;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
+                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->getScheduler()->unscheduleUpdateForTarget(wrapper);
                     CCASSERT(OBJECT_TO_JSVAL(tmpObj) == wrapper->getJSCallbackThis(), "Wrong target object.");
@@ -1670,7 +1682,7 @@ JSBool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, ui
             
             JSScheduleWrapper* wrapper = NULL;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
+                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper) {
                     cobj->unscheduleAllForTarget(wrapper);
                 }
@@ -1787,7 +1799,7 @@ JSBool js_CCScheduler_unscheduleUpdateForTarget(JSContext *cx, uint32_t argc, js
             
             JSScheduleWrapper* wrapper = NULL;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
+                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->isUpdateSchedule()) {
                     cobj->unscheduleUpdateForTarget(wrapper);
                     CCASSERT(argv[0] == wrapper->getJSCallbackThis(), "Wrong target object.");
@@ -1907,7 +1919,7 @@ JSBool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, 
             
             JSScheduleWrapper* wrapper = NULL;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->objectAtIndex(i);
+                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
                 if(wrapper && wrapper->getJSCallbackFunc() == argv[1]) {
                     cobj->unscheduleSelector(schedule_selector(JSScheduleWrapper::scheduleFunc), wrapper);
                     JSScheduleWrapper::removeTargetForJSObject(tmpObj, wrapper);
@@ -1976,8 +1988,8 @@ JSBool js_cocos2dx_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *
             Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return JS_TRUE;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                if(arr->objectAtIndex(i)) {
-                    sched->pauseTarget(arr->objectAtIndex(i));
+                if(arr->getObjectAtIndex(i)) {
+                    sched->pauseTarget(arr->getObjectAtIndex(i));
                 }
             }
 
@@ -2002,8 +2014,8 @@ JSBool js_cocos2dx_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval 
             Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return JS_TRUE;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                if(arr->objectAtIndex(i)) {
-                    sched->resumeTarget(arr->objectAtIndex(i));
+                if(arr->getObjectAtIndex(i)) {
+                    sched->resumeTarget(arr->getObjectAtIndex(i));
                 }
             }
             
@@ -2029,8 +2041,8 @@ JSBool js_cocos2dx_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsva
             Array *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
             if(! arr) return JS_TRUE;
             for(unsigned int i = 0; i < arr->count(); ++i) {
-                if(arr->objectAtIndex(i)) {
-                    ret = cobj->isTargetPaused(arr->objectAtIndex(i)) ? JS_TRUE : JS_FALSE;
+                if(arr->getObjectAtIndex(i)) {
+                    ret = cobj->isTargetPaused(arr->getObjectAtIndex(i)) ? JS_TRUE : JS_FALSE;
                     // break directly since all targets have the same `pause` status.
                     break;
                 }
@@ -2884,7 +2896,7 @@ JSBool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, js
 
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-        ccTexParams param = { arg0, arg1, arg2, arg3 };
+        Texture2D::TexParams param = { arg0, arg1, arg2, arg3 };
 
         cobj->setTexParameters(param);
 
@@ -3143,6 +3155,8 @@ JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, j
         unsigned char* data = cobj->getFileData(arg0, "rb", &size);
         if (data && size > 0) {
             jsval jsret = c_string_to_jsval(cx, (char*)data, size);
+            CC_SAFE_DELETE_ARRAY(data);
+            
             JS_SET_RVAL(cx, vp, jsret);
             return JS_TRUE;
         }
@@ -3177,6 +3191,8 @@ JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc
                 }
                 uint8_t* bufdata = (uint8_t*)JS_GetArrayBufferViewData(array);
                 memcpy(bufdata, data, size*sizeof(uint8_t));
+                CC_SAFE_DELETE_ARRAY(data);
+                
                 JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
                 return JS_TRUE;
             }

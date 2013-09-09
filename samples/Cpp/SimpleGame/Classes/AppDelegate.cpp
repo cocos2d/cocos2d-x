@@ -14,12 +14,12 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
     
     director->setOpenGLView(EGLView::getInstance());
     
-    Size screenSize = EGLView::getInstance()->getFrameSize();
-    Size designSize = Size(480, 320);
+    auto screenSize = EGLView::getInstance()->getFrameSize();
+    auto designSize = Size(480, 320);
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    Scene *scene = HelloWorld::scene();
+    auto scene = HelloWorld::scene();
 
     // run
     director->runWithScene(scene);

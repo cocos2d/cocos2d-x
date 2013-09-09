@@ -1,41 +1,48 @@
+
+
+require "Cocos2d"
+require "Cocos2dConstants"
+require "Opengl"
+require "OpenglConstants"
 require "luaScript/helper"
 require "luaScript/testResource"
+require "luaScript/VisibleRect"
 
-require "luaScript/ActionsTest/ActionsTest"
-require "luaScript/TransitionsTest/TransitionsTest"
-require "luaScript/ActionsProgressTest/ActionsProgressTest"
-require "luaScript/EffectsTest/EffectsTest"
-require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
-require "luaScript/RotateWorldTest/RotateWorldTest"
-require "luaScript/ParticleTest/ParticleTest"
-require "luaScript/ActionsEaseTest/ActionsEaseTest"
-require "luaScript/MotionStreakTest/MotionStreakTest"
-require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
-require "luaScript/NodeTest/NodeTest"
-require "luaScript/TouchesTest/TouchesTest"
-require "luaScript/SpriteTest/SpriteTest"
-require "luaScript/LayerTest/LayerTest"
-require "luaScript/PerformanceTest/PerformanceTest"
-require "luaScript/LabelTest/LabelTest"
-require "luaScript/ParallaxTest/ParallaxTest"
-require "luaScript/TileMapTest/TileMapTest"
+require "luaScript/AccelerometerTest/AccelerometerTest"
 require "luaScript/ActionManagerTest/ActionManagerTest"
-require "luaScript/MenuTest/MenuTest"
+require "luaScript/ActionsEaseTest/ActionsEaseTest"
+require "luaScript/ActionsProgressTest/ActionsProgressTest"
+require "luaScript/ActionsTest/ActionsTest"
+require "luaScript/BugsTest/BugsTest"
+require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
+require "luaScript/CocosDenshionTest/CocosDenshionTest"
+require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
+require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
+require "luaScript/EffectsTest/EffectsTest"
+require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
+require "luaScript/ExtensionTest/ExtensionTest"
+require "luaScript/FontTest/FontTest"
 require "luaScript/IntervalTest/IntervalTest"
+require "luaScript/KeypadTest/KeypadTest"
+require "luaScript/LabelTest/LabelTest"
+require "luaScript/LayerTest/LayerTest"
+require "luaScript/MenuTest/MenuTest"
+require "luaScript/MotionStreakTest/MotionStreakTest"
+require "luaScript/NodeTest/NodeTest"
+require "luaScript/OpenGLTest/OpenGLTest"
+require "luaScript/ParallaxTest/ParallaxTest"
+require "luaScript/ParticleTest/ParticleTest"
+require "luaScript/PerformanceTest/PerformanceTest"
+require "luaScript/RenderTextureTest/RenderTextureTest"
+require "luaScript/RotateWorldTest/RotateWorldTest"
+require "luaScript/SpriteTest/SpriteTest"
 require "luaScript/SceneTest/SceneTest"
 require "luaScript/Texture2dTest/Texture2dTest"
-require "luaScript/RenderTextureTest/RenderTextureTest"
-require "luaScript/ZwoptexTest/ZwoptexTest"
-require "luaScript/FontTest/FontTest"
-require "luaScript/CocosDenshionTest/CocosDenshionTest"
-require "luaScript/EffectsAdvancedTest/EffectsAdvancedTest"
+require "luaScript/TileMapTest/TileMapTest"
+require "luaScript/TouchesTest/TouchesTest"
+require "luaScript/TransitionsTest/TransitionsTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
-require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
-require "luaScript/BugsTest/BugsTest"
-require "luaScript/ExtensionTest/ExtensionTest"
-require "luaScript/AccelerometerTest/AccelerometerTest"
-require "luaScript/KeypadTest/KeypadTest"
-require "luaScript/OpenGLTest/OpenGLTest"
+require "luaScript/ZwoptexTest/ZwoptexTest"
 
 
 local LINE_SPACE = 40
@@ -96,15 +103,15 @@ local TESTS_COUNT = table.getn(_allTests)
 -- create scene
 local function CreateTestScene(nIdx)
     local scene = _allTests[nIdx].create_func()
-    CCDirector:getInstance():purgeCachedData()
+    cc.Director:getInstance():purgeCachedData()
     return scene
 end
 -- create menu
 function CreateTestMenu()
-    local menuLayer = CCLayer:create()
+    local menuLayer = cc.Layer:create()
 
     local function closeCallback()
-        CCDirector:getInstance():endToLua()
+        cc.Director:getInstance():endToLua()
     end
 
     local function menuCallback(tag)
@@ -112,37 +119,37 @@ function CreateTestMenu()
         local Idx = tag - 10000
         local testScene = CreateTestScene(Idx)
         if testScene then
-            CCDirector:getInstance():replaceScene(testScene)
+            cc.Director:getInstance():replaceScene(testScene)
         end
     end
 
     -- add close menu
-    local s = CCDirector:getInstance():getWinSize()
-    local CloseItem = CCMenuItemImage:create(s_pPathClose, s_pPathClose)
+    local s = cc.Director:getInstance():getWinSize()
+    local CloseItem = cc.MenuItemImage:create(s_pPathClose, s_pPathClose)
     CloseItem:registerScriptTapHandler(closeCallback)
-    CloseItem:setPosition(CCPoint(s.width - 30, s.height - 30))
+    CloseItem:setPosition(cc.p(s.width - 30, s.height - 30))
 
-    local CloseMenu = CCMenu:create()
+    local CloseMenu = cc.Menu:create()
     CloseMenu:setPosition(0, 0)
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
 
     -- add menu items for tests
-    local MainMenu = CCMenu:create()
+    local MainMenu = cc.Menu:create()
     local index = 0
     local obj = nil
     for index, obj in pairs(_allTests) do
-        local testLabel = CCLabelTTF:create(obj.name, "Arial", 24)
-        local testMenuItem = CCMenuItemLabel:create(testLabel)
+        local testLabel = cc.LabelTTF:create(obj.name, "Arial", 24)
+        local testMenuItem = cc.MenuItemLabel:create(testLabel)
         if not obj.isSupported then
             testMenuItem:setEnabled(false)
         end
         testMenuItem:registerScriptTapHandler(menuCallback)
-        testMenuItem:setPosition(CCPoint(s.width / 2, (s.height - (index) * LINE_SPACE)))
+        testMenuItem:setPosition(cc.p(s.width / 2, (s.height - (index) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
     end
 
-    MainMenu:setContentSize(CCSize(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)))
+    MainMenu:setContentSize(cc.size(s.width, (TESTS_COUNT + 1) * (LINE_SPACE)))
     MainMenu:setPosition(CurPos.x, CurPos.y)
     menuLayer:addChild(MainMenu)
 
@@ -157,7 +164,7 @@ function CreateTestMenu()
         local nMoveY = y - BeginPos.y
         local curPosx, curPosy = MainMenu:getPosition()
         local nextPosy = curPosy + nMoveY
-        local winSize = CCDirector:getInstance():getWinSize()
+        local winSize = cc.Director:getInstance():getWinSize()
         if nextPosy < 0 then
             MainMenu:setPosition(0, 0)
             return

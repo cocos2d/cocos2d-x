@@ -16,7 +16,6 @@ extern "C" {
 #include "CCLuaEngine.h"
 #include "Lua_web_socket.h"
 #include "LuaOpengl.h"
-#include "LuaScrollView.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -626,58 +625,6 @@ tolua_lerror:
 #endif
 }
 
-int tolua_Cocos2d_ScrollView_registerScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,3,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-int tolua_Cocos2d_ScrollView_unregisterScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"CCScrollView",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaScrollView* self    = (LuaScrollView*)  tolua_tousertype(tolua_S,1,0);
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,2,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
 
 static void tolua_reg_script_handler_mgr_type(lua_State* tolua_S)
 {
@@ -755,30 +702,6 @@ TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S)
       tolua_endmodule(tolua_S);
       tolua_cclass(tolua_S,"ScriptHandlerMgr","ScriptHandlerMgr","",NULL);
       tolua_beginmodule(tolua_S, "ScriptHandlerMgr");
-        tolua_constant(tolua_S,"kNormalHandler",ScriptHandlerMgr::kNodeHandler);
-        tolua_constant(tolua_S,"kMenuClickHandler",ScriptHandlerMgr::kMenuClickHandler);
-        tolua_constant(tolua_S,"kNotificationHandler",ScriptHandlerMgr::kNotificationHandler);
-        tolua_constant(tolua_S,"kCallFuncHandler",ScriptHandlerMgr::kCallFuncHandler);
-        tolua_constant(tolua_S,"kScheduleHandler",ScriptHandlerMgr::kScheduleHandler);
-        tolua_constant(tolua_S,"kTouchesHandler",ScriptHandlerMgr::kTouchesHandler);
-        tolua_constant(tolua_S,"kKeypadHandler",ScriptHandlerMgr::kKeypadHandler);
-        tolua_constant(tolua_S,"kAccelerometerHandler",ScriptHandlerMgr::kAccelerometerHandler);
-        tolua_constant(tolua_S,"kControlTouchDownHandler",ScriptHandlerMgr::kControlTouchDownHandler);
-        tolua_constant(tolua_S,"kControlTouchDragInsideHandler",ScriptHandlerMgr::kControlTouchDragInsideHandler);
-        tolua_constant(tolua_S,"kControlTouchDragOutsideHandler",ScriptHandlerMgr::kControlTouchDragOutsideHandler);
-        tolua_constant(tolua_S,"kControlTouchDragEnterHandler",ScriptHandlerMgr::kControlTouchDragEnterHandler);
-        tolua_constant(tolua_S,"kControlTouchDragExitHandler",ScriptHandlerMgr::kControlTouchDragExitHandler);
-        tolua_constant(tolua_S,"kControlTouchUpInsideHandler",ScriptHandlerMgr::kControlTouchUpInsideHandler);
-        tolua_constant(tolua_S,"kControlTouchUpOutsideHandler",ScriptHandlerMgr::kControlTouchUpOutsideHandler);
-        tolua_constant(tolua_S,"kControlTouchCancelHandler",ScriptHandlerMgr::kControlTouchCancelHandler);
-        tolua_constant(tolua_S,"kControlValueChangedHandler",ScriptHandlerMgr::kControlValueChangedHandler);
-        tolua_constant(tolua_S,"kWebSocketScriptHandlerOpen",ScriptHandlerMgr::kWebSocketScriptHandlerOpen);
-        tolua_constant(tolua_S,"kWebSocketScriptHandlerMessage",ScriptHandlerMgr::kWebSocketScriptHandlerMessage);
-        tolua_constant(tolua_S,"kWebSocketScriptHandlerClose",ScriptHandlerMgr::kWebSocketScriptHandlerClose);
-        tolua_constant(tolua_S,"kWebSocketScriptHandlerError",ScriptHandlerMgr::kWebSocketScriptHandlerError);
-        tolua_constant(tolua_S,"kGLNodeDrawHandler",ScriptHandlerMgr::kGLNodeDrawHandler);
-        tolua_constant(tolua_S,"kScrollViewScrollHandler",ScriptHandlerMgr::kScrollViewScrollHandler);
-        tolua_constant(tolua_S,"kScrollViewZoomHandler",ScriptHandlerMgr::kScrollViewZoomHandler);
         tolua_function(tolua_S, "getInstance", tolua_Cocos2d_ScriptHandlerMgr_getInstance00);
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);

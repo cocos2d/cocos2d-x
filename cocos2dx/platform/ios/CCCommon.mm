@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCCommon.h"
+#include "platform/CCCommon.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -34,7 +34,7 @@ NS_CC_BEGIN
 // XXX deprecated
 void CCLog(const char * pszFormat, ...)
 {
-    printf("Cocos2d: ");
+    printf("cocos2d: ");
     char szBuf[kMaxLogLen+1] = {0};
     va_list ap;
     va_start(ap, pszFormat);
@@ -46,7 +46,7 @@ void CCLog(const char * pszFormat, ...)
 
 void log(const char * pszFormat, ...)
 {
-    printf("Cocos2d: ");
+    printf("cocos2d: ");
     char szBuf[kMaxLogLen+1] = {0};
     va_list ap;
     va_start(ap, pszFormat);

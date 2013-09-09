@@ -55,7 +55,7 @@ public:
      * Creates a slider with a given background sprite and a progress bar and a
      * thumb item.
      *
-     * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
+     * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
 
@@ -68,7 +68,7 @@ public:
     *
     * @param backgroundSprite  Sprite, that is used as a background.
     * @param progressSprite    Sprite, that is used as a progress bar.
-    * @param thumbItem         Sprite, that is used as a thumb.
+    * @param thumbSprite       Sprite, that is used as a thumb.
     */
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
 
@@ -94,7 +94,7 @@ protected:
     float valueForLocation(Point location);
 
     //maunally put in the setters
-    /** Contains the receiver¡¯s current value. */
+    /** Contains the receiver's current value. */
     CC_SYNTHESIZE_READONLY(float, _value, Value);
 
     /** Contains the minimum value of the receiver.

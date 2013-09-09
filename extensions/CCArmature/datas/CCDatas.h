@@ -31,28 +31,28 @@ THE SOFTWARE.
 
 #define CS_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
-	static inline varType *create(void){ \
-	varType *var = new varType();\
-	if (var)\
+    static inline varType *create(void){ \
+    varType *var = new varType();\
+    if (var)\
 {\
-	var->autorelease();\
-	return var;\
+    var->autorelease();\
+    return var;\
 }\
-	CC_SAFE_DELETE(var);\
-	return NULL;\
+    CC_SAFE_DELETE(var);\
+    return NULL;\
 }
 
 #define CS_CREATE_NO_PARAM(varType)\
 public: \
-	static inline varType *create(void){ \
-	varType *var = new varType();\
-	if (var && var->init())\
+    static inline varType *create(void){ \
+    varType *var = new varType();\
+    if (var && var->init())\
 {\
-	var->autorelease();\
-	return var;\
+    var->autorelease();\
+    return var;\
 }\
-	CC_SAFE_DELETE(var);\
-	return NULL;\
+    CC_SAFE_DELETE(var);\
+    return NULL;\
 }
 
 namespace cocos2d { namespace extension { namespace armature {
@@ -72,19 +72,19 @@ public:
     * Copy datas from node
     * @param  node A BaseData to copy datas
     */
-    virtual void copy(const BaseData *_node);
+    virtual void copy(const BaseData *node);
 
     /*
-    * Calculate two BaseData's between value(_to - _from) and set to self
+    * Calculate two BaseData's between value(to - from) and set to self
     *
     * @param  from   from BaseData
     * @param  to     to BaseData
     */
-    virtual void subtract(BaseData *_from, BaseData *_to);
+    virtual void subtract(BaseData *from, BaseData *to);
 public:
-	float x;					//! position x attribute
-	float y;					//! position y attribute
-	int zOrder;					//! zorder attribute, used to order the Bone's depth order
+    float x;                    //! position x attribute
+    float y;                    //! position y attribute
+    int zOrder;                 //! zorder attribute, used to order the Bone's depth order
 
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -96,9 +96,9 @@ public:
     float scaleX;
     float scaleY;
 
-    float tweenRotate;			//! SkewX, SkewY, and TweenRotate effect the rotation
+    float tweenRotate;          //! SkewX, SkewY, and TweenRotate effect the rotation
 
-    bool isUseColorInfo;		//! Whether or not this frame have the color changed Info
+    bool isUseColorInfo;        //! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
 };
@@ -242,9 +242,9 @@ public:
     void addDisplayData(DisplayData *displayData);
     DisplayData *getDisplayData(int index);
 public:
-    std::string name;			//! the bone's name
-    std::string parentName;		//! the bone parent's name
-    Array displayDataList;	//! save DisplayData informations for the Bone
+    std::string name;       //! the bone's name
+    std::string parentName; //! the bone parent's name
+    Array *displayDataList;  //! save DisplayData informations for the Bone
 };
 
 
@@ -266,8 +266,8 @@ public:
     BoneData *getBoneData(const char *boneName);
 public:
     std::string name;
-    Dictionary boneDataDic;
-    Array boneList;
+    Dictionary *boneDataDic;
+    Array *boneList;
 };
 
 
@@ -313,12 +313,12 @@ public:
     void addFrameData(FrameData *frameData);
     FrameData *getFrameData(int index);
 public:
-    float delay;		//! movement delay percent, this value can produce a delay effect
-    float scale;		//! scale this movement
-    float duration;		//! this Bone in this movement will last _duration frames
-    std::string name;	//! bone name
+    float delay;        //! movement delay percent, this value can produce a delay effect
+    float scale;        //! scale this movement
+    float duration;     //! this Bone in this movement will last _duration frames
+    std::string name;   //! bone name
 
-    Array frameList;
+    Array *frameList;
 };
 
 
@@ -351,7 +351,7 @@ public:
     */
     int durationTween;
 
-	bool loop;           //! whether the movement is looped
+    bool loop;           //! whether the movement is looped
 
     /**
     * Which tween easing effect the movement use
@@ -360,11 +360,10 @@ public:
     TweenType tweenEasing;
 
     /**
-    * @brief	save movment bone datas
-    * @key	std::string
-    * @value	MovementBoneData *
-    */
-    Dictionary movBoneDataDic;
+     * Dictionary to save movment bone data.
+     * Key type is std::string, value type is MovementBoneData *.
+     */
+    Dictionary *movBoneDataDic;
 };
 
 
@@ -389,7 +388,7 @@ public:
     int getMovementCount();
 public:
     std::string name;
-    Dictionary movementDataDic;
+    Dictionary *movementDataDic;
     std::vector<std::string> movementNames;
 };
 
@@ -419,7 +418,7 @@ public:
 
     virtual bool init();
 public:
-    Array vertexList;	//! Save contour vertex info, vertex saved in a Point
+    Array *vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -442,15 +441,15 @@ public:
     ContourData *getContourData(int index);
 public:
 
-	float height;		//! The texture's width, height
-	float width;
+    float height;       //! The texture's width, height
+    float width;
 
-    float pivotX;		//! The texture's anchor point
+    float pivotX;       //! The texture's anchor point
     float pivotY;
 
-	std::string name;	//! The texture's name
+    std::string name;   //! The texture's name
 
-    Array contourDataList;
+    Array *contourDataList;
 };
 
 

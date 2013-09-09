@@ -33,9 +33,9 @@ THE SOFTWARE.
 #include <condition_variable>
 #include <queue>
 #include <string>
+#include <unordered_map>
 
 #include "cocoa/CCObject.h"
-#include "cocoa/CCDictionary.h"
 #include "textures/CCTexture2D.h"
 #include "platform/CCImage.h"
 
@@ -83,15 +83,15 @@ public:
 
     const char* description(void) const;
 
-    Dictionary* snapshotTextures();
+//    Dictionary* snapshotTextures();
 
-    /** Returns a Texture2D object given an file image
-    * If the file image was not previously loaded, it will create a new Texture2D
+    /** Returns a Texture2D object given an filename.
+    * If the filename was not previously loaded, it will create a new Texture2D
     *  object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
     */
-    Texture2D* addImage(const char* fileimage);
+    Texture2D* addImage(const std::string &filepath);
 
     /* Returns a Texture2D object given a file image
     * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -100,20 +100,22 @@ public:
     * Supported image extensions: .png, .jpg
     * @since v0.8
     */
-    virtual void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const std::string &filepath, Object *target, SEL_CallFuncO selector);
 
-    /** Returns a Texture2D object given an UIImage image
+    /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
-    * Otherwise it will return a reference of a previously loaded image
+    * Otherwise it will return a reference of a previously loaded image.
     * The "key" parameter will be used as the "key" for the cache.
     * If "key" is nil, then a new texture will be created each time.
     */
-    Texture2D* addUIImage(Image *image, const char *key);
+    Texture2D* addImage(Image *image, const std::string &key);
+    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const char *key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5
     */
-    Texture2D* textureForKey(const char* key);
+    Texture2D* getTextureForKey(const std::string& key) const;
+    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const char* key) const { return getTextureForKey(key); }
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
@@ -137,31 +139,18 @@ public:
     /** Deletes a texture from the cache given a its key name
     @since v0.99.4
     */
-    void removeTextureForKey(const char *textureKeyName);
+    void removeTextureForKey(const std::string &key);
 
     /** Output to CCLOG the current contents of this TextureCache
     * This will attempt to calculate the size of each texture, and the total texture memory in use
     *
     * @since v1.0
     */
-    void dumpCachedTextureInfo();
-    
-    /** Returns a Texture2D object given an PVR filename
-    * If the file image was not previously loaded, it will create a new Texture2D
-    *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-    */
-    Texture2D* addPVRImage(const char* filename);
-    
-    /** Returns a Texture2D object given an ETC filename
-     * If the file image was not previously loaded, it will create a new Texture2D
-     *  object and it will return it. Otherwise it will return a reference of a previously loaded image
-     */
-    Texture2D* addETCImage(const char* filename);
+    void dumpCachedTextureInfo() const;
 
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-    Image::Format computeImageFormatType(std::string& filename);
 
 public:
     struct AsyncStruct
@@ -169,9 +158,9 @@ public:
     public:
         AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
 
-        std::string            filename;
-        Object    *target;
-        SEL_CallFuncO        selector;
+        std::string filename;
+        Object *target;
+        SEL_CallFuncO selector;
     };
 
 protected:
@@ -179,7 +168,6 @@ protected:
     {
         AsyncStruct *asyncStruct;
         Image        *image;
-        Image::Format imageType;
     } ImageInfo;
     
     std::thread* _loadingThread;
@@ -197,7 +185,7 @@ protected:
 
     int _asyncRefCount;
 
-    Dictionary* _textures;
+    std::unordered_map<std::string, Texture2D*> _textures;
 
     static TextureCache *_sharedTextureCache;
 };
@@ -218,12 +206,12 @@ public:
     VolatileTexture(Texture2D *t);
     ~VolatileTexture();
 
-    static void addImageTexture(Texture2D *tt, const char* imageFileName, Image::Format format);
+    static void addImageTexture(Texture2D *tt, const char* imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
-    static void addDataTexture(Texture2D *tt, void* data, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
+    static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
 
-    static void setTexParameters(Texture2D *t, const ccTexParams &texParams);
+    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 
@@ -244,15 +232,15 @@ protected:
     ccCachedImageType _cashedImageType;
 
     void *_textureData;
+    int  _dataLen;
     Size _textureSize;
     Texture2D::PixelFormat _pixelFormat;
 
     std::string _fileName;
-    Image::Format _fmtImage;
 
-    ccTexParams      _texParams;
-    std::string      _text;
-    FontDefinition   _fontDefinition;
+    Texture2D::TexParams      _texParams;
+    std::string               _text;
+    FontDefinition            _fontDefinition;
 };
 
 #endif

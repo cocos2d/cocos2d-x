@@ -225,7 +225,7 @@ public:
     virtual void onError(AssetsManager::ErrorCode errorCode) {};
     /** @brief Call back function for recording downloading percent
         @param percent How much percent downloaded
-        @warn This call back function just for recording downloading percent.
+        @warning    This call back function just for recording downloading percent.
               AssetsManager will do some other thing after downloading, you should
               write code in onSuccess() after downloading. 
      */

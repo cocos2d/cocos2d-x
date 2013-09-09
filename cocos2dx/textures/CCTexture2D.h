@@ -27,6 +27,8 @@ THE SOFTWARE.
 #define __CCTEXTURE2D_H__
 
 #include <string>
+#include <map>
+
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
@@ -37,6 +39,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Image;
+typedef struct _MipmapInfo MipmapInfo;
 
 /**
  * @addtogroup textures
@@ -47,21 +50,11 @@ class Image;
 
 class GLProgram;
 
-/**
-Extension to set the Min / Mag filter
-*/
-typedef struct _ccTexParams {
-    GLuint    minFilter;
-    GLuint    magFilter;
-    GLuint    wrapS;
-    GLuint    wrapT;
-} ccTexParams;
-
 //CLASS INTERFACES:
 
 /** @brief Texture2D class.
 * This class allows to easily create OpenGL 2D textures from images, text or raw data.
-* The created Texture2D object will always have power-of-two dimensions. 
+* The created Texture2D object will always have power-of-two dimensions.
 * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
 * Be aware that the content of the generated textures will be upside-down!
 */
@@ -76,7 +69,10 @@ public:
      */
     enum class PixelFormat
     {
-        
+        //! auto detect the type
+        AUTO,
+        //! 32-bit texture: BGRA8888
+        BGRA8888,
         //! 32-bit texture: RGBA8888
         RGBA8888,
         //! 24-bit texture: RGBA888
@@ -94,14 +90,66 @@ public:
         //! 16-bit textures: RGB5A1
         RGB5A1,
         //! 4-bit PVRTC-compressed texture: PVRTC4
-        PRVTC4,
+        PVRTC4,
+        //! 4-bit PVRTC-compressed texture: PVRTC4 (has alpha channel)
+        PVRTC4A,
         //! 2-bit PVRTC-compressed texture: PVRTC2
-        PRVTC2,
-
-        //! Default texture format: RGBA8888
-        DEFAULT = RGBA8888
+        PVRTC2,
+        //! 2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
+        PVRTC2A,
+        //! ETC-compressed texture: ETC
+        ETC,
+        //! S3TC-compressed texture: S3TC_Dxt1
+        S3TC_DXT1,
+        //! S3TC-compressed texture: S3TC_Dxt3
+        S3TC_DXT3,
+        //! S3TC-compressed texture: S3TC_Dxt5
+        S3TC_DXT5,
+        //! ATITC-compressed texture: ATC_RGB
+        ATC_RGB,
+        //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
+        ATC_EXPLICIT_ALPHA,
+        //! ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
+        ATC_INTERPOLATED_ALPHA,
+        //! Default texture format: AUTO
+        DEFAULT = AUTO,
+        
+        NONE = -1
     };
     
+    
+    struct PixelFormatInfo {
+
+        PixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
+            : internalFormat(internalFormat)
+            , format(format)
+            , type(type)
+            , bpp(bpp)
+            , compressed(compressed)
+            , alpha(alpha)
+        {}
+
+        GLenum internalFormat;
+        GLenum format;
+        GLenum type;
+        int bpp;
+        bool compressed;
+        bool alpha;
+    };
+    
+    typedef std::map<Texture2D::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
+    
+    /**
+     Extension to set the Min / Mag filter
+     */
+    typedef struct _TexParams {
+        GLuint    minFilter;
+        GLuint    magFilter;
+        GLuint    wrapS;
+        GLuint    wrapT;
+    }TexParams;
+    
+public:
     /** sets the default pixel format for UIImagescontains alpha channel.
      If the UIImage contains alpha channel, then the options are:
      - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
@@ -148,7 +196,10 @@ public:
     void* keepData(void *data, unsigned int length);
 
     /** Initializes with a texture2d with data */
-    bool initWithData(const void* data, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void *data, int dataLen, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
+
+    /** Initializes with mipmaps */
+    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh);
 
     /**
     Drawing extensions to make it easy to draw basic quads using a Texture2D object.
@@ -161,22 +212,25 @@ public:
 
     /**
     Extensions to make it easy to create a Texture2D object from an image file.
-    Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
     */
-    /** Initializes a texture from a UIImage object */
-
-    bool initWithImage(Image * uiImage);
+    /** 
+	Initializes a texture from a UIImage object.
+    We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
+    NOTE: It will not convert the pvr image file.
+	*/
+    bool initWithImage(Image * image);
+    
+    /** 
+	Initializes a texture from a UIImage object.
+	we will use the format you passed to the function to convert the image format to the texture format.
+    If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
+    **/
+    bool initWithImage(Image * image, PixelFormat format);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), Label::HAlignment hAlignment = Label::HAlignment::CENTER, Label::VAlignment vAlignment = Label::VAlignment::TOP);
+    bool initWithString(const char *text,  const char *fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
     /** Initializes a texture from a string using a text definition*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
-    
-    /** Initializes a texture from a PVR file */
-    bool initWithPVRFile(const char* file);
-    
-    /** Initializes a texture from a ETC file */
-    bool initWithETCFile(const char* file);
 
     /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
@@ -185,8 +239,8 @@ public:
 
     @since v0.8
     */
-    void setTexParameters(const ccTexParams& texParams);
-    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const ccTexParams* texParams) { return setTexParameters(*texParams); };
+    void setTexParameters(const TexParams& texParams);
+    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const TexParams* texParams) { return setTexParameters(*texParams); };
 
     /** sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
@@ -266,8 +320,57 @@ public:
     void setShaderProgram(GLProgram* program);
     GLProgram* getShaderProgram() const;
     
+public:
+    static const PixelFormatInfoMap& getPixelFormatInfoMap();
+    
 private:
-    bool initPremultipliedATextureWithImage(Image * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+
+    /**convert functions*/
+
+    /**
+    Convert the format to the format param you specified, if the format is PixelFormat::Automatic, it will detect it automatically and convert to the closest format for you.
+    It will return the converted format to you. if the outData != data, you must delete it manually.
+    */
+    static PixelFormat convertDataToFormat(const unsigned char* data, int dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, int* outDataLen);
+
+    static PixelFormat convertI8ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
+    static PixelFormat convertAI88ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
+    static PixelFormat convertRGB888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
+    static PixelFormat convertRGBA8888ToFormat(const unsigned char* data, int dataLen, PixelFormat format, unsigned char** outData, int* outDataLen);
+
+    //I8 to XXX
+    static void convertI8ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertI8ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
+
+    //AI88 to XXX
+    static void convertAI88ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToA8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertAI88ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
+
+    //RGB888 to XXX
+    static void convertRGB888ToRGBA8888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGB888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
+
+    //RGBA8888 to XXX
+    static void convertRGBA8888ToRGB888(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGB565(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToI8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToA8(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToAI88(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGBA4444(const unsigned char* data, int dataLen, unsigned char* outData);
+    static void convertRGBA8888ToRGB5A1(const unsigned char* data, int dataLen, unsigned char* outData);
 
 protected:
     /** pixel format of the texture */
@@ -298,7 +401,10 @@ protected:
 
     /** shader program used by drawAtPoint and drawInRect */
     GLProgram* _shaderProgram;
+
+    static const PixelFormatInfoMap _pixelFormatInfoTables;
 };
+
 
 // end of textures group
 /// @}

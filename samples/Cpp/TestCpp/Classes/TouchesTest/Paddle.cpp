@@ -10,7 +10,7 @@ Paddle::~Paddle(void)
 
 Rect Paddle::getRect()
 {
-    Size s = getTexture()->getContentSize();
+    auto s = getTexture()->getContentSize();
     return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
@@ -35,14 +35,14 @@ bool Paddle::initWithTexture(Texture2D* aTexture)
 
 void Paddle::onEnter()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
     Sprite::onEnter();
 }
 
 void Paddle::onExit()
 {
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getTouchDispatcher()->removeDelegate(this);
     Sprite::onExit();
 }    
@@ -72,7 +72,7 @@ void Paddle::ccTouchMoved(Touch* touch, Event* event)
     
     CCASSERT(_state == kPaddleStateGrabbed, "Paddle - Unexpected state!");    
     
-    Point touchPoint = touch->getLocation();
+    auto touchPoint = touch->getLocation();
     
     setPosition( Point(touchPoint.x, getPosition().y) );
 }

@@ -10,7 +10,7 @@
 #include "ComponentsTest/ComponentsTestScene.h"
 #include "ArmatureTest/ArmatureScene.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
 #include "NetworkTest/SocketIOTest.h"
 #endif
@@ -34,7 +34,7 @@ static struct {
 	{ "NotificationCenterTest", [](Object* sender) { runNotificationCenterTest(); }
 	},
     { "Scale9SpriteTest", [](Object* sender) {
-            S9SpriteTestScene* scene = new S9SpriteTestScene();
+            auto scene = new S9SpriteTestScene();
             if (scene)
             {
                 scene->runThisTest();
@@ -44,11 +44,11 @@ static struct {
 	},
 	{ "CCControlButtonTest", [](Object *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
-		Scene* scene = pManager->currentControlScene();
+		auto scene = pManager->currentControlScene();
 		Director::getInstance()->replaceScene(scene);
 	}},
 	{ "CocosBuilderTest", [](Object *sender) {
-		TestScene* scene = new CocosBuilderTestScene();
+		auto scene = new CocosBuilderTestScene();
 		if (scene)
 		{
 			scene->runThisTest();
@@ -59,7 +59,7 @@ static struct {
 	{ "HttpClientTest", [](Object *sender){ runHttpClientTest();}
 	},
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	{ "WebSocketTest", [](Object *sender){ runWebSocketTest();}
 	},
 	{ "SocketIOTest", [](Object *sender){ runSocketIOTest();}
@@ -93,7 +93,7 @@ void ExtensionsMainLayer::onEnter()
 {
     Layer::onEnter();
     
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
     _itemMenu = Menu::create();
     _itemMenu->setPosition( Point::ZERO );
@@ -101,7 +101,7 @@ void ExtensionsMainLayer::onEnter()
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
-        MenuItemFont* pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
+        auto pItem = MenuItemFont::create(g_extensionsTests[i].name, g_extensionsTests[i].callback);
         pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
@@ -113,20 +113,20 @@ void ExtensionsMainLayer::onEnter()
 
 void ExtensionsMainLayer::ccTouchesBegan(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
     _beginPos = touch->getLocation();    
 }
 
 void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 {
-    Touch* touch = static_cast<Touch*>(touches->anyObject());
+    auto touch = static_cast<Touch*>(touches->anyObject());
 
-    Point touchLocation = touch->getLocation();    
+    auto touchLocation = touch->getLocation();    
     float nMoveY = touchLocation.y - _beginPos.y;
 
-    Point curPos  = _itemMenu->getPosition();
-    Point nextPos = Point(curPos.x, curPos.y + nMoveY);
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
 
     if (nextPos.y < 0.0f)
     {
@@ -153,7 +153,7 @@ void ExtensionsMainLayer::ccTouchesMoved(Set  *touches, Event  *event)
 
 void ExtensionsTestScene::runThisTest()
 {
-    Layer* layer = new ExtensionsMainLayer();
+    auto layer = new ExtensionsMainLayer();
     addChild(layer);
     layer->release();
     

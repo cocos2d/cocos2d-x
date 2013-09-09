@@ -53,6 +53,7 @@ struct LineBreakLine {
 };
 
 NS_CC_BEGIN
+
 class BitmapDC
 {
 public:
@@ -449,9 +450,8 @@ bool Image::initWithString(
 
 		_width = (short)dc.iMaxLineWidth;
 		_height = (short)dc.iMaxLineHeight;
-		_hasAlpha = true;
+        _renderFormat = Texture2D::PixelFormat::RGBA8888;
 		_preMulti = true;
-		_bitsPerComponent = 8;
 
 		bRet = true;
 

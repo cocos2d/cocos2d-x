@@ -92,6 +92,16 @@ struct Color4B
     GLubyte g;
     GLubyte b;
     GLubyte a;
+
+    const static Color4B WHITE;
+    const static Color4B YELLOW;
+    const static Color4B BLUE;
+    const static Color4B GREEN;
+    const static Color4B RED;
+    const static Color4B MAGENTA;
+    const static Color4B BLACK;
+    const static Color4B ORANGE;
+    const static Color4B GRAY;
 };
 
 
@@ -108,9 +118,9 @@ struct Color4F
     {}
     
     explicit Color4F(const Color3B &color3B)
-        : r(color3B.r)
-        , g(color3B.g)
-        , b(color3B.b)
+        : r(color3B.r / 255.0f)
+        , g(color3B.g / 255.0f)
+        , b(color3B.b / 255.0f)
         , a(1.f)
     {}
     
@@ -135,6 +145,16 @@ struct Color4F
     GLfloat g;
     GLfloat b;
     GLfloat a;
+
+    const static Color4F WHITE;
+    const static Color4F YELLOW;
+    const static Color4F BLUE;
+    const static Color4F GREEN;
+    const static Color4F RED;
+    const static Color4F MAGENTA;
+    const static Color4F BLACK;
+    const static Color4F ORANGE;
+    const static Color4F GRAY;
 };
 
 /** A vertex composed of 2 floats: x, y
@@ -311,26 +331,25 @@ struct BlendFunc
     const static BlendFunc ADDITIVE;
 };
 
-class Label : public Object
+// Label::VAlignment
+// Label::HAlignment
+
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+//! Vertical text alignment type
+enum class TextVAlignment
 {
-public:
-    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-    //! Vertical text alignment type
-    enum class VAlignment
-    {
-        TOP,
-        CENTER,
-        BOTTOM,
-    };
-    
-    // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
-    //! Horizontal text alignment type
-    enum class HAlignment
-    {
-        LEFT,
-        CENTER,
-        RIGHT,
-    };
+    TOP,
+    CENTER,
+    BOTTOM,
+};
+
+// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+//! Horizontal text alignment type
+enum class TextHAlignment
+{
+    LEFT,
+    CENTER,
+    RIGHT,
 };
 
 // types for animation in particle systems
@@ -359,6 +378,7 @@ struct AnimationFrameData
 /**
  types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  */
+
 
 // shadow attributes
 struct FontShadow
@@ -410,8 +430,8 @@ public:
     
     FontDefinition()
         : _fontSize(0)
-        , _alignment(Label::HAlignment::CENTER)
-        , _vertAlignment(Label::VAlignment::TOP)
+        , _alignment(TextHAlignment::CENTER)
+        , _vertAlignment(TextVAlignment::TOP)
     	, _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
     {}
@@ -421,9 +441,9 @@ public:
     // font size
     int                   _fontSize;
     // horizontal alignment
-    Label::HAlignment         _alignment;
+    TextHAlignment        _alignment;
     // vertical alignment
-    Label::VAlignment _vertAlignment;
+    TextVAlignment _vertAlignment;
     // renering box
     Size                  _dimensions;
     // font color

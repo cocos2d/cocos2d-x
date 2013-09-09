@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1525771E17CEFBD400BE417B /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525771B17CEFBD400BE417B /* DeprecatedClass.lua */; };
+		1525771F17CEFBD400BE417B /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525771C17CEFBD400BE417B /* DeprecatedEnum.lua */; };
+		1525772017CEFBD400BE417B /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1525771D17CEFBD400BE417B /* DeprecatedOpenglEnum.lua */; };
 		15C1568E1683131500D239F2 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C1568D1683131500D239F2 /* libcurl.a */; };
 		15C156981683138E00D239F2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156911683138E00D239F2 /* Default-568h@2x.png */; };
 		15C156991683138E00D239F2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156921683138E00D239F2 /* Default.png */; };
@@ -34,6 +37,7 @@
 		1AC3623816D47C5C000847F2 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622C16D47C5C000847F2 /* land.png */; };
 		1AC3623916D47C5C000847F2 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622D16D47C5C000847F2 /* menu1.png */; };
 		1AC3623A16D47C5C000847F2 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC3622E16D47C5C000847F2 /* menu2.png */; };
+		1ADB273817CCA0C200634B5E /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1ADB273717CCA0C200634B5E /* Cocos2d.lua */; };
 		1AF4C3F21786633E00122817 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3DF1786631700122817 /* libchipmunk iOS.a */; };
 		1AF4C3F31786633E00122817 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3DB1786631700122817 /* libcocos2dx iOS.a */; };
 		1AF4C3F41786633E00122817 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C3DD1786631700122817 /* libcocos2dx-extensions iOS.a */; };
@@ -191,6 +195,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1525771B17CEFBD400BE417B /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedClass.lua; path = ../../../scripting/lua/script/DeprecatedClass.lua; sourceTree = "<group>"; };
+		1525771C17CEFBD400BE417B /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedEnum.lua; path = ../../../scripting/lua/script/DeprecatedEnum.lua; sourceTree = "<group>"; };
+		1525771D17CEFBD400BE417B /* DeprecatedOpenglEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedOpenglEnum.lua; path = ../../../scripting/lua/script/DeprecatedOpenglEnum.lua; sourceTree = "<group>"; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		15C156911683138E00D239F2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		15C156921683138E00D239F2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
@@ -218,6 +225,7 @@
 		1AC3622C16D47C5C000847F2 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = land.png; path = ../Resources/land.png; sourceTree = "<group>"; };
 		1AC3622D16D47C5C000847F2 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu1.png; path = ../Resources/menu1.png; sourceTree = "<group>"; };
 		1AC3622E16D47C5C000847F2 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu2.png; path = ../Resources/menu2.png; sourceTree = "<group>"; };
+		1ADB273717CCA0C200634B5E /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../../../scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
 		1AF4C3B8178662A500122817 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		1AF4C3B91786631600122817 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1AF4C402178663F200122817 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -268,8 +276,12 @@
 		1A0227A417A3AA1A00B867AD /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				1525771B17CEFBD400BE417B /* DeprecatedClass.lua */,
+				1525771C17CEFBD400BE417B /* DeprecatedEnum.lua */,
+				1525771D17CEFBD400BE417B /* DeprecatedOpenglEnum.lua */,
 				1A0227A517A3AA3500B867AD /* AudioEngine.lua */,
 				1A0227A617A3AA3500B867AD /* CCBReaderLoad.lua */,
+				1ADB273717CCA0C200634B5E /* Cocos2d.lua */,
 				1A0227A717A3AA3500B867AD /* Cocos2dConstants.lua */,
 				1A0227A817A3AA3500B867AD /* Deprecated.lua */,
 				1A0227A917A3AA3500B867AD /* DrawPrimitives.lua */,
@@ -575,6 +587,10 @@
 				1A0227B017A3AA3500B867AD /* DrawPrimitives.lua in Resources */,
 				1A0227B117A3AA3500B867AD /* Opengl.lua in Resources */,
 				1A0227B217A3AA3500B867AD /* OpenglConstants.lua in Resources */,
+				1ADB273817CCA0C200634B5E /* Cocos2d.lua in Resources */,
+				1525771E17CEFBD400BE417B /* DeprecatedClass.lua in Resources */,
+				1525771F17CEFBD400BE417B /* DeprecatedEnum.lua in Resources */,
+				1525772017CEFBD400BE417B /* DeprecatedOpenglEnum.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +731,7 @@
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../scripting/lua/tolua\"",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/include\"",
+					"\"$(SRCROOT)/../../../scripting/auto-generated/lua-bindings\"",
 					"\"$(SRCROOT)/../../../scripting/lua/cocos2dx_support\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/ios\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",
@@ -765,6 +782,7 @@
 					"\"$(SRCROOT)/../../../cocos2dx/kazmath/include\"",
 					"\"$(SRCROOT)/../../../scripting/lua/tolua\"",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/include\"",
+					"\"$(SRCROOT)/../../../scripting/auto-generated/lua-bindings\"",
 					"\"$(SRCROOT)/../../../scripting/lua/cocos2dx_support\"",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/ios\"",
 					"\"$(SRCROOT)/../../../cocos2dx/include\"",

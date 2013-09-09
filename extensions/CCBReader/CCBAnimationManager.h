@@ -6,6 +6,7 @@
 #include "CCBSequence.h"
 #include "CCBValue.h"
 #include "CCBSequenceProperty.h"
+#include "GUI/CCControlExtension/CCControl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -40,6 +41,8 @@ public:
 
     void addDocumentCallbackNode(Node *node);
     void addDocumentCallbackName(std::string name);
+    void addDocumentCallbackControlEvents(Control::EventType eventType);
+    
     void addDocumentOutletNode(Node *node);
     void addDocumentOutletName(std::string name);
 
@@ -48,6 +51,8 @@ public:
     std::string getDocumentControllerName();
     Array* getDocumentCallbackNames();
     Array* getDocumentCallbackNodes();
+    Array* getDocumentCallbackControlEvents();
+    
     Array* getDocumentOutletNames();
     Array* getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
@@ -87,10 +92,15 @@ public:
 
     Object* actionForCallbackChannel(CCBSequenceProperty* channel);
     Object* actionForSoundChannel(CCBSequenceProperty* channel);
+
+	// return -1 if timeline not exsit
+    int getSequenceId(const char* pSequenceName);
+    
+    // get timeline duration
+    float getSequenceDuration(const char* pSequenceName);
     
 private:
     Object* getBaseValue(Node *pNode, const char* propName);
-    int getSequenceId(const char* pSequenceName);
     CCBSequence* getSequence(int nSequenceId);
     ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *propName, Node *pNode);
     void setAnimatedProperty(const char *propName, Node *pNode, Object *pValue, float fTweenDuraion);
@@ -116,6 +126,7 @@ private:
     Array *_documentOutletNodes;
     Array *_documentCallbackNames;
     Array *_documentCallbackNodes;
+    Array *_documentCallbackControlEvents;
     Array *_keyframeCallbacks;
     Dictionary *_keyframeCallFuncs;
     

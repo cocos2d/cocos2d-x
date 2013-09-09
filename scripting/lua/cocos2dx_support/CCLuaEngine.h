@@ -71,7 +71,7 @@ public:
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(Object* pObj);
+    virtual void removeScriptObjectByObject(Object* object);
     
     /**
      @brief Remove Lua function reference
@@ -120,6 +120,7 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
+    virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
     void extendLuaObject();
 private:
     LuaEngine(void)
@@ -138,14 +139,10 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
-    void extendNode(lua_State* lua_S);
-    void extendMenuItem(lua_State* lua_S);
-    void extendLayer(lua_State* lua_S);
-    void extendControl(lua_State* lua_S);
+    int handleTableViewEvent(void* data);
+    int handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray);
     void extendWebsocket(lua_State* lua_S);
     void extendGLNode(lua_State* lua_S);
-    void extendScrollView(lua_State* lua_S);
-    void extendDrawNode(lua_State* lua_S);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

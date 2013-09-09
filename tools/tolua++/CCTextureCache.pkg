@@ -5,8 +5,6 @@ class CCTextureCache : public CCObject
     CCTexture2D* addUIImage(CCImage *image, const char *key);
     CCTexture2D* textureForKey(const char* key);
 
-	CCTexture2D* addPVRImage(const char* filename);
-
     void removeAllTextures();
     void removeUnusedTextures();
     void removeTexture(CCTexture2D* texture);

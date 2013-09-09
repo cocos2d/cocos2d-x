@@ -3,13 +3,16 @@ cocos2d-x authors & contributors
 (ordered by the join in time)
 
 Core Developers:
-    Zhe Wang (Walzer)
+    Ricardo Quesada
     XiaoMing Zhang (Minggo)
     JianHua Chen (Dumganhar)
+    Zhe Wang (Walzer)
+    Qingkui Hu (samuele3hu)
+    Huabing Xu (dabingnn)
+    Bo Yu (boyu0)
 
 
 Developers:
-    Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
         
@@ -35,6 +38,7 @@ Developers:
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
         Adding CCLabelTTF::createWithFontDefinition.
+        New label support.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
@@ -70,7 +74,8 @@ Developers:
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
         Adding project part for QtCreator.
-        Implemented pitch, pan and gain
+        Implemented pitch, pan and gain.
+        Using SDL backend instead of glfw for Linux.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -328,6 +333,7 @@ Developers:
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
         Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
+        Adding a method to get duration of timeline for CCBAnimationManager class, it's easy for getting duration of animation in JSB.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
@@ -419,6 +425,8 @@ Developers:
         Added some guards in fileutils. Fixed a bug in emscripten file utils.
         Added emscripten keyboard support
         Clang support for Linux
+        Multiple emscripten template support. Emscripten multiple resolutions support.
+        Toplevel Makefile refactoring
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -548,7 +556,27 @@ Developers:
         
      thp
          Port Cocos2D-X to Qt 5
+         
+    Nako Sung (nakosung)
+        Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
+        Exposing cc.RemoveSelf to JS.
+        
+    dotsquid
+        Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.
+        
+    maciekczwa
+        Fixing a bug that stroke color with channel color values other than 255 doesn't take effect on android.
+        
+    zcgit
+        a potential bug fix in Layer::init.
+        
+    gkosciolek
+        Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
 
+    xbruce
+        Fixing a bug that crash appears when extending cc.ScrollView in JS.
+        Fixing a bug that cc.registerTargettedDelegate doesn't support pure js object as its target.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -573,6 +601,7 @@ Retired Core Developers:
     timothyqiu
         Project creator: use absolute path for json config files
         Documentation fixes
+        A better way to locate project creator
 
 
 Cocos2d-x can not grow so fast without the active community.

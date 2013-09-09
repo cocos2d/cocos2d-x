@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include <string>
 #include <vector>
 
@@ -48,8 +47,8 @@ class CC_DLL FileUtilsTizen : public FileUtils
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
 };
 
 // end of platform group

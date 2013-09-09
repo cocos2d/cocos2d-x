@@ -57,11 +57,13 @@ ArmatureDataManager::ArmatureDataManager(void)
 
 ArmatureDataManager::~ArmatureDataManager(void)
 {
+    CCLOGINFO("deallocing ArmatureDataManager: %p", this);
+
     removeAll();
 
-    CC_SAFE_DELETE(_animationDatas);
-    CC_SAFE_DELETE(_armarureDatas);
-    CC_SAFE_DELETE(_textureDatas);
+    CC_SAFE_RELEASE(_animationDatas);
+    CC_SAFE_RELEASE(_armarureDatas);
+    CC_SAFE_RELEASE(_textureDatas);
 }
 
 void ArmatureDataManager::purgeArmatureSystem()
@@ -77,17 +79,17 @@ bool ArmatureDataManager::init()
     bool bRet = false;
     do
     {
-        _armarureDatas = Dictionary::create();
+        _armarureDatas = new Dictionary;
         CCASSERT(_armarureDatas, "create ArmatureDataManager::_armarureDatas fail!");
-        _armarureDatas->retain();
+        _armarureDatas->init();
 
-        _animationDatas = Dictionary::create();
+        _animationDatas = new Dictionary;
         CCASSERT(_animationDatas, "create ArmatureDataManager::_animationDatas fail!");
-        _animationDatas->retain();
+        _animationDatas->init();
 
-        _textureDatas = Dictionary::create();
+        _textureDatas = new Dictionary;
         CCASSERT(_textureDatas, "create ArmatureDataManager::_textureDatas fail!");
-        _textureDatas->retain();
+        _textureDatas->init();
 
         bRet = true;
     }

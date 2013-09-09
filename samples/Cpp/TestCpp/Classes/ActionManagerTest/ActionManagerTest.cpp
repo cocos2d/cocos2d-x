@@ -36,7 +36,7 @@ Layer* nextActionManagerAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    Layer* layer = createActionManagerLayer(sceneIdx);
+    auto layer = createActionManagerLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -49,7 +49,7 @@ Layer* backActionManagerAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    Layer* layer = createActionManagerLayer(sceneIdx);
+    auto layer = createActionManagerLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -57,7 +57,7 @@ Layer* backActionManagerAction()
 
 Layer* restartActionManagerAction()
 {
-    Layer* layer = createActionManagerLayer(sceneIdx);
+    auto layer = createActionManagerLayer(sceneIdx);
     layer->autorelease();
 
     return layer;
@@ -84,7 +84,7 @@ std::string ActionManagerTest::title()
 
 void ActionManagerTest::restartCallback(Object* sender)
 {
-    Scene* s = new ActionManagerTestScene();
+    auto s = new ActionManagerTestScene();
     s->addChild(restartActionManagerAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -93,7 +93,7 @@ void ActionManagerTest::restartCallback(Object* sender)
 
 void ActionManagerTest::nextCallback(Object* sender)
 {
-    Scene* s = new ActionManagerTestScene();
+    auto s = new ActionManagerTestScene();
     s->addChild( nextActionManagerAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -101,7 +101,7 @@ void ActionManagerTest::nextCallback(Object* sender)
 
 void ActionManagerTest::backCallback(Object* sender)
 {
-    Scene* s = new ActionManagerTestScene();
+    auto s = new ActionManagerTestScene();
     s->addChild( backActionManagerAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -117,7 +117,7 @@ void CrashTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* child = Sprite::create(s_pathGrossini);
+    auto child = Sprite::create(s_pathGrossini);
     child->setPosition( VisibleRect::center() );
     addChild(child, 1);
 
@@ -158,7 +158,7 @@ void LogicTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    Sprite* grossini = Sprite::create(s_pathGrossini);
+    auto grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, 2);
     grossini->setPosition(VisibleRect::center());
 
@@ -195,7 +195,7 @@ void PauseTest::onEnter()
     ActionManagerTest::onEnter();
     
 
-    LabelTTF* l = LabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
+    auto l = LabelTTF::create("After 5 seconds grossini should move", "Thonburi", 16);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y-75) );
     
@@ -203,13 +203,13 @@ void PauseTest::onEnter()
     //
     // Also, this test MUST be done, after [super onEnter]
     //
-    Sprite* grossini = Sprite::create(s_pathGrossini);
+    auto grossini = Sprite::create(s_pathGrossini);
     addChild(grossini, 0, kTagGrossini);
     grossini->setPosition(VisibleRect::center() );
     
-    Action* action = MoveBy::create(1, Point(150,0));
+    auto action = MoveBy::create(1, Point(150,0));
 
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getActionManager()->addAction(action, grossini, true);
 
     schedule( schedule_selector(PauseTest::unpause), 3); 
@@ -218,8 +218,8 @@ void PauseTest::onEnter()
 void PauseTest::unpause(float dt)
 {
     unschedule( schedule_selector(PauseTest::unpause) );
-    Node* node = getChildByTag( kTagGrossini );
-    Director* director = Director::getInstance();
+    auto node = getChildByTag( kTagGrossini );
+    auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(node);
 }
 
@@ -237,16 +237,16 @@ void RemoveTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    LabelTTF* l = LabelTTF::create("Should not crash", "Thonburi", 16);
+    auto l = LabelTTF::create("Should not crash", "Thonburi", 16);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75) );
 
-    MoveBy* pMove = MoveBy::create(2, Point(200, 0));
-    CallFunc* pCallback = CallFunc::create(CC_CALLBACK_0(RemoveTest::stopAction,this));
-    ActionInterval* pSequence = Sequence::create(pMove, pCallback, NULL);
+    auto pMove = MoveBy::create(2, Point(200, 0));
+    auto pCallback = CallFunc::create(CC_CALLBACK_0(RemoveTest::stopAction,this));
+    auto pSequence = Sequence::create(pMove, pCallback, NULL);
     pSequence->setTag(kTagSequence);
 
-    Sprite* pChild = Sprite::create(s_pathGrossini);
+    auto pChild = Sprite::create(s_pathGrossini);
     pChild->setPosition( VisibleRect::center() );
 
     addChild(pChild, 1, kTagGrossini);
@@ -255,7 +255,7 @@ void RemoveTest::onEnter()
 
 void RemoveTest::stopAction()
 {
-    Node* sprite = getChildByTag(kTagGrossini);
+    auto sprite = getChildByTag(kTagGrossini);
     sprite->stopActionByTag(kTagSequence);
 }
 
@@ -278,17 +278,17 @@ void ResumeTest::onEnter()
 {
     ActionManagerTest::onEnter();
 
-    LabelTTF* l = LabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
+    auto l = LabelTTF::create("Grossini only rotate/scale in 3 seconds", "Thonburi", 16);
     addChild(l);
     l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 75));
 
-    Sprite* pGrossini = Sprite::create(s_pathGrossini);
+    auto pGrossini = Sprite::create(s_pathGrossini);
     addChild(pGrossini, 0, kTagGrossini);
     pGrossini->setPosition(VisibleRect::center());
 
     pGrossini->runAction(ScaleBy::create(2, 2));
 
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getActionManager()->pauseTarget(pGrossini);
     pGrossini->runAction(RotateBy::create(2, 360));
 
@@ -299,8 +299,8 @@ void ResumeTest::resumeGrossini(float time)
 {
     this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
 
-    Node* pGrossini = getChildByTag(kTagGrossini);
-    Director* director = Director::getInstance();
+    auto pGrossini = getChildByTag(kTagGrossini);
+    auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(pGrossini);
 }
 
@@ -311,7 +311,7 @@ void ResumeTest::resumeGrossini(float time)
 //------------------------------------------------------------------
 void ActionManagerTestScene::runThisTest()
 {
-    Layer* layer = nextActionManagerAction();
+    auto layer = nextActionManagerAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
