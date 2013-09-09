@@ -388,11 +388,11 @@ public:
     /** switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      */
-    void switchTo(unsigned int n);
+    void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
     */
-    void switchToAndReleaseMe(unsigned int n);
+    void switchToAndReleaseMe(int n);
 
 protected:
     unsigned int _enabledLayer;

@@ -153,7 +153,7 @@ bool KeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     if (_toRemove)
     {
         _toRemove = false;
-        for (unsigned int i = 0; i < _handlersToRemove->num; ++i)
+        for (int i = 0; i < _handlersToRemove->num; ++i)
         {
             forceRemoveDelegate((KeypadDelegate*)_handlersToRemove->arr[i]);
         }
@@ -163,7 +163,7 @@ bool KeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
     if (_toAdd)
     {
         _toAdd = false;
-        for (unsigned int i = 0; i < _handlersToAdd->num; ++i)
+        for (int i = 0; i < _handlersToAdd->num; ++i)
         {
             forceAddDelegate((KeypadDelegate*)_handlersToAdd->arr[i]);
         }

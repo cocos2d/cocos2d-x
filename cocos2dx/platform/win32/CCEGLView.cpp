@@ -187,8 +187,8 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
 
-    s_mouseX /= eglView->getFrameZoomFactor();
-    s_mouseY /= eglView->getFrameZoomFactor();
+    s_mouseX *= eglView->getFrameZoomFactor();
+    s_mouseY *= eglView->getFrameZoomFactor();
 
     if(s_captured)
     {
@@ -336,8 +336,8 @@ void EGLView::swapBuffers()
 
 bool EGLView::windowShouldClose()
 {
-    if(_mainWindow)
-        return glfwWindowShouldClose(_mainWindow);
+	if(_mainWindow)
+		return glfwWindowShouldClose(_mainWindow) != 0;
     else
         return true;
 }

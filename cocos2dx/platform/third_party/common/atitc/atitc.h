@@ -38,8 +38,8 @@ enum class ATITCDecodeFlag
 //Decode ATITC encode data to RGB32
 void atitc_decode(uint8_t *encode_data,
                   uint8_t *decode_data,
-                  const unsigned int pixelsWidth,
-                  const unsigned int pixelsHeight,
+                  const int pixelsWidth,
+                  const int pixelsHeight,
                   ATITCDecodeFlag decodeFlag
                   );
 

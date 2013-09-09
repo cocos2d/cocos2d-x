@@ -61,7 +61,7 @@ typedef struct _hashSelectorEntry
 {
     ccArray             *timers;
     Object            *target;    // hash key (retained)
-    unsigned int        timerIndex;
+    int        timerIndex;
     Timer             *currentTimer;
     bool                currentTimerSalvaged;
     bool                paused;
@@ -320,7 +320,7 @@ void Scheduler::scheduleSelector(SEL_SCHEDULE selector, Object *target, float in
     }
     else 
     {
-        for (unsigned int i = 0; i < element->timers->num; ++i)
+        for (int i = 0; i < element->timers->num; ++i)
         {
             Timer *timer = (Timer*)element->timers->arr[i];
 
@@ -356,7 +356,7 @@ void Scheduler::unscheduleSelector(SEL_SCHEDULE selector, Object *target)
 
     if (element)
     {
-        for (unsigned int i = 0; i < element->timers->num; ++i)
+        for (int i = 0; i < element->timers->num; ++i)
         {
             Timer *pTimer = (Timer*)(element->timers->arr[i]);
 
@@ -521,7 +521,7 @@ bool Scheduler::isScheduledForTarget(SEL_SCHEDULE selector, Object *target)
         return false;
     }else
     {
-        for (unsigned int i = 0; i < element->timers->num; ++i)
+        for (int i = 0; i < element->timers->num; ++i)
         {
             Timer *timer = (Timer*)element->timers->arr[i];
             
