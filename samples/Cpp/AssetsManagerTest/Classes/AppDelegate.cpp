@@ -146,6 +146,7 @@ bool UpdateLayer::init()
     pAssetsManager->setDelegate(this);
     pAssetsManager->setConnectionTimeout(3);
     addChild(pAssetsManager);
+    pAssetsManager->release();
     
     createDownloadedDir();
     
