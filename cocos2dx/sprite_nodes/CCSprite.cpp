@@ -295,7 +295,8 @@ Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
-, _texture(NULL)
+, _texture(nullptr)
+, _physicsBody(nullptr)
 {
 }
 
@@ -444,6 +445,16 @@ void Sprite::setTextureCoords(Rect rect)
         _quad.tr.texCoords.u = right;
         _quad.tr.texCoords.v = top;
     }
+}
+
+void Sprite::setPhysicsBody(PhysicsBody* body)
+{
+    _physicsBody = body;
+}
+
+PhysicsBody* Sprite::getPhysicsBody() const
+{
+    return _physicsBody;
 }
 
 void Sprite::updateTransform(void)

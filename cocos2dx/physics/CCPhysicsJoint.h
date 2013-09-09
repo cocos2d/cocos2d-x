@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class PhysicsBody;
 
-class PhysicsJoint : public Object
+class PhysicsJoint
 {
 protected:
     PhysicsJoint();

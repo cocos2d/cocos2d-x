@@ -70,7 +70,6 @@ PhysicsWorld* PhysicsWorld::create()
     PhysicsWorld * physicsWorld = new PhysicsWorld();
     if(physicsWorld && physicsWorld->init())
     {
-        physicsWorld->autorelease();
         return physicsWorld;
     }
     

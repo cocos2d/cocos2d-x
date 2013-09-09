@@ -443,6 +443,16 @@ public:
      */
     void setFlipY(bool bFlipY);
     
+    /**
+     *   set the PhysicsBody that let the sprite effect with physics
+     */
+    virtual void setPhysicsBody(PhysicsBody* body);
+    
+    /**
+     *   get the PhysicsBody the sprite have
+     */
+    PhysicsBody* getPhysicsBody() const;
+    
     /// @} End of Sprite properties getter/setters
 
 
@@ -539,6 +549,8 @@ protected:
     // image is flipped
     bool _flipX;                              /// Whether the sprite is flipped horizaontally or not.
     bool _flipY;                              /// Whether the sprite is flipped vertically or not.
+    
+    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 };
 
 

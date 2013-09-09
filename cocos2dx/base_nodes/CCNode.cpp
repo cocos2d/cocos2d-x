@@ -120,8 +120,6 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(NULL)
-, _scene(nullptr)
-, _physicsBody(nullptr)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -590,7 +588,6 @@ void Node::addChild(Node *child, int zOrder, int tag)
     child->_tag = tag;
 
     child->setParent(this);
-    child->setScene(_scene);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
 
     if( _running )
@@ -1272,26 +1269,6 @@ bool Node::removeComponent(const char *pName)
 void Node::removeAllComponents()
 {
     _componentContainer->removeAll();
-}
-
-void Node::setScene(Scene* scene)
-{
-    _scene = scene;
-}
-
-Scene* Node::getScene()
-{
-    return _scene;
-}
-
-void Node::setPhysicsBody(PhysicsBody* body)
-{
-    _physicsBody = body;
-}
-
-PhysicsBody* Node::getPhysicsBody()
-{
-    return _physicsBody;
 }
 
 // NodeRGBA
