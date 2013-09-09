@@ -74,6 +74,11 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleSystem.cpp \
 ../particle_nodes/CCParticleSystemQuad.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
+../physics/CCPhysicsBody.cpp \
+../physics/CCPhysicsContactDelegate.cpp \
+../physics/CCPhysicsFixture.cpp \
+../physics/CCPhysicsJoint.cpp \
+../physics/CCPhysicsWorld.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
 ../platform/CCEGLViewProtocol.cpp \
