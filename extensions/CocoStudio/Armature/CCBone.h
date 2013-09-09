@@ -145,9 +145,9 @@ public:
     CCNode *getDisplayRenderNode();
 
     /*
-     * Get the shape list in this bone. The object in the CCArray is ColliderBody.
+     * Get the ColliderBody list in this bone. The object in the CCArray is ColliderBody.
      */
-    virtual CCArray *getShapeList();
+    virtual CCArray *getColliderBodyList();
 
 public:
     /*
