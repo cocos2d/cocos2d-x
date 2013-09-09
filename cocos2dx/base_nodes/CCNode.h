@@ -1427,6 +1427,12 @@ public:
     
     virtual bool init();
     
+    /**
+     * Allocates and initializes a nodergba.
+     * @return A initialized node which is marked as "autorelease".
+     */
+    static CCNodeRGBA * create(void);
+    
     virtual GLubyte getOpacity();
     virtual GLubyte getDisplayedOpacity();
     virtual void setOpacity(GLubyte opacity);

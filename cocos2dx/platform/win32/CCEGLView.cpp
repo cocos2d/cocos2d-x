@@ -163,7 +163,7 @@ static bool glew_dynamic_binding()
 //////////////////////////////////////////////////////////////////////////
 static CCEGLView* s_pMainWindow = NULL;
 static const WCHAR* kWindowClassName = L"Cocos2dxWin32";
-
+CCEGLView* CCEGLView::s_pEglView = NULL;
 static LRESULT CALLBACK _WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (s_pMainWindow && s_pMainWindow->getHWnd() == hWnd)
@@ -605,6 +605,11 @@ HWND CCEGLView::getHWnd()
     return m_hWnd;
 }
 
+void CCEGLView::setHWnd(HWND hWnd)
+{
+	m_hWnd = hWnd;
+}
+
 void CCEGLView::resize(int width, int height)
 {
     if (! m_hWnd)
@@ -669,6 +674,24 @@ void CCEGLView::setFrameSize(float width, float height)
     centerWindow();
 }
 
+void CCEGLView::setEditorFrameSize(float width, float height,HWND hWnd)
+{
+	m_hWnd=hWnd;
+
+	bool bRet = false;
+	do 
+	{	
+		resize(width, height);
+
+		bRet = initGL();
+		CC_BREAK_IF(!bRet);
+
+		s_pMainWindow = this;
+		bRet = true;
+	} while (0);
+
+	CCEGLViewProtocol::setFrameSize(width, height);
+}
 void CCEGLView::centerWindow()
 {
     if (! m_hWnd)
@@ -719,7 +742,7 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
-    static CCEGLView* s_pEglView = NULL;
+  
     if (s_pEglView == NULL)
     {
         s_pEglView = new CCEGLView();
