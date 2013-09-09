@@ -28,6 +28,8 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 ComAudio::ComAudio(void)
+: _filePath("")
+, _loop(false)
 {
     _name = "Audio";
 }
@@ -201,5 +203,24 @@ void ComAudio::unloadEffect(const char *pszFilePath)
     CocosDenshion::SimpleAudioEngine::getInstance()->unloadEffect(pszFilePath);
 }
 
+void ComAudio::setFile(const char* pszFilePath)
+{
+	_filePath.assign(pszFilePath);
+}
+
+void ComAudio::setLoop(bool bLoop)
+{
+	_loop = bLoop;
+}
+
+const char* ComAudio::getFile()
+{
+	return _filePath.c_str();
+}
+
+bool ComAudio::isLoop()
+{
+	return _loop;
+}
 
 NS_CC_EXT_END

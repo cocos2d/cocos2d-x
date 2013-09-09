@@ -50,9 +50,34 @@
 
 #include "spine/spine-cocos2dx.h"
 
-#include "Components/CCComAttribute.h"
-#include "Components/CCComAudio.h"
-#include "Components/CCComController.h"
+#include "CocoStudio/Armature/CCArmature.h"
+#include "CocoStudio/Armature/CCBone.h"
+#include "CocoStudio/Armature/animation/CCArmatureAnimation.h"
+#include "CocoStudio/Armature/datas/CCDatas.h"
+#include "CocoStudio/Armature/display/CCBatchNode.h"
+#include "CocoStudio/Armature/display/CCDecorativeDisplay.h"
+#include "CocoStudio/Armature/display/CCDisplayManager.h"
+#include "CocoStudio/Armature/display/CCSkin.h"
+#include "CocoStudio/Armature/physics/CCColliderDetector.h"
+#include "CocoStudio/Armature/physics/CCPhysicsWorld.h"
+#include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
+#include "CocoStudio/Armature/utils/CCConstValue.h"
+#include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
+#include "CocoStudio/Armature/utils/CCTweenFunction.h"
+#include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
+#include "CocoStudio/Armature/external_tool/sigslot.h"
+
+#include "CocoStudio/Components/CCComAttribute.h"
+#include "CocoStudio/Components/CCComAudio.h"
+#include "CocoStudio/Components/CCComController.h"
+#include "CocoStudio/Components/CCComRender.h"
+
+#include "CocoStudio/Json/CSContentJsonDictionary.h"
+#include "CocoStudio/Json/DictionaryHelper.h"
+
+#include "CocoStudio/Reader/CCSSceneReader.h"
+
+
 
 #include "CCDeprecated-ext.h"
 

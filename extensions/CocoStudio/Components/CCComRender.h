@@ -22,44 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __CC_EXTENTIONS_CCCOMNODE_H__
+#define __CC_EXTENTIONS_CCCOMNODE_H__
 
 #include "cocos2d.h"
+#include "cocos-ext.h"
 #include "ExtensionMacros.h"
-#include <string>
 
 NS_CC_EXT_BEGIN
 
-class ComAttribute : public cocos2d::Component
+class ComRender : public cocos2d::Component
 {
 protected:
-    ComAttribute(void);
-    virtual ~ComAttribute(void);
+    ComRender(void);
+    ComRender(cocos2d::Node *node, const char *comName);
+    virtual ~ComRender(void);
     
 public:
-   virtual bool init();
-   static ComAttribute* create(void);
+   virtual void onEnter();
+   virtual void onExit();
+   cocos2d::Node* getNode();
 
-   void setInt(const char *key, int value);
-   void setDouble(const char *key, double value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   void setObject(const char *key, Object *value);
-   
-   int    getInt(const char *key) const;
-   double getDouble(const char *key) const;
-   float  getFloat(const char *key) const;
-   bool   getBool(const char *key) const;
-   const char* getCString(const char *key) const;
-   Object* getObject(const char *key) const;
-   
+   static ComRender* create(cocos2d::Node *pNode, const char *comName);
+
 private:
-   Dictionary *_attributes;  
-   
+   cocos2d::Node *_render;
 };
 
 NS_CC_EXT_END
-
 #endif  // __FUNDATION__CCCOMPONENT_H__

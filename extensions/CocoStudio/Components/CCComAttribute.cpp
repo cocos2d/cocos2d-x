@@ -28,12 +28,14 @@ NS_CC_EXT_BEGIN
 
 ComAttribute::ComAttribute(void)
 : _attributes(NULL)
+, _jsonDict(NULL)
 {
     _name = "ComAttribute";
 }
 
 ComAttribute::~ComAttribute(void)
 {
+	CC_SAFE_DELETE(_jsonDict);
     CC_SAFE_RELEASE(_attributes);
 }
 
@@ -41,6 +43,8 @@ bool ComAttribute::init()
 {
     _attributes = Dictionary::create();
     _attributes->retain();
+
+	_jsonDict = new cs::JsonDictionary();
     return true;
 }
 
@@ -178,6 +182,11 @@ const char* ComAttribute::getCString(const char *key) const
 Object* ComAttribute::getObject(const char *key) const
 {
     return _attributes->objectForKey(key);
+}
+
+cs::JsonDictionary* ComAttribute::getDict() const
+{
+	return _jsonDict;
 }
 
 NS_CC_EXT_END
