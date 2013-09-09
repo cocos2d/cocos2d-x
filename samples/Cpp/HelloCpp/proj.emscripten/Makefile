@@ -6,19 +6,18 @@ SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
         ../Classes/HelloWorldScene.cpp
 
-RESOURCE_PATH = ../Resources/iphone
+RESOURCE_PATH = ../Resources
 
-RESOURCES = CloseNormal.png \
-            CloseSelected.png \
-            HelloWorld.png
+RESOURCES = $(shell (cd $(RESOURCE_PATH); find . -type f ! -name '* *'))
 
 FONT_PATH = ../Resources/fonts
 
 COCOS_ROOT = ../../../..
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 
+HTMLTPL_DIR = $(COCOS_ROOT)/tools/emscripten-templates/iphone-ipad-ipadhd
 SHAREDLIBS += -lcocos2d
-COCOS_LIBS = $(LIB_DIR)/libcocos2d.so
+COCOS_LIBS= $(LIB_DIR)/libcocos2d.so
 
 $(TARGET).js: $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
@@ -36,7 +35,7 @@ $(TARGET).data:
 	$(eval RESTMP := $(shell mktemp -d /tmp/cocos-emscripten.XXXXXX))
 	# Always need a font path, so ensure that it is created first.
 	mkdir -p $(RESTMP)/fonts
-	(cd $(RESOURCE_PATH) && cp -a $(RESOURCES) $(RESTMP))
+	(cd $(RESOURCE_PATH) && cp -Rf . $(RESTMP))
 	(cd $(FONT_PATH) && cp -a * $(RESTMP)/fonts)
 	# NOTE: we copy the system arial.ttf so that there is always a fallback.
 	cp $(ARIAL_TTF) $(RESTMP)/fonts/arial.ttf

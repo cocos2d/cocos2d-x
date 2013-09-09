@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCOBJECT_H__
 
 #include "cocoa/CCDataVisitor.h"
+#include "ccMacros.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -64,25 +65,96 @@ public:
 class CC_DLL Object
 {
 public:
-    // object id, ScriptSupport need public _ID
+    /// object id, ScriptSupport need public _ID
     unsigned int        _ID;
-    // Lua reference id
+    /// Lua reference id
     int                 _luaID;
 protected:
-    // count of references
+    /// count of references
     unsigned int        _reference;
-    // count of autorelease
+    /// count of autorelease
     unsigned int        _autoReleaseCount;
 public:
-    Object(void);
-    virtual ~Object(void);
+    /**
+     * Constructor
+     *
+     * The object's reference count is 1 after construction.
+     */
+    Object();
+
+    virtual ~Object();
     
-    void release(void);
-    void retain(void);
-    Object* autorelease(void);
-    bool isSingleReference(void) const;
-    unsigned int retainCount(void) const;
-    virtual bool isEqual(const Object* pObject);
+    /**
+     * Release the ownership immediately.
+     *
+     * This decrements the object's reference count.
+     *
+     * If the reference count reaches 0 after the descrement, this object is
+     * destructed.
+     *
+     * @see retain, autorelease
+     */
+    inline void release()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        --_reference;
+
+        if (_reference == 0)
+            delete this;
+    }
+
+    /**
+     * Retains the ownership.
+     *
+     * This increases the object's reference count.
+     *
+     * @see release, autorelease
+     */
+    inline void retain()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        ++_reference;
+    }
+
+    /**
+     * Release the ownership sometime soon automatically.
+     *
+     * This descrements the object's reference count at the end of current
+     * autorelease pool block.
+     *
+     * If the reference count reaches 0 after the descrement, this object is
+     * destructed.
+     *
+     * @returns The object itself.
+     *
+     * @see AutoreleasePool, retain, release
+     */
+    Object* autorelease();
+
+    /**
+     * Returns a boolean value that indicates whether there is only one
+     * reference to the object. That is, whether the reference count is 1.
+     *
+     * @returns Whether the object's reference count is 1.
+     */
+    bool isSingleReference() const;
+
+    /**
+     * Returns the object's current reference count.
+     *
+     * @returns The object's reference count.
+     */
+    unsigned int retainCount() const;
+
+    /**
+     * Returns a boolean value that indicates whether this object and a given
+     * object are equal.
+     *
+     * @param object    The object to be compared to this object.
+     *
+     * @returns True if this object and @p object are equal, otherwise false.
+     */
+    virtual bool isEqual(const Object* object);
 
     virtual void acceptVisitor(DataVisitor &visitor);
 

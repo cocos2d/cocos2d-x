@@ -69,7 +69,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\libfreetype2;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\platform\third_party\common\etc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -107,7 +107,7 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\pthread;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\platform\third_party\win32\iconv;$(ProjectDir)..\platform\third_party\win32\zlib;$(ProjectDir)..\platform\third_party\win32\libpng;$(ProjectDir)..\platform\third_party\win32\libjpeg;$(ProjectDir)..\platform\third_party\win32\libtiff;$(ProjectDir)..\platform\third_party\win32\libwebp;$(ProjectDir)..\platform\third_party\win32\libfreetype2;$(ProjectDir)..\platform\third_party\win32\OGLES;..\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\platform\third_party\common\etc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -174,9 +174,19 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\actions\CCActionTiledGrid.cpp" />
     <ClCompile Include="..\actions\CCActionTween.cpp" />
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp" />
+    <ClCompile Include="..\label_nodes\CCFont.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontAtlas.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontAtlasCache.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontAtlasFactory.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontDefinition.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontFNT.cpp" />
+    <ClCompile Include="..\label_nodes\CCFontFreeType.cpp" />
+    <ClCompile Include="..\label_nodes\CCLabel.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelAtlas.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelBMFont.cpp" />
+    <ClCompile Include="..\label_nodes\CCLabelTextFormatter.cpp" />
     <ClCompile Include="..\label_nodes\CCLabelTTF.cpp" />
+    <ClCompile Include="..\label_nodes\CCTextImage.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCLayer.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCScene.cpp" />
     <ClCompile Include="..\layers_scenes_transitions_nodes\CCTransition.cpp" />
@@ -194,9 +204,11 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
+    <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp" />
+    <ClCompile Include="..\platform\third_party\common\etc\etc1.cpp" />
+    <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp" />
     <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
@@ -234,9 +246,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\textures\CCTexture2D.cpp" />
     <ClCompile Include="..\textures\CCTextureAtlas.cpp" />
     <ClCompile Include="..\textures\CCTextureCache.cpp" />
-    <ClCompile Include="..\textures\CCTextureETC.cpp" />
-    <ClCompile Include="..\textures\CCTexturePVR.cpp" />
-    <ClCompile Include="..\textures\etc\etc1.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTileMapAtlas.cpp" />
     <ClCompile Include="..\tileMap_parallax_nodes\CCTMXLayer.cpp" />
@@ -314,9 +323,21 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\include\ccTypes.h" />
     <ClInclude Include="..\include\cocos2d.h" />
     <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h" />
+    <ClInclude Include="..\label_nodes\CCFont.h" />
+    <ClInclude Include="..\label_nodes\CCFontAtlas.h" />
+    <ClInclude Include="..\label_nodes\CCFontAtlasCache.h" />
+    <ClInclude Include="..\label_nodes\CCFontAtlasFactory.h" />
+    <ClInclude Include="..\label_nodes\CCFontCache.h" />
+    <ClInclude Include="..\label_nodes\CCFontDefinition.h" />
+    <ClInclude Include="..\label_nodes\CCFontFNT.h" />
+    <ClInclude Include="..\label_nodes\CCFontFreeType.h" />
+    <ClInclude Include="..\label_nodes\CCLabel.h" />
     <ClInclude Include="..\label_nodes\CCLabelAtlas.h" />
     <ClInclude Include="..\label_nodes\CCLabelBMFont.h" />
+    <ClInclude Include="..\label_nodes\CCLabelTextFormatProtocol.h" />
+    <ClInclude Include="..\label_nodes\CCLabelTextFormatter.h" />
     <ClInclude Include="..\label_nodes\CCLabelTTF.h" />
+    <ClInclude Include="..\label_nodes\CCTextImage.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCLayer.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCScene.h" />
     <ClInclude Include="..\layers_scenes_transitions_nodes\CCTransition.h" />
@@ -343,6 +364,10 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
+    <ClInclude Include="..\platform\platform.h" />
+    <ClInclude Include="..\platform\third_party\common\atitc\atitc.h" />
+    <ClInclude Include="..\platform\third_party\common\etc\etc1.h" />
+    <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h" />
     <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CCApplication.h" />
     <ClInclude Include="..\platform\win32\CCEGLView.h" />
@@ -397,9 +422,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\textures\CCTexture2D.h" />
     <ClInclude Include="..\textures\CCTextureAtlas.h" />
     <ClInclude Include="..\textures\CCTextureCache.h" />
-    <ClInclude Include="..\textures\CCTextureETC.h" />
-    <ClInclude Include="..\textures\CCTexturePVR.h" />
-    <ClInclude Include="..\textures\etc\etc1.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTileMapAtlas.h" />
     <ClInclude Include="..\tileMap_parallax_nodes\CCTMXLayer.h" />

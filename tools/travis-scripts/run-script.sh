@@ -41,8 +41,8 @@ if [ "$GEN_JSB"x = "YES"x ]; then
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 
-    # Generate jsbinding glue codes
-    echo "Generating jsbindings glue codes ..."
+    # Generate binding glue codes
+    echo "Generating bindings glue codes ..."
     cd $COCOS2DX_ROOT/tools/travis-scripts
     ./generate-jsbindings.sh
 
@@ -70,11 +70,11 @@ elif [ "$PLATFORM"x = "android"x ]; then
     build_android TestLua
 
     # Build template
-    echo "Building template ..."
-    cd $COCOS2DX_ROOT/template
-    build_android multi-platform-cpp
-    build_android multi-platform-js
-    build_android multi-platform-lua
+    # echo "Building template ..."
+    # cd $COCOS2DX_ROOT/template
+    # build_android multi-platform-cpp
+    # build_android multi-platform-js
+    # build_android multi-platform-lua
 
 elif [ "$PLATFORM"x = "nacl"x ]; then
     export NACL_SDK_ROOT=$HOME/bin/nacl_sdk/pepper_canary
@@ -83,9 +83,19 @@ elif [ "$PLATFORM"x = "nacl"x ]; then
     cd $COCOS2DX_ROOT
     make -j4
 elif [ "$PLATFORM"x = "linux"x ]; then
+    # Generate binding glue codes
+    echo "Generating bindings glue codes ..."
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-jsbindings.sh
+
     cd $COCOS2DX_ROOT
     make -j4
 elif [ "$PLATFORM"x = "emscripten"x ]; then
+    # Generate binding glue codes
+    echo "Generating bindings glue codes ..."
+    cd $COCOS2DX_ROOT/tools/travis-scripts
+    ./generate-jsbindings.sh
+
     cd $COCOS2DX_ROOT
     export PYTHON=/usr/bin/python
     export LLVM=$HOME/bin/clang+llvm-3.2/bin

@@ -25,10 +25,11 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CCPROFILING_H__
 #define __SUPPORT_CCPROFILING_H__
 
+#include <string>
+#include <chrono>
 #include "ccConfig.h"
 #include "cocoa/CCObject.h"
 #include "cocoa/CCDictionary.h"
-#include <string>
 
 NS_CC_BEGIN
 
@@ -72,22 +73,25 @@ public:
 class ProfilingTimer : public Object
 {
 public:
-    bool initWithName(const char* timerName);
+    ProfilingTimer();
     ~ProfilingTimer(void);
+
+    bool initWithName(const char* timerName);
+
     const char* description(void) const;
-    inline struct timeval * getStartTime(void) { return &_startTime; };
-    inline void setAverageTime(double value) { _averageTime = value; }
-    inline double getAverageTime(void) { return _averageTime; }
+    inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
+
     /** resets the timer properties */
     void reset();
 
     std::string _nameStr;
-    struct timeval _startTime;
-    double _averageTime;
-    double            minTime;
-    double            maxTime;
-    double            totalTime;
-    unsigned int    numberOfCalls;
+    std::chrono::high_resolution_clock::time_point _startTime;
+    int _averageTime1;
+    int _averageTime2;
+    int minTime;
+    int maxTime;
+    long long totalTime;
+    int numberOfCalls;
 };
 
 extern void ProfilingBeginTimingBlock(const char *timerName);

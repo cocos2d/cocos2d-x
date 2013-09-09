@@ -453,4 +453,101 @@ public:
     virtual std::string subtitle();
 };
 
+// S3TC Dxt1 texture format test
+class TextureS3TCDxt1 : public TextureDemo
+{
+public:
+    TextureS3TCDxt1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// S3TC Dxt3 texture format test
+class TextureS3TCDxt3 : public TextureDemo
+{
+public:
+    TextureS3TCDxt3();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// S3TC Dxt5 texture format test
+class TextureS3TCDxt5 : public TextureDemo
+{
+public:
+    TextureS3TCDxt5();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// ATITC RGB texture format test
+class TextureATITCRGB : public TextureDemo
+{
+public:
+    TextureATITCRGB();
+    
+    virtual std::string title();
+    virtual std::string subtitle();    
+};
+
+//ATITC RGBA Explicit texture format test
+class TextureATITCExplicit : public TextureDemo
+{
+public:
+    TextureATITCExplicit();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+//ATITC RGBA Interpolated texture format test
+class TextureATITCInterpolated : public TextureDemo
+{
+public:
+    TextureATITCInterpolated();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
+// RGB888 texture convert test
+class TextureConvertRGB888 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// RGBA8888 texture convert test
+class TextureConvertRGBA8888 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// I8 texture convert test
+class TextureConvertI8 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// AI88 texture convert test
+class TextureConvertAI88 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 #endif // __TEXTURE2D_TEST_H__

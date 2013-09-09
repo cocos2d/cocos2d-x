@@ -30,7 +30,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
     
     return layer;
@@ -43,7 +43,7 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
     
     return layer;
@@ -51,7 +51,7 @@ static Layer* backAction()
 
 static Layer* restartAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->autorelease();
     
     return layer;
@@ -71,7 +71,7 @@ void BaseLayer::onEnter()
 
 void BaseLayer::restartCallback(cocos2d::Object *pSender)
 {
-    Scene *s = new DrawPrimitivesTestScene();
+    auto s = new DrawPrimitivesTestScene();
     s->addChild(restartAction());
     
     Director::getInstance()->replaceScene(s);
@@ -80,7 +80,7 @@ void BaseLayer::restartCallback(cocos2d::Object *pSender)
 
 void BaseLayer::nextCallback(cocos2d::Object *pSender)
 {
-    Scene *s = new DrawPrimitivesTestScene();;
+    auto s = new DrawPrimitivesTestScene();;
     s->addChild(nextAction());
     
     Director::getInstance()->replaceScene(s);
@@ -89,7 +89,7 @@ void BaseLayer::nextCallback(cocos2d::Object *pSender)
 
 void BaseLayer::backCallback(cocos2d::Object *pSender)
 {
-    Scene *s = new DrawPrimitivesTestScene();
+    auto s = new DrawPrimitivesTestScene();
     s->addChild(backAction());
     
     Director::getInstance()->replaceScene(s);
@@ -236,9 +236,9 @@ string DrawPrimitivesTest::subtitle()
 // DrawNodeTest
 DrawNodeTest::DrawNodeTest()
 {
-    Size s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
     
-    DrawNode *draw = DrawNode::create();
+    auto draw = DrawNode::create();
     addChild(draw, 10);
     
     // Draw 10 circles
@@ -300,7 +300,7 @@ string DrawNodeTest::subtitle()
 
 void DrawPrimitivesTestScene::runThisTest()
 {
-    Layer* layer = nextAction();
+    auto layer = nextAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

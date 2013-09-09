@@ -3,8 +3,8 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
-#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_ccbreader.h"
@@ -27,7 +27,7 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    auto pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
     pDirector->setProjection(Director::Projection::_2D);
 
@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
     
-    ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
+    auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
 #if JSB_ENABLE_DEBUGGER
     ScriptingCore::getInstance()->runScript("main.debug.js");
@@ -67,7 +67,7 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    Director* director = Director::getInstance();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {

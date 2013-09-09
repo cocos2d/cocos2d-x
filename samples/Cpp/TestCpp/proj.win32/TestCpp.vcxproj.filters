@@ -552,6 +552,12 @@
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp">
+      <Filter>Classes\LabelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1048,6 +1054,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h">
+      <Filter>Classes\LabelTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

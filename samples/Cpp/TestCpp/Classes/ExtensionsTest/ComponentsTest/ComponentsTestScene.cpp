@@ -26,7 +26,7 @@ Scene* ComponentsTestLayer::scene()
 		CC_BREAK_IF(! scene);
 
 		// 'layer' is an autorelease object
-		ComponentsTestLayer *layer = ComponentsTestLayer::create();
+		auto layer = ComponentsTestLayer::create();
 		CC_BREAK_IF(! layer);
 
 		// add layer as a child to scene
@@ -45,7 +45,7 @@ bool ComponentsTestLayer::init()
 	{
         CC_BREAK_IF(! LayerColor::initWithColor( Color4B(255,255,255,255) ) );
         
-        Node *root = createGameScene();
+        auto root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
 
@@ -67,11 +67,11 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
     Node *root = NULL;
     do 
 	{
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Point origin = Director::getInstance()->getVisibleOrigin();
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        auto origin = Director::getInstance()->getVisibleOrigin();
 
        
-        Sprite *player = Sprite::create("components/Player.png", Rect(0, 0, 27, 40) );
+        auto player = Sprite::create("components/Player.png", Rect(0, 0, 27, 40) );
         
         player->setPosition( Point(origin.x + player->getContentSize().width/2,
                                  origin.y + visibleSize.height/2) );
@@ -80,15 +80,15 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         root->addChild(player, 1, 1);
         
 
-        MenuItemFont *itemBack = MenuItemFont::create("Back", [](Object* sender){
-        	ExtensionsTestScene *scene = new ExtensionsTestScene();
+        auto itemBack = MenuItemFont::create("Back", [](Object* sender){
+        	auto scene = new ExtensionsTestScene();
             scene->runThisTest();
             scene->release();
         });
         
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        Menu *menuBack = Menu::create(itemBack, NULL);
+        auto menuBack = Menu::create(itemBack, NULL);
         menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         
@@ -99,6 +99,6 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
 
 void runComponentsTestLayerTest()
 {
-    Scene *scene = ComponentsTestLayer::scene();
+    auto scene = ComponentsTestLayer::scene();
     Director::getInstance()->replaceScene(scene);
 }

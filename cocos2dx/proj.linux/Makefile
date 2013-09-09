@@ -2,6 +2,9 @@ TARGET = libcocos2d.so
 
 INCLUDES += \
 			-I../platform/third_party/linux/libfreetype2 \
+			-I../platform/third_party/common/etc \
+		       -I../platform/third_party/common/s3tc \
+		      -I../platform/third_party/common/atitc \
 			-I../../extensions \
 			-I../../extensions/CCBReader \
 			-I../../extensions/GUI/CCControlExtension \
@@ -43,9 +46,19 @@ SOURCES = ../actions/CCAction.cpp \
 ../keypad_dispatcher/CCKeypadDelegate.cpp \
 ../keypad_dispatcher/CCKeypadDispatcher.cpp \
 ../keyboard_dispatcher/CCKeyboardDispatcher.cpp \
+../label_nodes/CCFont.cpp \
+../label_nodes/CCFontAtlas.cpp \
+../label_nodes/CCFontAtlasCache.cpp \
+../label_nodes/CCFontAtlasFactory.cpp \
+../label_nodes/CCFontDefinition.cpp \
+../label_nodes/CCFontFNT.cpp \
+../label_nodes/CCFontFreeType.cpp \
+../label_nodes/CCLabel.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
 ../label_nodes/CCLabelBMFont.cpp \
 ../label_nodes/CCLabelTTF.cpp \
+../label_nodes/CCLabelTextFormatter.cpp \
+../label_nodes/CCTextImage.cpp \
 ../layers_scenes_transitions_nodes/CCLayer.cpp \
 ../layers_scenes_transitions_nodes/CCScene.cpp \
 ../layers_scenes_transitions_nodes/CCTransition.cpp \
@@ -63,7 +76,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \
 ../platform/linux/CCStdC.cpp \
@@ -73,6 +85,9 @@ SOURCES = ../actions/CCAction.cpp \
 ../platform/linux/CCEGLView.cpp \
 ../platform/linux/CCImage.cpp \
 ../platform/linux/CCDevice.cpp \
+../platform/third_party/common/etc/etc1.cpp \
+../platform/third_party/common/s3tc/s3tc.cpp \
+../platform/third_party/common/atitc/atitc.cpp \
 ../script_support/CCScriptSupport.cpp \
 ../sprite_nodes/CCAnimation.cpp \
 ../sprite_nodes/CCAnimationCache.cpp \
@@ -101,9 +116,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTexture2D.cpp \
 ../textures/CCTextureAtlas.cpp \
 ../textures/CCTextureCache.cpp \
-../textures/CCTextureETC.cpp \
-../textures/CCTexturePVR.cpp \
-../textures/etc/etc1.cpp\
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \

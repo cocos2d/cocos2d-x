@@ -53,8 +53,8 @@ public:
     /** 
      * Initializes a potentiometer with a track sprite and a progress bar.
      *
-     * @param trackSprite Sprite, that is used as a background.
-     * @param progressSprite ProgressTimer, that is used as a progress bar.
+     * @param trackSprite   Sprite, that is used as a background.
+     * @param progressTimer ProgressTimer, that is used as a progress bar.
      */
     bool initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite* trackSprite, ProgressTimer* progressTimer, Sprite* thumbSprite);
 

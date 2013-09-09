@@ -41,7 +41,7 @@ typedef struct _hashElement
 {
     struct _ccArray             *actions;
     Object                    *target;
-    unsigned int                actionIndex;
+    int                actionIndex;
     Action                    *currentAction;
     bool                        currentActionSalvaged;
     bool                        paused;
@@ -58,7 +58,7 @@ ActionManager::ActionManager(void)
 
 ActionManager::~ActionManager(void)
 {
-    CCLOGINFO("cocos2d: deallocing %p", this);
+    CCLOGINFO("deallocing ActionManager: %p", this);
 
     removeAllActions();
 }
@@ -87,9 +87,9 @@ void ActionManager::actionAllocWithHashElement(tHashElement *pElement)
 
 }
 
-void ActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElement)
+void ActionManager::removeActionAtIndex(int index, tHashElement *pElement)
 {
-    Action *pAction = (Action*)pElement->actions->arr[uIndex];
+    Action *pAction = (Action*)pElement->actions->arr[index];
 
     if (pAction == pElement->currentAction && (! pElement->currentActionSalvaged))
     {
@@ -97,10 +97,10 @@ void ActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElem
         pElement->currentActionSalvaged = true;
     }
 
-    ccArrayRemoveObjectAtIndex(pElement->actions, uIndex, true);
+    ccArrayRemoveObjectAtIndex(pElement->actions, index, true);
 
     // update actionIndex in case we are in tick. looping over the actions
-    if (pElement->actionIndex >= uIndex)
+    if (pElement->actionIndex >= index)
     {
         pElement->actionIndex--;
     }
@@ -265,9 +265,9 @@ void ActionManager::removeAction(Action *pAction)
     }
 }
 
-void ActionManager::removeActionByTag(unsigned int tag, Object *target)
+void ActionManager::removeActionByTag(int tag, Object *target)
 {
-    CCASSERT((int)tag != kActionTagInvalid, "");
+    CCASSERT(tag != Action::INVALID_TAG, "");
     CCASSERT(target != NULL, "");
 
     tHashElement *pElement = NULL;
@@ -293,9 +293,9 @@ void ActionManager::removeActionByTag(unsigned int tag, Object *target)
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-Action* ActionManager::getActionByTag(unsigned int tag, const Object *target) const
+Action* ActionManager::getActionByTag(int tag, const Object *target) const
 {
-    CCASSERT((int)tag != kActionTagInvalid, "");
+    CCASSERT(tag != Action::INVALID_TAG, "");
 
     tHashElement *pElement = NULL;
     HASH_FIND_INT(_targets, &target, pElement);

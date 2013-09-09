@@ -83,7 +83,7 @@ class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
 {
 public:
 
-    static const int kSpriteIndexNotInitialized = -1; /// Sprite invalid index on the SpriteBatchNode
+    static const int INDEX_NOT_INITIALIZED = -1; /// Sprite invalid index on the SpriteBatchNode
 
     /// @{
     /// @name Creators
@@ -294,7 +294,7 @@ public:
     
     /**
      * Updates the texture rect of the Sprite in points.
-     * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+     * It will call setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) with \p rotated = false, and \p utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const Rect& rect);
     
@@ -329,10 +329,13 @@ public:
      */
     virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
     
+    /** @deprecated Use getDisplayFrame() instead */
+    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() { return getDisplayFrame(); };
+    
     /**
      * Returns the current displayed frame.
      */
-    virtual SpriteFrame* displayFrame(void);
+    virtual SpriteFrame* getDisplayFrame();
     
     /// @} End of frames methods
     
@@ -459,20 +462,20 @@ public:
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
     virtual void setPosition(const Point& pos) override;
-    virtual void setRotation(float fRotation) override;
-    virtual void setRotationX(float fRotationX) override;
-    virtual void setRotationY(float fRotationY) override;
+    virtual void setRotation(float rotation) override;
+    virtual void setRotationX(float rotationX) override;
+    virtual void setRotationY(float rotationY) override;
     virtual void setSkewX(float sx) override;
     virtual void setSkewY(float sy) override;
-    virtual void removeChild(Node* child, bool bCleanup) override;
-    virtual void removeAllChildrenWithCleanup(bool bCleanup) override;
+    virtual void removeChild(Node* child, bool cleanup) override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void reorderChild(Node *child, int zOrder) override;
     virtual void addChild(Node *child) override;
     virtual void addChild(Node *child, int zOrder) override;
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
-    virtual void setScale(float fScale) override;
-    virtual void setVertexZ(float fVertexZ) override;
+    virtual void setScale(float scale) override;
+    virtual void setVertexZ(float vertexZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;

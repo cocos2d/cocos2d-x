@@ -78,7 +78,8 @@ bool Control::init()
         // Set the touch dispatcher priority by default to 1
         this->setTouchPriority(1);
         // Initialise the tables
-        _dispatchTable = new Dictionary(); 
+        _dispatchTable = new Dictionary();
+        _dispatchTable->init();
         
         return true;
     }
@@ -267,7 +268,7 @@ bool Control::isTouchInside(Touch* touch)
 
 Array* Control::dispatchListforControlEvent(EventType controlEvent)
 {
-    Array* invocationList = (Array*)_dispatchTable->objectForKey((int)controlEvent);
+    Array* invocationList = static_cast<Array*>(_dispatchTable->objectForKey((int)controlEvent));
 
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)

@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include <functional>
 
 #include "CCStdC.h"
-#include "ccTypeInfo.h"
 #include "CCAction.h"
 
 NS_CC_BEGIN
@@ -297,7 +296,7 @@ protected:
 @brief Calls a 'callback' with the node as the first argument
 N means Node
 */
-class CC_DLL CallFuncN : public CallFunc, public TypeInfo
+class CC_DLL CallFuncN : public CallFunc
 {
 public:
     /** creates the action with the callback of type std::function<void()>.
@@ -325,11 +324,6 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
 
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
-
     //
     // Overrides
     //
@@ -352,11 +346,6 @@ class CC_DLL  __CCCallFuncND : public CallFunc
 public:
     /** creates the action with the callback and the data to pass as an argument */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
-    
-    virtual long getClassTypeInfo() {
-        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
     
 protected:
     /** initializes the action with the callback and the data to pass as an argument */
@@ -382,7 +371,7 @@ protected:
  @since v0.99.5
  */
 
-class CC_DLL __CCCallFuncO : public CallFunc, public TypeInfo
+class CC_DLL __CCCallFuncO : public CallFunc
 {
 public:
     /** creates the action with the callback
@@ -393,11 +382,6 @@ public:
     
     __CCCallFuncO();
     virtual ~__CCCallFuncO();
-    
-    virtual long getClassTypeInfo() {
-	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CallFunc).name());
-		return id;
-    }
     
 protected:
     /** initializes the action with the callback

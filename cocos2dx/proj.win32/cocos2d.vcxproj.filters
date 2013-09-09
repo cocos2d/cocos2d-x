@@ -103,11 +103,11 @@
     <Filter Include="support\component">
       <UniqueIdentifier>{caa78ce0-9b58-4314-b117-1acae278691e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="textures\etc">
-      <UniqueIdentifier>{5e6e45aa-50ef-451b-9bb1-f98b9b78259b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="keyboard_dispatcher">
       <UniqueIdentifier>{e7134ba0-4220-4dd1-b120-3533883394ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\etc">
+      <UniqueIdentifier>{47fda93e-6eb4-4abc-b5bc-725bf667a395}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -330,9 +330,6 @@
     <ClCompile Include="..\textures\CCTextureCache.cpp">
       <Filter>textures</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\CCTexturePVR.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\tileMap_parallax_nodes\CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
@@ -446,9 +443,6 @@
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCImageCommonWebp.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCDevice.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -465,23 +459,56 @@
       <Filter>cocoa</Filter>
     </ClCompile>
     <ClCompile Include="..\ccFPSImages.c" />
-    <ClCompile Include="..\textures\CCTextureETC.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\component\CCComponent.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
     <ClCompile Include="..\support\component\CCComponentContainer.cpp">
       <Filter>support\component</Filter>
     </ClCompile>
-    <ClCompile Include="..\textures\etc\etc1.cpp">
-      <Filter>textures\etc</Filter>
-    </ClCompile>
     <ClCompile Include="..\keyboard_dispatcher\CCKeyboardDispatcher.cpp">
       <Filter>keyboard_dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\ccTypes.cpp" />
+    <ClCompile Include="..\platform\third_party\common\etc\etc1.cpp">
+      <Filter>platform\etc</Filter>
+    </ClCompile>
     <ClCompile Include="..\CCDeprecated.cpp" />
+    <ClCompile Include="..\label_nodes\CCFont.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontAtlas.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontAtlasCache.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontAtlasFactory.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontDefinition.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontFNT.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCFontFreeType.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCLabel.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCLabelTextFormatter.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\label_nodes\CCTextImage.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\base_nodes\CCAtlasNode.h">
@@ -754,9 +781,6 @@
     <ClInclude Include="..\textures\CCTextureCache.h">
       <Filter>textures</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTexturePVR.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\tileMap_parallax_nodes\CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
@@ -944,9 +968,6 @@
     <ClInclude Include="..\cocoa\CCFloat.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\CCTextureETC.h">
-      <Filter>textures</Filter>
-    </ClInclude>
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\support\component\CCComponentContainer.h">
       <Filter>support\component</Filter>
@@ -954,14 +975,57 @@
     <ClInclude Include="..\support\component\CCComponent.h">
       <Filter>support\component</Filter>
     </ClInclude>
-    <ClInclude Include="..\textures\etc\etc1.h">
-      <Filter>textures\etc</Filter>
-    </ClInclude>
     <ClInclude Include="..\keyboard_dispatcher\CCKeyboardDispatcher.h">
       <Filter>keyboard_dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CCDeprecated.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\etc\etc1.h">
+      <Filter>platform\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\platform.h" />
+    <ClInclude Include="..\label_nodes\CCFont.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontAtlas.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontAtlasCache.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontAtlasFactory.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontCache.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontDefinition.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontFNT.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCFontFreeType.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCLabel.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCLabelTextFormatProtocol.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCLabelTextFormatter.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\label_nodes\CCTextImage.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\third_party\common\atitc\atitc.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

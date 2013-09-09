@@ -5,7 +5,7 @@ local function drawPrimitivesMainLayer()
     local testCount = 2
     local maxCases = testCount
     local curCase  = 0
-    local size = CCDirector:getInstance():getWinSize()
+    local size = cc.Director:getInstance():getWinSize()
     local curLayer = nil
 
     local  function orderCallbackMenu()
@@ -27,23 +27,23 @@ local function drawPrimitivesMainLayer()
             showCurrentTest()
         end
 
-        local ordercallbackmenu = CCMenu:create()
-        local size = CCDirector:getInstance():getWinSize()
-        local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+        local ordercallbackmenu = cc.Menu:create()
+        local size = cc.Director:getInstance():getWinSize()
+        local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
         item1:registerScriptTapHandler(backCallback)
         ordercallbackmenu:addChild(item1,kItemTagBasic)
-        local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+        local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
         item2:registerScriptTapHandler(restartCallback)
         ordercallbackmenu:addChild(item2,kItemTagBasic)
-        local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+        local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
         ordercallbackmenu:addChild(item3,kItemTagBasic) 
         item3:registerScriptTapHandler(nextCallback)
                 
-        item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-        item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-        item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+        item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+        item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
         
-        ordercallbackmenu:setPosition(CCPoint(0, 0))
+        ordercallbackmenu:setPosition(cc.p(0, 0))
 
         return ordercallbackmenu
     end
@@ -66,89 +66,90 @@ local function drawPrimitivesMainLayer()
 
     local function InitTitle(layer)
         --Title
-        local lableTitle = CCLabelTTF:create(GetTitle(), "Arial", 40)
+        local lableTitle = cc.LabelTTF:create(GetTitle(), "Arial", 40)
         layer:addChild(lableTitle, 15)
-        lableTitle:setPosition(CCPoint(size.width / 2, size.height - 32))
-        lableTitle:setColor(Color3B(255, 255, 40))
+        lableTitle:setPosition(cc.p(size.width / 2, size.height - 32))
+        lableTitle:setColor(cc.c3b(255, 255, 40))
         --SubTitle
-        local subLabelTitle = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        local subLabelTitle = cc.LabelTTF:create(GetSubTitle(), "Thonburi", 16)
         layer:addChild(subLabelTitle, 15)
-        subLabelTitle:setPosition(CCPoint(size.width / 2, size.height - 80)) 
+        subLabelTitle:setPosition(cc.p(size.width / 2, size.height - 80)) 
     end
 
     local function createDrawPrimitivesEffect()
-        local layer = CCLayer:create()
+        local layer = cc.Layer:create()
 
         InitTitle(layer)
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(CCSize(size.width, size.height))
-        glNode:setAnchorPoint(CCPoint(0.5, 0.5))
+        glNode:setContentSize(cc.size(size.width, size.height))
+        glNode:setAnchorPoint(cc.p(0.5, 0.5))
 
         local function primitivesDraw()
-            CCDrawPrimitives.ccDrawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
+            cc.DrawPrimitives.drawLine(VisibleRect:leftBottom(), VisibleRect:rightTop() )
 
             gl.lineWidth( 5.0 )
-            CCDrawPrimitives.ccDrawColor4B(255,0,0,255)
-            CCDrawPrimitives.ccDrawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
+            cc.DrawPrimitives.drawColor4B(255,0,0,255)
+            cc.DrawPrimitives.drawLine( VisibleRect:leftTop(), VisibleRect:rightBottom() )
 
 
 
-            CCDrawPrimitives.ccPointSize(64)
-            CCDrawPrimitives.ccDrawColor4B(0, 0, 255, 128)
-            CCDrawPrimitives.ccDrawPoint(VisibleRect:center())
+            cc.DrawPrimitives.setPointSize(64)
+            cc.DrawPrimitives.drawColor4B(0, 0, 255, 128)
+            cc.DrawPrimitives.drawPoint(VisibleRect:center())
 
-            local points = {CCPoint(60,60), CCPoint(70,70), CCPoint(60,70), CCPoint(70,60) }
-            CCDrawPrimitives.ccPointSize(4)
-            CCDrawPrimitives.ccDrawColor4B(0,255,255,255)
-            CCDrawPrimitives.ccDrawPoints(points,4)
+            local points = {cc.p(60,60), cc.p(70,70), cc.p(60,70), cc.p(70,60) }
+            cc.DrawPrimitives.setPointSize(4)
+            cc.DrawPrimitives.drawColor4B(0,255,255,255)
+            cc.DrawPrimitives.drawPoints(points,4)
 
             gl.lineWidth(16)
-            CCDrawPrimitives.ccDrawColor4B(0, 255, 0, 255)
-            CCDrawPrimitives.ccDrawCircle( VisibleRect:center(), 100, 0, 10, false)
+            cc.DrawPrimitives.drawColor4B(0, 255, 0, 255)
+            cc.DrawPrimitives.drawCircle( VisibleRect:center(), 100, 0, 10, false)
 
             gl.lineWidth(2)
-            CCDrawPrimitives.ccDrawColor4B(0, 255, 255, 255)
-            CCDrawPrimitives.ccDrawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
+            cc.DrawPrimitives.drawColor4B(0, 255, 255, 255)
+            cc.DrawPrimitives.drawCircle( VisibleRect:center(), 50, math.pi / 2, 50, true)
 
             gl.lineWidth(2)
-            CCDrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
-            CCDrawPrimitives.ccDrawSolidCircle( VisibleRect:center() + CCPoint(140,0), 40, math.rad(90), 50, 1.0, 1.0)
+            cc.DrawPrimitives.drawColor4B(255, 0, 255, 255)
+            cc.DrawPrimitives.drawSolidCircle( cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 40, math.rad(90), 50, 1.0, 1.0)
 
             gl.lineWidth(10)
-            CCDrawPrimitives.ccDrawColor4B(255, 255, 0, 255)
-            local yellowPoints = { CCPoint(0,0), CCPoint(50,50), CCPoint(100,50), CCPoint(100,100), CCPoint(50,100)}
-            CCDrawPrimitives.ccDrawPoly( yellowPoints, 5, false)
+            cc.DrawPrimitives.drawColor4B(255, 255, 0, 255)
+            local yellowPoints = { cc.p(0,0), cc.p(50,50), cc.p(100,50), cc.p(100,100), cc.p(50,100)}
+            cc.DrawPrimitives.drawPoly( yellowPoints, 5, false)
 
             gl.lineWidth(1)
-            local filledVertices = { CCPoint(0,120), CCPoint(50,120), CCPoint(50,170), CCPoint(25,200), CCPoint(0,170) }
-            CCDrawPrimitives.ccDrawSolidPoly(filledVertices, 5, Color4F(0.5, 0.5, 1, 1))
+            local filledVertices = { cc.p(0,120), cc.p(50,120), cc.p(50,170), cc.p(25,200), cc.p(0,170) }
+            cc.DrawPrimitives.drawSolidPoly(filledVertices, 5, cc.c4f(0.5, 0.5, 1, 1))
 
             gl.lineWidth(2)
-            CCDrawPrimitives.ccDrawColor4B(255, 0, 255, 255)
-            local closePoints= { CCPoint(30,130), CCPoint(30,230), CCPoint(50,200) }
-            CCDrawPrimitives.ccDrawPoly( closePoints, 3, true)
+            cc.DrawPrimitives.drawColor4B(255, 0, 255, 255)
+            local closePoints= { cc.p(30,130), cc.p(30,230), cc.p(50,200) }
+            cc.DrawPrimitives.drawPoly( closePoints, 3, true)
 
-            CCDrawPrimitives.ccDrawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
+            cc.DrawPrimitives.drawQuadBezier(VisibleRect:leftTop(), VisibleRect:center(), VisibleRect:rightTop(), 50)
 
-            CCDrawPrimitives.ccDrawCubicBezier(VisibleRect:center(), CCPoint(VisibleRect:center().x + 30, VisibleRect:center().y + 50), CCPoint(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
+            cc.DrawPrimitives.drawCubicBezier(VisibleRect:center(), cc.p(VisibleRect:center().x + 30, VisibleRect:center().y + 50), cc.p(VisibleRect:center().x + 60,VisibleRect:center().y - 50), VisibleRect:right(), 100)
 
-            local solidvertices = {CCPoint(60,160), CCPoint(70,190), CCPoint(100,190), CCPoint(90,160)}
-            CCDrawPrimitives.ccDrawSolidPoly( solidvertices, 4, Color4F(1, 1, 0, 1) )
+            local solidvertices = {cc.p(60,160), cc.p(70,190), cc.p(100,190), cc.p(90,160)}
+            cc.DrawPrimitives.drawSolidPoly( solidvertices, 4, cc.c4f(1, 1, 0, 1) )
 
-            local array = CCPointArray:create(20)
-            array:addControlPoint(CCPoint(0, 0))
-            array:addControlPoint(CCPoint(size.width / 2 - 30, 0))
-            array:addControlPoint(CCPoint(size.width / 2 - 30, size.height - 80))
-            array:addControlPoint(CCPoint(0, size.height - 80))
-            array:addControlPoint(CCPoint(0, 0))
-            CCDrawPrimitives.ccDrawCatmullRom( array, 5)
+            local array = {
+                cc.p(0, 0),
+                cc.p(size.width / 2 - 30, 0),
+                cc.p(size.width / 2 - 30, size.height - 80),
+                cc.p(0, size.height - 80),
+                cc.p(0, 0),
+            }
+            cc.DrawPrimitives.drawCatmullRom( array, 5)
 
-            CCDrawPrimitives.ccDrawCardinalSpline( array, 0,100)
+            cc.DrawPrimitives.drawCardinalSpline( array, 0,100)
 
             gl.lineWidth(1)
-            CCDrawPrimitives.ccDrawColor4B(255,255,255,255)
-            CCDrawPrimitives.ccPointSize(1)
+            cc.DrawPrimitives.drawColor4B(255,255,255,255)
+            cc.DrawPrimitives.setPointSize(1)
         end
 
         glNode:registerScriptDrawHandler(primitivesDraw)
@@ -159,44 +160,44 @@ local function drawPrimitivesMainLayer()
     end
 
     local function createDrawNodeTest()
-        local layer = CCLayer:create()
+        local layer = cc.Layer:create()
 
         InitTitle(layer)
 
-        local draw = CCDrawNode:create()
+        local draw = cc.DrawNode:create()
         layer:addChild(draw, 10)
 
         --Draw 10 circles
         for i=1, 10 do
-            draw:drawDot(CCPoint(size.width/2, size.height/2), 10*(10-i), Color4F(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+            draw:drawDot(cc.p(size.width/2, size.height/2), 10*(10-i), cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
         end
 
         --Draw polygons
-        points = { CCPoint(size.height/4, 0), CCPoint(size.width, size.height / 5), CCPoint(size.width / 3 * 2, size.height) }
-        draw:drawPolygon(points, table.getn(points), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,1))
+        points = { cc.p(size.height/4, 0), cc.p(size.width, size.height / 5), cc.p(size.width / 3 * 2, size.height) }
+        draw:drawPolygon(points, table.getn(points), cc.c4f(1,0,0,0.5), 4, cc.c4f(0,0,1,1))
 
         local o = 80
         local w = 20
         local h = 50
-        local star1 = { CCPoint( o + w, o - h), CCPoint(o + w * 2, o), CCPoint(o + w * 2 + h, o + w), CCPoint(o + w * 2, o + w * 2) }
+        local star1 = { cc.p( o + w, o - h), cc.p(o + w * 2, o), cc.p(o + w * 2 + h, o + w), cc.p(o + w * 2, o + w * 2) }
         
-        draw:drawPolygon(star1, table.getn(star1), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1))
+        draw:drawPolygon(star1, table.getn(star1), cc.c4f(1,0,0,0.5), 1, cc.c4f(0,0,1,1))
 
         o = 180
         w = 20
         h = 50
         local star2 = {
-            CCPoint(o, o), CCPoint(o + w, o - h), CCPoint(o + w * 2, o),        --lower spike
-            CCPoint(o + w * 2 + h, o + w ), CCPoint(o + w * 2, o + w * 2),      --right spike
-            CCPoint(o + w, o + w * 2 + h), CCPoint(o, o + w * 2),               --top spike
-            CCPoint(o - h, o + w),                                              --left spike
+            cc.p(o, o), cc.p(o + w, o - h), cc.p(o + w * 2, o),        --lower spike
+            cc.p(o + w * 2 + h, o + w ), cc.p(o + w * 2, o + w * 2),      --right spike
+            cc.p(o + w, o + w * 2 + h), cc.p(o, o + w * 2),               --top spike
+            cc.p(o - h, o + w),                                              --left spike
         };
         
-        draw:drawPolygon(star2, table.getn(star2), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1))
+        draw:drawPolygon(star2, table.getn(star2), cc.c4f(1,0,0,0.5), 1, cc.c4f(0,0,1,1))
 
-        draw:drawSegment(CCPoint(20,size.height), CCPoint(20,size.height/2), 10, Color4F(0, 1, 0, 1))
+        draw:drawSegment(cc.p(20,size.height), cc.p(20,size.height/2), 10, cc.c4f(0, 1, 0, 1))
 
-        draw:drawSegment(CCPoint(10,size.height/2), CCPoint(size.width/2, size.height/2), 40, Color4F(1, 0, 1, 0.5))
+        draw:drawSegment(cc.p(10,size.height/2), cc.p(size.width/2, size.height/2), 40, cc.c4f(1, 0, 1, 0.5))
 
         return layer
     end
@@ -210,14 +211,14 @@ local function drawPrimitivesMainLayer()
     end
 
     function showCurrentTest()    
-        local curScene = CCScene:create()
+        local curScene = cc.Scene:create()
         if nil ~= curScene then
             curLayer = createLayerByCurCase(curCase)
             if nil ~= curLayer then
                 curScene:addChild(curLayer)
                 curLayer:addChild(orderCallbackMenu(),15)
                 curScene:addChild(CreateBackMenuItem())
-                CCDirector:getInstance():replaceScene(curScene)
+                cc.Director:getInstance():replaceScene(curScene)
             end            
         end 
     end
@@ -228,7 +229,7 @@ local function drawPrimitivesMainLayer()
 end
 
 function DrawPrimitivesTest()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     scene:addChild(drawPrimitivesMainLayer())
     scene:addChild(CreateBackMenuItem())
     return scene

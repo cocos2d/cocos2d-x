@@ -59,16 +59,18 @@ class ComponentContainer;
  */
 
 enum {
-    kNodeTagInvalid = -1,
-};
-
-enum {
     kNodeOnEnter,
     kNodeOnExit,
     kNodeOnEnterTransitionDidFinish,
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup
 };
+
+#if CC_USE_ARRAY_VECTOR
+bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
+#else
+bool nodeComparisonLess(Object* p1, Object* p2);
+#endif
 
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
@@ -128,6 +130,9 @@ enum {
 class CC_DLL Node : public Object
 {
 public:
+    /// Default tag used for all the nodes
+    static const int INVALID_TAG = -1;
+
     /// @{
     /// @name Constructor, Distructor and Initializers
 
@@ -174,7 +179,7 @@ public:
      * The larger number it is, the later this node will be drawn in each message loop.
      * Please refer to setVertexZ(float) for the difference.
      *
-     * @param nZOrder   Z order of this node.
+     * @param zOrder   Z order of this node.
      */
     virtual void setZOrder(int zOrder);
     /**
@@ -206,7 +211,7 @@ public:
      *
      * @warning Use it at your own risk since it might break the cocos2d parent-children z order
      *
-     * @param fVertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  OpenGL Z vertex of this node.
      */
     virtual void setVertexZ(float vertexZ);
     /**
@@ -462,9 +467,9 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      * 
-     * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotaionX);
+    virtual void setRotationX(float rotationX);
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
@@ -481,7 +486,7 @@ public:
      * 0 is the default rotation angle. 
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
-     * @param fRotationY    The Y rotation in degrees.
+     * @param rotationY    The Y rotation in degrees.
      */
     virtual void setRotationY(float rotationY);
     /**
@@ -1062,6 +1067,7 @@ public:
      * this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
      * @endcode
      *
+     * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
      * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
@@ -1072,7 +1078,7 @@ public:
      * Schedules a custom selector with an interval time in seconds.
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param interval      Callback interval time in seconds. 0 means tick every frame,
      */
     void schedule(SEL_SCHEDULE selector, float interval);
@@ -1081,7 +1087,7 @@ public:
      * Schedules a selector that runs only once, with a delay of 0 or larger
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      A function wrapped as a selector
+     * @param selector      The SEL_SCHEDULE selector to be scheduled.
      * @param delay         The amount of time that the first tick will wait before execution.
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
@@ -1152,7 +1158,7 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToParentTransform() const;
+    virtual const AffineTransform& getNodeToParentTransform() const;
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
@@ -1161,7 +1167,7 @@ public:
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual AffineTransform getParentToNodeTransform() const;
+    virtual const AffineTransform& getParentToNodeTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
@@ -1295,7 +1301,7 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
-private:
+protected:
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1303,12 +1309,12 @@ private:
     void insertChild(Node* child, int z);
     
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, bool doCleanup);
+    void detachChild(Node *child, int index, bool doCleanup);
     
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
 
-protected:
+
     float _rotationX;                 ///< rotation angle on x-axis
     float _rotationY;                 ///< rotation angle on y-axis
     

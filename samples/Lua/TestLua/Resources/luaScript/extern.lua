@@ -1,3 +1,20 @@
+function clone(object)
+    local lookup_table = {}
+    local function _copy(object)
+        if type(object) ~= "table" then
+            return object
+        elseif lookup_table[object] then
+            return lookup_table[object]
+        end
+        local new_table = {}
+        lookup_table[object] = new_table
+        for key, value in pairs(object) do
+            new_table[_copy(key)] = _copy(value)
+        end
+        return setmetatable(new_table, getmetatable(object))
+    end
+    return _copy(object)
+end
 
 --Create an class.
 function class(classname, super)
@@ -60,16 +77,16 @@ function class(classname, super)
 end
 
 function schedule(node, callback, delay)
-    local delay = CCDelayTime:create(delay)
-    local sequence = CCSequence:createWithTwoActions(delay, CCCallFunc:create(callback))
-    local action = CCRepeatForever:create(sequence)
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
+    local action = cc.RepeatForever:create(sequence)
     node:runAction(action)
     return action
 end
 
 function performWithDelay(node, callback, delay)
-    local delay = CCDelayTime:create(delay)
-    local sequence = CCSequence:createWithTwoActions(delay, CCCallFunc:create(callback))
+    local delay = cc.DelayTime:create(delay)
+    local sequence = cc.Sequence:create(delay, cc.CallFunc:create(callback))
     node:runAction(sequence)
     return sequence
 end

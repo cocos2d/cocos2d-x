@@ -61,7 +61,7 @@ ScrollView::ScrollView()
 
 ScrollView::~ScrollView()
 {
-    _touches->release();
+    CC_SAFE_RELEASE(_touches);
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
@@ -110,6 +110,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
         setTouchEnabled(true);
         _touches = new Array();
+        _touches->init();
+        
         _delegate = NULL;
         _bounceable = true;
         _clippingToBounds = true;
@@ -183,7 +185,8 @@ void ScrollView::setTouchEnabled(bool e)
     {
         _dragging = false;
         _touchMoved = false;
-        _touches->removeAllObjects();
+        if(_touches)
+            _touches->removeAllObjects();
     }
 }
 
@@ -553,13 +556,12 @@ void ScrollView::visit()
 
 	if(_children)
     {
-		ccArray *arrayData = _children->data;
-		unsigned int i=0;
+		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ )
+		for( ; i < _children->count(); i++ )
         {
-			Node *child =  (Node*)arrayData->arr[i];
+			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -574,9 +576,9 @@ void ScrollView::visit()
 		this->draw();
 		
 		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ )
+		for( ; i < _children->count(); i++ )
         {
-			Node* child = (Node*)arrayData->arr[i];
+			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
 			child->visit();
 		}
         
@@ -627,11 +629,11 @@ bool ScrollView::ccTouchBegan(Touch* touch, Event* event)
     }
     else if (_touches->count() == 2)
     {
-        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getMidpoint(
-                        this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1))));
+        _touchPoint = (this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getMidpoint(
+                        this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1))));
         
-        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
-                       _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+        _touchLength = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
+                       _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
         
         _dragging  = false;
     } 
@@ -655,7 +657,7 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
             
             frame = getViewRect();
 
-            newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0));
+            newPoint     = this->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0));
             moveDistance = newPoint - _touchPoint;
             
             float dis = 0.0f;
@@ -712,8 +714,8 @@ void ScrollView::ccTouchMoved(Touch* touch, Event* event)
         }
         else if (_touches->count() == 2 && !_dragging)
         {
-            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(0)).getDistance(
-                                            _container->convertTouchToNodeSpace((Touch*)_touches->objectAtIndex(1)));
+            const float len = _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(0)).getDistance(
+                                            _container->convertTouchToNodeSpace((Touch*)_touches->getObjectAtIndex(1)));
             this->setZoomScale(this->getZoomScale()*len/_touchLength);
         }
     }

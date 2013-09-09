@@ -8,8 +8,9 @@ DISABLED_WARNINGS = -Wno-ignored-qualifiers -Wno-unused-parameter -Wno-psabi
 QMAKE_CXXFLAGS += $${DISABLED_WARNINGS} -Wno-reorder
 QMAKE_CFLAGS += $${DISABLED_WARNINGS}
 
-# C++11 support (GCC 4.6; for newer versions, change to -std=c++11)
-QMAKE_CXXFLAGS += -Doverride= -std=c++0x
+# C++11 support (Pick the first one if you have an old GCC version)
+#QMAKE_CXXFLAGS += -Doverride= -std=c++0x
+CONFIG += c++11
 
 OS_TYPE = linux
 

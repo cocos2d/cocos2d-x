@@ -1,0 +1,3 @@
+No Java files
+src/ is required for Android's build.xml to operate correctly.
+git does not allow empty directories in revision control so this file is added to src/ both as a readme and to keep git happy.

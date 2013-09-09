@@ -39,6 +39,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(ActionOrbit),
     CL(ActionFollow),
     CL(ActionTargeted),
+    CL(ActionTargetedReverse),
     CL(ActionMoveStacked),
     CL(ActionMoveJumpStacked),
     CL(ActionMoveBezierStacked),
@@ -61,7 +62,7 @@ static Layer* nextAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -75,7 +76,7 @@ static Layer* backAction()
     if( sceneIdx < 0 )
         sceneIdx += total;
     
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -84,7 +85,7 @@ static Layer* backAction()
 
 static Layer* restartAction()
 {
-    Layer* layer = (createFunctions[sceneIdx])();
+    auto layer = (createFunctions[sceneIdx])();
     layer->init();
     layer->autorelease();
     
@@ -144,7 +145,7 @@ void ActionsDemo::onExit()
 
 void ActionsDemo::restartCallback(Object* sender)
 {
-    Scene* s = new ActionsTestScene();
+    auto s = new ActionsTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -152,7 +153,7 @@ void ActionsDemo::restartCallback(Object* sender)
 
 void ActionsDemo::nextCallback(Object* sender)
 {
-    Scene* s = new ActionsTestScene();
+    auto s = new ActionsTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -160,7 +161,7 @@ void ActionsDemo::nextCallback(Object* sender)
 
 void ActionsDemo::backCallback(Object* sender)
 {
-    Scene* s = new ActionsTestScene();
+    auto s = new ActionsTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -646,7 +647,7 @@ void ActionAnimate::onEnter()
     //
     // Manual animation
     //
-    Animation* animation = Animation::create();
+    auto animation = Animation::create();
     for( int i=1;i<15;i++)
     {
         char szName[100] = {0};
@@ -657,24 +658,24 @@ void ActionAnimate::onEnter()
     animation->setDelayPerUnit(2.8f / 14.0f);
     animation->setRestoreOriginalFrame(true);
 
-    Animate* action = Animate::create(animation);
+    auto action = Animate::create(animation);
     _grossini->runAction(Sequence::create(action, action->reverse(), NULL));
     
     //
     // File animation
     //
     // With 2 loops and reverse
-    AnimationCache *cache = AnimationCache::getInstance();
+    auto cache = AnimationCache::getInstance();
     cache->addAnimationsWithFile("animations/animations-2.plist");
-    Animation *animation2 = cache->animationByName("dance_1");
+    auto animation2 = cache->animationByName("dance_1");
 
-    Animate* action2 = Animate::create(animation2);
+    auto action2 = Animate::create(animation2);
     _tamara->runAction(Sequence::create(action2, action2->reverse(), NULL));
 
 // TODO:
 //     observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:AnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
 // 
-//         NSDictionary *userInfo = [notification userInfo);
+//         auto userInfo = [notification userInfo);
 //         NSLog(@"object %@ with data %@", [notification object), userInfo );
 //     });
 
@@ -683,11 +684,11 @@ void ActionAnimate::onEnter()
     // File animation
     //
     // with 4 loops
-    Animation *animation3 = animation2->clone();
+    auto animation3 = animation2->clone();
     animation3->setLoops(4);
 
 
-    Animate* action3 = Animate::create(animation3);
+    auto action3 = Animate::create(animation3);
     _kathia->runAction(action3);
 }
 
@@ -1335,6 +1336,37 @@ std::string ActionTargeted::subtitle()
     return "Action that runs on another target. Useful for sequences";
 }
 
+
+void ActionTargetedReverse::onEnter()
+{
+    ActionsDemo::onEnter();
+    centerSprites(2);
+    
+    
+    auto jump1 = JumpBy::create(2,Point::ZERO,100,3);
+    auto jump2 = jump1->clone();
+    auto rot1 = RotateBy::create(1, 360);
+    auto rot2 = rot1->clone();
+    
+    auto t1 = TargetedAction::create(_kathia, jump2);
+    auto t2 = TargetedAction::create(_kathia, rot2);
+    
+    auto seq = Sequence::create(jump1, t1->reverse(), rot1, t2->reverse(), NULL);
+    auto always = RepeatForever::create(seq);
+    
+    _tamara->runAction(always);
+}
+
+std::string ActionTargetedReverse::title()
+{
+    return "ActionTargetedReverse";
+}
+
+std::string ActionTargetedReverse::subtitle()
+{
+    return "Action that runs reversely on another target. Useful for sequences";
+}
+
 //#pragma mark - ActionStacked
 
 void ActionStacked::onEnter()
@@ -1356,7 +1388,7 @@ void ActionStacked::addNewSpriteWithCoords(Point p)
     int y = (idx/5) * 121;
     
     
-    Sprite *sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121));
+    auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(x,y,85,121));
     
     sprite->setPosition(p);
     this->addChild(sprite);
@@ -1375,7 +1407,7 @@ void ActionStacked::ccTouchesEnded(Set* touches, Event* event)
 
         const Touch *touch = static_cast<Touch*>(item);
 
-        Point location = touch->getLocation();
+        auto location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }
 }
@@ -1402,8 +1434,8 @@ void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
                 MoveBy::create(0.05f, Point(-10,-10)),
        NULL)));
     
-    MoveBy* action = MoveBy::create(2.0f, Point(400,0));
-    MoveBy* action_back = action->reverse();
+    auto action = MoveBy::create(2.0f, Point(400,0));
+    auto action_back = action->reverse();
     
     sprite->runAction(
       RepeatForever::create(
@@ -1454,10 +1486,10 @@ void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
     bezier.controlPoint_2 = Point(300, -s.height/2);
     bezier.endPosition = Point(300,100);
     
-    BezierBy* bezierForward = BezierBy::create(3, bezier);
-    BezierBy* bezierBack = bezierForward->reverse();
+    auto bezierForward = BezierBy::create(3, bezier);
+    auto bezierBack = bezierForward->reverse();
     auto seq = Sequence::create(bezierForward, bezierBack, NULL);
-    RepeatForever* rep = RepeatForever::create(seq);
+    auto rep = RepeatForever::create(seq);
     sprite->runAction(rep);
     
     sprite->runAction(
@@ -1806,14 +1838,14 @@ void Issue1288::onEnter()
     ActionsDemo::onEnter();
     centerSprites(0);
 
-    Sprite *spr = Sprite::create("Images/grossini.png");
+    auto spr = Sprite::create("Images/grossini.png");
     spr->setPosition(Point(100, 100));
     addChild(spr);
 
-    MoveBy* act1 = MoveBy::create(0.5, Point(100, 0));
-    MoveBy* act2 = act1->reverse();
+    auto act1 = MoveBy::create(0.5, Point(100, 0));
+    auto act2 = act1->reverse();
     auto act3 = Sequence::create(act1, act2, NULL);
-    Repeat* act4 = Repeat::create(act3, 2);
+    auto act4 = Repeat::create(act3, 2);
 
     spr->runAction(act4);
 }
@@ -2066,7 +2098,7 @@ void ActionCardinalSpline::onEnter()
     // Spline with high tension (tension==1)
     //
     
-    CardinalSplineBy *action2 = CardinalSplineBy::create(3, array, 1);
+    auto action2 = CardinalSplineBy::create(3, array, 1);
     auto reverse2 = action2->reverse();
     
     auto seq2 = Sequence::create(action2, reverse2, NULL);
@@ -2152,7 +2184,7 @@ string PauseResumeActions::subtitle()
 void PauseResumeActions::pause(float dt)
 {
     log("Pausing");
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
 
     CC_SAFE_RELEASE(_pausedTargets);
     _pausedTargets = director->getActionManager()->pauseAllRunningActions();
@@ -2162,7 +2194,7 @@ void PauseResumeActions::pause(float dt)
 void PauseResumeActions::resume(float dt)
 {
     log("Resuming");
-    Director *director = Director::getInstance();
+    auto director = Director::getInstance();
     director->getActionManager()->resumeTargets(_pausedTargets);
 }
 

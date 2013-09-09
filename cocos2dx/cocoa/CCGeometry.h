@@ -63,7 +63,7 @@ public:
     Point();
     Point(float x, float y);
     Point(const Point& other);
-    Point(const Size& size);
+    explicit Point(const Size& size);
     Point& operator= (const Point& other);
     Point& operator= (const Size& size);
     Point operator+(const Point& right) const;
@@ -246,32 +246,48 @@ public:
     }
     
     /** A general line-line intersection test
-     @param p1
-     is the startpoint for the first line P1 = (p1 - p2)
-     @param p2
-     is the endpoint for the first line P1 = (p1 - p2)
-     @param p3
-     is the startpoint for the second line P2 = (p3 - p4)
-     @param p4
-     is the endpoint for the second line P2 = (p3 - p4)
-     @param s
-     is the range for a hitpoint in P1 (pa = p1 + s*(p2 - p1))
-     @param t
-     is the range for a hitpoint in P3 (pa = p2 + t*(p4 - p3))
-     @return bool
-     indicating successful intersection of a line
-     note that to truly test intersection for segments we have to make
-     sure that s & t lie within [0..1] and for rays, make sure s & t > 0
-     the hit point is        p3 + t * (p4 - p3);
-     the hit point also is    p1 + s * (p2 - p1);
+     @param A   the startpoint for the first line L1 = (A - B)
+     @param B   the endpoint for the first line L1 = (A - B)
+     @param C   the startpoint for the second line L2 = (C - D)
+     @param D   the endpoint for the second line L2 = (C - D)
+     @param S   the range for a hitpoint in L1 (p = A + S*(B - A))
+     @param T   the range for a hitpoint in L2 (p = C + T*(D - C))
+     @returns   whether these two lines interects.
+
+     Note that to truly test intersection for segments we have to make
+     sure that S & T lie within [0..1] and for rays, make sure S & T > 0
+     the hit point is        C + T * (D - C);
+     the hit point also is   A + S * (B - A);
      @since 3.0
      */
     static bool isLineIntersect(const Point& A, const Point& B,
                                  const Point& C, const Point& D,
-                                 float *S, float *T);
+                                 float *S = nullptr, float *T = nullptr);
     
     /*
-     returns YES if Segment A-B intersects with segment C-D
+     returns true if Line A-B overlap with segment C-D
+     @since v3.0
+     */
+    static bool isLineOverlap(const Point& A, const Point& B,
+                                const Point& C, const Point& D);
+    
+    /*
+     returns true if Line A-B parallel with segment C-D
+     @since v3.0
+     */
+    static bool isLineParallel(const Point& A, const Point& B,
+                   const Point& C, const Point& D);
+    
+    /*
+     returns true if Segment A-B overlap with segment C-D
+     @since v3.0
+     */
+    static bool isSegmentOverlap(const Point& A, const Point& B,
+                                 const Point& C, const Point& D,
+                                 Point* S = nullptr, Point* E = nullptr);
+    
+    /*
+     returns true if Segment A-B intersects with segment C-D
      @since v3.0
      */
     static bool isSegmentIntersect(const Point& A, const Point& B, const Point& C, const Point& D);
@@ -283,6 +299,13 @@ public:
     static Point getIntersectPoint(const Point& A, const Point& B, const Point& C, const Point& D);
     
     static const Point ZERO;
+    
+private:
+    // returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
+    static bool isOneDemensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E);
+    
+    // cross procuct of 2 vector. A->B X C->D
+    static float crossProduct2Vector(const Point& A, const Point& B, const Point& C, const Point& D) { return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y); }
 };
 
 class CC_DLL Size
@@ -295,7 +318,7 @@ public:
     Size();
     Size(float width, float height);
     Size(const Size& other);
-    Size(const Point& point);
+    explicit Size(const Point& point);
     Size& operator= (const Size& other);
     Size& operator= (const Point& point);
     Size operator+(const Size& right) const;

@@ -13,7 +13,7 @@ local testsName =
     "PerformanceTouchesTest"
 }
 
-local s = CCDirector:getInstance():getWinSize()
+local s = cc.Director:getInstance():getWinSize()
 
 --Create toMainLayr MenuItem
 function CreatePerfomBasicLayerMenu(pMenu)
@@ -23,14 +23,14 @@ function CreatePerfomBasicLayerMenu(pMenu)
 	local function toMainLayer()
        local pScene = PerformanceTestMain()
        if pScene ~= nil then
-           CCDirector:getInstance():replaceScene(pScene)
+           cc.Director:getInstance():replaceScene(pScene)
        end
     end	
     --Create BackMneu
-    CCMenuItemFont:setFontName("Arial")
-    CCMenuItemFont:setFontSize(24)
-   	local pMenuItemFont = CCMenuItemFont:create("Back")
-    pMenuItemFont:setPosition(CCPoint(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
+    cc.MenuItemFont:setFontName("Arial")
+    cc.MenuItemFont:setFontSize(24)
+   	local pMenuItemFont = cc.MenuItemFont:create("Back")
+    pMenuItemFont:setPosition(cc.p(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
     pMenuItemFont:registerScriptTapHandler(toMainLayer)
     pMenu:addChild(pMenuItemFont)
 end
@@ -62,7 +62,7 @@ local function runNodeChildrenTest()
     local nMaxCases = 0
     local nCurCase  = 0
     
-    local pNewscene = CCScene:create()
+    local pNewscene = cc.Scene:create()
     
     local function GetTitle()
     	if 0 == nCurCase then
@@ -125,21 +125,21 @@ local function runNodeChildrenTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
-    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			local size = cc.Director:getInstance():getWinSize()
+    			local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
-    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
     			item2:registerScriptTapHandler(restartCallback)
     			pMenu:addChild(item2,kItemTagBasic)
-    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
-    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = cc.Director:getInstance():getWinSize()
+    			item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -147,7 +147,7 @@ local function runNodeChildrenTest()
    local function updateQuantityLabel()
     	 if nQuantityOfNodes ~= nLastRenderedCount then	
  --     	local pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
- 			local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "CCLabelTTF")
+ 			local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "LabelTTF")
        		local strNode = nQuantityOfNodes.." nodes"
         	pInfoLabel:setString(strNode)
         	nLastRenderedCount = nQuantityOfNodes
@@ -164,9 +164,9 @@ local function runNodeChildrenTest()
 				return
 			end
     		local i = 0
-    		local len = pChildren:count()
+    		local len = table.getn(pChildren)
     		for i = 0, len - 1, 1 do
-        		local  child = tolua.cast(pChildren:objectAtIndex(i), "CCSprite")
+        		local  child = tolua.cast(pChildren[i + 1], "Sprite")
         		child:setVisible(false)
     		end
     end
@@ -180,16 +180,16 @@ local function runNodeChildrenTest()
     	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
     	local zs = {}
     	if nTotalToAdd > 0 then
-    		local pSprites = CCArray:createWithCapacity(nTotalToAdd)
+            local pSprites = {}
     		local i = 0
     		for i = 0 , nTotalToAdd - 1 do
-    			local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
-            	pSprites:addObject(pSprite)
+    			local pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(0,0,32,32))
+                pSprites[i + 1] = pSprite
             	zs[i]    = math.random(-1,1) * 50
     		end
     		
     		for i = 0 , nTotalToAdd - 1 do
-    			local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+    			local pChild = tolua.cast(pSprites[i + 1],"Node")
     			pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i)
     		end
     		
@@ -207,17 +207,16 @@ local function runNodeChildrenTest()
     	end
      	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
 		if  nTotalToAdd > 0 then
-			 local pSprites = CCArray:createWithCapacity(nTotalToAdd)
-
+             local pSprites = {}
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0, nTotalToAdd - 1 do
-        		 local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
-            	 pSprites:addObject(pSprite)
+        		 local pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(0,0,32,32))
+                 pSprites[i + 1] = pSprite
         	end
        		-- add them with random Z (very important!)
         	for i=0, nTotalToAdd - 1  do
-        		local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+        		local pChild = tolua.cast(pSprites[i + 1],"Node")
         		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)
             end
                     
@@ -235,18 +234,17 @@ local function runNodeChildrenTest()
     	local nTotalToAdd = nCurrentQuantityOfNodes * 0.15
 
     	if nTotalToAdd > 0 then  
-        	local pSprites = CCArray:createWithCapacity(nTotalToAdd)
-
+            local pSprites = {}
         	-- Don't include the sprite creation time as part of the profiling
         	local i = 0
         	for i = 0,nTotalToAdd - 1 do       
-            	local pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0,0,32,32))
-            	pSprites:addObject(pSprite)
+            	local pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(0,0,32,32))
+            	pSprites[i + 1] = pSprite
         	end
 
         	--dd them with random Z (very important!)
         	for i = 0, nTotalToAdd - 1 do 
-        		local pChild = tolua.cast(pSprites:objectAtIndex(i),"CCNode")
+        		local pChild = tolua.cast(pSprites[i + 1] ,"Node")
         		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)         	
        		end
 
@@ -254,7 +252,7 @@ local function runNodeChildrenTest()
 
         	-- reorder them
       		for i = 0, nTotalToAdd - 1 do    	
-        		local pNode =  tolua.cast(pBatchNode:getChildren():objectAtIndex(i),"CCNode")
+        		local pNode =  tolua.cast(pSprites[i + 1],"Node")
             	pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50)
         	end	      
         	pBatchNode:sortAllChildren()
@@ -278,14 +276,14 @@ local function runNodeChildrenTest()
     end
     
     local function updateQuantityOfNodes()
-    	local s = CCDirector:getInstance():getWinSize()  	
+    	local s = cc.Director:getInstance():getWinSize()  	
    		--increase nodes
     	if( nCurrentQuantityOfNodes < nQuantityOfNodes ) then
     		local i = 0
     		for i = 0,nQuantityOfNodes - nCurrentQuantityOfNodes - 1 do 
-            	local sprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0, 0, 32, 32))
+            	local sprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(0, 0, 32, 32))
             	pBatchNode:addChild(sprite)
-            	sprite:setPosition(CCPoint( math.random() * s.width, math.random() * s.height))
+            	sprite:setPosition(cc.p( math.random() * s.width, math.random() * s.height))
             	if 0 ~= nCurCase then
             		sprite:setVisible(false)
             	end
@@ -325,29 +323,29 @@ local function runNodeChildrenTest()
     
     local function SpecialInitWithQuantityOfNodes()
     --	if 0 == nCurCase then
-    		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png")
+    		pBatchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png")
     		pNewscene:addChild(pBatchNode)
     	--[[
     	else
-    		pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png")
+    		pBatchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png")
     		pNewscene:addChild(pBatchNode)
     	end 
     	]]--
     end
     
     local function MainSceneInitWithQuantityOfNodes(nNodes)
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = cc.Director:getInstance():getWinSize()
     		
         --Title
-   		local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+   		local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
     	pNewscene:addChild(pLabel, 1)
-    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
-    	pLabel:setColor(Color3B(255,255,40))  	
+    	pLabel:setPosition(cc.p(s.width/2, s.height-32))
+    	pLabel:setColor(cc.c3b(255,255,40))  	
     	
    		if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
-        	local pSubLabel = CCLabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        	local pSubLabel = cc.LabelTTF:create(GetSubTitle(), "Thonburi", 16)
         	pNewscene:addChild(pSubLabel, 1)
-        	pSubLabel:setPosition(CCPoint(s.width/2, s.height-80))
+        	pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
         end
         
         nLastRenderedCount = 0 	
@@ -355,33 +353,33 @@ local function runNodeChildrenTest()
     	nQuantityOfNodes = nNodes
     	
     	--"+","-" Menu
-		CCMenuItemFont:setFontSize(65)
-    	local pDecrease = CCMenuItemFont:create(" - ")
+		cc.MenuItemFont:setFontSize(65)
+    	local pDecrease = cc.MenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(Color3B(0,200,20))
-    	local pIncrease = CCMenuItemFont:create(" + ")
+    	pDecrease:setColor(cc.c3b(0,200,20))
+    	local pIncrease = cc.MenuItemFont:create(" + ")
     	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(Color3B(0,200,20))
+   		pIncrease:setColor(cc.c3b(0,200,20))
     	
-    	local pMenuAddOrSub = CCMenu:create()
+    	local pMenuAddOrSub = cc.Menu:create()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
    		pNewscene:addChild(pMenuAddOrSub,1)
    		
    		--InfoLayer
-   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-    	pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height/2-15))
+   		local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+    	pInfoLabel:setColor(cc.c3b(0,200,20))
+    	pInfoLabel:setPosition(cc.p(s.width/2, s.height/2-15))
     	pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
     	
     	--NodeChildrenMenuLayer
-    	local pNodeChildrenMenuLayer 	= CCLayer:create()
-    	local pNodeChildrenMenuMenu     = CCMenu:create()
+    	local pNodeChildrenMenuLayer 	= cc.Layer:create()
+    	local pNodeChildrenMenuMenu     = cc.Menu:create()
     	CreatePerfomBasicLayerMenu(pNodeChildrenMenuMenu)
 		CreateBasicLayerMenuItem(pNodeChildrenMenuMenu,true,NodeChildrenTestParam.TEST_COUNT,nCurCase)
-		pNodeChildrenMenuMenu:setPosition(CCPoint(0, 0))
+		pNodeChildrenMenuMenu:setPosition(cc.p(0, 0))
 		pNodeChildrenMenuLayer:addChild(pNodeChildrenMenuMenu)
 		pNewscene:addChild(pNodeChildrenMenuLayer) 
 		
@@ -395,13 +393,13 @@ local function runNodeChildrenTest()
 			pNewscene:unscheduleUpdate()
 		end
 		
-		pNewscene = CCScene:create()
+		pNewscene = cc.Scene:create()
     	if nil ~= pNewscene then
     		SpecialInitWithQuantityOfNodes()
 			MainSceneInitWithQuantityOfNodes(nQuantityOfNodes)
 --			pNewscene:registerScriptHandler(onNodeEvent)
 			NodeChildrenScheduleUpdate()
-			CCDirector:getInstance():replaceScene(pNewscene)
+			cc.Director:getInstance():replaceScene(pNewscene)
     	end	
     end
     
@@ -442,7 +440,7 @@ local function runParticleTest()
     
     local ScheduleSelector = nil
     
-    local pNewScene = CCScene:create()
+    local pNewScene = cc.Scene:create()
     
     local function GetTitle()
     	local strTitle = nil
@@ -483,21 +481,21 @@ local function runParticleTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
-    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			local size = cc.Director:getInstance():getWinSize()
+    			local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
-    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
     			item2:registerScriptTapHandler(restartCallback)
     			pMenu:addChild(item2,kItemTagBasic)
-    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
-    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = cc.Director:getInstance():getWinSize()
+    			item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -510,7 +508,7 @@ local function runParticleTest()
     
     local function UpdateQuantityLabel()
     	if nQuantityParticles ~= nLastRenderedCount then
-    		local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "CCLabelTTF")
+    		local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "LabelTTF")
     		local  strInfo    = string.format("%u particles", nQuantityParticles)
     		pInfoLabel:setString(strInfo)
     		
@@ -519,8 +517,8 @@ local function runParticleTest()
     end
     
     local function doTest()
-   		local s = CCDirector:getInstance():getWinSize()
-   		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
+   		local s = cc.Director:getInstance():getWinSize()
+   		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"ParticleSystem")
    		if nil == pParticleSystem then
    			return
    		end
@@ -529,7 +527,7 @@ local function runParticleTest()
     		   pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(CCPoint(0,-90))
+    		  pParticleSystem:setGravity(cc.p(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -544,8 +542,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
-   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
+    		  pParticleSystem:setPosition(cc.p(s.width/2, 100))
+   			  pParticleSystem:setPosVar(cc.p(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -555,13 +553,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(cc.c4f(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(cc.c4f(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(4.0)
@@ -577,7 +575,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(CCPoint(0,-90))
+    		  pParticleSystem:setGravity(cc.p(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -592,8 +590,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
-   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
+    		  pParticleSystem:setPosition(cc.p(s.width/2, 100))
+   			  pParticleSystem:setPosVar(cc.p(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -603,13 +601,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(cc.c4f(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(cc.c4f(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(8.0)
@@ -624,7 +622,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(CCPoint(0,-90))
+    		  pParticleSystem:setGravity(cc.p(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -639,8 +637,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
-   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
+    		  pParticleSystem:setPosition(cc.p(s.width/2, 100))
+   			  pParticleSystem:setPosVar(cc.p(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -650,13 +648,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(cc.c4f(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(cc.c4f(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(32.0)
@@ -671,7 +669,7 @@ local function runParticleTest()
     		  pParticleSystem:setDuration(-1)
 
     		  --gravity
-    		  pParticleSystem:setGravity(CCPoint(0,-90))
+    		  pParticleSystem:setGravity(cc.p(0,-90))
 
     	      --angle
     		  pParticleSystem:setAngle(90)
@@ -686,8 +684,8 @@ local function runParticleTest()
     		  pParticleSystem:setSpeedVar(50)
     		  
     		  -- emitter position
-    		  pParticleSystem:setPosition(CCPoint(s.width/2, 100))
-   			  pParticleSystem:setPosVar(CCPoint(s.width/2,0))
+    		  pParticleSystem:setPosition(cc.p(s.width/2, 100))
+   			  pParticleSystem:setPosVar(cc.p(s.width/2,0))
 
     		  -- life of particles
    			  pParticleSystem:setLife(2.0)
@@ -697,13 +695,13 @@ local function runParticleTest()
     		  pParticleSystem:setEmissionRate(pParticleSystem:getTotalParticles() / pParticleSystem:getLife())
     		  
     		  --color of particles
-    		  pParticleSystem:setStartColor(Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColor(cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setStartColorVar( Color4F(0.5, 0.5, 0.5, 1.0))
+    		  pParticleSystem:setStartColorVar( cc.c4f(0.5, 0.5, 0.5, 1.0))
 
-    		  pParticleSystem:setEndColor(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColor(cc.c4f(0.1, 0.1, 0.1, 0.2))
    
-    		  pParticleSystem:setEndColorVar(Color4F(0.1, 0.1, 0.1, 0.2))
+    		  pParticleSystem:setEndColorVar(cc.c4f(0.1, 0.1, 0.1, 0.2))
 
     		  -- size, in pixels
     		  pParticleSystem:setEndSize(64.0)
@@ -733,21 +731,21 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = CCTextureCache:getInstance():addImage("Images/fire.png")
-    		CCTextureCache:getInstance():removeTexture(pTexture)
-    		local pParticleSystem = CCParticleSystemQuad:new()
+    		local pTexture = cc.TextureCache:getInstance():addImage("Images/fire.png")
+    		cc.TextureCache:getInstance():removeTexture(pTexture)
+    		local pParticleSystem = cc.ParticleSystemQuad:new()
     		if 1 == nSubtestNumber then
-    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     		elseif 2 == nSubtestNumber then
-    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    			cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
     		elseif 3 == nSubtestNumber then
-    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
+    		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_A8)
     		elseif 4 == nSubtestNumber then 
-    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    			cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     		elseif 5 == nSubtestNumber then 
-    		    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
     		elseif 6 == nSubtestNumber then 
-    			CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_A8)
+    			cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_A8)
     		else
     			pParticleSystem = nil
     			print("Shall not happen!")
@@ -755,26 +753,26 @@ local function runParticleTest()
     		
     		if nil ~= pParticleSystem then
     			pParticleSystem:initWithTotalParticles(nQuantityParticles)
-        		pParticleSystem:setTexture(CCTextureCache:getInstance():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
     		
     		doTest()
     		--restore the default pixel format
-    		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)  
+    		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)  
 	end
 	
 	local function step(t)
-		  local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"CCLabelAtlas")
-    	  local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"CCParticleSystem")
+		  local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"LabelAtlas")
+    	  local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"ParticleSystem")
     	  local strInfo = string.format("%4d",pEmitter:getParticleCount())
     	  pAtlas:setString(strInfo)
 	end
 	
 	local function ScheduleFuncion()
 		 local function OnEnterOrExit(tag)
-    		  local scheduler = CCDirector:getInstance():getScheduler()
+    		  local scheduler = cc.Director:getInstance():getScheduler()
 			    if tag == "enter" then
 					ScheduleSelector = scheduler:scheduleScriptFunc(step,0,false)
 				elseif tag == "exit" then
@@ -806,69 +804,69 @@ local function runParticleTest()
     
     local function InitWithSubTest(nSubtest,nParticles)
     	nSubtestNumber = nSubtest
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = cc.Director:getInstance():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityParticles = nParticles
     	
     	--"+","-" Menu
-		CCMenuItemFont:setFontSize(65)
-    	local pDecrease = CCMenuItemFont:create(" - ")
+		cc.MenuItemFont:setFontSize(65)
+    	local pDecrease = cc.MenuItemFont:create(" - ")
     	pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(Color3B(0,200,20))
-    	local pIncrease = CCMenuItemFont:create(" + ")
+    	pDecrease:setColor(cc.c3b(0,200,20))
+    	local pIncrease = cc.MenuItemFont:create(" + ")
     	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(Color3B(0,200,20))
+   		pIncrease:setColor(cc.c3b(0,200,20))
    		
-   		local pMenuAddOrSub = CCMenu:create()
+   		local pMenuAddOrSub = cc.Menu:create()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
-   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-        pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height - 90))
+   		local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+        pInfoLabel:setColor(cc.c3b(0,200,20))
+    	pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, ParticleTestParam.kTagInfoLayer)
     	
     	--particles on stage
-    	local pLabelAtlas = CCLabelAtlas:create("0000", "fps_images.png", 12, 32, string.byte('.'))
+    	local pLabelAtlas = cc.LabelAtlas:_create("0000", "fps_images.png", 12, 32, string.byte('.'))
     	pNewScene:addChild(pLabelAtlas, 0, ParticleTestParam.kTagLabelAtlas)
-    	pLabelAtlas:setPosition(CCPoint(s.width-66,50))
+    	pLabelAtlas:setPosition(cc.p(s.width-66,50))
     	
     	--ParticleTestMenuLayer
-    	local pParticleMenuLayer 	= CCLayer:create()
-    	local pParticleMenu         = CCMenu:create()
+    	local pParticleMenuLayer 	= cc.Layer:create()
+    	local pParticleMenu         = cc.Menu:create()
     	CreatePerfomBasicLayerMenu(pParticleMenu)
 		CreateBasicLayerMenuItem(pParticleMenu,true,ParticleTestParam.TEST_COUNT,nCurCase)
-		pParticleMenu:setPosition(CCPoint(0, 0))
+		pParticleMenu:setPosition(cc.p(0, 0))
 		pParticleMenuLayer:addChild(pParticleMenu)
 		pNewScene:addChild(pParticleMenuLayer) 
 		
 		--Sub Tests
-		CCMenuItemFont:setFontSize(40)
-    	local pSubMenu = CCMenu:create()
+		cc.MenuItemFont:setFontSize(40)
+    	local pSubMenu = cc.Menu:create()
     	local i = 1
     	for  i = 1, 6 do
   			local strNum = string.format("%d ",i)
-        	local pItemFont = CCMenuItemFont:create(strNum)
+        	local pItemFont = cc.MenuItemFont:create(strNum)
         	pItemFont:registerScriptTapHandler(TestNCallback)     	
         	pSubMenu:addChild(pItemFont, i + ParticleTestParam.kSubMenuBasicZOrder)
         	if i <= 3 then
-            	pItemFont:setColor(Color3B(200,20,20))
+            	pItemFont:setColor(cc.c3b(200,20,20))
         	else
-            	pItemFont:setColor(Color3B(0,200,20))
+            	pItemFont:setColor(cc.c3b(0,200,20))
         	end
    		end
     	pSubMenu:alignItemsHorizontally()
-    	pSubMenu:setPosition(CCPoint(s.width/2, 80))
+    	pSubMenu:setPosition(cc.p(s.width/2, 80))
     	pNewScene:addChild(pSubMenu, 2)
     	
-    	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
-    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
-    	pLabel:setColor(Color3B(255,255,40))
+    	pLabel:setPosition(cc.p(s.width/2, s.height-32))
+    	pLabel:setColor(cc.c3b(255,255,40))
     	
     	UpdateQuantityLabel()  	
     	CreateParticleSystem()
@@ -877,11 +875,11 @@ local function runParticleTest()
     
     function ShowCurrentTest()
     	if nil ~= pNewScene then
-    		CCDirector:getInstance():getScheduler():unscheduleScriptEntry(ScheduleSelector)
+    		cc.Director:getInstance():getScheduler():unscheduleScriptEntry(ScheduleSelector)
     	end  	
-		pNewScene = CCScene:create()
+		pNewScene = cc.Scene:create()
 		InitWithSubTest(nSubtestNumber,nQuantityParticles)
-		CCDirector:getInstance():replaceScene(pNewScene)	   	
+		cc.Director:getInstance():replaceScene(pNewScene)	   	
     end
     
 	
@@ -944,7 +942,7 @@ local function runSpriteTest()
     	return strTitle
     end
     
-    local pNewScene = CCScene:create()
+    local pNewScene = cc.Scene:create()
     
     local function CreateBasicLayerMenuItem(pMenu,bMenuVisible,nMaxCasesNum,nCurCaseIndex)
     	if nil ~= pMenu then
@@ -971,28 +969,28 @@ local function runSpriteTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
-    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			local size = cc.Director:getInstance():getWinSize()
+    			local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
-    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
     			item2:registerScriptTapHandler(restartCallback)
     			pMenu:addChild(item2,kItemTagBasic)
-    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
-    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = cc.Director:getInstance():getWinSize()
+    			item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
     
     local function UpdateNodes()
     	  if  nQuantityNodes ~= nLastRenderedCount then   		
-        	 local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "CCLabelTTF")
+        	 local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "LabelTTF")
         	 local strInfo = string.format("%u nodes", nQuantityNodes)
         	 pInfoLabel:setString(strInfo)
         	 nLastRenderedCount = nQuantityNodes
@@ -1000,99 +998,90 @@ local function runSpriteTest()
     end
     
     local function PerformancePosition(pSprite)
-    	local size = CCDirector:getInstance():getWinSize()
-    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+    	local size = cc.Director:getInstance():getWinSize()
+    	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     end
     
     local function PerformanceScale(pSprite)
-    	local size = CCDirector:getInstance():getWinSize()
-    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+    	local size = cc.Director:getInstance():getWinSize()
+    	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setScale(math.random() * 100 / 50)
 	end
 	
 	local function PerformanceRotationScale(pSprite)
-	    local size = CCDirector:getInstance():getWinSize()
-    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+	    local size = cc.Director:getInstance():getWinSize()
+    	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	pSprite:setRotation(math.random() * 360)
     	pSprite:setScale(math.random() * 2)
 	end
 	
 	local function PerformanceOut100(pSprite)
-    	pSprite:setPosition(CCPoint( -1000, -1000))
+    	pSprite:setPosition(cc.p( -1000, -1000))
 	end
 	
 	local function Performanceout20(pSprite)
-		  local size = CCDirector:getInstance():getWinSize()
+		  local size = cc.Director:getInstance():getWinSize()
 
     	  if math.random() < 0.2 then
-        	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+        	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	  else
-        	pSprite:setPosition(CCPoint( -1000, -1000))
+        	pSprite:setPosition(cc.p( -1000, -1000))
 		  end
 	end
 	
 	local function PerformanceActions(pSprite)
-	    local size = CCDirector:getInstance():getWinSize()
-    	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+	    local size = cc.Director:getInstance():getWinSize()
+    	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
 
     	local fPeriod = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
-    	local pRot    = CCRotateBy:create(fPeriod, 360.0 * math.random() )
+    	local pRot    = cc.RotateBy:create(fPeriod, 360.0 * math.random() )
     	local pRot_back = pRot:reverse()
-    	local arrRot = CCArray:create()
-    	arrRot:addObject(pRot)
-    	arrRot:addObject(pRot_back)
-    	local pPermanentRotation = CCRepeatForever:create(CCSequence:create(arrRot))
+    	local pPermanentRotation = cc.RepeatForever:create(cc.Sequence:create(pRot, pRot_back))
     	pSprite:runAction(pPermanentRotation)
 
     	local fGrowDuration = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
-    	local pGrow         = CCScaleBy:create(fGrowDuration, 0.5, 0.5)
-    	local arrGrow = CCArray:create()
-    	arrGrow:addObject(pGrow)
-    	arrGrow:addObject(pGrow:reverse())
-    	local pPermanentScaleLoop = CCRepeatForever:create(CCSequence:create(arrGrow))
+    	local pGrow         = cc.ScaleBy:create(fGrowDuration, 0.5, 0.5)
+    	local pPermanentScaleLoop = cc.RepeatForever:create(cc.Sequence:create(pGrow, pGrow:reverse()))
     	pSprite:runAction(pPermanentScaleLoop)
 	end
 	
 	local function PerformanceActions20(pSprite)
-		  local size = CCDirector:getInstance():getWinSize()
+		  local size = cc.Director:getInstance():getWinSize()
 		  
     	  if math.random() < 0.2  then
-        	pSprite:setPosition(CCPoint((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
+        	pSprite:setPosition(cc.p((math.random(0,SpriteTestParam.kRandMax) % (size.width) ), (math.random(0,SpriteTestParam.kRandMax) % (size.height))))
     	  else
-        	pSprite:setPosition(CCPoint( -1000, -1000))
+        	pSprite:setPosition(cc.p( -1000, -1000))
           end
          
     	  local pPeriod = 0.5 + (math.random(0,SpriteTestParam.kRandMax) % 1000) / 500.0
-    	  local pRot    = CCRotateBy:create(pPeriod, 360.0 * math.random())
+    	  local pRot    = cc.RotateBy:create(pPeriod, 360.0 * math.random())
     	  local pRot_back = pRot:reverse()
-    	  local arrRot = CCArray:create()
-    	  arrRot:addObject(pRot)
-    	  arrRot:addObject(pRot_back)
-    	  local pPermanentRotation = CCRepeatForever:create(CCSequence:create(arrRot))
+    	  local pPermanentRotation = cc.RepeatForever:create(cc.Sequence:create(pRot, pRot_back))
     	  pSprite:runAction(pPermanentRotation)
 
 
     	  local fGrowDuration = 0.5 + (math.random(0,SpriteTestParam.kRandMax)  % 1000) / 500.0
-    	  local pGrow         = CCScaleBy:create(fGrowDuration, 0.5, 0.5)
-          local pPermanentScaleLoop = CCRepeatForever:create(CCSequence:createWithTwoActions(pGrow, pGrow:reverse()))
+    	  local pGrow         = cc.ScaleBy:create(fGrowDuration, 0.5, 0.5)
+          local pPermanentScaleLoop = cc.RepeatForever:create(cc.Sequence:create(pGrow, pGrow:reverse()))
     	  pSprite:runAction(pPermanentScaleLoop)
     	     	  
 	end
 	
 	local function CreateSpriteWithTag(nTag)
         --create 
-    	CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    	cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     	local pSprite = nil
     	if 1 == nSubtestNumber then
-    		pSprite = CCSprite:create("Images/grossinis_sister1.png")
+    		pSprite = cc.Sprite:create("Images/grossinis_sister1.png")
             pNewScene:addChild(pSprite, 0, nTag+100)
     	elseif 2 == nSubtestNumber or 3 == nSubtestNumber then
-    		pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(0, 0, 52, 139))
+    		pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(0, 0, 52, 139))
             pBatchNode:addChild(pSprite, 0, nTag+100)
     	elseif 4 == nSubtestNumber then
     	    local nIndex = math.floor((math.random() * 1400 / 100)) + 1
             local strPath = string.format("Images/grossini_dance_%02d.png", nIndex)
-            pSprite = CCSprite:create(strPath)
+            pSprite = cc.Sprite:create(strPath)
             pNewScene:addChild(pSprite, 0, nTag+100)
     	elseif 5 == nSubtestNumber or 6 == nSubtestNumber then
     	     local nY = 0
@@ -1104,7 +1093,7 @@ local function runSpriteTest()
 
              nX = nX * 85
              nY = nY * 121
-             pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(nX,nY,85,121))
+             pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(nX,nY,85,121))
              pBatchNode:addChild(pSprite, 0, nTag+100)
     	elseif 7 == nSubtestNumber then
     	  	local nX = 0
@@ -1115,7 +1104,7 @@ local function runSpriteTest()
             nY = math.floor(nR / 8)
             
             local strPath = string.format("Images/sprites_test/sprite-%d-%d.png", nX, nY)
-            pSprite = CCSprite:create(strPath)
+            pSprite = cc.Sprite:create(strPath)
             pNewScene:addChild(pSprite, 0, nTag+100)
     	elseif 8 == nSubtestNumber or 9 == nSubtestNumber then
     	  	local nX = 0
@@ -1127,10 +1116,10 @@ local function runSpriteTest()
 
             nX = nX * 32
             nY = nY * 32
-            pSprite = CCSprite:createWithTexture(pBatchNode:getTexture(), CCRect(nX,nY,32,32))
+            pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(nX,nY,32,32))
             pBatchNode:addChild(pSprite, 0, nTag+100)
     	end
-		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
+		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT )
 		
 		return  pSprite  	
     end
@@ -1215,7 +1204,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = CCTextureCache:getInstance()
+    	local pMgr = cc.TextureCache:getInstance()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1223,28 +1212,28 @@ local function runSpriteTest()
     	
     	if 1 == nSubTest or 4 == nSubTest or 7 == nSubTest then
     	elseif 2 == nSubTest then
-    	    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-            pBatchNode = CCSpriteBatchNode:create("Images/grossinis_sister1.png", 100)
+    	    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+            pBatchNode = cc.SpriteBatchNode:create("Images/grossinis_sister1.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	elseif 3 == nSubTest then
-    		CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-            pBatchNode = CCSpriteBatchNode:create("Images/grossinis_sister1.png", 100)
+    		cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+            pBatchNode = cc.SpriteBatchNode:create("Images/grossinis_sister1.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	elseif 5 == nSubTest then
-    	    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-            pBatchNode = CCSpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
+    	    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+            pBatchNode = cc.SpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	elseif 6 == nSubTest then
-    	    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-            pBatchNode = CCSpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
+    	    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+            pBatchNode = cc.SpriteBatchNode:create("Images/grossini_dance_atlas.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	elseif 8 == nSubTest then
-    	    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
-            pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png", 100)
+    	    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+            pBatchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	elseif 9 == nSubTest then
-    	    CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
-            pBatchNode = CCSpriteBatchNode:create("Images/spritesheet1.png", 100)
+    	    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
+            pBatchNode = cc.SpriteBatchNode:create("Images/spritesheet1.png", 100)
             pNewScene:addChild(pBatchNode, 0)
     	end
     	
@@ -1252,85 +1241,85 @@ local function runSpriteTest()
     	    pBatchNode:retain()
     	end
     
-    	CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_Default)
+    	cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT )
     end
         
     local function InitWithSpriteTest(nSubtest,nNodes)
     	nSubtestNumber = nSubtest
     	--about create subset
     	InitWithSubTest(nSubtest)
-    	local s = CCDirector:getInstance():getWinSize()
+    	local s = cc.Director:getInstance():getWinSize()
     	
     	nLastRenderedCount = 0
     	nQuantityNodes    = 0
     	
     	--"+","-" Menu
-		CCMenuItemFont:setFontSize(65)
-    	local pDecrease = CCMenuItemFont:create(" - ")
+		cc.MenuItemFont:setFontSize(65)
+    	local pDecrease = cc.MenuItemFont:create(" - ")
    		pDecrease:registerScriptTapHandler(onDecrease)
-    	pDecrease:setColor(Color3B(0,200,20))
-    	local pIncrease = CCMenuItemFont:create(" + ")
+    	pDecrease:setColor(cc.c3b(0,200,20))
+    	local pIncrease = cc.MenuItemFont:create(" + ")
 	   	pIncrease:registerScriptTapHandler(onIncrease)
-   		pIncrease:setColor(Color3B(0,200,20))
+   		pIncrease:setColor(cc.c3b(0,200,20))
    		
-   		local pMenuAddOrSub = CCMenu:create()
+   		local pMenuAddOrSub = cc.Menu:create()
     	pMenuAddOrSub:addChild(pDecrease)
     	pMenuAddOrSub:addChild(pIncrease)
     	pMenuAddOrSub:alignItemsHorizontally()
-    	pMenuAddOrSub:setPosition(CCPoint(s.width/2, s.height/2+15))
+    	pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
    		pNewScene:addChild(pMenuAddOrSub,1)
    		
-   		local pInfoLabel = CCLabelTTF:create("0 nodes", "Marker Felt", 30)
-        pInfoLabel:setColor(Color3B(0,200,20))
-    	pInfoLabel:setPosition(CCPoint(s.width/2, s.height - 90))
+   		local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+        pInfoLabel:setColor(cc.c3b(0,200,20))
+    	pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
     	pNewScene:addChild(pInfoLabel, 1, SpriteTestParam.kTagInfoLayer)
     	
     	--SpriteTestMenuLayer
-    	local pSpriteMenuLayer 	= CCLayer:create()
-    	local pSpriteMenu       = CCMenu:create()
+    	local pSpriteMenuLayer 	= cc.Layer:create()
+    	local pSpriteMenu       = cc.Menu:create()
     	CreatePerfomBasicLayerMenu(pSpriteMenu)
 		CreateBasicLayerMenuItem(pSpriteMenu,true,SpriteTestParam.TEST_COUNT,nCurCase)
-		pSpriteMenu:setPosition(CCPoint(0, 0))
+		pSpriteMenu:setPosition(cc.p(0, 0))
 		pSpriteMenuLayer:addChild(pSpriteMenu)
 		pNewScene:addChild(pSpriteMenuLayer,1,SpriteTestParam.kTagMenuLayer) 
 		
 		
 		--Sub Tests
-		CCMenuItemFont:setFontSize(40)
-    	local pSubMenu = CCMenu:create()
+		cc.MenuItemFont:setFontSize(40)
+    	local pSubMenu = cc.Menu:create()
     	local i = 1
     	for  i = 1, 9 do
   			local strNum = string.format("%d ",i)
-        	local pItemFont = CCMenuItemFont:create(strNum)
+        	local pItemFont = cc.MenuItemFont:create(strNum)
 	       	pItemFont:registerScriptTapHandler(TestNCallback)     	
         	pSubMenu:addChild(pItemFont, i + SpriteTestParam.kSubMenuBasicZOrder)
  			if i <= 3 then
- 				pItemFont:setColor(Color3B(200,20,20))
+ 				pItemFont:setColor(cc.c3b(200,20,20))
  			elseif i <= 6  then
- 				pItemFont:setColor(Color3B(0,200,20))
+ 				pItemFont:setColor(cc.c3b(0,200,20))
  			else
- 				pItemFont:setColor(Color3B(0,20,200))
+ 				pItemFont:setColor(cc.c3b(0,20,200))
  			end        	
    		end
    		
    		
     	pSubMenu:alignItemsHorizontally()
-    	pSubMenu:setPosition(CCPoint(s.width/2, 80))
+    	pSubMenu:setPosition(cc.p(s.width/2, 80))
     	pNewScene:addChild(pSubMenu, 2)
     	
-    	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
     	pNewScene:addChild(pLabel, 1)
-    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
-    	pLabel:setColor(Color3B(255,255,40))
+    	pLabel:setPosition(cc.p(s.width/2, s.height-32))
+    	pLabel:setColor(cc.c3b(255,255,40))
     	while nQuantityNodes < nNodes do
     		onIncrease()
     	end
     end
     
     function ShowCurrentTest() 	
-		pNewScene = CCScene:create()
+		pNewScene = cc.Scene:create()
 		InitWithSpriteTest(nSubtestNumber,nQuantityNodes)
-		CCDirector:getInstance():replaceScene(pNewScene)	 
+		cc.Director:getInstance():replaceScene(pNewScene)	 
     end
     
     InitWithSpriteTest(1,SpriteTestParam.kInitNodes)
@@ -1357,16 +1346,16 @@ local function runTextureTest()
 	end
 	
 	local nTexCurCase = 0	
-	local pNewscene = CCScene:create()
-	local pLayer    = CCLayer:create()
-	local s 		= CCDirector:getInstance():getWinSize()
+	local pNewscene = cc.Scene:create()
+	local pLayer    = cc.Layer:create()
+	local s 		= cc.Director:getInstance():getWinSize()
 	
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = CCTextureCache:getInstance()
+    	  local pCache = cc.TextureCache:getInstance()
     	  print("RGBA 8888")
-    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888)
+    	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     	  pTexture = pCache:addImage(strFileName) 		  
     	  if nil ~= pTexture then
     	  	--os.time()--get secs,not micr sec
@@ -1377,7 +1366,7 @@ local function runTextureTest()
     	  pCache:removeTexture(pTexture)
     	  
     	  print("RGBA 4444")
-    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444)
+    	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
     	  --gettimeofday(&now, NULL)
     	  pTexture = pCache:addImage(strFileName)
     	  if nil ~= pTexture then 
@@ -1388,7 +1377,7 @@ local function runTextureTest()
     	  pCache:removeTexture(pTexture)
     	  
     	  print("RGBA 5551")
-    	  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1)
+    	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB5_A1)
     	  --gettimeofday(&now, NULL)
     	  pTexture = pCache:addImage(strFileName)
     	  if nil ~= pTexture then
@@ -1399,7 +1388,7 @@ local function runTextureTest()
     	  pCache:removeTexture(pTexture)
     	  
     	  print("RGB 565")
-   		  CCTexture2D:setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB565)
+   		  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565)
    		 -- gettimeofday(&now, NULL)    
     	 pTexture = pCache:addImage(strFileName)
     	 if nil ~= pTexture then
@@ -1437,20 +1426,20 @@ local function runTextureTest()
 		end
 		
 		--Title
-    	local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+    	local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
-    	pLabel:setPosition(CCPoint(s.width/2, s.height-32))
-    	pLabel:setColor(Color3B(255,255,40))
+    	pLabel:setPosition(cc.p(s.width/2, s.height-32))
+    	pLabel:setColor(cc.c3b(255,255,40))
 
     	--Subtitle
-        local pSubLabel = CCLabelTTF:create(GetSubtitle(), "Thonburi", 16)
+        local pSubLabel = cc.LabelTTF:create(GetSubtitle(), "Thonburi", 16)
         pLayer:addChild(pSubLabel, 1)
-        pSubLabel:setPosition(CCPoint(s.width/2, s.height-80))
+        pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
         
         --menu
-        local pMenu = CCMenu:create()
+        local pMenu = cc.Menu:create()
         CreatePerfomBasicLayerMenu(pMenu)
-        pMenu:setPosition(CCPoint(0, 0))
+        pMenu:setPosition(cc.p(0, 0))
         pLayer:addChild(pMenu)
         
         PerformTests()
@@ -1481,9 +1470,9 @@ local function runTouchesTest()
     local  nNumberOfTouchesC  = 0
     local  fElapsedTime       = 0.0
     
-    local  s = CCDirector:getInstance():getWinSize()
-   	local  pNewscene = CCScene:create()
-	local  pLayer    = CCLayer:create()
+    local  s = cc.Director:getInstance():getWinSize()
+   	local  pNewscene = cc.Scene:create()
+	local  pLayer    = cc.Layer:create()
 	
     local  function GetTitle()
     	if 0 == nCurCase then
@@ -1518,21 +1507,21 @@ local function runTouchesTest()
     				ShowCurrentTest()
    				end
    				
-    			local size = CCDirector:getInstance():getWinSize()
-    			local item1 = CCMenuItemImage:create(s_pPathB1, s_pPathB2)
+    			local size = cc.Director:getInstance():getWinSize()
+    			local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
     			item1:registerScriptTapHandler(backCallback)
     			pMenu:addChild(item1,kItemTagBasic)
-    			local item2 = CCMenuItemImage:create(s_pPathR1, s_pPathR2)
+    			local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
     			item2:registerScriptTapHandler(restartCallback)
     			pMenu:addChild(item2,kItemTagBasic)
-    			local item3 = CCMenuItemImage:create(s_pPathF1, s_pPathF2)
+    			local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
     			pMenu:addChild(item3,kItemTagBasic) 
     			item3:registerScriptTapHandler(nextCallback)
     			
-    			local size = CCDirector:getInstance():getWinSize()
-    			item1:setPosition(CCPoint(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    			item2:setPosition(CCPoint(size.width / 2, item2:getContentSize().height / 2))
-    			item3:setPosition(CCPoint(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			local size = cc.Director:getInstance():getWinSize()
+    			item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    			item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+    			item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
     		end 
     	end
     end
@@ -1606,22 +1595,22 @@ local function runTouchesTest()
     
     local function InitLayer()
      	--menu
-     	local pTouchesTestMenu     = CCMenu:create()
+     	local pTouchesTestMenu     = cc.Menu:create()
     	CreatePerfomBasicLayerMenu(pTouchesTestMenu)
 		CreateBasicLayerMenuItem(pTouchesTestMenu,true,TouchesTestParam.TEST_COUNT,nCurCase)
-		pTouchesTestMenu:setPosition(CCPoint(0, 0))
+		pTouchesTestMenu:setPosition(cc.p(0, 0))
 		pLayer:addChild(pTouchesTestMenu)
 		
      	--Title
-   	    local pLabel = CCLabelTTF:create(GetTitle(), "Arial", 40)
+   	    local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
     	pLayer:addChild(pLabel, 1)
-   		pLabel:setPosition(CCPoint(s.width/2, s.height-32))
-	   	pLabel:setColor(Color3B(255,255,40)) 
+   		pLabel:setPosition(cc.p(s.width/2, s.height-32))
+	   	pLabel:setColor(cc.c3b(255,255,40)) 
     	
     	pLayer:scheduleUpdateWithPriorityLua(update,0)	
     
-    	pClassLabel = CCLabelBMFont:create("00.0", "fonts/arial16.fnt")
-    	pClassLabel:setPosition(CCPoint(s.width/2, s.height/2))
+    	pClassLabel = cc.LabelBMFont:create("00.0", "fonts/arial16.fnt")
+    	pClassLabel:setPosition(cc.p(s.width/2, s.height/2))
     	pLayer:addChild(pClassLabel) 
     
     	fElapsedTime = 0.0
@@ -1639,13 +1628,13 @@ local function runTouchesTest()
 			pLayer:unscheduleUpdate()
 		end
 		
-		pNewscene = CCScene:create()
+		pNewscene = cc.Scene:create()
 		
     	if nil ~= pNewscene then
-    		pLayer = CCLayer:create()
+    		pLayer = cc.Layer:create()
     		InitLayer()
 			pNewscene:addChild(pLayer)
-			CCDirector:getInstance():replaceScene(pNewscene)
+			cc.Director:getInstance():replaceScene(pNewscene)
     	end	
     end
 
@@ -1676,19 +1665,19 @@ local function menuCallback(tag, pMenuItem)
     local nIdx = pMenuItem:getZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
-         CCDirector:getInstance():replaceScene(PerformanceTestScene)
+         cc.Director:getInstance():replaceScene(PerformanceTestScene)
     end
 end
 
 local function PerformanceMainLayer()
-	local layer = CCLayer:create()
+	local layer = cc.Layer:create()
 
-	local menu = CCMenu:create()
-    menu:setPosition(CCPoint(0, 0))
-    CCMenuItemFont:setFontName("Arial")
-    CCMenuItemFont:setFontSize(24)
+	local menu = cc.Menu:create()
+    menu:setPosition(cc.p(0, 0))
+    cc.MenuItemFont:setFontName("Arial")
+    cc.MenuItemFont:setFontSize(24)
     for i = 1, MAX_COUNT do
-		local item = CCMenuItemFont:create(testsName[i])
+		local item = cc.MenuItemFont:create(testsName[i])
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
@@ -1703,7 +1692,7 @@ end
 --  Performance Test
 -------------------------------------
 function PerformanceTestMain()
-	local scene = CCScene:create()
+	local scene = cc.Scene:create()
 
 	scene:addChild(PerformanceMainLayer())
 	scene:addChild(CreateBackMenuItem())

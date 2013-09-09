@@ -7,8 +7,8 @@
 
 UserDefaultTest::UserDefaultTest()
 {
-    Size s = Director::getInstance()->getWinSize();
-    LabelTTF* label = LabelTTF::create("CCUserDefault test see log", "Arial", 28);
+    auto s = Director::getInstance()->getWinSize();
+    auto label = LabelTTF::create("CCUserDefault test see log", "Arial", 28);
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
@@ -97,7 +97,7 @@ UserDefaultTest::~UserDefaultTest()
 
 void UserDefaultTestScene::runThisTest()
 {
-    Layer* layer = new UserDefaultTest();
+    auto layer = new UserDefaultTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

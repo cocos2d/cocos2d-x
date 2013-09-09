@@ -4,6 +4,7 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
+
 class AtlasDemo : public BaseTest
 {
 protected:
@@ -191,8 +192,8 @@ private:
     const char* getCurrentAlignment();
 private:
     LabelTTF* _plabel;
-    Label::HAlignment _horizAlign;
-    Label::VAlignment _vertAlign;
+    TextHAlignment _horizAlign;
+    TextVAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -314,6 +315,49 @@ public:
 private:
     LabelBMFont *label1;
 };
+
+class NewLabelTTFUnicode : public AtlasDemo
+{
+public:
+    
+    NewLabelTTFUnicode();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class NewLabelBMFontTest : public AtlasDemo
+{
+public:
+
+    NewLabelBMFontTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+class NewLabelFontDefTest : public AtlasDemo
+{
+public:
+
+    NewLabelFontDefTest();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+
+private:
+};
+
+class LabelBMFontCrashTest : public AtlasDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
 
 // we don't support linebreak mode
 

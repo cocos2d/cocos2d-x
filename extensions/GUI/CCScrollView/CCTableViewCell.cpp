@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "CCTableViewCell.h"
+#include "support/data_support/ccCArray.h"
 
 NS_CC_EXT_BEGIN
 

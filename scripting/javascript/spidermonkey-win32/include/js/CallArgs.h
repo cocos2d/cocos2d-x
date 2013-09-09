@@ -1,6 +1,5 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- * vim: set ts=4 sw=4 et tw=99 ft=cpp:
- *
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -45,6 +44,18 @@ class JSObject;
 typedef JSBool
 (* JSNative)(JSContext *cx, unsigned argc, JS::Value *vp);
 
+/*
+ * Compute |this| for the |vp| inside a JSNative, either boxing primitives or
+ * replacing with the global object as necessary.
+ *
+ * This method will go away at some point: instead use |args.thisv()|.  If the
+ * value is an object, no further work is required.  If that value is |null| or
+ * |undefined|, use |JS_GetGlobalForObject| to compute the global object.  If
+ * the value is some other primitive, use |JS_ValueToObject| to box it.
+ */
+extern JS_PUBLIC_API(JS::Value)
+JS_ComputeThis(JSContext *cx, JS::Value *vp);
+
 namespace JS {
 
 /*
@@ -66,7 +77,7 @@ namespace JS {
  *
  *       // It's always fine to access thisv().
  *       HandleValue thisv = rec.thisv();
- *       rec.thisv().set(thisv);
+ *       rec.rval().set(thisv);
  *
  *       // As the return value was last set to |this|, returns |this|.
  *       return true;
@@ -81,7 +92,7 @@ namespace JS {
  * public interface are meant to be used by embedders!  See inline comments to
  * for details.
  */
-class CallReceiver
+class MOZ_STACK_CLASS CallReceiver
 {
   protected:
 #ifdef DEBUG
@@ -128,6 +139,13 @@ class CallReceiver
         // this yet.
         // MOZ_ASSERT(!argv_[-1].isMagic(JS_IS_CONSTRUCTING));
         return HandleValue::fromMarkedLocation(&argv_[-1]);
+    }
+
+    Value computeThis(JSContext *cx) const {
+        if (thisv().isObject())
+            return thisv();
+
+        return JS_ComputeThis(cx, base());
     }
 
     /*
@@ -215,7 +233,7 @@ CallReceiverFromVp(Value *vp)
  * public interface are meant to be used by embedders!  See inline comments to
  * for details.
  */
-class CallArgs : public CallReceiver
+class MOZ_STACK_CLASS CallArgs : public CallReceiver
 {
   protected:
     unsigned argc_;
@@ -242,15 +260,9 @@ class CallArgs : public CallReceiver
     }
 
     /* Returns a mutable handle for the i-th zero-indexed argument. */
-    MutableHandleValue handleAt(unsigned i) {
+    MutableHandleValue handleAt(unsigned i) const {
         MOZ_ASSERT(i < argc_);
         return MutableHandleValue::fromMarkedLocation(&argv_[i]);
-    }
-
-    /* Returns a Handle for the i-th zero-indexed argument. */
-    HandleValue handleAt(unsigned i) const {
-        MOZ_ASSERT(i < argc_);
-        return HandleValue::fromMarkedLocation(&argv_[i]);
     }
 
     /*
@@ -294,18 +306,6 @@ CallArgsFromSp(unsigned argc, Value *sp)
 }
 
 } // namespace JS
-
-/*
- * Compute |this| for the |vp| inside a JSNative, either boxing primitives or
- * replacing with the global object as necessary.
- *
- * This method will go away at some point: instead use |args.thisv()|.  If the
- * value is an object, no further work is required.  If that value is |null| or
- * |undefined|, use |JS_GetGlobalForObject| to compute the global object.  If
- * the value is some other primitive, use |JS_ValueToObject| to box it.
- */
-extern JS_PUBLIC_API(JS::Value)
-JS_ComputeThis(JSContext *cx, JS::Value *vp);
 
 /*
  * Macros to hide interpreter stack layout details from a JSNative using its

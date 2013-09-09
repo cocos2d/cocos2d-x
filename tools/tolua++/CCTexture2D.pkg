@@ -454,16 +454,17 @@ typedef enum {
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
 } CCTexture2DPixelFormat;
 
-class ccTexParams {
-    ccTexParams(void);
+
+class CCTexture2D : public CCObject
+{
+
+class TexParams {
+    TexParams(void);
     GLuint minFilter;
     GLuint magFilter;
     GLuint wrapS;
     GLuint wrapT;
 };
-
-class CCTexture2D : public CCObject
-{
 	void releaseData(void* data);
 	void* keepData(void* data, unsigned int length);
 
@@ -490,7 +491,7 @@ class CCTexture2D : public CCObject
 
     CCSize getContentSize(void);
 
-    void setTexParameters(const ccTexParams& texParams);
+    void setTexParameters(const TexParams& texParams);
     void setAntiAliasTexParameters();
     void setAliasTexParameters();
     void generateMipmap();

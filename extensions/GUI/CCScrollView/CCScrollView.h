@@ -48,7 +48,7 @@ public:
 
 
 /**
- * ScrollView support for cocos2d for iphone.
+ * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
 class ScrollView : public Layer
@@ -73,8 +73,6 @@ public:
     /**
      * Returns an autoreleased scroll view object.
      *
-     * @param size view size
-     * @param container parent object
      * @return autoreleased scroll view object
      */
     static ScrollView* create();
@@ -97,8 +95,8 @@ public:
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
      *
-     * @param offset new offset
-     * @param If YES, the view scrolls to the new offset
+     * @param offset    The new offset.
+     * @param animated  If true, the view will scroll to the new offset.
      */
     void setContentOffset(Point offset, bool animated = false);
     Point getContentOffset();
@@ -106,8 +104,8 @@ public:
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
      * You can override the animation duration with this method.
      *
-     * @param offset new offset
-     * @param animation duration
+     * @param offset    The new offset.
+     * @param dt        The animation duration.
      */
     void setContentOffsetInDuration(Point offset, float dt); 
 
@@ -115,8 +113,8 @@ public:
     /**
      * Sets a new scale and does that for a predefined duration.
      *
-     * @param s a new scale vale
-     * @param animated if YES, scaling is animated
+     * @param s         The new scale vale
+     * @param animated  If true, scaling is animated
      */
     void setZoomScale(float s, bool animated);
 
@@ -125,8 +123,8 @@ public:
     /**
      * Sets a new scale for container in a given duration.
      *
-     * @param s a new scale value
-     * @param animation duration
+     * @param s     The new scale value
+     * @param dt    The animation duration
      */
     void setZoomScaleInDuration(float s, float dt);
     /**
@@ -140,7 +138,7 @@ public:
     /**
      * Determines if a given node's bounding box is in visible bounds
      *
-     * @return YES if it is in visible bounds
+     * @returns true if it is in visible bounds
      */
     bool isNodeVisible(Node * node);
     /**
@@ -203,7 +201,7 @@ protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
-     * @param animated If YES, relocation is animated
+     * @param animated If true, relocation is animated
      */
     void relocateContainer(bool animated);
     /**

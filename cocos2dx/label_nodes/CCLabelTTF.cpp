@@ -40,8 +40,8 @@ NS_CC_BEGIN
 //CCLabelTTF
 //
 LabelTTF::LabelTTF()
-: _alignment(Label::HAlignment::CENTER)
-, _vAlignment(Label::VAlignment::TOP)
+: _alignment(TextHAlignment::CENTER)
+, _vAlignment(TextVAlignment::TOP)
 , _fontName(NULL)
 , _fontSize(0.0)
 , _string("")
@@ -73,18 +73,18 @@ LabelTTF * LabelTTF::create()
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return LabelTTF::create(string, fontName, fontSize,
-                              Size::ZERO, Label::HAlignment::CENTER, Label::VAlignment::TOP);
+                              Size::ZERO, TextHAlignment::CENTER, TextVAlignment::TOP);
 }
 
 LabelTTF * LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                const Size& dimensions, Label::HAlignment hAlignment)
+                                const Size& dimensions, TextHAlignment hAlignment)
 {
-    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, Label::VAlignment::TOP);
+    return LabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, TextVAlignment::TOP);
 }
 
 LabelTTF* LabelTTF::create(const char *string, const char *fontName, float fontSize,
-                               const Size &dimensions, Label::HAlignment hAlignment, 
-                               Label::VAlignment vAlignment)
+                               const Size &dimensions, TextHAlignment hAlignment, 
+                               TextVAlignment vAlignment)
 {
     LabelTTF *pRet = new LabelTTF();
     if(pRet && pRet->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
@@ -114,20 +114,20 @@ bool LabelTTF::init()
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize, 
-                                const Size& dimensions, Label::HAlignment alignment)
+                                const Size& dimensions, TextHAlignment alignment)
 {
-    return this->initWithString(label, fontName, fontSize, dimensions, alignment, Label::VAlignment::TOP);
+    return this->initWithString(label, fontName, fontSize, dimensions, alignment, TextVAlignment::TOP);
 }
 
 bool LabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize, 
-                                Size::ZERO, Label::HAlignment::LEFT, Label::VAlignment::TOP);
+                                Size::ZERO, TextHAlignment::LEFT, TextVAlignment::TOP);
 }
 
 bool LabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
-                                const cocos2d::Size &dimensions, Label::HAlignment hAlignment,
-                                Label::VAlignment vAlignment)
+                                const cocos2d::Size &dimensions, TextHAlignment hAlignment,
+                                TextVAlignment vAlignment)
 {
     if (Sprite::init())
     {
@@ -193,12 +193,12 @@ const char* LabelTTF::description() const
     return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName->c_str(), _fontSize)->getCString();
 }
 
-Label::HAlignment LabelTTF::getHorizontalAlignment() const
+TextHAlignment LabelTTF::getHorizontalAlignment() const
 {
     return _alignment;
 }
 
-void LabelTTF::setHorizontalAlignment(Label::HAlignment alignment)
+void LabelTTF::setHorizontalAlignment(TextHAlignment alignment)
 {
     if (alignment != _alignment)
     {
@@ -212,12 +212,12 @@ void LabelTTF::setHorizontalAlignment(Label::HAlignment alignment)
     }
 }
 
-Label::VAlignment LabelTTF::getVerticalAlignment() const
+TextVAlignment LabelTTF::getVerticalAlignment() const
 {
     return _vAlignment;
 }
 
-void LabelTTF::setVerticalAlignment(Label::VAlignment verticalAlignment)
+void LabelTTF::setVerticalAlignment(TextVAlignment verticalAlignment)
 {
     if (verticalAlignment != _vAlignment)
     {

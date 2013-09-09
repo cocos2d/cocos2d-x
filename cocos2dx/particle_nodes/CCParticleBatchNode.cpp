@@ -186,7 +186,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 
     if (pos != 0) 
     {
-        ParticleSystem* p = (ParticleSystem*)_children->objectAtIndex(pos-1);
+        ParticleSystem* p = (ParticleSystem*)_children->getObjectAtIndex(pos-1);
         atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
 
     }
@@ -272,9 +272,9 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for( unsigned int i=0;i < _children->count();i++)
+            for( int i=0;i < _children->count();i++)
             {
-                ParticleSystem* pNode = (ParticleSystem*)_children->objectAtIndex(i);
+                ParticleSystem* pNode = (ParticleSystem*)_children->getObjectAtIndex(i);
                 if( pNode == child ) 
                 {
                     newAtlasIndex = child->getAtlasIndex();
@@ -302,7 +302,7 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
 
     for( unsigned int i=0; i < count; i++ ) 
     {
-        Node* pNode = (Node *)_children->objectAtIndex(i);
+        Node* pNode = (Node *)_children->getObjectAtIndex(i);
 
         // new index
         if( pNode->getZOrder() > z &&  ! foundNewIdx ) 
@@ -349,7 +349,7 @@ unsigned int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 
     for( unsigned int i=0; i < count; i++ ) 
     {
-        Node *child = (Node *)_children->objectAtIndex(i);
+        Node *child = (Node *)_children->getObjectAtIndex(i);
         if (child->getZOrder() > z)
         {
             return i;
@@ -385,7 +385,7 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 
 void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 {
-    removeChild((ParticleSystem *)_children->objectAtIndex(index),doCleanup);
+    removeChild((ParticleSystem *)_children->getObjectAtIndex(index),doCleanup);
 }
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)

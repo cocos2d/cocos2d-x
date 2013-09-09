@@ -31,7 +31,9 @@ NS_CC_BEGIN
 
 Thread::~Thread()
 {
-
+    // To prevent warning: private field '_autoreasePool' is not
+    // used [-Wunused-private-field] by CLANG.
+    _autoReleasePool = nullptr;
 }
 
 void Thread::createAutoreleasePool()

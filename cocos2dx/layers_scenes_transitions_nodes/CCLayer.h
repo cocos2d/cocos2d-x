@@ -302,7 +302,7 @@ public:
     bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
-     Default: YES
+     Default: true
      */
     void setCompressedInterpolation(bool bCompressedInterpolation);
     bool isCompressedInterpolation() const;
@@ -374,6 +374,7 @@ public:
     LayerMultiplex();
     virtual ~LayerMultiplex();
 
+    virtual bool init();
     /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
     bool initWithLayers(Layer* layer, va_list params);
 
@@ -385,13 +386,13 @@ public:
     void addLayer(Layer* layer);
 
     /** switches to a certain layer indexed by n.
-     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+     The current (old) layer will be removed from it's parent with 'cleanup=true'.
      */
-    void switchTo(unsigned int n);
+    void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+    The current (old) layer will be removed from it's parent with 'cleanup=true'.
     */
-    void switchToAndReleaseMe(unsigned int n);
+    void switchToAndReleaseMe(int n);
 
 protected:
     unsigned int _enabledLayer;
