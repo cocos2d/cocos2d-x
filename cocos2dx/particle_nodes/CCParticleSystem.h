@@ -356,8 +356,8 @@ public:
     inline void setEmissionRate(float rate) { _emissionRate = rate; };
 
     /** maximum particles of the system */
-    virtual unsigned int getTotalParticles() const;
-    virtual void setTotalParticles(unsigned int totalParticles);
+    virtual int getTotalParticles() const;
+    virtual void setTotalParticles(int totalParticles);
 
     /** does the alpha value modify color */
     inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
@@ -446,7 +446,7 @@ protected:
     float _emitCounter;
 
     //!  particle idx
-    unsigned int _particleIdx;
+    int _particleIdx;
 
     // Optimization
     //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
@@ -461,13 +461,13 @@ protected:
     //true if scaled or rotated
     bool _transformSystemDirty;
     // Number of allocated particles
-    unsigned int _allocatedParticles;
+    int _allocatedParticles;
 
     /** Is the emitter active */
     bool _isActive;
     
     /** Quantity of particles that are being simulated at the moment */
-    unsigned int _particleCount;
+    int _particleCount;
     /** How many seconds the emitter will run. -1 means 'forever' */
     float _duration;
     /** sourcePosition of the emitter */
@@ -516,7 +516,7 @@ protected:
     /** emission rate of the particles */
     float _emissionRate;
     /** maximum particles of the system */
-    unsigned int _totalParticles;
+    int _totalParticles;
     /** conforms to CocosNodeTexture protocol */
     Texture2D* _texture;
     /** conforms to CocosNodeTexture protocol */

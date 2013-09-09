@@ -108,7 +108,7 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
 }
 void ParallaxNode::removeChild(Node* child, bool cleanup)
 {
-    for( unsigned int i=0;i < _parallaxArray->num;i++)
+    for( int i=0;i < _parallaxArray->num;i++)
     {
         PointObject *point = (PointObject*)_parallaxArray->arr[i];
         if( point->getChild()->isEqual(child)) 
@@ -148,7 +148,7 @@ void ParallaxNode::visit()
     Point pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
-        for(unsigned int i=0; i < _parallaxArray->num; i++ ) 
+        for( int i=0; i < _parallaxArray->num; i++ ) 
         {
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
