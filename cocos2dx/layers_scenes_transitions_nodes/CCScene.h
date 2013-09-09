@@ -31,6 +31,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class PhysicsWorld;
+
 /**
  * @addtogroup scene
  * @{
@@ -50,13 +52,21 @@ class CC_DLL Scene : public Node
 {
 public:
     /** creates a new Scene object */
-    static Scene *create(void);
+    static Scene *create(bool usePhysics = false);
 
     Scene();
     virtual ~Scene();
     
     bool init();
-
+    
+    virtual void addChild(Node* child) override;
+    virtual void addChild(Node* child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+    
+    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    
+protected:
+    PhysicsWorld* _physicsWorld;
 };
 
 // end of scene group

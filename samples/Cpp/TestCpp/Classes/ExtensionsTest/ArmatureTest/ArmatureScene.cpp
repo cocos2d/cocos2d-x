@@ -531,7 +531,7 @@ void TestBox2DDetector::onEnter()
 	armature2->setPosition(Point(VisibleRect::right().x - 30, VisibleRect::left().y));
 	addChild(armature2);
 
-	PhysicsWorld::sharedPhysicsWorld()->BoneColliderSignal.connect(this, &TestBox2DDetector::onHit);
+	extension::armature::PhysicsWorld::sharedPhysicsWorld()->BoneColliderSignal.connect(this, &TestBox2DDetector::onHit);
 }
 std::string TestBox2DDetector::title()
 {
@@ -543,7 +543,7 @@ void TestBox2DDetector::draw()
 
 	kmGLPushMatrix();
 
-	PhysicsWorld::sharedPhysicsWorld()->drawDebug();
+	extension::armature::PhysicsWorld::sharedPhysicsWorld()->drawDebug();
 
 	kmGLPopMatrix();
 	
@@ -551,7 +551,7 @@ void TestBox2DDetector::draw()
 void TestBox2DDetector::update(float delta)
 {
 	armature2->setVisible(true);
-	PhysicsWorld::sharedPhysicsWorld()->update(delta);
+	extension::armature::PhysicsWorld::sharedPhysicsWorld()->update(delta);
 }
 void TestBox2DDetector::onHit(Bone *bone, Bone *bone2)
 {

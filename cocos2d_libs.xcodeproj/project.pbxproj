@@ -1999,6 +1999,26 @@
 		B33AFB6A17A20BE40022B711 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B33AFB6717A20BE40022B711 /* etc1.cpp */; };
 		B33AFB6B17A20BE40022B711 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B33AFB6817A20BE40022B711 /* etc1.h */; };
 		B33AFB6C17A20BE40022B711 /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = B33AFB6817A20BE40022B711 /* etc1.h */; };
+		B3BDDFF717D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */; };
+		B3BDDFF817D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */; };
+		B3BDDFF917D9703C001ADE9E /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFEE17D9703C001ADE9E /* CCPhysicsBody.h */; };
+		B3BDDFFA17D9703C001ADE9E /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFEE17D9703C001ADE9E /* CCPhysicsBody.h */; };
+		B3BDDFFB17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFEF17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp */; };
+		B3BDDFFC17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFEF17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp */; };
+		B3BDDFFD17D9703C001ADE9E /* CCPhysicsContactDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF017D9703C001ADE9E /* CCPhysicsContactDelegate.h */; };
+		B3BDDFFE17D9703C001ADE9E /* CCPhysicsContactDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF017D9703C001ADE9E /* CCPhysicsContactDelegate.h */; };
+		B3BDDFFF17D9703C001ADE9E /* CCPhysicsFixture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF117D9703C001ADE9E /* CCPhysicsFixture.cpp */; };
+		B3BDE00017D9703C001ADE9E /* CCPhysicsFixture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF117D9703C001ADE9E /* CCPhysicsFixture.cpp */; };
+		B3BDE00117D9703C001ADE9E /* CCPhysicsFixture.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF217D9703C001ADE9E /* CCPhysicsFixture.h */; };
+		B3BDE00217D9703C001ADE9E /* CCPhysicsFixture.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF217D9703C001ADE9E /* CCPhysicsFixture.h */; };
+		B3BDE00317D9703C001ADE9E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF317D9703C001ADE9E /* CCPhysicsJoint.cpp */; };
+		B3BDE00417D9703C001ADE9E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF317D9703C001ADE9E /* CCPhysicsJoint.cpp */; };
+		B3BDE00517D9703C001ADE9E /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF417D9703C001ADE9E /* CCPhysicsJoint.h */; };
+		B3BDE00617D9703C001ADE9E /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF417D9703C001ADE9E /* CCPhysicsJoint.h */; };
+		B3BDE00717D9703C001ADE9E /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF517D9703C001ADE9E /* CCPhysicsWorld.cpp */; };
+		B3BDE00817D9703C001ADE9E /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3BDDFF517D9703C001ADE9E /* CCPhysicsWorld.cpp */; };
+		B3BDE00917D9703C001ADE9E /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF617D9703C001ADE9E /* CCPhysicsWorld.h */; };
+		B3BDE00A17D9703C001ADE9E /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = B3BDDFF617D9703C001ADE9E /* CCPhysicsWorld.h */; };
 		B3D8DD58179922A10039C204 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD53179922A10039C204 /* libcurl.a */; };
 		B3D8DD59179922A10039C204 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD54179922A10039C204 /* libjpeg.a */; };
 		B3D8DD5A179922A10039C204 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D8DD55179922A10039C204 /* libpng.a */; };
@@ -3342,6 +3362,17 @@
 		A0C80BE91799E867002532D9 /* CCLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabel.h; sourceTree = "<group>"; };
 		B33AFB6717A20BE40022B711 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = etc1.cpp; path = common/etc/etc1.cpp; sourceTree = "<group>"; };
 		B33AFB6817A20BE40022B711 /* etc1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = etc1.h; path = common/etc/etc1.h; sourceTree = "<group>"; };
+		B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsBody.cpp; path = physics/CCPhysicsBody.cpp; sourceTree = "<group>"; };
+		B3BDDFEE17D9703C001ADE9E /* CCPhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsBody.h; path = physics/CCPhysicsBody.h; sourceTree = "<group>"; };
+		B3BDDFEF17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsContactDelegate.cpp; path = physics/CCPhysicsContactDelegate.cpp; sourceTree = "<group>"; };
+		B3BDDFF017D9703C001ADE9E /* CCPhysicsContactDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsContactDelegate.h; path = physics/CCPhysicsContactDelegate.h; sourceTree = "<group>"; };
+		B3BDDFF117D9703C001ADE9E /* CCPhysicsFixture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsFixture.cpp; path = physics/CCPhysicsFixture.cpp; sourceTree = "<group>"; };
+		B3BDDFF217D9703C001ADE9E /* CCPhysicsFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsFixture.h; path = physics/CCPhysicsFixture.h; sourceTree = "<group>"; };
+		B3BDDFF317D9703C001ADE9E /* CCPhysicsJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsJoint.cpp; path = physics/CCPhysicsJoint.cpp; sourceTree = "<group>"; };
+		B3BDDFF417D9703C001ADE9E /* CCPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsJoint.h; path = physics/CCPhysicsJoint.h; sourceTree = "<group>"; };
+		B3BDDFF517D9703C001ADE9E /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsWorld.cpp; path = physics/CCPhysicsWorld.cpp; sourceTree = "<group>"; };
+		B3BDDFF617D9703C001ADE9E /* CCPhysicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsWorld.h; path = physics/CCPhysicsWorld.h; sourceTree = "<group>"; };
+		B3BDE00C17D979DE001ADE9E /* CCPhysicsSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCPhysicsSetting.h; path = physics/CCPhysicsSetting.h; sourceTree = "<group>"; };
 		B3D8DD53179922A10039C204 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		B3D8DD54179922A10039C204 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = cocos2dx/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
 		B3D8DD55179922A10039C204 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = cocos2dx/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
@@ -3744,6 +3775,7 @@
 				A03F1E751780BAE4006731B9 /* menu_nodes */,
 				A03F1E7A1780BAE4006731B9 /* misc_nodes */,
 				A03F1E831780BAE4006731B9 /* particle_nodes */,
+				B3BD6D7D17D823B500DD3077 /* physics */,
 				A03F1E8D1780BAE4006731B9 /* platform */,
 				A03F24E91780BAE8006731B9 /* script_support */,
 				A03F24EC1780BAE8006731B9 /* shaders */,
@@ -5752,6 +5784,24 @@
 			name = etc;
 			sourceTree = "<group>";
 		};
+		B3BD6D7D17D823B500DD3077 /* physics */ = {
+			isa = PBXGroup;
+			children = (
+				B3BDE00C17D979DE001ADE9E /* CCPhysicsSetting.h */,
+				B3BDDFED17D9703C001ADE9E /* CCPhysicsBody.cpp */,
+				B3BDDFEE17D9703C001ADE9E /* CCPhysicsBody.h */,
+				B3BDDFEF17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp */,
+				B3BDDFF017D9703C001ADE9E /* CCPhysicsContactDelegate.h */,
+				B3BDDFF117D9703C001ADE9E /* CCPhysicsFixture.cpp */,
+				B3BDDFF217D9703C001ADE9E /* CCPhysicsFixture.h */,
+				B3BDDFF317D9703C001ADE9E /* CCPhysicsJoint.cpp */,
+				B3BDDFF417D9703C001ADE9E /* CCPhysicsJoint.h */,
+				B3BDDFF517D9703C001ADE9E /* CCPhysicsWorld.cpp */,
+				B3BDDFF617D9703C001ADE9E /* CCPhysicsWorld.h */,
+			);
+			name = physics;
+			sourceTree = "<group>";
+		};
 		B3D8D4471799219B0039C204 /* mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -5848,6 +5898,7 @@
 				A03F25DA1780BAE8006731B9 /* CCKeypadDelegate.h in Headers */,
 				A03F25DC1780BAE8006731B9 /* CCKeypadDispatcher.h in Headers */,
 				A03F25DE1780BAE8006731B9 /* CCLabelAtlas.h in Headers */,
+				B3BDE00917D9703C001ADE9E /* CCPhysicsWorld.h in Headers */,
 				A03F25E01780BAE8006731B9 /* CCLabelBMFont.h in Headers */,
 				A03F25E21780BAE8006731B9 /* CCLabelTTF.h in Headers */,
 				A03F25E41780BAE8006731B9 /* CCLayer.h in Headers */,
@@ -5896,6 +5947,7 @@
 				A03F2B131780BAE9006731B9 /* ccShader_PositionTexture_vert.h in Headers */,
 				A03F2B141780BAE9006731B9 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				A03F2B151780BAE9006731B9 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
+				B3BDDFF917D9703C001ADE9E /* CCPhysicsBody.h in Headers */,
 				A03F2B161780BAE9006731B9 /* ccShader_PositionTextureColor_frag.h in Headers */,
 				A03F2B171780BAE9006731B9 /* ccShader_PositionTextureColor_vert.h in Headers */,
 				A03F2B181780BAE9006731B9 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
@@ -5919,6 +5971,7 @@
 				A03F2B3D1780BAE9006731B9 /* ccCArray.h in Headers */,
 				A03F2B3E1780BAE9006731B9 /* uthash.h in Headers */,
 				A03F2B3F1780BAE9006731B9 /* utlist.h in Headers */,
+				B3BDE00117D9703C001ADE9E /* CCPhysicsFixture.h in Headers */,
 				A03F2B411780BAE9006731B9 /* TGAlib.h in Headers */,
 				A03F2B431780BAE9006731B9 /* tinyxml2.h in Headers */,
 				A03F2B451780BAE9006731B9 /* TransformUtils.h in Headers */,
@@ -5964,6 +6017,7 @@
 				A0C80B901799DF75002532D9 /* ftconfig.h in Headers */,
 				A0C80B911799DF75002532D9 /* ftheader.h in Headers */,
 				A0C80B921799DF75002532D9 /* ftmodule.h in Headers */,
+				B3BDE00517D9703C001ADE9E /* CCPhysicsJoint.h in Headers */,
 				A0C80B931799DF75002532D9 /* ftoption.h in Headers */,
 				A0C80B941799DF75002532D9 /* ftstdlib.h in Headers */,
 				A0C80B951799DF75002532D9 /* freetype.h in Headers */,
@@ -5978,6 +6032,7 @@
 				A0C80B9E1799DF75002532D9 /* ftchapters.h in Headers */,
 				A0C80B9F1799DF75002532D9 /* ftcid.h in Headers */,
 				A0C80BA01799DF75002532D9 /* fterrdef.h in Headers */,
+				B3BDDFFD17D9703C001ADE9E /* CCPhysicsContactDelegate.h in Headers */,
 				A0C80BA11799DF75002532D9 /* fterrors.h in Headers */,
 				A0C80BA21799DF75002532D9 /* ftgasp.h in Headers */,
 				A0C80BA31799DF75002532D9 /* ftglyph.h in Headers */,
@@ -6566,6 +6621,7 @@
 				A07A4D311783777C0073F6A7 /* ccShader_PositionTextureColor_vert.h in Headers */,
 				A07A4D321783777C0073F6A7 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				A07A4D331783777C0073F6A7 /* CCShaderCache.h in Headers */,
+				B3BDE00A17D9703C001ADE9E /* CCPhysicsWorld.h in Headers */,
 				A07A4D341783777C0073F6A7 /* ccShaderEx_SwitchMask_frag.h in Headers */,
 				A07A4D351783777C0073F6A7 /* ccShaders.h in Headers */,
 				A07A4D361783777C0073F6A7 /* CCAnimation.h in Headers */,
@@ -6599,6 +6655,7 @@
 				A07A4D531783777C0073F6A7 /* CCTextureAtlas.h in Headers */,
 				A07A4D541783777C0073F6A7 /* CCTextureCache.h in Headers */,
 				A07A4D571783777C0073F6A7 /* CCParallaxNode.h in Headers */,
+				B3BDE00617D9703C001ADE9E /* CCPhysicsJoint.h in Headers */,
 				A07A4D581783777C0073F6A7 /* CCTileMapAtlas.h in Headers */,
 				A07A4D591783777C0073F6A7 /* CCTMXLayer.h in Headers */,
 				A07A4D5A1783777C0073F6A7 /* CCTMXObjectGroup.h in Headers */,
@@ -6625,6 +6682,7 @@
 				A07A4DAF17837B910073F6A7 /* curl.h in Headers */,
 				A07A4DB017837B910073F6A7 /* curlbuild.h in Headers */,
 				A07A4DB117837B910073F6A7 /* curlrules.h in Headers */,
+				B3BDDFFA17D9703C001ADE9E /* CCPhysicsBody.h in Headers */,
 				A07A4DB217837B910073F6A7 /* curlver.h in Headers */,
 				A07A4DB317837B910073F6A7 /* easy.h in Headers */,
 				A07A4DB417837B910073F6A7 /* mprintf.h in Headers */,
@@ -6632,6 +6690,7 @@
 				A07A4DB617837B910073F6A7 /* stdcheaders.h in Headers */,
 				A07A4DB717837B910073F6A7 /* typecheck-gcc.h in Headers */,
 				A07A4DBA17837B910073F6A7 /* decode.h in Headers */,
+				B3BDE00217D9703C001ADE9E /* CCPhysicsFixture.h in Headers */,
 				A07A4DBB17837B910073F6A7 /* encode.h in Headers */,
 				A07A4DBC17837B910073F6A7 /* types.h in Headers */,
 				466BE8EE1793DBE400424245 /* CCDeprecated.h in Headers */,
@@ -6639,6 +6698,7 @@
 				A0C80A581799DB97002532D9 /* CCFontAtlas.h in Headers */,
 				A0C80A5C1799DB97002532D9 /* CCFontDefinition.h in Headers */,
 				A0C80A601799DB97002532D9 /* CCFontFreeType.h in Headers */,
+				B3BDDFFE17D9703C001ADE9E /* CCPhysicsContactDelegate.h in Headers */,
 				A0C80A6C1799DB97002532D9 /* CCLabelTextFormatProtocol.h in Headers */,
 				A0C80A701799DB97002532D9 /* CCLabelTextFormatter.h in Headers */,
 				A0C80A781799DB97002532D9 /* CCTextImage.h in Headers */,
@@ -7409,6 +7469,7 @@
 				A03F25D21780BAE8006731B9 /* ray2.c in Sources */,
 				A03F25D31780BAE8006731B9 /* utility.c in Sources */,
 				A03F25D41780BAE8006731B9 /* vec2.c in Sources */,
+				B3BDE00717D9703C001ADE9E /* CCPhysicsWorld.cpp in Sources */,
 				A03F25D51780BAE8006731B9 /* vec3.c in Sources */,
 				A03F25D61780BAE8006731B9 /* vec4.c in Sources */,
 				A03F25D71780BAE8006731B9 /* CCKeyboardDispatcher.cpp in Sources */,
@@ -7429,7 +7490,9 @@
 				A03F25F51780BAE8006731B9 /* CCProgressTimer.cpp in Sources */,
 				A03F25F71780BAE8006731B9 /* CCRenderTexture.cpp in Sources */,
 				A03F25F91780BAE8006731B9 /* CCParticleBatchNode.cpp in Sources */,
+				B3BDDFFF17D9703C001ADE9E /* CCPhysicsFixture.cpp in Sources */,
 				A03F25FB1780BAE8006731B9 /* CCParticleExamples.cpp in Sources */,
+				B3BDDFFB17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp in Sources */,
 				A03F25FD1780BAE8006731B9 /* CCParticleSystem.cpp in Sources */,
 				A03F25FF1780BAE8006731B9 /* CCParticleSystemQuad.cpp in Sources */,
 				A03F263E1780BAE8006731B9 /* CCEGLViewProtocol.cpp in Sources */,
@@ -7441,6 +7504,7 @@
 				A03F2B081780BAE9006731B9 /* ccGLStateCache.cpp in Sources */,
 				A03F2B191780BAE9006731B9 /* CCShaderCache.cpp in Sources */,
 				A03F2B1C1780BAE9006731B9 /* ccShaders.cpp in Sources */,
+				B3BDE00317D9703C001ADE9E /* CCPhysicsJoint.cpp in Sources */,
 				A03F2B1E1780BAE9006731B9 /* CCAnimation.cpp in Sources */,
 				A03F2B201780BAE9006731B9 /* CCAnimationCache.cpp in Sources */,
 				A03F2B221780BAE9006731B9 /* CCSprite.cpp in Sources */,
@@ -7503,6 +7567,7 @@
 				0186A8FD17A0674300D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90217A068E800D88A79 /* CCFont.cpp in Sources */,
 				01C92EE117BB5DE800024119 /* atitc.cpp in Sources */,
+				B3BDDFF717D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7856,7 +7921,9 @@
 				A07A4C4F1783777C0073F6A7 /* mat3.c in Sources */,
 				A07A4C501783777C0073F6A7 /* mat4.c in Sources */,
 				A07A4C511783777C0073F6A7 /* neon_matrix_impl.c in Sources */,
+				B3BDE00017D9703C001ADE9E /* CCPhysicsFixture.cpp in Sources */,
 				A07A4C521783777C0073F6A7 /* plane.c in Sources */,
+				B3BDE00817D9703C001ADE9E /* CCPhysicsWorld.cpp in Sources */,
 				A07A4C531783777C0073F6A7 /* quaternion.c in Sources */,
 				A07A4C541783777C0073F6A7 /* ray2.c in Sources */,
 				A07A4C551783777C0073F6A7 /* utility.c in Sources */,
@@ -7888,6 +7955,7 @@
 				A07A4C6F1783777C0073F6A7 /* CCFileUtils.cpp in Sources */,
 				A07A4C711783777C0073F6A7 /* CCSAXParser.cpp in Sources */,
 				A07A4C721783777C0073F6A7 /* CCThread.cpp in Sources */,
+				B3BDDFF817D9703C001ADE9E /* CCPhysicsBody.cpp in Sources */,
 				A07A4C7F1783777C0073F6A7 /* CCScriptSupport.cpp in Sources */,
 				A07A4C801783777C0073F6A7 /* CCGLProgram.cpp in Sources */,
 				A07A4C811783777C0073F6A7 /* ccGLStateCache.cpp in Sources */,
@@ -7896,6 +7964,7 @@
 				A07A4C841783777C0073F6A7 /* CCAnimation.cpp in Sources */,
 				B33AFB6A17A20BE40022B711 /* etc1.cpp in Sources */,
 				A07A4C851783777C0073F6A7 /* CCAnimationCache.cpp in Sources */,
+				B3BDE00417D9703C001ADE9E /* CCPhysicsJoint.cpp in Sources */,
 				A07A4C861783777C0073F6A7 /* CCSprite.cpp in Sources */,
 				A07A4C871783777C0073F6A7 /* CCSpriteBatchNode.cpp in Sources */,
 				A07A4C881783777C0073F6A7 /* CCSpriteFrame.cpp in Sources */,
@@ -7936,6 +8005,7 @@
 				A07A4D8517837B690073F6A7 /* CCApplication.mm in Sources */,
 				A07A4D8617837B690073F6A7 /* CCCommon.mm in Sources */,
 				A07A4D8717837B690073F6A7 /* CCDevice.mm in Sources */,
+				B3BDDFFC17D9703C001ADE9E /* CCPhysicsContactDelegate.cpp in Sources */,
 				A07A4D8917837B690073F6A7 /* CCDirectorCaller.mm in Sources */,
 				A07A4D8B17837B690073F6A7 /* CCEGLView.mm in Sources */,
 				A07A4D8D17837B690073F6A7 /* CCES2Renderer.m in Sources */,
