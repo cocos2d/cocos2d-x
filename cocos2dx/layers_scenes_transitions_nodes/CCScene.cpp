@@ -53,7 +53,7 @@ bool Scene::init()
      return bRet;
 }
 
-Scene *Scene::create()
+Scene *Scene::create(bool usePhysics/* = false*/)
 {
     Scene *pRet = new Scene();
     if (pRet && pRet->init())
@@ -67,5 +67,22 @@ Scene *Scene::create()
         return NULL;
     }
 }
+
+void Scene::addChild(Node* child)
+{
+    Node::addChild(child);
+}
+
+void Scene::addChild(Node* child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+
+void Scene::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    child->setScene(this);
+}
+
 
 NS_CC_END
