@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #import <Foundation/Foundation.h>
-#import <UIKit/UIDevice.h>
 
 #include <string>
 #include <stack>
@@ -34,7 +33,7 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "support/zip_support/unzip.h"
 
-#include "CCFileUtilsIOS.h"
+#include "CCFileUtilsApple.h"
 
 NS_CC_BEGIN
 
@@ -210,25 +209,28 @@ static void addObjectToNSDict(const char * key, Object* object, NSMutableDiction
     }
 }
 
+
+#pragma mark - FileUtils
+
+static NSFileManager* s_fileManager = [NSFileManager defaultManager];
+
 FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new FileUtilsIOS();
+        s_sharedFileUtils = new FileUtilsApple();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
           s_sharedFileUtils = NULL;
-          CCLOG("ERROR: Could not init CCFileUtilsIOS");
+          CCLOG("ERROR: Could not init CCFileUtilsApple");
         }
     }
     return s_sharedFileUtils;
 }
 
 
-static NSFileManager* s_fileManager = [NSFileManager defaultManager];
-
-std::string FileUtilsIOS::getWritablePath()
+std::string FileUtilsApple::getWritablePath() const
 {
     // save to document folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -238,9 +240,9 @@ std::string FileUtilsIOS::getWritablePath()
     return strRet;
 }
 
-bool FileUtilsIOS::isFileExist(const std::string& strFilePath)
+bool FileUtilsApple::isFileExist(const std::string& strFilePath) const
 {
-    if (0 == strFilePath.length())
+    if(strFilePath.length() == 0)
     {
         return false;
     }
@@ -280,7 +282,7 @@ bool FileUtilsIOS::isFileExist(const std::string& strFilePath)
     return bRet;
 }
 
-std::string FileUtilsIOS::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
 {
     if (strDirectory[0] != '/')
     {
@@ -302,15 +304,9 @@ std::string FileUtilsIOS::getFullPathForDirectoryAndFilename(const std::string& 
     return "";
 }
 
-bool FileUtilsIOS::isAbsolutePath(const std::string& strPath)
+Dictionary* FileUtilsApple::createDictionaryWithContentsOfFile(const std::string& filename)
 {
-    NSString* path = [NSString stringWithUTF8String:strPath.c_str()];
-    return [path isAbsolutePath] ? true : false;
-}
-
-Dictionary* FileUtilsIOS::createDictionaryWithContentsOfFile(const std::string& filename)
-{
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
+    std::string fullPath = fullPathForFilename(filename);
     NSString* pPath = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* pDict = [NSDictionary dictionaryWithContentsOfFile:pPath];
     
@@ -330,7 +326,7 @@ Dictionary* FileUtilsIOS::createDictionaryWithContentsOfFile(const std::string& 
     }
 }
 
-bool FileUtilsIOS::writeToFile(Dictionary *dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(Dictionary *dict, const std::string &fullPath)
 {
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
@@ -348,14 +344,14 @@ bool FileUtilsIOS::writeToFile(Dictionary *dict, const std::string &fullPath)
     return true;
 }
 
-Array* FileUtilsIOS::createArrayWithContentsOfFile(const std::string& filename)
+Array* FileUtilsApple::createArrayWithContentsOfFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
     //    pPath = [pPath stringByDeletingPathExtension];
     //    pPath = [[NSBundle mainBundle] pathForResource:pPath ofType:pathExtension];
     //    fixing cannot read data using Array::createWithContentsOfFile
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
+    std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* array = [NSArray arrayWithContentsOfFile:path];
     
