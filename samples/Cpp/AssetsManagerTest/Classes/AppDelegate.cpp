@@ -92,7 +92,7 @@ void UpdateLayer::update(cocos2d::Object *pSender)
     pProgressLabel->setString("");
     
     // update resources
-    getAssetsManager()->update();
+    pAssetsManager->update();
     
     isUpdateItemClicked = true;
 }
@@ -114,7 +114,7 @@ void UpdateLayer::reset(cocos2d::Object *pSender)
     system(command.c_str());
 #endif
     // Delete recorded version codes.
-    getAssetsManager()->deleteVersion();
+    pAssetsManager->deleteVersion();
     
     createDownloadedDir();
 }
