@@ -42,7 +42,7 @@ std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
 
 const char *CCArmature::armatureVersion()
 {
-    return "0.3.3.0";
+    return "0.4.0.0";
 }
 
 CCArmature *CCArmature::create()
@@ -691,20 +691,20 @@ CCBone *CCArmature::getBoneAtPoint(float x, float y)
 }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-b2Body *CCArmature::getB2Body()
+b2Body *CCArmature::getBody()
 {
-    return m_pB2Body;
+    return m_pBody;
 }
 
-void CCArmature::setB2Body(b2Body *body)
+void CCArmature::setBody(b2Body *body)
 {
-    if (m_pB2Body == body)
+    if (m_pBody == body)
     {
         return;
     }
 
-    m_pB2Body = body;
-    m_pB2Body->SetUserData(this);
+    m_pBody = body;
+    m_pBody->SetUserData(this);
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
@@ -719,27 +719,40 @@ void CCArmature::setB2Body(b2Body *body)
                 CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
                 if (detector != NULL)
                 {
-                    detector->setB2Body(m_pB2Body);
+                    detector->setBody(m_pBody);
                 }
             }
         }
     }
 }
+
+b2Fixture *CCArmature::getShapeList()
+{
+    if (m_pBody)
+    {
+        return m_pBody->GetFixtureList();
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-cpBody *CCArmature::getCPBody()
+cpBody *CCArmature::getBody()
 {
-    return m_pCPBody;
+    return m_pBody;
 }
 
-void CCArmature::setCPBody(cpBody *body)
+void CCArmature::setBody(cpBody *body)
 {
-    if (m_pCPBody == body)
+    if (m_pBody == body)
     {
         return;
     }
 
-    m_pCPBody = body;
-    m_pCPBody->data = this;
+    m_pBody = body;
+    m_pBody->data = this;
 
     CCObject *object = NULL;
     CCARRAY_FOREACH(m_pChildren, object)
@@ -754,10 +767,22 @@ void CCArmature::setCPBody(cpBody *body)
                 CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
                 if (detector != NULL)
                 {
-                    detector->setCPBody(m_pCPBody);
+                    detector->setBody(m_pBody);
                 }
             }
         }
+    }
+}
+
+cpShape *CCArmature::getShapeList()
+{
+    if (m_pBody)
+    {
+        return m_pBody->shapeList_private;
+    }
+    else
+    {
+        return NULL;
     }
 }
 #endif
