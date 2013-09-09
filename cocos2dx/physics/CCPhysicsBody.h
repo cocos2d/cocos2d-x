@@ -25,8 +25,8 @@
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
 
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 #include "CCPhysicsSetting.h"
 #include <vector>
 

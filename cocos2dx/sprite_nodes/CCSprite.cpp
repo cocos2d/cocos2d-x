@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "cocoa/CCAffineTransform.h"
 #include "support/TransformUtils.h"
 #include "support/CCProfiling.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
 // external
 #include "kazmath/GL/matrix.h"
 

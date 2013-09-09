@@ -25,8 +25,8 @@
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
-#include "CCObject.h"
-#include "CCGeometry.h"
+#include "cocoa/CCObject.h"
+#include "cocoa/CCGeometry.h"
 #include "CCPhysicsSetting.h"
 
 NS_CC_BEGIN
