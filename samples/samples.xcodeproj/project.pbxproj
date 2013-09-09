@@ -54,6 +54,8 @@
 /* Begin PBXBuildFile section */
 		018DB85017B41BD9006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
 		018DB85117B41BDB006EC77B /* LabelTestNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 018DB84C17B419BA006EC77B /* LabelTestNew.cpp */; };
+		1525773B17D836E800BE417B /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A510317839B9C0073F6A7 /* libbox2d iOS.a */; };
+		1525773C17D8370000BE417B /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A50F717839B9C0073F6A7 /* libbox2d Mac.a */; };
 		159FC84817CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
 		159FC84917CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
 		159FC84A17CB4BA400AEB473 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 159FC84717CB4BA400AEB473 /* DeprecatedEnum.lua */; };
@@ -3039,6 +3041,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1525773B17D836E800BE417B /* libbox2d iOS.a in Frameworks */,
 				1A119860178538E400D62A44 /* libcocos2dx iOS.a in Frameworks */,
 				1A119861178538E400D62A44 /* libCocosDenshion iOS.a in Frameworks */,
 				1A119862178538E400D62A44 /* libcocos2dx-extensions iOS.a in Frameworks */,
@@ -3079,6 +3082,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1525773C17D8370000BE417B /* libbox2d Mac.a in Frameworks */,
 				1A6FB7A31785614200CDF010 /* libcocos2dx Mac.a in Frameworks */,
 				1A6FB7A41785614200CDF010 /* libcocos2dx-extensions Mac.a in Frameworks */,
 				1A6FB7A51785614200CDF010 /* libCocosDenshion Mac.a in Frameworks */,
