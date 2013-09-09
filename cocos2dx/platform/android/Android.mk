@@ -14,6 +14,8 @@ CCDevice.cpp \
 CCEGLView.cpp \
 CCFileUtilsAndroid.cpp \
 CCImage.cpp \
+Queue.cpp \
+Executor.cpp \
 nativeactivity.cpp \
 jni/DPIJni.cpp \
 jni/IMEJni.cpp \

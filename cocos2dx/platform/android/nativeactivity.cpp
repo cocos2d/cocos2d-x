@@ -445,6 +445,8 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
             if (cocos2d::Director::getInstance()->getOpenGLView()) {
                 cocos2d::Application::getInstance()->applicationWillEnterForeground();
             }
+            engine->animating = 1;
+            ALooper_wake(app->looper);
 
             break;
         case APP_CMD_LOST_FOCUS:
