@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDatas.h"
-#include "CCArmature/utils/CCUtilMath.h"
+#include "../utils/CCUtilMath.h"
 
 namespace cocos2d { namespace extension { namespace armature {
 

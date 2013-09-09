@@ -46,18 +46,18 @@ namespace cs {
         EDIC_TYPEOBJECT
     }DicItemType;
 
-    class CSJsonDictionary
+    class JsonDictionary
     {
     public:
-        CSJsonDictionary();
-        ~CSJsonDictionary();
+        JsonDictionary();
+        ~JsonDictionary();
 
     public:
         void    initWithDescription(const char *pszDescription);
         void    insertItem(const char *pszKey, int nValue);
         void    insertItem(const char *pszKey, double fValue);
         void    insertItem(const char *pszKey, const char * pszValue);
-        void    insertItem(const char *pszKey, CSJsonDictionary * subDictionary);
+        void    insertItem(const char *pszKey, JsonDictionary * subDictionary);
         void    insertItem(const char *pszKey, bool bValue);
         bool    deleteItem(const char *pszKey);
         void    cleanUp();
@@ -67,20 +67,21 @@ namespace cs {
         double          getItemFloatValue(const char *pszKey, double fDefaultValue);
         const char *    getItemStringValue(const char *pszKey);
         bool            getItemBoolvalue(const char *pszKey, bool bDefaultValue);
-        CSJsonDictionary *   getSubDictionary(const char *pszKey);
+        JsonDictionary *   getSubDictionary(const char *pszKey);
 
         std::string          getDescription();
 
         bool    insertItemToArray(const char *pszArrayKey, int nValue);
         bool    insertItemToArray(const char *pszArrayKey, double fValue);
         bool    insertItemToArray(const char *pszArrayKey, const char * pszValue);
-        bool    insertItemToArray(const char *pszArrayKey, CSJsonDictionary * subDictionary);
+        bool    insertItemToArray(const char *pszArrayKey, JsonDictionary * subDictionary);
 
         int getArrayItemCount(const char *pszArrayKey);
         int getIntValueFromArray(const char *pszArrayKey, int nIndex, int nDefaultValue);
         double getFloatValueFromArray(const char *pszArrayKey, int nIndex, double fDefaultValue);
+        bool getBoolValueFromArray(const char *pszArrayKey, int nIndex, bool bDefaultValue);
         const char * getStringValueFromArray(const char *pszArrayKey, int nIndex);
-        CSJsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
+        JsonDictionary *getSubItemFromArray(const char *pszArrayKey, int nIndex);
         DicItemType getItemTypeFromArray(const char *pszArrayKey, int nIndex);
 
         int         getItemCount();
@@ -89,7 +90,7 @@ namespace cs {
         std::vector<std::string> getAllMemberNames();
 
     protected:
-        CSJson::Value _value;
+        CSJson::Value m_cValue;
 
     private:
         void initWithValue(CSJson::Value& value);
