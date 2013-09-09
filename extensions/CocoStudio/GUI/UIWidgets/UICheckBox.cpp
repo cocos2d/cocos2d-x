@@ -33,15 +33,19 @@ m_pFrontCrossRenderer(NULL),
 m_pBackGroundBoxDisabledRenderer(NULL),
 m_pFrontCrossDisabledRenderer(NULL),
 m_bIsSelected(true),
-m_pSelectListener(NULL),
-m_pfnSelectSelector(NULL),
-m_pUnSelectListener(NULL),
-m_pfnUnSelectSelector(NULL),
+m_pSelectedStateEventListener(NULL),
+m_pfnSelectedStateEventSelector(NULL),
 m_eBackGroundTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
-m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL)
+m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL),
+/*Compatible*/
+m_pSelectListener(NULL),
+m_pfnSelectSelector(NULL),
+m_pUnSelectListener(NULL),
+m_pfnUnSelectSelector(NULL)
+/************/
 {
 }
 
@@ -279,20 +283,33 @@ bool UICheckBox::getSelectedState()
 
 void UICheckBox::selectedEvent()
 {
+    /*Compatible*/
     if (m_pSelectListener && m_pfnSelectSelector)
     {
         (m_pSelectListener->*m_pfnSelectSelector)(this);
+    }
+    /************/
+    if (m_pSelectedStateEventListener && m_pfnSelectedStateEventSelector)
+    {
+        (m_pSelectedStateEventListener->*m_pfnSelectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
 }
 
 void UICheckBox::unSelectedEvent()
 {
+    /*Compatible*/
     if (m_pUnSelectListener && m_pfnUnSelectSelector)
     {
         (m_pUnSelectListener->*m_pfnUnSelectSelector)(this);
     }
+    /************/
+    if (m_pSelectedStateEventListener && m_pfnSelectedStateEventSelector)
+    {
+        (m_pSelectedStateEventListener->*m_pfnSelectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
+    }
 }
 
+/*Compatible*/
 void UICheckBox::addSelectEvent(CCObject *target, SEL_SelectEvent selector)
 {
     m_pSelectListener = target;
@@ -303,6 +320,13 @@ void UICheckBox::addUnSelectEvent(CCObject *target, SEL_UnSelectEvent selector)
 {
     m_pUnSelectListener = target;
     m_pfnUnSelectSelector = selector;
+}
+/************/
+
+void UICheckBox::addSelectedStateEvent(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
+{
+    m_pSelectedStateEventListener = target;
+    m_pfnSelectedStateEventSelector = selector;
 }
 
 void UICheckBox::setFlipX(bool flipX)

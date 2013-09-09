@@ -416,6 +416,7 @@ void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             }
             if (offset > m_fChildFocusCancelOffset)
             {
+//                if (isInScrollDegreeRange(sender))
                 {
                     sender->setFocused(false);
                     handleMoveLogic(touchPoint);
@@ -1266,8 +1267,8 @@ void UIListView::setLoopPosition()
                     
                     if (m_overBottomArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overBottomArray->objectAtIndex(i));
                             

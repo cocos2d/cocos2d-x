@@ -46,7 +46,7 @@ m_fAutoScrollOriginalSpeed(0.0f),
 m_fAutoScrollAcceleration(600.0f),
 m_bBePressed(false),
 m_fSlidTime(0.0f),
-moveChildPoint(ccp(0.0f, 0.0f)),
+moveChildPoint(CCPointZero),
 m_fChildFocusCancelOffset(5.0f),
 m_pScrollToTopListener(NULL),
 m_pfnScrollToTopSelector(NULL),
@@ -588,6 +588,9 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             }
             if (offset > m_fChildFocusCancelOffset)
             {
+                
+                //temp mark
+//                if (isInScrollDegreeRange(sender))
                 {
                     sender->setFocused(false);
                     handleMoveLogic(touchPoint);

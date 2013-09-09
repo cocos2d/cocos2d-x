@@ -419,6 +419,7 @@ const CCSize& Layout::getBackGroundImageTextureSize() const
 
 RectClippingNode::RectClippingNode():
 m_pInnerStencil(NULL),
+m_bEnabled(true),
 m_clippingSize(CCSizeMake(50.0f, 50.0f)),
 m_bClippingEnabled(false)
 {
@@ -471,6 +472,7 @@ void RectClippingNode::setClippingSize(const cocos2d::CCSize &size)
     rect[2] = ccp(m_clippingSize.width, m_clippingSize.height);
     rect[3] = ccp(0, m_clippingSize.height);
     ccColor4F green = {0, 1, 0, 1};
+    m_pInnerStencil->clear();
     m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
 }
 
@@ -481,6 +483,10 @@ void RectClippingNode::setClippingEnabled(bool enabled)
 
 void RectClippingNode::visit()
 {
+    if (!m_bEnabled)
+    {
+        return;
+    }
     if (m_bClippingEnabled)
     {
         CCClippingNode::visit();
@@ -489,6 +495,16 @@ void RectClippingNode::visit()
     {
         CCNode::visit();
     }
+}
+
+void RectClippingNode::setEnabled(bool enabled)
+{
+    m_bEnabled = enabled;
+}
+
+bool RectClippingNode::isEnabled() const
+{
+    return m_bEnabled;
 }
 
 NS_CC_EXT_END

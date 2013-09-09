@@ -212,11 +212,11 @@ protected:
     void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
     SCROLLVIEW_MOVE_DIR getMoveDirection();
     virtual void onSizeChanged();
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
     /*compatible*/
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
-
 protected:
     SCROLLVIEW_DIR m_eDirection;
     SCROLLVIEW_MOVE_DIR m_eMoveDirection;

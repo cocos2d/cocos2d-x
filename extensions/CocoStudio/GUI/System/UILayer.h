@@ -135,9 +135,9 @@ public:
     void update(float dt);
     void addUpdateEnableWidget(UIWidget* widget);
     void removeUpdateEnableWidget(UIWidget* widget);
-
+//    void setUIType(GUITYPE type);
     /*compatible*/
-    virtual void dispose();
+    CC_DEPRECATED_ATTRIBUTE virtual void dispose();
     /************/
 protected:
 

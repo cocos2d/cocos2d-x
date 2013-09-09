@@ -149,23 +149,25 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
+    
     virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
     virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
     virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
-   
+    
     
     /*Compatible*/
-    void setText(const char* text){setTitleText(text);};
-    void setTextColor(int r,int g,int b){setTitleColor(ccc3(r, g, b));};
-    void setFontSize(int size){setTitleFontSize(size);};
-    void setFontName(const char* fontName){setTitleFontName(fontName);};
-    void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
-    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureNormal(normal,texType);};
-    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexturePressed(selected,texType);};
-    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureDisabled(disabled,texType);};
-    void setScale9Enable(bool able){setScale9Enabled(able);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    CC_DEPRECATED_ATTRIBUTE void setText(const char* text){setTitleText(text);};
+    CC_DEPRECATED_ATTRIBUTE void setTextColor(int r,int g,int b){setTitleColor(ccc3(r, g, b));};
+    CC_DEPRECATED_ATTRIBUTE void setFontSize(int size){setTitleFontSize(size);};
+    CC_DEPRECATED_ATTRIBUTE void setFontName(const char* fontName){setTitleFontName(fontName);};
+    CC_DEPRECATED_ATTRIBUTE void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
+    CC_DEPRECATED_ATTRIBUTE void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureNormal(normal,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexturePressed(selected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureDisabled(disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool able){setScale9Enabled(able);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     /************/
+
 protected:
     virtual bool init();
     virtual void initRenderer();

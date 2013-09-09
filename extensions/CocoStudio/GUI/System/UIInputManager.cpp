@@ -121,7 +121,7 @@ bool UIInputManager::checkEventWidget(const CCPoint &touchPoint)
         UIWidget* widget = (UIWidget*)(arrayWidget->arr[i]);
         if(widget->hitTest(touchPoint) && widget->isEnabled())
         {
-            if (!widget->parentAreaContainPoint(touchPoint))
+            if (!widget->clippingParentAreaContainPoint(touchPoint))
             {
                 continue;
             }
