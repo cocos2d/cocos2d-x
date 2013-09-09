@@ -532,4 +532,3 @@ CelShadingSpriteTest::CelShadingSpriteTest()
         addChild(sprite);
     }
 }
-
