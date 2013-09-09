@@ -10,7 +10,7 @@ class ShaderTestDemo2 : public BaseTest
 {
 public:
     ShaderTestDemo2(void);
-    virtual std::string title() { return "New Shader Test!";}
+    virtual std::string title() { return "Shader Sprite!";}
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
