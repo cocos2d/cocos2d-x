@@ -57,10 +57,10 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils();
+    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils();
+    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
 
     /**
      *  The destructor of FileUtils.
@@ -86,7 +86,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* pszMode, unsigned long * pSize);
+    virtual unsigned char* getFileData(const char* filename, const char* mode, unsigned long * size);
 
     /**
      *  Gets resource file data from a zip file.
@@ -96,7 +96,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* filename, unsigned long *size);
+    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, unsigned long *size);
 
     
     /** Returns the fullpath for a given filename.
@@ -144,7 +144,7 @@ public:
 
      @since v2.1
      */
-    virtual std::string fullPathForFilename(const char* filename);
+    virtual std::string fullPathForFilename(const std::string &filename);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -177,7 +177,7 @@ public:
      *
      @since v2.1
      */
-    virtual void loadFilenameLookupDictionaryFromFile(const char* filename);
+    virtual void loadFilenameLookupDictionaryFromFile(const std::string &filename);
     
     /** 
      *  Sets the filenameLookup dictionary.
@@ -185,7 +185,7 @@ public:
      *  @param pFilenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
-    virtual void setFilenameLookupDictionary(Dictionary* pFilenameLookupDict);
+    virtual void setFilenameLookupDictionary(Dictionary* filenameLookupDict);
     
     /**
      *  Gets full path from a file name and the path of the reletive file.
@@ -196,7 +196,7 @@ public:
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
-    virtual const char* fullPathFromRelativeFile(const char *filename, const char *pszRelativeFile);
+    virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile);
 
     /** 
      *  Sets the array that contains the search order of the resources.
@@ -213,7 +213,7 @@ public:
       * @see setSearchResolutionsOrder(), fullPathForFilename().
       * @since v2.1
       */
-    virtual void addSearchResolutionsOrder(const char* order);
+    virtual void addSearchResolutionsOrder(const std::string &order);
     
     /**
      *  Gets the array that contains the search order of the resources.
@@ -247,7 +247,7 @@ public:
       *
       * @since v2.1
       */
-     void addSearchPath(const char* path);
+    void addSearchPath(const std::string & path);
     
     /**
      *  Gets the array of search paths.
@@ -255,13 +255,13 @@ public:
      *  @return The array of search paths.
      *  @see fullPathForFilename(const char*).
      */
-    virtual const std::vector<std::string>& getSearchPaths();
+    virtual const std::vector<std::string>& getSearchPaths() const;
 
     /**
      *  Gets the writable path.
      *  @return  The path that can be write/read a file in
      */
-    virtual std::string getWritablePath() = 0;
+    virtual std::string getWritablePath() const = 0;
     
     /**
      *  Checks whether a file exists.
@@ -270,7 +270,7 @@ public:
      *  @param strFilePath The path of the file, it could be a relative or absolute path.
      *  @return true if the file exists, otherwise it will return false.
      */
-    virtual bool isFileExist(const std::string& strFilePath) = 0;
+    virtual bool isFileExist(const std::string& filePath) const = 0;
     
     /**
      *  Checks whether the path is an absolute path.
@@ -281,13 +281,13 @@ public:
      *  @param strPath The path that needs to be checked.
      *  @return true if it's an absolute path, otherwise it will return false.
      */
-    virtual bool isAbsolutePath(const std::string& strPath);
+    virtual bool isAbsolutePath(const std::string& path) const;
     
     
     /**
      *  Sets/Gets whether to pop-up a message box when failed to load an image.
      */
-    virtual void setPopupNotify(bool bNotify);
+    virtual void setPopupNotify(bool notify);
     virtual bool isPopupNotify();
 
 protected:
@@ -308,11 +308,12 @@ protected:
     
     /**
      *  Gets the new filename from the filename lookup dictionary.
+     *  It is possible to have a override names.
      *  @param filename The original filename.
      *  @return The new filename after searching in the filename lookup dictionary.
      *          If the original filename wasn't in the dictionary, it will return the original filename.
      */
-    virtual std::string getNewFilename(const char* filename);
+    virtual std::string getNewFilename(const std::string &filename);
     
     /**
      *  Gets full path for filename, resolution directory and search path.
@@ -334,7 +335,7 @@ protected:
      *  @param strFilename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename);
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
     
     /**
      *  Creates a dictionary by the contents of a file.

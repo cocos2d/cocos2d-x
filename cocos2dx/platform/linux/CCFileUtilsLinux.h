@@ -46,8 +46,8 @@ class CC_DLL FileUtilsLinux : public FileUtils
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
 };
 
 // end of platform group

@@ -133,12 +133,12 @@ string RenderTextureSave::subtitle()
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
 
-void RenderTextureSave::clearImage(cocos2d::Object *pSender)
+void RenderTextureSave::clearImage(cocos2d::Object *sender)
 {
     _target->clear(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
 
-void RenderTextureSave::saveImage(cocos2d::Object *pSender)
+void RenderTextureSave::saveImage(cocos2d::Object *sender)
 {
     static int counter = 0;
 
@@ -151,11 +151,11 @@ void RenderTextureSave::saveImage(cocos2d::Object *pSender)
     _target->saveToFile(jpg, Image::Format::JPG);
     
 
-    auto pImage = _target->newImage();
+    auto image = _target->newImage();
 
-    auto tex = TextureCache::getInstance()->addUIImage(pImage, png);
+    auto tex = TextureCache::getInstance()->addImage(image, png);
 
-    CC_SAFE_DELETE(pImage);
+    CC_SAFE_DELETE(image);
 
     auto sprite = Sprite::createWithTexture(tex);
 

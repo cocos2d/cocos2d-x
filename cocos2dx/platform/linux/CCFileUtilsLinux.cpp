@@ -67,7 +67,7 @@ bool FileUtilsLinux::init()
     return FileUtils::init();
 }
 
-string FileUtilsLinux::getWritablePath()
+string FileUtilsLinux::getWritablePath() const
 {
     struct stat st;
     stat(_writablePath.c_str(), &st);
@@ -78,7 +78,7 @@ string FileUtilsLinux::getWritablePath()
     return _writablePath;
 }
 
-bool FileUtilsLinux::isFileExist(const std::string& strFilePath)
+bool FileUtilsLinux::isFileExist(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {

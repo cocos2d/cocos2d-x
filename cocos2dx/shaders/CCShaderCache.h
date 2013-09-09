@@ -27,6 +27,9 @@ THE SOFTWARE.
 #ifndef __CCSHADERCACHE_H__
 #define __CCSHADERCACHE_H__
 
+#include <string>
+#include <unordered_map>
+
 #include "cocoa/CCDictionary.h"
 
 NS_CC_BEGIN
@@ -68,17 +71,17 @@ public:
     void reloadDefaultShaders();
 
     /** returns a GL program for a given key */
-    GLProgram * programForKey(const char* key);
+    GLProgram * programForKey(const std::string &key);
 
     /** adds a GLProgram to the cache for a given name */
-    void addProgram(GLProgram* program, const char* key);
+    void addProgram(GLProgram* program, const std::string &key);
 
 private:
     bool init();
     void loadDefaultShader(GLProgram *program, int type);
 
-    Dictionary* _programs;
-
+//    Dictionary* _programs;
+    std::unordered_map<std::string, GLProgram*> _programs;
 };
 
 // end of shaders group
