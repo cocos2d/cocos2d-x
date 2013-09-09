@@ -54,9 +54,9 @@ public:
      */
     struct Data
     {
-        Data():bytes(NULL), len(0), isBinary(false){}
+        Data():bytes(NULL), len(0), issued(0), isBinary(false){}
         char* bytes;
-        int len;
+        size_t len, issued;
         bool isBinary;
     };
     
@@ -147,6 +147,10 @@ private:
     
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
+    
+    size_t _pending_frame_data_len;
+    unsigned int _current_data_len;
+    char *_current_data;
     
     struct libwebsocket*         _wsInstance;
     struct libwebsocket_context* _wsContext;
