@@ -70,6 +70,7 @@ struct {
 	{ "SceneTest", [](){return new SceneTestScene();} },
 	{ "SchedulerTest", [](){return new SchedulerTestScene(); } },
 	{ "ShaderTest", []() { return new ShaderTestScene(); } },
+    { "NewShaderTest", []() { return new ShaderTestScene2(); } },
 	{ "SpineTest", []() { return new SpineTestScene(); } },
 	{ "SpriteTest", [](){return new SpriteTestScene(); } },
 	{ "TextInputTest", [](){return new TextInputTestScene(); } },

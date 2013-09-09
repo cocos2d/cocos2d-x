@@ -1296,6 +1296,7 @@
 		ED743D1D17D09CD40004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1E17D09D070004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		EDF3D9C317D9B6B000D4C480 /* ShaderTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2993,6 +2994,8 @@
 		A0BD5A1C178F5F6C008915C5 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		A0BD5A1D178F5F6C008915C5 /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest2.cpp; sourceTree = "<group>"; };
+		EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTest2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4662,6 +4665,8 @@
 		A0359A7617821D9C00987F6C /* ShaderTest */ = {
 			isa = PBXGroup;
 			children = (
+				EDF3D9C117D9B67C00D4C480 /* ShaderTest2.cpp */,
+				EDF3D9C217D9B67C00D4C480 /* ShaderTest2.h */,
 				A0359A7717821D9C00987F6C /* ShaderTest.cpp */,
 				A0359A7817821D9C00987F6C /* ShaderTest.h */,
 			);
@@ -7070,6 +7075,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDF3D9C317D9B6B000D4C480 /* ShaderTest2.cpp in Sources */,
 				A07A51AE1783A1D20073F6A7 /* AccelerometerTest.cpp in Sources */,
 				A07A51AF1783A1D20073F6A7 /* ActionManagerTest.cpp in Sources */,
 				A07A51B01783A1D20073F6A7 /* ActionsEaseTest.cpp in Sources */,
