@@ -67,14 +67,14 @@ public:
     virtual bool init(const char *name);
 
     /**
-     * Add display and use  displayData init the display.
+     * Add display and use displayData to init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
      *
      * @param displayData it include the display information, like DisplayType.
      *          If you want to create a sprite display, then create a CCSpriteDisplayData param
      *
-     *	@param 	_index the index of the display you want to replace or add to
+     * @param index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
     void addDisplay(CCDisplayData *displayData, int index);
@@ -84,15 +84,15 @@ public:
     void changeDisplayByIndex(int index, bool force);
 
     /**
-     * Add a child to this bone, and it will let this child call setParent(CCBone *_parent) function to set self to it's parent
-     *	@param 	_child  the child you want to add
+     * Add a child to this bone, and it will let this child call setParent(CCBone *parent) function to set self to it's parent
+     * @param 	child  the child you want to add
      */
-    void addChildBone(CCBone *_child);
+    void addChildBone(CCBone *child);
 
     /**
      * Set parent bone.
      * If parent is NUll, then also remove this bone from armature.
-     * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* _parentName).
+     * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* parentName).
      *
      * @param parent  the parent bone.
      *          NULL : remove this bone from armature
@@ -143,6 +143,12 @@ public:
     virtual CCAffineTransform nodeToWorldTransform();
 
     CCNode *getDisplayRenderNode();
+
+    /*
+     * Get the shape list in this bone. The object in the CCArray is ColliderBody.
+     */
+    virtual CCArray *getShapeList();
+
 public:
     /*
      *  The origin state of the CCBone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
