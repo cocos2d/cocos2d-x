@@ -56,4 +56,11 @@
 
 #include "CCDeprecated-ext.h"
 
+#include "CCArmature/CCArmature.h"
+#include "CCArmature/animation/CCArmatureAnimation.h"
+#include "CCArmature/display/CCSkin.h"
+#include "CCArmature/CCBone.h"
+#include "CCArmature/utils/CCArmatureDataManager.h"
+#include "CCArmature/datas/CCDatas.h"
+
 #endif /* __COCOS2D_EXT_H__ */

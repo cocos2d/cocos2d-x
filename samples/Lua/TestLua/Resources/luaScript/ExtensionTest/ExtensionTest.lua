@@ -1,5 +1,6 @@
 require "luaScript/ExtensionTest/CocosBuilderTest"
 require "luaScript/ExtensionTest/WebProxyTest"
+require "luaScript/ExtensionTest/ArmatureTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
@@ -13,7 +14,8 @@ local ExtensionTestEnum =
     TEST_EDITBOX            = 4,
 	TEST_TABLEVIEW          = 5,
     TEST_SCROLLVIEW         = 6,
-    TEST_MAX_COUNT          = 7,
+    TEST_ARMATURE           = 7,
+    TEST_MAX_COUNT          = 8,
 }
 
 local testsName =
@@ -25,6 +27,7 @@ local testsName =
     "EditBoxTest",
     "TableViewTest",
     "ScrollViewTest",
+    "ArmatureTest",
 }
 
 
@@ -1190,6 +1193,7 @@ local CreateExtensionsTestTable =
     runEditBoxTest,
     runTableViewTest,
     runScrollViewTest,
+    runArmatureTest,
 }
 
 
@@ -1239,6 +1243,44 @@ local function ExtensionsMainLayer()
 	end
 
     layer:addChild(menu)
+
+    -- handling touch events
+    local beginPos = {x = 0, y = 0}
+    local function onTouchBegan(x, y)
+        beginPos = {x = x, y = y}
+        return true
+    end
+
+    local function onTouchMoved(x, y)
+        local nMoveY = y - beginPos.y
+        local curPosx, curPosy = menu:getPosition()
+        local nextPosy = curPosy + nMoveY
+        local winSize = cc.Director:getInstance():getWinSize()
+        if nextPosy < 0 then
+            menu:setPosition(0, 0)
+            return
+        end
+
+        if nextPosy > ((ExtensionTestEnum.TEST_MAX_COUNT + 1) * LINE_SPACE - winSize.height) then
+            menu:setPosition(0, ((ExtensionTestEnum.TEST_MAX_COUNT + 1) * LINE_SPACE - winSize.height))
+            return
+        end
+
+        menu:setPosition(curPosx, nextPosy)
+        beginPos = {x = x, y = y}
+    end
+
+    local function onTouch(eventType, x, y)
+        if eventType == "began" then
+            return onTouchBegan(x, y)
+        elseif eventType == "moved" then
+            return onTouchMoved(x, y)
+        end
+    end
+
+    layer:setTouchEnabled(true)
+
+    layer:registerScriptTouchHandler(onTouch)
 
 	return layer
 end
