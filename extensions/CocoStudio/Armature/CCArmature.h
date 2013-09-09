@@ -40,7 +40,7 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
 public:
 
-	static const char* armatureVersion();
+    static const char *armatureVersion();
 
     /**
     * Allocates and initializes an armature.
