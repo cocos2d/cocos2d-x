@@ -22,41 +22,58 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_FRAMEWORK_COMPONENT_H__
-#define __CC_FRAMEWORK_COMPONENT_H__
+#include "CCComRender.h"
 
-#include "cocoa/CCObject.h"
-#include <string>
+NS_CC_EXT_BEGIN
 
-NS_CC_BEGIN
-
-class CC_DLL Component : public Object
+ComRender::ComRender(void)
+: _render(NULL)
 {
-protected:
-    Component(void);
-public:
-    virtual ~Component(void);
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
-    virtual void serialize(void* r);
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
-    static Component* create(void);
-    
-    const char* getName() const;
-    void setName(const char *pName);
-    
-    void setOwner(Node *pOwner);
-    Node* getOwner() const;
-    
-protected:
-    Node *_owner;
-    std::string _name;
-    bool _enabled;
-};
+  
+}
 
-NS_CC_END
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+ComRender::ComRender(cocos2d::Node *node, const char *comName)
+{
+    _render = node;
+    _name.assign(comName);
+}
+
+ComRender::~ComRender(void)
+{
+    _render = NULL;
+}
+
+void ComRender::onEnter()
+{
+    if (_owner != NULL)
+    {
+        _owner->addChild(_render);
+    }
+}
+
+void ComRender::onExit()
+{
+    _render = NULL;
+}
+
+cocos2d::Node* ComRender::getNode()
+{
+    return _render;
+}
+
+ComRender* ComRender::create(cocos2d::Node *pNode, const char *comName)
+{
+    ComRender * pRet = new ComRender(pNode, comName);
+    if (pRet != NULL && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
+NS_CC_EXT_END

@@ -22,41 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_FRAMEWORK_COMPONENT_H__
-#define __CC_FRAMEWORK_COMPONENT_H__
+#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
-#include "cocoa/CCObject.h"
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
 #include <string>
+#include "../Json/CSContentJsonDictionary.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
-class CC_DLL Component : public Object
+class ComAttribute : public cocos2d::Component
 {
 protected:
-    Component(void);
+    ComAttribute(void);
+    virtual ~ComAttribute(void);
+    
 public:
-    virtual ~Component(void);
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
-    virtual void serialize(void* r);
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
-    static Component* create(void);
-    
-    const char* getName() const;
-    void setName(const char *pName);
-    
-    void setOwner(Node *pOwner);
-    Node* getOwner() const;
-    
-protected:
-    Node *_owner;
-    std::string _name;
-    bool _enabled;
+   virtual bool init();
+   static ComAttribute* create(void);
+
+   void setInt(const char *key, int value);
+   void setDouble(const char *key, double value);
+   void setFloat(const char *key, float value);
+   void setBool(const char *key, bool value);
+   void setCString(const char *key, const char *value);
+   void setObject(const char *key, Object *value);
+   
+   int    getInt(const char *key) const;
+   double getDouble(const char *key) const;
+   float  getFloat(const char *key) const;
+   bool   getBool(const char *key) const;
+   const char* getCString(const char *key) const;
+   Object* getObject(const char *key) const;
+   
+   cs::JsonDictionary* getDict() const;
+private:
+   Dictionary *_attributes;  
+   cs::JsonDictionary *_jsonDict;
+   
 };
 
-NS_CC_END
+NS_CC_EXT_END
 
 #endif  // __FUNDATION__CCCOMPONENT_H__

@@ -807,14 +807,14 @@ void DataReaderHelper::addDataFromJson(const char *filePath)
 
 void DataReaderHelper::addDataFromJsonCache(const char *fileContent)
 {
-    cs::CSJsonDictionary json;
+    cs::JsonDictionary json;
     json.initWithDescription(fileContent);
 
     // Decode armatures
     int length = json.getArrayItemCount(ARMATURE_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
+        cs::JsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
         ArmatureData *armatureData = decodeArmature(*armatureDic);
         ArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData);
 
@@ -825,7 +825,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent)
     length = json.getArrayItemCount(ANIMATION_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
+        cs::JsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
         AnimationData *animationData = decodeAnimation(*animationDic);
         ArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData);
 
@@ -836,7 +836,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent)
     length = json.getArrayItemCount(TEXTURE_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
+        cs::JsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
         TextureData *textureData = decodeTexture(*textureDic);
         ArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData);
 
@@ -844,7 +844,7 @@ void DataReaderHelper::addDataFromJsonCache(const char *fileContent)
     }
 }
 
-ArmatureData *DataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
+ArmatureData *DataReaderHelper::decodeArmature(cs::JsonDictionary &json)
 {
     ArmatureData *armatureData = ArmatureData::create();
 
@@ -857,7 +857,7 @@ ArmatureData *DataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
     int length = json.getArrayItemCount(BONE_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
         armatureData->addBoneData(decodeBone(*dic));
 
         delete dic;
@@ -866,7 +866,7 @@ ArmatureData *DataReaderHelper::decodeArmature(cs::CSJsonDictionary &json)
     return armatureData;
 }
 
-BoneData *DataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
+BoneData *DataReaderHelper::decodeBone(cs::JsonDictionary &json)
 {
     BoneData *boneData = BoneData::create();
 
@@ -888,7 +888,7 @@ BoneData *DataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
 
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
         boneData->addDisplayData(decodeBoneDisplay(*dic));
 
         delete dic;
@@ -897,7 +897,7 @@ BoneData *DataReaderHelper::decodeBone(cs::CSJsonDictionary &json)
     return boneData;
 }
 
-DisplayData *DataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
+DisplayData *DataReaderHelper::decodeBoneDisplay(cs::JsonDictionary &json)
 {
     DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
 
@@ -963,7 +963,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json)
     return displayData;
 }
 
-AnimationData *DataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
+AnimationData *DataReaderHelper::decodeAnimation(cs::JsonDictionary &json)
 {
     AnimationData *aniData = AnimationData::create();
 
@@ -977,7 +977,7 @@ AnimationData *DataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
 
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
         aniData->addMovement(decodeMovement(*dic));
 
         delete dic;
@@ -986,7 +986,7 @@ AnimationData *DataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json)
     return aniData;
 }
 
-MovementData *DataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
+MovementData *DataReaderHelper::decodeMovement(cs::JsonDictionary &json)
 {
     MovementData *movementData = MovementData::create();
 
@@ -1005,7 +1005,7 @@ MovementData *DataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     int length = json.getArrayItemCount(MOVEMENT_BONE_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
         movementData->addMovementBoneData(decodeMovementBone(*dic));
 
         delete dic;
@@ -1014,7 +1014,7 @@ MovementData *DataReaderHelper::decodeMovement(cs::CSJsonDictionary &json)
     return movementData;
 }
 
-MovementBoneData *DataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json)
+MovementBoneData *DataReaderHelper::decodeMovementBone(cs::JsonDictionary &json)
 {
     MovementBoneData *movementBoneData = MovementBoneData::create();
 
@@ -1030,7 +1030,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &jso
     int length = json.getArrayItemCount(FRAME_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
         FrameData *frameData = decodeFrame(*dic);
         movementBoneData->addFrameData(frameData);
         //movementBoneData->duration += frameData->duration;
@@ -1041,7 +1041,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &jso
     return movementBoneData;
 }
 
-FrameData *DataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
+FrameData *DataReaderHelper::decodeFrame(cs::JsonDictionary &json)
 {
     FrameData *frameData = FrameData::create();
 
@@ -1060,7 +1060,7 @@ FrameData *DataReaderHelper::decodeFrame(cs::CSJsonDictionary &json)
     return frameData;
 }
 
-TextureData *DataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
+TextureData *DataReaderHelper::decodeTexture(cs::JsonDictionary &json)
 {
     TextureData *textureData = TextureData::create();
 
@@ -1078,7 +1078,7 @@ TextureData *DataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
     int length = json.getArrayItemCount(CONTOUR_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
         textureData->contourDataList->addObject(decodeContour(*dic));
 
         delete dic;
@@ -1087,14 +1087,14 @@ TextureData *DataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
     return textureData;
 }
 
-ContourData *DataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
+ContourData *DataReaderHelper::decodeContour(cs::JsonDictionary &json)
 {
     ContourData *contourData = ContourData::create();
 
     int length = json.getArrayItemCount(VERTEX_POINT);
     for (int i = length - 1; i >= 0; i--)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
+        cs::JsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
 
         ContourVertex2F *vertex = new ContourVertex2F(0, 0);
 
@@ -1110,7 +1110,7 @@ ContourData *DataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
     return contourData;
 }
 
-void DataReaderHelper::decodeNode(BaseData *node, cs::CSJsonDictionary &json)
+void DataReaderHelper::decodeNode(BaseData *node, cs::JsonDictionary &json)
 {
     node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
     node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
@@ -1121,7 +1121,7 @@ void DataReaderHelper::decodeNode(BaseData *node, cs::CSJsonDictionary &json)
     node->scaleX = json.getItemFloatValue(A_SCALE_X, 1);
     node->scaleY = json.getItemFloatValue(A_SCALE_Y, 1);
 
-    cs::CSJsonDictionary *colorDic = json.getSubItemFromArray(COLOR_INFO, 0);
+    cs::JsonDictionary *colorDic = json.getSubItemFromArray(COLOR_INFO, 0);
 
     if (colorDic)
     {

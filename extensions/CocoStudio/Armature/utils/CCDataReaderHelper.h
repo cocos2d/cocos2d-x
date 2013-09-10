@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../datas/CCDatas.h"
 #include "../utils/CCConstValue.h"
 #include "../CCArmature.h"
-#include "../external_tool/Json/CSContentJsonDictionary.h"
+#include "../../Json/CSContentJsonDictionary.h"
 
 namespace tinyxml2 { class XMLElement; }
 
@@ -110,20 +110,20 @@ public:
     static void addDataFromJson(const char *filePath);
     static void addDataFromJsonCache(const char *fileContent);
 
-    static ArmatureData *decodeArmature(cs::CSJsonDictionary &json);
-    static BoneData *decodeBone(cs::CSJsonDictionary &json);
-    static DisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json);
+    static ArmatureData *decodeArmature(cs::JsonDictionary &json);
+    static BoneData *decodeBone(cs::JsonDictionary &json);
+    static DisplayData *decodeBoneDisplay(cs::JsonDictionary &json);
 
-    static AnimationData *decodeAnimation(cs::CSJsonDictionary &json);
-    static MovementData *decodeMovement(cs::CSJsonDictionary &json);
-    static MovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json);
-    static FrameData *decodeFrame(cs::CSJsonDictionary &json);
+    static AnimationData *decodeAnimation(cs::JsonDictionary &json);
+    static MovementData *decodeMovement(cs::JsonDictionary &json);
+    static MovementBoneData *decodeMovementBone(cs::JsonDictionary &json);
+    static FrameData *decodeFrame(cs::JsonDictionary &json);
 
-    static TextureData *decodeTexture(cs::CSJsonDictionary &json);
+    static TextureData *decodeTexture(cs::JsonDictionary &json);
 
-    static ContourData *decodeContour(cs::CSJsonDictionary &json);
+    static ContourData *decodeContour(cs::JsonDictionary &json);
 
-    static void decodeNode(BaseData *node, cs::CSJsonDictionary &json);
+    static void decodeNode(BaseData *node, cs::JsonDictionary &json);
 };
 
 }}} // namespace cocos2d { namespace extension { namespace armature {
