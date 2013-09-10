@@ -85,6 +85,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/SceneTest/SceneTest.cpp \
 	../Classes/SchedulerTest/SchedulerTest.cpp \
 	../Classes/ShaderTest/ShaderTest.cpp \
+	../Classes/ShaderTest/ShaderTest2.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
