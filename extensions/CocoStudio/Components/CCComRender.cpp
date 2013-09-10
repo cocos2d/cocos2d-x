@@ -62,6 +62,11 @@ cocos2d::CCNode* CCComRender::getNode()
     return m_pRender;
 }
 
+void CCComRender::setNode(cocos2d::CCNode *pNode)
+{
+	m_pRender = pNode;
+}
+
 CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
 {
     CCComRender * pRet = new CCComRender(pNode, comName);
