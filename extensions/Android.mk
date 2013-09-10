@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libextension
 LOCAL_SRC_FILES := \
 CCDeprecated-ext.cpp \
 AssetsManager/AssetsManager.cpp \
-
 CCBReader/CCBAnimationManager.cpp \
 CCBReader/CCBFileLoader.cpp \
 CCBReader/CCBKeyframe.cpp \
