@@ -30,7 +30,7 @@ CCBReader/CCNodeLoaderLibrary.cpp \
 CCBReader/CCParticleSystemQuadLoader.cpp \
 CCBReader/CCScale9SpriteLoader.cpp \
 CCBReader/CCScrollViewLoader.cpp \
-CCBReader/CCSpriteLoader.cpp 
+CCBReader/CCSpriteLoader.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
