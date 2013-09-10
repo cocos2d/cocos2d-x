@@ -33,6 +33,9 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Scene::Scene()
+#ifdef _physicsWorld
+: _physicsWorld(nullptr)
+#endif
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -56,7 +59,7 @@ bool Scene::init()
      return bRet;
 }
 
-Scene *Scene::create(bool usePhysics/* = false*/)
+Scene *Scene::create()
 {
     Scene *pRet = new Scene();
     if (pRet && pRet->init())
@@ -70,6 +73,38 @@ Scene *Scene::create(bool usePhysics/* = false*/)
         return NULL;
     }
 }
+
+#ifdef CC_USE_PHYSICS
+Scene *Scene::createWithPhysics()
+{
+    Scene *pRet = new Scene();
+    if (pRet && pRet->initWithPhysics())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
+bool Scene::initWithPhysics()
+{
+    bool bRet = false;
+    do
+    {
+        Director * pDirector;
+        CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
+        this->setContentSize(pDirector->getWinSize());
+        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::create()));
+        // success
+        bRet = true;
+    } while (0);
+    return bRet;
+}
+#endif
 
 void Scene::addChild(Node* child)
 {
@@ -85,30 +120,35 @@ void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
     
-    auto addToPhysicsWorldFunc = [this](Object* node) -> void
+#ifdef CC_USE_PHYSICS
+    if (_physicsWorld)
     {
-        if (typeid(Sprite).hash_code() == typeid(node).hash_code())
+        auto addToPhysicsWorldFunc = [this](Object* node) -> void
         {
-            Sprite* sp = dynamic_cast<Sprite*>(node);
-            
-            if (sp && sp->getPhysicsBody())
+            if (typeid(Sprite).hash_code() == typeid(node).hash_code())
             {
-                _physicsWorld->addChild(sp->getPhysicsBody());
+                Sprite* sp = dynamic_cast<Sprite*>(node);
+                
+                if (sp && sp->getPhysicsBody())
+                {
+                    _physicsWorld->addChild(sp->getPhysicsBody());
+                }
             }
-        }
-    };
-    
-    if(typeid(Layer).hash_code() == typeid(child).hash_code())
-    {
-        Object* subChild = nullptr;
-        CCARRAY_FOREACH(child->getChildren(), subChild)
+        };
+        
+        if(typeid(Layer).hash_code() == typeid(child).hash_code())
         {
-            addToPhysicsWorldFunc(subChild);
+            Object* subChild = nullptr;
+            CCARRAY_FOREACH(child->getChildren(), subChild)
+            {
+                addToPhysicsWorldFunc(subChild);
+            }
+        }else
+        {
+            addToPhysicsWorldFunc(child);
         }
-    }else
-    {
-        addToPhysicsWorldFunc(child);
     }
+#endif
 }
 
 

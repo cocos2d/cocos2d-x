@@ -52,8 +52,6 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
-class Scene;
-class PhysicsBody;
 
 /**
  * @addtogroup base_nodes
