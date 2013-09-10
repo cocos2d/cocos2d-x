@@ -78,11 +78,4 @@ public:
     virtual std::string subtitle() {return "CelShadingSpriteTest";}
 };
 
-class FlameTest3 : public ShaderTestDemo2
-{
-public:
-    FlameTest3() {}
-    virtual std::string subtitle() {return "FlameTest3";}
-};
-
 #endif
