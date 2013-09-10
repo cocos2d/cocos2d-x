@@ -82,6 +82,15 @@ void Component::setName(const char *pName)
     _name.assign(pName);
 }
 
+void Component::setNode(cocos2d::Node *pNode)
+{
+     CC_UNUSED_PARAM(pNode);
+}
+cocos2d::Node* Component::getNode() const
+{
+    return NULL;
+}
+
 Node* Component::getOwner() const
 {
     return _owner;

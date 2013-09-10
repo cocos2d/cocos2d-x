@@ -57,7 +57,12 @@ void ComRender::onExit()
     _render = NULL;
 }
 
-cocos2d::Node* ComRender::getNode()
+void ComRender::setNode(cocos2d::Node *pNode)
+{
+    _render = pNode;
+}
+
+cocos2d::Node* ComRender::getNode() const
 {
     return _render;
 }
