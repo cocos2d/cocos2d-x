@@ -42,6 +42,7 @@ public:
    virtual void onEnter();
    virtual void onExit();
    cocos2d::CCNode* getNode();
+   void setNode(cocos2d::CCNode *pNode);
 
    static CCComRender* create(cocos2d::CCNode *pNode, const char *comName);
 
