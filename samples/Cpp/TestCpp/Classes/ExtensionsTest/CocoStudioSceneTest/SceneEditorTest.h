@@ -32,7 +32,7 @@ public:
 	cocos2d::extension::armature::Armature* getFish(int nTag, const char *pszName);
 
 private:
-	cocos2d::CCNode *m_pCurNode;
+	cocos2d::Node *_curNode;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

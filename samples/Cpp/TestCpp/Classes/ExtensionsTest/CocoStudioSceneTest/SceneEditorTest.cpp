@@ -13,7 +13,7 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
 
 SceneEditorTestLayer::SceneEditorTestLayer()
 {
-	m_pCurNode = NULL;
+	_curNode = NULL;
 }
 
 Scene* SceneEditorTestLayer::scene()
@@ -43,7 +43,7 @@ bool SceneEditorTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! LayerColor::initWithColor( ccc4(0,0,0,255) ) );
+        CC_BREAK_IF(! LayerColor::initWithColor(Color4B(0,0,0,255)));
         
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
@@ -55,26 +55,26 @@ bool SceneEditorTestLayer::init()
 	return bRet;
 }
 
-cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
+cocos2d::Node* SceneEditorTestLayer::createGameScene()
 {
-    Node *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    Node *pNode = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
-	m_pCurNode = pNode;
+	_curNode = pNode;
 
 	//fishes
 	/*cocos2d::extension::armature::Armature *pBlowFish = getFish(10008, "blowFish");
 	cocos2d::extension::armature::Armature *pButterFlyFish = getFish(10009, "butterFlyFish");
 	pBlowFish->getAnimation()->playByIndex(0);
 	pButterFlyFish->getAnimation()->playByIndex(0);*/
-
-    CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(SceneEditorTestLayer::toExtensionsMainLayer));
-        itemBack->setColor(ccc3(255, 255, 255));
-        itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        CCMenu *menuBack = CCMenu::create(itemBack, NULL);
-        menuBack->setPosition(CCPointZero);
+   
+    MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(SceneEditorTestLayer::toExtensionsMainLayer, this));
+        itemBack->setColor(Color3B(255, 255, 255));
+        itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        Menu *menuBack = Menu::create(itemBack, NULL);
+        menuBack->setPosition(Point(0.0f, 0.0f));
 		menuBack->setZOrder(4);
 
     pNode->addChild(menuBack);
@@ -85,27 +85,28 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
     return pNode;
 }
 
-void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
+void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
-
+    ComAudio *pBackMusic = (ComAudio*)(_curNode->getComponent("CCBackgroundAudio"));
+    pBackMusic->stopBackgroundMusic();
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();
-}
+}  
 
-
-void runSceneEditorTestLayer()
-{
-    CCScene *pScene = SceneEditorTestLayer::scene();
-    CCDirector::sharedDirector()->replaceScene(pScene);
-}
 
 cocos2d::extension::armature::Armature* SceneEditorTestLayer::getFish(int nTag, const char *pszName)
 {
-	if (m_pCurNode == NULL)
+	if (_curNode == NULL)
 	{
 		return NULL;
 	}
-	ComRender *pFishRender = (ComRender*)(m_pCurNode->getChildByTag(nTag)->getComponent(pszName));
+	ComRender *pFishRender = (ComRender*)(_curNode->getChildByTag(nTag)->getComponent(pszName));
 	return (cocos2d::extension::armature::Armature *)(pFishRender->getNode());
+}
+
+void runSceneEditorTestLayer()
+{
+    Scene *pScene = SceneEditorTestLayer::scene();
+    Director::getInstance()->replaceScene(pScene);
 }
