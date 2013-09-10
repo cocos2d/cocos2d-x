@@ -158,6 +158,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
+    <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
@@ -268,6 +269,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h" />
+    <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
