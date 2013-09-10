@@ -38,7 +38,7 @@ NS_CC_EXT_BEGIN
 			~SceneReader(void);
 
         public:
-			static SceneReader* sharedSceneReader();
+			static SceneReader* getInstance();
 			void purgeSceneReader();
 			static const char* sceneReaderVersion();
 			cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);

@@ -53,9 +53,9 @@ NS_CC_EXT_BEGIN
 			  if (std::string::npos != strFileName.find_last_of('/'))
 			  {
 				  strFileName = strFileName.substr(0, strFileName.find_last_of('/') + 1);
-				  cocos2d::CCFileUtils::sharedFileUtils()->addSearchPath(strFileName.c_str());
+				  cocos2d::CCFileUtils::getInstance()->addSearchPath(strFileName.c_str());
 			  }
-              pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "r", &size));
+              pData = (char*)(cocos2d::CCFileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
               cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
               jsonDict->initWithDescription(pData);
@@ -107,12 +107,12 @@ NS_CC_EXT_BEGIN
 					const char *plistFile = fileData->getItemStringValue("plistFile");
 					if (file != NULL)
 					{
-						pPath.append(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(file));
+						pPath.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(file));
 					}
 
 					if (plistFile != NULL)
 					{
-						pPlistFile.append(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(plistFile));
+						pPlistFile.append(cocos2d::CCFileUtils::getInstance()->fullPathForFilename(plistFile));
 					}
 					CC_SAFE_DELETE(fileData);
                 }
@@ -138,7 +138,7 @@ NS_CC_EXT_BEGIN
 							continue;
 						}
 						pngFile.replace(pos, pngFile.length(), ".png");
-						CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(pPlistFile.c_str(), pngFile.c_str());
+						CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(pPlistFile.c_str(), pngFile.c_str());
 						pSprite = Sprite::createWithSpriteFrameName(pPath.c_str());
 					}
 					else
@@ -192,7 +192,7 @@ NS_CC_EXT_BEGIN
 					}
 					else
 					{
-						CCLog("unknown resourcetype on CCParticleSystemQuad!");
+						CCLOG("unknown resourcetype on CCParticleSystemQuad!");
 					}
 
 					pParticle->setPosition(0, 0);
@@ -218,12 +218,12 @@ NS_CC_EXT_BEGIN
 						file_path = reDir.substr(0, pos+1);
 					}
 					unsigned long size = 0;
-					const char *des = (char*)(cocos2d::FileUtils::sharedFileUtils()->getFileData(pPath.c_str(),"r" , &size));
+					const char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
 					cs::JsonDictionary *jsonDict = new cs::JsonDictionary();
 					jsonDict->initWithDescription(des);
 					if(NULL == des || strcmp(des, "") == 0)
 					{
-						CCLog("read json file[%s] error!\n", pPath.c_str());
+						CCLOG("read json file[%s] error!\n", pPath.c_str());
 					}
 
 					int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
@@ -237,8 +237,8 @@ NS_CC_EXT_BEGIN
 						std::string plistpath;
 						plistpath += file_path;
 						plistpath.append(plist);
-						cocos2d::CCDictionary *root = CCDictionary::createWithContentsOfFile(plistpath.c_str());
-						CCDictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
+						cocos2d::Dictionary *root = Dictionary::createWithContentsOfFile(plistpath.c_str());
+						Dictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
 						const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
 
 						std::string textupath;
@@ -269,10 +269,10 @@ NS_CC_EXT_BEGIN
                 }
                 else if(comName != NULL && strcmp(comName, "CCComAudio") == 0)
                 {
-					CCComAudio *pAudio = NULL;
+					ComAudio *pAudio = NULL;
 					if (nResType == 0)
 					{
-						pAudio = CCComAudio::create();
+						pAudio = ComAudio::create();
 					}
 					else
 					{
@@ -289,7 +289,7 @@ NS_CC_EXT_BEGIN
 						pAttribute = ComAttribute::create();
 						unsigned long size = 0;
 						const char* pData = 0;
-						pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(), "r", &size));
+						pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
 						if(pData != NULL && strcmp(pData, "") != 0)
 						{
 							pAttribute->getDict()->initWithDescription(pData);
@@ -297,7 +297,7 @@ NS_CC_EXT_BEGIN
 					}
 					else
 					{
-						CCLog("unknown resourcetype on CCComAttribute!");
+						CCLOG("unknown resourcetype on CCComAttribute!");
 						continue;
 					}
                     gb->addComponent(pAttribute);
@@ -307,7 +307,7 @@ NS_CC_EXT_BEGIN
 					ComAudio *pAudio = NULL;
 					if (nResType == 0)
 					{
-						pAudio = CCComAudio::create();
+						pAudio = ComAudio::create();
 					}
 					else
 					{
@@ -359,7 +359,7 @@ NS_CC_EXT_BEGIN
     {
 		int x = dict->getItemIntValue("x", 0);
 		int y = dict->getItemIntValue("y", 0);
-		node->setPosition(ccp(x, y));
+		node->setPosition(Point(x, y));
 		
 		bool bVisible = (bool)(dict->getItemIntValue("visible", 1));
 		node->setVisible(bVisible);
@@ -379,7 +379,7 @@ NS_CC_EXT_BEGIN
         node->setRotation(fRotationZ);
     }
 
-	SceneReader* SceneReader::sharedSceneReader()
+	SceneReader* SceneReader::getInstance()
 	{
 		if (s_sharedReader == NULL)
 		{
