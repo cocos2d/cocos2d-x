@@ -69,6 +69,7 @@ CocoStudio/Armature/display/CCBatchNode.cpp \
 CocoStudio/Armature/display/CCDecorativeDisplay.cpp \
 CocoStudio/Armature/display/CCDisplayFactory.cpp \
 CocoStudio/Armature/display/CCDisplayManager.cpp \
+CocoStudio/Armature/display/CCShaderNode.cpp \
 CocoStudio/Armature/display/CCSkin.cpp \
 CocoStudio/Armature/external_tool/CCTexture2DMutable.cpp \
 CocoStudio/Armature/external_tool/GLES-Render.cpp \
