@@ -469,8 +469,11 @@ GreyScaleSpriteTest::GreyScaleSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         GreyScaleSprite* sprite = GreyScaleSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/powered.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
     
 }
@@ -481,9 +484,11 @@ BlurSpriteTest::BlurSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         BlurSprite* sprite = BlurSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
-        sprite->setBlurSize(1.5);
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/powered.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
     
 }
@@ -494,8 +499,11 @@ NoiseSpriteTest::NoiseSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         NoiseSprite* sprite = NoiseSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/powered.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
 }
 
@@ -505,8 +513,11 @@ EdgeDetectionSpriteTest::EdgeDetectionSpriteTest()
     {
         auto s = Director::getInstance()->getWinSize();
         EdgeDetectionSprite* sprite = EdgeDetectionSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/powered.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
 }
 
@@ -515,9 +526,12 @@ BloomSpriteTest::BloomSpriteTest()
     if (ShaderTestDemo2::init())
     {
         auto s = Director::getInstance()->getWinSize();
-        BloomSprite* sprite = BloomSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
+        BloomSprite* sprite = BloomSprite::createSprite("Images/stone.png");
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/stone.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
 }
 
@@ -526,8 +540,11 @@ CelShadingSpriteTest::CelShadingSpriteTest()
     if (ShaderTestDemo2::init())
     {
         auto s = Director::getInstance()->getWinSize();
-        CelShadingSprite* sprite = CelShadingSprite::createSprite("Images/powered.png");
-        sprite->setPosition(Point(s.width/2, s.height/2));
+        CelShadingSprite* sprite = CelShadingSprite::createSprite("Images/stone.png");
+        sprite->setPosition(Point(s.width * 0.75, s.height/2));
+        auto sprite2 = Sprite::create("Images/stone.png");
+        sprite2->setPosition(Point(s.width * 0.25, s.height/2));
         addChild(sprite);
+        addChild(sprite2);
     }
 }
