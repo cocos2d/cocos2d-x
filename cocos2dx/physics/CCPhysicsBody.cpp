@@ -22,3 +22,99 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCPhysicsBody.h"
+
+#ifdef CC_USE_PHYSICS
+
+NS_CC_BEGIN
+
+
+#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+
+class PhysicsBodyInfo
+{
+public:
+    PhysicsBodyInfo();
+    ~PhysicsBodyInfo();
+    
+public:
+    cpBody* body;
+    cpShape* shape;
+};
+
+PhysicsBodyInfo::PhysicsBodyInfo()
+: body(nullptr)
+, shape(nullptr)
+{
+}
+
+PhysicsBodyInfo::~PhysicsBodyInfo()
+{
+    if (body) cpBodyFree(body);
+    if (shape) cpShapeFree(shape);
+}
+
+PhysicsBody::PhysicsBody()
+{
+}
+
+PhysicsBody::~PhysicsBody()
+{
+    CC_SAFE_DELETE(_info);
+}
+
+PhysicsBody* PhysicsBody::create()
+{
+    PhysicsBody * body = new PhysicsBody();
+    if(body && body->init())
+    {
+        return body;
+    }
+    
+    CC_SAFE_DELETE(body);
+    return nullptr;
+}
+
+bool PhysicsBody::init()
+{
+    do
+    {
+        _info = new PhysicsBodyInfo();
+        CC_BREAK_IF(_info == nullptr);
+        
+        _info->body = cpBodyNew(1.0, 1.0);
+        CC_BREAK_IF(_info->body == nullptr);
+        
+        return true;
+    } while (false);
+    
+    return false;
+}
+
+PhysicsBody* PhysicsBody::createCircle(Point centre, float radius)
+{
+    PhysicsBody* body = PhysicsBody::create();
+    
+    if (body == nullptr)
+    {
+        return nullptr;
+    }
+    
+    cpBodySetPos(body->_info->body, cpv(centre.x, centre.y));
+    body->_info->shape = cpCircleShapeNew(body->_info->body, radius, cpvzero);
+    
+    if (body->_info->shape == nullptr)
+    {
+        return nullptr;
+    }
+    
+    return body;
+}
+
+#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
+
+
+#endif
+
+NS_CC_END
+
+#endif // CC_USE_PHYSICS

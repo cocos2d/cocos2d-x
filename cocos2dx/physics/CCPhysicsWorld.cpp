@@ -57,6 +57,11 @@ bool PhysicsWorld::init()
     return true;
 }
 
+void PhysicsWorld::addChild(PhysicsBody* body)
+{
+    
+}
+
 #elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
 
 struct PhysicsInfo
@@ -67,19 +72,20 @@ struct PhysicsInfo
 
 PhysicsWorld* PhysicsWorld::create()
 {
-    PhysicsWorld * physicsWorld = new PhysicsWorld();
-    if(physicsWorld && physicsWorld->init())
+    PhysicsWorld * world = new PhysicsWorld();
+    if(world && world->init())
     {
-        return physicsWorld;
+        return world;
     }
     
-    CC_SAFE_DELETE(physicsWorld);
-    return NULL;
+    CC_SAFE_DELETE(world);
+    return nullptr;
 }
 
-PhysicsWorld::PhysicsWorld() :
-_gravity(Point(0, -9.8)),
-_speed(1.0)
+PhysicsWorld::PhysicsWorld()
+: _gravity(Point(0, -9.8))
+, _speed(1.0)
+, _worldInfo(nullptr)
 {
     
 }

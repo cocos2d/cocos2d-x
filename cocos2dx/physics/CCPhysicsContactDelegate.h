@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS_ENGINE
+#ifdef CC_USE_PHYSICS
 
 #ifndef __CCPHYSICS_CONTACTDELEGATE_H__
 #define __CCPHYSICS_CONTACTDELEGATE_H__
@@ -49,4 +49,4 @@ public:
 NS_CC_END
 #endif //__CCPHYSICS_CONTACTDELEGATE_H__
 
-#endif // CC_USE_PHYSICS_ENGINE
+#endif // CC_USE_PHYSICS

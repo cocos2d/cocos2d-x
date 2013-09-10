@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS_ENGINE
+#ifdef CC_USE_PHYSICS
 
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
@@ -37,6 +37,7 @@ class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
 class PhysicsFixture;
+class PhysicsBodyInfo;
 
 class PhysicsBody : public Object, public Clonable
 {
@@ -63,7 +64,7 @@ public:
     void removeFixture(PhysicsFixture* fixture);
     void removeAllFixtures();
     
-    inline PhysicsWorld* getWorld() const { return _physicsWorld; }
+    inline PhysicsWorld* getWorld() const { return _world; }
     inline const std::vector<PhysicsJoint*>* getJoints() const { return &_joints; }
     
     inline Sprite* getOwner() const { return _owner; }
@@ -78,13 +79,14 @@ public:
     virtual Clonable* clone() const override;
     
 protected:
+    static PhysicsBody* create();
     bool init();
     
 protected:
     PhysicsBody();
     virtual ~PhysicsBody();
     
-private:
+protected:
     float  _mass;
     float  _density;
     float  _area;
@@ -100,11 +102,12 @@ private:
     
     std::vector<PhysicsJoint*> _joints;
     Array* _fixtures;
-    PhysicsWorld* _physicsWorld;
+    PhysicsWorld* _world;
+    PhysicsBodyInfo* _info;
 };
 
 NS_CC_END
 
 #endif // __CCPHYSICS_BODY_H__
 
-#endif // CC_USE_PHYSICS_ENGINE
+#endif // CC_USE_PHYSICS

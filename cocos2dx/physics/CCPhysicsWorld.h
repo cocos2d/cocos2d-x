@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS_ENGINE
+#ifdef CC_USE_PHYSICS
 
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
@@ -55,6 +55,9 @@ public:
     
     void registerContactDelegate(PhysicsContactDelegate* delegate);
     
+    inline Point getGravity() { return _gravity; }
+    inline void setGravity(Point gravity) { _gravity = gravity; }
+    
 protected:
     static PhysicsWorld* create();
     bool init();
@@ -78,4 +81,4 @@ NS_CC_END
 
 #endif // __CCPHYSICS_WORLD_H__
 
-#endif // CC_USE_PHYSICS_ENGINE
+#endif // CC_USE_PHYSICS
