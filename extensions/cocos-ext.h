@@ -56,4 +56,6 @@
 
 #include "CCDeprecated-ext.h"
 
+#include "AssetsManager/AssetsManager.h"
+
 #endif /* __COCOS2D_EXT_H__ */
