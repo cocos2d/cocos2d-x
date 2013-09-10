@@ -65,6 +65,7 @@ struct {
 	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },
 	{ "ParticleTest", [](){return new ParticleTestScene(); } },
 	{ "PerformanceTest", []() { return new PerformanceTestScene(); } },
+	{ "PhysicsTest", []() { return new PhysicsTestScene(); } },
 	{ "RenderTextureTest", [](){return new RenderTextureScene(); } },
 	{ "RotateWorldTest", [](){return new RotateWorldTestScene(); } },
 	{ "SceneTest", [](){return new SceneTestScene();} },
@@ -142,7 +143,7 @@ void TestController::menuCallback(Object * sender)
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();
 
-    if (scene)
+    if (scene && scene->initTest())
     {
         scene->runThisTest();
         scene->release();
