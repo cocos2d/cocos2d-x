@@ -124,6 +124,13 @@ THE SOFTWARE.
 #include "particle_nodes/CCParticleExamples.h"
 #include "particle_nodes/CCParticleSystemQuad.h"
 
+// physics
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsContactDelegate.h"
+#include "physics/CCPhysicsFixture.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsWorld.h"
+
 // platform
 #include "platform/CCDevice.h"
 #include "platform/CCCommon.h"
