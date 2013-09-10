@@ -300,6 +300,11 @@ void UIDragPanel::setInnerContainerOffset(const CCPoint &offset)
         berthEvent();
     }
 }
+
+Layout* UIDragPanel::getInnerContainer()
+{
+	return m_pInnerContainer;
+}
 /**/
 
 /*

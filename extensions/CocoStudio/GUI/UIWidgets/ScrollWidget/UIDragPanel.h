@@ -162,6 +162,12 @@ public:
      */
     void setInnerContainerOffset(const CCPoint& offset, bool animated);
     /**/
+
+	/**
+     *  get inner container render
+     */
+	Layout* getInnerContainer();
+	/**/
     
     // auto move
     /**
