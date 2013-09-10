@@ -52,6 +52,7 @@
 #include "TextureCacheTest/TextureCacheTest.h"
 #include "NodeTest/NodeTest.h"
 #include "ShaderTest/ShaderTest.h"
+#include "ShaderTest/ShaderTest2.h"
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
