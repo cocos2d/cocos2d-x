@@ -212,7 +212,6 @@
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64830165F39AB007D4F18 /* libxml2.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
-		15C6498716633E65007D4F18 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6498616633E65007D4F18 /* libcurl.a */; };
 		15CFD0DE1612A3EE00BF2188 /* CCControlButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0C91612A3EE00BF2188 /* CCControlButtonTest.cpp */; };
 		15CFD0DF1612A3EE00BF2188 /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0CC1612A3EE00BF2188 /* CCControlColourPickerTest.cpp */; };
 		15CFD0E01612A3EE00BF2188 /* CCControlPotentiometerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CFD0CF1612A3EE00BF2188 /* CCControlPotentiometerTest.cpp */; };
@@ -396,6 +395,8 @@
 		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
+		A01B535317DE8C0700A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B535117DE8C0700A3D114 /* PerformanceAllocTest.cpp */; };
+		A0A890A217DE997500494489 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A890A117DE997500494489 /* libcurl.dylib */; };
 		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
 /* End PBXBuildFile section */
 
@@ -1224,6 +1225,9 @@
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
 		8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImplMac.h; path = CCEditBox/CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCEditBoxImplMac.mm; path = CCEditBox/CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		A01B535117DE8C0700A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
+		A01B535217DE8C0700A3D114 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceAllocTest.h; path = ../../Classes/PerformanceTest/PerformanceAllocTest.h; sourceTree = "<group>"; };
+		A0A890A117DE997500494489 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
 		D4EFE03615D27336002D3DA0 /* HttpClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClientTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1233,8 +1237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0A890A217DE997500494489 /* libcurl.dylib in Frameworks */,
 				15C159531683161A00D239F2 /* libcocos2dx.a in Frameworks */,
-				15C6498716633E65007D4F18 /* libcurl.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
 				15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
@@ -1774,6 +1778,8 @@
 		15AA9D1215B7EC460033D6C2 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				A01B535117DE8C0700A3D114 /* PerformanceAllocTest.cpp */,
+				A01B535217DE8C0700A3D114 /* PerformanceAllocTest.h */,
 				15AA9D1315B7EC460033D6C2 /* PerformanceNodeChildrenTest.cpp */,
 				15AA9D1415B7EC460033D6C2 /* PerformanceNodeChildrenTest.h */,
 				15AA9D1515B7EC460033D6C2 /* PerformanceParticleTest.cpp */,
@@ -2622,6 +2628,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0A890A117DE997500494489 /* libcurl.dylib */,
 				15C6498616633E65007D4F18 /* libcurl.a */,
 				15C64830165F39AB007D4F18 /* libxml2.dylib */,
 				15C6482E165F399D007D4F18 /* libz.dylib */,
@@ -3732,6 +3739,7 @@
 				37CA270C17D87BB500A649D0 /* UITextButtonTest.cpp in Sources */,
 				37CA270D17D87BB500A649D0 /* UITextFieldTest.cpp in Sources */,
 				37CA270E17D87BB500A649D0 /* SceneEditorTest.cpp in Sources */,
+				A01B535317DE8C0700A3D114 /* PerformanceAllocTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3769,8 +3777,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -3797,10 +3805,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				OTHER_CFLAGS = "-O2";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3813,11 +3819,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Test_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3839,9 +3845,8 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/mac\"",
 				);
 				INFOPLIST_FILE = Test_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/mac/libraries\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = TestCpp;
 				SDKROOT = macosx;
 				TARGETED_DEVICE_FAMILY = "1,2";
