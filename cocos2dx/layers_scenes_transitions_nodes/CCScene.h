@@ -28,10 +28,9 @@ THE SOFTWARE.
 #define __CCSCENE_H__
 
 #include "base_nodes/CCNode.h"
+#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
-
-class PhysicsWorld;
 
 /**
  * @addtogroup scene
@@ -52,21 +51,31 @@ class CC_DLL Scene : public Node
 {
 public:
     /** creates a new Scene object */
-    static Scene *create(bool usePhysics = false);
+    static Scene *create();
+#ifdef CC_USE_PHYSICS
+    static Scene *createWithPhysics();
+#endif
 
     Scene();
     virtual ~Scene();
     
     bool init();
+#ifdef CC_USE_PHYSICS
+    bool initWithPhysics();
+#endif
     
     virtual void addChild(Node* child) override;
     virtual void addChild(Node* child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
+#ifdef CC_USE_PHYSICS
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+#endif
     
 protected:
+#ifdef CC_USE_PHYSICS
     PhysicsWorld* _physicsWorld;
+#endif
 };
 
 // end of scene group
