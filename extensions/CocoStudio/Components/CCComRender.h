@@ -22,41 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_FRAMEWORK_COMPONENT_H__
-#define __CC_FRAMEWORK_COMPONENT_H__
+#ifndef __CC_EXTENTIONS_CCCOMNODE_H__
+#define __CC_EXTENTIONS_CCCOMNODE_H__
 
-#include "cocoa/CCObject.h"
-#include <string>
+#include "cocos2d.h"
+#include "cocos-ext.h"
+#include "ExtensionMacros.h"
 
-NS_CC_BEGIN
+NS_CC_EXT_BEGIN
 
-class CC_DLL Component : public Object
+class ComRender : public cocos2d::Component
 {
 protected:
-    Component(void);
+    ComRender(void);
+    ComRender(cocos2d::Node *node, const char *comName);
+    virtual ~ComRender(void);
+    
 public:
-    virtual ~Component(void);
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
-    virtual void serialize(void* r);
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
-    static Component* create(void);
-    
-    const char* getName() const;
-    void setName(const char *pName);
-    
-    void setOwner(Node *pOwner);
-    Node* getOwner() const;
-    
-protected:
-    Node *_owner;
-    std::string _name;
-    bool _enabled;
+   virtual void onEnter();
+   virtual void onExit();
+   cocos2d::Node* getNode();
+
+   static ComRender* create(cocos2d::Node *pNode, const char *comName);
+
+private:
+   cocos2d::Node *_render;
 };
 
-NS_CC_END
-
+NS_CC_EXT_END
 #endif  // __FUNDATION__CCCOMPONENT_H__
