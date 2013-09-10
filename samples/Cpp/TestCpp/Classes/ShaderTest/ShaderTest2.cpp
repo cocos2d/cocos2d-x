@@ -13,8 +13,7 @@ namespace ShaderTest2
         CL(NoiseSpriteTest),
         CL(EdgeDetectionSpriteTest),
         CL(BloomSpriteTest),
-        CL(CelShadingSpriteTest),
-        CL(FlameTest3)
+        CL(CelShadingSpriteTest)
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
