@@ -5,21 +5,23 @@
 #include "PerformanceSpriteTest.h"
 #include "PerformanceTextureTest.h"
 #include "PerformanceTouchesTest.h"
+#include "PerformanceAllocTest.h"
 
 enum
 {
-    MAX_COUNT = 5,
+    MAX_COUNT = 6,
     LINE_SPACE = 40,
     kItemTagBasic = 1000,
 };
 
 const std::string testsName[MAX_COUNT] = 
 {
-    "PerformanceNodeChildrenTest",
-    "PerformanceParticleTest",
-    "PerformanceSpriteTest",
-    "PerformanceTextureTest",
-    "PerformanceTouchesTest"
+    "Perf NodeChildren Test",
+    "Perf Particle Test",
+    "Perf Sprite Test",
+    "Perf Texture Test",
+    "Perf Touches Test",
+    "Perf Alloc Test",
 };
 
 ////////////////////////////////////////////////////////
@@ -69,6 +71,9 @@ void PerformanceMainLayer::menuCallback(CCObject* pSender)
         break;
     case 4:
         runTouchesTest();
+        break;
+    case 5:
+        runAllocPerformanceTest();
         break;
     default:
         break;
