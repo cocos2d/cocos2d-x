@@ -105,6 +105,7 @@ Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
+Classes/PerformanceTest/PerformanceNodeAllocTest.cpp \
 Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 Classes/PerformanceTest/PerformanceParticleTest.cpp \
 Classes/PerformanceTest/PerformanceSpriteTest.cpp \
