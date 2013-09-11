@@ -1328,3 +1328,25 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         }
     }
 }
+
+void std_vector_to_luaval(lua_State* L,const std::vector<Sprite*>& inValue)
+{
+    lua_newtable(L);
+    
+    if (inValue.empty())
+        return;
+    
+    auto iter = inValue.begin();
+    int  indexTable = 1;
+    for (; iter != inValue.end(); ++iter)
+    {
+        if (nullptr == *iter)
+            continue;
+        
+        lua_pushnumber(L, (lua_Number)indexTable);
+        toluafix_pushusertype_ccobject(L, (*iter)->_ID, &((*iter)->_luaID), (void*)(*iter),"Sprite");
+        lua_rawset(L, -3);
+        (*iter)->retain();
+        ++indexTable;
+    }
+}
