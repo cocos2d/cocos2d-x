@@ -198,25 +198,23 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
 
     // parse spacing / padding
     std::string line;
-    std::string strLeft = contents->getCString();
-    while (strLeft.length() > 0)
+    int contentLength = contents->length();
+    const char *strLeft = contents->getCString();
+    const char *strLeftEnd = strLeft + contentLength;
+
+    while (strLeft < strLeftEnd) 
     {
-        int pos = strLeft.find('\n');
-
-        if (pos != (int)std::string::npos)
-        {
-            // the data is more than a line.get one line
-            line = strLeft.substr(0, pos);
-            strLeft = strLeft.substr(pos + 1);
-        }
+        const char * eolPtr = strchr(strLeft, '\n');
+        if (! eolPtr)
+            eolPtr = strLeftEnd;
         else
-        {
-            // get the left data
-            line = strLeft;
-            strLeft.erase();
-        }
+            eolPtr++; // point to the character immediately after the '\n'
+        
+        int numChars = eolPtr - strLeft;
+        line = std::string(strLeft, numChars);
+        strLeft += numChars;
 
-        if(line.substr(0,strlen("info face")) == "info face") 
+        if(line.substr(0,strlen("info face")) == "info face")
         {
             // XXX: info parsing is incomplete
             // Not needed for the Hiero editors, but needed for the AngelCode editor
