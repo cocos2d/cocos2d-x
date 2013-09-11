@@ -246,9 +246,6 @@
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCAccelerometer.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -699,9 +696,6 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCAccelerometer.h">
-      <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\win32\CCApplication.h">
       <Filter>platform\win32</Filter>
