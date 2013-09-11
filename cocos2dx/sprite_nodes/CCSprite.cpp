@@ -1089,7 +1089,7 @@ static unsigned char cc_2x2_white_image[] = {
     0xFF, 0xFF, 0xFF, 0xFF
 };
 
-#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+#define CC_2x2_WHITE_IMAGE_KEY  "/cc_2x2_white_image"
 
 void Sprite::setTexture(Texture2D *texture)
 {
@@ -1110,7 +1110,7 @@ void Sprite::setTexture(Texture2D *texture)
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = TextureCache::getInstance()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }

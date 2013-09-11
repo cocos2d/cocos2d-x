@@ -372,7 +372,7 @@ bool ParticleSystem::initWithDictionary(Dictionary *dictionary, const char *dirn
                         CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(TextureCache::getInstance()->addUIImage(image, textureName.c_str()));
+                        setTexture(TextureCache::getInstance()->addImage(image, textureName.c_str()));
 
                         image->release();
                     }
