@@ -218,7 +218,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClCompile Include="..\platform\third_party\common\atitc\atitc.cpp" />
     <ClCompile Include="..\platform\third_party\common\etc\etc1.cpp" />
     <ClCompile Include="..\platform\third_party\common\s3tc\s3tc.cpp" />
-    <ClCompile Include="..\platform\win32\CCAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
     <ClCompile Include="..\platform\win32\CCDevice.cpp" />
@@ -380,7 +379,6 @@ xcopy /Y /Q "$(ProjectDir)..\platform\third_party\win32\libraries\*.*" "$(OutDir
     <ClInclude Include="..\platform\third_party\common\atitc\atitc.h" />
     <ClInclude Include="..\platform\third_party\common\etc\etc1.h" />
     <ClInclude Include="..\platform\third_party\common\s3tc\s3tc.h" />
-    <ClInclude Include="..\platform\win32\CCAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CCApplication.h" />
     <ClInclude Include="..\platform\win32\CCEGLView.h" />
     <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
