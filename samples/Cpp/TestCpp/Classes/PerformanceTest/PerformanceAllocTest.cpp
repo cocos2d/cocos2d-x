@@ -250,7 +250,11 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    printf("Size of Node: %u\n", sizeof(CCNode));
+#else
     printf("Size of Node: %lu\n", sizeof(CCNode));
+#endif
 
     scheduleUpdate();
 }
@@ -298,7 +302,11 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    printf("Size of Node: %u\n", sizeof(CCNode));
+#else
     printf("Size of Node: %lu\n", sizeof(CCNode));
+#endif
 
     scheduleUpdate();
 }
@@ -351,7 +359,11 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(CCSprite));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    printf("Size of Node: %u\n", sizeof(CCSprite));
+#else
+    printf("Size of Node: %lu\n", sizeof(CCSprite));
+#endif
 
     scheduleUpdate();
 }
@@ -401,7 +413,11 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(CCSprite));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    printf("Size of Node: %u\n", sizeof(CCSprite));
+#else
+    printf("Size of Node: %lu\n", sizeof(CCSprite));
+#endif
 
     scheduleUpdate();
 }
@@ -451,7 +467,11 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of sprite: %lu\n", sizeof(CCSprite));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
+    printf("Size of Node: %u\n", sizeof(CCSprite));
+#else
+    printf("Size of Node: %lu\n", sizeof(CCSprite));
+#endif
 
     scheduleUpdate();
 }
