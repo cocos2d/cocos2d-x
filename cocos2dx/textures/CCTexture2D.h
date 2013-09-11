@@ -119,22 +119,22 @@ public:
     
     
     struct PixelFormatInfo {
-    public:
+
+        PixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
+            : internalFormat(internalFormat)
+            , format(format)
+            , type(type)
+            , bpp(bpp)
+            , compressed(compressed)
+            , alpha(alpha)
+        {}
+
         GLenum internalFormat;
         GLenum format;
         GLenum type;
         int bpp;
         bool compressed;
         bool alpha;
-        
-        PixelFormatInfo(GLenum internalFormat, GLenum format, GLenum type, int bpp, bool compressed, bool alpha)
-        :internalFormat(internalFormat),
-        format(format),
-        type(type),
-        bpp(bpp),
-        compressed(compressed),
-        alpha(alpha)
-        {}
     };
     
     typedef std::map<Texture2D::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;

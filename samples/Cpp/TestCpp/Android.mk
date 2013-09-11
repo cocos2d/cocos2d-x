@@ -44,8 +44,6 @@ Classes/DataVisitorTest/DataVisitorTest.cpp \
 Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 Classes/EffectsTest/EffectsTest.cpp \
-Classes/ExtensionsTest/ExtensionsTest.cpp \
-Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
@@ -53,12 +51,6 @@ Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer
 Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
-Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
@@ -75,6 +67,15 @@ Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
+Classes/ExtensionsTest/ExtensionsTest.cpp \
+Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
+Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
@@ -101,6 +102,7 @@ Classes/RotateWorldTest/RotateWorldTest.cpp \
 Classes/SceneTest/SceneTest.cpp \
 Classes/SchedulerTest/SchedulerTest.cpp \
 Classes/ShaderTest/ShaderTest.cpp \
+Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
