@@ -22,36 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCARMATUREDEFINE_H__
-#define __CCARMATUREDEFINE_H__
-
-
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
-
-#define VERSION_COMBINED 0.30f
-
-
-#ifndef AUTO_ADD_SPRITE_FRAME_NAME_PREFIX
-#define AUTO_ADD_SPRITE_FRAME_NAME_PREFIX 0
-#endif // !AUTO_ADD_SPRITE_FRAME_NAME_PREFIX
-
-
-#ifndef ENABLE_PHYSICS_BOX2D_DETECT
-#define ENABLE_PHYSICS_BOX2D_DETECT 0
-#endif
-
-#ifndef ENABLE_PHYSICS_CHIPMUNK_DETECT
-#define ENABLE_PHYSICS_CHIPMUNK_DETECT 1
-#endif
-
-#define CS_RETURN_IF(cond) if (cond) return
-#define CS_RETURN_NULL_IF(cond) if (cond) return NULL;
+#include "CCArmatureDefine.h"
 
 NS_CC_EXT_BEGIN
 
-const char *armatureVersion();
+const char *armatureVersion()
+{
+    return "0.4.0.0";
+}
 
 NS_CC_EXT_END
-
-#endif /*__CCARMATUREDEFINE_H__*/

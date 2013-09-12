@@ -39,6 +39,7 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 {
 
 public:
+
     /**
     * Allocates and initializes an armature.
     * @return An initialized armature which is marked as "autorelease".
@@ -134,6 +135,13 @@ public:
 
     virtual void setAnimation(CCArmatureAnimation *animation);
     virtual CCArmatureAnimation *getAnimation();
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    virtual b2Fixture *getShapeList();
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    virtual cpShape *getShapeList();
+#endif
+
 protected:
 
     /*
@@ -171,9 +179,9 @@ protected:
     CCArmatureAnimation *m_pAnimation;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_PROPERTY(b2Body *, m_pB2Body, B2Body);
+    CC_PROPERTY(b2Body *, m_pBody, Body);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_PROPERTY(cpBody *, m_pCPBody, CPBody);
+    CC_PROPERTY(cpBody *, m_pBody, Body);
 #endif
 };
 
