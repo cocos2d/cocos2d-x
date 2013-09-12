@@ -102,8 +102,11 @@ bool HelloWorld::init()
 
 		this->setTouchEnabled(true);
 
-		_targets = new Array;
-		_projectiles = new Array;
+		_targets = new Array();
+        _targets->init();
+        
+		_projectiles = new Array();
+        _projectiles->init();
 
 		// use updateGame instead of update, otherwise it will conflit with SelectorProtocol::update
 		// see http://www.cocos2d-x.org/boards/6/topics/1478
@@ -187,10 +190,10 @@ void HelloWorld::gameLogic(float dt)
 }
 
 // cpp with cocos2d-x
-void HelloWorld::ccTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
 	// Choose one of the touches to work with
-	Touch* touch = static_cast<Touch*>( touches->anyObject() );
+	Touch* touch = touches[0];
 	Point location = touch->getLocation();
     
 	log("++++++++after  x:%f, y:%f", location.x, location.y);
@@ -239,7 +242,9 @@ void HelloWorld::ccTouchesEnded(const std::vector<Touch*>& touches, Event* event
 
 void HelloWorld::updateGame(float dt)
 {
-	Array *projectilesToDelete = new Array;
+	Array *projectilesToDelete = new Array();
+    projectilesToDelete->init();
+    
     Object* it = NULL;
     Object* jt = NULL;
 
@@ -253,7 +258,8 @@ void HelloWorld::updateGame(float dt)
 			projectile->getContentSize().width,
 			projectile->getContentSize().height);
 
-		auto targetsToDelete =new Array;
+		auto targetsToDelete = new Array();
+        targetsToDelete->init();
 
 		// for (jt = _targets->begin(); jt != _targets->end(); jt++)
         CCARRAY_FOREACH(_targets, jt)
@@ -305,8 +311,3 @@ void HelloWorld::updateGame(float dt)
 	projectilesToDelete->release();
 }
 
-void HelloWorld::registerWithTouchDispatcher()
-{
-	// TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
-    Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this,0);
-}
