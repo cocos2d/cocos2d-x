@@ -25,6 +25,8 @@
 
 #include "CCScrollView.h"
 
+#include <algorithm>
+
 NS_CC_EXT_BEGIN
 
 #define SCROLL_DEACCEL_RATE  0.95f
@@ -571,7 +573,8 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		
+		updateEventPriorityIndex();
+        
 		// draw children zOrder >= 0
 		for( ; i < _children->count(); i++ )
         {
@@ -583,6 +586,7 @@ void ScrollView::visit()
     else
     {
 		this->draw();
+        updateEventPriorityIndex();
     }
 
     this->afterDraw();

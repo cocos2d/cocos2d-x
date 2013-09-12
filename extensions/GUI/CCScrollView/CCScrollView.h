@@ -90,8 +90,6 @@ public:
      */
     bool initWithViewSize(Size size, Node* container = NULL);
 
-//    virtual void registerWithTouchDispatcher();
-
     /**
      * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
      *
