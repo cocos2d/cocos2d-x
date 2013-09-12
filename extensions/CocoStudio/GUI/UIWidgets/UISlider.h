@@ -29,8 +29,19 @@
 
 NS_CC_EXT_BEGIN
 
+typedef enum
+{
+    SLIDER_PERCENTCHANGED
+}SliderEventType;
+
+typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType);
+#define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
+
+
+/*compatible*/
 typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 #define coco_percentchangedselector(_SELECTOR) (SEL_PercentChangedEvent)(&_SELECTOR)
+/************/
 class UISlider : public UIWidget
 {
 public:
@@ -138,7 +149,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    virtual void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector);
+    void addPercentEvent(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -162,15 +173,16 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     /*Compatible*/
-    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
-    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
-    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
-    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
-    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
-    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
-    void setSlidBallPercent(int percent){setPercent(percent);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    void setScale9Enable(bool is){setScale9Enabled(is);};
+    CC_DEPRECATED_ATTRIBUTE void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setSlidBallPercent(int percent){setPercent(percent);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool is){setScale9Enabled(is);};
+    CC_DEPRECATED_ATTRIBUTE void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector);
     /************/
 protected:
     virtual void initRenderer();
@@ -205,13 +217,19 @@ protected:
     std::string m_strSlidBallPressedTextureFile;
     std::string m_strSlidBallDisabledTextureFile;
     CCRect m_capInsets;
-    CCObject*       m_pPercentListener;
-    SEL_PushEvent    m_pfnPercentSelector;
+
+    CCObject*       m_pSlidPercentListener;
+    SEL_SlidPercentChangedEvent    m_pfnSlidPercentSelector;
     TextureResType m_eBarTexType;
     TextureResType m_eProgressBarTexType;
     TextureResType m_eBallNTexType;
     TextureResType m_eBallPTexType;
     TextureResType m_eBallDTexType;
+    
+    /*Compatible*/
+    CCObject*       m_pPercentListener;
+    SEL_PushEvent    m_pfnPercentSelector;
+    /************/
 };
 
 NS_CC_EXT_END

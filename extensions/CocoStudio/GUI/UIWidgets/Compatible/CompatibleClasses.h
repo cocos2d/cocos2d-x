@@ -3,7 +3,6 @@
 #define __COMPATIBLECLASSES_H__
 
 #include "../UILabel.h"
-#include "../UITextButton.h"
 #include "../../Layouts/Layout.h"
 
 NS_CC_EXT_BEGIN
@@ -12,6 +11,8 @@ NS_CC_EXT_BEGIN
 typedef Layout UIPanel;
 typedef UILabel UITextArea;
 typedef Layout UIContainerWidget;
+typedef UIButton UITextButton;
+typedef UIWidget UINodeContainer;
 class UIZoomButton : public UITextButton
 {
 public:
@@ -26,7 +27,8 @@ public:
         return NULL;
     };
 protected:
-    virtual bool init(){
+    virtual bool init()
+    {
         if (UITextButton::init())
         {
             setScale9Enabled(true);

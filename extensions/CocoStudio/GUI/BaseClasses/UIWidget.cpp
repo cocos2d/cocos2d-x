@@ -48,14 +48,11 @@ m_pWidgetParent(NULL),
 m_eBrightStyle(BRIGHT_NONE),
 m_bUpdateEnabled(false),
 m_pRenderer(NULL),
-m_pPushListener(NULL),
-m_pfnPushSelector(NULL),
-m_pMoveListener(NULL),
-m_pfnMoveSelector(NULL),
-m_pReleaseListener(NULL),
-m_pfnReleaseSelector(NULL),
-m_pCancelListener(NULL),
-m_pfnCancelSelector(NULL),
+m_touchStartPos(CCPointZero),
+m_touchMovePos(CCPointZero),
+m_touchEndPos(CCPointZero),
+m_pfnTouchEventSelector(NULL),
+m_pTouchEventListener(NULL),
 m_nWidgetTag(-1),
 m_strName("default"),
 m_WidgetType(WidgetTypeWidget),
@@ -64,13 +61,25 @@ m_nActionTag(0),
 m_size(CCSizeZero),
 m_customSize(CCSizeZero),
 m_pLayoutParameter(NULL),
-
 m_bIgnoreSize(false),
 m_children(NULL),
 m_bAffectByClipping(false),
+
 /*temp action*/
-m_pBindingAction(NULL)
+m_pBindingAction(NULL),
+
+/*Compatible*/
+m_pPushListener(NULL),
+m_pfnPushSelector(NULL),
+m_pMoveListener(NULL),
+m_pfnMoveSelector(NULL),
+m_pReleaseListener(NULL),
+m_pfnReleaseSelector(NULL),
+m_pCancelListener(NULL),
+m_pfnCancelSelector(NULL)
+/************/
 {
+    
 }
 
 UIWidget::~UIWidget()
@@ -321,7 +330,15 @@ void UIWidget::disableUpdate()
 void UIWidget::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
-    DYNAMIC_CAST_CCNODERGBA->setEnabled(enabled);
+    GUIRenderer* renderer = DYNAMIC_CAST_CCNODERGBA;
+    if (renderer)
+    {
+        renderer->setEnabled(enabled);
+    }
+    else
+    {
+        dynamic_cast<RectClippingNode*>(m_pRenderer)->setEnabled(enabled);
+    }
     ccArray* arrayChildren = m_children->data;
     int childrenCount = arrayChildren->num;
     for (int i = 0; i < childrenCount; i++)
@@ -610,6 +627,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
 void UIWidget::onTouchCancelled(const CCPoint &touchPoint)
 {
     setFocused(false);
+    cancelUpEvent();
 }
 
 void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)
@@ -619,33 +637,61 @@ void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)
 
 void UIWidget::pushDownEvent()
 {
+    /*compatible*/
     if (m_pPushListener && m_pfnPushSelector)
     {
         (m_pPushListener->*m_pfnPushSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_BEGAN);
     }
 }
 
 void UIWidget::moveEvent()
 {
+    /*compatible*/
     if (m_pMoveListener && m_pfnMoveSelector)
     {
         (m_pMoveListener->*m_pfnMoveSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_MOVED);
     }
 }
 
 void UIWidget::releaseUpEvent()
 {
+    /*compatible*/
     if (m_pReleaseListener && m_pfnReleaseSelector)
     {
         (m_pReleaseListener->*m_pfnReleaseSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
 }
 
 void UIWidget::cancelUpEvent()
 {
+    /*compatible*/
     if (m_pCancelListener && m_pfnCancelSelector)
     {
         (m_pCancelListener->*m_pfnCancelSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
 }
 
@@ -654,6 +700,7 @@ void UIWidget::longClickEvent()
     
 }
 
+/*Compatible*/
 void UIWidget::addPushDownEvent(CCObject*target, SEL_PushEvent selector)
 {
     m_pPushListener = target;
@@ -677,10 +724,27 @@ void UIWidget::addCancelEvent(CCObject *target, SEL_CancelEvent selector)
     m_pCancelListener = target;
     m_pfnCancelSelector = selector;
 }
+/************/
+
+void UIWidget::addTouchEventListener(cocos2d::CCObject *target, SEL_TouchEvent selector)
+{
+    m_pTouchEventListener = target;
+    m_pfnTouchEventSelector = selector;
+}
 
 CCNode* UIWidget::getRenderer()
 {
     return m_pRenderer;
+}
+
+void UIWidget::addRenderer(CCNode* renderer, int zOrder)
+{
+    m_pRenderer->addChild(renderer, zOrder);
+}
+
+void UIWidget::removeRenderer(CCNode* renderer, bool cleanup)
+{
+    m_pRenderer->removeChild(renderer,cleanup);
 }
 
 bool UIWidget::hitTest(const CCPoint &pt)
@@ -694,11 +758,11 @@ bool UIWidget::hitTest(const CCPoint &pt)
     return false;
 }
 
-bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
+bool UIWidget::clippingParentAreaContainPoint(const CCPoint &pt)
 {
-
     m_bAffectByClipping = false;
     UIWidget* parent = getParent();
+    UIWidget* clippingParent = NULL;
     while (parent)
     {
         Layout* layoutParent = dynamic_cast<Layout*>(parent);
@@ -707,6 +771,7 @@ bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
             if (layoutParent->isClippingEnabled())
             {
                 m_bAffectByClipping = true;
+                clippingParent = layoutParent;
                 break;
             }
         }
@@ -719,23 +784,23 @@ bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
     }
     
     
-    if (m_pWidgetParent)
+    if (clippingParent)
     {
         bool bRet = false;
-        if (m_pWidgetParent->hitTest(pt))
+        if (clippingParent->hitTest(pt))
         {
             bRet = true;
         }
         if (bRet)
         {
-            return m_pWidgetParent->parentAreaContainPoint(pt);
+            return clippingParent->clippingParentAreaContainPoint(pt);
         }
         return false;
     }
     return true;
 }
 
-void UIWidget::checkChildInfo(int handleState, UIWidget *sender,const CCPoint &touchPoint)
+void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const CCPoint &touchPoint)
 {
     if (m_pWidgetParent)
     {
@@ -1079,7 +1144,7 @@ LayoutParameter* UIWidget::getLayoutParameter()
     return m_pLayoutParameter;
 }
 
-/*******to be removed*******/
+/*******Compatible*******/
 
 void UIWidget::setTouchEnable(bool enabled, bool containChildren)
 {
@@ -1139,6 +1204,7 @@ CCRect UIWidget::getRect()
 }
 
 /***************************/
+
 /*temp action*/
 void UIWidget::setActionTag(int tag)
 {
@@ -1185,7 +1251,7 @@ void GUIRenderer::setEnabled(bool enabled)
     m_bEnabled = enabled;
 }
 
-bool GUIRenderer::getEnabled() const
+bool GUIRenderer::isEnabled() const
 {
     return m_bEnabled;
 }

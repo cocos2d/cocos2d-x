@@ -28,7 +28,7 @@ NS_CC_EXT_BEGIN
 
 UILabel::UILabel():
 m_bTouchScaleChangeEnabled(false),
-m_fNormalScaleValue(1),
+m_fNormalScaleValue(1.0f),
 m_sFontName("Thonburi"),
 m_nFontSize(10),
 m_fOnSelectedScaleOffset(0.5),

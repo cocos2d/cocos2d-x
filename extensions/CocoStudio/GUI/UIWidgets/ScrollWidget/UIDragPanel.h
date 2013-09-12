@@ -307,9 +307,17 @@ protected:
     void moveToInit();
     void moveToUpdate(float t);
     virtual void onSizeChanged();
+    /*compatible*/
+    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     Layout* m_pInnerContainer;
+    
+    /*
+    DRAGPANEL_DIR m_eDirection;
+    DRAGPANEL_MOVE_DIR m_eMoveDirection;
+     */
     
     bool m_bTouchPressed;
     bool m_bTouchMoved;
@@ -375,6 +383,8 @@ protected:
     SEL_DragPanelBounceToRightEvent m_pfnBounceToRightSelector;
     CCObject* m_pBounceToBottomListener;
     SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;        
+    
+    
     
     float m_bRunningAction;
     int m_nActionType;

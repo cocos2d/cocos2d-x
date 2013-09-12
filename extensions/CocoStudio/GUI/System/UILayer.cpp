@@ -195,6 +195,7 @@ void UILayer::dispose()
 {
     removeFromParentAndCleanup(true);
 }
+
 void UILayer::clear()
 {
     m_pRootWidget->removeAllChildrenAndCleanUp(true);

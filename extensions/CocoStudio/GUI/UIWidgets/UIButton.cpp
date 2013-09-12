@@ -27,7 +27,10 @@
 
 NS_CC_EXT_BEGIN
 
-#define NORMALRENDERER
+#define NORMALRENDERERZ (0)
+#define PRESSEDRENDERERZ (0)
+#define DISABLEDRENDERERZ (0)
+#define TITLERENDERERZ (1)
     
 UIButton::UIButton():
 m_pButtonNormalRenderer(NULL),
@@ -84,10 +87,10 @@ void UIButton::initRenderer()
     m_pButtonClickedRenderer = CCSprite::create();
     m_pButtonDisableRenderer = CCSprite::create();
     m_pTitleRenderer = CCLabelTTF::create();
-    m_pRenderer->addChild(m_pButtonNormalRenderer,-1);
-    m_pRenderer->addChild(m_pButtonClickedRenderer,-1);
-    m_pRenderer->addChild(m_pButtonDisableRenderer,-1);
-    m_pRenderer->addChild(m_pTitleRenderer);
+    m_pRenderer->addChild(m_pButtonNormalRenderer,NORMALRENDERERZ);
+    m_pRenderer->addChild(m_pButtonClickedRenderer,PRESSEDRENDERERZ);
+    m_pRenderer->addChild(m_pButtonDisableRenderer,DISABLEDRENDERERZ);
+    m_pRenderer->addChild(m_pTitleRenderer,TITLERENDERERZ);
 }
 
 void UIButton::setScale9Enabled(bool able)
@@ -124,9 +127,9 @@ void UIButton::setScale9Enabled(bool able)
     loadTextureNormal(m_strNormalFileName.c_str(), m_eNormalTexType);
     loadTexturePressed(m_strClickedFileName.c_str(), m_ePressedTexType);
     loadTextureDisabled(m_strDisabledFileName.c_str(), m_eDisabledTexType);
-    m_pRenderer->addChild(m_pButtonNormalRenderer,-1);
-    m_pRenderer->addChild(m_pButtonClickedRenderer,-1);
-    m_pRenderer->addChild(m_pButtonDisableRenderer,-1);
+    m_pRenderer->addChild(m_pButtonNormalRenderer,NORMALRENDERERZ);
+    m_pRenderer->addChild(m_pButtonClickedRenderer,PRESSEDRENDERERZ);
+    m_pRenderer->addChild(m_pButtonDisableRenderer,DISABLEDRENDERERZ);
     if (m_bScale9Enabled)
     {
         bool ignoreBefore = m_bIgnoreSize;
@@ -636,4 +639,5 @@ void UIButton::setColor(const ccColor3B &color)
     UIWidget::setColor(color);
     setTitleColor(m_titleColor);
 }
+
 NS_CC_EXT_END
