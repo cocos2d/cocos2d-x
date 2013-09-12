@@ -39,7 +39,6 @@ THE SOFTWARE.
 // externals
 #include "kazmath/GL/matrix.h"
 
-
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
@@ -103,7 +102,7 @@ CCNode::CCNode(void)
 CCNode::~CCNode(void)
 {
     CCLOGINFO( "cocos2d: deallocing" );
-    
+
     unregisterScriptHandler();
     if (m_nUpdateScriptHandler)
     {
@@ -171,7 +170,7 @@ int CCNode::getZOrder()
 }
 
 /// zOrder setter : private method
-/// used internally to alter the zOrder variable. DON'T call this method manually 
+/// used internally to alter the zOrder variable. DON'T call this method manually
 void CCNode::_setZOrder(int z)
 {
     m_nZOrder = z;
@@ -192,13 +191,11 @@ float CCNode::getVertexZ()
     return m_fVertexZ;
 }
 
-
 /// vertexZ setter
 void CCNode::setVertexZ(float var)
 {
     m_fVertexZ = var;
 }
-
 
 /// rotation getter
 float CCNode::getRotation()
@@ -338,10 +335,9 @@ CCCamera* CCNode::getCamera()
     {
         m_pCamera = new CCCamera();
     }
-    
+
     return m_pCamera;
 }
-
 
 /// grid getter
 CCGridBase* CCNode::getGrid()
@@ -356,7 +352,6 @@ void CCNode::setGrid(CCGridBase* pGrid)
     CC_SAFE_RELEASE(m_pGrid);
     m_pGrid = pGrid;
 }
-
 
 /// isVisible getter
 bool CCNode::isVisible()
@@ -433,7 +428,7 @@ bool CCNode::isIgnoreAnchorPointForPosition()
 /// isRelativeAnchorPoint setter
 void CCNode::ignoreAnchorPointForPosition(bool newValue)
 {
-    if (newValue != m_bIgnoreAnchorPointForPosition) 
+    if (newValue != m_bIgnoreAnchorPointForPosition)
     {
 		m_bIgnoreAnchorPointForPosition = newValue;
 		m_bTransformDirty = m_bInverseDirty = true;
@@ -533,16 +528,15 @@ void CCNode::cleanup()
     // actions
     this->stopAllActions();
     this->unscheduleAllSelectors();
-    
+
     if ( m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnCleanup);
     }
-    
+
     // timers
     arrayMakeObjectsPerformSelector(m_pChildren, cleanup, CCNode*);
 }
-
 
 const char* CCNode::description()
 {
@@ -578,7 +572,7 @@ CCNode* CCNode::getChildByTag(int aTag)
 * to override this method
 */
 void CCNode::addChild(CCNode *child, int zOrder, int tag)
-{    
+{
     CCAssert( child != NULL, "Argument must be non-nil");
     CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
 
@@ -623,7 +617,7 @@ void CCNode::removeFromParentAndCleanup(bool cleanup)
     if (m_pParent != NULL)
     {
         m_pParent->removeChild(this,cleanup);
-    } 
+    }
 }
 
 void CCNode::removeChild(CCNode* child)
@@ -703,10 +697,9 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
                 pNode->setParent(NULL);
             }
         }
-        
+
         m_pChildren->removeAllObjects();
     }
-    
 }
 
 void CCNode::detachChild(CCNode *child, bool doCleanup)
@@ -732,7 +725,6 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
 
     m_pChildren->removeObject(child);
 }
-
 
 // helper used by reorderChild & add
 void CCNode::insertChild(CCNode* child, int z)
@@ -779,7 +771,6 @@ void CCNode::sortAllChildren()
     }
 }
 
-
  void CCNode::draw()
  {
      //CCAssert(0);
@@ -816,7 +807,7 @@ void CCNode::visit()
         {
             pNode = (CCNode*) arrayData->arr[i];
 
-            if ( pNode && pNode->m_nZOrder < 0 ) 
+            if ( pNode && pNode->m_nZOrder < 0 )
             {
                 pNode->visit();
             }
@@ -835,7 +826,7 @@ void CCNode::visit()
             {
                 pNode->visit();
             }
-        }        
+        }
     }
     else
     {
@@ -849,7 +840,7 @@ void CCNode::visit()
      {
          m_pGrid->afterDraw(this);
     }
- 
+
     kmGLPopMatrix();
 }
 
@@ -863,7 +854,7 @@ void CCNode::transformAncestors()
 }
 
 void CCNode::transform()
-{    
+{
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
@@ -874,7 +865,6 @@ void CCNode::transform()
     transfrom4x4.mat[14] = m_fVertexZ;
 
     kmGLMultMatrix( &transfrom4x4 );
-
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
     if ( m_pCamera != NULL && !(m_pGrid != NULL && m_pGrid->isActive()) )
@@ -889,9 +879,7 @@ void CCNode::transform()
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-m_obAnchorPointInPoints.x), RENDER_IN_SUBPIXEL(-m_obAnchorPointInPoints.y), 0 );
     }
-
 }
-
 
 void CCNode::onEnter()
 {
@@ -938,7 +926,7 @@ void CCNode::onExit()
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
 
-    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);    
+    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
 }
 
 void CCNode::registerScriptHandler(int nHandler)
@@ -1111,14 +1099,13 @@ void CCNode::update(float fDelta)
 
 CCAffineTransform CCNode::nodeToParentTransform(void)
 {
-    if (m_bTransformDirty) 
+    if (m_bTransformDirty)
     {
-
         // Translate values
         float x = m_obPosition.x;
         float y = m_obPosition.y;
 
-        if (m_bIgnoreAnchorPointForPosition) 
+        if (m_bIgnoreAnchorPointForPosition)
         {
             x += m_obAnchorPointInPoints.x;
             y += m_obAnchorPointInPoints.y;
@@ -1140,7 +1127,6 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
 
         bool needsSkewMatrix = ( m_fSkewX || m_fSkewY );
 
-
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
@@ -1150,7 +1136,6 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
             y += sy * -m_obAnchorPointInPoints.x * m_fScaleX +  cx * -m_obAnchorPointInPoints.y * m_fScaleY;
         }
 
-
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
         m_sTransform = CCAffineTransformMake( cy * m_fScaleX,  sy * m_fScaleX,
@@ -1159,7 +1144,7 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
-        if (needsSkewMatrix) 
+        if (needsSkewMatrix)
         {
             CCAffineTransform skewMatrix = CCAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)),
                 tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1.0f,
@@ -1172,7 +1157,7 @@ CCAffineTransform CCNode::nodeToParentTransform(void)
                 m_sTransform = CCAffineTransformTranslate(m_sTransform, -m_obAnchorPointInPoints.x, -m_obAnchorPointInPoints.y);
             }
         }
-        
+
         if (m_bAdditionalTransformDirty)
         {
             m_sTransform = CCAffineTransformConcat(m_sTransform, m_sAdditionalTransform);
@@ -1277,6 +1262,20 @@ CCNodeRGBA::CCNodeRGBA()
 
 CCNodeRGBA::~CCNodeRGBA() {}
 
+CCNodeRGBA * CCNodeRGBA::create()
+{
+	CCNodeRGBA * pRet = new CCNodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
 bool CCNodeRGBA::init()
 {
     if (CCNode::init())
@@ -1310,7 +1309,7 @@ GLubyte CCNodeRGBA::getDisplayedOpacity(void)
 void CCNodeRGBA::setOpacity(GLubyte opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
-    
+
 	if (_cascadeOpacityEnabled)
     {
 		GLubyte parentOpacity = 255;
@@ -1345,7 +1344,7 @@ void CCRGBAProtocol::updateDisplayedOpacityChildren(CCNode* parent, GLubyte pare
 void CCNodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-	
+
     if (_cascadeOpacityEnabled)
     {
         CCRGBAProtocol::updateDisplayedOpacityChildren(this, _displayedOpacity);
@@ -1375,16 +1374,16 @@ const ccColor3B& CCNodeRGBA::getDisplayedColor()
 void CCNodeRGBA::setColor(const ccColor3B& color)
 {
 	_displayedColor = _realColor = color;
-	
+
 	if (_cascadeColorEnabled)
     {
 		ccColor3B parentColor = ccWHITE;
         CCRGBAProtocol *parent = dynamic_cast<CCRGBAProtocol*>(m_pParent);
 		if (parent && parent->isCascadeColorEnabled())
         {
-            parentColor = parent->getDisplayedColor(); 
+            parentColor = parent->getDisplayedColor();
         }
-        
+
         updateDisplayedColor(parentColor);
 	}
 }
@@ -1413,7 +1412,7 @@ void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    
+
     if (_cascadeColorEnabled)
     {
         CCRGBAProtocol::updateDisplayedColorChildren(this, _displayedColor);
