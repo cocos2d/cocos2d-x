@@ -207,9 +207,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     float x = 0.0f;
     float y = 0.0f;
     int nUnusedIndex = 0;
-    
-    _touchEvent.setValid(true);
-    _touchEvent._touches.clear();
+    TouchEvent touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -238,18 +236,18 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
             CCLOGINFO("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
             g_touchIdReorderMap.insert(std::make_pair(id, nUnusedIndex));
-            _touchEvent._touches.push_back(touch);
+            touchEvent._touches.push_back(touch);
         }
     }
 
-    if (_touchEvent._touches.size() == 0)
+    if (touchEvent._touches.size() == 0)
     {
         CCLOG("touchesBegan: size = 0");
         return;
     }
     
-    _touchEvent._eventCode = TouchEvent::EventCode::BEGAN;
-    EventDispatcher::getInstance()->dispatchEvent(&_touchEvent);
+    touchEvent._eventCode = TouchEvent::EventCode::BEGAN;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
@@ -257,9 +255,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
     int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    
-    _touchEvent.setValid(true);
-    _touchEvent._touches.clear();
+    TouchEvent touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -281,7 +277,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
 			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
 								(y - _viewPortRect.origin.y) / _scaleY);
             
-            _touchEvent._touches.push_back(touch);
+            touchEvent._touches.push_back(touch);
         }
         else
         {
@@ -291,14 +287,14 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
         }
     }
 
-    if (_touchEvent._touches.size() == 0)
+    if (touchEvent._touches.size() == 0)
     {
         CCLOG("touchesMoved: size = 0");
         return;
     }
     
-    _touchEvent._eventCode = TouchEvent::EventCode::MOVED;
-    EventDispatcher::getInstance()->dispatchEvent(&_touchEvent);
+    touchEvent._eventCode = TouchEvent::EventCode::MOVED;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
 }
 
 void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode, int num, int ids[], float xs[], float ys[])
@@ -306,9 +302,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode
     int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    
-    _touchEvent.setValid(true);
-    _touchEvent._touches.clear();
+    TouchEvent touchEvent;
     
     for (int i = 0; i < num; ++i)
     {
@@ -331,7 +325,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode
 			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
 								(y - _viewPortRect.origin.y) / _scaleY);
 
-            _touchEvent._touches.push_back(touch);
+            touchEvent._touches.push_back(touch);
             
             g_touches[iter->second] = NULL;
             removeUsedIndexBit(iter->second);
@@ -346,16 +340,16 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode
 
     }
 
-    if (_touchEvent._touches.size() == 0)
+    if (touchEvent._touches.size() == 0)
     {
         CCLOG("touchesEnded or touchesCancel: size = 0");
         return;
     }
     
-    _touchEvent._eventCode = eventCode;
-    EventDispatcher::getInstance()->dispatchEvent(&_touchEvent);
+    touchEvent._eventCode = eventCode;
+    EventDispatcher::getInstance()->dispatchEvent(&touchEvent);
     
-    for (auto& touch : _touchEvent._touches)
+    for (auto& touch : touchEvent._touches)
     {
         // delete the touch object.
         delete touch;
