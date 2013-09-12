@@ -51,6 +51,18 @@ typedef enum
     UI_TEX_TYPE_PLIST
 }TextureResType;
 
+typedef enum
+{
+    TOUCH_EVENT_BEGAN,
+    TOUCH_EVENT_MOVED,
+    TOUCH_EVENT_ENDED,
+    TOUCH_EVENT_CANCELED
+}TouchEventType;
+
+typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
+#define toucheventselector(_SELECTOR) (cocos2d::extension::SEL_TouchEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (CCObject::*SEL_PushEvent)(CCObject*);
 typedef void (CCObject::*SEL_MoveEvent)(CCObject*);
 typedef void (CCObject::*SEL_ReleaseEvent)(CCObject*);
@@ -59,8 +71,10 @@ typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
 #define coco_moveselector(_SELECTOR) (cocos2d::extension::SEL_MoveEvent)(&_SELECTOR)
 #define coco_releaseselector(_SELECTOR) (cocos2d::extension::SEL_ReleaseEvent)(&_SELECTOR)
 #define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
+/************************/
 
-class UILayer;
+
+//class UILayer;
 /*temp action*/
 class UIActionNode;
 
@@ -83,13 +97,6 @@ public:
     static UIWidget* create();
     
     /**
-     * Release texture resoures of widget.
-     * Release renderer.
-     * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
-     */
-    virtual void releaseResoures();
-    
-    /**
      * Sets whether the widget is enabled
      *
      * Highest control of widget.
@@ -97,7 +104,7 @@ public:
      *
      * @param enabled   true if the widget is enabled, widget may be touched and visible, false if the widget is disabled, widget cannot be touched and hidden.
      */
-    void setEnabled(bool enabled);
+    virtual void setEnabled(bool enabled);
     
     /**
      * Determines if the widget is enabled
@@ -242,35 +249,18 @@ public:
      *
      * @return the result of removing, succeeded or failed.
      */
-    virtual bool removeChild(UIWidget* child,bool cleanup);
-    
+    virtual bool removeChild(UIWidget* child);
+
     /**
      * Removes this widget itself from its parent widget.
      * If the widget orphan, then it will destroy itself.
-     * @param cleanup   true if all actions and callbacks on this widget should be removed, false otherwise.
      */
-    virtual void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParent();
     
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
-     *
-     * @param cleanup   true if all running actions on all children widgets should be cleanup, false otherwise.
      */
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
-    
-    /**
-     * Sets the UILayer object that is the manager of a widget tree.
-     *
-     * @param uiLayer   A UILayer that is the manager of a widget tree.
-     */
-    void setUILayer(UILayer* uiLayer);
-
-    /**
-     * Sets the UILayer object to all of widget's children.
-     *
-     * @param uiLayer   A UILayer that is the manager of a widget tree.
-     */
-    void updateChildrenUILayer(UILayer* uiLayer);
+    virtual void removeAllChildren();
     
     /**
      * Unschedules the "update" method.
@@ -322,6 +312,28 @@ public:
     CCNode* getRenderer();
     
     /**
+     * Add a CCNode for rendering.
+     *
+     * renderer is a CCNode, it's for drawing
+     *
+     * @param renderer     A render node
+     *
+     * @param zOrder    Z order for drawing priority. Please refer to CCNode::setZOrder(int)
+     */
+    void addRenderer(CCNode* renderer, int zOrder);
+    
+    /**
+     * Remove a CCNode from widget.
+     *
+     * renderer is a CCNode, it's for drawing
+     *
+     * @param renderer     A render node which needs to be removed
+     *
+     * @param cleanup   true if all running actions and callbacks on the render node will be cleanup, false otherwise.
+     */
+    void removeRenderer(CCNode* renderer, bool cleanup);
+    
+    /**
      * Sets the parent widget
      *
      * @param parent    A pointer to the parnet widget
@@ -337,25 +349,10 @@ public:
      */
     UIWidget* getParent();
     
-    /** 
-     * Sets the push event target/selector of the menu item
-     */
-    virtual void addPushDownEvent(CCObject* target,SEL_PushEvent selector);
-    
     /**
-     * Sets the move event target/selector of the menu item
+     * Sets the touch event target/selector of the menu item
      */
-    virtual void addMoveEvent(CCObject* target,SEL_MoveEvent selector);
-    
-    /**
-     * Sets the release event target/selector of the menu item
-     */
-    virtual void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector);
-    
-    /**
-     * Sets the cancel event target/selector of the menu item
-     */
-    virtual void addCancelEvent(CCObject* target,SEL_CancelEvent selector);
+    void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
     
     
     //cocos2d property
@@ -603,28 +600,18 @@ public:
     void didNotSelectSelf();
     
     /*
-     * Update method will be called automatically every frame if "setUpdateEnabled" is called, and the widget is "live"
-     */
-    virtual void update(float dt){};
-    
-    /*
      * Checks a point if in parent's area.
      *
      * @param point
      *
      * @return true if the point is in parent's area, flase otherwise.
      */
-    bool parentAreaContainPoint(const CCPoint &pt);
+    bool clippingParentAreaContainPoint(const CCPoint &pt);
     
     /*
      * Sends the touch event to widget's parent
      */
     virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
-    
-    /*
-     * Informs UILayer that the structure of widget tree has changed.
-     */
-    void structureChangedEvent();
     
     /*
      * Gets the touch began point of widget when widget is selected.
@@ -816,26 +803,97 @@ public:
      */
     virtual const CCSize& getContentSize() const;
     
-    /*******to be removed*******/
-    virtual void setTouchEnable(bool enabled, bool containChildren = false);
-	void setBright(bool bright, bool containChild);
-    void disable(bool containChildren = false);
-    void active(bool containChildren = false);
-    bool isActive();
-    CCRect getRect();
-    void setWidgetZOrder(int z){setZOrder(z);};
-    int getWidgetZOrder(){return getZOrder();};
-    void setWidgetTag(int tag){setTag(tag);};
-    int getWidgetTag(){return getTag();};
-    CCNode* getContainerNode(){return getRenderer();};
-    UIWidget* getWidgetParent(){return getParent();};
-    CCNode* getValidNode(){return getVirtualRenderer();};
-    float getRelativeLeftPos(){return getLeftInParent();};
-    float getRelativeBottomPos(){return getBottomInParent();};
-    float getRelativeRightPos(){return getRightInParent();};
-    float getRelativeTopPos(){return getTopInParent();};
-    void setWidgetParent(UIWidget* parent){setParent(parent);};
+    /*******Compatible*******/
+    CC_DEPRECATED_ATTRIBUTE void setTouchEnable(bool enabled, bool containChildren = false)
+    {
+        setTouchEnabled(enabled);
+        if (containChildren)
+        {
+            ccArray* childrenArray = getChildren()->data;
+            int length = childrenArray->num;
+            for (int i=0; i<length; ++i)
+            {
+                UIWidget* child = (UIWidget*)childrenArray->arr[i];
+                child->setTouchEnable(enabled,true);
+            }
+        }
+    };
+    CC_DEPRECATED_ATTRIBUTE void disable(bool containChildren = false)
+    {
+        setBright(false,containChildren);
+        setTouchEnable(false,containChildren);
+    };
+    CC_DEPRECATED_ATTRIBUTE void active(bool containChildren = false)
+    {
+        setBright(true,containChildren);
+        setTouchEnable(true,containChildren);
+    };
+    CC_DEPRECATED_ATTRIBUTE bool isActive()
+    {
+        return isBright();
+    };
+    CC_DEPRECATED_ATTRIBUTE void setBright(bool bright, bool containChild)
+    {
+        setBright(bright);
+        if (containChild)
+        {
+            ccArray* childrenArray = getChildren()->data;
+            int length = childrenArray->num;
+            for (int i=0; i<length; ++i)
+            {
+                UIWidget* child = (UIWidget*)childrenArray->arr[i];
+                child->setBright(bright,containChild);
+            }
+        }
+    };
+    CC_DEPRECATED_ATTRIBUTE CCRect getRect()
+    {
+        CCPoint wPos = getWorldPosition();
+        float width = m_size.width;
+        float height = m_size.height;
+        float offset_width = m_anchorPoint.x * width;
+        float offset_height = m_anchorPoint.y * height;
+        return CCRectMake(wPos.x - offset_width, wPos.y - offset_height, width, height);
+    };
+    CC_DEPRECATED_ATTRIBUTE CCNode* getValidNode(){return getVirtualRenderer();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetZOrder(int z){setZOrder(z);};
+    CC_DEPRECATED_ATTRIBUTE int getWidgetZOrder(){return getZOrder();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeLeftPos(){return getLeftInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeBottomPos(){return getBottomInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeRightPos(){return getRightInParent();};
+    CC_DEPRECATED_ATTRIBUTE float getRelativeTopPos(){return getTopInParent();};
+    CC_DEPRECATED_ATTRIBUTE CCNode* getContainerNode(){return getRenderer();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetParent(UIWidget* parent){setParent(parent);};
+    CC_DEPRECATED_ATTRIBUTE UIWidget* getWidgetParent(){return getParent();};
+    CC_DEPRECATED_ATTRIBUTE void setWidgetTag(int tag){setTag(tag);};
+    CC_DEPRECATED_ATTRIBUTE int getWidgetTag(){return getTag();};
+    CC_DEPRECATED_ATTRIBUTE void addCCNode(CCNode* node){addRenderer(node, 0);};
+    CC_DEPRECATED_ATTRIBUTE void removeCCNode(bool cleanup){removeCCNode(cleanup);};
+    CC_DEPRECATED_ATTRIBUTE void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
+    {
+        m_pPushListener = target;
+        m_pfnPushSelector = selector;
+    };
+    CC_DEPRECATED_ATTRIBUTE void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
+    {
+        m_pMoveListener = target;
+        m_pfnMoveSelector = selector;
+    };
+    CC_DEPRECATED_ATTRIBUTE void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
+    {
+        m_pReleaseListener = target;
+        m_pfnReleaseSelector = selector;
+    };
+    CC_DEPRECATED_ATTRIBUTE void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
+    {
+        m_pCancelListener = target;
+        m_pfnCancelSelector = selector;
+    };
+    CC_DEPRECATED_ATTRIBUTE bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
+    CC_DEPRECATED_ATTRIBUTE void removeFromParentAndCleanup(bool cleanup){removeFromParent();};
+    CC_DEPRECATED_ATTRIBUTE void removeAllChildrenAndCleanUp(bool cleanup){removeAllChildren();};
     /***************************/
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
@@ -864,6 +922,12 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
+    /**
+     * Release texture resoures of widget.
+     * Release renderer.
+     * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
+     */
+    virtual void releaseResoures();
 protected:
     bool m_bEnabled;            ///< Highest control of widget
     bool m_bVisible;            ///< is this widget visible
@@ -880,6 +944,28 @@ protected:
     CCPoint m_touchStartPos;    ///< touch began point
     CCPoint m_touchMovePos;     ///< touch moved point
     CCPoint m_touchEndPos;      ///< touch ended point
+    
+    CCObject*       m_pTouchEventListener;
+    SEL_TouchEvent    m_pfnTouchEventSelector;
+    
+
+    
+    int m_nWidgetTag;
+    std::string m_strName;
+    WidgetType m_WidgetType;
+	int m_nActionTag;
+    CCSize m_size;
+    CCSize m_customSize;
+    LayoutParameter* m_pLayoutParameter;
+    bool m_bIgnoreSize;
+    CCArray* m_children;
+    bool m_bAffectByClipping;
+    
+    CCScheduler* m_pScheduler;
+    
+    /*temp action*/
+    UIActionNode* m_pBindingAction;
+    /*Compatible*/
     CCObject*       m_pPushListener;
     SEL_PushEvent    m_pfnPushSelector;
     CCObject*       m_pMoveListener;
@@ -888,20 +974,7 @@ protected:
     SEL_ReleaseEvent    m_pfnReleaseSelector;
     CCObject*       m_pCancelListener;
     SEL_ReleaseEvent    m_pfnCancelSelector;
-    bool m_bOpacityDirty;
-    int m_nWidgetTag;
-    std::string m_strName;
-    WidgetType m_WidgetType;
-    UILayer* m_pUILayer;
-	int m_nActionTag;
-    CCSize m_size;
-    CCSize m_customSize;
-    LayoutParameter* m_pLayoutParameter;
-    bool m_bIgnoreSize;
-    CCArray* m_children;
-    bool m_bAffectByClipping;
-    /*temp action*/
-    UIActionNode* m_pBindingAction;
+    /************/
 };
 
 class GUIRenderer : public CCNodeRGBA
@@ -912,7 +985,7 @@ public:
     virtual void visit(void);
     static GUIRenderer* create();
     void setEnabled(bool enabled);
-    bool getEnabled() const;
+    bool isEnabled() const;
 protected:
     bool m_bEnabled;
 };

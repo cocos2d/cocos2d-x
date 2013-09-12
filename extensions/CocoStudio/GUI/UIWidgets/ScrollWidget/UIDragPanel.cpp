@@ -23,12 +23,16 @@
  ****************************************************************************/
 
 #include "UIDragPanel.h"
-
+#include "../../System/UILayer.h"
 
 NS_CC_EXT_BEGIN
 
 UIDragPanel::UIDragPanel()
 : m_pInnerContainer(NULL)
+/*
+, m_eDirection(DRAGPANEL_DIR_BOTH)
+, m_eMoveDirection(DRAGPANEL_MOVE_DIR_ANY)
+ */
 , m_bTouchPressed(false)
 , m_bTouchMoved(false)
 , m_bTouchReleased(false)
@@ -85,10 +89,10 @@ UIDragPanel::UIDragPanel()
 , m_fDuration(0.0f)
 , m_elapsed(0.0f)
 , m_bFirstTick(false)
-, m_positionDelta(CCPointZero)
-, m_startPosition(CCPointZero)
-, m_previousPosition(CCPointZero)
 , m_endPosition(CCPointZero)
+, m_startPosition(CCPointZero)
+, m_positionDelta(CCPointZero)
+, m_previousPosition(CCPointZero)
 {
     
 }
@@ -103,6 +107,7 @@ UIDragPanel* UIDragPanel::create()
     UIDragPanel* widget = new UIDragPanel();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -132,12 +137,28 @@ void UIDragPanel::initRenderer()
 
 void UIDragPanel::releaseResoures()
 {
-    Layout::releaseResoures();
-    m_pInnerContainer->structureChangedEvent();
-    m_pInnerContainer->releaseResoures();
-    m_pInnerContainer->setParent(NULL);
-    delete m_pInnerContainer;
-    m_pInnerContainer = NULL;
+    m_pPushListener = NULL;
+    m_pfnPushSelector = NULL;
+    m_pMoveListener = NULL;
+    m_pfnMoveSelector = NULL;
+    m_pReleaseListener = NULL;
+    m_pfnReleaseSelector = NULL;
+    m_pCancelListener = NULL;
+    m_pfnCancelSelector = NULL;
+    setUpdateEnabled(false);
+//    if (m_pUILayer)
+//    {
+//        m_pUILayer->getInputManager()->removeManageredWidget(this);
+//        setUILayer(NULL);
+//    }
+    removeAllChildren();
+    m_pRenderer->removeAllChildrenWithCleanup(true);
+    m_pRenderer->removeFromParentAndCleanup(true);
+    m_pRenderer->release();
+    
+    Layout::removeChild(m_pInnerContainer);
+    
+    m_children->release();
 }
 
 bool UIDragPanel::onTouchBegan(const CCPoint &touchPoint)
@@ -194,10 +215,10 @@ bool UIDragPanel::addChild(UIWidget *widget)
     return true;
 }
 
-bool UIDragPanel::removeChild(UIWidget *child, bool cleanup)
+bool UIDragPanel::removeChild(UIWidget *child)
 {
     bool value = false;
-    if (m_pInnerContainer->removeChild(child, cleanup))
+    if (m_pInnerContainer->removeChild(child))
     {
 //        updateWidthAndHeight();
         value = true;
@@ -206,9 +227,9 @@ bool UIDragPanel::removeChild(UIWidget *child, bool cleanup)
     return value;
 }
 
-void UIDragPanel::removeAllChildrenAndCleanUp(bool cleanup)
+void UIDragPanel::removeAllChildren()
 {
-    m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
+    m_pInnerContainer->removeAllChildren();
 }
 
 CCArray* UIDragPanel::getChildren()
@@ -299,11 +320,6 @@ void UIDragPanel::setInnerContainerOffset(const CCPoint &offset)
     {
         berthEvent();
     }
-}
-
-Layout* UIDragPanel::getInnerContainer()
-{
-	return m_pInnerContainer;
 }
 /**/
 

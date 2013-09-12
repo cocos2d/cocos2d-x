@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "UIScrollView.h"
+#include "../../System/UILayer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -46,7 +47,7 @@ m_fAutoScrollOriginalSpeed(0.0f),
 m_fAutoScrollAcceleration(600.0f),
 m_bBePressed(false),
 m_fSlidTime(0.0f),
-moveChildPoint(ccp(0.0f, 0.0f)),
+moveChildPoint(CCPointZero),
 m_fChildFocusCancelOffset(5.0f),
 m_pScrollToTopListener(NULL),
 m_pfnScrollToTopSelector(NULL),
@@ -71,6 +72,7 @@ UIScrollView* UIScrollView::create()
     UIScrollView* widget = new UIScrollView();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -79,12 +81,28 @@ UIScrollView* UIScrollView::create()
 
 void UIScrollView::releaseResoures()
 {
-    Layout::releaseResoures();
-    m_pInnerContainer->structureChangedEvent();
-    m_pInnerContainer->releaseResoures();
-    m_pInnerContainer->setParent(NULL);
-    delete m_pInnerContainer;
-    m_pInnerContainer = NULL;
+    m_pPushListener = NULL;
+    m_pfnPushSelector = NULL;
+    m_pMoveListener = NULL;
+    m_pfnMoveSelector = NULL;
+    m_pReleaseListener = NULL;
+    m_pfnReleaseSelector = NULL;
+    m_pCancelListener = NULL;
+    m_pfnCancelSelector = NULL;
+    setUpdateEnabled(false);
+//    if (m_pUILayer)
+//    {
+//        m_pUILayer->getInputManager()->removeManageredWidget(this);
+//        setUILayer(NULL);
+//    }
+    removeAllChildren();
+    m_pRenderer->removeAllChildrenWithCleanup(true);
+    m_pRenderer->removeFromParentAndCleanup(true);
+    m_pRenderer->release();
+    
+    Layout::removeChild(m_pInnerContainer);
+
+    m_children->release();
 }
 
 bool UIScrollView::init()
@@ -155,14 +173,14 @@ bool UIScrollView::addChild(UIWidget* widget)
     return m_pInnerContainer->addChild(widget);
 }
 
-void UIScrollView::removeAllChildrenAndCleanUp(bool cleanup)
+void UIScrollView::removeAllChildren()
 {
-    m_pInnerContainer->removeAllChildrenAndCleanUp(cleanup);
+    m_pInnerContainer->removeAllChildren();
 }
 
-bool UIScrollView::removeChild(UIWidget* child,bool cleanup)
+bool UIScrollView::removeChild(UIWidget* child)
 {
-	return m_pInnerContainer->removeChild(child, cleanup);
+	return m_pInnerContainer->removeChild(child);
 }
 
 CCArray* UIScrollView::getChildren()
@@ -588,6 +606,9 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             }
             if (offset > m_fChildFocusCancelOffset)
             {
+                
+                //temp mark
+//                if (isInScrollDegreeRange(sender))
                 {
                     sender->setFocused(false);
                     handleMoveLogic(touchPoint);

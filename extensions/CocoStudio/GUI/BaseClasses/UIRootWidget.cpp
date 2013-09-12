@@ -32,7 +32,6 @@ UIRootWidget::UIRootWidget()
 
 UIRootWidget::~UIRootWidget()
 {
-    
 }
 
 UIRootWidget* UIRootWidget::create()
@@ -40,6 +39,7 @@ UIRootWidget* UIRootWidget::create()
     UIRootWidget* widget = new UIRootWidget();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
