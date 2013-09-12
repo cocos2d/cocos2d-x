@@ -51,14 +51,6 @@ dispatched.
 class EventDispatcher
 {
 public:
-    struct EventListenerItem
-    {
-        int           id;
-        Node*         node;            // Weak reference.
-        int           fixedPriority;   // The higher the number, the higher the priority
-        std::shared_ptr<EventListener> listener;
-    };
-
     /** Gets the singleton of EventDispatcher */
     static EventDispatcher* getInstance();
 
@@ -71,7 +63,6 @@ public:
      *  @return The unique ID for the listener.
      */
     int registerEventListenerWithFixedPriority(std::shared_ptr<EventListener> listener, int fixedPriority);
-
 
     /** Unregisters a callback function by the unique ID. */
     void unregisterEventListener(int listenerId);
@@ -93,27 +84,42 @@ public:
      *  event dispatcher list.
      */
     void dispatchEvent(Event* event);
-
-    /** Gets event listener list by event type. */
-    std::list<EventListenerItem*>* getListeners(const std::string& eventType);
-
-private:
-    /** Constructor of EventDispatcher */
-    EventDispatcher();
-
-    void registerEventListenerWithItem(EventListenerItem* item);
-
-    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
-    void dispatchTouchEvent(TouchEvent* event);
+    
+    /** Removes listeners by event type */
+    void removeListenersForEventType(const std::string& eventType);
+    
+    /** Removes all listeners */
+    void removeAllListeners();
 
 public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
 private:
-
+    struct EventListenerItem
+    {
+        int           id;
+        Node*         node;            // Weak reference.
+        int           fixedPriority;   // The higher the number, the higher the priority
+        std::shared_ptr<EventListener> listener;
+    };
+    
+    /** Constructor of EventDispatcher */
+    EventDispatcher();
+    
+    void registerEventListenerWithItem(EventListenerItem* item);
+    
+    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
+    void dispatchTouchEvent(TouchEvent* event);
+    
+    /** Gets event listener list by event type. */
+    std::list<EventListenerItem*>* getListeners(const std::string& eventType);
+    
     /** Sorts all listeners by priority */
     void sortAllEventListenerItems();
+    
+    /** Remove listeners that have been unregistered. */
+    void removeUnregisteredListeners();
 
 private:
     /**

@@ -239,34 +239,20 @@ void EventDispatcher::dispatchEvent(Event* event)
 
                 (*listenerIter)->listener->onEvent(event);
 
-                if ((*listenerIter)->id == 0)
-                {
-                    delete (*listenerIter);
-                    listenerList->remove(*listenerIter);
-                }
-
                 if (event->isStopped())
                     break;
             }
-
-            if (listenerList->empty())
-            {
-                _listeners->erase(iter);
-                CC_SAFE_DELETE(listenerList);
-            }
-        }
-
-        if (_listeners->empty())
-        {
-            CC_SAFE_DELETE(_listeners);
         }
     }
-
+    
+    removeUnregisteredListeners();
 }
 
 void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
 {
     auto touchListeners = getListeners(TouchEvent::EVENT_TYPE);
+    if (touchListeners == nullptr)
+        return;
     
     std::vector<EventDispatcher::EventListenerItem*> oneByOnelisteners;
     oneByOnelisteners.reserve(touchListeners->size());
@@ -313,6 +299,10 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
             auto oneByOneIter = oneByOnelisteners.begin();
             for (; oneByOneIter != oneByOnelisteners.end(); ++oneByOneIter)
             {
+                // Skip if the listener was removed.
+                if ((*oneByOneIter)->id == 0)
+                    continue;
+                
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
@@ -363,6 +353,12 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                     }
                 }
                 
+                // If the event was stopped, return directly.
+                if (event->isStopped())
+                {
+                    removeUnregisteredListeners();
+                    return;
+                }
                 
                 CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(), "");
                 
@@ -425,12 +421,61 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                     CCASSERT(false, "The eventcode is invalid.");
                     break;
             }
+            
+            // If the event was stopped, return directly.
+            if (event->isStopped())
+            {
+                removeUnregisteredListeners();
+                return;
+            }
         }
+    }
+    
+    removeUnregisteredListeners();
+}
+
+void EventDispatcher::removeUnregisteredListeners()
+{
+    if (!_listeners)
+        return;
+    
+    auto listenerItemIter = _listeners->begin();
+    while ( listenerItemIter != _listeners->end())
+    {
+        auto removeIterBegin = std::remove_if(listenerItemIter->second->begin(), listenerItemIter->second->end(), [](const EventListenerItem* item){
+            return item->id == 0;
+        });
+        
+        for (auto iter = removeIterBegin; iter != listenerItemIter->second->end(); ++iter)
+        {
+            delete (*iter);
+        }
+        
+        listenerItemIter->second->erase(removeIterBegin, listenerItemIter->second->end());
+        
+        if (listenerItemIter->second->empty())
+        {
+            delete listenerItemIter->second;
+            listenerItemIter =  _listeners->erase(listenerItemIter);
+        }
+        else
+        {
+            ++listenerItemIter;
+        }
+    }
+    
+    if (_listeners->empty())
+    {
+        delete _listeners;
+        _listeners = nullptr;
     }
 }
 
 void EventDispatcher::sortAllEventListenerItems()
 {
+    if (_listeners == nullptr)
+        return;
+    
     for (auto listenerItemIter = _listeners->begin(); listenerItemIter != _listeners->end(); ++listenerItemIter)
     {
         // After sort: priority < 0, = 0, scene graph, > 0
@@ -464,13 +509,58 @@ void EventDispatcher::sortAllEventListenerItems()
 
 std::list<EventDispatcher::EventListenerItem*>* EventDispatcher::getListeners(const std::string& eventType)
 {
-    auto iter = _listeners->find(eventType);
-    if (iter != _listeners->end())
+    if (_listeners != nullptr)
     {
-        return iter->second;
+        auto iter = _listeners->find(eventType);
+        if (iter != _listeners->end())
+        {
+            return iter->second;
+        }
+    }
+    
+    return nullptr;
+}
+
+void EventDispatcher::removeListenersForEventType(const std::string& eventType)
+{
+    if (_listeners == nullptr)
+        return;
+    
+    auto listenerItemIter = _listeners->find(eventType);
+    if (listenerItemIter != _listeners->end())
+    {
+        for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
+        {
+            delete (*iter);
+        }
+        
+        listenerItemIter->second->clear();
+        
+        delete listenerItemIter->second;
+        
+        _listeners->erase(listenerItemIter);
+    }
+}
+
+void EventDispatcher::removeAllListeners()
+{
+    if (_listeners == nullptr)
+        return;
+    
+    for (auto listenerItemIter = _listeners->begin(); listenerItemIter != _listeners->end(); ++listenerItemIter)
+    {
+        for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
+        {
+            delete (*iter);
+        }
+        
+        listenerItemIter->second->clear();
+    
+        delete listenerItemIter->second;
     }
 
-    return nullptr;
+    delete _listeners;
+    _listeners = nullptr;
 }
 
 NS_CC_END
