@@ -166,8 +166,6 @@ protected:
     float  _scaleX;
     float  _scaleY;
     ResolutionPolicy _resolutionPolicy;
-    
-    TouchEvent _touchEvent;
 };
 
 // end of platform group
