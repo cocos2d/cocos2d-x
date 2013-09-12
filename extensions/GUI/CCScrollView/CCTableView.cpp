@@ -592,7 +592,7 @@ bool TableView::onTouchBegan(Touch *pTouch, Event *pEvent)
 
     bool touchResult = ScrollView::onTouchBegan(pTouch, pEvent);
 
-    if(_touches->count() == 1) {
+    if(_touches.size() == 1) {
         unsigned int        index;
         Point           point;
 

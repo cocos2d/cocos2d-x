@@ -304,9 +304,9 @@ protected:
      */
     float _touchLength;
     /**
-     * UITouch objects to detect multitouch
+     * Touch objects to detect multitouch
      */
-    Array* _touches;
+    std::vector<Touch*> _touches;
     /**
      * size to clip. Node boundingBox uses contentSize directly.
      * It's semantically different what it actually means to common scroll views.
