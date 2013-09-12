@@ -65,7 +65,7 @@ CCMotionStreak::~CCMotionStreak()
     CC_SAFE_FREE(m_pTexCoords);
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
@@ -78,7 +78,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
 {
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
@@ -91,7 +91,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     return NULL;
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, const char* path)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
 {
     CCAssert(path != NULL, "Invalid filename");
 
@@ -99,7 +99,7 @@ bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColo
     return initWithFade(fade, minSeg, stroke, color, texture);
 }
 
-bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, ccColor3B color, CCTexture2D* texture)
+bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
 {
     CCNode::setPosition(CCPointZero);
     setAnchorPoint(CCPointZero);
