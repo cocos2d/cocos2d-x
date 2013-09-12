@@ -54,7 +54,6 @@ ScrollView::ScrollView()
 , _bounceable(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
-, _touches(NULL)
 , _minScale(0.0f)
 , _maxScale(0.0f)
 {
