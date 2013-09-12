@@ -81,9 +81,9 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, CCDecorativeDisplay *decoDisp
             do
             {
 #if ENABLE_PHYSICS_BOX2D_DETECT
-                CC_BREAK_IF(!detector->getB2Body());
+                CC_BREAK_IF(!detector->getBody());
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-                CC_BREAK_IF(!detector->getCPBody());
+                CC_BREAK_IF(!detector->getBody());
 #endif
                 CCNode *node = decoDisplay->getDisplay();
                 CCAffineTransform displayTransform = node->nodeToParentTransform();
