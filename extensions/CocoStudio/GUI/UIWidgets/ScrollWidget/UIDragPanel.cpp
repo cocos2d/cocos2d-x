@@ -85,10 +85,10 @@ UIDragPanel::UIDragPanel()
 , m_fDuration(0.0f)
 , m_elapsed(0.0f)
 , m_bFirstTick(false)
-, m_endPosition(CCPointZero)
-, m_startPosition(CCPointZero)
 , m_positionDelta(CCPointZero)
+, m_startPosition(CCPointZero)
 , m_previousPosition(CCPointZero)
+, m_endPosition(CCPointZero)
 {
     
 }
