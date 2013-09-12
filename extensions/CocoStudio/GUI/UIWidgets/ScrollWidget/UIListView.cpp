@@ -83,6 +83,7 @@ UIListView* UIListView::create()
     UIListView* widget = new UIListView();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -129,11 +130,11 @@ bool UIListView::addChild(UIWidget* widget)
     return true;
 }
 
-void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
+void UIListView::removeAllChildren()
 {
     m_pUpdatePool->removeAllObjects();
     m_pChildPool->removeAllObjects();
-    Layout::removeAllChildrenAndCleanUp(cleanup);
+    Layout::removeAllChildren();
     
     /*
     m_pUpdatePool->clear();
@@ -141,11 +142,11 @@ void UIListView::removeAllChildrenAndCleanUp(bool cleanup)
      */
 }
 
-bool UIListView::removeChild(UIWidget* child,bool cleanup)
+bool UIListView::removeChild(UIWidget* child)
 {
     bool value = false;
     
-    if (Layout::removeChild(child, cleanup))
+    if (Layout::removeChild(child))
     {
         value = true;
         resetProperty();
@@ -416,6 +417,7 @@ void UIListView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             }
             if (offset > m_fChildFocusCancelOffset)
             {
+//                if (isInScrollDegreeRange(sender))
                 {
                     sender->setFocused(false);
                     handleMoveLogic(touchPoint);
@@ -1266,8 +1268,8 @@ void UIListView::setLoopPosition()
                     
                     if (m_overBottomArray->count() == childrenCount)
                     {
-                        int count = childrenCount;
-                        for (int i = 0; i < count; ++i)
+                        unsigned int count = childrenCount;
+                        for (unsigned int i = 0; i < count; ++i)
                         {
                             UIWidget* child = dynamic_cast<UIWidget*>(m_overBottomArray->objectAtIndex(i));
                             

@@ -29,10 +29,22 @@
 
 NS_CC_EXT_BEGIN
 
+typedef enum
+{
+    CHECKBOX_STATE_EVENT_SELECTED,
+    CHECKBOX_STATE_EVENT_UNSELECTED
+}CheckBoxEventType;
+
+typedef void (CCObject::*SEL_SelectedStateEvent)(CCObject*,CheckBoxEventType);
+#define checkboxselectedeventselector(_SELECTOR) (cocos2d::extension::SEL_SelectedStateEvent)(&_SELECTOR)
+
+/*******Compatible*******/
 typedef void (CCObject::*SEL_SelectEvent)(CCObject*);
 typedef void (CCObject::*SEL_UnSelectEvent)(CCObject*);
 #define coco_selectselector(_SELECTOR) (cocos2d::extension::SEL_SelectEvent)(&_SELECTOR)
 #define coco_unselectselector(_SELECTOR) (cocos2d::extension::SEL_UnSelectEvent)(&_SELECTOR)
+/************************/
+
 class UICheckBox : public UIWidget
 {
 public:
@@ -128,11 +140,8 @@ public:
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
     
-    //add a call back function would called when checkbox is selected.
-    virtual void addSelectEvent(CCObject* target,SEL_SelectEvent selector);
-    
-    //add a call back function would called when checkbox is unselected.
-    virtual void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector);
+    //add a call back function would called when checkbox is selected or unselected.
+    void addSelectedStateEvent(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -154,15 +163,26 @@ public:
     
     //override "getVirtualRenderer" method of widget.
     virtual CCNode* getVirtualRenderer();
-   
+    
     /*Compatible*/
-    void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
-    void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
-    void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
-    void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
-    void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
-    void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
+    CC_DEPRECATED_ATTRIBUTE void addSelectEvent(CCObject* target,SEL_SelectEvent selector)
+    {
+        m_pSelectListener = target;
+        m_pfnSelectSelector = selector;
+    };
+    CC_DEPRECATED_ATTRIBUTE void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector)
+    {
+        m_pUnSelectListener = target;
+        m_pfnUnSelectSelector = selector;
+    };
     /************/
+
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -184,15 +204,22 @@ protected:
     CCSprite* m_pBackGroundBoxDisabledRenderer;
     CCSprite* m_pFrontCrossDisabledRenderer;
     bool m_bIsSelected;
-    CCObject*       m_pSelectListener;
-    SEL_SelectEvent    m_pfnSelectSelector;
-    CCObject*       m_pUnSelectListener;
-    SEL_UnSelectEvent    m_pfnUnSelectSelector;
+
+    CCObject*       m_pSelectedStateEventListener;
+    SEL_SelectedStateEvent    m_pfnSelectedStateEventSelector;
+    
     TextureResType m_eBackGroundTexType;
     TextureResType m_eBackGroundSelectedTexType;
     TextureResType m_eFrontCrossTexType;
     TextureResType m_eBackGroundDisabledTexType;
     TextureResType m_eFrontCrossDisabledTexType;
+    
+    /*Compatible*/
+    CCObject*       m_pSelectListener;
+    SEL_SelectEvent    m_pfnSelectSelector;
+    CCObject*       m_pUnSelectListener;
+    SEL_UnSelectEvent    m_pfnUnSelectSelector;
+    /************/
 };
 
 NS_CC_EXT_END

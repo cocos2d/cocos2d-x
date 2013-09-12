@@ -137,11 +137,11 @@ public:
     /**
      *  remove widget child override
      */
-    virtual bool removeChild(UIWidget* child,bool cleanup);
+    virtual bool removeChild(UIWidget* child);
     /**
      *  remove all widget children override
      */
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     /**
      *  get widget children of inner container
      */
@@ -162,12 +162,6 @@ public:
      */
     void setInnerContainerOffset(const CCPoint& offset, bool animated);
     /**/
-
-	/**
-     *  get inner container render
-     */
-	Layout* getInnerContainer();
-	/**/
     
     // auto move
     /**
@@ -307,9 +301,17 @@ protected:
     void moveToInit();
     void moveToUpdate(float t);
     virtual void onSizeChanged();
+    /*compatible*/
+    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     Layout* m_pInnerContainer;
+    
+    /*
+    DRAGPANEL_DIR m_eDirection;
+    DRAGPANEL_MOVE_DIR m_eMoveDirection;
+     */
     
     bool m_bTouchPressed;
     bool m_bTouchMoved;
@@ -375,6 +377,8 @@ protected:
     SEL_DragPanelBounceToRightEvent m_pfnBounceToRightSelector;
     CCObject* m_pBounceToBottomListener;
     SEL_DragPanelBounceToBottomEvent m_pfnBounceToBottomSelector;        
+    
+    
     
     float m_bRunningAction;
     int m_nActionType;

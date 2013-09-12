@@ -48,6 +48,27 @@ m_pWidgetParent(NULL),
 m_eBrightStyle(BRIGHT_NONE),
 m_bUpdateEnabled(false),
 m_pRenderer(NULL),
+m_touchStartPos(CCPointZero),
+m_touchMovePos(CCPointZero),
+m_touchEndPos(CCPointZero),
+m_pfnTouchEventSelector(NULL),
+m_pTouchEventListener(NULL),
+m_nWidgetTag(-1),
+m_strName("default"),
+m_WidgetType(WidgetTypeWidget),
+m_nActionTag(0),
+m_size(CCSizeZero),
+m_customSize(CCSizeZero),
+m_pLayoutParameter(NULL),
+m_bIgnoreSize(false),
+m_children(NULL),
+m_bAffectByClipping(false),
+
+/*temp action*/
+m_pBindingAction(NULL),
+m_pScheduler(NULL),
+
+/*Compatible*/
 m_pPushListener(NULL),
 m_pfnPushSelector(NULL),
 m_pMoveListener(NULL),
@@ -55,27 +76,18 @@ m_pfnMoveSelector(NULL),
 m_pReleaseListener(NULL),
 m_pfnReleaseSelector(NULL),
 m_pCancelListener(NULL),
-m_pfnCancelSelector(NULL),
-m_nWidgetTag(-1),
-m_strName("default"),
-m_WidgetType(WidgetTypeWidget),
-m_pUILayer(NULL),
-m_nActionTag(0),
-m_size(CCSizeZero),
-m_customSize(CCSizeZero),
-m_pLayoutParameter(NULL),
-
-m_bIgnoreSize(false),
-m_children(NULL),
-m_bAffectByClipping(false),
-/*temp action*/
-m_pBindingAction(NULL)
+m_pfnCancelSelector(NULL)
+/************/
 {
+    
 }
 
 UIWidget::~UIWidget()
 {
+    releaseResoures();
+    setParent(NULL);
     CC_SAFE_RELEASE_NULL(m_pLayoutParameter);
+    CC_SAFE_RELEASE(m_pScheduler);
 }
 
 UIWidget* UIWidget::create()
@@ -83,6 +95,7 @@ UIWidget* UIWidget::create()
     UIWidget* widget = new UIWidget();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -104,6 +117,8 @@ bool UIWidget::init()
     }
     setBright(true);
     ignoreContentAdaptWithSize(true);
+    m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+    CC_SAFE_RETAIN(m_pScheduler);
     return true;
 }
 
@@ -118,12 +133,8 @@ void UIWidget::releaseResoures()
     m_pCancelListener = NULL;
     m_pfnCancelSelector = NULL;
     setUpdateEnabled(false);
-    if (m_pUILayer)
-    {
-        m_pUILayer->getInputManager()->removeManageredWidget(this);
-        setUILayer(NULL);
-    }
-    removeAllChildrenAndCleanUp(true);
+    removeAllChildren();
+    m_children->release();
     m_pRenderer->removeAllChildrenWithCleanup(true);
     m_pRenderer->removeFromParentAndCleanup(true);
     m_pRenderer->release();
@@ -175,84 +186,51 @@ bool UIWidget::addChild(UIWidget *child)
     }
     child->getRenderer()->setZOrder(child->getZOrder());
     m_pRenderer->addChild(child->getRenderer());
-    
-    if (m_pUILayer)
-    {
-        int childrenCount = m_children->data->num;
-        ccArray* arrayChildren = m_children->data;
-        for (int i=0; i<childrenCount; i++)
-        {
-            UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-            child->updateChildrenUILayer(m_pUILayer);
-        }
-    }
-    structureChangedEvent();
     return true;
 }
 
-bool UIWidget::removeChild(UIWidget *child, bool cleanup)
+bool UIWidget::removeChild(UIWidget *child)
 {
     if (!child)
     {
         return false;
     }
-    if (cleanup)
+    if (m_children->containsObject(child))
     {
-        if (m_children->containsObject(child))
-        {
-            m_children->removeObject(child);
-            child->structureChangedEvent();
-            child->releaseResoures();
-            child->setParent(NULL);
-            delete child;
-        }
+        child->disableUpdate();
+        child->setParent(NULL);
+        m_pRenderer->removeChild(child->getRenderer());
+        m_children->removeObject(child);
+        return true;
     }
-    else
-    {
-        if (m_children->containsObject(child))
-        {
-            child->structureChangedEvent();
-            child->disableUpdate();
-            child->updateChildrenUILayer(NULL);
-            m_pRenderer->removeChild(child->getRenderer(), false);
-            m_children->removeObject(child);
-            child->setParent(NULL);
-        }
-    }
-    return true;
+    return false;
 }
 
-void UIWidget::removeFromParentAndCleanup(bool cleanup)
+void UIWidget::removeFromParent()
 {
     if (m_pWidgetParent)
     {
-        m_pWidgetParent->removeChild(this, cleanup);
-    }
-    else
-    {
-        structureChangedEvent();
-        releaseResoures();
-        m_pWidgetParent = NULL;
-        delete this;
+        m_pWidgetParent->removeChild(this);
     }
 }
 
-void UIWidget::removeAllChildrenAndCleanUp(bool cleanup)
+void UIWidget::removeAllChildren()
 {
-    int times = m_children->data->num;
-    for (int i=0;i<times;i++)
+    if (!m_children || m_children->count() <= 0)
     {
-        UIWidget* child = (UIWidget*)(m_children->lastObject());
-        m_children->removeObject(child);
-        child->structureChangedEvent();
-        child->releaseResoures();
-        delete child;
-        child = NULL;
+        return;
+    }
+    int times = m_children->data->num;
+    for (int i=0; i<times; ++i)
+    {
+        UIWidget* lastChild = (UIWidget*)(m_children->lastObject());
+        removeChild(lastChild);
     }
 }
 
 void UIWidget::reorderChild(UIWidget* child)
 {
+    CC_SAFE_RETAIN(child);
     m_children->removeObject(child);
     int childrenCount = m_children->data->num;
     if (childrenCount <= 0)
@@ -287,27 +265,14 @@ void UIWidget::reorderChild(UIWidget* child)
             m_children->insertObject(child,0);
         }
     }
-    structureChangedEvent();
-}
-
-void UIWidget::updateChildrenUILayer(UILayer* uiLayer)
-{
-    setUILayer(uiLayer);
-    setUpdateEnabled(isUpdateEnabled());
-    int childrenCount = m_children->data->num;
-    ccArray* arrayChildren = m_children->data;
-    for (int i=0; i<childrenCount; i++)
-    {
-        UIWidget* child = (UIWidget*)(arrayChildren->arr[i]);
-        child->updateChildrenUILayer(m_pUILayer);
-    }
+    CC_SAFE_RELEASE(child);
 }
 
 void UIWidget::disableUpdate()
 {
-    if (m_pUILayer)
+    if (m_pScheduler)
     {
-        m_pUILayer->removeUpdateEnableWidget(this);
+        m_pScheduler->unscheduleUpdateForTarget(this);
     }
     int childrenCount = m_children->data->num;
     ccArray* arrayChildren = m_children->data;
@@ -321,7 +286,15 @@ void UIWidget::disableUpdate()
 void UIWidget::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
-    DYNAMIC_CAST_CCNODERGBA->setEnabled(enabled);
+    GUIRenderer* renderer = DYNAMIC_CAST_CCNODERGBA;
+    if (renderer)
+    {
+        renderer->setEnabled(enabled);
+    }
+    else
+    {
+        dynamic_cast<RectClippingNode*>(m_pRenderer)->setEnabled(enabled);
+    }
     ccArray* arrayChildren = m_children->data;
     int childrenCount = arrayChildren->num;
     for (int i = 0; i < childrenCount; i++)
@@ -416,19 +389,6 @@ const CCSize& UIWidget::getContentSize() const
     return m_size;
 }
 
-void UIWidget::setUILayer(UILayer *uiLayer)
-{
-    m_pUILayer = uiLayer;
-}
-
-void UIWidget::structureChangedEvent()
-{
-    if (m_pUILayer)
-    {
-        m_pUILayer->getInputManager()->uiSceneHasChanged();
-    }
-}
-
 void UIWidget::setZOrder(int z)
 {
     m_nWidgetZOrder = z;
@@ -447,7 +407,6 @@ int UIWidget::getZOrder()
 void UIWidget::setTouchEnabled(bool enable)
 {
     m_bTouchEnabled = enable;
-    structureChangedEvent();
 }
 
 bool UIWidget::isTouchEnabled() const
@@ -460,16 +419,16 @@ void UIWidget::setUpdateEnabled(bool enable)
     m_bUpdateEnabled = enable;
     if (enable)
     {
-        if (m_pUILayer)
+        if (m_pScheduler)
         {
-            m_pUILayer->addUpdateEnableWidget(this);
+            m_pScheduler->scheduleUpdateForTarget(this, 0, false);
         }
     }
     else
     {
-        if (m_pUILayer)
+        if (m_pScheduler)
         {
-            m_pUILayer->removeUpdateEnableWidget(this);
+            m_pScheduler->unscheduleUpdateForTarget(this);
         }
     }
 }
@@ -610,6 +569,7 @@ void UIWidget::onTouchEnded(const CCPoint &touchPoint)
 void UIWidget::onTouchCancelled(const CCPoint &touchPoint)
 {
     setFocused(false);
+    cancelUpEvent();
 }
 
 void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)
@@ -619,33 +579,61 @@ void UIWidget::onTouchLongClicked(const CCPoint &touchPoint)
 
 void UIWidget::pushDownEvent()
 {
+    /*compatible*/
     if (m_pPushListener && m_pfnPushSelector)
     {
         (m_pPushListener->*m_pfnPushSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_BEGAN);
     }
 }
 
 void UIWidget::moveEvent()
 {
+    /*compatible*/
     if (m_pMoveListener && m_pfnMoveSelector)
     {
         (m_pMoveListener->*m_pfnMoveSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_MOVED);
     }
 }
 
 void UIWidget::releaseUpEvent()
 {
+    /*compatible*/
     if (m_pReleaseListener && m_pfnReleaseSelector)
     {
         (m_pReleaseListener->*m_pfnReleaseSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
 }
 
 void UIWidget::cancelUpEvent()
 {
+    /*compatible*/
     if (m_pCancelListener && m_pfnCancelSelector)
     {
         (m_pCancelListener->*m_pfnCancelSelector)(this);
+    }
+    /************/
+    
+    if (m_pTouchEventListener && m_pfnTouchEventSelector)
+    {
+        (m_pTouchEventListener->*m_pfnTouchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
 }
 
@@ -654,33 +642,25 @@ void UIWidget::longClickEvent()
     
 }
 
-void UIWidget::addPushDownEvent(CCObject*target, SEL_PushEvent selector)
+void UIWidget::addTouchEventListener(cocos2d::CCObject *target, SEL_TouchEvent selector)
 {
-    m_pPushListener = target;
-    m_pfnPushSelector = selector;
-}
-
-void UIWidget::addMoveEvent(CCObject* target,SEL_MoveEvent selector)
-{
-    m_pMoveListener = target;
-    m_pfnMoveSelector = selector;
-}
-
-void UIWidget::addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
-{
-    m_pReleaseListener = target;
-    m_pfnReleaseSelector = selector;
-}
-
-void UIWidget::addCancelEvent(CCObject *target, SEL_CancelEvent selector)
-{
-    m_pCancelListener = target;
-    m_pfnCancelSelector = selector;
+    m_pTouchEventListener = target;
+    m_pfnTouchEventSelector = selector;
 }
 
 CCNode* UIWidget::getRenderer()
 {
     return m_pRenderer;
+}
+
+void UIWidget::addRenderer(CCNode* renderer, int zOrder)
+{
+    m_pRenderer->addChild(renderer, zOrder);
+}
+
+void UIWidget::removeRenderer(CCNode* renderer, bool cleanup)
+{
+    m_pRenderer->removeChild(renderer,cleanup);
 }
 
 bool UIWidget::hitTest(const CCPoint &pt)
@@ -694,11 +674,11 @@ bool UIWidget::hitTest(const CCPoint &pt)
     return false;
 }
 
-bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
+bool UIWidget::clippingParentAreaContainPoint(const CCPoint &pt)
 {
-
     m_bAffectByClipping = false;
     UIWidget* parent = getParent();
+    UIWidget* clippingParent = NULL;
     while (parent)
     {
         Layout* layoutParent = dynamic_cast<Layout*>(parent);
@@ -707,6 +687,7 @@ bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
             if (layoutParent->isClippingEnabled())
             {
                 m_bAffectByClipping = true;
+                clippingParent = layoutParent;
                 break;
             }
         }
@@ -719,23 +700,23 @@ bool UIWidget::parentAreaContainPoint(const CCPoint &pt)
     }
     
     
-    if (m_pWidgetParent)
+    if (clippingParent)
     {
         bool bRet = false;
-        if (m_pWidgetParent->hitTest(pt))
+        if (clippingParent->hitTest(pt))
         {
             bRet = true;
         }
         if (bRet)
         {
-            return m_pWidgetParent->parentAreaContainPoint(pt);
+            return clippingParent->clippingParentAreaContainPoint(pt);
         }
         return false;
     }
     return true;
 }
 
-void UIWidget::checkChildInfo(int handleState, UIWidget *sender,const CCPoint &touchPoint)
+void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const CCPoint &touchPoint)
 {
     if (m_pWidgetParent)
     {
@@ -1079,66 +1060,6 @@ LayoutParameter* UIWidget::getLayoutParameter()
     return m_pLayoutParameter;
 }
 
-/*******to be removed*******/
-
-void UIWidget::setTouchEnable(bool enabled, bool containChildren)
-{
-    setTouchEnabled(enabled);
-    if (containChildren)
-    {
-        ccArray* childrenArray = getChildren()->data;
-        int length = childrenArray->num;
-        for (int i=0; i<length; ++i)
-        {
-            UIWidget* child = (UIWidget*)childrenArray->arr[i];
-            child->setTouchEnable(enabled,true);
-        }
-    }
-}
-
-void UIWidget::disable(bool containChildren)
-{
-    setBright(false,containChildren);
-    setTouchEnable(false,containChildren);
-}
-
-void UIWidget::active(bool containChildren)
-{
-    setBright(true,containChildren);
-    setTouchEnable(true,containChildren);
-}
-
-bool UIWidget::isActive()
-{
-    return isBright();
-}
-
-void UIWidget::setBright(bool bright, bool containChild)
-{
-    setBright(bright);
-    if (containChild)
-    {
-        ccArray* childrenArray = getChildren()->data;
-        int length = childrenArray->num;
-        for (int i=0; i<length; ++i)
-        {
-            UIWidget* child = (UIWidget*)childrenArray->arr[i];
-            child->setBright(bright,containChild);
-        }
-    }
-}
-
-CCRect UIWidget::getRect()
-{
-    CCPoint wPos = getWorldPosition();
-    float width = m_size.width;
-    float height = m_size.height;
-    float offset_width = m_anchorPoint.x * width;
-    float offset_height = m_anchorPoint.y * height;
-    return CCRectMake(wPos.x - offset_width, wPos.y - offset_height, width, height);
-}
-
-/***************************/
 /*temp action*/
 void UIWidget::setActionTag(int tag)
 {
@@ -1185,7 +1106,7 @@ void GUIRenderer::setEnabled(bool enabled)
     m_bEnabled = enabled;
 }
 
-bool GUIRenderer::getEnabled() const
+bool GUIRenderer::isEnabled() const
 {
     return m_bEnabled;
 }

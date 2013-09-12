@@ -172,10 +172,18 @@ public:
      */
     virtual bool isClippingEnabled();
     
+    /**
+     * Gets the content size of widget.
+     *
+     * Content size is widget's texture size.
+     */
+    virtual const CCSize& getContentSize() const;
+    
     /*Compatible*/
-    void setBackGroundImageScale9Enable(bool is){setBackGroundImageScale9Enabled(is);};
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    CC_DEPRECATED_ATTRIBUTE void setBackGroundImageScale9Enable(bool is){setBackGroundImageScale9Enabled(is);};
+    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
+
 protected:
     //override "init" method of widget.
     virtual bool init();
@@ -218,8 +226,11 @@ public:
     void setClippingSize(const CCSize& size);
     void setClippingEnabled(bool enabled);
     virtual void visit();
+    void setEnabled(bool enabled);
+    bool isEnabled() const;
 protected:
     CCDrawNode* m_pInnerStencil;
+    bool m_bEnabled;
 private:
     RectClippingNode();
     CCPoint rect[4];

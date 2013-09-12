@@ -271,24 +271,23 @@ bool UICCTextField::getDeleteBackward()
 
     
 UITextField::UITextField():
-m_fTouchWidth(0.0),
-m_fTouchHeight(0.0),
+m_fTouchWidth(0.0f),
+m_fTouchHeight(0.0f),
 m_bUseTouchArea(false),
-m_pAttachWithIMEListener(NULL),
-m_pDetachWithIMEListener(NULL),
-m_pInsertTextListener(NULL),
-m_pDeleteBackwardListener(NULL),
 m_pfnAttachWithIMESelector(NULL),
 m_pfnDetachWithIMESelector(NULL),
 m_pfnInsertTextSelector(NULL),
 m_pfnDeleteBackwardSelector(NULL),
+m_pAttachWithIMEListener(NULL),
+m_pDetachWithIMEListener(NULL),
+m_pInsertTextListener(NULL),
+m_pDeleteBackwardListener(NULL),
 m_pTextFieldRenderer(NULL)
 {
 }
 
 UITextField::~UITextField()
 {
-    
 }
 
 UITextField* UITextField::create()
@@ -296,6 +295,7 @@ UITextField* UITextField::create()
     UITextField* widget = new UITextField();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -334,7 +334,7 @@ void UITextField::setText(const char* text)
 	}
     std::string strText(text);
     m_pTextFieldRenderer->setString(strText.c_str());
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 //void UITextField::setSize(const CCSize &size)
@@ -345,19 +345,19 @@ void UITextField::setText(const char* text)
 void UITextField::setPlaceHolder(const char *value)
 {
     m_pTextFieldRenderer->setPlaceHolder(value);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontSize(int size)
 {
     m_pTextFieldRenderer->setFontSize(size);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::setFontName(const char *name)
 {
     m_pTextFieldRenderer->setFontName(name);
-	textfieldRendererScaleChangedWithSize();
+    textfieldRendererScaleChangedWithSize();
 }
 
 void UITextField::didNotSelectSelf()
