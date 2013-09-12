@@ -117,10 +117,6 @@ public:
     
     virtual void setTouchMode(Touch::DispatchMode mode);
     virtual Touch::DispatchMode getTouchMode() const;
-    
-    /** priority of the touch events. Default is 0 */
-    CC_DEPRECATED_ATTRIBUTE virtual void setTouchPriority(int priority) final;
-    CC_DEPRECATED_ATTRIBUTE virtual int getTouchPriority() const final;
 
     /** swallowsTouches of the touch events. Default is true */
     virtual void setSwallowsTouches(bool swallowsTouches);
