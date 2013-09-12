@@ -611,7 +611,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         return false;
     }
 
-    if (std::find(_touches.begin(), _touches.end(), touch) != _touches.end())
+    if (std::find(_touches.begin(), _touches.end(), touch) == _touches.end())
     {
         _touches.push_back(touch);
     }
