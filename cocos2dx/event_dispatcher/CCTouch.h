@@ -35,7 +35,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Touch : public Object
+class CC_DLL Touch
 {
 public:
     /** how the touches are dispathced */
