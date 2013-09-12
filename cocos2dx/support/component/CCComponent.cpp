@@ -87,7 +87,7 @@ void Component::setNode(Node *pNode)
      CC_UNUSED_PARAM(pNode);
 }
 
-cocos2d::Node* Component::getNode() const
+Node* Component::getNode() const
 {
     return NULL;
 }
