@@ -4,6 +4,7 @@
 
 #include "../UILabel.h"
 #include "../../Layouts/Layout.h"
+#include "../UIButton.h"
 
 NS_CC_EXT_BEGIN
 

@@ -180,8 +180,11 @@ public:
     virtual const CCSize& getContentSize() const;
     
     /*Compatible*/
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundImageScale9Enable(bool is){setBackGroundImageScale9Enabled(is);};
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /**
+     * These methods will be removed
+     */
+    void setBackGroundImageScale9Enable(bool is){setBackGroundImageScale9Enabled(is);};
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
 
 protected:

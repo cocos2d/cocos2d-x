@@ -804,7 +804,10 @@ public:
     virtual const CCSize& getContentSize() const;
     
     /*******Compatible*******/
-    CC_DEPRECATED_ATTRIBUTE void setTouchEnable(bool enabled, bool containChildren = false)
+    /**
+     * These methods will be removed
+     */
+    void setTouchEnable(bool enabled, bool containChildren = false)
     {
         setTouchEnabled(enabled);
         if (containChildren)
@@ -818,21 +821,21 @@ public:
             }
         }
     };
-    CC_DEPRECATED_ATTRIBUTE void disable(bool containChildren = false)
+    void disable(bool containChildren = false)
     {
         setBright(false,containChildren);
         setTouchEnable(false,containChildren);
     };
-    CC_DEPRECATED_ATTRIBUTE void active(bool containChildren = false)
+    void active(bool containChildren = false)
     {
         setBright(true,containChildren);
         setTouchEnable(true,containChildren);
     };
-    CC_DEPRECATED_ATTRIBUTE bool isActive()
+    bool isActive()
     {
         return isBright();
     };
-    CC_DEPRECATED_ATTRIBUTE void setBright(bool bright, bool containChild)
+    void setBright(bool bright, bool containChild)
     {
         setBright(bright);
         if (containChild)
@@ -846,7 +849,7 @@ public:
             }
         }
     };
-    CC_DEPRECATED_ATTRIBUTE CCRect getRect()
+    CCRect getRect()
     {
         CCPoint wPos = getWorldPosition();
         float width = m_size.width;
@@ -855,43 +858,43 @@ public:
         float offset_height = m_anchorPoint.y * height;
         return CCRectMake(wPos.x - offset_width, wPos.y - offset_height, width, height);
     };
-    CC_DEPRECATED_ATTRIBUTE CCNode* getValidNode(){return getVirtualRenderer();};
-    CC_DEPRECATED_ATTRIBUTE void setWidgetZOrder(int z){setZOrder(z);};
-    CC_DEPRECATED_ATTRIBUTE int getWidgetZOrder(){return getZOrder();};
-    CC_DEPRECATED_ATTRIBUTE float getRelativeLeftPos(){return getLeftInParent();};
-    CC_DEPRECATED_ATTRIBUTE float getRelativeBottomPos(){return getBottomInParent();};
-    CC_DEPRECATED_ATTRIBUTE float getRelativeRightPos(){return getRightInParent();};
-    CC_DEPRECATED_ATTRIBUTE float getRelativeTopPos(){return getTopInParent();};
-    CC_DEPRECATED_ATTRIBUTE CCNode* getContainerNode(){return getRenderer();};
-    CC_DEPRECATED_ATTRIBUTE void setWidgetParent(UIWidget* parent){setParent(parent);};
-    CC_DEPRECATED_ATTRIBUTE UIWidget* getWidgetParent(){return getParent();};
-    CC_DEPRECATED_ATTRIBUTE void setWidgetTag(int tag){setTag(tag);};
-    CC_DEPRECATED_ATTRIBUTE int getWidgetTag(){return getTag();};
-    CC_DEPRECATED_ATTRIBUTE void addCCNode(CCNode* node){addRenderer(node, 0);};
-    CC_DEPRECATED_ATTRIBUTE void removeCCNode(bool cleanup){removeCCNode(cleanup);};
-    CC_DEPRECATED_ATTRIBUTE void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
+    CCNode* getValidNode(){return getVirtualRenderer();};
+    void setWidgetZOrder(int z){setZOrder(z);};
+    int getWidgetZOrder(){return getZOrder();};
+    float getRelativeLeftPos(){return getLeftInParent();};
+    float getRelativeBottomPos(){return getBottomInParent();};
+    float getRelativeRightPos(){return getRightInParent();};
+    float getRelativeTopPos(){return getTopInParent();};
+    CCNode* getContainerNode(){return getRenderer();};
+    void setWidgetParent(UIWidget* parent){setParent(parent);};
+    UIWidget* getWidgetParent(){return getParent();};
+    void setWidgetTag(int tag){setTag(tag);};
+    int getWidgetTag(){return getTag();};
+    void addCCNode(CCNode* node){addRenderer(node, 0);};
+    void removeCCNode(bool cleanup){removeCCNode(cleanup);};
+    void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
     {
         m_pPushListener = target;
         m_pfnPushSelector = selector;
     };
-    CC_DEPRECATED_ATTRIBUTE void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
+    void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
     {
         m_pMoveListener = target;
         m_pfnMoveSelector = selector;
     };
-    CC_DEPRECATED_ATTRIBUTE void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
+    void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
     {
         m_pReleaseListener = target;
         m_pfnReleaseSelector = selector;
     };
-    CC_DEPRECATED_ATTRIBUTE void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
+    void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
     {
         m_pCancelListener = target;
         m_pfnCancelSelector = selector;
     };
-    CC_DEPRECATED_ATTRIBUTE bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
-    CC_DEPRECATED_ATTRIBUTE void removeFromParentAndCleanup(bool cleanup){removeFromParent();};
-    CC_DEPRECATED_ATTRIBUTE void removeAllChildrenAndCleanUp(bool cleanup){removeAllChildren();};
+    bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
+    void removeFromParentAndCleanup(bool cleanup){removeFromParent();};
+    void removeAllChildrenAndCleanUp(bool cleanup){removeAllChildren();};
     /***************************/
     
     /*temp action*/

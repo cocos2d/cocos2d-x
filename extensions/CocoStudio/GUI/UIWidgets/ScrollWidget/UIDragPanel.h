@@ -215,7 +215,16 @@ public:
     void addBounceToLeftEvent(CCObject* target, SEL_DragPanelBounceToLeftEvent selector);
     void addBounceToTopEvent(CCObject* target, SEL_DragPanelBounceToTopEvent selector);
     void addBounceToRightEvent(CCObject* target, SEL_DragPanelBounceToRightEvent selector);
-    void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);    
+    void addBounceToBottomEvent(CCObject* target, SEL_DragPanelBounceToBottomEvent selector);
+    
+    /**
+     * Gets inner container of dragpanel.
+     *
+     * Inner container is the container of dragpanel's children.
+     *
+     * @return inner container.
+     */
+    Layout* getInnerContainer();
     
 protected:
     virtual bool init();
@@ -302,7 +311,10 @@ protected:
     void moveToUpdate(float t);
     virtual void onSizeChanged();
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:

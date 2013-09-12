@@ -133,8 +133,11 @@ public:
     virtual void setOpacity(int opacity);
     
     /*compatibel*/
-    CC_DEPRECATED_ATTRIBUTE void setMaxLengthEnable(bool is){setMaxLengthEnabled(is);};
-    CC_DEPRECATED_ATTRIBUTE void setPasswordEnable(bool is){setPasswordEnabled(is);};
+    /**
+     * These methods will be removed
+     */
+    void setMaxLengthEnable(bool is){setMaxLengthEnabled(is);};
+    void setPasswordEnable(bool is){setPasswordEnabled(is);};
     /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();

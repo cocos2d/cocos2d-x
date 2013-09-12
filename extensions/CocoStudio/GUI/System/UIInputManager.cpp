@@ -29,7 +29,6 @@ NS_CC_EXT_BEGIN
 
 UIInputManager::UIInputManager():
 m_manageredWidget(NULL),
-//m_pCurSelectedWidget(NULL),
 m_bWidgetBeSorted(false),
 m_bTouchDown(false),
 m_fLongClickTime(0.0),

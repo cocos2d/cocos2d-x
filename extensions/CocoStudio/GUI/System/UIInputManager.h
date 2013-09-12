@@ -88,7 +88,6 @@ protected:
 protected:
     CCArray* m_manageredWidget;
     CCArray* m_pSelectedWidgets;
-//    UIWidget* m_pCurSelectedWidget;
     CCPoint touchBeganedPoint;
     CCPoint touchMovedPoint;
     CCPoint touchEndedPoint;
