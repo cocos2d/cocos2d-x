@@ -95,10 +95,12 @@ bool HelloWorld::init()
     auto layerTouchListener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
     layerTouchListener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
         CCLOG("layer touches began... count = %d", (int)touches.size());
+       // dispatcher->removeAllListeners();
     };
     
     
     int layerTouchId = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener, this);
+    int layerTouchId2 = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener, this);
     
     auto spriteTouchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     spriteTouchListener->setSwallowTouches(true);
@@ -106,6 +108,7 @@ bool HelloWorld::init()
     spriteTouchListener->onTouchBegan = [=](Touch* touch, Event* evt){
         CCLOG("Touch sprite.... began... %d， drawOrder = %d", sprite->getZOrder(), sprite->getEventPriority());
         dispatcher->unregisterEventListener(layerTouchId);
+        dispatcher->unregisterEventListener(layerTouchId2);
         return false;
     };
     
@@ -147,6 +150,7 @@ bool HelloWorld::init()
             
             CCLOG("Touch sprite222.... began..zorder: %d. drawOrder: %d", sprite1->getZOrder(), sprite1->getEventPriority());
             sprite1->setColor(Color3B::BLACK);
+            event->stopPropagation();
             return true;
         };
         

@@ -826,7 +826,7 @@ void Node::visit()
         }
         // self draw
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        this->updateEventPriorityIndex();
 
         for( ; i < _children->count(); i++ )
         {
@@ -838,7 +838,7 @@ void Node::visit()
     else
     {
         this->draw();
-        _eventPriority = ++_globalEventPriorityIndex;
+        this->updateEventPriorityIndex();
     }
 
     // reset for next frame
@@ -1294,6 +1294,11 @@ void Node::removeAllComponents()
 void Node::resetEventPriorityIndex()
 {
     _globalEventPriorityIndex = 0;
+}
+
+void Node::updateEventPriorityIndex()
+{
+    _eventPriority = ++_globalEventPriorityIndex;
 }
 
 void Node::addEventId(int eventId)

@@ -1307,17 +1307,20 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+
+private:
+    friend class Director;
+    friend class EventDispatcher;
+    
     void addEventId(int eventId);
     void removeEventId(int eventId);
     
-private:
-    friend class Director;
-    
     static void resetEventPriorityIndex();
-    
     std::set<int> _eventIds;
     
 protected:
+    
+    void updateEventPriorityIndex();
     
     /// lazy allocs
     void childrenAlloc(void);
