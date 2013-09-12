@@ -222,6 +222,7 @@
 		1A4D4A2615FD7E2200F61EEB /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2215FD7E2200F61EEB /* CustomTableViewCell.cpp */; };
 		1A4D4A2715FD7E2200F61EEB /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D4A2415FD7E2200F61EEB /* TableViewTestScene.cpp */; };
 		1A60BF54173CCCF80054773B /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */; };
+		1A729AC517E1C97A00F37B6A /* CCArmatureDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A729AC417E1C97900F37B6A /* CCArmatureDefine.cpp */; };
 		1A75E95A16F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */; };
 		1A8F3B1A175DC64000049216 /* CCSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B16175DC64000049216 /* CCSkeleton.cpp */; };
 		1A8F3B1B175DC64000049216 /* CCSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F3B18175DC64000049216 /* CCSkeletonAnimation.cpp */; };
@@ -915,6 +916,7 @@
 		1A4D4A2515FD7E2200F61EEB /* TableViewTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTestScene.h; sourceTree = "<group>"; };
 		1A60BF52173CCCF80054773B /* DataVisitorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataVisitorTest.cpp; sourceTree = "<group>"; };
 		1A60BF53173CCCF80054773B /* DataVisitorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVisitorTest.h; sourceTree = "<group>"; };
+		1A729AC417E1C97900F37B6A /* CCArmatureDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureDefine.cpp; sourceTree = "<group>"; };
 		1A75E95716F84FDD00BA80BD /* TimelineCallbackLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackLayerLoader.h; sourceTree = "<group>"; };
 		1A75E95816F84FDD00BA80BD /* TimelineCallbackTestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineCallbackTestLayer.cpp; sourceTree = "<group>"; };
 		1A75E95916F84FDD00BA80BD /* TimelineCallbackTestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCallbackTestLayer.h; sourceTree = "<group>"; };
@@ -2793,6 +2795,7 @@
 			children = (
 				37CA1BA217D87A3300A649D0 /* CCArmatureDataManager.cpp */,
 				37CA1BA317D87A3300A649D0 /* CCArmatureDataManager.h */,
+				1A729AC417E1C97900F37B6A /* CCArmatureDefine.cpp */,
 				37CA1BA417D87A3300A649D0 /* CCArmatureDefine.h */,
 				37CA1BA517D87A3300A649D0 /* CCDataReaderHelper.cpp */,
 				37CA1BA617D87A3300A649D0 /* CCDataReaderHelper.h */,
@@ -3764,6 +3767,7 @@
 				37CA1D1917D87AC700A649D0 /* UITextFieldTest.cpp in Sources */,
 				37CA1D1A17D87AC700A649D0 /* SceneEditorTest.cpp in Sources */,
 				A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */,
+				1A729AC517E1C97A00F37B6A /* CCArmatureDefine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
