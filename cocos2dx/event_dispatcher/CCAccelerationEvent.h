@@ -36,7 +36,7 @@ public:
     static const char* EVENT_TYPE;
     
     AccelerationEvent();
-    Acceleration* acc;
+    Acceleration acc;
 };
 
 NS_CC_END

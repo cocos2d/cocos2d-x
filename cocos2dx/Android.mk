@@ -45,6 +45,16 @@ draw_nodes/CCDrawingPrimitives.cpp \
 draw_nodes/CCDrawNode.cpp \
 effects/CCGrabber.cpp \
 effects/CCGrid.cpp \
+event_dispatcher/CCAccelerationEvent.cpp \
+event_dispatcher/CCAccelerationEventListener.cpp \
+event_dispatcher/CCEvent.cpp \
+event_dispatcher/CCEventDispatcher.cpp \
+event_dispatcher/CCEventListener.cpp \
+event_dispatcher/CCKeyboardEvent.cpp \
+event_dispatcher/CCKeyboardEventListener.cpp \
+event_dispatcher/CCTouch.cpp \
+event_dispatcher/CCTouchEvent.cpp \
+event_dispatcher/CCTouchEventListener.cpp \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -58,9 +68,6 @@ kazmath/src/vec3.c \
 kazmath/src/vec4.c \
 kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
-keyboard_dispatcher/CCKeyboardDispatcher.cpp \
-keypad_dispatcher/CCKeypadDelegate.cpp \
-keypad_dispatcher/CCKeypadDispatcher.cpp \
 label_nodes/CCFont.cpp \
 label_nodes/CCFontAtlas.cpp \
 label_nodes/CCFontAtlasCache.cpp \
@@ -133,10 +140,8 @@ tilemap_parallax_nodes/CCTileMapAtlas.cpp \
 tilemap_parallax_nodes/CCTMXLayer.cpp \
 tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
 tilemap_parallax_nodes/CCTMXTiledMap.cpp \
-tilemap_parallax_nodes/CCTMXXMLParser.cpp \
-touch_dispatcher/CCTouch.cpp \
-touch_dispatcher/CCTouchDispatcher.cpp \
-touch_dispatcher/CCTouchHandler.cpp
+tilemap_parallax_nodes/CCTMXXMLParser.cpp
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/include \

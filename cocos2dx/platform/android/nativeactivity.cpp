@@ -18,13 +18,14 @@
 #include "CCEventType.h"
 #include "support/CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
-#include "CCAccelerometer.h"
 #include "jni/JniHelper.h"
 
 #include "CCEGLView.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "shaders/CCShaderCache.h"
 #include "textures/CCTextureCache.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+#include "event_dispatcher/CCAccelerationEvent.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
@@ -525,17 +526,22 @@ void android_main(struct android_app* state) {
                             // ACONFIGURATION_ORIENTATION_ANY
                             // ACONFIGURATION_ORIENTATION_PORT
                             // ACONFIGURATION_ORIENTATION_SQUARE
-                            cocos2d::Director::getInstance()->getAccelerometer()->update(event.acceleration.x,
-                                                                                         -event.acceleration.y,
-                                                                                         event.acceleration.z,
-                                                                                         0);
+                            cocos2d::AccelerationEvent accEvent;
+                            accEvent.acc.x = event.acceleration.x;
+                            accEvent.acc.y = -event.acceleration.y;
+                            accEvent.acc.z = event.acceleration.z;
+                            accEvent.acc.timestamp = 0;
+                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         } else {
                             // ACONFIGURATION_ORIENTATION_LAND
                             // swap x and y parameters
-                            cocos2d::Director::getInstance()->getAccelerometer()->update(-event.acceleration.y,
-                                                                                         event.acceleration.x,
-                                                                                         event.acceleration.z,
-                                                                                         0);
+
+                            cocos2d::AccelerationEvent accEvent;
+                            accEvent.acc.x = -event.acceleration.y;
+                            accEvent.acc.y = event.acceleration.x;
+                            accEvent.acc.z = event.acceleration.z;
+                            accEvent.acc.timestamp = 0;
+                            cocos2d::EventDispatcher::getInstance()->dispatchEvent(&accEvent);
                         }
                     }
                 }

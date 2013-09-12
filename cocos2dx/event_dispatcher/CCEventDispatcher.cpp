@@ -23,8 +23,11 @@
  ****************************************************************************/
 #include "CCEventDispatcher.h"
 #include "CCEvent.h"
+#include "CCTouchEvent.h"
+#include "CCTouchEventListener.h"
 #include "base_nodes/CCNode.h"
 #include "CCDirector.h"
+
 #include <algorithm>
 
 namespace
@@ -218,6 +221,12 @@ void EventDispatcher::dispatchEvent(Event* event)
 
     DispatchGuard guard(_inDispatch);
 
+    if (event->_type == TouchEvent::EVENT_TYPE)
+    {
+        dispatchTouchEvent(static_cast<TouchEvent*>(event));
+        return;
+    }
+    
     if (_listeners)
     {
         auto iter = _listeners->find(event->getType());
@@ -253,6 +262,171 @@ void EventDispatcher::dispatchEvent(Event* event)
         }
     }
 
+}
+
+void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
+{
+    auto touchListeners = getListeners(TouchEvent::EVENT_TYPE);
+    
+    std::vector<EventDispatcher::EventListenerItem*> oneByOnelisteners;
+    oneByOnelisteners.reserve(touchListeners->size());
+    
+    std::vector<EventDispatcher::EventListenerItem*> allInOnelisteners;
+    allInOnelisteners.reserve(touchListeners->size());
+    
+    for (auto iter = touchListeners->begin(); iter != touchListeners->end(); ++iter)
+    {
+        auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*iter)->listener);
+        
+        if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
+        {
+            oneByOnelisteners.push_back(*iter);
+        }
+        else if (touchEventListener->_dispatchMode == Touch::DispatchMode::ALL_AT_ONCE)
+        {
+            allInOnelisteners.push_back(*iter);
+        }
+        else
+        {
+            CCASSERT(false, "Not supported touch listener type.");
+        }
+    }
+    
+    bool isNeedsMutableSet = (oneByOnelisteners.size() > 0 && allInOnelisteners.size() > 0);
+    
+    std::vector<Touch*> orignalTouches = event->getTouches();
+    std::vector<Touch*> mutableTouches(orignalTouches.size());
+    std::copy(orignalTouches.begin(), orignalTouches.end(), mutableTouches.begin());
+    
+    //
+    // process the target handlers 1st
+    //
+    if (oneByOnelisteners.size() > 0)
+    {
+        auto mutableTouchesIter = mutableTouches.begin();
+        auto touchesIter = orignalTouches.begin();
+        
+        
+        for (; touchesIter != orignalTouches.end(); ++touchesIter)
+        {
+            bool isSwallowed = false;
+            auto oneByOneIter = oneByOnelisteners.begin();
+            for (; oneByOneIter != oneByOnelisteners.end(); ++oneByOneIter)
+            {
+                bool isClaimed = false;
+                std::vector<Touch*>::iterator removedIter;
+                
+                auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*oneByOneIter)->listener);
+                TouchEvent::EventCode eventCode = event->getEventCode();
+                
+                if (eventCode == TouchEvent::EventCode::BEGAN)
+                {
+                    if (touchEventListener->onTouchBegan)
+                    {
+                        isClaimed = touchEventListener->onTouchBegan(*touchesIter, event);
+                        if (isClaimed)
+                        {
+                            touchEventListener->_claimedTouches.push_back(*touchesIter);
+                        }
+                    }
+                }
+                else if (touchEventListener->_claimedTouches.size() > 0
+                         && ((removedIter = std::find(touchEventListener->_claimedTouches.begin(), touchEventListener->_claimedTouches.end(), *touchesIter)) != touchEventListener->_claimedTouches.end()))
+                {
+                    isClaimed = true;
+                    
+                    switch (eventCode)
+                    {
+                        case TouchEvent::EventCode::MOVED:
+                            if (touchEventListener->onTouchMoved)
+                            {
+                                touchEventListener->onTouchMoved(*touchesIter, event);
+                            }
+                            break;
+                        case TouchEvent::EventCode::ENDED:
+                            if (touchEventListener->onTouchEnded)
+                            {
+                                touchEventListener->onTouchEnded(*touchesIter, event);
+                                touchEventListener->_claimedTouches.erase(removedIter);
+                            }
+                            break;
+                        case TouchEvent::EventCode::CANCELLED:
+                            if (touchEventListener->onTouchCancelled)
+                            {
+                                touchEventListener->onTouchCancelled(*touchesIter, event);
+                                touchEventListener->_claimedTouches.erase(removedIter);
+                            }
+                            break;
+                        default:
+                            CCASSERT(false, "The eventcode is invalid.");
+                            break;
+                    }
+                }
+                
+                
+                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(), "");
+                
+                if (isClaimed && touchEventListener->_needSwallow)
+                {
+                    if (isNeedsMutableSet)
+                    {
+                        mutableTouchesIter = mutableTouches.erase(mutableTouchesIter);
+                        isSwallowed = true;
+                    }
+                    break;
+                }
+            }
+            
+            if (!isSwallowed)
+                ++mutableTouchesIter;
+        }
+    }
+    
+    //
+    // process standard handlers 2nd
+    //
+    if (allInOnelisteners.size() > 0 && mutableTouches.size() > 0)
+    {
+        for (auto allInOneIter = allInOnelisteners.begin(); allInOneIter != allInOnelisteners.end(); ++allInOneIter)
+        {
+            // Skip if the listener was removed.
+            if ((*allInOneIter)->id == 0)
+                continue;
+            
+            auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*allInOneIter)->listener);
+            
+            switch (event->getEventCode())
+            {
+                case TouchEvent::EventCode::BEGAN:
+                    if (touchEventListener->onTouchesBegan)
+                    {
+                        touchEventListener->onTouchesBegan(mutableTouches, event);
+                    }
+                    break;
+                case TouchEvent::EventCode::MOVED:
+                    if (touchEventListener->onTouchesMoved)
+                    {
+                        touchEventListener->onTouchesMoved(mutableTouches, event);
+                    }
+                    break;
+                case TouchEvent::EventCode::ENDED:
+                    if (touchEventListener->onTouchesEnded)
+                    {
+                        touchEventListener->onTouchesEnded(mutableTouches, event);
+                    }
+                    break;
+                case TouchEvent::EventCode::CANCELLED:
+                    if (touchEventListener->onTouchesCancelled)
+                    {
+                        touchEventListener->onTouchesCancelled(mutableTouches, event);
+                    }
+                    break;
+                default:
+                    CCASSERT(false, "The eventcode is invalid.");
+                    break;
+            }
+        }
+    }
 }
 
 void EventDispatcher::sortAllEventListenerItems()
