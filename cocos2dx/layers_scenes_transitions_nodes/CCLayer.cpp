@@ -205,11 +205,6 @@ void Layer::setTouchMode(Touch::DispatchMode mode)
     }
 }
 
-void Layer::setTouchPriority(int priority)
-{
-    CCASSERT(false, "Touch priority is based on scene graph in new event dispatcher, so it doesn't need to be set.");
-}
-
 void Layer::setSwallowsTouches(bool swallowsTouches)
 {
     if (_swallowsTouches != swallowsTouches)
@@ -222,13 +217,6 @@ void Layer::setSwallowsTouches(bool swallowsTouches)
             setTouchEnabled(true);
         }
     }
-}
-
-
-int Layer::getTouchPriority() const
-{
-    CCASSERT(false, "Touch priority is based on scene graph in new event dispatcher, so it doesn't need to be set.");
-    return -1;
 }
 
 Touch::DispatchMode Layer::getTouchMode() const
