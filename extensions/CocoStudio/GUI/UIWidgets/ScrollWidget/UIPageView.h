@@ -138,7 +138,12 @@ public:
 //    void setScrollDegreeRange(float range);
     
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE int getPage() const{return getCurPageIndex();};
+    /**
+     * These methods will be removed
+     */
+    int getPage() const{return getCurPageIndex();};
+    void removePage(Layout* page, bool cleanup){removePage(page);};
+    void removePageAtIndex(int index, bool cleanup){removePageAtIndex(index);};
     /************/
 protected:
     virtual bool addChild(UIWidget* widget);
@@ -159,9 +164,10 @@ protected:
     virtual void onSizeChanged();
 //    virtual bool isInScrollDegreeRange(UIWidget* widget);
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
-    CC_DEPRECATED_ATTRIBUTE void removePage(Layout* page, bool cleanup){removePage(page);};
-    CC_DEPRECATED_ATTRIBUTE void removePageAtIndex(int index, bool cleanup){removePageAtIndex(index);};
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:

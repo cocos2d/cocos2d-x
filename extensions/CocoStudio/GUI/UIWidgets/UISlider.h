@@ -187,16 +187,19 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     /*Compatible*/
-    CC_DEPRECATED_ATTRIBUTE void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setSlidBallPercent(int percent){setPercent(percent);};
-    CC_DEPRECATED_ATTRIBUTE void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    CC_DEPRECATED_ATTRIBUTE void setScale9Enable(bool is){setScale9Enabled(is);};
-    CC_DEPRECATED_ATTRIBUTE void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector)
+    /**
+     * These methods will be removed
+     */
+    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
+    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
+    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
+    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
+    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
+    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
+    void setSlidBallPercent(int percent){setPercent(percent);};
+    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
+    void setScale9Enable(bool is){setScale9Enabled(is);};
+    void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector)
     {
         m_pPercentListener = target;
         m_pfnPercentSelector = selector;
@@ -234,7 +237,7 @@ protected:
     std::string m_strSlidBallNormalTextureFile;
     std::string m_strSlidBallPressedTextureFile;
     std::string m_strSlidBallDisabledTextureFile;
-//    CCRect m_capInsets;
+
     CCRect m_capInsetsBarRenderer;
     CCRect m_capInsetsProgressBarRenderer;
 

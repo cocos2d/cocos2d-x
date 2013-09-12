@@ -106,7 +106,6 @@ void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType tex
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundTexType = texType;
     switch (m_eBackGroundTexType)
     {
@@ -130,7 +129,6 @@ void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundSelectedTexType = texType;
     switch (m_eBackGroundSelectedTexType)
     {
@@ -154,7 +152,6 @@ void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eFrontCrossTexType = texType;
     switch (m_eFrontCrossTexType)
     {
@@ -178,7 +175,6 @@ void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundDisabledTexType = texType;
     switch (m_eBackGroundDisabledTexType)
     {
@@ -202,7 +198,6 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eFrontCrossDisabledTexType = texType;
     switch (m_eFrontCrossDisabledTexType)
     {

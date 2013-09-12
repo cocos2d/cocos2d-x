@@ -130,8 +130,11 @@ public:
     void addUpdateEnableWidget(UIWidget* widget);
     void removeUpdateEnableWidget(UIWidget* widget);
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void dispose(){removeFromParentAndCleanup(true);};
-    CC_DEPRECATED_ATTRIBUTE void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup){removeWidget(widget);};
+    /**
+     * These methods will be removed
+     */
+    virtual void dispose(){removeFromParentAndCleanup(true);};
+    void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup){removeWidget(widget);};
     /************/
 protected:
     UIRootWidget* m_pRootWidget;

@@ -212,7 +212,10 @@ protected:
     virtual void onSizeChanged();
 //    virtual bool isInScrollDegreeRange(UIWidget* widget);
     /*compatible*/
-    CC_DEPRECATED_ATTRIBUTE virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
     /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:

@@ -93,7 +93,6 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
             if (pageIdx > pageCount)
             {
                 CCLOG("pageIdx is %d, it will be added as page id [%d]",pageIdx,pageCount);
-//                pageIdx = pageCount;
             }
             Layout* newPage = createPage();
             newPage->addChild(widget);
@@ -374,10 +373,7 @@ void UIPageView::onTouchMoved(const CCPoint &touchPoint)
 {
     m_touchMovePos.x = touchPoint.x;
     m_touchMovePos.y = touchPoint.y;
-//    if (isInScrollDegreeRange(this))
-    {
-        handleMoveLogic(touchPoint);
-    }
+    handleMoveLogic(touchPoint);
     if (m_pWidgetParent)
     {
         m_pWidgetParent->checkChildInfo(1,this,touchPoint);
@@ -460,7 +456,6 @@ void UIPageView::handlePressLogic(const CCPoint &touchPoint)
     CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
     m_fTouchMoveStartLocation = nsp.x;
     m_fTouchStartLocation = nsp.x;
-//    startRecordSlidAction();
 }
 
 void UIPageView::handleMoveLogic(const CCPoint &touchPoint)
@@ -518,7 +513,6 @@ void UIPageView::handleReleaseLogic(const CCPoint &touchPoint)
             scrollToPage(m_nCurPageIdx);
         }
     }
-//    CCLOG("cur page idx == %d",m_nCurPageIdx);
 }
 
 void UIPageView::checkChildInfo(int handleState,UIWidget* sender, const CCPoint &touchPoint)
@@ -539,11 +533,8 @@ void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const CC
             offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
             if (offset > m_fChildFocusCancelOffset)
             {
-//                if (isInScrollDegreeRange(sender))
-                {
-                    sender->setFocused(false);
-                    handleMoveLogic(touchPoint);
-                }
+                sender->setFocused(false);
+                handleMoveLogic(touchPoint);
             }
         }
             break;
@@ -574,33 +565,5 @@ int UIPageView::getCurPageIndex() const
 {
     return m_nCurPageIdx;
 }
-
-//float UIPageView::getScrollDegreeRange() const
-//{
-//    return m_fScrollDegreeRange;
-//}
-//
-//void UIPageView::setScrollDegreeRange(float range)
-//{
-//    m_fScrollDegreeRange = range;
-//}
-//
-//bool UIPageView::isInScrollDegreeRange(UIWidget* widget)
-//{
-//    CCPoint vector = ccpSub(widget->getTouchMovePos(), widget->getTouchStartPos());
-//    float radians = ccpToAngle(vector);
-//    float degrees = CC_RADIANS_TO_DEGREES(radians);
-//    
-//    float compare = m_fScrollDegreeRange / 2;
-//    
-//    if ((degrees >= -compare && degrees <= compare)
-//        || (degrees >= -179.99 && degrees <= -179.99 + compare)
-//        || (degrees >= 180 - compare && degrees <= 180))
-//    {
-//        return true;
-//    }
-//    
-//    return false;
-//}
 
 NS_CC_EXT_END

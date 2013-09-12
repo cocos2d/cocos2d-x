@@ -231,7 +231,6 @@ void UISlider::setScale9Enabled(bool able)
     {
         ignoreContentAdaptWithSize(m_bPrevIgnoreSize);
     }
-//    setCapInsets(m_capInsets);
     setCapInsetsBarRenderer(m_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(m_capInsetsProgressBarRenderer);
 }

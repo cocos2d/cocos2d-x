@@ -125,7 +125,6 @@ void UIButton::setScale9Enabled(bool able)
         m_pButtonDisableRenderer = CCSprite::create();
     }
 
-//    setTextures(m_strNormalFileName.c_str(), m_strClickedFileName.c_str(), m_strDisabledFileName.c_str(),getUseMergedTexture());
     loadTextureNormal(m_strNormalFileName.c_str(), m_eNormalTexType);
     loadTexturePressed(m_strClickedFileName.c_str(), m_ePressedTexType);
     loadTextureDisabled(m_strDisabledFileName.c_str(), m_eDisabledTexType);
@@ -142,7 +141,6 @@ void UIButton::setScale9Enabled(bool able)
     {
         ignoreContentAdaptWithSize(m_bPrevIgnoreSize);
     }
-//    setCapInsets(m_capInsets);
     setCapInsetsNormalRenderer(m_capInsetsNormal);
     setCapInsetsPressedRenderer(m_capInsetsPressed);
     setCapInsetsDisabledRenderer(m_capInsetsDisabled);
@@ -172,7 +170,6 @@ void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
         return;
     }
     m_strNormalFileName = normal;
-//    setUseMergedTexture(useSpriteFrame);
     m_eNormalTexType = texType;
     if (m_bScale9Enabled)
     {
@@ -218,7 +215,6 @@ void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
         return;
     }
     m_strClickedFileName = selected;
-//    setUseMergedTexture(useSpriteFrame);
     m_ePressedTexType = texType;
     if (m_bScale9Enabled)
     {
@@ -264,7 +260,6 @@ void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
         return;
     }
     m_strDisabledFileName = disabled;
-//    setUseMergedTexture(useSpriteFrame);
     m_eDisabledTexType = texType;
     if (m_bScale9Enabled)
     {
@@ -552,11 +547,7 @@ void UIButton::pressedTextureScaleChangedWithSize()
 {
     if (m_bIgnoreSize)
     {
-//        if (m_bScale9Enabled)
-//        {
-//            m_pButtonClicked->setContentSize(m_pressedTextureSize);
-//        }
-//        else
+        if (!m_bScale9Enabled)
         {
             m_pButtonClickedRenderer->setScale(1.0f);
         }
@@ -587,11 +578,7 @@ void UIButton::disabledTextureScaleChangedWithSize()
 {
     if (m_bIgnoreSize)
     {
-//        if (m_bScale9Enabled)
-//        {
-//            m_pButtonDisable->setContentSize(m_disabledTextureSize);
-//        }
-//        else
+        if (!m_bScale9Enabled)
         {
             m_pButtonDisableRenderer->setScale(1.0f);
         }

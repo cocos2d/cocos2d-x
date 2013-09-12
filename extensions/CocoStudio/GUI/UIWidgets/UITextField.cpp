@@ -337,11 +337,6 @@ void UITextField::setText(const char* text)
     textfieldRendererScaleChangedWithSize();
 }
 
-//void UITextField::setSize(const CCSize &size)
-//{
-//    m_pRenderTextField->setDimensions(size);
-//}
-
 void UITextField::setPlaceHolder(const char *value)
 {
     m_pTextFieldRenderer->setPlaceHolder(value);

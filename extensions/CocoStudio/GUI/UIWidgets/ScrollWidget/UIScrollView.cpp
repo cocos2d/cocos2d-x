@@ -90,11 +90,6 @@ void UIScrollView::releaseResoures()
     m_pCancelListener = NULL;
     m_pfnCancelSelector = NULL;
     setUpdateEnabled(false);
-//    if (m_pUILayer)
-//    {
-//        m_pUILayer->getInputManager()->removeManageredWidget(this);
-//        setUILayer(NULL);
-//    }
     removeAllChildren();
     m_pRenderer->removeAllChildrenWithCleanup(true);
     m_pRenderer->removeFromParentAndCleanup(true);
@@ -540,11 +535,7 @@ bool UIScrollView::onTouchBegan(const CCPoint &touchPoint)
 void UIScrollView::onTouchMoved(const CCPoint &touchPoint)
 {
     Layout::onTouchMoved(touchPoint);
-    //temp mark
-//    if (isInScrollDegreeRange(this))
-    {
-        handleMoveLogic(touchPoint);
-    }
+    handleMoveLogic(touchPoint);
 }
 
 void UIScrollView::onTouchEnded(const CCPoint &touchPoint)
@@ -606,13 +597,8 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             }
             if (offset > m_fChildFocusCancelOffset)
             {
-                
-                //temp mark
-//                if (isInScrollDegreeRange(sender))
-                {
-                    sender->setFocused(false);
-                    handleMoveLogic(touchPoint);
-                }
+                sender->setFocused(false);
+                handleMoveLogic(touchPoint);
             }
         }
             break;
@@ -721,49 +707,5 @@ LayoutExecutant* UIScrollView::getLayoutExecutant() const
 {
     return m_pInnerContainer->getLayoutExecutant();
 }
-
-//float UIScrollView::getScrollDegreeRange() const
-//{
-//    return m_fScrollDegreeRange;
-//}
-//
-//void UIScrollView::setScrollDegreeRange(float range)
-//{
-//    m_fScrollDegreeRange = range;
-//}
-
-//bool UIScrollView::isInScrollDegreeRange(UIWidget* widget)
-//{
-//    CCPoint vector = ccpSub(widget->getTouchMovePos(), widget->getTouchStartPos());
-//    float radians = ccpToAngle(vector);
-//    float degrees = CC_RADIANS_TO_DEGREES(radians);
-//    
-//    float compare = m_fScrollDegreeRange / 2.0f;
-//    
-//    switch (m_eDirection)
-//    {
-//        case SCROLLVIEW_DIR_VERTICAL:
-//            if ((degrees >= 90.0f - compare && degrees <= 90.0f + compare)
-//                || (degrees >= -90.0f - compare && degrees <= -90.0f + compare))
-//            {
-//                return true;
-//            }
-//            break;
-//            
-//        case SCROLLVIEW_DIR_HORIZONTAL:
-//            if ((degrees >= -compare && degrees <= compare)
-//                || (degrees >= -179.99f && degrees <= -179.99f + compare)
-//                || (degrees >= 180.0f - compare && degrees <= 180.0f))
-//            {
-//                return true;
-//            }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    return false;
-//}
 
 NS_CC_EXT_END

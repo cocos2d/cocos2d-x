@@ -165,18 +165,21 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /*Compatible*/
-    CC_DEPRECATED_ATTRIBUTE void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
-    CC_DEPRECATED_ATTRIBUTE void addSelectEvent(CCObject* target,SEL_SelectEvent selector)
+    /**
+     * These methods will be removed
+     */
+    void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
+    void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
+    void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
+    void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
+    void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
+    void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
+    void addSelectEvent(CCObject* target,SEL_SelectEvent selector)
     {
         m_pSelectListener = target;
         m_pfnSelectSelector = selector;
     };
-    CC_DEPRECATED_ATTRIBUTE void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector)
+    void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector)
     {
         m_pUnSelectListener = target;
         m_pfnUnSelectSelector = selector;
