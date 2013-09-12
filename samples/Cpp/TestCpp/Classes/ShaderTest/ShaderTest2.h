@@ -24,8 +24,6 @@ public:
     virtual void runThisTest();
 };
 
-
-
 class NormalSpriteTest : public ShaderTestDemo2
 {
 public:
@@ -84,7 +82,5 @@ public:
     CelShadingSpriteTest();
     virtual std::string subtitle() {return "CelShadingSpriteTest";}
 };
-
-
 
 #endif
