@@ -100,9 +100,9 @@ protected:
     CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_PROPERTY(b2Body *, m_pB2Body, B2Body);
+    CC_PROPERTY(b2Body *, m_pBody, Body);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_PROPERTY(cpBody *, m_pCPBody, CPBody);
+    CC_PROPERTY(cpBody *, m_pBody, Body);
 #endif
 
 protected:
