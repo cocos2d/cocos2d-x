@@ -25,17 +25,17 @@ package org.cocos2dx.lib;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
+public abstract class Cocos2dxFragmentActivity extends FragmentActivity implements Cocos2dxHelperListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -47,7 +47,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
-	private Cocos2dxHandler mHandler;
+	private Cocos2dxFragmentHandler mHandler;
 	private static Context sContext = null;
 	
 	public static Context getContext() {
@@ -62,7 +62,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		sContext = this;
-    	this.mHandler = new Cocos2dxHandler(this);
+    	this.mHandler = new Cocos2dxFragmentHandler(this);
 
     	this.init();
 
@@ -128,7 +128,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	        if (isAndroidEmulator())
 	           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
 	        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
-	        
+
 	        v = initLayout(this.mGLSurfaceView);
 		}
 		
