@@ -51,8 +51,8 @@ m_pRenderer(NULL),
 m_touchStartPos(CCPointZero),
 m_touchMovePos(CCPointZero),
 m_touchEndPos(CCPointZero),
-m_pfnTouchEventSelector(NULL),
 m_pTouchEventListener(NULL),
+m_pfnTouchEventSelector(NULL),
 m_nWidgetTag(-1),
 m_strName("default"),
 m_WidgetType(WidgetTypeWidget),
@@ -63,10 +63,11 @@ m_pLayoutParameter(NULL),
 m_bIgnoreSize(false),
 m_children(NULL),
 m_bAffectByClipping(false),
+m_pScheduler(NULL),
 
 /*temp action*/
 m_pBindingAction(NULL),
-m_pScheduler(NULL),
+
 
 /*Compatible*/
 m_pPushListener(NULL),
