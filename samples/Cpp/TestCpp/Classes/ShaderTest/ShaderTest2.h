@@ -71,11 +71,20 @@ public:
     virtual std::string subtitle() {return "BloomSpriteTest";}
 };
 
+class LensFlareSpriteTest : public ShaderTestDemo2
+{
+public:
+    LensFlareSpriteTest();
+    virtual std::string subtitle() {return "LensFlareSpriteTest";}
+};
+
 class CelShadingSpriteTest : public ShaderTestDemo2
 {
 public:
     CelShadingSpriteTest();
     virtual std::string subtitle() {return "CelShadingSpriteTest";}
 };
+
+
 
 #endif
