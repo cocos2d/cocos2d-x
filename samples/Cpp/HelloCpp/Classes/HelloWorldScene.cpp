@@ -175,9 +175,9 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(Object* sender)
 {
-//    Director::getInstance()->end();
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//    exit(0);
-//#endif
+    Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }

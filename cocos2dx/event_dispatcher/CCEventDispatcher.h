@@ -36,6 +36,7 @@
 NS_CC_BEGIN
 
 class Event;
+class TouchEvent;
 class Node;
 
 /**
@@ -101,6 +102,9 @@ private:
     EventDispatcher();
 
     void registerEventListenerWithItem(EventListenerItem* item);
+
+    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
+    void dispatchTouchEvent(TouchEvent* event);
 
 public:
     /** Destructor of EventDispatcher */

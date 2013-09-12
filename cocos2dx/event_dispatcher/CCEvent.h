@@ -42,14 +42,12 @@ public:
 	const std::string& getType() const { return _type; };
     void stopPropagation() { _isStopped = true; };
     bool isStopped() const { return _isStopped; };
-    
-    void setValid(bool isValid) { _isValid = isValid; };
-    bool isValid() const { return _isValid; };
 
 protected:
 	std::string _type;
     bool _isStopped;
-    bool _isValid;
+    
+    friend class EventDispatcher;
 };
 
 NS_CC_END

@@ -32,7 +32,7 @@ AccelerationEventListener::AccelerationEventListener()
 {
     onEvent = [this](Event* event){
         auto accEvent = static_cast<AccelerationEvent*>(event);
-        this->onAccelerationEvent(accEvent->acc, event);
+        this->onAccelerationEvent(&accEvent->acc, event);
     };
 }
 

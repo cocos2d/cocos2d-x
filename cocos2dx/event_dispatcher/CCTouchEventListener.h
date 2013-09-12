@@ -59,6 +59,8 @@ private:
     std::vector<Touch*> _claimedTouches;
     bool _needSwallow;
     Touch::DispatchMode _dispatchMode;
+    
+    friend class EventDispatcher;
 };
 
 NS_CC_END
