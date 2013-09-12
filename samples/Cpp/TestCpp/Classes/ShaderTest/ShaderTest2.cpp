@@ -600,4 +600,3 @@ LensFlareSpriteTest::LensFlareSpriteTest()
         addChild(sprite);
     }
 }
-
