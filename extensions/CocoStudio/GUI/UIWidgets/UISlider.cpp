@@ -46,16 +46,16 @@ m_strProgressBarTextureFile(""),
 m_strSlidBallNormalTextureFile(""),
 m_strSlidBallPressedTextureFile(""),
 m_strSlidBallDisabledTextureFile(""),
-//m_capInsets(CCRectZero),
 m_capInsetsBarRenderer(CCRectZero),
 m_capInsetsProgressBarRenderer(CCRectZero),
 m_pSlidPercentListener(NULL),
 m_pfnSlidPercentSelector(NULL),
 m_eBarTexType(UI_TEX_TYPE_LOCAL),
+m_eProgressBarTexType(UI_TEX_TYPE_LOCAL),
 m_eBallNTexType(UI_TEX_TYPE_LOCAL),
 m_eBallPTexType(UI_TEX_TYPE_LOCAL),
 m_eBallDTexType(UI_TEX_TYPE_LOCAL),
-m_eProgressBarTexType(UI_TEX_TYPE_LOCAL),
+
 
 /*Compatible*/
 m_pPercentListener(NULL),
