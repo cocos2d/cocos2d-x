@@ -580,7 +580,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         if (!isMultiTouches)
             touchesMode = Touch::DispatchMode::ONE_BY_ONE;
         self->setTouchMode(touchesMode);
-        self->setTouchPriority(priority);
+//        self->setTouchPriority(priority);
 		self->setSwallowsTouches(swallowTouches);
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
