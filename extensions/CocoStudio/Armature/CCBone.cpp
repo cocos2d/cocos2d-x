@@ -360,4 +360,17 @@ void CCBone::changeDisplayByIndex(int index, bool force)
     m_pDisplayManager->changeDisplayByIndex(index, force);
 }
 
+CCArray *CCBone::getColliderBodyList()
+{
+    if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
+    {
+        if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
+        {
+            return detector->getColliderBodyList();
+        }
+    }
+    return NULL;
+}
+
+
 NS_CC_EXT_END
