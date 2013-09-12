@@ -29,7 +29,6 @@ NS_CC_BEGIN
 Event::Event(const std::string& type)
 : _type(type)
 , _isStopped(false)
-, _isValid(true)
 {
 }
 
