@@ -96,7 +96,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     }
 
     cocos2d::AccelerationEvent event;
-    event.acc = _acceleration;
+    event.acc = *_acceleration;
     cocos2d::EventDispatcher::getInstance()->dispatchEvent(&event);
 }
 
