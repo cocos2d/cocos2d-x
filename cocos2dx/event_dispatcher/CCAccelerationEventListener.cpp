@@ -38,7 +38,7 @@ AccelerationEventListener::AccelerationEventListener()
 
 AccelerationEventListener::~AccelerationEventListener()
 {
-    CCLOGINFO("In the destructor of AccelerationEventListener");
+    CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
 }
 
 std::shared_ptr<AccelerationEventListener> AccelerationEventListener::create(std::function<void(Acceleration*, Event* event)> callback)
