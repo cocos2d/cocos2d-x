@@ -35,7 +35,8 @@ class TouchEvent : public Event
 {
 public:
     static const char* EVENT_TYPE;
-
+    static const int MAX_TOUCHES = 5;
+    
     enum class EventCode
     {
         BEGAN,
@@ -47,6 +48,7 @@ public:
     TouchEvent()
     : Event(EVENT_TYPE)
     {
+        _touches.reserve(MAX_TOUCHES);
     }
 
     EventCode getEventCode() { return _eventCode; };

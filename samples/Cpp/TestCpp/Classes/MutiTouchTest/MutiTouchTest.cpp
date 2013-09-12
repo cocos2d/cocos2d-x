@@ -1,7 +1,7 @@
 #include "MutiTouchTest.h"
 
 
-static const Color3B* s_TouchColors[CC_MAX_TOUCHES] = {
+static const Color3B* s_TouchColors[TouchEvent::MAX_TOUCHES] = {
     &Color3B::YELLOW,
     &Color3B::BLUE,
     &Color3B::GREEN,
