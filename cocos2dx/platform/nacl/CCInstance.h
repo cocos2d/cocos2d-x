@@ -34,7 +34,10 @@ extern "C" void* cocos_main(void* arg);
 class CocosPepperInstance : public pp::Instance {
 public:
     explicit CocosPepperInstance(PP_Instance instance);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CocosPepperInstance() {}
 
     virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]);

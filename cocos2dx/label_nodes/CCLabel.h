@@ -115,8 +115,14 @@ public:
     const char * getString() const { return "not implemented"; }
     
 private:
-    
+    /**
+     * @js NA
+     */
     Label(FontAtlas *atlas, TextHAlignment alignment);
+    /**
+     * @js NA
+     * @lua NA
+     */
    ~Label();
     
     static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);

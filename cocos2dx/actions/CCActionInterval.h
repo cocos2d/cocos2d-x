@@ -93,13 +93,22 @@ class CC_DLL Sequence : public ActionInterval
 public:
     /** helper constructor to create an array of sequenceable actions */
     static Sequence* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** helper constructor to create an array of sequenceable actions given an array */
+    /** helper constructor to create an array of sequenceable actions given an array
+     * @code
+     * When this funtion bound to the js or lua,the input params changed
+     * in js  :var   create(var   object1,var   object2, ...)
+     * in lua :local create(local object1,local object2, ...)
+     * @endcode
+     */
     static Sequence* create(Array *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
     static Sequence* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static Sequence* createWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Sequence(void);
 
     /** initializes the action */
@@ -128,7 +137,10 @@ class CC_DLL Repeat : public ActionInterval
 public:
     /** creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
     static Repeat* create(FiniteTimeAction *pAction, unsigned int times);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Repeat(void);
 
     /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
@@ -177,10 +189,16 @@ class CC_DLL RepeatForever : public ActionInterval
 public:
     /** creates the action */
     static RepeatForever* create(ActionInterval *pAction);
-
+    /**
+     * @js ctor
+     */
     RepeatForever()
         : _innerAction(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~RepeatForever();
 
     /** initializes the action */
@@ -220,7 +238,13 @@ protected:
 class CC_DLL Spawn : public ActionInterval
 {
 public:
-    /** helper constructor to create an array of spawned actions */
+    /** helper constructor to create an array of spawned actions 
+     * @code
+     * When this funtion bound to the js or lua,the input params changed
+     * in js  :var   create(var   object1,var   object2, ...)
+     * in lua :local create(local object1,local object2, ...)
+     * @endcode
+     */
     static Spawn* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** helper constructor to create an array of spawned actions */
@@ -231,7 +255,10 @@ public:
 
     /** creates the Spawn action */
     static Spawn* createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Spawn(void);
 
     /** initializes the Spawn action with the 2 actions to spawn */
@@ -477,7 +504,13 @@ typedef struct _ccBezierConfig {
 class CC_DLL BezierBy : public ActionInterval
 {
 public:
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static BezierBy* create(float t, const ccBezierConfig& c);
 
     /** initializes the action with a duration and a bezier configuration */
@@ -503,7 +536,13 @@ protected:
 class CC_DLL BezierTo : public BezierBy
 {
 public:
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static BezierTo* create(float t, const ccBezierConfig& c);
     bool initWithDuration(float t, const ccBezierConfig &c);
 
@@ -742,8 +781,14 @@ class CC_DLL ReverseTime : public ActionInterval
 public:
     /** creates the action */
     static ReverseTime* create(FiniteTimeAction *pAction);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ReverseTime(void);
+    /**
+     * @js ctor
+     */
     ReverseTime();
 
     /** initializes the action */
@@ -769,8 +814,14 @@ class CC_DLL Animate : public ActionInterval
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
     static Animate* create(Animation *pAnimation);
-
+    /**
+     * @js ctor
+     */
     Animate();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Animate();
 
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
@@ -805,7 +856,14 @@ protected:
 class CC_DLL TargetedAction : public ActionInterval
 {
 public:
+    /**
+     * @js ctor
+     */
     TargetedAction();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TargetedAction();
 
     /** Create an action with the specified action and forced target */

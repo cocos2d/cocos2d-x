@@ -34,7 +34,14 @@ NS_CC_BEGIN
 class CC_DLL Application : public ApplicationProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Application();
         
     /**
@@ -49,6 +56,8 @@ public:
         
     /**
     @brief	Run the message loop.
+    * @js NA
+    * @lua NA
     */
     int run();
         

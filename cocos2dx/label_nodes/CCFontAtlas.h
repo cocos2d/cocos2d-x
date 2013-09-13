@@ -50,8 +50,14 @@ struct FontLetterDefinition
 class CC_DLL FontAtlas : public Object
 {
 public:
-    
+    /**
+     * @js ctor
+     */
     FontAtlas(Font &theFont);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FontAtlas();
     
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);
