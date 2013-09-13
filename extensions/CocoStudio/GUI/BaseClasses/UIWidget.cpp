@@ -64,6 +64,11 @@ m_bIgnoreSize(false),
 m_children(NULL),
 m_bAffectByClipping(false),
 m_pScheduler(NULL),
+m_eSizeType(SIZE_ABSOLUTE),
+m_sizePercent(CCPointZero),
+m_ePositionType(POSITION_ABSOLUTE),
+m_positionPercent(CCPointZero),
+m_bIsRunning(false),
 
 /*temp action*/
 m_pBindingAction(NULL),
@@ -141,6 +146,19 @@ void UIWidget::releaseResoures()
     m_pRenderer->release();
 }
 
+void UIWidget::onEnter()
+{
+    arrayMakeObjectsPerformSelector(m_children, onEnter, UIWidget*);
+    m_bIsRunning = true;
+    updateSizeAndPosition();
+}
+
+void UIWidget::onExit()
+{
+    m_bIsRunning = false;
+    arrayMakeObjectsPerformSelector(m_children, onExit, UIWidget*);
+}
+
 bool UIWidget::addChild(UIWidget *child)
 {
     if (!child)
@@ -187,6 +205,10 @@ bool UIWidget::addChild(UIWidget *child)
     }
     child->getRenderer()->setZOrder(child->getZOrder());
     m_pRenderer->addChild(child->getRenderer());
+    if (m_bIsRunning)
+    {
+        child->onEnter();
+    }
     return true;
 }
 
@@ -198,6 +220,10 @@ bool UIWidget::removeChild(UIWidget *child)
     }
     if (m_children->containsObject(child))
     {
+        if (m_bIsRunning)
+        {
+            child->onExit();    
+        }
         child->disableUpdate();
         child->setParent(NULL);
         m_pRenderer->removeChild(child->getRenderer());
@@ -327,6 +353,7 @@ void UIWidget::initRenderer()
 
 void UIWidget::setSize(const CCSize &size)
 {
+    m_customSize = size;
     if (m_bIgnoreSize)
     {
         m_size = getContentSize();
@@ -335,8 +362,92 @@ void UIWidget::setSize(const CCSize &size)
     {
         m_size = size;
     }
-    m_customSize = size;
+    if (m_bIsRunning)
+    {
+        m_sizePercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(m_customSize.width / m_pWidgetParent->getSize().width, m_customSize.height / m_pWidgetParent->getSize().height);   
+    }
     onSizeChanged();
+}
+
+void UIWidget::setSizePercent(const CCPoint &percent)
+{
+    m_sizePercent = percent;
+    if (!m_bIsRunning)
+    {
+        return;
+    }
+    CCSize cSize = (m_pWidgetParent == NULL) ? CCSizeZero : CCSizeMake(m_pWidgetParent->getSize().width * percent.x , m_pWidgetParent->getSize().height * percent.y);
+    if (m_bIgnoreSize)
+    {
+        m_size = getContentSize();
+    }
+    else
+    {
+        m_size = cSize;
+    }
+    m_customSize = cSize;
+    onSizeChanged();
+}
+
+void UIWidget::updateSizeAndPosition()
+{
+    switch (m_eSizeType)
+    {
+        case SIZE_ABSOLUTE:
+            if (m_bIgnoreSize)
+            {
+                m_size = getContentSize();
+            }
+            else
+            {
+                m_size = m_customSize;
+            }
+            m_sizePercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(m_customSize.width / m_pWidgetParent->getSize().width, m_customSize.height / m_pWidgetParent->getSize().height);
+            break;
+        case SIZE_PERCENT:
+        {
+            CCSize cSize = (m_pWidgetParent == NULL) ? CCSizeZero : CCSizeMake(m_pWidgetParent->getSize().width * m_sizePercent.x , m_pWidgetParent->getSize().height * m_sizePercent.y);
+            if (m_bIgnoreSize)
+            {
+                m_size = getContentSize();
+            }
+            else
+            {
+                m_size = cSize;
+            }
+            m_customSize = cSize;
+        }
+            break;
+        default:
+            break;
+    }
+    onSizeChanged();
+    CCPoint absPos = getPosition();
+    switch (m_ePositionType)
+    {
+        case POSITION_ABSOLUTE:
+            m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(absPos.x / m_pWidgetParent->getSize().width, absPos.y / m_pWidgetParent->getSize().height);
+            break;
+        case POSITION_PERCENT:
+        {
+            CCSize parentSize = m_pWidgetParent->getSize();
+            absPos = ccp(parentSize.width * m_positionPercent.x, parentSize.height * m_positionPercent.y);
+        }
+            break;
+        default:
+            break;
+    }
+    m_pRenderer->setPosition(absPos);
+}
+
+void UIWidget::setSizeType(SizeType type)
+{
+    m_eSizeType = type;
+}
+
+SizeType UIWidget::getSizeType() const
+{
+    return m_eSizeType;
 }
 
 void UIWidget::ignoreContentAdaptWithSize(bool ignore)
@@ -362,6 +473,11 @@ bool UIWidget::isIgnoreContentAdaptWithSize() const
 const CCSize& UIWidget::getSize() const
 {
     return m_size;
+}
+
+const CCPoint& UIWidget::getSizePercent() const
+{
+    return m_sizePercent;
 }
 
 CCPoint UIWidget::getWorldPosition()
@@ -726,7 +842,22 @@ void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const CCPoint &
 
 void UIWidget::setPosition(const CCPoint &pos)
 {
+    if (m_bIsRunning)
+    {
+        m_positionPercent = (m_pWidgetParent == NULL) ? CCPointZero : ccp(pos.x / m_pWidgetParent->getSize().width, pos.y / m_pWidgetParent->getSize().height);
+    }
     m_pRenderer->setPosition(pos);
+}
+
+void UIWidget::setPositionPercent(const CCPoint &percent)
+{
+    m_positionPercent = percent;
+    if (m_bIsRunning)
+    {
+        CCSize parentSize = m_pWidgetParent->getSize();
+        CCPoint absPos = ccp(parentSize.width * m_positionPercent.x, parentSize.height * m_positionPercent.y);
+        m_pRenderer->setPosition(absPos);
+    }
 }
 
 void UIWidget::setAnchorPoint(const CCPoint &pt)
@@ -743,6 +874,21 @@ void UIWidget::updateAnchorPoint()
 const CCPoint& UIWidget::getPosition()
 {
     return m_pRenderer->getPosition();
+}
+
+const CCPoint& UIWidget::getPositionPercent()
+{
+    return m_positionPercent;
+}
+
+void UIWidget::setPositionType(PositionType type)
+{
+    m_ePositionType = type;
+}
+
+PositionType UIWidget::getPositionType() const
+{
+    return m_ePositionType;
 }
 
 const CCPoint& UIWidget::getAnchorPoint()

@@ -312,24 +312,21 @@ void UILoadingBar::barRendererScaleChangedWithSize()
             m_pBarRenderer->setScaleY(scaleY);
         }
     }
-    m_pBarRenderer->setPosition(ccp(-m_fTotalLength * 0.5f, 0.0f));
-}
-
-void UILoadingBar::setScale9Scale()
-{
     switch (m_nBarType)
     {
         case LoadingBarTypeLeft:
             m_pBarRenderer->setPosition(ccp(-m_fTotalLength * 0.5f, 0.0f));
             break;
-            
         case LoadingBarTypeRight:
             m_pBarRenderer->setPosition(ccp(m_fTotalLength * 0.5f, 0.0f));
             break;
-            
         default:
             break;
     }
+}
+
+void UILoadingBar::setScale9Scale()
+{
     float width = (float)(m_nPercent) / 100 * m_fTotalLength;
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setPreferredSize(CCSizeMake(width, m_barRendererTextureSize.height));
 }
