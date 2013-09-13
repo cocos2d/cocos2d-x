@@ -85,4 +85,24 @@ bool TouchEventListener::checkAvaiable()
     return true;
 }
 
+std::shared_ptr<EventListener> TouchEventListener::clone()
+{
+    std::shared_ptr<TouchEventListener> ret(new TouchEventListener(_dispatchMode));
+    
+    ret->onTouchBegan = onTouchBegan;
+    ret->onTouchMoved = onTouchMoved;
+    ret->onTouchEnded = onTouchEnded;
+    ret->onTouchCancelled = onTouchCancelled;
+    ret->onTouchesBegan = onTouchesBegan;
+    ret->onTouchesMoved = onTouchesMoved;
+    ret->onTouchesEnded = onTouchesEnded;
+    ret->onTouchesCancelled = onTouchesCancelled;
+    
+    ret->_claimedTouches = _claimedTouches;
+    ret->_dispatchMode = _dispatchMode;
+    ret->_needSwallow = _needSwallow;
+    
+    return ret;
+}
+
 NS_CC_END

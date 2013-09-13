@@ -36,6 +36,7 @@ std::shared_ptr<EventListener> EventListener::create(const std::string& eventTyp
 EventListener::EventListener(const std::string& t, std::function<void(Event*)>callback)
 : onEvent(callback)
 , type(t)
+, _isRegistered(false)
 {}
     
 EventListener::~EventListener() 
@@ -46,6 +47,12 @@ EventListener::~EventListener()
 bool EventListener::checkAvaiable()
 { 
 	return (onEvent != nullptr);
+}
+
+std::shared_ptr<EventListener> EventListener::clone()
+{
+    std::shared_ptr<EventListener> ret(new EventListener(type, onEvent));
+    return ret;
 }
 
 NS_CC_END
