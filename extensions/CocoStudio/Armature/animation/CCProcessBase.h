@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 enum AnimationType
 {
@@ -47,34 +47,34 @@ enum AnimationType
 };
 
 
-class  ProcessBase : public Object
+class  CCProcessBase : public Object
 {
 public:
-    ProcessBase(void);
-    ~ProcessBase(void);
+    CCProcessBase(void);
+    ~CCProcessBase(void);
 
     /**
      * Play animation by animation name.
      *
-     * @param  animation  It will not used in the ProcessBase Class
+     * @param  animation  It will not used in the CCProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
+     * @param  tweenEasing CCTween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -103,7 +103,7 @@ public:
      * You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
      *
-     * @param dt    The duration since last update
+     * @param The duration since last update
      */
     virtual void update(float dt);
 
@@ -118,50 +118,50 @@ protected:
     virtual void updateHandler() {};
 
 protected:
-	//! Scale the animation speed
-	CC_SYNTHESIZE_PASS_BY_REF(float, _animationScale, AnimationScale);
+    //! Scale the process speed
+    CC_SYNTHESIZE(float, m_fProcessScale, ProcessScale);
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPause, IsPause);
+    CC_SYNTHESIZE(bool, m_bIsPause, IsPause);
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isComplete, IsComplete);
+    CC_SYNTHESIZE(bool, m_bIsComplete, IsComplete);
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _isPlaying, IsPlaying);
+    CC_SYNTHESIZE(bool, m_bIsPlaying, IsPlaying);
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE_PASS_BY_REF(float, _currentPercent, CurrentPercent);
+    CC_SYNTHESIZE(float, m_fCurrentPercent, CurrentPercent);
 
     //! The raw duration
-    CC_SYNTHESIZE_PASS_BY_REF(int, _rawDuration, RawDuration);
+    CC_SYNTHESIZE(int, m_iRawDuration, RawDuration);
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE_PASS_BY_REF(AnimationType, _loopType, LoopType);
+    CC_SYNTHESIZE(AnimationType, m_eLoopType, LoopType);
 
     //! The tween easing effect
-    CC_SYNTHESIZE_PASS_BY_REF(TweenType, _tweenEasing, TweenEasing);
+    CC_SYNTHESIZE(CCTweenType, m_eTweenEasing, TweenEasing);
 
     //! The animation update speed
-    CC_SYNTHESIZE_PASS_BY_REF(float, _animationInternal, AnimationInternal);
+    CC_SYNTHESIZE(float, m_fAnimationInternal, AnimationInternal);
 
 
 protected:
     //! The durantion frame count will run
-    int _durationTween;
+    int m_iDurationTween;
 
     //! Current frame this process arrived, this frame is tween frame
-    float _currentFrame;
+    float m_fCurrentFrame;
     //! Frame index it the time line
-    int _curFrameIndex;
+    int m_iCurFrameIndex;
 
     //! Next frame this process need run to
-    int _nextFrameIndex;
+    int m_iNextFrameIndex;
 
 
-    bool _isLoopBack;
+    bool m_bIsLoopBack;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCPROCESSBASE_H__*/

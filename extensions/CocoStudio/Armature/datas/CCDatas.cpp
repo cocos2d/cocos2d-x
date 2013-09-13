@@ -24,102 +24,119 @@ THE SOFTWARE.
 
 #include "CCDatas.h"
 #include "../utils/CCUtilMath.h"
+#include "../utils/CCTransformHelp.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 
-	BaseData::BaseData()
-	: x(0.0f)
-	, y(0.0f)
-	, zOrder(0)
+CCBaseData::CCBaseData()
+    : x(0.0f)
+    , y(0.0f)
+    , zOrder(0)
 
-	, skewX(0.0f)
-	, skewY(0.0f)
-	, scaleX(1.0f)
-	, scaleY(1.0f)
+    , skewX(0.0f)
+    , skewY(0.0f)
+    , scaleX(1.0f)
+    , scaleY(1.0f)
 
-	, tweenRotate(0.0f)
+    , tweenRotate(0.0f)
 
-	, isUseColorInfo(false)
-	, a(255)
-	, r(255)
-	, g(255)
-	, b(255)
+    , isUseColorInfo(false)
+    , a(255)
+    , r(255)
+    , g(255)
+    , b(255)
 {
 }
 
-BaseData::~BaseData()
+CCBaseData::~CCBaseData()
 {
 }
 
-void BaseData::copy(const BaseData *node )
+void CCBaseData::copy(const CCBaseData *node )
 {
-	x = node->x;
-	y = node->y;
-	zOrder = node->zOrder;
+    x = node->x;
+    y = node->y;
+    zOrder = node->zOrder;
 
-	scaleX = node->scaleX;
-	scaleY = node->scaleY;
-	skewX = node->skewX;
-	skewY = node->skewY;
+    scaleX = node->scaleX;
+    scaleY = node->scaleY;
+    skewX = node->skewX;
+    skewY = node->skewY;
 
-	tweenRotate = node->tweenRotate;
+    tweenRotate = node->tweenRotate;
 
-	isUseColorInfo = node->isUseColorInfo;
-	r = node->r;
-	g = node->g;
-	b = node->b;
-	a = node->a;
+    isUseColorInfo = node->isUseColorInfo;
+    r = node->r;
+    g = node->g;
+    b = node->b;
+    a = node->a;
 }
 
 
-void BaseData::subtract(BaseData *from, BaseData *to)
+void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
 {
-	x = to->x - from->x;
-	y = to->y - from->y;
-	scaleX = to->scaleX - from->scaleX;
-	scaleY = to->scaleY - from->scaleY;
-	skewX = to->skewX - from->skewX;
-	skewY = to->skewY - from->skewY;
+    x = to->x - from->x;
+    y = to->y - from->y;
+    scaleX = to->scaleX - from->scaleX;
+    scaleY = to->scaleY - from->scaleY;
+    skewX = to->skewX - from->skewX;
+    skewY = to->skewY - from->skewY;
 
-	if(from->isUseColorInfo || to->isUseColorInfo)
-	{
-		a = to->a - from->a;
-		r = to->r - from->r;
-		g = to->g - from->g;
-		b = to->b - from->b;
+    if(isUseColorInfo || from->isUseColorInfo || to->isUseColorInfo)
+    {
+        a = to->a - from->a;
+        r = to->r - from->r;
+        g = to->g - from->g;
+        b = to->b - from->b;
 
-		isUseColorInfo = true;
-	}
+        isUseColorInfo = true;
+    }
+    else
+    {
+        a = r = g = b = 0;
+        isUseColorInfo = false;
+    }
 
+    if (skewX > M_PI)
+    {
+        skewX -= (float)CC_DOUBLE_PI;
+    }
+    if (skewX < -M_PI)
+    {
+        skewX += (float)CC_DOUBLE_PI;
+    }
 
-	if (skewX > M_PI)
-	{
-		skewX -= (float)CC_DOUBLE_PI;
-	}
-	if (skewX < -M_PI)
-	{
-		skewX += (float)CC_DOUBLE_PI;
-	}
+    if (skewY > M_PI)
+    {
+        skewY -= (float)CC_DOUBLE_PI;
+    }
+    if (skewY < -M_PI)
+    {
+        skewY += (float)CC_DOUBLE_PI;
+    }
 
-	if (skewY > M_PI)
-	{
-		skewY -= (float)CC_DOUBLE_PI;
-	}
-	if (skewY < -M_PI)
-	{
-		skewY += (float)CC_DOUBLE_PI;
-	}
-
-	if (to->tweenRotate)
-	{
-		skewX += to->tweenRotate;
-		skewY -= to->tweenRotate;
-	}
+    if (to->tweenRotate)
+    {
+        skewX += to->tweenRotate;
+        skewY -= to->tweenRotate;
+    }
 }
 
+void CCBaseData::setColor(const Color4B &color)
+{
+    r = color.r;
+    g = color.g;
+    b = color.b;
+    a = color.a;
+}
 
-const char *DisplayData::changeDisplayToTexture(const char *displayName)
+Color4B CCBaseData::getColor()
+{
+    return ccc4(r, g, b, a);
+}
+
+const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
@@ -133,304 +150,271 @@ const char *DisplayData::changeDisplayToTexture(const char *displayName)
     return textureName.c_str();
 }
 
-DisplayData::DisplayData(void)
-    : displayType(CS_DISPLAY_SPRITE)
+CCDisplayData::CCDisplayData(void)
+    : displayType(CS_DISPLAY_MAX)
 {
 }
 
-DisplayData::~DisplayData(void)
+CCDisplayData::~CCDisplayData(void)
 {
 }
 
-SpriteDisplayData::SpriteDisplayData(void)
+CCSpriteDisplayData::CCSpriteDisplayData(void)
     : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-SpriteDisplayData::~SpriteDisplayData()
+CCSpriteDisplayData::~CCSpriteDisplayData()
 {
 }
 
-void SpriteDisplayData::copy(SpriteDisplayData *displayData)
+void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
+
+    skinData = displayData->skinData;
 }
 
-ArmatureDisplayData::ArmatureDisplayData(void)
+CCArmatureDisplayData::CCArmatureDisplayData(void)
     : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-ArmatureDisplayData::~ArmatureDisplayData()
+CCArmatureDisplayData::~CCArmatureDisplayData()
 {
 }
 
-void ArmatureDisplayData::copy(ArmatureDisplayData *displayData)
+void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
 {
     displayName = displayData->displayName;
     displayType = displayData->displayType;
 }
 
-ParticleDisplayData::ParticleDisplayData(void)
+CCParticleDisplayData::CCParticleDisplayData(void)
     : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void ParticleDisplayData::copy(ParticleDisplayData *displayData)
+void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
 {
     plist = displayData->plist;
     displayType = displayData->displayType;
 }
 
-ShaderDisplayData::ShaderDisplayData(void)
-    : vert("")
-    , frag("")
-{
-    displayType = CS_DISPLAY_SHADER;
-}
 
-void ShaderDisplayData::copy(ShaderDisplayData *displayData)
-{
-    vert = displayData->vert;
-    frag = displayData->frag;
-    displayType = displayData->displayType;
-}
-
-
-BoneData::BoneData(void)
+CCBoneData::CCBoneData(void)
     : name("")
     , parentName("")
 {
 }
 
-BoneData::~BoneData(void)
+CCBoneData::~CCBoneData(void)
 {
-    CC_SAFE_RELEASE(displayDataList);
 }
 
-bool BoneData::init()
+bool CCBoneData::init()
 {
-    displayDataList = new Array;
-    displayDataList->init();
+    displayDataList.init();
     return true;
 }
 
-void BoneData::addDisplayData(DisplayData *displayData)
+void CCBoneData::addDisplayData(CCDisplayData *displayData)
 {
-    displayDataList->addObject(displayData);
+    displayDataList.addObject(displayData);
 }
 
-DisplayData *BoneData::getDisplayData(int index)
+CCDisplayData *CCBoneData::getDisplayData(int index)
 {
-    return static_cast<DisplayData *>( displayDataList->getObjectAtIndex(index) );
+    return (CCDisplayData *)displayDataList.getObjectAtIndex(index);
 }
 
-ArmatureData::ArmatureData()
+
+CCArmatureData::CCArmatureData()
+    : dataVersion(0.1f)
 {
 }
 
-ArmatureData::~ArmatureData()
+CCArmatureData::~CCArmatureData()
 {
-    CC_SAFE_RELEASE(boneList);
-    CC_SAFE_RELEASE(boneDataDic);
 }
 
-bool ArmatureData::init()
+bool CCArmatureData::init()
 {
-    boneList = new Array;
-    boneList->init();
-
-    boneDataDic = new Dictionary;
-    boneDataDic->init();
-
     return true;
 }
 
-void ArmatureData::addBoneData(BoneData *boneData)
+void CCArmatureData::addBoneData(CCBoneData *boneData)
 {
-    boneDataDic->setObject(boneData, boneData->name);
-    boneList->addObject(boneData);
+    boneDataDic.setObject(boneData, boneData->name);
 }
 
-BoneData *ArmatureData::getBoneData(const char *boneName)
+CCBoneData *CCArmatureData::getBoneData(const char *boneName)
 {
-    return static_cast<BoneData *>( boneDataDic->objectForKey(boneName) );
+    return (CCBoneData *)boneDataDic.objectForKey(boneName);
 }
 
-FrameData::FrameData(void)
-    : duration(1)
+CCFrameData::CCFrameData(void)
+    : frameID(0)
+    , duration(1)
     , tweenEasing(Linear)
     , displayIndex(0)
+    , blendType(BLEND_NORMAL)
 
-    , _movement("")
-    , _event("")
-    , _sound("")
-    , _soundEffect("")
+    , strEvent("")
+    , strMovement("")
+    , strSound("")
+    , strSoundEffect("")
 {
 }
 
-FrameData::~FrameData(void)
+CCFrameData::~CCFrameData(void)
 {
 }
 
-void FrameData::copy(FrameData *frameData)
+void CCFrameData::copy(CCFrameData *frameData)
 {
-    BaseData::copy(frameData);
+    CCBaseData::copy(frameData);
 
     duration = frameData->duration;
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
+    blendType = frameData->blendType;
 }
 
-MovementBoneData::MovementBoneData()
+CCMovementBoneData::CCMovementBoneData()
     : delay(0.0f)
     , scale(1.0f)
     , duration(0)
     , name("")
 {
-    frameList = new Array;
-    frameList->init();
 }
 
-MovementBoneData::~MovementBoneData(void)
+CCMovementBoneData::~CCMovementBoneData(void)
 {
-    CC_SAFE_RELEASE(frameList);
 }
 
-bool MovementBoneData::init()
+bool CCMovementBoneData::init()
 {
-    return true;
+    return frameList.init();
 }
 
-void MovementBoneData::addFrameData(FrameData *frameData)
+void CCMovementBoneData::addFrameData(CCFrameData *frameData)
 {
-    frameList->addObject(frameData);
-    duration += frameData->duration;
+    frameList.addObject(frameData);
 }
 
-FrameData *MovementBoneData::getFrameData(int index)
+CCFrameData *CCMovementBoneData::getFrameData(int index)
 {
-    return static_cast<FrameData *>( frameList->getObjectAtIndex(index) );
+    return (CCFrameData *)frameList.getObjectAtIndex(index);
 }
 
-MovementData::MovementData(void)
+
+
+CCMovementData::CCMovementData(void)
     : name("")
     , duration(0)
+    , scale(1.0f)
     , durationTo(0)
     , durationTween(0)
     , loop(true)
     , tweenEasing(Linear)
 {
-    movBoneDataDic = new Dictionary;
-    movBoneDataDic->init();
 }
 
-MovementData::~MovementData(void)
+CCMovementData::~CCMovementData(void)
 {
-    CC_SAFE_RELEASE(movBoneDataDic);
 }
 
-void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
+void CCMovementData::addMovementBoneData(CCMovementBoneData *movBoneData)
 {
-    movBoneDataDic->setObject(movBoneData, movBoneData->name);
+    movBoneDataDic.setObject(movBoneData, movBoneData->name);
 }
 
-MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
+CCMovementBoneData *CCMovementData::getMovementBoneData(const char *boneName)
 {
-    return static_cast<MovementBoneData *>( movBoneDataDic->objectForKey(boneName) );
+    return (CCMovementBoneData *)movBoneDataDic.objectForKey(boneName);
 }
 
 
 
-AnimationData::AnimationData(void)
+CCAnimationData::CCAnimationData(void)
 {
-    movementDataDic = new Dictionary;
-    movementDataDic->init();
 }
 
-AnimationData::~AnimationData(void)
+CCAnimationData::~CCAnimationData(void)
 {
-    CC_SAFE_RELEASE(movementDataDic);
 }
 
-void AnimationData::release()
+void CCAnimationData::addMovement(CCMovementData *movData)
 {
-    Object::release();
-}
-
-void AnimationData::retain()
-{
-    Object::retain();
-}
-
-void AnimationData::addMovement(MovementData *movData)
-{
-    movementDataDic->setObject(movData, movData->name);
+    movementDataDic.setObject(movData, movData->name);
     movementNames.push_back(movData->name);
 }
 
-MovementData *AnimationData::getMovement(const char *movementName)
+CCMovementData *CCAnimationData::getMovement(const char *movementName)
 {
-    return (MovementData *)movementDataDic->objectForKey(movementName);
+    return (CCMovementData *)movementDataDic.objectForKey(movementName);
 }
 
-int AnimationData::getMovementCount()
+int CCAnimationData::getMovementCount()
 {
-    return movementDataDic->count();
+    return movementDataDic.count();
 }
 
 
 
-ContourData::ContourData()
+CCContourData::CCContourData()
 {
-    vertexList = new Array;
-    vertexList->init();
 }
 
-ContourData::~ContourData()
+CCContourData::~CCContourData()
 {
-    CC_SAFE_RELEASE(vertexList);
 }
 
-bool ContourData::init()
+bool CCContourData::init()
 {
-    return true;
+    return vertexList.init();
 }
 
-TextureData::TextureData()
+void CCContourData::addVertex(Point *vertex)
+{
+    CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
+    vertex2->autorelease();
+
+    vertexList.addObject(vertex2);
+}
+
+CCTextureData::CCTextureData()
     : height(0.0f)
     , width(0.0f)
     , pivotX(0.5f)
     , pivotY(0.5f)
     , name("")
 {
-    contourDataList = new Array;
-    contourDataList->init();
 }
 
-TextureData::~TextureData()
+CCTextureData::~CCTextureData()
 {
-    CC_SAFE_RELEASE(contourDataList);
 }
 
-bool TextureData::init()
+bool CCTextureData::init()
 {
-    return true;
+    return contourDataList.init();
 }
 
-void TextureData::addContourData(ContourData *contourData)
+void CCTextureData::addContourData(CCContourData *contourData)
 {
-    contourDataList->addObject(contourData);
+    contourDataList.addObject(contourData);
 }
 
-ContourData *TextureData::getContourData(int index)
+CCContourData *CCTextureData::getContourData(int index)
 {
-    return static_cast<ContourData *>( contourDataList->getObjectAtIndex(index) );
+    return (CCContourData *)contourDataList.getObjectAtIndex(index);
 }
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

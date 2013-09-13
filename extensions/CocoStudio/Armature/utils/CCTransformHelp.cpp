@@ -25,21 +25,21 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-AffineTransform TransformHelp::helpMatrix1;
-AffineTransform TransformHelp::helpMatrix2;
+AffineTransform CCTransformHelp::helpMatrix1;
+AffineTransform CCTransformHelp::helpMatrix2;
 
-Point TransformHelp::helpPoint1;
-Point TransformHelp::helpPoint2;
+Point CCTransformHelp::helpPoint1;
+Point CCTransformHelp::helpPoint2;
 
-BaseData helpParentNode;
+CCBaseData helpParentNode;
 
-TransformHelp::TransformHelp()
+CCTransformHelp::CCTransformHelp()
 {
 }
 
-void TransformHelp::transformFromParent(BaseData &node, const BaseData &parentNode)
+void CCTransformHelp::transformFromParent(CCBaseData &node, const CCBaseData &parentNode)
 {
     nodeToMatrix(node, helpMatrix1);
     nodeToMatrix(parentNode, helpMatrix2);
@@ -50,7 +50,7 @@ void TransformHelp::transformFromParent(BaseData &node, const BaseData &parentNo
     matrixToNode(helpMatrix1, node);
 }
 
-void TransformHelp::transformToParent(BaseData &node, const BaseData &parentNode)
+void CCTransformHelp::transformToParent(CCBaseData &node, const CCBaseData &parentNode)
 {
 
     nodeToMatrix(node, helpMatrix1);
@@ -61,7 +61,7 @@ void TransformHelp::transformToParent(BaseData &node, const BaseData &parentNode
     matrixToNode(helpMatrix1, node);
 }
 
-void TransformHelp::transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode)
+void CCTransformHelp::transformFromParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode)
 {
 
     helpParentNode.copy(&parentNode);
@@ -77,7 +77,7 @@ void TransformHelp::transformFromParentWithoutScale(BaseData &node, const BaseDa
     matrixToNode(helpMatrix1, node);
 }
 
-void TransformHelp::transformToParentWithoutScale(BaseData &node, const BaseData &parentNode)
+void CCTransformHelp::transformToParentWithoutScale(CCBaseData &node, const CCBaseData &parentNode)
 {
 
     helpParentNode.copy(&parentNode);
@@ -92,7 +92,7 @@ void TransformHelp::transformToParentWithoutScale(BaseData &node, const BaseData
     matrixToNode(helpMatrix1, node);
 }
 
-void TransformHelp::nodeToMatrix(const BaseData &node, AffineTransform &matrix)
+void CCTransformHelp::nodeToMatrix(const CCBaseData &node, AffineTransform &matrix)
 {
     matrix.a = node.scaleX * cos(node.skewY);
     matrix.b = node.scaleX * sin(node.skewY);
@@ -103,7 +103,7 @@ void TransformHelp::nodeToMatrix(const BaseData &node, AffineTransform &matrix)
     matrix.ty = node.y;
 }
 
-void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
+void CCTransformHelp::matrixToNode(const AffineTransform &matrix, CCBaseData &node)
 {
     /*
      *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform
@@ -129,7 +129,7 @@ void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
     node.y = matrix.ty;
 }
 
-void TransformHelp::nodeConcat(BaseData &target, BaseData &source)
+void CCTransformHelp::nodeConcat(CCBaseData &target, CCBaseData &source)
 {
     target.x += source.x;
     target.y += source.y;
@@ -139,4 +139,14 @@ void TransformHelp::nodeConcat(BaseData &target, BaseData &source)
     target.scaleY += source.scaleY;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+void CCTransformHelp::nodeSub(CCBaseData &target, CCBaseData &source)
+{
+    target.x -= source.x;
+    target.y -= source.y;
+    target.skewX -= source.skewX;
+    target.skewY -= source.skewY;
+    target.scaleX -= source.scaleX;
+    target.scaleY -= source.scaleY;
+}
+
+NS_CC_EXT_ARMATURE_END

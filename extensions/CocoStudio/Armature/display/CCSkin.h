@@ -28,26 +28,34 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCBone.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-class Skin : public Sprite
+class CCSkin : public Sprite
 {
 public:
-    static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSkin *create();
+    static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSkin *create(const char *pszFileName);
 public:
-    Skin();
+    CCSkin();
 
+    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+    bool initWithFile(const char *pszFilename);
+
+    void updateArmatureTransform();
     void updateTransform();
-    void draw();
 
-    CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
-    CC_SYNTHESIZE(Bone *, _bone, Bone);
+    AffineTransform getNodeToWorldTransform();
+    AffineTransform getNodeToWorldTransformAR();
+
+    CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
+    CC_SYNTHESIZE(CCBone *, m_pBone, Bone);
 
 protected:
-    AffineTransform _skinTransform;
+    AffineTransform m_tSkinTransform;
+    CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCSKIN_H__*/
