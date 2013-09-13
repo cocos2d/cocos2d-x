@@ -37,6 +37,9 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "event_dispatcher/CCEventDispatcher.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -52,6 +55,7 @@ class ActionManager;
 class Component;
 class Dictionary;
 class ComponentContainer;
+class EventDispatcher;
 
 /**
  * @addtogroup base_nodes
@@ -134,7 +138,7 @@ public:
     static const int INVALID_TAG = -1;
 
     /// @{
-    /// @name Constructor, Distructor and Initializers
+    /// @name Constructor, Destructor and Initializers
 
     /**
      * Allocates and initializes a node.
@@ -206,6 +210,8 @@ public:
     virtual int getZOrder() const;
 
 
+    int getEventPriority() const { return _eventPriority; };
+    
     /**
      * Sets the real OpenGL Z vertex.
      *
@@ -1361,7 +1367,21 @@ public:
     virtual void removeAllComponents();
     /// @} end of component functions
 
+
+private:
+    friend class Director;
+    friend class EventDispatcher;
+    
+    void addEventId(int eventId);
+    void removeEventId(int eventId);
+    
+    static void resetEventPriorityIndex();
+    std::set<int> _eventIds;
+    
 protected:
+    
+    void updateEventPriorityIndex();
+    
     /// lazy allocs
     void childrenAlloc(void);
     
@@ -1439,6 +1459,7 @@ protected:
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
+    int _eventPriority;
 };
 
 //#pragma mark - NodeRGBA

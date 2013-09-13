@@ -73,7 +73,7 @@ public:
 protected:
     void updateControlPicker();
     void updateHueAndControlPicker();
-    virtual bool ccTouchBegan(Touch* touch, Event* pEvent);
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
 
     HSV _hsv;
     CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)

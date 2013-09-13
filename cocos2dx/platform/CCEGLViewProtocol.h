@@ -2,6 +2,9 @@
 #define __CCEGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
+#include "event_dispatcher/CCTouchEvent.h"
+
+#include <vector>
 
 enum class ResolutionPolicy
 {
@@ -30,10 +33,7 @@ enum class ResolutionPolicy
 
 NS_CC_BEGIN
 
-#define CC_MAX_TOUCHES  5
-
 class EGLTouchDelegate;
-class Set;
 
 /**
  * @addtogroup platform
@@ -156,7 +156,7 @@ public:
      */
     float getScaleY() const;
 private:
-    void getSetOfTouchesEndOrCancel(Set& set, int num, int ids[], float xs[], float ys[]);
+    void handleTouchesOfEndOrCancel(TouchEvent::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
 
 protected:
     EGLTouchDelegate* _delegate;
