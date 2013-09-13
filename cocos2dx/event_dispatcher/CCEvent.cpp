@@ -29,6 +29,7 @@ NS_CC_BEGIN
 Event::Event(const std::string& type)
 : _type(type)
 , _isStopped(false)
+, _currentTarget(nullptr)
 {
 }
 
@@ -36,5 +37,14 @@ Event::~Event()
 {
 }
 
+Node* Event::getCurrentTarget()
+{
+    return _currentTarget;
+}
+
+void Event::setCurrentTarget(Node* target)
+{
+    _currentTarget = target;
+}
 
 NS_CC_END
