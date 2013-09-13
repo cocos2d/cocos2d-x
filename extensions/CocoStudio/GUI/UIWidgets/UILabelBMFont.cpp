@@ -42,6 +42,7 @@ UILabelBMFont* UILabelBMFont::create()
     UILabelBMFont* widget = new UILabelBMFont();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);

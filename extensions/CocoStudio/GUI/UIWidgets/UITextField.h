@@ -115,7 +115,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
-    void update(float dt);
+    virtual void update(float dt);
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
     bool getDetachWithIME();
@@ -133,8 +133,12 @@ public:
     virtual void setOpacity(int opacity);
     
     /*compatibel*/
+    /**
+     * These methods will be removed
+     */
     void setMaxLengthEnable(bool is){setMaxLengthEnabled(is);};
     void setPasswordEnable(bool is){setPasswordEnabled(is);};
+    /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
 protected:
