@@ -58,43 +58,78 @@ class CC_DLL PointArray : public Object, public Clonable
 {
 public:
     
-    /** creates and initializes a Points array with capacity */
+    /** creates and initializes a Points array with capacity 
+     * @js NA
+     */
     static PointArray* create(unsigned int capacity);
-
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~PointArray();
+    /**
+     * @js NA
+     * @lua NA
+     */
     PointArray();
     
-    /** initializes a Catmull Rom config with a capacity hint */
+    /** initializes a Catmull Rom config with a capacity hint 
+     * @js NA
+     */
     bool initWithCapacity(unsigned int capacity);
     
-    /** appends a control point */
+    /** appends a control point 
+     * @js NA
+     */
     void addControlPoint(Point controlPoint);
     
-    /** inserts a controlPoint at index */
+    /** inserts a controlPoint at index 
+     * @js NA
+     */
     void insertControlPoint(Point &controlPoint, unsigned int index);
     
-    /** replaces an existing controlPoint at index */
+    /** replaces an existing controlPoint at index 
+     * @js NA
+     */
     void replaceControlPoint(Point &controlPoint, unsigned int index);
     
-    /** get the value of a controlPoint at a given index */
+    /** get the value of a controlPoint at a given index 
+     * @js NA
+     */
     Point getControlPointAtIndex(unsigned int index);
     
-    /** deletes a control point at a given index */
+    /** deletes a control point at a given index 
+     * @js NA
+     */
     void removeControlPointAtIndex(unsigned int index);
     
-    /** returns the number of objects of the control point array */
+    /** returns the number of objects of the control point array 
+     * @js NA
+     */
     unsigned int count() const;
     
-    /** returns a new copy of the array reversed. User is responsible for releasing this copy */
+    /** returns a new copy of the array reversed. User is responsible for releasing this copy 
+     * @js NA
+     */
     PointArray* reverse() const;
     
-    /** reverse the current control point array inline, without generating a new one */
+    /** reverse the current control point array inline, without generating a new one 
+     * @js NA
+     */
     void reverseInline();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual PointArray* clone() const;
-
+    /**
+     * @js NA
+     */
     const std::vector<Point*>* getControlPoints() const;
-
+    /**
+     * @js NA
+     */
     void setControlPoints(std::vector<Point*> *controlPoints);
 private:
     /** Array that contains the control points */
@@ -109,10 +144,23 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static CardinalSplineTo* create(float duration, PointArray* points, float tension);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CardinalSplineTo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     CardinalSplineTo();
     
     /** initializes the action with a duration and an array of points */
@@ -121,6 +169,10 @@ public:
     virtual void updatePosition(Point &newPos);
 
     inline PointArray* getPoints() { return _points; }
+    /**
+     * @js NA
+     * @lua NA
+     */
     inline void setPoints(PointArray* points)
     {
         CC_SAFE_RETAIN(points);
@@ -151,7 +203,13 @@ class CC_DLL CardinalSplineBy : public CardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static CardinalSplineBy* create(float duration, PointArray* points, float tension);
 
     CardinalSplineBy();
@@ -175,7 +233,13 @@ class CC_DLL CatmullRomTo : public CardinalSplineTo
 {
 public:
     
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var dt,var table)
+     * in lua: lcaol create(local dt, local table)
+     * @endcode
+     */
     static CatmullRomTo* create(float dt, PointArray* points);
 
     /** initializes the action with a duration and an array of points */
@@ -194,7 +258,13 @@ public:
 class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension */
+    /** creates an action with a Cardinal Spline array of points and tension 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var dt,var table)
+     * in lua: lcaol create(local dt, local table)
+     * @endcode
+     */
     static CatmullRomBy* create(float dt, PointArray* points);
 
     /** initializes the action with a duration and an array of points */

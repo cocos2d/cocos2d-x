@@ -31,7 +31,14 @@ class Texture2DMutable : public cocos2d::Texture2D
     cocos2d::Image *image_;
     
 public:
+    /**
+     * @js ctor
+     */
     Texture2DMutable(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Texture2DMutable(void);
     
     void restore();

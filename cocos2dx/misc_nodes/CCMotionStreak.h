@@ -53,8 +53,14 @@ public:
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
-
+    /**
+     * @js ctor
+     */
     MotionStreak();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
@@ -80,11 +86,27 @@ public:
 
     // Overrides
     virtual void setPosition(const Point& position) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void draw() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void update(float delta) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc() const override;
     virtual GLubyte getOpacity() const override;
     virtual void setOpacity(GLubyte opacity) override;

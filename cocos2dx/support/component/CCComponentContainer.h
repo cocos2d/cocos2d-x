@@ -35,9 +35,16 @@ class Node;
 class CC_DLL ComponentContainer
 {
 protected:
+    /**
+     * @js ctor
+     */
     ComponentContainer(Node *pNode);
     
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComponentContainer(void);
     virtual Component* get(const char *pName) const;
     virtual bool add(Component *pCom);

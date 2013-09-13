@@ -104,8 +104,14 @@ public:
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
-
+    /**
+     * @js ctor
+     */
     Director(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Director(void);
     virtual bool init(void);
 
@@ -127,7 +133,10 @@ public:
     /** seconds per frame */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the EGLView, where everything is rendered */
+    /** Get the EGLView, where everything is rendered
+    * @js NA
+    * @lua NA
+    */
     inline EGLView* getOpenGLView() { return _openGLView; }
     void setOpenGLView(EGLView *pobOpenGLView);
 
@@ -142,6 +151,8 @@ public:
     
     /** Sets an OpenGL projection
      @since v0.8.2
+     * @js NA
+     * @lua NA
      */
     inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
@@ -169,8 +180,14 @@ public:
     
     /** Director delegate. It shall implemente the DirectorDelegate protocol
      @since v0.99.5
+     * @js NA
+     * @lua NA
      */
     DirectorDelegate* getDelegate() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setDelegate(DirectorDelegate* delegate);
 
     // window size
@@ -250,6 +267,7 @@ public:
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
+     * @lua endToLua
      */
     void end();
 
@@ -333,7 +351,6 @@ public:
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
-
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
 

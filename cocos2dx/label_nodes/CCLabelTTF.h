@@ -57,8 +57,19 @@ NS_CC_BEGIN
 class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     LabelTTF();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LabelTTF();
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description() const;
     
     /** creates a LabelTTF with a font name and font size in points

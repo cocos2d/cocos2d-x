@@ -43,7 +43,14 @@ class EGLTouchDelegate;
 class CC_DLL EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLViewProtocol();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLViewProtocol();
 
     /** Force destroying EGL view, subclass must implement this method. */

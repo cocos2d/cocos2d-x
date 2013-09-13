@@ -46,7 +46,10 @@ public:
 		this->_contourData = contourData;
 		CC_SAFE_RETAIN(_contourData);
 	}
-
+    /**
+     * @js NA
+     * @lua NA
+     */
 	~ColliderBody()
 	{
 		CC_SAFE_RELEASE(_contourData);
@@ -76,7 +79,14 @@ public:
 	static ColliderDetector *create();
     static ColliderDetector *create(Bone *bone);
 public:
+    /**
+     * @js ctor
+     */
 	ColliderDetector();
+    /**
+     * @js NA
+     * @lua NA
+     */
 	~ColliderDetector(void);
     
     virtual bool init();

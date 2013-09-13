@@ -38,7 +38,14 @@ class CC_DLL Application
     : public ApplicationProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Application();
 
     /**

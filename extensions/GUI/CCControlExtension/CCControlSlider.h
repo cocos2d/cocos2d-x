@@ -58,8 +58,14 @@ public:
      * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
-
+    /**
+     * @js ctor
+     */
     ControlSlider();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSlider();
 
     /** 

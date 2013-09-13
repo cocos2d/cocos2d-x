@@ -56,8 +56,14 @@ class CC_DLL Image : public Object
 {
 public:
     friend class TextureCache;
-    
+    /**
+     * @js ctor
+     */
     Image();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Image();
 
     /** Supported formats for Image */
@@ -110,6 +116,8 @@ public:
     @param data  stream buffer which holds the image data.
     @param dataLen  data length expressed in (number of) bytes.
     @return true if loaded correctly.
+    * @js NA
+    * @lua NA
     */
     bool initWithImageData(const unsigned char * data, int dataLen);
 
@@ -124,6 +132,8 @@ public:
     @param alignMask  the test Alignment
     @param fontName   the name of the font used to draw the text. If nil, use the default system font.
     @param size       the font size, if 0, use the system default size.
+    * @js NA
+    * @lua NA
     */
     bool initWithString(
         const char *    text,

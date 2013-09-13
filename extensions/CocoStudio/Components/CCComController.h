@@ -36,15 +36,27 @@ protected:
     ComController(void);
     
 public:
-   virtual ~ComController(void);
-   virtual bool init();
-   virtual void onEnter();
-   virtual void onExit();
-   virtual void update(float delta);
-   virtual bool isEnabled() const;
-   virtual void setEnabled(bool b);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ComController(void);
+    virtual bool init();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onExit();
+    virtual void update(float delta);
+    virtual bool isEnabled() const;
+    virtual void setEnabled(bool b);
     
-   static ComController* create(void);
+    static ComController* create(void);
 };
 
 NS_CC_EXT_END
