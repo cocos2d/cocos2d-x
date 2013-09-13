@@ -166,8 +166,11 @@ bool EGLView::init(const char *viewName, float width, float height)
     setFrameSize(width, height);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width, _screenSize.height, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
+    
+    glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);
+    
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
@@ -278,18 +281,22 @@ void EGLView::setFrameSize(float width, float height)
 
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
-               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
-               (GLsizei)(w * _scaleX * _frameZoomFactor),
-               (GLsizei)(h * _scaleY * _frameZoomFactor));
+    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
+    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
+    glViewport((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
+               (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
+               (GLsizei)(w * _scaleX * frameZoomFactorX),
+               (GLsizei)(h * _scaleY * frameZoomFactorY));
 }
 
 void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
-              (GLint)(y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
-              (GLsizei)(w * _scaleX * _frameZoomFactor),
-              (GLsizei)(h * _scaleY * _frameZoomFactor));
+    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
+    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
+    glScissor((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
+               (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
+               (GLsizei)(w * _scaleX * frameZoomFactorX),
+               (GLsizei)(h * _scaleY * frameZoomFactorY));
 }
 
 EGLView* EGLView::getInstance()

@@ -72,7 +72,8 @@ protected:
 private:
     bool _captured;
     bool _supportTouch;
-    
+
+    int _frameBufferSize[2];
     float _frameZoomFactor;
     static EGLView* s_pEglView;
 public:
