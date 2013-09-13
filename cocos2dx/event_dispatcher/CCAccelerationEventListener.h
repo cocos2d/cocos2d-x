@@ -33,11 +33,15 @@ NS_CC_BEGIN
 class AccelerationEventListener : public EventListener
 {
 public:
-    static std::shared_ptr<AccelerationEventListener> create(std::function<void(Acceleration*, Event* event)> callback);
-
+    static AccelerationEventListener* create(std::function<void(Acceleration*, Event* event)> callback);
+    virtual AccelerationEventListener* clone() override;
+    
     ~AccelerationEventListener();
 private:
     AccelerationEventListener();
+    virtual bool checkAvaiable() override;
+    
+    bool init(std::function<void(Acceleration*, Event* event)> callback);
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;
 };
 

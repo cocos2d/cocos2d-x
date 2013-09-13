@@ -30,9 +30,8 @@
 
 NS_CC_BEGIN
 
-TouchEventListener::TouchEventListener(Touch::DispatchMode mode)
-: EventListener(TouchEvent::EVENT_TYPE, nullptr)
-, onTouchBegan(nullptr)
+TouchEventListener::TouchEventListener()
+: onTouchBegan(nullptr)
 , onTouchMoved(nullptr)
 , onTouchEnded(nullptr)
 , onTouchCancelled(nullptr)
@@ -41,8 +40,24 @@ TouchEventListener::TouchEventListener(Touch::DispatchMode mode)
 , onTouchesEnded(nullptr)
 , onTouchesCancelled(nullptr)
 , _needSwallow(false)
-, _dispatchMode(mode)
+, _dispatchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
+}
+
+TouchEventListener::~TouchEventListener()
+{
+    CCLOGINFO("In the destructor of TouchEventListener, %p", this);
+}
+
+bool TouchEventListener::init(Touch::DispatchMode mode)
+{
+    if (EventListener::init(TouchEvent::EVENT_TYPE, nullptr))
+    {
+        _dispatchMode = mode;
+        return true;
+    }
+    
+    return false;
 }
 
 void TouchEventListener::setSwallowTouches(bool needSwallow)
@@ -51,9 +66,17 @@ void TouchEventListener::setSwallowTouches(bool needSwallow)
     _needSwallow = needSwallow;
 }
 
-std::shared_ptr<TouchEventListener> TouchEventListener::create(Touch::DispatchMode mode)
+TouchEventListener* TouchEventListener::create(Touch::DispatchMode mode)
 {
-    std::shared_ptr<TouchEventListener> ret(new TouchEventListener(mode));
+    auto ret = new TouchEventListener();
+    if (ret && ret->init(mode))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 
@@ -85,23 +108,30 @@ bool TouchEventListener::checkAvaiable()
     return true;
 }
 
-std::shared_ptr<EventListener> TouchEventListener::clone()
+TouchEventListener* TouchEventListener::clone()
 {
-    std::shared_ptr<TouchEventListener> ret(new TouchEventListener(_dispatchMode));
-    
-    ret->onTouchBegan = onTouchBegan;
-    ret->onTouchMoved = onTouchMoved;
-    ret->onTouchEnded = onTouchEnded;
-    ret->onTouchCancelled = onTouchCancelled;
-    ret->onTouchesBegan = onTouchesBegan;
-    ret->onTouchesMoved = onTouchesMoved;
-    ret->onTouchesEnded = onTouchesEnded;
-    ret->onTouchesCancelled = onTouchesCancelled;
-    
-    ret->_claimedTouches = _claimedTouches;
-    ret->_dispatchMode = _dispatchMode;
-    ret->_needSwallow = _needSwallow;
-    
+    auto ret = new TouchEventListener();
+    if (ret && ret->init(_dispatchMode))
+    {
+        ret->autorelease();
+        
+        ret->onTouchBegan = onTouchBegan;
+        ret->onTouchMoved = onTouchMoved;
+        ret->onTouchEnded = onTouchEnded;
+        ret->onTouchCancelled = onTouchCancelled;
+        ret->onTouchesBegan = onTouchesBegan;
+        ret->onTouchesMoved = onTouchesMoved;
+        ret->onTouchesEnded = onTouchesEnded;
+        ret->onTouchesCancelled = onTouchesCancelled;
+        
+        ret->_claimedTouches = _claimedTouches;
+        ret->_dispatchMode = _dispatchMode;
+        ret->_needSwallow = _needSwallow;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 

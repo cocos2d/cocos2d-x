@@ -94,9 +94,9 @@ void EventDispatcher::registerEventListenerWithItem(EventListenerItem* item)
     listenerList->push_front(item);
 }
 
-int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr<EventListener> listener, Node* node)
+int EventDispatcher::registerEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
 {
-    CCASSERT(listener->_isRegistered, "The listener has been registered.");
+    CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
     if (!listener->checkAvaiable())
         return 0;
@@ -106,6 +106,7 @@ int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr
     item->node          = node;
     item->fixedPriority = 0;
     item->listener      = listener;
+    item->listener->retain();
     item->listener->_isRegistered = true;
 
     registerEventListenerWithItem(item);
@@ -116,9 +117,9 @@ int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr
     return item->id;
 }
 
-int EventDispatcher::registerEventListenerWithFixedPriority(std::shared_ptr<EventListener> listener, int fixedPriority)
+int EventDispatcher::registerEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
-    CCASSERT(listener->_isRegistered, "The listener has been registered.");
+    CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
     if (!listener->checkAvaiable())
         return 0;
@@ -128,6 +129,7 @@ int EventDispatcher::registerEventListenerWithFixedPriority(std::shared_ptr<Even
     item->node          = nullptr;
     item->fixedPriority = fixedPriority;
     item->listener      = listener;
+    item->listener->retain();
     item->listener->_isRegistered = true;
 
     registerEventListenerWithItem(item);
@@ -150,6 +152,7 @@ void EventDispatcher::unregisterEventListener(int listenerId)
 
                 if (_inDispatch == 0)
                 {
+                    (*itemIter)->listener->release();
                     delete (*itemIter);
                     iter->second->remove(*itemIter);
                 }
@@ -268,7 +271,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
     
     for (auto iter = touchListeners->begin(); iter != touchListeners->end(); ++iter)
     {
-        auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*iter)->listener);
+        TouchEventListener* touchEventListener = static_cast<TouchEventListener*>((*iter)->listener);
         
         if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
         {
@@ -309,12 +312,11 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                     continue;
              
                 event->setCurrentTarget((*oneByOneIter)->node);
-                CCLOG("touch target : %p, %s", (*oneByOneIter)->node, typeid(*(*oneByOneIter)->node).name());
                 
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
                 
-                auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*oneByOneIter)->listener);
+                auto touchEventListener = static_cast<TouchEventListener*>((*oneByOneIter)->listener);
                 TouchEvent::EventCode eventCode = event->getEventCode();
                 
                 if (eventCode == TouchEvent::EventCode::BEGAN)
@@ -399,7 +401,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
             
             event->setCurrentTarget((*allInOneIter)->node);
             
-            auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*allInOneIter)->listener);
+            auto touchEventListener = static_cast<TouchEventListener*>((*allInOneIter)->listener);
             
             switch (event->getEventCode())
             {
@@ -541,6 +543,7 @@ void EventDispatcher::removeListenersForEventType(const std::string& eventType)
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
+            (*iter)->listener->release();
             delete (*iter);
         }
         
@@ -561,6 +564,7 @@ void EventDispatcher::removeAllListeners()
     {
         for (auto iter = listenerItemIter->second->begin(); iter != listenerItemIter->second->end(); ++iter)
         {
+            (*iter)->listener->release();
             delete (*iter);
         }
         

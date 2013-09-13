@@ -27,16 +27,21 @@
 
 NS_CC_BEGIN
 
-std::shared_ptr<EventListener> EventListener::create(const std::string& eventType, std::function<void(Event*)> callback)
+EventListener* EventListener::create(const std::string& eventType, std::function<void(Event*)> callback)
 {
-    std::shared_ptr<EventListener> ret(new EventListener(eventType, callback));
+    EventListener* ret = new EventListener();
+    if (ret && ret->init(eventType, callback))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 
-EventListener::EventListener(const std::string& t, std::function<void(Event*)>callback)
-: onEvent(callback)
-, type(t)
-, _isRegistered(false)
+EventListener::EventListener()
 {}
     
 EventListener::~EventListener() 
@@ -44,14 +49,31 @@ EventListener::~EventListener()
 	CCLOGINFO("In the destructor of EventListener. %p", this);
 }
 
+bool EventListener::init(const std::string& t, std::function<void(Event*)>callback)
+{
+    onEvent = callback;
+    type = t;
+    _isRegistered = false;
+    
+    return true;
+}
+
 bool EventListener::checkAvaiable()
 { 
 	return (onEvent != nullptr);
 }
 
-std::shared_ptr<EventListener> EventListener::clone()
+EventListener* EventListener::clone()
 {
-    std::shared_ptr<EventListener> ret(new EventListener(type, onEvent));
+    EventListener* ret = new EventListener();
+    if (ret && ret->init(type, onEvent))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 

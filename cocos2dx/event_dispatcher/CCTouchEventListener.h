@@ -36,11 +36,14 @@ NS_CC_BEGIN
 class TouchEventListener : public EventListener
 {
 public:
-    static std::shared_ptr<TouchEventListener> create(Touch::DispatchMode mode);
-    virtual std::shared_ptr<EventListener> clone() override;
+    static TouchEventListener* create(Touch::DispatchMode mode);
+    virtual TouchEventListener* clone() override;
     
 private:
-    TouchEventListener(Touch::DispatchMode mode);
+    TouchEventListener();
+    bool init(Touch::DispatchMode mode);
+    
+    virtual ~TouchEventListener();
     virtual bool checkAvaiable() override;
     
 public:
