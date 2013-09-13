@@ -47,12 +47,12 @@ private:
     
     bool initDefinition(Font *font, const char *letters, int textureSize);
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
-    void addLetterDefinition(FontLetterDefinition &defToAdd);
+    void addLetterDefinition(const FontLetterDefinition &defToAdd);
     
     TextImage *                                     _textImages;
     std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinitionUTF16;
     float                                           _commonLineHeight;
-    static const int                                _DEFAUL_ATALS_TEXTURE_SIZE;
+    static const int                                DEFAUL_ATALS_TEXTURE_SIZE;
     
 };
 

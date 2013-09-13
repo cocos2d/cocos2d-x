@@ -17,7 +17,7 @@ Rect Paddle::getRect()
 Paddle* Paddle::createWithTexture(Texture2D* aTexture)
 {
     Paddle* pPaddle = new Paddle();
-    pPaddle->initWithTexture( aTexture );
+    pPaddle->initWithTexture(aTexture);
     pPaddle->autorelease();
 
     return pPaddle;
@@ -25,7 +25,7 @@ Paddle* Paddle::createWithTexture(Texture2D* aTexture)
 
 bool Paddle::initWithTexture(Texture2D* aTexture)
 {
-    if( Sprite::initWithTexture(aTexture) ) 
+    if( Sprite::initWithTexture(aTexture) )
     {
         _state = kPaddleStateUngrabbed;
     }
