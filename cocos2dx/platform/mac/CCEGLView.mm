@@ -158,12 +158,13 @@ EGLView::~EGLView()
     s_pEglView = nullptr;
 }
 
-bool EGLView::init(const char *viewName, float width, float height)
+bool EGLView::init(const char *viewName, float width, float height, float frameZoomFactor)
 {
     if(nullptr != _mainWindow) return true;
     
     setViewName(viewName);
     setFrameSize(width, height);
+    setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
     _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
