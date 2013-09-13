@@ -44,7 +44,14 @@ public:
     static void SetScreenOrientation(Tizen::Ui::Orientation orientation);
 
 public:
+    /**
+     * @js ctor
+     */
     OspApplication();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~OspApplication();
 
     Tizen::Ui::Controls::Form* getOspForm();

@@ -104,8 +104,14 @@ private:
 class CC_DLL TextPageDef
 {
 public:
-    
+    /**
+     * @js NA
+     */
      TextPageDef(int pageNum, int width, int height);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TextPageDef();
     
     void addLine(TextLineDef *theLine)      { _lines.push_back(theLine); }
@@ -139,8 +145,14 @@ private:
 class CC_DLL TextFontPagesDef
 {
 public:
-    
+    /**
+     * @js ctor
+     */
     TextFontPagesDef();
+    /**
+     * @js NA
+     * @lua NA
+     */
    ~TextFontPagesDef();
     
     void addPage(TextPageDef *newPage)         { _pages.push_back(newPage);    }
@@ -159,8 +171,14 @@ private:
 class CC_DLL TextImage
 {
 public:
-    
+    /**
+     * @js ctor
+     */
     TextImage();
+    /**
+     * @js NA
+     * @lua NA
+     */
    ~TextImage();
     
     bool initWithString(const char *text, int width, int height, Font* font, bool releaseRAWData = true);

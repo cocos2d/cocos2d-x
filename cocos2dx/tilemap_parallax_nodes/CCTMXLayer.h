@@ -77,8 +77,14 @@ class CC_DLL TMXLayer : public SpriteBatchNode
 public:
     /** creates a TMXLayer with an tileset info, a layer info and a map info */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    
+    /**
+     * @js ctor
+     */
     TMXLayer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXLayer();
 
     /** initializes a TMXLayer with a tileset info, a layer info and a map info */
@@ -148,7 +154,10 @@ public:
     inline const Size& getMapTileSize() const { return _mapTileSize; };
     inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
     
-    /** pointer to the map of tiles */
+    /** pointer to the map of tiles 
+     * @js NA
+     * @lua NA
+     */
     inline unsigned int* getTiles() const { return _tiles; };
     inline void setTiles(unsigned int* tiles) { _tiles = tiles; };
     

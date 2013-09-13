@@ -44,6 +44,10 @@ public:
 protected:
     
     FontFNT(CCBMFontConfiguration *theContfig) :  _configuration(theContfig) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FontFNT();
     
 private:

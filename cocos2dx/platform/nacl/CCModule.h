@@ -31,13 +31,19 @@ THE SOFTWARE.
 class CocosPepperModule : public pp::Module
 {
 public:
+    /**
+     * @js ctor
+     */
     CocosPepperModule() : pp::Module() {}
 
     virtual bool Init()
     {
         return glInitializePPAPI(get_browser_interface()) == GL_TRUE;
     }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CocosPepperModule() {}
 
     virtual pp::Instance* CreateInstance(PP_Instance instance)

@@ -46,7 +46,14 @@ class CC_DLL DrawNode : public Node
 public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
+    /**
+     * @js ctor
+     */
     DrawNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~DrawNode();
     
     virtual bool init();
@@ -57,17 +64,35 @@ public:
     /** draw a segment with a radius and color */
     void drawSegment(const Point &from, const Point &to, float radius, const Color4F &color);
     
-    /** draw a polygon with a fill color and line color */
+    /** draw a polygon with a fill color and line color
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var drawPolygon(var Arrayofpoints, var fillColor, var width, var borderColor)
+    * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
+    * @endcode
+    */
     void drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
-    
+    /**
+    * @js NA
+    * @lua NA
+    */
     const BlendFunc& getBlendFunc() const;
+    /**
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var setBlendFunc(var src, var dst)
+    * @endcode
+    * @lua NA
+    */
     void setBlendFunc(const BlendFunc &blendFunc);
     
     /** listen the event that coming to foreground on Android
-     */
+    * @js NA
+    * @lua NA
+    */
     void listenBackToForeground(Object *obj);
 
     // Overrides

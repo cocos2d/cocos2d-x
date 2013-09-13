@@ -61,8 +61,14 @@ public:
      The tile file will be loaded using the TextureMgr.
      */
     static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-    
+    /**
+     * @js ctor
+     */
     TileMapAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TileMapAtlas();
     
     /** initializes a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
