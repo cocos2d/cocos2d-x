@@ -81,6 +81,10 @@ public:
     void setPercentage(float fPercentage);
     void setSprite(Sprite *pSprite);
     void setType(Type type);
+    /**
+     * @js setReverseDirection
+     * @lua setReverseDirection
+     */
     void setReverseProgress(bool reverse);
 
     inline bool isReverseDirection() { return _reverseDirection; };

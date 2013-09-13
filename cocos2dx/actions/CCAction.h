@@ -50,7 +50,10 @@ public:
     Action(void);
 
     virtual ~Action(void);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description() const;
 
 	/** returns a clone of action */

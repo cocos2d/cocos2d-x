@@ -42,9 +42,20 @@ NS_CC_BEGIN
 class CC_DLL Thread
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     Thread() : _autoReleasePool(nullptr) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Thread();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     void createAutoreleasePool();
 
 private:

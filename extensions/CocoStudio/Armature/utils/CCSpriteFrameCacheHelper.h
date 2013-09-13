@@ -55,6 +55,10 @@ public:
 
 private:
     SpriteFrameCacheHelper();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~SpriteFrameCacheHelper();
 
     std::map<std::string, std::string> _display2ImageMap;

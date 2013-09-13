@@ -53,6 +53,10 @@ public:
     static ControlColourPicker* create();
 
     ControlColourPicker();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlColourPicker();
 
     virtual bool init();

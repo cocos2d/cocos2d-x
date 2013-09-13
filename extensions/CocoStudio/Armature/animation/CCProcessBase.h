@@ -51,6 +51,10 @@ class  ProcessBase : public Object
 {
 public:
     ProcessBase(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ProcessBase(void);
 
     /**

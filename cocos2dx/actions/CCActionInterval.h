@@ -93,7 +93,13 @@ class CC_DLL Sequence : public ActionInterval
 public:
     /** helper constructor to create an array of sequenceable actions */
     static Sequence* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** helper constructor to create an array of sequenceable actions given an array */
+    /** helper constructor to create an array of sequenceable actions given an array
+     * @code
+     * When this funtion bound to the js or lua,the input params changed
+     * in js  :var   create(var   object1,var   object2, ...)
+     * in lua :local create(local object1,local object2, ...)
+     * @endcode
+     */
     static Sequence* create(Array *arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
     static Sequence* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
@@ -220,7 +226,13 @@ protected:
 class CC_DLL Spawn : public ActionInterval
 {
 public:
-    /** helper constructor to create an array of spawned actions */
+    /** helper constructor to create an array of spawned actions 
+     * @code
+     * When this funtion bound to the js or lua,the input params changed
+     * in js  :var   create(var   object1,var   object2, ...)
+     * in lua :local create(local object1,local object2, ...)
+     * @endcode
+     */
     static Spawn* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** helper constructor to create an array of spawned actions */
@@ -477,7 +489,13 @@ typedef struct _ccBezierConfig {
 class CC_DLL BezierBy : public ActionInterval
 {
 public:
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static BezierBy* create(float t, const ccBezierConfig& c);
 
     /** initializes the action with a duration and a bezier configuration */
@@ -503,7 +521,13 @@ protected:
 class CC_DLL BezierTo : public BezierBy
 {
 public:
-    /** creates the action with a duration and a bezier configuration */
+    /** creates the action with a duration and a bezier configuration 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var create(var t,var table)
+     * in lua: lcaol create(local t, local table)
+     * @endcode
+     */
     static BezierTo* create(float t, const ccBezierConfig& c);
     bool initWithDuration(float t, const ccBezierConfig &c);
 

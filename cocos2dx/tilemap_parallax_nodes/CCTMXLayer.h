@@ -148,7 +148,10 @@ public:
     inline const Size& getMapTileSize() const { return _mapTileSize; };
     inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
     
-    /** pointer to the map of tiles */
+    /** pointer to the map of tiles 
+     * @js NA
+     * @lua NA
+     */
     inline unsigned int* getTiles() const { return _tiles; };
     inline void setTiles(unsigned int* tiles) { _tiles = tiles; };
     

@@ -50,6 +50,10 @@ public:
     static PhysicsDebugNode* create(cpSpace *space);
 
     PhysicsDebugNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~PhysicsDebugNode();
     
 

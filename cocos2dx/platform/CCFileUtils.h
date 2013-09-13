@@ -176,6 +176,8 @@ public:
      * @param filename The plist file name.
      *
      @since v2.1
+     * @js loadFilenameLookup
+     * @lua loadFilenameLookup
      */
     virtual void loadFilenameLookupDictionaryFromFile(const std::string &filename);
     
@@ -204,6 +206,8 @@ public:
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
      *  @see getSearchResolutionsOrder(void), fullPathForFilename(const char*).
      *  @since v2.1
+     *  In js:var setSearchResolutionsOrder(var jsval)
+     *  @lua NA
      */
     virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
 
@@ -220,6 +224,7 @@ public:
      *
      *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
      *  @since v2.1
+     *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
@@ -239,6 +244,8 @@ public:
      *  @param searchPaths The array contains search paths.
      *  @see fullPathForFilename(const char*)
      *  @since v2.1
+     *  In js:var setSearchPaths(var jsval);
+     *  @lua NA
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
@@ -254,6 +261,7 @@ public:
      *  
      *  @return The array of search paths.
      *  @see fullPathForFilename(const char*).
+     *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths() const;
 

@@ -47,8 +47,15 @@ class CC_DLL  TouchHandler : public Object
 public:
     virtual ~TouchHandler(void);
 
-    /** delegate */
+    /** delegate 
+     * @js NA
+     * @lua NA
+     */
     TouchDelegate* getDelegate();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setDelegate(TouchDelegate *pDelegate);
 
     /** priority */

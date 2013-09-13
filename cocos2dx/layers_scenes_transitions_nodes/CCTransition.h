@@ -79,6 +79,10 @@ public:
     static TransitionScene * create(float t, Scene *scene);
 
     TransitionScene();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionScene();
 
     /** initializes a transition with duration and incoming scene */
@@ -94,7 +98,15 @@ public:
     // Overrides
     //
     virtual void draw() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
     virtual void cleanup() override;
 
@@ -145,6 +157,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -162,6 +178,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -185,6 +205,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -248,6 +272,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     
 protected:
@@ -303,6 +331,10 @@ public:
     static TransitionSlideInT* create(float t, Scene* scene);
 
     TransitionSlideInT();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInT();
 
     /** initializes the scenes */
@@ -323,6 +355,10 @@ public:
     static TransitionShrinkGrow* create(float t, Scene* scene);
 
     TransitionShrinkGrow();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionShrinkGrow();
 
     //
@@ -343,11 +379,19 @@ public:
     static TransitionFlipX* create(float t, Scene* s);
 
     TransitionFlipX();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipX();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -362,11 +406,19 @@ public:
     static TransitionFlipY* create(float t, Scene* s);
 
     TransitionFlipY();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipY();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -381,11 +433,19 @@ public:
     static TransitionFlipAngular* create(float t, Scene* s);
 
     TransitionFlipAngular();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipAngular();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -400,11 +460,19 @@ public:
     static TransitionZoomFlipX* create(float t, Scene* s);
 
     TransitionZoomFlipX();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipX();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -419,11 +487,19 @@ public:
     static TransitionZoomFlipY* create(float t, Scene* s);
 
     TransitionZoomFlipY();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipY();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -438,11 +514,19 @@ public:
     static TransitionZoomFlipAngular* create(float t, Scene* s);
 
     TransitionZoomFlipAngular();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipAngular();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -459,6 +543,10 @@ public:
     static TransitionFade* create(float duration,Scene* scene);
 
     TransitionFade();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFade();
 
     /** initializes the transition with a duration and with an RGB color */
@@ -468,7 +556,15 @@ public:
     // Overrides
     //
     bool initWithDuration(float t,Scene* scene);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit();
 
 protected:
@@ -486,13 +582,25 @@ public :
     static TransitionCrossFade* create(float t, Scene* scene);
 
     TransitionCrossFade();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionCrossFade();
 
     //
     // Overrides
     //
     virtual void draw() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
 
 };
@@ -506,11 +614,19 @@ public :
     static TransitionTurnOffTiles* create(float t, Scene* scene);
 
     TransitionTurnOffTiles();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionTurnOffTiles();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 
@@ -527,6 +643,10 @@ public:
     static TransitionSplitCols* create(float t, Scene* scene);
 
     TransitionSplitCols();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSplitCols();
 
     virtual ActionInterval* action(void);
@@ -534,6 +654,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 };
@@ -547,6 +671,10 @@ public:
     static TransitionSplitRows* create(float t, Scene* scene);
 
     TransitionSplitRows();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSplitRows();
 
     //
@@ -564,12 +692,20 @@ public:
     static TransitionFadeTR* create(float t, Scene* scene);
 
     TransitionFadeTR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeTR();
     virtual ActionInterval* actionWithSize(const Size& size);
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
 
@@ -586,6 +722,10 @@ public:
     static TransitionFadeBL* create(float t, Scene* scene);
 
     TransitionFadeBL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeBL();
 
     //
@@ -604,6 +744,10 @@ public:
     static TransitionFadeUp* create(float t, Scene* scene);
 
     TransitionFadeUp();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeUp();
 
     //
@@ -621,6 +765,10 @@ public:
     static TransitionFadeDown* create(float t, Scene* scene);
 
     TransitionFadeDown();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeDown();
 
     //

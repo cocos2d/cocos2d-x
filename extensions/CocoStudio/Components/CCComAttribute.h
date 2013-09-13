@@ -36,6 +36,10 @@ class ComAttribute : public cocos2d::Component
 {
 protected:
     ComAttribute(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComAttribute(void);
     
 public:

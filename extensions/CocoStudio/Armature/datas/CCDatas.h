@@ -66,6 +66,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(BaseData)
 public:
     BaseData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~BaseData(void);
 
     /*
@@ -125,6 +129,10 @@ public:
     static const char *changeDisplayToTexture(const char *);
 public:
     DisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~DisplayData(void);
 
     DisplayType displayType;	//! mark which type your display is
@@ -138,6 +146,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
 public:
     SpriteDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteDisplayData();
 
     inline void setParam(const char *displayName)
@@ -164,6 +176,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
 public:
     ArmatureDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ArmatureDisplayData();
 
     inline void setParam(const char *displayName)
@@ -190,6 +206,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
 public:
     ParticleDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleDisplayData() {};
 
     void setParam(const char *plist)
@@ -209,6 +229,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(ShaderDisplayData)
 public:
     ShaderDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ShaderDisplayData() {};
 
     inline void setParam(const char *vert, const char *frag)
@@ -235,6 +259,10 @@ public:
     CS_CREATE_NO_PARAM(BoneData)
 public:
     BoneData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~BoneData(void);
 
     virtual bool init();
@@ -259,6 +287,10 @@ public:
     CS_CREATE_NO_PARAM(ArmatureData)
 public:
     ArmatureData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ArmatureData();
 
     bool init();
@@ -277,6 +309,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(FrameData)
 public:
     FrameData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~FrameData();
 
     virtual void copy(FrameData *frameData);
@@ -306,6 +342,10 @@ public:
     CS_CREATE_NO_PARAM(MovementBoneData)
 public:
     MovementBoneData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~MovementBoneData(void);
 
     virtual bool init();
@@ -328,6 +368,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(MovementData)
 public:
     MovementData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~MovementData(void);
 
     void addMovementBoneData(MovementBoneData *movBoneData);
@@ -378,6 +422,10 @@ public:
     CS_CREATE_NO_PARAM_NO_INIT(AnimationData)
 public:
     AnimationData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~AnimationData(void);
 
     void release();
@@ -414,6 +462,10 @@ public:
     CS_CREATE_NO_PARAM(ContourData)
 public:
     ContourData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ContourData(void);
 
     virtual bool init();
@@ -433,6 +485,10 @@ public:
     CS_CREATE_NO_PARAM(TextureData)
 public:
     TextureData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TextureData(void);
 
     virtual bool init();

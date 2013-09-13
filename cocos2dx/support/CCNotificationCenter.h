@@ -128,24 +128,56 @@ public:
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
      *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
+     * @js NA
+     * @lua NA
      */
     NotificationObserver(Object *target, 
                            SEL_CallFuncO selector,
                            const char *name,
                            Object *sender);
 
-    /** NotificationObserver destructor function */
+    /** NotificationObserver destructor function 
+     * @js NA
+     * @lua NA
+     */
     ~NotificationObserver();      
     
-    /** Invokes the callback function of this observer */
+    /** Invokes the callback function of this observer 
+     * @js NA
+     * @lua NA
+     */
     void performSelector(Object *sender);
     
     // Getters / Setters
+    /**
+     * @js NA
+     * @lua NA
+     */
     Object* getTarget() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     SEL_CallFuncO getSelector() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* getName() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     Object* getSender() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     int getHandler() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setHandler(int handler);
 
 private:

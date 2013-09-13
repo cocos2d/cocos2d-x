@@ -21,6 +21,10 @@ class CCBAnimationManager : public Object
 public:
     bool _jsControlled;
     CCBAnimationManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBAnimationManager();
 
 
@@ -83,11 +87,16 @@ public:
     void runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
     void runAnimationsForSequenceNamed(const char *pName);
     void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton);
-
+    /**
+     * when this function bound to js ,the second param are callfunc_selector
+     * @lua NA
+     */
     void setAnimationCompletedCallback(Object *target, SEL_CallFunc callbackFunc);
 
     void debug();
-    
+    /**
+     * @js setCallFuncForJSCallbackNamed
+     */
     void setCallFunc(CallFunc *callFunc, const std::string &callbackNamed);
 
     Object* actionForCallbackChannel(CCBSequenceProperty* channel);
@@ -142,7 +151,10 @@ class CCBSetSpriteFrame : public ActionInstant
 public:
     /** creates a Place action with a position */
     static CCBSetSpriteFrame* create(SpriteFrame *pSpriteFrame);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBSetSpriteFrame();
     
     bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
@@ -161,6 +173,10 @@ class CCBSoundEffect : public ActionInstant
 {
 public:
     static CCBSoundEffect* actionWithSoundFile(const std::string &file, float pitch, float pan, float gain);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBSoundEffect();
     bool initWithSoundFile(const std::string &file, float pitch, float pan, float gain);
 

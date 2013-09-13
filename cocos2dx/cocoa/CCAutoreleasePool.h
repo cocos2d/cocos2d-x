@@ -47,7 +47,15 @@ class CC_DLL AutoreleasePool : public Object
      */
     Array   *_managedObjectArray;
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     AutoreleasePool();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~AutoreleasePool();
 
     /**
@@ -58,6 +66,8 @@ public:
      * for each time it was added.
      *
      * @param object    The object to add to the pool.
+     * @js NA
+     * @lua NA
      */
     void addObject(Object *object);
 
@@ -65,6 +75,8 @@ public:
      * Remove a given object from this pool.
      *
      * @param object    The object to be removed from the pool.
+     * @js NA
+     * @lua NA
      */
     void removeObject(Object *object);
 
@@ -73,6 +85,8 @@ public:
      *
      * Object::release() will be called for each time the managed object is
      * added to the pool.
+     * @js NA
+     * @lua NA
      */
     void clear();
 };
@@ -84,19 +98,38 @@ class CC_DLL PoolManager
 
     AutoreleasePool *getCurReleasePool();
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     static PoolManager* sharedPoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
     static void purgePoolManager();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     PoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~PoolManager();
 
     /**
      * Clear all the AutoreleasePool on the pool stack.
+     * @js NA
+     * @lua NA
      */
     void finalize();
 
     /**
      * Push a new AutoreleasePool to the pool stack.
+     * @js NA
+     * @lua NA
      */
     void push();
 
@@ -107,6 +140,8 @@ public:
      * the stack.
      *
      * The AutoreleasePool being poped is destructed.
+     * @js NA
+     * @lua NA
      */
     void pop();
 
@@ -116,6 +151,8 @@ public:
      * @param object    The object to be removed.
      *
      * @see AutoreleasePool::removeObject
+     * @js NA
+     * @lua NA
      */
     void removeObject(Object *object);
 
@@ -125,9 +162,14 @@ public:
      * @param object    The object to add.
      *
      * @see AutoreleasePool::addObject
+     * @js NA
+     * @lua NA
      */
     void addObject(Object *object);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     friend class AutoreleasePool;
 };
 

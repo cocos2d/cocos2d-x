@@ -52,6 +52,10 @@ public:
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
 
     ControlStepper();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlStepper();
 
     bool initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite);

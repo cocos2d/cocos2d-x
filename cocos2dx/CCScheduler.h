@@ -50,7 +50,10 @@ public:
     static Timer* create(Object *target, SEL_SCHEDULE selector);
     /** Allocates a timer with a target, a selector and an interval in seconds. */
     static Timer* create(Object *target, SEL_SCHEDULE selector, float seconds);
-    /** Allocates a timer with a script callback function and an interval in seconds. */
+    /** Allocates a timer with a script callback function and an interval in seconds. 
+     * @js NA
+     * @lua NA
+     */
     static Timer* createWithScriptHandler(int nHandler, float seconds);
 
     CC_DEPRECATED_ATTRIBUTE static Timer* timerWithTarget(Object *target, SEL_SCHEDULE selector) { return Timer::create(target, selector); }
@@ -70,7 +73,10 @@ public:
     float getInterval() const;
     /** set interval in seconds */
     void setInterval(float interval);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     SEL_SCHEDULE getSelector() const;
 
     /** triggers the timer */
@@ -122,6 +128,10 @@ public:
     static const int PRIORITY_NON_SYSTEM_MIN;
     
     Scheduler();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Scheduler(void);
 
     inline float getTimeScale(void) { return _timeScale; }
@@ -136,6 +146,8 @@ public:
 
     /** 'update' the scheduler.
      You should NEVER call this method, unless you know what you are doing.
+     * @js NA
+     * @lua NA
      */
     void update(float dt);
 
@@ -220,6 +232,8 @@ public:
 
     /** Returns whether or not the target is paused
     @since v1.0.0
+    * In js: var isTargetPaused(var jsObject)
+    * @lua NA 
     */
     bool isTargetPaused(Object *target);
 

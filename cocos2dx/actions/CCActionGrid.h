@@ -66,19 +66,34 @@ public:
 
     /** returns the grid */
     virtual GridBase* getGrid(void);
-    /** returns the vertex than belongs to certain position in the grid */
+    /** returns the vertex than belongs to certain position in the grid 
+     * @js NA
+     * @lua NA
+     */
     Vertex3F getVertex(const Point& position) const;
 
-    /** @deprecated Use getVertex() instead */
+    /** @deprecated Use getVertex() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE inline Vertex3F vertex(const Point& position) { return getVertex(position); }
 
-    /** returns the non-transformed vertex than belongs to certain position in the grid */
+    /** returns the non-transformed vertex than belongs to certain position in the grid 
+     * @js NA
+     * @lua NA
+     */
     Vertex3F getOriginalVertex(const Point& position) const;
 
-    /** @deprecated Use getOriginalVertex() instead */
+    /** @deprecated Use getOriginalVertex() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE inline Vertex3F originalVertex(const Point& position) { return getOriginalVertex(position); }
 
-    /** sets a new vertex to a certain position of the grid */
+    /** sets a new vertex to a certain position of the grid 
+     * @js NA
+     * @lua NA
+     */
     void setVertex(const Point& position, const Vertex3F& vertex);
 
     // Overrides
@@ -89,22 +104,40 @@ public:
 class CC_DLL TiledGrid3DAction : public GridAction
 {
 public:
-    /** creates the action with size and duration */
+    /** creates the action with size and duration 
+     * @js NA
+     * @lua NA
+     */
     static TiledGrid3DAction* create(float duration, const Size& gridSize);
 
-    /** returns the tile that belongs to a certain position of the grid */
+    /** returns the tile that belongs to a certain position of the grid 
+     * @js NA
+     * @lua NA
+     */
     Quad3 getTile(const Point& position) const;
 
-    /** @deprecated Use getTile() instead */
+    /** @deprecated Use getTile() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& position) { return getTile(position); }
 
-    /** returns the non-transformed tile that belongs to a certain position of the grid */
+    /** returns the non-transformed tile that belongs to a certain position of the grid 
+     * @js NA
+     * @lua NA
+     */
     Quad3 getOriginalTile(const Point& position) const;
 
-    /** @deprecated Use getOriginalTile() instead */
+    /** @deprecated Use getOriginalTile() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& position) { return getOriginalTile(position); }
 
-    /** sets a new tile to a certain position of the grid */
+    /** sets a new tile to a certain position of the grid 
+     * @js NA
+     * @lua NA
+     */
     void setTile(const Point& position, const Quad3& coords);
 
     /** returns the grid */
