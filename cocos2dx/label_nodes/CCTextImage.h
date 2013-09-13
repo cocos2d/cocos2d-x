@@ -43,12 +43,12 @@ class CC_DLL GlyphDef
 public:
     
     GlyphDef() : _validGlyph(false)                                     {   /*do nothing*/                              }
-    GlyphDef(unsigned short int letterUTF8, Rect &rect)                 { _gliphRect = rect; _uTF16Letter = letterUTF8; }
+    GlyphDef(unsigned short int letterUTF8, const Rect &rect)           { _gliphRect = rect; _uTF16Letter = letterUTF8; }
     
     void setUTF16Letter(unsigned short int letterUTF8)                  { _uTF16Letter  = letterUTF8;   }
-    void setRect(Rect & theRect)                                        { _gliphRect = theRect;         }
+    void setRect(const Rect & theRect)                                  { _gliphRect = theRect;         }
     unsigned short int getUTF8Letter()                                  { return _uTF16Letter;          }
-    Rect &  getRect()                                                   { return _gliphRect;            }
+    const Rect &  getRect() const                                       { return _gliphRect;            }
     void    setPadding(float padding)                                   { _padding = padding;           }
     float   getPadding()                                                { return _padding;              }
     void    setCommonHeight(float commonHeight)                         { _commonHeight = commonHeight; }
@@ -77,14 +77,14 @@ public:
     
     TextLineDef(float x, float y, float width, float height);
     
-    float getX()        { return _x;        }
-    float getY()        { return _y;        }
-    float getWidth()    { return _width;    }
-    float getHeight()   { return _height;   }
+    float getX() const        { return _x;        }
+    float getY() const        { return _y;        }
+    float getWidth() const    { return _width;    }
+    float getHeight() const   { return _height;   }
     
-    void  addGlyph(GlyphDef theGlyph) { _glyphs.push_back(theGlyph);  }
-    int   getNumGlyph()               { return _glyphs.size();        }
-    GlyphDef & getGlyphAt(int index)  { return _glyphs[index];        }
+    void  addGlyph(GlyphDef theGlyph)               { _glyphs.push_back(theGlyph);  }
+    int   getNumGlyph()  const                      { return _glyphs.size();        }
+    const GlyphDef & getGlyphAt(int index) const    { return _glyphs[index];        }
     
 private:
     
@@ -113,13 +113,13 @@ public:
     ~TextPageDef();
     
     void addLine(TextLineDef *theLine)      { _lines.push_back(theLine); }
-    int  getNumLines()                      { return _lines.size();      }
-    TextLineDef * getLineAt(int index)      { return _lines[index];      }
-    int getWidth()                          { return _width;             }
-    int getHeight()                         { return _height;            }
-    int getPageNumber()                     { return _pageNum;           }
-    void setPageData(unsigned char *pData)  { _pageData = pData;         }
-    unsigned char * getPageData()           { return _pageData;          }
+    int  getNumLines() const                { return _lines.size();      }
+    TextLineDef * getLineAt(int index) const        { return _lines[index];      }
+    int getWidth() const                            { return _width;             }
+    int getHeight() const                           { return _height;            }
+    int getPageNumber() const                       { return _pageNum;           }
+    void setPageData(unsigned char *data)           { _pageData = data;          }
+    const unsigned char * getPageData() const       { return _pageData;          }
     Texture2D     *getPageTexture();
     void preparePageTexture(bool releaseRAWData = true);
     
@@ -151,9 +151,9 @@ public:
      */
    ~TextFontPagesDef();
     
-    void addPage(TextPageDef *newPage)      { _pages.push_back(newPage);    }
-    int  getNumPages()                      { return _pages.size();         }
-    TextPageDef* getPageAt(int index)       { return _pages[index];         }
+    void addPage(TextPageDef *newPage)         { _pages.push_back(newPage);    }
+    int  getNumPages()  const                  { return _pages.size();         }
+    TextPageDef* getPageAt(int index) const    { return _pages[index];         }
     
 private:
     
@@ -175,16 +175,16 @@ public:
      */
    ~TextImage();
     
-    bool initWithString(const char *text, int nWidth, int nHeight, Font* font, bool releaseRAWData = true);
+    bool initWithString(const char *text, int width, int height, Font* font, bool releaseRAWData = true);
     
-    TextFontPagesDef  * getPages()    { return _fontPages; }
-    Font              * getFont()     { return _font;      }
+    TextFontPagesDef  * getPages()  const  { return _fontPages; }
+    Font              * getFont() const    { return _font;      }
     
 private:
     
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
-    bool generateTextGlyphs(const char * pText);
+    bool generateTextGlyphs(const char * text);
     int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
     unsigned char * preparePageGlyphData(TextPageDef *thePage);

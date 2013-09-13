@@ -62,11 +62,11 @@ public:
     bool getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontLetterDefinition &outDefinition);
     
     void  addTexture(Texture2D &texture, int slot);
-    float getCommonLineHeight();
+    float getCommonLineHeight() const;
     void  setCommonLineHeight(float newHeight);
     
-    Texture2D           & getTexture(int slot);
-    Font                & getFont();
+    Texture2D                 & getTexture(int slot);
+    Font                      & getFont() const;
     
 private:
     

@@ -31,10 +31,10 @@ FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* fntFilePath, int fo
 
 FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
 {
-    Font *pFont = Font::createWithFNT(fntFilePath);
+    Font *font = Font::createWithFNT(fntFilePath);
     
-    if(pFont)
-        return pFont->createFontAtlas();
+    if(font)
+        return font->createFontAtlas();
     else
         return nullptr;
 }

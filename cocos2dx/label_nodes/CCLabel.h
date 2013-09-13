@@ -38,7 +38,6 @@ enum class GlyphCollection {
     NEHE,
     ASCII,
     CUSTOM
-    
 };
 
 //fwd
@@ -52,79 +51,79 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 public:
     
     // static create
-    static Label* createWithTTF( const char* label, const char* fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0 );
+    static Label* createWithTTF(const char* label, const char* fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0);
     
-    static Label* createWithBMFont( const char* label, const char* bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0 );
+    static Label* createWithBMFont(const char* label, const char* bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
     
     bool setText(const char *stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
     
-    virtual void setString(const char *stringToRender);
+    virtual void setString(const char *stringToRender) override;
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
-    virtual void setScale(float scale);
-    virtual void setScaleX(float scaleX);
-    virtual void setScaleY(float scaleY);
+    virtual void setScale(float scale) override;
+    virtual void setScaleX(float scaleX) override;
+    virtual void setScaleY(float scaleY) override;
 
     // RGBAProtocol
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    virtual const Color3B& getColor(void) const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual unsigned char  getOpacity() const;
-    virtual unsigned char  getDisplayedOpacity() const;
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual bool isCascadeOpacityEnabled() const override;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
+    virtual void setColor(const Color3B& color) override;
+    virtual void updateDisplayedColor(const Color3B& parentColor) override;
+    virtual bool isCascadeColorEnabled() const override;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
+    virtual const Color3B& getColor(void) const override;
+    virtual const Color3B& getDisplayedColor() const override;
+    virtual unsigned char  getOpacity() const override;
+    virtual unsigned char  getDisplayedOpacity() const override;
     
      // CCLabelTextFormat protocol implementation
-    virtual Sprite *                    getSpriteChild(int ID);
-    virtual Array  *                    getChildrenLetters();
-    virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint);
-    virtual float                       getLetterPosXLeft( Sprite* sp );
-    virtual float                       getLetterPosXRight( Sprite* sp );
+    virtual Sprite *                    getSpriteChild(int ID) const override;
+    virtual Array  *                    getChildrenLetters() const override;
+    virtual Sprite *                    getSpriteForChar(unsigned short int theChar, int spriteIndexHint) override;
+    virtual float                       getLetterPosXLeft( Sprite* sp ) const override;
+    virtual float                       getLetterPosXRight( Sprite* sp ) const override;
 
     
     // font related stuff
-    virtual int                         getCommonLineHeight();
-    virtual int                         getKerningForCharsPair(unsigned short first, unsigned short second);
-    virtual int                         getXOffsetForChar(unsigned short c);
-    virtual int                         getYOffsetForChar(unsigned short c);
-    virtual int                         getAdvanceForChar(unsigned short c, int hintPositionInString);
-    virtual Rect                        getRectForChar(unsigned short c) ;
+    virtual int                         getCommonLineHeight() const override;
+    virtual int                         getKerningForCharsPair(unsigned short first, unsigned short second) const override;
+    virtual int                         getXOffsetForChar(unsigned short c) const override;
+    virtual int                         getYOffsetForChar(unsigned short c) const override;
+    virtual int                         getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
+    virtual Rect                        getRectForChar(unsigned short c) const override;
     
     // string related stuff
-    virtual int                         getStringNumLines();
-    virtual int                         getStringLenght();
-    virtual unsigned short              getCharAtStringPosition(int position);
-    virtual unsigned short *            getUTF8String();
-    virtual void                        assignNewUTF8String(unsigned short *newString);
-    virtual TextHAlignment              getTextAlignment();
+    virtual int                         getStringNumLines() const override;
+    virtual int                         getStringLenght() const override;
+    virtual unsigned short              getCharAtStringPosition(int position) const override;
+    virtual unsigned short *            getUTF8String() const override;
+    virtual void                        assignNewUTF8String(unsigned short *newString) override;
+    virtual TextHAlignment              getTextAlignment() const override;
     
     // label related stuff
-    virtual float                       getMaxLineWidth() ;
-    virtual bool                        breakLineWithoutSpace();
-    virtual Size                        getLabelContentSize();
-    virtual void                        setLabelContentSize(const Size &newSize);
+    virtual float                       getMaxLineWidth() const override;
+    virtual bool                        breakLineWithoutSpace() const override;
+    virtual Size                        getLabelContentSize() const override;
+    virtual void                        setLabelContentSize(const Size &newSize) override;
     
     // carloX
     const char * getString() const { return "not implemented"; }
     
 private:
     
-    Label(FontAtlas *pAtlas, TextHAlignment alignment);
+    Label(FontAtlas *atlas, TextHAlignment alignment);
     /**
      * @js NA
      * @lua NA
      */
    ~Label();
     
-    static Label* createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
+    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
     
     bool init();
     
@@ -138,8 +137,8 @@ private:
     void resetCurrentString();
     
     Sprite * getSprite();
-    Sprite * createNewSpriteFromLetterDefinition(FontLetterDefinition &theDefinition, Texture2D *theTexture);
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    Sprite * createNewSpriteFromLetterDefinition(const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
     Sprite * getSpriteForLetter(unsigned short int newLetter);
     Sprite * updateSpriteForLetter(Sprite *spriteToUpdate, unsigned short int newLetter);
     
