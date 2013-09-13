@@ -74,7 +74,7 @@ void CCBaseData::copy(const CCBaseData *node )
 }
 
 
-void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
+void CCBaseData::subtract(CCBaseData *from, CCBaseData *to, bool limit)
 {
     x = to->x - from->x;
     y = to->y - from->y;
@@ -98,23 +98,27 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to)
         isUseColorInfo = false;
     }
 
-    if (skewX > M_PI)
-    {
-        skewX -= (float)CC_DOUBLE_PI;
-    }
-    if (skewX < -M_PI)
-    {
-        skewX += (float)CC_DOUBLE_PI;
-    }
+	if (limit)
+	{
+		if (skewX > M_PI)
+		{
+			skewX -= (float)CC_DOUBLE_PI;
+		}
+		if (skewX < -M_PI)
+		{
+			skewX += (float)CC_DOUBLE_PI;
+		}
 
-    if (skewY > M_PI)
-    {
-        skewY -= (float)CC_DOUBLE_PI;
-    }
-    if (skewY < -M_PI)
-    {
-        skewY += (float)CC_DOUBLE_PI;
-    }
+		if (skewY > M_PI)
+		{
+			skewY -= (float)CC_DOUBLE_PI;
+		}
+		if (skewY < -M_PI)
+		{
+			skewY += (float)CC_DOUBLE_PI;
+		}
+	}
+	
 
     if (to->tweenRotate)
     {
