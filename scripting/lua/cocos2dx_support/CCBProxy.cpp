@@ -142,7 +142,7 @@ void CCBProxy::setCallback(Node* node,int handle, int controlEvents)
     {
         MenuItem *menuItem = dynamic_cast<MenuItem*>(node);
         if (nullptr != menuItem) {
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)menuItem, handle, ScriptHandlerMgr::kMenuClickHandler);
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)menuItem, handle, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
         }
     }
     else  if (NULL != dynamic_cast<Control*>(node))
@@ -154,8 +154,8 @@ void CCBProxy::setCallback(Node* node,int handle, int controlEvents)
             {
                 if ((controlEvents & (1 << i)))
                 {
-                    int handlerevent  = ScriptHandlerMgr::kControlTouchDownHandler + i;
-                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)control, handle, handlerevent);
+                    ScriptHandlerMgr::HandlerType handlerType = ScriptHandlerMgr::HandlerType((int)ScriptHandlerMgr::HandlerType::CONTROL_TOUCH_DOWN + i);
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)control, handle, handlerType);
                 }
             }
         }
