@@ -35,18 +35,19 @@ class ComRender : public cocos2d::Component
 {
 protected:
     ComRender(void);
-    ComRender(cocos2d::Node *node, const char *comName);
+    ComRender(Node *node, const char *comName);
     virtual ~ComRender(void);
     
 public:
    virtual void onEnter();
    virtual void onExit();
-   cocos2d::Node* getNode();
+   void setNode(Node *pNode);
+   Node* getNode() const;
 
-   static ComRender* create(cocos2d::Node *pNode, const char *comName);
+   static ComRender* create(Node *pNode, const char *comName);
 
 private:
-   cocos2d::Node *_render;
+   Node *_render;
 };
 
 NS_CC_EXT_END

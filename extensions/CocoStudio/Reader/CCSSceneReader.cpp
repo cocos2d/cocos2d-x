@@ -52,8 +52,19 @@ NS_CC_EXT_BEGIN
 			  std::string strFileName(pszFileName);
 			  if (std::string::npos != strFileName.find_last_of('/'))
 			  {
-				  strFileName = strFileName.substr(0, strFileName.find_last_of('/') + 1);
-				  cocos2d::CCFileUtils::getInstance()->addSearchPath(strFileName.c_str());
+				   strFileName = strFileName.substr(0, strFileName.find_last_of('/') + 1);
+				   std::vector<std::string> searchPaths = cocos2d::CCFileUtils::getInstance()->getSearchPaths();
+				   std::vector<std::string> addPaths;
+				   for (std::vector<std::string>::iterator iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
+				   {
+					   string strTemp = *iter;
+					   strTemp.append(strFileName);
+					   addPaths.push_back(strTemp);
+				   }
+				   for (std::vector<std::string>::iterator iter = addPaths.begin(); iter != addPaths.end(); ++iter)
+				   {
+					   cocos2d::CCFileUtils::getInstance()->addSearchPath(*iter);
+				   }
 			  }
               pData = (char*)(cocos2d::CCFileUtils::getInstance()->getFileData(pszFileName, "r", &size));
               CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
