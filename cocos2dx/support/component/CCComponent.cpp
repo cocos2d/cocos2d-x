@@ -82,6 +82,16 @@ void Component::setName(const char *pName)
     _name.assign(pName);
 }
 
+void Component::setNode(Node *pNode)
+{
+     CC_UNUSED_PARAM(pNode);
+}
+
+Node* Component::getNode() const
+{
+    return NULL;
+}
+
 Node* Component::getOwner() const
 {
     return _owner;

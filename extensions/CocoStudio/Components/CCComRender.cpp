@@ -33,7 +33,7 @@ ComRender::ComRender(void)
 }
 
 
-ComRender::ComRender(cocos2d::Node *node, const char *comName)
+ComRender::ComRender(Node *node, const char *comName)
 {
     _render = node;
     _name.assign(comName);
@@ -57,12 +57,17 @@ void ComRender::onExit()
     _render = NULL;
 }
 
-cocos2d::Node* ComRender::getNode()
+void ComRender::setNode(Node *pNode)
+{
+    _render = pNode;
+}
+
+Node* ComRender::getNode() const
 {
     return _render;
 }
 
-ComRender* ComRender::create(cocos2d::Node *pNode, const char *comName)
+ComRender* ComRender::create(Node *pNode, const char *comName)
 {
     ComRender * pRet = new ComRender(pNode, comName);
     if (pRet != NULL && pRet->init())
