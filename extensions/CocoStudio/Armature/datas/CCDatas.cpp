@@ -265,6 +265,7 @@ CCFrameData::CCFrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+	, isTween(true)
     , displayIndex(0)
     , blendType(BLEND_NORMAL)
 
@@ -287,6 +288,7 @@ void CCFrameData::copy(CCFrameData *frameData)
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
     blendType = frameData->blendType;
+	isTween = frameData->isTween;
 }
 
 CCMovementBoneData::CCMovementBoneData()
