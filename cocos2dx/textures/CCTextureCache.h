@@ -78,9 +78,19 @@ public:
     static void reloadAllTextures();
 
 public:
+    /**
+     * @js ctor
+     */
     TextureCache();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description(void) const;
 
 //    Dictionary* snapshotTextures();
@@ -204,6 +214,10 @@ class VolatileTexture
 
 public:
     VolatileTexture(Texture2D *t);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~VolatileTexture();
 
     static void addImageTexture(Texture2D *tt, const char* imageFileName);

@@ -45,6 +45,10 @@ class CC_DLL FileUtilsAndroid : public FileUtils
     friend class FileUtils;
     FileUtilsAndroid();
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FileUtilsAndroid();
 
     static void setassetmanager(AAssetManager* a);

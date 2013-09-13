@@ -48,6 +48,8 @@ public:
      *
      * @param table table contains the given cell
      * @param cell  cell that is touched
+     * @js NA
+     * @lua NA
      */
     virtual void tableCellTouched(TableView* table, TableViewCell* cell) = 0;
 
@@ -56,6 +58,8 @@ public:
      *
      * @param table table contains the given cell
      * @param cell  cell that is pressed
+     * @js NA
+     * @lua NA
      */
     virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
 
@@ -64,6 +68,8 @@ public:
      *
      * @param table table contains the given cell
      * @param cell  cell that is pressed
+     * @js NA
+     * @lua NA
      */
     virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell){};
 
@@ -74,6 +80,8 @@ public:
      *
      * @param table table contains the given cell
      * @param cell  cell that is pressed
+     * @js NA
+     * @lua NA
      */
     virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell){};
 
@@ -86,6 +94,10 @@ public:
 class TableViewDataSource
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TableViewDataSource() {}
 
     /**
@@ -143,6 +155,12 @@ public:
      * @param dataSource data source
      * @param size view size
      * @return table view
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js:var create(var jsObject,var size)
+     * in lua:local create(var size)
+     * in lua:
+     * @endcode
      */
     static TableView* create(TableViewDataSource* dataSource, Size size);
     /**
@@ -152,23 +170,52 @@ public:
      * @param size view size
      * @param container parent object for cells
      * @return table view
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js:var create(var jsObject,var size,var container)
+     * in lua:local create(var size, var container)
+     * in lua:
+     * @endcode
      */
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
-
+    /**
+     * @js ctor
+     */
     TableView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TableView();
 
     bool initWithViewSize(Size size, Node* container = NULL);
 
     /**
      * data source
+     * @js NA
+     * @lua NA
      */
     TableViewDataSource* getDataSource() { return _dataSource; }
+    /**
+     * when this function bound to js or lua,the input params are changed
+     * in js:var setDataSource(var jsSource)
+     * in lua:local setDataSource()
+     * @endcode
+     */
     void setDataSource(TableViewDataSource* source) { _dataSource = source; }
     /**
      * delegate
+     * @js NA
+     * @lua NA
      */
     TableViewDelegate* getDelegate() { return _tableViewDelegate; }
+    /**
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js:var setDelegate(var jsDelegate)
+     * in lua:local setDelegate()
+     * @endcode
+     */
     void setDelegate(TableViewDelegate* pDelegate) { _tableViewDelegate = pDelegate; }
 
     /**

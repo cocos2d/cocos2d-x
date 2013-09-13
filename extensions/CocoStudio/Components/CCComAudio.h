@@ -33,48 +33,63 @@ NS_CC_EXT_BEGIN
 class ComAudio : public cocos2d::Component
 {
 protected:
+    /**
+     * @js ctor
+     */
     ComAudio(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComAudio(void);
     
 public:
-   virtual bool init();
-   virtual void onEnter();
-   virtual void onExit();
-   virtual bool isEnabled() const;
-   virtual void setEnabled(bool b);
+    virtual bool init();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onExit();
+    virtual bool isEnabled() const;
+    virtual void setEnabled(bool b);
 
-   static ComAudio* create(void);
+    static ComAudio* create(void);
    
 public:
-   void end();
-   void preloadBackgroundMusic(const char* pszFilePath);
-   void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-   void playBackgroundMusic(const char* pszFilePath);
-   void stopBackgroundMusic(bool bReleaseData);
-   void stopBackgroundMusic();
-   void pauseBackgroundMusic();
-   void resumeBackgroundMusic();
-   void rewindBackgroundMusic();
-   bool willPlayBackgroundMusic();
-   bool isBackgroundMusicPlaying();
-   float getBackgroundMusicVolume();
-   void setBackgroundMusicVolume(float volume);
-   float getEffectsVolume();
-   void setEffectsVolume(float volume);
-   unsigned int playEffect(const char* pszFilePath, bool bLoop);
-   unsigned int playEffect(const char* pszFilePath);
-   void pauseEffect(unsigned int nSoundId);
-   void pauseAllEffects();
-   void resumeEffect(unsigned int nSoundId);
-   void resumeAllEffects();
-   void stopEffect(unsigned int nSoundId);
-   void stopAllEffects();
-   void preloadEffect(const char* pszFilePath);
-   void unloadEffect(const char* pszFilePath);
-   void setFile(const char* pszFilePath);
-   const char* getFile();
-   void setLoop(bool bLoop);
-   bool isLoop();
+    void end();
+    void preloadBackgroundMusic(const char* pszFilePath);
+    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+    void playBackgroundMusic(const char* pszFilePath);
+    void stopBackgroundMusic(bool bReleaseData);
+    void stopBackgroundMusic();
+    void pauseBackgroundMusic();
+    void resumeBackgroundMusic();
+    void rewindBackgroundMusic();
+    bool willPlayBackgroundMusic();
+    bool isBackgroundMusicPlaying();
+    float getBackgroundMusicVolume();
+    void setBackgroundMusicVolume(float volume);
+    float getEffectsVolume();
+    void setEffectsVolume(float volume);
+    unsigned int playEffect(const char* pszFilePath, bool bLoop);
+    unsigned int playEffect(const char* pszFilePath);
+    void pauseEffect(unsigned int nSoundId);
+    void pauseAllEffects();
+    void resumeEffect(unsigned int nSoundId);
+    void resumeAllEffects();
+    void stopEffect(unsigned int nSoundId);
+    void stopAllEffects();
+    void preloadEffect(const char* pszFilePath);
+    void unloadEffect(const char* pszFilePath);
+    void setFile(const char* pszFilePath);
+    const char* getFile();
+    void setLoop(bool bLoop);
+    bool isLoop();
 private:
 	std::string _filePath;
 	bool _loop;

@@ -171,8 +171,14 @@ public:
 
     //! create a system with a fixed number of particles
     static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
-
+    /**
+     * @js ctor
+     */
     ParticleSystem();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSystem();
 
     /** initializes a ParticleSystem*/
@@ -374,7 +380,18 @@ public:
     virtual void update(float dt) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *In lua: local setBlendFunc(local src, local dst)
+    *@endcode
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc &getBlendFunc() const override;
 protected:
     virtual void updateBlendFunc();

@@ -65,7 +65,14 @@ class  BaseData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(BaseData)
 public:
+    /**
+     * @js ctor
+     */
     BaseData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~BaseData(void);
 
     /*
@@ -124,7 +131,14 @@ public:
 
     static const char *changeDisplayToTexture(const char *);
 public:
+    /**
+     * @js ctor
+     */
     DisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~DisplayData(void);
 
     DisplayType displayType;	//! mark which type your display is
@@ -137,7 +151,14 @@ class  SpriteDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     SpriteDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteDisplayData();
 
     inline void setParam(const char *displayName)
@@ -163,7 +184,14 @@ class  ArmatureDisplayData  : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ArmatureDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ArmatureDisplayData();
 
     inline void setParam(const char *displayName)
@@ -189,7 +217,14 @@ class  ParticleDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ParticleDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleDisplayData() {};
 
     void setParam(const char *plist)
@@ -208,7 +243,14 @@ class  ShaderDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ShaderDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ShaderDisplayData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ShaderDisplayData() {};
 
     inline void setParam(const char *vert, const char *frag)
@@ -234,7 +276,14 @@ class  BoneData : public BaseData
 public:
     CS_CREATE_NO_PARAM(BoneData)
 public:
+    /**
+     * @js ctor
+     */
     BoneData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~BoneData(void);
 
     virtual bool init();
@@ -258,7 +307,14 @@ class  ArmatureData : public Object
 public:
     CS_CREATE_NO_PARAM(ArmatureData)
 public:
+    /**
+     * @js ctor
+     */
     ArmatureData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ArmatureData();
 
     bool init();
@@ -276,7 +332,14 @@ class  FrameData : public BaseData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(FrameData)
 public:
+    /**
+     * @js ctor
+     */
     FrameData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~FrameData();
 
     virtual void copy(FrameData *frameData);
@@ -305,7 +368,14 @@ class  MovementBoneData : public Object
 public:
     CS_CREATE_NO_PARAM(MovementBoneData)
 public:
+    /**
+     * @js ctor
+     */
     MovementBoneData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~MovementBoneData(void);
 
     virtual bool init();
@@ -327,7 +397,14 @@ class  MovementData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(MovementData)
 public:
+    /**
+     * @js ctor
+     */
     MovementData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~MovementData(void);
 
     void addMovementBoneData(MovementBoneData *movBoneData);
@@ -377,7 +454,14 @@ class  AnimationData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(AnimationData)
 public:
+    /**
+     * @js ctor
+     */
     AnimationData(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~AnimationData(void);
 
     void release();
@@ -413,7 +497,14 @@ class  ContourData : public Object
 public:
     CS_CREATE_NO_PARAM(ContourData)
 public:
+    /**
+     * @js ctor
+     */
     ContourData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ContourData(void);
 
     virtual bool init();
@@ -432,7 +523,14 @@ class  TextureData : public Object
 public:
     CS_CREATE_NO_PARAM(TextureData)
 public:
+    /**
+     * @js ctor
+     */
     TextureData();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TextureData(void);
 
     virtual bool init();

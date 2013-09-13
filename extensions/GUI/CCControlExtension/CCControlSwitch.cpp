@@ -34,8 +34,20 @@ NS_CC_EXT_BEGIN
 class ControlSwitchSprite : public Sprite, public ActionTweenDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool initWithMaskSprite(
         Sprite *maskSprite, 
         Sprite *onSprite, 
@@ -43,12 +55,40 @@ public:
         Sprite *thumbSprite,
         LabelTTF* onLabel, 
         LabelTTF* offLabel);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void draw();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void needsLayout();
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setSliderXPosition(float sliderXPosition);
+    /**
+     * @js NA
+     * @lua NA
+     */
     float getSliderXPosition() {return _sliderXPosition;}
+    /**
+     * @js NA
+     * @lua NA
+     */
     float onSideWidth();
+    /**
+     * @js NA
+     * @lua NA
+     */
     float offSideWidth();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateTweenAction(float value, const char* key);
 /** Contains the position (in x-axis) of the slider inside the receiver. */
     float _sliderXPosition;

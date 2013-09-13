@@ -427,7 +427,10 @@ public:
 struct FontDefinition
 {
 public:
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     FontDefinition()
         : _fontSize(0)
         , _alignment(TextHAlignment::CENTER)

@@ -37,6 +37,10 @@ NS_CC_BEGIN
 class CC_DLL ActionTweenDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ActionTweenDelegate() {}
     virtual void updateTweenAction(float value, const char* key) = 0;
 };

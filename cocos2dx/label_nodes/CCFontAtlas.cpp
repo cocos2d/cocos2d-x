@@ -62,7 +62,7 @@ Texture2D & FontAtlas::getTexture(int slot)
     return *(_atlasTextures[slot]);
 }
 
-float FontAtlas::getCommonLineHeight()
+float FontAtlas::getCommonLineHeight() const
 {
     return _commonLineHeight;
 }
@@ -72,7 +72,7 @@ void  FontAtlas::setCommonLineHeight(float newHeight)
     _commonLineHeight = newHeight;
 }
 
-Font & FontAtlas::getFont()
+Font & FontAtlas::getFont() const
 {
     return _font;
 }

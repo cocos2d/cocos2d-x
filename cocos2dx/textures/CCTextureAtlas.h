@@ -66,8 +66,14 @@ public:
      * The TextureAtlas capacity can be increased in runtime.
      */
     static TextureAtlas* createWithTexture(Texture2D *texture, int capacity);
-
+    /**
+     * @js ctor
+     */
     TextureAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureAtlas();
 
     /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
@@ -184,7 +190,10 @@ public:
     inline bool isDirty(void) { return _dirty; }
     /** specify if the array buffer of the VBO needs to be updated */
     inline void setDirty(bool bDirty) { _dirty = bDirty; }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description() const;
 
     /** Gets the quantity of quads that are going to be drawn */

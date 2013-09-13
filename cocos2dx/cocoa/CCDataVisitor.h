@@ -63,6 +63,10 @@ class Data;
 class CC_DLL DataVisitor
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~DataVisitor() {}
 
     /** default method, called from non-overloaded methods and for unrecognized objects */

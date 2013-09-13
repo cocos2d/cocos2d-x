@@ -89,7 +89,14 @@ public:
 	static Armature *create(const char *name, Bone *parentBone);
 
 public:
+    /**
+     * @js ctor
+     */
     Armature();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Armature(void);
 
     /**
@@ -147,6 +154,10 @@ public:
 	virtual void updateOffsetPoint();
 
     // overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual void visit() override;
     virtual void update(float dt) override;
 	virtual void draw() override;

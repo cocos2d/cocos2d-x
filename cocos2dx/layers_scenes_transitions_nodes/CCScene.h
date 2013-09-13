@@ -53,6 +53,10 @@ public:
     static Scene *create(void);
 
     Scene();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Scene();
     
     bool init();

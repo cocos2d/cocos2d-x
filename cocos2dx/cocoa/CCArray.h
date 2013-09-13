@@ -234,45 +234,79 @@ class CC_DLL Array : public Object, public Clonable
 {
 public:
 
-    /** Creates an empty array. Default capacity is 10 */
+    /** Creates an empty array. Default capacity is 10 
+     * @js NA
+     * @lua NA
+     */
     static Array* create();
-    /** Create an array with objects */
+    /** Create an array with objects 
+     * @js NA
+     */
     static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Create an array with one object */
+    /** Create an array with one object 
+     * @js NA
+     */
     static Array* createWithObject(Object* object);
-    /** Create an array with a default capacity */
+    /** Create an array with a default capacity 
+     * @js NA
+     */
     static Array* createWithCapacity(int capacity);
-    /** Create an array with from an existing array */
+    /** Create an array with from an existing array 
+     * @js NA
+     */
     static Array* createWithArray(Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The Array pointer generated from the file
+     * @js NA
      */
     static Array* createWithContentsOfFile(const char* pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
      invoker should call release().
+     * @js NA
+     * @lua NA
      */
     static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Array();
 
-    /** Initializes an array */
+    /** Initializes an array 
+     * @js NA
+     * @lua NA
+     */
     bool init();
-    /** Initializes an array with one object */
+    /** Initializes an array with one object 
+     * @js NA
+     * @lua NA
+     */
     bool initWithObject(Object* object);
-    /** Initializes an array with some objects */
+    /** Initializes an array with some objects 
+     * @js NA
+     * @lua NA
+     */
     bool initWithObjects(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** Initializes an array with capacity */
+    /** Initializes an array with capacity 
+     * @js NA
+     * @lua NA
+     */
     bool initWithCapacity(int capacity);
-    /** Initializes an array with an existing array */
+    /** Initializes an array with an existing array 
+     * @js NA
+     * @lua NA
+     */
     bool initWithArray(Array* otherArray);
 
     // Querying an Array
 
-    /** Returns element count of the array */
+    /** Returns element count of the array 
+     * @js NA
+     */
     int count() const
     {
 #if CC_USE_ARRAY_VECTOR
@@ -281,7 +315,9 @@ public:
         return data->num;
 #endif
     }
-    /** Returns capacity of the array */
+    /** Returns capacity of the array 
+     * @js NA
+     */
     int capacity() const
     {
 #if CC_USE_ARRAY_VECTOR
@@ -290,11 +326,20 @@ public:
         return data->max;
 #endif
     }
-    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
+    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object 
+     * @js NA
+     * @lua NA
+     */
     int getIndexOfObject(Object* object) const;
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE int indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
-    /** Returns an element with a certain index */
+    /** Returns an element with a certain index 
+     * @js NA
+     * @lua NA
+     */
     Object* getObjectAtIndex(int index)
     {
         CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
@@ -305,7 +350,9 @@ public:
 #endif
     }
     CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(int index) { return getObjectAtIndex(index); }
-    /** Returns the last element of the array */
+    /** Returns the last element of the array 
+     * @js NA
+     */
     Object* getLastObject()
     {
 #if CC_USE_ARRAY_VECTOR
@@ -317,25 +364,53 @@ public:
         return nullptr;
 #endif
     }
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE Object* lastObject() { return getLastObject(); }
-    /** Returns a random element */
+    /** Returns a random element 
+     * @js NA
+     * @lua NA
+     */
     Object* getRandomObject();
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE Object* randomObject() { return getRandomObject(); }
-    /** Returns a Boolean value that indicates whether object is present in array. */
+    /** Returns a Boolean value that indicates whether object is present in array. 
+     * @js NA
+     */
     bool containsObject(Object* object) const;
-    /** @since 1.1 */
+    /** @since 1.1 
+     * @js NA
+     */
     bool isEqualToArray(Array* otherArray);
     // Adding Objects
 
-    /** Add a certain object */
+    /** Add a certain object 
+     * @js NA
+     */
     void addObject(Object* object);
-    /** Add all elements of an existing array */
+    /**
+     * @js NA
+     */
+    /** Add all elements of an existing array 
+     * @js NA
+     */
     void addObjectsFromArray(Array* otherArray);
-    /** Insert a certain object at a certain index */
+    /** Insert a certain object at a certain index 
+     * @js NA
+     */
     void insertObject(Object* object, int index);
-    /** sets a certain object at a certain index */
+    /** sets a certain object at a certain index 
+     * @js NA
+     * @lua NA
+     */
     void setObject(Object* object, int index);
-    /** sets a certain object at a certain index without retaining. Use it with caution */
+    /** sets a certain object at a certain index without retaining. Use it with caution 
+     * @js NA
+     * @lua NA
+     */
     void fastSetObject(Object* object, int index)
     {
 #if CC_USE_ARRAY_VECTOR
@@ -345,7 +420,10 @@ public:
         data->arr[index] = object;
 #endif
     }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     void swap( int indexOne, int indexTwo )
     {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
@@ -358,38 +436,68 @@ public:
 
     // Removing Objects
 
-    /** Remove last object */
+    /** Remove last object 
+     * @js NA
+     */
     void removeLastObject(bool releaseObj = true);
-    /** Remove a certain object */
+    /** Remove a certain object 
+     * @js NA
+     */
     void removeObject(Object* object, bool releaseObj = true);
-    /** Remove an element with a certain index */
+    /** Remove an element with a certain index 
+     * @js NA
+     */
     void removeObjectAtIndex(int index, bool releaseObj = true);
-    /** Remove all elements */
+    /** Remove all elements 
+     * @js NA
+     */
     void removeObjectsInArray(Array* otherArray);
-    /** Remove all objects */
+    /** Remove all objects 
+     * @js NA
+     */
     void removeAllObjects();
-    /** Fast way to remove a certain object */
+    /** Fast way to remove a certain object 
+     * @js NA
+     */
     void fastRemoveObject(Object* object);
-    /** Fast way to remove an element with a certain index */
+    /** Fast way to remove an element with a certain index 
+     * @js NA
+     */
     void fastRemoveObjectAtIndex(int index);
 
     // Rearranging Content
 
-    /** Swap two elements */
+    /** Swap two elements 
+     * @js NA
+     */
     void exchangeObject(Object* object1, Object* object2);
-    /** Swap two elements with certain indexes */
+    /** Swap two elements with certain indexes 
+     * @js NA
+     */
     void exchangeObjectAtIndex(int index1, int index2);
 
-    /** Replace object at index with another object. */
+    /** Replace object at index with another object. 
+     * @js NA
+     */
     void replaceObjectAtIndex(int index, Object* object, bool releaseObject = true);
 
-    /** Revers the array */
+    /** Revers the array 
+     * @js NA
+     */
     void reverseObjects();
-    /* Shrinks the array so the memory footprint corresponds with the number of items */
+    /* Shrinks the array so the memory footprint corresponds with the number of items 
+     * @js NA
+     */
     void reduceMemoryFootprint();
   
-    /* override functions */
+    /* override functions 
+     * @js NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual Array* clone() const;
 
     // ------------------------------------------
@@ -398,16 +506,35 @@ public:
 #if CC_USE_ARRAY_VECTOR
     typedef std::vector<RCPtr<Object>>::iterator iterator;
     typedef std::vector<RCPtr<Object>>::const_iterator const_iterator;
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     iterator begin() { return data.begin(); }
+    /**
+     * @js NA
+     * @lua NA
+     */
     iterator end() { return data.end(); }
     const_iterator cbegin() { return data.cbegin(); }
+    /**
+     * @js NA
+     * @lua NA
+     */
     const_iterator cend() { return data.cend(); }
 
     std::vector<RCPtr<Object>> data;
 
 #else
+    /**
+     * @js NA
+     * @lua NA
+     */
     Object** begin() { return &data->arr[0]; }
+    /**
+     * @js NA
+     * @lua NA
+     */
     Object** end() { return &data->arr[data->num]; }
 
     ccArray* data;
@@ -415,6 +542,10 @@ public:
 #endif
 
 //protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
     Array();
 };
 

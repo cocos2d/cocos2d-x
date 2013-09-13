@@ -33,26 +33,69 @@ NS_CC_EXT_BEGIN
 class InputDelegate
 {
 protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
     InputDelegate(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~InputDelegate(void);
     
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isTouchEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchEnabled(bool value);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isAccelerometerEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setAccelerometerEnabled(bool value);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isKeypadEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setKeypadEnabled(bool value);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchMode(Touch::DispatchMode mode);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual Touch::DispatchMode getTouchMode() const;
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchPriority(int priority);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual int  getTouchPriority() const;
-
-    /** @deprecated Please override onAcceleration */
+ /** @deprecated Please override onAcceleration */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
     // Deprecated touch callbacks.
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};

@@ -49,22 +49,49 @@ class ProfilingTimer;
 class CC_DLL Profiler : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Profiler(void);
-    /** display the timers */
+    /** display the timers
+     * @js NA
+     * @lua NA
+     */
     void displayTimers(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool init(void);
 
 public:
-    /** returns the singleton */
+    /** returns the singleton 
+     * @js NA
+     * @lua NA
+     */
     static Profiler* getInstance(void);
 
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
 
-    /** Creates and adds a new timer */
+    /** Creates and adds a new timer 
+     * @js NA
+     * @lua NA
+     */
     ProfilingTimer* createAndAddTimerWithName(const char* timerName);
-    /** releases a timer */
+    /** releases a timer 
+     * @js NA
+     * @lua NA
+     */
     void releaseTimer(const char* timerName);
-    /** releases all timers */
+    /** releases all timers 
+     * @js NA
+     * @lua NA
+     */
     void releaseAllTimers();
 
     Dictionary* _activeTimers;
@@ -73,15 +100,36 @@ public:
 class ProfilingTimer : public Object
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ProfilingTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ProfilingTimer(void);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool initWithName(const char* timerName);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description(void) const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
 
-    /** resets the timer properties */
+    /** resets the timer properties
+     * @js NA
+     * @lua NA
+     */
     void reset();
 
     std::string _nameStr;
