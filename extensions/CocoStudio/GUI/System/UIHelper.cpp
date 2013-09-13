@@ -25,7 +25,7 @@
 #include "UIHelper.h"
 #include "../../Json/DictionaryHelper.h"
 #include "cocos2d.h"
-#include "CCSReader.h"
+#include "../../Reader/CCSGUIReader.h"
 
 
 NS_CC_EXT_BEGIN
@@ -57,7 +57,7 @@ m_textureFiles(NULL)
 
 UIHelper::~UIHelper()
 {
-    cocos2d::extension::CCSReader::purgeCCSReader();
+    cocos2d::extension::CCSGUIReader::purgeCCSGUIReader();
 }
 
 void UIHelper::init()
@@ -68,7 +68,7 @@ void UIHelper::init()
 
 UIWidget* UIHelper::createWidgetFromJsonFile(const char *fileName)
 {
-    return CCSReader::shareReader()->widgetFromJsonFile(fileName);
+    return CCSGUIReader::shareReader()->widgetFromJsonFile(fileName);
 }
 
 void UIHelper::addSpriteFrame(const char *fileName)

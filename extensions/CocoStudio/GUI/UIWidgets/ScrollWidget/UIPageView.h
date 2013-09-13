@@ -86,19 +86,15 @@ public:
      * Remove a page of pageview.
      *
      * @param page    page which will be removed.
-     *
-     * @param cleanup   true that page will be destroyed, false otherwise.
      */
-    void removePage(Layout* page, bool cleanup);
-    
+    void removePage(Layout* page);
+
     /**
      * Remove a page at index of pageview.
      *
      * @param index    index of page.
-     *
-     * @param cleanup   true that page will be destroyed, false otherwise.
      */
-    void removePageAtIndex(int index, bool cleanup);
+    void removePageAtIndex(int index);
     
     /**
      * scroll pageview to index.
@@ -118,10 +114,10 @@ public:
     void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
     
     //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget, bool cleanup);
+    virtual bool removeChild(UIWidget* widget);
     
     //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildrenAndCleanUp(bool cleanup);
+    virtual void removeAllChildren();
     
     //override "onTouchBegan" method of widget.
     virtual bool onTouchBegan(const CCPoint &touchPoint);
@@ -138,8 +134,16 @@ public:
     //override "update" method of widget.
     virtual void update(float dt);
     
+//    float getScrollDegreeRange() const;
+//    void setScrollDegreeRange(float range);
+    
     /*compatible*/
+    /**
+     * These methods will be removed
+     */
     int getPage() const{return getCurPageIndex();};
+    void removePage(Layout* page, bool cleanup){removePage(page);};
+    void removePageAtIndex(int index, bool cleanup){removePageAtIndex(index);};
     /************/
 protected:
     virtual bool addChild(UIWidget* widget);
@@ -158,6 +162,13 @@ protected:
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
+//    virtual bool isInScrollDegreeRange(UIWidget* widget);
+    /*compatible*/
+    /**
+     * These methods will be removed
+     */
+    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
+    /************/
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
 protected:
     int m_nCurPageIdx;

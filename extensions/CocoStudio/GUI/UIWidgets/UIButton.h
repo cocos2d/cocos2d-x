@@ -93,6 +93,27 @@ public:
      * @param capInsets    capinsets for button
      */
     void setCapInsets(const CCRect &capInsets);
+
+    /**
+     * Sets capinsets for button, if button is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for button
+     */
+    void setCapInsetsNormalRenderer(const CCRect &capInsets);
+    
+    /**
+     * Sets capinsets for button, if button is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for button
+     */
+    void setCapInsetsPressedRenderer(const CCRect &capInsets);
+    
+    /**
+     * Sets capinsets for button, if button is using scale9 renderer.
+     *
+     * @param capInsets    capinsets for button
+     */
+    void setCapInsetsDisabledRenderer(const CCRect &capInsets);
     
     //override "setAnchorPoint" of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
@@ -149,12 +170,16 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
+    
     virtual void setNormalSpriteFrame(CCSpriteFrame* frame);
     virtual void setPressedSpriteFrame(CCSpriteFrame* frame);
     virtual void setDisabledSpriteFrame(CCSpriteFrame* frame);
-   
+    
     
     /*Compatible*/
+    /**
+     * These methods will be removed
+     */
     void setText(const char* text){setTitleText(text);};
     void setTextColor(int r,int g,int b){setTitleColor(ccc3(r, g, b));};
     void setFontSize(int size){setTitleFontSize(size);};
@@ -166,6 +191,7 @@ public:
     void setScale9Enable(bool able){setScale9Enabled(able);};
     void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
     /************/
+
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -187,7 +213,10 @@ protected:
     std::string m_strDisabledFileName;
     bool m_bPrevIgnoreSize;
     bool m_bScale9Enabled;
-    CCRect m_capInsets;
+//    CCRect m_capInsets;
+    CCRect m_capInsetsNormal;
+    CCRect m_capInsetsPressed;
+    CCRect m_capInsetsDisabled;
     TextureResType m_eNormalTexType;
     TextureResType m_ePressedTexType;
     TextureResType m_eDisabledTexType;

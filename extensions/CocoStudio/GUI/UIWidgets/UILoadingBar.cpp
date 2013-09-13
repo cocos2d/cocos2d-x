@@ -35,7 +35,7 @@ m_nPercent(100),
 m_fTotalLength(0),
 m_pBarRenderer(NULL),
 m_eRenderBarTexType(UI_TEX_TYPE_LOCAL),
-m_barRendererTextureSize(ccp(0.0f, 0.0f)),
+m_barRendererTextureSize(CCSizeZero),
 m_bScale9Enabled(false),
 m_bPrevIgnoreSize(true),
 m_capInsets(CCRectZero),
@@ -53,6 +53,7 @@ UILoadingBar* UILoadingBar::create()
     UILoadingBar* widget = new UILoadingBar();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -201,12 +202,11 @@ void UILoadingBar::setScale9Enabled(bool enabled)
 
 void UILoadingBar::setCapInsets(const CCRect &capInsets)
 {
+    m_capInsets = capInsets;
     if (!m_bScale9Enabled)
     {
         return;
     }
-    m_capInsets = capInsets;
-    
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(capInsets);
 }
 

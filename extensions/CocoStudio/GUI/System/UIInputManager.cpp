@@ -29,7 +29,6 @@ NS_CC_EXT_BEGIN
 
 UIInputManager::UIInputManager():
 m_manageredWidget(NULL),
-//m_pCurSelectedWidget(NULL),
 m_bWidgetBeSorted(false),
 m_bTouchDown(false),
 m_fLongClickTime(0.0),
@@ -73,26 +72,25 @@ void UIInputManager::uiSceneHasChanged()
     m_bWidgetBeSorted = false;
 }
 
-void UIInputManager::sortWidgets(UIWidget *widget)
-{
-    m_manageredWidget->removeAllObjects();
-    sortRootWidgets(widget);
-    m_bWidgetBeSorted = true;
-}
-
-void UIInputManager::sortRootWidgets(UIWidget *root)
+bool UIInputManager::checkTouchEvent(UIWidget *root, const CCPoint &touchPoint)
 {
     ccArray* arrayRootChildren = root->getChildren()->data;
     int length = arrayRootChildren->num;
     for (int i=length-1; i >= 0; i--)
     {
         UIWidget* widget = (UIWidget*)(arrayRootChildren->arr[i]);
-        sortRootWidgets(widget);
+        if (checkTouchEvent(widget, touchPoint))
+        {
+            return true;
+        }
     }
-    if (root->isTouchEnabled())
+    if (root->isEnabled() && root->isTouchEnabled() && root->hitTest(touchPoint) && root->clippingParentAreaContainPoint(touchPoint))
     {
-        registWidget(root);
+        m_pSelectedWidgets->addObject(root);
+        root->onTouchBegan(touchPoint);
+        return true;
     }
+    return false;
 }
 
 void UIInputManager::removeManageredWidget(UIWidget* widget)
@@ -110,28 +108,7 @@ void UIInputManager::removeManageredWidget(UIWidget* widget)
 
 bool UIInputManager::checkEventWidget(const CCPoint &touchPoint)
 {
-    if (!m_bWidgetBeSorted && m_pRootWidget)
-    {
-        sortWidgets(m_pRootWidget);
-    }
-    ccArray* arrayWidget = m_manageredWidget->data;
-    int widgetCount = arrayWidget->num;
-    for (int i=0;i<widgetCount;i++)
-    {
-        UIWidget* widget = (UIWidget*)(arrayWidget->arr[i]);
-        if(widget->hitTest(touchPoint) && widget->isEnabled())
-        {
-            if (!widget->parentAreaContainPoint(touchPoint))
-            {
-                continue;
-            }
-            m_pSelectedWidgets->addObject(widget);
-            if (!widget->onTouchBegan(touchPoint))
-            {
-                break;
-            }
-        }
-    }
+    checkTouchEvent(m_pRootWidget,touchPoint);
     return (m_pSelectedWidgets->count() > 0);
 }
 

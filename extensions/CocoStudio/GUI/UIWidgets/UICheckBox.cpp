@@ -33,15 +33,19 @@ m_pFrontCrossRenderer(NULL),
 m_pBackGroundBoxDisabledRenderer(NULL),
 m_pFrontCrossDisabledRenderer(NULL),
 m_bIsSelected(true),
-m_pSelectListener(NULL),
-m_pfnSelectSelector(NULL),
-m_pUnSelectListener(NULL),
-m_pfnUnSelectSelector(NULL),
+m_pSelectedStateEventListener(NULL),
+m_pfnSelectedStateEventSelector(NULL),
 m_eBackGroundTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 m_eFrontCrossTexType(UI_TEX_TYPE_LOCAL),
 m_eBackGroundDisabledTexType(UI_TEX_TYPE_LOCAL),
-m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL)
+m_eFrontCrossDisabledTexType(UI_TEX_TYPE_LOCAL),
+/*Compatible*/
+m_pSelectListener(NULL),
+m_pfnSelectSelector(NULL),
+m_pUnSelectListener(NULL),
+m_pfnUnSelectSelector(NULL)
+/************/
 {
 }
 
@@ -55,6 +59,7 @@ UICheckBox* UICheckBox::create()
     UICheckBox* widget = new UICheckBox();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -101,7 +106,6 @@ void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType tex
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundTexType = texType;
     switch (m_eBackGroundTexType)
     {
@@ -125,7 +129,6 @@ void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundSelectedTexType = texType;
     switch (m_eBackGroundSelectedTexType)
     {
@@ -149,7 +152,6 @@ void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eFrontCrossTexType = texType;
     switch (m_eFrontCrossTexType)
     {
@@ -173,7 +175,6 @@ void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eBackGroundDisabledTexType = texType;
     switch (m_eBackGroundDisabledTexType)
     {
@@ -197,7 +198,6 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     {
         return;
     }
-//    setUseMergedTexture(useSpriteFrame);
     m_eFrontCrossDisabledTexType = texType;
     switch (m_eFrontCrossDisabledTexType)
     {
@@ -279,30 +279,36 @@ bool UICheckBox::getSelectedState()
 
 void UICheckBox::selectedEvent()
 {
+    /*Compatible*/
     if (m_pSelectListener && m_pfnSelectSelector)
     {
         (m_pSelectListener->*m_pfnSelectSelector)(this);
+    }
+    /************/
+    if (m_pSelectedStateEventListener && m_pfnSelectedStateEventSelector)
+    {
+        (m_pSelectedStateEventListener->*m_pfnSelectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
 }
 
 void UICheckBox::unSelectedEvent()
 {
+    /*Compatible*/
     if (m_pUnSelectListener && m_pfnUnSelectSelector)
     {
         (m_pUnSelectListener->*m_pfnUnSelectSelector)(this);
     }
+    /************/
+    if (m_pSelectedStateEventListener && m_pfnSelectedStateEventSelector)
+    {
+        (m_pSelectedStateEventListener->*m_pfnSelectedStateEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
+    }
 }
 
-void UICheckBox::addSelectEvent(CCObject *target, SEL_SelectEvent selector)
+void UICheckBox::addSelectedStateEvent(cocos2d::CCObject *target, SEL_SelectedStateEvent selector)
 {
-    m_pSelectListener = target;
-    m_pfnSelectSelector = selector;
-}
-
-void UICheckBox::addUnSelectEvent(CCObject *target, SEL_UnSelectEvent selector)
-{
-    m_pUnSelectListener = target;
-    m_pfnUnSelectSelector = selector;
+    m_pSelectedStateEventListener = target;
+    m_pfnSelectedStateEventSelector = selector;
 }
 
 void UICheckBox::setFlipX(bool flipX)
