@@ -99,8 +99,8 @@ private:
     struct EventListenerItem
     {
         int           id;
-        Node*         node;            // Weak reference.
         int           fixedPriority;   // The higher the number, the higher the priority
+        Node*         node;            // Weak reference.
         std::shared_ptr<EventListener> listener;
     };
     

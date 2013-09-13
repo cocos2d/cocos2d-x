@@ -96,6 +96,8 @@ void EventDispatcher::registerEventListenerWithItem(EventListenerItem* item)
 
 int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr<EventListener> listener, Node* node)
 {
+    CCASSERT(listener->_isRegistered, "The listener has been registered.");
+    
     if (!listener->checkAvaiable())
         return 0;
 
@@ -104,6 +106,7 @@ int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr
     item->node          = node;
     item->fixedPriority = 0;
     item->listener      = listener;
+    item->listener->_isRegistered = true;
 
     registerEventListenerWithItem(item);
 
@@ -115,6 +118,8 @@ int EventDispatcher::registerEventListenerWithSceneGraphPriority(std::shared_ptr
 
 int EventDispatcher::registerEventListenerWithFixedPriority(std::shared_ptr<EventListener> listener, int fixedPriority)
 {
+    CCASSERT(listener->_isRegistered, "The listener has been registered.");
+    
     if (!listener->checkAvaiable())
         return 0;
 
@@ -123,6 +128,7 @@ int EventDispatcher::registerEventListenerWithFixedPriority(std::shared_ptr<Even
     item->node          = nullptr;
     item->fixedPriority = fixedPriority;
     item->listener      = listener;
+    item->listener->_isRegistered = true;
 
     registerEventListenerWithItem(item);
 
@@ -292,7 +298,6 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
         auto mutableTouchesIter = mutableTouches.begin();
         auto touchesIter = orignalTouches.begin();
         
-        
         for (; touchesIter != orignalTouches.end(); ++touchesIter)
         {
             bool isSwallowed = false;
@@ -302,6 +307,9 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                 // Skip if the listener was removed.
                 if ((*oneByOneIter)->id == 0)
                     continue;
+             
+                event->setCurrentTarget((*oneByOneIter)->node);
+                CCLOG("touch target : %p, %s", (*oneByOneIter)->node, typeid(*(*oneByOneIter)->node).name());
                 
                 bool isClaimed = false;
                 std::vector<Touch*>::iterator removedIter;
@@ -337,15 +345,15 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
                             if (touchEventListener->onTouchEnded)
                             {
                                 touchEventListener->onTouchEnded(*touchesIter, event);
-                                touchEventListener->_claimedTouches.erase(removedIter);
                             }
+                            touchEventListener->_claimedTouches.erase(removedIter);
                             break;
                         case TouchEvent::EventCode::CANCELLED:
                             if (touchEventListener->onTouchCancelled)
                             {
                                 touchEventListener->onTouchCancelled(*touchesIter, event);
-                                touchEventListener->_claimedTouches.erase(removedIter);
                             }
+                            touchEventListener->_claimedTouches.erase(removedIter);
                             break;
                         default:
                             CCASSERT(false, "The eventcode is invalid.");
@@ -388,6 +396,8 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
             // Skip if the listener was removed.
             if ((*allInOneIter)->id == 0)
                 continue;
+            
+            event->setCurrentTarget((*allInOneIter)->node);
             
             auto touchEventListener = std::static_pointer_cast<TouchEventListener>((*allInOneIter)->listener);
             
