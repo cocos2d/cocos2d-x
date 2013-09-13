@@ -87,6 +87,7 @@ Classes/LayerTest/LayerTest.cpp \
 Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
+Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 Classes/NodeTest/NodeTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
