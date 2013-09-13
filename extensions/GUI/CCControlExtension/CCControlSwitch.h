@@ -55,6 +55,10 @@ public:
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
 
     ControlSwitch();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSwitch();
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */

@@ -79,8 +79,15 @@ public:
 
 public:
     TextureCache();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description(void) const;
 
 //    Dictionary* snapshotTextures();

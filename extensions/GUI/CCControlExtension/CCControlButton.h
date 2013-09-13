@@ -59,6 +59,10 @@ public:
     static ControlButton* create(std::string title, const char * fontName, float fontSize);
 
     ControlButton();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlButton();
 
     virtual bool init();

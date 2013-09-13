@@ -35,33 +35,45 @@ public:
     @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
+    * @js NA
+    * @lua NA
     */
     virtual bool applicationDidFinishLaunching() = 0;
 
     /**
     @brief  This function will be called when the application enters background.
+    * @js NA
+    * @lua NA
     */
     virtual void applicationDidEnterBackground() = 0;
 
     /**
     @brief  This function will be called when the application enters foreground.
+    * @js NA
+    * @lua NA
     */
     virtual void applicationWillEnterForeground() = 0;
 
     /**
     @brief    Callback by Director for limit FPS.
     @param interval The time, expressed in seconds, between current frame and next.
+    * @js NA
+    * @lua NA
     */
     virtual void setAnimationInterval(double interval) = 0;
 
     /**
     @brief Get current language config
     @return Current language config
+    * @js NA
+    * @lua NA
     */
     virtual LanguageType getCurrentLanguage() = 0;
     
     /**
      @brief Get target platform
+     * @js NA
+     * @lua NA
      */
     virtual Platform getTargetPlatform() = 0;
 };

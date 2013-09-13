@@ -43,6 +43,10 @@ public:
     static DecorativeDisplay *create();
 public:
     DecorativeDisplay(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~DecorativeDisplay(void);
 
     virtual bool init();

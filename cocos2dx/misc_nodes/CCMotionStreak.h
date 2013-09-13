@@ -80,11 +80,27 @@ public:
 
     // Overrides
     virtual void setPosition(const Point& position) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void draw() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void update(float delta) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc() const override;
     virtual GLubyte getOpacity() const override;
     virtual void setOpacity(GLubyte opacity) override;

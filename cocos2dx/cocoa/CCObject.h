@@ -79,9 +79,14 @@ public:
      * Constructor
      *
      * The object's reference count is 1 after construction.
+     * @js NA
      */
     Object();
-
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Object();
     
     /**
@@ -93,6 +98,7 @@ public:
      * destructed.
      *
      * @see retain, autorelease
+     * @js NA
      */
     inline void release()
     {
@@ -109,6 +115,7 @@ public:
      * This increases the object's reference count.
      *
      * @see release, autorelease
+     * @js NA
      */
     inline void retain()
     {
@@ -128,6 +135,8 @@ public:
      * @returns The object itself.
      *
      * @see AutoreleasePool, retain, release
+     * @js NA
+     * @lua NA
      */
     Object* autorelease();
 
@@ -136,6 +145,7 @@ public:
      * reference to the object. That is, whether the reference count is 1.
      *
      * @returns Whether the object's reference count is 1.
+     * @js NA
      */
     bool isSingleReference() const;
 
@@ -143,6 +153,7 @@ public:
      * Returns the object's current reference count.
      *
      * @returns The object's reference count.
+     * @js NA
      */
     unsigned int retainCount() const;
 
@@ -153,11 +164,19 @@ public:
      * @param object    The object to be compared to this object.
      *
      * @returns True if this object and @p object are equal, otherwise false.
+     * @js NA
+     * @lua NA
      */
     virtual bool isEqual(const Object* object);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
     friend class AutoreleasePool;

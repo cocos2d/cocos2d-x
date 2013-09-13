@@ -60,6 +60,10 @@ public:
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
 
     ControlSlider();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSlider();
 
     /** 

@@ -92,7 +92,7 @@ float Camera::getZEye(void)
     return FLT_EPSILON;
 }
 
-void Camera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
+void Camera::setEye(float fEyeX, float fEyeY, float fEyeZ)
 {
     _eyeX = fEyeX;
     _eyeY = fEyeY;
@@ -101,7 +101,7 @@ void Camera::setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ)
     _dirty = true;
 }
 
-void Camera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
+void Camera::setCenter(float fCenterX, float fCenterY, float fCenterZ)
 {
     _centerX = fCenterX;
     _centerY = fCenterY;
@@ -110,7 +110,7 @@ void Camera::setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ)
     _dirty = true;
 }
 
-void Camera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
+void Camera::setUp(float fUpX, float fUpY, float fUpZ)
 {
     _upX = fUpX;
     _upY = fUpY;
@@ -119,21 +119,21 @@ void Camera::setUpXYZ(float fUpX, float fUpY, float fUpZ)
     _dirty = true;
 }
 
-void Camera::getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ) const
+void Camera::getEye(float *pEyeX, float *pEyeY, float *pEyeZ) const
 {
     *pEyeX = _eyeX;
     *pEyeY = _eyeY;
     *pEyeZ = _eyeZ;
 }
 
-void Camera::getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ) const
+void Camera::getCenter(float *pCenterX, float *pCenterY, float *pCenterZ) const
 {
     *pCenterX = _centerX;
     *pCenterY = _centerY;
     *pCenterZ = _centerZ;
 }
 
-void Camera::getUpXYZ(float *pUpX, float *pUpY, float *pUpZ) const
+void Camera::getUp(float *pUpX, float *pUpY, float *pUpZ) const
 {
     *pUpX = _upX;
     *pUpY = _upY;

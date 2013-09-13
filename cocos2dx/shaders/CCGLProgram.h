@@ -104,9 +104,15 @@ public:
     
     GLProgram();
     virtual ~GLProgram();
-    /** Initializes the GLProgram with a vertex and fragment with bytes array */
+    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+     * @js initWithString
+     * @lua initWithString
+     */
     bool initWithVertexShaderByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /** Initializes the GLProgram with a vertex and fragment with contents of filenames */
+    /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
+     * @js init
+     * @lua init
+     */
     bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
     /**  It will add a new attribute to the shader */
     void addAttribute(const char* attributeName, GLuint index);
@@ -128,7 +134,10 @@ public:
     /** calls retrieves the named uniform location for this shader program. */
     GLint getUniformLocationForName(const char* name) const;
     
-    /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
+     * @js setUniformLocationI32
+     * @lua setUniformLocationI32
+     */
     void setUniformLocationWith1i(GLint location, GLint i1);
     
     /** calls glUniform2i only if the values are different than the previous call for this same shader program. */
@@ -150,16 +159,28 @@ public:
     
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
-    /** calls glUniform1f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
-    /** calls glUniform2f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform2f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
-    /** calls glUniform3f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform3f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
-    /** calls glUniform4f only if the values are different than the previous call for this same shader program. */
+    /** calls glUniform4f only if the values are different than the previous call for this same shader program. 
+     * In js or lua,please use setUniformLocationF32
+     * @js NA
+     */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
@@ -178,11 +199,26 @@ public:
     void setUniformsForBuiltins();
 
     /** returns the vertexShader error log */
-    const char* vertexShaderLog() const;
+    const char* getVertexShaderLog() const;
+    /** @deprecated. Use getVertexShaderLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* vertexShaderLog() const { return getVertexShaderLog(); }
     /** returns the fragmentShader error log */
-    const char* fragmentShaderLog() const;
+    const char* getFragmentShaderLog() const;
+    /** @deprecated. Use getFragmentShaderLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* fragmentShaderLog() const{ return getFragmentShaderLog();}
     /** returns the program error log */
-    const char* programLog() const;
+    const char* getProgramLog() const;
+    /** @deprecated. Use getProgramLog() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE const char* programLog() const { return getProgramLog(); }
     
     // reload all shaders, this function is designed for android
     // when opengl context lost, so don't call it.

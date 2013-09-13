@@ -41,6 +41,10 @@ public:
 
 public:
     DisplayManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~DisplayManager();
 
     bool init(Bone *bone);

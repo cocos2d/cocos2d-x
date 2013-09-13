@@ -9,14 +9,18 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class LayerLoader : public NodeLoader {
-    public:
-        virtual ~LayerLoader() {};
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LayerLoader, loader);
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~LayerLoader() {};
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LayerLoader, loader);
 
-    protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Layer);
+protected:
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Layer);
 
-        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
+    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

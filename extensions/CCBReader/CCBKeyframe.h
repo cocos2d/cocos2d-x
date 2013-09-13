@@ -33,6 +33,10 @@ public:
     };
     
     CCBKeyframe();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBKeyframe();
     
     Object* getValue();

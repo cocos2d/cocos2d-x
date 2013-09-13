@@ -65,13 +65,25 @@ protected:
     
 public:
     ControlSaturationBrightnessPicker();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(Node* target, Point pos);
 
     static ControlSaturationBrightnessPicker* create(Node* target, Point pos);
 
     virtual void setEnabled(bool enabled);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateWithHSV(HSV hsv);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateDraggerWithHSV(HSV hsv);
 
 protected:    

@@ -11,6 +11,10 @@ class CCBSequenceProperty : public Object
 {
 public:
     CCBSequenceProperty();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBSequenceProperty();
     
     virtual bool init();

@@ -184,7 +184,10 @@ public:
     inline bool isDirty(void) { return _dirty; }
     /** specify if the array buffer of the VBO needs to be updated */
     inline void setDirty(bool bDirty) { _dirty = bDirty; }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description() const;
 
     /** Gets the quantity of quads that are going to be drawn */

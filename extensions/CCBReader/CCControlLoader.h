@@ -11,6 +11,10 @@ class CCBReader;
 
 class ControlLoader : public NodeLoader {
     public:
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual ~ControlLoader() {};
 
     protected:

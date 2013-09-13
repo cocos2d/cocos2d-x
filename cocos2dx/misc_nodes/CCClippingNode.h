@@ -84,9 +84,25 @@ public:
     void setInverted(bool bInverted);
 
     // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnterTransitionDidFinish() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExitTransitionDidStart() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
     virtual void visit() override;
 

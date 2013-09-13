@@ -125,7 +125,15 @@ public://@public
     std::set<unsigned int> *_characterSet;
 public:
     CCBMFontConfiguration();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CCBMFontConfiguration();
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char * description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */

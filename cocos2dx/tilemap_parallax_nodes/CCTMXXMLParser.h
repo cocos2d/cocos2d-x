@@ -242,8 +242,20 @@ public:
     };
     
     // implement pure virtual methods of SAXDelegator
+    /**
+     * @js NA
+     * @lua NA
+     */
     void startElement(void *ctx, const char *name, const char **atts);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void endElement(void *ctx, const char *name);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void textHandler(void *ctx, const char *ch, int len);
     
     inline const char* getCurrentString(){ return _currentString.c_str(); }

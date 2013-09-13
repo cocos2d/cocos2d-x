@@ -42,6 +42,10 @@ public:
     static void purgeArmatureSystem();
 private:
     ArmatureDataManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ArmatureDataManager(void);
 
 public:

@@ -117,18 +117,37 @@ public:
     static Grid3D* create(const Size& gridSize);
 
     Grid3D();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Grid3D(void);
 
-    /** returns the vertex at a given position */
+    /** returns the vertex at a given position 
+     * @js NA
+     * @lua NA
+     */
     Vertex3F getVertex(const Point& pos) const;
-    /** @deprecated Use getVertex() instead */
+    /** @deprecated Use getVertex() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Vertex3F vertex(const Point& pos) const { return getVertex(pos); }
-    /** returns the original (non-transformed) vertex at a given position */
+    /** returns the original (non-transformed) vertex at a given position
+     * @js NA
+     * @lua NA
+     */
     Vertex3F getOriginalVertex(const Point& pos) const;
-    /** @deprecated Use getOriginalVertex() instead */
+    /** @deprecated Use getOriginalVertex() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Vertex3F originalVertex(const Point& pos) const { return getOriginalVertex(pos); }
 
-    /** sets a new vertex at a given position */
+    /** sets a new vertex at a given position 
+     * @js NA
+     * @lua NA
+     */
     void setVertex(const Point& pos, const Vertex3F& vertex);
 
     // Overrides
@@ -161,16 +180,31 @@ public:
     TiledGrid3D();
     ~TiledGrid3D();
 
-    /** returns the tile at the given position */
+    /** returns the tile at the given position 
+     * @js NA
+     * @lua NA
+     */
     Quad3 getTile(const Point& pos) const;
-    /** returns the tile at the given position */
+    /** returns the tile at the given position 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Point& pos) const { return getTile(pos); }
-    /** returns the original tile (untransformed) at the given position */
+    /** returns the original tile (untransformed) at the given position 
+     * @js NA
+     * @lua NA
+     */
     Quad3 getOriginalTile(const Point& pos) const;
-    /** returns the original tile (untransformed) at the given position */
+    /** returns the original tile (untransformed) at the given position 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Point& pos) const { return getOriginalTile(pos); }
 
-    /** sets a new tile */
+    /** sets a new tile 
+     * @js NA
+     * @lua NA
+     */
     void setTile(const Point& pos, const Quad3& coords);
 
     // Overrides

@@ -46,7 +46,10 @@ public:
 	CCSkeletonAnimation (SkeletonData* skeletonData);
 	CCSkeletonAnimation (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~CCSkeletonAnimation ();
 
 	virtual void update (float deltaTime);

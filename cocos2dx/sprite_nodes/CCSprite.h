@@ -168,6 +168,8 @@ public:
     
     /**
      * Default destructor
+     * @js  NA
+     * @lua NA
      */
     virtual ~Sprite(void);
     
@@ -240,6 +242,8 @@ public:
      *
      * @param   filename The path to an image file in local file system
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js      init
+     * @lua     init
      */
     virtual bool initWithFile(const char *filename);
     
@@ -253,6 +257,8 @@ public:
      * @param   filename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  true if the sprite is initialized properly, false otherwise.
+     * @js      init
+     * @lua     init
      */
     virtual bool initWithFile(const char *filename, const Rect& rect);
     
@@ -366,7 +372,9 @@ public:
     virtual void setDirty(bool bDirty) { _dirty = bDirty; }
     
     /**
-     * Returns the quad (tex coords, vertex coords and color) information. 
+     * Returns the quad (tex coords, vertex coords and color) information.
+     * @js  NA
+     * @lua NA
      */
     inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
 
@@ -417,13 +425,21 @@ public:
      *
      * @return true if the sprite is flipped horizaontally, false otherwise.
      */
-    bool isFlipX(void) const;
+    bool isFlippedX(void) const;
     /**
      * Sets whether the sprite should be flipped horizontally or not.
      *
      * @param bFlipX true if the sprite should be flipped horizaontally, false otherwise.
      */
-    void setFlipX(bool bFlipX);
+    void setFlippedX(bool flippedX);
+    
+    /** @deprecated Use isFlippedX() instead 
+    * @js NA
+    * @lua NA
+    */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
+    /** @deprecated Use setFlippedX() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) {  setFlippedX(flippedX); };
     
     /** 
      * Return the flag which indicates whether the sprite is flipped vertically or not.
@@ -435,16 +451,20 @@ public:
      * 
      * @return true if the sprite is flipped vertically, flase otherwise.
      */
-    bool isFlipY(void) const;
+    bool isFlippedY(void) const;
     /**
      * Sets whether the sprite should be flipped vertically or not.
      *
      * @param bFlipY true if the sprite should be flipped vertically, flase otherwise.
      */
-    void setFlipY(bool bFlipY);
+    void setFlippedY(bool flippedY);
     
     /// @} End of Sprite properties getter/setters
-
+    
+    /** @deprecated Use isFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
+    /** @deprecated Use setFlippedY() instead */
+    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) {  setFlippedY(flippedY); };
 
     //
     // Overrides
@@ -453,7 +473,18 @@ public:
     /// @name Functions inherited from TextureProtocol
     virtual void setTexture(Texture2D *texture) override;
     virtual Texture2D* getTexture() const override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *In lua: local setBlendFunc(local src, local dst)
+    *@endcode
+    */
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    /**
+    * @js  NA
+    * @lua NA
+    */
     inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
@@ -461,6 +492,10 @@ public:
     /// @name Functions inherited from Node
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
+    /**
+    * @js  NA
+    * @lua NA
+    */
     virtual void setPosition(const Point& pos) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationX(float rotationX) override;
@@ -537,8 +572,8 @@ protected:
     bool _opacityModifyRGB;
 
     // image is flipped
-    bool _flipX;                              /// Whether the sprite is flipped horizaontally or not.
-    bool _flipY;                              /// Whether the sprite is flipped vertically or not.
+    bool _flippedX;                              /// Whether the sprite is flipped horizaontally or not.
+    bool _flippedY;                              /// Whether the sprite is flipped vertically or not.
 };
 
 

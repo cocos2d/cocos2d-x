@@ -225,6 +225,9 @@ class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 public:
 	/** creates the action with the callback of type std::function<void()>.
 	 This is the preferred way to create the callback.
+     * When this funtion bound in js or lua ,the input param will be changed
+     * In js: var create(var func, var this, var [data]) or var create(var func)
+     * In lua:local create(local funcID)
 	 */
     static CallFunc * create(const std::function<void()>& func);
 
@@ -232,6 +235,8 @@ public:
 
      typedef void (Object::*SEL_CallFunc)();
 	 @deprecated Use the std::function API instead.
+     * @js NA
+     * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
 
@@ -242,6 +247,10 @@ public:
 		, _function(nullptr)
     {
     }
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CallFunc();
 
 	/** initializes the action with the callback 
@@ -251,6 +260,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget);
 
 	/** initializes the action with the std::function<void()>
+     * @js NK
+     * @lua NK
 	 */
     bool initWithFunction(const std::function<void()>& func);
 

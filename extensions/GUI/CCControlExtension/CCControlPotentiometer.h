@@ -48,6 +48,10 @@ public:
     static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
 
     ControlPotentiometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlPotentiometer();
 
     /** 

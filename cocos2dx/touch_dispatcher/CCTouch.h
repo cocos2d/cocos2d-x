@@ -78,7 +78,10 @@ public:
             _startPointCaptured = true;
         }
     }
-
+    /**
+     * @js getId
+     * @lua getId
+     */
     int getID() const
     {
         return _id;

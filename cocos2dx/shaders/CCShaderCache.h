@@ -70,8 +70,14 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-    /** returns a GL program for a given key */
-    GLProgram * programForKey(const std::string &key);
+    /** returns a GL program for a given key 
+     */
+    GLProgram * getProgram(const std::string &key);
+    /** @deprecated Use getProgram() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getProgram(key); }
 
     /** adds a GLProgram to the cache for a given name */
     void addProgram(GLProgram* program, const std::string &key);

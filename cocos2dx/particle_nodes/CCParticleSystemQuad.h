@@ -79,21 +79,53 @@ public:
     void setDisplayFrame(SpriteFrame *spriteFrame);
 
     /** Sets a new texture with a rect. The rect is in Points.
-    @since v0.99.4
-    */
+     @since v0.99.4
+     * @js NA
+     * @lua NA
+     */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
 
     /** listen the event that coming to foreground on Android
+     * @js NA
+     * @lua NA
      */
     void listenBackToForeground(Object *obj);
 
     // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTexture(Texture2D* texture) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void updateQuadWithParticle(tParticle* particle, const Point& newPosition) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void postStep() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void draw() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setBatchNode(ParticleBatchNode* batchNode) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTotalParticles(int tp) override;
 
 private:

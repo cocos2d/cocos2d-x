@@ -54,6 +54,10 @@ class Scale9Sprite : public NodeRGBA
 {
 public:
     Scale9Sprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Scale9Sprite();
 
 public:
@@ -247,6 +251,10 @@ public:
 
     // overrides
     virtual void setContentSize(const Size & size) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit() override;
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
