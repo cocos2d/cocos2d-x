@@ -405,6 +405,9 @@
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\System\CCSReader.cpp">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClCompile>
@@ -450,10 +453,16 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UINodeContainer.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextButton.cpp">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp">
@@ -474,8 +483,8 @@
     <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp">
       <Filter>CocoStudio\Json\lib_json</Filter>
     </ClCompile>
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp">
-      <Filter>CocoStudio\Reader</Filter>
+    <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
+      <Filter>CocoStudio\Armature\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -757,6 +766,9 @@
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h">
       <Filter>CocoStudio\GUI\Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\System\CCSReader.h">
+      <Filter>CocoStudio\GUI\System</Filter>
+    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
@@ -808,10 +820,16 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UINodeContainer.h">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h">
+      <Filter>CocoStudio\GUI\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextButton.h">
       <Filter>CocoStudio\GUI\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h">
@@ -852,9 +870,6 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h">
       <Filter>CocoStudio\Json\lib_json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h">
-      <Filter>CocoStudio\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
