@@ -154,6 +154,8 @@
 		1A2E824C17952ECE0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E824D17952ED70058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
 		1A2E824E17952EDF0058E421 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E823A1793EED50058E421 /* jsb_deprecated.js */; };
+		1A33319A17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
+		1A33319B17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */; };
 		1A6FB4DE17854A6A00CDF010 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C417854A6A00CDF010 /* animations */; };
 		1A6FB4DF17854A6A00CDF010 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C517854A6A00CDF010 /* armature */; };
 		1A6FB4E017854A6A00CDF010 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */; };
@@ -2355,6 +2357,8 @@
 		1A119C9117853D8D00D62A44 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = ../scripting/lua/script/Opengl.lua; sourceTree = "<group>"; };
 		1A119C9217853D8D00D62A44 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
 		1A2E823A1793EED50058E421 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewEventDispatcherTest.cpp; sourceTree = "<group>"; };
+		1A33319917E2DFEA00ED3802 /* NewEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventDispatcherTest.h; sourceTree = "<group>"; };
 		1A6FB4C417854A6A00CDF010 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Cpp/TestCpp/Resources/animations; sourceTree = SOURCE_ROOT; };
 		1A6FB4C517854A6A00CDF010 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = Cpp/TestCpp/Resources/armature; sourceTree = SOURCE_ROOT; };
 		1A6FB4C617854A6A00CDF010 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = SOURCE_ROOT; };
@@ -3677,6 +3681,15 @@
 			name = "Lua Common";
 			sourceTree = "<group>";
 		};
+		1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A33319817E2DFEA00ED3802 /* NewEventDispatcherTest.cpp */,
+				1A33319917E2DFEA00ED3802 /* NewEventDispatcherTest.h */,
+			);
+			path = NewEventDispatcherTest;
+			sourceTree = "<group>";
+		};
 		1A6FB57C1785513C00CDF010 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -3939,6 +3952,7 @@
 		A035994D17821D9B00987F6C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1A33319117E2DF4E00ED3802 /* NewEventDispatcherTest */,
 				A035994E17821D9B00987F6C /* AccelerometerTest */,
 				A035995117821D9B00987F6C /* ActionManagerTest */,
 				A035995417821D9B00987F6C /* ActionsEaseTest */,
@@ -6942,6 +6956,7 @@
 				37B6EF9417DEB93D001BE102 /* ProjectileController.cpp in Sources */,
 				37B6EF9617DEB942001BE102 /* SceneController.cpp in Sources */,
 				37B6EF9817DEB94E001BE102 /* ArmatureScene.cpp in Sources */,
+				1A33319A17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7217,6 +7232,7 @@
 				37B6EF9717DEB944001BE102 /* SceneController.cpp in Sources */,
 				37B6EF9917DEB950001BE102 /* ArmatureScene.cpp in Sources */,
 				37B6F03417DEBD17001BE102 /* PlayerController.cpp in Sources */,
+				1A33319B17E2DFEA00ED3802 /* NewEventDispatcherTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

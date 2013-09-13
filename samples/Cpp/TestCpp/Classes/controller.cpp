@@ -15,6 +15,7 @@ struct {
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
 
+    { "NewEventDispatcherTest", []() { return new EventDispatcherTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
