@@ -64,6 +64,10 @@ public:
     static ParticleSystemQuad * create(const char *plistFile);
 
     ParticleSystemQuad();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSystemQuad();
 
     /** initializes the indices for the vertices*/

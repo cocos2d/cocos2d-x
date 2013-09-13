@@ -49,7 +49,10 @@ class CC_DLL ShaderCache : public Object
 {
 public:
     ShaderCache();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ShaderCache();
 
     /** returns the shared instance */

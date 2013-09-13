@@ -35,6 +35,10 @@ class CC_DLL Component : public Object
 protected:
     Component(void);
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Component(void);
     virtual bool init();
     /**

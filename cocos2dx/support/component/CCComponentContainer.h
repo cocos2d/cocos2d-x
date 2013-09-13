@@ -38,6 +38,10 @@ protected:
     ComponentContainer(Node *pNode);
     
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComponentContainer(void);
     virtual Component* get(const char *pName) const;
     virtual bool add(Component *pCom);

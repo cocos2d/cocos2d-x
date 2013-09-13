@@ -105,7 +105,10 @@ public:
     static Sequence* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
     /** creates the action */
     static Sequence* createWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Sequence(void);
 
     /** initializes the action */
@@ -134,7 +137,10 @@ class CC_DLL Repeat : public ActionInterval
 public:
     /** creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
     static Repeat* create(FiniteTimeAction *pAction, unsigned int times);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Repeat(void);
 
     /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
@@ -187,6 +193,10 @@ public:
     RepeatForever()
         : _innerAction(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~RepeatForever();
 
     /** initializes the action */
@@ -243,7 +253,10 @@ public:
 
     /** creates the Spawn action */
     static Spawn* createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Spawn(void);
 
     /** initializes the Spawn action with the 2 actions to spawn */
@@ -766,7 +779,10 @@ class CC_DLL ReverseTime : public ActionInterval
 public:
     /** creates the action */
     static ReverseTime* create(FiniteTimeAction *pAction);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ReverseTime(void);
     ReverseTime();
 
@@ -795,6 +811,10 @@ public:
     static Animate* create(Animation *pAnimation);
 
     Animate();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Animate();
 
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
@@ -830,6 +850,10 @@ class CC_DLL TargetedAction : public ActionInterval
 {
 public:
     TargetedAction();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TargetedAction();
 
     /** Create an action with the specified action and forced target */

@@ -49,6 +49,10 @@ class CC_DLL Clonable
 public:
 	/** returns a copy of the object */
     virtual Clonable* clone() const = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~Clonable() {};
 
     /** returns a copy of the object.

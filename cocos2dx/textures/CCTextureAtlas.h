@@ -68,6 +68,10 @@ public:
     static TextureAtlas* createWithTexture(Texture2D *texture, int capacity);
 
     TextureAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureAtlas();
 
     /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.

@@ -77,6 +77,10 @@ public:
     static SpriteBatchNode* create(const char* fileImage, int capacity = DEFAULT_CAPACITY);
 
     SpriteBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteBatchNode();
 
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.

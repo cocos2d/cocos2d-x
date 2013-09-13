@@ -55,6 +55,10 @@ public:
         ,_upYOrig(0)
         ,_upZOrig(0)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ActionCamera(){}
 
     // Overrides
@@ -99,6 +103,10 @@ public:
         , _radX(0.0)                        
         , _radDeltaX(0.0)        
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~OrbitCamera(){}
     
     /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */

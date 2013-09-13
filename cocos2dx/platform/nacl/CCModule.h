@@ -37,7 +37,10 @@ public:
     {
         return glInitializePPAPI(get_browser_interface()) == GL_TRUE;
     }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CocosPepperModule() {}
 
     virtual pp::Instance* CreateInstance(PP_Instance instance)

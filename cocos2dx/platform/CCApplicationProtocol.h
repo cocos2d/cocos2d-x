@@ -28,7 +28,10 @@ public:
         OS_TIZEN
     };
 
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ApplicationProtocol() {}
 
     /**

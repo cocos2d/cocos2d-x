@@ -78,6 +78,10 @@ public:
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
     Menu() : _selectedItem(NULL) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Menu(){}
 
     /** initializes an empty Menu */

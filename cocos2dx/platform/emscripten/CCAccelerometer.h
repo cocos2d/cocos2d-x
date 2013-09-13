@@ -17,6 +17,10 @@ class Accelerometer
 {
 public:
     Accelerometer(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Accelerometer(){}
 
     static Accelerometer* sharedAccelerometer() { return NULL; };

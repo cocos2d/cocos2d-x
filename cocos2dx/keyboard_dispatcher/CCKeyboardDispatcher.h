@@ -46,6 +46,10 @@ class CC_DLL KeyboardDispatcher : public Object
 {
 public:
     KeyboardDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~KeyboardDispatcher();
 
     /**

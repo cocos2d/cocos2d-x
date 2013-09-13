@@ -48,7 +48,10 @@ public:
     static const int INVALID_TAG = -1;
 
     Action(void);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Action(void);
     /**
      * @js NA
@@ -129,6 +132,10 @@ public:
     FiniteTimeAction()
 	: _duration(0)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FiniteTimeAction(){}
     //! get duration in seconds of the action
     inline float getDuration(void) const { return _duration; }
@@ -162,6 +169,10 @@ public:
     static Speed* create(ActionInterval* pAction, float fSpeed);
 
     Speed();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Speed(void);
 
     inline float getSpeed(void) const { return _speed; }
@@ -223,6 +234,10 @@ public:
         , _bottomBoundary(0.0)
 		, _worldRect(Rect::ZERO)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Follow(void);
     
     inline bool isBoundarySet(void) const { return _boundarySet; }

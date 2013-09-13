@@ -61,6 +61,10 @@ public:
     /** creates a fullscreen black layer */
     static Layer *create(void);
     Layer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Layer();
     virtual bool init();
     
@@ -195,6 +199,10 @@ public:
     CREATE_FUNC(LayerRGBA);
     
     LayerRGBA();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerRGBA();
     
     virtual bool init();
@@ -247,6 +255,10 @@ public:
     static LayerColor * create(const Color4B& color);
 
     LayerColor();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerColor();
 
     virtual bool init();

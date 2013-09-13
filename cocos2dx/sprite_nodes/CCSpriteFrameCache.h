@@ -75,6 +75,10 @@ protected:
     SpriteFrameCache() : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
 
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteFrameCache();
     bool init(void);
 

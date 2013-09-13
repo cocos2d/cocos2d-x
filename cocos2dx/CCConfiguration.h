@@ -60,7 +60,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
 
 public:
-
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~Configuration();
 
     /** OpenGL Max texture size. */

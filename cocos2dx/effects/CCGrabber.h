@@ -43,6 +43,10 @@ class Grabber : public Object
 {
 public:
     Grabber(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Grabber(void);
 
     void grab(Texture2D *texture);

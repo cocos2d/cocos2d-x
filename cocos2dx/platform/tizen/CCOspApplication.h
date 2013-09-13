@@ -45,6 +45,10 @@ public:
 
 public:
     OspApplication();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~OspApplication();
 
     Tizen::Ui::Controls::Form* getOspForm();

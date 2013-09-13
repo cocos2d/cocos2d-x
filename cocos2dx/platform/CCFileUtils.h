@@ -64,6 +64,8 @@ public:
 
     /**
      *  The destructor of FileUtils.
+     * @js NA
+     * @lua NA
      */
     virtual ~FileUtils();
     

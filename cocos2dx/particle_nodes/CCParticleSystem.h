@@ -173,6 +173,10 @@ public:
     static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
 
     ParticleSystem();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSystem();
 
     /** initializes a ParticleSystem*/

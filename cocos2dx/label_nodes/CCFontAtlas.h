@@ -52,6 +52,10 @@ class CC_DLL FontAtlas : public Object
 public:
     
     FontAtlas(Font &theFont);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FontAtlas();
     
     void addLetterDefinition(const FontLetterDefinition &letterDefinition);

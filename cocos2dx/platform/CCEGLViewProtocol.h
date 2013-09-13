@@ -44,6 +44,10 @@ class CC_DLL EGLViewProtocol
 {
 public:
     EGLViewProtocol();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLViewProtocol();
 
     /** Force destroying EGL view, subclass must implement this method. */

@@ -39,6 +39,10 @@ class CC_DLL Application
 {
 public:
     Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Application();
 
     /**

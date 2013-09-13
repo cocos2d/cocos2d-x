@@ -103,6 +103,10 @@ public:
     static const char* ATTRIBUTE_NAME_TEX_COORD;
     
     GLProgram();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~GLProgram();
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString

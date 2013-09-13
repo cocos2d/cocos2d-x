@@ -44,6 +44,10 @@ class EGLView : public EGLViewProtocol
 {
 public:
     EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLView();
 
     /**

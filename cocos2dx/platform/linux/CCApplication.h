@@ -19,6 +19,10 @@ class Application : public ApplicationProtocol
 {
 public:
 	Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~Application();
 
 	/**

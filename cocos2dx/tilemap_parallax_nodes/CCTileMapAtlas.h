@@ -63,6 +63,10 @@ public:
     static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
     
     TileMapAtlas();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TileMapAtlas();
     
     /** initializes a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.

@@ -58,6 +58,10 @@ class CC_DLL ActionManager : public Object
 {
 public:
     ActionManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ActionManager(void);
 
     // actions

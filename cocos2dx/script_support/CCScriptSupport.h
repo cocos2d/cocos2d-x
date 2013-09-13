@@ -55,6 +55,10 @@ class ScriptHandlerEntry : public Object
 {
 public:
     static ScriptHandlerEntry* create(int nHandler);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ScriptHandlerEntry(void);
     
     int getHandler(void) {

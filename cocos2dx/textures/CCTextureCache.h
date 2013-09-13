@@ -211,6 +211,10 @@ class VolatileTexture
 
 public:
     VolatileTexture(Texture2D *t);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~VolatileTexture();
 
     static void addImageTexture(Texture2D *tt, const char* imageFileName);

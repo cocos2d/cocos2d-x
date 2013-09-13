@@ -110,6 +110,10 @@ class CC_DLL TMXTiledMap : public Node
 {
 public:
     TMXTiledMap();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXTiledMap();
 
     /** creates a TMX Tiled Map with a TMX file.*/

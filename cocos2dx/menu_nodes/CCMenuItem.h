@@ -72,6 +72,10 @@ public:
 	, _callback(nullptr)
     , _target(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItem();
 
     /** Initializes a MenuItem with a target/selector 
@@ -145,6 +149,10 @@ public:
     : _originalScale(0.0)
     , _label(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemLabel();
 
 	/** initializes a MenuItemLabel with a Label, target and selector */
@@ -199,6 +207,10 @@ public:
     static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
     MenuItemAtlasFont(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemAtlasFont(){}
 
     /** initializes a menu item from a string and atlas with a target/selector */
@@ -222,6 +234,10 @@ public:
     static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
 
     MenuItemFont() : _fontSize(0), _fontName(""){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemFont(){}
 
     /** initializes a menu item from a string with a target/selector */
@@ -374,6 +390,10 @@ public:
     static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
 
     MenuItemImage(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemImage(){}
 
     bool init();
@@ -421,6 +441,10 @@ public:
     : _selectedIndex(0)
     , _subItems(NULL)            
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemToggle();
 
     /** initializes a menu item from a list of items with a target selector 

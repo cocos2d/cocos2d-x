@@ -30,6 +30,10 @@ class GLBufferedNode
 {
 public:
     GLBufferedNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~GLBufferedNode();
 
     /**

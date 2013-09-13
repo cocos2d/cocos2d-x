@@ -46,6 +46,10 @@ class CC_DLL TMXObjectGroup : public Object
 {
 public:
     TMXObjectGroup();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXObjectGroup();
 
     inline const char* getGroupName(){ return _groupName.c_str(); }

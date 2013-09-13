@@ -60,6 +60,10 @@ public:
     static RenderTexture * create(int w, int h);
 
     RenderTexture();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~RenderTexture();
     
     /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */

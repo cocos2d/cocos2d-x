@@ -57,6 +57,10 @@ public:
     static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
 
     TransitionPageTurn();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionPageTurn();
 
     /**

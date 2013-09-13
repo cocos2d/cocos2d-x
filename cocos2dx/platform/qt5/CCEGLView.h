@@ -38,24 +38,28 @@ NS_CC_BEGIN
 class Cocos2DQt5OpenGLIntegration;
 
 class EGLView : public EGLViewProtocol {
-    public:
-        EGLView();
-        virtual ~EGLView();
+public:
+    EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~EGLView();
 
-        static EGLView *getInstance();
+    static EGLView *getInstance();
 
-        /** @deprecated Use getInstance() instead */
-        CC_DEPRECATED_ATTRIBUTE static EGLView *sharedOpenGLView();
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView *sharedOpenGLView();
 
-        virtual bool isOpenGLReady() { return (m_integration != NULL); }
+    virtual bool isOpenGLReady() { return (m_integration != NULL); }
 
-        virtual void setFrameSize(float width, float height);
-        virtual void swapBuffers();
-        virtual void setIMEKeyboardState(bool bOpen);
-        virtual void end();
+    virtual void setFrameSize(float width, float height);
+    virtual void swapBuffers();
+    virtual void setIMEKeyboardState(bool bOpen);
+    virtual void end();
 
-    private:
-        Cocos2DQt5OpenGLIntegration *m_integration;
+private:
+    Cocos2DQt5OpenGLIntegration *m_integration;
 };
 
 NS_CC_END
