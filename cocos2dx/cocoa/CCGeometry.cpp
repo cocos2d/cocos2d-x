@@ -368,12 +368,12 @@ bool Rect::equals(const Rect& rect) const
 
 float Rect::getMaxX() const
 {
-    return (float)(origin.x + size.width);
+    return origin.x + size.width;
 }
 
 float Rect::getMidX() const
 {
-    return (float)(origin.x + size.width / 2.0);
+    return origin.x + size.width / 2.0f;
 }
 
 float Rect::getMinX() const
@@ -388,7 +388,7 @@ float Rect::getMaxY() const
 
 float Rect::getMidY() const
 {
-    return (float)(origin.y + size.height / 2.0);
+    return origin.y + size.height / 2.0f;
 }
 
 float Rect::getMinY() const
