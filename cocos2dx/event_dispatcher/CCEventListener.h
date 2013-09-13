@@ -46,10 +46,11 @@ protected:
 public:
     virtual ~EventListener();
     virtual bool checkAvaiable();
-    
+    virtual std::shared_ptr<EventListener> clone();
 protected:
     std::function<void(Event*)> onEvent;
     std::string type;
+    bool _isRegistered;
     
     friend class EventDispatcher;
 };

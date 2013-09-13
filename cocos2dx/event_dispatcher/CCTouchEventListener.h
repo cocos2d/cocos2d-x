@@ -37,6 +37,7 @@ class TouchEventListener : public EventListener
 {
 public:
     static std::shared_ptr<TouchEventListener> create(Touch::DispatchMode mode);
+    virtual std::shared_ptr<EventListener> clone() override;
     
 private:
     TouchEventListener(Touch::DispatchMode mode);
