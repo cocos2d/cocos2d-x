@@ -1637,6 +1637,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
 CCContourData *CCDataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
 {
     CCContourData *contourData = new CCContourData();
+	contourData->init();
 
     int length = json.getArrayItemCount(VERTEX_POINT);
     for (int i = length - 1; i >= 0; i--)
