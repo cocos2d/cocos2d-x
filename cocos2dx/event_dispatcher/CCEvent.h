@@ -33,6 +33,8 @@
 
 NS_CC_BEGIN
 
+class Node;
+
 class Event
 {
 public:
@@ -42,10 +44,13 @@ public:
 	const std::string& getType() const { return _type; };
     void stopPropagation() { _isStopped = true; };
     bool isStopped() const { return _isStopped; };
-
+    Node* getCurrentTarget();
+    
 protected:
+    void setCurrentTarget(Node* target);
 	std::string _type;
     bool _isStopped;
+    Node* _currentTarget;
     
     friend class EventDispatcher;
 };
