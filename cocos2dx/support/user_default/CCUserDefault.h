@@ -46,6 +46,10 @@ NS_CC_BEGIN
 class CC_DLL UserDefault
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~UserDefault();
 
     // get value methods
@@ -53,82 +57,131 @@ public:
     /**
     @brief Get bool value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is false.
+    * @js NA
     */
     bool    getBoolForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     bool    getBoolForKey(const char* pKey, bool defaultValue);
     /**
     @brief Get integer value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.
+    * @js NA
     */
     int     getIntegerForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     int     getIntegerForKey(const char* pKey, int defaultValue);
     /**
     @brief Get float value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0f.
+    * @js NA
     */
     float    getFloatForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     float    getFloatForKey(const char* pKey, float defaultValue);
     /**
     @brief Get double value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is 0.0.
+    * @js NA
     */
     double  getDoubleForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     double  getDoubleForKey(const char* pKey, double defaultValue);
     /**
     @brief Get string value by key, if the key doesn't exist, a default value will return.
     You can set the default value, or it is "".
+    * @js NA
     */
     std::string getStringForKey(const char* pKey);
+    /**
+     * @js NA
+     */
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
     /**
      @brief Get binary data value by key, if the key doesn't exist, a default value will return.
      You can set the default value, or it is null.
+     * @js NA
+     * @lua NA
      */
     Data* getDataForKey(const char* pKey);
+    /**
+     * @js NA
+     * @lua NA
+     */
     Data* getDataForKey(const char* pKey, Data* defaultValue);
 
     // set value methods
 
     /**
-    @brief Set bool value by key.
-    */
+     @brief Set bool value by key.
+     * @js NA
+     */
     void    setBoolForKey(const char* pKey, bool value);
     /**
-    @brief Set integer value by key.
-    */
+     @brief Set integer value by key.
+     * @js NA
+     */
     void    setIntegerForKey(const char* pKey, int value);
     /**
-    @brief Set float value by key.
-    */
+     @brief Set float value by key.
+     * @js NA
+     */
     void    setFloatForKey(const char* pKey, float value);
     /**
-    @brief Set double value by key.
-    */
+     @brief Set double value by key.
+     * @js NA
+     */
     void    setDoubleForKey(const char* pKey, double value);
     /**
-    @brief Set string value by key.
-    */
+     @brief Set string value by key.
+     * @js NA
+     */
     void    setStringForKey(const char* pKey, const std::string & value);
     /**
      @brief Set binary data value by key.
+     * @js NA
+     * @lua NA
      */
     void    setDataForKey(const char* pKey, const Data& value);
     /**
      @brief Save content to xml file
+     * @js NA
      */
     void    flush();
 
-    /** returns the singleton */
+    /** returns the singleton 
+     * @js NA
+     * @lua NA
+     */
     static UserDefault* getInstance();
-
+    /**
+     * @js NA
+     */
     static void destroyInstance();
 
-    /** deprecated. Use getInstace() instead */
+    /** deprecated. Use getInstace() instead 
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static UserDefault* sharedUserDefault();
-
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
-
+    /**
+     * @js NA
+     */
     const static std::string& getXMLFilePath();
+    /**
+     * @js NA
+     */
     static bool isXMLFileExist();
 
 private:

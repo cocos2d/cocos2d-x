@@ -52,7 +52,14 @@ public:
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
+    /**
+     * @js ctor
+     */
     ArmatureAnimation();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ArmatureAnimation(void);
 
     /**

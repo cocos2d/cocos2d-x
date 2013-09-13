@@ -72,8 +72,14 @@ public:
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
-
+    /**
+     * @js ctor
+     */
     ParticleBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleBatchNode();
 
     /** initializes the particle system with Texture2D, a capacity of particles */
@@ -107,7 +113,18 @@ public:
     virtual void draw(void) override;
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var setBlendFunc(var src, var dst)
+    * @endcode
+    * @lua NA
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc(void) const override;
 
 private:

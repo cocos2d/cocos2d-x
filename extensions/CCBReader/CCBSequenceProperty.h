@@ -10,7 +10,14 @@ NS_CC_EXT_BEGIN
 class CCBSequenceProperty : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     CCBSequenceProperty();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBSequenceProperty();
     
     virtual bool init();

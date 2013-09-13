@@ -46,7 +46,14 @@ class WsMessage;
 class WebSocket
 {
 public:
+    /**
+     * @js ctor
+     */
     WebSocket();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~WebSocket();
     
     /**

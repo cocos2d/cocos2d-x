@@ -27,6 +27,10 @@ NS_CC_EXT_BEGIN
 
 class CCBMemberVariableAssigner {
     public:
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual ~CCBMemberVariableAssigner() {};
 
         /**

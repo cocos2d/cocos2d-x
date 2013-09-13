@@ -16,7 +16,14 @@ namespace   cocos2d {
 class Accelerometer
 {
 public:
+    /**
+     * @js ctor
+     */
     Accelerometer(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Accelerometer(){}
 
     static Accelerometer* sharedAccelerometer() { return NULL; };

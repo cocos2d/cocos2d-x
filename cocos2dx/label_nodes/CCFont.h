@@ -63,6 +63,10 @@ public:
 protected:
     
     Font();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Font() {}
     void setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs = 0);
     const char * getGlyphCollection(GlyphCollection glyphs) const;

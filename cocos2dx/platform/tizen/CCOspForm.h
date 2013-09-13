@@ -37,7 +37,14 @@ class OspForm
     , public Tizen::Ui::ITextEventListener
 {
 public:
+    /**
+     * @js ctor
+     */
     OspForm();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~OspForm();
 
     virtual result OnInitializing(void);

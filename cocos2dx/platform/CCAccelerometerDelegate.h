@@ -39,7 +39,10 @@ public:
     double z;
 
     double timestamp;
-    
+    /**
+    * @js NA
+    * @lua NA
+    */
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 

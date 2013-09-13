@@ -45,7 +45,14 @@ typedef std::function<void(int)> KeyboardDelegate;
 class CC_DLL KeyboardDispatcher : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     KeyboardDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~KeyboardDispatcher();
 
     /**

@@ -9,12 +9,20 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class MenuLoader : public LayerLoader {
-    public:
-        virtual ~MenuLoader() {};
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MenuLoader() {};
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
 
-    protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Menu);
+protected:
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Menu);
 };
 
 NS_CC_EXT_END

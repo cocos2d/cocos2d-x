@@ -97,7 +97,14 @@ public:
 class CC_DLL TextFieldTTF : public LabelTTF, public IMEDelegate
 {
 public:
+    /**
+     * @js ctor
+     */
     TextFieldTTF();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextFieldTTF();
 
     //char * description();
@@ -124,8 +131,15 @@ public:
     //////////////////////////////////////////////////////////////////////////
     // properties
     //////////////////////////////////////////////////////////////////////////
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     inline TextFieldDelegate* getDelegate() const { return _delegate; };
+    /**
+     * @js NA
+     * @lua NA
+     */
     inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
 
     inline int getCharCount() const { return _charCount; };
