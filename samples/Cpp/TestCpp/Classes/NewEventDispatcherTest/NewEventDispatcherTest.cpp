@@ -163,10 +163,18 @@ void TouchableSpriteTest::onEnter()
         target->setPosition(target->getPosition() + touch->getDelta());
     };
     
-    listener1->onTouchEnded = [](Touch* touch, Event* event){
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         log("sprite tag %d onTouchesEnded.. ", target->getTag());
         target->setOpacity(255);
+        if (target == sprite2)
+        {
+            sprite1->setZOrder(100);
+        }
+        else if(target == sprite1)
+        {
+            sprite1->setZOrder(0);
+        }
     };
     
     dispatcher->registerEventListenerWithSceneGraphPriority(listener1, sprite1);
