@@ -92,6 +92,7 @@ UILabelAtlas* UILabelAtlas::create()
     UILabelAtlas* widget = new UILabelAtlas();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);

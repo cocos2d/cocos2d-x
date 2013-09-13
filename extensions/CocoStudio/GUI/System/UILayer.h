@@ -33,12 +33,6 @@
 
 NS_CC_EXT_BEGIN
 
-//typedef enum
-//{
-//    UILAYER_SCENE,
-//    UILAYER_MODEL
-//}GUITYPE;
-
 
 class UILayer : public CCLayer
 {
@@ -85,7 +79,7 @@ public:
      *
      * @param cleanup true if all running actions on all children widgets should be cleanup, false otherwise.
      */
-    void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup);
+    void removeWidget(UIWidget* widget);
     
     /**
      * Sets whether the UILayer is visible
@@ -135,13 +129,14 @@ public:
     void update(float dt);
     void addUpdateEnableWidget(UIWidget* widget);
     void removeUpdateEnableWidget(UIWidget* widget);
-
     /*compatible*/
-    virtual void dispose();
+    /**
+     * These methods will be removed
+     */
+    virtual void dispose(){removeFromParentAndCleanup(true);};
+    void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup){removeWidget(widget);};
     /************/
 protected:
-
-//    GUITYPE m_UIType;
     UIRootWidget* m_pRootWidget;
     UIInputManager* m_pInputManager;
     CCArray* m_updateEnableWidget;

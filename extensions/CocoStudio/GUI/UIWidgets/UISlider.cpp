@@ -46,14 +46,21 @@ m_strProgressBarTextureFile(""),
 m_strSlidBallNormalTextureFile(""),
 m_strSlidBallPressedTextureFile(""),
 m_strSlidBallDisabledTextureFile(""),
-m_capInsets(CCRectZero),
-m_pPercentListener(NULL),
-m_pfnPercentSelector(NULL),
+m_capInsetsBarRenderer(CCRectZero),
+m_capInsetsProgressBarRenderer(CCRectZero),
+m_pSlidPercentListener(NULL),
+m_pfnSlidPercentSelector(NULL),
 m_eBarTexType(UI_TEX_TYPE_LOCAL),
 m_eProgressBarTexType(UI_TEX_TYPE_LOCAL),
 m_eBallNTexType(UI_TEX_TYPE_LOCAL),
 m_eBallPTexType(UI_TEX_TYPE_LOCAL),
-m_eBallDTexType(UI_TEX_TYPE_LOCAL)
+m_eBallDTexType(UI_TEX_TYPE_LOCAL),
+
+
+/*Compatible*/
+m_pPercentListener(NULL),
+m_pfnPercentSelector(NULL)
+/************/
 {
 }
 
@@ -67,6 +74,7 @@ UISlider* UISlider::create()
     UISlider* widget = new UISlider();
     if (widget && widget->init())
     {
+        widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -223,7 +231,8 @@ void UISlider::setScale9Enabled(bool able)
     {
         ignoreContentAdaptWithSize(m_bPrevIgnoreSize);
     }
-    setCapInsets(m_capInsets);
+    setCapInsetsBarRenderer(m_capInsetsBarRenderer);
+    setCapInsetProgressBarRebderer(m_capInsetsProgressBarRenderer);
 }
 
 void UISlider::ignoreContentAdaptWithSize(bool ignore)
@@ -237,12 +246,28 @@ void UISlider::ignoreContentAdaptWithSize(bool ignore)
 
 void UISlider::setCapInsets(const CCRect &capInsets)
 {
-    m_capInsets = capInsets;
+    setCapInsetsBarRenderer(capInsets);
+    setCapInsetProgressBarRebderer(capInsets);
+}
+
+void UISlider::setCapInsetsBarRenderer(const CCRect &capInsets)
+{
+    m_capInsetsBarRenderer = capInsets;
     if (!m_bScale9Enabled)
     {
         return;
     }
     dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setCapInsets(capInsets);
+}
+
+void UISlider::setCapInsetProgressBarRebderer(const CCRect &capInsets)
+{
+    m_capInsetsProgressBarRenderer = capInsets;
+    if (!m_bScale9Enabled)
+    {
+        return;
+    }
+    dynamic_cast<CCScale9Sprite*>(m_pProgressBarRenderer)->setCapInsets(capInsets);
 }
 
 void UISlider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
@@ -393,17 +418,23 @@ float UISlider::getPercentWithBallPos(float px)
     return (((px-(-m_fBarLength/2.0f))/m_fBarLength)*100.0f);
 }
 
-void UISlider::addPercentChangedEvent(CCObject *target, SEL_PushEvent selector)
+void UISlider::addPercentEvent(cocos2d::CCObject *target, SEL_SlidPercentChangedEvent selector)
 {
-    m_pPercentListener = target;
-    m_pfnPercentSelector = selector;
+    m_pSlidPercentListener = target;
+    m_pfnSlidPercentSelector = selector;
 }
 
 void UISlider::percentChangedEvent()
 {
+    /*Compatible*/
     if (m_pPercentListener && m_pfnPercentSelector)
     {
         (m_pPercentListener->*m_pfnPercentSelector)(this);
+    }
+    /************/
+    if (m_pSlidPercentListener && m_pfnSlidPercentSelector)
+    {
+        (m_pSlidPercentListener->*m_pfnSlidPercentSelector)(this,SLIDER_PERCENTCHANGED);
     }
 }
 
