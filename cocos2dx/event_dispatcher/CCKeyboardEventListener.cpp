@@ -36,28 +36,64 @@ bool KeyboardEventListener::checkAvaiable()
     return true;
 }
 
-std::shared_ptr<KeyboardEventListener> KeyboardEventListener::create()
+KeyboardEventListener* KeyboardEventListener::create()
 {
-    std::shared_ptr<KeyboardEventListener> ret(new KeyboardEventListener());
+    auto ret = new KeyboardEventListener();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+KeyboardEventListener* KeyboardEventListener::clone()
+{
+    auto ret = new KeyboardEventListener();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+        ret->onKeyPressed = onKeyPressed;
+        ret->onKeyReleased = onKeyReleased;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 
 KeyboardEventListener::KeyboardEventListener()
-: EventListener(KeyboardEvent::EVENT_TYPE, nullptr)
-, onKeyPressed(nullptr)
+: onKeyPressed(nullptr)
 , onKeyReleased(nullptr)
 {
-    onEvent = [this](Event* event){
+}
+
+bool KeyboardEventListener::init()
+{
+    auto listener = [this](Event* event){
         auto keyboardEvent = static_cast<KeyboardEvent*>(event);
         if (keyboardEvent->_isPressed)
         {
-            onKeyPressed(keyboardEvent->_keyCode, event);
+            if (onKeyPressed != nullptr)
+                onKeyPressed(keyboardEvent->_keyCode, event);
         }
         else
         {
-            onKeyReleased(keyboardEvent->_keyCode, event);
+            if (onKeyReleased != nullptr)
+                onKeyReleased(keyboardEvent->_keyCode, event);
         }
     };
+    
+    if (EventListener::init(KeyboardEvent::EVENT_TYPE, listener))
+    {
+        return true;
+    }
+    
+    return false;
 }
 
 NS_CC_END

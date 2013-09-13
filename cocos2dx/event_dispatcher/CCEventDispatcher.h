@@ -57,12 +57,12 @@ public:
     /** Registers a callback function for an specified event with the priority of scene graph.
      *  @return The unique ID for the listener.
      */
-    int registerEventListenerWithSceneGraphPriority(std::shared_ptr<EventListener> listener, Node* node);
+    int registerEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
     /** Registers a callback function for an specified event with the fixed priority.
      *  @return The unique ID for the listener.
      */
-    int registerEventListenerWithFixedPriority(std::shared_ptr<EventListener> listener, int fixedPriority);
+    int registerEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
     /** Unregisters a callback function by the unique ID. */
     void unregisterEventListener(int listenerId);
@@ -98,10 +98,10 @@ public:
 private:
     struct EventListenerItem
     {
-        int           id;
-        int           fixedPriority;   // The higher the number, the higher the priority
-        Node*         node;            // Weak reference.
-        std::shared_ptr<EventListener> listener;
+        int            id;
+        int            fixedPriority;   // The higher the number, the higher the priority
+        Node*          node;            // Weak reference.
+        EventListener* listener;
     };
     
     /** Constructor of EventDispatcher */

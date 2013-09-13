@@ -26,6 +26,7 @@
 #define cocos2d_libs_EventListener_h
 
 #include "platform/CCPlatformMacros.h"
+#include "cocoa/CCObject.h"
 
 #include <functional>
 #include <string>
@@ -35,18 +36,18 @@ NS_CC_BEGIN
 
 class Event;
 
-class EventListener
+class EventListener : public Object
 {
 public:
-    static std::shared_ptr<EventListener> create(const std::string& eventType, std::function<void(Event*)> callback);
+    static EventListener* create(const std::string& eventType, std::function<void(Event*)> callback);
     
 protected:
-    EventListener(const std::string& t, std::function<void(Event*)>callback);
-    
+    EventListener();
+    bool init(const std::string& t, std::function<void(Event*)>callback);
 public:
     virtual ~EventListener();
     virtual bool checkAvaiable();
-    virtual std::shared_ptr<EventListener> clone();
+    virtual EventListener* clone();
 protected:
     std::function<void(Event*)> onEvent;
     std::string type;

@@ -28,12 +28,8 @@
 NS_CC_BEGIN
 
 AccelerationEventListener::AccelerationEventListener()
-: EventListener(AccelerationEvent::EVENT_TYPE, nullptr)
 {
-    onEvent = [this](Event* event){
-        auto accEvent = static_cast<AccelerationEvent*>(event);
-        this->onAccelerationEvent(&accEvent->acc, event);
-    };
+
 }
 
 AccelerationEventListener::~AccelerationEventListener()
@@ -41,11 +37,58 @@ AccelerationEventListener::~AccelerationEventListener()
     CCLOGINFO("In the destructor of AccelerationEventListener. %p", this);
 }
 
-std::shared_ptr<AccelerationEventListener> AccelerationEventListener::create(std::function<void(Acceleration*, Event* event)> callback)
+AccelerationEventListener* AccelerationEventListener::create(std::function<void(Acceleration*, Event* event)> callback)
 {
-    std::shared_ptr<AccelerationEventListener> ret(new AccelerationEventListener());
-    ret->onAccelerationEvent = callback;
+    AccelerationEventListener* ret = new AccelerationEventListener();
+    if (ret && ret->init(callback))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    
     return ret;
+}
+
+bool AccelerationEventListener::init(std::function<void(Acceleration*, Event* event)> callback)
+{
+    auto listener = [this](Event* event){
+        auto accEvent = static_cast<AccelerationEvent*>(event);
+        this->onAccelerationEvent(&accEvent->acc, event);
+    };
+    
+    if (EventListener::init(AccelerationEvent::EVENT_TYPE, listener))
+    {
+        onAccelerationEvent = callback;
+        return true;
+    }
+    
+    return false;
+}
+
+AccelerationEventListener* AccelerationEventListener::clone()
+{
+    auto ret = new AccelerationEventListener();
+    
+    if (ret && ret->init(onAccelerationEvent))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    
+    return ret;
+}
+
+bool AccelerationEventListener::checkAvaiable()
+{
+    CCASSERT(onAccelerationEvent, "");
+    
+    return true;
 }
 
 NS_CC_END

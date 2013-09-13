@@ -36,12 +36,15 @@ class Event;
 class KeyboardEventListener : public EventListener
 {
 public:
-    static std::shared_ptr<KeyboardEventListener> create();
+    static KeyboardEventListener* create();
+    virtual KeyboardEventListener* clone() override;
     
     std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyPressed;
     std::function<void(KeyboardEvent::KeyCode, Event* event)> onKeyReleased;
 private:
     KeyboardEventListener();
+    bool init();
+    
     virtual bool checkAvaiable() override;
 };
 
