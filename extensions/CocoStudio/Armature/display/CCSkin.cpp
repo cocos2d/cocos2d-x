@@ -24,8 +24,10 @@ THE SOFTWARE.
 
 #include "CCSkin.h"
 #include "../utils/CCTransformHelp.h"
+#include "../utils/CCSpriteFrameCacheHelper.h"
+#include "../CCArmature.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -33,9 +35,9 @@ namespace cocos2d { namespace extension { namespace armature {
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-Skin *Skin::create()
+CCSkin *CCSkin::create()
 {
-    Skin *skin = new Skin();
+    CCSkin *skin = new CCSkin();
     if(skin && skin->init())
     {
         skin->autorelease();
@@ -45,9 +47,9 @@ Skin *Skin::create()
     return NULL;
 }
 
-Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    Skin *skin = new Skin();
+    CCSkin *skin = new CCSkin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
         skin->autorelease();
@@ -57,34 +59,78 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return NULL;
 }
 
-Skin::Skin()
-    : _bone(NULL)
+CCSkin *CCSkin::create(const char *pszFileName)
 {
+    CCSkin *skin = new CCSkin();
+    if(skin && skin->initWithFile(pszFileName))
+    {
+        skin->autorelease();
+        return skin;
+    }
+    CC_SAFE_DELETE(skin);
+    return NULL;
 }
 
-void Skin::setSkinData(const BaseData &var)
+CCSkin::CCSkin()
+    : m_pBone(NULL)
+    , m_strDisplayName("")
 {
-    _skinData = var;
-
-    setScaleX(_skinData.scaleX);
-    setScaleY(_skinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(_skinData.skewX));
-    setPosition(Point(_skinData.x, _skinData.y));
-
-    _skinTransform = getNodeToParentTransform();
+    m_tSkinTransform = AffineTransformIdentity;
 }
 
-const BaseData &Skin::getSkinData() const
+bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    return _skinData;
+    bool ret = Sprite::initWithSpriteFrameName(pszSpriteFrameName);
+
+    if (ret)
+    {
+		TextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		setTextureAtlas(atlas);
+
+		m_strDisplayName = pszSpriteFrameName;
+    }
+
+    return ret;
 }
 
-void Skin::updateTransform()
+bool CCSkin::initWithFile(const char *pszFilename)
 {
-    _transform = AffineTransformConcat(_skinTransform, _bone->nodeToArmatureTransform());
+    bool ret = Sprite::initWithFile(pszFilename);
+
+    if (ret)
+    {
+		TextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(_texture);
+		setTextureAtlas(atlas);
+
+		m_strDisplayName = pszFilename;
+    }
+
+    return ret;
 }
 
-void Skin::draw()
+void CCSkin::setSkinData(const CCBaseData &var)
+{
+    m_sSkinData = var;
+
+    setScaleX(m_sSkinData.scaleX);
+    setScaleY(m_sSkinData.scaleY);
+    setRotation(CC_RADIANS_TO_DEGREES(m_sSkinData.skewX));
+    setPosition(Point(m_sSkinData.x, m_sSkinData.y));
+
+    m_tSkinTransform = getNodeToParentTransform();
+}
+
+const CCBaseData &CCSkin::getSkinData() const
+{
+    return m_sSkinData;
+}
+
+void CCSkin::updateArmatureTransform()
+{
+    _transform = AffineTransformConcat(m_tSkinTransform, m_pBone->getNodeToArmatureTransform());
+}
+
+void CCSkin::updateTransform()
 {
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
@@ -97,7 +143,7 @@ void Skin::draw()
         // calculate the Quad based on the Affine Matrix
         //
 
-        Size size = _rect.size;
+        Size &size = _rect.size;
 
         float x1 = _offsetPosition.x;
         float y1 = _offsetPosition.y;
@@ -137,4 +183,22 @@ void Skin::draw()
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+AffineTransform CCSkin::getNodeToWorldTransform()
+{
+    return AffineTransformConcat(_transform, m_pBone->getArmature()->getNodeToWorldTransform());
+}
+
+AffineTransform CCSkin::getNodeToWorldTransformAR()
+{
+    AffineTransform displayTransform = _transform;
+    Point anchorPoint =  _anchorPointInPoints;
+
+    anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
+
+    displayTransform.tx = anchorPoint.x;
+    displayTransform.ty = anchorPoint.y;
+
+    return AffineTransformConcat(displayTransform, m_pBone->getArmature()->getNodeToWorldTransform());
+}
+
+NS_CC_EXT_ARMATURE_END

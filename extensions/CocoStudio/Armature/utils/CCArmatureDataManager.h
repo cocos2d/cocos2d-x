@@ -26,124 +26,159 @@ THE SOFTWARE.
 #define __CCARMATUREDATAMANAGER_H__
 
 #include "CCArmatureDefine.h"
-#include "CCConstValue.h"
 #include "../datas/CCDatas.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 /**
- *  @brief  format and manage armature configuration and armature animation
+ *	@brief	format and manage armature configuration and armature animation
  */
-class  ArmatureDataManager : public Object 
+class  CCArmatureDataManager : public Object
 {
 public:
-    static ArmatureDataManager *sharedArmatureDataManager();
-    static void purgeArmatureSystem();
+    static CCArmatureDataManager *sharedArmatureDataManager();
+
+    static void purge();
 private:
-    ArmatureDataManager(void);
-    ~ArmatureDataManager(void);
+    CCArmatureDataManager(void);
+    ~CCArmatureDataManager(void);
 
 public:
+
     /**
-     * Init ArmatureDataManager
+     * Init CCArmatureDataManager
      */
     virtual bool init();
-    
-    /**
-     * @brief Add armature data.
-     *
-     * @param id            The id of the armature data.
-     * @param armatureData  The armature data to be added.
-     */
-    void addArmatureData(const char *id, ArmatureData *armatureData);
-    
-    /**
-     * @brief Get armature data.
-     *
-     * @param id   The id of the armature data you want to get.
-     *
-     * @return The ArmatureData whose id is @p id.
-     */
-    ArmatureData *getArmatureData(const char *id);
 
     /**
-     *  @brief Add animation data.
-     *
-     *  @param id               The id of the animation data.
-     *  @param animationData    The animation data to be added.
+     * Add armature data
+     * @param id The id of the armature data
+     * @param armatureData CCArmatureData *
      */
-    void addAnimationData(const char *id, AnimationData *animationData);
-    
-    /**
-     * @brief Get animation data.
-     *
-     * @param id    The id of the animation data you want to get.
-     *
-     * @return The AnimationData whose id is @p id.
-     */
-    AnimationData *getAnimationData(const char *id);
+    void addArmatureData(const char *id, CCArmatureData *armatureData);
 
     /**
-     *  @brief Add texture data.
-     *
-     *  @param id           The id of the texture data.
-     *  @param textureData  The texture data to be added.
+     *	@brief	get armature data
+     *	@param	id the id of the armature data you want to get
+     *  @return	CCArmatureData *
      */
-    void addTextureData(const char *id, TextureData *textureData);
-    
-    /**
-     * @brief Get texture data.
-     *
-     * @param id   The id of the texture data you want to get.
-     *
-     * @return The TextureData whose id is @p id.
-     */
-    TextureData *getTextureData(const char *id);
-    
-    /**
-     * @brief  Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     */
-    void addArmatureFileInfo(const char *armatureName, const char *useExistFileInfo, const char *imagePath, const char *plistPath, const char *configFilePath);
+    CCArmatureData *getArmatureData(const char *id);
 
     /**
-     * @brief  Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	remove armature data
+     *	@param	id the id of the armature data you want to get
+     */
+    void removeArmatureData(const char *id);
+
+    /**
+     *	@brief	add animation data
+     *	@param 	id the id of the animation data
+     *  @return CCAnimationData *
+     */
+    void addAnimationData(const char *id, CCAnimationData *animationData);
+
+    /**
+     *	@brief	get animation data from m_pAnimationDatas(Dictionary)
+     *	@param 	id the id of the animation data you want to get
+     *  @return CCAnimationData *
+     */
+    CCAnimationData *getAnimationData(const char *id);
+
+    /**
+     *	@brief	remove animation data
+     *	@param 	id the id of the animation data
+     */
+    void removeAnimationData(const char *id);
+
+    /**
+     *	@brief	add texture data
+     *	@param 	id the id of the texture data
+     *  @return CCTextureData *
+     */
+    void addTextureData(const char *id, CCTextureData *textureData);
+
+    /**
+     *	@brief	get texture data
+     *	@param 	id the id of the texture data you want to get
+     *  @return CCTextureData *
+     */
+    CCTextureData *getTextureData(const char *id);
+
+    /**
+     *	@brief	remove texture data
+     *	@param 	id the id of the texture data you want to get
+     */
+    void removeTextureData(const char *id);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     */
+    void addArmatureFileInfo(const char *configFilePath);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *			It will load data in a new thread
+     */
+    void addArmatureFileInfoAsync(const char *configFilePath, Object *target, SEL_SCHEDULE selector);
+
+    /**
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
     void addArmatureFileInfo(const char *imagePath, const char *plistPath, const char *configFilePath);
 
     /**
-     * @brief  Add sprite frame to SpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
+     *			It will load data in a new thread
+     */
+    void addArmatureFileInfoAsync(const char *imagePath, const char *plistPath, const char *configFilePath, Object *target, SEL_SCHEDULE selector);
+
+    /**
+     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
+
     /**
-     * @brief  Clear the data in the _armarureDatas and _animationDatas, and set _armarureDatas and _animationDatas to NULL
+     *	@brief	Clear the data in the m_pArmarureDatas and m_pAnimationDatas, and set m_pArmarureDatas and m_pAnimationDatas to NULL
      */
     void removeAll();
 
-   
+    /**
+     *	@brief	Juge whether or not need auto load sprite file
+     */
+    bool isAutoLoadSpriteFile();
+
+
+    Dictionary *getArmatureDatas() const;
+    Dictionary *getAnimationDatas() const;
+    Dictionary *getTextureDatas() const;
 private:
     /**
-     * Dictionary to save amature data.
-     * Key type is std::string, value type is ArmatureData *.
+     *	@brief	save amature datas
+     *  @key	std::string
+     *  @value	CCArmatureData *
      */
-    CC_SYNTHESIZE_READONLY(Dictionary *, _armarureDatas, ArmarureDatas);
+    Dictionary *m_pArmarureDatas;
 
     /**
-     * Dictionary to save animation data.
-     * Key type is std::string, value type is AnimationData *.
+     *	@brief	save animation datas
+     *  @key	std::string
+     *  @value	CCAnimationData *
      */
-    CC_SYNTHESIZE_READONLY(Dictionary *, _animationDatas, AnimationDatas);
+    Dictionary *m_pAnimationDatas;
 
     /**
-     * Dictionary to save texture data.
-     * Key type is std::string, value type is TextureData *.
+     *	@brief	save texture datas
+     *  @key	std::string
+     *  @value	CCTextureData *
      */
-    CC_SYNTHESIZE_READONLY(Dictionary *, _textureDatas, TextureDatas);
+    Dictionary *m_pTextureDatas;
 
+    bool m_bAutoLoadSpriteFile;
 };
 
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif/*__CCARMATUREDATAMANAGER_H__*/

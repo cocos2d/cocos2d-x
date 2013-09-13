@@ -25,160 +25,51 @@ THE SOFTWARE.
 #include "CCSpriteFrameCacheHelper.h"
 
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
+CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
 
-SpriteFrameCacheHelper *SpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
+CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
     if(!s_SpriteFrameCacheHelper)
     {
-        s_SpriteFrameCacheHelper = new SpriteFrameCacheHelper();
+        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
     }
 
     return s_SpriteFrameCacheHelper;
 }
 
-void SpriteFrameCacheHelper::purgeSpriteFrameCacheHelper()
+void CCSpriteFrameCacheHelper::purge()
 {
     delete s_SpriteFrameCacheHelper;
     s_SpriteFrameCacheHelper = NULL;
 }
 
-void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
+void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
 {
-
-    std::string path = FileUtils::getInstance()->fullPathForFilename(plistPath);
-    Dictionary *dict = Dictionary::createWithContentsOfFileThreadSafe(path.c_str());
-
-
-    Texture2D *pobTexture = TextureCache::getInstance()->addImage(imagePath);
-
-    addSpriteFrameFromDict(dict, pobTexture, imagePath);
-
-    dict->release();
-
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
-void SpriteFrameCacheHelper::addSpriteFrameFromDict(Dictionary *dictionary, Texture2D *pobTexture, const char *imagePath)
+TextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(Texture2D *texture)
 {
-    /*
-    Supported Zwoptex Formats:
-
-    ZWTCoordinatesFormatOptionXMLLegacy = 0, // Flash Version
-    ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
-    ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
-    ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
-    */
-
-    Dictionary *metadataDict = (Dictionary *)dictionary->objectForKey("metadata");
-    Dictionary *framesDict = (Dictionary *)dictionary->objectForKey("frames");
-    int format = 0;
-
-    // get the format
-    if(metadataDict != NULL)
-    {
-        format = metadataDict->valueForKey("format")->intValue();
-    }
-
-    // check the format
-    CCASSERT(format >= 0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
-
-    DictElement *pElement = NULL;
-    CCDICT_FOREACH(framesDict, pElement)
-    {
-        Dictionary *frameDict = static_cast<Dictionary*>(pElement->getObject());
-        std::string spriteFrameName = pElement->getStrKey();
-
-        _display2ImageMap[spriteFrameName] = imagePath;
-
-        //log("spriteFrameName : %s,    imagePath : %s", spriteFrameName.c_str(), _imagePath);
-
-        SpriteFrame *spriteFrame = (SpriteFrame *)SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName.c_str());
-        if (spriteFrame)
-        {
-            continue;
-        }
-
-        if(format == 0)
-        {
-            float x = frameDict->valueForKey("x")->floatValue();
-            float y = frameDict->valueForKey("y")->floatValue();
-            float w = frameDict->valueForKey("width")->floatValue();
-            float h = frameDict->valueForKey("height")->floatValue();
-            float ox = frameDict->valueForKey("offsetX")->floatValue();
-            float oy = frameDict->valueForKey("offsetY")->floatValue();
-            int ow = frameDict->valueForKey("originalWidth")->intValue();
-            int oh = frameDict->valueForKey("originalHeight")->intValue();
-            // check ow/oh
-            if(!ow || !oh)
-            {
-                CCLOG("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
-            }
-            // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
-            // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, Rect(x, y, w, h), false, Point(ox, oy), Size((float)ow, (float)oh));
-		}
-        else if(format == 1 || format == 2)
-        {
-            Rect frame = RectFromString(frameDict->valueForKey("frame")->getCString());
-            bool rotated = false;
-
-            // rotation
-            if (format == 2)
-            {
-                rotated = frameDict->valueForKey("rotated")->boolValue();
-            }
-
-            Point offset = PointFromString(frameDict->valueForKey("offset")->getCString());
-            Size sourceSize = SizeFromString(frameDict->valueForKey("sourceSize")->getCString());
-
-            // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(pobTexture, frame, rotated, offset, sourceSize );
-        }
-        else if (format == 3)
-        {
-
-        }
-
-        // add sprite frame
-        SpriteFrameCache::getInstance()->addSpriteFrame(spriteFrame, spriteFrameName.c_str());
-        spriteFrame->release();
-    }
-}
-
-const char *SpriteFrameCacheHelper::getDisplayImagePath(const char *displayName)
-{
-    return _display2ImageMap[displayName].c_str();
-}
-
-
-TextureAtlas *SpriteFrameCacheHelper::getTextureAtlas(const char *displayName)
-{
-    const char *textureName = getDisplayImagePath(displayName);
-    TextureAtlas *atlas = (TextureAtlas *)_display2TextureAtlas->objectForKey(textureName);
+    int key = texture->getName();
+    TextureAtlas *atlas = (TextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
     if (atlas == NULL)
     {
-        atlas = TextureAtlas::createWithTexture(TextureCache::getInstance()->addImage(textureName), 4);
-        _display2TextureAtlas->setObject(atlas, textureName);
+        atlas = TextureAtlas::createWithTexture(texture, 4);
+        m_pTextureAtlasDic->setObject(atlas, key);
     }
-
     return atlas;
 }
 
-SpriteFrameCacheHelper::SpriteFrameCacheHelper()
+CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
 {
-    _display2TextureAtlas = new Dictionary();
-    _display2TextureAtlas->init();
+    m_pTextureAtlasDic = new Dictionary();
 }
 
-SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
+CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(_display2TextureAtlas);
+    CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

@@ -15,7 +15,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::armature::ArmatureDataManager::purgeArmatureSystem();
+	cocos2d::extension::armature::CCArmatureDataManager::purge();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
