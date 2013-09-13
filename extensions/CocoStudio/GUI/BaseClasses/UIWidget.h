@@ -59,6 +59,18 @@ typedef enum
     TOUCH_EVENT_CANCELED
 }TouchEventType;
 
+typedef enum
+{
+    SIZE_ABSOLUTE,
+    SIZE_PERCENT
+}SizeType;
+
+typedef enum
+{
+    POSITION_ABSOLUTE,
+    POSITION_PERCENT
+}PositionType;
+
 typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 #define toucheventselector(_SELECTOR) (cocos2d::extension::SEL_TouchEvent)(&_SELECTOR)
 
@@ -368,6 +380,16 @@ public:
     void setPosition(const CCPoint &pos);
     
     /**
+     * Changes the position (x,y) of the widget in OpenGL coordinates
+     *
+     * Usually we use ccp(x,y) to compose CCPoint object.
+     * The original point (0,0) is at the left-bottom corner of screen.
+     *
+     * @param percent  The percent (x,y) of the widget in OpenGL coordinates
+     */
+    void setPositionPercent(const CCPoint &percent);
+    
+    /**
      * Gets the position (x,y) of the widget in OpenGL coordinates
      *
      * @see setPosition(const CCPoint&)
@@ -375,6 +397,33 @@ public:
      * @return The position (x,y) of the widget in OpenGL coordinates
      */
     const CCPoint& getPosition();
+    
+    /**
+     * Gets the percent (x,y) of the widget in OpenGL coordinates
+     *
+     * @see setPosition(const CCPoint&)
+     *
+     * @return The percent (x,y) of the widget in OpenGL coordinates
+     */
+    const CCPoint& getPositionPercent();
+    
+    /**
+     * Changes the position type of the widget
+     *
+     * @see PositionType
+     *
+     * @param type  the position type of widget
+     */
+    void setPositionType(PositionType type);
+
+    /**
+     * Gets the position type of the widget
+     *
+     * @see PositionType
+     *
+     * @return type  the position type of widget
+     */
+    PositionType getPositionType() const;
     
     /**
      * Sets the anchor point in percent.
@@ -683,11 +732,43 @@ public:
     virtual void setSize(const CCSize &size);
     
     /**
+     * Changes the percent that is widget's percent size
+     *
+     * @param percent that is widget's percent size
+     */
+    virtual void setSizePercent(const CCPoint &percent);
+    
+    /**
+     * Changes the size type of widget.
+     *
+     * @see SizeType
+     *
+     * @param type that is widget's size type
+     */
+    void setSizeType(SizeType type);
+
+    /**
+     * Gets the size type of widget.
+     *
+     * @see SizeType
+     *
+     * @param type that is widget's size type
+     */
+    SizeType getSizeType() const;
+    
+    /**
      * Returns size of widget
      *
-     * @return A WidgetType
+     * @return size
      */
     const CCSize& getSize() const;
+    
+    /**
+     * Returns size percent of widget
+     *
+     * @return size percent
+     */
+    const CCPoint& getSizePercent() const;
     
     /**
      * Checks a point if is in widget's space
@@ -802,6 +883,9 @@ public:
      * Content size is widget's texture size.
      */
     virtual const CCSize& getContentSize() const;
+    
+    virtual void onEnter();
+    virtual void onExit();
     
     /*******Compatible*******/
     /**
@@ -931,6 +1015,7 @@ protected:
      * If you override releaseResoures, you shall call its parent's one, e.g. UIWidget::releaseResoures().
      */
     virtual void releaseResoures();
+    void updateSizeAndPosition();
 protected:
     bool m_bEnabled;            ///< Highest control of widget
     bool m_bVisible;            ///< is this widget visible
@@ -965,6 +1050,12 @@ protected:
     bool m_bAffectByClipping;
     
     CCScheduler* m_pScheduler;
+    
+    SizeType m_eSizeType;
+    CCPoint m_sizePercent;
+    PositionType m_ePositionType;
+    CCPoint m_positionPercent;
+    bool m_bIsRunning;
     
     /*temp action*/
     UIActionNode* m_pBindingAction;
