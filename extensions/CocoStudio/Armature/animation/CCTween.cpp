@@ -293,6 +293,12 @@ void CCTween::setBetween(CCFrameData *from, CCFrameData *to)
     }
     while (0);
 
+	if (!from->isTween)
+	{
+		m_pTweenData->copy(from);
+		m_pTweenData->isTween = true;
+	}
+	
     arriveKeyFrame(from);
 }
 
@@ -333,6 +339,11 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {
     node = node == NULL ? m_pTweenData : node;
+	if (!m_pFrom->isTween)
+	{
+		return m_pFrom;
+	}
+	
 
     node->x = m_pFrom->x + percent * m_pBetween->x;
     node->y = m_pFrom->y + percent * m_pBetween->y;

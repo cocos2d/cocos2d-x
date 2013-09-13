@@ -286,6 +286,7 @@ public:
     int frameID;
     int duration;                //! The frame will last duration frames
     CCTweenType tweenEasing;     //! Every frame's tween easing effect
+	bool isTween;                //! Whether it's a tween key frame
 
     /**
     * The current display index when change to this frame.
