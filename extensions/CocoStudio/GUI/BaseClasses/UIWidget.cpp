@@ -320,7 +320,6 @@ CCArray* UIWidget::getChildren()
     return m_children;
 }
 
-
 void UIWidget::initRenderer()
 {
     m_pRenderer = GUIRenderer::create();
