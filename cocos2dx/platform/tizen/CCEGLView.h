@@ -37,6 +37,9 @@ class CC_DLL EGLView
     , public Tizen::Base::Runtime::ITimerEventListener
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
     /**
      * @js NA

@@ -190,6 +190,7 @@ public:
 
     /**
      * Constructor.
+     * @js ctor
      */
     EditBox(void);
     

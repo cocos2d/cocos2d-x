@@ -163,6 +163,7 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     Sprite(void);
     

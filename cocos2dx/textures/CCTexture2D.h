@@ -186,6 +186,9 @@ public:
     static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
 public:
+    /**
+     * @js ctor
+     */
     Texture2D();
     /**
      * @js NA

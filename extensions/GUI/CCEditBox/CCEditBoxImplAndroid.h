@@ -40,6 +40,9 @@ class EditBox;
 class EditBoxImplAndroid : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplAndroid(EditBox* pEditText);
     /**
      * @js NA

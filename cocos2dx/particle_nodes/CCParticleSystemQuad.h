@@ -62,7 +62,9 @@ public:
      This plist files can be created manually or with Particle Designer:
      */
     static ParticleSystemQuad * create(const char *plistFile);
-
+    /**
+     * @js ctor
+     */
     ParticleSystemQuad();
     /**
      * @js NA

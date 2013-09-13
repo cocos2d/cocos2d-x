@@ -75,7 +75,9 @@ public:
      The file will be loaded using the TextureMgr.
      */
     static SpriteBatchNode* create(const char* fileImage, int capacity = DEFAULT_CAPACITY);
-
+    /**
+     * @js ctor
+     */
     SpriteBatchNode();
     /**
      * @js NA

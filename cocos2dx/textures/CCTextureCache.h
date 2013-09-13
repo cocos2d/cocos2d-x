@@ -78,6 +78,9 @@ public:
     static void reloadAllTextures();
 
 public:
+    /**
+     * @js ctor
+     */
     TextureCache();
     /**
      * @js NA

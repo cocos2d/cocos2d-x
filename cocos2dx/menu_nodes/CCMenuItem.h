@@ -65,7 +65,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Object *rec, SEL_MenuHandler selector);
     /** Creates a MenuItem with a target/selector */
     static MenuItem* create(const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItem()
     : _selected(false)
     , _enabled(false)            
@@ -144,7 +146,9 @@ public:
 
     /** creates a MenuItemLabel with a Label. Target and selector will be nil */
     static MenuItemLabel* create(Node *label);
-
+    /**
+     * @js ctor
+     */
     MenuItemLabel()
     : _originalScale(0.0)
     , _label(NULL)
@@ -205,7 +209,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemAtlasFont(){}
     /**
      * @js NA
@@ -232,7 +238,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
     static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemFont() : _fontSize(0), _fontName(""){}
     /**
      * @js NA
@@ -388,7 +396,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemImage(){}
     /**
      * @js NA
@@ -436,7 +446,9 @@ public:
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
-
+    /**
+     * @js ctor
+     */
     MenuItemToggle()
     : _selectedIndex(0)
     , _subItems(NULL)            

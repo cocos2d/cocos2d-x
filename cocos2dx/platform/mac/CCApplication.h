@@ -34,6 +34,9 @@ NS_CC_BEGIN
 class CC_DLL Application : public ApplicationProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     Application();
     /**
      * @js NA

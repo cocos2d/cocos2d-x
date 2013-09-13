@@ -178,7 +178,9 @@ public:
      * @endcode
      */
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
-
+    /**
+     * @js ctor
+     */
     TableView();
     /**
      * @js NA

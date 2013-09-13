@@ -39,6 +39,9 @@ class Cocos2DQt5MainloopIntegration;
 NS_CC_BEGIN
 class Application : public ApplicationProtocol {
 public:
+    /**
+     * @js ctor
+     */
     Application();
     /**
      * @js NA

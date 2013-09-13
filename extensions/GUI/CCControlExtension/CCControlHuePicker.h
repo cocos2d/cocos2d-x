@@ -49,7 +49,9 @@ class ControlHuePicker : public Control
 {
 public:
     static ControlHuePicker* create(Node* target, Point pos);
-
+    /**
+     * @js ctor
+     */
     ControlHuePicker();
     /**
      * @js NA

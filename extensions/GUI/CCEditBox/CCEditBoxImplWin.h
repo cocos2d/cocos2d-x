@@ -40,6 +40,9 @@ class EditBox;
 class EditBoxImplWin : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplWin(EditBox* pEditText);
     /**
      * @js NA

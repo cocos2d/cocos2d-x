@@ -46,7 +46,9 @@ public:
      * Creates potentiometer with a track filename and a progress filename.
      */
     static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
-
+    /**
+     * @js ctor
+     */
     ControlPotentiometer();
     /**
      * @js NA

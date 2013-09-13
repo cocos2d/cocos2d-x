@@ -10,18 +10,18 @@ NS_CC_EXT_BEGIN
 class CCBReader;
 
 class ControlLoader : public NodeLoader {
-    public:
-        /**
-         * @js NA
-         * @lua NA
-         */
-        virtual ~ControlLoader() {};
+public:
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual ~ControlLoader() {};
 
-    protected:
-        CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Control);
+protected:
+    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(Control);
 
-        virtual void onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char * pPropertyName, BlockControlData * pBlockControlData, CCBReader * ccbReader);
-        virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
+    virtual void onHandlePropTypeBlockControl(Node * pNode, Node * pParent, const char * pPropertyName, BlockControlData * pBlockControlData, CCBReader * ccbReader);
+    virtual void onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };
 
 NS_CC_EXT_END

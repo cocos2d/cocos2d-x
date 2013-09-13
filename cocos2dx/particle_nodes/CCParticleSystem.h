@@ -171,7 +171,9 @@ public:
 
     //! create a system with a fixed number of particles
     static ParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
-
+    /**
+     * @js ctor
+     */
     ParticleSystem();
     /**
      * @js NA

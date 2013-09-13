@@ -54,6 +54,9 @@ public:
     TextureAtlas *getTextureAtlas(const char *displayName);
 
 private:
+    /**
+     * @js ctor
+     */
     SpriteFrameCacheHelper();
     /**
      * @js NA

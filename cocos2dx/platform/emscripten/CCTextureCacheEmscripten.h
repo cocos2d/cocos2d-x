@@ -32,6 +32,9 @@ NS_CC_BEGIN
 class CC_DLL TextureCacheEmscripten : public TextureCache
 {
 public:
+    /**
+     * @js ctor
+     */
     TextureCacheEmscripten();
     /**
      * @js NA

@@ -46,7 +46,9 @@ class CC_DLL Action : public Object, public Clonable
 public:
     /// Default tag used for all the actions
     static const int INVALID_TAG = -1;
-
+    /**
+     * @js ctor
+     */
     Action(void);
     /**
      * @js NA
@@ -129,6 +131,9 @@ protected:
 class CC_DLL FiniteTimeAction : public Action
 {
 public:
+    /**
+     * @js ctor
+     */
     FiniteTimeAction()
 	: _duration(0)
     {}
@@ -167,7 +172,9 @@ class CC_DLL Speed : public Action
 public:
     /** create the action */
     static Speed* create(ActionInterval* pAction, float fSpeed);
-
+    /**
+     * @js ctor
+     */
     Speed();
     /**
      * @js NA
@@ -223,7 +230,9 @@ public:
      *              with no boundary.
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
-
+    /**
+     * @js ctor
+     */
     Follow()
 		: _followedNode(NULL)
         , _boundarySet(false)

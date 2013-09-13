@@ -20,6 +20,9 @@ class CCBAnimationManager : public Object
 {
 public:
     bool _jsControlled;
+    /**
+     * @js ctor
+     */
     CCBAnimationManager();
     /**
      * @js NA

@@ -70,6 +70,9 @@ class EditBox;
 class EditBoxImplMac : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplMac(EditBox* pEditText);
     /**
      * @js NA

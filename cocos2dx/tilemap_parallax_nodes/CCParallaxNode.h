@@ -52,6 +52,7 @@ public:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
     It returns self, so you can chain several addChilds.
     @since v0.8
+    * @js ctor
     */
     ParallaxNode();
     /**

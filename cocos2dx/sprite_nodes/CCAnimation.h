@@ -55,6 +55,9 @@ class SpriteFrame;
 class CC_DLL AnimationFrame : public Object, public Clonable
 {
 public:
+    /**
+     * @js ctor
+     */
     AnimationFrame();
     /**
      * @js NA
@@ -139,7 +142,9 @@ public:
      * @js NA
      */
     static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
-
+    /**
+     * @js ctor
+     */
     Animation();
     /**
      * @js NA

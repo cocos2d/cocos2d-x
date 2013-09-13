@@ -36,6 +36,9 @@ NS_CC_EXT_BEGIN
 class EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImpl(EditBox* pEditBox) : _delegate(NULL),_editBox(pEditBox) {}
     /**
      * @js NA

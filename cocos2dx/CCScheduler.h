@@ -126,7 +126,9 @@ public:
     
     // Minimum priority level for user scheduling.
     static const int PRIORITY_NON_SYSTEM_MIN;
-    
+    /**
+     * @js ctor
+     */
     Scheduler();
     /**
      * @js NA

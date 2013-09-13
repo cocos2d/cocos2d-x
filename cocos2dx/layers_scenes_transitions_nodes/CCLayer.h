@@ -60,6 +60,9 @@ class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 public:    
     /** creates a fullscreen black layer */
     static Layer *create(void);
+    /**
+     * @js ctor
+     */
     Layer();
     /**
      * @js NA
@@ -197,7 +200,9 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    
+    /**
+     * @js ctor
+     */
     LayerRGBA();
     /**
      * @js NA
@@ -253,7 +258,9 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-
+    /**
+     * @js ctor
+     */
     LayerColor();
     /**
      * @js NA
@@ -440,7 +447,9 @@ public:
      * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-
+    /**
+     * @js ctor
+     */
     LayerMultiplex();
     /**
      * @js NA

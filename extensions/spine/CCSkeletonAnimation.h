@@ -42,9 +42,17 @@ public:
 	static CCSkeletonAnimation* createWithData (SkeletonData* skeletonData);
 	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     */
 	CCSkeletonAnimation (SkeletonData* skeletonData);
+    /**
+     * @js NA
+     */
 	CCSkeletonAnimation (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+    /**
+     * @js NA
+     */
 	CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
     /**
      * @js NA

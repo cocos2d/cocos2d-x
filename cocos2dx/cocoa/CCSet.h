@@ -40,6 +40,9 @@ typedef std::set<Object *>::iterator SetIterator;
 class CC_DLL Set : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     Set(void);
     Set(const Set &rSetObject);
     /**

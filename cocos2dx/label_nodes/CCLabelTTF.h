@@ -57,6 +57,9 @@ NS_CC_BEGIN
 class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     LabelTTF();
     /**
      * @js NA

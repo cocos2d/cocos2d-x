@@ -97,6 +97,9 @@ public:
 class CC_DLL TextFieldTTF : public LabelTTF, public IMEDelegate
 {
 public:
+    /**
+     * @js ctor
+     */
     TextFieldTTF();
     /**
      * @js NA

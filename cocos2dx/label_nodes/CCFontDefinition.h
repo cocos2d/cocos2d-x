@@ -41,8 +41,14 @@ public:
     FontAtlas * createFontAtlas();
     
 private:
-    
+    /**
+     * @js ctor
+     */
      FontDefinitionTTF();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~FontDefinitionTTF();
     
     bool initDefinition(Font *font, const char *letters, int textureSize);

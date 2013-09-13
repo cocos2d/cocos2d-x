@@ -58,7 +58,9 @@ public:
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
-
+    /**
+     * @js ctor
+     */
     RenderTexture();
     /**
      * @js NA

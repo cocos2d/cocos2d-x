@@ -91,7 +91,9 @@ public:
     };
     
     static Control* create();
-
+    /**
+     * @js ctor
+     */
     Control();
     virtual bool init(void);
     /**

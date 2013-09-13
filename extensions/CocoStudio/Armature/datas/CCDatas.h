@@ -65,6 +65,9 @@ class  BaseData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(BaseData)
 public:
+    /**
+     * @js ctor
+     */
     BaseData();
     /**
      * @js NA
@@ -128,6 +131,9 @@ public:
 
     static const char *changeDisplayToTexture(const char *);
 public:
+    /**
+     * @js ctor
+     */
     DisplayData();
     /**
      * @js NA
@@ -145,6 +151,9 @@ class  SpriteDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     SpriteDisplayData();
     /**
      * @js NA
@@ -175,6 +184,9 @@ class  ArmatureDisplayData  : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ArmatureDisplayData();
     /**
      * @js NA
@@ -205,6 +217,9 @@ class  ParticleDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ParticleDisplayData();
     /**
      * @js NA
@@ -228,6 +243,9 @@ class  ShaderDisplayData : public DisplayData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(ShaderDisplayData)
 public:
+    /**
+     * @js ctor
+     */
     ShaderDisplayData();
     /**
      * @js NA
@@ -258,6 +276,9 @@ class  BoneData : public BaseData
 public:
     CS_CREATE_NO_PARAM(BoneData)
 public:
+    /**
+     * @js ctor
+     */
     BoneData(void);
     /**
      * @js NA
@@ -286,6 +307,9 @@ class  ArmatureData : public Object
 public:
     CS_CREATE_NO_PARAM(ArmatureData)
 public:
+    /**
+     * @js ctor
+     */
     ArmatureData();
     /**
      * @js NA
@@ -308,6 +332,9 @@ class  FrameData : public BaseData
 public:
     CS_CREATE_NO_PARAM_NO_INIT(FrameData)
 public:
+    /**
+     * @js ctor
+     */
     FrameData();
     /**
      * @js NA
@@ -341,6 +368,9 @@ class  MovementBoneData : public Object
 public:
     CS_CREATE_NO_PARAM(MovementBoneData)
 public:
+    /**
+     * @js ctor
+     */
     MovementBoneData();
     /**
      * @js NA
@@ -367,6 +397,9 @@ class  MovementData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(MovementData)
 public:
+    /**
+     * @js ctor
+     */
     MovementData(void);
     /**
      * @js NA
@@ -421,6 +454,9 @@ class  AnimationData : public Object
 public:
     CS_CREATE_NO_PARAM_NO_INIT(AnimationData)
 public:
+    /**
+     * @js ctor
+     */
     AnimationData(void);
     /**
      * @js NA
@@ -461,6 +497,9 @@ class  ContourData : public Object
 public:
     CS_CREATE_NO_PARAM(ContourData)
 public:
+    /**
+     * @js ctor
+     */
     ContourData();
     /**
      * @js NA
@@ -484,6 +523,9 @@ class  TextureData : public Object
 public:
     CS_CREATE_NO_PARAM(TextureData)
 public:
+    /**
+     * @js ctor
+     */
     TextureData();
     /**
      * @js NA

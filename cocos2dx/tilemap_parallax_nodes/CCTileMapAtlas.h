@@ -61,7 +61,9 @@ public:
      The tile file will be loaded using the TextureMgr.
      */
     static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
-    
+    /**
+     * @js ctor
+     */
     TileMapAtlas();
     /**
      * @js NA

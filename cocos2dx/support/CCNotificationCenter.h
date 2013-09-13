@@ -35,7 +35,9 @@ class CC_DLL NotificationCenter : public Object
 {
     friend class ScriptHandlerMgr;
 public:
-    /** NotificationCenter constructor */
+    /** NotificationCenter constructor
+     * @js ctor
+     */
     NotificationCenter();
 
     /** NotificationCenter destructor

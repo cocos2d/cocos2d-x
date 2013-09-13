@@ -55,6 +55,9 @@ public:
 
     void initNoGravityWorld();
 private:
+    /**
+     * @js ctor
+     */
     PhysicsWorld();
     /**
      * @js NA

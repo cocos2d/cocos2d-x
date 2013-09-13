@@ -54,6 +54,9 @@ public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
                               unsigned int itemsToRender);
+    /**
+     * @js ctor
+     */
     AtlasNode();
     /**
      * @js NA

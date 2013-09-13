@@ -42,6 +42,9 @@ class Texture2D;
 class Grabber : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     Grabber(void);
     /**
      * @js NA

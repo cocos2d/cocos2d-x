@@ -53,6 +53,9 @@ NS_CC_EXT_BEGIN
 class Scale9Sprite : public NodeRGBA
 {
 public:
+    /**
+     * @js ctor
+     */
     Scale9Sprite();
     /**
      * @js NA

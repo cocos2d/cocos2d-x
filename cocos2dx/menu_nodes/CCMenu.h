@@ -76,7 +76,9 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
-
+    /**
+     * @js ctor
+     */
     Menu() : _selectedItem(NULL) {}
     /**
      * @js NA

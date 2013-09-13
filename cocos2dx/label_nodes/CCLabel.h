@@ -115,7 +115,9 @@ public:
     const char * getString() const { return "not implemented"; }
     
 private:
-    
+    /**
+     * @js NA
+     */
     Label(FontAtlas *atlas, TextHAlignment alignment);
     /**
      * @js NA

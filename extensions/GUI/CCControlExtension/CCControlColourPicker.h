@@ -51,7 +51,9 @@ class ControlColourPicker: public Control
 {
 public:
     static ControlColourPicker* create();
-
+    /**
+     * @js ctor
+     */
     ControlColourPicker();
     /**
      * @js NA

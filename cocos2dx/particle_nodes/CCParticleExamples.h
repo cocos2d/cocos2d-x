@@ -39,6 +39,9 @@ NS_CC_BEGIN
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFire(){}
     /**
      * @js NA
@@ -56,6 +59,9 @@ public:
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFireworks(){}
     /**
      * @js NA
@@ -73,6 +79,9 @@ public:
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSun(){}
     /**
      * @js NA
@@ -90,6 +99,9 @@ public:
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleGalaxy(){}
     /**
      * @js NA
@@ -107,6 +119,9 @@ public:
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFlower(){}
     /**
      * @js NA
@@ -124,6 +139,9 @@ public:
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleMeteor(){}
     /**
      * @js NA
@@ -141,6 +159,9 @@ public:
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSpiral(){}
     /**
      * @js NA
@@ -158,6 +179,9 @@ public:
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleExplosion(){}
     /**
      * @js NA
@@ -175,6 +199,9 @@ public:
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSmoke(){}
     /**
      * @js NA
@@ -192,6 +219,9 @@ public:
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSnow(){}
     /**
      * @js NA
@@ -209,6 +239,9 @@ public:
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleRain(){}
     /**
      * @js NA
