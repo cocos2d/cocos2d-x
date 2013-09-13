@@ -55,6 +55,10 @@ public:
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     MotionStreak();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */

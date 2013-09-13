@@ -38,7 +38,10 @@ public:
     /** NotificationCenter constructor */
     NotificationCenter();
 
-    /** NotificationCenter destructor */
+    /** NotificationCenter destructor
+     * @js NA
+     * @lua NA
+     */
     ~NotificationCenter();
     
     /** Gets the single instance of NotificationCenter. */

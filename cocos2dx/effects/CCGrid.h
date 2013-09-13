@@ -56,7 +56,10 @@ public:
     static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
     static GridBase* create(const Size& gridSize);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~GridBase(void);
 
     bool initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped);
@@ -178,6 +181,10 @@ public:
     static TiledGrid3D* create(const Size& gridSize);
 
     TiledGrid3D();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TiledGrid3D();
 
     /** returns the tile at the given position 

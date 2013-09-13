@@ -81,6 +81,8 @@ private:
 public:
     /**
      *  The destructor of DictElement.
+     * @js NA
+     * @lua NA
      */
     ~DictElement();
 

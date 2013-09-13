@@ -134,6 +134,10 @@ public:
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
 
     TransitionSceneOriented();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSceneOriented();
 
     /** initializes a transition with duration and incoming scene */
@@ -152,6 +156,10 @@ public:
     static TransitionRotoZoom* create(float t, Scene* scene);
 
     TransitionRotoZoom();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionRotoZoom();
 
     //
@@ -173,6 +181,10 @@ public:
     static TransitionJumpZoom* create(float t, Scene* scene);
 
     TransitionJumpZoom();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionJumpZoom();
 
     //
@@ -194,6 +206,10 @@ public:
     static TransitionMoveInL* create(float t, Scene* scene);
 
     TransitionMoveInL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInL();
     /** initializes the scenes */
     virtual void initScenes(void);
@@ -221,6 +237,10 @@ public:
     static TransitionMoveInR* create(float t, Scene* scene);
 
     TransitionMoveInR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInR();
     virtual void initScenes();
 };
@@ -234,6 +254,10 @@ public:
     static TransitionMoveInT* create(float t, Scene* scene);
 
     TransitionMoveInT();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInT();
     virtual void initScenes();
 };
@@ -247,6 +271,10 @@ public:
     static TransitionMoveInB* create(float t, Scene* scene);
 
     TransitionMoveInB();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInB();
     virtual void initScenes();
 };
@@ -260,6 +288,10 @@ public:
     static TransitionSlideInL* create(float t, Scene* scene);
 
     TransitionSlideInL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInL();
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
@@ -291,6 +323,10 @@ public:
     static TransitionSlideInR* create(float t, Scene* scene);
 
     TransitionSlideInR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInR();
 
     /** initializes the scenes */
@@ -311,6 +347,10 @@ public:
     static TransitionSlideInB* create(float t, Scene* scene);
 
     TransitionSlideInB();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInB();
 
     /** initializes the scenes */

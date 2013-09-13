@@ -118,6 +118,10 @@ public:
 private:
     
     Label(FontAtlas *pAtlas, TextHAlignment alignment);
+    /**
+     * @js NA
+     * @lua NA
+     */
    ~Label();
     
     static Label* createWithAtlas(FontAtlas *pAtlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);

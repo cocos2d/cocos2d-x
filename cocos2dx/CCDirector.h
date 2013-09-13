@@ -106,6 +106,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
 
     Director(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Director(void);
     virtual bool init(void);
 

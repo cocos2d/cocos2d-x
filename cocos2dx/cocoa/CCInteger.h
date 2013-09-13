@@ -48,7 +48,10 @@ public:
     Integer(int v)
         : _value(v) {}
     int getValue() const {return _value;}
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Integer() {
         CCLOGINFO("deallocing ~Integer: %p", this);
     }

@@ -64,6 +64,10 @@ public:
     static ProgressTimer* create(Sprite* sp);
 
     ProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ProgressTimer();
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */

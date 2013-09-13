@@ -70,6 +70,10 @@ public:
     static float getZEye();
 
     Camera(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Camera(void);
 
     void init(void);

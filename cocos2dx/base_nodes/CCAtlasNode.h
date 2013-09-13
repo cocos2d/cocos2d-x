@@ -55,6 +55,10 @@ public:
 	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
                               unsigned int itemsToRender);
     AtlasNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~AtlasNode();
 
     /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/

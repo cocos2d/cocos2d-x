@@ -39,22 +39,26 @@ class AccelerometerListener;
 NS_CC_BEGIN
 
 class Accelerometer {
-    public:
-        Accelerometer();
-        ~Accelerometer();
+public:
+    Accelerometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~Accelerometer();
 
-        static Accelerometer *sharedAccelerometer();
+    static Accelerometer *sharedAccelerometer();
 
-        void setDelegate(std::function<void(Acceleration*)> function);
-        void setAccelerometerInterval(float interval);
+    void setDelegate(std::function<void(Acceleration*)> function);
+    void setAccelerometerInterval(float interval);
 
-        /* Functions to be called from AccelerometerListener */
-        void readingChanged();
+    /* Functions to be called from AccelerometerListener */
+    void readingChanged();
 
-    private:
-        QAccelerometer *m_accelerometer;
-        AccelerometerListener *m_listener;
-        std::function<void(Acceleration*)> m_function;
+private:
+    QAccelerometer *m_accelerometer;
+    AccelerometerListener *m_listener;
+    std::function<void(Acceleration*)> m_function;
 };
 
 NS_CC_END

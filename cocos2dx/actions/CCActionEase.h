@@ -44,6 +44,10 @@ class Object;
 class CC_DLL ActionEase : public ActionInterval
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ActionEase(void);
 
     /** initializes the action */
@@ -72,6 +76,10 @@ protected:
 class CC_DLL EaseRateAction : public ActionEase
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EaseRateAction(void);
 
     /** Initializes the action with the inner action and the rate parameter */

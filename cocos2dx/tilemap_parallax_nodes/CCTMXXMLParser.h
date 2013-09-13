@@ -90,6 +90,10 @@ class CC_DLL TMXLayerInfo : public Object
 {
 public:
     TMXLayerInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXLayerInfo();
 
     void setProperties(Dictionary *properties);
@@ -131,6 +135,10 @@ public:
     Size          _imageSize;
 public:
     TMXTilesetInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXTilesetInfo();
     Rect rectForGID(unsigned int gid);
 };
@@ -162,6 +170,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
     
     TMXMapInfo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXMapInfo();
     
     /** initializes a TMX format with a  tmx file */

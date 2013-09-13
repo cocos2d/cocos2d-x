@@ -35,6 +35,10 @@ class Accelerometer
 {
 public:
     Accelerometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Accelerometer();
 
     void setDelegate(std::function<void(Acceleration*)> function);

@@ -47,6 +47,10 @@ public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
     DrawNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~DrawNode();
     
     virtual bool init();

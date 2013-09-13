@@ -49,7 +49,10 @@ public:
      The stencil node will be retained.
      */
     static ClippingNode* create(Node *pStencil);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ClippingNode();
     
     /** Initializes a clipping node without a stencil.

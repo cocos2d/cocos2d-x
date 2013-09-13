@@ -50,6 +50,10 @@ class CC_DLL KeypadDispatcher : public Object
 {
 public:
     KeypadDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~KeypadDispatcher();
 
     /**

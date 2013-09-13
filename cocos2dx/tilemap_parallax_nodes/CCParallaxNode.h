@@ -54,6 +54,10 @@ public:
     @since v0.8
     */
     ParallaxNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParallaxNode();
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"

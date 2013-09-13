@@ -38,6 +38,10 @@ class CC_DLL EGLView
 {
 public:
     EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLView();
 
     bool    isOpenGLReady();

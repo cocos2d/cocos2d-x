@@ -33,6 +33,10 @@ class CC_DLL TextureCacheEmscripten : public TextureCache
 {
 public:
     TextureCacheEmscripten();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureCacheEmscripten();
 
     void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);

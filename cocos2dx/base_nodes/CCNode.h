@@ -149,6 +149,8 @@ public:
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~Node(void);
     
@@ -1453,6 +1455,10 @@ class CC_DLL NodeRGBA : public Node, public RGBAProtocol
 {
 public:
     NodeRGBA();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~NodeRGBA();
     
     virtual bool init();

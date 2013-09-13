@@ -152,7 +152,10 @@ public:
      * @endcode
      */
     static CardinalSplineTo* create(float duration, PointArray* points, float tension);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~CardinalSplineTo();
     CardinalSplineTo();
     

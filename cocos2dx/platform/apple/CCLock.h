@@ -33,6 +33,10 @@ class Lock
 {
 public:
     Lock(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Lock(void);
 
     void lock(void);

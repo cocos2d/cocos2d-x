@@ -51,6 +51,10 @@ class CC_DLL AnimationCache : public Object
 {
 public:
     AnimationCache();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~AnimationCache();
     /** Returns the shared instance of the Animation cache */
     static AnimationCache* getInstance();

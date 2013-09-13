@@ -74,6 +74,10 @@ public:
     static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
 
     ParticleBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleBatchNode();
 
     /** initializes the particle system with Texture2D, a capacity of particles */

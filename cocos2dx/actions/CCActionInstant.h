@@ -392,6 +392,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
     
     __CCCallFuncO();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~__CCCallFuncO();
     
 protected:

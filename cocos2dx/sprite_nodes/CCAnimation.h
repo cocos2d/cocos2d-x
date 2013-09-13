@@ -56,6 +56,10 @@ class CC_DLL AnimationFrame : public Object, public Clonable
 {
 public:
     AnimationFrame();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~AnimationFrame();
 
     /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
@@ -137,6 +141,10 @@ public:
     static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
     Animation();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Animation(void);
 
     bool init();

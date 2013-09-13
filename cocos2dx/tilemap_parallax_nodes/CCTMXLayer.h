@@ -79,6 +79,10 @@ public:
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     
     TMXLayer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXLayer();
 
     /** initializes a TMXLayer with a tileset info, a layer info and a map info */

@@ -37,6 +37,10 @@ class CC_DLL Accelerometer : public Tizen::Uix::Sensor::ISensorEventListener
 {
 public:
     Accelerometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Accelerometer();
 
     void setDelegate(std::function<void(Acceleration*)> function);

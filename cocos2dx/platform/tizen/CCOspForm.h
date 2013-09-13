@@ -38,6 +38,10 @@ class OspForm
 {
 public:
     OspForm();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~OspForm();
 
     virtual result OnInitializing(void);
