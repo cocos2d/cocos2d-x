@@ -98,27 +98,27 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to, bool limit)
         isUseColorInfo = false;
     }
 
-	if (limit)
-	{
-		if (skewX > M_PI)
-		{
-			skewX -= (float)CC_DOUBLE_PI;
-		}
-		if (skewX < -M_PI)
-		{
-			skewX += (float)CC_DOUBLE_PI;
-		}
+    if (limit)
+    {
+        if (skewX > M_PI)
+        {
+            skewX -= (float)CC_DOUBLE_PI;
+        }
+        if (skewX < -M_PI)
+        {
+            skewX += (float)CC_DOUBLE_PI;
+        }
 
-		if (skewY > M_PI)
-		{
-			skewY -= (float)CC_DOUBLE_PI;
-		}
-		if (skewY < -M_PI)
-		{
-			skewY += (float)CC_DOUBLE_PI;
-		}
-	}
-	
+        if (skewY > M_PI)
+        {
+            skewY -= (float)CC_DOUBLE_PI;
+        }
+        if (skewY < -M_PI)
+        {
+            skewY += (float)CC_DOUBLE_PI;
+        }
+    }
+
 
     if (to->tweenRotate)
     {
@@ -265,7 +265,7 @@ CCFrameData::CCFrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
-	, isTween(true)
+    , isTween(true)
     , displayIndex(0)
     , blendType(BLEND_NORMAL)
 
@@ -288,7 +288,7 @@ void CCFrameData::copy(CCFrameData *frameData)
     displayIndex = frameData->displayIndex;
     tweenEasing = frameData->tweenEasing;
     blendType = frameData->blendType;
-	isTween = frameData->isTween;
+    isTween = frameData->isTween;
 }
 
 CCMovementBoneData::CCMovementBoneData()

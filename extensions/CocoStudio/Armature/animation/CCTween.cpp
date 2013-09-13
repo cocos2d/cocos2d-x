@@ -293,12 +293,12 @@ void CCTween::setBetween(CCFrameData *from, CCFrameData *to, bool limit)
     }
     while (0);
 
-	if (!from->isTween)
-	{
-		m_pTweenData->copy(from);
-		m_pTweenData->isTween = true;
-	}
-	
+    if (!from->isTween)
+    {
+        m_pTweenData->copy(from);
+        m_pTweenData->isTween = true;
+    }
+
     arriveKeyFrame(from);
 }
 
@@ -339,11 +339,11 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {
     node = node == NULL ? m_pTweenData : node;
-	if (!m_pFrom->isTween)
-	{
-		return m_pFrom;
-	}
-	
+    if (!m_pFrom->isTween)
+    {
+        return m_pFrom;
+    }
+
 
     node->x = m_pFrom->x + percent * m_pBetween->x;
     node->y = m_pFrom->y + percent * m_pBetween->y;
@@ -438,11 +438,11 @@ float CCTween::updateFrameData(float currentPercent)
 
         m_eFrameTweenEasing = from->tweenEasing;
 
-		if (m_pBone->getName() == "bady-a20")
-		{
-			int a = 0;
-		}
-		
+        if (m_pBone->getName() == "bady-a20")
+        {
+            int a = 0;
+        }
+
 
         setBetween(from, to, false);
 
