@@ -124,11 +124,15 @@ void TouchableSpriteTest::onEnter()
     
     auto sprite1 = Sprite::create("Images/CyanSquare.png");
     sprite1->setPosition(origin+Point(size.width/2, size.height/2) + Point(-80, 80));
-    addChild(sprite1, 1, 100);
+    addChild(sprite1, 10);
     
     auto sprite2 = Sprite::create("Images/MagentaSquare.png");
     sprite2->setPosition(origin+Point(size.width/2, size.height/2));
-    addChild(sprite2, 2, 200);
+    addChild(sprite2, 20);
+    
+    auto sprite3 = Sprite::create("Images/YellowSquare.png");
+    sprite3->setPosition(Point(0, 0));
+    sprite2->addChild(sprite3, 1);
     
     // Make sprite1 touchable
     auto listener1 = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
@@ -167,6 +171,7 @@ void TouchableSpriteTest::onEnter()
     
     dispatcher->registerEventListenerWithSceneGraphPriority(listener1, sprite1);
     dispatcher->registerEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
+    dispatcher->registerEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
 }
 
 std::string TouchableSpriteTest::title()
