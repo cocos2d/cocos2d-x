@@ -100,7 +100,7 @@ bool HelloWorld::init()
     
     
     int layerTouchId = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener, this);
-    int layerTouchId2 = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener, this);
+    int layerTouchId2 = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener->clone(), this);
     
     auto spriteTouchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     spriteTouchListener->setSwallowTouches(true);
