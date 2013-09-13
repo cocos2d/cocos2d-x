@@ -41,7 +41,8 @@ protected:
 public:
    virtual void onEnter();
    virtual void onExit();
-   cocos2d::Node* getNode();
+   void setNode(cocos2d::Node *pNode);
+   cocos2d::Node* getNode() const;
 
    static ComRender* create(cocos2d::Node *pNode, const char *comName);
 

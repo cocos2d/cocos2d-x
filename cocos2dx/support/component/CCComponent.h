@@ -48,6 +48,9 @@ public:
     const char* getName() const;
     void setName(const char *pName);
     
+    void setNode(cocos2d::Node *pNode);
+    cocos2d::Node* getNode() const;
+    
     void setOwner(Node *pOwner);
     Node* getOwner() const;
     
