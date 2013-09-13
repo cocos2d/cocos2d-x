@@ -256,8 +256,8 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
 
         if (CCRGBAProtocol *rgbaProtocaol = dynamic_cast<CCRGBAProtocol *>(m_pDisplayRenderNode))
         {
-            rgbaProtocaol->setColor(m_pBone->getColor());
-            rgbaProtocaol->setOpacity(m_pBone->getOpacity());
+			rgbaProtocaol->setColor(m_pBone->getDisplayedColor());
+			rgbaProtocaol->setOpacity(m_pBone->getDisplayedOpacity());
         }
 
         m_pDisplayRenderNode->retain();

@@ -75,6 +75,7 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Armature/display/CCDisplayManager.cpp \
 ../CocoStudio/Armature/display/CCSkin.cpp \
 ../CocoStudio/Armature/physics/CCColliderDetector.cpp \
+../CocoStudio/Armature/utils/CCArmatureDefine.cpp \
 ../CocoStudio/Armature/utils/CCArmatureDataManager.cpp \
 ../CocoStudio/Armature/utils/CCDataReaderHelper.cpp \
 ../CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \

@@ -175,6 +175,8 @@
 		1A30F23817D9B79700487F42 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A30F1F317D9B79700487F42 /* json_writer.cpp */; };
 		1A30F23917D9B79700487F42 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A30F1F517D9B79700487F42 /* sconscript */; };
 		1A30F23A17D9B79700487F42 /* CCSSceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A30F1F917D9B79700487F42 /* CCSSceneReader.cpp */; };
+		1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A729AC017E1C60B00F37B6A /* MotionStreakTest */; };
+		1A729AC217E1C60B00F37B6A /* MotionStreakTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A729AC017E1C60B00F37B6A /* MotionStreakTest */; };
 		1A80332A1728DECD00240CC3 /* EffectsAdvancedTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A8033291728DECD00240CC3 /* EffectsAdvancedTest */; };
 		1A80332C1728F1FB00240CC3 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A80332B1728F1FB00240CC3 /* res */; };
 		1A82F5F8169AC91400C4B13A /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */; };
@@ -763,6 +765,7 @@
 		1A30F1F717D9B79700487F42 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1A30F1F917D9B79700487F42 /* CCSSceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSSceneReader.cpp; sourceTree = "<group>"; };
 		1A30F1FA17D9B79700487F42 /* CCSSceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSSceneReader.h; sourceTree = "<group>"; };
+		1A729AC017E1C60B00F37B6A /* MotionStreakTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MotionStreakTest; path = ../../Shared/tests/MotionStreakTest; sourceTree = "<group>"; };
 		1A8033291728DECD00240CC3 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = EffectsAdvancedTest; path = ../../Shared/tests/EffectsAdvancedTest; sourceTree = "<group>"; };
 		1A80332B1728F1FB00240CC3 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../Shared/tests/res; sourceTree = "<group>"; };
 		1A82F5F5169AC91400C4B13A /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
@@ -1730,14 +1733,13 @@
 		D401B5FC16FB169100F2529D /* js_src_raw */ = {
 			isa = PBXGroup;
 			children = (
-				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
-				A218F7DB1743D97E00F65883 /* XHRTest */,
 				1AA51A7816F708FA000FDF05 /* ActionManagerTest */,
 				1AA51A7916F708FA000FDF05 /* ActionsTest */,
 				1AA51A7A16F708FA000FDF05 /* BaseTestLayer */,
 				1AA51A7B16F708FA000FDF05 /* Box2dTest */,
 				1AA51A7C16F708FA000FDF05 /* ChipmunkTest */,
 				1AA51A7D16F708FA000FDF05 /* ClickAndMoveTest */,
+				A22656EE1743DCBB00598A2C /* ClippingNodeTest */,
 				1AA51A7E16F708FA000FDF05 /* CocosDenshionTest */,
 				1AA51A7F16F708FA000FDF05 /* CocosNodeTest */,
 				1AA51A8016F708FA000FDF05 /* CurrentLanguageTest */,
@@ -1753,6 +1755,7 @@
 				1AA51A8916F708FA000FDF05 /* LabelTest */,
 				1AA51A8A16F708FA000FDF05 /* LayerTest */,
 				1AA51A8B16F708FA000FDF05 /* MenuTest */,
+				1A729AC017E1C60B00F37B6A /* MotionStreakTest */,
 				1AA51A8C16F708FA000FDF05 /* OpenGLTest */,
 				1AA51A8D16F708FA000FDF05 /* ParallaxTest */,
 				1AA51A8E16F708FA000FDF05 /* ParticleTest */,
@@ -1771,6 +1774,7 @@
 				1AA51A9C16F708FA000FDF05 /* TouchesTest */,
 				1AA51A9D16F708FA000FDF05 /* TransitionsTest */,
 				1AA51A9E16F708FA000FDF05 /* UnitTest */,
+				A218F7DB1743D97E00F65883 /* XHRTest */,
 				15A3D4621682F14C002FB0C5 /* main.js */,
 				D401B6DE16FC071100F2529D /* tests-boot-jsb.js */,
 				15A3D4741682F14C002FB0C5 /* tests-main.js */,
@@ -1969,6 +1973,7 @@
 				1A80332C1728F1FB00240CC3 /* res in Resources */,
 				A218F7DC1743D97E00F65883 /* XHRTest in Resources */,
 				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
+				1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1986,6 +1991,7 @@
 				D401B6C216FB637400F2529D /* Icon-114.png in Resources */,
 				D401B6C316FB637400F2529D /* Icon-72.png in Resources */,
 				D401B6C416FB637400F2529D /* Icon-144.png in Resources */,
+				1A729AC217E1C60B00F37B6A /* MotionStreakTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
