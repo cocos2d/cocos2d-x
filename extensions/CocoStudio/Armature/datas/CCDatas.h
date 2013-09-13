@@ -80,7 +80,7 @@ public:
     * @param  from   from CCBaseData
     * @param  to     to CCBaseData
     */
-    virtual void subtract(CCBaseData *from, CCBaseData *to);
+    virtual void subtract(CCBaseData *from, CCBaseData *to, bool limit);
 
     virtual void setColor(const ccColor4B &color);
     virtual ccColor4B getColor();
