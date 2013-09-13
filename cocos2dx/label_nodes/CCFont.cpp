@@ -39,7 +39,7 @@ Font::Font() : _usedGlyphs(GlyphCollection::ASCII), _customGlyphs(nullptr)
 {
 }
 
-const char * Font::getGlyphCollection(GlyphCollection glyphs)
+const char * Font::getGlyphCollection(GlyphCollection glyphs) const
 {
     switch (glyphs)
     {
@@ -85,7 +85,7 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
     }
 }
 
-const char * Font::getCurrentGlyphCollection()
+const char * Font::getCurrentGlyphCollection() const
 {
     if (_customGlyphs)
     {
@@ -107,9 +107,9 @@ Font* Font::createWithFNT(const char* fntFilePath)
    return FontFNT::create(fntFilePath);
 }
 
-unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
+unsigned short int  * Font::getUTF16Text(const char *text, int &outNumLetters) const
 {
-    unsigned short* utf16String = cc_utf8_to_utf16(pText);
+    unsigned short* utf16String = cc_utf8_to_utf16(text);
     
     if(!utf16String)
         return 0;
@@ -118,28 +118,28 @@ unsigned short int  * Font::getUTF16Text(const char *pText, int &outNumLetters)
     return utf16String;
 }
 
-int Font::getUTF16TextLenght(unsigned short int *pText)
+int Font::getUTF16TextLenght(unsigned short int *text) const
 {
-     return cc_wcslen(pText);
+     return cc_wcslen(text);
 }
 
-unsigned short int  * Font::trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd)
+unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const
 {
-    if ( newBegin<0 || newEnd<=0 )
+    if ( newBegin < 0 || newEnd <= 0 )
         return 0;
     
-    if ( newBegin>=newEnd )
+    if ( newBegin >= newEnd )
         return 0;
     
-    if (newEnd >= cc_wcslen(pText))
+    if (newEnd >= cc_wcslen(text))
         return 0;
     
     int newLenght = newEnd - newBegin + 2;
     unsigned short* trimmedString = new unsigned short[newLenght];
     
-    for(int c = 0; c < (newLenght-1); ++c)
+    for(int c = 0; c < (newLenght - 1); ++c)
     {
-        trimmedString[c] = pText[newBegin + c];
+        trimmedString[c] = text[newBegin + c];
     }
     
     // last char
@@ -149,15 +149,9 @@ unsigned short int  * Font::trimUTF16Text(unsigned short int *pText, int newBegi
     return trimmedString;
 }
 
-Rect Font::getRectForChar(unsigned short theChar)
+Rect Font::getRectForChar(unsigned short theChar) const
 {
-    Rect temp;
-    temp.size.width  = 0;
-    temp.size.height = 0;
-    temp.origin.x = 0;
-    temp.origin.y = 0;
-    
-    return temp;
+    return Rect::ZERO;
 }
 
 NS_CC_END
