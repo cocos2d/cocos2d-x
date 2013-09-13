@@ -43,6 +43,9 @@ class Set;
 class CC_DLL EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLViewProtocol();
     /**
      * @js NA

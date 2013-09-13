@@ -124,6 +124,9 @@ public://@public
     // Character Set defines the letters that actually exist in the font
     std::set<unsigned int> *_characterSet;
 public:
+    /**
+     * @js ctor
+     */
     CCBMFontConfiguration();
     /**
      * @js NA
@@ -190,8 +193,14 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     LabelBMFont();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LabelBMFont();
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.

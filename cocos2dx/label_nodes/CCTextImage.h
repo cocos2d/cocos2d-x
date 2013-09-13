@@ -104,7 +104,9 @@ private:
 class CC_DLL TextPageDef
 {
 public:
-    
+    /**
+     * @js NA
+     */
      TextPageDef(int pageNum, int width, int height);
     /**
      * @js NA
@@ -143,7 +145,9 @@ private:
 class CC_DLL TextFontPagesDef
 {
 public:
-    
+    /**
+     * @js ctor
+     */
     TextFontPagesDef();
     /**
      * @js NA
@@ -167,7 +171,9 @@ private:
 class CC_DLL TextImage
 {
 public:
-    
+    /**
+     * @js ctor
+     */
     TextImage();
     /**
      * @js NA

@@ -44,6 +44,9 @@ class Camera;
 class CC_DLL ActionCamera : public ActionInterval //<NSCopying> 
 {
 public:
+    /**
+     * @js ctor
+     */
     ActionCamera()
 		:_centerXOrig(0)
         ,_centerYOrig(0)
@@ -90,7 +93,9 @@ class CC_DLL OrbitCamera : public ActionCamera //<NSCopying>
 public:
     /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
-
+    /**
+     * @js ctor
+     */
     OrbitCamera()
 		: _radius(0.0)
         , _deltaRadius(0.0)

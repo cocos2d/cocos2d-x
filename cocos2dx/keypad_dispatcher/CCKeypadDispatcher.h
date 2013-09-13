@@ -49,6 +49,9 @@ struct _ccCArray;
 class CC_DLL KeypadDispatcher : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     KeypadDispatcher();
     /**
      * @js NA

@@ -88,7 +88,9 @@ public:
      * @return autoreleased scroll view object
      */
     static ScrollView* create();
-
+    /**
+     * @js ctor
+     */
     ScrollView();
     /**
      * @js NA

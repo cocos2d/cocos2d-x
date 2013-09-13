@@ -57,6 +57,9 @@ struct _hashElement;
 class CC_DLL ActionManager : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     ActionManager(void);
     /**
      * @js NA

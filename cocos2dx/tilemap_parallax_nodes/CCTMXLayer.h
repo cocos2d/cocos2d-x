@@ -77,7 +77,9 @@ class CC_DLL TMXLayer : public SpriteBatchNode
 public:
     /** creates a TMXLayer with an tileset info, a layer info and a map info */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    
+    /**
+     * @js ctor
+     */
     TMXLayer();
     /**
      * @js NA

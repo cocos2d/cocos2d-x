@@ -48,6 +48,9 @@ class GLProgram;
 class CC_DLL ShaderCache : public Object 
 {
 public:
+    /**
+     * @js ctor
+     */
     ShaderCache();
     /**
      * @js NA

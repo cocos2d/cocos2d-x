@@ -43,6 +43,9 @@ public:
      */
     static Tween *create(Bone *bone);
 public:
+    /**
+     * @js ctor
+     */
     Tween(void);
     /**
      * @js NA

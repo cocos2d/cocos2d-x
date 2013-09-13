@@ -36,6 +36,9 @@ NS_CC_BEGIN
 class CC_DLL Accelerometer : public Tizen::Uix::Sensor::ISensorEventListener
 {
 public:
+    /**
+     * @js ctor
+     */
     Accelerometer();
     /**
      * @js NA

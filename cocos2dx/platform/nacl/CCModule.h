@@ -31,6 +31,9 @@ THE SOFTWARE.
 class CocosPepperModule : public pp::Module
 {
 public:
+    /**
+     * @js ctor
+     */
     CocosPepperModule() : pp::Module() {}
 
     virtual bool Init()

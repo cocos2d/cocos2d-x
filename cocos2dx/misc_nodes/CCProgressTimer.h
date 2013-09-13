@@ -62,7 +62,9 @@ public:
     
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static ProgressTimer* create(Sprite* sp);
-
+    /**
+     * @js ctor
+     */
     ProgressTimer();
     /**
      * @js NA

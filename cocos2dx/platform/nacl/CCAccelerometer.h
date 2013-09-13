@@ -33,6 +33,9 @@ namespace   cocos2d {
 class Accelerometer
 {
 public:
+    /**
+     * @js ctor
+     */
     Accelerometer(){}
     /**
      * @js NA

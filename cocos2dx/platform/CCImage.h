@@ -56,7 +56,9 @@ class CC_DLL Image : public Object
 {
 public:
     friend class TextureCache;
-    
+    /**
+     * @js ctor
+     */
     Image();
     /**
      * @js NA

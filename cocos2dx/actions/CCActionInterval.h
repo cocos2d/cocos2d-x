@@ -189,7 +189,9 @@ class CC_DLL RepeatForever : public ActionInterval
 public:
     /** creates the action */
     static RepeatForever* create(ActionInterval *pAction);
-
+    /**
+     * @js ctor
+     */
     RepeatForever()
         : _innerAction(NULL)
     {}
@@ -784,6 +786,9 @@ public:
      * @lua NA
      */
     virtual ~ReverseTime(void);
+    /**
+     * @js ctor
+     */
     ReverseTime();
 
     /** initializes the action */
@@ -809,7 +814,9 @@ class CC_DLL Animate : public ActionInterval
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
     static Animate* create(Animation *pAnimation);
-
+    /**
+     * @js ctor
+     */
     Animate();
     /**
      * @js NA
@@ -849,6 +856,9 @@ protected:
 class CC_DLL TargetedAction : public ActionInterval
 {
 public:
+    /**
+     * @js ctor
+     */
     TargetedAction();
     /**
      * @js NA

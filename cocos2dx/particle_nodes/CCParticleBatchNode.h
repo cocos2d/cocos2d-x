@@ -72,7 +72,9 @@ public:
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
-
+    /**
+     * @js ctor
+     */
     ParticleBatchNode();
     /**
      * @js NA

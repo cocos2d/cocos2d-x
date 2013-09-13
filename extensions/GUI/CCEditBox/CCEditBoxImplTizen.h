@@ -41,6 +41,9 @@ class EditBox;
 class EditBoxImplTizen : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplTizen(EditBox* pEditText);
     /**
      * @js NA

@@ -118,7 +118,9 @@ public:
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
     static Grid3D* create(const Size& gridSize);
-
+    /**
+     * @js ctor
+     */
     Grid3D();
     /**
      * @js NA
@@ -179,7 +181,9 @@ public:
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize);
-
+    /**
+     * @js ctor
+     */
     TiledGrid3D();
     /**
      * @js NA

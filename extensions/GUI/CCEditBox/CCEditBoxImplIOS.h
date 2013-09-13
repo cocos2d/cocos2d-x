@@ -71,6 +71,9 @@ class EditBox;
 class EditBoxImplIOS : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplIOS(EditBox* pEditText);
     /**
      * @js NA

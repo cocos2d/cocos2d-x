@@ -43,6 +43,9 @@ NS_CC_BEGIN
 class EGLView : public EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
     /**
      * @js NA

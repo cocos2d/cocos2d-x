@@ -34,6 +34,9 @@ NS_CC_EXT_BEGIN
 class SceneReader
 {
 public:
+    /**
+     * @js ctor
+     */
     SceneReader(void);
     /**
      * @js NA

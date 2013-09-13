@@ -39,6 +39,9 @@ class EGL;
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
     /**
      * @js NA

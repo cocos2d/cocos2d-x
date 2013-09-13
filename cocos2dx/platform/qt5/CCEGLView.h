@@ -39,6 +39,9 @@ class Cocos2DQt5OpenGLIntegration;
 
 class EGLView : public EGLViewProtocol {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
     /**
      * @js NA

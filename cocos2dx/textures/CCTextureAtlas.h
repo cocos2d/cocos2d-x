@@ -66,7 +66,9 @@ public:
      * The TextureAtlas capacity can be increased in runtime.
      */
     static TextureAtlas* createWithTexture(Texture2D *texture, int capacity);
-
+    /**
+     * @js ctor
+     */
     TextureAtlas();
     /**
      * @js NA

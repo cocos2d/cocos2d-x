@@ -157,6 +157,10 @@ public:
      * @lua NA
      */
     virtual ~CardinalSplineTo();
+    /**
+     * @js NA
+     * @lua NA
+     */
     CardinalSplineTo();
     
     /** initializes the action with a duration and an array of points */

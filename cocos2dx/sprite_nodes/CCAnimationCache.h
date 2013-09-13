@@ -50,6 +50,9 @@ Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5,
 class CC_DLL AnimationCache : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     AnimationCache();
     /**
      * @js NA

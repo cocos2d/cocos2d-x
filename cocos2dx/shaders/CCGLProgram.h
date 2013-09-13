@@ -101,7 +101,9 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
-    
+    /**
+     * @js ctor
+     */
     GLProgram();
     /**
      * @js NA

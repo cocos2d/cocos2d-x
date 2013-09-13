@@ -144,6 +144,7 @@ public:
 
     /**
      * Default constructor
+     * @js ctor
      */
     Node(void);
     
@@ -1454,6 +1455,9 @@ protected:
 class CC_DLL NodeRGBA : public Node, public RGBAProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     NodeRGBA();
     /**
      * @js NA

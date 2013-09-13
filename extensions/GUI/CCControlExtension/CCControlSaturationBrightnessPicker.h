@@ -64,6 +64,9 @@ protected:
     int         boxSize;
     
 public:
+    /**
+     * @js ctor
+     */
     ControlSaturationBrightnessPicker();
     /**
      * @js NA

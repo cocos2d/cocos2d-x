@@ -89,6 +89,9 @@ public:
 	static Armature *create(const char *name, Bone *parentBone);
 
 public:
+    /**
+     * @js ctor
+     */
     Armature();
     /**
      * @js NA

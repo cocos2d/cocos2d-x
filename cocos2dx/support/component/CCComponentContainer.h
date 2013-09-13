@@ -35,6 +35,9 @@ class Node;
 class CC_DLL ComponentContainer
 {
 protected:
+    /**
+     * @js ctor
+     */
     ComponentContainer(Node *pNode);
     
 public:

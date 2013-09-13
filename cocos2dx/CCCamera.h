@@ -68,7 +68,9 @@ class CC_DLL Camera : public Object
 public:
     /** returns the Z eye */
     static float getZEye();
-
+    /**
+     * @js ctor
+     */
     Camera(void);
     /**
      * @js NA

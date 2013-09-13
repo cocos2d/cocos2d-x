@@ -109,6 +109,9 @@ object->getProperty(name_of_the_property);
 class CC_DLL TMXTiledMap : public Node
 {
 public:
+    /**
+     * @js ctor
+     */
     TMXTiledMap();
     /**
      * @js NA

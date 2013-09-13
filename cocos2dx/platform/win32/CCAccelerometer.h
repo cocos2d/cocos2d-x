@@ -33,6 +33,9 @@ NS_CC_BEGIN
 class CC_DLL Accelerometer
 {
 public:
+    /**
+     * @js ctor
+     */
     Accelerometer();
     /**
      * @js NA

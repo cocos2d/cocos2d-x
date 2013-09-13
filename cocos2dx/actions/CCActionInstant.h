@@ -241,6 +241,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
 
 public:
+    /**
+     * @js ctor
+     */
     CallFunc()
         : _selectorTarget(NULL)
         , _callFunc(NULL)
@@ -390,7 +393,9 @@ public:
      typedef void (Object::*SEL_CallFuncO)(Object*);
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
-    
+    /**
+     * @js ctor
+     */
     __CCCallFuncO();
     /**
      * @js NA

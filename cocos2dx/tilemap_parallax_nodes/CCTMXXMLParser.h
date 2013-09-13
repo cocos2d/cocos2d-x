@@ -89,6 +89,9 @@ This information is obtained from the TMX file.
 class CC_DLL TMXLayerInfo : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     TMXLayerInfo();
     /**
      * @js NA
@@ -134,6 +137,9 @@ public:
     //! size in pixels of the image
     Size          _imageSize;
 public:
+    /**
+     * @js ctor
+     */
     TMXTilesetInfo();
     /**
      * @js NA
@@ -168,7 +174,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
     /** creates a TMX Format with an XML string and a TMX resource path */
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
-    
+    /**
+     * @js ctor
+     */
     TMXMapInfo();
     /**
      * @js NA

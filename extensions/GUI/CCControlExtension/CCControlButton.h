@@ -57,7 +57,9 @@ public:
     static ControlButton* create(Scale9Sprite* sprite);
     static ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
     static ControlButton* create(std::string title, const char * fontName, float fontSize);
-
+    /**
+     * @js ctor
+     */
     ControlButton();
     /**
      * @js NA

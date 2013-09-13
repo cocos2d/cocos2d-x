@@ -33,6 +33,9 @@ NS_CC_EXT_BEGIN
 class ComAudio : public cocos2d::Component
 {
 protected:
+    /**
+     * @js ctor
+     */
     ComAudio(void);
     /**
      * @js NA

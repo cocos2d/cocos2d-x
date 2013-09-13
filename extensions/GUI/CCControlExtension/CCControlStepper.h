@@ -50,7 +50,9 @@ public:
     };
     
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
-
+    /**
+     * @js ctor
+     */
     ControlStepper();
     /**
      * @js NA

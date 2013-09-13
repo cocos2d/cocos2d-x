@@ -46,6 +46,9 @@ class CC_DLL DrawNode : public Node
 public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
+    /**
+     * @js ctor
+     */
     DrawNode();
     /**
      * @js NA

@@ -55,7 +55,9 @@ public:
      * scene is being turned from left over the outgoing scene.
      */
     static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
-
+    /**
+     * @js ctor
+     */
     TransitionPageTurn();
     /**
      * @js NA

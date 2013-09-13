@@ -72,6 +72,7 @@ public:
      * @param packageUrl URL of new package, the package should be a zip file.
      * @param versionFileUrl URL of version file. It should contain version code of new package.
      * @param storagePath The path to store downloaded resources.
+     * @js NA
      */
     AssetsManager(const char* packageUrl = NULL, const char* versionFileUrl = NULL, const char* storagePath = NULL);
     /**
@@ -173,6 +174,9 @@ private:
     class Helper : public cocos2d::Object
     {
     public:
+        /**
+         * @js ctor
+         */
         Helper();
         /**
          * @js NA

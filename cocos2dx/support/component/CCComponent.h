@@ -33,6 +33,9 @@ NS_CC_BEGIN
 class CC_DLL Component : public Object
 {
 protected:
+    /**
+     * @js ctor
+     */
     Component(void);
 public:
     /**

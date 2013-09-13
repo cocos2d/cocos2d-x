@@ -52,6 +52,9 @@ public:
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
+    /**
+     * @js ctor
+     */
     ArmatureAnimation();
     /**
      * @js NA

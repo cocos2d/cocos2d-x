@@ -42,6 +42,9 @@ class  DecorativeDisplay: public Object, public sigslot::has_slots<>
 public:
     static DecorativeDisplay *create();
 public:
+    /**
+     * @js ctor
+     */
     DecorativeDisplay(void);
     /**
      * @js NA
