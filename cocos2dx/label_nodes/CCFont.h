@@ -47,25 +47,25 @@ public:
     
     virtual  FontAtlas *createFontAtlas() = 0;
 
-    virtual Size                * getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters)                         = 0;
-    virtual const char          * getCurrentGlyphCollection();
+    virtual Size                * getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const                        = 0;
+    virtual const char          * getCurrentGlyphCollection() const;
     
-    virtual int                   getLetterPadding()                                                                         { return 0;     }
-    virtual unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight)                      { return 0;     }
-    virtual GlyphDef            * getGlyphDefintionsForText(const char *pText, int &outNumGlyphs, bool    UTF16text = false) { return 0;     }
-    virtual int                   getFontMaxHeight()                                                                         { return 0;     }
-    virtual Rect                  getRectForChar(unsigned short theChar);
+    virtual int                   getLetterPadding()  const                                                                       { return 0;     }
+    virtual unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const                     { return 0;     }
+    virtual GlyphDef            * getGlyphDefintionsForText(const char *text, int &outNumGlyphs, bool    UTF16text = false) const { return 0;     }
+    virtual int                   getFontMaxHeight()  const                                                                       { return 0;     }
+    virtual Rect                  getRectForChar(unsigned short theChar) const;
     
-    virtual int                   getUTF16TextLenght(unsigned short int *pText);
-    virtual unsigned short int  * getUTF16Text(const char *pText, int &outNumLetters);
-    virtual unsigned short int  * trimUTF16Text(unsigned short int *pText, int newBegin, int newEnd);
+    virtual int                   getUTF16TextLenght(unsigned short int *text) const; 
+    virtual unsigned short int  * getUTF16Text(const char *text, int &outNumLetters) const;
+    virtual unsigned short int  * trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const;
     
 protected:
     
     Font();
     virtual ~Font() {}
     void setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs = 0);
-    const char * getGlyphCollection(GlyphCollection glyphs);
+    const char * getGlyphCollection(GlyphCollection glyphs) const;
     
 private:
     
