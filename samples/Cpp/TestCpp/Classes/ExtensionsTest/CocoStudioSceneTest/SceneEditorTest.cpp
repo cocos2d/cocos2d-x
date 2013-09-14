@@ -67,12 +67,6 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
 	}
 	m_pCurNode = pNode;
 
-	//fishes
-	CCArmature *pBlowFish = getFish(10008, "blowFish");
-	CCArmature *pButterFlyFish = getFish(10009, "butterFlyFish");
-	pBlowFish->getAnimation()->playByIndex(0);
-	pButterFlyFish->getAnimation()->playByIndex(0);
-
     CCMenuItemFont *itemBack = CCMenuItemFont::create("Back", this, menu_selector(SceneEditorTestLayer::toExtensionsMainLayer));
         itemBack->setColor(ccc3(255, 255, 255));
         itemBack->setPosition(ccp(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
