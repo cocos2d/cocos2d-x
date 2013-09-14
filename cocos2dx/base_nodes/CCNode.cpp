@@ -176,9 +176,9 @@ Node::~Node()
     
     CC_SAFE_DELETE(_componentContainer);
     
-    for (auto iter = _eventIds.begin(); iter != _eventIds.end(); ++iter)
+    for (auto iter = _eventlisteners.begin(); iter != _eventlisteners.end(); ++iter)
     {
-        EventDispatcher::getInstance()->unregisterEventListener(*iter);
+        EventDispatcher::getInstance()->removeEventListener(*iter);
     }
 }
 
@@ -1301,14 +1301,9 @@ void Node::updateEventPriorityIndex()
     _eventPriority = ++_globalEventPriorityIndex;
 }
 
-void Node::addEventId(int eventId)
+void Node::associateEventListener(EventListener* listener)
 {
-    _eventIds.insert(eventId);
-}
-
-void Node::removeEventId(int eventId)
-{
-    _eventIds.erase(eventId);
+    _eventlisteners.insert(listener);
 }
 
 // NodeRGBA

@@ -124,11 +124,11 @@ public:
 
 protected:   
     bool _touchEnabled;
-    int  _touchListenerId;
+    EventListener* _touchListener;
     bool _accelerometerEnabled;
-    int  _accelerometerListenerId;
+    EventListener*  _accelerometerListener;
     bool _keypadEnabled;
-    int  _keyboardListenerId;
+    EventListener*  _keyboardListener;
 private:
      int _touchPriority;
     Touch::DispatchMode _touchMode;

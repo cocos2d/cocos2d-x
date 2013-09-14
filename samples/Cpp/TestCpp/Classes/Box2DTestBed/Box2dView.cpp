@@ -87,8 +87,8 @@ bool MenuLayer::initWithEntryID(int entryId)
     listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
 
-    _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithFixedPriority(listener, 0);
-    
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 0);
+    _touchListener = listener;
     return true;
 }
 
@@ -185,8 +185,6 @@ bool Box2DView::initWithEntryID(int entryId)
     
     // Register Touch Event
     
-//    EventDispatcher::getInstance()->unregisterEventListener(this->getTouchEventId());
-    
     auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
     
@@ -194,7 +192,8 @@ bool Box2DView::initWithEntryID(int entryId)
     listener->onTouchMoved = CC_CALLBACK_2(Box2DView::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Box2DView::onTouchEnded, this);
     
-    _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithFixedPriority(listener, 10);
+    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 10);
+    _touchListener = listener;
     
     return true;
 }

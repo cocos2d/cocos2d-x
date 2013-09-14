@@ -134,7 +134,7 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
     listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 //void KeyboardNotificationLayer::registerWithTouchDispatcher()

@@ -120,8 +120,6 @@ public:
     virtual bool isTouchEnabled() const;
     virtual void setTouchEnabled(bool value);
     
-    int getTouchListenerId() const { return _touchListenerId; };
-    
     virtual void setTouchMode(Touch::DispatchMode mode);
     virtual Touch::DispatchMode getTouchMode() const;
 
@@ -182,9 +180,9 @@ protected:
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    int _touchListenerId;
-    int _keyboardListenerId;
-    int _accelerationId;
+    EventListener* _touchListener;
+    EventListener* _keyboardListener;
+    EventListener* _accelerationListener;
 private:
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;

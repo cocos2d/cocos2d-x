@@ -37,9 +37,6 @@ void Paddle::onEnter()
 {
     Sprite::onEnter();
     
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-    
     // Register Touch Event
     auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     listener->setSwallowTouches(true);
@@ -48,7 +45,7 @@ void Paddle::onEnter()
     listener->onTouchMoved = CC_CALLBACK_2(Paddle::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Paddle::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void Paddle::onExit()

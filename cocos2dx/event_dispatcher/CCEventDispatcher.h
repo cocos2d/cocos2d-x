@@ -55,41 +55,39 @@ public:
     static EventDispatcher* getInstance();
 
     /** Registers a callback function for an specified event with the priority of scene graph.
-     *  @return The unique ID for the listener.
      */
-    int registerEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
+    void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
     /** Registers a callback function for an specified event with the fixed priority.
-     *  @return The unique ID for the listener.
      */
-    int registerEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
+    void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
     /** Unregisters a callback function by the unique ID. */
-    void unregisterEventListener(int listenerId);
+    void removeEventListener(EventListener* listener);
 
+    /** Removes listeners by event type */
+    void removeListenersForEventType(const std::string& eventType);
+    
+    /** Removes all listeners */
+    void removeAllListeners();
+    
     /** Sets listener's priority with node's draw order. */
-    void setPriorityWithSceneGraph(int listenerId, Node* node);
+    void setPriorityWithSceneGraph(EventListener* listener, Node* node);
 
     /** Sets listener's priority with fixed value. */
-    void setPriorityWithFixedValue(int listenerId, int fixedPriority);
+    void setPriorityWithFixedValue(EventListener* listener, int fixedPriority);
 
     /** Whether to enable dispatching events */
-    void setEnabled(bool isEnabled) { _isEnabled = isEnabled; };
+    void setEnabled(bool isEnabled);
 
     /** Checks whether dispatching events is enabled */
-    bool isEnabled() const { return _isEnabled; };
+    bool isEnabled() const;
 
     /** Dispatches the event
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
     void dispatchEvent(Event* event);
-    
-    /** Removes listeners by event type */
-    void removeListenersForEventType(const std::string& eventType);
-    
-    /** Removes all listeners */
-    void removeAllListeners();
 
 public:
     /** Destructor of EventDispatcher */
@@ -98,7 +96,6 @@ public:
 private:
     struct EventListenerItem
     {
-        int            id;
         int            fixedPriority;   // The higher the number, the higher the priority
         Node*          node;            // Weak reference.
         EventListener* listener;

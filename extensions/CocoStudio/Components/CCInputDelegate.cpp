@@ -28,11 +28,11 @@ NS_CC_EXT_BEGIN
 
 InputDelegate::InputDelegate(void)
 : _touchEnabled(false)
-, _touchListenerId(0)
+, _touchListener(nullptr)
 , _accelerometerEnabled(false)
-, _accelerometerListenerId(0)
+, _accelerometerListener(nullptr)
 , _keypadEnabled(false)
-, _keyboardListenerId(0)
+, _keyboardListener(nullptr)
 , _touchPriority(0)
 , _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 {
@@ -42,9 +42,9 @@ InputDelegate::InputDelegate(void)
 InputDelegate::~InputDelegate(void)
 {
     auto dispatcher = EventDispatcher::getInstance();
-    dispatcher->unregisterEventListener(_touchListenerId);
-    dispatcher->unregisterEventListener(_keyboardListenerId);
-    dispatcher->unregisterEventListener(_accelerometerListenerId);
+    dispatcher->removeEventListener(_touchListener);
+    dispatcher->removeEventListener(_keyboardListener);
+    dispatcher->removeEventListener(_accelerometerListener);
 }
 
 bool InputDelegate::onTouchBegan(Touch *pTouch, Event *pEvent)
@@ -107,9 +107,7 @@ void InputDelegate::setTouchEnabled(bool enabled)
     {
         _touchEnabled = enabled;
         if (enabled)
-        {
-            EventDispatcher::getInstance()->unregisterEventListener(_touchListenerId);
-            
+        {            
             if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
                 // Register Touch Event
                 auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
@@ -119,7 +117,8 @@ void InputDelegate::setTouchEnabled(bool enabled)
                 listener->onTouchesEnded = CC_CALLBACK_2(InputDelegate::onTouchesEnded, this);
                 listener->onTouchesCancelled = CC_CALLBACK_2(InputDelegate::onTouchesCancelled, this);
                 
-                _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithFixedPriority(listener, 0);
+                EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 0);
+                _touchListener = listener;
             } else {
                 // Register Touch Event
                 auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
@@ -130,12 +129,13 @@ void InputDelegate::setTouchEnabled(bool enabled)
                 listener->onTouchEnded = CC_CALLBACK_2(InputDelegate::onTouchEnded, this);
                 listener->onTouchCancelled = CC_CALLBACK_2(InputDelegate::onTouchCancelled, this);
                 
-                _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithFixedPriority(listener, _touchPriority);
+                EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, _touchPriority);
+                _touchListener = listener;
             }
         }
         else
         {
-            EventDispatcher::getInstance()->unregisterEventListener(_touchListenerId);
+            EventDispatcher::getInstance()->removeEventListener(_touchListener);
         }
     }
 }
@@ -190,11 +190,14 @@ void InputDelegate::setAccelerometerEnabled(bool enabled)
         _accelerometerEnabled = enabled;
 
         auto dispatcher = EventDispatcher::getInstance();
-        dispatcher->unregisterEventListener(_accelerometerListenerId);
+        dispatcher->removeEventListener(_accelerometerListener);
+        _accelerometerListener = nullptr;
+        
         if (enabled)
         {
             auto listener = AccelerationEventListener::create(CC_CALLBACK_2(InputDelegate::onAcceleration, this));
-            _accelerometerListenerId = dispatcher->registerEventListenerWithFixedPriority(listener, 0);
+            dispatcher->addEventListenerWithFixedPriority(listener, 0);
+            _accelerometerListener = listener;
         }
     }
 }
@@ -210,13 +213,16 @@ void InputDelegate::setKeypadEnabled(bool enabled)
     {
         _keypadEnabled = enabled;
 
+        EventDispatcher::getInstance()->removeEventListener(_keyboardListener);
+        
         if (enabled)
         {
             auto listener = KeyboardEventListener::create();
             listener->onKeyPressed = CC_CALLBACK_2(InputDelegate::onKeyPressed, this);
             listener->onKeyReleased = CC_CALLBACK_2(InputDelegate::onKeyReleased, this);
             
-            _keyboardListenerId = EventDispatcher::getInstance()->registerEventListenerWithFixedPriority(listener, 0);
+            EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 0);
+            _keyboardListener = listener;
         }
     }
 }

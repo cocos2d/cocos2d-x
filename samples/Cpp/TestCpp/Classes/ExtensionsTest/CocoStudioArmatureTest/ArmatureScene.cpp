@@ -448,7 +448,7 @@ void TestParticleDisplay::onEnter()
     
     listener->onTouchBegan = CC_CALLBACK_2(TestParticleDisplay::onTouchBegan, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
 }
 std::string TestParticleDisplay::title()
@@ -503,7 +503,7 @@ void TestUseMutiplePicture::onEnter()
     
     listener->onTouchBegan = CC_CALLBACK_2(TestUseMutiplePicture::onTouchBegan, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
 }
 std::string TestUseMutiplePicture::title()
@@ -651,7 +651,7 @@ void TestArmatureNesting::onEnter()
     
     listener->onTouchBegan = CC_CALLBACK_2(TestArmatureNesting::onTouchBegan, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
     
 }
 
