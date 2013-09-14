@@ -9,12 +9,12 @@
   "visible": 1,
   "x": 0,
   "y": 0,
-  "zorder": 1,
+  "zorder": 0,
   "gameobjects": [
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "bg",
+      "name": "BK",
       "canedit": true,
       "objecttag": 10003,
       "rotation": 0,
@@ -46,8 +46,8 @@
       "canedit": true,
       "objecttag": 10004,
       "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
+      "scalex": 0.5,
+      "scaley": 0.5,
       "visible": 1,
       "x": 0,
       "y": 0,
@@ -77,8 +77,8 @@
       "scalex": -1,
       "scaley": 1,
       "visible": 1,
-      "x": 192,
-      "y": 45,
+      "x": 188.35035705566406,
+      "y": 43.945346832275391,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -105,8 +105,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 288,
-      "y": 48,
+      "x": 289.21835327148438,
+      "y": 45.547077178955078,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -128,20 +128,20 @@
       "classname": "CCNode",
       "name": "blowFish",
       "canedit": true,
-      "objecttag": 10008,
+      "objecttag": 10007,
       "rotation": 0,
       "scalex": 0.3,
       "scaley": 0.3,
       "visible": 1,
-      "x": 425.5,
-      "y": 82.5,
+      "x": 413.84616088867188,
+      "y": 150,
       "zorder": 1,
       "gameobjects": [],
       "components": [
         {
           "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
           "classname": "CCArmature",
-          "name": "blowFish",
+          "name": "CCArmature",
           "file": null,
           "fileData": {
             "path": "fishes/blowFish/Blowfish.ExportJson",
@@ -155,22 +155,22 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "ButterFlyFish",
+      "name": "Butterflyfish",
       "canedit": true,
-      "objecttag": 10009,
+      "objecttag": 10008,
       "rotation": 0,
-      "scalex": 0.3,
-      "scaley": 0.3,
+      "scalex": 0.25,
+      "scaley": 0.25,
       "visible": 1,
-      "x": 426,
-      "y": 158,
+      "x": 411.5384521484375,
+      "y": 84.6153793334961,
       "zorder": 1,
       "gameobjects": [],
       "components": [
         {
           "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
           "classname": "CCArmature",
-          "name": "butterFlyFish",
+          "name": "CCArmature",
           "file": null,
           "fileData": {
             "path": "fishes/Butterflyfish/Butterflyfish.ExportJson",
@@ -186,7 +186,7 @@
     "_height": 320,
     "_width": 480
   },
-  "Version": "0.3.3.0",
+  "Version": "0.4.0.0",
   "components": [
     {
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
@@ -200,11 +200,11 @@
       "name": "CCBackgroundAudio",
       "file": null,
       "fileData": {
-        "path": "Misc/music_logo.mp3",
+        "path": "",
         "plistFile": null,
         "resourceType": 0
       },
-      "loop": 1
+      "loop": 0
     }
   ]
 }
