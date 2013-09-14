@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCGeometry.h"
 #include "ccMacros.h"
+#include <algorithm>
 
 // implementation of Point
 NS_CC_BEGIN

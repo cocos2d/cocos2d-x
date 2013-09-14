@@ -186,16 +186,36 @@ public:
     static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
 public:
+    /**
+     * @js ctor
+     */
     Texture2D();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Texture2D();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     const char* description(void) const;
 
-    /** These functions are needed to create mutable textures */
+    /** These functions are needed to create mutable textures
+     * @js NA
+     * @lua NA
+     */
     void releaseData(void *data);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void* keepData(void *data, unsigned int length);
 
-    /** Initializes with a texture2d with data */
+    /** Initializes with a texture2d with data 
+     * @js NA
+     * @lua NA
+     */
     bool initWithData(const void *data, int dataLen, Texture2D::PixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const Size& contentSize);
 
     /** Initializes with mipmaps */
@@ -238,8 +258,17 @@ public:
     @warning Calling this method could allocate additional texture memory.
 
     @since v0.8
+    * @code 
+    * When this function bound into js or lua,the input parameter will be changed
+    * In js: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
+    * In lua: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
+    * @endcode
     */
     void setTexParameters(const TexParams& texParams);
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE void setTexParameters(const TexParams* texParams) { return setTexParameters(*texParams); };
 
     /** sets antialias texture parameters:

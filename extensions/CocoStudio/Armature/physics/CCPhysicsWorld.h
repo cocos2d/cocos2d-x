@@ -55,7 +55,14 @@ public:
 
     void initNoGravityWorld();
 private:
+    /**
+     * @js ctor
+     */
     PhysicsWorld();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~PhysicsWorld();
 
 private:

@@ -33,35 +33,114 @@ NS_CC_EXT_BEGIN
 class InputDelegate : public TouchDelegate, public KeypadDelegate
 {
 protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
     InputDelegate(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~InputDelegate(void);
     
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isTouchEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchEnabled(bool value);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isAccelerometerEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setAccelerometerEnabled(bool value);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool isKeypadEnabled() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setKeypadEnabled(bool value);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchMode(Touch::DispatchMode mode);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual Touch::DispatchMode getTouchMode() const;
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void setTouchPriority(int priority);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual int  getTouchPriority() const;
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void didAccelerate(Acceleration* accelerationValue);
 
     // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool ccTouchBegan(Touch *touch, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchMoved(Touch *touch, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchEnded(Touch *touch, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchCancelled(Touch *touch, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchesBegan(Set *touches, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchesMoved(Set *touches, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchesEnded(Set *touches, Event *event) override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchesCancelled(Set *touches, Event *event) override;
 
 protected:   

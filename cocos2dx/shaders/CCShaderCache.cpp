@@ -281,7 +281,7 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
     CHECK_GL_ERROR_DEBUG();
 }
 
-GLProgram* ShaderCache::programForKey(const std::string &key)
+GLProgram* ShaderCache::getProgram(const std::string &key)
 {
     auto it = _programs.find(key);
     if( it != _programs.end() )

@@ -36,17 +36,29 @@ class ComRender : public cocos2d::Component
 protected:
     ComRender(void);
     ComRender(cocos2d::Node *node, const char *comName);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComRender(void);
     
 public:
-   virtual void onEnter();
-   virtual void onExit();
-   cocos2d::Node* getNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onExit();
+    cocos2d::Node* getNode();
 
-   static ComRender* create(cocos2d::Node *pNode, const char *comName);
+    static ComRender* create(cocos2d::Node *pNode, const char *comName);
 
 private:
-   cocos2d::Node *_render;
+    cocos2d::Node *_render;
 };
 
 NS_CC_EXT_END

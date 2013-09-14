@@ -104,8 +104,14 @@ public:
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
-
+    /**
+     * @js ctor
+     */
     Director(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Director(void);
     virtual bool init(void);
 
@@ -127,7 +133,10 @@ public:
     /** seconds per frame */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the EGLView, where everything is rendered */
+    /** Get the EGLView, where everything is rendered
+    * @js NA
+    * @lua NA
+    */
     inline EGLView* getOpenGLView() { return _openGLView; }
     void setOpenGLView(EGLView *pobOpenGLView);
 
@@ -142,6 +151,8 @@ public:
     
     /** Sets an OpenGL projection
      @since v0.8.2
+     * @js NA
+     * @lua NA
      */
     inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
@@ -169,8 +180,14 @@ public:
     
     /** Director delegate. It shall implemente the DirectorDelegate protocol
      @since v0.99.5
+     * @js NA
+     * @lua NA
      */
     DirectorDelegate* getDelegate() const;
+    /**
+     * @js NA
+     * @lua NA
+     */
     void setDelegate(DirectorDelegate* delegate);
 
     // window size
@@ -250,6 +267,7 @@ public:
 
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
+     * @lua endToLua
      */
     void end();
 
@@ -336,38 +354,52 @@ public:
     
     /** Gets the TouchDispatcher associated with this director
      @since v2.0
+     * @js NA
+     * @lua NA
      */
     TouchDispatcher* getTouchDispatcher() const;
     
     /** Sets the TouchDispatcher associated with this director
      @since v2.0
+     * @js NA
+     * @lua NA
      */
     void setTouchDispatcher(TouchDispatcher* touchDispatcher);
 
     /** Gets the KeyboardDispatcher associated with this director
      @note Supported on Mac and Linux only now.
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     KeyboardDispatcher* getKeyboardDispatcher() const;
 
     /** Sets the KeyboardDispatcher associated with this director
      @note Supported on Mac and Linux only now.
      @since v3.0
+     * @js NA
+     * @lua NA
      */
     void setKeyboardDispatcher(KeyboardDispatcher* keyboardDispatcher);
     
     /** Gets the KeypadDispatcher associated with this director
      @since v2.0
+     * @js NA
+     * @lua NA
      */
     KeypadDispatcher* getKeypadDispatcher() const;
 
     /** Sets the KeypadDispatcher associated with this director
      @since v2.0
+     * @js NA
+     * @lua NA
      */
     void setKeypadDispatcher(KeypadDispatcher* keypadDispatcher);
     
     /** Gets Accelerometer associated with this director
      @since v2.0
+     *@js NA
+     *@lua NA
      */
     Accelerometer* getAccelerometer() const;
     

@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-const int FontDefinitionTTF::_DEFAUL_ATALS_TEXTURE_SIZE = 1024;
+const int FontDefinitionTTF::DEFAUL_ATALS_TEXTURE_SIZE = 1024;
 
 FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 {
@@ -36,18 +36,18 @@ FontDefinitionTTF::FontDefinitionTTF():_textImages(0), _commonLineHeight(0)
 FontDefinitionTTF* FontDefinitionTTF::create(Font *font, int textureSize)
 {
     if (textureSize == 0)
-        textureSize = _DEFAUL_ATALS_TEXTURE_SIZE;
+        textureSize = DEFAUL_ATALS_TEXTURE_SIZE;
     
     FontDefinitionTTF *ret = new FontDefinitionTTF;
     
-    if(!ret)
+    if (!ret)
         return 0;
     
-    const char *pGlyph = font->getCurrentGlyphCollection();
-    if (!pGlyph)
+    const char *glyph = font->getCurrentGlyphCollection();
+    if (!glyph)
         return nullptr;
     
-    if ( ret->initDefinition(font, pGlyph, textureSize ) )
+    if (ret->initDefinition(font, glyph, textureSize))
     {
         return ret;
     }
@@ -69,34 +69,33 @@ FontDefinitionTTF::~FontDefinitionTTF()
 bool FontDefinitionTTF::prepareLetterDefinitions(TextFontPagesDef *pageDefs)
 {
     // get all the pages
-    TextFontPagesDef *pPages = pageDefs;
-    if (!pPages)
+    TextFontPagesDef *pages = pageDefs;
+    if (!pages)
         return (false);
     
     float maxLineHeight = -1;
     
     // loops all the pages
-    for (int cPages = 0; cPages<pPages->getNumPages(); ++cPages)
+    for (int cPages = 0; cPages < pages->getNumPages(); ++cPages)
     {
         // loops all the lines in this page
-        for (int cLines = 0; cLines<pPages->getPageAt(cPages)->getNumLines(); ++cLines)
+        for (int cLines = 0; cLines<pages->getPageAt(cPages)->getNumLines(); ++cLines)
         {
             float posXUV       = 0.0;
-            float posYUV       = pPages->getPageAt(cPages)->getLineAt(cLines)->getY();
+            float posYUV       = pages->getPageAt(cPages)->getLineAt(cLines)->getY();
             
             int   charsCounter = 0;
             
-            for (int c = 0; c < pPages->getPageAt(cPages)->getLineAt(cLines)->getNumGlyph(); ++c)
+            for (int c = 0; c < pages->getPageAt(cPages)->getLineAt(cLines)->getNumGlyph(); ++c)
             {
-                
                 // the current glyph
-                GlyphDef currentGlyph = pPages->getPageAt(cPages)->getLineAt(cLines)->getGlyphAt(c);
+                GlyphDef currentGlyph = pages->getPageAt(cPages)->getLineAt(cLines)->getGlyphAt(c);
                 
                 // letter width
                 float letterWidth  = currentGlyph.getRect().size.width;
                 
                 // letter height
-                float letterHeight = pPages->getPageAt(cPages)->getLineAt(cLines)->getHeight();
+                float letterHeight = pages->getPageAt(cPages)->getLineAt(cLines)->getHeight();
                 
                 // add this letter definition
                 FontLetterDefinition tempDef;
@@ -180,7 +179,7 @@ bool FontDefinitionTTF::initDefinition(cocos2d::Font *font, const char *letters,
     return prepareLetterDefinitions(_textImages->getPages());
 }
 
-void FontDefinitionTTF::addLetterDefinition(FontLetterDefinition &defToAdd)
+void FontDefinitionTTF::addLetterDefinition(const FontLetterDefinition &defToAdd)
 {
     if (_fontLettersDefinitionUTF16.find(defToAdd.letteCharUTF16) == _fontLettersDefinitionUTF16.end())
     {
@@ -191,10 +190,10 @@ void FontDefinitionTTF::addLetterDefinition(FontLetterDefinition &defToAdd)
 FontAtlas * FontDefinitionTTF::createFontAtlas()
 {
     int numTextures          = 0;
-    TextFontPagesDef *pPages = _textImages->getPages();
+    TextFontPagesDef *pages = _textImages->getPages();
     
-    if (pPages)
-        numTextures = pPages->getNumPages();
+    if (pages)
+        numTextures = pages->getNumPages();
     else
         return nullptr;
     

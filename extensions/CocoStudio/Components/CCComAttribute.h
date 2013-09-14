@@ -35,7 +35,14 @@ NS_CC_EXT_BEGIN
 class ComAttribute : public cocos2d::Component
 {
 protected:
+    /**
+     * @js ctor
+     */
     ComAttribute(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ComAttribute(void);
     
 public:

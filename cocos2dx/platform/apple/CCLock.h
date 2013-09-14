@@ -32,7 +32,14 @@ NS_CC_BEGIN
 class Lock
 {
 public:
+    /**
+     * @js ctor
+     */
     Lock(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Lock(void);
 
     void lock(void);

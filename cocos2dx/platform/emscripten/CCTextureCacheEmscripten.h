@@ -32,7 +32,14 @@ NS_CC_BEGIN
 class CC_DLL TextureCacheEmscripten : public TextureCache
 {
 public:
+    /**
+     * @js ctor
+     */
     TextureCacheEmscripten();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TextureCacheEmscripten();
 
     void addImageAsync(const char *path, Object *target, SEL_CallFuncO selector);

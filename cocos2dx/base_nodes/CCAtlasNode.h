@@ -54,7 +54,14 @@ public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
 	static AtlasNode * create(const char* tile,unsigned int tileWidth, unsigned int tileHeight,
                               unsigned int itemsToRender);
+    /**
+     * @js ctor
+     */
     AtlasNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~AtlasNode();
 
     /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
@@ -84,7 +91,18 @@ public:
     virtual const Color3B& getColor(void) const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
+    /**
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var setBlendFunc(var src, var dst)
+    * @endcode
+    * @lua NA
+    */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc() const override;
 
 private :

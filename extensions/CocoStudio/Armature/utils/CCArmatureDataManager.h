@@ -41,7 +41,14 @@ public:
     static ArmatureDataManager *sharedArmatureDataManager();
     static void purgeArmatureSystem();
 private:
+    /**
+     * @js ctor
+     */
     ArmatureDataManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ArmatureDataManager(void);
 
 public:

@@ -460,7 +460,7 @@ static int tolua_cocos2d_MenuItem_registerScriptTapHandler(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)cobj, handler, ScriptHandlerMgr::kMenuClickHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)cobj, handler, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
         return 0;
     }
     
@@ -500,7 +500,7 @@ static int tolua_cocos2d_MenuItem_unregisterScriptTapHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)cobj, ScriptHandlerMgr::kMenuClickHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)cobj, ScriptHandlerMgr::HandlerType::MENU_CLICKED);
         return 0;
     }
     
@@ -582,7 +582,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
         self->setTouchMode(touchesMode);
         self->setTouchPriority(priority);
 		self->setSwallowsTouches(swallowTouches);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kTouchesHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
     
@@ -622,7 +622,7 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kTouchesHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::TOUCHES);
         return 0;
     }
     
@@ -669,7 +669,7 @@ static int tolua_cocos2d_Layer_registerScriptKeypadHandler(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kKeypadHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::KEYPAD);
         return 0;
     }
     
@@ -710,7 +710,7 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler(self, ScriptHandlerMgr::kKeypadHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler(self, ScriptHandlerMgr::HandlerType::KEYPAD);
         return 0;
     }
 
@@ -756,7 +756,7 @@ static int tolua_cocos2d_Layer_registerScriptAccelerateHandler(lua_State* tolua_
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kAccelerometerHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
         return 0;
     }
     
@@ -795,7 +795,7 @@ static int tolua_cocos2d_Layer_unregisterScriptAccelerateHandler(lua_State* tolu
     
     if (0 == argc)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kAccelerometerHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::ACCELEROMETER);
         return 0;
     }
     
@@ -1031,7 +1031,7 @@ static int tolua_cocos2d_Node_registerScriptHandler(lua_State* tolua_S)
 #endif
         
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::kNodeHandler);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::NODE);
 
         return 0;
     }
@@ -1071,7 +1071,7 @@ static int tolua_cocos2d_Node_unregisterScriptHandler(lua_State* tolua_S)
     
     if (argc == 0)
     {
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::kNodeHandler);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::NODE);
         return 0;
     }
     
@@ -1792,7 +1792,7 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2dx_Camera_getCenterXYZ(lua_State* tolua_S)
+static int tolua_cocos2dx_Camera_getCenter(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
         return 0;
@@ -1809,7 +1809,7 @@ static int tolua_cocos2dx_Camera_getCenterXYZ(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getCenterXYZ'\n", nullptr);
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getCenter'\n", nullptr);
 		return 0;
 	}
 #endif
@@ -1821,24 +1821,24 @@ static int tolua_cocos2dx_Camera_getCenterXYZ(lua_State* tolua_S)
         float x;
         float y;
         float z;
-        self->getCenterXYZ(&x, &y, &z);
+        self->getCenter(&x, &y, &z);
         tolua_pushnumber(tolua_S,(lua_Number)x);
         tolua_pushnumber(tolua_S, (lua_Number)y);
         tolua_pushnumber(tolua_S, (lua_Number)z);
         return 3;
     }
     
-    CCLOG("'getCenterXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getCenter' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getCenterXYZ'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'getCenter'.",&tolua_err);
     return 0;
 #endif
 }
 
-static int tolua_cocos2dx_Camera_getEyeXYZ(lua_State* tolua_S)
+static int tolua_cocos2dx_Camera_getEye(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
         return 0;
@@ -1854,7 +1854,7 @@ static int tolua_cocos2dx_Camera_getEyeXYZ(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getEyeXYZ'\n", nullptr);
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getEye'\n", nullptr);
 		return 0;
 	}
 #endif
@@ -1866,24 +1866,24 @@ static int tolua_cocos2dx_Camera_getEyeXYZ(lua_State* tolua_S)
         float x;
         float y;
         float z;
-        self->getEyeXYZ(&x, &y, &z);
+        self->getEye(&x, &y, &z);
         tolua_pushnumber(tolua_S,(lua_Number)x);
         tolua_pushnumber(tolua_S, (lua_Number)y);
         tolua_pushnumber(tolua_S, (lua_Number)z);
         return 3;
     }
     
-    CCLOG("'getEyeXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getEye' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getEyeXYZ'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'getEye'.",&tolua_err);
     return 0;
 #endif
 }
 
-static int tolua_cocos2dx_Camera_getUpXYZ(lua_State* tolua_S)
+static int tolua_cocos2dx_Camera_getUp(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
         return 0;
@@ -1899,7 +1899,7 @@ static int tolua_cocos2dx_Camera_getUpXYZ(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getUpXYZ'\n", nullptr);
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getUp'\n", nullptr);
 		return 0;
 	}
 #endif
@@ -1911,19 +1911,19 @@ static int tolua_cocos2dx_Camera_getUpXYZ(lua_State* tolua_S)
         float x;
         float y;
         float z;
-        self->getUpXYZ(&x, &y, &z);
+        self->getUp(&x, &y, &z);
         tolua_pushnumber(tolua_S,(lua_Number)x);
         tolua_pushnumber(tolua_S, (lua_Number)y);
         tolua_pushnumber(tolua_S, (lua_Number)z);
         return 3;
     }
     
-    CCLOG("'getUpXYZ' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'getUp' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getUpXYZ'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'getUp'.",&tolua_err);
     return 0;
 #endif
 }
@@ -2620,15 +2620,15 @@ static void extendCamera(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         lua_pushstring(tolua_S,"getCenter");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getCenterXYZ );
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getCenter );
         lua_rawset(tolua_S,-3);
         
         lua_pushstring(tolua_S,"getUp");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getUpXYZ );
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getUp );
         lua_rawset(tolua_S,-3);
         
         lua_pushstring(tolua_S,"getEye");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getEyeXYZ );
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getEye );
         lua_rawset(tolua_S,-3);
     }
 }
