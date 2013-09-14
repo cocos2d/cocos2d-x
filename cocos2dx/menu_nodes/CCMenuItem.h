@@ -65,18 +65,30 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Object *rec, SEL_MenuHandler selector);
     /** Creates a MenuItem with a target/selector */
     static MenuItem* create(const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItem()
     : _selected(false)
     , _enabled(false)            
 	, _callback(nullptr)
     , _target(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItem();
 
-    /** Initializes a MenuItem with a target/selector */
+    /** Initializes a MenuItem with a target/selector 
+    * @js NA
+    * @lua NA
+    */
     bool initWithCallback(const ccMenuCallback& callback);
-    /** Initializes a MenuItem with a target/selector */
+    /** Initializes a MenuItem with a target/selector 
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget( Object *rec, SEL_MenuHandler selector);
 
     /** Returns the outside box */
@@ -94,9 +106,17 @@ public:
     /** returns whether or not the item is selected */
     virtual bool isSelected() const;
 
-    /** set the callback to the menu item */
+    /** set the callback to the menu item
+    * @code
+    * In js,can contain two params,the second param is jsptr
+    * @endcode
+    * @lua NA
+    */
     void setCallback(const ccMenuCallback& callback);
-    /** set the target/selector of the menu item*/
+    /** set the target/selector of the menu item
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
 
 protected:
@@ -126,11 +146,17 @@ public:
 
     /** creates a MenuItemLabel with a Label. Target and selector will be nil */
     static MenuItemLabel* create(Node *label);
-
+    /**
+     * @js ctor
+     */
     MenuItemLabel()
     : _originalScale(0.0)
     , _label(NULL)
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemLabel();
 
 	/** initializes a MenuItemLabel with a Label, target and selector */
@@ -183,8 +209,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static MenuItemAtlasFont* create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemAtlasFont(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemAtlasFont(){}
 
     /** initializes a menu item from a string and atlas with a target/selector */
@@ -206,8 +238,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
     static MenuItemFont * create(const char *value, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemFont() : _fontSize(0), _fontName(""){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemFont(){}
 
     /** initializes a menu item from a string with a target/selector */
@@ -229,20 +267,26 @@ public:
     /** set font size
      * c++ can not overload static and non-static member functions with the same parameter types
      * so change the name to setFontSizeObj
+     * @js setFontSize
      */
     void setFontSizeObj(unsigned int s);
     
-    /** get font size */
+    /** get font size 
+     * @js getFontSize
+     */
     unsigned int getFontSizeObj() const;
     CC_DEPRECATED_ATTRIBUTE unsigned int fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
      * c++ can not overload static and non-static member functions with the same parameter types
      * so change the name to setFontNameObj
+     * @js setFontName
      */
     void setFontNameObj(const char* name);
 
-    /** returns the name of the Font */
+    /** returns the name of the Font 
+     * @js getFontNameObj
+     */
     const char* getFontNameObj() const;
 
     /** deprecated Use getFontNameObj() instead */
@@ -352,8 +396,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, const ccMenuCallback& callback);
-
+    /**
+     * @js ctor
+     */
     MenuItemImage(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemImage(){}
 
     bool init();
@@ -386,18 +436,33 @@ public:
     static MenuItemToggle* create();
     /** creates a menu item with a item */
     static MenuItemToggle* create(MenuItem *item);
-    /** creates a menu item from a Array with a target selector */
+    /** creates a menu item from a Array with a target selector 
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
-    /** creates a menu item from a list of items with a target/selector */
+    /** creates a menu item from a list of items with a target/selector 
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
-
+    /**
+     * @js ctor
+     */
     MenuItemToggle()
     : _selectedIndex(0)
     , _subItems(NULL)            
     {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~MenuItemToggle();
 
-    /** initializes a menu item from a list of items with a target selector */
+    /** initializes a menu item from a list of items with a target selector 
+    * @js NA
+    * @lua NA
+    */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, va_list args);
     /** initializes a menu item from a list of items with a callable object */
     bool initWithCallback(const ccMenuCallback& callback, MenuItem* item, va_list args);
@@ -421,6 +486,8 @@ public:
     /** Gets the array that contains the subitems.
      You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
+     * @js NA
+     * @lua NA
      */
 
     inline Array* getSubItems() const { return _subItems; };

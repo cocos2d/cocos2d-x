@@ -39,7 +39,14 @@ NS_CC_BEGIN
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFire(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleFire(){}
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -52,7 +59,14 @@ public:
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFireworks(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleFireworks(){}
     bool init(){ return initWithTotalParticles(1500); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -65,7 +79,14 @@ public:
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSun(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSun(){}
     bool init(){ return initWithTotalParticles(350); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -78,7 +99,14 @@ public:
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleGalaxy(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleGalaxy(){}
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -91,7 +119,14 @@ public:
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleFlower(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleFlower(){}
     bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -104,7 +139,14 @@ public:
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleMeteor(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleMeteor(){}
     bool init(){ return initWithTotalParticles(150); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -117,7 +159,14 @@ public:
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSpiral(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSpiral(){}
     bool init(){ return initWithTotalParticles(500); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -130,7 +179,14 @@ public:
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleExplosion(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleExplosion(){}
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -143,7 +199,14 @@ public:
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSmoke(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSmoke(){}
     bool init(){ return initWithTotalParticles(200); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -156,7 +219,14 @@ public:
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleSnow(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleSnow(){}
     bool init(){ return initWithTotalParticles(700); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);
@@ -169,7 +239,14 @@ public:
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
+    /**
+     * @js ctor
+     */
     ParticleRain(){}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ParticleRain(){}
     bool init(){ return initWithTotalParticles(1000); }
     virtual bool initWithTotalParticles(unsigned int numberOfParticles);

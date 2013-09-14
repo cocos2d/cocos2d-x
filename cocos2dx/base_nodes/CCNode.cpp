@@ -130,7 +130,6 @@ Node::Node(void)
 
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
-    _componentContainer = new ComponentContainer(this);
 }
 
 Node::~Node()
@@ -167,8 +166,6 @@ Node::~Node()
     // children
     CC_SAFE_RELEASE(_children);
     
-          // _comsContainer
-    _componentContainer->removeAll();
     CC_SAFE_DELETE(_componentContainer);
 }
 
@@ -799,7 +796,7 @@ void Node::visit()
      }
 
     this->transform();
-    unsigned int i = 0;
+    int i = 0;
 
     if(_children && _children->count() > 0)
     {
@@ -1253,22 +1250,30 @@ void Node::updateTransform()
 
 Component* Node::getComponent(const char *pName)
 {
-    return _componentContainer->get(pName);
+    if( _componentContainer )
+        return _componentContainer->get(pName);
+    return nullptr;
 }
 
 bool Node::addComponent(Component *pComponent)
 {
+    // lazy alloc
+    if( !_componentContainer )
+        _componentContainer = new ComponentContainer(this);
     return _componentContainer->add(pComponent);
 }
 
 bool Node::removeComponent(const char *pName)
 {
-    return _componentContainer->remove(pName);
+    if( _componentContainer )
+        return _componentContainer->remove(pName);
+    return false;
 }
 
 void Node::removeAllComponents()
 {
-    _componentContainer->removeAll();
+    if( _componentContainer )
+        _componentContainer->removeAll();
 }
 
 // NodeRGBA

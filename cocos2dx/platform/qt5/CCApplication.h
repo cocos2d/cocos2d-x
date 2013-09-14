@@ -37,57 +37,63 @@ class QGuiApplication;
 class Cocos2DQt5MainloopIntegration;
 
 NS_CC_BEGIN
-
 class Application : public ApplicationProtocol {
-    public:
-        Application();
-        virtual ~Application();
+public:
+    /**
+     * @js ctor
+     */
+    Application();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Application();
 
-        /**
-          @brief	Callback by Director for limit FPS.
-          @param interval   The time, which expressed in second in second, between current frame and next.
-          */
-        void setAnimationInterval(double interval);
+    /**
+      @brief	Callback by Director for limit FPS.
+      @param interval   The time, which expressed in second in second, between current frame and next.
+      */
+    void setAnimationInterval(double interval);
 
-        /**
-          @brief	Run the message loop.
-          */
-        int run();
+    /**
+      @brief	Run the message loop.
+      */
+    int run();
 
-        /**
-          @brief	Get current application instance.
-          @return Current application instance pointer.
-          */
-        static Application* getInstance();
+    /**
+      @brief	Get current application instance.
+      @return Current application instance pointer.
+      */
+    static Application* getInstance();
 
-        /** @deprecated Use getInstance() instead */
-        CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
 
-        /* override functions */
-        virtual LanguageType getCurrentLanguage();
+    /* override functions */
+    virtual LanguageType getCurrentLanguage();
 
-        /**
-         *  Sets the Resource root path.
-         *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
-         */
-        CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string &rootResDir);
+    /**
+     *  Sets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string &rootResDir);
 
-        /**
-         *  Gets the Resource root path.
-         *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead.
-         */
-        CC_DEPRECATED_ATTRIBUTE const std::string &getResourceRootPath();
+    /**
+     *  Gets the Resource root path.
+     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE const std::string &getResourceRootPath();
 
-        /**
-          @brief Get target platform
-          */
-        virtual Platform getTargetPlatform();
+    /**
+      @brief Get target platform
+      */
+    virtual Platform getTargetPlatform();
 
-    protected:
-        QGuiApplication *m_application;
-        long m_animationInterval;
-        std::string m_resourceRootPath;
-        Cocos2DQt5MainloopIntegration *m_mainloop;
+protected:
+    QGuiApplication *m_application;
+    long m_animationInterval;
+    std::string m_resourceRootPath;
+    Cocos2DQt5MainloopIntegration *m_mainloop;
 };
 
 NS_CC_END

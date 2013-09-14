@@ -57,7 +57,14 @@ struct _hashElement;
 class CC_DLL ActionManager : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     ActionManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ActionManager(void);
 
     // actions
@@ -119,7 +126,7 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(unsigned int uIndex, struct _hashElement *pElement);
+    void removeActionAtIndex(int index, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);

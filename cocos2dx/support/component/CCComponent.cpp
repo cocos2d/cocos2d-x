@@ -77,6 +77,11 @@ const char* Component::getName() const
     return _name.c_str();
 }
 
+void Component::setName(const char *pName)
+{
+    _name.assign(pName);
+}
+
 Node* Component::getOwner() const
 {
     return _owner;

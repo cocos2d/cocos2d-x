@@ -806,7 +806,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Object* target, SEL_MenuHandle
     pRet->_subItems = Array::create();
     pRet->_subItems->retain();
     
-    for (unsigned int z=0; z < menuItems->count(); z++)
+    for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
         pRet->_subItems->addObject(menuItem);
@@ -824,7 +824,7 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
     pRet->_subItems = Array::create();
     pRet->_subItems->retain();
 
-    for (unsigned int z=0; z < menuItems->count(); z++)
+    for (int z=0; z < menuItems->count(); z++)
     {
         MenuItem* menuItem = (MenuItem*)menuItems->getObjectAtIndex(z);
         pRet->_subItems->addObject(menuItem);

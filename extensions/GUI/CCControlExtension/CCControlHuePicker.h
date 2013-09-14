@@ -49,8 +49,14 @@ class ControlHuePicker : public Control
 {
 public:
     static ControlHuePicker* create(Node* target, Point pos);
-
+    /**
+     * @js ctor
+     */
     ControlHuePicker();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ControlHuePicker();
     virtual bool initWithTargetAndPos(Node* target, Point pos);
 

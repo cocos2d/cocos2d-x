@@ -46,12 +46,35 @@ class CCBReader;
 
 class NodeLoader : public Object {
     public:
+        /**
+         * @js NA
+         * @lua NA
+         */
         NodeLoader();
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual ~NodeLoader();
+        /**
+         * @js NA
+         * @lua NA
+         */
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoader, loader);
-
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual Node * loadNode(Node *, CCBReader * ccbReader);
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual void parseProperties(Node * pNode, Node * pParent, CCBReader * ccbReader);
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual Dictionary* getCustomProperties();
     
     protected:

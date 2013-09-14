@@ -162,7 +162,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         
-        _flipX = _flipY = false;
+        _flippedX = _flippedY = false;
         
         // default transform anchor: center
         setAnchorPoint(Point(0.5f, 0.5f));
@@ -321,11 +321,11 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     Point relativeOffset = _unflippedOffsetPositionFromCenter;
 
     // issue #732
-    if (_flipX)
+    if (_flippedX)
     {
         relativeOffset.x = -relativeOffset.x;
     }
-    if (_flipY)
+    if (_flippedY)
     {
         relativeOffset.y = -relativeOffset.y;
     }
@@ -392,12 +392,12 @@ void Sprite::setTextureCoords(Rect rect)
         bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-        if (_flipX)
+        if (_flippedX)
         {
             CC_SWAP(top, bottom, float);
         }
 
-        if (_flipY)
+        if (_flippedY)
         {
             CC_SWAP(left, right, float);
         }
@@ -425,12 +425,12 @@ void Sprite::setTextureCoords(Rect rect)
         bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-        if(_flipX)
+        if(_flippedX)
         {
             CC_SWAP(left,right,float);
         }
 
-        if(_flipY)
+        if(_flippedY)
         {
             CC_SWAP(top,bottom,float);
         }
@@ -858,32 +858,32 @@ void Sprite::setVisible(bool bVisible)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setFlipX(bool bFlipX)
+void Sprite::setFlippedX(bool flippedX)
 {
-    if (_flipX != bFlipX)
+    if (_flippedX != flippedX)
     {
-        _flipX = bFlipX;
+        _flippedX = flippedX;
         setTextureRect(_rect, _rectRotated, _contentSize);
     }
 }
 
-bool Sprite::isFlipX(void) const
+bool Sprite::isFlippedX(void) const
 {
-    return _flipX;
+    return _flippedX;
 }
 
-void Sprite::setFlipY(bool bFlipY)
+void Sprite::setFlippedY(bool flippedY)
 {
-    if (_flipY != bFlipY)
+    if (_flippedY != flippedY)
     {
-        _flipY = bFlipY;
+        _flippedY = flippedY;
         setTextureRect(_rect, _rectRotated, _contentSize);
     }
 }
 
-bool Sprite::isFlipY(void) const
+bool Sprite::isFlippedY(void) const
 {
-    return _flipY;
+    return _flippedY;
 }
 
 //
@@ -1089,7 +1089,7 @@ static unsigned char cc_2x2_white_image[] = {
     0xFF, 0xFF, 0xFF, 0xFF
 };
 
-#define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
+#define CC_2x2_WHITE_IMAGE_KEY  "/cc_2x2_white_image"
 
 void Sprite::setTexture(Texture2D *texture)
 {
@@ -1110,7 +1110,7 @@ void Sprite::setTexture(Texture2D *texture)
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = TextureCache::getInstance()->addUIImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = TextureCache::getInstance()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }

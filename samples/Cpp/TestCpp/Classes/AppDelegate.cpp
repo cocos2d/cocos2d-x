@@ -4,7 +4,6 @@
 #include "controller.h"
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
-#include "CCArmature/utils/CCArmatureDataManager.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;

@@ -560,6 +560,7 @@ Developers:
     Nako Sung (nakosung)
         Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
         Exposing cc.RemoveSelf to JS.
+        exposed AssetsManager to javascript and added multiple-assetsManager support
         
     dotsquid
         Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.

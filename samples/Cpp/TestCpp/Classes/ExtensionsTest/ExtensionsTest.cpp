@@ -7,8 +7,10 @@
 #include "NetworkTest/HttpClientTest.h"
 #endif
 #include "TableViewTest/TableViewTestScene.h"
-#include "ComponentsTest/ComponentsTestScene.h"
-#include "ArmatureTest/ArmatureScene.h"
+
+#include "CocoStudioArmatureTest/ArmatureScene.h"
+#include "CocoStudioComponentsTest/ComponentsTestScene.h"
+#include "CocoStudioSceneTest/SceneEditorTest.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NetworkTest/WebSocketTest.h"
@@ -71,13 +73,15 @@ static struct {
 #endif
 	{ "TableViewTest", [](Object *sender){ runTableViewTest();}
 	},
-    { "CommponentTest", [](Object *sender) { runComponentsTestLayerTest(); }
+	{ "CocoStudioArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+	                                       scene->runThisTest();
+	                                       scene->release();
+	}
+	},
+    { "CocoStudioComponentsTest", [](Object *sender) { runComponentsTestLayerTest(); }
     },
-    { "ArmatureTest", [](Object *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
-                                             scene->runThisTest();
-                                             scene->release();
-                                        }
-    },
+	{ "CocoStudioSceneTest", [](Object *sender) { runSceneEditorTestLayer(); }
+	}
 };
 
 static const int g_maxTests = sizeof(g_extensionsTests) / sizeof(g_extensionsTests[0]);

@@ -76,22 +76,22 @@ void ShaderCache::purgeSharedShaderCache()
 }
 
 ShaderCache::ShaderCache()
-: _programs(0)
+: _programs()
 {
 
 }
 
 ShaderCache::~ShaderCache()
 {
+    for( auto it = _programs.begin(); it != _programs.end(); ++it ) {
+        (it->second)->release();
+    }
+
     CCLOGINFO("deallocing ShaderCache: %p", this);
-    _programs->release();
 }
 
 bool ShaderCache::init()
-{
-    _programs = Dictionary::create();
-    _programs->retain();
-    
+{    
     loadDefaultShaders();
     return true;
 }
@@ -101,70 +101,54 @@ void ShaderCache::loadDefaultShaders()
     // Position Texture Color shader
     GLProgram *p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
-
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-    p->release();
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, p ) );
 
     // Position Texture Color alpha test
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureColorAlphaTest);
-
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-    p->release();
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST, p) );
 
     //
     // Position, Color shader
     //
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionColor);
-
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_COLOR);
-    p->release();
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR, p) );
 
     //
     // Position Texture shader
     //
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTexture);
-
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE);
-    p->release();
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE, p) );
 
     //
     // Position, Texture attribs, 1 Color as uniform shader
     //
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTexture_uColor);
-
-    _programs->setObject(p ,GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
-    p->release();
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR, p) );
 
     //
     // Position Texture A8 Color shader
     //
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureA8Color);
-    
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
-    p->release();
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR, p) );
 
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_Position_uColor);
-    
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    p->release();
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
     
     //
 	// Position, Legth(TexCoords, Color (used by Draw Node basically )
 	//
     p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionLengthTexureColor);
-    
-    _programs->setObject(p, GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
-    p->release();
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
 }
 
 void ShaderCache::reloadDefaultShaders()
@@ -297,14 +281,18 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
     CHECK_GL_ERROR_DEBUG();
 }
 
-GLProgram* ShaderCache::programForKey(const char* key)
+GLProgram* ShaderCache::getProgram(const std::string &key)
 {
-    return static_cast<GLProgram*>(_programs->objectForKey(key));
+    auto it = _programs.find(key);
+    if( it != _programs.end() )
+        return it->second;
+    return nullptr;
 }
 
-void ShaderCache::addProgram(GLProgram* program, const char* key)
+void ShaderCache::addProgram(GLProgram* program, const std::string &key)
 {
-    _programs->setObject(program, key);
+    program->retain();
+    _programs.insert( std::make_pair( key, program) );
 }
 
 NS_CC_END

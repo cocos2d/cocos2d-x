@@ -56,6 +56,10 @@ public:
      @brief Get the shared Engine object,it will new one when first time be called
      */
     static SimpleAudioEngine* getInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
 
     /**
@@ -73,47 +77,63 @@ public:
     /**
      @brief Preload background music
      @param pszFilePath The path of the background music file.
+     * @js preloadMusic
+     * @lua preloadMusic
      */
     virtual void preloadBackgroundMusic(const char* pszFilePath);
     
     /**
-    @brief Play background music
-    @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
-    @param bLoop Whether the background music loop or not
-    */
+     @brief Play background music
+     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
+     @param bLoop Whether the background music loop or not
+     * @js playMusic
+     * @lua playMusic
+     */
     virtual void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
 
     /**
-    @brief Stop playing background music
-    @param bReleaseData If release the background music data or not.As default value is false
-    */
+     @brief Stop playing background music
+     @param bReleaseData If release the background music data or not.As default value is false
+     * @js stopMusic
+     * @lua stopMusic
+     */
     virtual void stopBackgroundMusic(bool bReleaseData = false);
 
     /**
-    @brief Pause playing background music
+     @brief Pause playing background music
+     * @js pauseMusic
+     * @lua pauseMusic
      */
     virtual void pauseBackgroundMusic();
 
     /**
-    @brief Resume playing background music
+     @brief Resume playing background music
+     * @js resumeMusic
+     * @lua resumeMusic
      */
     virtual void resumeBackgroundMusic();
 
     /**
-    @brief Rewind playing background music
+     @brief Rewind playing background music
+     * @js rewindMusic
+     * @lua rewindMusic
      */
     virtual void rewindBackgroundMusic();
 
     /**
      @brief Indicates whether any background music can be played or not.
      @return <i>true</i> if background music can be played, otherwise <i>false</i>.
+     * @js willPlayMusic
+     * @lua willPlayMusic
      */
     virtual bool willPlayBackgroundMusic();
 
     /**
-    @brief Indicates whether the background music is playing
-    @return <i>true</i> if the background music is playing, otherwise <i>false</i>
-    */
+     @brief Indicates whether the background music is playing
+     @return <i>true</i> if the background music is playing, otherwise <i>false</i>
+     * @js isMusicPlaying
+     * @lua isMusicPlaying
+     */
     virtual bool isBackgroundMusicPlaying();
 
     // 
@@ -121,14 +141,18 @@ public:
     //
 
     /**
-    @brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
-    */
+     @brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * @js getMusicVolume
+     * @lua getMusicVolume
+     */
     virtual float getBackgroundMusicVolume();
 
     /**
-    @brief Set the volume of background music
-    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
-    */
+     @brief Set the volume of background music
+     @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * @js setMusicVolume
+     * @lua setMusicVolume
+     */
     virtual void setBackgroundMusicVolume(float volume);
 
     /**
