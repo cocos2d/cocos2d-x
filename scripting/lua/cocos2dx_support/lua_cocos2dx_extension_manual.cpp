@@ -10,7 +10,6 @@ extern "C" {
 
 #include "cocos2d.h"
 #include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
 #include "CCBProxy.h"
@@ -28,7 +27,7 @@ public:
     {
         if (nullptr != view)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewScrollHandler);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
             if (0 != handler)
             {
                 CommonScriptData data(handler,"");
@@ -43,7 +42,7 @@ public:
     {
         if (nullptr != view)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewZoomHandler);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM);
             if (0 != handler)
             {
                 CommonScriptData data(handler,"");
@@ -134,7 +133,7 @@ static int tolua_cocos2d_ScrollView_registerScriptHandler(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,3,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(tolua_S,3,0) + (int)ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
         return 0;
@@ -180,7 +179,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         if (!tolua_isnumber(tolua_S, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(tolua_S,2,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(tolua_S,2,0) + (int)ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
         ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
         return 0;
     }
@@ -252,7 +251,7 @@ static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
         {
             if ((controlevent & (1 << i)))
             {
-                int handlerevent  = ScriptHandlerMgr::kControlTouchDownHandler + i;
+                ScriptHandlerMgr::HandlerType handlerevent  = ScriptHandlerMgr::HandlerType((int)ScriptHandlerMgr::HandlerType::CONTROL_TOUCH_DOWN + i);
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerevent);
             }
         }
@@ -304,7 +303,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         {
             if ((controlevent & (1 << i)))
             {
-                int handlerevent  = ScriptHandlerMgr::kControlTouchDownHandler + i;
+                ScriptHandlerMgr::HandlerType handlerevent  = ScriptHandlerMgr::HandlerType((int)ScriptHandlerMgr::HandlerType::CONTROL_TOUCH_DOWN + i);
                 ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerevent);
                 break;
             }
@@ -868,10 +867,10 @@ public:
     {
         if (nullptr != view)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewScrollHandler);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kScrollViewScrollHandler);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
                 BasicScriptData data(view,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -883,10 +882,10 @@ public:
     {
         if (nullptr != view)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::kScrollViewZoomHandler);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kScrollViewZoomHandler);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM);
                 BasicScriptData data(view,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -898,10 +897,10 @@ public:
     {
         if (nullptr != table && nullptr != cell)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellTouched);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellTouched,cell);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED,cell);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -913,10 +912,10 @@ public:
     {
         if (nullptr != table && nullptr != cell)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellHighlight);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellHighlight,cell);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT,cell);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -928,10 +927,10 @@ public:
     {
         if (nullptr != table && nullptr != cell)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellUnhighlight);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellUnhighlight,cell);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT,cell);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -943,10 +942,10 @@ public:
     {
         if (nullptr != table && nullptr != cell)
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellWillRecycle);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellWillRecycle,cell);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE,cell);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEvent(&event);
@@ -1024,12 +1023,12 @@ public:
     {
         if (nullptr != table )
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellSizeForIndex);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX);
             if (0 != handler)
             {
                 Array resultArray;
                 resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellSizeForIndex,&idx);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX,&idx);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEventReturnArray(&event, 2, resultArray);
@@ -1050,12 +1049,12 @@ public:
     {
         if (nullptr != table )
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kTableCellAtIndex);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX);
             if (0 != handler)
             {
                 Array resultArray;
                 resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kTableCellAtIndex,&idx);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX,&idx);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
@@ -1076,12 +1075,12 @@ public:
     {
         if (nullptr != table )
         {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::kNumberOfCellsInTableView);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS);
             if (0 != handler)
             {
                 Array resultArray;
                 resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::kNumberOfCellsInTableView);
+                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS);
                 BasicScriptData data(table,&eventData);
                 ScriptEvent event(kTableViewEvent,(void*)&data);
                 LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
@@ -1254,7 +1253,7 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(L,3,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
         return 0;
@@ -1300,7 +1299,7 @@ static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
         if (!tolua_isnumber(L, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        ScriptHandlerMgr::HandlerEventType handlerType = (ScriptHandlerMgr::HandlerEventType) ((int)tolua_tonumber(L,2,0) + ScriptHandlerMgr::kScrollViewScrollHandler);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,2,0) + (int)ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
         ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
         return 0;
     }

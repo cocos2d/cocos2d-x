@@ -75,8 +75,14 @@ public:
      The file will be loaded using the TextureMgr.
      */
     static SpriteBatchNode* create(const char* fileImage, int capacity = DEFAULT_CAPACITY);
-
+    /**
+     * @js ctor
+     */
     SpriteBatchNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteBatchNode();
 
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.
@@ -86,6 +92,8 @@ public:
     /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
+     * @js init
+     * @lua init
      */
     bool initWithFile(const char* fileImage, int capacity);
     bool init();
@@ -131,7 +139,18 @@ public:
     // TextureProtocol
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *@endcode
+    * @lua NA 
+    */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc(void) const override;
 
     virtual void visit(void) override;

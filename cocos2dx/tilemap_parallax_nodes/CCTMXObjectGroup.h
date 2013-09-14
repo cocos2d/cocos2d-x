@@ -45,7 +45,14 @@ NS_CC_BEGIN
 class CC_DLL TMXObjectGroup : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     TMXObjectGroup();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TMXObjectGroup();
 
     inline const char* getGroupName(){ return _groupName.c_str(); }

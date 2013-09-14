@@ -11,7 +11,15 @@ class CCBReader;
 
 class CCBFileLoader : public NodeLoader {
     public:
+        /**
+         * @js NA
+         * @lua NA
+         */
         virtual ~CCBFileLoader() {};
+        /**
+         * @js NA
+         * @lua NA
+         */
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBFileLoader, loader);
 
     protected:

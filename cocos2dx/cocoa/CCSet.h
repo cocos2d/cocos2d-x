@@ -40,8 +40,15 @@ typedef std::set<Object *>::iterator SetIterator;
 class CC_DLL Set : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     Set(void);
     Set(const Set &rSetObject);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Set(void);
 
     /**
@@ -79,17 +86,24 @@ public:
     bool containsObject(Object *pObject);
     /**
     *@brief Return the iterator that points to the first element.
+    * @js NA
+    * @lua NA
     */
     SetIterator begin();
     /**
     *@brief Return the iterator that points to the position after the last element.
+    * @js NA
+    * @lua NA
     */
     SetIterator end();
     /**
     *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
     */
     Object* anyObject();
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void acceptVisitor(DataVisitor &visitor);
 
 private:

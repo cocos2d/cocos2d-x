@@ -11,6 +11,7 @@
 #include "platform/CCCommon.h"
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
+ #include "platform/third_party/linux/glfw/glfw3.h"
 #include <SDL2/SDL.h>
 #include <set>
 
@@ -18,58 +19,64 @@ bool initExtensions();
 
 NS_CC_BEGIN
 
-class EGLView : public EGLViewProtocol{
+class CC_DLL EGLView : public EGLViewProtocol
+{
 public:
-    EGLView();
-    virtual ~EGLView();
-
-    friend void keyEventHandle(int,int);
-    friend void mouseButtonEventHandle(int,int);
-    friend void mousePosEventHandle(int,int);
-    friend void charEventHandle(int,int);
-
     /**
-     * iPixelWidth, height: the window's size
-     * iWidth ,height: the point size, which may scale.
-     * iDepth is not the buffer depth of opengl, it indicate how may bits for a pixel
+     * @js ctor
      */
+    EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~EGLView();
+    
+    /* override functions */
+    virtual bool isOpenGLReady();
+    virtual void end();
+    virtual void swapBuffers();
     virtual void setFrameSize(float width, float height);
-    virtual void setViewPortInPoints(float x , float y , float w , float h);
-    virtual void setScissorInPoints(float x , float y , float w , float h);
-
+    virtual void setIMEKeyboardState(bool bOpen);
+    
+    bool init(const char* viewName, float width, float height);
+public:
+    
+    //void resize(int width, int height);
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float fZoomFactor);
     float getFrameZoomFactor();
-    virtual bool isOpenGLReady();
-    virtual void end();
-    virtual void swapBuffers();
-    virtual void pollInputEvents();
-    virtual void setIMEKeyboardState(bool bOpen);
+    //void centerWindow();
 
-	/**
-	 @brief	get the shared main open gl window
-	 */
-	static EGLView* getInstance();
-
+    
+    virtual void setViewPortInPoints(float x , float y , float w , float h);
+    virtual void setScissorInPoints(float x , float y , float w , float h);
+    
+    // static function
+    /**
+     @brief    get the shared main open gl window
+     */
+    static EGLView* getInstance();
+    
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
-
+protected:
+    
 private:
-    bool initGL();
-    void destroyGL();
-
-    //store current mouse point for moving, valid if and only if the mouse pressed
-    Point _mousePoint;
-    bool _wasInit;
+    bool _captured;
+    bool _supportTouch;
+    
     float _frameZoomFactor;
-
-    SDL_Window *_window;
-    SDL_GLContext _context;
-    // Several mouse instances are possible.
-    std::set<int> _pressedMouseInstances;
-    bool _IMEKeyboardOpened;
+    static EGLView* s_pEglView;
+public:
+    bool windowShouldClose();
+    
+    void pollEvents();
+    GLFWwindow* getWindow() const { return _mainWindow; }
+private:
+    GLFWwindow* _mainWindow;
 };
 
 NS_CC_END

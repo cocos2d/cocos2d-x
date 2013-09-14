@@ -70,7 +70,14 @@ class EditBox;
 class EditBoxImplMac : public EditBoxImpl
 {
 public:
+    /**
+     * @js NA
+     */
     EditBoxImplMac(EditBox* pEditText);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EditBoxImplMac();
     
     virtual bool initWithSize(const Size& size);
@@ -92,10 +99,18 @@ public:
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
     virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter(void);
 private:
     NSPoint    convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode);

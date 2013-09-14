@@ -37,20 +37,24 @@ public:
     
     static FontFNT * create(const char* fntFilePath);
     
-    virtual Size* getAdvancesForTextUTF16(unsigned short *pText, int &outNumLetters) override;
-    virtual Rect  getRectForChar(unsigned short theChar) override;
+    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual Rect  getRectForChar(unsigned short theChar) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:
     
     FontFNT(CCBMFontConfiguration *theContfig) :  _configuration(theContfig) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~FontFNT();
     
 private:
     
-    int  getAdvanceForChar(unsigned short theChar);
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar);
-    Rect getRectForCharInternal(unsigned short theChar);
+    int  getAdvanceForChar(unsigned short theChar) const;
+    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
+    Rect getRectForCharInternal(unsigned short theChar) const;
     
     CCBMFontConfiguration *   _configuration;
     

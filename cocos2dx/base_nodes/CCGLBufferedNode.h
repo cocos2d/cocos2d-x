@@ -29,7 +29,14 @@ THE SOFTWARE.
 class GLBufferedNode
 {
 public:
+    /**
+     * @js ctor
+     */
     GLBufferedNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~GLBufferedNode();
 
     /**

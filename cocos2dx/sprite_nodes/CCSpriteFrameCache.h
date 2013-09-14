@@ -75,6 +75,10 @@ protected:
     SpriteFrameCache() : _spriteFrames(NULL), _spriteFramesAliases(NULL){}
 
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteFrameCache();
     bool init(void);
 
@@ -82,15 +86,22 @@ public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
      * If you want to use another texture, you should use the addSpriteFramesWithFile(const char *plist, const char *textureFileName) method.
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const char *plist);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
-    @since v0.99.5
-    */
+     @since v0.99.5
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
+     */
     void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. */
+    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
+     */
     void addSpriteFramesWithFile(const char *plist, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
@@ -131,6 +142,8 @@ public:
     /** Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.
      You should retain the returned copy if you are going to use it.
+     * @js getSpriteFrame
+     * @lua getSpriteFrame
      */
     SpriteFrame* getSpriteFrameByName(const char *name);
 

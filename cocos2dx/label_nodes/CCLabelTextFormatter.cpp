@@ -49,14 +49,14 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         unsigned int line = 1, i = 0;
         
-        bool   start_line  = false, start_word = false;
+        bool   isStartOfLine  = false, isStartOfWord = false;
         float  startOfLine = -1, startOfWord   = -1;
         
         int skip = 0;
         
         Array* children = theLabel->getChildrenLetters();
         
-        for (unsigned int j = 0; j < children->count(); j++)
+        for (int j = 0; j < children->count(); j++)
         {
             Sprite* characterSprite;
             unsigned int justSkipped = 0;
@@ -76,16 +76,16 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             
             unsigned short character = strWhole[i];
             
-            if (!start_word)
+            if (!isStartOfWord)
             {
                 startOfWord = theLabel->getLetterPosXLeft( characterSprite );
-                start_word = true;
+                isStartOfWord = true;
             }
             
-            if (!start_line)
+            if (!isStartOfLine)
             {
                 startOfLine = startOfWord;
-                start_line  = true;
+                isStartOfLine  = true;
             }
             
             // Newline.
@@ -96,12 +96,12 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
-                start_word = false;
-                start_line = false;
+                isStartOfWord = false;
+                isStartOfLine = false;
                 startOfWord = -1;
                 startOfLine = -1;
-                i+=justSkipped;
-                line++;
+                i += justSkipped;
+                ++line;
                 
                 if (i >= stringLength)
                     break;
@@ -111,12 +111,12 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 if (!startOfWord)
                 {
                     startOfWord = theLabel->getLetterPosXLeft( characterSprite );
-                    start_word = true;
+                    isStartOfWord = true;
                 }
                 if (!startOfLine)
                 {
                     startOfLine  = startOfWord;
-                    start_line = true;
+                    isStartOfLine = true;
                 }
             }
             
@@ -126,14 +126,14 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 last_word.push_back(character);
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
-                start_word = false;
+                isStartOfWord = false;
                 startOfWord = -1;
-                i++;
+                ++i;
                 continue;
             }
             
             // Out of bounds.
-            if ( theLabel->getLetterPosXRight( characterSprite ) - startOfLine > theLabel->getMaxLineWidth() )
+            if (theLabel->getLetterPosXRight( characterSprite ) - startOfLine > theLabel->getMaxLineWidth())
             {
                 if (!theLabel->breakLineWithoutSpace())
                 {
@@ -148,10 +148,10 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                     if (multiline_string.size() > 0)
                         multiline_string.push_back('\n');
                     
-                    line++;
-                    start_line = false;
+                    ++line;
+                    isStartOfLine = false;
                     startOfLine = -1;
-                    i++;
+                    ++i;
                 }
                 else
                 {
@@ -160,11 +160,11 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                     last_word.push_back('\n');
                     multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                     last_word.clear();
-                    start_word = false;
-                    start_line = false;
+                    isStartOfWord = false;
+                    isStartOfLine = false;
                     startOfWord = -1;
                     startOfLine = -1;
-                    line++;
+                    ++line;
                     
                     if (i >= stringLength)
                         break;
@@ -172,15 +172,15 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                     if (!startOfWord)
                     {
                         startOfWord = theLabel->getLetterPosXLeft( characterSprite );
-                        start_word = true;
+                        isStartOfWord = true;
                     }
                     if (!startOfLine)
                     {
                         startOfLine  = startOfWord;
-                        start_line = true;
+                        isStartOfLine = true;
                     }
                     
-                    j--;
+                    --j;
                 }
                 
                 continue;
@@ -189,7 +189,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             {
                 // Character is normal.
                 last_word.push_back(character);
-                i++;
+                ++i;
                 continue;
             }
         }
@@ -197,15 +197,15 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
         
         int size = multiline_string.size();
-        unsigned short* str_new = new unsigned short[size + 1];
+        unsigned short* strNew = new unsigned short[size + 1];
         
         for (int i = 0; i < size; ++i)
         {
-            str_new[i] = multiline_string[i];
+            strNew[i] = multiline_string[i];
         }
         
-        str_new[size] = 0;
-        theLabel->assignNewUTF8String(str_new);
+        strNew[size] = 0;
+        theLabel->assignNewUTF8String(strNew);
         
         return true;
     }
@@ -220,28 +220,28 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
     int i = 0;
     
     int lineNumber = 0;
-    int str_len = cc_wcslen(theLabel->getUTF8String());
-    vector<unsigned short> last_line;
-    for (int ctr = 0; ctr <= str_len; ++ctr)
+    int strLen = cc_wcslen(theLabel->getUTF8String());
+    vector<unsigned short> lastLine;
+    for (int ctr = 0; ctr <= strLen; ++ctr)
     {
         unsigned short int currentChar = theLabel->getCharAtStringPosition(ctr);
         
         if (currentChar == '\n' || currentChar == 0)
         {
             float lineWidth = 0.0f;
-            unsigned int line_length = last_line.size();
+            unsigned int lineLength = lastLine.size();
             
             // if last line is empty we must just increase lineNumber and work with next line
-            if (line_length == 0)
+            if (lineLength == 0)
             {
                 lineNumber++;
                 continue;
             }
-            int index = i + line_length - 1 + lineNumber;
+            int index = i + lineLength - 1 + lineNumber;
             if (index < 0) continue;
             
             Sprite* lastChar = theLabel->getSpriteChild(index);
-            if ( lastChar == NULL )
+            if (lastChar == nullptr)
                 continue;
             
             lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width / 2.0f;
@@ -261,7 +261,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
             
             if (shift != 0)
             {
-                for (unsigned j = 0; j < line_length; j++)
+                for (unsigned j = 0; j < lineLength; ++j)
                 {
                     index = i + j + lineNumber;
                     if (index < 0) continue;
@@ -273,14 +273,14 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                 }
             }
             
-            i += line_length;
-            lineNumber++;
+            i += lineLength;
+            ++lineNumber;
             
-            last_line.clear();
+            lastLine.clear();
             continue;
         }
         
-        last_line.push_back(currentChar);
+        lastLine.push_back(currentChar);
     }
     
     return true;
@@ -311,7 +311,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
     int commonLineHeight        = theLabel->getCommonLineHeight();
     
     totalHeight                 =     commonLineHeight * quantityOfLines;
-    nextFontPositionY           = 0 - ( commonLineHeight - totalHeight );
+    nextFontPositionY           = 0 - (commonLineHeight - totalHeight);
     
     Rect      rect;
 
@@ -340,9 +340,9 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         }
         
         // get the sprite to this letter
-        Sprite *pLetterSprite = theLabel->getSpriteForChar(c, i);
+        Sprite *letterSprite = theLabel->getSpriteForChar(c, i);
         
-        if (!pLetterSprite)
+        if (!letterSprite)
         {
             log("WARNING: can't find letter definition in font file for letter: %c", c);
             continue;
@@ -352,11 +352,11 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         int yOffset = commonLineHeight - charYOffset;
         
         
-        Point fontPos = Point( (float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
-                             (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f );
+        Point fontPos = Point((float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
+                             (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f);
         
         // set the sprite position
-        pLetterSprite->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
+        letterSprite->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
         
         // update kerning
         nextFontPositionX += charAdvance + kerningAmount;

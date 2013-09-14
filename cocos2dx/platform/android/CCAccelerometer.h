@@ -34,7 +34,14 @@ namespace   cocos2d {
 class Accelerometer
 {
 public:
+    /**
+     * @js ctor
+     */
     Accelerometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~Accelerometer();
 
     void setDelegate(std::function<void(Acceleration*)> function);

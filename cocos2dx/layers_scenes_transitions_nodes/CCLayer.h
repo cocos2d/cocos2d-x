@@ -60,7 +60,14 @@ class CC_DLL Layer : public Node, public TouchDelegate, public KeypadDelegate
 public:    
     /** creates a fullscreen black layer */
     static Layer *create(void);
+    /**
+     * @js ctor
+     */
     Layer();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Layer();
     virtual bool init();
     
@@ -75,7 +82,10 @@ public:
     virtual void ccTouchesMoved(Set *touches, Event *event);
     virtual void ccTouchesEnded(Set *touches, Event *event);
     virtual void ccTouchesCancelled(Set *touches, Event *event);
-    
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void didAccelerate(Acceleration* accelerationValue);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
@@ -124,7 +134,15 @@ public:
 
     virtual bool isKeyboardEnabled() const;
     virtual void setKeyboardEnabled(bool value);
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void keyPressed(int keyCode) {};
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual void keyReleased(int keyCode) {};
 
     virtual bool isKeypadEnabled() const;
@@ -135,8 +153,20 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnterTransitionDidFinish() override;
 
 protected:
@@ -170,8 +200,14 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    
+    /**
+     * @js ctor
+     */
     LayerRGBA();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerRGBA();
     
     virtual bool init();
@@ -222,14 +258,26 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-
+    /**
+     * @js ctor
+     */
     LayerColor();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerColor();
 
     virtual bool init();
-    /** initializes a Layer with color, width and height in Points */
+    /** initializes a Layer with color, width and height in Points 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
-    /** initializes a Layer with color. Width and height are the window size. */
+    /** initializes a Layer with color. Width and height are the window size. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
@@ -249,7 +297,18 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
+    /**
+    * @js NA
+    * @lua NA
+    */
     virtual const BlendFunc& getBlendFunc() const override;
+    /**
+    *@code
+    *When this function bound into js or lua,the parameter will be changed
+    *In js: var setBlendFunc(var src, var dst)
+    *In lua: local setBlendFunc(local src, local dst)
+    *@endcode
+    */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
 protected:
@@ -295,10 +354,16 @@ public:
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Point& v);
 
     virtual bool init();
-    /** Initializes the Layer with a gradient between start and end. */
+    /** Initializes the Layer with a gradient between start and end. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& start, const Color4B& end);
 
-    /** Initializes the Layer with a gradient between start and end in the direction of v. */
+    /** Initializes the Layer with a gradient between start and end in the direction of v. 
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& start, const Color4B& end, const Point& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
@@ -354,28 +419,49 @@ Features:
 class CC_DLL LayerMultiplex : public Layer
 {
 public:
-    /** creates and initializes a LayerMultiplex object */
+    /** creates and initializes a LayerMultiplex object 
+     * @js NA
+     * @lua NA
+     */
     static LayerMultiplex* create();
 
     /** creates a LayerMultiplex with an array of layers.
      @since v2.1
+     * @js NA
      */
     static LayerMultiplex* createWithArray(Array* arrayOfLayers);
 
-    /** creates a LayerMultiplex with one or more layers using a variable argument list. */
+    /** creates a LayerMultiplex with one or more layers using a variable argument list. 
+     * @code
+     * When this function bound to lua or js,the input params are changed.
+     * In js:var create(...)
+     * In lua:local create(...)
+     * @endcode
+     */
     static LayerMultiplex * create(Layer* layer, ... );
 
     /**
      * lua script can not init with undetermined number of variables
      * so add these functions to be used with lua.
+     * @js NA
+     * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-
+    /**
+     * @js ctor
+     */
     LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~LayerMultiplex();
 
     virtual bool init();
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
+     * @js NA
+     * @lua NA
+     */
     bool initWithLayers(Layer* layer, va_list params);
 
     /** initializes a MultiplexLayer with an array of layers
@@ -388,11 +474,11 @@ public:
     /** switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      */
-    void switchTo(unsigned int n);
+    void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
     */
-    void switchToAndReleaseMe(unsigned int n);
+    void switchToAndReleaseMe(int n);
 
 protected:
     unsigned int _enabledLayer;

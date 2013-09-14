@@ -81,7 +81,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     }
     
     Size imageSize = Size((float)(_width), (float)(_height));
-    if( (imageSize.width <=0) || (imageSize.height<=0) )
+    if((imageSize.width <= 0) || (imageSize.height <= 0))
         return false;
     
     _pageTexture = new Texture2D();
@@ -92,7 +92,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::RGBA8888, _width, _height, imageSize);
     
     // release the page data if requested
-    if ( releasePageData && textureCreated )
+    if (releasePageData && textureCreated)
     {
         delete [] _pageData;
         _pageData = 0;
@@ -123,7 +123,7 @@ TextFontPagesDef::TextFontPagesDef()
 TextFontPagesDef::~TextFontPagesDef()
 {
     int numPages = _pages.size();
-    for( int c = 0; c<numPages; ++c )
+    for( int c = 0; c < numPages; ++c )
     {
         if (_pages[c])
             delete _pages[c];
@@ -143,7 +143,7 @@ TextImage::~TextImage()
         _font->release();
 }
 
-bool TextImage::initWithString(const char *text, int nWidth, int nHeight, cocos2d::Font* font, bool releaseRAWData)
+bool TextImage::initWithString(const char *text, int width, int height, cocos2d::Font* font, bool releaseRAWData)
 {
     bool textIsUTF16 = false;
     
@@ -157,14 +157,14 @@ bool TextImage::initWithString(const char *text, int nWidth, int nHeight, cocos2
     _font = font;
     
     // generate the glyphs for the requested text (glyphs are latter's bounding boxes)
-    if ( !generateTextGlyphs(text) )
+    if (!generateTextGlyphs(text))
         return false;
     
     Size constrainSize;
     unsigned short int *strUTF16 = 0;
     
     int stringNumChars;
-    if ( textIsUTF16 )
+    if (textIsUTF16)
     {
         strUTF16       = (unsigned short int *)text;
         stringNumChars = cc_wcslen(strUTF16);
@@ -179,11 +179,11 @@ bool TextImage::initWithString(const char *text, int nWidth, int nHeight, cocos2
         return false;
     
     // create all the needed pages
-    if (!createPageDefinitions(strUTF16, nWidth, nHeight, _font->getFontMaxHeight()))
+    if (!createPageDefinitions(strUTF16, width, height, _font->getFontMaxHeight()))
         return false;
     
     // release the original string if needed
-    if ( !textIsUTF16 )
+    if (!textIsUTF16)
         delete [] strUTF16;
     
     // actually create the needed images
@@ -212,7 +212,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
     
     // create the first page (ther is going to be at least one page)
     TextPageDef *currentPageDef = new TextPageDef(currentPage, imageWidth, imageHeight);
-    if ( !currentPageDef )
+    if (!currentPageDef)
         return false;
     
     // add the current page
@@ -223,14 +223,14 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
     do {
         
         // choose texture page
-        if ( ( currentY + lineHeight ) > imageHeight )
+        if ((currentY + lineHeight) > imageHeight)
         {
             currentY     = 0;
             currentPage += 1;
             
             // create a new page and add
             currentPageDef = new TextPageDef(currentPage, imageWidth, imageHeight);
-            if ( !currentPageDef )
+            if (!currentPageDef)
                 return false;
             
             _fontPages->addPage(currentPageDef);
@@ -251,7 +251,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
         
         // create the new line and add to the current page
         TextLineDef *newLine  = new TextLineDef(0.0, currentY, newLineSize, lineHeight);
-        if ( !newLine )
+        if (!newLine)
             return false;
         
         // add all the glyphs to this line
@@ -268,7 +268,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
         delta = (stringLenght - numFittingChar);
         
         // there is still some leftover, need to work on it
-        if ( delta )
+        if (delta)
         {
             // create the new string
             unsigned short int *tempS = _font->trimUTF16Text(strUTF16, numFittingChar, (stringLenght - 1));
@@ -286,7 +286,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
         // go to next line
         currentY += lineHeight;
         
-    } while( delta );
+    } while(delta);
     
     if (needToReleaseText)
         delete [] strUTF16;
@@ -305,7 +305,7 @@ int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> 
     // get the string to UTF8
     int numChar = cc_wcslen(strUTF8);
     
-    for (int c = 0; c<numChar; ++c)
+    for (int c = 0; c < numChar; ++c)
     {
         widthWithBBX += (glyphDefs[strUTF8[c]].getRect().size.width + glyphDefs[strUTF8[c]].getPadding());
         
@@ -332,7 +332,7 @@ bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool te
     
     if (textIsUTF16)
     {
-        UTF16string = (unsigned short int *) lineText;
+        UTF16string = (unsigned short int *)lineText;
         numLetters = cc_wcslen(UTF16string);
     }
     else
@@ -340,7 +340,7 @@ bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool te
         UTF16string  = _font->getUTF16Text(lineText, numLetters);
     }
     
-    for (int c=0; c<numLetters; ++c)
+    for (int c = 0; c < numLetters; ++c)
     {
         _textGlyphs[UTF16string[c]].setCommonHeight(line->getHeight());
         line->addGlyph(_textGlyphs[UTF16string[c]] );
@@ -352,24 +352,24 @@ bool TextImage::addGlyphsToLine(TextLineDef *line, const char *lineText, bool te
     return true;
 }
 
-bool TextImage::generateTextGlyphs(const char * pText)
+bool TextImage::generateTextGlyphs(const char * text)
 {
     if (!_font)
         return false;
     
     int numGlyphs = 0;
-    GlyphDef *pNewGlyphs  = _font->getGlyphDefintionsForText(pText, numGlyphs);
+    GlyphDef *newGlyphs  = _font->getGlyphDefintionsForText(text, numGlyphs);
     
-    if (!pNewGlyphs)
+    if (!newGlyphs)
         return false;
     
     if (!_textGlyphs.empty())
         _textGlyphs.clear();
     
-    for (int c=0; c < numGlyphs; ++c)
-        _textGlyphs[pNewGlyphs[c].getUTF8Letter()] = pNewGlyphs[c];
+    for (int c = 0; c < numGlyphs; ++c)
+        _textGlyphs[newGlyphs[c].getUTF8Letter()] = newGlyphs[c];
     
-    delete [] pNewGlyphs;
+    delete [] newGlyphs;
     return true;
 }
 
@@ -381,13 +381,13 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
     
     for (int c = 0; c < numPages; ++c)
     {
-        unsigned char *pPageData = 0;
-        pPageData = preparePageGlyphData(thePages->getPageAt(c));
+        unsigned char *pageData = 0;
+        pageData = preparePageGlyphData(thePages->getPageAt(c));
         
-        if (pPageData)
+        if (pageData)
         {
             // set the page data
-            thePages->getPageAt(c)->setPageData(pPageData);
+            thePages->getPageAt(c)->setPageData(pageData);
             
             // crete page texture and relase RAW data
             thePages->getPageAt(c)->preparePageTexture(releaseRAWData);
@@ -396,7 +396,6 @@ bool TextImage::createImageDataFromPages(TextFontPagesDef *thePages, bool releas
         {
             return false;
         }
-        
     }
     
     return true;
@@ -432,18 +431,18 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
     
     int numLines = thePage->getNumLines();
     
-    for (int c = 0; c<numLines; ++c)
+    for (int c = 0; c < numLines; ++c)
     {
-        TextLineDef *pCurrentLine   = thePage->getLineAt(c);
+        TextLineDef *currentLine   = thePage->getLineAt(c);
         
         float origX         = _font->getLetterPadding();
-        float origY         = pCurrentLine->getY();
+        float origY         = currentLine->getY();
         
-        int numGlyphToRender = pCurrentLine->getNumGlyph();
+        int numGlyphToRender = currentLine->getNumGlyph();
         
         for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
         {
-            GlyphDef currGlyph      = pCurrentLine->getGlyphAt(cglyph);
+            GlyphDef currGlyph      = currentLine->getGlyphAt(cglyph);
             renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
             origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
         }
@@ -454,9 +453,9 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
     char outFilename[512];
     sprintf(outFilename,"testIMG%d", counter);
     ++counter;
-    Image *pImage = new Image;
-    pImage->initWithRawData(data, (pageWidth * pageWidth * 4), 1024, 1024, 8, false);
-    pImage->saveToFile(outFilename);
+    Image *image = new Image;
+    image->initWithRawData(data, (pageWidth * pageWidth * 4), 1024, 1024, 8, false);
+    image->saveToFile(outFilename);
 #endif
     
     // we are done here
@@ -475,7 +474,7 @@ bool TextImage::renderCharAt(unsigned short int charToRender, int posX, int posY
     // get the glyph's bitmap
     sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
     
-    if(!sourceBitmap)
+    if (!sourceBitmap)
         return false;
     
     int iX = posX;
