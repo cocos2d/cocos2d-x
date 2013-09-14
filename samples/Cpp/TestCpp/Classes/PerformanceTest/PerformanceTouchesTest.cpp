@@ -100,19 +100,14 @@ void TouchesPerformTest1::onEnter()
     listener->onTouchEnded = CC_CALLBACK_2(TouchesPerformTest1::onTouchEnded, this);
     listener->onTouchCancelled = CC_CALLBACK_2(TouchesPerformTest1::onTouchCancelled, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _touchListener = listener;
 }
 
 std::string TouchesPerformTest1::title()
 {
     return "Targeted touches";
 }
-
-//void TouchesPerformTest1::registerWithTouchDispatcher()
-//{
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-//}
 
 bool TouchesPerformTest1::onTouchBegan(Touch* touch, Event* event)
 {

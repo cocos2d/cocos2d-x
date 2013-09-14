@@ -177,9 +177,9 @@ void TouchableSpriteTest::onEnter()
         }
     };
     
-    dispatcher->registerEventListenerWithSceneGraphPriority(listener1, sprite1);
-    dispatcher->registerEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
-    dispatcher->registerEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
+    dispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
+    dispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite3);
 }
 
 std::string TouchableSpriteTest::title()

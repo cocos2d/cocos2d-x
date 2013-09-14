@@ -18,7 +18,6 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-//    virtual void registerWithTouchDispatcher();
 
     virtual bool onTouchBegan(Touch* touch, Event* event);
     virtual void onTouchMoved(Touch* touch, Event* event);

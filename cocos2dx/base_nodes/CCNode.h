@@ -76,6 +76,8 @@ bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
 bool nodeComparisonLess(Object* p1, Object* p2);
 #endif
 
+class EventListener;
+
 /** @brief Node is the main element. Anything that gets drawn or contains things that get drawn is a Node.
  The most popular Nodes are: Scene, Layer, Sprite, Menu.
 
@@ -1372,11 +1374,10 @@ private:
     friend class Director;
     friend class EventDispatcher;
     
-    void addEventId(int eventId);
-    void removeEventId(int eventId);
+    void associateEventListener(EventListener* listener);
     
     static void resetEventPriorityIndex();
-    std::set<int> _eventIds;
+    std::set<EventListener*> _eventlisteners;
     
 protected:
     

@@ -133,7 +133,7 @@ TestController::TestController()
     listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 TestController::~TestController()

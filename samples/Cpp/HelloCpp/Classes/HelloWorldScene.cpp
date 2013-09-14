@@ -98,21 +98,21 @@ bool HelloWorld::init()
        // dispatcher->removeAllListeners();
     };
     
-    
-    int layerTouchId = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener, this);
-    int layerTouchId2 = dispatcher->registerEventListenerWithSceneGraphPriority(layerTouchListener->clone(), this);
+    auto layerTouchListener2 = layerTouchListener->clone();
+    dispatcher->addEventListenerWithSceneGraphPriority(layerTouchListener, this);
+    dispatcher->addEventListenerWithSceneGraphPriority(layerTouchListener2, this);
     
     auto spriteTouchListener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
     spriteTouchListener->setSwallowTouches(true);
     
     spriteTouchListener->onTouchBegan = [=](Touch* touch, Event* evt){
         CCLOG("Touch sprite.... began... %d， drawOrder = %d", sprite->getZOrder(), sprite->getEventPriority());
-        dispatcher->unregisterEventListener(layerTouchId);
-        dispatcher->unregisterEventListener(layerTouchId2);
+        dispatcher->removeEventListener(layerTouchListener);
+        dispatcher->removeEventListener(layerTouchListener2);
         return false;
     };
     
-    dispatcher->registerEventListenerWithSceneGraphPriority(spriteTouchListener, sprite);
+    dispatcher->addEventListenerWithSceneGraphPriority(spriteTouchListener, sprite);
     
     
     for (int i = 0; i < 10; ++i) {
@@ -160,7 +160,7 @@ bool HelloWorld::init()
         
         spriteItemTouchListener->setSwallowTouches(true);
         
-        dispatcher->registerEventListenerWithSceneGraphPriority(spriteItemTouchListener, sprite1);
+        dispatcher->addEventListenerWithSceneGraphPriority(spriteItemTouchListener, sprite1);
 
         
 //        EventDispatcher::getInstance()->registerEventListener(TouchEvent::EVENT_TYPE, [=](Event* evt){

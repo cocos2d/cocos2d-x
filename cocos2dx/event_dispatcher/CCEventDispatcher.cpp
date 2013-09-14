@@ -51,8 +51,6 @@ private:
     int& _count;
 };
 
-int _eventId = 0;
-
 }
 
 NS_CC_BEGIN
@@ -94,15 +92,14 @@ void EventDispatcher::registerEventListenerWithItem(EventListenerItem* item)
     listenerList->push_front(item);
 }
 
-int EventDispatcher::registerEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
+void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
 {
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
     if (!listener->checkAvaiable())
-        return 0;
-
+        return;
+    
     EventListenerItem* item = new EventListenerItem();
-    item->id            = ++_eventId;
     item->node          = node;
     item->fixedPriority = 0;
     item->listener      = listener;
@@ -112,20 +109,17 @@ int EventDispatcher::registerEventListenerWithSceneGraphPriority(EventListener* 
     registerEventListenerWithItem(item);
 
     _eventNodes.push_back(node);
-    node->addEventId(item->id);
-
-    return item->id;
+    node->associateEventListener(listener);
 }
 
-int EventDispatcher::registerEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
+void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority)
 {
     CCASSERT(!listener->_isRegistered, "The listener has been registered.");
     
     if (!listener->checkAvaiable())
-        return 0;
-
+        return;
+    
     EventListenerItem* item = new EventListenerItem();
-    item->id            = ++_eventId;
     item->node          = nullptr;
     item->fixedPriority = fixedPriority;
     item->listener      = listener;
@@ -133,28 +127,28 @@ int EventDispatcher::registerEventListenerWithFixedPriority(EventListener* liste
     item->listener->_isRegistered = true;
 
     registerEventListenerWithItem(item);
-
-    return item->id;
 }
 
-void EventDispatcher::unregisterEventListener(int listenerId)
+void EventDispatcher::removeEventListener(EventListener* listener)
 {
-    if (_listeners == nullptr || listenerId <= 0)
+    if (_listeners == nullptr || listener == nullptr)
         return;
 
     for (auto iter = _listeners->begin(); iter != _listeners->end();)
     {
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
-            if ((*itemIter)->id == listenerId)
+            if ((*itemIter)->listener == listener)
             {
-                (*itemIter)->id = 0;
-
                 if (_inDispatch == 0)
                 {
                     (*itemIter)->listener->release();
                     delete (*itemIter);
                     iter->second->remove(*itemIter);
+                }
+                else
+                {
+                    (*itemIter)->listener = nullptr;
                 }
 
                 break;
@@ -179,9 +173,9 @@ void EventDispatcher::unregisterEventListener(int listenerId)
     }
 }
 
-void EventDispatcher::setPriorityWithSceneGraph(int listenerId, Node* node)
+void EventDispatcher::setPriorityWithSceneGraph(EventListener* listener, Node* node)
 {
-    if (_listeners == nullptr || listenerId <= 0)
+    if (_listeners == nullptr || listener == nullptr || node == nullptr)
         return;
 
     for (auto iter = _listeners->begin(); iter != _listeners->end(); ++iter)
@@ -189,7 +183,7 @@ void EventDispatcher::setPriorityWithSceneGraph(int listenerId, Node* node)
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             auto item = *itemIter;
-            if (item->id == listenerId)
+            if (item->listener == listener)
             {
                 // FIXME: fixed priority --> scene graph's priority.
                 item->fixedPriority = 0;
@@ -200,9 +194,9 @@ void EventDispatcher::setPriorityWithSceneGraph(int listenerId, Node* node)
     }
 }
 
-void EventDispatcher::setPriorityWithFixedValue(int listenerId, int fixedPriority)
+void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fixedPriority)
 {
-    if (_listeners == nullptr || listenerId <= 0)
+    if (_listeners == nullptr || listener == nullptr)
         return;
 
     for (auto iter = _listeners->begin(); iter != _listeners->end(); ++iter)
@@ -210,7 +204,7 @@ void EventDispatcher::setPriorityWithFixedValue(int listenerId, int fixedPriorit
         for (auto itemIter = iter->second->begin(); itemIter != iter->second->end(); ++itemIter)
         {
             auto item = *itemIter;
-            if (item->id == listenerId)
+            if (item->listener == listener)
             {
                 // FIXME: scene graph's priority --> fixed priority.
                 item->fixedPriority = fixedPriority;
@@ -308,7 +302,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
             for (; oneByOneIter != oneByOnelisteners.end(); ++oneByOneIter)
             {
                 // Skip if the listener was removed.
-                if ((*oneByOneIter)->id == 0)
+                if ((*oneByOneIter)->listener == nullptr)
                     continue;
              
                 event->setCurrentTarget((*oneByOneIter)->node);
@@ -396,7 +390,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
         for (auto allInOneIter = allInOnelisteners.begin(); allInOneIter != allInOnelisteners.end(); ++allInOneIter)
         {
             // Skip if the listener was removed.
-            if ((*allInOneIter)->id == 0)
+            if ((*allInOneIter)->listener == nullptr)
                 continue;
             
             event->setCurrentTarget((*allInOneIter)->node);
@@ -455,7 +449,7 @@ void EventDispatcher::removeUnregisteredListeners()
     while ( listenerItemIter != _listeners->end())
     {
         auto removeIterBegin = std::remove_if(listenerItemIter->second->begin(), listenerItemIter->second->end(), [](const EventListenerItem* item){
-            return item->id == 0;
+            return item->listener == nullptr;
         });
         
         for (auto iter = removeIterBegin; iter != listenerItemIter->second->end(); ++iter)
@@ -575,6 +569,17 @@ void EventDispatcher::removeAllListeners()
 
     delete _listeners;
     _listeners = nullptr;
+}
+
+void EventDispatcher::setEnabled(bool isEnabled)
+{
+    _isEnabled = isEnabled;
+}
+
+
+bool EventDispatcher::isEnabled() const
+{
+    return _isEnabled;
 }
 
 NS_CC_END

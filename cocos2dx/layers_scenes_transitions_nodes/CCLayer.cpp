@@ -52,9 +52,9 @@ Layer::Layer()
 , _keyboardEnabled(false)
 , _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
 , _swallowsTouches(true)
-, _touchListenerId(0)
-, _keyboardListenerId(0)
-, _accelerationId(0)
+, _touchListener(nullptr)
+, _keyboardListener(nullptr)
+, _accelerationListener(nullptr)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -97,22 +97,9 @@ Layer *Layer::create()
 }
 
 /// Touch and Accelerometer related
-//
-//void Layer::registerWithTouchDispatcher()
-//{
-//    TouchDispatcher* pDispatcher = Director::getInstance()->getTouchDispatcher();
-//
-//    if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
-//        pDispatcher->addStandardDelegate(this, 0);
-//    } else {
-//        pDispatcher->addTargetedDelegate(this, _touchPriority, _swallowsTouches);
-//    }
-//}
 
 void Layer::onRegisterTouchListener()
-{
-     EventDispatcher::getInstance()->unregisterEventListener(_touchListenerId);
-    
+{    
     if( _touchMode == Touch::DispatchMode::ALL_AT_ONCE ) {
         // Register Touch Event
         auto listener = TouchEventListener::create(Touch::DispatchMode::ALL_AT_ONCE);
@@ -122,7 +109,8 @@ void Layer::onRegisterTouchListener()
         listener->onTouchesEnded = CC_CALLBACK_2(Layer::onTouchesEnded, this);
         listener->onTouchesCancelled = CC_CALLBACK_2(Layer::onTouchesCancelled, this);
         
-        _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
     } else {
         // Register Touch Event
         auto listener = TouchEventListener::create(Touch::DispatchMode::ONE_BY_ONE);
@@ -133,7 +121,8 @@ void Layer::onRegisterTouchListener()
         listener->onTouchEnded = CC_CALLBACK_2(Layer::onTouchEnded, this);
         listener->onTouchCancelled = CC_CALLBACK_2(Layer::onTouchCancelled, this);
         
-        _touchListenerId = EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = listener;
     }
 }
 
@@ -182,10 +171,8 @@ void Layer::setTouchEnabled(bool enabled)
             }
             else
             {
-                // have problems?
-//                Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
-                EventDispatcher::getInstance()->unregisterEventListener(_touchListenerId);
-                _touchListenerId = 0;
+                EventDispatcher::getInstance()->removeEventListener(_touchListener);
+                _touchListener = nullptr;
             }
         }
     }
@@ -248,12 +235,13 @@ void Layer::setAccelerometerEnabled(bool enabled)
         if (_running)
         {
             auto dispatcher = EventDispatcher::getInstance();
-            dispatcher->unregisterEventListener(_accelerationId);
+            dispatcher->removeEventListener(_accelerationListener);
+            _accelerationListener = nullptr;
             
             if (enabled)
             {
-                auto listener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
-                dispatcher->registerEventListenerWithSceneGraphPriority(listener, this);
+                _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+                dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
             }
         }
     }
@@ -295,8 +283,9 @@ void Layer::setKeyboardEnabled(bool enabled)
     {
         _keyboardEnabled = enabled;
 
-        EventDispatcher::getInstance()->unregisterEventListener(_keyboardListenerId);
-        _keyboardListenerId = 0;
+        auto dispatcher = EventDispatcher::getInstance();
+        dispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
         
         if (enabled)
         {
@@ -304,7 +293,8 @@ void Layer::setKeyboardEnabled(bool enabled)
             listener->onKeyPressed = CC_CALLBACK_2(Layer::onKeyPressed, this);
             listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
             
-            _keyboardListenerId = EventDispatcher::getInstance()->registerEventListenerWithSceneGraphPriority(listener, this);
+            dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _keyboardListener = listener;
         }
     }
 }
@@ -326,9 +316,9 @@ void Layer::onEnter()
     if (_accelerometerEnabled)
     {
         auto dispatcher = EventDispatcher::getInstance();
-        dispatcher->unregisterEventListener(_accelerationId);
+        dispatcher->removeEventListener(_accelerationListener);
         auto listener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
-        dispatcher->registerEventListenerWithSceneGraphPriority(listener, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     }
 }
 
@@ -336,16 +326,16 @@ void Layer::onExit()
 {
     auto dispatcher = EventDispatcher::getInstance();
 
-    dispatcher->unregisterEventListener(_touchListenerId);
-    _touchListenerId = 0;
+    dispatcher->removeEventListener(_touchListener);
+    _touchListener = nullptr;
     
     // remove this layer from the delegates who concern Accelerometer Sensor
-    dispatcher->unregisterEventListener(_accelerationId);
-    _accelerationId = 0;
+    dispatcher->removeEventListener(_accelerationListener);
+    _accelerationListener = nullptr;
     
     // remove this layer from the delegates who concern the keypad msg
-    dispatcher->unregisterEventListener(_keyboardListenerId);
-    _keyboardListenerId = 0;
+    dispatcher->removeEventListener(_keyboardListener);
+    _keyboardListener = nullptr;
 
     Node::onExit();
 }
@@ -355,9 +345,8 @@ void Layer::onEnterTransitionDidFinish()
     if (_accelerometerEnabled)
     {
         auto dispatcher = EventDispatcher::getInstance();
-        dispatcher->unregisterEventListener(_accelerationId);
-        auto listener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
-        dispatcher->registerEventListenerWithSceneGraphPriority(listener, this);
+        _accelerationListener = AccelerationEventListener::create(CC_CALLBACK_2(Layer::onAcceleration, this));
+        dispatcher->addEventListenerWithSceneGraphPriority(_accelerationListener, this);
     }
     
     Node::onEnterTransitionDidFinish();
