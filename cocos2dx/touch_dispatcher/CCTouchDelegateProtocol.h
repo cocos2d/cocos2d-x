@@ -44,25 +44,61 @@ class TouchDispatcher;
 class CC_DLL TouchDelegate
 {
 public:
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     TouchDelegate() {}
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TouchDelegate()
     {
     }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     // optional
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
 
     // optional
-     virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-     virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-     virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-     virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
 
 };
 /**
@@ -88,8 +124,20 @@ public:
      virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) { CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);return false;};
  
      // optional
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
  };
  
@@ -101,10 +149,26 @@ public:
  {
  public:
      // optional
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+     /**
+      * @js NA
+      * @lua NA
+      */
      virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+     /**
+      * @js NA
+      * @lua NA
+      */
+     virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
  };
 
 // end of input group

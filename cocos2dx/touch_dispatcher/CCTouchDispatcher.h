@@ -61,11 +61,30 @@ struct ccTouchHandlerHelperData {
 class CC_DLL EGLTouchDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesBegan(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesMoved(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesEnded(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesCancelled(Set* touches, Event* pEvent) = 0;
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLTouchDelegate() {}
 };
 
@@ -90,9 +109,21 @@ struct _ccCArray;
 class CC_DLL TouchDispatcher : public Object, public EGLTouchDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TouchDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool init(void);
-    TouchDispatcher() 
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchDispatcher()
         : _targetedHandlers(NULL)
         , _standardHandlers(NULL)
         , _handlersToAdd(NULL)
@@ -101,42 +132,79 @@ public:
     {}
 
 public:
-    /** Whether or not the events are going to be dispatched. Default: true */
+    /** Whether or not the events are going to be dispatched. Default: true 
+     * @js NA
+     * @lua NA
+     */
     bool isDispatchEvents(void);
     void setDispatchEvents(bool bDispatchEvents);
 
     /** Adds a standard touch delegate to the dispatcher's list.
      See StandardTouchDelegate description.
      IMPORTANT: The delegate will be retained.
+     * @js NA
+     * @lua NA
      */
     void addStandardDelegate(TouchDelegate *pDelegate, int nPriority);
 
     /** Adds a targeted touch delegate to the dispatcher's list.
      See TargetedTouchDelegate description.
      IMPORTANT: The delegate will be retained.
+     * @js NA
+     * @lua NA
      */
     void addTargetedDelegate(TouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches);
 
     /** Removes a touch delegate.
      The delegate will be released
+     * @js NA
+     * @lua NA
      */
     void removeDelegate(TouchDelegate *pDelegate);
 
-    /** Removes all touch delegates, releasing all the delegates */
+    /** Removes all touch delegates, releasing all the delegates 
+     * @js NA
+     * @lua NA
+     */
     void removeAllDelegates(void);
 
     /** Changes the priority of a previously added delegate. The lower the number,
-    the higher the priority */
+     the higher the priority 
+     * @js NA
+     * @lua NA
+     */
     void setPriority(int nPriority, TouchDelegate *pDelegate);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     void touches(Set *pTouches, Event *pEvent, unsigned int uIndex);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesBegan(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesMoved(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesEnded(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void touchesCancelled(Set* touches, Event* pEvent);
 
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     TouchHandler* findHandler(TouchDelegate *pDelegate);
 protected:
     void forceRemoveDelegate(TouchDelegate *pDelegate);

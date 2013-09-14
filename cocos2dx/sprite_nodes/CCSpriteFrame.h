@@ -74,7 +74,10 @@ public:
      The originalSize is the size in points of the frame before being trimmed.
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SpriteFrame(void);
 
     /** Initializes a SpriteFrame with a texture, rect in points.

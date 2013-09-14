@@ -54,7 +54,14 @@ public:
     TextureAtlas *getTextureAtlas(const char *displayName);
 
 private:
+    /**
+     * @js ctor
+     */
     SpriteFrameCacheHelper();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~SpriteFrameCacheHelper();
 
     std::map<std::string, std::string> _display2ImageMap;

@@ -82,7 +82,10 @@ class CC_DLL ShuffleTiles : public TiledGrid3DAction
 public:
     /** creates the action with a random seed, the grid size and the duration */
     static ShuffleTiles* create(float duration, const Size& gridSize, unsigned int seed);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ShuffleTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
@@ -176,7 +179,10 @@ public:
     static TurnOffTiles* create(float duration, const Size& gridSize);
     /** creates the action with a random seed, the grid size and the duration */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~TurnOffTiles(void);
     /** initializes the action with a random seed, the grid size and the duration */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);

@@ -22,7 +22,14 @@ NS_CC_BEGIN
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
+    /**
+     * @js ctor
+     */
     EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLView();
     
     /* override functions */

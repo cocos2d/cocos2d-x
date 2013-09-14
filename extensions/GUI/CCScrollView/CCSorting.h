@@ -34,6 +34,10 @@ NS_CC_EXT_BEGIN
 class SortableObject
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~SortableObject() {}
     virtual void setObjectID(unsigned int objectID) = 0;
     virtual unsigned int getObjectID() = 0;

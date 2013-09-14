@@ -50,7 +50,14 @@ enum AnimationType
 class  ProcessBase : public Object
 {
 public:
+    /**
+     * @js ctor
+     */
     ProcessBase(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~ProcessBase(void);
 
     /**

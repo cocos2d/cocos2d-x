@@ -77,8 +77,14 @@ public:
     
     /** creates a base transition with duration and incoming scene */
     static TransitionScene * create(float t, Scene *scene);
-
+    /**
+     * @js ctor
+     */
     TransitionScene();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionScene();
 
     /** initializes a transition with duration and incoming scene */
@@ -94,7 +100,15 @@ public:
     // Overrides
     //
     virtual void draw() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
     virtual void cleanup() override;
 
@@ -120,8 +134,14 @@ class CC_DLL TransitionSceneOriented : public TransitionScene
 public:
     /** creates a base transition with duration and incoming scene */
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
-
+    /**
+     * @js ctor
+     */
     TransitionSceneOriented();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSceneOriented();
 
     /** initializes a transition with duration and incoming scene */
@@ -140,11 +160,19 @@ public:
     static TransitionRotoZoom* create(float t, Scene* scene);
 
     TransitionRotoZoom();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionRotoZoom();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -155,13 +183,23 @@ class CC_DLL TransitionJumpZoom : public TransitionScene
 {
 public:
     static TransitionJumpZoom* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionJumpZoom();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionJumpZoom();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -172,8 +210,14 @@ class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseSc
 {
 public:
     static TransitionMoveInL* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionMoveInL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInL();
     /** initializes the scenes */
     virtual void initScenes(void);
@@ -185,6 +229,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -195,8 +243,14 @@ class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
 public:
     static TransitionMoveInR* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionMoveInR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInR();
     virtual void initScenes();
 };
@@ -208,8 +262,14 @@ class CC_DLL TransitionMoveInT : public TransitionMoveInL
 {
 public:
     static TransitionMoveInT* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionMoveInT();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInT();
     virtual void initScenes();
 };
@@ -221,8 +281,14 @@ class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
     static TransitionMoveInB* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionMoveInB();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionMoveInB();
     virtual void initScenes();
 };
@@ -234,8 +300,14 @@ class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseS
 {
 public:
     static TransitionSlideInL* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSlideInL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInL();
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
@@ -248,6 +320,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     
 protected:
@@ -261,8 +337,14 @@ class CC_DLL TransitionSlideInR : public TransitionSlideInL
 {
 public:
     static TransitionSlideInR* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSlideInR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInR();
 
     /** initializes the scenes */
@@ -281,8 +363,14 @@ class CC_DLL TransitionSlideInB : public TransitionSlideInL
 {
 public:
     static TransitionSlideInB* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSlideInB();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInB();
 
     /** initializes the scenes */
@@ -301,8 +389,14 @@ class CC_DLL TransitionSlideInT : public TransitionSlideInL
 {
 public:
     static TransitionSlideInT* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSlideInT();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSlideInT();
 
     /** initializes the scenes */
@@ -321,8 +415,14 @@ class CC_DLL TransitionShrinkGrow : public TransitionScene , public TransitionEa
 {
 public:
     static TransitionShrinkGrow* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionShrinkGrow();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionShrinkGrow();
 
     //
@@ -341,13 +441,23 @@ class CC_DLL TransitionFlipX : public TransitionSceneOriented
 public:
     static TransitionFlipX* create(float t, Scene* s, Orientation o);
     static TransitionFlipX* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionFlipX();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipX();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -360,13 +470,23 @@ class CC_DLL TransitionFlipY : public TransitionSceneOriented
 public:
     static TransitionFlipY* create(float t, Scene* s, Orientation o);
     static TransitionFlipY* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionFlipY();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipY();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -379,13 +499,23 @@ class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 public:
     static TransitionFlipAngular* create(float t, Scene* s, Orientation o);
     static TransitionFlipAngular* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionFlipAngular();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFlipAngular();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -398,13 +528,23 @@ class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 public:
     static TransitionZoomFlipX* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipX* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionZoomFlipX();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipX();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -417,13 +557,23 @@ class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 public:
     static TransitionZoomFlipY* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipY* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionZoomFlipY();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipY();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -436,13 +586,23 @@ class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 public:
     static TransitionZoomFlipAngular* create(float t, Scene* s, Orientation o);
     static TransitionZoomFlipAngular* create(float t, Scene* s);
-
+    /**
+     * @js ctor
+     */
     TransitionZoomFlipAngular();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionZoomFlipAngular();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
 };
 
@@ -457,8 +617,14 @@ public:
     */
     static TransitionFade* create(float duration,Scene* scene, const Color3B& color);
     static TransitionFade* create(float duration,Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionFade();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFade();
 
     /** initializes the transition with a duration and with an RGB color */
@@ -468,7 +634,15 @@ public:
     // Overrides
     //
     bool initWithDuration(float t,Scene* scene);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit();
 
 protected:
@@ -484,15 +658,29 @@ class CC_DLL TransitionCrossFade : public TransitionScene
 {
 public :
     static TransitionCrossFade* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionCrossFade();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionCrossFade();
 
     //
     // Overrides
     //
     virtual void draw() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit() override;
 
 };
@@ -504,13 +692,23 @@ class CC_DLL TransitionTurnOffTiles : public TransitionScene ,public TransitionE
 {
 public :
     static TransitionTurnOffTiles* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionTurnOffTiles();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionTurnOffTiles();
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 
@@ -525,8 +723,14 @@ class CC_DLL TransitionSplitCols : public TransitionScene , public TransitionEas
 {
 public:
     static TransitionSplitCols* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSplitCols();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSplitCols();
 
     virtual ActionInterval* action(void);
@@ -534,6 +738,10 @@ public:
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
 };
@@ -545,8 +753,14 @@ class CC_DLL TransitionSplitRows : public TransitionSplitCols
 {
 public:
     static TransitionSplitRows* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionSplitRows();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionSplitRows();
 
     //
@@ -562,14 +776,24 @@ class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseSc
 {
 public:
     static TransitionFadeTR* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionFadeTR();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeTR();
     virtual ActionInterval* actionWithSize(const Size& size);
 
     //
     // Overrides
     //
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
 
@@ -584,8 +808,14 @@ class CC_DLL TransitionFadeBL : public TransitionFadeTR
 {
 public:
     static TransitionFadeBL* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionFadeBL();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeBL();
 
     //
@@ -602,8 +832,14 @@ class CC_DLL TransitionFadeUp : public TransitionFadeTR
 {
 public:
     static TransitionFadeUp* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionFadeUp();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeUp();
 
     //
@@ -619,8 +855,14 @@ class CC_DLL TransitionFadeDown : public TransitionFadeTR
 {
 public:
     static TransitionFadeDown* create(float t, Scene* scene);
-
+    /**
+     * @js ctor
+     */
     TransitionFadeDown();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~TransitionFadeDown();
 
     //

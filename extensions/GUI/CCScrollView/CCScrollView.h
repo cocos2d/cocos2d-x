@@ -41,8 +41,20 @@ class ScrollView;
 class ScrollViewDelegate
 {
 public:
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScrollViewDelegate() {}
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void scrollViewDidScroll(ScrollView* view) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void scrollViewDidZoom(ScrollView* view) = 0;
 };
 
@@ -76,8 +88,14 @@ public:
      * @return autoreleased scroll view object
      */
     static ScrollView* create();
-
+    /**
+     * @js ctor
+     */
     ScrollView();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScrollView();
 
     bool init();
@@ -172,8 +190,18 @@ public:
      */
     Direction getDirection() const { return _direction; }
     virtual void setDirection(Direction eDirection) { _direction = eDirection; }
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     ScrollViewDelegate* getDelegate() { return _delegate; }
+    /**
+     * @code
+     * when this function bound to js or lua,the input param are changed
+     * in js: var setDelegate(var jsObject)
+     * in lua: local setDelegate()
+     * @endcode
+     */
     void setDelegate(ScrollViewDelegate* pDelegate) { _delegate = pDelegate; }
 
 	void updateInset();
@@ -191,6 +219,10 @@ public:
     virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit() override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void addChild(Node * child, int zOrder) override;

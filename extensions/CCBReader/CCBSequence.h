@@ -12,6 +12,10 @@ class CCBSequence : public Object
 {
 public:
     CCBSequence();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBSequence();
     float getDuration();
     void setDuration(float fDuration);
