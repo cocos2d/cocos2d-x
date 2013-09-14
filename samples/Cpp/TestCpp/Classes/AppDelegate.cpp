@@ -37,16 +37,20 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto designSize = Size(480, 320);
 
     auto pFileUtils = FileUtils::getInstance();
+	std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
         auto resourceSize = Size(960, 640);
-        std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
 		searchPaths.push_back("hd/scenetest");
-        pFileUtils->setSearchPaths(searchPaths);
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
+	else
+	{
+		searchPaths.push_back("scenetest");
+	}
+	pFileUtils->setSearchPaths(searchPaths);
 
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
