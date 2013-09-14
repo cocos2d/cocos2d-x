@@ -27,19 +27,54 @@ THE SOFTWARE.
 
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
-#include "../utils/CCConstValue.h"
 #include "../CCArmature.h"
 #include "../../Json/CSContentJsonDictionary.h"
 
-namespace tinyxml2 { class XMLElement; }
+#include <string>
+#include <queue>
+#include <list>
+#include <mutex>
+#include <thread>
 
-namespace cocos2d { namespace extension { namespace armature {
-
-
-class  DataReaderHelper
+namespace tinyxml2
 {
+    class XMLElement;
+}
+
+NS_CC_EXT_ARMATURE_BEGIN
+
+
+class  CCDataReaderHelper : Object
+{
+protected:
+
+	enum ConfigType
+	{
+		DragonBone_XML,
+		CocoStudio_JSON
+	};
+
+	typedef struct _AsyncStruct
+	{
+		std::string    filename;
+		std::string    fileContent;
+		ConfigType     configType;
+		std::string    baseFilePath;
+		Object       *target;
+		SEL_SCHEDULE   selector;
+		bool           autoLoadSpriteFile;
+	} AsyncStruct;
+
+	typedef struct _DataInfo
+	{
+		AsyncStruct *asyncStruct;
+		std::queue<std::string>      configFileQueue;
+	} DataInfo;
 
 public:
+
+	static CCDataReaderHelper *sharedDataReaderHelper();
+
     /**
      * Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
@@ -47,85 +82,105 @@ public:
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-    static void addDataFromFile(const char *filePath);
-
+    static void purge();
     static void clear();
 public:
+	CCDataReaderHelper();
+    ~CCDataReaderHelper();
 
-    /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPath Path of xml file
-     */
-    static void addDataFromXML(const char *xmlPath);
+    void addDataFromFile(const char *filePath);
+    void addDataFromFileAsync(const char *filePath, Object *target, SEL_SCHEDULE selector);
 
-    /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param xmlPakPath Path of pak file
-     */
-    static void addDataFromXMLPak(const char *xmlPakPath);
-
-    /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
-     *
-     * @param fileContent The cache of the xml
-     */
-    static void addDataFromCache(const char *fileContent);
-
-
-
-    /**
-     * Decode Armature Datas from xml export from Dragon Bone flash tool
-     */
-    static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
-    static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
-    static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
-
-
-    /**
-     * Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
-     */
-    static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
-    static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData);
-    static MovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, BoneData *boneData);
-    static FrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, BoneData *boneData);
-
-
-    /**
-     * Decode Texture Datas from xml export from Dragon Bone flash tool
-     */
-    static TextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
-
-    /**
-     * Decode Contour Datas from xml export from Dragon Bone flash tool
-     */
-    static ContourData *decodeContour(tinyxml2::XMLElement *contourXML);
+    void addDataAsyncCallBack(float dt);
 
 public:
 
-    static void addDataFromJson(const char *filePath);
-    static void addDataFromJsonCache(const char *fileContent);
+    /**
+     * Translate XML export from Dragon CCBone flash tool to datas, and save them.
+     * When you add a new xml, the data already saved will be keeped.
+     *
+     * @param xmlPath The cache of the xml
+     */
+    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = NULL);
 
-    static ArmatureData *decodeArmature(cs::JsonDictionary &json);
-    static BoneData *decodeBone(cs::JsonDictionary &json);
-    static DisplayData *decodeBoneDisplay(cs::JsonDictionary &json);
 
-    static AnimationData *decodeAnimation(cs::JsonDictionary &json);
-    static MovementData *decodeMovement(cs::JsonDictionary &json);
-    static MovementBoneData *decodeMovementBone(cs::JsonDictionary &json);
-    static FrameData *decodeFrame(cs::JsonDictionary &json);
 
-    static TextureData *decodeTexture(cs::JsonDictionary &json);
+    /**
+     * Decode CCArmature Datas from xml export from Dragon CCBone flash tool
+     */
+    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
+    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
+    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
 
-    static ContourData *decodeContour(cs::JsonDictionary &json);
 
-    static void decodeNode(BaseData *node, cs::JsonDictionary &json);
+    /**
+     * Decode CCArmatureAnimation Datas from xml export from Dragon CCBone flash tool
+     */
+    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
+    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);
+    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData);
+    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData);
+
+
+    /**
+     * Decode Texture Datas from xml export from Dragon CCBone flash tool
+     */
+    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
+
+    /**
+     * Decode Contour Datas from xml export from Dragon CCBone flash tool
+     */
+    static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
+
+public:
+    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
+
+    static CCArmatureData *decodeArmature(cs::JsonDictionary &json);
+    static CCBoneData *decodeBone(cs::JsonDictionary &json);
+    static CCDisplayData *decodeBoneDisplay(cs::JsonDictionary &json);
+
+    static CCAnimationData *decodeAnimation(cs::JsonDictionary &json);
+    static CCMovementData *decodeMovement(cs::JsonDictionary &json);
+    static CCMovementBoneData *decodeMovementBone(cs::JsonDictionary &json);
+    static CCFrameData *decodeFrame(cs::JsonDictionary &json);
+
+    static CCTextureData *decodeTexture(cs::JsonDictionary &json);
+
+    static CCContourData *decodeContour(cs::JsonDictionary &json);
+
+    static void decodeNode(CCBaseData *node, cs::JsonDictionary &json);
+
+protected:
+	void loadData();
+
+
+
+
+	std::condition_variable		s_SleepCondition;
+
+	std::thread     *s_LoadingThread;
+
+	std::mutex      s_SleepMutex;
+
+	std::mutex      s_AsyncStructQueueMutex;
+	std::mutex      s_DataInfoMutex;
+
+	std::mutex      s_AddDataMutex;
+	std::mutex      s_ReadFileMutex;
+
+
+	unsigned long s_nAsyncRefCount;
+	unsigned long s_nAsyncRefTotalCount;
+
+	bool need_quit;
+
+	std::queue<AsyncStruct *> *s_pAsyncStructQueue;
+	std::queue<DataInfo *>   *s_pDataQueue;
+
+
+    static CCDataReaderHelper *s_DataReaderHelper;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCDATAREADERHELPER_H__*/
