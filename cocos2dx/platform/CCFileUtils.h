@@ -251,6 +251,14 @@ public:
      */
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
+    /** 
+     *  Purges the file searching paths.
+     *
+     *  @note It is couldn't set the paths array at lua environment. 
+     *        If we need to change the searching paths order, we can purges the searching paths and add them with expect order.
+     */
+    void purgeSearchPaths();
+    
     /**
       * Add search path.
       *
