@@ -43,6 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         auto resourceSize = Size(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
+		searchPaths.push_back("hd/scenetest");
         pFileUtils->setSearchPaths(searchPaths);
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
