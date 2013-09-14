@@ -27,52 +27,62 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
-#include "../external_tool/sigslot.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
 
 enum MovementEventType
 {
-	START,
-	COMPLETE,
-	LOOP_COMPLETE
+    START,
+    COMPLETE,
+    LOOP_COMPLETE
 };
 
 
-class Armature;
-class Bone;
+class CCArmature;
+class CCBone;
 
-class  ArmatureAnimation : public ProcessBase
+typedef void (Object::*SEL_MovementEventCallFunc)(CCArmature *, MovementEventType, const char *);
+typedef void (Object::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, int);
+
+#define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
+#define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
+
+
+class  CCArmatureAnimation : public CCProcessBase
 {
 public:
     /**
-     * Create with a Armature
-     * @param armature The Armature ArmatureAnimation will bind to
+     * Create with a CCArmature
+     * @param armature The CCArmature CCArmatureAnimation will bind to
      */
-    static ArmatureAnimation *create(Armature *armature);
+    static CCArmatureAnimation *create(CCArmature *armature);
 public:
-    /**
-     * @js ctor
-     */
-    ArmatureAnimation();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ArmatureAnimation(void);
+    CCArmatureAnimation();
+    virtual ~CCArmatureAnimation(void);
 
     /**
-     * Init with a Armature
-     * @param armature The Armature ArmatureAnimation will bind to
+     * Init with a CCArmature
+     * @param armature The CCArmature CCArmatureAnimation will bind to
      */
-    virtual bool init(Armature *armature);
+    virtual bool init(CCArmature *armature);
 
     /**
      * Scale animation play speed.
      * @param animationScale Scale value
      */
     virtual void setAnimationScale(float animationScale);
+    virtual float getAnimationScale() const;
+
+    /**
+     * Scale animation play speed.
+     * @param animationScale Scale value
+     */
+    virtual void setSpeedScale(float speedScale);
+    virtual float getSpeedScale() const;
+
+    //! The animation update speed
+    virtual void setAnimationInternal(float animationInternal);
 
     /**
      * Play animation by animation name.
@@ -81,21 +91,21 @@ public:
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      * @param  durationTween  The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : use the value from CCMovementData get from flash design panel
      *
      * @param  loop   Whether the animation is loop
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
+     *         loop < 0 : use the value from CCMovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
+     * @param  tweenEasing CCTween easing is used for calculate easing effect
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+     *         TWEEN_EASING_MAX : use the value from CCMovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
@@ -106,7 +116,7 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  animationIndex  the animation index you want to play
+     * @param  _animationIndex  the animation index you want to play
      */
     void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
@@ -130,6 +140,25 @@ public:
     int getMovementCount();
 
     void update(float dt);
+
+    /**
+     * Get current movementID
+     * @return The name of current movement
+     */
+    std::string getCurrentMovementID();
+
+    /**
+     * Set armature's movement event callback function
+     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
+     */
+    void setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc);
+
+    /**
+     * Set armature's frame event callback function
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
+     */
+    void setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc);
+
 protected:
 
     /**
@@ -142,31 +171,52 @@ protected:
      */
     void updateFrameData(float currentPercent);
 
-protected:
-    //! AnimationData save all MovementDatas this animation used.
-    CC_SYNTHESIZE_RETAIN(AnimationData *, _animationData, AnimationData);
-
-
-    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
-
-    Armature *_armature;						//! A weak reference of armature
-
-    std::string _movementID;				//! Current movment's name
-
-    int _prevFrameIndex;						//! Prev key frame index
-    int _toIndex;								//! The frame index in MovementData->_movFrameDataArr, it's different from _frameIndex.
-
-    Array *_tweenList;
-public:
     /**
-     * MovementEvent signal. This will emit a signal when trigger a event.
-     * The 1st param is the Armature. The 2nd param is Event Type, like START, COMPLETE. The 3rd param is Movement ID, also called Movement Name.
+     * Emit a frame event
      */
-    sigslot::signal3<Armature *, MovementEventType, const char *> MovementEventSignal;
+    void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
-    sigslot::signal2<Bone *, const char *> FrameEventSignal;
+    friend class CCTween;
+protected:
+    //! CCAnimationData save all MovementDatas this animation used.
+    CC_SYNTHESIZE_RETAIN(CCAnimationData *, m_pAnimationData, AnimationData);
+
+    //! Scale the animation speed
+    float m_fSpeedScale;
+
+    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+
+    CCArmature *m_pArmature;						//! A weak reference of armature
+
+    std::string m_strMovementID;				//! Current movment's name
+
+    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+
+    Array *m_pTweenList;
+
+protected:
+    /**
+     * MovementEvent CallFunc.
+     * @param CCArmature* a CCArmature
+     * @param MovementEventType, Event Type, like START, COMPLETE.
+     * @param const char*, Movement ID, also called Movement Name
+     */
+    SEL_MovementEventCallFunc m_sMovementEventCallFunc;
+
+    /**
+     * FrameEvent CallFunc.
+     * @param CCBone*, a CCBone
+     * @param const char*, the name of this frame event
+     * @param int, origin frame index
+     * @param int, current frame index, animation may be delayed
+     */
+    SEL_FrameEventCallFunc m_sFrameEventCallFunc;
+
+
+    Object *m_sMovementEventTarget;
+    Object *m_sFrameEventTarget;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCANIMATION_H__*/

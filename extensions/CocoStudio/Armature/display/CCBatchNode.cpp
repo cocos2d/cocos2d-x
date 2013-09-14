@@ -26,11 +26,11 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../CCArmature.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-BatchNode *BatchNode::create()
+CCBatchNode *CCBatchNode::create()
 {
-    BatchNode *batchNode = new BatchNode();
+    CCBatchNode *batchNode = new CCBatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -40,29 +40,29 @@ BatchNode *BatchNode::create()
     return NULL;
 }
 
-BatchNode::BatchNode()
-    : _atlas(NULL)
+CCBatchNode::CCBatchNode()
+    : m_pAtlas(NULL)
 {
 }
 
-bool BatchNode::init()
+bool CCBatchNode::init()
 {
     bool ret = Node::init();
-    setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
-void BatchNode::addChild(Node *child, int zOrder, int tag)
+void CCBatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
-    Armature *armature = dynamic_cast<Armature *>(child);
+    CCArmature *armature = dynamic_cast<CCArmature *>(child);
     if (armature != NULL)
     {
         armature->setBatchNode(this);
     }
 }
 
-void BatchNode::visit()
+void CCBatchNode::visit()
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -91,29 +91,29 @@ void BatchNode::visit()
     kmGLPopMatrix();
 }
 
-void BatchNode::draw()
+void CCBatchNode::draw()
 {
     CC_NODE_DRAW_SETUP();
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Armature *armature = dynamic_cast<Armature *>(object);
+        CCArmature *armature = dynamic_cast<CCArmature *>(object);
         if (armature)
         {
             armature->visit();
-            _atlas = armature->getTextureAtlas();
+            m_pAtlas = armature->getTextureAtlas();
         }
         else
         {
-            static_cast<Node*>(object)->visit();
+            ((Node *)object)->visit();
         }
     }
 
-    if (_atlas)
+    if (m_pAtlas)
     {
-        _atlas->drawQuads();
-        _atlas->removeAllQuads();
+        m_pAtlas->drawQuads();
+        m_pAtlas->removeAllQuads();
     }
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

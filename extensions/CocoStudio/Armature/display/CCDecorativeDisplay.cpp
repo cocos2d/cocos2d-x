@@ -23,13 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCDecorativeDisplay.h"
-#include "../utils/CCConstValue.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-DecorativeDisplay *DecorativeDisplay::create()
+CCDecorativeDisplay *CCDecorativeDisplay::create()
 {
-    DecorativeDisplay *pDisplay = new DecorativeDisplay();
+    CCDecorativeDisplay *pDisplay = new CCDecorativeDisplay();
     if (pDisplay && pDisplay->init())
     {
         pDisplay->autorelease();
@@ -39,35 +38,30 @@ DecorativeDisplay *DecorativeDisplay::create()
     return NULL;
 }
 
-DecorativeDisplay::DecorativeDisplay()
-    : _display(NULL)
-    , _displayData(NULL)
+CCDecorativeDisplay::CCDecorativeDisplay()
+    : m_pDisplay(NULL)
+    , m_pDisplayData(NULL)
 
 {
-#if ENABLE_PHYSICS_DETECT
-    _colliderDetector = NULL;
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    m_pColliderDetector = NULL;
 #endif
 }
 
 
-DecorativeDisplay::~DecorativeDisplay(void)
+CCDecorativeDisplay::~CCDecorativeDisplay(void)
 {
-    CC_SAFE_RELEASE_NULL(_displayData);
-    CC_SAFE_RELEASE_NULL(_display);
+    CC_SAFE_RELEASE_NULL(m_pDisplayData);
+    CC_SAFE_RELEASE_NULL(m_pDisplay);
 
-#if ENABLE_PHYSICS_DETECT
-    CC_SAFE_RELEASE_NULL(_colliderDetector);
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SAFE_RELEASE_NULL(m_pColliderDetector);
 #endif
 }
 
-bool DecorativeDisplay::init()
+bool CCDecorativeDisplay::init()
 {
     return true;
 }
 
-
-void DecorativeDisplay::anchorPointChanged(float pointX, float pointY)
-{
-}
-
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

@@ -29,35 +29,28 @@ THE SOFTWARE.
 #include "../display/CCDecorativeDisplay.h"
 #include "../datas/CCDatas.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-class Bone;
+class CCBone;
 
-//! DisplayManager manages Bone's display
-class  DisplayManager : public Object
+//! CCDisplayManager manages CCBone's display
+class  CCDisplayManager : public Object
 {
 public:
-    static DisplayManager *create(Bone *bone);
+    static CCDisplayManager *create(CCBone *bone);
 
 public:
-    /**
-     * @js ctor
-     */
-    DisplayManager();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    ~DisplayManager();
+    CCDisplayManager();
+    ~CCDisplayManager();
 
-    bool init(Bone *bone);
+    bool init(CCBone *bone);
 
     /**
-     * Use BoneData to init the display list.
+     * Use CCBoneData to init the display list.
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
-     * If the display is a Armature, then create a new Armature
+     * If the display is a CCArmature, then create a new CCArmature
      */
-    void initDisplayList(BoneData *boneData);
+    virtual void initDisplayList(CCBoneData *boneData);
 
     /**
      * Add display and use  _DisplayData init the display.
@@ -65,12 +58,14 @@ public:
      * If index is current display index, then also change display to _index
      *
      *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a SpriteDisplayData param
+     *					If you want to create a sprite display, then create a CCSpriteDisplayData param
      *
      *	@param 	index the index of the display you want to replace or add to
      *					-1 : append display from back
      */
-    void addDisplay(DisplayData *displayData, int index);
+    void addDisplay(CCDisplayData *displayData, int index);
+
+    void addDisplay(Node *display, int index);
 
     void removeDisplay(int index);
 
@@ -92,9 +87,9 @@ public:
 
     int getCurrentDisplayIndex();
 
-    void setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay);
-    DecorativeDisplay *getCurrentDecorativeDisplay();
-    DecorativeDisplay *getDecorativeDisplayByIndex( int index);
+    virtual void setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisplay);
+    virtual CCDecorativeDisplay *getCurrentDecorativeDisplay();
+    virtual CCDecorativeDisplay *getDecorativeDisplayByIndex( int index);
 
     /**
      * Sets whether the display is visible
@@ -128,22 +123,22 @@ public:
     virtual bool containPoint(float x, float y);
 
 protected:
-	Array *_decoDisplayList;
-	//! Display render node.
-	Node *_displayRenderNode;
+    Array *m_pDecoDisplayList;
+    //! Display render node.
+    Node *m_pDisplayRenderNode;
     //! Include current display information, like contour sprite, etc.
-    DecorativeDisplay *_currentDecoDisplay;
+    CCDecorativeDisplay *m_pCurrentDecoDisplay;
     //! Current display index
-    int _displayIndex;
+    int m_iDisplayIndex;
 
-    CC_SYNTHESIZE_PASS_BY_REF(bool, _forceChangeDisplay, ForceChangeDisplay)
+    CC_SYNTHESIZE(bool, m_bForceChangeDisplay, ForceChangeDisplay)
 
     //! Whether of not the bone is visible. Default is true
-    bool _visible;
+    bool m_bVisible;
 
-    Bone *_bone;
+    CCBone *m_pBone;
 };
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END
 
 #endif /*__CCDISPLAYMANAGER_H__*/

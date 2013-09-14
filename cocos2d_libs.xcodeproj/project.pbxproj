@@ -66,6 +66,7 @@
 		01C92EE217BB5DE800024119 /* atitc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C92EDF17BB5DE800024119 /* atitc.cpp */; };
 		01C92EE317BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
 		01C92EE417BB5DE800024119 /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C92EE017BB5DE800024119 /* atitc.h */; };
+		0678023617E4757300C15940 /* CCArmatureDefine.CPP in Sources */ = {isa = PBXBuildFile; fileRef = 0678023517E4757300C15940 /* CCArmatureDefine.CPP */; };
 		159FC83117C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */; };
 		159FC83217C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */; };
 		159FC83317C342DE00AEB473 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 159FC83017C342DE00AEB473 /* lua_cocos2dx_extension_manual.h */; };
@@ -212,40 +213,22 @@
 		37B6EFC017DEB9F2001BE102 /* CCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EEFF17DEB40C001BE102 /* CCDisplayManager.cpp */; };
 		37B6EFC117DEB9F5001BE102 /* CCDisplayManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0017DEB40C001BE102 /* CCDisplayManager.h */; };
 		37B6EFC217DEB9F6001BE102 /* CCDisplayManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0017DEB40C001BE102 /* CCDisplayManager.h */; };
-		37B6EFC317DEB9F9001BE102 /* CCShaderNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0117DEB40C001BE102 /* CCShaderNode.cpp */; };
-		37B6EFC417DEB9FB001BE102 /* CCShaderNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0117DEB40C001BE102 /* CCShaderNode.cpp */; };
-		37B6EFC517DEB9FE001BE102 /* CCShaderNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0217DEB40C001BE102 /* CCShaderNode.h */; };
-		37B6EFC617DEB9FF001BE102 /* CCShaderNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0217DEB40C001BE102 /* CCShaderNode.h */; };
 		37B6EFC717DEBA02001BE102 /* CCSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0317DEB40C001BE102 /* CCSkin.cpp */; };
 		37B6EFC817DEBA04001BE102 /* CCSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0317DEB40C001BE102 /* CCSkin.cpp */; };
 		37B6EFC917DEBA07001BE102 /* CCSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0417DEB40C001BE102 /* CCSkin.h */; };
 		37B6EFCA17DEBA09001BE102 /* CCSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0417DEB40C001BE102 /* CCSkin.h */; };
-		37B6EFCB17DEBA12001BE102 /* CCTexture2DMutable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0617DEB40C001BE102 /* CCTexture2DMutable.cpp */; };
-		37B6EFCC17DEBA14001BE102 /* CCTexture2DMutable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0617DEB40C001BE102 /* CCTexture2DMutable.cpp */; };
-		37B6EFCD17DEBA18001BE102 /* CCTexture2DMutable.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0717DEB40C001BE102 /* CCTexture2DMutable.h */; };
-		37B6EFCE17DEBA19001BE102 /* CCTexture2DMutable.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0717DEB40C001BE102 /* CCTexture2DMutable.h */; };
-		37B6EFCF17DEBA1C001BE102 /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0817DEB40C001BE102 /* GLES-Render.cpp */; };
-		37B6EFD017DEBA1E001BE102 /* GLES-Render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0817DEB40C001BE102 /* GLES-Render.cpp */; };
-		37B6EFD117DEBA21001BE102 /* GLES-Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0917DEB40C001BE102 /* GLES-Render.h */; };
-		37B6EFD217DEBA23001BE102 /* GLES-Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0917DEB40C001BE102 /* GLES-Render.h */; };
 		37B6EFD317DEBA27001BE102 /* sigslot.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0A17DEB40C001BE102 /* sigslot.h */; };
 		37B6EFD417DEBA28001BE102 /* sigslot.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0A17DEB40C001BE102 /* sigslot.h */; };
 		37B6EFD517DEBA2E001BE102 /* CCColliderDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0C17DEB40C001BE102 /* CCColliderDetector.cpp */; };
 		37B6EFD617DEBA2F001BE102 /* CCColliderDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0C17DEB40C001BE102 /* CCColliderDetector.cpp */; };
 		37B6EFD717DEBA33001BE102 /* CCColliderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0D17DEB40C001BE102 /* CCColliderDetector.h */; };
 		37B6EFD817DEBA34001BE102 /* CCColliderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0D17DEB40C001BE102 /* CCColliderDetector.h */; };
-		37B6EFD917DEBA38001BE102 /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0E17DEB40C001BE102 /* CCPhysicsWorld.cpp */; };
-		37B6EFDA17DEBA39001BE102 /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF0E17DEB40C001BE102 /* CCPhysicsWorld.cpp */; };
-		37B6EFDB17DEBA3D001BE102 /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0F17DEB40C001BE102 /* CCPhysicsWorld.h */; };
-		37B6EFDC17DEBA3F001BE102 /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF0F17DEB40C001BE102 /* CCPhysicsWorld.h */; };
 		37B6EFDD17DEBA47001BE102 /* CCArmatureDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF1117DEB40C001BE102 /* CCArmatureDataManager.cpp */; };
 		37B6EFDE17DEBA48001BE102 /* CCArmatureDataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF1117DEB40C001BE102 /* CCArmatureDataManager.cpp */; };
 		37B6EFDF17DEBA4C001BE102 /* CCArmatureDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1217DEB40C001BE102 /* CCArmatureDataManager.h */; };
 		37B6EFE017DEBA4D001BE102 /* CCArmatureDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1217DEB40C001BE102 /* CCArmatureDataManager.h */; };
 		37B6EFE117DEBA50001BE102 /* CCArmatureDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1317DEB40C001BE102 /* CCArmatureDefine.h */; };
 		37B6EFE217DEBA51001BE102 /* CCArmatureDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1317DEB40C001BE102 /* CCArmatureDefine.h */; };
-		37B6EFE317DEBA55001BE102 /* CCConstValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1417DEB40C001BE102 /* CCConstValue.h */; };
-		37B6EFE417DEBA56001BE102 /* CCConstValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1417DEB40C001BE102 /* CCConstValue.h */; };
 		37B6EFE517DEBA59001BE102 /* CCDataReaderHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF1517DEB40C001BE102 /* CCDataReaderHelper.cpp */; };
 		37B6EFE617DEBA5B001BE102 /* CCDataReaderHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B6EF1517DEB40C001BE102 /* CCDataReaderHelper.cpp */; };
 		37B6EFE717DEBA5E001BE102 /* CCDataReaderHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6EF1617DEB40C001BE102 /* CCDataReaderHelper.h */; };
@@ -2138,6 +2121,7 @@
 		01881BC917B33B400019A3C3 /* s3tc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = s3tc.h; path = common/s3tc/s3tc.h; sourceTree = "<group>"; };
 		01C92EDF17BB5DE800024119 /* atitc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atitc.cpp; path = common/atitc/atitc.cpp; sourceTree = "<group>"; };
 		01C92EE017BB5DE800024119 /* atitc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atitc.h; path = common/atitc/atitc.h; sourceTree = "<group>"; };
+		0678023517E4757300C15940 /* CCArmatureDefine.CPP */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureDefine.CPP; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		159FC82F17C342DE00AEB473 /* lua_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
@@ -2223,23 +2207,14 @@
 		37B6EEFE17DEB40C001BE102 /* CCDisplayFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDisplayFactory.h; sourceTree = "<group>"; };
 		37B6EEFF17DEB40C001BE102 /* CCDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDisplayManager.cpp; sourceTree = "<group>"; };
 		37B6EF0017DEB40C001BE102 /* CCDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDisplayManager.h; sourceTree = "<group>"; };
-		37B6EF0117DEB40C001BE102 /* CCShaderNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderNode.cpp; sourceTree = "<group>"; };
-		37B6EF0217DEB40C001BE102 /* CCShaderNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderNode.h; sourceTree = "<group>"; };
 		37B6EF0317DEB40C001BE102 /* CCSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkin.cpp; sourceTree = "<group>"; };
 		37B6EF0417DEB40C001BE102 /* CCSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkin.h; sourceTree = "<group>"; };
-		37B6EF0617DEB40C001BE102 /* CCTexture2DMutable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTexture2DMutable.cpp; sourceTree = "<group>"; };
-		37B6EF0717DEB40C001BE102 /* CCTexture2DMutable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2DMutable.h; sourceTree = "<group>"; };
-		37B6EF0817DEB40C001BE102 /* GLES-Render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "GLES-Render.cpp"; sourceTree = "<group>"; };
-		37B6EF0917DEB40C001BE102 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		37B6EF0A17DEB40C001BE102 /* sigslot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sigslot.h; sourceTree = "<group>"; };
 		37B6EF0C17DEB40C001BE102 /* CCColliderDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCColliderDetector.cpp; sourceTree = "<group>"; };
 		37B6EF0D17DEB40C001BE102 /* CCColliderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColliderDetector.h; sourceTree = "<group>"; };
-		37B6EF0E17DEB40C001BE102 /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorld.cpp; sourceTree = "<group>"; };
-		37B6EF0F17DEB40C001BE102 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		37B6EF1117DEB40C001BE102 /* CCArmatureDataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmatureDataManager.cpp; sourceTree = "<group>"; };
 		37B6EF1217DEB40C001BE102 /* CCArmatureDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDataManager.h; sourceTree = "<group>"; };
 		37B6EF1317DEB40C001BE102 /* CCArmatureDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArmatureDefine.h; sourceTree = "<group>"; };
-		37B6EF1417DEB40C001BE102 /* CCConstValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConstValue.h; sourceTree = "<group>"; };
 		37B6EF1517DEB40C001BE102 /* CCDataReaderHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDataReaderHelper.cpp; sourceTree = "<group>"; };
 		37B6EF1617DEB40C001BE102 /* CCDataReaderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDataReaderHelper.h; sourceTree = "<group>"; };
 		37B6EF1717DEB40C001BE102 /* CCSpriteFrameCacheHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteFrameCacheHelper.cpp; sourceTree = "<group>"; };
@@ -3793,8 +3768,6 @@
 				37B6EEFE17DEB40C001BE102 /* CCDisplayFactory.h */,
 				37B6EEFF17DEB40C001BE102 /* CCDisplayManager.cpp */,
 				37B6EF0017DEB40C001BE102 /* CCDisplayManager.h */,
-				37B6EF0117DEB40C001BE102 /* CCShaderNode.cpp */,
-				37B6EF0217DEB40C001BE102 /* CCShaderNode.h */,
 				37B6EF0317DEB40C001BE102 /* CCSkin.cpp */,
 				37B6EF0417DEB40C001BE102 /* CCSkin.h */,
 			);
@@ -3804,10 +3777,6 @@
 		37B6EF0517DEB40C001BE102 /* external_tool */ = {
 			isa = PBXGroup;
 			children = (
-				37B6EF0617DEB40C001BE102 /* CCTexture2DMutable.cpp */,
-				37B6EF0717DEB40C001BE102 /* CCTexture2DMutable.h */,
-				37B6EF0817DEB40C001BE102 /* GLES-Render.cpp */,
-				37B6EF0917DEB40C001BE102 /* GLES-Render.h */,
 				37B6EF0A17DEB40C001BE102 /* sigslot.h */,
 			);
 			path = external_tool;
@@ -3818,8 +3787,6 @@
 			children = (
 				37B6EF0C17DEB40C001BE102 /* CCColliderDetector.cpp */,
 				37B6EF0D17DEB40C001BE102 /* CCColliderDetector.h */,
-				37B6EF0E17DEB40C001BE102 /* CCPhysicsWorld.cpp */,
-				37B6EF0F17DEB40C001BE102 /* CCPhysicsWorld.h */,
 			);
 			path = physics;
 			sourceTree = "<group>";
@@ -3829,8 +3796,8 @@
 			children = (
 				37B6EF1117DEB40C001BE102 /* CCArmatureDataManager.cpp */,
 				37B6EF1217DEB40C001BE102 /* CCArmatureDataManager.h */,
+				0678023517E4757300C15940 /* CCArmatureDefine.CPP */,
 				37B6EF1317DEB40C001BE102 /* CCArmatureDefine.h */,
-				37B6EF1417DEB40C001BE102 /* CCConstValue.h */,
 				37B6EF1517DEB40C001BE102 /* CCDataReaderHelper.cpp */,
 				37B6EF1617DEB40C001BE102 /* CCDataReaderHelper.h */,
 				37B6EF1717DEB40C001BE102 /* CCSpriteFrameCacheHelper.cpp */,
@@ -6359,16 +6326,11 @@
 				37B6EFB917DEB9E1001BE102 /* CCDecorativeDisplay.h in Headers */,
 				37B6EFBD17DEB9EC001BE102 /* CCDisplayFactory.h in Headers */,
 				37B6EFC117DEB9F5001BE102 /* CCDisplayManager.h in Headers */,
-				37B6EFC517DEB9FE001BE102 /* CCShaderNode.h in Headers */,
 				37B6EFC917DEBA07001BE102 /* CCSkin.h in Headers */,
-				37B6EFCD17DEBA18001BE102 /* CCTexture2DMutable.h in Headers */,
-				37B6EFD117DEBA21001BE102 /* GLES-Render.h in Headers */,
 				37B6EFD317DEBA27001BE102 /* sigslot.h in Headers */,
 				37B6EFD717DEBA33001BE102 /* CCColliderDetector.h in Headers */,
-				37B6EFDB17DEBA3D001BE102 /* CCPhysicsWorld.h in Headers */,
 				37B6EFDF17DEBA4C001BE102 /* CCArmatureDataManager.h in Headers */,
 				37B6EFE117DEBA50001BE102 /* CCArmatureDefine.h in Headers */,
-				37B6EFE317DEBA55001BE102 /* CCConstValue.h in Headers */,
 				37B6EFE717DEBA5E001BE102 /* CCDataReaderHelper.h in Headers */,
 				37B6EFEB17DEBA67001BE102 /* CCSpriteFrameCacheHelper.h in Headers */,
 				37B6EFEF17DEBA71001BE102 /* CCTransformHelp.h in Headers */,
@@ -6886,16 +6848,11 @@
 				37B6EFBA17DEB9E3001BE102 /* CCDecorativeDisplay.h in Headers */,
 				37B6EFBE17DEB9ED001BE102 /* CCDisplayFactory.h in Headers */,
 				37B6EFC217DEB9F6001BE102 /* CCDisplayManager.h in Headers */,
-				37B6EFC617DEB9FF001BE102 /* CCShaderNode.h in Headers */,
 				37B6EFCA17DEBA09001BE102 /* CCSkin.h in Headers */,
-				37B6EFCE17DEBA19001BE102 /* CCTexture2DMutable.h in Headers */,
-				37B6EFD217DEBA23001BE102 /* GLES-Render.h in Headers */,
 				37B6EFD417DEBA28001BE102 /* sigslot.h in Headers */,
 				37B6EFD817DEBA34001BE102 /* CCColliderDetector.h in Headers */,
-				37B6EFDC17DEBA3F001BE102 /* CCPhysicsWorld.h in Headers */,
 				37B6EFE017DEBA4D001BE102 /* CCArmatureDataManager.h in Headers */,
 				37B6EFE217DEBA51001BE102 /* CCArmatureDefine.h in Headers */,
-				37B6EFE417DEBA56001BE102 /* CCConstValue.h in Headers */,
 				37B6EFE817DEBA5F001BE102 /* CCDataReaderHelper.h in Headers */,
 				37B6EFEC17DEBA69001BE102 /* CCSpriteFrameCacheHelper.h in Headers */,
 				37B6EFF017DEBA72001BE102 /* CCTransformHelp.h in Headers */,
@@ -7555,6 +7512,7 @@
 				0186A8FD17A0674300D88A79 /* CCFontFNT.cpp in Sources */,
 				0186A90217A068E800D88A79 /* CCFont.cpp in Sources */,
 				01C92EE117BB5DE800024119 /* atitc.cpp in Sources */,
+				0678023617E4757300C15940 /* CCArmatureDefine.CPP in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7808,12 +7766,8 @@
 				37B6EFB717DEB9DD001BE102 /* CCDecorativeDisplay.cpp in Sources */,
 				37B6EFBB17DEB9E6001BE102 /* CCDisplayFactory.cpp in Sources */,
 				37B6EFBF17DEB9F1001BE102 /* CCDisplayManager.cpp in Sources */,
-				37B6EFC317DEB9F9001BE102 /* CCShaderNode.cpp in Sources */,
 				37B6EFC717DEBA02001BE102 /* CCSkin.cpp in Sources */,
-				37B6EFCB17DEBA12001BE102 /* CCTexture2DMutable.cpp in Sources */,
-				37B6EFCF17DEBA1C001BE102 /* GLES-Render.cpp in Sources */,
 				37B6EFD517DEBA2E001BE102 /* CCColliderDetector.cpp in Sources */,
-				37B6EFD917DEBA38001BE102 /* CCPhysicsWorld.cpp in Sources */,
 				37B6EFDD17DEBA47001BE102 /* CCArmatureDataManager.cpp in Sources */,
 				37B6EFE517DEBA59001BE102 /* CCDataReaderHelper.cpp in Sources */,
 				37B6EFE917DEBA63001BE102 /* CCSpriteFrameCacheHelper.cpp in Sources */,
@@ -8106,12 +8060,8 @@
 				37B6EFB817DEB9DE001BE102 /* CCDecorativeDisplay.cpp in Sources */,
 				37B6EFBC17DEB9E7001BE102 /* CCDisplayFactory.cpp in Sources */,
 				37B6EFC017DEB9F2001BE102 /* CCDisplayManager.cpp in Sources */,
-				37B6EFC417DEB9FB001BE102 /* CCShaderNode.cpp in Sources */,
 				37B6EFC817DEBA04001BE102 /* CCSkin.cpp in Sources */,
-				37B6EFCC17DEBA14001BE102 /* CCTexture2DMutable.cpp in Sources */,
-				37B6EFD017DEBA1E001BE102 /* GLES-Render.cpp in Sources */,
 				37B6EFD617DEBA2F001BE102 /* CCColliderDetector.cpp in Sources */,
-				37B6EFDA17DEBA39001BE102 /* CCPhysicsWorld.cpp in Sources */,
 				37B6EFDE17DEBA48001BE102 /* CCArmatureDataManager.cpp in Sources */,
 				37B6EFE617DEBA5B001BE102 /* CCDataReaderHelper.cpp in Sources */,
 				37B6EFEA17DEBA64001BE102 /* CCSpriteFrameCacheHelper.cpp in Sources */,

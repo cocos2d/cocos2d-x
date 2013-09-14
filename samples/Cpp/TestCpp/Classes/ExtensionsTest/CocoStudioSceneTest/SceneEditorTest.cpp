@@ -95,14 +95,14 @@ void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 }  
 
 
-cocos2d::extension::armature::Armature* SceneEditorTestLayer::getFish(int nTag, const char *pszName)
+cocos2d::extension::armature::CCArmature* SceneEditorTestLayer::getFish(int nTag, const char *pszName)
 {
 	if (_curNode == NULL)
 	{
 		return NULL;
 	}
 	ComRender *pFishRender = (ComRender*)(_curNode->getChildByTag(nTag)->getComponent(pszName));
-	return (cocos2d::extension::armature::Armature *)(pFishRender->getNode());
+	return (cocos2d::extension::armature::CCArmature *)(pFishRender->getNode());
 }
 
 void runSceneEditorTestLayer()

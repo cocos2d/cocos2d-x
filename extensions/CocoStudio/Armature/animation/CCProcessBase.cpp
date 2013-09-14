@@ -25,121 +25,128 @@ THE SOFTWARE.
 #include "CCProcessBase.h"
 #include "../utils/CCUtilMath.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_BEGIN
 
-ProcessBase::ProcessBase(void)
-    : _animationScale(1)
-    , _isPause(true)
-    , _isComplete(true)
-	, _isPlaying(false)
-	, _currentPercent(0.0f)
-	, _rawDuration(0)
-	, _loopType(ANIMATION_LOOP_BACK)
-	, _tweenEasing(Linear)
-	, _durationTween(0)
-    , _currentFrame(0)
-    , _curFrameIndex(0)
-    , _isLoopBack(false)
+CCProcessBase::CCProcessBase(void)
+    : m_fProcessScale(1)
+    , m_bIsPause(true)
+    , m_bIsComplete(true)
+    , m_bIsPlaying(false)
+    , m_fCurrentPercent(0.0f)
+    , m_iRawDuration(0)
+    , m_eLoopType(ANIMATION_LOOP_BACK)
+    , m_eTweenEasing(Linear)
+    , m_iDurationTween(0)
+    , m_fCurrentFrame(0)
+    , m_iCurFrameIndex(0)
+    , m_bIsLoopBack(false)
 {
     /*
-     *  set _animationInternal defualt value to Director::getInstance()
+     *  set m_fAnimationInternal defualt value to CCDirector::sharedDirector()
      *  ->getAnimationInterval(), in line with game update speed
      */
-    _animationInternal = Director::getInstance()->getAnimationInterval();
+    m_fAnimationInternal = CCDirector::getInstance()->getAnimationInterval();
 }
 
 
-ProcessBase::~ProcessBase(void)
+CCProcessBase::~CCProcessBase(void)
 {
 }
 
 
-void ProcessBase::pause()
+void CCProcessBase::pause()
 {
-    _isPause = true;
+    m_bIsPause = true;
+    m_bIsPlaying = false;
 }
 
 
-void ProcessBase::resume()
+void CCProcessBase::resume()
 {
-    _isPause = false;
+    m_bIsPause = false;
+    m_bIsPlaying = true;
 }
 
-void ProcessBase::stop()
+void CCProcessBase::stop()
 {
-    _isComplete = true;
-    _currentFrame = 0;
-    _currentPercent = 0;
+    m_bIsComplete = true;
+    m_bIsPlaying = false;
+    m_fCurrentFrame = 0;
+    m_fCurrentPercent = 0;
 }
 
-void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void CCProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    _isComplete = false;
-    _isPause = false;
-    _isPlaying = true;
-    _currentFrame = 0;
+    m_bIsComplete = false;
+    m_bIsPause = false;
+    m_bIsPlaying = true;
+    m_fCurrentFrame = 0;
 
     /*
-     *  Set _totalFrames to durationTo, it is used for change tween between two animation.
-     *  When changing end, _totalFrames will be setted to _durationTween
+     *  Set m_iTotalFrames to durationTo, it is used for change tween between two animation.
+     *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
-    _nextFrameIndex = durationTo;
-    _tweenEasing = (TweenType)tweenEasing;
+    m_iNextFrameIndex = durationTo;
+    m_eTweenEasing = (CCTweenType)tweenEasing;
 
 }
 
-void ProcessBase::update(float dt)
+void CCProcessBase::update(float dt)
 {
 
-    if (_isComplete || _isPause)
+    if (m_bIsComplete || m_bIsPause)
     {
         return;
     }
 
     /*
-     *  Fileter the _duration <=0 and dt >1
+     *  Fileter the m_iDuration <=0 and dt >1
      *  If dt>1, generally speaking  the reason is the device is stuck.
      */
-    if(_rawDuration <= 0 || dt > 1)
+    if(m_iRawDuration <= 0 || dt > 1)
     {
         return;
     }
 
-    if (_nextFrameIndex <= 0)
+    if (m_iNextFrameIndex <= 0)
     {
-        _currentFrame = _nextFrameIndex = 1;
+        m_fCurrentPercent = 1;
+        m_fCurrentFrame = 0;
     }
+    else
+    {
+        /*
+        *  update m_fCurrentFrame, every update add the frame passed.
+        *  dt/m_fAnimationInternal determine it is not a frame animation. If frame speed changed, it will not make our
+        *  animation speed slower or quicker.
+        */
+        m_fCurrentFrame += m_fProcessScale * (dt / m_fAnimationInternal);
 
-    /*
-     *  update _currentFrame, every update add the frame passed.
-     *  dt/_animationInternal determine it is not a frame animation. If frame speed changed, it will not make our
-     *  animation speed slower or quicker.
-     */
-    _currentFrame += _animationScale * (dt / _animationInternal);
 
+        m_fCurrentPercent = m_fCurrentFrame / m_iNextFrameIndex;
 
-    _currentPercent = _currentFrame / _nextFrameIndex;
-
-    /*
-     *	if _currentFrame is bigger or equal than _totalFrames, then reduce it util _currentFrame is
-     *  smaller than _totalFrames
-     */
-    _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
+        /*
+        *	if m_fCurrentFrame is bigger or equal than m_iTotalFrames, then reduce it util m_fCurrentFrame is
+        *  smaller than m_iTotalFrames
+        */
+        m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+    }
 
     updateHandler();
 }
 
 
 
-void ProcessBase::gotoFrame(int frameIndex)
+void CCProcessBase::gotoFrame(int frameIndex)
 {
-    _curFrameIndex = frameIndex;
-    stop();
+    m_iCurFrameIndex = frameIndex;
+    pause();
 }
 
-int ProcessBase::getCurrentFrameIndex()
+int CCProcessBase::getCurrentFrameIndex()
 {
-    return _curFrameIndex;
+    m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
+    return m_iCurFrameIndex;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+NS_CC_EXT_ARMATURE_END

@@ -29,13 +29,20 @@ THE SOFTWARE.
 #include "datas/CCDatas.h"
 #include "display/CCSkin.h"
 
-namespace cocos2d { namespace extension { namespace armature {
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
 
-std::map<int, Armature *> Armature::_armatureIndexDic;
 
-Armature *Armature::create()
+NS_CC_EXT_ARMATURE_BEGIN
+
+std::map<int, CCArmature *> CCArmature::m_sArmatureIndexDic;
+
+CCArmature *CCArmature::create()
 {
-    Armature *armature = new Armature();
+    CCArmature *armature = new CCArmature();
     if (armature && armature->init())
     {
         armature->autorelease();
@@ -46,10 +53,10 @@ Armature *Armature::create()
 }
 
 
-Armature *Armature::create(const char *_name)
+CCArmature *CCArmature::create(const char *name)
 {
-    Armature *armature = new Armature();
-    if (armature && armature->init(_name))
+    CCArmature *armature = new CCArmature();
+    if (armature && armature->init(name))
     {
         armature->autorelease();
         return armature;
@@ -58,9 +65,9 @@ Armature *Armature::create(const char *_name)
     return NULL;
 }
 
-Armature *Armature::create(const char *name, Bone *parentBone)
+CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
 {
-    Armature *armature = new Armature();
+    CCArmature *armature = new CCArmature();
     if (armature && armature->init(name, parentBone))
     {
         armature->autorelease();
@@ -70,100 +77,101 @@ Armature *Armature::create(const char *name, Bone *parentBone)
     return NULL;
 }
 
-Armature::Armature()
-    : _animation(NULL)
-	, _armatureData(NULL)
-	, _batchNode(NULL)
-    , _atlas(NULL)
-	, _parentBone(NULL)
-	, _boneDic(NULL)
-    , _topBoneList(NULL)
+CCArmature::CCArmature()
+    : m_pArmatureData(NULL)
+    , m_pBatchNode(NULL)
+    , m_pAtlas(NULL)
+    , m_pParentBone(NULL)
+    , m_bArmatureTransformDirty(true)
+    , m_pBoneDic(NULL)
+    , m_pTopBoneList(NULL)
+    , m_pAnimation(NULL)
 {
 }
 
 
-Armature::~Armature(void)
+CCArmature::~CCArmature(void)
 {
-    CCLOGINFO("deallocing Armature: %p", this);
-
-    if(NULL != _boneDic)
+    if(NULL != m_pBoneDic)
     {
-        _boneDic->removeAllObjects();
-        CC_SAFE_RELEASE(_boneDic);
+        m_pBoneDic->removeAllObjects();
+        CC_SAFE_DELETE(m_pBoneDic);
     }
-    if (NULL != _topBoneList)
+    if (NULL != m_pTopBoneList)
     {
-        _topBoneList->removeAllObjects();
-        CC_SAFE_DELETE(_topBoneList);
+        m_pTopBoneList->removeAllObjects();
+        CC_SAFE_DELETE(m_pTopBoneList);
     }
-    CC_SAFE_DELETE(_animation);
+    CC_SAFE_DELETE(m_pAnimation);
 }
 
 
-bool Armature::init()
+bool CCArmature::init()
 {
     return init(NULL);
 }
 
 
-bool Armature::init(const char *name)
+bool CCArmature::init(const char *name)
 {
     bool bRet = false;
     do
     {
         removeAllChildren();
 
-        CC_SAFE_DELETE(_animation);
-        _animation = new ArmatureAnimation();
-        _animation->init(this);
+        CC_SAFE_DELETE(m_pAnimation);
+        m_pAnimation = new CCArmatureAnimation();
+        m_pAnimation->init(this);
 
-        CC_SAFE_RELEASE(_boneDic);
-        _boneDic	= new Dictionary();
-        _boneDic->init();
+        CC_SAFE_DELETE(m_pBoneDic);
+        m_pBoneDic	= new Dictionary();
 
-        CC_SAFE_DELETE(_topBoneList);
-        _topBoneList = Array::create();
-        _topBoneList->retain();
+        CC_SAFE_DELETE(m_pTopBoneList);
+        m_pTopBoneList = new Array();
+        m_pTopBoneList->init();
 
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-        _name = name == NULL ? "" : name;
+        m_sBlendFunc.src = CC_BLEND_SRC;
+        m_sBlendFunc.dst = CC_BLEND_DST;
 
-        ArmatureDataManager *armatureDataManager = ArmatureDataManager::sharedArmatureDataManager();
 
-        if(_name.length() != 0)
+        m_strName = name == NULL ? "" : name;
+
+        CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::sharedArmatureDataManager();
+
+        if(m_strName.length() != 0)
         {
-            _name = name;
+            m_strName = name;
 
-            AnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCASSERT(animationData, "CCAnimationData not exist! ");
+            CCAnimationData *animationData = armatureDataManager->getAnimationData(name);
+            CCAssert(animationData, "CCAnimationData not exist! ");
 
-            _animation->setAnimationData(animationData);
+            m_pAnimation->setAnimationData(animationData);
 
 
-            ArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCASSERT(armatureData, "");
+            CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
+            CCAssert(armatureData, "");
 
-            _armatureData = armatureData;
+            m_pArmatureData = armatureData;
 
 
             DictElement *_element = NULL;
-            Dictionary *boneDataDic = armatureData->boneDataDic;
+            Dictionary *boneDataDic = &armatureData->boneDataDic;
             CCDICT_FOREACH(boneDataDic, _element)
             {
-                Bone *bone = createBone(_element->getStrKey());
+                CCBone *bone = createBone(_element->getStrKey());
 
-                //! init bone's  Tween to 1st movement's 1st frame
+                //! init bone's  CCTween to 1st movement's 1st frame
                 do
                 {
 
-                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
+                    CCMovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
                     CC_BREAK_IF(!movData);
 
-                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
-                    CC_BREAK_IF(!movBoneData || movBoneData->frameList->count() <= 0);
+                    CCMovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
+                    CC_BREAK_IF(!movBoneData || movBoneData->frameList.count() <= 0);
 
-                    FrameData *frameData = movBoneData->getFrameData(0);
+                    CCFrameData *frameData = movBoneData->getFrameData(0);
                     CC_BREAK_IF(!frameData);
 
                     bone->getTweenData()->copy(frameData);
@@ -177,21 +185,21 @@ bool Armature::init(const char *name)
         }
         else
         {
-            _name = "new_armature";
-            _armatureData = ArmatureData::create();
-            _armatureData->name = _name;
+            m_strName = "new_armature";
+            m_pArmatureData = CCArmatureData::create();
+            m_pArmatureData->name = m_strName;
 
-            AnimationData *animationData = AnimationData::create();
-            animationData->name = _name;
+            CCAnimationData *animationData = CCAnimationData::create();
+            animationData->name = m_strName;
 
-            armatureDataManager->addArmatureData(_name.c_str(), _armatureData);
-            armatureDataManager->addAnimationData(_name.c_str(), animationData);
+            armatureDataManager->addArmatureData(m_strName.c_str(), m_pArmatureData);
+            armatureDataManager->addAnimationData(m_strName.c_str(), animationData);
 
-            _animation->setAnimationData(animationData);
+            m_pAnimation->setAnimationData(animationData);
 
         }
 
-        setShaderProgram(ShaderCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         unscheduleUpdate();
         scheduleUpdate();
@@ -206,33 +214,33 @@ bool Armature::init(const char *name)
     return bRet;
 }
 
-bool Armature::init(const char *name, Bone *parentBone)
+bool CCArmature::init(const char *name, CCBone *parentBone)
 {
-    _parentBone = parentBone;
+    m_pParentBone = parentBone;
     return init(name);
 }
 
 
-Bone *Armature::createBone(const char *boneName)
+CCBone *CCArmature::createBone(const char *boneName)
 {
-    Bone *existedBone = getBone(boneName);
+    CCBone *existedBone = getBone(boneName);
     if(existedBone != NULL)
         return existedBone;
 
-    BoneData *boneData = (BoneData *)_armatureData->getBoneData(boneName);
+    CCBoneData *boneData = (CCBoneData *)m_pArmatureData->getBoneData(boneName);
     std::string parentName = boneData->parentName;
 
-    Bone *bone = NULL;
+    CCBone *bone = NULL;
 
     if( parentName.length() != 0 )
     {
         createBone(parentName.c_str());
-        bone = Bone::create(boneName);
+        bone = CCBone::create(boneName);
         addBone(bone, parentName.c_str());
     }
     else
     {
-        bone = Bone::create(boneName);
+        bone = CCBone::create(boneName);
         addBone(bone, "");
     }
 
@@ -243,90 +251,103 @@ Bone *Armature::createBone(const char *boneName)
 }
 
 
-void Armature::addBone(Bone *bone, const char *parentName)
+void CCArmature::addBone(CCBone *bone, const char *parentName)
 {
-    CCASSERT( bone != NULL, "Argument must be non-nil");
-    CCASSERT(_boneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
+    CCAssert( bone != NULL, "Argument must be non-nil");
+    CCAssert(m_pBoneDic->objectForKey(bone->getName()) == NULL, "bone already added. It can't be added again");
 
     if (NULL != parentName)
     {
-        Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
+        CCBone *boneParent = (CCBone *)m_pBoneDic->objectForKey(parentName);
         if (boneParent)
         {
             boneParent->addChildBone(bone);
         }
         else
         {
-            if (_parentBone)
-                _parentBone->addChildBone(bone);
+            if (m_pParentBone)
+                m_pParentBone->addChildBone(bone);
             else
-                _topBoneList->addObject(bone);
+                m_pTopBoneList->addObject(bone);
         }
     }
     else
     {
-        if (_parentBone)
-            _parentBone->addChildBone(bone);
+        if (m_pParentBone)
+            m_pParentBone->addChildBone(bone);
         else
-            _topBoneList->addObject(bone);
+            m_pTopBoneList->addObject(bone);
     }
 
     bone->setArmature(this);
 
-    _boneDic->setObject(bone, bone->getName());
+    m_pBoneDic->setObject(bone, bone->getName());
     addChild(bone);
 }
 
 
-void Armature::removeBone(Bone *bone, bool recursion)
+void CCArmature::removeBone(CCBone *bone, bool recursion)
 {
-    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
+    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
 
     bone->setArmature(NULL);
     bone->removeFromParent(recursion);
 
-    if (_topBoneList->containsObject(bone))
+    if (m_pTopBoneList->containsObject(bone))
     {
-        _topBoneList->removeObject(bone);
+        m_pTopBoneList->removeObject(bone);
     }
-    _boneDic->removeObjectForKey(bone->getName());
+    m_pBoneDic->removeObjectForKey(bone->getName());
     removeChild(bone, true);
 }
 
 
-Bone *Armature::getBone(const char *_name) const
+CCBone *CCArmature::getBone(const char *name) const
 {
-    return (Bone *)_boneDic->objectForKey(_name);
+    return (CCBone *)m_pBoneDic->objectForKey(name);
 }
 
 
-void Armature::changeBoneParent(Bone *bone, const char *parentName)
+void CCArmature::changeBoneParent(CCBone *bone, const char *parentName)
 {
-    CCASSERT(bone != NULL, "bone must be added to the bone dictionary!");
+    CCAssert(bone != NULL, "bone must be added to the bone dictionary!");
 
-    bone->getParentBone()->getChildren()->removeObject(bone);
-    bone->setParentBone(NULL);
+    if(bone->getParentBone())
+    {
+        bone->getParentBone()->getChildren()->removeObject(bone);
+        bone->setParentBone(NULL);
+    }
 
     if (parentName != NULL)
     {
-        Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
+        CCBone *boneParent = (CCBone *)m_pBoneDic->objectForKey(parentName);
 
         if (boneParent)
         {
             boneParent->addChildBone(bone);
+            if (m_pTopBoneList->containsObject(bone))
+            {
+                m_pTopBoneList->removeObject(bone);
+            }
+        }
+        else
+        {
+            m_pTopBoneList->addObject(bone);
         }
     }
 }
 
-Dictionary *Armature::getBoneDic()
+Dictionary *CCArmature::getBoneDic()
 {
-    return _boneDic;
+    return m_pBoneDic;
 }
 
-const AffineTransform& Armature::getNodeToParentTransform() const
+const AffineTransform& CCArmature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
+        m_bArmatureTransformDirty = true;
+
         // Translate values
         float x = _position.x;
         float y = _position.y;
@@ -352,8 +373,8 @@ const AffineTransform& Armature::getNodeToParentTransform() const
         }
 
         // Add offset point
-        x += cy * _offsetPoint.x * _scaleX + -sx * _offsetPoint.y * _scaleY;
-        y += sy * _offsetPoint.x * _scaleX + cx * _offsetPoint.y * _scaleY;
+        x += cy * m_pOffsetPoint.x * _scaleX + -sx * m_pOffsetPoint.y * _scaleY;
+        y += sy * m_pOffsetPoint.x * _scaleX + cx * m_pOffsetPoint.y * _scaleY;
 
         bool needsSkewMatrix = ( _skewX || _skewY );
 
@@ -401,100 +422,192 @@ const AffineTransform& Armature::getNodeToParentTransform() const
     return _transform;
 }
 
-void Armature::updateOffsetPoint()
+void CCArmature::updateOffsetPoint()
 {
     // Set contentsize and Calculate anchor point.
-    Rect rect = getBoundingBox();
+    Rect rect = boundingBox();
     setContentSize(rect.size);
-    _offsetPoint = Point(-rect.origin.x,  -rect.origin.y);
-    setAnchorPoint(Point(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
-}
-
-
-void Armature::update(float dt)
-{
-    _animation->update(dt);
-
-    Object *object = NULL;
-    CCARRAY_FOREACH(_topBoneList, object)
+    m_pOffsetPoint = Point(-rect.origin.x,  -rect.origin.y);
+    if (rect.size.width != 0 && rect.size.height != 0)
     {
-        static_cast<Bone*>(object)->update(dt);
+        setAnchorPoint(Point(m_pOffsetPoint.x / rect.size.width, m_pOffsetPoint.y / rect.size.height));
     }
 }
 
-void Armature::draw()
+void CCArmature::setAnimation(CCArmatureAnimation *animation)
 {
-    if (_parentBone == NULL)
+    m_pAnimation = animation;
+}
+
+CCArmatureAnimation *CCArmature::getAnimation()
+{
+    return m_pAnimation;
+}
+
+bool CCArmature::getArmatureTransformDirty()
+{
+    return m_bArmatureTransformDirty;
+}
+
+void CCArmature::update(float dt)
+{
+    m_pAnimation->update(dt);
+
+    Object *object = NULL;
+    CCARRAY_FOREACH(m_pTopBoneList, object)
+    {
+        ((CCBone *)object)->update(dt);
+    }
+
+    m_bArmatureTransformDirty = false;
+}
+
+void CCArmature::draw()
+{
+    if (m_pParentBone == NULL)
     {
         CC_NODE_DRAW_SETUP();
-        GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+        GL::blendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     }
 
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *bone = static_cast<Bone *>(object);
-
-        DisplayManager *displayManager = bone->getDisplayManager();
-        Node *node = displayManager->getDisplayRenderNode();
-
-        if (NULL == node)
-            continue;
-
-        if(Skin *skin = dynamic_cast<Skin *>(node))
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
-            TextureAtlas *textureAtlas = skin->getTextureAtlas();
-            if(_atlas != textureAtlas)
+            CCDisplayManager *displayManager = bone->getDisplayManager();
+            Node *node = displayManager->getDisplayRenderNode();
+
+            if (NULL == node)
+                continue;
+
+            switch (displayManager->getCurrentDecorativeDisplay()->getDisplayData()->displayType)
             {
-                if (_atlas)
+            case CS_DISPLAY_SPRITE:
+            {
+                CCSkin *skin = (CCSkin *)node;
+
+                TextureAtlas *textureAtlas = skin->getTextureAtlas();
+                CCBlendType blendType = bone->getBlendType();
+                if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
                 {
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
+                    if (m_pAtlas)
+                    {
+                        m_pAtlas->drawQuads();
+                        m_pAtlas->removeAllQuads();
+                    }
+                }
+
+                m_pAtlas = textureAtlas;
+                if (m_pAtlas->getCapacity() == m_pAtlas->getTotalQuads() && !m_pAtlas->resizeCapacity(m_pAtlas->getCapacity() * 2))
+                    return;
+
+                skin->updateTransform();
+
+                if (blendType != BLEND_NORMAL)
+                {
+                    updateBlendType(blendType);
+                    m_pAtlas->drawQuads();
+                    m_pAtlas->removeAllQuads();
+                    GL::blendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
                 }
             }
-
-            _atlas = textureAtlas;
-            if (_atlas->getCapacity() == _atlas->getTotalQuads() && !_atlas->resizeCapacity(_atlas->getCapacity() * 2))
-                return;
-
-            skin->draw();
-        }
-        else if(Armature *armature = dynamic_cast<Armature *>(node))
-        {
-            TextureAtlas *textureAtlas = armature->getTextureAtlas();
-
-            if(_atlas != textureAtlas)
+            break;
+            case CS_DISPLAY_ARMATURE:
             {
-                if (_atlas)
+                CCArmature *armature = (CCArmature *)(node);
+
+                TextureAtlas *textureAtlas = armature->getTextureAtlas();
+                if(m_pAtlas != textureAtlas)
                 {
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
+                    if (m_pAtlas)
+                    {
+                        m_pAtlas->drawQuads();
+                        m_pAtlas->removeAllQuads();
+                    }
                 }
+                armature->draw();
             }
-            armature->draw();
-        }
-        else
-        {
-            if (_atlas)
+            break;
+            default:
             {
-                _atlas->drawQuads();
-                _atlas->removeAllQuads();
+                if (m_pAtlas)
+                {
+                    m_pAtlas->drawQuads();
+                    m_pAtlas->removeAllQuads();
+                }
+                node->visit();
+
+                CC_NODE_DRAW_SETUP();
+                GL::blendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+            }
+            break;
+            }
+        }
+        else if(Node *node = dynamic_cast<Node *>(object))
+        {
+            if (m_pAtlas)
+            {
+                m_pAtlas->drawQuads();
+                m_pAtlas->removeAllQuads();
             }
             node->visit();
 
             CC_NODE_DRAW_SETUP();
-            GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+            GL::blendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
         }
     }
 
-    if(_atlas && !_batchNode && _parentBone == NULL)
+    if(m_pAtlas && !m_pBatchNode && m_pParentBone == NULL)
     {
-        _atlas->drawQuads();
-        _atlas->removeAllQuads();
+        m_pAtlas->drawQuads();
+        m_pAtlas->removeAllQuads();
     }
 }
 
-void Armature::visit()
+
+void CCArmature::updateBlendType(CCBlendType blendType)
+{
+    BlendFunc blendFunc;
+    switch (blendType)
+    {
+    case BLEND_NORMAL:
+    {
+        blendFunc.src = CC_BLEND_SRC;
+        blendFunc.dst = CC_BLEND_DST;
+    }
+    break;
+    case BLEND_ADD:
+    {
+        blendFunc.src = GL_SRC_ALPHA;
+        blendFunc.dst = GL_ONE;
+    }
+    break;
+    case BLEND_MULTIPLY:
+    {
+        blendFunc.src = GL_DST_COLOR;
+        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+    }
+    break;
+    case BLEND_SCREEN:
+    {
+        blendFunc.src = GL_ONE;
+        blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+    }
+    break;
+    default:
+    {
+        blendFunc.src = CC_BLEND_SRC;
+        blendFunc.dst = CC_BLEND_DST;
+    }
+    break;
+    }
+    GL::blendFunc(blendFunc.src, blendFunc.dst);
+}
+
+
+
+void CCArmature::visit()
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -523,7 +636,7 @@ void Armature::visit()
     kmGLPopMatrix();
 }
 
-Rect Armature::getBoundingBox() const
+Rect CCArmature::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
 
@@ -534,46 +647,145 @@ Rect Armature::getBoundingBox() const
     Object *object = NULL;
     CCARRAY_FOREACH(_children, object)
     {
-        Bone *bone = static_cast<Bone *>(object);
-        Rect r = bone->getDisplayManager()->getBoundingBox();
-
-        if(first)
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
-            minx = r.getMinX();
-            miny = r.getMinY();
-            maxx = r.getMaxX();
-            maxy = r.getMaxY();
+            Rect r = bone->getDisplayManager()->getBoundingBox();
 
-            first = false;
-        }
-        else
-        {
-            minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-            miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-            maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-            maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
-        }
+            if(first)
+            {
+                minx = r.getMinX();
+                miny = r.getMinY();
+                maxx = r.getMaxX();
+                maxy = r.getMaxY();
 
-        boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
+                first = false;
+            }
+            else
+            {
+                minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
+                miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
+                maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
+                maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+            }
+
+            boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
+        }
     }
 
     return boundingBox;
 }
 
-Bone *Armature::getBoneAtPoint(float x, float y)
+CCBone *CCArmature::getBoneAtPoint(float x, float y)
 {
-    int length = _children->count();
-    Bone *bs;
+    int length = _children->data->num;
+    CCBone **bs = (CCBone **)_children->data->arr;
 
     for(int i = length - 1; i >= 0; i--)
     {
-        bs = static_cast<Bone*>( _children->getObjectAtIndex(i) );
-        if(bs->getDisplayManager()->containPoint(x, y))
+        if(bs[i]->getDisplayManager()->containPoint(x, y))
         {
-            return bs;
+            return bs[i];
         }
     }
     return NULL;
 }
 
-}}} // namespace cocos2d { namespace extension { namespace armature {
+#if ENABLE_PHYSICS_BOX2D_DETECT
+b2Body *CCArmature::getBody()
+{
+    return m_pBody;
+}
+
+void CCArmature::setBody(b2Body *body)
+{
+    if (m_pBody == body)
+    {
+        return;
+    }
+
+    m_pBody = body;
+    m_pBody->SetUserData(this);
+
+    Object *object = NULL;
+    CCARRAY_FOREACH(_children, object)
+    {
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+
+            Object *displayObject = NULL;
+            CCARRAY_FOREACH(displayList, displayObject)
+            {
+                CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
+                if (detector != NULL)
+                {
+                    detector->setBody(m_pBody);
+                }
+            }
+        }
+    }
+}
+
+b2Fixture *CCArmature::getShapeList()
+{
+    if (m_pBody)
+    {
+        return m_pBody->GetFixtureList();
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+cpBody *CCArmature::getBody()
+{
+    return m_pBody;
+}
+
+void CCArmature::setBody(cpBody *body)
+{
+    if (m_pBody == body)
+    {
+        return;
+    }
+
+    m_pBody = body;
+    m_pBody->data = this;
+
+    Object *object = NULL;
+    CCARRAY_FOREACH(_children, object)
+    {
+        if (CCBone *bone = dynamic_cast<CCBone *>(object))
+        {
+            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+
+            Object *displayObject = NULL;
+            CCARRAY_FOREACH(displayList, displayObject)
+            {
+                CCColliderDetector *detector = ((CCDecorativeDisplay *)displayObject)->getColliderDetector();
+                if (detector != NULL)
+                {
+                    detector->setBody(m_pBody);
+                }
+            }
+        }
+    }
+}
+
+cpShape *CCArmature::getShapeList()
+{
+    if (m_pBody)
+    {
+        return m_pBody->shapeList_private;
+    }
+    else
+    {
+        return NULL;
+    }
+}
+#endif
+
+
+NS_CC_EXT_ARMATURE_END

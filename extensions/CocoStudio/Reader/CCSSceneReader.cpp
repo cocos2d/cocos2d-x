@@ -249,7 +249,7 @@ NS_CC_EXT_BEGIN
 
 					}
 
-					cocos2d::extension::armature::Armature *pAr = cocos2d::extension::armature::Armature::create(name);
+					cocos2d::extension::armature::CCArmature *pAr = cocos2d::extension::armature::CCArmature::create(name);
 					ComRender *pRender = ComRender::create(pAr, "CCArmature");
 					if (pComName != NULL)
 					{
