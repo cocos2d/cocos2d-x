@@ -217,12 +217,13 @@ void EventDispatcher::setPriorityWithFixedValue(EventListener* listener, int fix
     }
 }
 
-void EventDispatcher::dispatchEvent(Event* event)
+void EventDispatcher::dispatchEvent(Event* event, bool toSortListeners)
 {
     if (_listeners == nullptr || !_isEnabled)
         return;
 
-    sortAllEventListenerItemsForType(event->_type);
+    if (toSortListeners)
+        sortAllEventListenerItemsForType(event->_type);
 
     DispatchGuard guard(_inDispatch);
 

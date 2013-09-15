@@ -91,7 +91,7 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    void dispatchEvent(Event* event);
+    void dispatchEvent(Event* event, bool toSortListeners = true);
 
 public:
     /** Destructor of EventDispatcher */
