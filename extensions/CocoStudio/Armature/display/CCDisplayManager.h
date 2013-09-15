@@ -123,20 +123,20 @@ public:
     virtual bool containPoint(float x, float y);
 
 protected:
-    Array *m_pDecoDisplayList;
+    Array *_decoDisplayList;
     //! Display render node.
-    Node *m_pDisplayRenderNode;
+    Node *_displayRenderNode;
     //! Include current display information, like contour sprite, etc.
-    DecorativeDisplay *m_pCurrentDecoDisplay;
+    DecorativeDisplay *_currentDecoDisplay;
     //! Current display index
-    int m_iDisplayIndex;
+    int _displayIndex;
 
-    CC_SYNTHESIZE(bool, m_bForceChangeDisplay, ForceChangeDisplay)
+    CC_SYNTHESIZE(bool, _forceChangeDisplay, ForceChangeDisplay)
 
     //! Whether of not the bone is visible. Default is true
-    bool m_bVisible;
+    bool _visible;
 
-    Bone *m_pBone;
+    Bone *_bone;
 };
 
 NS_CC_EXT_ARMATURE_END

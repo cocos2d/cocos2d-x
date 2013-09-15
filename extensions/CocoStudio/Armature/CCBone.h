@@ -152,13 +152,13 @@ public:
 
 public:
     /*
-     *  The origin state of the Bone. Display's state is effected by m_pBoneData, m_pNode, m_pTweenData
+     *  The origin state of the Bone. Display's state is effected by m_pBoneData, m_pNode, _tweenData
      *  when call setData function, it will copy from the BoneData.
      */
     CC_PROPERTY(BoneData *, m_pBoneData, BoneData);
 
     //! A weak reference to the Armature
-    CC_PROPERTY(Armature *, m_pArmature, Armature);
+    CC_PROPERTY(Armature *, _armature, Armature);
 
     //! A weak reference to the child Armature
     CC_PROPERTY(Armature *, m_pChildArmature, ChildArmature);
@@ -176,11 +176,11 @@ protected:
     Tween *m_pTween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
-    CC_SYNTHESIZE_READONLY(FrameData *, m_pTweenData, TweenData);
+    CC_SYNTHESIZE_READONLY(FrameData *, _tweenData, TweenData);
 
-    CC_SYNTHESIZE(std::string, m_strName, Name);
+    CC_SYNTHESIZE(std::string, _name, Name);
 
-    Bone *m_pParentBone;	             //! A weak reference to its parent
+    Bone *_parentBone;	             //! A weak reference to its parent
     bool m_bBoneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state

@@ -126,11 +126,11 @@ public:
 
     inline void setBlendFunc(const BlendFunc &blendFunc)
     {
-        m_sBlendFunc = blendFunc;
+        _blendFunc = blendFunc;
     }
     inline const BlendFunc &getBlendFunc(void) const
     {
-        return m_sBlendFunc;
+        return _blendFunc;
     }
 
     virtual void setAnimation(ArmatureAnimation *animation);
@@ -154,37 +154,35 @@ protected:
     //! Update blend function
     void updateBlendType(BlendType blendType);
 
-    CC_SYNTHESIZE(ArmatureData *, m_pArmatureData, ArmatureData);
+    CC_SYNTHESIZE(ArmatureData *, _armatureData, ArmatureData);
 
-    CC_SYNTHESIZE(BatchNode *, m_pBatchNode, BatchNode);
+    CC_SYNTHESIZE(BatchNode *, _batchNode, BatchNode);
 
-    CC_SYNTHESIZE(std::string, m_strName, Name);
+    CC_SYNTHESIZE(std::string, _name, Name);
 
-    CC_SYNTHESIZE(TextureAtlas *, m_pAtlas, TextureAtlas);
+    CC_SYNTHESIZE(TextureAtlas *, _atlas, TextureAtlas);
 
-    CC_SYNTHESIZE(Bone *, m_pParentBone, ParentBone);
+    CC_SYNTHESIZE(Bone *, _parentBone, ParentBone);
 
-    CC_SYNTHESIZE(float, m_fVersion, Version);
+    CC_SYNTHESIZE(float, _version, Version);
 
 protected:
-    mutable bool m_bArmatureTransformDirty;
+    mutable bool _armatureTransformDirty;
 
-    Dictionary *m_pBoneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
-    Array *m_pTopBoneList;
+    Array *_topBoneList;
 
-    static std::map<int, Armature *> m_sArmatureIndexDic;	//! Use to save armature zorder info,
+    BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
-    BlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
+    Point _offsetPoint;
 
-    Point m_pOffsetPoint;
-
-    ArmatureAnimation *m_pAnimation;
+    ArmatureAnimation *_animation;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_PROPERTY(b2Body *, m_pBody, Body);
+    CC_PROPERTY(b2Body *, _body, Body);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_PROPERTY(cpBody *, m_pBody, Body);
+    CC_PROPERTY(cpBody *, _body, Body);
 #endif
 };
 

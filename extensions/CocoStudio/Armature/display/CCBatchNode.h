@@ -42,7 +42,7 @@ public:
     void draw();
 
 protected:
-    TextureAtlas *m_pAtlas;
+    TextureAtlas *_atlas;
 };
 
 NS_CC_EXT_ARMATURE_END

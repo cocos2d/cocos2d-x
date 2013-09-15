@@ -48,11 +48,11 @@ class ColliderBody : public Object
 {
 public:
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_SYNTHESIZE(b2Fixture *, m_pFixture, B2Fixture)
-    CC_SYNTHESIZE(b2Filter *, m_pFilter, B2Filter)
+    CC_SYNTHESIZE(b2Fixture *, _fixture, B2Fixture)
+    CC_SYNTHESIZE(b2Filter *, _filter, B2Filter)
 
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE(cpShape *, m_pShape, Shape)
+    CC_SYNTHESIZE(cpShape *, _shape, Shape)
 #endif
 
 public:
@@ -61,10 +61,10 @@ public:
 
     inline ContourData *getContourData()
     {
-        return m_pContourData;
+        return _contourData;
     }
 private:
-    ContourData *m_pContourData;
+    ContourData *_contourData;
 };
 
 /*
@@ -96,17 +96,17 @@ public:
     Array *getColliderBodyList();
 
 protected:
-    Array *m_pColliderBodyList;
-    CC_SYNTHESIZE(Bone *, m_pBone, Bone);
+    Array *_colliderBodyList;
+    CC_SYNTHESIZE(Bone *, _bone, Bone);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
-    CC_PROPERTY(b2Body *, m_pBody, Body);
+    CC_PROPERTY(b2Body *, _body, Body);
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_PROPERTY(cpBody *, m_pBody, Body);
+    CC_PROPERTY(cpBody *, _body, Body);
 #endif
 
 protected:
-    bool m_bActive;
+    bool _active;
 };
 
 NS_CC_EXT_ARMATURE_END
