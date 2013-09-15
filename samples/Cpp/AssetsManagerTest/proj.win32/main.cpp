@@ -24,11 +24,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setViewName("AssetsManagerTest");
-    eglView->setFrameSize(800, 450);
+    EGLView* eglView = new EGLView();
+    eglView->init("TestCPP",900,640);
 
-    int ret = CCApplication::sharedApplication()->run();
+    int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();

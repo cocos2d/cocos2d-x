@@ -2,7 +2,7 @@ class CCControlColourPicker : public CCControl
 {    
     CCControlColourPicker();
     virtual ~CCControlColourPicker();
-    virtual void setColor(const ccColor3B& colorValue);
+    virtual void setColor(const Color3B& colorValue);
     virtual void setEnabled(bool bEnabled);
 
     virtual CCControlSaturationBrightnessPicker*  getcolourPicker() const; 

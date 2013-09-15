@@ -6,29 +6,58 @@
 
 NS_CC_EXT_BEGIN
 
-class CCBKeyframe : public CCObject
+class CCBKeyframe : public Object
 {
-private:
-    CCObject *mValue;
-    float mTime;
-    int mEasingType;
-    float mEasingOpt;
-    
 public:
+    enum class EasingType
+    {
+        INSTANT,
+        
+        LINEAR,
+        
+        CUBIC_IN,
+        CUBIC_OUT,
+        CUBIC_INOUT,
+        
+        ELASTIC_IN,
+        ELASTIC_OUT,
+        ELASTIC_INOUT,
+        
+        BOUNCE_IN,
+        BOUNCE_OUT,
+        BOUNCE_INOUT,
+        
+        BACK_IN,
+        BACK_OUT,
+        BACK_INOUT,
+    };
+    /**
+     * @js ctor
+     */
     CCBKeyframe();
+    /**
+     * @js NA
+     * @lua NA
+     */
     ~CCBKeyframe();
     
-    CCObject* getValue();
-    void setValue(CCObject *pValue); // retain
+    Object* getValue();
+    void setValue(Object *pValue); // retain
     
     float getTime();
     void setTime(float fTime);
     
-    int getEasingType();
-    void setEasingType(int nEasingType);
+    EasingType getEasingType();
+    void setEasingType(EasingType easingType);
     
     float getEasingOpt();
     void setEasingOpt(float fEasingOpt);
+    
+private:
+    Object *_value;
+    float _time;
+    EasingType _easingType;
+    float _easingOpt;
 };
 
 NS_CC_EXT_END

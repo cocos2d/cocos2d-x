@@ -9,11 +9,11 @@
 #include <map>
 #include <vector>
 #include <dlfcn.h>
-#include "SLES/OpenSLES.h"
-#include "SLES/OpenSLES_Android.h"
+#include <SLES/OpenSLES.h>
+#include <SLES/OpenSLES_Android.h>
 #include <sys/types.h>
-#include "android/asset_manager.h"
-#include "android/asset_manager_jni.h"
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 #include <android/log.h>
 #include <jni/JniHelper.h>
 #include <dlfcn.h>
@@ -62,15 +62,15 @@ public:
 
 	void resumeAllEffects();
 
-	void setEffectLooping(unsigned int effectID, bool isLooping);
+	void setEffectParameters(unsigned int effectID, bool isLooping, float pitch, float pan, float gain);
 
 	void setEffectsVolume(float volume);
 
 	float getEffectsVolume();
 
 private:
-	SLmillibel m_musicVolume;
-	SLmillibel m_effectVolume;
+	SLmillibel _musicVolume;
+    float _effectVolume;
 };
 
 #endif

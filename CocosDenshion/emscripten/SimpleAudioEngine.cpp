@@ -83,7 +83,7 @@ namespace CocosDenshion
     static const int NR_CHANNELS = 32;
     static void stopBackground(bool bReleaseData)
     {
-        SimpleAudioEngine *engine = SimpleAudioEngine::sharedEngine();
+        SimpleAudioEngine *engine = SimpleAudioEngine::getInstance();
         engine->stopBackgroundMusic();
     }
 
@@ -95,7 +95,7 @@ namespace CocosDenshion
 	{
 	}
 
-	SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
+	SimpleAudioEngine* SimpleAudioEngine::getInstance()
 	{
 		if (!s_engine)
 			s_engine = new SimpleAudioEngine();
@@ -215,7 +215,8 @@ namespace CocosDenshion
         s_effectsVolume = volume;
 	}
 
-	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+	unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
+                                               float pitch, float pan, float gain)
 	{
         std::string key = std::string(pszFilePath);
         struct soundData *sound;

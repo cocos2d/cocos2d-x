@@ -22,45 +22,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCFileUtilsAndroid.h"
-#include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "android/asset_manager.h"
+#include "android/asset_manager_jni.h"
+
+#include <stdlib.h>
+
+#define  LOG_TAG    "CCFileUtilsAndroid.cpp"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 using namespace std;
 
+AAssetManager* cocos2d::FileUtilsAndroid::assetmanager = NULL;
+
 NS_CC_BEGIN
 
-// record the zip on the resource path
-static ZipFile *s_pZipFile = NULL;
+void FileUtilsAndroid::setassetmanager(AAssetManager* a) {
+    if (NULL == a) {
+        LOGD("setassetmanager : received unexpected NULL parameter");
+        return;
+    }
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+    cocos2d::FileUtilsAndroid::assetmanager = a;
+}
+
+FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsAndroid();
-        s_sharedFileUtils->init();
-        std::string resourcePath = getApkPath();
-        s_pZipFile = new ZipFile(resourcePath, "assets/");
+        s_sharedFileUtils = new FileUtilsAndroid();
+        if(!s_sharedFileUtils->init())
+        {
+          delete s_sharedFileUtils;
+          s_sharedFileUtils = NULL;
+          CCLOG("ERROR: Could not init CCFileUtilsAndroid");
+        }
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsAndroid::CCFileUtilsAndroid()
+FileUtilsAndroid::FileUtilsAndroid()
 {
 }
 
-CCFileUtilsAndroid::~CCFileUtilsAndroid()
+FileUtilsAndroid::~FileUtilsAndroid()
 {
-    CC_SAFE_DELETE(s_pZipFile);
 }
 
-bool CCFileUtilsAndroid::init()
+bool FileUtilsAndroid::init()
 {
-    m_strDefaultResRootPath = "assets/";
-    return CCFileUtils::init();
+    _defaultResRootPath = "assets/";
+    return FileUtils::init();
 }
 
-bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
+bool FileUtilsAndroid::isFileExist(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {
@@ -72,16 +88,21 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
     // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
-        std::string strPath = strFilePath;
-        if (strPath.find(m_strDefaultResRootPath) != 0)
-        {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, m_strDefaultResRootPath);
-        }
+        const char* s = strFilePath.c_str();
 
-        if (s_pZipFile->fileExists(strPath))
-        {
-            bFound = true;
-        } 
+        // Found "assets/" at the beginning of the path and we don't want it
+        if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
+
+        if (FileUtilsAndroid::assetmanager) {
+            AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
+            if (aa)
+            {
+                bFound = true;
+                AAsset_close(aa);
+            } else {
+                // CCLOG("[AssetManager] ... in APK %s, found = false!", strFilePath.c_str());
+            }
+        }
     }
     else
     {
@@ -95,13 +116,13 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
     return bFound;
 }
 
-bool CCFileUtilsAndroid::isAbsolutePath(const std::string& strPath)
+bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 {
     // On Android, there are two situations for full path.
     // 1) Files in APK, e.g. assets/path/path/file.png
     // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
     // So these two situations need to be checked on Android.
-    if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
+    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
     {
         return true;
     }
@@ -109,31 +130,86 @@ bool CCFileUtilsAndroid::isAbsolutePath(const std::string& strPath)
 }
 
 
-unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* pszMode, unsigned long * pSize)
 {    
-    unsigned char * pData = 0;
+    return doGetFileData(filename, pszMode, pSize, false);
+}
 
-    if ((! pszFileName) || (! pszMode) || 0 == strlen(pszFileName))
+unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, unsigned long * pSize)
+{
+    return doGetFileData(filename, pszMode, pSize, true);
+}
+
+unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* pszMode, unsigned long * pSize, bool forAsync)
+{
+    unsigned char * pData = 0;
+    
+    if ((! filename) || (! pszMode) || 0 == strlen(filename))
     {
         return 0;
     }
-
-    string fullPath = fullPathForFilename(pszFileName);
-
+    
+    string fullPath = fullPathForFilename(filename);
+    
     if (fullPath[0] != '/')
     {
-        //CCLOG("GETTING FILE RELATIVE DATA: %s", pszFileName);
-        pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+        
+        // fullPathForFilename is not thread safe.
+        if (forAsync) {
+            LOGD("Async loading not supported. fullPathForFilename is not thread safe.");
+            return NULL;
+        }
+
+        string fullPath = fullPathForFilename(filename);
+        LOGD("full path = %s", fullPath.c_str());
+
+        string relativePath = string();
+
+        size_t position = fullPath.find("assets/");
+        if (0 == position) {
+            // "assets/" is at the beginning of the path and we don't want it
+            relativePath += fullPath.substr(strlen("assets/"));
+        } else {
+            relativePath += fullPath;
+        }
+        LOGD("relative path = %s", relativePath.c_str());
+
+        if (NULL == FileUtilsAndroid::assetmanager) {
+            LOGD("... FileUtilsAndroid::assetmanager is NULL");
+            return NULL;
+        }
+
+        // read asset data
+        AAsset* asset =
+            AAssetManager_open(FileUtilsAndroid::assetmanager,
+                               relativePath.c_str(),
+                               AASSET_MODE_UNKNOWN);
+        if (NULL == asset) {
+            LOGD("asset is NULL");
+            return NULL;
+        }
+
+        off_t size = AAsset_getLength(asset);
+
+        pData = new unsigned char[size];
+
+        int bytesread = AAsset_read(asset, (void*)pData, size);
+        if (pSize)
+        {
+            *pSize = bytesread;
+        }
+
+        AAsset_close(asset);
     }
     else
     {
-        do 
+        do
         {
             // read rrom other path than user set it
-	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
+	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
             FILE *fp = fopen(fullPath.c_str(), pszMode);
             CC_BREAK_IF(!fp);
-
+            
             unsigned long size;
             fseek(fp,0,SEEK_END);
             size = ftell(fp);
@@ -141,25 +217,25 @@ unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const ch
             pData = new unsigned char[size];
             size = fread(pData,sizeof(unsigned char), size,fp);
             fclose(fp);
-
+            
             if (pSize)
             {
                 *pSize = size;
-            }            
-        } while (0);        
+            }
+        } while (0);
     }
-
+    
     if (! pData)
     {
         std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
-        CCLOG(msg.c_str());
+        msg.append(filename).append(") failed!");
+        CCLOG("%s", msg.c_str());
     }
-
+    
     return pData;
 }
 
-string CCFileUtilsAndroid::getWritablePath()
+string FileUtilsAndroid::getWritablePath() const
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method

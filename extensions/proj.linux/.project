@@ -31,6 +31,21 @@
 			<locationURI>PARENT-1-PROJECT_LOC/CCBReader</locationURI>
 		</link>
 		<link>
+			<name>CCArmature</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CCArmature</locationURI>
+		</link>
+		<link>
+			<name>Components</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Components</locationURI>
+		</link>
+		<link>
+			<name>spine</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/spine</locationURI>
+		</link>
+		<link>
 			<name>ExtensionMacros.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/ExtensionMacros.h</locationURI>
@@ -61,4 +76,15 @@
 			<locationURI>PARENT-1-PROJECT_LOC/physics_nodes</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1373359750543</id>
+			<name></name>
+			<type>22</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-WebSocket.*</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

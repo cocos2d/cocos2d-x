@@ -37,52 +37,28 @@
 #include "jsfriendapi.h"
 #include "jsb_helper.h"
 
-enum MinXmlHttpRequestResponseType {
-    kRequestResponseTypeString,
-    kRequestResponseTypeArrayBuffer,
-    kRequestResponseTypeBlob,
-    kRequestResponseTypeDocument,
-    kRequestResponseTypeJSON
-};
-
-// Ready States (http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest)
-const unsigned short UNSENT = 0;
-const unsigned short OPENED = 1;
-const unsigned short HEADERS_RECEIVED = 2;
-const unsigned short LOADING = 3;
-const unsigned short DONE = 4;
-
-class MinXmlHttpRequest : public cocos2d::CCObject
+class MinXmlHttpRequest : public cocos2d::Object
 {
-    std::string url;
-    JSContext *cx;
-    std::string meth;
-	std::string type;
-	std::stringstream data;
-	size_t dataSize;
-	JSObject* onreadystateCallback;
-	int readyState;
-	int status;
-    std::string statusText;
-	int responseType;
-    unsigned timeout;
-	bool isAsync;
-    cocos2d::extension::CCHttpRequest* cc_request;
-
-	bool isNetwork;
-    bool withCredentialsValue;
-    map<string, string> http_header;
-    map<string, string> request_header;
-
-	void _gotHeader(std::string header);
-
-    void _setRequestHeader(const char* field, const char* value);
-    void _setHttpRequestHeader();
-    void _sendRequest(JSContext *cx);
-
 public:
+    enum class ResponseType
+    {
+        STRING,
+        ARRAY_BUFFER,
+        BLOB,
+        DOCUMENT,
+        JSON
+    };
+
+    // Ready States (http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest)
+    static const unsigned short UNSENT = 0;
+    static const unsigned short OPENED = 1;
+    static const unsigned short HEADERS_RECEIVED = 2;
+    static const unsigned short LOADING = 3;
+    static const unsigned short DONE = 4;
+
     MinXmlHttpRequest();
     ~MinXmlHttpRequest();
+    
     JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);
     JS_BINDED_CONSTRUCTOR(MinXmlHttpRequest);
     JS_BINDED_PROP_ACCESSOR(MinXmlHttpRequest, onreadystatechange);
@@ -104,8 +80,33 @@ public:
     JS_BINDED_FUNC(MinXmlHttpRequest, setRequestHeader);
     JS_BINDED_FUNC(MinXmlHttpRequest, overrideMimeType);
 
-    void handle_requestResponse(cocos2d::extension::CCHttpClient *sender, cocos2d::extension::CCHttpResponse *response);
+    void handle_requestResponse(cocos2d::extension::HttpClient *sender, cocos2d::extension::HttpResponse *response);
 
+
+private:
+    void _gotHeader(std::string header);
+    void _setRequestHeader(const char* field, const char* value);
+    void _setHttpRequestHeader();
+    void _sendRequest(JSContext *cx);
+    
+    std::string                       _url;
+    JSContext*                        _cx;
+    std::string                       _meth;
+    std::string                       _type;
+    std::stringstream                 _data;
+    size_t                            _dataSize;
+    JSObject*                         _onreadystateCallback;
+    int                               _readyState;
+    int                               _status;
+    std::string                       _statusText;
+    ResponseType                      _responseType;
+    unsigned                          _timeout;
+    bool                              _isAsync;
+    cocos2d::extension::HttpRequest*  _httpRequest;
+    bool                              _isNetwork;
+    bool                              _withCredentialsValue;
+    std::map<string, string>          _httpHeader;
+    std::map<string, string>          _requestHeader;
 };
 
 #endif

@@ -27,7 +27,7 @@ $(OBJ_DIR)/%.o: %.cpp $(CORE_MAKEFILE_LIST)
 	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(NMF): $(TARGET)
-	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ $(BIN_DIR)/*.nexe --objdump=i686-nacl-objdump -L$(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl/lib/ -s $(BIN_DIR)
+	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ $(BIN_DIR)/*.nexe -s $(BIN_DIR) $(NMF_FLAGS)
 
 run: all
 	/bin/cp -ar ../Resources/ .

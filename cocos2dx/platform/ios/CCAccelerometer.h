@@ -25,17 +25,25 @@ THE SOFTWARE.
 #ifndef __PLATFORM_IPHONE_CCACCELEROMETER_H__
 #define __PLATFORM_IPHONE_CCACCELEROMETER_H__
 
+#include <functional>
 #include "platform/CCAccelerometerDelegate.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CCAccelerometer
+class Accelerometer
 {
 public:
-    CCAccelerometer();
-    ~CCAccelerometer();
-
-    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    /**
+     * @js ctor
+     */
+    Accelerometer();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~Accelerometer();
+    
+    void setDelegate(std::function<void(Acceleration*)> function);
     void setAccelerometerInterval(float interval);
 };
 

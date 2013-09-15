@@ -30,17 +30,24 @@ THE SOFTWARE.
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
+#include "platform/third_party/win32/GLFW/glfw3.h"
+
 NS_CC_BEGIN
 
-typedef LRESULT (*CUSTOM_WND_PROC)(UINT message, WPARAM wParam, LPARAM lParam, BOOL* pProcessed);
+class EGL;
 
-class CCEGL;
-
-class CC_DLL CCEGLView : public CCEGLViewProtocol
+class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
-    CCEGLView();
-    virtual ~CCEGLView();
+    /**
+     * @js ctor
+     */
+    EGLView();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~EGLView();
 
     /* override functions */
     virtual bool isOpenGLReady();
@@ -49,25 +56,16 @@ public:
     virtual void setFrameSize(float width, float height);
     virtual void setIMEKeyboardState(bool bOpen);
 
-    void setMenuResource(LPCWSTR menu);
-    void setWndProc(CUSTOM_WND_PROC proc);
-
-private:
-    virtual bool Create();
-    bool initGL();
-    void destroyGL();
+    bool init(const char* viewName, float width, float height);
 public:
-    virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
-    // win32 platform function
-    HWND getHWnd();
-    void resize(int width, int height);
+    //void resize(int width, int height);
     /* 
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float fZoomFactor);
 	float getFrameZoomFactor();
-    void centerWindow();
+    //void centerWindow();
 
     typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
     void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
@@ -79,22 +77,26 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-    static CCEGLView* sharedOpenGLView();
+    static EGLView* getInstance();
 
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
 protected:
 
 private:
-    bool m_bCaptured;
-    HWND m_hWnd;
-    HDC  m_hDC;
-    HGLRC m_hRC;
-    LPFN_ACCELEROMETER_KEYHOOK m_lpfnAccelerometerKeyHook;
-    bool m_bSupportTouch;
+    bool _captured;
+    LPFN_ACCELEROMETER_KEYHOOK _lpfnAccelerometerKeyHook;
+    bool _supportTouch;
 
-    LPCWSTR m_menu;
-    CUSTOM_WND_PROC m_wndproc;
+    float _frameZoomFactor;
+    static EGLView* s_pEglView;
+public:
+    bool windowShouldClose();
 
-    float m_fFrameZoomFactor;
+    void pollEvents();
+    GLFWwindow* getWindow() const { return _mainWindow; }
+private:
+    GLFWwindow* _mainWindow;
 };
 
 NS_CC_END

@@ -17,9 +17,9 @@ cclog("font count = "..fontCount)
 
 local vAlignIdx = 1
 local verticalAlignment = {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
+    cc.VERTICAL_TEXT_ALIGNMENT_TOP,
+    cc.VERTICAL_TEXT_ALIGNMENT_CENTER,
+    cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM,
 }
 
 local vAlignCount = table.getn(verticalAlignment)
@@ -27,9 +27,9 @@ local vAlignCount = table.getn(verticalAlignment)
 local function showFont(ret, pFont)
 
     cclog("vAlignIdx="..vAlignIdx)
-    local s = CCDirector:sharedDirector():getWinSize()
+    local s = cc.Director:getInstance():getWinSize()
 
-    local blockSize = CCSizeMake(s.width/3, 200)
+    local blockSize = cc.size(s.width/3, 200)
     local fontSize = 26
 
     ret:removeChildByTag(kTagLabel1, true)
@@ -37,36 +37,36 @@ local function showFont(ret, pFont)
     ret:removeChildByTag(kTagLabel3, true)
     ret:removeChildByTag(kTagLabel4, true)
 
-    local top = CCLabelTTF:create(pFont, pFont, 24)
-    local left = CCLabelTTF:create("alignment left", pFont, fontSize,
-                                   blockSize, kCCTextAlignmentLeft, verticalAlignment[vAlignIdx])
-    local center = CCLabelTTF:create("alignment center", pFont, fontSize,
-                                     blockSize, kCCTextAlignmentCenter, verticalAlignment[vAlignIdx])
-    local right = CCLabelTTF:create("alignment right", pFont, fontSize,
-                                    blockSize, kCCTextAlignmentRight, verticalAlignment[vAlignIdx])
+    local top = cc.LabelTTF:create(pFont, pFont, 24)
+    local left = cc.LabelTTF:create("alignment left", pFont, fontSize,
+                                   blockSize, cc.TEXT_ALIGNMENT_LEFT, verticalAlignment[vAlignIdx])
+    local center = cc.LabelTTF:create("alignment center", pFont, fontSize,
+                                     blockSize, cc.TEXT_ALIGNMENT_CENTER, verticalAlignment[vAlignIdx])
+    local right = cc.LabelTTF:create("alignment right", pFont, fontSize,
+                                    blockSize, cc.TEXT_ALIGNMENT_RIGHT, verticalAlignment[vAlignIdx])
 
-    local leftColor = CCLayerColor:create(ccc4(100, 100, 100, 255), blockSize.width, blockSize.height)
-    local centerColor = CCLayerColor:create(ccc4(200, 100, 100, 255), blockSize.width, blockSize.height)
-    local rightColor = CCLayerColor:create(ccc4(100, 100, 200, 255), blockSize.width, blockSize.height)
+    local leftColor = cc.LayerColor:create(cc.c4b(100, 100, 100, 255), blockSize.width, blockSize.height)
+    local centerColor = cc.LayerColor:create(cc.c4b(200, 100, 100, 255), blockSize.width, blockSize.height)
+    local rightColor = cc.LayerColor:create(cc.c4b(100, 100, 200, 255), blockSize.width, blockSize.height)
 
     leftColor:ignoreAnchorPointForPosition(false)
     centerColor:ignoreAnchorPointForPosition(false)
     rightColor:ignoreAnchorPointForPosition(false)
 
-    top:setAnchorPoint(ccp(0.5, 1))
-    left:setAnchorPoint(ccp(0,0.5))
-    leftColor:setAnchorPoint(ccp(0,0.5))
-    center:setAnchorPoint(ccp(0,0.5))
-    centerColor:setAnchorPoint(ccp(0,0.5))
-    right:setAnchorPoint(ccp(0,0.5))
-    rightColor:setAnchorPoint(ccp(0,0.5))
+    top:setAnchorPoint(cc.p(0.5, 1))
+    left:setAnchorPoint(cc.p(0,0.5))
+    leftColor:setAnchorPoint(cc.p(0,0.5))
+    center:setAnchorPoint(cc.p(0,0.5))
+    centerColor:setAnchorPoint(cc.p(0,0.5))
+    right:setAnchorPoint(cc.p(0,0.5))
+    rightColor:setAnchorPoint(cc.p(0,0.5))
 
-    top:setPosition(ccp(s.width/2,s.height-20))
-    left:setPosition(ccp(0,s.height/2))
+    top:setPosition(cc.p(s.width/2,s.height-20))
+    left:setPosition(cc.p(0,s.height/2))
     leftColor:setPosition(left:getPosition())
-    center:setPosition(ccp(blockSize.width, s.height/2))
+    center:setPosition(cc.p(blockSize.width, s.height/2))
     centerColor:setPosition(center:getPosition())
-    right:setPosition(ccp(blockSize.width*2, s.height/2))
+    right:setPosition(cc.p(blockSize.width*2, s.height/2))
     rightColor:setPosition(right:getPosition())
 
     ret:addChild(leftColor, -1)
@@ -98,7 +98,7 @@ function FontTestMain()
     cclog("FontTestMain")
     Helper.index = 1
     vAlignIdx = 1
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     Helper.createFunctionTable = {
         createTestLayer,
         createTestLayer,

@@ -37,15 +37,6 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef enum
-{
-    ccTouchSelectorBeganBit = 1 << 0,
-    ccTouchSelectorMovedBit = 1 << 1,
-    ccTouchSelectorEndedBit = 1 << 2,
-    ccTouchSelectorCancelledBit = 1 << 3,
-    ccTouchSelectorAllBits = ( ccTouchSelectorBeganBit | ccTouchSelectorMovedBit | ccTouchSelectorEndedBit | ccTouchSelectorCancelledBit),
-} ccTouchSelectorFlag;
-
 
 enum {
     CCTOUCHBEGAN,
@@ -56,31 +47,50 @@ enum {
     ccTouchMax,
 };
 
-class CCSet;
-class CCEvent;
+class Set;
+class Event;
 
 struct ccTouchHandlerHelperData {
     // we only use the type
-//    void (StandardTouchDelegate::*touchesSel)(CCSet*, CCEvent*);
-//    void (TargetedTouchDelegate::*touchSel)(NSTouch*, CCEvent*);
-    int  m_type;
+//    void (StandardTouchDelegate::*touchesSel)(Set*, Event*);
+//    void (TargetedTouchDelegate::*touchSel)(NSTouch*, Event*);
+    int  _type;
 };
 
 
 class CC_DLL EGLTouchDelegate
 {
 public:
-    virtual void touchesBegan(CCSet* touches, CCEvent* pEvent) = 0;
-    virtual void touchesMoved(CCSet* touches, CCEvent* pEvent) = 0;
-    virtual void touchesEnded(CCSet* touches, CCEvent* pEvent) = 0;
-    virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent) = 0;
-
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesBegan(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesMoved(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesEnded(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesCancelled(Set* touches, Event* pEvent) = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~EGLTouchDelegate() {}
 };
 
-class CCTouchHandler;
+class TouchHandler;
 struct _ccCArray;
-/** @brief CCTouchDispatcher.
+/** @brief TouchDispatcher.
  Singleton that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
  There are 2 different type of touch handlers:
@@ -96,78 +106,127 @@ struct _ccCArray;
 
  @since v0.8.0
  */
-class CC_DLL CCTouchDispatcher : public CCObject, public EGLTouchDelegate
+class CC_DLL TouchDispatcher : public Object, public EGLTouchDelegate
 {
 public:
-    ~CCTouchDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~TouchDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool init(void);
-    CCTouchDispatcher() 
-        : m_pTargetedHandlers(NULL)
-        , m_pStandardHandlers(NULL)
-        , m_pHandlersToAdd(NULL)
-        , m_pHandlersToRemove(NULL)
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchDispatcher()
+        : _targetedHandlers(NULL)
+        , _standardHandlers(NULL)
+        , _handlersToAdd(NULL)
+        , _handlersToRemove(NULL)
         
     {}
 
 public:
-    /** Whether or not the events are going to be dispatched. Default: true */
+    /** Whether or not the events are going to be dispatched. Default: true 
+     * @js NA
+     * @lua NA
+     */
     bool isDispatchEvents(void);
     void setDispatchEvents(bool bDispatchEvents);
 
     /** Adds a standard touch delegate to the dispatcher's list.
      See StandardTouchDelegate description.
      IMPORTANT: The delegate will be retained.
+     * @js NA
+     * @lua NA
      */
-    void addStandardDelegate(CCTouchDelegate *pDelegate, int nPriority);
+    void addStandardDelegate(TouchDelegate *pDelegate, int nPriority);
 
     /** Adds a targeted touch delegate to the dispatcher's list.
      See TargetedTouchDelegate description.
      IMPORTANT: The delegate will be retained.
+     * @js NA
+     * @lua NA
      */
-    void addTargetedDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches);
+    void addTargetedDelegate(TouchDelegate *pDelegate, int nPriority, bool bSwallowsTouches);
 
     /** Removes a touch delegate.
      The delegate will be released
+     * @js NA
+     * @lua NA
      */
-    void removeDelegate(CCTouchDelegate *pDelegate);
+    void removeDelegate(TouchDelegate *pDelegate);
 
-    /** Removes all touch delegates, releasing all the delegates */
+    /** Removes all touch delegates, releasing all the delegates 
+     * @js NA
+     * @lua NA
+     */
     void removeAllDelegates(void);
 
     /** Changes the priority of a previously added delegate. The lower the number,
-    the higher the priority */
-    void setPriority(int nPriority, CCTouchDelegate *pDelegate);
-
-    void touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex);
-
-    virtual void touchesBegan(CCSet* touches, CCEvent* pEvent);
-    virtual void touchesMoved(CCSet* touches, CCEvent* pEvent);
-    virtual void touchesEnded(CCSet* touches, CCEvent* pEvent);
-    virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent);
+     the higher the priority 
+     * @js NA
+     * @lua NA
+     */
+    void setPriority(int nPriority, TouchDelegate *pDelegate);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void touches(Set *pTouches, Event *pEvent, unsigned int uIndex);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesBegan(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesMoved(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesEnded(Set* touches, Event* pEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void touchesCancelled(Set* touches, Event* pEvent);
 
 public:
-    CCTouchHandler* findHandler(CCTouchDelegate *pDelegate);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchHandler* findHandler(TouchDelegate *pDelegate);
 protected:
-    void forceRemoveDelegate(CCTouchDelegate *pDelegate);
-    void forceAddHandler(CCTouchHandler *pHandler, CCArray* pArray);
+    void forceRemoveDelegate(TouchDelegate *pDelegate);
+    void forceAddHandler(TouchHandler *pHandler, Array* pArray);
     void forceRemoveAllDelegates(void);
-    void rearrangeHandlers(CCArray* pArray);
-    CCTouchHandler* findHandler(CCArray* pArray, CCTouchDelegate *pDelegate);
+    void rearrangeHandlers(Array* pArray);
+    TouchHandler* findHandler(Array* pArray, TouchDelegate *pDelegate);
 
 protected:
-     CCArray* m_pTargetedHandlers;
-     CCArray* m_pStandardHandlers;
+     Array* _targetedHandlers;
+     Array* _standardHandlers;
 
-    bool m_bLocked;
-    bool m_bToAdd;
-    bool m_bToRemove;
-     CCArray* m_pHandlersToAdd;
-    struct _ccCArray *m_pHandlersToRemove;
-    bool m_bToQuit;
-    bool m_bDispatchEvents;
+    bool _locked;
+    bool _toAdd;
+    bool _toRemove;
+     Array* _handlersToAdd;
+    struct _ccCArray *_handlersToRemove;
+    bool _toQuit;
+    bool _dispatchEvents;
 
     // 4, 1 for each type of event
-    struct ccTouchHandlerHelperData m_sHandlerHelperData[ccTouchMax];
+    struct ccTouchHandlerHelperData _handlerHelperData[ccTouchMax];
 };
 
 // end of input group

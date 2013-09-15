@@ -11,26 +11,26 @@ bool Bug458Layer::init()
     if(BugsTestBaseLayer::init())
     {
         // ask director the the window size
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
+        auto size = Director::getInstance()->getWinSize();
 
-        QuestionContainerSprite* question = new QuestionContainerSprite();
-        QuestionContainerSprite* question2 = new QuestionContainerSprite();
+        auto question = new QuestionContainerSprite();
+        auto question2 = new QuestionContainerSprite();
         question->init();
         question2->init();
 
 //        [question setContentSize:CGSizeMake(50,50)];
 //        [question2 setContentSize:CGSizeMake(50,50)];
         
-        CCMenuItemSprite* sprite = CCMenuItemSprite::create(question2, question, this, menu_selector(Bug458Layer::selectAnswer));
-        CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,255,255), 100, 100);
+        auto sprite = MenuItemSprite::create(question2, question, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
+        auto layer = LayerColor::create(Color4B(0,0,255,255), 100, 100);
         question->release();
         question2->release();
 
-        CCLayerColor* layer2 = CCLayerColor::create(ccc4(255,0,0,255), 100, 100);
-        CCMenuItemSprite* sprite2 = CCMenuItemSprite::create(layer, layer2, this, menu_selector(Bug458Layer::selectAnswer));        
-        CCMenu* menu = CCMenu::create(sprite, sprite2, NULL);
+        auto layer2 = LayerColor::create(Color4B(255,0,0,255), 100, 100);
+        auto sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
+        auto menu = Menu::create(sprite, sprite2, NULL);
         menu->alignItemsVerticallyWithPadding(100);
-        menu->setPosition(ccp(size.width / 2, size.height / 2));
+        menu->setPosition(Point(size.width / 2, size.height / 2));
 
         // add the label as a child to this Layer
         addChild(menu);
@@ -40,7 +40,7 @@ bool Bug458Layer::init()
     return false;
 }
 
-void Bug458Layer::selectAnswer(CCObject* sender)
+void Bug458Layer::selectAnswer(Object* sender)
 {
-    CCLog("Selected");
+    log("Selected");
 }

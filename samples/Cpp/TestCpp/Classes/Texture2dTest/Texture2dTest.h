@@ -2,9 +2,10 @@
 #define __TEXTURE2D_TEST_H__
 
 #include "../testBasic.h"
+#include "../BaseTest.h"
 
 
-class TextureDemo : public CCLayer
+class TextureDemo : public BaseTest
 {
 public:
     virtual ~TextureDemo();
@@ -12,9 +13,9 @@ public:
     virtual std::string subtitle();
     virtual void onEnter();
 
-    void restartCallback(CCObject* pSender);
-    void nextCallback(CCObject* pSender);
-    void backCallback(CCObject* pSender);
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
 };
 
 class TextureTIFF : public TextureDemo
@@ -55,7 +56,7 @@ public:
     virtual void onEnter();
 };
 
-class TexturePVR : public TextureDemo
+class TexturePVRTest : public TextureDemo
 {
 public:
     virtual std::string title();
@@ -347,12 +348,12 @@ class TextureAsync : public TextureDemo
 public:
     virtual ~TextureAsync();
     void loadImages(float dt);
-    void imageLoaded(CCObject* pObj);
+    void imageLoaded(Object* pObj);
     virtual std::string title();
     virtual std::string subtitle();
     virtual void onEnter();
 private:
-    int m_nImageOffset;
+    int _imageOffset;
 };
 
 class TextureGlRepeat : public TextureDemo
@@ -398,7 +399,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* m_pTex1, *m_pTex2;
+    Texture2D* _tex1, *_Tex2F;
 };
 
 class TextureDrawInRect : public TextureDemo
@@ -410,7 +411,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 private:
-    CCTexture2D* m_pTex1, *m_pTex2;
+    Texture2D* _tex1, *_Tex2F;
 };
 
 class TextureTestScene : public TestScene
@@ -425,10 +426,10 @@ public:
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
-    void updateImage(CCObject *sender);
-    void changeBackgroundVisible(CCObject *sender);
+    void updateImage(Object *sender);
+    void changeBackgroundVisible(Object *sender);
 private:
-    CCSprite *m_pBackground;
+    Sprite *_background;
 };
 
 class TexturePVRv3Premult : public TextureDemo
@@ -439,7 +440,7 @@ public:
     virtual std::string title();
     virtual std::string subtitle();
     
-    void transformSprite(cocos2d::CCSprite *sprite);
+    void transformSprite(cocos2d::Sprite *sprite);
 };
 
 // ETC1 texture format test
@@ -448,6 +449,103 @@ class TextureETC1 : public TextureDemo
 public:
     TextureETC1();
     
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// S3TC Dxt1 texture format test
+class TextureS3TCDxt1 : public TextureDemo
+{
+public:
+    TextureS3TCDxt1();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// S3TC Dxt3 texture format test
+class TextureS3TCDxt3 : public TextureDemo
+{
+public:
+    TextureS3TCDxt3();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// S3TC Dxt5 texture format test
+class TextureS3TCDxt5 : public TextureDemo
+{
+public:
+    TextureS3TCDxt5();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// ATITC RGB texture format test
+class TextureATITCRGB : public TextureDemo
+{
+public:
+    TextureATITCRGB();
+    
+    virtual std::string title();
+    virtual std::string subtitle();    
+};
+
+//ATITC RGBA Explicit texture format test
+class TextureATITCExplicit : public TextureDemo
+{
+public:
+    TextureATITCExplicit();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+//ATITC RGBA Interpolated texture format test
+class TextureATITCInterpolated : public TextureDemo
+{
+public:
+    TextureATITCInterpolated();
+    
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+
+// RGB888 texture convert test
+class TextureConvertRGB888 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// RGBA8888 texture convert test
+class TextureConvertRGBA8888 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// I8 texture convert test
+class TextureConvertI8 : public TextureDemo
+{
+public:
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+// AI88 texture convert test
+class TextureConvertAI88 : public TextureDemo
+{
+public:
+    virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
 };

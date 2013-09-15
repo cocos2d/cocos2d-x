@@ -29,7 +29,6 @@
 #include "CCBReader/CCBSequence.h"
 #include "CCBReader/CCBSequenceProperty.h"
 #include "CCBReader/CCBValue.h"
-#include "CCBReader/CCData.h"
 #include "CCBReader/CCNode+CCBRelativePositioning.h"
 
 #include "GUI/CCControlExtension/CCControlExtensions.h"
@@ -40,21 +39,8 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
-
-#include "CCArmature/CCArmature.h"
-#include "CCArmature/CCBone.h"
-#include "CCArmature/animation/CCArmatureAnimation.h"
-#include "CCArmature/datas/CCDatas.h"
-#include "CCArmature/display/CCBatchNode.h"
-#include "CCArmature/display/CCDecorativeDisplay.h"
-#include "CCArmature/display/CCDisplayManager.h"
-#include "CCArmature/display/CCSkin.h"
-#include "CCArmature/physics/CCColliderDetector.h"
-#include "CCArmature/utils/CCArmatureDataManager.h"
-#include "CCArmature/utils/CCConstValue.h"
-#include "CCArmature/utils/CCDataReaderHelper.h"
-#include "CCArmature/utils/CCTweenFunction.h"
-#include "CCArmature/external_tool/sigslot.h"
+#include "network/WebSocket.h"
+#include "network/SocketIO.h"
 
 // Physics integration
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
@@ -64,8 +50,35 @@
 
 #include "spine/spine-cocos2dx.h"
 
-#include "Components/CCComAttribute.h"
-#include "Components/CCComAudio.h"
-#include "Components/CCComController.h"
+#include "CocoStudio/Armature/CCArmature.h"
+#include "CocoStudio/Armature/CCBone.h"
+#include "CocoStudio/Armature/animation/CCArmatureAnimation.h"
+#include "CocoStudio/Armature/datas/CCDatas.h"
+#include "CocoStudio/Armature/display/CCBatchNode.h"
+#include "CocoStudio/Armature/display/CCDecorativeDisplay.h"
+#include "CocoStudio/Armature/display/CCDisplayManager.h"
+#include "CocoStudio/Armature/display/CCSkin.h"
+#include "CocoStudio/Armature/physics/CCColliderDetector.h"
+#include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
+#include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
+#include "CocoStudio/Armature/utils/CCTweenFunction.h"
+#include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
+#include "CocoStudio/Armature/external_tool/sigslot.h"
+
+#include "CocoStudio/Components/CCComAttribute.h"
+#include "CocoStudio/Components/CCComAudio.h"
+#include "CocoStudio/Components/CCComController.h"
+#include "CocoStudio/Components/CCComRender.h"
+
+#include "CocoStudio/Json/CSContentJsonDictionary.h"
+#include "CocoStudio/Json/DictionaryHelper.h"
+
+#include "CocoStudio/Reader/CCSSceneReader.h"
+
+
+
+#include "CCDeprecated-ext.h"
+
+#include "AssetsManager/AssetsManager.h"
 
 #endif /* __COCOS2D_EXT_H__ */

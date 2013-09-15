@@ -26,8 +26,8 @@
 #define __AssetsManager__
 
 #include <string>
-#include <curl/curl.h>
-#include <pthread.h>
+
+#include <mutex>
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
@@ -41,22 +41,22 @@ class AssetsManagerDelegateProtocol;
  *  The updated package should be a zip file. And there should be a file named
  *  version in the server, which contains version code.
  */
-class AssetsManager
+class AssetsManager : public Node
 {
 public:
-    enum ErrorCode
+    enum class ErrorCode
     {
         // Error caused by creating a file to store downloaded data
-        kCreateFile,
+        CREATE_FILE,
         /** Error caused by network
          -- network unavaivable
          -- timeout
          -- ...
          */
-        kNetwork,
+        NETWORK,
         /** There is not a new version
          */
-        kNoNewVersion,
+        NO_NEW_VERSION,
         /** Error caused in uncompressing stage
          -- can not open zip file
          -- can not read file global information
@@ -64,7 +64,7 @@ public:
          -- can not create a directory
          -- ...
          */
-        kUncompress,
+        UNCOMPRESS,
     };
     
     /* @brief Creates a AssetsManager with new package url, version code url and storage path.
@@ -72,11 +72,23 @@ public:
      * @param packageUrl URL of new package, the package should be a zip file.
      * @param versionFileUrl URL of version file. It should contain version code of new package.
      * @param storagePath The path to store downloaded resources.
+     * @js NA
      */
     AssetsManager(const char* packageUrl = NULL, const char* versionFileUrl = NULL, const char* storagePath = NULL);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~AssetsManager();
     
+    typedef std::function<void(int)> ErrorCallback;
+    typedef std::function<void(int)> ProgressCallback;
+    typedef std::function<void(void)> SuccessCallback;
+
+    /* @brief To access within scripting environment
+     */
+    static AssetsManager* create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback );
+
     /* @brief Check out if there is a new version resource.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
@@ -124,6 +136,8 @@ public:
     void setStoragePath(const char* storagePath);
     
     /** @brief Sets delegate, the delegate will receive messages
+     * @js NA
+     * @lua NA
      */
     void setDelegate(AssetsManagerDelegateProtocol *delegate);
     
@@ -137,9 +151,8 @@ public:
     
     /* downloadAndUncompress is the entry of a new thread 
      */
-    friend void* assetsManagerDownloadAndUncompress(void*);
     friend int assetsManagerProgressFunc(void *, double, double, double, double);
-    
+
 protected:
     bool downLoad();
     void checkStoragePath();
@@ -147,6 +160,7 @@ protected:
     bool createDirectory(const char *path);
     void setSearchPath();
     void sendErrorMessage(ErrorCode code);
+    void downloadAndUncompress();
     
 private:
     typedef struct _Message
@@ -157,10 +171,17 @@ private:
         void* obj;
     } Message;
     
-    class Helper : public cocos2d::CCObject
+    class Helper : public cocos2d::Object
     {
     public:
+        /**
+         * @js ctor
+         */
         Helper();
+        /**
+         * @js NA
+         * @lua NA
+         */
         ~Helper();
         
         virtual void update(float dt);
@@ -170,8 +191,17 @@ private:
         void handleUpdateSucceed(Message *msg);
         
         std::list<Message*> *_messageQueue;
-        pthread_mutex_t _messageQueueMutex;
+        std::mutex _messageQueueMutex;
     };
+
+private:
+    /** @brief Initializes storage path.
+     */
+    void createStoragePath();
+    
+    /** @brief Destroys storage path.
+     */
+    void destroyStoragePath();
     
 private:
     //! The path to store downloaded resources.
@@ -185,12 +215,18 @@ private:
     
     std::string _downloadedVersion;
     
-    CURL *_curl;
+    void *_curl;
+
     Helper *_schedule;
-    pthread_t *_tid;
     unsigned int _connectionTimeout;
     
-    AssetsManagerDelegateProtocol *_delegate; // weak reference
+    AssetsManagerDelegateProtocol *_delegate; 
+    
+    bool _isDownloading;
+    bool _shouldDeleteDelegateWhenExit;
+    
+    std::string keyOfVersion() const;
+    std::string keyOfDownloadedVersion() const;
 };
 
 class AssetsManagerDelegateProtocol
@@ -198,19 +234,29 @@ class AssetsManagerDelegateProtocol
 public:
     /* @brief Call back function for error
        @param errorCode Type of error
+     * @js NA
+     * @lua NA
      */
     virtual void onError(AssetsManager::ErrorCode errorCode) {};
     /** @brief Call back function for recording downloading percent
         @param percent How much percent downloaded
-        @warn This call back function just for recording downloading percent.
+        @warning    This call back function just for recording downloading percent.
               AssetsManager will do some other thing after downloading, you should
               write code in onSuccess() after downloading. 
+     * @js NA
+     * @lua NA
      */
     virtual void onProgress(int percent) {};
     /** @brief Call back function for success
+     * @js NA
+     * @lua NA
      */
     virtual void onSuccess() {};
 };
+
+// Deprecated declaration
+CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
+CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
 NS_CC_EXT_END;
 

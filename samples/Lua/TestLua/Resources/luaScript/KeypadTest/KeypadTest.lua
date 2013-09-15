@@ -1,16 +1,16 @@
 local function KeypadMainLayer()	
-	local pLayer = CCLayer:create()   
+	local pLayer = cc.Layer:create()   
 	
-	local  s = CCDirector:sharedDirector():getWinSize()
-    local  label = CCLabelTTF:create("Keypad Test", "Arial", 28)
+	local  s = cc.Director:getInstance():getWinSize()
+    local  label = cc.LabelTTF:create("Keypad Test", "Arial", 28)
     pLayer:addChild(label, 0)
-    label:setPosition( ccp(s.width/2, s.height-50) )
+    label:setPosition( cc.p(s.width/2, s.height-50) )
 
     pLayer:setKeypadEnabled(true)
 
     -- create a label to display the tip string
-    local pLabelTip = CCLabelTTF:create("Please press any key...", "Arial", 22)
-    pLabelTip:setPosition(ccp(s.width / 2, s.height / 2))
+    local pLabelTip = cc.LabelTTF:create("Please press any key...", "Arial", 22)
+    pLabelTip:setPosition(cc.p(s.width / 2, s.height / 2))
     pLayer:addChild(pLabelTip, 0)
     
     pLabelTip:retain()
@@ -31,7 +31,7 @@ end
 
 function KeypadTestMain()
 	cclog("KeypadTestMain")
-	local scene = CCScene:create()
+	local scene = cc.Scene:create()
 	scene:addChild(KeypadMainLayer())
 	scene:addChild(CreateBackMenuItem())
 	return scene

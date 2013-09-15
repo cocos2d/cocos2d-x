@@ -20,8 +20,8 @@ if [ -z "${NDK_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${CLANG_ROOT+aaa}" ]; then
-# ... if CLANG_ROOT is not set, use "$HOME/bin/clang+llvm-3.1"
-    CLANG_ROOT="$HOME/bin/clang+llvm-3.1"
+# ... if CLANG_ROOT is not set, use "$HOME/bin/clang+llvm-3.3"
+    CLANG_ROOT="$HOME/bin/clang+llvm-3.3"
 fi
 
 if [ -z "${PYTHON_BIN+aaa}" ]; then
@@ -80,7 +80,7 @@ echo ---
 # Generate bindings for cocos2dx
 echo "Generating bindings for cocos2dx..."
 set -x
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx.ini -s cocos2d-x -o ${COCOS2DX_ROOT}/scripting/javascript/bindings/generated -n jsb_cocos2dx_auto
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx.ini -s cocos2d-x -t spidermonkey -o ${COCOS2DX_ROOT}/scripting/auto-generated/js-bindings  -n jsb_cocos2dx_auto
 
 echo "Generating bindings for cocos2dx_extension..."
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -o ${COCOS2DX_ROOT}/scripting/javascript/bindings/generated -n jsb_cocos2dx_extension_auto
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t spidermonkey -o ${COCOS2DX_ROOT}/scripting/auto-generated/js-bindings -n jsb_cocos2dx_extension_auto

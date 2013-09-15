@@ -32,7 +32,17 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
+// XXX deprecated
 void CCLog(const char * pszFormat, ...)
+{
+    va_list args;
+    va_start(args, pszFormat);        
+    __android_log_vprint(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat, args);
+    va_end(args);
+
+}
+
+void log(const char * pszFormat, ...)
 {
     char buf[MAX_LEN];
 
@@ -41,17 +51,17 @@ void CCLog(const char * pszFormat, ...)
     vsnprintf(buf, MAX_LEN, pszFormat, args);
     va_end(args);
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  buf);
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
 }
 
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     showDialogJNI(pszMsg, pszTitle);
 }
 
-void CCLuaLog(const char * pszFormat)
+void LuaLog(const char * pszFormat)
 {
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat);
+    __android_log_write(ANDROID_LOG_DEBUG, "cocos2d-x debug info", pszFormat);
 }
 
 NS_CC_END

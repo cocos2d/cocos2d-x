@@ -36,55 +36,61 @@ NS_CC_BEGIN
  * @addtogroup menu
  * @{
  */
-typedef enum  
-{
-    kCCMenuStateWaiting,
-    kCCMenuStateTrackingTouch
-} tCCMenuState;
 
-enum {
-    //* priority used by the menu for the event handler
-    kCCMenuHandlerPriority = -128,
-};
 
-/** @brief A CCMenu
+
+/** @brief A Menu
 * 
 * Features and Limitation:
 *  - You can add MenuItem objects in runtime using addChild:
 *  - But the only accepted children are MenuItem objects
 */
-class CC_DLL CCMenu : public CCLayerRGBA
+class CC_DLL Menu : public LayerRGBA
 {
-    /** whether or not the menu will receive events */
-    bool m_bEnabled;
-    
 public:
-    CCMenu() : m_pSelectedItem(NULL) {}
-    virtual ~CCMenu(){}
+    enum
+    {
+        HANDLER_PRIORITY = -128,
+    };
+    
+    enum class State
+    {
+        WAITING,
+        TRACKING_TOUCH,
+    };
+    
+    /** creates an empty Menu */
+    static Menu* create();
 
-    /** creates an empty CCMenu */
-    static CCMenu* create();
+    /** creates a Menu with MenuItem objects */
+    static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
-    /** creates a CCMenu with CCMenuItem objects */
-    static CCMenu* create(CCMenuItem* item, ...);
+    /** creates a Menu with a Array of MenuItem objects */
+    static Menu* createWithArray(Array* pArrayOfItems);
 
-    /** creates a CCMenu with a CCArray of CCMenuItem objects */
-    static CCMenu* createWithArray(CCArray* pArrayOfItems);
-
-    /** creates a CCMenu with it's item, then use addChild() to add 
+    /** creates a Menu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
     */
-    static CCMenu* createWithItem(CCMenuItem* item);
+    static Menu* createWithItem(MenuItem* item);
     
-    /** creates a CCMenu with CCMenuItem objects */
-    static CCMenu* createWithItems(CCMenuItem *firstItem, va_list args);
+    /** creates a Menu with MenuItem objects */
+    static Menu* createWithItems(MenuItem *firstItem, va_list args);
+    /**
+     * @js ctor
+     */
+    Menu() : _selectedItem(NULL) {}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Menu(){}
 
-    /** initializes an empty CCMenu */
+    /** initializes an empty Menu */
     bool init();
 
-    /** initializes a CCMenu with a NSArray of CCMenuItem objects */
-    bool initWithArray(CCArray* pArrayOfItems);
+    /** initializes a Menu with a NSArray of MenuItem objects */
+    bool initWithArray(Array* pArrayOfItems);
 
     /** align items vertically */
     void alignItemsVertically();
@@ -101,49 +107,43 @@ public:
     void alignItemsHorizontallyWithPadding(float padding);
 
     /** align items in rows of columns */
-    void alignItemsInColumns(unsigned int columns, ...);
-    void alignItemsInColumns(unsigned int columns, va_list args);
-    void alignItemsInColumnsWithArray(CCArray* rows);
+    void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
+    void alignItemsInColumns(int columns, va_list args);
+    void alignItemsInColumnsWithArray(Array* rows);
 
     /** align items in columns of rows */
-    void alignItemsInRows(unsigned int rows, ...);
-    void alignItemsInRows(unsigned int rows, va_list args);
-    void alignItemsInRowsWithArray(CCArray* columns);
+    void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
+    void alignItemsInRows(int rows, va_list args);
+    void alignItemsInRowsWithArray(Array* columns);
 
-    /** set event handler priority. By default it is: kCCMenuTouchPriority */
+    /** set event handler priority. By default it is: kMenuTouchPriority */
     void setHandlerPriority(int newPriority);
 
-    //super methods
-    virtual void addChild(CCNode * child);
-    virtual void addChild(CCNode * child, int zOrder);
-    virtual void addChild(CCNode * child, int zOrder, int tag);
     virtual void registerWithTouchDispatcher();
-    virtual void removeChild(CCNode* child, bool cleanup);
+    virtual void removeChild(Node* child, bool cleanup);
 
-    /**
-    @brief For phone event handle functions
-    */
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-    virtual void ccTouchCancelled(CCTouch *touch, CCEvent* event);
-    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual bool isEnabled() const { return _enabled; }
+    virtual void setEnabled(bool value) { _enabled = value; };
 
-    /**
-    @since v0.99.5
-    override onExit
-    */
-    virtual void onExit();
-
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) { return false;}
-    
-    virtual bool isEnabled() { return m_bEnabled; }
-    virtual void setEnabled(bool value) { m_bEnabled = value; };
+    // overrides
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual bool ccTouchBegan(Touch* touch, Event* event) override;
+    virtual void ccTouchEnded(Touch* touch, Event* event) override;
+    virtual void ccTouchCancelled(Touch *touch, Event* event) override;
+    virtual void ccTouchMoved(Touch* touch, Event* event) override;
+    virtual void onExit() override;
+    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB(void) const override { return false;}
 
 protected:
-    CCMenuItem* itemForTouch(CCTouch * touch);
-    tCCMenuState m_eState;
-    CCMenuItem *m_pSelectedItem;
+    /** whether or not the menu will receive events */
+    bool _enabled;
+
+    MenuItem* itemForTouch(Touch * touch);
+    State _state;
+    MenuItem *_selectedItem;
 };
 
 // end of GUI group

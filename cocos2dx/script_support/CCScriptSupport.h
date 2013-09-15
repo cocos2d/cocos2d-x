@@ -38,12 +38,12 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class CCTimer;
-class CCLayer;
-class CCMenuItem;
-class CCNotificationCenter;
-class CCCallFunc;
-class CCAcceleration;
+class Timer;
+class Layer;
+class MenuItem;
+class NotificationCenter;
+class CallFunc;
+class Acceleration;
 
 enum ccScriptType {
     kScriptTypeNone = 0,
@@ -51,31 +51,35 @@ enum ccScriptType {
     kScriptTypeJavascript
 };
 
-class CCScriptHandlerEntry : public CCObject
+class ScriptHandlerEntry : public Object
 {
 public:
-    static CCScriptHandlerEntry* create(int nHandler);
-    ~CCScriptHandlerEntry(void);
+    static ScriptHandlerEntry* create(int nHandler);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~ScriptHandlerEntry(void);
     
     int getHandler(void) {
-        return m_nHandler;
+        return _handler;
     }
     
     int getEntryId(void) {
-        return m_nEntryId;
+        return _entryId;
     }
     
 protected:
-    CCScriptHandlerEntry(int nHandler)
-    : m_nHandler(nHandler)
+    ScriptHandlerEntry(int nHandler)
+    : _handler(nHandler)
     {
         static int newEntryId = 0;
         newEntryId++;
-        m_nEntryId = newEntryId;
+        _entryId = newEntryId;
     }
     
-    int m_nHandler;
-    int m_nEntryId;
+    int _handler;
+    int _entryId;
 };
 
 /**
@@ -83,111 +87,323 @@ protected:
  * @{
  */
 
-class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
+class SchedulerScriptHandlerEntry : public ScriptHandlerEntry
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
-    ~CCSchedulerScriptHandlerEntry(void);
-    
-    cocos2d::CCTimer* getTimer(void) {
-        return m_pTimer;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~SchedulerScriptHandlerEntry(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    cocos2d::Timer* getTimer(void) {
+        return _timer;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isPaused(void) {
-        return m_bPaused;
+        return _paused;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     void markedForDeletion(void) {
-        m_bMarkedForDeletion = true;
+        _markedForDeletion = true;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isMarkedForDeletion(void) {
-        return m_bMarkedForDeletion;
+        return _markedForDeletion;
     }
     
 private:
-    CCSchedulerScriptHandlerEntry(int nHandler)
-    : CCScriptHandlerEntry(nHandler)
-    , m_pTimer(NULL)
-    , m_bPaused(false)
-    , m_bMarkedForDeletion(false)
+    SchedulerScriptHandlerEntry(int nHandler)
+    : ScriptHandlerEntry(nHandler)
+    , _timer(NULL)
+    , _paused(false)
+    , _markedForDeletion(false)
     {
     }
     bool init(float fInterval, bool bPaused);
     
-    cocos2d::CCTimer*   m_pTimer;
-    bool                m_bPaused;
-    bool                m_bMarkedForDeletion;
+    cocos2d::Timer*   _timer;
+    bool                _paused;
+    bool                _markedForDeletion;
 };
 
 
 
-class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
+class TouchScriptHandlerEntry : public ScriptHandlerEntry
 {
 public:
-    static CCTouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
-    ~CCTouchScriptHandlerEntry(void);
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static TouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~TouchScriptHandlerEntry(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool isMultiTouches(void) {
-        return m_bIsMultiTouches;
+        return _isMultiTouches;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     int getPriority(void) {
-        return m_nPriority;
+        return _priority;
     }
-    
+    /**
+     * @js NA
+     * @lua NA
+     */
     bool getSwallowsTouches(void) {
-        return m_bSwallowsTouches;
+        return _swallowsTouches;
     }
     
 private:
-    CCTouchScriptHandlerEntry(int nHandler)
-    : CCScriptHandlerEntry(nHandler)
-    , m_bIsMultiTouches(false)
-    , m_nPriority(0)
-    , m_bSwallowsTouches(false)
+    TouchScriptHandlerEntry(int nHandler)
+    : ScriptHandlerEntry(nHandler)
+    , _isMultiTouches(false)
+    , _priority(0)
+    , _swallowsTouches(false)
     {
     }
     bool init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
     
-    bool    m_bIsMultiTouches;
-    int     m_nPriority;
-    bool    m_bSwallowsTouches;
+    bool    _isMultiTouches;
+    int     _priority;
+    bool    _swallowsTouches;
 };
 
+enum ScriptEventType
+{
+    kNodeEvent = 0,
+    kMenuClickedEvent,
+    kNotificationEvent,
+    kCallFuncEvent,
+    kScheduleEvent,
+    kTouchEvent,
+    kTouchesEvent,
+    kKeypadEvent,
+    kAccelerometerEvent,
+    kControlEvent,
+    kCommonEvent,
+    kTableViewEvent,//Now it's only used in LuaBinding
+};
 
-// Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
+struct BasicScriptData
+{
+    // nativeobject:to get handler for lua or to get jsobject for js
+    void* nativeObject;
+    // value: a pointer to a object that already defined
+    void* value;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    BasicScriptData(void* inObject,void* inValue = NULL)
+    : nativeObject(inObject),value(inValue)
+    {
+    }
+};
+
+struct SchedulerScriptData
+{
+    // lua use
+    int handler;
+    float elapse;
+    // js use
+    void* node;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    SchedulerScriptData(int inHandler,float inElapse,void* inNode = NULL)
+    : handler(inHandler),
+      elapse(inElapse),
+      node(inNode)
+    {
+    }
+};
+
+struct TouchesScriptData
+{
+    int actionType;
+    void* nativeObject;
+    Set* touches;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchesScriptData(int inActionType, void* inNativeObject, Set* inTouches)
+    : actionType(inActionType),
+      nativeObject(inNativeObject),
+      touches(inTouches)
+    {
+    }
+};
+
+struct TouchScriptData
+{
+    int actionType;
+    void* nativeObject;
+    Touch* touch;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    TouchScriptData(int inActionType, void* inNativeObject, Touch* inTouch)
+    : actionType(inActionType),
+      nativeObject(inNativeObject),
+      touch(inTouch)
+    {
+    }
+};
+
+struct KeypadScriptData
+{
+    int actionType;
+    void* nativeObject;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    KeypadScriptData(int inActionType,void* inNativeObject)
+    : actionType(inActionType),nativeObject(inNativeObject)
+    {
+    }
+};
+
+struct CommonScriptData
+{
+    // Now this struct is only used in LuaBinding.
+    int handler;
+    char eventName[64];
+    Object* eventSource;
+    char eventSourceClassName[64];
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
+    : handler(inHandler),
+      eventSource(inSource)
+    {
+        strncpy(eventName, inName, 64);
+        
+        if (NULL == inClassName)
+        {
+            memset(eventSourceClassName, 0, 64*sizeof(char));
+        }
+        else
+        {
+            strncpy(eventSourceClassName, inClassName, 64);
+        }
+    }
+};
+
+struct ScriptEvent
+{
+    ScriptEventType type;
+    void* data;
+    
+    // Constructor
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ScriptEvent(ScriptEventType inType,void* inData)
+    : type(inType),
+      data(inData)
+    {
+    }
+};
+
+// Don't make ScriptEngineProtocol inherits from Object since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
 // So a crash will appear on Win32 if you click the close button.
-class CC_DLL CCScriptEngineProtocol
+class CC_DLL ScriptEngineProtocol
 {
 public:
-    virtual ~CCScriptEngineProtocol() {};
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ScriptEngineProtocol() {};
     
-    /** Get script type */
+    /** Get script type 
+     * @js NA
+     * @lua NA
+     */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
 
-    /** Remove script object. */
-    virtual void removeScriptObjectByCCObject(CCObject* pObj) = 0;
+    /** Remove script object. 
+     * @js NA
+     * @lua NA
+     */
+    virtual void removeScriptObjectByObject(Object* pObj) = 0;
     
-    /** Remove script function handler, only CCLuaEngine class need to implement this function. */
+    /** Remove script function handler, only LuaEngine class need to implement this function. 
+     * @js NA
+     * @lua NA
+     */
     virtual void removeScriptHandler(int nHandler) {};
     
-    /** Reallocate script function handler, only CCLuaEngine class need to implement this function. */
-    virtual int reallocateScriptHandler(int nHandler) { return -1;}
+    /** Reallocate script function handler, only LuaEngine class need to implement this function. 
+     * @js NA
+     * @lua NA
+     */
+    virtual int reallocateScriptHandler(int nHandler) { return 0;}
     
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.
      @return 0 if the string is executed correctly.
      @return other if the string is executed wrongly.
+     * @js NA
+     * @lua NA
      */
     virtual int executeString(const char* codes) = 0;
     
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
+     * @js NA
+     * @lua NA
      */
     virtual int executeScriptFile(const char* filename) = 0;
     
@@ -196,71 +412,83 @@ public:
      @brief The function should not take any parameters and should return an integer.
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
+     * @js NA
+     * @lua NA
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    /**
-     @brief Execute a node event function
-     @param pNode which node produce this event
-     @param nAction kCCNodeOnEnter,kCCNodeOnExit,kCCMenuItemActivated,kCCNodeOnEnterTransitionDidFinish,kCCNodeOnExitTransitionDidStart
-     @return The integer value returned from the script function.
+    /**when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+     * @js NA
+     * @lua NA
      */
-    virtual int executeNodeEvent(CCNode* pNode, int nAction) = 0;
+    virtual int sendEvent(ScriptEvent* evt) = 0;
     
-    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem) = 0;
-    /** Execute a notification event function */
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
-    
-    /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
-    /** execute a schedule function */
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL) = 0;
-    
-    /** functions for executing touch event */
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
-
-    /** functions for keypad event */
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType) = 0;
-
-    /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
-
-    /** function for common event */
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
-
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
+     * @js NA
+     * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
 };
 
 /**
- CCScriptEngineManager is a singleton which holds an object instance of CCScriptEngineProtocl
+ ScriptEngineManager is a singleton which holds an object instance of ScriptEngineProtocl
  It helps cocos2d-x and the user code to find back LuaEngine object
  @since v0.99.5-x-0.8.5
  */
-class CC_DLL CCScriptEngineManager
+class CC_DLL ScriptEngineManager
 {
 public:
-    ~CCScriptEngineManager(void);
-    
-    CCScriptEngineProtocol* getScriptEngine(void) {
-        return m_pScriptEngine;
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~ScriptEngineManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ScriptEngineProtocol* getScriptEngine(void) {
+        return _scriptEngine;
     }
-    void setScriptEngine(CCScriptEngineProtocol *pScriptEngine);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void setScriptEngine(ScriptEngineProtocol *pScriptEngine);
+    /**
+     * @js NA
+     * @lua NA
+     */
     void removeScriptEngine(void);
-    
-    static CCScriptEngineManager* sharedManager(void);
-    static void purgeSharedManager(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static ScriptEngineManager* getInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static void destroyInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:
-    CCScriptEngineManager(void)
-    : m_pScriptEngine(NULL)
+    ScriptEngineManager(void)
+    : _scriptEngine(NULL)
     {
     }
     
-    CCScriptEngineProtocol *m_pScriptEngine;
+    ScriptEngineProtocol *_scriptEngine;
 };
 
 // end of script_support group

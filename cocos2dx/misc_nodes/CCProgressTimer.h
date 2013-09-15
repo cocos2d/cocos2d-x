@@ -37,97 +37,115 @@ NS_CC_BEGIN
  * @{
  */
 
-/** Types of progress
- @since v0.99.1
- */
-typedef enum {
-    /// Radial Counter-Clockwise
-    kCCProgressTimerTypeRadial,
-    /// Bar
-    kCCProgressTimerTypeBar,
-} CCProgressTimerType;
-
 /**
- @brief CCProgressTimer is a subclass of CCNode.
+ @brief ProgressTimer is a subclass of Node.
  It renders the inner sprite according to the percentage.
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNodeRGBA
+class CC_DLL ProgressTimer : public NodeRGBA
 #ifdef EMSCRIPTEN
-, public CCGLBufferedNode
+, public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
-    CCProgressTimer();
-    ~CCProgressTimer(void);
-
-    /**    Change the percentage to change progress. */
-    inline CCProgressTimerType getType(void) { return m_eType; }
-
-    /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {return m_fPercentage; }
-
-    /** The image to show the progress percentage, retain */
-    inline CCSprite* getSprite(void) { return m_pSprite; }
+    /** Types of progress
+     @since v0.99.1
+     */
+    enum class Type
+    {
+        /// Radial Counter-Clockwise
+        RADIAL,
+        /// Bar
+        BAR,
+    };
+    
+    /** Creates a progress timer with the sprite as the shape the timer goes through */
+    static ProgressTimer* create(Sprite* sp);
+    /**
+     * @js ctor
+     */
+    ProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ProgressTimer();
 
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
-    bool initWithSprite(CCSprite* sp);
+    bool initWithSprite(Sprite* sp);
+
+    /** Change the percentage to change progress. */
+    inline Type getType() const { return _type; }
+
+    /** Percentages are from 0 to 100 */
+    inline float getPercentage() const {return _percentage; }
+
+    /** The image to show the progress percentage, retain */
+    inline Sprite* getSprite() const { return _sprite; }
 
     void setPercentage(float fPercentage);
-    void setSprite(CCSprite *pSprite);
-    void setType(CCProgressTimerType type);
+    void setSprite(Sprite *pSprite);
+    void setType(Type type);
+    /**
+     * @js setReverseDirection
+     * @lua setReverseDirection
+     */
     void setReverseProgress(bool reverse);
 
-    virtual void draw(void);
-    void setAnchorPoint(CCPoint anchorPoint);
-
-    virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB(void);
-    
-    inline bool isReverseDirection() { return m_bReverseDirection; };
-    inline void setReverseDirection(bool value) { m_bReverseDirection = value; };
-
-public:
-    /** Creates a progress timer with the sprite as the shape the timer goes through */
-    static CCProgressTimer* create(CCSprite* sp);
-protected:
-    ccTex2F textureCoordFromAlphaPoint(CCPoint alpha);
-    ccVertex2F vertexFromAlphaPoint(CCPoint alpha);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    void updateColor(void);
-    CCPoint boundaryTexCoord(char index);
-
-protected:
-    CCProgressTimerType m_eType;
-    float m_fPercentage;
-    CCSprite *m_pSprite;
-    int m_nVertexDataCount;
-    ccV2F_C4B_T2F *m_pVertexData;
+    inline bool isReverseDirection() { return _reverseDirection; };
+    inline void setReverseDirection(bool value) { _reverseDirection = value; };
 
     /**
      *    Midpoint is used to modify the progress start position.
      *    If you're using radials type then the midpoint changes the center point
      *    If you're using bar type the the midpoint changes the bar growth
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to ccp(0,y)
-     *        you want a right to left then set the midpoint all the way to ccp(1,y)
-     *        you want a bottom to top then set the midpoint all the way to ccp(x,0)
-     *        you want a top to bottom then set the midpoint all the way to ccp(x,1)
+     *        you want a left to right then set the midpoint all the way to Point(0,y)
+     *        you want a right to left then set the midpoint all the way to Point(1,y)
+     *        you want a bottom to top then set the midpoint all the way to Point(x,0)
+     *        you want a top to bottom then set the midpoint all the way to Point(x,1)
      */
-    CC_PROPERTY(CCPoint, m_tMidpoint, Midpoint);
+    void setMidpoint(const Point& point);
+    /** Returns the Midpoint */
+    Point getMidpoint() const;
 
     /**
      *    This allows the bar type to move the component at a specific rate
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%
-     *    Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
+     *    Set the rate to be Point(0,1); and set the midpoint to = Point(0,.5f);
      */
-    CC_SYNTHESIZE(CCPoint, m_tBarChangeRate, BarChangeRate);
+    inline void setBarChangeRate(const Point& barChangeRate ) { _barChangeRate = barChangeRate; }
+    /** Returns the BarChangeRate */
+    inline Point getBarChangeRate() const { return _barChangeRate; }
 
-    bool m_bReverseDirection;
+    // Overrides
+    virtual void draw(void) override;
+    void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setColor(const Color3B& color) override;
+    virtual const Color3B& getColor() const override;
+    virtual GLubyte getOpacity() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    
+protected:
+    Tex2F textureCoordFromAlphaPoint(Point alpha);
+    Vertex2F vertexFromAlphaPoint(Point alpha);
+    void updateProgress(void);
+    void updateBar(void);
+    void updateRadial(void);
+    void updateColor(void);
+    Point boundaryTexCoord(char index);
+
+    Type _type;
+    Point _midpoint;
+    Point _barChangeRate;
+    float _percentage;
+    Sprite *_sprite;
+    int _vertexDataCount;
+    V2F_C4B_T2F *_vertexData;
+
+    bool _reverseDirection;
 };
 
 // end of misc_nodes group

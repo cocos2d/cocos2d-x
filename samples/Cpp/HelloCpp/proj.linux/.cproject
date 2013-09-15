@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.exe.debug.1378309016">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.exe.debug.1378309016" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -37,7 +35,9 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.753894218" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1866379485" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1499791735" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1024548975" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -46,11 +46,12 @@
 								<option id="gnu.c.compiler.option.include.paths.141168982" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1586206751" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1184297872" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1033696081" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1383466696" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1383466696" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1391251808" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
@@ -60,7 +61,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.1730426040" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../../../../cocos2dx/proj.linux/${ConfigName}"/>
-									<listOptionValue builtIn="false" value="../../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/proj.linux/${ConfigName}"/>
 									<listOptionValue builtIn="false" value="../../../../../CocosDenshion/third_party/fmod/api/lib"/>
 								</option>
@@ -118,7 +118,9 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1649765609" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1723104068" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.627062533" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1992070152" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -127,6 +129,7 @@
 								<option id="gnu.c.compiler.option.include.paths.92708570" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1314682529" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1476095646" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -196,7 +199,9 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1548854529" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.2007222686" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1315195796" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1416670206" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug">
@@ -205,11 +210,12 @@
 								<option id="gnu.c.compiler.option.include.paths.933596900" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.832129936" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.554519008" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../CocosDenshion/third_party/fmod/api/lib" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.2053496868" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
-							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/lib64/api/lib  -Wl,-rpath,../../../../cocos2dx/platform/third_party/linux/glew-1.7.0/glew-1.7.0/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1997771554" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} bin/${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} -Wl,-rpath,${ProjDirPath}/../../../../cocos2dx/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/proj.linux/${ConfigName} -Wl,-rpath,${ProjDirPath}/../../../../CocosDenshion/third_party/fmod/lib64/api/lib" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1997771554" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.1152326257" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2d"/>
 									<listOptionValue builtIn="false" value="GLEW"/>
@@ -276,7 +282,9 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.126458805" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.915252180" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1688497828" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.183595977" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release">
@@ -285,6 +293,7 @@
 								<option id="gnu.c.compiler.option.include.paths.1845657" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1210902351" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LINUX"/>
+									<listOptionValue builtIn="false" value="CC_KEYBOARD_SUPPORT"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1195049589" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

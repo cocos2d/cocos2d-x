@@ -10,7 +10,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../GUI/CCControlExtension \
 	-I../GUI/CCEditBox \
 	-I../network \
-    -I../Components \
+	-I../Components \
 	-I../CCArmature
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
@@ -35,7 +35,6 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCBSequence.cpp \
 ../CCBReader/CCBSequenceProperty.cpp \
 ../CCBReader/CCBValue.cpp \
-../CCBReader/CCData.cpp \
 ../CCBReader/CCNode+CCBRelativePositioning.cpp \
 ../GUI/CCScrollView/CCScrollView.cpp \
 ../GUI/CCScrollView/CCSorting.cpp \
@@ -58,6 +57,36 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../network/HttpClient.cpp \
 ../physics_nodes/CCPhysicsDebugNode.cpp \
 ../physics_nodes/CCPhysicsSprite.cpp \
+../CocoStudio/Armature/CCArmature.cpp \
+../CocoStudio/Armature/CCBone.cpp \
+../CocoStudio/Armature/animation/CCArmatureAnimation.cpp \
+../CocoStudio/Armature/animation/CCProcessBase.cpp \
+../CocoStudio/Armature/animation/CCTween.cpp \
+../CocoStudio/Armature/datas/CCDatas.cpp \
+../CocoStudio/Armature/display/CCBatchNode.cpp \
+../CocoStudio/Armature/display/CCDecorativeDisplay.cpp \
+../CocoStudio/Armature/display/CCDisplayFactory.cpp \
+../CocoStudio/Armature/display/CCDisplayManager.cpp \
+../CocoStudio/Armature/display/CCSkin.cpp \
+../CocoStudio/Armature/physics/CCColliderDetector.cpp \
+../CocoStudio/Armature/utils/CCArmatureDefine.cpp \
+../CocoStudio/Armature/utils/CCArmatureDataManager.cpp \
+../CocoStudio/Armature/utils/CCDataReaderHelper.cpp \
+../CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.cpp \
+../CocoStudio/Armature/utils/CCTransformHelp.cpp \
+../CocoStudio/Armature/utils/CCTweenFunction.cpp \
+../CocoStudio/Armature/utils/CCUtilMath.cpp \
+../CocoStudio/Components/CCComAttribute.cpp \
+../CocoStudio/Components/CCComAudio.cpp \
+../CocoStudio/Components/CCComController.cpp \
+../CocoStudio/Components/CCComRender.cpp \
+../CocoStudio/Components/CCInputDelegate.cpp \
+../CocoStudio/Json/CSContentJsonDictionary.cpp \
+../CocoStudio/Json/DictionaryHelper.cpp \
+../CocoStudio/Json/lib_json/json_value.cpp \
+../CocoStudio/Json/lib_json/json_reader.cpp \
+../CocoStudio/Json/lib_json/json_writer.cpp \
+../CocoStudio/Reader/CCSSceneReader.cpp \
 ../spine/Animation.cpp \
 ../spine/AnimationState.cpp \
 ../spine/AnimationStateData.cpp \
@@ -79,39 +108,11 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../spine/spine-cocos2dx.cpp \
 ../spine/CCSkeleton.cpp \
 ../spine/CCSkeletonAnimation.cpp \
-../Components/CCComAttribute.cpp \
-../Components/CCComAudio.cpp \
-../Components/CCComController.cpp \
-../Components/CCInputDelegate.cpp \
-../CCArmature/CCArmature.cpp \
-../CCArmature/CCBone.cpp \
-../CCArmature/animation/CCArmatureAnimation.cpp \
-../CCArmature/animation/CCProcessBase.cpp \
-../CCArmature/animation/CCTween.cpp \
-../CCArmature/datas/CCDatas.cpp \
-../CCArmature/display/CCBatchNode.cpp \
-../CCArmature/display/CCDecorativeDisplay.cpp \
-../CCArmature/display/CCDisplayFactory.cpp \
-../CCArmature/display/CCDisplayManager.cpp \
-../CCArmature/display/CCShaderNode.cpp \
-../CCArmature/display/CCSkin.cpp \
-../CCArmature/external_tool/GLES-Render.cpp \
-../CCArmature/external_tool/Json/CSContentJsonDictionary.cpp \
-../CCArmature/external_tool/Json/lib_json/json_value.cpp \
-../CCArmature/external_tool/Json/lib_json/json_reader.cpp \
-../CCArmature/external_tool/Json/lib_json/json_writer.cpp \
-../CCArmature/physics/CCColliderDetector.cpp \
-../CCArmature/physics/CCPhysicsWorld.cpp \
-../CCArmature/utils/CCArmatureDataManager.cpp \
-../CCArmature/utils/CCDataReaderHelper.cpp \
-../CCArmature/utils/CCSpriteFrameCacheHelper.cpp \
-../CCArmature/utils/CCTransformHelp.cpp \
-../CCArmature/utils/CCTweenFunction.cpp \
-../CCArmature/utils/CCUtilMath.cpp \
+../CCDeprecated-ext.cpp
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 
-CXXFLAGS += -Wno-multichar -Wno-delete-non-virtual-dtor
+CXXFLAGS += -Wno-multichar
 
 TARGET := $(LIB_DIR)/$(TARGET)
 

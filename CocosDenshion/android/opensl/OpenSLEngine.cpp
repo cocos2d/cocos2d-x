@@ -6,8 +6,8 @@ using namespace std;
 
 
 OpenSLEngine::OpenSLEngine()
- :m_musicVolume(0),
-  m_effectVolume(0)
+ :_musicVolume(0),
+  _effectVolume(0)
 {}
 
 OpenSLEngine::~OpenSLEngine()
@@ -130,14 +130,50 @@ extern "C" {
 #define MAX_VOLUME_MILLIBEL 0
 #define RANGE_VOLUME_MILLIBEL 4000
 
-struct AudioPlayer
+class AudioPlayer
 {
+public:
 	SLDataSource audioSrc;
 	SLObjectItf fdPlayerObject;
 	SLPlayItf fdPlayerPlay;
 	SLSeekItf fdPlayerSeek;
-	SLVolumeItf fdPlayerVolume;
-} musicPlayer; /* for background music */
+    SLVolumeItf fdPlayerVolume;
+    SLPlaybackRateItf fdPlaybackRate;
+
+    /// Applies global effects volume, takes effect gain into account.
+    /// @param volume In range 0..1.
+    void applyEffectsVolume(float volume)
+    {
+        SLmillibel finalVolume = int (RANGE_VOLUME_MILLIBEL * (volume * _gain)) + MIN_VOLUME_MILLIBEL;
+        SLresult result = (*fdPlayerVolume)->SetVolumeLevel(fdPlayerVolume, finalVolume);
+        assert(SL_RESULT_SUCCESS == result);
+    }
+
+    void applyParameters(bool isLooping, float pitch, float pan, float gain, float effectsVolume)
+    {
+        SLresult result = (*fdPlayerSeek)->SetLoop(fdPlayerSeek, (SLboolean) isLooping, 0, SL_TIME_UNKNOWN);
+        assert(SL_RESULT_SUCCESS == result);
+
+        SLpermille stereo = SLpermille(1000 * pan);
+        result = (*fdPlayerVolume)->EnableStereoPosition(fdPlayerVolume, SL_BOOLEAN_TRUE);
+        assert(SL_RESULT_SUCCESS == result);
+        result = (*fdPlayerVolume)->SetStereoPosition(fdPlayerVolume, stereo);
+        assert(SL_RESULT_SUCCESS == result);
+
+        SLpermille playbackRate = SLpermille(1000 * pitch);
+        if (fdPlaybackRate)
+            result = (*fdPlaybackRate)->SetRate(fdPlaybackRate, playbackRate);
+        assert(SL_RESULT_SUCCESS == result);
+
+        _gain = gain;
+        applyEffectsVolume(effectsVolume);
+    }
+
+private:
+    float _gain;
+};
+
+static AudioPlayer s_musicPlayer; /* for background music */
 
 typedef map<unsigned int, vector<AudioPlayer*>* > EffectList;
 typedef pair<unsigned int, vector<AudioPlayer*>* > Effect;
@@ -275,6 +311,9 @@ bool createAudioPlayerBySource(AudioPlayer* player)
 	result = (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_SEEK"), &(player->fdPlayerSeek));
 	assert(SL_RESULT_SUCCESS == result);
 
+    // get the playback rate interface, if available
+    (*(player->fdPlayerObject))->GetInterface(player->fdPlayerObject, getInterfaceID("SL_IID_PLAYBACKRATE"), &(player->fdPlaybackRate));
+
 	return true;
 }
 
@@ -289,7 +328,8 @@ bool initAudioPlayer(AudioPlayer* player, const char* filename)
 		if(fp){
 			SLDataLocator_URI loc_fd = {SL_DATALOCATOR_URI , (SLchar*)filename};
 			SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-			(player->audioSrc) = {&loc_fd, &format_mime};
+			player->audioSrc.pLocator = &loc_fd;
+			player->audioSrc.pFormat = &format_mime;
 			return createAudioPlayerBySource(player);
 		}
 		LOGD("file not found! Stop preload file: %s", filename);
@@ -316,6 +356,7 @@ void destroyAudioPlayer(AudioPlayer * player)
 		player->fdPlayerPlay = NULL;
 		player->fdPlayerSeek = NULL;
 		player->fdPlayerVolume = NULL;
+        player->fdPlaybackRate = NULL;
 	}
 }
 
@@ -330,7 +371,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 	const char* errorInfo = dlerror();
 	if (errorInfo)
 	{
-		LOGD(errorInfo);
+		LOGD("%s", errorInfo);
 		return;
 	}
 
@@ -367,7 +408,7 @@ void OpenSLEngine::createEngine(void* pHandle)
 void OpenSLEngine::closeEngine()
 {
 	// destroy background players
-	destroyAudioPlayer(&musicPlayer);
+    destroyAudioPlayer(&s_musicPlayer);
 
 	// destroy effect players
 	vector<AudioPlayer*>* vec;
@@ -431,13 +472,6 @@ void PlayOverEvent(SLPlayItf caller, void* pContext, SLuint32 playEvent)
 	}
 }
 
-void setSingleEffectVolume(AudioPlayer* player, SLmillibel volume)
-{
-	SLresult result;
-	result = (*(player->fdPlayerVolume))->SetVolumeLevel(player->fdPlayerVolume, volume);
-	assert(result == SL_RESULT_SUCCESS);
-}
-
 int getSingleEffectState(AudioPlayer * player)
 {
 	SLuint32 state = 0;
@@ -499,7 +533,7 @@ bool OpenSLEngine::recreatePlayer(const char* filename)
 	assert(SL_RESULT_SUCCESS == result);
 
 	// set volume 
-	setSingleEffectVolume(newPlayer, m_effectVolume);
+    newPlayer->applyEffectsVolume(_effectVolume);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_STOPPED);
 	setSingleEffectState(newPlayer, SL_PLAYSTATE_PLAYING);
 
@@ -524,8 +558,8 @@ unsigned int OpenSLEngine::preloadEffect(const char * filename)
 		return FILE_NOT_FOUND;
 	}
 	
-	// set the new player's volume as others'
-	setSingleEffectVolume(player, m_effectVolume);
+    // set the new player's volume as others'
+    player->applyEffectsVolume(_effectVolume);
 
 	vector<AudioPlayer*>* vec = new vector<AudioPlayer*>;
 	vec->push_back(player);
@@ -640,9 +674,9 @@ void OpenSLEngine::resumeAllEffects()
 	}
 }
 
-void OpenSLEngine::setEffectLooping(unsigned int effectID, bool isLooping)
+void OpenSLEngine::setEffectParameters(unsigned int effectID, bool isLooping,
+                                       float pitch, float pan, float gain)
 {
-	SLresult result;
 	vector<AudioPlayer*>* vec = sharedList()[effectID];
 	assert(NULL != vec);
 
@@ -652,17 +686,15 @@ void OpenSLEngine::setEffectLooping(unsigned int effectID, bool isLooping)
 
 	if (player && player->fdPlayerSeek) 
 	{
-		result = (*(player->fdPlayerSeek))->SetLoop(player->fdPlayerSeek, (SLboolean) isLooping, 0, SL_TIME_UNKNOWN);
-		assert(SL_RESULT_SUCCESS == result);
+        player->applyParameters(isLooping, pitch, pan, gain, _effectVolume);
 	}
 }
 
 void OpenSLEngine::setEffectsVolume(float volume)
 {
 	assert(volume <= 1.0f && volume >= 0.0f);
-	m_effectVolume = int (RANGE_VOLUME_MILLIBEL * volume) + MIN_VOLUME_MILLIBEL;
-	
-	SLresult result;
+    _effectVolume = volume;
+
 	EffectList::iterator p;
 	AudioPlayer * player;
 	for (p = sharedList().begin() ; p != sharedList().end() ; ++ p)
@@ -671,14 +703,13 @@ void OpenSLEngine::setEffectsVolume(float volume)
 		for (vector<AudioPlayer*>::iterator iter = vec->begin() ; iter != vec->end() ; ++ iter)
 		{
 			player = *iter;
-			result = (*(player->fdPlayerVolume))->SetVolumeLevel(player->fdPlayerVolume, m_effectVolume);
-			assert(SL_RESULT_SUCCESS == result);
+            player->applyEffectsVolume(_effectVolume);
 		}
 	}
 }
 
 float OpenSLEngine::getEffectsVolume()
 {
-	float volume = (m_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
+	float volume = (_effectVolume - MIN_VOLUME_MILLIBEL) / (1.0f * RANGE_VOLUME_MILLIBEL);
 	return volume;
 }

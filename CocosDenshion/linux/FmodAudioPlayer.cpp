@@ -283,7 +283,8 @@ void FmodAudioPlayer::setEffectsVolume(float volume) {
 
 }
 
-unsigned int FmodAudioPlayer::playEffect(const char* pszFilePath, bool bLoop) {
+unsigned int FmodAudioPlayer::playEffect(const char* pszFilePath, bool bLoop,
+                                         float pitch, float pan, float gain) {
 	FMOD::Channel* pChannel;
 	FMOD::Sound* pSound = NULL;
 
@@ -311,6 +312,11 @@ unsigned int FmodAudioPlayer::playEffect(const char* pszFilePath, bool bLoop) {
 		}
 
 		pChannel->setChannelGroup(pChannelGroup);
+        pChannel->setPan(pan);
+        float freq = 0;
+        pChannel->getFrequency(&freq);
+        pChannel->setFrequency(pitch * freq);
+        pChannel->setVolume(gain);
 
 		//set its loop
 		pChannel->setLoopCount((bLoop) ? -1 : 0);

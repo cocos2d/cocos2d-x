@@ -1,11 +1,13 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- */
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * vim: set ts=8 sts=4 et sw=4 tw=99:
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef js_heap_api_h___
 #define js_heap_api_h___
+
+#include "jspubtd.h"
 
 /* These values are private to the JS engine. */
 namespace js {
@@ -17,7 +19,7 @@ namespace gc {
  * Note: The freelist supports a maximum arena shift of 15.
  * Note: Do not use JS_CPU_SPARC here, this header is used outside JS.
  */
-#if (defined(SOLARIS) || defined(__FreeBSD__)) && \
+#if (defined(SOLARIS) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)) && \
     (defined(__sparc) || defined(__sparcv9) || defined(__ia64))
 const size_t PageShift = 13;
 const size_t ArenaShift = PageShift;
@@ -43,6 +45,7 @@ const size_t CellMask = CellSize - 1;
 /* These are magic constants derived from actual offsets in gc/Heap.h. */
 const size_t ChunkMarkBitmapOffset = 1032368;
 const size_t ChunkMarkBitmapBits = 129024;
+const size_t ChunkRuntimeOffset = ChunkSize - sizeof(void*);
 
 /*
  * Live objects are marked black. How many other additional colors are available
@@ -56,7 +59,7 @@ static const uint32_t GRAY = 1;
 } /* namespace js */
 
 namespace JS {
-typedef JSCompartment Zone;
+struct Zone;
 } /* namespace JS */
 
 namespace JS {
@@ -89,6 +92,15 @@ GetGCThingMarkBitmap(const void *thing)
     return reinterpret_cast<uintptr_t *>(addr);
 }
 
+static JS_ALWAYS_INLINE JS::shadow::Runtime *
+GetGCThingRuntime(const void *thing)
+{
+    uintptr_t addr = uintptr_t(thing);
+    addr &= ~js::gc::ChunkMask;
+    addr |= js::gc::ChunkRuntimeOffset;
+    return *reinterpret_cast<JS::shadow::Runtime **>(addr);
+}
+
 static JS_ALWAYS_INLINE void
 GetGCThingMarkWordAndMask(const void *thing, uint32_t color,
                           uintptr_t **wordp, uintptr_t *maskp)
@@ -110,28 +122,16 @@ GetGCThingArena(void *thing)
 }
 
 } /* namespace gc */
+
 } /* namespace js */
 
 namespace JS {
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetGCThingCompartment(void *thing)
-{
-    JS_ASSERT(thing);
-    return js::gc::GetGCThingArena(thing)->zone;
-}
 
 static JS_ALWAYS_INLINE Zone *
 GetGCThingZone(void *thing)
 {
     JS_ASSERT(thing);
     return js::gc::GetGCThingArena(thing)->zone;
-}
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetObjectCompartment(JSObject *obj)
-{
-    return GetGCThingCompartment(obj);
 }
 
 static JS_ALWAYS_INLINE Zone *
@@ -149,8 +149,10 @@ GCThingIsMarkedGray(void *thing)
 }
 
 static JS_ALWAYS_INLINE bool
-IsIncrementalBarrierNeededOnGCThing(void *thing, JSGCTraceKind kind)
+IsIncrementalBarrierNeededOnGCThing(shadow::Runtime *rt, void *thing, JSGCTraceKind kind)
 {
+    if (!rt->needsBarrier_)
+        return false;
     js::Zone *zone = GetGCThingZone(thing);
     return reinterpret_cast<shadow::Zone *>(zone)->needsBarrier_;
 }

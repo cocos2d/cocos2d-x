@@ -6,12 +6,14 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
-#include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "js_bindings_ccbreader.h"
 #include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -23,61 +25,61 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    CCScriptEngineManager::sharedManager()->purgeSharedManager();
+    ScriptEngineManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
-    pDirector->setProjection(kCCDirectorProjection2D);
+    auto pDirector = Director::getInstance();
+    pDirector->setOpenGLView(EGLView::getInstance());
+    pDirector->setProjection(Director::Projection::_2D);
 
 
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    auto screenSize = EGLView::getInstance()->getFrameSize();
 
-    CCSize designSize = CCSizeMake(320, 480);
-    CCSize resourceSize = CCSizeMake(320, 480);
+    auto designSize = Size(320, 480);
+    auto resourceSize = Size(320, 480);
     
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
-    if (platform == kTargetIphone || platform == kTargetIpad)
+    Platform platform = Application::getInstance()->getTargetPlatform();
+    if (platform == Application::Platform::OS_IPHONE || platform == Application::Platform::OS_IPAD || platform == Application::Platform::OS_MAC)
     {
-        std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
         searchPaths.insert(searchPaths.begin(), "Published files iOS");
-        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
         if (screenSize.height > 1024)
         {
-            resourceSize = CCSizeMake(1536, 2048);
+            resourceSize = Size(1536, 2048);
             resDirOrders.push_back("resources-ipadhd");
             resDirOrders.push_back("resources-ipad");
             resDirOrders.push_back("resources-iphonehd");
         }
         else if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(768, 1024);
+            resourceSize = Size(768, 1024);
             resDirOrders.push_back("resources-ipad");
             resDirOrders.push_back("resources-iphonehd");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-iphonehd");
             resDirOrders.push_back("resources-iphone");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 480);
+            resourceSize = Size(320, 480);
             resDirOrders.push_back("resources-iphone");
         }
         
     }
-    else if (platform == kTargetAndroid || platform == kTargetWindows)
+    else if (platform == Application::Platform::OS_ANDROID || platform == Application::Platform::OS_WINDOWS)
     {
         if (screenSize.height > 960)
         {
-            resourceSize = CCSizeMake(1280, 1920);
+            resourceSize = Size(1280, 1920);
             resDirOrders.push_back("resources-xlarge");
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
@@ -85,29 +87,29 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
         else if (screenSize.height > 720)
         {
-            resourceSize = CCSizeMake(640, 960);
+            resourceSize = Size(640, 960);
             resDirOrders.push_back("resources-large");
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else if (screenSize.height > 480)
         {
-            resourceSize = CCSizeMake(480, 720);
+            resourceSize = Size(480, 720);
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
         }
         else
         {
-            resourceSize = CCSizeMake(320, 480);
+            resourceSize = Size(320, 480);
             resDirOrders.push_back("resources-small");
         }
     }
     
-    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    FileUtils::getInstance()->setSearchResolutionsOrder(resDirOrders);
     
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -122,12 +124,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
+    sc->addRegisterCallback(JSB_register_opengl);
+    sc->addRegisterCallback(jsb_register_chipmunk);
     
     sc->start();
 
     js_log("RUNNING Main");
-    CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
-    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    auto pEngine = ScriptingCore::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
        
     return true;
@@ -137,11 +141,11 @@ void handle_signal(int signal) {
     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
-    CCDirector* director = CCDirector::sharedDirector();
+    auto director = Director::getInstance();
     if (director->getRunningScene()) {
         director->popToRootScene();
     } else {
-        CCPoolManager::sharedPoolManager()->finalize();
+        PoolManager::sharedPoolManager()->finalize();
         if (internal_state == 0) {
             //sc->dumpRoot(NULL, 0, NULL);
             sc->start();
@@ -156,15 +160,15 @@ void handle_signal(int signal) {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

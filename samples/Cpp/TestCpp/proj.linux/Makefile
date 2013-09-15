@@ -1,5 +1,7 @@
 EXECUTABLE = TestCpp
 
+DEFINES += -DCC_KEYBOARD_SUPPORT
+
 SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ActionManagerTest/ActionManagerTest.cpp \
 	../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -50,17 +52,21 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/ExtensionsTest.cpp \
 	../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 	../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/ComponentsTestScene.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/EnemyController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/GameOverScene.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/PlayerController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/ProjectileController.cpp \
-    ../Classes/ExtensionsTest/ComponentsTest/SceneController.cpp \
-	../Classes/ExtensionsTest/ArmatureTest/ArmatureScene.cpp \
+    ../Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
+	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+	../Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 	../Classes/FontTest/FontTest.cpp \
 	../Classes/IntervalTest/IntervalTest.cpp \
+	../Classes/KeyboardTest/KeyboardTest.cpp \
 	../Classes/KeypadTest/KeypadTest.cpp \
 	../Classes/LabelTest/LabelTest.cpp \
+	../Classes/LabelTest/LabelTestNew.cpp \
 	../Classes/LayerTest/LayerTest.cpp \
 	../Classes/MenuTest/MenuTest.cpp \
 	../Classes/MotionStreakTest/MotionStreakTest.cpp \
@@ -68,6 +74,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/NodeTest/NodeTest.cpp \
 	../Classes/ParallaxTest/ParallaxTest.cpp \
 	../Classes/ParticleTest/ParticleTest.cpp \
+	../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 	../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 	../Classes/PerformanceTest/PerformanceParticleTest.cpp \
 	../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
@@ -79,6 +86,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/SceneTest/SceneTest.cpp \
 	../Classes/SchedulerTest/SchedulerTest.cpp \
 	../Classes/ShaderTest/ShaderTest.cpp \
+	../Classes/ShaderTest/ShaderTest2.cpp \
 	../Classes/SpriteTest/SpriteTest.cpp \
 	../Classes/TextInputTest/TextInputTest.cpp \
 	../Classes/Texture2dTest/Texture2dTest.cpp \
@@ -98,10 +106,11 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/controller.cpp \
 	../Classes/testBasic.cpp \
 	../Classes/AppDelegate.cpp \
+	../Classes/BaseTest.cpp \
 	../Classes/VisibleRect.cpp \
 	main.cpp
 
-SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl
+SHAREDLIBS = -lcocos2d -lcocosdenshion -lcurl -lpng
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 
 include ../../../../cocos2dx/proj.linux/cocos2dx.mk

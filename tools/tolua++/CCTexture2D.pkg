@@ -196,7 +196,7 @@
 #define GL_INT                            0x1404
 #define GL_UNSIGNED_INT                   0x1405
 #define GL_FLOAT                          0x1406
-#define GL_FIXED                          0x140C
+// #define GL_FIXED                          0x140C
 
 /* PixelFormat */
 #define GL_DEPTH_COMPONENT                0x1902
@@ -216,12 +216,12 @@
 #define GL_FRAGMENT_SHADER                0x8B30
 #define GL_VERTEX_SHADER                  0x8B31
 #define GL_MAX_VERTEX_ATTRIBS             0x8869
-#define GL_MAX_VERTEX_UNIFORM_VECTORS     0x8DFB
-#define GL_MAX_VARYING_VECTORS            0x8DFC
+// #define GL_MAX_VERTEX_UNIFORM_VECTORS     0x8DFB
+// #define GL_MAX_VARYING_VECTORS            0x8DFC
 #define GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS 0x8B4D
 #define GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS 0x8B4C
 #define GL_MAX_TEXTURE_IMAGE_UNITS        0x8872
-#define GL_MAX_FRAGMENT_UNIFORM_VECTORS   0x8DFD
+// #define GL_MAX_FRAGMENT_UNIFORM_VECTORS   0x8DFD
 #define GL_SHADER_TYPE                    0x8B4F
 #define GL_DELETE_STATUS                  0x8B80
 #define GL_LINK_STATUS                    0x8B82
@@ -359,26 +359,26 @@
 #define GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING 0x889F
 
 /* Read Format */
-#define GL_IMPLEMENTATION_COLOR_READ_TYPE   0x8B9A
-#define GL_IMPLEMENTATION_COLOR_READ_FORMAT 0x8B9B
+// #define GL_IMPLEMENTATION_COLOR_READ_TYPE   0x8B9A
+// #define GL_IMPLEMENTATION_COLOR_READ_FORMAT 0x8B9B
 
 /* Shader Source */
 #define GL_COMPILE_STATUS                 0x8B81
 #define GL_INFO_LOG_LENGTH                0x8B84
 #define GL_SHADER_SOURCE_LENGTH           0x8B88
-#define GL_SHADER_COMPILER                0x8DFA
+// #define GL_SHADER_COMPILER                0x8DFA
 
 /* Shader Binary */
-#define GL_SHADER_BINARY_FORMATS          0x8DF8
-#define GL_NUM_SHADER_BINARY_FORMATS      0x8DF9
+// #define GL_SHADER_BINARY_FORMATS          0x8DF8
+// #define GL_NUM_SHADER_BINARY_FORMATS      0x8DF9
 
 /* Shader Precision-Specified Types */
-#define GL_LOW_FLOAT                  0x8DF0
-#define GL_MEDIUM_FLOAT               0x8DF1
-#define GL_HIGH_FLOAT                 0x8DF2
-#define GL_LOW_INT                    0x8DF3
-#define GL_MEDIUM_INT                 0x8DF4
-#define GL_HIGH_INT                   0x8DF5
+// #define GL_LOW_FLOAT                  0x8DF0
+// #define GL_MEDIUM_FLOAT               0x8DF1
+// #define GL_HIGH_FLOAT                 0x8DF2
+// #define GL_LOW_INT                    0x8DF3
+// #define GL_MEDIUM_INT                 0x8DF4
+// #define GL_HIGH_INT                   0x8DF5
 
 /* Framebuffer Object. */
 #define GL_FRAMEBUFFER                                      0x8D40
@@ -389,7 +389,8 @@
 //comment nextline since it wasn't defined in glew.h of windows
 // #define GL_RGB565                                           0x8D62
 #define GL_DEPTH_COMPONENT16                                0x81A5
-#define GL_STENCIL_INDEX                                    0x1901
+//comment nextline since it wasn't defined in gl.h of IOS7 sdk
+//#define GL_STENCIL_INDEX                                    0x1901
 #define GL_STENCIL_INDEX8                                   0x8D48
 
 #define GL_RENDERBUFFER_WIDTH                               0x8D42
@@ -451,28 +452,19 @@ typedef enum {
 
     //! Default texture format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-
-    // backward compatibility stuff
-  //  kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
-    kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-    kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
-    kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-    kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-    kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-    kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-    kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
 } CCTexture2DPixelFormat;
 
-class ccTexParams {
-    ccTexParams(void);
+
+class CCTexture2D : public CCObject
+{
+
+class TexParams {
+    TexParams(void);
     GLuint minFilter;
     GLuint magFilter;
     GLuint wrapS;
     GLuint wrapT;
 };
-
-class CCTexture2D : public CCObject
-{
 	void releaseData(void* data);
 	void* keepData(void* data, unsigned int length);
 
@@ -491,23 +483,23 @@ class CCTexture2D : public CCObject
     GLfloat getMaxT();
     void setMaxT(GLfloat val);
 
-    bool hasPremultipliedAlpha();
-    bool hasMipmaps();
+    bool hasPremultipliedAlpha() const;
+    bool hasMipmaps() const;
 
     void drawAtPoint(CCPoint point);
     void drawInRect(CCRect rect);
 
     CCSize getContentSize(void);
 
-    void setTexParameters(ccTexParams* texParams);
+    void setTexParameters(const TexParams& texParams);
     void setAntiAliasTexParameters();
     void setAliasTexParameters();
     void generateMipmap();
 
-	const char* stringForFormat();
-    unsigned int bitsPerPixelForFormat();
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
+	const char* getStringForFormat() const;
+    unsigned int getBitsPerPixelForFormat() const;
+	unsigned int getBitsPerPixelForFormat(CCTexture2DPixelFormat format) const;
 
     static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
-    static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+    static CCTexture2DPixelFormat getDefaultAlphaPixelFormat();
 };

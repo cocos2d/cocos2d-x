@@ -25,13 +25,14 @@
  */
 /*
  *
- * Helper class to store targets and selectors (and eventually, params?) in the same CCMutableArray. Basically a very crude form of a NSInvocation
+ * Helper class to store targets and selectors (and eventually, params?) in the same MutableArray. Basically a very crude form of a NSInvocation
  */
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
 
 #include "cocoa/CCObject.h"
 #include "../../ExtensionMacros.h"
+#include "CCControl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -42,23 +43,31 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-typedef unsigned int CCControlEvent;
+#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
 
-typedef void (CCObject::*SEL_CCControlHandler)(CCObject*, CCControlEvent);
-
-#define cccontrol_selector(_SELECTOR) (SEL_CCControlHandler)(&_SELECTOR)
-
-class CCInvocation : public CCObject
+class Invocation : public Object
 {
-    CC_SYNTHESIZE_READONLY(SEL_CCControlHandler, m_action, Action);
-    CC_SYNTHESIZE_READONLY(CCObject*, m_target, Target);
-    CC_SYNTHESIZE_READONLY(CCControlEvent, m_controlEvent, ControlEvent);
-    
 public:
-    static CCInvocation* create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
-    CCInvocation(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static Invocation* create(Object* target, Control::Handler action, Control::EventType controlEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    Invocation(Object* target, Control::Handler action, Control::EventType controlEvent);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void invoke(Object* sender);
 
-    void invoke(CCObject* sender);
+protected:
+    CC_SYNTHESIZE_READONLY(Control::Handler, _action, Action);
+    CC_SYNTHESIZE_READONLY(Object*, _target, Target);
+    CC_SYNTHESIZE_READONLY(Control::EventType, _controlEvent, ControlEvent);
 };
 
 // end of GUI group

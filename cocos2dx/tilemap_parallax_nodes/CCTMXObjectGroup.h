@@ -39,34 +39,72 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief CCTMXObjectGroup represents the TMX object group.
+/** @brief TMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-class CC_DLL CCTMXObjectGroup : public CCObject
+class CC_DLL TMXObjectGroup : public Object
 {
-    /** offset position of child objects */
-    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
-    /** list of properties stored in a dictionary */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
-    /** array of the objects */
-    CC_PROPERTY(CCArray*, m_pObjects, Objects);
 public:
-    CCTMXObjectGroup();
-    virtual ~CCTMXObjectGroup();
+    /**
+     * @js ctor
+     */
+    TMXObjectGroup();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~TMXObjectGroup();
 
-    inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-    inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
+    inline const char* getGroupName(){ return _groupName.c_str(); }
+    inline void setGroupName(const char *groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
-    CCString *propertyNamed(const char* propertyName);
+    String* getProperty(const char* propertyName) const;
+    
+    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char* propertyName) const { return getProperty(propertyName); };
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    CCDictionary* objectNamed(const char *objectName);
-protected:    
+    Dictionary* getObject(const char *objectName) const;
+    
+    CC_DEPRECATED_ATTRIBUTE Dictionary* objectNamed(const char *objectName) const { return getObject(objectName); };
+    
+    /** Gets the offset position of child objects */
+    inline const Point& getPositionOffset() const { return _positionOffset; };
+    
+    /** Sets the offset position of child objects */
+    inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
+    
+    /** Gets the list of properties stored in a dictionary */
+    inline Dictionary* getProperties() const { return _properties; };
+    
+    /** Sets the list of properties */
+    inline void setProperties(Dictionary* properties) {
+        CC_SAFE_RETAIN(properties);
+        CC_SAFE_RELEASE(_properties);
+        _properties = properties;
+    };
+    
+    /** Gets the array of the objects */
+    inline Array* getObjects() const { return _objects; };
+    
+    /** Sets the array of the objects */
+    inline void setObjects(Array* objects) {
+        CC_SAFE_RETAIN(objects);
+        CC_SAFE_RELEASE(_objects);
+        _objects = objects;
+    };
+    
+protected:
     /** name of the group */
-    std::string m_sGroupName;
+    std::string _groupName;
+    /** offset position of child objects */
+    Point _positionOffset;
+    /** list of properties stored in a dictionary */
+    Dictionary* _properties;
+    /** array of the objects */
+    Array* _objects;
 };
 
 // end of tilemap_parallax_nodes group

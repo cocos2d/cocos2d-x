@@ -3,22 +3,31 @@
 
 #include "../testBasic.h"
 
-class CocosDenshionTest : public CCLayer
+class AudioSlider;
+
+class CocosDenshionTest : public Layer
 {
 public:
     CocosDenshionTest(void);
     ~CocosDenshionTest(void);
 
-    void menuCallback(CCObject * pSender);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void onExit();
 
 private:
-    CCMenu* m_pItmeMenu;
-    CCPoint m_tBeginPos;
-    int m_nTestCount;
-    unsigned int m_nSoundId;
+    void addButtons();
+    void addSliders();
+    void addChildAt(Node *node, float percentageX, float percentageY);
+
+    void updateVolumes(float);
+
+    unsigned int _soundId;
+    float _musicVolume;
+    float _effectsVolume;
+    AudioSlider *_sliderPitch;
+    AudioSlider *_sliderPan;
+    AudioSlider *_sliderGain;
+    AudioSlider *_sliderEffectsVolume;
+    AudioSlider *_sliderMusicVolume;
 };
 
 class CocosDenshionTestScene : public TestScene

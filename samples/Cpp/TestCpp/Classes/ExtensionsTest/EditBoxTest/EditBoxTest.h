@@ -1,5 +1,5 @@
 //
-//  CCEditBoxTest.h
+//  EditBoxTest.h
 //  TestCpp
 //
 //  Created by James on 8/14/12.
@@ -12,22 +12,22 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-class EditBoxTest : public cocos2d::CCLayer, public cocos2d::extension::CCEditBoxDelegate
+class EditBoxTest : public cocos2d::Layer, public cocos2d::extension::EditBoxDelegate
 {
 public:
     EditBoxTest();
     virtual ~EditBoxTest();
-    void toExtensionsMainLayer(cocos2d::CCObject *sender);
+    void toExtensionsMainLayer(cocos2d::Object *sender);
     
-    virtual void editBoxEditingDidBegin(cocos2d::extension::CCEditBox* editBox);
-    virtual void editBoxEditingDidEnd(cocos2d::extension::CCEditBox* editBox);
-    virtual void editBoxTextChanged(cocos2d::extension::CCEditBox* editBox, const std::string& text);
-    virtual void editBoxReturn(cocos2d::extension::CCEditBox* editBox);
+    virtual void editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox);
+    virtual void editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox);
+    virtual void editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text);
+    virtual void editBoxReturn(cocos2d::extension::EditBox* editBox);
 private:
-    cocos2d::CCLabelTTF* m_pTTFShowEditReturn;
-    cocos2d::extension::CCEditBox* m_pEditName;
-    cocos2d::extension::CCEditBox* m_pEditPassword;
-    cocos2d::extension::CCEditBox* m_pEditEmail;
+    cocos2d::LabelTTF* _TTFShowEditReturn;
+    cocos2d::extension::EditBox* _editName;
+    cocos2d::extension::EditBox* _editPassword;
+    cocos2d::extension::EditBox* _editEmail;
 };
 
 void runEditBoxTest();

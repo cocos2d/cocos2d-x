@@ -37,70 +37,98 @@ NS_CC_BEGIN
 /**
 @brief    Input Method Edit Message Dispatcher.
 */
-class CC_DLL CCIMEDispatcher
+class CC_DLL IMEDispatcher
 {
 public:
-    ~CCIMEDispatcher();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~IMEDispatcher();
 
     /**
-    @brief Returns the shared CCIMEDispatcher object for the system.
-    */
-    static CCIMEDispatcher* sharedDispatcher();
+     @brief Returns the shared IMEDispatcher object for the system.
+     * @js NA
+     * @lua NA
+     */
+    static IMEDispatcher* sharedDispatcher();
 
 //     /**
-//     @brief Releases all CCIMEDelegates from the shared dispatcher.
+//     @brief Releases all IMEDelegates from the shared dispatcher.
 //     */
 //     static void purgeSharedDispatcher();
 
     /**
-    @brief Dispatches the input text from IME.
-    */
+     @brief Dispatches the input text from IME.
+     * @js NA
+     * @lua NA
+     */
     void dispatchInsertText(const char * pText, int nLen);
 
     /**
-    @brief Dispatches the delete-backward operation.
-    */
+     @brief Dispatches the delete-backward operation.
+     * @js NA
+     * @lua NA
+     */
     void dispatchDeleteBackward();
 
     /**
-    @brief Get the content text from CCIMEDelegate, retrieved previously from IME.
-    */
+     @brief Get the content text from IMEDelegate, retrieved previously from IME.
+     * @js NA
+     * @lua NA
+     */
     const char * getContentText();
 
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification
     //////////////////////////////////////////////////////////////////////////
-    void dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& info);
-    void dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& info);
-    void dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& info);
-    void dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info);
 
 protected:
-    friend class CCIMEDelegate;
+    friend class IMEDelegate;
 
     /**
     @brief Add delegate to receive IME messages.
     */
-    void addDelegate(CCIMEDelegate * pDelegate);
+    void addDelegate(IMEDelegate * pDelegate);
 
     /**
     @brief Attach the pDelegate to the IME.
     @return If the old delegate can detach from the IME, and the new delegate 
             can attach to the IME, return true, otherwise false.
     */
-    bool attachDelegateWithIME(CCIMEDelegate * pDelegate);
-    bool detachDelegateWithIME(CCIMEDelegate * pDelegate);
+    bool attachDelegateWithIME(IMEDelegate * pDelegate);
+    bool detachDelegateWithIME(IMEDelegate * pDelegate);
 
     /**
     @brief Remove the delegate from the delegates which receive IME messages.
     */
-    void removeDelegate(CCIMEDelegate * pDelegate);
+    void removeDelegate(IMEDelegate * pDelegate);
 
 private:
-    CCIMEDispatcher();
+    IMEDispatcher();
     
     class Impl;
-    Impl * m_pImpl;
+    Impl * _impl;
 };
 
 // end of input group

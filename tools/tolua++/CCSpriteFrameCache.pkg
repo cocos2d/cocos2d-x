@@ -14,8 +14,8 @@ class CCSpriteFrameCache : public CCObject
     //void removeSpriteFramesFromDictionary(CCDictionary<std::string, CCSpriteFrame*> *dictionary);
     void removeSpriteFramesFromTexture(CCTexture2D* texture);
 
-    CCSpriteFrame* spriteFrameByName(const char *pszName);
+    CCSpriteFrame* getSpriteFrameByName(const char *pszName);
 
-    static CCSpriteFrameCache* sharedSpriteFrameCache(void);
-    static void purgeSharedSpriteFrameCache(void);
+    static CCSpriteFrameCache* getInstance();
+    static void destroyInstance();
 };

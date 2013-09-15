@@ -3,16 +3,18 @@
 
 #include "../testBasic.h"
 
-class ExtensionsMainLayer : public CCLayer
+class ExtensionsMainLayer : public Layer
 {
 public:
     virtual void onEnter();
-    void menuCallback(CCObject* pSender);
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-private:
-    CCPoint m_tBeginPos;
-    CCMenu* m_pItemMenu;
+
+	virtual void ccTouchesBegan(Set  *touches, Event  *event);
+    virtual void ccTouchesMoved(Set  *touches, Event  *event);
+
+	Point _beginPos;
+    Menu* _itemMenu;
+
+	int _testcount;
 };
 
 class ExtensionsTestScene : public TestScene

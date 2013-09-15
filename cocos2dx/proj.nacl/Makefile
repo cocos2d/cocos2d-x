@@ -25,17 +25,18 @@ SOURCES = ../actions/CCAction.cpp \
 ../cocoa/CCNS.cpp \
 ../cocoa/CCObject.cpp \
 ../cocoa/CCSet.cpp \
-../cocoa/CCZone.cpp \
 ../cocoa/CCArray.cpp \
 ../cocoa/CCDictionary.cpp \
 ../cocoa/CCString.cpp \
 ../cocoa/CCDataVisitor.cpp \
+../cocoa/CCData.cpp \
 ../draw_nodes/CCDrawingPrimitives.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
 ../effects/CCGrid.cpp \
 ../keypad_dispatcher/CCKeypadDelegate.cpp \
 ../keypad_dispatcher/CCKeypadDispatcher.cpp \
+../keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
 ../label_nodes/CCLabelBMFont.cpp \
 ../label_nodes/CCLabelTTF.cpp \
@@ -56,7 +57,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../particle_nodes/CCParticleBatchNode.cpp \
 ../platform/CCSAXParser.cpp \
 ../platform/CCThread.cpp \
-../platform/platform.cpp \
 ../platform/CCImageCommonWebp.cpp \
 ../platform/CCEGLViewProtocol.cpp \
 ../platform/CCFileUtils.cpp \
@@ -75,7 +75,6 @@ SOURCES = ../actions/CCAction.cpp \
 ../sprite_nodes/CCSpriteFrame.cpp \
 ../sprite_nodes/CCSpriteFrameCache.cpp \
 ../support/tinyxml2/tinyxml2.cpp \
-../support/CCPointExtension.cpp \
 ../support/CCProfiling.cpp \
 ../support/user_default/CCUserDefault.cpp \
 ../support/TransformUtils.cpp \
@@ -98,6 +97,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../textures/CCTextureCache.cpp \
 ../textures/CCTextureETC.cpp \
 ../textures/CCTexturePVR.cpp \
+../textures/etc/etc1.cpp\
 ../tilemap_parallax_nodes/CCParallaxNode.cpp \
 ../tilemap_parallax_nodes/CCTMXLayer.cpp \
 ../tilemap_parallax_nodes/CCTMXObjectGroup.cpp \
@@ -129,7 +129,9 @@ SOURCES = ../actions/CCAction.cpp \
 ../CCDirector.cpp \
 ../CCScheduler.cpp \
 ../ccFPSImages.c \
-../cocos2d.cpp
+../ccTypes.cpp \
+../cocos2d.cpp \
+../CCDeprecated.cpp
 
 include cocos2dx.mk
 

@@ -5,9 +5,9 @@ local MUSIC_FILE  = "background.mp3"
 local LINE_SPACE = 40
 
 local function CocosDenshionTest()
-    local ret = CCLayer:create()
+    local ret = cc.Layer:create()
     local m_pItmeMenu = nil
-    local m_tBeginPos = ccp(0, 0)
+    local m_tBeginPos = cc.p(0, 0)
     local m_nSoundId = 0
 
     local testItems = {
@@ -93,20 +93,20 @@ local function CocosDenshionTest()
         end
     end
     -- add menu items for tests
-    m_pItmeMenu = CCMenu:create()
+    m_pItmeMenu = cc.Menu:create()
 
     m_nTestCount = table.getn(testItems)
     local i = 1
     for  i = 1, m_nTestCount do
-        local  label = CCLabelTTF:create(testItems[i], "Arial", 24)
-        local  pMenuItem = CCMenuItemLabel:create(label)
+        local  label = cc.LabelTTF:create(testItems[i], "Arial", 24)
+        local  pMenuItem = cc.MenuItemLabel:create(label)
         pMenuItem:registerScriptTapHandler(menuCallback)
         m_pItmeMenu:addChild(pMenuItem, i + 10000 -1)
-        pMenuItem:setPosition( ccp( VisibleRect:center().x, (VisibleRect:top().y - i * LINE_SPACE) ))
+        pMenuItem:setPosition( cc.p( VisibleRect:center().x, (VisibleRect:top().y - i * LINE_SPACE) ))
     end
 
-    m_pItmeMenu:setContentSize(CCSizeMake(VisibleRect:getVisibleRect().size.width, (m_nTestCount + 1) * LINE_SPACE))
-    m_pItmeMenu:setPosition(ccp(0, 0))
+    m_pItmeMenu:setContentSize(cc.size(VisibleRect:getVisibleRect().width, (m_nTestCount + 1) * LINE_SPACE))
+    m_pItmeMenu:setPosition(cc.p(0, 0))
     ret:addChild(m_pItmeMenu)
     ret:setTouchEnabled(true)
 
@@ -122,7 +122,7 @@ local function CocosDenshionTest()
         if event == "enter" then
 
         elseif event == "exit" then
-            --SimpleAudioEngine:sharedEngine():endToLua()
+            --SimpleAudioEngine:getInstance():endToLua()
         end
     end
 
@@ -133,21 +133,21 @@ local function CocosDenshionTest()
         if eventType == "began" then
             prev.x = x
             prev.y = y
-            m_tBeginPos = ccp(x, y)
+            m_tBeginPos = cc.p(x, y)
             return true
         elseif  eventType == "moved" then
-            local touchLocation = ccp(x, y)
+            local touchLocation = cc.p(x, y)
             local nMoveY = touchLocation.y - m_tBeginPos.y
             local curPosX, curPosY = m_pItmeMenu:getPosition()
-            local curPos = ccp(curPosX, curPosY)
-            local nextPos = ccp(curPos.x, curPos.y + nMoveY)
+            local curPos = cc.p(curPosX, curPosY)
+            local nextPos = cc.p(curPos.x, curPos.y + nMoveY)
 
             if nextPos.y < 0.0 then
-                m_pItmeMenu:setPosition(ccp(0, 0))
+                m_pItmeMenu:setPosition(cc.p(0, 0))
             end
 
-            if nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().size.height) then
-                m_pItmeMenu:setPosition(ccp(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().size.height)))
+            if nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().height) then
+                m_pItmeMenu:setPosition(cc.p(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().height)))
             end
 
             m_pItmeMenu:setPosition(nextPos)
@@ -165,7 +165,7 @@ end
 
 function CocosDenshionTestMain()
     cclog("CocosDenshionTestMain")
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     scene:addChild(CocosDenshionTest())
     scene:addChild(CreateBackMenuItem())
     return scene

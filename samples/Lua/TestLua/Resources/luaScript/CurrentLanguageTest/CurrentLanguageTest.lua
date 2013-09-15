@@ -1,37 +1,37 @@
 local function CurrentLanguageTest()
-    local ret = CCLayer:create()
-    local  label = CCLabelTTF:create("Current language Test", "Arial", 28)
+    local ret = cc.Layer:create()
+    local  label = cc.LabelTTF:create("Current language Test", "Arial", 28)
     ret:addChild(label, 0)
-    label:setPosition( ccp(VisibleRect:center().x, VisibleRect:top().y-50) )
+    label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y-50) )
 
-    local labelLanguage = CCLabelTTF:create("", "Arial", 20)
+    local labelLanguage = cc.LabelTTF:create("", "Arial", 20)
     labelLanguage:setPosition(VisibleRect:center())
 
-    local currentLanguageType = CCApplication:sharedApplication():getCurrentLanguage()
+    local currentLanguageType = cc.Application:getInstance():getCurrentLanguage()
 
-    if currentLanguageType == kLanguageEnglish then
+    if currentLanguageType == cc.LANGUAGE_ENGLISH then
         labelLanguage:setString("current language is English")
-    elseif currentLanguageType == kLanguageChinese then
+    elseif currentLanguageType == cc.LANGUAGE_CHINESE then
         labelLanguage:setString("current language is Chinese")
-    elseif currentLanguageType == kLanguageFrench then
+    elseif currentLanguageType == cc.LANGUAGE_FRENCH then
         labelLanguage:setString("current language is French")
-    elseif currentLanguageType == kLanguageGerman then
+    elseif currentLanguageType == cc.LANGUAGE_GERMAN then
         labelLanguage:setString("current language is German")
-    elseif currentLanguageType == kLanguageItalian then
+    elseif currentLanguageType == cc.LANGUAGE_ITALIAN then
         labelLanguage:setString("current language is Italian")
-    elseif currentLanguageType == kLanguageRussian then
+    elseif currentLanguageType == cc.LANGUAGE_RUSSIAN then
         labelLanguage:setString("current language is Russian")
-    elseif currentLanguageType == kLanguageSpanish then
+    elseif currentLanguageType == cc.LANGUAGE_SPANISH then
         labelLanguage:setString("current language is Spanish")
-    elseif currentLanguageType == kLanguageKorean then
+    elseif currentLanguageType == cc.LANGUAGE_KOREAN then
         labelLanguage:setString("current language is Korean")
-    elseif currentLanguageType == kLanguageJapanese then
+    elseif currentLanguageType == cc.LANGUAGE_JAPANESE then
         labelLanguage:setString("current language is Japanese")
-    elseif currentLanguageType == kLanguageHungarian then
+    elseif currentLanguageType == cc.LANGUAGE_HUNGARIAN then
         labelLanguage:setString("current language is Hungarian")
-    elseif currentLanguageType == kLanguagePortuguese then
+    elseif currentLanguageType == cc.LANGUAGE_PORTUGUESE then
         labelLanguage:setString("current language is Portuguese")
-    elseif currentLanguageType == kLanguageArabic then
+    elseif currentLanguageType == cc.LANGUAGE_ARABIC then
         labelLanguage:setString("current language is Arabic")
     end
     ret:addChild(labelLanguage)
@@ -39,7 +39,7 @@ local function CurrentLanguageTest()
 end
 
 function CurrentLanguageTestMain()
-    local scene = CCScene:create()
+    local scene = cc.Scene:create()
     local pLayer = CurrentLanguageTest()
     scene:addChild(pLayer)
     scene:addChild(CreateBackMenuItem())

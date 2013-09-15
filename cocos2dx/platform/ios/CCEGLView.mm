@@ -30,62 +30,68 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-CCEGLView::CCEGLView()
+EGLView::EGLView()
 {
-    m_obScreenSize.width = m_obDesignResolutionSize.width = [[EAGLView sharedEGLView] getWidth];
-    m_obScreenSize.height = m_obDesignResolutionSize.height = [[EAGLView sharedEGLView] getHeight];
+    _screenSize.width = _designResolutionSize.width = [[CCEAGLView sharedEGLView] getWidth];
+    _screenSize.height = _designResolutionSize.height = [[CCEAGLView sharedEGLView] getHeight];
 }
 
-CCEGLView::~CCEGLView()
+EGLView::~EGLView()
 {
 
 }
 
-bool CCEGLView::isOpenGLReady()
+bool EGLView::isOpenGLReady()
 {
-    return [EAGLView sharedEGLView] != NULL;
+    return [CCEAGLView sharedEGLView] != NULL;
 }
     
-bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
+bool EGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    assert(m_eResolutionPolicy == kResolutionUnKnown); // cannot enable retina mode
+    assert(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
 	
-	m_fScaleX = m_fScaleY = contentScaleFactor;
-	[[EAGLView sharedEGLView] setNeedsLayout];
+	_scaleX = _scaleY = contentScaleFactor;
+	[[CCEAGLView sharedEGLView] setNeedsLayout];
         
 	return true;
 }
 
-void CCEGLView::end()
+void EGLView::end()
 {
     [CCDirectorCaller destroy];
     
     // destroy EAGLView
-    [[EAGLView sharedEGLView] removeFromSuperview];
+    [[CCEAGLView sharedEGLView] removeFromSuperview];
 }
 
 
-void CCEGLView::swapBuffers()
+void EGLView::swapBuffers()
 {
-    [[EAGLView sharedEGLView] swapBuffers];
+    [[CCEAGLView sharedEGLView] swapBuffers];
 }
 
-void CCEGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen)
     {
-        [[EAGLView sharedEGLView] becomeFirstResponder];
+        [[CCEAGLView sharedEGLView] becomeFirstResponder];
     }
     else
     {
-        [[EAGLView sharedEGLView] resignFirstResponder];
+        [[CCEAGLView sharedEGLView] resignFirstResponder];
     }
 }
 
-CCEGLView* CCEGLView::sharedOpenGLView()
+EGLView* EGLView::getInstance()
 {
-    static CCEGLView instance;
+    static EGLView instance;
     return &instance;
+}
+
+// XXX: deprecated
+EGLView* EGLView::sharedOpenGLView()
+{
+    return EGLView::getInstance();
 }
 
 NS_CC_END

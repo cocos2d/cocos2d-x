@@ -1,16 +1,16 @@
 #ifndef _TEST_RESOURCE_H_
 #define _TEST_RESOURCE_H_
 
-static const char s_pPathGrossini[]       = "Images/grossini.png";
-static const char s_pPathSister1[]        = "Images/grossinis_sister1.png";
-static const char s_pPathSister2[]        = "Images/grossinis_sister2.png";
-static const char s_pPathB1[]             = "Images/b1.png";
-static const char s_pPathB2[]             = "Images/b2.png";
-static const char s_pPathR1[]             = "Images/r1.png";
-static const char s_pPathR2[]             = "Images/r2.png";
-static const char s_pPathF1[]             = "Images/f1.png";
-static const char s_pPathF2[]             = "Images/f2.png";
-static const char s_pPathBlock[]          = "Images/blocks.png";
+static const char s_pathGrossini[]       = "Images/grossini.png";
+static const char s_pathSister1[]        = "Images/grossinis_sister1.png";
+static const char s_pathSister2[]        = "Images/grossinis_sister2.png";
+static const char s_pathB1[]             = "Images/b1.png";
+static const char s_pathB2[]             = "Images/b2.png";
+static const char s_pathR1[]             = "Images/r1.png";
+static const char s_pathR2[]             = "Images/r2.png";
+static const char s_pathF1[]             = "Images/f1.png";
+static const char s_pathF2[]             = "Images/f2.png";
+static const char s_pathBlock[]          = "Images/blocks.png";
 static const char s_back[]                = "Images/background.png";
 static const char s_back1[]               = "Images/background1.png";
 static const char s_back2[]               = "Images/background2.png";
@@ -28,7 +28,7 @@ static const char s_HighNormal[]          = "Images/btn-highscores-normal.png";
 static const char s_HighSelect[]          = "Images/btn-highscores-selected.png";
 static const char s_Ball[]                = "Images/ball.png";
 static const char s_Paddle[]              = "Images/paddle.png";
-static const char s_pPathClose[]          = "Images/close.png";
+static const char s_pathClose[]          = "Images/close.png";
 static const char s_MenuItem[]            = "Images/menuitemsprite.png";
 static const char s_SendScore[]           = "Images/SendScoreButton.png";
 static const char s_PressSendScore[]      = "Images/SendScoreButtonPressed.png";
@@ -39,5 +39,10 @@ static const char s_AtlasTest[]           = "Images/atlastest.png";
 static const char s_TilesPng[]            = "TileMaps/tiles.png";
 static const char s_LevelMapTga[]         = "TileMaps/levelmap.tga";
 
+// Scale9Sprite resource
+static const char s_s9s_blocks9[]         = "Images/blocks9ss.png";
+static const char s_s9s_blocks9_plist[]   = "Images/blocks9ss.plist";
+static const char s_s9s_ui[]              = "Images/ui.png";
+static const char s_s9s_ui_plist[]        = "Images/ui.plist";
 
 #endif

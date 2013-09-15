@@ -5,9 +5,8 @@ class CCNotificationCenter : public CCObject
 
     ~CCNotificationCenter();    
     
-    static CCNotificationCenter *sharedNotificationCenter(void);
-    
-    static void purgeNotificationCenter(void);
+    static CCNotificationCenter* getInstance();
+    static void destroyInstance();
 
     int removeAllObservers(CCObject *target);
 

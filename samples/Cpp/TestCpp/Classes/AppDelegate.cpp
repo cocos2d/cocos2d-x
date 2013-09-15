@@ -15,7 +15,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocos2d::extension::CCArmatureDataManager::sharedArmatureDataManager()->purgeArmatureSystem();
+	cocos2d::extension::armature::CCArmatureDataManager::purge();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -23,38 +23,38 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// As an example, load config file
 	// XXX: This should be loaded before the Director is initialized,
 	// XXX: but at this point, the director is already initialized
-	CCConfiguration::sharedConfiguration()->loadConfigFile("configs/config-example.plist");
+	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    auto director = Director::getInstance();
+    director->setOpenGLView(EGLView::getInstance());
 
-    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    director->setDisplayStats(true);
+    director->setAnimationInterval(1.0 / 60);
 
-#ifdef TIZEN
-    CCSize designSize = CCSizeMake(1280, 720);
-#else
-    CCSize designSize = CCSizeMake(480, 320);
-#endif
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    auto screenSize = EGLView::getInstance()->getFrameSize();
+
+    auto designSize = Size(480, 320);
+
+    auto pFileUtils = FileUtils::getInstance();
     
     if (screenSize.height > 320)
     {
-        CCSize resourceSize = CCSizeMake(960, 640);
+        auto resourceSize = Size(960, 640);
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);
-        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+        director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 
-    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
-    CCScene * pScene = CCScene::create();
-    CCLayer * pLayer = new TestController();
-    pLayer->autorelease();
+    auto scene = Scene::create();
+    auto layer = new TestController();
+    layer->autorelease();
 
-    pScene->addChild(pLayer);
-    pDirector->runWithScene(pScene);
+    scene->addChild(layer);
+    director->runWithScene(scene);
 
     return true;
 }
@@ -62,15 +62,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    Director::getInstance()->stopAnimation();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    Director::getInstance()->startAnimation();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

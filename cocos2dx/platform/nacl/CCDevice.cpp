@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-int CCDevice::getDPI()
+int Device::getDPI()
 {
     //TODO(sbc):
     return 160;

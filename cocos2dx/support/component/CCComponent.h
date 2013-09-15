@@ -30,30 +30,46 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL CCComponent : public CCObject
+class CC_DLL Component : public Object
 {
 protected:
-    CCComponent(void);
+    /**
+     * @js ctor
+     */
+    Component(void);
 public:
-    virtual ~CCComponent(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Component(void);
     virtual bool init();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onEnter();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void onExit();
     virtual void update(float delta);
     virtual void serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
-    static CCComponent* create(void);
+    static Component* create(void);
     
     const char* getName() const;
+    void setName(const char *pName);
     
-    void setOwner(CCNode *pOwner);
-    CCNode* getOwner() const;
+    void setOwner(Node *pOwner);
+    Node* getOwner() const;
     
 protected:
-    CCNode *m_pOwner;
-    std::string m_strName;
-    bool m_bEnabled;
+    Node *_owner;
+    std::string _name;
+    bool _enabled;
 };
 
 NS_CC_END

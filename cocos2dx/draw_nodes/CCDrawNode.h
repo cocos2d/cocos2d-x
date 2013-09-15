@@ -35,53 +35,83 @@
 
 NS_CC_BEGIN
 
-/** CCDrawNode
+/** DrawNode
  Node that draws dots, segments and polygons.
  Faster than the "drawing primitives" since they it draws everything in one single batch.
  
  @since v2.1
  */
-class CC_DLL CCDrawNode : public CCNode
+class CC_DLL DrawNode : public Node
 {
-protected:
-    GLuint      m_uVao;
-    GLuint      m_uVbo;
-    
-    unsigned int    m_uBufferCapacity;
-    GLsizei         m_nBufferCount;
-    ccV2F_C4B_T2F   *m_pBuffer;
-    
-    ccBlendFunc     m_sBlendFunc;
-    
-    bool            m_bDirty;
-    
 public:
-    static CCDrawNode* create();
-    virtual ~CCDrawNode();
+    /** creates and initialize a DrawNode node */
+    static DrawNode* create();
+    /**
+     * @js ctor
+     */
+    DrawNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~DrawNode();
     
     virtual bool init();
-    virtual void draw();
-    
+
     /** draw a dot at a position, with a given radius and color */
-    void drawDot(const CCPoint &pos, float radius, const ccColor4F &color);
+    void drawDot(const Point &pos, float radius, const Color4F &color);
     
     /** draw a segment with a radius and color */
-    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
+    void drawSegment(const Point &from, const Point &to, float radius, const Color4F &color);
     
-    /** draw a polygon with a fill color and line color */
-    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
+    /** draw a polygon with a fill color and line color
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var drawPolygon(var Arrayofpoints, var fillColor, var width, var borderColor)
+    * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
+    * @endcode
+    */
+    void drawPolygon(Point *verts, unsigned int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
+    /**
+    * @js NA
+    * @lua NA
+    */
+    const BlendFunc& getBlendFunc() const;
+    /**
+    * @code
+    * When this function bound into js or lua,the parameter will be changed
+    * In js: var setBlendFunc(var src, var dst)
+    * @endcode
+    * @lua NA
+    */
+    void setBlendFunc(const BlendFunc &blendFunc);
     
-    ccBlendFunc getBlendFunc() const;
-    void setBlendFunc(const ccBlendFunc &blendFunc);
-    
-    CCDrawNode();
-    
-private:
-    void ensureCapacity(unsigned int count);
+    /** listen the event that coming to foreground on Android
+    * @js NA
+    * @lua NA
+    */
+    void listenBackToForeground(Object *obj);
+
+    // Overrides
+    virtual void draw() override;
+
+protected:
+    void ensureCapacity(int count);
     void render();
+
+    GLuint      _vao;
+    GLuint      _vbo;
+
+    int         _bufferCapacity;
+    GLsizei     _bufferCount;
+    V2F_C4B_T2F *_buffer;
+
+    BlendFunc   _blendFunc;
+
+    bool        _dirty;
 };
 
 NS_CC_END

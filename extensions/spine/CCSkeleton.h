@@ -34,28 +34,28 @@ namespace cocos2d { namespace extension {
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::CCNodeRGBA, public cocos2d::CCBlendProtocol {
+class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
 public:
-	Skeleton* skeleton;
-	Bone* rootBone;
-	float timeScale;
-	bool debugSlots;
-	bool debugBones;
-	bool premultipliedAlpha;
-
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     */
 	CCSkeleton (SkeletonData* skeletonData, bool ownsSkeletonData = false);
+    /**
+     * @js NA
+     */
 	CCSkeleton (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
+    /**
+     * @js NA
+     */
 	CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual ~CCSkeleton ();
-
-	virtual void update (float deltaTime);
-	virtual void draw ();
-	virtual cocos2d::CCRect boundingBox ();
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();
@@ -79,15 +79,27 @@ public:
 	/* Returns false if the slot or attachment was not found. */
 	bool setAttachment (const char* slotName, const char* attachmentName);
 
-	// --- CCBlendProtocol
-	CC_PROPERTY(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
-	virtual void setOpacityModifyRGB (bool value);
-	virtual bool isOpacityModifyRGB ();
+    // Overrides
+	virtual void update (float deltaTime) override;
+	virtual void draw() override;
+	virtual cocos2d::Rect getBoundingBox() const override;
+	virtual void setOpacityModifyRGB (bool value) override;
+	virtual bool isOpacityModifyRGB() const override;
+    virtual void setBlendFunc( const cocos2d::BlendFunc& func ) override;
+    virtual const cocos2d::BlendFunc& getBlendFunc() const override;
+
+    Skeleton* skeleton;
+	Bone* rootBone;
+	float timeScale;
+	bool debugSlots;
+	bool debugBones;
+	bool premultipliedAlpha;
+    cocos2d::BlendFunc blendFunc;
 
 protected:
 	CCSkeleton ();
 	void setSkeletonData (SkeletonData* skeletonData, bool ownsSkeletonData);
-	cocos2d::CCTextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
+	cocos2d::TextureAtlas* getTextureAtlas (RegionAttachment* regionAttachment) const;
 
 private:
 	bool ownsSkeletonData;

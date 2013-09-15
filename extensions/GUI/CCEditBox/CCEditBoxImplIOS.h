@@ -36,16 +36,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface CustomUITextField : UITextField
+@interface CCCustomUITextField : UITextField
 {
 }
 
 @end
 
 
-@interface EditBoxImplIOS : NSObject <UITextFieldDelegate>
+@interface CCEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
 {
-    CustomUITextField* textField_;
+    CCCustomUITextField* textField_;
     void* editBox_;
     BOOL editState_;
 }
@@ -66,34 +66,49 @@
 
 NS_CC_EXT_BEGIN
 
-class CCEditBox;
+class EditBox;
 
-class CCEditBoxImplIOS : public CCEditBoxImpl
+class EditBoxImplIOS : public EditBoxImpl
 {
 public:
-    CCEditBoxImplIOS(CCEditBox* pEditText);
-    virtual ~CCEditBoxImplIOS();
+    /**
+     * @js NA
+     */
+    EditBoxImplIOS(EditBox* pEditText);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~EditBoxImplIOS();
     
-    virtual bool initWithSize(const CCSize& size);
+    virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const ccColor3B& color);
+    virtual void setFontColor(const Color3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const ccColor3B& color);
-    virtual void setInputMode(EditBoxInputMode inputMode);
-    virtual void setInputFlag(EditBoxInputFlag inputFlag);
+    virtual void setPlaceholderFontColor(const Color3B& color);
+    virtual void setInputMode(EditBox::InputMode inputMode);
+    virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
     virtual int  getMaxLength();
-    virtual void setReturnType(KeyboardReturnType returnType);
+    virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const CCPoint& pos);
+    virtual void setPosition(const Point& pos);
     virtual void setVisible(bool visible);
-    virtual void setContentSize(const CCSize& size);
-	virtual void setAnchorPoint(const CCPoint& anchorPoint);
+    virtual void setContentSize(const Size& size);
+	virtual void setAnchorPoint(const Point& anchorPoint);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void visit(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
 	virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
@@ -102,19 +117,19 @@ public:
 	virtual void onEndEditing();
     
 private:
-	void			initInactiveLabels(const CCSize& size);
+	void			initInactiveLabels(const Size& size);
 	void			setInactiveText(const char* pText);
 	void			adjustTextFieldPosition();
     void            placeInactiveLabels();
 	
-    CCLabelTTF*     m_pLabel;
-    CCLabelTTF*     m_pLabelPlaceHolder;
-    CCSize          m_tContentSize;
-    CCPoint         m_obPosition;
-    CCPoint         m_obAnchorPoint;
-    EditBoxImplIOS* m_systemControl;
-    int             m_nMaxTextLength;
-    bool            m_bInRetinaMode;
+    LabelTTF*     _label;
+    LabelTTF*     _labelPlaceHolder;
+    Size          _contentSize;
+    Point         _position;
+    Point         _anchorPoint;
+    CCEditBoxImplIOS_objc* _systemControl;
+    int             _maxTextLength;
+    bool            _inRetinaMode;
 };
 
 

@@ -35,122 +35,135 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef enum _ccConfigurationType {
-    ConfigurationError,
-    ConfigurationString,
-    ConfigurationInt,
-    ConfigurationDouble,
-    ConfigurationBoolean
-} ccConfigurationType;
-
-
 /**
  * @addtogroup global
  * @{
  */
 /**
- @brief CCConfiguration contains some openGL variables
+ @brief Configuration contains some openGL variables
  @since v0.99.0
  */
-class CC_DLL CCConfiguration : public CCObject
+class CC_DLL Configuration : public Object
 {
 public:
-    /** returns a shared instance of CCConfiguration */
-    static CCConfiguration *sharedConfiguration(void);
+    
+    /** returns a shared instance of Configuration */
+    static Configuration *getInstance();
 
-    /** purge the shared instance of CCConfiguration */
-    static void purgeConfiguration(void);
+    /** purge the shared instance of Configuration */
+    static void destroyInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
+
+    /** @deprecated Use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
 
 public:
-
-	virtual ~CCConfiguration(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+	virtual ~Configuration();
 
     /** OpenGL Max texture size. */
-	int getMaxTextureSize(void) const;
+	int getMaxTextureSize() const;
 
     /** OpenGL Max Modelview Stack Depth. */
-	int getMaxModelviewStackDepth(void) const;
+	int getMaxModelviewStackDepth() const;
 
     /** returns the maximum texture units
      @since v2.0.0
      */
-	int getMaxTextureUnits(void) const;
+	int getMaxTextureUnits() const;
 
     /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
      OpenGL ES 2.0 already supports NPOT (iOS).
      
      @since v0.99.2
      */
-	bool supportsNPOT(void) const;
+	bool supportsNPOT() const;
 
     /** Whether or not PVR Texture Compressed is supported */
-	bool supportsPVRTC(void) const;
-
+	bool supportsPVRTC() const;
+    
+     /** Whether or not ETC Texture Compressed is supported */
+    bool supportsETC() const;
+    
+    /** Whether or  not S3TC Texture Compressed is supported */
+    bool supportsS3TC() const;
+    
+    /** Whether or  not ATITC Texture Compressed is supported */
+    bool supportsATITC() const;
+    
     /** Whether or not BGRA8888 textures are supported.
      @since v0.99.2
      */
-	bool supportsBGRA8888(void) const;
+	bool supportsBGRA8888() const;
 
     /** Whether or not glDiscardFramebufferEXT is supported
      @since v0.99.2
      */
-	bool supportsDiscardFramebuffer(void) const;
+	bool supportsDiscardFramebuffer() const;
 
     /** Whether or not shareable VAOs are supported.
      @since v2.0.0
      */
-	bool supportsShareableVAO(void) const;
+	bool supportsShareableVAO() const;
 
     /** returns whether or not an OpenGL is supported */
     bool checkForGLExtension(const std::string &searchName) const;
 
-    bool init(void);
+    bool init();
 
 	/** returns the value of a given key as a string.
 	 If the key is not found, it will return the default value */
-	const char* getCString( const char *key, const char *default_value=NULL ) const;
+	const char* getCString(const char *key, const char *defaultValue = nullptr) const;
 
 	/** returns the value of a given key as a boolean.
 	 If the key is not found, it will return the default value */
-	bool getBool( const char *key, bool default_value=false ) const;
+	bool getBool(const char *key, bool defaultValue = false) const;
 
 	/** returns the value of a given key as a double.
 	 If the key is not found, it will return the default value */
-	double getNumber( const char *key, double default_value=0.0 ) const;
+	double getNumber(const char *key, double defaultValue = 0.0) const;
 
 	/** returns the value of a given key as a double */
-	CCObject * getObject( const char *key ) const;
+	Object * getObject(const char *key) const;
 
 	/** sets a new key/value pair  in the configuration dictionary */
-	void setObject( const char *key, CCObject *value );
+	void setObject(const char *key, Object *value);
 
 	/** dumps the current configuration on the console */
-	void dumpInfo(void) const;
+	void dumpInfo() const;
 
 	/** gathers OpenGL / GPU information */
-	void gatherGPUInfo( void );
+	void gatherGPUInfo();
 
 	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
-	void loadConfigFile( const char *filename );
+	void loadConfigFile(const char *filename);
 
 private:
-    CCConfiguration(void);
-    static CCConfiguration *s_gSharedConfiguration;
-	static std::string		s_sConfigfile;
+    Configuration(void);
+    static Configuration    *s_sharedConfiguration;
+	static std::string		s_configfile;
     
 protected:
-    GLint           m_nMaxTextureSize;
-    GLint           m_nMaxModelviewStackDepth;
-    bool            m_bSupportsPVRTC;
-    bool            m_bSupportsNPOT;
-    bool            m_bSupportsBGRA8888;
-    bool            m_bSupportsDiscardFramebuffer;
-    bool            m_bSupportsShareableVAO;
-    GLint           m_nMaxSamplesAllowed;
-    GLint           m_nMaxTextureUnits;
-    char *          m_pGlExtensions;
+    GLint           _maxTextureSize;
+    GLint           _maxModelviewStackDepth;
+    bool            _supportsPVRTC;
+    bool            _supportsETC;
+    bool            _supportsS3TC;
+    bool            _supportsATITC;
+    bool            _supportsNPOT;
+    bool            _supportsBGRA8888;
+    bool            _supportsDiscardFramebuffer;
+    bool            _supportsShareableVAO;
+    GLint           _maxSamplesAllowed;
+    GLint           _maxTextureUnits;
+    char *          _glExtensions;
 	
-	CCDictionary	*m_pValueDict;
+	Dictionary	*_valueDict;
 };
 
 // end of global group

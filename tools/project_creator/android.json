@@ -1,0 +1,13 @@
+{
+    "remove":               ["assets",
+                             "bin",
+						 	 "libs",
+						 	 "gen",
+						 	 "obj"],
+    "replace_package_name": ["AndroidManifest.xml"],
+    "replace_project_name": [".project",
+							 "AndroidManifest.xml",
+						     "build.xml",
+						     "build_native.sh",
+						     "res/values/strings.xml"]
+}

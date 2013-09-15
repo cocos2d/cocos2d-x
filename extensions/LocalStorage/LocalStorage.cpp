@@ -43,9 +43,6 @@ static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
 
 
-static void localStorageLazyInit();
-static void localStorageCreateTable();
-
 static void localStorageCreateTable()
 {
 	const char *sql_createtable = "CREATE TABLE IF NOT EXISTS data(key TEXT PRIMARY KEY,value TEXT);";

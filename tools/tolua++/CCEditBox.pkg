@@ -67,7 +67,7 @@ public:
     
     void setFontSize(int fontSize);
     
-    void setFontColor(const ccColor3B& color);
+    void setFontColor(const Color3B& color);
     
     void setPlaceholderFont(const char* pFontName, int fontSize);
     
@@ -75,7 +75,7 @@ public:
     
     void setPlaceholderFontSize(int fontSize);
     
-    void setPlaceholderFontColor(const ccColor3B& color);
+    void setPlaceholderFontColor(const Color3B& color);
     
     void setPlaceHolder(const char* pText);
     

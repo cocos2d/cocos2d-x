@@ -4,7 +4,7 @@ class CCLabelAtlas : public CCAtlasNode
     void updateAtlasValues();
 
     void setString(const char *label);
-    const char* getString(void);
+    const char* getString(void) const;
 
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);

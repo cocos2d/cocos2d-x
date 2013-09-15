@@ -31,7 +31,7 @@ struct b2AABB;
 class GLESDebugDraw : public b2Draw
 {
     float32 mRatio;
-    cocos2d::CCGLProgram* mShaderProgram;
+    cocos2d::GLProgram* mShaderProgram;
     GLint        mColorLocation;
 
     void initShader( void );

@@ -86,7 +86,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 
     for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
     {
-        ContactPoint* cp = m_points + m_pointCount;
+        auto cp = m_points + m_pointCount;
         cp->fixtureA = fixtureA;
         cp->fixtureB = fixtureB;
         cp->position = worldManifold.points[i];
@@ -412,7 +412,7 @@ void Test::Step(Settings* settings)
 
         for (int32 i = 0; i < m_pointCount; ++i)
         {
-            ContactPoint* point = m_points + i;
+            auto point = m_points + i;
 
             if (point->state == b2_addState)
             {

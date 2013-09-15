@@ -28,7 +28,9 @@ THE SOFTWARE.
 #define __CCINSTANT_ACTION_H__
 
 #include <string>
-#include "ccTypeInfo.h"
+#include <functional>
+
+#include "CCStdC.h"
 #include "CCAction.h"
 
 NS_CC_BEGIN
@@ -40,341 +42,388 @@ NS_CC_BEGIN
 
 /** 
 @brief Instant actions are immediate actions. They don't have a duration like
-the CCIntervalAction actions.
+the IntervalAction actions.
 */ 
-class CC_DLL CCActionInstant : public CCFiniteTimeAction //<NSCopying>
+class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
 public:
-    CCActionInstant();
-    virtual ~CCActionInstant(){}
-    // CCAction methods
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual bool isDone(void);
-    virtual void step(float dt);
-    virtual void update(float time);
-    //CCFiniteTimeAction method
-    virtual CCFiniteTimeAction * reverse(void);
+    //
+    // Overrides
+    //
+	virtual ActionInstant* clone() const override = 0;
+    virtual ActionInstant * reverse(void) const override = 0;
+    virtual bool isDone(void) const override;
+    virtual void step(float dt) override;
+    virtual void update(float time) override;
 };
 
 /** @brief Show the node
 */
-class CC_DLL CCShow : public CCActionInstant
+class CC_DLL Show : public ActionInstant
 {
 public:
-    CCShow(){}
-    virtual ~CCShow(){}
-    //super methods
-    virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
-    virtual CCObject* copyWithZone(CCZone *pZone);
-public:
-
     /** Allocates and initializes the action */
-    static CCShow * create();
+    static Show * create();
+
+    Show(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+    virtual ActionInstant* reverse(void) const override;
+	virtual Show* clone() const override;
 };
-
-
 
 /** 
 @brief Hide the node
 */
-class CC_DLL CCHide : public CCActionInstant
+class CC_DLL Hide : public ActionInstant
 {
 public:
-    CCHide(){}
-    virtual ~CCHide(){}
-    //super methods
-    virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
-    virtual CCObject* copyWithZone(CCZone *pZone);
-public:
-
     /** Allocates and initializes the action */
-    static CCHide * create();
+    static Hide * create();
+
+    Hide(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual ActionInstant* reverse() const override;
+	virtual Hide* clone() const override;
 };
 
 /** @brief Toggles the visibility of a node
 */
-class CC_DLL CCToggleVisibility : public CCActionInstant
+class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
-    CCToggleVisibility(){}
-    virtual ~CCToggleVisibility(){}
-    //super method
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone *pZone);
-public:
-
     /** Allocates and initializes the action */
-    static CCToggleVisibility * create();
+    static ToggleVisibility * create();
+
+    ToggleVisibility(){}
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual ToggleVisibility* reverse() const override;
+	virtual ToggleVisibility* clone() const override;
 };
 
 /** 
 @brief Remove the node
 */
-class CC_DLL CCRemoveSelf : public CCActionInstant
+class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
-	CCRemoveSelf(){}
-	virtual ~CCRemoveSelf(){}
-	//super methods
-	virtual void update(float time);
-	virtual CCFiniteTimeAction * reverse(void);
-	virtual CCObject* copyWithZone(CCZone *pZone);
-public:
 	/** create the action */
-	static CCRemoveSelf * create(bool isNeedCleanUp = true);
+	static RemoveSelf * create(bool isNeedCleanUp = true);
+
+    RemoveSelf():_isNeedCleanUp(true)
+	{}
+
 	/** init the action */
 	bool init(bool isNeedCleanUp);
+
+	//
+    // Override
+    //
+	virtual void update(float time) override;
+	virtual RemoveSelf* clone() const override;
+	virtual RemoveSelf* reverse() const override;
+
 protected:
-	bool m_bIsNeedCleanUp;
+	bool _isNeedCleanUp;
 };
 
 /** 
 @brief Flips the sprite horizontally
 @since v0.99.0
 */
-class CC_DLL CCFlipX : public CCActionInstant
+class CC_DLL FlipX : public ActionInstant
 {
 public:
-    CCFlipX()
-        :m_bFlipX(false)
-    {}
-    virtual ~CCFlipX(){}
-
     /** create the action */
-    static CCFlipX * create(bool x);
+    static FlipX * create(bool x);
+
+    FlipX()
+        :_flipX(false)
+    {}
 
     /** init the action */
     bool initWithFlipX(bool x);
-    //super methods
-    virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
-    virtual CCObject* copyWithZone(CCZone *pZone);
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual FlipX* reverse() const override;
+	virtual FlipX* clone() const override;
 
 protected:
-    bool    m_bFlipX;
+    bool    _flipX;
 };
 
 /** 
 @brief Flips the sprite vertically
 @since v0.99.0
 */
-class CC_DLL CCFlipY : public CCActionInstant
+class CC_DLL FlipY : public ActionInstant
 {
 public:
-    CCFlipY()
-        :m_bFlipY(false)
-    {}
-    virtual ~CCFlipY(){}
-
     /** create the action */
-    static CCFlipY * create(bool y);
+    static FlipY * create(bool y);
+
+    FlipY()
+        :_flipY(false)
+    {}
 
     /** init the action */
     bool initWithFlipY(bool y);
-    //super methods
-    virtual void update(float time);
-    virtual CCFiniteTimeAction * reverse(void);
-    virtual CCObject* copyWithZone(CCZone *pZone);
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual FlipY* reverse() const override;
+	virtual FlipY* clone() const override;
 
 protected:
-    bool    m_bFlipY;
+    bool    _flipY;
 };
 
 /** @brief Places the node in a certain position
 */
-class CC_DLL CCPlace : public CCActionInstant //<NSCopying>
+class CC_DLL Place : public ActionInstant //<NSCopying>
 {
 public:
-    CCPlace(){}
-    virtual ~CCPlace(){}
+    Place(){}
 
     /** creates a Place action with a position */
-    static CCPlace * create(const CCPoint& pos);
+    static Place * create(const Point& pos);
     /** Initializes a Place action with a position */
-    bool initWithPosition(const CCPoint& pos);
-    //super methods
-    virtual void update(float time);
-    virtual CCObject* copyWithZone(CCZone *pZone);
+    bool initWithPosition(const Point& pos);
+
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual Place* reverse() const override;
+	virtual Place* clone() const override;
+
 protected:
-    CCPoint m_tPosition;
+    Point _position;
 };
+
 
 /** @brief Calls a 'callback'
 */
-class CC_DLL CCCallFunc : public CCActionInstant //<NSCopying>
+class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
 public:
-    CCCallFunc()
-        : m_pSelectorTarget(NULL)
-		, m_nScriptHandler(0)
-        , m_pCallFunc(NULL)
+	/** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+     * When this funtion bound in js or lua ,the input param will be changed
+     * In js: var create(var func, var this, var [data]) or var create(var func)
+     * In lua:local create(local funcID)
+	 */
+    static CallFunc * create(const std::function<void()>& func);
+
+    /** creates the action with the callback
+
+     typedef void (Object::*SEL_CallFunc)();
+	 @deprecated Use the std::function API instead.
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Object* pSelectorTarget, SEL_CallFunc selector);
+
+public:
+    /**
+     * @js ctor
+     */
+    CallFunc()
+        : _selectorTarget(NULL)
+        , _callFunc(NULL)
+		, _function(nullptr)
     {
     }
-    virtual ~CCCallFunc();
-
-    /** creates the action with the callback 
-
-    typedef void (CCObject::*SEL_CallFunc)();
-    */
-    static CCCallFunc * create(CCObject* pSelectorTarget, SEL_CallFunc selector);
-
-	/** creates the action with the handler script function */
-	static CCCallFunc * create(int nHandler);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~CallFunc();
 
 	/** initializes the action with the callback 
-    
-    typedef void (CCObject::*SEL_CallFunc)();
+    typedef void (Object::*SEL_CallFunc)();
+    @deprecated Use the std::function API instead.
     */
-    virtual bool initWithTarget(CCObject* pSelectorTarget);
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget);
+
+	/** initializes the action with the std::function<void()>
+     * @js NK
+     * @lua NK
+	 */
+    bool initWithFunction(const std::function<void()>& func);
+
     /** executes the callback */
     virtual void execute();
-    //super methods
-    virtual void update(float time);
-    CCObject * copyWithZone(CCZone *pZone);
 
-    inline CCObject* getTargetCallback()
+    inline Object* getTargetCallback()
     {
-        return m_pSelectorTarget;
+        return _selectorTarget;
     }
 
-    inline void setTargetCallback(CCObject* pSel)
+    inline void setTargetCallback(Object* pSel)
     {
-        if (pSel != m_pSelectorTarget)
+        if (pSel != _selectorTarget)
         {
             CC_SAFE_RETAIN(pSel);
-            CC_SAFE_RELEASE(m_pSelectorTarget);
-            m_pSelectorTarget = pSel; 
+            CC_SAFE_RELEASE(_selectorTarget);
+            _selectorTarget = pSel; 
         }
     }
-    
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    //
+    // Overrides
+    //
+    virtual void update(float time) override;
+	virtual CallFunc* reverse() const override;
+	virtual CallFunc* clone() const override;
+
 protected:
     /** Target that will be called */
-    CCObject*   m_pSelectorTarget;
-
-	int m_nScriptHandler;
+    Object*   _selectorTarget;
 
     union
     {
-        SEL_CallFunc    m_pCallFunc;
-        SEL_CallFuncN    m_pCallFuncN;
-        SEL_CallFuncND    m_pCallFuncND;
-        SEL_CallFuncO   m_pCallFuncO;
+        SEL_CallFunc    _callFunc;
+        SEL_CallFuncN    _callFuncN;
     };
+    
+    /** function that will be called */
+	std::function<void()> _function;
 };
 
 /** 
 @brief Calls a 'callback' with the node as the first argument
 N means Node
 */
-class CC_DLL CCCallFuncN : public CCCallFunc, public TypeInfo
+class CC_DLL CallFuncN : public CallFunc
 {
 public:
-    CCCallFuncN(){}
-    virtual ~CCCallFuncN(){}
-    virtual long getClassTypeInfo() {
-		static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
-		return id;
-    }
+    /** creates the action with the callback of type std::function<void()>.
+	 This is the preferred way to create the callback.
+	 */
+    static CallFuncN * create(const std::function<void(Node*)>& func);
 
     /** creates the action with the callback 
 
-    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
+    typedef void (Object::*SEL_CallFuncN)(Node*);
+     @deprecated Use the std::function API instead.
     */
-    static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
+    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Object* pSelectorTarget, SEL_CallFuncN selector);
+public:
+    CallFuncN():_functionN(nullptr){}
 
-	/** creates the action with the handler script function */
-	static CCCallFuncN * create(int nHandler);
+    /** initializes the action with the std::function<void(Node*)>
+	 */
+    bool initWithFunction(const std::function<void(Node*)>& func);
 
     /** initializes the action with the callback 
 
-    typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
+    typedef void (Object::*SEL_CallFuncN)(Node*);
+    @deprecated Use the std::function API instead.
     */
-    virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncN selector);
-    // super methods
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void execute();
-};
+    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Object* pSelectorTarget, SEL_CallFuncN selector);
 
-
-/** 
-@brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
-* ND means: Node and Data. Data is void *, so it could be anything.
-*/
-class CC_DLL CCCallFuncND : public CCCallFuncN
-{
-public:
-    virtual long getClassTypeInfo() {
-        static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
-		return id;
-    }
-
-    /** creates the action with the callback and the data to pass as an argument */
-    static CCCallFuncND * create(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
-
-    /** initializes the action with the callback and the data to pass as an argument */
-    virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncND selector, void* d);
-    // super methods
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void execute();
+    //
+    // Overrides
+    //
+	virtual CallFuncN* clone() const override;
+    virtual void execute() override;
 
 protected:
-    void            *m_pData;
+    /** function that will be called with the "sender" as the 1st argument */
+    std::function<void(Node*)> _functionN;
+};
+
+/**
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
+ * ND means: Node and Data. Data is void *, so it could be anything.
+ */
+
+class CC_DLL  __CCCallFuncND : public CallFunc
+{
+public:
+    /** creates the action with the callback and the data to pass as an argument */
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+protected:
+    /** initializes the action with the callback and the data to pass as an argument */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncND selector, void* d);
+    
+public:
+    //
+    // Overrides
+    //
+	virtual __CCCallFuncND* clone() const override;
+    virtual void execute() override;
+    
+protected:
+    SEL_CallFuncND _callFuncND;
+    void* _data;
 };
 
 
 /**
-@brief Calls a 'callback' with an object as the first argument.
-O means Object.
-@since v0.99.5
-*/
+ @deprecated Please use CallFuncN instead.
+ @brief Calls a 'callback' with an object as the first argument.
+ O means Object.
+ @since v0.99.5
+ */
 
-class CC_DLL CCCallFuncO : public CCCallFunc, public TypeInfo
+class CC_DLL __CCCallFuncO : public CallFunc
 {
 public:
-    CCCallFuncO();
-    virtual ~CCCallFuncO();
-
-    virtual long getClassTypeInfo() {
-	    static const long id = cocos2d::getHashCodeByString(typeid(cocos2d::CCCallFunc).name());
-		return id;
-    }
-
-    /** creates the action with the callback 
-
-    typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-    */
-    static CCCallFuncO * create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
-
-    /** initializes the action with the callback 
-
-    typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-    */
-    virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
-    // super methods
-    virtual CCObject* copyWithZone(CCZone *pZone);
-    virtual void execute();
-
-    inline CCObject* getObject()
-    {
-        return m_pObject;
-    }
-
-    inline void setObject(CCObject* pObj)
-    {
-        if (pObj != m_pObject)
-        {
-            CC_SAFE_RELEASE(m_pObject);
-            m_pObject = pObj;
-            CC_SAFE_RETAIN(m_pObject);
-        }
-    }
-
+    /** creates the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    /**
+     * @js ctor
+     */
+    __CCCallFuncO();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~__CCCallFuncO();
+    
+protected:
+    /** initializes the action with the callback
+     
+     typedef void (Object::*SEL_CallFuncO)(Object*);
+     */
+    bool initWithTarget(Object* selectorTarget, SEL_CallFuncO selector, Object* object);
+    
+public:
+    //
+    // Overrides
+    //
+	virtual __CCCallFuncO* clone() const override;
+    virtual void execute() override;
+    
+    Object* getObject() const;
+    void setObject(Object* obj);
+    
 protected:
     /** object to be passed as argument */
-    CCObject* m_pObject;
+    Object* _object;
+    SEL_CallFuncO _callFuncO;
 };
 
 // end of actions group

@@ -35,134 +35,134 @@ using namespace Tizen::Ui::Controls;
 
 NS_CC_EXT_BEGIN
 
-CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
+EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return new CCEditBoxImplTizen(pEditBox);
+    return new EditBoxImplTizen(pEditBox);
 }
 
-CCEditBoxImplTizen::CCEditBoxImplTizen(CCEditBox* pEditText)
-: CCEditBoxImpl(pEditText)
-, m_pLabel(NULL)
-, m_pLabelPlaceHolder(NULL)
-, m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
-, m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
-, m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
-, m_colText(ccWHITE)
-, m_colPlaceHolder(ccGRAY)
-, m_nMaxLength(-1)
-{
-}
-
-CCEditBoxImplTizen::~CCEditBoxImplTizen()
+EditBoxImplTizen::EditBoxImplTizen(EditBox* pEditText)
+: EditBoxImpl(pEditText)
+, _label(NULL)
+, _labelPlaceHolder(NULL)
+, _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
+, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
+, _colText(Color3B::WHITE)
+, _colPlaceHolder(Color3B::GRAY)
+, _maxLength(-1)
 {
 }
 
-void CCEditBoxImplTizen::doAnimationWhenKeyboardMove(float duration, float distance)
+EditBoxImplTizen::~EditBoxImplTizen()
+{
+}
+
+void EditBoxImplTizen::doAnimationWhenKeyboardMove(float duration, float distance)
 {
 }
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
-bool CCEditBoxImplTizen::initWithSize(const CCSize& size)
+bool EditBoxImplTizen::initWithSize(const Size& size)
 {
-    int fontSize = (int)size.height-12;
-    m_pLabel = CCLabelTTF::create("", "", size.height-12);
+//    int fontSize = (int)size.height-12;
+    _label = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
-    m_pLabel->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
-    m_pLabel->setColor(m_colText);
-    m_pEditBox->addChild(m_pLabel);
+    _label->setAnchorPoint(Point(0, 0.5f));
+    _label->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _label->setColor(_colText);
+    _editBox->addChild(_label);
 
-    m_pLabelPlaceHolder = CCLabelTTF::create("", "", size.height-12);
+    _labelPlaceHolder = LabelTTF::create("", "", size.height-12);
     // align the text vertically center
-    m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5f));
-    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, size.height / 2.0f));
-    m_pLabelPlaceHolder->setVisible(false);
-    m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
-    m_pEditBox->addChild(m_pLabelPlaceHolder);
+    _labelPlaceHolder->setAnchorPoint(Point(0, 0.5f));
+    _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _labelPlaceHolder->setVisible(false);
+    _labelPlaceHolder->setColor(_colPlaceHolder);
+    _editBox->addChild(_labelPlaceHolder);
 
-    m_EditSize = size;
+    _editSize = size;
     return true;
 }
 
-void CCEditBoxImplTizen::setFont(const char* pFontName, int fontSize)
+void EditBoxImplTizen::setFont(const char* pFontName, int fontSize)
 {
-    if(m_pLabel != NULL) {
-        m_pLabel->setFontName(pFontName);
-        m_pLabel->setFontSize(fontSize);
+    if(_label != NULL) {
+        _label->setFontName(pFontName);
+        _label->setFontSize(fontSize);
     }
     
-    if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setFontName(pFontName);
-        m_pLabelPlaceHolder->setFontSize(fontSize);
+    if(_labelPlaceHolder != NULL) {
+        _labelPlaceHolder->setFontName(pFontName);
+        _labelPlaceHolder->setFontSize(fontSize);
     }
 }
 
-void CCEditBoxImplTizen::setFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setFontColor(const Color3B& color)
 {
-    m_colText = color;
-    m_pLabel->setColor(color);
+    _colText = color;
+    _label->setColor(color);
 }
 
-void CCEditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
+void EditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-    if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setFontName(pFontName);
-        m_pLabelPlaceHolder->setFontSize(fontSize);
+    if(_labelPlaceHolder != NULL) {
+        _labelPlaceHolder->setFontName(pFontName);
+        _labelPlaceHolder->setFontSize(fontSize);
     }
 }
 
-void CCEditBoxImplTizen::setPlaceholderFontColor(const ccColor3B& color)
+void EditBoxImplTizen::setPlaceholderFontColor(const Color3B& color)
 {
-    m_colPlaceHolder = color;
-    m_pLabelPlaceHolder->setColor(color);
+    _colPlaceHolder = color;
+    _labelPlaceHolder->setColor(color);
 }
 
-void CCEditBoxImplTizen::setInputMode(EditBoxInputMode inputMode)
+void EditBoxImplTizen::setInputMode(EditBox::InputMode inputMode)
 {
-    m_eEditBoxInputMode = inputMode;
+    _editBoxInputMode = inputMode;
 }
 
-void CCEditBoxImplTizen::setMaxLength(int maxLength)
+void EditBoxImplTizen::setMaxLength(int maxLength)
 {
-    m_nMaxLength = maxLength;
+    _maxLength = maxLength;
 }
 
-int CCEditBoxImplTizen::getMaxLength()
+int EditBoxImplTizen::getMaxLength()
 {
-    return m_nMaxLength;
+    return _maxLength;
 }
 
-void CCEditBoxImplTizen::setInputFlag(EditBoxInputFlag inputFlag)
+void EditBoxImplTizen::setInputFlag(EditBox::InputFlag inputFlag)
 {
-    m_eEditBoxInputFlag = inputFlag;
+    _editBoxInputFlag = inputFlag;
 }
 
-void CCEditBoxImplTizen::setReturnType(KeyboardReturnType returnType)
+void EditBoxImplTizen::setReturnType(EditBox::KeyboardReturnType returnType)
 {
-    m_eKeyboardReturnType = returnType;
+    _keyboardReturnType = returnType;
 }
 
-bool CCEditBoxImplTizen::isEditing()
+bool EditBoxImplTizen::isEditing()
 {
     return false;
 }
 
-void CCEditBoxImplTizen::setText(const char* pText)
+void EditBoxImplTizen::setText(const char* pText)
 {
     if (pText != NULL)
     {
-        m_strText = pText;
+        _text = pText;
 
-        if (m_strText.length() > 0)
+        if (_text.length() > 0)
         {
-            m_pLabelPlaceHolder->setVisible(false);
+            _labelPlaceHolder->setVisible(false);
 
             std::string strToShow;
 
-            if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
+            if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
-                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                long length = cc_utf8_strlen(_text.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");
@@ -170,130 +170,138 @@ void CCEditBoxImplTizen::setText(const char* pText)
             }
             else
             {
-                strToShow = m_strText;
+                strToShow = _text;
             }
 
-            m_pLabel->setString(strToShow.c_str());
+            _label->setString(strToShow.c_str());
 
             // Clip the text width to fit to the text box
-            float fMaxWidth = m_EditSize.width - CC_EDIT_BOX_PADDING * 2;
-            CCRect clippingRect = m_pLabel->getTextureRect();
+            float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
+            Rect clippingRect = _label->getTextureRect();
             if(clippingRect.size.width > fMaxWidth) {
                 clippingRect.size.width = fMaxWidth;
-                m_pLabel->setTextureRect(clippingRect);
+                _label->setTextureRect(clippingRect);
             }
 
         }
         else
         {
-            m_pLabelPlaceHolder->setVisible(true);
-            m_pLabel->setString("");
+            _labelPlaceHolder->setVisible(true);
+            _label->setString("");
         }
 
     }
 }
 
-const char*  CCEditBoxImplTizen::getText(void)
+const char*  EditBoxImplTizen::getText(void)
 {
-    return m_strText.c_str();
+    return _text.c_str();
 }
 
-void CCEditBoxImplTizen::setPlaceHolder(const char* pText)
+void EditBoxImplTizen::setPlaceHolder(const char* pText)
 {
     if (pText != NULL)
     {
-        m_strPlaceHolder = pText;
-        if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
+        _placeHolder = pText;
+        if (_placeHolder.length() > 0 && _text.length() == 0)
         {
-            m_pLabelPlaceHolder->setVisible(true);
+            _labelPlaceHolder->setVisible(true);
         }
 
-        m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
+        _labelPlaceHolder->setString(_placeHolder.c_str());
     }
 }
 
-void CCEditBoxImplTizen::setPosition(const CCPoint& pos)
+void EditBoxImplTizen::setPosition(const Point& pos)
 {
 }
 
-void CCEditBoxImplTizen::setVisible(bool visible)
+void EditBoxImplTizen::setVisible(bool visible)
 {
 }
 
-void CCEditBoxImplTizen::setContentSize(const CCSize& size)
+void EditBoxImplTizen::setContentSize(const Size& size)
 {
 }
 
-void CCEditBoxImplTizen::setAnchorPoint(const CCPoint& anchorPoint)
+void EditBoxImplTizen::setAnchorPoint(const Point& anchorPoint)
 {
 }
 
-void CCEditBoxImplTizen::visit(void)
+void EditBoxImplTizen::visit(void)
 {
 }
 
-void CCEditBoxImplTizen::onEnter(void)
+void EditBoxImplTizen::onEnter(void)
 {
 }
 
 static void editBoxCallbackFunc(const char* pText, void* ctx)
 {
-    CCEditBoxImplTizen* thiz = (CCEditBoxImplTizen*)ctx;
+    EditBoxImplTizen* thiz = (EditBoxImplTizen*)ctx;
     thiz->setText(pText);
 
     if (thiz->getDelegate() != NULL)
     {
-        thiz->getDelegate()->editBoxTextChanged(thiz->getCCEditBox(), thiz->getText());
-        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
-        thiz->getDelegate()->editBoxReturn(thiz->getCCEditBox());
+        thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
+        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
+        thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
     }
     
-    CCEditBox* pEditBox = thiz->getCCEditBox();
+    EditBox* pEditBox = thiz->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return",pEditBox);
+    {       
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"ended",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        memset(data.eventName,0,64*sizeof(char));
+        strncpy(data.eventName,"return",64);
+        event.data = (void*)&data;
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 }
 
-void CCEditBoxImplTizen::openKeyboard()
+void EditBoxImplTizen::openKeyboard()
 {
-    if (m_pDelegate != NULL)
+    if (_delegate != NULL)
     {
-        m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
+        _delegate->editBoxEditingDidBegin(_editBox);
     }
-    CCEditBox* pEditBox = this->getCCEditBox();
+    EditBox* pEditBox = this->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        ScriptEvent event(kCommonEvent,(void*)&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 
     KeypadStyle keypadStyle = KEYPAD_STYLE_NORMAL;
     KeypadInputModeCategory keypadCategory = KEYPAD_MODE_ALPHA;
     bool bSingleLineEnabled = false;
-    switch (m_eEditBoxInputMode)
+    switch (_editBoxInputMode)
     {
-    case kEditBoxInputModeAny:
+    case EditBox::InputMode::ANY:
         keypadStyle = KEYPAD_STYLE_NORMAL;
         break;
-    case kEditBoxInputModeEmailAddr:
+    case EditBox::InputMode::EMAIL_ADDRESS:
         keypadStyle = KEYPAD_STYLE_EMAIL;
         break;
-    case kEditBoxInputModeNumeric:
-    case kEditBoxInputModeDecimal:
+    case EditBox::InputMode::NUMERIC:
+    case EditBox::InputMode::DECIMAL:
         keypadStyle = KEYPAD_STYLE_NUMBER;
         keypadCategory = KEYPAD_MODE_NUMERIC;
         break;
-    case kEditBoxInputModePhoneNumber:
+    case EditBox::InputMode::PHONE_NUMBER:
         keypadStyle = KEYPAD_STYLE_PHONE_NUMBER;
         break;
-    case kEditBoxInputModeUrl:
+    case EditBox::InputMode::URL:
         keypadStyle = KEYPAD_STYLE_URL;
         break;
-    case kEditBoxInputModeSingleLine:
+    case EditBox::InputMode::SINGLE_LINE:
         bSingleLineEnabled = true;
         break;
     default:
@@ -302,32 +310,32 @@ void CCEditBoxImplTizen::openKeyboard()
     }
 
     bool bTextPrediction = true;
-    switch (m_eEditBoxInputFlag)
+    switch (_editBoxInputFlag)
     {
-    case kEditBoxInputFlagPassword:
+    case EditBox::InputFlag::PASSWORD:
         keypadStyle = KEYPAD_STYLE_PASSWORD;
         break;
-    case kEditBoxInputFlagSensitive:
+    case EditBox::InputFlag::SENSITIVE:
         bTextPrediction = false;
         break;
     default:
         break;
     }
 
-    ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->ShowKeypad(
-        m_strText.c_str(),
+    ((OspForm *)OspApplication::GetInstance()->getOspForm())->ShowKeypad(
+        _text.c_str(),
         keypadStyle,
         keypadCategory,
         bSingleLineEnabled,
         bTextPrediction,
-        m_nMaxLength,
+        _maxLength,
         editBoxCallbackFunc,
         (void*)this);
 }
 
-void CCEditBoxImplTizen::closeKeyboard()
+void EditBoxImplTizen::closeKeyboard()
 {
-    ((CCOspForm *)CCOspApplication::GetInstance()->getCCOspForm())->CloseKeypad();
+    ((OspForm *)OspApplication::GetInstance()->getOspForm())->CloseKeypad();
 }
 
 NS_CC_EXT_END

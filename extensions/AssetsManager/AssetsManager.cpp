@@ -21,7 +21,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "AssetsManager.h"
 #include "cocos2d.h"
 
@@ -29,12 +28,15 @@
 #include <curl/easy.h>
 #include <stdio.h>
 #include <vector>
+#include <thread>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <dirent.h>
 #endif
+
 
 #include "support/zip_support/unzip.h"
 
@@ -78,9 +80,10 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _versionFileUrl(versionFileUrl)
 , _downloadedVersion("")
 , _curl(NULL)
-, _tid(NULL)
 , _connectionTimeout(0)
 , _delegate(NULL)
+, _isDownloading(false)
+, _shouldDeleteDelegateWhenExit(false)
 {
     checkStoragePath();
     _schedule = new Helper();
@@ -92,6 +95,10 @@ AssetsManager::~AssetsManager()
     {
         _schedule->release();
     }
+    if (_shouldDeleteDelegateWhenExit)
+    {
+        delete _delegate;
+    }
 }
 
 void AssetsManager::checkStoragePath()
@@ -100,6 +107,26 @@ void AssetsManager::checkStoragePath()
     {
         _storagePath.append("/");
     }
+}
+
+// Multiple key names
+static std::string keyWithHash( const char* prefix, const std::string& url )
+{
+    char buf[256];
+    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
+    return buf;
+}
+
+// hashed version
+std::string AssetsManager::keyOfVersion() const
+{
+    return keyWithHash(KEY_OF_VERSION,_packageUrl);
+}
+
+// hashed version
+std::string AssetsManager::keyOfDownloadedVersion() const
+{
+    return keyWithHash(KEY_OF_DOWNLOADED_VERSION,_packageUrl);
 }
 
 static size_t getVersionCode(void *ptr, size_t size, size_t nmemb, void *userdata)
@@ -134,16 +161,16 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        sendErrorMessage(kNetwork);
+        sendErrorMessage(ErrorCode::NETWORK);
         CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
     }
     
-    string recordedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
     if (recordedVersion == _version)
     {
-        sendErrorMessage(kNoNewVersion);
+        sendErrorMessage(ErrorCode::NO_NEW_VERSION);
         CCLOG("there is not new version");
         // Set resource search path.
         setSearchPath();
@@ -155,49 +182,43 @@ bool AssetsManager::checkUpdate()
     return true;
 }
 
-void* assetsManagerDownloadAndUncompress(void *data)
+void AssetsManager::downloadAndUncompress()
 {
-    AssetsManager* self = (AssetsManager*)data;
-    
     do
     {
-        if (self->_downloadedVersion != self->_version)
+        if (_downloadedVersion != _version)
         {
-            if (! self->downLoad()) break;
+            if (! downLoad()) break;
             
             // Record downloaded version.
             AssetsManager::Message *msg1 = new AssetsManager::Message();
             msg1->what = ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION;
-            msg1->obj = self;
-            self->_schedule->sendMessage(msg1);
+            msg1->obj = this;
+            _schedule->sendMessage(msg1);
         }
         
         // Uncompress zip file.
-        if (! self->uncompress())
+        if (! uncompress())
         {
-            self->sendErrorMessage(AssetsManager::kUncompress);
+            sendErrorMessage(ErrorCode::UNCOMPRESS);
             break;
         }
         
         // Record updated version and remove downloaded zip file
         AssetsManager::Message *msg2 = new AssetsManager::Message();
         msg2->what = ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED;
-        msg2->obj = self;
-        self->_schedule->sendMessage(msg2);
+        msg2->obj = this;
+        _schedule->sendMessage(msg2);
     } while (0);
     
-    if (self->_tid)
-    {
-        delete self->_tid;
-        self->_tid = NULL;
-    }
-    
-    return NULL;
+    _isDownloading = false;
 }
 
 void AssetsManager::update()
 {
-    if (_tid) return;
+    if (_isDownloading) return;
+    
+    _isDownloading = true;
     
     // 1. Urls of package and version should be valid;
     // 2. Package should be a zip file.
@@ -206,17 +227,22 @@ void AssetsManager::update()
         std::string::npos == _packageUrl.find(".zip"))
     {
         CCLOG("no version file url, or no package url, or the package is not a zip file");
+        _isDownloading = false;
         return;
     }
     
     // Check if there is a new version.
-    if (! checkUpdate()) return;
+    if (! checkUpdate())
+    {
+        _isDownloading = false;
+        return;
+    }
     
     // Is package already downloaded?
-    _downloadedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
+    _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
     
-    _tid = new pthread_t();
-    pthread_create(&(*_tid), NULL, assetsManagerDownloadAndUncompress, this);
+    auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
+    t.detach();
 }
 
 bool AssetsManager::uncompress()
@@ -370,10 +396,10 @@ bool AssetsManager::createDirectory(const char *path)
 
 void AssetsManager::setSearchPath()
 {
-    vector<string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+    vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     vector<string>::iterator iter = searchPaths.begin();
     searchPaths.insert(iter, _storagePath);
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userdata)
@@ -408,7 +434,7 @@ bool AssetsManager::downLoad()
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
-        sendErrorMessage(kCreateFile);
+        sendErrorMessage(ErrorCode::CREATE_FILE);
         CCLOG("can not create file %s", outFileName.c_str());
         return false;
     }
@@ -425,7 +451,7 @@ bool AssetsManager::downLoad()
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        sendErrorMessage(kNetwork);
+        sendErrorMessage(ErrorCode::NETWORK);
         CCLOG("error when download package");
         fclose(fp);
         return false;
@@ -470,12 +496,12 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
 
 string AssetsManager::getVersion()
 {
-    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    return UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
 }
 
 void AssetsManager::deleteVersion()
 {
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
+    UserDefault::getInstance()->setStringForKey(keyOfVersion().c_str(), "");
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)
@@ -511,21 +537,20 @@ void AssetsManager::sendErrorMessage(AssetsManager::ErrorCode code)
 AssetsManager::Helper::Helper()
 {
     _messageQueue = new list<Message*>();
-    pthread_mutex_init(&_messageQueueMutex, NULL);
-    CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
+    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
 }
 
 AssetsManager::Helper::~Helper()
 {
-    CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
+    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
     delete _messageQueue;
 }
 
 void AssetsManager::Helper::sendMessage(Message *msg)
 {
-    pthread_mutex_lock(&_messageQueueMutex);
+    _messageQueueMutex.lock();
     _messageQueue->push_back(msg);
-    pthread_mutex_unlock(&_messageQueueMutex);
+    _messageQueueMutex.unlock();
 }
 
 void AssetsManager::Helper::update(float dt)
@@ -533,17 +558,17 @@ void AssetsManager::Helper::update(float dt)
     Message *msg = NULL;
     
     // Returns quickly if no message
-    pthread_mutex_lock(&_messageQueueMutex);
+    _messageQueueMutex.lock();
     if (0 == _messageQueue->size())
     {
-        pthread_mutex_unlock(&_messageQueueMutex);
+        _messageQueueMutex.unlock();
         return;
     }
     
     // Gets message
     msg = *(_messageQueue->begin());
     _messageQueue->pop_front();
-    pthread_mutex_unlock(&_messageQueueMutex);
+    _messageQueueMutex.unlock();
     
     switch (msg->what) {
         case ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED:
@@ -551,9 +576,9 @@ void AssetsManager::Helper::update(float dt)
             
             break;
         case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
+            UserDefault::getInstance()->setStringForKey(((AssetsManager*)msg->obj)->keyOfDownloadedVersion().c_str(),
                                                                 ((AssetsManager*)msg->obj)->_version.c_str());
-            CCUserDefault::sharedUserDefault()->flush();
+            UserDefault::getInstance()->flush();
             
             break;
         case ASSETSMANAGER_MESSAGE_PROGRESS:
@@ -587,11 +612,11 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     AssetsManager* manager = (AssetsManager*)msg->obj;
     
     // Record new version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
+    UserDefault::getInstance()->setStringForKey(manager->keyOfVersion().c_str(), manager->_version.c_str());
     
     // Unrecord downloaded version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
-    CCUserDefault::sharedUserDefault()->flush();
+    UserDefault::getInstance()->setStringForKey(manager->keyOfDownloadedVersion().c_str(), "");
+    UserDefault::getInstance()->flush();
     
     // Set resource search path.
     manager->setSearchPath();
@@ -604,6 +629,71 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     }
     
     if (manager) manager->_delegate->onSuccess();
+}
+
+AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )
+{
+    class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
+    {
+    public :
+        DelegateProtocolImpl(ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback)
+        : errorCallback(errorCallback), progressCallback(progressCallback), successCallback(successCallback)
+        {}
+
+        virtual void onError(AssetsManager::ErrorCode errorCode) { errorCallback(int(errorCode)); }
+        virtual void onProgress(int percent) { progressCallback(percent); }
+        virtual void onSuccess() { successCallback(); }
+
+    private :
+        ErrorCallback errorCallback;
+        ProgressCallback progressCallback;
+        SuccessCallback successCallback;
+    };
+
+    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
+    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
+    manager->setDelegate(delegate);
+    manager->_shouldDeleteDelegateWhenExit = true;
+    manager->autorelease();
+    return manager;
+}
+
+void AssetsManager::createStoragePath()
+{
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    DIR *dir = NULL;
+    
+    dir = opendir (_storagePath.c_str());
+    if (!dir)
+    {
+        mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+#else    
+    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        CreateDirectoryA(_storagePath.c_str(), 0);
+    }
+#endif
+}
+
+void AssetsManager::destroyStoragePath()
+{
+    // Delete recorded version codes.
+    deleteVersion();
+    
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    string command = "rm -r ";
+    // Path may include space.
+    command += "\"" + _storagePath + "\"";
+    system(command.c_str());    
+#else
+    string command = "rd /s /q ";
+    // Path may include space.
+    command += "\"" + _storagePath + "\"";
+    system(command.c_str());
+#endif
 }
 
 NS_CC_EXT_END;

@@ -1,0 +1,37 @@
+################################################################################
+# Do not include this file in your project: see cocos2dx.pri.
+################################################################################
+
+linux {
+    # Use OpenAL in default QtCreator project.
+    isEmpty(COCOS2D_USE_FMOD):COCOS2D_USE_FMOD=0
+
+    # Variables used when building libraries.
+    CC_LIBRARY_DIR = $$PWD/../../lib/linux/release
+    CC_MAKE_FLAGS = -s
+    CONFIG(debug, debug|release) {
+        # Override in debug build.
+        CC_MAKE_FLAGS += DEBUG=1
+        CC_LIBRARY_DIR = $$PWD/../../lib/linux/debug
+    }
+    contains(COCOS2D_MODULES,box2d) {
+        CC_MAKE_FLAGS += USE_BOX2D=1
+    }
+    !equals(COCOS2D_USE_FMOD, 1) {
+        CC_MAKE_FLAGS += OPENAL=1
+    }
+
+    # We will compile cocos2d shared library on demand using Makefile.
+    build_cocos2d.name = Build cocos2d shared library
+    build_cocos2d.input = $$PWD/Makefile
+    build_cocos2d.output = $$CC_LIBRARY_DIR/libcocos2d.so
+    build_cocos2d.target = $$CC_LIBRARY_DIR/libcocos2d.so
+    build_cocos2d.CONFIG = no_link target_predeps
+    build_cocos2d.commands = cd $$PWD && make $$CC_MAKE_FLAGS ${QMAKE_FILE_IN}
+
+    QMAKE_EXTRA_COMPILERS += build_cocos2d
+    QMAKE_EXTRA_TARGETS += build_cocos2d
+
+    PRE_TARGETDEPS += $$CC_LIBRARY_DIR/libcocos2d.so
+    LIBS += -L$$CC_LIBRARY_DIR -lcocos2d -Wl,-rpath,\'$$CC_LIBRARY_DIR\'
+}

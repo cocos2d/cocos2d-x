@@ -24,12 +24,11 @@
  ****************************************************************************/
 
 #include "CCVertex.h"
-#include "CCPointExtension.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(Point *points, float stroke, Vertex2F *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -42,35 +41,35 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
     for(unsigned int i = offset; i<nuPoints; i++)
     {
         idx = i*2;
-        CCPoint p1 = points[i];
-        CCPoint perpVector;
+        Point p1 = points[i];
+        Point perpVector;
 
         if(i == 0)
-            perpVector = ccpPerp(ccpNormalize(ccpSub(p1, points[i+1])));
+            perpVector = (p1 - points[i+1]).normalize().getPerp();
         else if(i == nuPointsMinus)
-            perpVector = ccpPerp(ccpNormalize(ccpSub(points[i-1], p1)));
+            perpVector = (points[i-1] - p1).normalize().getPerp();
         else
         {
-            CCPoint p2 = points[i+1];
-            CCPoint p0 = points[i-1];
+            Point p2 = points[i+1];
+            Point p0 = points[i-1];
 
-            CCPoint p2p1 = ccpNormalize(ccpSub(p2, p1));
-            CCPoint p0p1 = ccpNormalize(ccpSub(p0, p1));
+            Point p2p1 = (p2 - p1).normalize();
+            Point p0p1 = (p0 - p1).normalize();
 
             // Calculate angle between vectors
-            float angle = acosf(ccpDot(p2p1, p0p1));
+            float angle = acosf(p2p1.dot(p0p1));
 
             if(angle < CC_DEGREES_TO_RADIANS(70))
-                perpVector = ccpPerp(ccpNormalize(ccpMidpoint(p2p1, p0p1)));
+                perpVector = p2p1.getMidpoint(p0p1).normalize().getPerp();
             else if(angle < CC_DEGREES_TO_RADIANS(170))
-                perpVector = ccpNormalize(ccpMidpoint(p2p1, p0p1));
+                perpVector = p2p1.getMidpoint(p0p1).normalize();
             else
-                perpVector = ccpPerp(ccpNormalize(ccpSub(p2, p0)));
+                perpVector = (p2 - p0).normalize().getPerp();
         }
-        perpVector = ccpMult(perpVector, stroke);
+        perpVector = perpVector * stroke;
 
-        vertices[idx] = vertex2(p1.x+perpVector.x, p1.y+perpVector.y);
-        vertices[idx+1] = vertex2(p1.x-perpVector.x, p1.y-perpVector.y);
+        vertices[idx] = Vertex2F(p1.x+perpVector.x, p1.y+perpVector.y);
+        vertices[idx+1] = Vertex2F(p1.x-perpVector.x, p1.y-perpVector.y);
 
     }
 
@@ -81,13 +80,13 @@ void ccVertexLineToPolygon(CCPoint *points, float stroke, ccVertex2F *vertices, 
         idx = i*2;
         const unsigned int idx1 = idx+2;
 
-        ccVertex2F p1 = vertices[idx];
-        ccVertex2F p2 = vertices[idx+1];
-        ccVertex2F p3 = vertices[idx1];
-        ccVertex2F p4 = vertices[idx1+1];
+        Vertex2F p1 = vertices[idx];
+        Vertex2F p2 = vertices[idx+1];
+        Vertex2F p3 = vertices[idx1];
+        Vertex2F p4 = vertices[idx1+1];
 
         float s;
-        //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
+        //BOOL fixVertex = !ccpLineIntersect(Point(p1.x, p1.y), Point(p4.x, p4.y), Point(p2.x, p2.y), Point(p3.x, p3.y), &s, &t);
         bool fixVertex = !ccVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
         if(!fixVertex)
             if (s<0.0f || s>1.0f)

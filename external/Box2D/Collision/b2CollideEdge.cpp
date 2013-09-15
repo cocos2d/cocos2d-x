@@ -240,7 +240,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
     m_v3 = edgeA->m_vertex3;
     
     bool hasVertex0 = edgeA->m_hasVertex0;
-    bool hasVertex3 = edgeA->m_hasVertex3;
+    bool hasVertex3F = edgeA->m_hasVertex3;
     
     b2Vec2 edge1 = m_v2 - m_v1;
     edge1.Normalize();
@@ -260,7 +260,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
     }
     
     // Is there a following edge?
-    if (hasVertex3)
+    if (hasVertex3F)
     {
         b2Vec2 edge2 = m_v3 - m_v2;
         edge2.Normalize();
@@ -270,7 +270,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
     }
     
     // Determine front or back collision. Determine collision normal limits.
-    if (hasVertex0 && hasVertex3)
+    if (hasVertex0 && hasVertex3F)
     {
         if (convex1 && convex2)
         {
@@ -372,7 +372,7 @@ void b2EPCollider::Collide(b2Manifold* manifold, const b2EdgeShape* edgeA, const
             }
         }
     }
-    else if (hasVertex3)
+    else if (hasVertex3F)
     {
         if (convex2)
         {

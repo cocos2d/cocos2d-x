@@ -34,39 +34,143 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL CCAutoreleasePool : public CCObject
+class CC_DLL AutoreleasePool : public Object
 {
-    CCArray*    m_pManagedObjectArray;    
+    /**
+     * The underlying array of object managed by the pool.
+     *
+     * Although Array retains the object once when an object is added, proper
+     * Object::release() is called outside the array to make sure that the pool
+     * does not affect the managed object's reference count. So an object can
+     * be destructed properly by calling Object::release() even if the object
+     * is in the pool.
+     */
+    Array   *_managedObjectArray;
 public:
-    CCAutoreleasePool(void);
-    ~CCAutoreleasePool(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    AutoreleasePool();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~AutoreleasePool();
 
-    void addObject(CCObject *pObject);
-    void removeObject(CCObject *pObject);
+    /**
+     * Add a given object to this pool.
+     *
+     * The same object may be added several times to the same pool; When the
+     * pool is destructed, the object's Object::release() method will be called
+     * for each time it was added.
+     *
+     * @param object    The object to add to the pool.
+     * @js NA
+     * @lua NA
+     */
+    void addObject(Object *object);
 
+    /**
+     * Remove a given object from this pool.
+     *
+     * @param object    The object to be removed from the pool.
+     * @js NA
+     * @lua NA
+     */
+    void removeObject(Object *object);
+
+    /**
+     * Clear the autorelease pool.
+     *
+     * Object::release() will be called for each time the managed object is
+     * added to the pool.
+     * @js NA
+     * @lua NA
+     */
     void clear();
 };
 
-class CC_DLL CCPoolManager
+class CC_DLL PoolManager
 {
-    CCArray*    m_pReleasePoolStack;    
-    CCAutoreleasePool*                    m_pCurReleasePool;
+    Array           *_releasePoolStack;
+    AutoreleasePool *_curReleasePool;
 
-    CCAutoreleasePool* getCurReleasePool();
+    AutoreleasePool *getCurReleasePool();
 public:
-    CCPoolManager();
-    ~CCPoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static PoolManager* sharedPoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static void purgePoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    PoolManager();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~PoolManager();
+
+    /**
+     * Clear all the AutoreleasePool on the pool stack.
+     * @js NA
+     * @lua NA
+     */
     void finalize();
+
+    /**
+     * Push a new AutoreleasePool to the pool stack.
+     * @js NA
+     * @lua NA
+     */
     void push();
+
+    /**
+     * Pop one AutoreleasePool from the pool stack.
+     *
+     * This method will ensure that there is at least one AutoreleasePool on
+     * the stack.
+     *
+     * The AutoreleasePool being poped is destructed.
+     * @js NA
+     * @lua NA
+     */
     void pop();
 
-    void removeObject(CCObject* pObject);
-    void addObject(CCObject* pObject);
+    /**
+     * Remove a given object from the current autorelease pool.
+     *
+     * @param object    The object to be removed.
+     *
+     * @see AutoreleasePool::removeObject
+     * @js NA
+     * @lua NA
+     */
+    void removeObject(Object *object);
 
-    static CCPoolManager* sharedPoolManager();
-    static void purgePoolManager();
-
-    friend class CCAutoreleasePool;
+    /**
+     * Add a given object to the current autorelease pool.
+     *
+     * @param object    The object to add.
+     *
+     * @see AutoreleasePool::addObject
+     * @js NA
+     * @lua NA
+     */
+    void addObject(Object *object);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    friend class AutoreleasePool;
 };
 
 // end of base_nodes group

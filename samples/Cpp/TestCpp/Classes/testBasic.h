@@ -7,23 +7,24 @@
 USING_NS_CC;
 using namespace std;
 
-class TestScene : public CCScene
+class TestScene : public Scene
 {
 public: 
     TestScene(bool bPortrait = false);
     virtual void onEnter();
 
     virtual void runThisTest() = 0;
-
-    // The CallBack for back to the main menu scene
-    virtual void MainMenuCallback(CCObject* pSender);
 };
 
-typedef CCLayer* (*NEWTESTFUNC)();
+typedef Layer* (*NEWTESTFUNC)();
 #define TESTLAYER_CREATE_FUNC(className) \
-static CCLayer* create##className() \
+static Layer* create##className() \
 { return new className(); }
 
 #define CF(className) create##className
+
+// C++ 11
+
+#define CL(__className__) [](){ return new __className__();}
 
 #endif

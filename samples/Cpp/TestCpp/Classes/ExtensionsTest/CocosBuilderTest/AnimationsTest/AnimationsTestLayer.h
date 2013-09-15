@@ -5,7 +5,7 @@
 #include "cocos-ext.h"
 
 class AnimationsTestLayer
-: public cocos2d::CCLayer
+: public cocos2d::Layer
 , public cocos2d::extension::CCBSelectorResolver
 , public cocos2d::extension::CCBMemberVariableAssigner 
 {
@@ -15,14 +15,14 @@ public:
     AnimationsTestLayer();
     virtual ~AnimationsTestLayer();
     
-    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName);
-    virtual cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName);
+    virtual cocos2d::extension::Control::Handler onResolveCCBCCControlSelector(cocos2d::Object * pTarget, const char * pSelectorName);
+    virtual bool onAssignCCBMemberVariable(cocos2d::Object * pTarget, const char * pMemberVariableName, cocos2d::Node * node);
     
-    void onCCControlButtonIdleClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
-    void onCCControlButtonWaveClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
-    void onCCControlButtonJumpClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
-    void onCCControlButtonFunkyClicked(cocos2d::CCObject * pSender, cocos2d::extension::CCControlEvent pCCControlEvent);
+    void onControlButtonIdleClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonWaveClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonJumpClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
+    void onControlButtonFunkyClicked(cocos2d::Object * sender, cocos2d::extension::Control::EventType pControlEvent);
     
     void setAnimationManager(cocos2d::extension::CCBAnimationManager *pAnimationManager);
     

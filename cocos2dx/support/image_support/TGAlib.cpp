@@ -193,13 +193,13 @@ void tgaFlipImage( tImageTGA *psInfo )
 }
 
 // this is the function to call when we want to load an image
-tImageTGA * tgaLoad(const char *pszFilename)
+tImageTGA * tgaLoad(const char *filename)
 {
     int mode,total;
     tImageTGA *info = NULL;
     
     unsigned long nSize = 0;
-    unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
+    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(filename, "rb", &nSize);
 
     do
     {

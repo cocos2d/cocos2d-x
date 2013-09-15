@@ -161,7 +161,7 @@ int push_table_instance(lua_State* L, int lo) {
 };
 
 /* the equivalent of lua_is* for usertype */
-static int lua_isusertype (lua_State* L, int lo, const char* type)
+int lua_isusertype (lua_State* L, int lo, const char* type)
 {
     if (!lua_isuserdata(L,lo)) {
         if (!push_table_instance(L, lo)) {

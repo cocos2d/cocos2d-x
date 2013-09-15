@@ -39,17 +39,28 @@ NS_CC_BEGIN
  */
 
 /**
- CCTouchHandler
+ TouchHandler
  Object than contains the delegate and priority of the event handler.
 */
-class CC_DLL  CCTouchHandler : public CCObject
+class CC_DLL  TouchHandler : public Object
 {
 public:
-    virtual ~CCTouchHandler(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~TouchHandler(void);
 
-    /** delegate */
-    CCTouchDelegate* getDelegate();
-    void setDelegate(CCTouchDelegate *pDelegate);
+    /** delegate 
+     * @js NA
+     * @lua NA
+     */
+    TouchDelegate* getDelegate();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void setDelegate(TouchDelegate *pDelegate);
 
     /** priority */
     int getPriority(void);
@@ -60,59 +71,63 @@ public:
     void setEnalbedSelectors(int nValue);
 
     /** initializes a TouchHandler with a delegate and a priority */
-    virtual bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+    bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
 
 public:
     /** allocates a TouchHandler with a delegate and a priority */
-    static CCTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+    static TouchHandler* handlerWithDelegate(TouchDelegate *pDelegate, int nPriority);
 
 protected:
-    CCTouchDelegate *m_pDelegate;
-    int m_nPriority;
-    int m_nEnabledSelectors;
+    TouchDelegate *_delegate;
+    int _priority;
+    int _enabledSelectors;
 };
 
-/** CCStandardTouchHandler
+/** StandardTouchHandler
  It forwards each event to the delegate.
  */
-class CC_DLL  CCStandardTouchHandler : public CCTouchHandler
+class CC_DLL  StandardTouchHandler : public TouchHandler
 {
 public:
     /** initializes a TouchHandler with a delegate and a priority */
-    virtual bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+    bool initWithDelegate(TouchDelegate *pDelegate, int nPriority);
 
 public:
     /** allocates a TouchHandler with a delegate and a priority */
-    static CCStandardTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority);
+    static StandardTouchHandler* handlerWithDelegate(TouchDelegate *pDelegate, int nPriority);
 };
 
 /**
- CCTargetedTouchHandler
+ TargetedTouchHandler
  Object than contains the claimed touches and if it swallows touches.
  Used internally by TouchDispatcher
  */
-class CC_DLL  CCTargetedTouchHandler : public CCTouchHandler
+class CC_DLL  TargetedTouchHandler : public TouchHandler
 {
 public:
-    ~CCTargetedTouchHandler(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~TargetedTouchHandler(void);
 
     /** whether or not the touches are swallowed */
     bool isSwallowsTouches(void);
     void setSwallowsTouches(bool bSwallowsTouches);
 
     /** MutableSet that contains the claimed touches */
-    CCSet* getClaimedTouches(void);
+    Set* getClaimedTouches(void);
 
     /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
-    bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
+    bool initWithDelegate(TouchDelegate *pDelegate, int nPriority, bool bSwallow);
 
 public:
     /** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
-    static CCTargetedTouchHandler* handlerWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
+    static TargetedTouchHandler* handlerWithDelegate(TouchDelegate *pDelegate, int nPriority, bool bSwallow);
 
 protected:
-    bool m_bSwallowsTouches;
-    CCSet *m_pClaimedTouches;
+    bool _swallowsTouches;
+    Set *_claimedTouches;
 };
 
 // end of input group

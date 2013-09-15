@@ -5,52 +5,44 @@
 #include "ExtensionMacros.h"
 
 /*
- These classes are wrapper of basic types, such as ccColor3B
+ These classes are wrapper of basic types, such as Color3B
  */
 
 NS_CC_EXT_BEGIN
 
-class ccColor3BWapper : public CCObject
+class Color3BWapper : public Object
 {
-private:
-    ccColor3B color;
-    
 public:
-    static ccColor3BWapper* create(const ccColor3B& color);
+    static Color3BWapper* create(const Color3B& color);
     
-    const ccColor3B& getColor() const;
-};
-
-enum
-{
-    kIntValue,
-    kFloatValue,
-    kBoolValue,
-    kUnsignedCharValue,
-    kStringValue,
-    kArrayValue
-};
-
-class CCBValue : public CCObject
-{
+    const Color3B& getColor() const;
+    
 private:
-    union 
+    Color3B color;
+};
+
+
+
+class CCBValue : public Object
+{
+public:
+    
+    enum class Type
     {
-        int nValue;
-        float fValue;
-    } mValue;
+        INT,
+        FLOAT,
+        BOOL,
+        UNSIGNED_CHAR,
+        STRING,
+        ARRAY
+    };
     
-    std::string m_strValue;
-    CCArray* m_arrValue;
-    int mType;
-    
-public:
     static CCBValue* create(int nValue);
     static CCBValue* create(bool bValue);
     static CCBValue* create(float fValue);
     static CCBValue* create(unsigned char byte);
     static CCBValue* create(const char* pStr);
-    static CCBValue* create(CCArray* pArr);
+    static CCBValue* create(Array* pArr);
 
     
     int getIntValue();
@@ -58,9 +50,20 @@ public:
     bool getBoolValue();
     unsigned char getByteValue();
     const char* getStringValue();
-    CCArray *getArrayValue();
+    Array *getArrayValue();
     
-    int getType();
+    Type getType();
+    
+private:
+    union
+    {
+        int intValue;
+        float floatValue;
+    } _value;
+    
+    std::string _strValue;
+    Array* _arrValue;
+    Type _type;
 };
 
 NS_CC_EXT_END

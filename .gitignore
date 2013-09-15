@@ -80,11 +80,16 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
+*.swo
+
+# Ignore files created by create_project.py
+projects/
 
 # Ignore config files in javascript bindings generator
 tools/tojs/user.cfg
 # ... userconf.ini generated if running from tools/tojs
 tools/tojs/userconf.ini
+tools/tolua/userconf.ini
 # ... userconf.ini generated if running from tools/jenkins_scripts/mac/android/
 tools/jenkins_scripts/mac/android/userconf.ini
 

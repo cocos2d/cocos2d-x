@@ -30,7 +30,9 @@ THE SOFTWARE.
 #include <math.h>
 #include <stdio.h>
 #include <sys/time.h>
+#include <stdarg.h>
 #include <float.h>
+#include <stdint.h>
 
 #ifndef MIN
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))
@@ -39,5 +41,9 @@ THE SOFTWARE.
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
+
+#define nullptr __null
+
+#define override
 
 #endif  // __CC_STD_C_H__

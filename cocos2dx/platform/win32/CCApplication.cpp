@@ -12,30 +12,29 @@ static void PVRFrameEnableControlWindow(bool bEnable);
 NS_CC_BEGIN
 
 // sharedApplication pointer
-CCApplication * CCApplication::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
-: m_hInstance(NULL)
-, m_hAccelTable(NULL)
+Application::Application()
+: _instance(NULL)
+, _accelTable(NULL)
 {
-    m_hInstance    = GetModuleHandle(NULL);
-    m_nAnimationInterval.QuadPart = 0;
+    _instance    = GetModuleHandle(NULL);
+    _animationInterval.QuadPart = 0;
     CC_ASSERT(! sm_pSharedApplication);
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
     sm_pSharedApplication = NULL;
 }
 
-int CCApplication::run()
+int Application::run()
 {
     PVRFrameEnableControlWindow(false);
 
     // Main message loop:
-    MSG msg;
     LARGE_INTEGER nFreq;
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
@@ -49,66 +48,51 @@ int CCApplication::run()
         return 0;
     }
 
-    CCEGLView* pMainWnd = CCEGLView::sharedOpenGLView();
-    pMainWnd->centerWindow();
-    ShowWindow(pMainWnd->getHWnd(), SW_SHOW);
+    EGLView* pMainWnd = EGLView::getInstance();
 
-    while (1)
+    while(!pMainWnd->windowShouldClose())
     {
-        if (! PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        QueryPerformanceCounter(&nNow);
+        if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
-            // Get current time tick.
-            QueryPerformanceCounter(&nNow);
-
-            // If it's the time to draw next frame, draw it, else sleep a while.
-            if (nNow.QuadPart - nLast.QuadPart > m_nAnimationInterval.QuadPart)
-            {
-                nLast.QuadPart = nNow.QuadPart;
-                CCDirector::sharedDirector()->mainLoop();
-            }
-            else
-            {
-                Sleep(0);
-            }
-            continue;
+            nLast.QuadPart = nNow.QuadPart;
+            Director::getInstance()->mainLoop();
+            pMainWnd->pollEvents();
         }
-
-        if (WM_QUIT == msg.message)
+        else
         {
-            // Quit message loop.
-            break;
-        }
-
-        // Deal with windows message.
-        if (! m_hAccelTable || ! TranslateAccelerator(msg.hwnd, m_hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            Sleep(0);
         }
     }
-
-    return (int) msg.wParam;
+    
+    return true;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
-    m_nAnimationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
+    _animationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
-CCApplication* CCApplication::sharedApplication()
+Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
 {
-    ccLanguageType ret = kLanguageEnglish;
+    return Application::getInstance();
+}
+
+LanguageType Application::getCurrentLanguage()
+{
+    LanguageType ret = LanguageType::ENGLISH;
 
     LCID localeID = GetUserDefaultLCID();
     unsigned short primaryLanguageID = localeID & 0xFF;
@@ -116,74 +100,80 @@ ccLanguageType CCApplication::getCurrentLanguage()
     switch (primaryLanguageID)
     {
         case LANG_CHINESE:
-            ret = kLanguageChinese;
+            ret = LanguageType::CHINESE;
             break;
         case LANG_ENGLISH:
-            ret = kLanguageEnglish;
+            ret = LanguageType::ENGLISH;
             break;
         case LANG_FRENCH:
-            ret = kLanguageFrench;
+            ret = LanguageType::FRENCH;
             break;
         case LANG_ITALIAN:
-            ret = kLanguageItalian;
+            ret = LanguageType::ITALIAN;
             break;
         case LANG_GERMAN:
-            ret = kLanguageGerman;
+            ret = LanguageType::GERMAN;
             break;
         case LANG_SPANISH:
-            ret = kLanguageSpanish;
+            ret = LanguageType::SPANISH;
             break;
         case LANG_RUSSIAN:
-            ret = kLanguageRussian;
+            ret = LanguageType::RUSSIAN;
             break;
         case LANG_KOREAN:
-            ret = kLanguageKorean;
+            ret = LanguageType::KOREAN;
             break;
         case LANG_JAPANESE:
-            ret = kLanguageJapanese;
+            ret = LanguageType::JAPANESE;
             break;
         case LANG_HUNGARIAN:
-            ret = kLanguageHungarian;
+            ret = LanguageType::HUNGARIAN;
             break;
         case LANG_PORTUGUESE:
-            ret = kLanguagePortuguese;
+            ret = LanguageType::PORTUGUESE;
             break;
         case LANG_ARABIC:
-            ret = kLanguageArabic;
+            ret = LanguageType::ARABIC;
+            break;
+	    case LANG_NORWEGIAN:
+            ret = LanguageType::NORWEGIAN;
+            break;
+ 	    case LANG_POLISH:
+            ret = LanguageType::POLISH;
             break;
     }
 
     return ret;
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+Application::Platform Application::getTargetPlatform()
 {
-    return kTargetWindows;
+    return Platform::OS_WINDOWS;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    std::replace(m_resourceRootPath.begin(), m_resourceRootPath.end(), '\\', '/');
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    std::replace(_resourceRootPath.begin(), _resourceRootPath.end(), '\\', '/');
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
-void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
-    m_startupScriptFilename = startupScriptFile;
-    std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
+    _startupScriptFilename = startupScriptFile;
+    std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');
 }
 
 NS_CC_END

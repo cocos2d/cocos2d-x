@@ -1,9 +1,5 @@
 APPNAME="TestCpp"
 
-# options
-
-buildexternalsfromsource=
-
 usage(){
 cat << EOF
 usage: $0 [options]
@@ -11,16 +7,12 @@ usage: $0 [options]
 Build C/C++ code for $APPNAME using Android NDK
 
 OPTIONS:
--s	Build externals from source
 -h	this help
 EOF
 }
 
-while getopts "sh" OPTION; do
+while getopts "h" OPTION; do
 case "$OPTION" in
-s)
-buildexternalsfromsource=1
-;;
 h)
 usage
 exit 0
@@ -36,8 +28,8 @@ then
     [ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
 
     # strip out entries with a "." because Bash cannot process variables with a "."
-    _PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
-    for line in "$_PROPERTIES"; do
+    _PROPERTIES=$(sed '/\./d' "$_LOCALPROPERTIES_FILE")
+    for line in $_PROPERTIES; do
         declare "$line";
     done
 fi
@@ -48,6 +40,21 @@ if [ -z "${NDK_ROOT+aaa}" ];then
 echo "NDK_ROOT not defined. Please define NDK_ROOT in your environment or in local.properties"
 exit 1
 fi
+
+# For compatibility of android-ndk-r9, 4.7 was removed from r9
+if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.7" ]; then
+    export NDK_TOOLCHAIN_VERSION=4.7
+    echo "The Selected NDK toolchain version was 4.7 !"
+else
+    if [ -d "${NDK_ROOT}/toolchains/arm-linux-androideabi-4.8" ]; then
+        export NDK_TOOLCHAIN_VERSION=4.8
+        echo "The Selected NDK toolchain version was 4.8 !"
+    else
+        echo "Couldn't find the gcc toolchain."
+        exit 1
+    fi
+fi
+
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
@@ -86,12 +93,6 @@ rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
 rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
 
-if [[ "$buildexternalsfromsource" ]]; then
-    echo "Building external dependencies from source"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
-else
-    echo "Using prebuilt externals"
-    "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-        "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
-fi
+echo "Using prebuilt externals"
+"$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"

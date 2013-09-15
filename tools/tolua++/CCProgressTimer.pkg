@@ -17,8 +17,8 @@ class CCProgressTimer : public CCNodeRGBA
     void setReverseProgress(bool reverse);
     void setAnchorPoint(CCPoint anchorPoint);
 
-    void setColor(const ccColor3B& color);
-    const ccColor3B& getColor(void);
+    void setColor(const Color3B& color);
+    const Color3B& getColor(void);
     GLubyte getOpacity(void);
     void setOpacity(GLubyte opacity);
     void setOpacityModifyRGB(bool bValue);

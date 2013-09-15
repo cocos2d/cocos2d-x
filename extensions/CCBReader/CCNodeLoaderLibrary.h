@@ -6,35 +6,112 @@
 
 NS_CC_EXT_BEGIN
 
-class CCNodeLoader;
+class NodeLoader;
 
-typedef std::map<std::string, CCNodeLoader *> CCNodeLoaderMap;
-typedef std::pair<std::string, CCNodeLoader *> CCNodeLoaderMapEntry;
+typedef std::map<std::string, NodeLoader *> NodeLoaderMap;
+typedef std::pair<std::string, NodeLoader *> NodeLoaderMapEntry;
 
-class CCNodeLoaderLibrary : public CCObject {
-    private:
-        CCNodeLoaderMap mCCNodeLoaders;
-
-    public:
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCNodeLoaderLibrary, library);
-
-        CCNodeLoaderLibrary();
-        virtual ~CCNodeLoaderLibrary();
-
-        void registerDefaultCCNodeLoaders();
-        void registerCCNodeLoader(const char * pClassName, CCNodeLoader * pCCNodeLoader);
-        //void registerCCNodeLoader(CCString * pClassName, CCNodeLoader * pCCNodeLoader);
-        void unregisterCCNodeLoader(const char * pClassName);
-        //void unregisterCCNodeLoader(CCString * pClassName);
-        CCNodeLoader * getCCNodeLoader(const char * pClassName);
-        //CCNodeLoader * getCCNodeLoader(CCString * pClassName);
-        void purge(bool pDelete);
-
-    public:
-        static CCNodeLoaderLibrary * sharedCCNodeLoaderLibrary();
-        static void purgeSharedCCNodeLoaderLibrary();
-
-        static CCNodeLoaderLibrary * newDefaultCCNodeLoaderLibrary();
+class NodeLoaderLibrary : public Object
+{
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    NodeLoaderLibrary();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~NodeLoaderLibrary();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void registerDefaultNodeLoaders();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader);
+    //void registerNodeLoader(String * pClassName, NodeLoader * pNodeLoader);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void unregisterNodeLoader(const char * pClassName);
+    //void unregisterNodeLoader(String * pClassName);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    NodeLoader * getNodeLoader(const char * pClassName);
+    //CCNodeLoader * getNodeLoader(String * pClassName);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void purge(bool pDelete);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void registerDefaultCCNodeLoaders() { registerDefaultNodeLoaders(); }
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void registerCCNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) { registerNodeLoader(pClassName, pNodeLoader); };
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void unregisterCCNodeLoader(const char * pClassName) { unregisterNodeLoader(pClassName); };
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE NodeLoader * getCCNodeLoader(const char * pClassName) { return getNodeLoader(pClassName); };
+    
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static NodeLoaderLibrary * getInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static void destroyInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static NodeLoaderLibrary * newDefaultNodeLoaderLibrary();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * sharedNodeLoaderLibrary() { return NodeLoaderLibrary::getInstance(); };
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static void purgeSharedNodeLoaderLibrary() { NodeLoaderLibrary::destroyInstance(); };
+    /**
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * newDefaultCCNodeLoaderLibrary() { return NodeLoaderLibrary::newDefaultNodeLoaderLibrary(); };
+    
+private:
+    NodeLoaderMap _nodeLoaders;
 };
 
 NS_CC_EXT_END

@@ -7,6 +7,7 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
 					<key>?name?</key>
@@ -42,7 +43,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
-					<value>true</value>
+					<value>false</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>
@@ -87,19 +88,19 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/OspPlayer.cpp</name>
+			<name>src/OpenALDecoder.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/tizen/OspPlayer.cpp</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/openal/OpenALDecoder.cpp</locationURI>
 		</link>
 		<link>
-			<name>src/OspPlayer.h</name>
+			<name>src/OpenALDecoder.h</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/tizen/OspPlayer.h</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/openal/OpenALDecoder.h</locationURI>
 		</link>
 		<link>
-			<name>src/SimpleAudioEngine.cpp</name>
+			<name>src/SimpleAudioEngineOpenAL.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/tizen/SimpleAudioEngine.cpp</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/openal/SimpleAudioEngineOpenAL.cpp</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

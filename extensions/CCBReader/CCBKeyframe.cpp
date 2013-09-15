@@ -5,57 +5,57 @@ using namespace cocos2d;
 NS_CC_EXT_BEGIN
 
 CCBKeyframe::CCBKeyframe()
-: mValue(NULL)
-, mTime(0.0f)
-, mEasingType(0)
-, mEasingOpt(0.0f)
+: _value(NULL)
+, _time(0.0f)
+, _easingType(EasingType::INSTANT)
+, _easingOpt(0.0f)
 {}
 
 CCBKeyframe::~CCBKeyframe()
 {
-    CC_SAFE_RELEASE_NULL(mValue);
+    CC_SAFE_RELEASE_NULL(_value);
 }
 
-CCObject* CCBKeyframe::getValue()
+Object* CCBKeyframe::getValue()
 {
-    return mValue;
+    return _value;
 }
 
-void CCBKeyframe::setValue(CCObject *pValue)
+void CCBKeyframe::setValue(Object *pValue)
 {
-    CC_SAFE_RELEASE(mValue);
-    mValue = pValue;
-    CC_SAFE_RETAIN(mValue);
+    CC_SAFE_RELEASE(_value);
+    _value = pValue;
+    CC_SAFE_RETAIN(_value);
 }
 
 float CCBKeyframe::getTime()
 {
-    return mTime;
+    return _time;
 }
 
 void CCBKeyframe::setTime(float fTime)
 {
-    mTime = fTime;
+    _time = fTime;
 }
 
-int CCBKeyframe::getEasingType()
+CCBKeyframe::EasingType CCBKeyframe::getEasingType()
 {
-    return mEasingType;
+    return _easingType;
 }
 
-void CCBKeyframe::setEasingType(int nEasingType)
+void CCBKeyframe::setEasingType(CCBKeyframe::EasingType easingType)
 {
-    mEasingType = nEasingType;
+    _easingType = easingType;
 }
 
 float CCBKeyframe::getEasingOpt()
 {
-    return mEasingOpt;
+    return _easingOpt;
 }
 
 void CCBKeyframe::setEasingOpt(float fEasingOpt)
 {
-    mEasingOpt = fEasingOpt;
+    _easingOpt = fEasingOpt;
 }
 
 NS_CC_EXT_END

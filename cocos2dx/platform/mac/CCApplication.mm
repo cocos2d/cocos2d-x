@@ -29,53 +29,67 @@
 #include "CCGeometry.h"
 #include "CCDirector.h"
 #import "CCDirectorCaller.h"
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
-CCApplication* CCApplication::sm_pSharedApplication = 0;
+Application* Application::sm_pSharedApplication = 0;
 
-CCApplication::CCApplication()
+Application::Application()
 {
-    CCAssert(! sm_pSharedApplication, "sm_pSharedApplication already exist");
+    CCASSERT(! sm_pSharedApplication, "sm_pSharedApplication already exist");
     sm_pSharedApplication = this;
 }
 
-CCApplication::~CCApplication()
+Application::~Application()
 {
-    CCAssert(this == sm_pSharedApplication, "sm_pSharedApplication != this");
+    CCASSERT(this == sm_pSharedApplication, "sm_pSharedApplication != this");
     sm_pSharedApplication = 0;
 }
 
-int CCApplication::run()
+int Application::run()
 {
-    if (/*initInstance() &&*/ applicationDidFinishLaunching()) 
+    if(!applicationDidFinishLaunching())
     {
-        [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
+        return 0;
     }
-    return 0;
+    EGLView* pMainWnd = EGLView::getInstance();
+    
+    while (!pMainWnd->windowShouldClose())
+    {
+        Director::getInstance()->mainLoop();
+        pMainWnd->pollEvents();
+    }
+    return true;
 }
 
-void CCApplication::setAnimationInterval(double interval)
+void Application::setAnimationInterval(double interval)
 {
     [[CCDirectorCaller sharedDirectorCaller] setAnimationInterval: interval ];
 }
 
-TargetPlatform CCApplication::getTargetPlatform()
+Application::Platform Application::getTargetPlatform()
 {
-    return kTargetMacOS;
+    return Platform::OS_MAC;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-CCApplication* CCApplication::sharedApplication()
+Application* Application::getInstance()
 {
-    CCAssert(sm_pSharedApplication, "sm_pSharedApplication not set");
+    CCASSERT(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+// @deprecated Use getInstance() instead
+Application* Application::sharedApplication()
+{
+    return Application::getInstance();
+}
+
+LanguageType Application::getCurrentLanguage()
 {
     // get the current language and country config
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -86,78 +100,83 @@ ccLanguageType CCApplication::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
-    ccLanguageType ret = kLanguageEnglish;
+    LanguageType ret = LanguageType::ENGLISH;
     if ([languageCode isEqualToString:@"zh"])
     {
-        ret = kLanguageChinese;
+        ret = LanguageType::CHINESE;
     }
     else if ([languageCode isEqualToString:@"en"])
     {
-        ret = kLanguageEnglish;
+        ret = LanguageType::ENGLISH;;
     }
     else if ([languageCode isEqualToString:@"fr"]){
-        ret = kLanguageFrench;
+        ret = LanguageType::FRENCH;
     }
     else if ([languageCode isEqualToString:@"it"]){
-        ret = kLanguageItalian;
+        ret = LanguageType::ITALIAN;
     }
     else if ([languageCode isEqualToString:@"de"]){
-        ret = kLanguageGerman;
+        ret = LanguageType::GERMAN;
     }
     else if ([languageCode isEqualToString:@"es"]){
-        ret = kLanguageSpanish;
+        ret = LanguageType::SPANISH;
     }
     else if ([languageCode isEqualToString:@"ru"]){
-        ret = kLanguageRussian;
+        ret = LanguageType::RUSSIAN;
     }
     else if ([languageCode isEqualToString:@"ko"]){
-        ret = kLanguageKorean;
+        ret = LanguageType::KOREAN;
     }
     else if ([languageCode isEqualToString:@"ja"]){
-        ret = kLanguageJapanese;
+        ret = LanguageType::JAPANESE;
     }
     else if ([languageCode isEqualToString:@"hu"]){
-        ret = kLanguageHungarian;
+        ret = LanguageType::HUNGARIAN;
     }
     else if ([languageCode isEqualToString:@"pt"])
     {
-        ret = kLanguagePortuguese;
+        ret = LanguageType::PORTUGUESE;
     }
     else if ([languageCode isEqualToString:@"ar"])
     {
-        ret = kLanguageArabic;
+        ret = LanguageType::ARABIC;
     }
-    
+    else if ([languageCode isEqualToString:@"nb"]){
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if ([languageCode isEqualToString:@"pl"]){
+        ret = LanguageType::POLISH;
+    }
     return ret;
 }
 
-void CCApplication::setResourceRootPath(const std::string& rootResDir)
+void Application::setResourceRootPath(const std::string& rootResDir)
 {
-    m_resourceRootPath = rootResDir;
-    if (m_resourceRootPath[m_resourceRootPath.length() - 1] != '/')
+    _resourceRootPath = rootResDir;
+    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
     {
-        m_resourceRootPath += '/';
+        _resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
+    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);
 }
 
-const std::string& CCApplication::getResourceRootPath(void)
+const std::string& Application::getResourceRootPath(void)
 {
-    return m_resourceRootPath;
+    return _resourceRootPath;
 }
 
-void CCApplication::setStartupScriptFilename(const std::string& startupScriptFile)
+void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
-    m_startupScriptFilename = startupScriptFile;
-    std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
+    _startupScriptFilename = startupScriptFile;
+    std::replace(_startupScriptFilename.begin(), _startupScriptFilename.end(), '\\', '/');
 }
 
-const std::string& CCApplication::getStartupScriptFilename(void)
+const std::string& Application::getStartupScriptFilename(void)
 {
-    return m_startupScriptFilename;
+    return _startupScriptFilename;
 }
 
 NS_CC_END

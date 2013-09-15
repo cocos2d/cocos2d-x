@@ -25,7 +25,8 @@ THE SOFTWARE.
 #ifndef __CCOBJECT_H__
 #define __CCOBJECT_H__
 
-#include "CCDataVisitor.h"
+#include "cocoa/CCDataVisitor.h"
+#include "ccMacros.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -38,66 +39,176 @@ NS_CC_BEGIN
  * @{
  */
 
-class CCZone;
-class CCObject;
-class CCNode;
-class CCEvent;
+class Object;
+class Node;
+class Event;
 
-class CC_DLL CCCopying
+/** Interface that defines how to clone an object */
+class CC_DLL Clonable
 {
 public:
-    virtual CCObject* copyWithZone(CCZone* pZone);
+	/** returns a copy of the object */
+    virtual Clonable* clone() const = 0;
+    /**
+     * @js NA
+     * @lua NA
+     */
+	virtual ~Clonable() {};
+
+    /** returns a copy of the object.
+     @deprecated Use clone() instead
+     */
+    CC_DEPRECATED_ATTRIBUTE Object* copy() const
+    {
+        // use "clone" instead
+        CC_ASSERT(false);
+        return nullptr;
+    }
 };
 
-class CC_DLL CCObject : public CCCopying
+class CC_DLL Object
 {
 public:
-    // object id, CCScriptSupport need public m_uID
-    unsigned int        m_uID;
-    // Lua reference id
-    int                 m_nLuaID;
+    /// object id, ScriptSupport need public _ID
+    unsigned int        _ID;
+    /// Lua reference id
+    int                 _luaID;
 protected:
-    // count of references
-    unsigned int        m_uReference;
-    // count of autorelease
-    unsigned int        m_uAutoReleaseCount;
+    /// count of references
+    unsigned int        _reference;
+    /// count of autorelease
+    unsigned int        _autoReleaseCount;
 public:
-    CCObject(void);
-    virtual ~CCObject(void);
+    /**
+     * Constructor
+     *
+     * The object's reference count is 1 after construction.
+     * @js NA
+     */
+    Object();
     
-    void release(void);
-    void retain(void);
-    CCObject* autorelease(void);
-    CCObject* copy(void);
-    bool isSingleReference(void) const;
-    unsigned int retainCount(void) const;
-    virtual bool isEqual(const CCObject* pObject);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Object();
+    
+    /**
+     * Release the ownership immediately.
+     *
+     * This decrements the object's reference count.
+     *
+     * If the reference count reaches 0 after the descrement, this object is
+     * destructed.
+     *
+     * @see retain, autorelease
+     * @js NA
+     */
+    inline void release()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        --_reference;
 
-    virtual void acceptVisitor(CCDataVisitor &visitor);
+        if (_reference == 0)
+            delete this;
+    }
 
+    /**
+     * Retains the ownership.
+     *
+     * This increases the object's reference count.
+     *
+     * @see release, autorelease
+     * @js NA
+     */
+    inline void retain()
+    {
+        CCASSERT(_reference > 0, "reference count should greater than 0");
+        ++_reference;
+    }
+
+    /**
+     * Release the ownership sometime soon automatically.
+     *
+     * This descrements the object's reference count at the end of current
+     * autorelease pool block.
+     *
+     * If the reference count reaches 0 after the descrement, this object is
+     * destructed.
+     *
+     * @returns The object itself.
+     *
+     * @see AutoreleasePool, retain, release
+     * @js NA
+     * @lua NA
+     */
+    Object* autorelease();
+
+    /**
+     * Returns a boolean value that indicates whether there is only one
+     * reference to the object. That is, whether the reference count is 1.
+     *
+     * @returns Whether the object's reference count is 1.
+     * @js NA
+     */
+    bool isSingleReference() const;
+
+    /**
+     * Returns the object's current reference count.
+     *
+     * @returns The object's reference count.
+     * @js NA
+     */
+    unsigned int retainCount() const;
+
+    /**
+     * Returns a boolean value that indicates whether this object and a given
+     * object are equal.
+     *
+     * @param object    The object to be compared to this object.
+     *
+     * @returns True if this object and @p object are equal, otherwise false.
+     * @js NA
+     * @lua NA
+     */
+    virtual bool isEqual(const Object* object);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void acceptVisitor(DataVisitor &visitor);
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
     
-    friend class CCAutoreleasePool;
+    friend class AutoreleasePool;
 };
 
 
-typedef void (CCObject::*SEL_SCHEDULE)(float);
-typedef void (CCObject::*SEL_CallFunc)();
-typedef void (CCObject::*SEL_CallFuncN)(CCNode*);
-typedef void (CCObject::*SEL_CallFuncND)(CCNode*, void*);
-typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
-typedef void (CCObject::*SEL_MenuHandler)(CCObject*);
-typedef void (CCObject::*SEL_EventHandler)(CCEvent*);
-typedef int (CCObject::*SEL_Compare)(CCObject*);
+typedef void (Object::*SEL_SCHEDULE)(float);
+typedef void (Object::*SEL_CallFunc)();
+typedef void (Object::*SEL_CallFuncN)(Node*);
+typedef void (Object::*SEL_CallFuncND)(Node*, void*);
+typedef void (Object::*SEL_CallFuncO)(Object*);
+typedef void (Object::*SEL_MenuHandler)(Object*);
+typedef void (Object::*SEL_EventHandler)(Event*);
+typedef int (Object::*SEL_Compare)(Object*);
 
-#define schedule_selector(_SELECTOR) (SEL_SCHEDULE)(&_SELECTOR)
-#define callfunc_selector(_SELECTOR) (SEL_CallFunc)(&_SELECTOR)
-#define callfuncN_selector(_SELECTOR) (SEL_CallFuncN)(&_SELECTOR)
-#define callfuncND_selector(_SELECTOR) (SEL_CallFuncND)(&_SELECTOR)
-#define callfuncO_selector(_SELECTOR) (SEL_CallFuncO)(&_SELECTOR)
-#define menu_selector(_SELECTOR) (SEL_MenuHandler)(&_SELECTOR)
-#define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
-#define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
+#define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+#define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
+#define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
+#define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
+#define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
+#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
+#define event_selector(_SELECTOR) static_cast<cocos2d::SEL_EventHandler>(&_SELECTOR)
+#define compare_selector(_SELECTOR) static_cast<cocos2d::SEL_Compare>(&_SELECTOR)
+
+// new callbacks based on C++11
+#define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
+#define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
+#define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 
 // end of base_nodes group
 /// @}

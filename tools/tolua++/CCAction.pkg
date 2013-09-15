@@ -10,9 +10,10 @@ class CCAction : public CCObject
     // void setTarget(CCNode *pTarget);
     CCNode* getOriginalTarget(void);
     // void setOriginalTarget(CCNode *pOriginalTarget);
-	// static CCAction* create();
     int getTag(void);
     void setTag(int nTag);
+    CCAction* clone();
+    CCObject* copy();
 };
 
 class CCFiniteTimeAction : public CCAction
@@ -29,8 +30,6 @@ class CCActionInterval : public CCFiniteTimeAction
     void setAmplitudeRate(float amp);
     float getAmplitudeRate(void);
     CCActionInterval* reverse(void);
-
-    CCActionInterval* create(float d);
 };
 
 // CCActionInterval
@@ -296,14 +295,4 @@ class CCFlipY : public CCActionInstant
 class CCPlace : public CCActionInstant //<NSCopying>
 {
     static CCPlace* create(CCPoint pos);
-};
-
-class CCCallFunc : public CCActionInstant
-{
-	static CCCallFunc* create(LUA_FUNCTION funcID);
-};
-
-class CCCallFuncN : public CCCallFunc
-{
-	static CCCallFuncN* create(LUA_FUNCTION funcID);
 };

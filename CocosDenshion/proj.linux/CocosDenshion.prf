@@ -1,0 +1,20 @@
+################################################################################
+# Do not include this file in your project: see cocos2dx.pri.
+################################################################################
+
+linux {
+    # We will compile extensions on demand using Makefile.
+    build_CocosDension.name = Build extension static library
+    build_CocosDension.input = $$PWD/Makefile
+    build_CocosDension.output = $$CC_LIBRARY_DIR/libcocosdenshion.so
+    build_CocosDension.target = $$CC_LIBRARY_DIR/libcocosdenshion.so
+    build_CocosDension.CONFIG = no_link target_predeps
+    build_CocosDension.commands = cd $$PWD && make $$CC_MAKE_FLAGS
+
+    QMAKE_EXTRA_COMPILERS += build_CocosDension
+    QMAKE_EXTRA_TARGETS += build_CocosDension
+
+    PRE_TARGETDEPS += $$CC_LIBRARY_DIR/libcocosdenshion.so
+    LIBS += -lcocosdenshion
+}
+

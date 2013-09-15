@@ -6,30 +6,20 @@ typedef enum {
 class CCLayer : public CCNode
 {
     void setTouchEnabled(bool bValue);
-    bool isTouchEnabled();
+    bool isTouchEnabled() const;
 
     void setAccelerometerEnabled(bool bValue);
-    bool isAccelerometerEnabled();
+    bool isAccelerometerEnabled() const;
 
     void setKeypadEnabled(bool bValue);
-    bool isKeypadEnabled();
+    bool isKeypadEnabled() const;
 
     virtual void setTouchMode(ccTouchesMode mode);
-    virtual int getTouchMode();
+    virtual int getTouchMode() const;
     virtual void setTouchPriority(int priority);
-    virtual int getTouchPriority();
-
-    void registerScriptTouchHandler(LUA_FUNCTION nHandler,
-                                    bool bIsMultiTouches = false,
-                                    int nPriority = 0,
-                                    bool bSwallowsTouches = false);
-    void unregisterScriptTouchHandler();
-
-    void registerScriptKeypadHandler(LUA_FUNCTION nHandler);
-    void unregisterScriptKeypadHandler(void);
-
-    void registerScriptAccelerateHandler(LUA_FUNCTION nHandler);
-    void unregisterScriptAccelerateHandler(void);
+    virtual int getTouchPriority() const;
+    virtual void setSwallowsTouches(bool swallowsTouches);
+    virtual bool isSwallowsTouches() const;
 
     static CCLayer *create(void);
 };
@@ -43,22 +33,22 @@ class CCLayerRGBA : public CCLayer, public CCRGBAProtocol
     
     virtual bool init();
     
-    virtual GLubyte getOpacity();
-    virtual GLubyte getDisplayedOpacity();
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled();
+    virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const ccColor3B& getColor();
-    virtual const ccColor3B& getDisplayedColor();
-    virtual void setColor(const ccColor3B& color);
-    virtual void updateDisplayedColor(const ccColor3B& parentColor);
-    virtual bool isCascadeColorEnabled();
+    virtual const Color3B& getColor() const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
     virtual void setOpacityModifyRGB(bool bValue);
-    virtual bool isOpacityModifyRGB();
+    virtual bool isOpacityModifyRGB() const;
 };
 
 class CCLayerColor : public CCLayerRGBA
@@ -70,25 +60,23 @@ class CCLayerColor : public CCLayerRGBA
 	void setContentSize(const CCSize & var);
 
     void setOpacity(GLubyte var);
-    GLubyte getOpacity(void);
-    void setColor(ccColor3B Value);
-    ccColor3B getColor(void);
-    void setBlendFunc(ccBlendFunc Value);
-    ccBlendFunc getBlendFunc(void);
+    void setColor(Color3B Value);
+    void setBlendFunc(BlendFunc Value);
+    BlendFunc getBlendFunc(void) const;
 
 	void setOpacityModifyRGB(bool bValue);
-    bool isOpacityModifyRGB(void);
+    bool isOpacityModifyRGB(void) const;
 
-    static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
-    static CCLayerColor * create(ccColor4B color);
+    static CCLayerColor * create(Color4B color, GLfloat width, GLfloat height);
+    static CCLayerColor * create(Color4B color);
 };
 
 class CCLayerGradient : public CCLayerColor
 {
-    void setStartColor(ccColor3B colors);
-    ccColor3B getStartColor();
-    void setEndColor(ccColor3B Value);
-    ccColor3B getEndColor(void);
+    void setStartColor(Color3B colors);
+    Color3B getStartColor() const;
+    void setEndColor(Color3B Value);
+    Color3B getEndColor(void) const;
     void setStartOpacity(GLubyte Value);
     GLubyte getStartOpacity(void);
     void setEndOpacity(GLubyte Value);
@@ -97,10 +85,10 @@ class CCLayerGradient : public CCLayerColor
     CCPoint getVector(void);
 
     void setCompressedInterpolation(bool Value);
-    bool isCompressedInterpolation(void);
+    bool isCompressedInterpolation(void) const;
 
-    static CCLayerGradient* create(ccColor4B start, ccColor4B end, CCPoint v);
-    static CCLayerGradient* create(ccColor4B start, ccColor4B end);
+    static CCLayerGradient* create(Color4B start, Color4B end, CCPoint v);
+    static CCLayerGradient* create(Color4B start, Color4B end);
     static CCLayerGradient* create();
 };
 

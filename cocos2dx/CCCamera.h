@@ -24,13 +24,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCCAMERA_H__
-#define __CCCAMERA_H__
+#ifndef __COCOS2DX_CAMERA_H__
+#define __COCOS2DX_CAMERA_H__
+
+#include <string>
 
 #include "cocoa/CCObject.h"
 #include "ccMacros.h"
 #include "kazmath/mat4.h"
-#include <string>
+
 
 NS_CC_BEGIN
 
@@ -40,7 +42,7 @@ NS_CC_BEGIN
  */
 
 /** 
-A CCCamera is used in every CCNode.
+A Camera is used in every Node.
 Useful to look at the object from different views.
 The OpenGL gluLookAt() function is used to locate the
 camera.
@@ -53,67 +55,127 @@ World coordinates won't work if you use the camera.
 
 Limitations:
 
-- Some nodes, like CCParallaxNode, CCParticle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
+- Some nodes, like ParallaxNode, Particle uses world node coordinates, and they won't work properly if you move them (or any of their ancestors)
 using the camera.
 
-- It doesn't work on batched nodes like CCSprite objects when they are parented to a CCSpriteBatchNode object.
+- It doesn't work on batched nodes like Sprite objects when they are parented to a SpriteBatchNode object.
 
-- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effects, use the action CCFollow or position/scale/rotate.
+- It is recommended to use it ONLY if you are going to create 3D effects. For 2D effects, use the action Follow or position/scale/rotate.
 
 */
-class CC_DLL CCCamera : public CCObject
+class CC_DLL Camera : public Object
 {
-protected:
-    float m_fEyeX;
-    float m_fEyeY;
-    float m_fEyeZ;
-
-    float m_fCenterX;
-    float m_fCenterY;
-    float m_fCenterZ;
-
-    float m_fUpX;
-    float m_fUpY;
-    float m_fUpZ;
-
-    bool m_bDirty;
-    kmMat4    m_lookupMatrix;
 public:
-    CCCamera(void);
-    ~CCCamera(void);
+    /** returns the Z eye */
+    static float getZEye();
+    /**
+     * @js ctor
+     */
+    Camera(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ~Camera(void);
 
     void init(void);
-
-    const char* description(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    const char* description(void) const;
 
     /** sets the dirty value */
-    inline void setDirty(bool bValue) { m_bDirty = bValue; }
+    inline void setDirty(bool bValue) { _dirty = bValue; }
     /** get the dirty value */
-    inline bool isDirty(void) { return m_bDirty; }
+    inline bool isDirty(void) const { return _dirty; }
 
     /** sets the camera in the default position */
     void restore(void);
     /** Sets the camera using gluLookAt using its eye, center and up_vector */
     void locate(void);
     /** sets the eye values in points */
-    void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+    void setEye(float fEyeX, float fEyeY, float fEyeZ);
+    /**
+     @deprecated. Use setEye() instead 
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ){ setEye(fEyeX, fEyeY, fEyeZ);}
     /** sets the center values in points */
-    void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+    void setCenter(float fCenterX, float fCenterY, float fCenterZ);
+    /**
+     @deprecated. Use setCenter() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ){ setCenter(fCenterX,fCenterY,fCenterZ);}
     /** sets the up values */
-    void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+    void setUp(float fUpX, float fUpY, float fUpZ);
+    /**
+     @deprecated. Use setUp() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void setUpXYZ(float fUpX, float fUpY, float fUpZ){ setUp(fUpX,fUpY,fUpZ); }
 
-    /** get the eye vector values in points */
-    void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ);
-    /** get the center vector values int points */
-    void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ);
-    /** get the up vector values */
-    void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ);
-public:
-    /** returns the Z eye */
-    static float getZEye();
+    /** get the eye vector values in points 
+     * @code
+     * when this function bound to js or lua,the input params are changed
+     * in js: var getEye()
+     * in lua:local getEye()
+     * @endcode
+     */
+    void getEye(float *pEyeX, float *pEyeY, float *pEyeZ) const;
+    /**
+     @deprecated. Use getEye() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void getEyeXYZ(float *pEyeX, float *pEyeY, float *pEyeZ) const { getEye(pEyeX, pEyeY, pEyeZ); }
+    /** get the center vector values int points 
+     * when this function bound to js or lua,the input params are changed
+     * in js: var getCenter()
+     * in lua:local getCenter()
+     */
+    void getCenter(float *pCenterX, float *pCenterY, float *pCenterZ) const;
+    /**
+     @deprecated. Use getCenter() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void getCenterXYZ(float *pCenterX, float *pCenterY, float *pCenterZ) const{ getCenter(pCenterX,pCenterY,pCenterZ); }
+    /** get the up vector values 
+     * when this function bound to js or lua,the input params are changed
+     * in js: var getUp()
+     * in lua:local getUp()
+     */
+    void getUp(float *pUpX, float *pUpY, float *pUpZ) const;
+    /**
+     @deprecated. Use getUp() instead
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE void getUpXYZ(float *pUpX, float *pUpY, float *pUpZ) const{ getUp(pUpX, pUpY, pUpZ); }
+
+protected:
+    float _eyeX;
+    float _eyeY;
+    float _eyeZ;
+
+    float _centerX;
+    float _centerY;
+    float _centerZ;
+
+    float _upX;
+    float _upY;
+    float _upZ;
+
+    bool _dirty;
+    kmMat4    _lookupMatrix;
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(CCCamera);
+    DISALLOW_COPY_AND_ASSIGN(Camera);
 };
 
 // end of base_node group
@@ -121,4 +183,4 @@ private:
 
 NS_CC_END
 
-#endif // __CCCAMERA_H__
+#endif // __COCOS2DX_CAMERA_H__

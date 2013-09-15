@@ -3,26 +3,55 @@ cocos2d-x authors & contributors
 (ordered by the join in time)
 
 Core Developers:
-    Zhe Wang (Walzer)
+    Ricardo Quesada
     XiaoMing Zhang (Minggo)
     JianHua Chen (Dumganhar)
+    Zhe Wang (Walzer)
+    Qingkui Hu (samuele3hu)
+    Huabing Xu (dabingnn)
+    Bo Yu (boyu0)
+
 
 Developers:
-    Ricardo Quesada
     Rolando Abarca
         Javascript Binding and testjs
+        
+    Squallium
+        Added ccFPSImages entity as linked resource on linux eclipse project setting.
+        Added CocosDenshion dependency to libextension project for eclipse project of linux.
+        
+    longlene
+        Improve android project creation script
+        
+    simpliplant
+        Hardware keyboard support
+    
+    liuyq
+        CCTextureAtlas::updateQuad modify for the memcpy hot spot.
+        
+    frranck 
+        adding norwegian language
+    
+    varlucian
+        fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
         
     carlomorgantinizynga
         CCLabelTTF supports for shadow and stroke
         Adding CCLabelTTF::createWithFontDefinition.
+        New label support.
         
     James Gregory (j4m3z0r, Zynga)
         Maintainer of Emscripten port.
         Initial Emscripten port.
         Use browser font rendering instead of FreeType.
+        Add destructor to CCGLBufferedNode.
+        Asynchronous Image loading for Emscripten
         
     DarraghCoy
         Fix a potential crash SimpleAudioEngineOpenSL::playEffect
+        Fix some bugs with Set class
+        Add ccDrawSolidCircle
+        Add Rect::unionWithRect
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
@@ -44,6 +73,9 @@ Developers:
         Added __attribute__(__format__()) for CCLog and CCString
         Refactoring network extension and fixing unlikely memory leaks.
         Adding PUT/DELETE methods for CCHttpRequest.
+        Adding project part for QtCreator.
+        Implemented pitch, pan and gain.
+        Using SDL backend instead of glfw for Linux.
 
     savdalion 
         Added example for russian language in TestCpp
@@ -86,6 +118,7 @@ Developers:
     Waiter
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
+        Fixing a bug that CCLabelTTF setString crash on android.
 
     billy1380
         make CCLens3d support concave effect.
@@ -93,12 +126,15 @@ Developers:
 
     benjamesward
         add Portuguese and Arabic language support
+        Fixed linebreaks on Mac OSX
 
     Victor K(fnz)
         fix memory leak of CCTextureCache::addImageAsync() on iOS
 
     tks2shimizu
         add CCFloat, CCDouble and CCBool
+        Add append function for String class
+        Adding String::componentsSeparatedByString function for splitting string.
 
     chenium
         fix a bug that CCRenderTexture can not work when coming to foreground on Android
@@ -173,6 +209,8 @@ Developers:
         Clean up linked libraries for android.
         JavaScript debugger improved and bugfixed.
         Fix flags for debugger server socket.
+        Fix flags for debugger server socket.
+        When user has built with JS Debugger support ScriptingCore will handle necessary runtime changes.
 
     Nicolas Gramlich (nicolasgramlich, Zynga)
         fixed CCDirector to use CCLabelBMFont instead of CCLabelTTF
@@ -294,11 +332,14 @@ Developers:
         Fixing a bug that CCControl's touch priority is not set correctly; m_nDefaultTouchPriority is never used.
         Fixing a syntax error for RENDER_IN_SUBPIXEL macro.
         Implement CCDictionary::writeToFile().
+        Fixing a bug that unused spriteframes also need to be removed when purgeCachedData.
+        Adding a method to get duration of timeline for CCBAnimationManager class, it's easy for getting duration of animation in JSB.
 
     xyhl515
         Fixed a bug that CCControlSwitch::setOn(isOn,false) doesn't work.
         Adds VS2012 Express template installing support.
         Fixing a logical error in CCDrawNode::drawPolygon.
+        Fixing a bug that Jsb function getCPBody return type is not right.
 
     DarraghCoy
         Fix for unaligned memory access crash in CCBReader::readFloat().
@@ -333,9 +374,13 @@ Developers:
         Adding Travis build support for linux and NaCl.
         Logging assert messages to the console.
         Renaming CCScriptSupport::executeAssert to CCScriptSupport::handleAssert.
+        Adding Native Client support for develop branch (cocos2d-x 3.0) and some warnings fixes.
+        Cleanup travis build scripts.
+        Refactoring emscripten building script.
 
     Peter Young (young40)
-        Implements setVisible() for CCEditBox
+        Implements setVisible() for CCEditBox.
+        Fixing a bug that event will not be sent to server when paramMap parameter of logEvent function is nil in plugin-x.
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
@@ -372,6 +417,16 @@ Developers:
 
     Éloi Rivard (azmeuk)
         Linux OpenAL support.
+        Added some guards to prevent Eclipse to compile twice the same class.
+        Linux Eclipse projects updates
+        Refactored emscripten-build.sh, it's no longer need to be edited to make emscripten work.
+        Creation of CCDeprecated-ext.h
+        Use of a single emscripten HTML template file.
+        Added some guards in fileutils. Fixed a bug in emscripten file utils.
+        Added emscripten keyboard support
+        Clang support for Linux
+        Multiple emscripten template support. Emscripten multiple resolutions support.
+        Toplevel Makefile refactoring
 
     elmiro
         Correction of passed buffer size to readlink and verification of result return by readlink.
@@ -400,6 +455,10 @@ Developers:
     jotel (Jaroslaw Lewandowski)
         Fixing a bug that wrong type of argument signature is used in setAccelerometerIntervalJNI function.
         Fix for broken of ccArrayGetIndexOfObject after merging this commit(076f38c).
+        Explicitly initialising CCAcceleration structure.
+        Add support to save/retrieve CCData into/from CCUserDefault.
+        Text Shadows fix
+        Solving 'black screen' on android.
 
     MarcelBloemendaal
         Adding secureTextEntry property to CCTextFieldTTF.
@@ -411,6 +470,7 @@ Developers:
 
     sunzhuoshi
         Adding support for javascript bytecode.
+        Fixing bad js constant names.
 
     ptekchand (Pranav Tekchand)
         Supporting negative node scales for CCScrollView.
@@ -436,6 +496,7 @@ Developers:
     smshuja
         Fixing a bug that pointQueryFirst returns invalid Shape when a shape is not found in JSB.
         Fixing a bug that New PivotJoint can't access 4 parameters like in html5 version.
+        Fixing a bug that Pivotjoint constructor and pointQueryFirst in Space class will return false instead of invalid shape object.
         
     Carsten Sandtner (casarock)
         Adding XMLHttpRequest support for JSB.
@@ -452,7 +513,71 @@ Developers:
     edwardzhou (Edward Zhou)
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+        fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
 
+    musikov
+        Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        
+    hawkwood (Justin Hawkwood)
+        Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        
+    wtyqm (zhang peng)
+        Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
+        
+    smilingpoplar (YangLe)
+        Fixing a bug that CCScale9Sprite doesn't support rotated spriteframe in atlas.
+        
+    xxuejie
+        Add namespace prefix to selector macros
+        
+    hannon235 (Chris)
+        Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
+        Implements a socket.io client extension and adds a test case.
+        
+    pktangyue
+        Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
+        Fixing a bug that Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions.
+        
+    jllust
+        Fixing a bug that CCLabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads sometimes.
+        
+    Sam Gross (colesbury)
+        Ignoring formatting specifiers in JavaScript log messages.
+        Make bindings-generator supports to bind std::function argument.
+        
+    James Munro (jdmunro)
+        Added JSB support for ccpDistanceSQ.
+        
+    Rafael (rafaelx)
+        A warning fix of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp.
+        
+    metalbass
+        Fixing an issue that sigslot::_connection_base# (from 0 to 8) don't have virtual destructors.
+        
+     thp
+         Port Cocos2D-X to Qt 5
+         
+    Nako Sung (nakosung)
+        Fixing a bug that wrong logic when pass an empty std::vector to WebSocket::init.
+        Exposing cc.RemoveSelf to JS.
+        exposed AssetsManager to javascript and added multiple-assetsManager support
+        
+    dotsquid
+        Fixed the crash caused by improper deletion of VBOs and VAO in ParticleSystemQuad.
+        
+    maciekczwa
+        Fixing a bug that stroke color with channel color values other than 255 doesn't take effect on android.
+        
+    zcgit
+        a potential bug fix in Layer::init.
+        
+    gkosciolek
+        Fixing a bug that observers with the same target and name but different sender are the same observer in NotificationCenter.
+
+    xbruce
+        Fixing a bug that crash appears when extending cc.ScrollView in JS.
+        Fixing a bug that cc.registerTargettedDelegate doesn't support pure js object as its target.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -464,6 +589,20 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+        
+    michaelcontento
+        [Android] use onWindowFocusChanged(bool) instead of onResume()/onPause()
+        
+    bmanGH
+        Use gl caching functions in TexturePVR::createGLTexture()
+        
+    metadao
+        make create_project.py more pythonic and fix some typoes
+        
+    timothyqiu
+        Project creator: use absolute path for json config files
+        Documentation fixes
+        A better way to locate project creator
 
 
 Cocos2d-x can not grow so fast without the active community.

@@ -20,47 +20,42 @@ typedef float			 GLfloat;
 typedef short			 GLshort;
 typedef unsigned int     GLenum;
 
-class ccColor3B
+struct Color3B
 {
-	ccColor3B(void);
+	Color3B(void);
+    Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
+    bool equals(const Color3B &other);
     GLubyte r;
     GLubyte g;
     GLubyte b;
 };
 
-static ccColor3B ccc3(const GLubyte r, const GLubyte g, const GLubyte b);
-
-//$renaming ccc3(255, 255, 255) @ ccWHITE
-//$renaming ccc3(255, 255,   0) @ ccYELLOW
-//$renaming ccc3(  0,   0, 255) @ ccBLUE
-//$renaming ccc3(  0, 255,   0) @ ccGREEN
-//$renaming ccc3(255,   0,   0) @ ccRED
-//$renaming ccc3(255,   0, 255) @ ccMAGENTA
-//$renaming ccc3(  0,   0,   0) @ ccBLACK
-//$renaming ccc3(255, 127,   0) @ ccORANGE
-//$renaming ccc3(166, 166, 166) @ ccGRAY
 
 /** RGBA color composed of 4 bytes
 @since v0.8
 */
-class ccColor4B
+struct Color4B
 {
-	ccColor4B(void);
+	Color4B(void);
+    Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
+    Color4B(const Color4F &color4F);
     GLubyte r;
     GLubyte g;
     GLubyte b;
     GLubyte a;
 };
-//! helper macro that creates an ccColor4B type
-static ccColor4B ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o);
 
 
 /** RGBA color composed of 4 floats
 @since v0.8
 */
-class ccColor4F
+struct Color4F
 {
-	ccColor4F(void);
+	Color4F(void);
+    Color4F(GLfloat _r, GLfloat _g, GLfloat _b, GLfloat _a);
+    Color4F(const Color3B &color3B);
+    Color4F(const Color4B &color4B);
+    bool equals(const Color4F &other);
     GLfloat r;
     GLfloat g;
     GLfloat b;
@@ -68,179 +63,158 @@ class ccColor4F
 };
 
 
-/** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
- @since v0.99.1
- */
-static ccColor4F ccc4FFromccc3B(ccColor3B c);
-
-//! helper that creates a ccColor4f type
-static ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a);
-
-/** Returns a ccColor4F from a ccColor4B.
- @since v0.99.1
- */
-static ccColor4F ccc4FFromccc4B(ccColor4B c);
-
-/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
- @since v0.99.1
- */
-static bool ccc4FEqual(ccColor4F a, ccColor4F b);
-
 /** A vertex composed of 2 floats: x, y
  @since v0.8
  */
-class ccVertex2F
+class Vertex2F
 {
-	ccVertex2F(void);
+	Vertex2F(void);
+    Vertex2F(float _x, float _y);
     GLfloat x;
     GLfloat y;
 };
 
-static ccVertex2F vertex2(const float x, const float y);
-
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8
  */
-class ccVertex3F
+class Vertex3F
 {
-	ccVertex3F(void);
+	Vertex3F(void);
+    Vertex3F(float _x, float _y, float _z);
     GLfloat x;
     GLfloat y;
     GLfloat z;
 };
 
-static ccVertex3F vertex3(const float x, const float y, const float z);
-
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
  */
-class ccTex2F
+class Tex2F
 {
-	ccTex2F(void);
+	Tex2F(void);
+    Tex2F(float _u, float _v);
 	GLfloat u;
 	GLfloat v;
 };
 
-static ccTex2F tex2(const float u, const float v);
-
 
 //! Point Sprite component
-class ccPointSprite
+class PointSprite
 {
-	ccPointSprite(void);
-    ccVertex2F    pos;        // 8 bytes
-    ccColor4B    color;        // 4 bytes
+	PointSprite(void);
+    Vertex2F    pos;        // 8 bytes
+    Color4B    color;        // 4 bytes
     GLfloat        size;        // 4 bytes
 };
 
 //!    A 2D Quad. 4 * 2 floats
-class ccQuad2
+class Quad2
 {
-	ccQuad2(void);
-    ccVertex2F        tl;
-    ccVertex2F        tr;
-    ccVertex2F        bl;
-    ccVertex2F        br;
+	Quad2(void);
+    Vertex2F        tl;
+    Vertex2F        tr;
+    Vertex2F        bl;
+    Vertex2F        br;
 };
 
 
 //!    A 3D Quad. 4 * 3 floats
-class ccQuad3
+class Quad3
 {
-	ccQuad3(void);
-    ccVertex3F        bl;
-    ccVertex3F        br;
-    ccVertex3F        tl;
-    ccVertex3F        tr;
+	Quad3(void);
+    Vertex3F        bl;
+    Vertex3F        br;
+    Vertex3F        tl;
+    Vertex3F        tr;
 };
 
 //! a Point with a vertex point, a tex coord point and a color 4B
-class ccV2F_C4B_T2F
+class V2F_C4B_T2F
 {
-	ccV2F_C4B_T2F(void);
+	V2F_C4B_T2F(void);
     //! vertices (2F)
-    ccVertex2F        vertices;
+    Vertex2F        vertices;
     //! colors (4B)
-    ccColor4B        colors;
+    Color4B        colors;
     //! tex coords (2F)
-    ccTex2F            texCoords;
+    Tex2F            texCoords;
 };
 
 //! a Point with a vertex point, a tex coord point and a color 4F
-class ccV2F_C4F_T2F
+class V2F_C4F_T2F
 {
-	ccV2F_C4F_T2F(void);
+	V2F_C4F_T2F(void);
     //! vertices (2F)
-    ccVertex2F        vertices;
+    Vertex2F        vertices;
     //! colors (4F)
-    ccColor4F        colors;
+    Color4F        colors;
     //! tex coords (2F)
-    ccTex2F            texCoords;
+    Tex2F            texCoords;
 };
 
 //! a Point with a vertex point, a tex coord point and a color 4B
-class ccV3F_C4B_T2F
+class V3F_C4B_T2F
 {
-	ccV3F_C4B_T2F(void);
+	V3F_C4B_T2F(void);
     //! vertices (3F)
-    ccVertex3F        vertices;            // 12 bytes
+    Vertex3F        vertices;            // 12 bytes
 //    char __padding__[4];
 
     //! colors (4B)
-    ccColor4B        colors;                // 4 bytes
+    Color4B        colors;                // 4 bytes
 //    char __padding2__[4];
 
     // tex coords (2F)
-    ccTex2F            texCoords;            // 8 byts
+    Tex2F            texCoords;            // 8 byts
 };
 
-//! 4 ccVertex2FTex2FColor4B Quad
-class ccV2F_C4B_T2F_Quad
+//! 4 Vertex2FTex2FColor4B Quad
+class V2F_C4B_T2F_Quad
 {
-	ccV2F_C4B_T2F_Quad(void);
+	V2F_C4B_T2F_Quad(void);
     //! bottom left
-    ccV2F_C4B_T2F    bl;
+    V2F_C4B_T2F    bl;
     //! bottom right
-    ccV2F_C4B_T2F    br;
+    V2F_C4B_T2F    br;
     //! top left
-    ccV2F_C4B_T2F    tl;
+    V2F_C4B_T2F    tl;
     //! top right
-    ccV2F_C4B_T2F    tr;
+    V2F_C4B_T2F    tr;
 };
 
-//! 4 ccVertex3FTex2FColor4B
-class ccV3F_C4B_T2F_Quad
+//! 4 Vertex3FTex2FColor4B
+class V3F_C4B_T2F_Quad
 {
-	ccV3F_C4B_T2F_Quad(void);
+	V3F_C4B_T2F_Quad(void);
     //! top left
-    ccV3F_C4B_T2F    tl;
+    V3F_C4B_T2F    tl;
     //! bottom left
-    ccV3F_C4B_T2F    bl;
+    V3F_C4B_T2F    bl;
     //! top right
-    ccV3F_C4B_T2F    tr;
+    V3F_C4B_T2F    tr;
     //! bottom right
-    ccV3F_C4B_T2F    br;
+    V3F_C4B_T2F    br;
 };
 
-//! 4 ccVertex2FTex2FColor4F Quad
-class ccV2F_C4F_T2F_Quad
+//! 4 Vertex2FTex2FColor4F Quad
+class V2F_C4F_T2F_Quad
 {
-	ccV2F_C4F_T2F_Quad(void);
+	V2F_C4F_T2F_Quad(void);
     //! bottom left
-    ccV2F_C4F_T2F    bl;
+    V2F_C4F_T2F    bl;
     //! bottom right
-    ccV2F_C4F_T2F    br;
+    V2F_C4F_T2F    br;
     //! top left
-    ccV2F_C4F_T2F    tl;
+    V2F_C4F_T2F    tl;
     //! top right
-    ccV2F_C4F_T2F    tr;
+    V2F_C4F_T2F    tr;
 };
 
 //! Blend Function used for textures
-class ccBlendFunc
+class BlendFunc
 {
-	ccBlendFunc(void);
+	BlendFunc(void);
     GLenum src;
     GLenum dst;
 };
@@ -266,24 +240,24 @@ typedef enum
 // types for animation in particle systems
 
 // texture coordinates for a quad
-class ccT2F_Quad
+class T2F_Quad
 {
-	ccT2F_Quad(void);
+	T2F_Quad(void);
     //! bottom left
-    ccTex2F    bl;
+    Tex2F    bl;
     //! bottom right
-    ccTex2F    br;
+    Tex2F    br;
     //! top left
-    ccTex2F    tl;
+    Tex2F    tl;
     //! top right
-    ccTex2F    tr;
+    Tex2F    tr;
 };
 
 // struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
-class ccAnimationFrameData
+class AnimationFrameData
 {
-	ccAnimationFrameData(void);
-    ccT2F_Quad texCoords;
+	AnimationFrameData(void);
+    T2F_Quad texCoords;
     float delay;
     CCSize size;
 };

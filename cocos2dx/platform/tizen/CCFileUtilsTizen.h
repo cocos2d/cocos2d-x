@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
-#include "ccTypeInfo.h"
 #include <string>
 #include <vector>
 
@@ -41,15 +40,15 @@ NS_CC_BEGIN
  */
 
 //! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsTizen : public CCFileUtils
+class CC_DLL FileUtilsTizen : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsTizen();
+    friend class FileUtils;
+    FileUtilsTizen();
 public:
     /* override funtions */
     bool init();
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
+    virtual std::string getWritablePath() const;
+    virtual bool isFileExist(const std::string& strFilePath) const;
 };
 
 // end of platform group
