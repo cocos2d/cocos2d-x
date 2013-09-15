@@ -77,19 +77,19 @@ void EventDispatcher::addEventListenerWithItem(EventListenerItem* item)
 {
     if (!_listeners)
     {
-        _listeners = new std::map<std::string, std::list<EventListenerItem*>*>();
+        _listeners = new std::map<std::string, std::vector<EventListenerItem*>*>();
     }
 
     auto itr = _listeners->find(item->listener->type);
     if (itr == _listeners->end())
     {
-        _listeners->insert(std::make_pair(item->listener->type, new std::list<EventListenerItem*>()));
+        _listeners->insert(std::make_pair(item->listener->type, new std::vector<EventListenerItem*>()));
         itr = _listeners->find(item->listener->type);
     }
 
     auto listenerList = itr->second;
 
-    listenerList->push_front(item);
+    listenerList->insert(listenerList->begin(), item);
 }
 
 void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
@@ -144,7 +144,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 {
                     (*itemIter)->listener->release();
                     delete (*itemIter);
-                    iter->second->remove(*itemIter);
+                    iter->second->erase(itemIter);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ void EventDispatcher::dispatchTouchEvent(TouchEvent* event)
     
     for (auto iter = touchListeners->begin(); iter != touchListeners->end(); ++iter)
     {
-        TouchEventListener* touchEventListener = static_cast<TouchEventListener*>((*iter)->listener);
+        auto touchEventListener = static_cast<TouchEventListener*>((*iter)->listener);
         
         if (touchEventListener->_dispatchMode == Touch::DispatchMode::ONE_BY_ONE)
         {
@@ -488,7 +488,7 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
     auto listenerList = getListenerItemsForType(eventType);
 
     // After sort: priority < 0, = 0, scene graph, > 0
-    listenerList->sort([](const EventListenerItem* item1, const EventListenerItem* item2) {
+    std::sort(listenerList->begin(), listenerList->end(), [](const EventListenerItem* item1, const EventListenerItem* item2) {
         // item1 and item2 are both using fixed priority.
         if (nullptr == item1->node && nullptr == item2->node)
         {
@@ -515,7 +515,7 @@ void EventDispatcher::sortAllEventListenerItemsForType(const std::string &eventT
     });
 }
 
-std::list<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerItemsForType(const std::string &eventType)
+std::vector<EventDispatcher::EventListenerItem*>* EventDispatcher::getListenerItemsForType(const std::string &eventType)
 {
     if (_listeners != nullptr)
     {

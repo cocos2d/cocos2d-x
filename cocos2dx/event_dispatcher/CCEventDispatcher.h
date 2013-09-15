@@ -32,6 +32,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -115,7 +116,7 @@ private:
     void dispatchTouchEvent(TouchEvent* event);
     
     /** Gets event the listener list for the event type. */
-    std::list<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
+    std::vector<EventListenerItem*>* getListenerItemsForType(const std::string& eventType);
     
     /** Sorts the listeners of specified type by priority */
     void sortAllEventListenerItemsForType(const std::string& eventType);
@@ -127,7 +128,7 @@ private:
     /**
      * Listeners map.
      */
-    std::map<std::string, std::list<EventListenerItem*>*>* _listeners;
+    std::map<std::string, std::vector<EventListenerItem*>*>* _listeners;
 
     int               _inDispatch;
     std::list<Node*>  _eventNodes;
